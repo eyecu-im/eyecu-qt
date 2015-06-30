@@ -6,6 +6,7 @@
 #include <utils/pluginhelper.h>
 #include <utils/logger.h>
 #include <utils/menu.h>
+#include "utils/qt4qt5compat.h"
 
 #define ADR_FORM_INDEX        Action::DR_Parametr1
 
@@ -133,11 +134,9 @@ void DiscoInfoWindow::updateWindow()
 		ui.lwtFearures->setEnabled(true);
 		ui.lblError->setVisible(false);
 	}
-
-	ui.twtIdentity->horizontalHeader()->setResizeMode(0,QHeaderView::ResizeToContents);
-	ui.twtIdentity->horizontalHeader()->setResizeMode(1,QHeaderView::ResizeToContents);
-	ui.twtIdentity->horizontalHeader()->setResizeMode(2,QHeaderView::Stretch);
-
+	ui.twtIdentity->horizontalHeader()->SETRESIZEMODE(0,QHeaderView::ResizeToContents);
+	ui.twtIdentity->horizontalHeader()->SETRESIZEMODE(1,QHeaderView::ResizeToContents);
+	ui.twtIdentity->horizontalHeader()->SETRESIZEMODE(2,QHeaderView::Stretch);
 	ui.pbtUpdate->setEnabled(true);
 }
 

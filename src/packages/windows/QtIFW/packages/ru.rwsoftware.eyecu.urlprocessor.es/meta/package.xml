@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>URL Processor Spanish Translation</DisplayName>
+    <Description>URL Processor Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.urlprocessor.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.urlprocessor,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

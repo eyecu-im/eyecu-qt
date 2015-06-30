@@ -1691,5 +1691,6 @@ void PrivacyLists::onMultiUserChatCreated(IMultiUserChat *AMultiChat)
 {
 	setContactAutoListed(AMultiChat->streamJid(),AMultiChat->roomJid(),PRIVACY_LIST_CONFERENCES,true);
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_privacylists, PrivacyLists)
+#endif

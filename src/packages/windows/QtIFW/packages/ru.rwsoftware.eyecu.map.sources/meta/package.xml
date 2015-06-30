@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Sources</DisplayName>
+    <Description>Map sources</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources</Name>
+    <SortingPriority>10</SortingPriority>
+</Package>

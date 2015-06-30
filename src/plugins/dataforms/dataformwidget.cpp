@@ -10,6 +10,7 @@
 #include <QTextDocument>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <utils/qt4qt5compat.h>
 
 class ScrollArea : 
 	public QScrollArea
@@ -162,7 +163,7 @@ bool DataFormWidget::checkForm(bool AAllowInvalid) const
 			if (!field.var.isEmpty() && !FDataForms->isFieldValid(field,DATAFORM_TYPE_SUBMIT))
 			{
 				invalidCount++;
-				message += QString("- <b>%2</b><br>").arg(Qt::escape(!field.label.isEmpty() ? field.label : field.var));
+				message += QString("- <b>%2</b><br>").arg(!field.label.isEmpty() ? HTML_ESCAPE(field.label) : HTML_ESCAPE(field.var));
 			}
 		}
 		if (invalidCount > 0)

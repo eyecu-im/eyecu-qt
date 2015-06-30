@@ -2,6 +2,7 @@
 #define AVATARS_H
 
 #include <QDir>
+#include <QComboBox>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iavatars.h>
 #include <interfaces/ixmppstreammanager.h>
@@ -10,6 +11,7 @@
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/irostersview.h>
 #include <interfaces/irostersmodel.h>
+#include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
 
 class Avatars :
@@ -19,10 +21,14 @@ class Avatars :
 	public IStanzaHandler,
 	public IStanzaRequestOwner,
 	public IRosterDataHolder,
-	public IRostersLabelHolder
+	public IRostersLabelHolder,
+	public IOptionsDialogHolder // *** <<< eyeCU >>> ***
 {
 	Q_OBJECT;
-	Q_INTERFACES(IPlugin IAvatars IStanzaHandler IRosterDataHolder IRostersLabelHolder IStanzaRequestOwner);
+	Q_INTERFACES(IPlugin IAvatars IStanzaHandler IRosterDataHolder IRostersLabelHolder IStanzaRequestOwner IOptionsDialogHolder); // *** <<< eyeCU >>> ***
+#if QT_VERSION >= 0x050000
+Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IAvatars")
+#endif
 public:
 	Avatars();
 	~Avatars();
@@ -45,6 +51,8 @@ public:
 	//IRostersLabelHolder
 	virtual QList<quint32> rosterLabels(int AOrder, const IRosterIndex *AIndex) const;
 	virtual AdvancedDelegateItem rosterLabel(int AOrder, quint32 ALabelId, const IRosterIndex *AIndex) const;
+	//IOptionsDialogHolder
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent); // *** <<< eyeCU >>> ***
 	//IAvatars
 	virtual QString avatarHash(const Jid &AContactJid) const;
 	virtual bool hasAvatar(const QString &AHash) const;
@@ -93,6 +101,7 @@ private:
 	IPresenceManager *FPresenceManager;
 	IRostersModel *FRostersModel;
 	IRostersViewPlugin *FRostersViewPlugin;
+	IOptionsManager *FOptionsManager;
 private:
 	QMap<Jid, int> FSHIPresenceIn;
 	QMap<Jid, int> FSHIPresenceOut;
@@ -104,10 +113,16 @@ private:
 	QMap<QString, Jid> FIqAvatarRequests;
 private:
 	QSize FAvatarSize;
+	int	FAvatarPosition; /*** <<< eyeCU >>> ***/
 	bool FAvatarsVisible;
+	bool FShowEmptyAvatars;
+	bool FShowGrayAvatars;
 	QMap<Jid, QString> FCustomPictures;
 private:
-	quint32 FAvatarLabelId;
+/*** <<< eyeCU <<< ***/
+	quint32 FAvatarRightLabelId;
+	quint32 FAvatarLeftLabelId;
+/*** >>> eyeCU >>> ***/
 	QDir FAvatarsDir;
 	QImage FEmptyAvatar;
 	QImage FEmptyGrayAvatar;

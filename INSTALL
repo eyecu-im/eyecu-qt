@@ -18,30 +18,30 @@
 
 
 [Windows]
-  * Default install directory c:\vacuum
+  * Default install directory c:\eyecu
   ==Visual Studio==
-    qmake CONFIG-=debug_and_release CONFIG-=debug -recursive vacuum.pro
+    qmake CONFIG-=debug_and_release CONFIG-=debug -recursive eyecu.pro
     nmake
     nmake install
 
   ==MinGW==
-    qmake CONFIG-=debug_and_release CONFIG-=debug -recursive vacuum.pro
+    qmake CONFIG-=debug_and_release CONFIG-=debug -recursive eyecu.pro
     mingw32-make.exe
     mingw32-make.exe install
 
 
 [Linux/Unix]
   * Default install prefix /usr/local
-  * By default libvacuumutils.so is copied to /usr/local/lib. On some distributives
-  * you may receive message that libvacuumutils.so is not found. In this case configure
+  * By default libeyecutils.so is copied to /usr/local/lib. On some distributives
+  * you may receive message that libeyecutils.so is not found. In this case configure
   * your system to search libraries in /usr/local/lib.
-  qmake CONFIG-=debug_and_release CONFIG-=debug -recursive vacuum.pro
+  qmake CONFIG-=debug_and_release CONFIG-=debug -recursive eyecu.pro
   make
   make install
 
 
 [MacOS X]
-  * Default install directory /Applications/vacuum.app
-  qmake CONFIG-=debug_and_release CONFIG-=debug -recursive vacuum.pro
+  * Default install directory /Applications/eyecu.app
+  qmake CONFIG-=debug_and_release CONFIG-=debug -recursive eyecu.pro
   make
   make install

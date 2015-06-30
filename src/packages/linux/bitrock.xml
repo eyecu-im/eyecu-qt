@@ -1,7 +1,7 @@
 <project>
-    <shortName>vacuum</shortName>
-    <fullName>Vacuum-IM</fullName>
-    <version>1.2.0</version>
+    <shortName>eyecu</shortName>
+    <fullName>eyeCU</fullName>
+    <version>1.3.0</version>
     <installerFilename>${product_shortname}_${product_version}_${platform_name}-installer.${platform_exec_suffix}</installerFilename>
     <readmeFile>../../../README</readmeFile>
     <licenseFile>../../../COPYING</licenseFile>
@@ -13,16 +13,16 @@
             <path>${installdir}/lib</path>
         </addLibraryToPath>
         <createSymLink>
-            <linkName>${installdir}/lib/libvacuumutils.so.1.0</linkName>
-            <target>${installdir}/lib/libvacuumutils.so.1.0.0</target>
+            <linkName>${installdir}/lib/libeyecuutils.so.1.0</linkName>
+            <target>${installdir}/lib/libeyecuutils.so.1.0.0</target>
         </createSymLink>
         <createSymLink>
-            <linkName>${installdir}/lib/libvacuumutils.so.1</linkName>
-            <target>${installdir}/lib/libvacuumutils.so.1.0.0</target>
+            <linkName>${installdir}/lib/libeyecuutils.so.1</linkName>
+            <target>${installdir}/lib/libeyecuutils.so.1.0.0</target>
         </createSymLink>
         <createSymLink>
-            <linkName>${installdir}/lib/libvacuumutils.so</linkName>
-            <target>${installdir}/lib/libvacuumutils.so.1.0.0</target>
+            <linkName>${installdir}/lib/libeyecuutils.so</linkName>
+            <target>${installdir}/lib/libeyecuutils.so.1.0.0</target>
         </createSymLink>
     </postInstallationActionList>
     <compressionAlgorithm>lzma</compressionAlgorithm>
@@ -30,7 +30,7 @@
     <enableTimestamp>1</enableTimestamp>
     <requireInstallationByRootUser>1</requireInstallationByRootUser>
     <saveRelativePaths>1</saveRelativePaths>
-    <vendor>JRuDevels</vendor>
+    <vendor>Road Works Software</vendor>
     <componentList>
         <component>
             <name>default</name>
@@ -40,9 +40,9 @@
             <show>1</show>
             <desktopShortcutList>
                 <shortcut>
-                    <comment>Crossplatform Jabber Client</comment>
-                    <exec>${installdir}/bin/vacuum</exec>
-                    <icon>${installdir}/share/vacuum/vacuum.ico</icon>
+                    <comment>Crossplatform XMPP Client and GIS</comment>
+                    <exec>${installdir}/bin/eyecu</exec>
+                    <icon>${installdir}/share/eyecu/eyecu.svg</icon>
                     <name>${product_fullname}</name>
                     <path>${installdir}/bin</path>
                     <platforms>linux</platforms>
@@ -61,7 +61,7 @@
                     <platforms>linux</platforms>
                     <distributionFileList>
                         <distributionFile>
-                            <origin>../../../vacuum</origin>
+                            <origin>../../../eyecu</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
@@ -72,7 +72,7 @@
                     <platforms>linux</platforms>
                     <distributionFileList>
                         <distributionFile>
-                            <origin>../../libs/libvacuumutils.so.1.0.0</origin>
+                            <origin>../../libs/libeyecuutils.so.1.0.0</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
@@ -97,7 +97,7 @@
                             <origin>../../../resources</origin>
                         </distributionDirectory>
                         <distributionFile>
-                            <origin>../../../vacuum.ico</origin>
+                            <origin>../../../eyecu.svg</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>

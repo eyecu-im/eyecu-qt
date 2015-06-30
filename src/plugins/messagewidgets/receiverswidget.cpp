@@ -11,6 +11,7 @@
 #include <utils/advanceditemdelegate.h>
 #include <utils/pluginhelper.h>
 #include <utils/options.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_ITEMS                  Action::DR_Parametr1
 
@@ -439,7 +440,7 @@ QStandardItem *ReceiversWidget::getContactItem(const Jid &AStreamJid, const Jid 
 		contactItem->setData(AContactJid.pBare(),RDR_PREP_BARE_JID);
 		contactItem->setData(AGroup,RDR_GROUP);
 
-		contactItem->setToolTip(Qt::escape(AContactJid.uBare()));
+		contactItem->setToolTip(HTML_ESCAPE(AContactJid.uBare()));
 
 		QStandardItem *parentItem = getGroupItem(AStreamJid,AGroup,AGroupOrder);
 		parentItem->appendRow(contactItem);
@@ -1046,5 +1047,3 @@ void ReceiversWidget::onStartSearchContacts()
 	else
 		restoreExpandState(QList<QStandardItem *>() << FModel->invisibleRootItem());
 }
-
-Q_DECLARE_METATYPE(QList<QStandardItem *>);

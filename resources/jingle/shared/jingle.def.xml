@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>micOn</key>
+    <object mime="image/png">microphoneon.png</object>
+  </icon>
+  <icon>
+    <key>micOff</key>
+    <object mime="image/png">microphoneoff.png</object>
+  </icon>
+
+  <icon>
+    <key>speakerOff</key>
+    <object mime="image/png">speakeroff.png</object>
+  </icon>
+  <icon>
+    <key>speakerOn</key>
+    <object mime="image/png">speakeron.png</object>
+  </icon>
+
+  <icon>
+    <key>testOn</key>
+    <object mime="image/png">test.png</object>
+  </icon>
+  <icon>
+    <key>testOff</key>
+    <object mime="image/png">testoff.png</object>
+  </icon>
+
+  <icon>
+    <key>microphoneOn</key>
+    <object mime="image/png">microphone.png</object>
+  </icon>
+
+  <icon>
+    <key>call</key>
+    <object mime="image/gif">call.gif</object>
+  </icon>
+  <icon>
+    <key>call_video</key>
+    <object mime="image/gif">call_video.gif</object>
+  </icon>
+  <icon>
+    <key>incoming</key>
+    <object mime="image/gif">incoming.gif</object>
+  </icon>
+  <icon>
+    <key>incoming_video</key>
+    <object mime="image/gif">incoming_video.gif</object>
+  </icon>
+  <icon>
+    <key>outgoing</key>
+    <object mime="image/gif">outgoing.gif</object>
+  </icon>
+  <icon>
+    <key>outgoing_video</key>
+    <object mime="image/gif">outgoing_video.gif</object>
+  </icon>
+  <icon>
+    <key>talk</key>
+    <object mime="image/gif">talk.gif</object>
+  </icon>
+  <icon>
+    <key>talk_video</key>
+    <object mime="image/gif">talk_video.gif</object>
+  </icon>
+  <icon>
+    <key>connect</key>
+    <object mime="image/gif">connect.gif</object>
+  </icon>
+  <icon>
+    <key>connect_video</key>
+    <object mime="image/gif">connect_video.gif</object>
+  </icon>
+  <icon>
+    <key>hangup</key>
+    <object mime="image/png">hangup.gif</object>
+  </icon>
+  <icon>
+    <key>error</key>
+    <object mime="image/png">error.gif</object>
+  </icon>
+</icondef>

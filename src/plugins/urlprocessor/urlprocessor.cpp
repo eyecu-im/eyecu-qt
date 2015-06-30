@@ -77,5 +77,6 @@ void UrlProcessor::onProxyAuthenticationRequired(const QNetworkProxy &AProxy, QA
 	AAuth->setUser(AProxy.user());
 	AAuth->setPassword(AProxy.password());
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_urlprocessor, UrlProcessor)
+#endif

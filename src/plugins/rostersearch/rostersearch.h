@@ -19,6 +19,9 @@ class RosterSearch :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IRosterSearch IRostersClickHooker IRostersKeyHooker);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IRosterSearch")
+#endif
 public:
 	RosterSearch();
 	~RosterSearch();

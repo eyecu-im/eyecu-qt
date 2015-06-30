@@ -15,11 +15,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="SearchLineEdit" name="sleSearch">
-     <property name="placeholderText">
-      <string>Search Contacts</string>
-     </property>
-    </widget>
+    <widget class="SearchLineEdit" name="sleSearch"/>
    </item>
    <item>
     <widget class="QTreeView" name="trvReceivers">

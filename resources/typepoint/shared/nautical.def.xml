@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>nautical:aqueduct</key><name>Aqueduct</name><object mime="image/png">nautical/aqueduct.png</object></icon>
+<icon><key>nautical:beacon</key><name>Beacon</name><object mime="image/png">nautical/beacon.png</object></icon>
+<icon><key>nautical:ferry</key><name>Ferry</name><object mime="image/png">nautical/ferry.png</object></icon>
+<icon><key>nautical:groyne</key><name>Groyne</name><object mime="image/png">nautical/groyne.png</object></icon>
+<icon><key>nautical:lighthouse</key><name>Lighthouse</name><object mime="image/png">nautical/lighthouse.png</object></icon>
+<icon><key>nautical:marina</key><name>Marina</name><object mime="image/png">nautical/marina.png</object></icon>
+<icon><key>nautical:pier</key><name>Pier</name><object mime="image/png">nautical/pier.png</object></icon>
+<icon><key>nautical:slipway</key><name>Slipway</name><object mime="image/png">nautical/slipway.png</object></icon>
+</icondef>

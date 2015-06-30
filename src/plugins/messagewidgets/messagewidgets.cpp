@@ -3,6 +3,9 @@
 #include <QPair>
 #include <QBuffer>
 #include <QMimeData>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <QClipboard>
 #include <QTextBlock>
 #include <QTextCursor>
@@ -140,6 +143,8 @@ QMultiMap<int, IOptionsDialogWidget *> MessageWidgets::optionsDialogWidgets(cons
 		widgets.insertMulti(OHO_MESSAGES_BEHAVIOR,FOptionsManager->newOptionsDialogHeader(tr("Message window behavior"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_SHOWSTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_SHOWSTATUS),tr("Show contacts status changes"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_ARCHIVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_ARCHIVESTATUS),tr("Save contacts status messages in history"),AParent));
+
+		widgets.insertMulti(OHO_MESSAGES_INFOBAR_ICONS, FOptionsManager->newOptionsDialogHeader(tr("Information bar icons"), AParent)); // *** <<< eyeCU >>> ***
 	}
 	return widgets;
 }
@@ -641,7 +646,13 @@ void MessageWidgets::onViewContextSearchActionTriggered(bool)
 	{
 		QString domain = tr("google.com","Your google domain");
 		QUrl url = QString("http://www.%1/search").arg(domain);
+#if QT_VERSION >= 0x050000
+		QUrlQuery query;
+		query.setQueryItems(QList<QPair<QString,QString> >() << qMakePair<QString,QString>(QString("q"),action->data(ADR_CONTEXT_DATA).toString()));
+		url.setQuery(query);
+#else
 		url.setQueryItems(QList<QPair<QString,QString> >() << qMakePair<QString,QString>(QString("q"),action->data(ADR_CONTEXT_DATA).toString()));
+#endif
 		QDesktopServices::openUrl(url);
 	}
 }
@@ -827,5 +838,6 @@ void MessageWidgets::onOptionsChanged(const OptionsNode &ANode)
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_messagewidgets, MessageWidgets)
+#endif

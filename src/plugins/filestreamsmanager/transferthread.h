@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QThread>
+#include <QMutex>   // *** <<< eyeCU >>> ***
 #include <interfaces/ifilestreamsmanager.h>
 #include <interfaces/idatastreamsmanager.h>
 
@@ -11,7 +12,7 @@ class TransferThread :
 {
 	Q_OBJECT;
 public:
-	TransferThread(IDataStreamSocket *ASocket, QFile *AFile, int AKind, qint64 ABytes, QObject *AParent);
+    TransferThread(IDataStreamSocket *ASocket, QFile *AFile, QList<QIODevice *> *AOutputDevices, QMutex *AOutputMutex, int AKind, qint64 ABytes, QObject *AParent);   // *** <<< eyeCU >>> ***
 	~TransferThread();
 	void abort();
 	bool isAborted() const;
@@ -24,6 +25,10 @@ private:
 	QFile *FFile;
 	qint64 FBytesToTransfer;
 	IDataStreamSocket *FSocket;
+// *** <<< eyeCU <<< ***
+    QList<QIODevice *> *FOutputDevices;
+    QMutex             *FOutputMutex;
+// *** >>> eyeCU >>> ***
 private:
 	volatile bool FAborted;
 };

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>HERE</DisplayName>
+    <Description>Allows to use HERE (by Nokia) as a map search provider</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.mapsearch.here</Name>
+    <SortingPriority>60</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

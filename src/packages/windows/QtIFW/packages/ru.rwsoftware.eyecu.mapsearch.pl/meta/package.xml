@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Search Polish Translation</DisplayName>
+    <Description>Map Search Polish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.mapsearch.pl</Name>
+	<AutoDependOn>ru.rwsoftware.eyecu.map.search,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Contacts Ukrainian Translation</DisplayName>
+    <Description>Map Contacts Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.contacts.uk</Name>
+	<AutoDependOn>ru.rwsoftware.eyecu.map.contacts,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

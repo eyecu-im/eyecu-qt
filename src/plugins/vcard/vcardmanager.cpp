@@ -793,5 +793,6 @@ void VCardManager::onRosterItemReceived(IRoster *ARoster, const IRosterItem &AIt
 			FUpdateQueue.insertMulti(ARoster->streamJid(),AItem.itemJid);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_vcard, VCardManager)
+#endif

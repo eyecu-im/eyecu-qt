@@ -34,6 +34,7 @@ public:
 	virtual QTextDocumentFragment selection() const;
 	virtual QTextCharFormat textFormatAt(const QPoint &APosition) const;
 	virtual QTextDocumentFragment textFragmentAt(const QPoint &APosition) const;
+    virtual QImage imageAt(const QPoint &APosition) const; // *** <<< eyeCU >>> ***
 signals:
 	void urlClicked(const QUrl &AUrl);
 	void viewContextMenu(const QPoint &APosition, Menu *AMenu);

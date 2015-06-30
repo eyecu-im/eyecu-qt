@@ -16,4 +16,14 @@
 #define NNT_CHATSTATE_TYPING          "ChatStateTyping"
 #define NNT_ROSTEREXCHANGE_REQUEST    "RosterExchangeRequest"
 
+// *** <<< eyeCU <<< ***
+#define NNT_ATTENTION                 "Attention"
+#define NNT_RECEIPTS                  "Receipts"
+#define NNT_ACTIVITY                  "Activity"
+#define NNT_CONTACTPROXIMITY          "ContactProximity"
+#define NNT_MOOD                      "Mood"
+#define NNT_TUNE                      "Tune"
+#define NNT_JINGLE_RTP_CALL           "JingleRtpCall"
+#define NNT_JINGLE_RTP_MISSED         "JingleRtpMissed"
+// *** >>> eyeCU >>> ***
 #endif // DEF_NOTIFICATIONTYPES_H

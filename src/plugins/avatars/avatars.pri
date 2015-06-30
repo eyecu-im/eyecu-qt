@@ -1,3 +1,8 @@
-HEADERS = avatars.h
+HEADERS = avatars.h \
+    avataroptionswidget.h
 
-SOURCES = avatars.cpp
+SOURCES = avatars.cpp \
+    avataroptionswidget.cpp
+
+FORMS += \
+    avataroptionswidget.ui

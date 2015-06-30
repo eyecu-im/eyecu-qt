@@ -4,6 +4,7 @@
 #include <definitions/menuicons.h>
 #include <definitions/resources.h>
 #include <utils/iconstorage.h>
+#include <utils/qt4qt5compat.h>
 
 AccountItemWidget::AccountItemWidget(const QUuid &AAccountId, QWidget *AParent) : QWidget(AParent)
 {
@@ -58,7 +59,7 @@ QString AccountItemWidget::name() const
 void AccountItemWidget::setName(const QString &AName)
 {
 	FName = AName;
-	ui.lblName->setText(QString("<b>%1<b>").arg(Qt::escape(AName)));
+	ui.lblName->setText(QString("<b>%1<b>").arg(HTML_ESCAPE(AName)));
 }
 
 Jid AccountItemWidget::accountJid() const

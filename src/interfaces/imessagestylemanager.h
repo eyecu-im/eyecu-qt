@@ -93,6 +93,7 @@ public:
 	virtual QTextDocumentFragment selection(QWidget *AWidget) const =0;
 	virtual QTextCharFormat textFormatAt(QWidget *AWidget, const QPoint &APosition) const =0;
 	virtual QTextDocumentFragment textFragmentAt(QWidget *AWidget, const QPoint &APosition) const =0;
+	virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const =0; // *** <<< eyeCU >>> ***
 	virtual bool changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear = true) =0;
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions) =0;
 protected:

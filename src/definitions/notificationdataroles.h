@@ -32,7 +32,15 @@ enum NotificationDataRoles {
 	NDR_TABPAGE_PRIORITY,
 	NDR_TABPAGE_ICONBLINK,
 	// ShowMinimized
-	NDR_SHOWMINIMIZED_WIDGET
+	NDR_SHOWMINIMIZED_WIDGET,
+    // *** <<< eyeCU <<< ***
+    // Suppress attention dialog
+    NDR_MAIN_WINDOW_ACTIVATE,
+    // Avatar data for Attention dialog
+    NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME,
+    // Jingle call type
+    NDR_JINGLE_RTP_EVENT_TYPE
+    // *** >>> eyeCU >>> ***
 };
 
 #endif // DEF_NOTIFICATIONDATAROLES_H

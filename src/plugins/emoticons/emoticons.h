@@ -25,6 +25,9 @@ class Emoticons :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IEmoticons IMessageWriter IOptionsDialogHolder IMessageEditContentsHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IEmoticons")
+#endif
 public:
 	Emoticons();
 	~Emoticons();

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<!-- icon><key>none</key><name>None</name><object mime="image/png">root/none.png</object></icon -->
+<icon><key>accommodation</key><name>Accommodation</name><object mime="image/png">root/accommodation.png</object></icon>
+<icon><key>education</key><name>Education</name><object mime="image/png">root/education.png</object></icon>
+<icon><key>food</key><name>Food</name><object mime="image/png">root/food.png</object></icon>
+<icon><key>geographic</key><name>Geographic</name><object mime="image/png">root/geographic.png</object></icon>
+<icon><key>health</key><name>Health</name><object mime="image/png">root/health.png</object></icon>
+<icon><key>historic</key><name>Historic</name><object mime="image/gif">root/historic.gif</object></icon>
+<icon><key>industrial</key><name>Industrial</name><object mime="image/png">root/industrial.png</object></icon>
+<icon><key>leisure</key><name>Leisure</name><object mime="image/png">root/leisure.png</object></icon>
+<icon><key>misc</key><name>Miscellaneous</name><object mime="image/png">root/misc.png</object></icon>
+<icon><key>money</key><name>Money</name><object mime="image/png">root/money.png</object></icon>
+<icon><key>nature</key><name>Nature</name><object mime="image/png">root/nature.png</object></icon>
+<icon><key>nautical</key><name>Nautical</name><object mime="image/gif">root/nautical.gif</object></icon>
+<icon><key>place</key><name>Place</name><object mime="image/png">root/place.png</object></icon>
+<icon><key>religion</key><name>Religion</name><object mime="image/png">root/religion.png</object></icon>
+<icon><key>service</key><name>Service</name><object mime="image/png">root/service.png</object></icon>
+<icon><key>shop</key><name>Shop</name><object mime="image/gif">root/shop.gif</object></icon>
+<icon><key>sightseeing</key><name>Sightseeing</name><object mime="image/png">root/sightseeing.png</object></icon>
+<icon><key>special</key><name>Special</name><object mime="image/gif">root/special.gif</object></icon>
+<icon><key>sport</key><name>Sport</name><object mime="image/png">root/sport.png</object></icon>
+<icon><key>public_transport</key><name>Public transport</name><object mime="image/gif">root/transport.gif</object></icon>
+<icon><key>vehicle</key><name>Vehicle</name><object mime="image/gif">root/vehicle.gif</object></icon>
+</icondef>

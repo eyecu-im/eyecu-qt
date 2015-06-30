@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>leisure:beach_resort</key><name>Beach resort</name><object mime="image/png">leisure/beach_resort.png</object></icon>
+<icon><key>leisure:bench</key><name>Bench</name><object mime="image/png">leisure/bench.png</object></icon>
+<icon><key>leisure:cinema</key><name>Cinema</name><object mime="image/png">leisure/cinema.png</object></icon>
+<icon><key>leisure:common</key><name>Common</name><object mime="image/png">leisure/common.png</object></icon>
+<icon><key>leisure:dog</key><name>Dog</name><object mime="image/png">leisure/dog.png</object></icon>
+<icon><key>leisure:garden</key><name>Garden</name><object mime="image/png">leisure/garden.png</object></icon>
+<icon><key>leisure:ice_rink</key><name>Ice rink</name><object mime="image/png">leisure/ice_rink.png</object></icon>
+<icon><key>leisure:nature_reserve</key><name>Nature reserve</name><object mime="image/png">leisure/nature_reserve.png</object></icon>
+<icon><key>leisure:nightclub</key><name>Nightclub</name><object mime="image/png">leisure/nightclub.png</object></icon>
+<icon><key>leisure:park</key><name>Park</name><object mime="image/png">leisure/park.png</object></icon>
+<icon><key>leisure:picnic</key><name>Picnic</name><object mime="image/png">leisure/picnic.png</object></icon>
+<icon><key>leisure:playground</key><name>Playground</name><object mime="image/png">leisure/playground.png</object></icon>
+<icon><key>leisure:sauna</key><name>Sauna</name><object mime="image/png">leisure/sauna.png</object></icon>
+<icon><key>leisure:stripclub</key><name>Stripclub</name><object mime="image/gif">leisure/stripclub.gif</object></icon>
+<icon><key>leisure:theater</key><name>Theater</name><object mime="image/png">leisure/theater.png</object></icon>
+<icon><key>leisure:theme_park</key><name>Theme park</name><object mime="image/png">leisure/theme_park.png</object></icon>
+<icon><key>leisure:water_park</key><name>Water park</name><object mime="image/png">leisure/water_park.png</object></icon>
+<icon><key>leisure:zoo</key><name>Zoo</name><object mime="image/png">leisure/zoo.png</object></icon>
+<icon><key>leisure:attraction</key><name>Attraction</name><object mime="image/png">leisure/attraction.png</object></icon>
+</icondef>

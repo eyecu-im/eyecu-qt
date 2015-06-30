@@ -338,6 +338,11 @@ int Notifications::appendNotification(const INotification &ANotification)
 				connect(record.popupWidget,SIGNAL(notifyActivated()),SLOT(onWindowNotifyActivated()));
 				connect(record.popupWidget,SIGNAL(notifyRemoved()),SLOT(onWindowNotifyRemoved()));
 				connect(record.popupWidget,SIGNAL(windowDestroyed()),SLOT(onWindowNotifyDestroyed()));
+// *** <<< eyeCU <<< ***
+            	connect(this, SIGNAL(enableAnimation(bool)), record.popupWidget, SLOT(setAnimated(bool)));
+				record.popupWidget->setAnimated(Options::node(OPV_NOTIFICATIONS_ANIMATIONENABLE).value().toBool());
+            	record.popupWidget->setNetworkManager(FNetworkAccessManager);
+// *** >>> eyeCU >>> ***
 				record.popupWidget->appear();
 			}
 		}
@@ -614,7 +619,7 @@ QString Notifications::contactName(const Jid &AStreamJid, const Jid &AContactJid
 {
 	QString name;
 
-	IRosterIndex *index = FRostersModel!=NULL ? FRostersModel->findContactIndexes(AStreamJid, AContactJid).value(0) : NULL;
+	IRosterIndex *index = FRostersModel!=NULL ? FRostersModel->getContactIndexes(AStreamJid, AContactJid).value(0) : NULL; // *** <<< eyeCU >>> ***
 	if (index != NULL)
 		name = index->data(RDR_NAME).toString();
 
@@ -832,5 +837,6 @@ void Notifications::onShortcutActivated(const QString &AId, QWidget *AWidget)
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_notifications, Notifications)
+#endif

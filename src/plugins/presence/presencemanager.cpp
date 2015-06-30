@@ -237,5 +237,6 @@ void PresenceManager::onXmppStreamActiveChanged(IXmppStream *AXmppStream, bool A
 		destroyPresence(presence);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_presence, PresenceManager)
+#endif

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Qt FFMpeg</DisplayName>
+    <Description>Qt Purple - FFMpeg Framework</Description>
+    <Version>1.0.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
+    <Dependencies>ru.purplesoft.qtpurple,org.digia.qt4.multimedia,org.ffmpeg.library</Dependencies>
+    <Virtual>true</Virtual>
+</Package>

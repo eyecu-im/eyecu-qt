@@ -10,7 +10,7 @@
 #define RIKO_GROUP_BLANK                 1530
 #define RIKO_GROUP_NOT_IN_ROSTER         1540
 #define RIKO_GROUP_MUC                   1550
-#define RIKO_GROUP_MY_RESOURCES          1560
+#define RIKO_GROUP_MY_RESOURCES          1515 // *** <<< eyeCU >>> ***
 #define RIKO_GROUP_AGENTS                1570
 
 #endif //DEF_ROSTERINDEXKINDORDERS_H

@@ -44,6 +44,9 @@ class ChatStates :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IChatStates IStanzaHandler IArchiveHandler IOptionsDialogHolder ISessionNegotiator);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IChatStates")
+#endif
 public:
 	ChatStates();
 	~ChatStates();

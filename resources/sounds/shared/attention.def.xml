@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sounddef>
+  <name>Attention sounds</name>
+
+  <file>
+    <key>attentionAlarm</key>
+    <object mime='sound/wav'>bells.wav</object>
+  </file>
+
+</sounddef>

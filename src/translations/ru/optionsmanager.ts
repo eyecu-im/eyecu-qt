@@ -202,5 +202,31 @@
         <source>Appearance</source>
         <translation>Оформление</translation>
     </message>
+    <message>
+        <source>Show advanced options</source>
+        <translation type="obsolete">Показать опции для опытных пользователей</translation>
+    </message>
+    <message>
+        <source>Options mode changed</source>
+        <translation>Режим опций изменён</translation>
+    </message>
+    <message>
+        <source>To switch options mode, %1 needs to be restarted.
+Do you want to restart %1 now?</source>
+        <translation>Для переключения режима опций требуется перезапустить %1.
+Желаете перезапустить %1 сейчас?</translation>
+    </message>
+    <message>
+        <source>Display advanced options?</source>
+        <translation>Отобразить расширенные настройки?</translation>
+    </message>
+    <message>
+        <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
+        <translation>Если Вы - обытный пользователь Jabber, нажмите &lt;i&gt;Да&lt;/i&gt;, чтобы отобразить расширенные настройки. Если же Вы новичок в Jabber, нажмите &lt;i&gt;Нет&lt;/i&gt;. Будут отображены упрощённые настройки.</translation>
+    </message>
+    <message>
+        <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
+        <translation>Вы всегда можете сменить режим настроек на странице &lt;i&gt;Общие&lt;/i&gt;.</translation>
+    </message>
 </context>
 </TS>

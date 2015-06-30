@@ -1,0 +1,5 @@
+eyecu (1.3.0.1206-1) unstable; urgency=low
+
+  * Initial debianization
+
+ -- Konstantin Kozlov <yagiza@rwsoftware.ru>  Tue, 17 Feb 2015 10:56:38 +0500

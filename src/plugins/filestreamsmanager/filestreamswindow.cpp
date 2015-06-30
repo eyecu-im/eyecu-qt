@@ -9,6 +9,7 @@
 #include <utils/iconstorage.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include "utils/qt4qt5compat.h"
 
 #define UPDATE_STATUSBAR_INTERVAL   500
 
@@ -46,7 +47,11 @@ FileStreamsWindow::FileStreamsWindow(IFileStreamsManager *AManager, QWidget *APa
 	FProxy.setSortLocaleAware(true);
 
 	ui.tbvStreams->setModel(&FProxy);
-	ui.tbvStreams->verticalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+#if QT_VERSION >= 0x050000
+	ui.tbvStreams->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+#else
+	ui.tbvStreams->verticalHeader()->SETRESIZEMODE(QHeaderView::ResizeToContents);
+#endif
 	connect(ui.tbvStreams,SIGNAL(activated(const QModelIndex &)),SLOT(onTableIndexActivated(const QModelIndex &)));
 
 	connect(FManager->instance(),SIGNAL(streamCreated(IFileStream *)),SLOT(onStreamCreated(IFileStream *)));
@@ -71,8 +76,11 @@ void FileStreamsWindow::initialize()
 	FStreamsModel.setHorizontalHeaderLabels(QStringList()<<tr("File Name")<<tr("State")<<tr("Size")<<tr("Progress")<<tr("Speed"));
 
 	for (int column=0; column<CMN_COUNT; column++)
-		ui.tbvStreams->horizontalHeader()->setResizeMode(column,column!=CMN_FILENAME ? QHeaderView::ResizeToContents : QHeaderView::Stretch);
-
+#if QT_VERSION >= 0x050000
+		ui.tbvStreams->horizontalHeader()->setSectionResizeMode(column,column!=CMN_FILENAME ? QHeaderView::ResizeToContents : QHeaderView::Stretch);
+#else
+		ui.tbvStreams->horizontalHeader()->SETRESIZEMODE(column,column!=CMN_FILENAME ? QHeaderView::ResizeToContents : QHeaderView::Stretch);
+#endif
 	foreach(IFileStream *stream, FManager->streams()) {
 		appendStream(stream); }
 

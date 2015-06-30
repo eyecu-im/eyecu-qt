@@ -16,6 +16,7 @@
 #include <utils/stanza.h>
 #include <utils/action.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define GATEWAY_TIMEOUT           30000
 
@@ -23,6 +24,7 @@
 #define ADR_SERVICE_JID           Action::DR_Parametr1
 #define ADR_NEW_SERVICE_JID       Action::DR_Parametr2
 #define ADR_LOG_IN                Action::DR_Parametr3
+#define ADR_ACTION_RESOLVE        Action::DR_Parametr4 /*** <<< eyeCU >>> ***/
 
 #define PSN_GATEWAYS_KEEP         "vacuum:gateways:keep"
 #define PSN_GATEWAYS_SUBSCRIBE    "vacuum:gateways:subscribe"
@@ -284,6 +286,22 @@ void Gateways::resolveNickName(const Jid &AStreamJid, const Jid &AContactJid)
 		LOG_STRM_ERROR(AStreamJid,QString("Failed to resolve contact nick name, jid=%1: Contact not found").arg(AContactJid.bare()));
 	}
 }
+
+/*** <<< eyeCU <<< ***/
+void Gateways::resetNickName(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	IRoster *roster = FRosterManager!=NULL ? FRosterManager->findRoster(AStreamJid) : NULL;
+	IRosterItem ritem = roster!=NULL ? roster->findItem(AContactJid) : IRosterItem();
+	if (!ritem.isNull() && !ritem.name.isEmpty() && roster->isOpen())
+	{
+		roster->renameItem(ritem.itemJid,QString());
+	}
+	else if (ritem.isNull())
+	{
+		LOG_STRM_ERROR(AStreamJid,QString("Failed to reset contact nick name, jid=%1: Contact not found").arg(AContactJid.bare()));
+	}
+}
+/*** >>> eyeCU >>> ***/
 
 void Gateways::sendLogPresence(const Jid &AStreamJid, const Jid &AServiceJid, bool ALogIn)
 {
@@ -612,6 +630,7 @@ void Gateways::onResolveActionTriggered(bool)
 	{
 		QStringList streams = action->data(ADR_STREAM_JID).toStringList();
 		QStringList services = action->data(ADR_SERVICE_JID).toStringList();
+		bool resolve = action->data(ADR_ACTION_RESOLVE).toBool(); /*** <<< eyeCU >>> ***/
 		for (int i=0; i<streams.count(); i++)
 		{
 			Jid serviceJid = services.at(i);
@@ -621,13 +640,29 @@ void Gateways::onResolveActionTriggered(bool)
 				foreach(const Jid &contactJid, serviceContacts(streams.at(i),serviceJid))
 				{
 					IRosterItem ritem = roster!=NULL ? roster->findItem(contactJid) : IRosterItem();
-					if (!ritem.isNull() && ritem.name.trimmed().isEmpty())
-						resolveNickName(streams.at(i),contactJid);
+					/*** <<< eyeCU <<< ***/
+					if (!ritem.isNull())
+					{
+						if (resolve)
+						{
+							if (ritem.name.trimmed().isEmpty())
+								resolveNickName(streams.at(i),contactJid);
+						}
+						else
+							if (!ritem.name.trimmed().isEmpty())
+								resetNickName(streams.at(i),contactJid);
+					}
+					/*** >>> eyeCU >>> ***/
 				}
 			}
 			else
 			{
-				resolveNickName(streams.at(i),serviceJid);
+				/*** <<< eyeCU <<< ***/
+				if (resolve)
+					resolveNickName(streams.at(i),serviceJid);
+				else
+					resetNickName(streams.at(i),serviceJid);
+				/*** >>> eyeCU >>> ***/
 			}
 		}
 	}
@@ -690,7 +725,8 @@ void Gateways::onRemoveActionTriggered(bool)
 		{
 			Jid serviceJid = services.first();
 			button = QMessageBox::question(NULL,tr("Remove transport and its contacts"),
-				tr("You are assured that wish to remove a transport '<b>%1</b>' and its <b>%n contacts</b> from roster?","",serviceContacts(streams.first(),serviceJid).count()).arg(Qt::escape(serviceJid.domain())),
+				tr("You are assured that wish to remove a transport '<b>%1</b>' and its <b>%n contacts</b> from roster?","",serviceContacts(streams.first(),serviceJid).count())
+					.arg(HTML_ESCAPE(serviceJid.domain())),
 				QMessageBox::Yes | QMessageBox::No);
 		}
 		else if (services.count() > 1)
@@ -784,6 +820,33 @@ void Gateways::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndex
 				connect(action,SIGNAL(triggered(bool)),SLOT(onResolveActionTriggered(bool)));
 				AMenu->addAction(action,AG_RVCM_GATEWAYS_RESOLVE);
 			}
+
+			/*** <<< eyeCU <<< ***/
+			QStringList jids = rolesMap.value(RDR_PREP_BARE_JID);
+			QStringList streamJids = rolesMap.value(RDR_STREAM_JID);
+
+			bool disabled=true;
+			if (indexKind==RIK_CONTACT)
+				for (QStringList::ConstIterator its=streamJids.constBegin(); its!=streamJids.constEnd() && disabled; its++)
+				{
+					IRoster *roster = FRosterManager->findRoster(*its);
+					if (roster)
+						for (QStringList::ConstIterator it=jids.constBegin(); it!=jids.constEnd() && disabled; it++)
+							if (!roster->findItem(*it).name.isEmpty())
+								disabled=false;
+				}
+			else
+				disabled=false;
+			Action *action = new Action(AMenu);
+			action->setText(indexKind==RIK_AGENT ? tr("Reset nick names") : tr("Reset nick name"));
+            action->setIcon(RSR_STORAGE_MENUICONS,MNI_NICKNAME_RESET);
+			action->setData(ADR_STREAM_JID,rolesMap.value(RDR_STREAM_JID));
+			action->setData(ADR_SERVICE_JID,rolesMap.value(RDR_PREP_BARE_JID));
+			action->setData(ADR_ACTION_RESOLVE, false);
+			action->setDisabled(disabled);
+			connect(action,SIGNAL(triggered(bool)),SLOT(onResolveActionTriggered(bool)));
+			AMenu->addAction(action,AG_RVCM_GATEWAYS_RESOLVE);
+			/*** >>> eyeCU >>> ***/
 
 			if (indexKind == RIK_AGENT)
 			{
@@ -1088,5 +1151,6 @@ void Gateways::onRegisterError(const QString &AId, const XmppError &AError)
 	Q_UNUSED(AError);
 	FShowRegisterRequests.remove(AId);
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_gateways, Gateways)
+#endif

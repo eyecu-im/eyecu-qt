@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>ExchangeApproveDialog</name>
     <message>
@@ -63,9 +65,17 @@
         <source>When receiving roster modification request</source>
         <translation>При отриманні запиту на зміну ростеру</translation>
     </message>
+    <message>
+        <source>Automatically accept roster modifications from gateways and group services</source>
+        <translation type="obsolete">Автоматично приймати зміни ростеру від транспортів та сервісів груп</translation>
+    </message>
     <message numerus="yes">
         <source>Send %n Contact(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation>
+            <numerusform>Відправити %n контакт</numerusform>
+            <numerusform>Відправити %n контакти</numerusform>
+            <numerusform>Відправити %n контактів</numerusform>
+        </translation>
     </message>
     <message>
         <source>Roster modification request from %1</source>
@@ -81,19 +91,27 @@
     </message>
     <message numerus="yes">
         <source>%n contact(s) have been sent</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation>
+            <numerusform>%n контакт був відправлений</numerusform>
+            <numerusform>%n контакти були відправлені</numerusform>
+            <numerusform>%n контактів були відправлені</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Failed to send %n contact(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation>
+            <numerusform>Не вдалося відправити %n контакт</numerusform>
+            <numerusform>Не вдалося відправити %n контакти</numerusform>
+            <numerusform>Не вдалося відправити %n контактів</numerusform>
+        </translation>
     </message>
     <message>
         <source>Contacts list management</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Allow gateways and group services manage your contacts list</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

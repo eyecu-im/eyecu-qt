@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>geographic:tower</key><name>Tower</name><object mime="image/png">misc/landmark/tower.png</object></icon>
+<icon><key>geographic:building</key><name>Building</name><object mime="image/png">misc/landmark/building.png</object></icon>
+<icon><key>geographic:bunker</key><name>Bunker</name><object mime="image/png">misc/landmark/bunker.png</object></icon>
+<icon><key>geographic:watermill</key><name>Watermill</name><object mime="image/png">misc/landmark/watermill.png</object></icon>
+<icon><key>geographic:water_tower</key><name>Water tower</name><object mime="image/png">misc/landmark/water_tower.png</object></icon>
+<icon><key>geographic:water_well</key><name>Water well</name><object mime="image/png">misc/landmark/water_well.png</object></icon>
+<icon><key>geographic:water_works</key><name>Water works</name><object mime="image/png">misc/landmark/water_works.png</object></icon>
+<icon><key>geographic:windmill</key><name>Windmill</name><object mime="image/png">misc/landmark/windmill.png</object></icon>
+</icondef>

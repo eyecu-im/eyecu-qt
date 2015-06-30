@@ -44,6 +44,9 @@ class ChatMessageHandler :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IXmppUriHandler IMessageHandler IRostersClickHooker IMessageEditSendHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IChatMessageHandler");
+#endif
 public:
 	ChatMessageHandler();
 	~ChatMessageHandler();

@@ -7,6 +7,7 @@
 #include <definitions/internalerrors.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 DefaultConnectionEngine::DefaultConnectionEngine()
 {
@@ -73,7 +74,13 @@ bool DefaultConnectionEngine::initSettings()
 	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_PORT,5222);
 	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_PROXY,QString(APPLICATION_PROXY_REF_UUID));
 	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_SSLPROTOCOL,QSsl::SecureProtocols);
-	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_USELEGACYSSL,false);
+	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_SSLPROTOCOL,
+#if QT_VERSION >= 0x040800
+							 QSsl::SecureProtocols
+#else
+							 QSsl::AnyProtocol
+#endif
+							 );
 	Options::setDefaultValue(OPV_ACCOUNT_CONNECTION_CERTVERIFYMODE,IDefaultConnection::Manual);
 	return true;
 }
@@ -193,16 +200,16 @@ void DefaultConnectionEngine::onConnectionSSLErrorsOccured(const QList<QSslError
 				certInfo += tr("Certificate holder:");
 				for (uint i=0; i<certInfoNamesCount; i++)
 				{
-					QString value = peerCert.subjectInfo(certInfoNames[i].info);
+					QString value = peerCert.subjectInfo(certInfoNames[i].info) MAYBE_JOIN;
 					if (!value.isEmpty())
-						certInfo += "   " + certInfoNames[i].name.arg(Qt::escape(value));
+						certInfo += "   " + certInfoNames[i].name.arg(HTML_ESCAPE(value));
 				}
 				certInfo += "\n" + tr("Certificate issuer:");
 				for (uint i=0; i<certInfoNamesCount; i++)
 				{
-					QString value = peerCert.issuerInfo(certInfoNames[i].info);
+					QString value = peerCert.issuerInfo(certInfoNames[i].info) MAYBE_JOIN;
 					if (!value.isEmpty())
-						certInfo += "   " + certInfoNames[i].name.arg(Qt::escape(value));
+						certInfo += "   " + certInfoNames[i].name.arg(HTML_ESCAPE(value));
 				}
 				certInfo += "\n" + tr("Certificate details:");
 				certInfo += "   " + tr("Effective from: %1").arg(peerCert.effectiveDate().date().toString());
@@ -264,5 +271,6 @@ void DefaultConnectionEngine::onConnectionDestroyed()
 		emit connectionDestroyed(connection);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_defaultconnection, DefaultConnectionEngine)
+#endif

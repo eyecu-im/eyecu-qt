@@ -1422,5 +1422,6 @@ void SessionNegotiation::onDiscoInfoRecieved(const IDiscoInfo &AInfo)
 			resumeSession(session.streamJid,session.contactJid);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_sessionnegotiation, SessionNegotiation)
+#endif

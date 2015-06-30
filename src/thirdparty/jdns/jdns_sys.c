@@ -117,7 +117,12 @@ read /etc/hosts manually:
 # include <windows.h>
 #endif
 
-#ifdef JDNS_OS_UNIX
+#ifdef JDNS_OS_OS2
+# include <os2.h>
+# define NO_IPV6
+#endif
+
+#if defined (JDNS_OS_UNIX) || defined (JDNS_OS_OS2)
 # include <netinet/in.h>
 # include <arpa/nameser.h>
 # include <resolv.h>
@@ -611,7 +616,7 @@ static jdns_dnsparams_t *dnsparams_get_win()
 
 #endif
 
-#ifdef JDNS_OS_UNIX
+#if defined (JDNS_OS_UNIX) || defined (JDNS_OS_OS2)
 
 static jdns_dnsparams_t *dnsparams_get_unixfiles()
 {
@@ -733,6 +738,7 @@ static jdns_dnsparams_t *dnsparams_get_unixsys()
 		return params;
 
 	// nameservers - ipv6
+#ifndef NO_IPV6
 #if defined(JDNS_OS_OPENBSD)
 	for(n = 0; n < MAXNS && n < RESVAR.nscount; ++n)
 #elif defined(JDNS_MODERN_RES_API)
@@ -759,6 +765,7 @@ static jdns_dnsparams_t *dnsparams_get_unixsys()
 		jdns_dnsparams_append_nameserver(params, addr, JDNS_UNICAST_PORT);
 		jdns_address_delete(addr);
 	}
+#endif
 
 	// nameservers - ipv4
 	for(n = 0; n < MAXNS && n < RESVAR.nscount; ++n)

@@ -16,6 +16,7 @@
 
 MainWindow::MainWindow(QWidget *AParent, Qt::WindowFlags AFlags) : QMainWindow(AParent,AFlags)
 {
+	setWindowFlags(Qt::WindowCloseButtonHint); // *** <<< eyeCU >>> ***
 	setWindowRole("MainWindow");
 	setAttribute(Qt::WA_DeleteOnClose,false);
 	setIconSize(QSize(16,16));
@@ -82,7 +83,7 @@ MainWindow::MainWindow(QWidget *AParent, Qt::WindowFlags AFlags) : QMainWindow(A
 
 	FMainMenu = new Menu(this);
 	FMainMenu->setIcon(RSR_STORAGE_MENUICONS,MNI_MAINWINDOW_MENU);
-	QToolButton *button = bottomToolBarChanger()->insertAction(FMainMenu->menuAction());
+	QToolButton *button = topToolBarChanger()->insertAction(FMainMenu->menuAction()); // *** <<< eyeCU >>> ***
 	button->setPopupMode(QToolButton::InstantPopup);
 
 	FMainMenuBar = new MenuBarChanger(new QMenuBar());
@@ -303,14 +304,14 @@ void MainWindow::setCentralWidgetVisible(bool AVisible)
 			FSplitter->setHandleWidth(FSplitterHandleWidth);
 			FLeftWidget->setFrameShape(QFrame::StyledPanel);
 			FCentralWidget->instance()->setVisible(true);
-			setWindowFlags(Qt::Window);
+			setWindowFlags(Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint | Qt::WindowMaximizeButtonHint); // *** <<< eyeCU >>> ***
 		}
 		else
 		{
 			FSplitter->setHandleWidth(0);
 			FLeftWidget->setFrameShape(QFrame::NoFrame);
 			FCentralWidget->instance()->setVisible(false);
-			setWindowFlags(Qt::Window | Qt::WindowTitleHint);
+			setWindowFlags(Qt::WindowCloseButtonHint); // *** <<< eyeCU >>> ***
 		}
 
 		updateWindow();

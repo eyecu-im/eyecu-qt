@@ -1,0 +1,30 @@
+﻿eyeCU-IM
+---------
+Web Site:
+  http://www.eyeCU.ru
+-------------------------------------------
+Version Nsis- 3.0a1
+Version App - 38
+-------------------------------------------
+package Total:
+
+structure:
+eyecu.nsi	- for start
+eyecu-base.nsi
+eyecu-config.nsi
+eyecu-functions.nsi
+eyecu-langv.nsi
+eyecu-qt4.nsi
+eyecu-qt5.nsi
+eyecu-sections.nsi
+eyecu-translate.nsi
+eyecu-un-base.nsi
+eyecu-un-langv.nsi
+eyecu-un-qt4.nsi
+eyecu-un-qt5.nsi
+eyecu-un-sections.nsi
+
+-------------------------------------------
+To set up the project on the user settings you want to change the data in the file "eyecu-config.nsi" - lines 14-17.
+
+-------------------------------------------

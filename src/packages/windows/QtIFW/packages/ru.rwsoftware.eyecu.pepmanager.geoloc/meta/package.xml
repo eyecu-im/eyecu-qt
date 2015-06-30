@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>User Location</DisplayName>
+    <Description>Allows users to exchage information about their current location</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc</Name>
+    <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo</Dependencies>
+    <SortingPriority>7</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

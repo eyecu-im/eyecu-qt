@@ -39,6 +39,7 @@
 #include <utils/options.h>
 #include <utils/action.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_STREAM_JID            Action::DR_StreamJid
 #define ADR_HOST                  Action::DR_Parametr1
@@ -322,6 +323,10 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		widgets.insertMulti(OWO_MESSAGES_MUC_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_MUC_REJOINAFTERKICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_REJOINAFTERKICK),tr("Automatically rejoin to conference after kick"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_MUC_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));
+// *** <<< eyeCU <<< ***
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_MUC_GROUPCHAT_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
+// *** >>> eyeCU >>> ***
 	}
 	return widgets;
 }
@@ -551,7 +556,7 @@ bool MultiUserChatManager::messageShowWindow(int AMessageId)
 		fields.password = inviteElem.firstChildElement("password").text();
 
 		QString reason = inviteElem.firstChildElement("reason").text();
-		QString msg = tr("You are invited to the conference %1 by %2.<br>Reason: %3").arg(Qt::escape(fields.roomJid.uBare())).arg(Qt::escape(fields.fromJid.uBare())).arg(Qt::escape(reason));
+		QString msg = tr("You are invited to the conference %1 by %2.<br>Reason: %3").arg(HTML_ESCAPE(fields.roomJid.uBare())).arg(HTML_ESCAPE(fields.fromJid.uBare())).arg(HTML_ESCAPE(reason)); // *** <<< eyeCU >>> ***
 		msg += "<br><br>";
 		msg += tr("Do you want to join this conference?");
 
@@ -1541,5 +1546,6 @@ void MultiUserChatManager::onInviteActionTriggered(bool)
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_multiuserchat, MultiUserChatManager)
+#endif

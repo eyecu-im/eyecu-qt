@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>sightseeing:archaeological</key><name>Archaeological</name><object mime="image/png">sightseeing/archaeological.png</object></icon>
+<icon><key>sightseeing:battlefield</key><name>Battlefield</name><object mime="image/png">sightseeing/battlefield.png</object></icon>
+<icon><key>sightseeing:castle</key><name>Castle</name><object mime="image/png">sightseeing/castle.png</object></icon>
+<icon><key>sightseeing:memorial</key><name>Memorial</name><object mime="image/png">sightseeing/memorial.png</object></icon>
+<icon><key>sightseeing:monument</key><name>Monument</name><object mime="image/png">sightseeing/monument.png</object></icon>
+<icon><key>sightseeing:museum</key><name>Museum</name><object mime="image/png">sightseeing/museum.png</object></icon>
+<icon><key>sightseeing:ruins</key><name>Ruins</name><object mime="image/png">sightseeing/ruins.png</object></icon>
+<icon><key>sightseeing:viewpoint</key><name>Viewpoint</name><object mime="image/png">sightseeing/viewpoint.png</object></icon>
+</icondef>

@@ -20,8 +20,13 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/menu.h>
+// *** <<< eyeCU <<< ***
+#include <XmlTextDocumentParser>
+#include "emoticonsoptions.h"
 
-#define DEFAULT_ICONSET                 "kolobok_dark"
+#define DEFAULT_ICONSET                 "default"
+#define ASIAN_ICONSET                   "blobs_purple"
+// *** >>> eyeCU >>> ***
 
 Emoticons::Emoticons()
 {
@@ -119,6 +124,14 @@ QMultiMap<int, IOptionsDialogWidget *> Emoticons::optionsDialogWidgets(const QSt
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_APPEARANCE)
 	{
+// *** <<< eyeCU <<< ***
+		widgets.insertMulti(OHO_APPEARANCE_MESSAGES,FOptionsManager->newOptionsDialogHeader(tr("Message windows"), AParent));
+
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_APPEARANCE_EMOTICONS, new EmoticonsOptions(this,AParent));
+		else
+		{
+// *** >>> eyeCU >>> ***
 		QComboBox *cmbEmoticons = new QComboBox(AParent);
 		cmbEmoticons->setItemDelegate(new IconsetDelegate(cmbEmoticons));
 
@@ -137,9 +150,9 @@ QMultiMap<int, IOptionsDialogWidget *> Emoticons::optionsDialogWidgets(const QSt
 
 			delete storage;
 		}
-
-		widgets.insertMulti(OHO_APPEARANCE_MESSAGES,FOptionsManager->newOptionsDialogHeader(tr("Message windows"),AParent));
+		// *** <<< eyeCU >>> ***
 		widgets.insertMulti(OWO_APPEARANCE_EMOTICONS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_EMOTICONS_ICONSET),tr("Smileys:"),cmbEmoticons,AParent));
+		} // *** <<< eyeCU >>> ***
 	}
 	return widgets;
 }
@@ -543,7 +556,13 @@ void Emoticons::onSelectIconMenuSelected(const QString &ASubStorage, const QStri
 				{
 					if (!editor->document()->resource(QTextDocument::ImageResource,url).isValid())
 						editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
-					cursor.insertImage(url.toString());
+// *** <<< eyeCU <<< ***
+                    QTextImageFormat imageFormat;
+                    imageFormat.setName(url.toString());
+                    imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, AIconKey);
+                    imageFormat.setProperty(QTextCharFormat::TextToolTip, AIconKey);
+                    cursor.insertImage(imageFormat);
+// *** >>> eyeCU >>> ***
 				}
 				else
 				{
@@ -617,5 +636,6 @@ void Emoticons::onOptionsChanged(const OptionsNode &ANode)
 		FMaxEmoticonsInMessage = ANode.value().toInt();
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_emoticons, Emoticons)
+#endif

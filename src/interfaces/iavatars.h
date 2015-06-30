@@ -9,6 +9,11 @@
 class IAvatars 
 {
 public:
+	enum ShowAvatar
+	{
+		Right,
+		Left
+	};
 	virtual QObject *instance() =0;
 	virtual QString avatarHash(const Jid &AContactJid) const =0;
 	virtual bool hasAvatar(const QString &AHash) const =0;

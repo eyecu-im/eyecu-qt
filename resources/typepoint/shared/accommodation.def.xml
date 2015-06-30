@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>accommodation:alpine_hut</key><name>Alpine hut</name><object mime="image/png">accommodation/alpine_hut.png</object></icon>
+<icon><key>accommodation:camping</key><name>Camping</name><object mime="image/png">accommodation/camping.png</object></icon>
+<icon><key>accommodation:chalet</key><name>Chalet</name><object mime="image/png">accommodation/chalet.png</object></icon>
+<icon><key>accommodation:guest_house</key><name>Guest house</name><object mime="image/png">accommodation/guest_house.png</object></icon>
+<icon><key>accommodation:hostel</key><name>Hostel</name><object mime="image/png">accommodation/hostel.png</object></icon>
+<icon><key>accommodation:hotel</key><name>Hotel</name><object mime="image/png">accommodation/hotel.png</object></icon>
+<icon><key>accommodation:motel</key><name>Motel</name><object mime="image/png">accommodation/motel.png</object></icon>
+<icon><key>accommodation:shelter</key><name>Shelter</name><object mime="image/png">accommodation/shelter.png</object></icon>
+<icon><key>accommodation:caravan</key><name>Caravan</name><object mime="image/png">accommodation/camping/caravan.png</object></icon>
+<icon><key>accommodation:wastewater</key><name>Wastewater</name><object mime="image/png">accommodation/camping/wastewater.png</object></icon>
+<icon><key>accommodation:water</key><name>Water</name><object mime="image/png">accommodation/camping/water.png</object></icon>
+</icondef>

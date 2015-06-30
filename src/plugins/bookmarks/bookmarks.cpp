@@ -1,5 +1,7 @@
 #include "bookmarks.h"
-
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <QInputDialog>
 #include <QDesktopServices>
 #include <QItemEditorFactory>
@@ -1070,15 +1072,24 @@ void Bookmarks::onDiscoWindowAddBookmarkActionTriggered(bool)
 		{
 			QUrl url;
 			url.setScheme("xmpp");
+#if QT_VERSION < 0x050000
 			url.setQueryDelimiters('=',';');
+#endif
 			url.setPath(discoJid);
 
 			QList< QPair<QString, QString> > queryItems;
 			queryItems << qMakePair(QString("disco"),QString()) << qMakePair(QString("type"),QString("get")) << qMakePair(QString("request"),QString("items"));
 			if (!discoNode.isEmpty())
 				queryItems << qMakePair(QString("node"),discoNode);
-			url.setQueryItems(queryItems);
 
+#if QT_VERSION < 0x050000
+			url.setQueryItems(queryItems);
+#else
+			QUrlQuery urlQueryItems;
+			urlQueryItems.setQueryDelimiters('=',';');
+			urlQueryItems.setQueryItems(queryItems);
+			url.setQuery(urlQueryItems);
+#endif
 			IBookmark bookmark;
 			bookmark.type = IBookmark::Url;
 			bookmark.name = "XMPP: ";
@@ -1133,5 +1144,6 @@ uint qHash(const IBookmark &AKey)
 		return qHash(QString::null);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_bookmarks, Bookmarks)
+#endif

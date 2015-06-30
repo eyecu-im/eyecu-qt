@@ -1,9 +1,13 @@
 #include "recentcontacts.h"
 
 #include <QDir>
+#include <QDrag>
 #include <QFile>
 #include <QStyle>
 #include <QPalette>
+#if QT_VERSION >= 0x050000
+#include <QMimeData>
+#endif
 #include <QMouseEvent>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
@@ -27,6 +31,7 @@
 #include <utils/shortcuts.h>
 #include <utils/datetime.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define DIR_RECENT                   "recent"
 
@@ -417,7 +422,10 @@ QList<quint32> RecentContacts::rosterLabels(int AOrder, const IRosterIndex *AInd
 	{
 		if (FSimpleContactsView)
 		{
-			labels.append(RLID_AVATAR_IMAGE);
+            // *** <<< eyeCU <<< ***
+            labels.append(RLID_AVATAR_IMAGE_LEFT);
+            labels.append(RLID_AVATAR_IMAGE_RIGHT);
+            // *** >>> eyeCU >>> ***
 			labels.append(RLID_ROSTERSVIEW_STATUS);
 		}
 		labels.append(RLID_METACONTACTS_BRANCH);
@@ -1083,7 +1091,7 @@ QList<IRecentItem> RecentContacts::loadItemsFromXML(const QDomElement &AElement,
 			QString propValue = propElem.text();
 			bool decryptValue = !APlainPassword && propName=="password";
 
-			item.properties.insert(propName, decryptValue ? Options::decrypt(propValue.toAscii()).toString() : propValue);
+			item.properties.insert(propName, decryptValue ? Options::decrypt(propValue.toLatin1()).toString() : propValue);
 			propElem = propElem.nextSiblingElement("property");
 		}
 		items.append(item);
@@ -1111,7 +1119,7 @@ void RecentContacts::saveItemsToXML(QDomElement &AElement, const QList<IRecentIt
 
 			QDomElement propElem = AElement.ownerDocument().createElement("property");
 			propElem.setAttribute("name",propName);
-			propElem.appendChild(AElement.ownerDocument().createTextNode(encryptValue ? QString::fromAscii(Options::encrypt(propValue)) : propValue));
+			propElem.appendChild(AElement.ownerDocument().createTextNode(encryptValue ? QString::fromLatin1(Options::encrypt(propValue)) : propValue));
 			itemElem.appendChild(propElem);
 		}
 		
@@ -1439,7 +1447,7 @@ void RecentContacts::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 AL
 		{
 			Jid streamJid = AIndex->data(RDR_STREAM_JID).toString();
 			IAccount *account = FAccountManager!=NULL ? FAccountManager->findAccountByStream(streamJid) : NULL;
-			AToolTips.insert(RTTO_ROSTERSVIEW_INFO_ACCOUNT,tr("<b>Account:</b> %1").arg(Qt::escape(account!=NULL ? account->name() : streamJid.uBare())));
+			AToolTips.insert(RTTO_ROSTERSVIEW_INFO_ACCOUNT,tr("<b>Account:</b> %1").arg(HTML_ESCAPE(account!=NULL ? account->name() : streamJid.uBare())));
 		}
 	}
 }
@@ -1586,8 +1594,11 @@ void RecentContacts::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path() == OPV_ROSTER_RECENT_SIMPLEITEMSVIEW)
 	{
 		FSimpleContactsView = ANode.value().toBool();
-		rosterLabelChanged(RLID_AVATAR_IMAGE);
-		rosterLabelChanged(RLID_ROSTERSVIEW_STATUS);
+		// *** <<< eyeCU <<< ***
+		emit rosterLabelChanged(RLID_AVATAR_IMAGE_LEFT);
+		emit rosterLabelChanged(RLID_AVATAR_IMAGE_RIGHT);
+		// *** >>> eyeCU >>> ***
+		emit rosterLabelChanged(RLID_ROSTERSVIEW_STATUS);
 	}
 	else if (ANode.path() == OPV_ROSTER_RECENT_SORTBYACTIVETIME)
 	{
@@ -1616,5 +1627,6 @@ uint qHash(const IRecentItem &AKey)
 {
 	return qHash(AKey.type+"~"+AKey.streamJid.pFull()+"~"+AKey.reference);
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_recentcontacts, RecentContacts)
+#endif

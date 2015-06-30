@@ -12,6 +12,7 @@
 #include <utils/iconstorage.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define MAX_HILIGHT_ITEMS            10
 #define TEXT_SEARCH_TIMEOUT          500
@@ -198,17 +199,17 @@ void ConsoleWidget::showElement(IXmppStream *AXmppStream, const QDomElement &AEl
 
 		if (accepted)
 		{
-			static QString sended =   Qt::escape(">>>>") + " <b>%1</b> %2 +%3 " + Qt::escape(">>>>");
-			static QString received = Qt::escape("<<<<") + " <b>%1</b> %2 +%3 " + Qt::escape("<<<<");
+			static QString sended =   HTML_ESCAPE_CHARS(">>>>") + " <b>%1</b> %2 +%3 " + HTML_ESCAPE_CHARS(">>>>");
+			static QString received = HTML_ESCAPE_CHARS("<<<<") + " <b>%1</b> %2 +%3 " + HTML_ESCAPE_CHARS("<<<<");
 
 			int delta = FTimePoint.isValid() ? FTimePoint.msecsTo(QTime::currentTime()) : 0;
 			FTimePoint = QTime::currentTime();
-			QString caption = (ASended ? sended : received).arg(Qt::escape(AXmppStream->streamJid().uFull())).arg(FTimePoint.toString()).arg(delta);
+			QString caption = (ASended ? sended : received).arg(HTML_ESCAPE(AXmppStream->streamJid().uFull())).arg(FTimePoint.toString()).arg(delta);
 			ui.tbrConsole->append(caption);
 
 			QString xml = stanza.toString(2);
 			hidePasswords(xml);
-			xml = "<pre>"+Qt::escape(xml).replace('\n',"<br>")+"</pre>";
+			xml = "<pre>"+HTML_ESCAPE(xml).replace('\n',"<br>")+"</pre>";
 			if (ui.chbHilightXML->checkState() == Qt::Checked)
 				colorXml(xml);
 			else if (ui.chbHilightXML->checkState()==Qt::PartiallyChecked && xml.size()<5000)

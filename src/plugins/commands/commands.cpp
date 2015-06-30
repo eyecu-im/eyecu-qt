@@ -650,5 +650,6 @@ void Commands::onRequestActionTriggered(bool)
 		FDiscovery->requestDiscoItems(streamJid,commandJid,NS_COMMANDS);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_commands, Commands)
+#endif

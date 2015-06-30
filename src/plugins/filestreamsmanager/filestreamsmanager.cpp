@@ -2,8 +2,12 @@
 
 #include <QSet>
 #include <QDir>
-#include <QComboBox>
+#if QT_VERSION >= 0x050000
+#include <QStandardPaths>
+#else
 #include <QDesktopServices>
+#endif
+#include <QComboBox>
 #include <definitions/namespaces.h>
 #include <definitions/menuicons.h>
 #include <definitions/resources.h>
@@ -115,7 +119,11 @@ bool FileStreamsManager::initObjects()
 bool FileStreamsManager::initSettings()
 {
 	QStringList availMethods = FDataManager!=NULL ? FDataManager->methods() : QStringList();
+#if QT_VERSION >= 0x050000
+	Options::setDefaultValue(OPV_FILESTREAMS_DEFAULTDIR,QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+#else
 	Options::setDefaultValue(OPV_FILESTREAMS_DEFAULTDIR,QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation));
+#endif
 	Options::setDefaultValue(OPV_FILESTREAMS_GROUPBYSENDER,false);
 	Options::setDefaultValue(OPV_FILESTREAMS_DEFAULTMETHOD,NS_SOCKS5_BYTESTREAMS);
 	Options::setDefaultValue(OPV_FILESTREAMS_ACCEPTABLEMETHODS,availMethods);
@@ -365,5 +373,6 @@ void FileStreamsManager::onProfileClosed(const QString &AName)
 	foreach(IFileStream *stream, FStreams.values())
 		delete stream->instance();
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_filestreamsmanager, FileStreamsManager);
+#endif

@@ -106,9 +106,9 @@ private:
 private:
 	QString FDataPath;
 	QDomDocument FPluginsSetup;
-	QTranslator *FQtTranslator;
-	QTranslator *FUtilsTranslator;
-	QTranslator *FLoaderTranslator;
+	QList<QTranslator *> FTranslators;
+	QStringList	FTranslatorNames;
+
 	QList<QString> FBlockedPlugins;
 	QHash<QUuid, PluginItem> FPluginItems;
 	mutable QMultiHash<QString, IPlugin *> FPlugins;

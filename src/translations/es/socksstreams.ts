@@ -1,29 +1,100 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es" sourcelanguage="en">
+<context>
+    <name>AdvancedSocksOptionsWidget</name>
+    <message>
+        <source>host:port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>second(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedSocksOptionsWidgetClass</name>
+    <message>
+        <source>Outgoing Connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection timeout:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use account connection proxy settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming Connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow direct incoming connections on port:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward direct incoming connections to host:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream Proxy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use jabber-proxy on your server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use additional jabber-proxies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 <context>
     <name>SocksOptionsWidgetClass</name>
     <message>
         <source>Use jabber-proxy on your server</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use additional jabber-proxy:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Allow direct incoming connections on port:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Forward direct incoming connections to host:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use account proxy settings for outgoing connections</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>host:port</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

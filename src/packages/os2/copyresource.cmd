@@ -1,0 +1,1 @@
+xcopy c:\eyecu\resources\%2\* %1\ /S

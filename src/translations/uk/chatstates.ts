@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>ChatStates</name>
     <message>
@@ -22,6 +24,10 @@
         <translation>Підтримує обмін інформацією про активність користувачів у чаті</translation>
     </message>
     <message>
+        <source>Send chat state notifications</source>
+        <translation type="obsolete">Відправляти інформацію про активність</translation>
+    </message>
+    <message>
         <source>When contact is typing the message for you</source>
         <translation>Коли контакт набирає повідомлення до Вас</translation>
     </message>
@@ -31,7 +37,7 @@
     </message>
     <message>
         <source>Send notifications of your chat activity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

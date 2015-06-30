@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QApplication>
 #include <QCryptographicHash>
+#include <QMessageBox> // *** <<< eyeCU >>> ***
 #include <definitions/actiongroups.h>
 #include <definitions/commandline.h>
 #include <definitions/resources.h>
@@ -84,6 +85,7 @@ bool OptionsManager::initConnections(IPluginManager *APluginManager, int &AInitO
 	}
 
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened())); // *** <<< eyeCU >>> ***
 
 	return true;
 }
@@ -161,6 +163,7 @@ QMultiMap<int, IOptionsDialogWidget *> OptionsManager::optionsDialogWidgets(cons
 	if (ANodeId == OPN_COMMON)
 	{
 		widgets.insertMulti(OHO_COMMON_SETTINGS, newOptionsDialogHeader(tr("Common settings"),AParent));
+		widgets.insertMulti(OWO_COMMON_ADVANCED, newOptionsDialogWidget(Options::node(OPV_COMMON_ADVANCED), tr("Show advanced options"), AParent)); // *** <<< eyeCU >>> ***
 #ifdef Q_WS_WIN
 		widgets.insertMulti(OWO_COMMON_AUTOSTART, newOptionsDialogWidget(Options::node(OPV_COMMON_AUTOSTART), tr("Auto run application on system startup"), AParent));
 #else
@@ -794,7 +797,13 @@ void OptionsManager::onOptionsChanged(const OptionsNode &ANode)
 		QLocale locale(ANode.value().toString());
 		FPluginManager->setLocale(locale.language(),locale.country());
 	}
-
+// *** <<< eyeCU <<< ***
+	else if (ANode.path() == OPV_COMMON_ADVANCED)
+	{
+		if (ANode.value().toBool() != FAdvanced && QMessageBox::question(NULL, tr("Options mode changed"), tr("To switch options mode, %1 needs to be restarted.\nDo you want to restart %1 now?").arg(CLIENT_NAME), QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes)
+			FPluginManager->restart();
+	}
+// *** >>> eyeCU >>> ***
 	LOG_DEBUG(QString("Options node value changed, node=%1, value=%2").arg(ANode.path(),ANode.value().toString()));
 }
 
@@ -829,4 +838,33 @@ void OptionsManager::onApplicationAboutToQuit()
 	closeProfile();
 }
 
+// *** <<< eyeCU <<< ***
+void OptionsManager::onOptionsOpened()
+{
+	if (Options::node(OPV_COMMON_ADVANCED).value().isNull())
+		QTimer::singleShot(100, this, SLOT(onNewProfileOpened()));
+	else
+		FAdvanced = Options::node(OPV_COMMON_ADVANCED).value().toBool();
+}
+
+void OptionsManager::onNewProfileOpened()
+{
+	QMessageBox *question = new QMessageBox(QMessageBox::Question,
+											tr("Display advanced options?"),
+											tr("If you're experienced Jabber user, "
+											   "press <i>Yes</i> to display advanced options. "
+											   "If you're new in Jabber, press <i>No</i>. "
+											   "Simplified options will be displayed. "),
+											QMessageBox::Yes|QMessageBox::No,
+											NULL);
+
+	question->setInformativeText(tr("You can always change options mode on <b>Common</b> page."));
+	question->setAttribute(Qt::WA_DeleteOnClose);
+	FAdvanced = question->exec() == QMessageBox::Yes;
+	Options::node(OPV_COMMON_ADVANCED).setValue(FAdvanced);
+	emit optionsModeInitialized(FAdvanced);
+}
+// *** >>> eyeCU >>> ***
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_optionsmanager, OptionsManager)
+#endif

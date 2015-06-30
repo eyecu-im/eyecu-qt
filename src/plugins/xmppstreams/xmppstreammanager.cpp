@@ -206,5 +206,6 @@ void XmppStreamManager::onXmppStreamDestroyed()
 		LOG_STRM_INFO(stream->streamJid(),"XMPP stream destroyed");
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_xmppstreams, XmppStreamManager)
+#endif

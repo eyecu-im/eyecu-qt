@@ -10,9 +10,11 @@
 #include <definitions/optionvalues.h>
 #include <utils/pluginhelper.h>
 #include <utils/options.h>
-#include "createaccountwizard.h"
-
-AccountsOptionsWidget::AccountsOptionsWidget(IAccountManager *AAccountManager, QWidget *AParent) : QWidget(AParent)
+// *** <<< eyeCU <<< ***
+#include <utils/qt4qt5compat.h>
+// #include "createaccountwizard.h"
+// *** >>> eyeCU >>> ***
+AccountsOptionsWidget::AccountsOptionsWidget(IAccountManager *AAccountManager, int AFlags, QWidget *AParent) : QWidget(AParent)
 {
 	ui.setupUi(this);
 	setAcceptDrops(true);
@@ -25,10 +27,12 @@ AccountsOptionsWidget::AccountsOptionsWidget(IAccountManager *AAccountManager, Q
 
 	FLayout = new QVBoxLayout(ui.wdtAccounts);
 	FLayout->setMargin(0);
-
-	ui.lblAddAccount->setText(QString("<a href='add_account'>%1</a>").arg(tr("Add Account...")));
-	connect(ui.lblAddAccount,SIGNAL(linkActivated(const QString &)),SLOT(onAddAccountLinkActivated()));
-
+ // *** <<< eyeCU <<< ***
+	ui.lblAddAccount->setText(AFlags&NoWizrd?QString("<a href='add_account'>%1</a>").arg(tr("Add Account..."))
+											:AFlags&Advanced?QString("<a href='add_account'>%1</a>(<a href='use_wizard'>%2</a>)").arg(tr("Add Account...")).arg(tr("Use wizard..."))
+															:QString("<a href='use_wizard'>%1</a>").arg(tr("Add Account...")));
+	connect(ui.lblAddAccount,SIGNAL(linkActivated(const QString &)),SIGNAL(addAccountLinkActivated(const QString &)));
+// *** >>> eyeCU >>> ***
 	connect(ui.lblHideShowInactive,SIGNAL(linkActivated(const QString &)),SLOT(onHideShowInactiveAccountsLinkActivated()));
 
 	connect(FAccountManager->instance(),SIGNAL(accountInserted(IAccount *)),SLOT(onAccountInserted(IAccount *)));
@@ -211,12 +215,13 @@ void AccountsOptionsWidget::dragMoveEvent(QDragMoveEvent *AEvent)
 		}
 	}
 }
-
+/*** <<< eyeCU <<< ***
 void AccountsOptionsWidget::onAddAccountLinkActivated()
 {
 	QWizard *wizard = new CreateAccountWizard(this);
 	wizard->show();
 }
+ *** >>> eyeCU >>> ***/
 
 void AccountsOptionsWidget::onHideShowInactiveAccountsLinkActivated()
 {
@@ -229,7 +234,7 @@ void AccountsOptionsWidget::onRemoveButtonClicked(const QUuid &AAccountId)
 	if (item)
 	{
 		QMessageBox::StandardButton res = QMessageBox::warning(this, tr("Remove Account"),
-			tr("You are assured that wish to remove an account <b>%1</b>?<br>All settings will be lost.").arg(Qt::escape(item->name())),
+			tr("You are assured that wish to remove an account <b>%1</b>?<br>All settings will be lost.").arg(HTML_ESCAPE(item->name())),
 			QMessageBox::Ok | QMessageBox::Cancel);
 		
 		if (res == QMessageBox::Ok)

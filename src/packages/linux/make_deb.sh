@@ -2,7 +2,7 @@
 # make_deb.sh
 
 
-[ -e vacuum.pro ]|| {
+[ -e eyecu.pro ]|| {
 	echo "You must execute this script from trunk directory."
 	exit 1
 }
@@ -37,7 +37,7 @@ ln -s "${debdir}" "${pkgdir}" || exit 1
 [ -f "${debdir}/changelog" ] && rm -vf "${debdir}/changelog"
 
 
-DEBEMAIL="Sergey A Potapov <potapov.s.a@gmail.com>" dch --create --package vacuum --force-distribution -D "unstable" -v "${VERSION}-1" "Release" || exit 1
+DEBEMAIL="Road Works Software <developer@rwsoftware.ru>" dch --create --package eyecu --force-distribution -D "unstable" -v "${VERSION}-1" "Release" || exit 1
 dpkg-buildpackage -b || exit 1
 
 

@@ -114,7 +114,9 @@ void Action::copyActionProperties(Action *ADestination, QAction *ASource)
 		ADestination->setPriority(ASource->priority());
 		ADestination->setSeparator(ASource->isSeparator());
 		ADestination->setShortcuts(ASource->shortcuts());
+#if QT_VERSION < 0x050000
 		ADestination->setSoftKeyRole(ASource->softKeyRole());
+#endif
 		ADestination->setStatusTip(ASource->statusTip());
 		ADestination->setText(ASource->text());
 		ADestination->setToolTip(ASource->toolTip());

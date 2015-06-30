@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+
+<icon><key>vehicle:block</key><name>Block</name><object mime="image/png">vehicle/block.png</object></icon>
+<icon><key>vehicle:border_control</key><name>Border control</name><object mime="image/png">vehicle/border_control.png</object></icon>
+<icon><key>vehicle:car_sharing</key><name>Car sharing</name><object mime="image/png">vehicle/car_sharing.png</object></icon>
+<icon><key>vehicle:car_wash</key><name>Car wash</name><object mime="image/png">vehicle/car_wash.png</object></icon>
+<icon><key>vehicle:cattle_grid</key><name>Cattle grid</name><object mime="image/png">vehicle/cattle_grid.png</object></icon>
+<icon><key>vehicle:chicane</key><name>Chicane</name><object mime="image/png">vehicle/chicane.png</object></icon>
+<icon><key>vehicle:crossing</key><name>Crossing</name><object mime="image/png">vehicle/crossing.png</object></icon>
+<icon><key>vehicle:cycle_barrier</key><name>Cycle barrier</name><object mime="image/png">vehicle/cycle_barrier.png</object></icon>
+<icon><key>vehicle:emergency_phone</key><name>Emergency phone</name><object mime="image/png">vehicle/emergency_phone.png</object></icon>
+<icon><key>vehicle:entrance</key><name>Entrance</name><object mime="image/png">vehicle/entrance.png</object></icon>
+<icon><key>vehicle:exit</key><name>Exit</name><object mime="image/png">vehicle/exit.png</object></icon>
+<icon><key>vehicle:ford</key><name>Ford</name><object mime="image/png">vehicle/ford.png</object></icon>
+<icon><key>vehicle:fuel</key><name>Fuel</name><object mime="image/png">vehicle/fuel.png</object></icon>
+<icon><key>vehicle:oil</key><name>Oil</name><object mime="image/png">vehicle/oil.png</object></icon>
+<icon><key>vehicle:gate</key><name>Gate</name><object mime="image/png">vehicle/gate.png</object></icon>
+<icon><key>vehicle:lift_gate</key><name>Lift gate</name><object mime="image/png">vehicle/lift_gate.png</object></icon>
+<icon><key>vehicle:motorbike</key><name>Motorbike</name><object mime="image/png">vehicle/motorbike.png</object></icon>
+<icon><key>vehicle:passing_place</key><name>Passing place</name><object mime="image/png">vehicle/passing_place.png</object></icon>
+<icon><key>vehicle:sally_port</key><name>Sally port</name><object mime="image/png">vehicle/sally_port.png</object></icon>
+<icon><key>vehicle:services</key><name>Services</name><object mime="image/png">vehicle/services.png</object></icon>
+<icon><key>vehicle:stile</key><name>Stile</name><object mime="image/png">vehicle/stile.png</object></icon>
+<icon><key>vehicle:tank</key><name>Tank</name><object mime="image/png">vehicle/tank.png</object></icon>
+<icon><key>vehicle:toll_booth</key><name>Toll booth</name><object mime="image/png">vehicle/toll_booth.png</object></icon>
+<icon><key>vehicle:turning_circle</key><name>Turning circle</name><object mime="image/png">vehicle/turning_circle.png</object></icon>
+<icon><key>vehicle:turnstile</key><name>Turnstile</name><object mime="image/png">vehicle/turnstile.png</object></icon>
+<icon><key>vehicle:tyres</key><name>Tyres</name><object mime="image/png">vehicle/tyres.png</object></icon>
+<icon><key>vehicle:viaduct</key><name>Viaduct</name><object mime="image/png">vehicle/viaduct.png</object></icon>
+<icon><key>vehicle:zebra_crossing</key><name>Zebra crossing</name><object mime="image/png">vehicle/zebra_crossing.png</object></icon>
+
+<icon><key>restriction</key><name>Restriction</name><object mime="image/png">vehicle/restriction.png</object></icon>
+<icon><key>restriction:access</key><name>Access</name><object mime="image/png">vehicle/restriction/access.png</object></icon>
+<icon><key>restriction:barrier</key><name>Barrier</name><object mime="image/png">vehicle/restriction/barrier.png</object></icon>
+<icon><key>restriction:bicycle_designated</key><name>Bicycle designated</name><object mime="image/png">vehicle/restriction/bicycle-designated.png</object></icon>
+<icon><key>restriction:bicycle</key><name>Bicycle</name><object mime="image/png">vehicle/restriction/bicycle.png</object></icon>
+<icon><key>restriction:bollard</key><name>Bollard</name><object mime="image/png">vehicle/restriction/bollard.png</object></icon>
+<icon><key>restriction:citylimit</key><name>City limit</name><object mime="image/png">vehicle/restriction/citylimit.png</object></icon>
+<icon><key>restriction:dead_end</key><name>Dead end</name><object mime="image/png">vehicle/restriction/dead_end.png</object></icon>
+<icon><key>restriction:foot_designated</key><name>Foot designated</name><object mime="image/png">vehicle/restriction/foot-designated.png</object></icon>
+<icon><key>restriction:foot</key><name>Foot</name><object mime="image/png">vehicle/restriction/foot.png</object></icon>
+<icon><key>restriction:goods</key><name>Goods</name><object mime="image/png">vehicle/restriction/goods.png</object></icon>
+<icon><key>restriction:horse_designated</key><name>Horse designated</name><object mime="image/png">vehicle/restriction/horse-designated.png</object></icon>
+<icon><key>restriction:horse</key><name>Horse</name><object mime="image/png">vehicle/restriction/horse.png</object></icon>
+<icon><key>restriction:incline</key><name>Incline</name><object mime="image/png">vehicle/restriction/incline.png</object></icon>
+<icon><key>restriction:maxheight</key><name>Maximum height</name><object mime="image/png">vehicle/restriction/maxheight.png</object></icon>
+<icon><key>restriction:maxlength</key><name>Maximum length</name><object mime="image/png">vehicle/restriction/maxlength.png</object></icon>
+<icon><key>restriction:maxweight</key><name>Maximum weight</name><object mime="image/png">vehicle/restriction/maxweight.png</object></icon>
+<icon><key>restriction:maxwidth</key><name>Maximum width</name><object mime="image/png">vehicle/restriction/maxwidth.png</object></icon>
+<icon><key>restriction:minspeed</key><name>Minimum speed</name><object mime="image/png">vehicle/restriction/minspeed.png</object></icon>
+<icon><key>restriction:motorcar</key><name>Motor car</name><object mime="image/png">vehicle/restriction/motorcar.png</object></icon>
+<icon><key>restriction:psv</key><name>PSV</name><object mime="image/png">vehicle/restriction/psv.png</object></icon>
+<icon><key>restriction:roundabout_left</key><name>Roundabout left</name><object mime="image/png">vehicle/restriction/roundabout_left.png</object></icon>
+<icon><key>restriction:roundabout_right</key><name>Roundabout right</name><object mime="image/png">vehicle/restriction/roundabout_right.png</object></icon>
+<icon><key>restriction:speed</key><name>Speed</name><object mime="image/png">vehicle/restriction/speed.png</object></icon>
+<icon><key>restriction:speed_trap</key><name>Speed trap</name><object mime="image/png">vehicle/restriction/speed_trap.png</object></icon>
+<icon><key>restriction:stop</key><name>Stop</name><object mime="image/png">vehicle/restriction/stop.png</object></icon>
+<icon><key>restriction:traffic_light</key><name>Traffic light</name><object mime="image/png">vehicle/restriction/traffic-light.png</object></icon>
+<icon><key>restriction:only_left_turn</key><name>Only left turn</name><object mime="image/png">vehicle/restriction/turn_restrictions/only_left_turn.png</object></icon>
+<icon><key>restriction:only_right_turn</key><name>Only right turn</name><object mime="image/png">vehicle/restriction/turn_restrictions/only_right_turn.png</object></icon>
+<icon><key>restriction:only_straight_on</key><name>Only straight on</name><object mime="image/png">vehicle/restriction/turn_restrictions/only_straight_on.png</object></icon>
+<icon><key>restriction:no_left_turn</key><name>No left turn</name><object mime="image/png">vehicle/restriction/turn_restrictions/ireland/no_left_turn.png</object></icon>
+<icon><key>restriction:no_right_turn</key><name>No right turn</name><object mime="image/png">vehicle/restriction/turn_restrictions/ireland/no_right_turn.png</object></icon>
+<icon><key>restriction:no_straight_on</key><name>No straight on</name><object mime="image/png">vehicle/restriction/turn_restrictions/ireland/no_straight_on.png</object></icon>
+<icon><key>restriction:no_u_turn</key><name>No U-turn</name><object mime="image/png">vehicle/restriction/turn_restrictions/ireland/no_u_turn.png</object></icon>
+
+<icon><key>parking</key><name>Parking</name><object mime="image/png">vehicle/parking.png</object></icon>
+<icon><key>parking:bicycle_parking</key><name>Bicycle</name><object mime="image/png">vehicle/parking/bicycle.png</object></icon>
+<icon><key>parking:motorbike_parking</key><name>Motorbike</name><object mime="image/png">vehicle/parking/bicycle.png</object></icon>
+<icon><key>parking:parking_entrance</key><name>Parking entrance</name><object mime="image/png">vehicle/parking/multi-storey.png</object></icon>
+<icon><key>parking:parking_exit</key><name>Parking exit</name><object mime="image/png">vehicle/parking/multi-storey.png</object></icon>
+<icon><key>parking:park_ride</key><name>Park and ride</name><object mime="image/png">vehicle/parking/park_ride.png</object></icon>
+<icon><key>parking:park_underground</key><name>Underground</name><object mime="image/png">vehicle/parking/underground.png</object></icon>
+
+<icon><key>rental</key><name>Rental</name><object mime="image/png">vehicle/rental.png</object></icon>
+<icon><key>rental:bicycle_rental</key><name>Bicycle</name><object mime="image/png">vehicle/rental/bicycle.png</object></icon>
+<icon><key>rental:car_rental</key><name>Car</name><object mime="image/png">vehicle/rental/car.png</object></icon>
+</icondef>

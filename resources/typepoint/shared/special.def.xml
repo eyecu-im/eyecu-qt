@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>special:air_force_base</key><name>Air force base</name><object mime="image/png">special/air_base.png</object></icon>
+<icon><key>special:border_point</key><name>Border point</name><object mime="image/png">special/border_point.png</object></icon>
+<icon><key>special:cosmodrome</key><name>Cosmodrome</name><object mime="image/png">special/cosmodrome.png</object></icon>
+<icon><key>special:military_base</key><name>Military base</name><object mime="image/png">special/military_base.png</object></icon>
+<icon><key>special:military_stock</key><name>Military stock</name><object mime="image/png">special/military_stock.png</object></icon>
+<icon><key>special:naval_base</key><name>Naval base</name><object mime="image/png">special/naval_base.png</object></icon>
+<icon><key>special:polygon</key><name>Polygon</name><object mime="image/png">special/polygon.png</object></icon>
+<icon><key>special:radar</key><name>Radar</name><object mime="image/png">special/radar.png</object></icon>
+<icon><key>special:restricted_area</key><name>Restricted area</name><object mime="image/png">special/restricted_area.png</object></icon>
+</icondef>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Author for slack build script script Oleg A Deordiev kvantarium@gmail.com
+# Author for slack build script script Oleg A Deordiev kvantarium@gmail.com, Konstantin K. Kozlov yagiza@rwsoftware.ru
 #
 
 arche=$HOSTTYPE
@@ -15,7 +15,7 @@ cpucore=""
 threadsmy=""
 pkgtype=txz
 revpkg="1"
-CLIENT_NAME="vacuum-im"
+CLIENT_NAME="eyecu"
 CLIENT_VERSION=""
 CLIENT_VERSION_SUFIX=""
 CLIENT_SVN_VER=""

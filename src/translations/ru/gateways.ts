@@ -105,5 +105,13 @@
         <source>Remove transports and their contacts</source>
         <translation>Удалить транспорты и их контакты</translation>
     </message>
+    <message>
+        <source>Reset nick names</source>
+        <translation>Сбросить ники</translation>
+    </message>
+    <message>
+        <source>Reset nick name</source>
+        <translation>Сбросить ник</translation>
+    </message>
 </context>
 </TS>

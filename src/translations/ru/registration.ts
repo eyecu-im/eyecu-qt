@@ -149,5 +149,13 @@
         <source>Invalid registration fields</source>
         <translation>Неверные поля регистрации</translation>
     </message>
+    <message>
+        <source>Register new account on server</source>
+        <translation>Зарегистрировать новый аккаунт на сервере</translation>
+    </message>
+    <message>
+        <source>e-mail</source>
+        <translation>Электронная почта</translation>
+    </message>
 </context>
 </TS>

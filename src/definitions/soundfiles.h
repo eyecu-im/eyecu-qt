@@ -36,4 +36,17 @@
 //StatusChanger
 #define SDF_SCHANGER_CONNECTION_ERROR     "schangerConnectionError"
 
+// *** <<< eyeCU <<< ***
+//Attention
+#define SDF_ATTENTION_ALARM               "attentionAlarm"
+//Receipts
+#define SDF_RECEIPTS_DELIVERED            "receiptsDelivered"
+//PEP
+#define SDF_PEP_EVENT                     "pepEvent"
+//Contact Proximity
+#define SDF_PROXIMITY_EVENT               "proximityEvent"
+//Jingle RTP
+#define SDF_JINGLE_RTP_CALL               "jingleRtpCall"
+// *** >>> eyeCU >>> ***
+
 #endif

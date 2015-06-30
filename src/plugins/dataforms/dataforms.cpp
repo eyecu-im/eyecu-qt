@@ -1099,5 +1099,6 @@ uint qHash(const QUrl &key)
 	return qHash(key.toEncoded((QUrl::FormattingOptions)0x100));
 }
 #endif
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_dataforms, DataForms);
+#endif

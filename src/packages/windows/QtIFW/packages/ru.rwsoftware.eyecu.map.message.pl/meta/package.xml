@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Message Polish Translation</DisplayName>
+    <Description>Map Message Polish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.message.pl</Name>
+	<AutoDependOn>ru.rwsoftware.eyecu.map.message,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

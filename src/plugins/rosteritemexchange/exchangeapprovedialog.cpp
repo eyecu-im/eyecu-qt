@@ -5,6 +5,7 @@
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include "utils/qt4qt5compat.h"
 
 enum ItemsTableColumns {
 	COL_ACTION,
@@ -29,7 +30,7 @@ ExchangeApproveDialog::ExchangeApproveDialog(IRoster *ARoster, const IRosterExch
 	ui.tbwItems->setTextElideMode(Qt::ElideNone);
 	ui.tbwItems->setColumnCount(COL_COUNT);
 	ui.tbwItems->setHorizontalHeaderLabels(QStringList()<<tr("Modification"));
-	ui.tbwItems->horizontalHeader()->setResizeMode(COL_ACTION,QHeaderView::Stretch);
+	ui.tbwItems->horizontalHeader()->SETRESIZEMODE(COL_ACTION,QHeaderView::Stretch);
 
 	ui.chbSubscribe->setChecked(true);
 	ui.chbSubscribe->setVisible(false);
@@ -152,7 +153,7 @@ void ExchangeApproveDialog::appendRequestItems(const QList<IRosterExchangeItem> 
 
 			ui.tbwItems->setRowCount(ui.tbwItems->rowCount()+1);
 			ui.tbwItems->setItem(ui.tbwItems->rowCount()-1,COL_ACTION,actionItem);
-			ui.tbwItems->verticalHeader()->setResizeMode(actionItem->row(),QHeaderView::ResizeToContents);
+			ui.tbwItems->verticalHeader()->SETRESIZEMODE(actionItem->row(),QHeaderView::ResizeToContents);
 
 			FItems.insert(actionItem,*it);
 		}

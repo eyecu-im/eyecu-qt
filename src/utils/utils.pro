@@ -1,17 +1,21 @@
 include(../make/config.inc)
 
-TARGET             = $$VACUUM_UTILS_NAME
+TARGET             = $$EYECU_UTILS_NAME
+os2: TARGET_SHORT  = $$EYECU_UTILS_SNAME
 TEMPLATE           = lib
-VERSION            = $$VACUUM_UTILS_ABI
+VERSION            = $$EYECU_UTILS_ABI
 CONFIG            += dll
 QT                += xml network
+greaterThan(QT_MAJOR_VERSION, 4): QT += util widgets
+else: CONFIG += util
+
 DEFINES           += UTILS_DLL QXT_STATIC
 
 DEPENDPATH        += ..
 INCLUDEPATH       += ..
 
 DESTDIR            = ../libs
-win32 {
+win32|os2 {
   DLLDESTDIR       = ..\\..
   QMAKE_DISTCLEAN += $${DLLDESTDIR}\\$${TARGET}.dll
 }
@@ -25,6 +29,8 @@ macx {
   CONFIG          += x11
 } else:win32 {
   LIBS            += -luser32
+} else:os2 {
+  LIBS            += -lpmhotkey
 }
 
 include(utils.pri)

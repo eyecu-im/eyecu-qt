@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sounddef>
+  <name>Message Delivery Receipts sounds</name>
+
+  <file>
+    <key>receiptsDelivered</key>
+    <object mime='sound/wav'>floop.wav</object>
+  </file>
+
+</sounddef>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source Google Japanese Translation</DisplayName>
+    <Description>Map Source Google Japanese translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.google.ja</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.google,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

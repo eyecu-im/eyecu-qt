@@ -1,5 +1,5 @@
-#ifndef SOCKSOPTIONS_H
-#define SOCKSOPTIONS_H
+#ifndef SOCKSOPTIONSWIDGET_H
+#define SOCKSOPTIONSWIDGET_H
 
 #include <QWidget>
 #include <interfaces/isocksstreams.h>
@@ -33,4 +33,4 @@ private:
 	IConnectionManager *FConnectionManager;
 };
 
-#endif // SOCKSOPTIONS_H
+#endif // SOCKSOPTIONSWIDGET_H

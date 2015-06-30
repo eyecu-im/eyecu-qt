@@ -9,6 +9,7 @@
 #include <QTextDocument>
 #include <definitions/namespaces.h>
 #include <definitions/optionvalues.h>
+#include <utils/qt4qt5compat.h>
 
 #define ONE_DAY           (24*60*60)
 #define ONE_MONTH         (ONE_DAY*31)
@@ -252,11 +253,11 @@ ArchiveAccountOptionsWidget::ArchiveAccountOptionsWidget(IMessageArchiver *AArch
 
 	ArchiveDelegate *delegat = new ArchiveDelegate(AArchiver,ui.tbwItemPrefs);
 	ui.tbwItemPrefs->setItemDelegate(delegat);
-	ui.tbwItemPrefs->horizontalHeader()->setResizeMode(COL_JID,QHeaderView::Stretch);
-	ui.tbwItemPrefs->horizontalHeader()->setResizeMode(COL_SAVE,QHeaderView::ResizeToContents);
-	ui.tbwItemPrefs->horizontalHeader()->setResizeMode(COL_OTR,QHeaderView::ResizeToContents);
-	ui.tbwItemPrefs->horizontalHeader()->setResizeMode(COL_EXPIRE,QHeaderView::ResizeToContents);
-	ui.tbwItemPrefs->horizontalHeader()->setResizeMode(COL_EXACT,QHeaderView::ResizeToContents);
+	ui.tbwItemPrefs->horizontalHeader()->SETRESIZEMODE(COL_JID,QHeaderView::Stretch);
+	ui.tbwItemPrefs->horizontalHeader()->SETRESIZEMODE(COL_SAVE,QHeaderView::ResizeToContents);
+	ui.tbwItemPrefs->horizontalHeader()->SETRESIZEMODE(COL_OTR,QHeaderView::ResizeToContents);
+	ui.tbwItemPrefs->horizontalHeader()->SETRESIZEMODE(COL_EXPIRE,QHeaderView::ResizeToContents);
+	ui.tbwItemPrefs->horizontalHeader()->SETRESIZEMODE(COL_EXACT,QHeaderView::ResizeToContents);
 
 	ui.cmbMethodAuto->addItem(tr("Yes, if supported by server"),ARCHIVE_METHOD_PREFER);
 	ui.cmbMethodAuto->addItem(tr("Yes, if other archive is not available"),ARCHIVE_METHOD_CONCEDE);
@@ -428,7 +429,7 @@ void ArchiveAccountOptionsWidget::updateItemPrefs(const Jid &AItemJid, const IAr
 		ui.tbwItemPrefs->setItem(jidItem->row(),COL_OTR,otrItem);
 		ui.tbwItemPrefs->setItem(jidItem->row(),COL_EXPIRE,expireItem);
 		ui.tbwItemPrefs->setItem(jidItem->row(),COL_EXACT,exactItem);
-		ui.tbwItemPrefs->verticalHeader()->setResizeMode(jidItem->row(),QHeaderView::ResizeToContents);
+		ui.tbwItemPrefs->verticalHeader()->SETRESIZEMODE(jidItem->row(),QHeaderView::ResizeToContents);
 		FTableItems.insert(AItemJid,jidItem);
 	}
 
@@ -510,7 +511,7 @@ void ArchiveAccountOptionsWidget::onAddItemPrefClicked()
 	}
 	else if (!itemJid.isEmpty())
 	{
-		QMessageBox::warning(this,tr("Unacceptable item JID"),tr("'%1' is not valid JID or already exists").arg(Qt::escape(itemJid.uFull())));
+		QMessageBox::warning(this,tr("Unacceptable item JID"),tr("'%1' is not valid JID or already exists").arg(HTML_ESCAPE(itemJid.uFull())));
 	}
 }
 

@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk_UA" sourcelanguage="en">
 <context>
     <name>AdiumMessageStyle</name>
     <message>
@@ -14,15 +16,30 @@
     <name>AdiumMessageStyleEngine</name>
     <message>
         <source>Adium Message Style</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Стиль повідомлень Adium</translation>
     </message>
     <message>
         <source>Allows to use a Adium style in message design</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Дозволяє використовувати стилі повідомлень для Adium</translation>
     </message>
     <message>
         <source>Adium</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AdiumMessageStylePlugin</name>
+    <message>
+        <source>Adium Message Style</source>
+        <translation type="obsolete">Стиль повідомлень Adium</translation>
+    </message>
+    <message>
+        <source>Allows to use a Adium style in message design</source>
+        <translation type="obsolete">Дозволяє використовувати стилі повідомлень для Adium</translation>
+    </message>
+    <message>
+        <source>Adium Style</source>
+        <translation type="obsolete">Стиль Adium</translation>
     </message>
 </context>
 <context>
@@ -53,7 +70,7 @@
     </message>
     <message>
         <source>Select font family and size</source>
-        <translation>Виберіть шрифт</translation>
+        <translation>Виберіть фришт</translation>
     </message>
     <message>
         <source>Select background image</source>
@@ -65,22 +82,46 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AdiumOptionsWidgetClass</name>
     <message>
+        <source>Message Style:</source>
+        <translation type="obsolete">Стиль:</translation>
+    </message>
+    <message>
         <source>Variant:</source>
         <translation>Варіант:</translation>
     </message>
     <message>
+        <source>Text Font:</source>
+        <translation type="obsolete">Шрифт:</translation>
+    </message>
+    <message>
+        <source>Set Font...</source>
+        <translation type="obsolete">Змінити шрифт...</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="obsolete">За замовчанням</translation>
+    </message>
+    <message>
+        <source>Background:</source>
+        <translation type="obsolete">Фонове зображення:</translation>
+    </message>
+    <message>
         <source>Color:</source>
         <translation>Колір:</translation>
+    </message>
+    <message>
+        <source>Set Image...</source>
+        <translation type="obsolete">Встановити зображення...</translation>
     </message>
     <message>
         <source>Layout:</source>
@@ -88,23 +129,23 @@
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Image:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>not set</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

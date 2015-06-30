@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>place:house</key><name>House</name><object mime="image/png">place/house.png</object></icon>
+<icon><key>place:island</key><name>Island</name><object mime="image/png">place/island.png</object></icon>
+<icon><key>place:islet</key><name>Islet</name><object mime="image/png">place/islet.png</object></icon>
+<icon><key>place:locality</key><name>Locality</name><object mime="image/png">place/locality.png</object></icon>
+<icon><key>place:marketplace</key><name>Marketplace</name><object mime="image/png">place/marketplace.png</object></icon>
+<icon><key>place:administrative</key><name>Administrative</name><object mime="image/png">place/administrative.png</object></icon>
+<icon><key>place:country</key><name>Country</name><object mime="image/png">place/administrative/country.png</object></icon>
+<icon><key>place:state</key><name>State</name><object mime="image/png">place/administrative/state.png</object></icon>
+<icon><key>place:county</key><name>County</name><object mime="image/png">place/administrative/county.png</object></icon>
+<icon><key>place:region</key><name>Region</name><object mime="image/png">place/administrative/region.png</object></icon>
+<icon><key>place:district</key><name>District</name><object mime="image/png">place/administrative/district.png</object></icon>
+<icon><key>place:municipality</key><name>Municipality</name><object mime="image/png">place/administrative/municipality.png</object></icon>
+<icon><key>place:city</key><name>City</name><object mime="image/png">place/settlement/city.png</object></icon>
+<icon><key>place:town</key><name>Town</name><object mime="image/png">place/settlement/town.png</object></icon>
+<icon><key>place:suburbs</key><name>Suburbs</name><object mime="image/png">place/settlement/suburbs.png</object></icon>
+<icon><key>place:village</key><name>Village</name><object mime="image/png">place/settlement/village.png</object></icon>
+<icon><key>place:hamlet</key><name>Hamlet</name><object mime="image/png">place/settlement/hamlet.png</object></icon>
+<icon><key>place:isolated_dwelling</key><name>Isolated dwelling</name><object mime="image/png">place/settlement/isolated_dwelling.png</object></icon>
+<icon><key>place:cemetery</key><name>Cemetery</name><object mime="image/png">rendering/landuse/cemetery.png</object></icon>
+<icon><key>place:allotments</key><name>Allotments</name><object mime="image/png">rendering/landuse/allotments.png</object></icon>
+</icondef>

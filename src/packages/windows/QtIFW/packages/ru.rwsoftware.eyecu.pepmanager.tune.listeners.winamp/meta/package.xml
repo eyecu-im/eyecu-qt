@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>WINAMP</DisplayName>
+    <Description>Requests currently playing Tune from WINAMP player</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp</Name>
+    <Dependencies>ru.rwsoftware.eyecu.pepmanager.tune</Dependencies>
+    <SortingPriority>9</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

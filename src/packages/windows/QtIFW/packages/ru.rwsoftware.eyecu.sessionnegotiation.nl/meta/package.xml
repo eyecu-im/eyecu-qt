@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Jabber Session Manager Dutch Translation</DisplayName>
+    <Description>Jabber Session Manager Dutch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.sessionnegotiation.nl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.sessionnegotiation,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

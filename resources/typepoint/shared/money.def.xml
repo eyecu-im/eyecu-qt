@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>money:atm</key><name>Atm</name><object mime="image/png">money/atm.png</object></icon>
+<icon><key>money:bank</key><name>Bank</name><object mime="image/png">money/bank.png</object></icon>
+<icon><key>money:exchange</key><name>Exchange</name><object mime="image/png">money/exchange.png</object></icon>
+</icondef>

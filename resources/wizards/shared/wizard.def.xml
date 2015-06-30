@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+ <icon><key>wizard</key><object mime="image/png">wizard.png</object></icon>
+ <icon><key>wizard_acc1</key><object mime="image/png">wiz-acc.png</object></icon>
+ <icon><key>wizard_acc2</key><object mime="image/png">wiz-acc2.png</object></icon>
+ <icon><key>wiz_acc_bann</key><object mime="image/png">wiz-banner.png</object></icon>
+ <icon><key>wiz_trans</key><object mime="image/png">wiz-trans.gif</object></icon>
+ <icon><key>wiz_trans_end</key><object mime="image/png">wiz-trans-end.gif</object></icon>
+</icondef>

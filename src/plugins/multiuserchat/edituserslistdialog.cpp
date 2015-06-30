@@ -7,6 +7,7 @@
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include "utils/qt4qt5compat.h"
 
 #define TIDR_ITEMJID    Qt::UserRole+1
 #define JID_COLUMN_NUM 0
@@ -51,13 +52,13 @@ EditUsersListDialog::EditUsersListDialog(const QString &AAffiliation, const QLis
 
 	if (AAffiliation == MUC_AFFIL_OUTCAST)
 	{
-		ui.tbwTable->horizontalHeader()->setResizeMode(0,QHeaderView::ResizeToContents);
-		ui.tbwTable->horizontalHeader()->setResizeMode(1,QHeaderView::Stretch);
+		ui.tbwTable->horizontalHeader()->SETRESIZEMODE(0,QHeaderView::ResizeToContents);
+		ui.tbwTable->horizontalHeader()->SETRESIZEMODE(1,QHeaderView::Stretch);
 	}
 	else
 	{
 		ui.tbwTable->hideColumn(1);
-		ui.tbwTable->horizontalHeader()->setResizeMode(0,QHeaderView::Stretch);
+		ui.tbwTable->horizontalHeader()->SETRESIZEMODE(0,QHeaderView::Stretch);
 	}
 	// default sort to JID column
 	ui.tbwTable->setSortingEnabled(true);

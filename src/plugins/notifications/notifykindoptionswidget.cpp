@@ -5,6 +5,7 @@
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
+#include "utils/qt4qt5compat.h"
 
 enum NotifiesTableColumn {
 	NTC_TYPE,
@@ -38,17 +39,17 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 
 	tbwNotifies->setColumnCount(NTC__COUNT);
 	tbwNotifies->setHorizontalHeaderLabels(QStringList() << tr("Event") << "" << "" << "");
-	tbwNotifies->horizontalHeader()->setResizeMode(NTC_TYPE,QHeaderView::Stretch);
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_TYPE,QHeaderView::Stretch);
 
-	tbwNotifies->horizontalHeader()->setResizeMode(NTC_SOUND,QHeaderView::ResizeToContents);
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_SOUND,QHeaderView::ResizeToContents);
 	tbwNotifies->horizontalHeaderItem(NTC_SOUND)->setToolTip(tr("Play sound at the notification"));
 	tbwNotifies->horizontalHeaderItem(NTC_SOUND)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_SOUNDPLAY));
 
-	tbwNotifies->horizontalHeader()->setResizeMode(NTC_POPUP,QHeaderView::ResizeToContents);
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_POPUP,QHeaderView::ResizeToContents);
 	tbwNotifies->horizontalHeaderItem(NTC_POPUP)->setToolTip(tr("Display a notification in popup window"));
 	tbwNotifies->horizontalHeaderItem(NTC_POPUP)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_PUPUPWINDOW));
 
-	tbwNotifies->horizontalHeader()->setResizeMode(NTC_MINIMIZED,QHeaderView::ResizeToContents);
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_MINIMIZED,QHeaderView::ResizeToContents);
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setToolTip(tr("Show the corresponding window minimized in the taskbar"));
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_SHOWMINIMIZED));
 
@@ -105,7 +106,7 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 		minimized->setCheckState(Qt::Unchecked);
 		tbwNotifies->setItem(row,NTC_MINIMIZED,minimized);
 
-		tbwNotifies->verticalHeader()->setResizeMode(row,QHeaderView::ResizeToContents);
+		tbwNotifies->verticalHeader()->SETRESIZEMODE(row,QHeaderView::ResizeToContents);
 	}
 
 	reset();

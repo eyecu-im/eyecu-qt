@@ -1,4 +1,5 @@
 TARGET = spellchecker
+os2:TARGET_SHORT = spellchk
 include(spellchecker.pri)
 include(../plugins.inc)
 

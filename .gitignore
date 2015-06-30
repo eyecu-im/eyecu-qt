@@ -1,11 +1,11 @@
 #################
-## Vacuum-IM
+## eyeCU
 #################
-/VacuumIM/
+/eyeCU/
 /plugins/*
 /src/libs/*
 gitinfo.h
-vacuum
+eyecu
 autotranslate
 
 
@@ -35,7 +35,7 @@ Makefile.Release
 #################
 ## Qt Creator
 #################
-*.pro.user
+*.pro.user*
 
 
 #################
@@ -196,3 +196,6 @@ $RECYCLE.BIN/
 .DS_Store
 !/src/packages/macosx/DS_Store
 *.xcodeproj
+
+# SVN
+/.svn

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <!-- Gateway -->
+  <icon><key>gateway</key><object mime='image/png'>gateway.png</object></icon>
+
+  <icon><key>aim</key><object mime='image/png'>aim.png</object></icon>
+  <icon><key>facebook</key><object mime='image/png'>facebook.png</object></icon>
+  <icon><key>gadu-gadu</key><object mime='image/png'>gadugadu.png</object></icon>
+  <icon><key>icq</key><object mime='image/png'>icq.png</object></icon>
+
+  <icon><key>irc</key><object mime='image/png'>irc.png</object></icon>
+  <icon><key>live-journal</key><object mime='image/png'>livejournal.png</object></icon>
+  <icon><key>lcs</key><object mime='image/png'>gateway_lcs.png</object></icon>
+  <icon><key>mrim</key><object mime='image/png'>mrim.png</object></icon>
+  <icon><key>msn</key><object mime='image/png'>msn.png</object></icon>
+
+  <icon><key>myspaceim</key><object mime='image/png'>gateway_myspace.png</object></icon>
+  <icon><key>odnoklassniki</key><object mime='image/png'>odnoklassniki.png</object></icon>
+
+<!--icon><key>ocs</key><object mime='image/png'>gateway_ocs.png</object></icon-->
+
+  <icon><key>qq</key><object mime='image/png'>gateway_qq.png</object></icon>
+  <icon><key>rss</key><object mime='image/png'>rss.png</object></icon>
+  <icon><key>renren</key><object mime='image/png'>renren.png</object></icon>
+  <icon><key>sametime</key><object mime='image/png'>gateway_sametime.png</object></icon>
+
+<!--icon><key>simple</key><object mime='image/png'>gateway_simple.png</object></icon-->
+
+  <icon><key>sip</key><object mime='image/png'>gateway_sip.png</object></icon>
+  <icon><key>skype</key><object mime='image/png'>skype.png</object></icon>
+  <icon><key>sms</key><object mime='image/png'>sms.png</object></icon>
+  <icon><key>twitter</key><object mime='image/png'>twitter.png</object></icon>
+  <icon><key>x-tlen</key><object mime='image/png'>gateway_tlen.png</object></icon>
+  <icon><key>vk</key><object mime='image/png'>vkontakte.png</object></icon>
+  <icon><key>xfire</key><object mime='image/png'>gateway_xfire.png</object></icon>
+  <icon><key>yahoo</key><object mime='image/png'>yahoo.png</object></icon>
+</icondef>

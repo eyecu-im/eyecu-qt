@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+
+ <icon><key>poi</key><object mime="image/png">poi.png</object></icon>
+ <icon><key>poiadd</key><object mime="image/png">poiadd.png</object></icon>
+ <icon><key>poinone</key><object mime="image/png">poinone.png</object></icon>
+ <icon><key>poitoolbar</key><object mime="image/png">poitoolbar.png</object></icon>
+ <icon><key>poiview</key><object mime="image/png">poiview.png</object></icon>
+ <icon><key>globus</key><object mime="image/png">globus.png</object></icon>
+ <icon><key>flag24</key><object mime="image/png">flag24.png</object></icon>
+ <icon><key>tracker</key><object mime="image/png">tracker.png</object></icon>
+ <icon><key>mapmessage</key><object mime="image/png">mapmessage.png</object></icon>
+ <icon><key>description</key><object mime="image/png">description.png</object></icon>
+
+ <icon><key>connect</key><object mime="image/png">connect.png</object></icon>
+ <icon><key>connectend</key><object mime="image/png">connectend.png</object></icon>
+ <icon><key>connectlong</key><object mime="image/png">connectlong.png</object></icon>
+ <icon><key>folder</key><object mime="image/png">folder.png</object></icon>
+ <icon><key>folderopen</key><object mime="image/png">folderopen.png</object></icon>
+ <icon><key>bgrmap</key><object mime="image/png">bgrmap.png</object></icon>
+ <icon><key>bgrsat</key><object mime="image/png">bgrsat.png</object></icon>
+ <icon><key>poinotype</key><object mime="image/png">poinotype.png</object></icon>
+
+</icondef>

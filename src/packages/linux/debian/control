@@ -1,24 +1,79 @@
-Source: vacuum
+Source: eyecu
 Section: net
 Priority: optional
-Maintainer: Sergey A Potapov <potapov.s.a@gmail.com>
-Build-Depends: cmake, debhelper (>= 7.0.50~), openssl, libqtwebkit-dev | libqt4-dev, libx11-dev, zlib1g-dev, libidn11-dev
+Maintainer: Road Works Software <support@rwsoftware.ru>
+# Build-Depends: cmake, debhelper (>= 7.0.50~), openssl-dev, libqt4-dev, libx11-dev, zlib1g-dev, libidn11-dev
 Standards-Version: 3.9.1
-Homepage: http://code.google.com/p/vacuum-im/
+Homepage: http://eyecu.ru/
 
-Package: vacuum
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Recommends: nas
-Description: Jabber client using Qt
- Vacuum is a free instant messaging application designed for the Jabber
+Package: eyecu
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Recommends: eyecu-extra, eyecu-positioning-serialport
+Description: Vacuum-IM-based XMPP client.
+ eyeCU is a free instant messaging application designed for the Jabber
  (XMPP) IM network (including Google Talk). It has full Unicode support, 
- and supports most important XMPP features.
+ supports most important XMPP features.
+ Besides all of Vacuum-IM features it supports XHTML-IM and User Location with positioning support.
 
-Package: vacuum-dev
+Package: eyecu-extra
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         eyecu (>= ${binary:Version})
+# Recommends: nas
+Description: eyeCU Extra Pack
+ Extra Package for eyeCU XMPP client. Contains a lot of extra features, like
+ Personal events (User Mood, User Activity, User Tune, User Nickname),
+ Attention, Delivery Receipts, Out-Of-Band Data and more.
+ Also, supports World Map from different sources, with Magnifier and Search capability,
+ Points of interest and other Map-related features.
+ Has Connection and Transport wizards for unexperienced users and much more.
+
+Package: eyecu-multimedia
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         eyecu (>= ${binary:Version})
+# Recommends: nas
+Description: eyeCU Multimedia Pack
+ Multimedia Package for eyeCU XMPP client. Contains 2 plugins:
+ 1. FFmpeg plugin which can be used by other plugins to implememt
+ different multimedia features.
+ 2. Multimedia Player. A plugin, which could be used to play multimedia
+ content from a file stream during file transfer, or as a standalone player.
+
+Package: eyecu-positioning-serialport
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         eyecu (>= ${binary:Version})
+# Recommends: nas
+Description: eyeCU Serial Port Positioning Method
+ A positioning method plugin for eyeCU XMPP client. It allows using
+ of a NMEA 0183 compatible positioning module (eg. GPS or GLONASS receiver),
+ connected via either physical or virtual (USB, Bluetooth etc.) serial port
+ as a positioning source.
+
+Package: eyecu-dev
 Architecture: all
-Depends: ${misc:Depends}, vacuum
-Description: Development files for Vacuum
- This package contains Vacuum include files you need if you
- want to develop plugins for Vacuum.
+Depends: ${misc:Depends}, eyecu (>= ${binary:Version})
+Recommends: eyecu-extra-dev
+Description: Development files for eyeCU
+ This package contains eyeCU include files you need, if you
+ want to develop plugins for eyeCU.
 
+Package: eyecu-extra-dev
+Architecture: all
+Depends: ${misc:Depends}, eyecu-dev (>= ${binary:Version}), eyecu-extra (>= ${binary:Version})
+Description: Development files for eyeCU Extra Pack
+ This package contains eyeCU Extra Pack include files you need, if you
+ want to develop plugins for eyeCU and eyeCU Extra Pack.
+
+Package: eyecu-multimedia-dev
+Architecture: all
+Depends: ${misc:Depends}, eyecu-dev (>= ${binary:Version}), eyecu-multimedia (>= ${binary:Version})
+Description: Development files for eyeCU Multimedia Pack
+ This package contains eyeCU Multimedia Pack include files you need, if you
+ want to develop plugins for eyeCU and eyeCU Multimedia Pack.

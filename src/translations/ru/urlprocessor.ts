@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Allows other plugins to load data from custom types of URLs</source>
-        <translation>Позволяет другим модулям загружать данные по URL различного типа</translation>
+        <translation>Позволяет другим плагинам загружать данные из произвольных типов URL</translation>
     </message>
 </context>
 </TS>

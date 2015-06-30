@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>History</DisplayName>
+    <Description>Allows to store and display the history of communications</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.messagearchiver</Name>
+    <Dependencies>org.digia.qt4.sql</Dependencies>
+    <SortingPriority>70</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

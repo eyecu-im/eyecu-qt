@@ -1,0 +1,1647 @@
+<WARPIN OS="OS2_2X">
+<HEAD>
+	<TITLE>eyeCU 1.3.0.1198</TITLE>
+	<REXX NAME="FindQtRuntime">
+		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
+		rc=SysLoadFuncs()
+
+		UNIXROOT = WirexxGetEnv('UNIXROOT')
+		if  \ (UNIXROOT = '') then LIB = UNIXROOT||'\usr\lib'		
+
+		do while stream(LIB||'\QtCore4.dll', 'c', 'query exists') = ''
+			LIB = WirexxVarPrompt(QT_LIB_PATH)
+		end
+
+		do while \ (QUEUED() = 0)
+			PULL
+		end
+
+		address cmd 'bldlevel '||LIB||'\QtCore4.dll | rxqueue'
+
+		do while \ (QUEUED() = 0)
+			pull LINE 
+			parse value LINE with 'FILE VERSION:' VAL
+			if \ (VAL='') then parse var VAL VER REST
+		end
+
+		parse value VER with MAJOR '.' MINOR '.' PATCH
+
+		if \ (MAJOR = 4) then
+		do
+			rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt4', 0x0020)
+			call WirexxCancel
+		end
+
+		if \ (MINOR > 6) then
+		do
+			rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt 4.7.3 or later', 0x0020)
+			call WirexxCancel
+		end
+
+		return LIB
+	</REXX>
+
+	<REXX NAME="FindQtSDK">
+		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
+		rc=SysLoadFuncs()
+
+		UNIXROOT = WirexxGetEnv('UNIXROOT')
+		if  \ (UNIXROOT = '') then QTROOT = UNIXROOT||'\usr'
+
+		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
+			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
+		end
+
+		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
+
+		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
+
+		if stream(QCONFIG,'c','open read') = 'READY:' then
+		do while LINES(QCONFIG)
+			parse value linein(QCONFIG) with field '=' val
+			if substr(field,1,10) = 'QT_VERSION' then
+			do
+				parse var val version rest
+				parse value version with major '.' minor '.' patch
+				leave
+			end
+		end
+		rc = stream(QCONFIG,'c','close')
+
+		if major = 4 & minor >= 7 then return 1
+		else return '"netlabs.org\Qt\SDK\4\7"'
+	</REXX>
+
+	<REXX NAME="QtSDKPath">
+		return WirexxGetEnv('QT_ROOT_DIR')
+	</REXX>
+
+<PCK 	INDEX=1
+	PACKAGEID="Road Works Software\eyeCU\Base package\1\3\0\1198"
+	TITLE="eyeCU"
+	TARGET="$(WARPIN_DEFAULTAPPSPATH)\eyeCU"
+	SELECT NODESELECT BASE
+	REQUIRES="eCo Software\Runtime\Win\2012\07\23" 
+	REQUIRES="netlabs.org\Qt4\SysTray\100\1\1\843" 
+	REQUIRES="netlabs.org\Qt4\SysTrayDLL\100\1\1\843" 
+	KILLPROCESS="eyecu.exe"
+	CREATEOBJECT="WPFolder|eyeCU|<WP_APPSFOLDER>|OBJECTID=<EYECU_FOLDER>;"
+	CREATEOBJECT="REPLACE WPProgram|eyeCU|<EYECU_FOLDER>|EXENAME=$(1)\eyecu.exe;OBJECTID=<EYECU_EXE>;BIGICONFILE=$(1)\resources\menuicons\shared\mainwindowlogo96.png;"
+	CREATEOBJECT="REPLACE WPShadow|eyeCU|<WP_INTERNET>|SHADOWID=<EYECU_EXE>;OBJECTID=<EYECU_EXE_SHADOW>;"
+	>eyeCU - XMPP-based IM client with Positioning
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=2
+	PACKAGEID="Road Works Software\eyeCU\Autostart\1\3\0\1198"
+	TITLE="Autostart via Startup folder"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	CREATEOBJECT="REPLACE WPShadow|eyeCU|<WP_START>|SHADOWID=<EYECU_EXE>;OBJECTID=<EYECU_EXE_STARTUP>;"
+	>Allows eyeCU to start automatically, by placing its shadow into Startup folder
+</PCK>
+
+<PCK 	INDEX=3
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker\1\3\0\1198"
+	TITLE="Spellchecker"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Highlits possibly wrongly spelled words
+</PCK>
+
+<PCK 	INDEX=4
+	PACKAGEID="Road Works Software\eyeCU\Statistics\1\3\0\1198"
+	TITLE="Google statistics"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to collect statistics of application usage
+</PCK>
+
+<PCK 	INDEX=5
+	PACKAGEID="Road Works Software\eyeCU\Privacy\1\3\0\1198"
+	TITLE="Privacy lists"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to block unwanted contacts
+</PCK>
+
+<PCK 	INDEX=6
+	PACKAGEID="Road Works Software\eyeCU\Compress\1\3\0\1198"
+	TITLE="XMPP stream compression"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to compress incoming and outgoing XMPP data
+</PCK>
+
+<PCK 	INDEX=7
+	PACKAGEID="Road Works Software\eyeCU\vCard\1\3\0\1198"
+	TITLE="vCard manager"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to receive personal information about the contact
+</PCK>
+
+<PCK 	INDEX=8
+	PACKAGEID="Road Works Software\eyeCU\Birthday reminder\1\3\0\1198"
+	TITLE="Birthday reminder"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=7
+	>Reminds about birthdays of your friends
+</PCK>
+
+<PCK 	INDEX=9
+	PACKAGEID="Road Works Software\eyeCU\Avatars\1\3\0\1198"
+	TITLE="Avatars"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=7
+	>Allows to set and display avatars
+</PCK>
+
+<PCK 	INDEX=10
+	PACKAGEID="Road Works Software\eyeCU\Message style: Adium\1\3\0\1198"
+	TITLE="Adium message style"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to use Adium message styles
+</PCK>
+
+<GROUP TITLE="Adium message styles">
+
+<PCK 	INDEX=11
+	PACKAGEID="Road Works Software\eyeCU\Adium style: Renkoo\1\3\0\1198"
+	TITLE="Adium message style: Renkoo"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=10
+	>eyeCU - Adium message style: Renkoo plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=12
+	PACKAGEID="Road Works Software\eyeCU\Adium style: yMous\1\3\0\1198"
+	TITLE="Adium message style: yMous"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=10
+	>eyeCU - Adium message style: yMous plugin
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+
+<PCK 	INDEX=15
+	PACKAGEID="Road Works Software\eyeCU\Gateways\1\3\0\1198"
+	TITLE="Gateways"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Makes interaction with gateways into other IM networks more simple
+</PCK>
+
+<PCK 	INDEX=16
+	PACKAGEID="Road Works Software\eyeCU\Shortcuts\1\3\0\1198"
+	TITLE="Shortcut manager"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to define custom hotkeys
+</PCK>
+
+<PCK 	INDEX=17
+	PACKAGEID="Road Works Software\eyeCU\Service discovery\1\3\0\1198"
+	TITLE="Service discovery"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to retrieve information about XMPP entities
+</PCK>
+
+<PCK 	INDEX=18
+	PACKAGEID="Road Works Software\eyeCU\Message carbons\1\3\0\1198"
+	TITLE="Message carbons"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=17
+	>Allows to keep conversation on all the user's clients
+</PCK>
+
+<PCK 	INDEX=19
+	PACKAGEID="Road Works Software\eyeCU\Console\1\3\0\1198"
+	TITLE="XMPP console"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=17
+	>Allows to watch XML stream between client and server
+</PCK>
+
+<PCK 	INDEX=20
+	PACKAGEID="Road Works Software\eyeCU\Message archiver\1\3\0\1198"
+	TITLE="History"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to store message history
+</PCK>
+
+<GROUP TITLE="History storage methods">
+
+<PCK 	INDEX=21
+	PACKAGEID="Road Works Software\eyeCU\Message archive: File\1\3\0\1198"
+	TITLE="File message archive"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=20
+	>Allows to store messages on local disk
+</PCK>
+
+<PCK 	INDEX=22
+	PACKAGEID="Road Works Software\eyeCU\Message archive: Server\1\3\0\1198"
+	TITLE="Server side message archive"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=20
+	>Allows to store messages on the server
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=25
+	PACKAGEID="Road Works Software\eyeCU\Roster search\1\3\0\1198"
+	TITLE="Roster search"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Roster search plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=26
+	PACKAGEID="Road Works Software\eyeCU\Jabber search\1\3\0\1198"
+	TITLE="Jabber search"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Jabber search plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=27
+	PACKAGEID="Road Works Software\eyeCU\Roster item exchange\1\3\0\1198"
+	TITLE="Roster item exchange"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to exchange items from contact list
+</PCK>
+
+<PCK 	INDEX=28
+	PACKAGEID="Road Works Software\eyeCU\Multiuser chat\1\3\0\1198"
+	TITLE="Multiuser chat"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to use Jabber multiuser conferences
+</PCK>
+
+<PCK 	INDEX=29
+	PACKAGEID="Road Works Software\eyeCU\Chat states\1\3\0\1198"
+	TITLE="Chat state notification"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows users to exchange with chat activity information
+</PCK>
+
+<PCK 	INDEX=30
+	PACKAGEID="Road Works Software\eyeCU\Private storage\1\3\0\1198"
+	TITLE="Private storage"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Private storage plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=31
+	PACKAGEID="Road Works Software\eyeCU\Metacontacts\1\3\0\1198"
+	TITLE="Metacontacts"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=30
+	>Allows to change user's presence automatically, due to inactivity
+</PCK>
+
+<PCK 	INDEX=32
+	PACKAGEID="Road Works Software\eyeCU\Bookmarks\1\3\0\1198"
+	TITLE="Bookmarks"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=30
+	>eyeCU - Bookmarks plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=33
+	PACKAGEID="Road Works Software\eyeCU\Annotations\1\3\0\1198"
+	TITLE="Annotations"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=30
+	>eyeCU - Annotations plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=34
+	PACKAGEID="Road Works Software\eyeCU\Rescent contacts\1\3\0\1198"
+	TITLE="Rescent contacts"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=30
+	>eyeCU - Rescent contacts plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=35
+	PACKAGEID="Road Works Software\eyeCU\Client info\1\3\0\1198"
+	TITLE="Client informatiom"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to query and send information about software version, local time and contact's last activity
+</PCK>
+
+<PCK 	INDEX=36
+	PACKAGEID="Road Works Software\eyeCU\URL processor\1\3\0\1198"
+	TITLE="URL processor"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - URL processor plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=37
+	PACKAGEID="Road Works Software\eyeCU\BOB\1\3\0\1198"
+	TITLE="Bits of Binary"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Bits of Binary plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=38
+	PACKAGEID="Road Works Software\eyeCU\BOB URL handler\1\3\0\1198"
+	TITLE="BOB URL handler"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=36
+	REQUIRES=37
+	>eyeCU - BOB URL handler plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=39
+	PACKAGEID="Road Works Software\eyeCU\XMPP URI queries\1\3\0\1198"
+	TITLE="XMPP URI queries"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows other modules to handle XMPP URI queries
+</PCK>
+
+<PCK 	INDEX=40
+	PACKAGEID="Road Works Software\eyeCU\Data forms\1\3\0\1198"
+	TITLE="Data forms"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Data forms plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=41
+	PACKAGEID="Road Works Software\eyeCU\Commands\1\3\0\1198"
+	TITLE="Ad-hoc commands"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=40
+	>eyeCU - Ad-hoc commands plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=42
+	PACKAGEID="Road Works Software\eyeCU\Captcha\1\3\0\1198"
+	TITLE="Captcha forms"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=37
+	REQUIRES=40
+	>eyeCU - Captcha forms plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=43
+	PACKAGEID="Road Works Software\eyeCU\Remote control\1\3\0\1198"
+	TITLE="Remote control"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=40
+	REQUIRES=41
+	>eyeCU - Remote control plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=44
+	PACKAGEID="Road Works Software\eyeCU\Registration\1\3\0\1198"
+	TITLE="Registration"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=40
+	REQUIRES=41
+	>eyeCU - Registration plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=45
+	PACKAGEID="Road Works Software\eyeCU\Session negotiation\1\3\0\1198"
+	TITLE="Session negotiation"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=40
+	>Allows to negotiate a session between two entities, which defines rules of XMPP stanza exchange
+</PCK>
+
+<PCK 	INDEX=46
+	PACKAGEID="Road Works Software\eyeCU\File transfer\1\3\0\1198"
+	TITLE="File transfer"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=40
+	>eyeCU - Plugins for File transfer
+	(c) Road Works Software
+</PCK>
+
+<GROUP TITLE="File stream types">
+
+<PCK 	INDEX=47
+	PACKAGEID="Road Works Software\eyeCU\SOCKS5\1\3\0\1198"
+	TITLE="SOCKS5 streams"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=46
+	>eyeCU - SOCKS5 streams plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=48
+	PACKAGEID="Road Works Software\eyeCU\IBB\1\3\0\1198"
+	TITLE="In-band bytestreams"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=46
+	>eyeCU - In-band bytestreams plugin
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=50
+	PACKAGEID="Road Works Software\eyeCU\Autostatus\1\3\0\1198"
+	TITLE="Autostatus"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to change user's presence automatically, due to inactivity
+</PCK>
+
+<PCK 	INDEX=51
+	PACKAGEID="Road Works Software\eyeCU\Iq authentication\1\3\0\1198"
+	TITLE="Authentication via iq queries"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to authenticate on Jabber server
+	without SASL authentication
+</PCK>
+
+<PCK 	INDEX=55
+	PACKAGEID="Road Works Software\eyeCU\PEP\1\3\0\1198"
+	TITLE="Personal events"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows other modules to handle personal events
+</PCK>
+
+<PCK 	INDEX=56
+	PACKAGEID="Road Works Software\eyeCU\Geoloc\1\3\0\1198"
+	TITLE="User location"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=55
+	>Implements XEP-0080: User Location
+</PCK>
+
+<PCK 	INDEX=57
+	PACKAGEID="Road Works Software\eyeCU\Positioning\1\3\0\1198"
+	TITLE="Positioning"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=56
+	>Allows User Location module to obtain current user position from various providers
+</PCK>
+
+<GROUP TITLE="Positioning methods">
+
+<PCK 	INDEX=58
+	PACKAGEID="Road Works Software\eyeCU\Positioning method: Manual\1\3\0\1198"
+	TITLE="Positioning Method: Manual"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=57
+	>Positioning source, which allows user to specify position manually
+</PCK>
+
+<PCK 	INDEX=101
+	PACKAGEID="Road Works Software\eyeCU-Extra\Positioning method: Serial port\1\3\0\1198"
+	TITLE="Positioning method: Serial port"
+	TARGET='=("FindQtRuntime")'
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=95
+	REQUIRES="Road Works Software\QtSerialPort\Runtime\1\0\0"
+	>Positioning method, which uses positioning module (GPS, GLONASS etc.), connected via serial port interface
+</PCK>
+
+</GROUP>
+
+
+<GROUP TITLE="Status icons">
+
+<PCK 	INDEX=60
+	PACKAGEID="Road Works Software\eyeCU\Status icons: AIM\1\3\0\1198"
+	TITLE="AIM status icons"
+	TARGET="$(1)\resources\statusicons\aim" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - AIM status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=61
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Bot\1\3\0\1198"
+	TITLE="Bot status icons"
+	TARGET="$(1)\resources\statusicons\bot" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Bot status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=62
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Car\1\3\0\1198"
+	TITLE="Car status icons"
+	TARGET="$(1)\resources\statusicons\car" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Car status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=63
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Conference\1\3\0\1198"
+	TITLE="Conference status icons"
+	TARGET="$(1)\resources\statusicons\conference" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Conference status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=64
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Facebook\1\3\0\1198"
+	TITLE="Conference status icons"
+	TARGET="$(1)\resources\statusicons\facebook" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Facebook status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=65
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Gadu\1\3\0\1198"
+	TITLE="Gadu-Gadu status icons"
+	TARGET="$(1)\resources\statusicons\gadu" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Gadu-Gadu status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=66
+	PACKAGEID="Road Works Software\eyeCU\Status icons: GTalk\1\3\0\1198"
+	TITLE="Google Talk status icons"
+	TARGET="$(1)\resources\statusicons\gtalk" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Google Talk status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=67
+	PACKAGEID="Road Works Software\eyeCU\Status icons: ICQ\1\3\0\1198"
+	TITLE="ICQ status icons"
+	TARGET="$(1)\resources\statusicons\icq" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - ICQ status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=68
+	PACKAGEID="Road Works Software\eyeCU\Status icons: LJ\1\3\0\1198"
+	TITLE="Live Journal status icons"
+	TARGET="$(1)\resources\statusicons\livejournal" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Live Journal status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=69
+	PACKAGEID="Road Works Software\eyeCU\Status icons: MRIM\1\3\0\1198"
+	TITLE="Mail.ru-agent status icons"
+	TARGET="$(1)\resources\statusicons\mrim" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Mail.ru-agent status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=70
+	PACKAGEID="Road Works Software\eyeCU\Status icons: MSN\1\3\0\1198"
+	TITLE="MSN status icons"
+	TARGET="$(1)\resources\statusicons\msn" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - MSN status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=71
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Odnoklassniki\1\3\0\1198"
+	TITLE="Odnoklassniki status icons"
+	TARGET="$(1)\resources\statusicons\odnoklassniki" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Odnoklassniki status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=72
+	PACKAGEID="Road Works Software\eyeCU\Status icons: RSS\1\3\0\1198"
+	TITLE="RSS status icons"
+	TARGET="$(1)\resources\statusicons\rss" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - RSS status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=73
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Skype\1\3\0\1198"
+	TITLE="Skype status icons"
+	TARGET="$(1)\resources\statusicons\skype" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Skype status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=74
+	PACKAGEID="Road Works Software\eyeCU\Status icons: SMS\1\3\0\1198"
+	TITLE="SMS status icons"
+	TARGET="$(1)\resources\statusicons\sms" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - SMS status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=75
+	PACKAGEID="Road Works Software\eyeCU\Status icons: SMTP\1\3\0\1198"
+	TITLE="SMTP status icons"
+	TARGET="$(1)\resources\statusicons\smtp" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - SMTP status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=76
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Twitter\1\3\0\1198"
+	TITLE="Twitter status icons"
+	TARGET="$(1)\resources\statusicons\twitter" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Twitter status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=77
+	PACKAGEID="Road Works Software\eyeCU\Status icons: vKontakte\1\3\0\1198"
+	TITLE="vKontakte status icons"
+	TARGET="$(1)\resources\statusicons\vkontakte" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - vKontakte status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=78
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Weather\1\3\0\1198"
+	TITLE="Weather status icons"
+	TARGET="$(1)\resources\statusicons\weather" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Weather status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=79
+	PACKAGEID="Road Works Software\eyeCU\Status icons: Yahoo\1\3\0\1198"
+	TITLE="Yahoo status icons"
+	TARGET="$(1)\resources\statusicons\yahoo" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Yahoo status icon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=80
+	PACKAGEID="Road Works Software\eyeCU\Status icons: YaOnline\1\3\0\1198"
+	TITLE="YaOnline status icons"
+	TARGET="$(1)\resources\statusicons\yaonline" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - YaOnline status icon set
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=85
+	PACKAGEID="Road Works Software\eyeCU\Emoticons\1\3\0\1198"
+	TITLE="Emoticons"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - Emoticons plugin
+	(c) Road Works Software
+</PCK>
+
+<GROUP TITLE="Emoticon sets">
+
+<PCK 	INDEX=86
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: Default\1\3\0\1198"
+	TITLE="Emoticons - default package"
+	TARGET="$(1)\resources\emoticons\default" FIXED
+	SELECT
+	REQUIRES=85
+	>eyeCU - Default emoticon set
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=87
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: Blobs Purple\1\3\0\1198"
+	TITLE="Emoticons - Blobs Purple"
+	TARGET="$(1)\resources\emoticons\blobs_purple" FIXED
+	SELECT
+	REQUIRES=85
+	>eyeCU - Blobs Pink emoticon set
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=89
+	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\1\3\0\1198"
+	TITLE="XHTML-IM"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>eyeCU - XHTML-IM plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=103
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map\1\3\0\1198"
+	TITLE="Map"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Allows user to see interactive Map from different sources
+</PCK>
+
+<GROUP TITLE="Map sources">
+
+<PCK 	INDEX=104
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: OSM\1\3\0\1198"
+	TITLE="OpenStreetMaps map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=3
+	>Allows Map plugin use OpenStreetMaps as map source
+</PCK>
+
+<PCK 	INDEX=105
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Wikimapia\1\3\0\1198"
+	TITLE="Wikimapia map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=3
+	>Allows Map plugin use Wikimapia as map source
+</PCK>
+
+<PCK 	INDEX=106
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Google\1\3\0\1198"
+	TITLE="Google map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Google as map source
+</PCK>
+
+<PCK 	INDEX=107
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Yahoo\1\3\0\1198"
+	TITLE="Yahoo! map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Yahoo! as map source
+</PCK>
+
+<PCK 	INDEX=108
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Bing\1\3\0\1198"
+	TITLE="Bing (Microsoft) map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Here (from Microsoft) as map source
+</PCK>
+
+<PCK 	INDEX=109
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Here\1\3\0\1198"
+	TITLE="Here (Nokia) map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Here (from Nokia) as map source
+</PCK>
+
+<PCK 	INDEX=110
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: RuMap\1\3\0\1198"
+	TITLE="RuMap map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use RuMap (from Geocentre-Consulting) as map source
+</PCK>
+
+<PCK 	INDEX=111
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Vi-Tel\1\3\0\1198"
+	TITLE="Vi-Tel map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Vi-Tel as map source
+</PCK>
+
+<PCK 	INDEX=112
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Esri\1\3\0\1198"
+	TITLE="Esri map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Esri as map source
+</PCK>
+
+<PCK 	INDEX=113
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Navteq\1\3\0\1198"
+	TITLE="Navteq map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Navteq as map source
+</PCK>
+
+<PCK 	INDEX=114
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Yandex\1\3\0\1198"
+	TITLE="Yandex map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Yandex as map source
+</PCK>
+
+<PCK 	INDEX=115
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Navitel\1\3\0\1198"
+	TITLE="Navitel map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Navitel as map source
+</PCK>
+
+<PCK 	INDEX=116
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: 2GIS\1\3\0\1198"
+	TITLE="2GIS map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use 2GIS as map source
+</PCK>
+
+<PCK 	INDEX=117
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Kosmosnimki\1\3\0\1198"
+	TITLE="Kosmosnimki map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Kosmosnimki as map source
+</PCK>
+
+<PCK 	INDEX=118
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Mail.ru\1\3\0\1198"
+	TITLE="Mail.ru map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Mail.ru as map source
+</PCK>
+
+<PCK 	INDEX=119
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Rosreestr\1\3\0\1198"
+	TITLE="Rosreestr map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Rosreestr as map source
+</PCK>
+
+<PCK 	INDEX=120
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: Megafon\1\3\0\1198"
+	TITLE="Megafon map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use Megafon as map source
+</PCK>
+
+<PCK 	INDEX=121
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map source: PROGOROD\1\3\0\1198"
+	TITLE="PROGOROD map source"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows Map plugin use PROGOROD as map source
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=125
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map contacts\1\3\0\1198"
+	TITLE="Map contacts"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	REQUIRES="Road Works Software\eyeCU\Geoloc\1\3\0\1198"
+	>eyeCU - Map contacts plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=126
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map message\1\3\0\1198"
+	TITLE="Map message"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	REQUIRES=125
+	>Displays contact messages on the map
+</PCK>
+
+<PCK 	INDEX=127
+	PACKAGEID="Road Works Software\eyeCU-Extra\Contact Proximity Notification\1\3\0\1198"
+	TITLE="Contact proximity notification"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES="Road Works Software\eyeCU\Geoloc\1\3\0\1198"
+	REQUIRES="Road Works Software\eyeCU\Positioning\1\3\0\1198"
+	>Notifies user about proximity of contacts in the roster
+</PCK>
+
+<PCK 	INDEX=130
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search\1\3\0\1198"
+	TITLE="Map Search"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=150
+	>Allows to search objects and addresses, using different search providers
+</PCK>
+
+<GROUP TITLE="Map search providers">
+
+<PCK 	INDEX=131
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: OSM\1\3\0\1198"
+	TITLE="OpenStreetMap map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use OSM as map search provider
+</PCK>
+
+<PCK 	INDEX=132
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: Google\1\3\0\1198"
+	TITLE="Google map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use Google as map search provider
+</PCK>
+
+<PCK 	INDEX=133
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: 2GIS\1\3\0\1198"
+	TITLE="2GIS map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use 2GIS as map search provider
+</PCK>
+
+<PCK 	INDEX=134
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: Yandex\1\3\0\1198"
+	TITLE="Yandex map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use Yandex as map search provider
+</PCK>
+
+<PCK 	INDEX=135
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: Navitel\1\3\0\1198"
+	TITLE="Navitel map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use Navitel as map search provider
+</PCK>
+
+<PCK 	INDEX=136
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map search provider: Here\1\3\0\1198"
+	TITLE="Here map search provider"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=130
+	>Allows Map Search to use Here (from Nokia) as map search provider
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=137
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map magnifier\1\3\0\1198"
+	TITLE="Map magnifier"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>eyeCU - Map magnifier plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=138
+	PACKAGEID="Road Works Software\eyeCU-Extra\Map location selector\1\3\0\1198"
+	TITLE="Map location selector"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=103
+	>Allows other modules to let user to select location on the map
+</PCK>
+
+<PCK 	INDEX=140
+	PACKAGEID="Road Works Software\eyeCU-Extra\Street view\1\3\0\1198"
+	TITLE="Street view"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	>Allows to view street-level imagery
+</PCK>
+
+<GROUP TITLE="Street view providers">
+
+	<PCK 	INDEX=141
+		PACKAGEID="Road Works Software\eyeCU-Extra\Street view provider: Google\1\3\0\1198"
+		TITLE="Google street view provider"
+		TARGET="$(1)" FIXED
+		EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+		SELECT
+		REQUIRES=140
+		>Allows to use Google as a Street View provider
+	</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=145
+	PACKAGEID="Road Works Software\eyeCU-Extra\Place view\1\3\0\1198"
+	TITLE="Place view"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	>Allows you to view the photos of places
+</PCK>
+
+<GROUP TITLE="Place view providers">
+
+	<PCK 	INDEX=146
+		PACKAGEID="Road Works Software\eyeCU-Extra\Place view provider: Google\1\3\0\1198"
+		TITLE="Google place view provider"
+		TARGET="$(1)" FIXED
+		EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+		SELECT
+		REQUIRES=45
+		>Allows to use Google as a Place View provider
+	</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=150
+	PACKAGEID="Road Works Software\eyeCU-Extra\POI\1\3\0\1198"
+	TITLE="Points of interest"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=30
+	>eyeCU - Points of interest plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=152
+	PACKAGEID="Road Works Software\eyeCU-Extra\Nick\1\3\0\1198"
+	TITLE="Nickname"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Implements XEP-0172: User Nickname
+</PCK>
+
+<PCK 	INDEX=153
+	PACKAGEID="Road Works Software\eyeCU-Extra\Abbreviations\1\3\0\1198"
+	TITLE="Abbreviations"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Translates abbreviations frequently used in network communities
+</PCK>
+
+<PCK 	INDEX=156
+	PACKAGEID="Road Works Software\eyeCU-Extra\Receipts\1\3\0\1198"
+	TITLE="Message delivery receipts"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Sends and displays notifications about message delivery
+</PCK>
+
+<PCK 	INDEX=157
+	PACKAGEID="Road Works Software\eyeCU-Extra\Attention\1\3\0\1198"
+	TITLE="Attention"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Allows user to attract attention of the other party
+</PCK>
+
+<PCK 	INDEX=160
+	PACKAGEID="Road Works Software\eyeCU-Extra\OOB\1\3\0\1198"
+	TITLE="Out-of-band data"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>eyeCU - Out-of-band data plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=161
+	PACKAGEID="Road Works Software\eyeCU-Extra\Client icons\1\3\0\1198"
+	TITLE="Client icons"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Displays client icons in the roster and chat info bar
+</PCK>
+
+<PCK 	INDEX=165
+	PACKAGEID="Road Works Software\eyeCU-Extra\Mood\1\3\0\1198"
+	TITLE="User mood"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES="Road Works Software\eyeCU\PEP\1\3\0\1198"
+	>Implements XEP-0107: User Mood
+</PCK>
+
+<PCK 	INDEX=166
+	PACKAGEID="Road Works Software\eyeCU-Extra\Activity\1\3\0\1198"
+	TITLE="User activity"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES="Road Works Software\eyeCU\PEP\1\3\0\1198"
+	>Implements XEP-0108: User Activity
+</PCK>
+
+<PCK 	INDEX=170
+	PACKAGEID="Road Works Software\eyeCU-Extra\User tune\1\3\0\1198"
+	TITLE="User tune"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES="Road Works Software\eyeCU\PEP\1\3\0\1198"
+	>Implements XEP-0118: User Tune
+	Allows users to exchange information about what they listening right now
+</PCK>
+
+<GROUP TITLE="Tune listeners">
+
+<PCK 	INDEX=171
+	PACKAGEID="Road Works Software\eyeCU-Extra\Tune listener: File\1\3\0\1198"
+	TITLE="Tune listener: File"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=170
+	>Obtains currently playing tune information from a text file
+</PCK>
+
+<PCK 	INDEX=172
+	PACKAGEID="Road Works Software\eyeCU-Extra\Tune listener: PM123\1\3\0\1198"
+	TITLE="Tune listener: PM123"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=170
+	>Obtains currently playing tune information from PM123
+</PCK>
+
+<PCK 	INDEX=173
+	PACKAGEID="Road Works Software\eyeCU-Extra\Tune listener: QuPlayer\1\3\0\1198"
+	TITLE="Tune listener: QuPlayer"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=170
+	>Obtains currently playing tune information from QuPlayer
+</PCK>
+
+<PCK 	INDEX=174
+	PACKAGEID="Road Works Software\eyeCU-Extra\Tune listener: Z!\1\3\0\1198"
+	TITLE="Tune listener: Z!"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=170
+	>Obtains currently playing tune information from Z!
+</PCK>
+
+</GROUP>
+
+<GROUP TITLE="Tune info requesters">
+
+<PCK 	INDEX=175
+	PACKAGEID="Road Works Software\eyeCU-Extra\Tune info requester: last.fm\1\3\0\1198"
+	TITLE="Tune info requester: last.fm"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=170
+	>Requests extra info about artist, album or track from last.fm
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=180
+	PACKAGEID="Road Works Software\eyeCU-Extra\Wizards\1\3\0\1198"
+	TITLE="Wizards"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=1
+	>Common files, required by Wizards
+</PCK>
+
+<GROUP TITLE="Wizards">
+
+<PCK 	INDEX=181
+	PACKAGEID="Road Works Software\eyeCU-Extra\Account Wizard\1\3\0\1198"
+	TITLE="Connection Wizard"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=180
+	>A Wizard, which helps unexperienced user to connect to Jabber network
+</PCK>
+
+<PCK 	INDEX=182
+	PACKAGEID="Road Works Software\eyeCU-Extra\Transport Wizard\1\3\0\1198"
+	TITLE="Transport Wizard"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	SELECT
+	REQUIRES=180
+	>Wizard, which helps to connect to legacy networks via XMPP transports (gateways)
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=81
+	PACKAGEID="Road Works Software\eyeCU\Documentation\1\3\0\1198"
+	TITLE="Documentation"
+	TARGET="$(1)\doc"
+	SELECT
+	REQUIRES=1
+	CREATEOBJECT="REPLACE WPShadow|CHANGELOG|<EYECU_FOLDER>|SHADOWID=$(195)\CHANGELOG;OBJECTID=<EYECU_CHANGELOG>;"
+	CREATEOBJECT="REPLACE WPShadow|COPYING|<EYECU_FOLDER>|SHADOWID=$(195)\COPYING;OBJECTID=<EYECU_COPYING>;"
+	CREATEOBJECT="REPLACE WPShadow|README|<EYECU_FOLDER>|SHADOWID=$(195)\README;OBJECTID=<EYECU_README>;"
+	CREATEOBJECT="REPLACE WPShadow|TRANSLATORS|<EYECU_FOLDER>|SHADOWID=$(195)\TRANSLATORS;OBJECTID=<EYECU_TRANSLATORS>;"
+	CREATEOBJECT="REPLACE WPShadow|AUTHORS|<EYECU_FOLDER>|SHADOWID=$(195)\AUTHORS;OBJECTID=<EYECU_AUTHORS>;"
+	>eyeCU Documentation
+	(c) Road Works Software
+</PCK>
+
+<GROUP TITLE="Language packs">
+
+<PCK 	INDEX=90
+	PACKAGEID="Road Works Software\eyeCU\Language: RU\1\3\0\1198"
+	TITLE="Russian language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Russian language pack
+</PCK>
+
+<PCK 	INDEX=91
+	PACKAGEID="Road Works Software\eyeCU\Language: UK\1\3\0\1198"
+	TITLE="Ukrainian language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Ukrainian language pack
+</PCK>
+
+<PCK 	INDEX=92
+	PACKAGEID="Road Works Software\eyeCU\Language: PL\1\3\0\1198"
+	TITLE="Polish language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Polish language pack
+</PCK>
+
+<PCK 	INDEX=93
+	PACKAGEID="Road Works Software\eyeCU\Language: DE\1\3\0\1198"
+	TITLE="Deutch language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Deutch language pack
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=94
+	PACKAGEID="Road Works Software\eyeCU\Language: ES\1\3\0\1198"
+	TITLE="Spanish language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Spanish language pack
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=95
+	PACKAGEID="Road Works Software\eyeCU\Language: NL\1\3\0\1198"
+	TITLE="Dutch language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Dutch language pack
+</PCK>
+
+<PCK 	INDEX=96
+	PACKAGEID="Road Works Software\eyeCU\Language: JA\1\3\0\1198"
+	TITLE="Japanese language pack"
+	TARGET="$(1)\translations" FIXED
+	REQUIRES=1
+	SELECT
+	>NLS: Japanese language pack
+</PCK>
+
+<PCK 	INDEX=190
+	PACKAGEID="Road Works Software\eyeCU\Language: RU\1\3\0\1198"
+	TITLE="Russian language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Russian language pack
+</PCK>
+
+<PCK 	INDEX=191
+	PACKAGEID="Road Works Software\eyeCU\Language: UK\1\3\0\1198"
+	TITLE="Ukrainian language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Ukrainian language pack
+</PCK>
+
+<PCK 	INDEX=192
+	PACKAGEID="Road Works Software\eyeCU\Language: PL\1\3\0\1198"
+	TITLE="Polish language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Polish language pack
+</PCK>
+
+<PCK 	INDEX=193
+	PACKAGEID="Road Works Software\eyeCU\Language: DE\1\3\0\1198"
+	TITLE="Deutch language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Deutch language pack
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=194
+	PACKAGEID="Road Works Software\eyeCU\Language: ES\1\3\0\1198"
+	TITLE="Spanish language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Spanish language pack
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=195
+	PACKAGEID="Road Works Software\eyeCU\Language: NL\1\3\0\1198"
+	TITLE="Dutch language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Dutch language pack
+</PCK>
+
+<PCK 	INDEX=196
+	PACKAGEID="Road Works Software\eyeCU\Language: JA\1\3\0\1198"
+	TITLE="Japanese language pack (Extra)"
+	TARGET="$(1)\translations" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	REQUIRES=1
+	SELECT
+	>NLS: Japanese language pack
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=98
+	PACKAGEID="Road Works Software\eyeCU\DEBUG\1\3\0\1198"
+	TITLE=".SYM files for debugging"
+	TARGET="$(1)" FIXED
+	>SYM files for debugging
+</PCK>
+
+<PCK 	INDEX=198
+	PACKAGEID="Road Works Software\eyeCU-Extra\DEBUG\1\3\0\1198"
+	TITLE=".SYM files for debugging (Extra)"
+	TARGET="$(1)" FIXED
+	EXTERNAL="eyecu2-extra-1.3.0.1198.wpi"
+	>SYM files for debugging
+</PCK>
+
+<PCK 	INDEX=300
+	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\0\0"
+	TITLE="QtSerialPort runtime"
+	EXTERNAL="QtSerialPort2-1.0.0.wpi"
+	TARGET='=("FindQtRuntime")'
+	FIXED
+	SELECT
+	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
+	(c) Road Works Software
+</PCK>
+
+</HEAD>
+
+<BODY>
+<!-- page 1: introductory page -->
+<PAGE INDEX=1 TYPE=TEXT>
+<NEXTBUTTON TARGET=2>~Next</NEXTBUTTON>
+<TEXT>
+Welcome!
+This is eyeCU installation.
+Select "Next" to continue.
+Select "Cancel" to abort installation.
+</TEXT></PAGE>
+
+<!-- page 2: README page -->
+</PAGE>
+
+<PAGE INDEX=2 TYPE=README>
+<NEXTBUTTON TARGET=3>~Next</NEXTBUTTON>
+<TEXT>eyeCU 1.3 README</TEXT>
+<README EXTRACTFROMPCK="81" FORMAT="PLAIN">README</README>
+</PAGE>
+
+<!-- page 3: WHATSNEW page -->
+<PAGE INDEX=3 TYPE=README>
+<NEXTBUTTON TARGET=4>~Next</NEXTBUTTON>
+<TEXT>What's new in version 1.3
+Important notice: this is original CHANGELOG from Vacuum-IM. Some information it contains may be inaccurate, obsolete or just not actual.
+</TEXT>
+<README EXTRACTFROMPCK="81" FORMAT="PLAIN">CHANGELOG</README>
+</PAGE>
+
+<!-- The TYPE=CONTAINER will list the packages which can be installed. -->
+<PAGE INDEX=4 TYPE=CONTAINER>
+<NEXTBUTTON TARGET=5>~Next</NEXTBUTTON>
+<TEXT>Please, select packages you want to install.</TEXT>
+</PAGE>
+
+<!-- The TYPE=CONFIGURE will allow user to select actions to be performed during nstallation. -->
+<PAGE INDEX=5 TYPE=CONFIGURE>
+<NEXTBUTTON TARGET=6>~Next</NEXTBUTTON>
+<TEXT>Please, choose actions to be performed during installation.</TEXT>
+</PAGE>
+
+<PAGE INDEX=6 TYPE=TEXT>
+<NEXTBUTTON TARGET=0>I~nstall</NEXTBUTTON>
+<TEXT>
+Now everything is ready to install eyeCU!
+Press "Install" to begin installing this archive.
+
+NOTE: Thou installer will try to kill eyeCU automatically, it is recommended to exit eyeCU before you start installing a new version.
+</TEXT>
+</PAGE>
+</BODY>
+</WARPIN>

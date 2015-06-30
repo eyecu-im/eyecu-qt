@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Qt4 Runtime</DisplayName>
+    <Description>Qt4 Runtime</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>org.digia.qt4</Name>
+	<Dependencies>com.microsoft.vcredist</Dependencies>
+    <Virtual>true</Virtual>
+</Package>

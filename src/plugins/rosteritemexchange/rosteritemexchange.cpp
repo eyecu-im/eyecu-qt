@@ -1,5 +1,5 @@
 #include "rosteritemexchange.h"
-
+#include <QMimeData>
 #include <QDropEvent>
 #include <QDataStream>
 #include <QMessageBox>
@@ -859,5 +859,6 @@ void RosterItemExchange::onExchangeApproveDialogDestroyed()
 		FNotifications->removeNotification(notifyId);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_rosteritemexchange, RosterItemExchange)
+#endif

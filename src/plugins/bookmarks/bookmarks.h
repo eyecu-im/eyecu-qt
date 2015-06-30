@@ -27,6 +27,9 @@ class Bookmarks :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IBookmarks IOptionsDialogHolder IRosterDataHolder IRostersEditHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IBookmarks")
+#endif
 public:
 	Bookmarks();
 	~Bookmarks();

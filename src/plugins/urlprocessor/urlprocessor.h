@@ -13,6 +13,9 @@ class UrlProcessor :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IUrlProcessor);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IUrlProcessor")
+#endif
 public:
 	UrlProcessor();
 	~UrlProcessor();

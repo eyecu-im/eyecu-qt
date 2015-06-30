@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sounddef>
+  <name>Contact Proximity sounds</name>
+
+  <file>
+    <key>proximityEvent</key>
+    <object mime='sound/wav'>sonar.wav</object>
+  </file>
+
+</sounddef>

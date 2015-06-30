@@ -574,6 +574,10 @@ Check values and try again</source>
         <source>Invite user</source>
         <translation>Пригласить пользователя</translation>
     </message>
+    <message>
+        <source>Add this suffix when referring to the user</source>
+        <translation>Добавлять этот суффикс при обращении к пользователю</translation>
+    </message>
 </context>
 <context>
     <name>MultiUserChatWindow</name>

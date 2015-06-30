@@ -1,5 +1,5 @@
-TARGET         = compress 
-LIBS          += -lzlib
+TARGET    = compress
+LIBS     += -lzlib
   
 include(compress.pri)
 include(../plugins.inc)

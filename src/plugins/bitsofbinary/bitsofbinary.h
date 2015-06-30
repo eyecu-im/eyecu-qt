@@ -20,6 +20,9 @@ class BitsOfBinary :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IBitsOfBinary IXmppStanzaHadler IStanzaHandler IStanzaRequestOwner);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IBitsOfBinary")
+#endif
 public:
 	BitsOfBinary();
 	~BitsOfBinary();

@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StreetViewForm</class>
+ <widget class="QWidget" name="StreetViewForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>437</width>
+    <height>190</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Street view</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
+   <property name="margin">
+    <number>3</number>
+   </property>
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblView">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0,0" columnstretch="1,1,0,1">
+      <property name="leftMargin">
+       <number>3</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
+      <property name="bottomMargin">
+       <number>2</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>3</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>2</number>
+      </property>
+      <item row="3" column="0">
+       <widget class="DirectionSelector" name="dselDirection" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2" rowspan="7">
+       <widget class="Line" name="verticalSplitter">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QSpinBox" name="spbAzimuth">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="wrapping">
+         <bool>true</bool>
+        </property>
+        <property name="minimum">
+         <number>-180</number>
+        </property>
+        <property name="maximum">
+         <number>180</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="ElevationSelector" name="eselElevation" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblAzimuth">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Azimuth</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="lblElevation">
+        <property name="text">
+         <string>Elevation</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3" rowspan="4">
+       <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1,0,1,0">
+        <item row="2" column="0">
+         <widget class="QLabel" name="lblSize">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Picture size</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3" rowspan="3">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="lblLongitude">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>16</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Longitude</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4" rowspan="2">
+         <widget class="QPushButton" name="pbMoveToLocation">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>18</width>
+            <height>18</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Move to location</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QDoubleSpinBox" name="spbLatitude">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="wrapping">
+           <bool>true</bool>
+          </property>
+          <property name="decimals">
+           <number>6</number>
+          </property>
+          <property name="minimum">
+           <double>-90.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>90.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QComboBox" name="cbSize">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <item>
+           <property name="text">
+            <string>400x300</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>640x480</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>640x640</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="5">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lblLatitude">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Latitude</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1" rowspan="3">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="2">
+         <widget class="QDoubleSpinBox" name="spbLongitude">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="wrapping">
+           <bool>true</bool>
+          </property>
+          <property name="decimals">
+           <number>6</number>
+          </property>
+          <property name="minimum">
+           <double>-180.000000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>180.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0,0,0,0">
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbCopy">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Copy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbSaveToDisk">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::TabFocus</enum>
+          </property>
+          <property name="toolTip">
+           <string>Save image to disk</string>
+          </property>
+          <property name="text">
+           <string>Save</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="tbView">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Select Provider</string>
+          </property>
+          <property name="text">
+           <string>View</string>
+          </property>
+          <property name="popupMode">
+           <enum>QToolButton::MenuButtonPopup</enum>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="0" colspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,0">
+        <item>
+         <widget class="QLabel" name="lblFov">
+          <property name="text">
+           <string>Field of view</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="hslFov">
+          <property name="minimum">
+           <number>90</number>
+          </property>
+          <property name="maximum">
+           <number>120</number>
+          </property>
+          <property name="pageStep">
+           <number>5</number>
+          </property>
+          <property name="value">
+           <number>90</number>
+          </property>
+          <property name="tracking">
+           <bool>false</bool>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksAbove</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLCDNumber" name="lcdFov">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="digitCount">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="spbElevation">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimum">
+         <number>-90</number>
+        </property>
+        <property name="maximum">
+         <number>90</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ElevationSelector</class>
+   <extends>QWidget</extends>
+   <header location="global">qtgeo/elevationselector.h</header>
+   <container>1</container>
+   <slots>
+    <signal>elevationChanged(qreal)</signal>
+    <signal>elevationTrack(qreal)</signal>
+    <slot>setElevation(qreal)</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
+   <class>DirectionSelector</class>
+   <extends>QWidget</extends>
+   <header location="global">qtgeo/directionselector.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>spbAzimuth</tabstop>
+  <tabstop>spbElevation</tabstop>
+  <tabstop>hslFov</tabstop>
+  <tabstop>spbLatitude</tabstop>
+  <tabstop>spbLongitude</tabstop>
+  <tabstop>pbMoveToLocation</tabstop>
+  <tabstop>cbSize</tabstop>
+  <tabstop>pbCopy</tabstop>
+  <tabstop>pbSaveToDisk</tabstop>
+  <tabstop>tbView</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>hslFov</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>lcdFov</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>112</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>100</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dselDirection</sender>
+   <signal>directionTrack(qreal)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onDirectionTrack(qreal)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dselDirection</sender>
+   <signal>directionChanged(qreal)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onDirectionChange(qreal)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>39</x>
+     <y>119</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>hslFov</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onFovValueChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>111</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>180</x>
+     <y>61</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbAzimuth</sender>
+   <signal>editingFinished()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onAzimuthEditFinished()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>171</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbElevation</sender>
+   <signal>editingFinished()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onElevationEditFinished()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>187</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eselElevation</sender>
+   <signal>elevationTrack(qreal)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onElevationTrack(qreal)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eselElevation</sender>
+   <signal>elevationChanged(qreal)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onElevationChange(qreal)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>117</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>102</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbMoveToLocation</sender>
+   <signal>clicked()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onMoveToPosition()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>146</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbSaveToDisk</sender>
+   <signal>clicked()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onSaveClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbSize</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onSizeSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>90</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbView</sender>
+   <signal>clicked()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onViewClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>177</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>StreetViewForm</receiver>
+   <slot>onCopyClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>89</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onFovValueChange(int)</slot>
+  <slot>onMoveToPosition()</slot>
+  <slot>onDirectionChange(qreal)</slot>
+  <slot>onDirectionTrack(qreal)</slot>
+  <slot>onAzimuthEditFinished()</slot>
+  <slot>onElevationChange(qreal)</slot>
+  <slot>onElevationTrack(qreal)</slot>
+  <slot>onElevationEditFinished()</slot>
+  <slot>onSaveClicked()</slot>
+  <slot>onSizeSelected(int)</slot>
+  <slot>onViewClicked()</slot>
+  <slot>onCopyClicked()</slot>
+ </slots>
+</ui>

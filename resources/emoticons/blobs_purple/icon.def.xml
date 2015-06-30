@@ -1,0 +1,379 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <name>Blobs Purple</name>
+  <version>1.0</version> 
+  <creation>2012-06-19</creation>
+  <description>Purple Blobs iconset</description>
+  <home>www.eyecu.ru</home>
+  <author>Yagiza</author>
+  <icon>
+    <text>(n_n)</text>
+    <text>n_n</text>
+    <object mime="image/gif">purple-hikasmile.gif</object>
+  </icon>
+  <icon>
+    <text>(n_-)</text>
+    <text>n_-</text>
+    <text>(-_n)</text>
+    <text>-_n</text>
+    <text>(^_-)</text>
+    <text>^_-</text>
+    <text>(-_^)</text>
+    <text>-_^</text>
+    <text>(n_~)</text>
+    <text>n_~</text>
+    <text>(~_n)</text>
+    <text>~_n</text>
+    <text>(^_~)</text>
+    <text>^_~</text>
+    <text>(~_^)</text>
+    <text>~_^</text>
+    <object mime="image/gif">purple-hikablink.gif</object>
+  </icon>
+  <icon>
+    <text>+(n_n)</text>
+    <text>+n_n</text>
+    <text>#(n_n)</text>
+    <text>#n_n</text>
+    <object mime="image/gif">purple-hikagrr.gif</object>
+  </icon>
+  <icon>
+    <text>(&gt;.&lt;)</text>
+    <text>&gt;.&lt;</text>
+    <object mime="image/gif">purple-hikafroid.gif</object>
+  </icon>
+  <icon>
+    <text>(^_^)'</text>
+    <text>^_^'</text>
+    <text>'(^_^)</text>
+    <text>'^_^</text>
+    <object mime="image/gif">purple-hikagoutte.gif</object>
+  </icon>
+  <icon>
+    <text>(*_*)</text>
+    <text>*_*</text>
+    <object mime="image/gif">purple-hikalove.gif</object>
+  </icon>
+  <icon>
+    <text>(^__^)</text>
+    <text>^__^</text>
+    <text>(^___^)</text>
+    <text>^___^</text>
+    <object mime="image/gif">purple-hikahaha.gif</object>
+  </icon>
+  <icon>
+    <text>(-_-)</text>
+    <text>-_-</text>
+    <object mime="image/gif">purple-hikaboudea.gif</object>
+  </icon>
+  <icon>
+    <text>(?_?)</text>
+    <text>?_?</text>
+    <object mime="image/gif">purple-hikahin.gif</object>
+  </icon>
+  <icon>
+    <text>(^_^)</text>
+    <text>^_^</text>
+    <object mime="image/gif">purple-hikahi.gif</object>
+  </icon>
+  <icon>
+    <text>V(^_^)</text>
+    <text>V^_^</text>
+    <text>(^_^)V</text>
+    <text>^_^V</text>
+    <text>V_(^_^)</text>
+    <text>V_^_^</text>
+    <text>(^_^)_V</text>
+    <text>^_^_V</text>
+    <text>V(n_n)</text>
+    <text>Vn_n</text>
+    <text>(n_n)V</text>
+    <text>n_nV</text>
+    <text>V_(n_n)</text>
+    <text>V_n_n</text>
+    <text>(n_n)_V</text>
+    <text>n_n_V</text>
+    <object mime="image/gif">purple-hikav.gif</object>
+  </icon>
+  <icon>
+    <text>V(^_-)</text>
+    <text>V^_-</text>
+    <text>(^_-)V</text>
+    <text>^_-V</text>
+    <text>V_(^_-)</text>
+    <text>V_^_-</text>
+    <text>(^_-)_V</text>
+    <text>^_-_V</text>
+    <text>V(n_-)</text>
+    <text>Vn_-</text>
+    <text>(n_-)V</text>
+    <text>n_-V</text>
+    <text>V_(n_-)</text>
+    <text>V_n_-</text>
+    <text>(n_-)_V</text>
+    <text>n_-_V</text>
+    <text>V(-_^)</text>
+    <text>V-_^</text>
+    <text>(-_^)V</text>
+    <text>-_^V</text>
+    <text>V_(-_^)</text>
+    <text>V_-_^</text>
+    <text>(-_^)_V</text>
+    <text>-_^_V</text>
+    <text>V(-_n)</text>
+    <text>V-_n</text>
+    <text>(-_n)V</text>
+    <text>-_nV</text>
+    <text>V(^_~)</text>
+    <text>V^_~</text>
+    <text>(^_~)V</text>
+    <text>^_~V</text>
+    <text>V_(^_~)</text>
+    <text>V_^_~</text>
+    <text>(^_~)_V</text>
+    <text>^_~_V</text>
+    <text>V(n_~)</text>
+    <text>Vn_~</text>
+    <text>(n_~)V</text>
+    <text>n_~V</text>
+    <text>V_(n_~)</text>
+    <text>V_n_~</text>
+    <text>(n_~)_V</text>
+    <text>n_~_V</text>
+    <text>V(~_^)</text>
+    <text>V~_^</text>
+    <text>(~_^)V</text>
+    <text>~_^V</text>
+    <text>V_(~_^)</text>
+    <text>V_~_^</text>
+    <text>(~_^)_V</text>
+    <text>~_^_V</text>
+    <text>V(~_n)</text>
+    <text>V~_n</text>
+    <text>(~_n)V</text>
+    <text>~_nV</text>
+    <text>V_(~_n)</text>
+    <text>V_~_n</text>
+    <text>(~_n)_V</text>
+    <text>~_n_V</text>
+    <object mime="image/gif">purple-hikav~.gif.gif</object>
+  </icon>
+  <icon>
+    <text>(T_T)</text>
+    <text>T_T</text>
+    <text>(Y_Y)</text>
+    <text>Y_Y</text>
+    <object mime="image/gif">purple-hikaouin.gif</object>
+  </icon>
+  <icon>
+    <text>(;_;)</text>
+    <text>;_;</text>
+    <text>(j_j)</text>
+    <text>j_j</text>
+    <object mime="image/gif">purple-hikapleure.gif</object>
+  </icon>
+  <icon>
+    <text>(*^_^*)</text>
+    <text>*^_^*</text>
+    <text>(*n_n*)</text>
+    <text>*n_n*</text>
+    <text>(*^^*)</text>
+    <text>*^^*</text>
+    <text>(*nn*)</text>
+    <text>*nn*</text>
+    <text>(*^.^*)</text>
+    <text>*^.^*</text>
+    <text>(*n.n*)</text>
+    <text>*n.n*</text>
+    <object mime="image/gif">purple-hikarougea.gif</object>
+  </icon>
+  <icon>
+    <text>(*&gt;_&lt;*)</text>
+    <text>*&gt;_&lt;*</text>
+    <text>(*&gt;&lt;*)</text>
+    <text>*&gt;*&lt;</text>
+    <text>(*&gt;.&lt;*)</text>
+    <text>*&gt;.&lt;*</text>
+    <object mime="image/gif">purple-hikarougeb.gif</object>
+  </icon>
+  <icon>
+    <text>d(n_n)</text>
+    <text>dn_n</text>
+    <text>(n_n)b</text>
+    <text>n_nb</text>
+    <text>d(^_^)</text>
+    <text>d^_^</text>
+    <text>(^_^)b</text>
+    <text>^_^b</text>
+    <object mime="image/gif">purple-hikad.gif</object>
+  </icon>
+  <icon>
+    <text>d(n_-)</text>
+    <text>dn_-</text>
+    <text>(n_-)b</text>
+    <text>n_-b</text>
+    <text>d(^_-)</text>
+    <text>d^_-</text>
+    <text>(^_-)b</text>
+    <text>^_-b</text>
+    <text>d(-_n)</text>
+    <text>d-_n</text>
+    <text>(-_n)b</text>
+    <text>-_nb</text>
+    <text>d(-_^)</text>
+    <text>d-_^</text>
+    <text>(-_^)b</text>
+    <text>-_^b</text>
+    <object mime="image/gif">purple-hikad~.gif</object>
+  </icon>
+  <icon>
+    <text>q(n_n)</text>
+    <text>qn_n</text>
+    <text>(n_n)p</text>
+    <text>n_np</text>
+    <text>q(^_^)</text>
+    <text>q^_^</text>
+    <text>(^_^)p</text>
+    <text>^_^p</text>
+    <object mime="image/gif">purple-hikaq.gif</object>
+  </icon>
+  <icon>
+    <text>(&gt;_&lt;)</text>
+    <text>&gt;_&lt;</text>
+    <text>(&gt;&lt;)</text>
+    <text>&gt;&lt;</text>
+    <object mime="image/gif">purple-hikaboxe.gif</object>
+  </icon>
+  <icon>
+    <text>(n.n)</text>
+    <text>n.n</text>
+    <text>(^.^)</text>
+    <text>^.^</text>
+    <object mime="image/gif">purple-hikastpa.gif</object>
+  </icon>
+  <icon>
+    <text>(n_q)</text>
+    <text>n_q</text>
+    <text>(p_n)</text>
+    <text>p_n</text>
+    <object mime="image/gif">purple-hikablee.gif</object>
+  </icon>
+  <icon>
+    <text>(o_o)</text>
+    <text>o_o</text>
+    <object mime="image/gif">purple-hikalunettes.gif</object>
+  </icon>
+  <icon>
+    <text>(v_v)</text>
+    <text>v_v</text>
+    <object mime="image/gif">purple-hikaboudeb.gif</object>
+  </icon>
+  <icon>
+    <text>(^o^)</text>
+    <text>^o^</text>
+    <object mime="image/gif">purple-hikayoupi.gif</object>
+  </icon>
+  <icon>
+    <text>(0_0)</text>
+    <text>0_0</text>
+    <text>(O_O)</text>
+    <text>O_O</text>
+    <object mime="image/gif">purple-hikaya.gif</object>
+  </icon>
+  <icon>
+    <text>V(^_^)V</text>
+    <text>V^_^V</text>
+    <text>V_(^_^)_V</text>
+    <text>V_^_^_V</text>
+    <text>V(n_n)V</text>
+    <text>Vn_nV</text>
+    <text>V_(n_n)V</text>
+    <text>V_n_n_V</text>
+    <object mime="image/gif">purple-hikavv.gif</object>
+  </icon>
+  <icon>
+    <text>V(^_-)V</text>
+    <text>V^_-V</text>
+    <text>V_(^_-)_V</text>
+    <text>V_^_-_V</text>
+    <text>V(n_-)V</text>
+    <text>Vn_-V</text>
+    <text>V_(n_-)V</text>
+    <text>V_n_-_V</text>
+    <text>V(-_^)V</text>
+    <text>V-_^V</text>
+    <text>V_(-_^)_V</text>
+    <text>V_-_^_V</text>
+    <text>V(-_n)V</text>
+    <text>V-_nV</text>
+    <text>V_(-_n)V</text>
+    <text>V_-_n_V</text>
+    <object mime="image/gif">purple-hikavv~.gif</object>
+  </icon>
+  <icon>
+    <text>\m/_</text>
+    <object mime="image/gif">purple-hikahandr.gif</object>
+  </icon>
+  <icon>
+    <text>_\m/</text>
+    <object mime="image/gif">purple-hikahandl.gif</object>
+  </icon>
+  <icon>
+    <text>(X_x)</text>
+    <text>X_x</text>
+    <text>(x_X)</text>
+    <text>x_X</text>
+    <text>(X_X)</text>
+    <text>X_X</text>
+    <text>(x_x)</text>
+    <text>x_x</text>
+    <text>(+_+)</text>
+    <text>+_+</text>
+    <object mime="image/gif">purple-hikadead.gif</object>
+  </icon>
+  <icon>
+    <text>(@_@)</text>
+    <text>@_@</text>
+    <object mime="image/gif">purple-hikaout.gif</object>
+  </icon>
+  <icon>
+    <text>d(n_n)b</text>
+    <text>dn_nb</text>
+    <text>d(^_^)b</text>
+    <text>d^_^b</text>
+    <object mime="image/gif">purple-hikadb.gif</object>
+  </icon>
+  <icon>
+    <text>d(n_-)b</text>
+    <text>dn_-b</text>
+    <text>d(^_-)b</text>
+    <text>d^_-b</text>
+    <text>d(-_n)b</text>
+    <text>d-_nb</text>
+    <text>d(-_^)b</text>
+    <text>d-_^b</text>
+    <text>d(n_~)b</text>
+    <text>dn_~b</text>
+    <text>d(^_~)b</text>
+    <text>d^_~b</text>
+    <text>d(~_n)b</text>
+    <text>d~_nb</text>
+    <text>d(~_^)b</text>
+    <text>d~_^b</text>
+    <object mime="image/gif">purple-hikadb~.gif</object>
+  </icon>
+  <icon>
+    <text>q(v_v)p</text>
+    <text>qv_vp</text>
+    <text>q(n_n)p</text>
+    <text>qn_np</text>
+    <text>q(^_^)p</text>
+    <text>q^_^p</text>
+    <object mime="image/gif">purple-hikapq.gif</object>
+  </icon>
+  <icon>
+    <text>m(_ _)m</text>
+    <text>m_ _m</text>
+    <object mime="image/gif">purple-hikastpb.gif</object>
+  </icon>
+</icondef>

@@ -1,5 +1,9 @@
 #include "messagecarbons.h"
 
+// *** <<< eyeCU <<< ***
+#include <definitions/menuicons.h>
+#include <definitions/resources.h>
+// *** >>> eyeCU >>> ***
 #include <definitions/namespaces.h>
 #include <definitions/stanzahandlerorders.h>
 #include <utils/message.h>
@@ -82,6 +86,9 @@ bool MessageCarbons::initObjects()
 		dfeature.active = true;
 		dfeature.name = tr("Message Carbons");
 		dfeature.description = tr("Allows to keep all user IM clients engaged in a conversation");
+// *** <<< eyeCU <<< ***
+		dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MESSAGECARBONS);
+// *** >>> eyeCU >>> ***
 		FDiscovery->insertDiscoFeature(dfeature);
 	}
 	return true;
@@ -236,5 +243,6 @@ void MessageCarbons::onDiscoInfoReceived(const IDiscoInfo &AInfo)
 			setEnabled(AInfo.streamJid,true);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_messagecarbons, MessageCarbons)
+#endif

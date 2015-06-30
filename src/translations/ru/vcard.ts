@@ -242,12 +242,12 @@
     </message>
     <message>
         <source>Show contact profile</source>
-        <translation>Показать личные данные контакта</translation>
+        <translation>Показать профиль контакта</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Show contact profile</comment>
-        <translation>Ctrl+I</translation>
+        <translation></translation>
     </message>
     <message>
         <source>User Profile</source>

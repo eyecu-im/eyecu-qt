@@ -30,6 +30,9 @@ class OptionsManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IOptionsManager IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IOptionsManager")
+#endif
 public:
 	OptionsManager();
 	~OptionsManager();
@@ -84,6 +87,7 @@ signals:
 	void optionsDialogHolderRemoved(IOptionsDialogHolder *AHolder);
 	void optionsDialogNodeInserted(const IOptionsDialogNode &ANode);
 	void optionsDialogNodeRemoved(const IOptionsDialogNode &ANode);
+	void optionsModeInitialized(bool AAdvanced); // *** <<< eyeCU >>> ***
 protected:
 	void closeProfile();
 	void openProfile(const QString &AProfile, const QString &APassword);
@@ -97,6 +101,7 @@ protected:
 	void updateOptionValues(const QMap<QString, QVariant> &AOptions) const;
 	void updateOptionDefaults(const QMap<QString, QVariant> &AOptions) const;
 protected slots:
+	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onOptionsDialogApplied();
 	void onChangeProfileByAction(bool);
@@ -104,6 +109,7 @@ protected slots:
 	void onLoginDialogRejected();
 	void onAutoSaveTimerTimeout();
 	void onApplicationAboutToQuit();
+	void onNewProfileOpened(); // *** <<< eyeCU >>> ***
 private:
 	ITrayManager *FTrayManager;
 	IPluginManager *FPluginManager;
@@ -125,6 +131,7 @@ private:
 	Action *FShowOptionsDialogAction;
 	QList<IOptionsDialogHolder *> FOptionsHolders;
 	QMap<QString, IOptionsDialogNode> FOptionsDialogNodes;
+	bool FAdvanced; // *** <<< eyeCU >>> ***
 };
 
 #endif // OPTIONSMANAGER_H

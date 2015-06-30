@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>health:baby_hatch</key><name>Baby hatch</name><object mime="image/png">health/baby_hatch.png</object></icon>
+<icon><key>health:dentist</key><name>Dentist</name><object mime="image/png">health/dentist.png</object></icon>
+<icon><key>health:doctor</key><name>Doctor</name><object mime="image/png">health/doctor.png</object></icon>
+<icon><key>health:hospital</key><name>Hospital</name><object mime="image/png">health/hospital.png</object></icon>
+<icon><key>health:pharmacy</key><name>Pharmacy</name><object mime="image/png">health/pharmacy.png</object></icon>
+<icon><key>health:veterinary</key><name>Veterinary</name><object mime="image/png">health/veterinary.png</object></icon>
+</icondef>

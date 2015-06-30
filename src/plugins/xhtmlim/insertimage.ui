@@ -1,0 +1,1037 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InsertImage</class>
+ <widget class="QDialog" name="InsertImage">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>580</width>
+    <height>165</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>100</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Insert image</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_3">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblUrl">
+     <property name="minimumSize">
+      <size>
+       <width>90</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(0, 0, 255);</string>
+     </property>
+     <property name="text">
+      <string>URL</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="cmbScheme">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>65</width>
+       <height>20</height>
+      </size>
+     </property>
+     <item>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">HTTP</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">HTTPS</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">FTP</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>File</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="2" colspan="6">
+    <widget class="QLineEdit" name="ledUrl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="spbMaxAge">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QComboBox" name="cmbMaxAgeUnits">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <item>
+      <property name="text">
+       <string notr="true">seconds</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">weeks</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">months</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">years</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <widget class="QCheckBox" name="chbEmbed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Embed into message</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lblImage">
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>80</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="textInteractionFlags">
+      <set>Qt::NoTextInteraction</set>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblInfoLabel">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>106</red>
+           <green>104</green>
+           <blue>100</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Information</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblMaxAge">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>106</red>
+           <green>104</green>
+           <blue>100</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Maximum age</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1" colspan="7">
+    <widget class="QGroupBox" name="gpbImageFormat">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>70</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Image format</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item row="0" column="1">
+       <layout class="QGridLayout" name="gridLayout_4">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Width</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QSpinBox" name="spbWidth">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="maximum">
+           <number>32000</number>
+          </property>
+          <property name="singleStep">
+           <number>1</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label_2">
+          <property name="minimumSize">
+           <size>
+            <width>50</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Height</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QSpinBox" name="spbHeight">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="mouseTracking">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="maximum">
+           <number>32000</number>
+          </property>
+          <property name="singleStep">
+           <number>1</number>
+          </property>
+          <property name="value">
+           <number>0</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="6">
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="8">
+         <widget class="QComboBox" name="cmbType">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="7">
+         <widget class="QLabel" name="lblType">
+          <property name="text">
+           <string>Type</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="8">
+         <widget class="QPushButton" name="pbInsert">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Insert</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QDoubleSpinBox" name="dspbWidth">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="suffix">
+           <string>%</string>
+          </property>
+          <property name="maximum">
+           <double>999.990000000000009</double>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="3">
+         <widget class="QDoubleSpinBox" name="dspbHeight">
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="suffix">
+           <string>%</string>
+          </property>
+          <property name="maximum">
+           <double>999.990000000000009</double>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QCheckBox" name="chbPhysResize">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Physically resize</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="5">
+         <widget class="QCheckBox" name="chbKeepAspect">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Keep aspect ratio</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QPushButton" name="pbBrowse">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>70</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Browse...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QPushButton" name="pbLoad">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Load</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="5">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>4</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>1</number>
+     </property>
+    </layout>
+   </item>
+   <item row="3" column="1" colspan="7">
+    <widget class="QLabel" name="lblInfo">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblAlt">
+     <property name="palette">
+      <palette>
+       <active>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </active>
+       <inactive>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>0</red>
+           <green>0</green>
+           <blue>255</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </inactive>
+       <disabled>
+        <colorrole role="WindowText">
+         <brush brushstyle="SolidPattern">
+          <color alpha="255">
+           <red>106</red>
+           <green>104</green>
+           <blue>100</blue>
+          </color>
+         </brush>
+        </colorrole>
+       </disabled>
+      </palette>
+     </property>
+     <property name="text">
+      <string>Alternative text</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="7">
+    <widget class="QLineEdit" name="ledAlt"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>chbKeepAspect</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onCheckBoxKeepAspect(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbPhysResize</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onCheckBoxPhysResize(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbScheme</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onSchemeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbHeight</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onSpbHeight(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbWidth</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onSpbWidth(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dspbHeight</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onDSpbHeight(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>268</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dspbWidth</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onDSpbWidth(double)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>268</x>
+     <y>91</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbBrowse</sender>
+   <signal>clicked()</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onButtonBrowse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>480</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbLoad</sender>
+   <signal>clicked()</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onButtonLoad()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>547</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbInsert</sender>
+   <signal>clicked()</signal>
+   <receiver>InsertImage</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ledUrl</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onTextChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>71</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ledUrl</sender>
+   <signal>returnPressed()</signal>
+   <receiver>pbLoad</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>369</x>
+     <y>10</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>547</x>
+     <y>32</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onImageSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>532</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dspbHeight</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onImageSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>143</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>dspbWidth</sender>
+   <signal>valueChanged(QString)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onImageSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chbPhysResize</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onImageSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>113</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbMaxAge</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>InsertImage</receiver>
+   <slot>onMaxAgeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>126</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>289</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onButtonLoad()</slot>
+  <slot>onButtonBrowse()</slot>
+  <slot>onSchemeChanged(int)</slot>
+  <slot>onTextChanged()</slot>
+  <slot>onCheckBoxKeepAspect(int)</slot>
+  <slot>onSpbWidth(int)</slot>
+  <slot>onSpbHeight(int)</slot>
+  <slot>onDSpbWidth(double)</slot>
+  <slot>onDSpbHeight(double)</slot>
+  <slot>onCheckBoxPhysResize(int)</slot>
+  <slot>onImageSettingsChanged()</slot>
+  <slot>onMaxAgeChanged(int)</slot>
+ </slots>
+</ui>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Service Discovery Deutsch Translation</DisplayName>
+    <Description>Service Discovery Deutsch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.servicediscovery.de</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.servicediscovery,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -15,6 +15,7 @@
 #include <utils/iconstorage.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 enum PluginItemDataRoles {
 	PDR_LABELS = Qt::UserRole + 1000,
@@ -174,7 +175,8 @@ void SetupPluginsDialog::updatePlugins()
 		else if (!isLoaded)
 		{
 			errorsCount++;
-			descrLabel.d->hints.insert(AdvancedDelegateItem::Foreground, Qt::red);
+//			descrLabel.d->hints.insert(AdvancedDelegateItem::Foreground, Qt::red);
+			descrLabel.d->hints.insert(AdvancedDelegateItem::Foreground, QColor(Qt::red));
 			nameLabel.d->hints.insert(AdvancedDelegateItem::Foreground, ui.tbvPlugins->palette().color(QPalette::Disabled, QPalette::Text));
 		}
 
@@ -187,7 +189,7 @@ void SetupPluginsDialog::updatePlugins()
 
 		pluginElem = pluginElem.nextSiblingElement();
 	}
-	ui.tbvPlugins->horizontalHeader()->setResizeMode(0,QHeaderView::Stretch);
+	ui.tbvPlugins->horizontalHeader()->SETRESIZEMODE(0,QHeaderView::Stretch);
 	ui.tbvPlugins->verticalHeader()->resizeSections(QHeaderView::ResizeToContents);
 
 	FModel.sort(0);
@@ -219,13 +221,13 @@ void SetupPluginsDialog::onCurrentPluginChanged(const QModelIndex &ACurrent, con
 	if (ACurrent.isValid())
 	{
 		ui.lblName->setText(QString("<b>%1</b> %2 (%3)").arg(
-			Qt::escape(ACurrent.data(PDR_NAME).toString()),
+			HTML_ESCAPE(ACurrent.data(PDR_NAME).toString()),
 			ACurrent.data(PDR_VERSION).toString(),
 			ACurrent.data(PDR_FILE).toString()));
 
 		ui.lblHomePage->setText(QString("<a href='%1'>%2</a>").arg(
 			ACurrent.data(PDR_HOMEPAGE).toString(),
-			Qt::escape(ACurrent.data(PDR_HOMEPAGE).toString())));
+			HTML_ESCAPE(ACurrent.data(PDR_HOMEPAGE).toString())));
 
 		ui.lblDescription->setText(ACurrent.data(PDR_DESCR).toString());
 

@@ -417,6 +417,22 @@ void FileStream::abortStream(const XmppError &AError)
 	}
 }
 
+// *** <<< eyeCU <<< ***
+void FileStream::addOutputDevice(QIODevice *AIODevice)
+{
+    FOutputMutex.lock();
+    FOutputDevices.append(AIODevice);
+    FOutputMutex.unlock();
+}
+
+void FileStream::removeOutputDevice(QIODevice *AIODevice)
+{
+    FOutputMutex.lock();
+    FOutputDevices.removeOne(AIODevice);
+    FOutputMutex.unlock();
+}
+// *** >>> eyeCU >>> ***
+
 bool FileStream::openFile()
 {
 	if (updateFileInfo() && !FFileName.isEmpty() && FFileSize>0)
@@ -522,7 +538,7 @@ void FileStream::onSocketStateChanged(int AState)
 		{
 			LOG_STRM_DEBUG(FStreamJid,QString("Starting file stream thread, sid=%1").arg(FStreamId));
 			qint64 bytesForTransfer = FRangeLength>0 ? FRangeLength : FFileSize-FRangeOffset;
-			FThread = new TransferThread(FSocket,&FFile,FStreamKind,bytesForTransfer,this);
+            FThread = new TransferThread(FSocket,&FFile,&FOutputDevices,&FOutputMutex,FStreamKind,bytesForTransfer,this);  // *** <<< eyeCU >>> ***
 			connect(FThread,SIGNAL(transferProgress(qint64)),SLOT(onTransferThreadProgress(qint64)));
 			connect(FThread,SIGNAL(finished()),SLOT(onTransferThreadFinished()));
 			setStreamState(Transfering,tr("Data transmission"));

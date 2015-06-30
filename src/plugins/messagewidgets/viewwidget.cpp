@@ -159,7 +159,14 @@ QTextDocumentFragment ViewWidget::textFragmentAt(const QPoint &APosition) const
 		return FMessageStyle->textFragmentAt(FStyleWidget,FStyleWidget->mapFromGlobal(mapToGlobal(APosition)));
 	return QTextDocumentFragment();
 }
-
+// *** <<< eyeCU <<< ***
+QImage ViewWidget::imageAt(const QPoint &APosition) const
+{
+    if (FMessageStyle && FStyleWidget)
+        return FMessageStyle->imageAt(FStyleWidget,FStyleWidget->mapFromGlobal(mapToGlobal(APosition)));
+    return QImage();
+}
+// *** >>> eyeCU >>> ***
 void ViewWidget::initialize()
 {
 }

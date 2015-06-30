@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source 2Gis Deutsch Translation</DisplayName>
+    <Description>Map Source 2Gis Deutsch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.2gis.de</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.2gis,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

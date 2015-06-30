@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Adium Message Style Spanish Translation</DisplayName>
+    <Description>Adium Message Style Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.adiummessagestyle.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.adiummessagestyle,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

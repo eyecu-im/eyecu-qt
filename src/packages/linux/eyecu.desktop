@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=eyeCU
+GenericName=XMPP Client
+GenericName[ru]=Клиент XMPP
+Comment=Communicate over the Jabber network
+Comment[ru]=Общение в сетях Jabber
+Exec=eyecu
+Icon=eyecu
+StartupNotify=true
+Type=Application
+Terminal=false
+Categories=Network;InstantMessaging;Qt;

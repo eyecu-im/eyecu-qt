@@ -99,10 +99,6 @@
         <translation>Изменять статус</translation>
     </message>
     <message>
-        <source>I&apos;m away from my desk</source>
-        <translation>Отошёл</translation>
-    </message>
-    <message>
         <source>On loss of connection to the server</source>
         <translation>При обрыве подключения к серверу</translation>
     </message>
@@ -112,15 +108,19 @@
     </message>
     <message>
         <source>Connect to server on startup</source>
-        <translation>Подключаться к серверу при запуске приложения</translation>
+        <translation>Подключаться к серверу при старте</translation>
     </message>
     <message>
         <source>Reconnect to server on connection errors</source>
-        <translation>Автоматически восстанавливать подключение при ошибках</translation>
+        <translation>Подключаться знова при ошибках соединения</translation>
     </message>
     <message>
         <source>Standard and users statuses</source>
         <translation>Стандартные и пользовательские статусы</translation>
+    </message>
+    <message>
+        <source>I&apos;m away from my desk</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

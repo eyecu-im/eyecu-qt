@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk_UA" sourcelanguage="en">
 <context>
     <name>PrivateStorage</name>
     <message>
@@ -7,7 +9,7 @@
     </message>
     <message>
         <source>Allows other modules to store arbitrary data on a server</source>
-        <translation>Дозволяє іншим модулям зберігати довільні дані на сервері</translation>
+        <translation>Дозволяе іншим модулям зберігати дозвільні данні на сервері</translation>
     </message>
 </context>
 </TS>

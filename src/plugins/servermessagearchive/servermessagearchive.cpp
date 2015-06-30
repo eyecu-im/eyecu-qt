@@ -778,5 +778,6 @@ void ServerMessageArchive::onServerModificationsLoaded(const QString &AId, const
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_servermessagearchive, ServerMessageArchive)
+#endif

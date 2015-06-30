@@ -92,6 +92,7 @@ public:
 	virtual QTextDocumentFragment selection() const =0;
 	virtual QTextCharFormat textFormatAt(const QPoint &APosition) const =0;
 	virtual QTextDocumentFragment textFragmentAt(const QPoint &APosition) const =0;
+    virtual QImage imageAt(const QPoint &APosition) const =0; // *** <<< eyeCU >>> ***
 protected:
 	virtual void urlClicked(const QUrl &AUrl) =0;
 	virtual void viewContextMenu(const QPoint &APosition, Menu *AMenu) =0;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>misc:construction</key><name>Construction</name><object mime="image/png">misc/construction.png</object></icon>
+<icon><key>misc:danger</key><name>Danger</name><object mime="image/png">misc/danger.png</object></icon>
+<icon><key>misc:deprecated</key><name>Deprecated</name><object mime="image/png">misc/deprecated.png</object></icon>
+<icon><key>misc:flag</key><name>Flag</name><object mime="image/png">misc/flag.png</object></icon>
+<icon><key>misc:grit_bin</key><name>Grit bin</name><object mime="image/png">misc/grit_bin.png</object></icon>
+<icon><key>misc:housenumber</key><name>House number</name><object mime="image/png">misc/housenumber.png</object></icon>
+<icon><key>misc:mud</key><name>Mud</name><object mime="image/png">misc/mud.png</object></icon>
+<icon><key>misc:note</key><name>Note</name><object mime="image/png">misc/note.png</object></icon>
+<icon><key>misc:streetlamp</key><name>Street lamp</name><object mime="image/png">misc/streetlamp.png</object></icon>
+<icon><key>misc:surveillance</key><name>Surveillance</name><object mime="image/png">misc/surveillance.png</object></icon>
+<icon><key>misc:mountain_pass</key><name>Mountain pass</name><object mime="image/png">misc/landmark/mountain_pass.png</object></icon>
+<icon><key>misc:range</key><name>Range</name><object mime="image/png">misc/landmark/range.png</object></icon>
+<icon><key>misc:reservoir_covered</key><name>Reservoir covered</name><object mime="image/png">misc/landmark/reservoir_covered.png</object></icon>
+<icon><key>misc:survey_point</key><name>Survey point</name><object mime="image/png">misc/landmark/survey_point.png</object></icon>
+<icon><key>misc:works</key><name>Works</name><object mime="image/png">misc/landmark/works.png</object></icon>
+<icon><key>misc:commercial</key><name>Commercial</name><object mime="image/png">misc/landuse/commercial.png</object></icon>
+<icon><key>misc:garages</key><name>Garages</name><object mime="image/png">misc/landuse/garages.png</object></icon>
+<icon><key>misc:greenhouse_horticulture</key><name>Greenhouse horticulture</name><object mime="image/png">misc/landuse/greenhouse_horticulture.png</object></icon>
+<icon><key>misc:residential</key><name>Residential</name><object mime="image/png">misc/landuse/residential.png</object></icon>
+<icon><key>misc:wifi</key><name>Wifi</name><object mime="image/png">misc/wifi.png</object></icon>
+<icon><key>misc:bay</key><name>Bay</name><object mime="image/png">misc/bay.png</object></icon>
+<icon><key>misc:beach</key><name>Beach</name><object mime="image/png">misc/beach.png</object></icon>
+<icon><key>misc:coastline</key><name>Coastline</name><object mime="image/png">misc/coastline.png</object></icon>
+<icon><key>misc:cliff</key><name>Cliff</name><object mime="image/png">misc/cliff.png</object></icon>
+<icon><key>misc:hunting_stand</key><name>Hunting stand</name><object mime="image/png">misc/hunting_stand.png</object></icon>
+<icon><key>information</key><name>Information</name><object mime="image/png">misc/information.png</object></icon>
+<icon><key>information:board</key><name>Board</name><object mime="image/png">misc/information/board.png</object></icon>
+<icon><key>information:guidepost</key><name>Guidepost</name><object mime="image/png">misc/information/guidepost.png</object></icon>
+<icon><key>information:map</key><name>Map</name><object mime="image/png">misc/information/map.png</object></icon>
+<icon><key>information:informationoffice</key><name>Information office</name><object mime="image/png">misc/information/informationoffice.png</object></icon>
+</icondef>

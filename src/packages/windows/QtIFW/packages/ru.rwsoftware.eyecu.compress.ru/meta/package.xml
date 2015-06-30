@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Stream Compression Russian Translation</DisplayName>
+    <Description>Stream Compression Russian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.compress.ru</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.compress,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -71,6 +71,9 @@ class MessageArchiver :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IMessageArchiver IStanzaHandler IStanzaRequestOwner IOptionsDialogHolder ISessionNegotiator);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IMessageArchiver")
+#endif
 public:
 	MessageArchiver();
 	~MessageArchiver();

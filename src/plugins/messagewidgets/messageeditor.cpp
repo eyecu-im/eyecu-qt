@@ -1,5 +1,7 @@
 #include "messageeditor.h"
-
+#if QT_VERSION >= 0x050000
+#include <QMimeData>
+#endif
 #include <QFrame>
 #include <QTextDocumentFragment>
 #include <QAbstractTextDocumentLayout>

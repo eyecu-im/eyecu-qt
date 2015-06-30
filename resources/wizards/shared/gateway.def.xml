@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<gateways>
+    <gateway name="aim">
+        <server><jid>aim.alpha-labs.net</jid><software>Aim Transport</software></server>
+        <server><jid>aim.jabber.rueckgr.at</jid><software>Aim Transport</software></server>
+    </gateway>
+    <gateway name="E-Mail">
+        <server><jid>smtp-t.netlab.cz</jid><software>E-mail-XMPP Gateway(service)</software></server>
+    </gateway>
+    <gateway name="gadu-gadu">
+        <server><jid>gg.isgeek.info</jid><software>GaduDadu Transport</software></server>
+        <server><jid>gadugadu.alpha-labs.net</jid><software>GaduDadu Transport</software></server>
+        <server><jid>gg.chrome.pl</jid><software>Gadu-Gadu Transport</software></server>
+        <server><jid>gg.jabber.rueckgr.at</jid><software>Gadu-Gadu Transport</software></server>
+    </gateway>
+    <gateway name="icq">
+        <server><jid>icq-dev.isgeek.info</jid><software>ICQ Transport</software></server>
+        <server><jid>icq.isgeek.info</jid><software>ICQ Transport</software></server>
+        <server><jid>icq2.isgeek.info</jid><software>Spectrum ICQ Transport</software></server>
+        <server><jid>icq.jabber.org.ru</jid><software>ICQ Transport</software></server>
+        <server><jid>icq.alpha-labs.net</jid><software>ICQ Transport</software></server>
+        <server><jid>icq.sudouser.ru</jid><software>ICQ Transport</software></server>
+    </gateway>
+    <gateway name="irc">
+        <server><jid>irc.isgeek.info</jid><software>IRC Transport</software></server>
+        <server><jid>irc.alpha-labs.net</jid><software>IRC Transport</software></server>
+        <server><jid>irc.sudouser.ru</jid><software>IRC Transport</software></server>
+        <server><jid>irc2.sudouser.ru</jid><software>IRC Transport (Spectrum 2)</software></server>
+    </gateway>
+    <gateway name="lcs"></gateway>
+    <gateway name="mrim">
+        <server><jid>mrim.sudouser.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+        <server><jid>mrim.jabbercity.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+        <server><jid>mrim.jabber.org.by</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+    </gateway>
+    <gateway name="myspaceim"></gateway>
+    <gateway name="qq">
+        <server><jid>qq.jabber.tf-network.de</jid><software>QQ Transport</software></server>
+    </gateway>
+    <gateway name="public">
+        <server><jid>chat.chrome.pl</jid><software>Public chat room</software></server>
+        <server><jid>n42@meetups.xmpp.ninja</jid><software>Public chat room</software></server>
+        <server><jid>pressluftcowboys@meetups.xmpp.ninja</jid><software>Public chat room</software></server>
+    </gateway>
+    <gateway name="renren">
+        <server><jid>renren.jabber.tf-network.de</jid><software>RenRen Transport</software></server>
+    </gateway>
+    <gateway name="sip"></gateway>
+    <gateway name="skype">
+        <server><jid>skype.jabbim.com</jid><software>Skype gateway</software></server>
+    </gateway>
+    <gateway name="sametime">
+        <server><jid>sametime.jabber.tf-network.de</jid><software>SameTime Transport</software></server>
+    </gateway>
+    <gateway name="sms">
+        <server><jid>sms.jabber.ru</jid><software>SMS gateway</software></server>
+        <server><jid>sms.jabbim.cz</jid><software>Jabbim SMS gateway</software></server>
+        <server><jid>sms.netlab.cz</jid><software>Jabbim SMS gateway</software></server>
+    </gateway>
+    <gateway name="twitter">
+       <server><jid>twitter.jabbim.com</jid><software>Twitter Jabbim gateway</software></server>
+    </gateway>
+    <gateway name="tlen">
+        <server><jid>tlen.isgeek.info</jid><software>Tlen Transport v</software></server>
+        <server><jid>tlen.chrome.pl</jid><software>Tlen Transport</software></server>
+    </gateway>
+    <gateway name="tv">
+        <server><jid>tv.jabbim.cz</jid><software>TV Jabbim gateway</software></server>
+    </gateway>
+    <gateway name="vk">
+        <server>
+            <jid>vkontakte.jabberon.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vktest.jabberon.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.clsv.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.helldev.net</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.im.etersoft.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.jabbercity.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server> 
+		<server>
+            <jid>vk.kap.sh</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk4xmpp.kap.sh</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+			</exception>
+        </server>
+		<server>
+            <jid>vk.mnezius.me</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.psynet.su</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+		<server>
+            <jid>vk.xmpp.tankserv.org</jid>
+            <software>VK4XMPP Transport</software>
+            <exception>
+                <field var="link"></field>
+                <field var="use_password" type="boolean"><value>true</value></field>
+            </exception>
+        </server>
+    </gateway>
+    <gateway name="xfire"></gateway>
+    <gateway name="yahoo">
+        <server><jid>yahoo.isgeek.info</jid><software>YAHOO! Transport</software></server>
+        <server><jid>yahoo.alpha-labs.net</jid><software>YAHOO! Transport</software></server>
+        <server><jid>yahoo.jabber.rueckgr.at</jid><software>YAHOO! Transport</software></server>
+        <server><jid>yahoo.jabber.tf-network.de</jid><software>YAHOO! Transport</software></server>
+    </gateway>
+</gateways>

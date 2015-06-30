@@ -1,6 +1,7 @@
 #include "webpage.h"
 
 #include <QAction>
+#include <QWebFrame>
 
 WebPage::WebPage(QObject *AParent) : QWebPage(AParent)
 {

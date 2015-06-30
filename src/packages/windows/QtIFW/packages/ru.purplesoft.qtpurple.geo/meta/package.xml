@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Qt Geo</DisplayName>
+    <Description>Qt Purple - Geo Framework</Description>
+    <Version>1.0.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.purplesoft.qtpurple.geo</Name>
+    <Dependencies>ru.purplesoft.qtpurple</Dependencies>
+    <Virtual>true</Virtual>
+</Package>

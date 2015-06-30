@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Search Ukrainian Translation</DisplayName>
+    <Description>Map Search Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.mapsearch.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.search,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

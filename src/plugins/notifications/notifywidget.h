@@ -18,6 +18,8 @@ public:
 	void appear();
 	static void setMainWindow(IMainWindow *AMainWindow);
 	static void setNetworkManager(QNetworkAccessManager *ANetworkManager);
+public slots:
+    void setAnimated(bool AAnimated);
 signals:
 	void notifyActivated();
 	void notifyRemoved();

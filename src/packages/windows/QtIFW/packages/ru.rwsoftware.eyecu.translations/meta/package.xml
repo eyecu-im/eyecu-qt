@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Language packs</DisplayName>
+    <Description>Language packs</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.translations</Name>
+    <SortingPriority>5</SortingPriority>
+</Package>

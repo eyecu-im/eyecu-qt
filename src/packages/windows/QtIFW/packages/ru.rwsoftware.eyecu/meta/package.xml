@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>eyeCU</DisplayName>
+    <Description>XMPP-based IM client with positioning</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu</Name>
+    <Dependencies>ru.purplesoft.qtpurple.util</Dependencies>
+    <Licenses>
+        <License name="License Agreement" file="LICENSE.TXT" />
+    </Licenses>
+    <SortingPriority>100</SortingPriority>
+    <UpdateText>This changed compared to the last release</UpdateText>
+    <Default>true</Default>
+    <ForcedInstallation>true</ForcedInstallation>
+    <Essential>false</Essential>
+    <Script>installscript.qs</Script>
+    <UserInterfaces>
+        <UserInterface>additionaloptionspageform.ui</UserInterface>
+    </UserInterfaces>
+</Package>

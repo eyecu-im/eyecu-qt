@@ -5,6 +5,7 @@
 #include <definitions/optionvalues.h>
 #include <definitions/internalerrors.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 Account::Account(IXmppStreamManager *AXmppStreamManager, const OptionsNode &AOptionsNode, QObject *AParent) : QObject(AParent)
 {
@@ -135,7 +136,7 @@ void Account::onXmppStreamPasswordRequested(bool &AWait)
 			FPasswordDialog = new PasswordDialog();
 			FPasswordDialog->setAttribute(Qt::WA_DeleteOnClose);
 			FPasswordDialog->setWindowTitle(tr("Account Password"));
-			FPasswordDialog->setLabelText(tr("Enter password for account <b>%1</b>").arg(Qt::escape(name())));
+			FPasswordDialog->setLabelText(tr("Enter password for account <b>%1</b>").arg(HTML_ESCAPE(name())));
 			FPasswordDialog->setPassword(FXmppStream->password());
 			FPasswordDialog->setSavePassword(!password().isEmpty());
 			connect(FPasswordDialog,SIGNAL(accepted()),SLOT(onPasswordDialogAccepted()));

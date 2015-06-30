@@ -16,6 +16,9 @@ class MessageProcessor :
 {
 	Q_OBJECT
 	Q_INTERFACES(IPlugin IMessageProcessor IMessageWriter IStanzaHandler)
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IMessageProcessor")
+#endif
 public:
 	MessageProcessor();
 	~MessageProcessor();
@@ -70,7 +73,7 @@ protected:
 	IMessageHandler *findMessageHandler(const Message &AMessage, int ADirection);
 	void notifyMessage(IMessageHandler *AHandler, const Message &AMessage, int ADirection);
 	QString prepareBodyForSend(const QString &AString) const;
-	QString prepareBodyForReceive(const QString &AString) const;
+    QDomDocument prepareBodyForReceive(const QString &AString) const;
 protected slots:
 	void onNotificationActivated(int ANotifyId);
 	void onNotificationRemoved(int ANotifyId);

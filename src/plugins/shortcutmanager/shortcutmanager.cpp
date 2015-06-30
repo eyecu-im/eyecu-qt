@@ -258,5 +258,6 @@ void ShortcutManager::onShortcutActivated(const QString &AId, QWidget *AWidget)
 			showHiddenWidgets();
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_shortcutmanager, ShortcutManager)
+#endif

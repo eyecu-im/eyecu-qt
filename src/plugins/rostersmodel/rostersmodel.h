@@ -18,6 +18,9 @@ class RostersModel :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IRostersModel IRosterDataHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IRostersModel")
+#endif
 public:
 	RostersModel();
 	~RostersModel();
@@ -59,6 +62,12 @@ public:
 	virtual QMultiMap<int, IRosterDataHolder *> rosterDataHolders() const;
 	virtual void insertRosterDataHolder(int AOrder, IRosterDataHolder *AHolder);
 	virtual void removeRosterDataHolder(int AOrder, IRosterDataHolder *AHolder);
+	// *** <<< eyeCU <<< ***
+	virtual bool getShowSelf() const {return FShowSelf;}
+	virtual void setShowSelf(bool AShow);
+	virtual bool getShowOfflineAgents() const {return FShowOfflineAgents;}
+	virtual void setShowOfflineAgents(bool AShow);
+	// *** >>> eyeCU >>> ***
 signals:
 	//IRostersModel
 	void streamAdded(const Jid &AStreamJid);
@@ -109,6 +118,10 @@ private:
 	QHash<IRosterIndex *, QMultiHash<Jid, IRosterIndex *> > FContactsCache;
 	// parent->name->index
 	QHash<IRosterIndex *, QMultiHash<QString, IRosterIndex *> > FGroupsCache;
+// *** <<< eyeCU <<< ***
+	bool FShowSelf;
+	bool FShowOfflineAgents;
+// *** >>> eyeCU >>> ***
 };
 
 #endif // ROSTERSMODEL_H

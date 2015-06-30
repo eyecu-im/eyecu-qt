@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<abbreviations>
+	<abbreviation><key>WTF</key><value>What the fuck</value></abbreviation>
+	<abbreviation><key>4U</key><value>For you</value></abbreviation>
+	<abbreviation><key>AAMOF</key><value>As a matter of fact</value></abbreviation>
+	<abbreviation><key>AND</key><value>Any day now</value></abbreviation>
+	<abbreviation><key>AFAIK</key><value>As far as I know</value></abbreviation>
+	<abbreviation><key>AFAIR</key><value>As far as I remember</value></abbreviation>
+	<abbreviation><key>AMF</key><value>Adios motherfuker</value></abbreviation>
+	<abbreviation><key>AS</key><value>On another subject</value></abbreviation>
+	<abbreviation><key>ASAP</key><value>As soon as possible</value></abbreviation>
+	<abbreviation><key>ATM</key><value>At the moment</value></abbreviation>
+	<abbreviation><key>ATSL</key><value>Along the same line</value></abbreviation>
+	<abbreviation><key>BBIAF</key><value>Be back in a few [minutes]</value></abbreviation>
+	<abbreviation><key>BBIAH</key><value>Be back in an hour</value></abbreviation>
+	<abbreviation><key>BBIAM</key><value>Be back in an minute</value></abbreviation>
+	<abbreviation><key>BBIAS</key><value>Be back in a second</value></abbreviation>
+	<abbreviation><key>BBS</key><value>Be back soon</value></abbreviation>
+	<abbreviation><key>BCNU</key><value>Be seeing you</value></abbreviation>
+	<abbreviation><key>BNF</key><value>Big name fan</value></abbreviation>
+	<abbreviation><key>BTW</key><value>By the way</value></abbreviation>
+	<abbreviation><key>BBIAH</key><value>Be back in an hour</value></abbreviation>
+	<abbreviation><key>CU</key><value>See you</value></abbreviation>
+	<abbreviation><key>CUL</key><value>See you later</value></abbreviation>
+	<abbreviation><key>CUL8R</key><value>See you later</value></abbreviation>
+	<abbreviation><key>CYA</key><value>Cover your ass</value></abbreviation>
+	<abbreviation><key>DL</key><value>Download</value></abbreviation>
+	<abbreviation><key>DIIK</key><value>Damned if I know</value></abbreviation>
+	<abbreviation><key>EMFBI</key><value>Excuse me for butting in</value></abbreviation>
+	<abbreviation><key>FAQ</key><value>Frequently asked questions</value></abbreviation>
+	<abbreviation><key>FITB</key><value>Fill in the blank</value></abbreviation>
+	<abbreviation><key>FROPPED</key><value>Fucking dropped</value></abbreviation>
+	<abbreviation><key>FUBAR</key><value>Fouled up beyond all repair</value></abbreviation>
+	<abbreviation><key>FWIW</key><value>For what its worth</value></abbreviation>
+	<abbreviation><key>FYBITS</key><value>Fuck you, buddy, Ifm the sysop</value></abbreviation>
+	<abbreviation><key>FYI</key><value>For your information</value></abbreviation>
+	<abbreviation><key>GIWIST</key><value>Gee I wish Ifd said that</value></abbreviation>
+	<abbreviation><key>HHTYAY</key><value>Happy holidays to you and yours</value></abbreviation>
+	<abbreviation><key>IANAL</key><value>I am not a lawyer</value></abbreviation>	
+	<abbreviation><key>IMCO</key><value>In my considered opinion</value></abbreviation>
+	<abbreviation><key>IMHO</key><value>In my humble opinion</value></abbreviation>
+	<abbreviation><key>IMNSHO</key><value>In my not so humble opinion</value></abbreviation>
+	<abbreviation><key>IMO</key><value>In my opinion</value></abbreviation>
+	<abbreviation><key>IOW</key><value>In other words</value></abbreviation>
+	<abbreviation><key>IRL</key><value>In real life</value></abbreviation>
+	<abbreviation><key>ITSFWI</key><value>If the shoe fits, wear it</value></abbreviation>
+	<abbreviation><key>JK</key><value>Just kidding</value></abbreviation>
+	<abbreviation><key>JSNM</key><value>Just stark naked magic</value></abbreviation>
+	<abbreviation><key>KISS</key><value>Keep it simple, sillyhead!</value></abbreviation>
+	<abbreviation><key>KHYF</key><value>Know how you feel</value></abbreviation>
+	<abbreviation><key>L8R</key><value>Later</value></abbreviation>
+	<abbreviation><key>LAB&amp;TYD</key><value>Life&apos;s a bitch and then you die</value></abbreviation>
+	<abbreviation><key>LOL</key><value>Laughing out loud</value></abbreviation>
+	<abbreviation><key>LTNS</key><value>Long time no see</value></abbreviation>
+	<abbreviation><key>LTNT</key><value>Long time no type</value></abbreviation>
+	<abbreviation><key>MHO</key><value>My humble opinion</value></abbreviation>
+	<abbreviation><key>MYOB</key><value>Mind your own business</value></abbreviation>
+	<abbreviation><key>NBFD</key><value>No big fucking deal</value></abbreviation>
+	<abbreviation><key>NSFW</key><value>Not safe for work</value></abbreviation>
+	<abbreviation><key>IC</key><value>I see</value></abbreviation>
+	<abbreviation><key>OIC</key><value>Oh, I see</value></abbreviation>	
+	<abbreviation><key>OOTQ</key><value>Out of the question</value></abbreviation>
+	<abbreviation><key>OTOH</key><value>On the other hand</value></abbreviation>
+	<abbreviation><key>OTTOMH</key><value>Off the top of my head</value></abbreviation>
+	<abbreviation><key>PFM</key><value>Pure fucking magic</value></abbreviation>
+	<abbreviation><key>PMJI</key><value>Pardon my jumping in</value></abbreviation>
+	<abbreviation><key>POV</key><value>Point of view</value></abbreviation>
+	<abbreviation><key>RE</key><value>Returned</value></abbreviation>
+	<abbreviation><key>RL</key><value>Real life</value></abbreviation>		
+	<abbreviation><key>ROFL</key><value>Rolling on the floor laughing</value></abbreviation>
+	<abbreviation><key>ROTFL</key><value>Rolling on the floor laughing</value></abbreviation>
+	<abbreviation><key>ROTF</key><value>Rolling on the floor</value></abbreviation>
+	<abbreviation><key>RSN</key><value>Real soon now</value></abbreviation>
+	<abbreviation><key>RTFM</key><value>Read that fucking manual</value></abbreviation>
+	<abbreviation><key>SNAFU</key><value>Situation normal, all fouled up</value></abbreviation>
+	<abbreviation><key>SOW</key><value>Speaking of which</value></abbreviation>
+	<abbreviation><key>SYSOP</key><value>System operator</value></abbreviation>
+	<abbreviation><key>TANJ</key><value>There ain’t no justice</value></abbreviation>
+	<abbreviation><key>TANSTAAFL</key><value>There ain’t no such thing as a free lunch</value></abbreviation>
+	<abbreviation><key>TANSTAASQ</key><value>There ain’t no such thing as a stupid question</value></abbreviation>
+	<abbreviation><key>TFTHAOT</key><value>Thanx for the help ahead of time</value></abbreviation>
+	<abbreviation><key>TL;DR;</key><value>Too long; Didn't read</value></abbreviation>
+	<abbreviation><key>TLDR;</key><value>Too long, didn't read</value></abbreviation>
+	<abbreviation><key>TNX</key><value>Thanx</value></abbreviation>
+	<abbreviation><key>TOBAL</key><value>There oughta be a law</value></abbreviation>
+	<abbreviation><key>TOBG</key><value>There oughta be good</value></abbreviation>
+	<abbreviation><key>TPTB</key><value>The powers that be</value></abbreviation>
+	<abbreviation><key>TTBOMK</key><value>To the best of my knowledge</value></abbreviation>
+	<abbreviation><key>TTFN</key><value>Ta ta for now</value></abbreviation>
+	<abbreviation><key>TTUL</key><value>Talk to you later</value></abbreviation>
+	<abbreviation><key>TTYL</key><value>Talk to you later</value></abbreviation>
+	<abbreviation><key>UL</key><value>Upload</value></abbreviation>
+	<abbreviation><key>WB</key><value>Welcome back</value></abbreviation>
+	<abbreviation><key>WRT</key><value>With respect to</value></abbreviation>
+	<abbreviation><key>WYSIWYG</key><value>What you see is what you get</value></abbreviation>
+	<abbreviation><key>YGLT</key><value>You’re gonna love this</value></abbreviation>
+	<abbreviation><key>YKYARW</key><value>You know You’re a redneck when</value></abbreviation>
+</abbreviations>

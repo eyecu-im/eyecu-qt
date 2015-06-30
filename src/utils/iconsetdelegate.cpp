@@ -3,7 +3,9 @@
 #include <QKeyEvent>
 #include <QMouseEvent>
 #include <QApplication>
+#if QT_VERSION < 0x050000
 #include <QWindowsVistaStyle>
+#endif
 
 #define DEFAULT_ICON_ROW_COUNT 1
 

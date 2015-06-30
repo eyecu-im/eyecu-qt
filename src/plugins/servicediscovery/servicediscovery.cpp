@@ -211,14 +211,14 @@ bool ServiceDiscovery::initObjects()
 	{
 		FTrayManager->contextMenu()->addAction(FDiscoMenu->menuAction(),AG_TMTM_DISCOVERY,true);
 	}
-
+/****** <<< eyeCU <<< ******
 	if (FMainWindowPlugin)
 	{
 		ToolBarChanger *changer = FMainWindowPlugin->mainWindow()->topToolBarChanger();
 		QToolButton *button = changer->insertAction(FDiscoMenu->menuAction(),TBG_MWTTB_DISCOVERY);
 		button->setPopupMode(QToolButton::InstantPopup);
 	}
-
+ ****** >>> eyeCU >>> ******/
 	if (FXmppUriQueries)
 	{
 		FXmppUriQueries->insertUriHandler(this, XUHO_DEFAULT);
@@ -1551,5 +1551,6 @@ void ServiceDiscovery::onSelfCapsChanged()
 	}
 	FUpdateSelfCapsStarted = false;
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_servicediscovery, ServiceDiscovery)
+#endif

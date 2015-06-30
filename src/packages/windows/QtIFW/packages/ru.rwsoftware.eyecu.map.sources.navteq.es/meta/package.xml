@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source Navteq Spanish Translation</DisplayName>
+    <Description>Map Source Navteq Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.navteq.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.navteq,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

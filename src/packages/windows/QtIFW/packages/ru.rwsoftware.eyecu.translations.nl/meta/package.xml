@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Dutch</DisplayName>
+    <Description>Dutch language pack</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.translations.nl</Name>
+    <SortingPriority>5</SortingPriority>
+    <Default>true</Default>
+</Package>

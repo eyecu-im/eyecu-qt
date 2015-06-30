@@ -197,6 +197,10 @@
         <comment>Send single message</comment>
         <translation>Ctrl+Return</translation>
     </message>
+    <message>
+        <source>Information bar icons</source>
+        <translation>Иконки на информационной полосе</translation>
+    </message>
 </context>
 <context>
     <name>NormalWindow</name>
@@ -309,13 +313,6 @@
     <message>
         <source>Hide Offline Contacts</source>
         <translation>Не показывать отключенные контакты</translation>
-    </message>
-</context>
-<context>
-    <name>ReceiversWidgetClass</name>
-    <message>
-        <source>Search Contacts</source>
-        <translation>Поиск контактов</translation>
     </message>
 </context>
 <context>

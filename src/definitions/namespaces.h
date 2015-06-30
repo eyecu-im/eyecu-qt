@@ -19,6 +19,8 @@
 #define NS_JABBER_DATA                          "jabber:x:data"
 #define NS_JABBER_REGISTER                      "jabber:iq:register"
 #define NS_JABBER_OOB                           "jabber:x:oob"
+#define NS_JABBER_OOB_X                         "jabber:x:oob"
+#define NS_JABBER_OOB_IQ                        "jabber:iq:oob"
 #define NS_JABBER_SEARCH                        "jabber:iq:search"
 #define NS_JABBER_GATEWAY                       "jabber:iq:gateway"
 #define NS_JABBER_PRIVACY                       "jabber:iq:privacy"
@@ -92,5 +94,30 @@
 #define NS_MESSAGE_FORWARD                      "urn:xmpp:forward:0"
 
 #define NS_VACUUM_PRIVATESTORAGE_UPDATE         "vacuum:privatestorage:update"
+
+// *** <<< eyeCU <<< ***
+#define NS_PUBSUB_RETRACT                       "http://jabber.org/protocol/pubsub#retract"
+
+#define NS_PEP_ACTIVITY                         "http://jabber.org/protocol/activity"
+#define NS_PEP_MOOD                             "http://jabber.org/protocol/mood"
+#define NS_PEP_TUNE                             "http://jabber.org/protocol/tune"
+#define NS_PEP_NICK                             "http://jabber.org/protocol/nick"
+
+#define NS_RECEIPTS                         	"urn:xmpp:receipts"
+#define NS_ATTENTION                         	"urn:xmpp:attention:0"
+#define NS_XHTML								"http://www.w3.org/1999/xhtml"
+#define NS_XHTML_IM								"http://jabber.org/protocol/xhtml-im"
+#define NS_X_POI                                "jabber:x:poi"
+
+//Jingle
+#define NS_JINGLE                               "urn:xmpp:jingle:1"
+#define NS_JINGLE_APPS_RTP                      "urn:xmpp:jingle:apps:rtp:1"
+#define NS_JINGLE_APPS_RTP_INFO                 "urn:xmpp:jingle:apps:rtp:info:1"
+
+#define NS_JINGLE_TRANSPORTS_RAW_UDP            "urn:xmpp:jingle:transports:raw-udp:1"
+#define NS_JINGLE_TRANSPORTS_ICE_UDP            "urn:xmpp:jingle:transports:ice-udp:1"
+//Other
+#define NS_XMPP_STANZAS                         "urn:ietf:params:xml:ns:xmpp-stanzas"
+// *** >>> eyeCU >>> ***
 
 #endif

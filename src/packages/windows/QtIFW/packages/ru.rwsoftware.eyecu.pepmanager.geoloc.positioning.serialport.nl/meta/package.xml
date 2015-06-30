@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Serial Port Positioning Method Dutch Translation</DisplayName>
+    <Description>Serial Port Positioning Method Dutch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport.nl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PositioningOptions</class>
+ <widget class="QWidget" name="PositioningOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>213</width>
+    <height>28</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Positioning method </string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>55</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QComboBox" name="cBoxSource"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="pbOptions">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Setup positioning method</string>
+     </property>
+     <property name="whatsThis">
+      <string>This button will display settings dialog for selected positioning method</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbOptions</sender>
+   <signal>clicked()</signal>
+   <receiver>PositioningOptions</receiver>
+   <slot>onOptionsClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>311</x>
+     <y>13</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cBoxSource</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PositioningOptions</receiver>
+   <slot>onMethodSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onOptionsClicked()</slot>
+  <slot>onMethodSelected(int)</slot>
+ </slots>
+</ui>

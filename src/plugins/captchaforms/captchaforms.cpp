@@ -497,5 +497,6 @@ void CaptchaForms::onNotificationRemoved(int ANotifyId)
 	}
 	FChallengeNotify.remove(ANotifyId);
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_captchaforms, CaptchaForms)
+#endif

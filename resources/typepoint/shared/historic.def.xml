@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>historic:boundary_stone</key><name>Boundary stone</name><object mime="image/png">historic/boundary_stone.png</object></icon>
+<icon><key>historic:palaeontological_site</key><name>Palaeontological site</name><object mime="image/png">historic/palaeontological_site.png</object></icon>
+</icondef>

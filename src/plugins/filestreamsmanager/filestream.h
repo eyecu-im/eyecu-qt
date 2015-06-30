@@ -52,6 +52,10 @@ public:
 	virtual bool initStream(const QList<QString> &AMethods);
 	virtual bool startStream(const QString &AMethodNS);
 	virtual void abortStream(const XmppError &AError);
+//*** <<< eyeCU <<< ***
+    virtual void addOutputDevice(QIODevice *AIODevice);
+    virtual void removeOutputDevice(QIODevice *AIODevice);
+//*** >>> eyeCU >>> ***
 signals:
 	void stateChanged();
 	void speedChanged();
@@ -97,6 +101,10 @@ private:
 	QFile FFile;
 	TransferThread *FThread;
 	IDataStreamSocket *FSocket;
+//*** <<< eyeCU <<< ***
+    QList<QIODevice *> FOutputDevices;
+    QMutex             FOutputMutex;
+//*** >>> eyeCU >>> ***
 };
 
 #endif // FILESTREAM_H

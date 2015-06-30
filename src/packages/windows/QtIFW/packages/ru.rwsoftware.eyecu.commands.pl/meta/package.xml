@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Ad-Hocs Commands Polish Translation</DisplayName>
+    <Description>Ad-Hocs Commands Polish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.commands.pl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.commands,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

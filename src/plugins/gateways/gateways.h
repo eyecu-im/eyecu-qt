@@ -25,6 +25,9 @@ class Gateways :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IGateways IStanzaRequestOwner IDiscoFeatureHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IGateways")
+#endif
 public:
 	Gateways();
 	~Gateways();
@@ -43,6 +46,7 @@ public:
 	virtual Action *createDiscoFeatureAction(const Jid &AStreamJid, const QString &AFeature, const IDiscoInfo &ADiscoInfo, QWidget *AParent);
 	//IGateways
 	virtual void resolveNickName(const Jid &AStreamJid, const Jid &AContactJid);
+	virtual void resetNickName(const Jid &AStreamJid, const Jid &AContactJid); /*** <<< eyeCU >>> ***/
 	virtual void sendLogPresence(const Jid &AStreamJid, const Jid &AServiceJid, bool ALogIn);
 	virtual QList<Jid> keepConnections(const Jid &AStreamJid) const;
 	virtual void setKeepConnection(const Jid &AStreamJid, const Jid &AServiceJid, bool AEnabled);

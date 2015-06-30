@@ -2,30 +2,100 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru" sourcelanguage="en">
 <context>
-    <name>SocksOptionsWidgetClass</name>
+    <name>AdvancedSocksOptionsWidget</name>
     <message>
-        <source>Use jabber-proxy on your server</source>
-        <translation>Использовать jabber-прокси на вашем сервере</translation>
+        <source>host:port</source>
+        <translation>хост:порт</translation>
+    </message>
+    <message numerus="yes">
+        <source>second(s)</source>
+        <translation>
+            <numerusform>секунда</numerusform>
+            <numerusform>секунды</numerusform>
+            <numerusform>секунд</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedSocksOptionsWidgetClass</name>
+    <message>
+        <source>Outgoing Connections</source>
+        <translation>Исходящие подключения</translation>
     </message>
     <message>
-        <source>Use additional jabber-proxy:</source>
-        <translation>Использовать дополнительный jabber-прокси:</translation>
+        <source>Connection timeout:</source>
+        <translation>Таймаут подключения:</translation>
+    </message>
+    <message>
+        <source>Use account connection proxy settings</source>
+        <translation>Использовать настройки прокси из аккаунта</translation>
+    </message>
+    <message>
+        <source>Incoming Connections</source>
+        <translation>Входящие подключения</translation>
     </message>
     <message>
         <source>Allow direct incoming connections on port:</source>
-        <translation>Разрешить прямые входящие подключения на порт:</translation>
+        <translation>Разрешить прямые входящие подключения к порту:</translation>
     </message>
     <message>
         <source>Forward direct incoming connections to host:</source>
-        <translation>Перенаправить прямые входящие подключения на хост:</translation>
+        <translation>Перенаправлять прямые входящие подключения на хост:</translation>
     </message>
     <message>
-        <source>Use account proxy settings for outgoing connections</source>
-        <translation>Использовать прокси аккаунта для исходящих подключений</translation>
+        <source>Stream Proxy</source>
+        <translation>Прокси потока</translation>
+    </message>
+    <message>
+        <source>Use jabber-proxy on your server</source>
+        <translation>Использовать jabber-прокси на своём сервере</translation>
+    </message>
+    <message>
+        <source>Use additional jabber-proxies</source>
+        <translation>Использовать дополнительные jabber-прокси</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation>Вверх</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation>Вниз</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>SocksOptionsWidgetClass</name>
+    <message>
+        <source>Use jabber-proxy on your server</source>
+        <translation>Использовать jabber-прокси на своём сервере</translation>
+    </message>
+    <message>
+        <source>Use additional jabber-proxy:</source>
+        <translation>Использовать дополнительные jabber-прокси:</translation>
+    </message>
+    <message>
+        <source>Allow direct incoming connections on port:</source>
+        <translation>Разрешить прямые входящие подключения к порту:</translation>
+    </message>
+    <message>
+        <source>Forward direct incoming connections to host:</source>
+        <translation>Перенаправлять прямые входящие подключения на хост:</translation>
     </message>
     <message>
         <source>host:port</source>
         <translation>хост:порт</translation>
+    </message>
+    <message>
+        <source>Use account proxy settings for outgoing connections</source>
+        <translation>Использовать для исходящих соединений настройки прокси из аккаунта</translation>
     </message>
 </context>
 <context>

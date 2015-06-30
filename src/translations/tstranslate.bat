@@ -1,2 +1,2 @@
-autotranslate.exe en ru
-pause
+autotranslate.exe en
+tsupdate.bat en

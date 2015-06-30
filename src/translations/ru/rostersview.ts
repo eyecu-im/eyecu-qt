@@ -59,6 +59,22 @@
         <translation>&lt;b&gt;Аккаунт:&lt;/b&gt; %1</translation>
     </message>
     <message>
+        <source>Highlite alternation</source>
+        <translation>Подсвечивать чередование</translation>
+    </message>
+    <message>
+        <source>Show self contact</source>
+        <translation>Показывать свой контакт</translation>
+    </message>
+    <message>
+        <source>Always show offline agents</source>
+        <translation>Всегда показывать отключенные агенты</translation>
+    </message>
+    <message>
+        <source>Contact-List</source>
+        <translation>Список контактов</translation>
+    </message>
+    <message>
         <source>Contacts List</source>
         <translation>Список контактов</translation>
     </message>
@@ -67,16 +83,32 @@
         <translation>Список контактов</translation>
     </message>
     <message>
+        <source>Show disconnected contacts</source>
+        <translation>Показывать отключённые контакты</translation>
+    </message>
+    <message>
+        <source>Show contacts of all accounts in common list</source>
+        <translation>Показывать контакты всех аккаунтов в общем списке</translation>
+    </message>
+    <message>
         <source>Show contact resource with highest priority</source>
         <translation>Показывать ресурс контакта с наивысшим приоритетом</translation>
     </message>
     <message>
         <source>Hide scroll bars in contact list window</source>
-        <translation>Скрыть полосы прокрутки в окне списка контактов</translation>
+        <translation>Спрятать полосы прокрутки в окне списка контактов</translation>
+    </message>
+    <message>
+        <source>Extra icons</source>
+        <translation>Дополнительные значки</translation>
+    </message>
+    <message>
+        <source>Full</source>
+        <translation>Полный</translation>
     </message>
     <message>
         <source>Simplified</source>
-        <translation>Упрощенный</translation>
+        <translation>Упрощённый</translation>
     </message>
     <message>
         <source>Compact</source>
@@ -87,32 +119,20 @@
         <translation>Вид списка контактов:</translation>
     </message>
     <message>
-        <source>Sort contacts list:</source>
-        <translation>Сортировать список контактов:</translation>
-    </message>
-    <message>
-        <source>alphabetically</source>
-        <translation>по алфавиту</translation>
-    </message>
-    <message>
         <source>by status</source>
         <translation>по статусу</translation>
     </message>
     <message>
-        <source>Full</source>
-        <translation>Полный</translation>
+        <source>alphabetically</source>
+        <translation>в алфавитном порядке</translation>
     </message>
     <message>
-        <source>Contact-List</source>
-        <translation>Список контактов</translation>
+        <source>Sort contacts list:</source>
+        <translation>Сортировать список контактов:</translation>
     </message>
     <message>
-        <source>Show disconnected contacts</source>
-        <translation>Показывать отключенные контакты</translation>
-    </message>
-    <message>
-        <source>Show contacts of all accounts in common list</source>
-        <translation>Показывать контакты всех аккаунтов в общем списке</translation>
+        <source>Display status</source>
+        <translation>Отображать статус</translation>
     </message>
 </context>
 </TS>

@@ -41,6 +41,9 @@ class VCardManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IVCardManager IRosterDataHolder IStanzaRequestOwner IXmppUriHandler IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IVCardManager")
+#endif
 	friend class VCard;
 public:
 	VCardManager();

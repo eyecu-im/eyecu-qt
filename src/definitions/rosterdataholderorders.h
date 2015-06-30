@@ -13,5 +13,12 @@
 #define RDHO_STATUSICONS                  1000
 #define RDHO_VCARD_SEARCH                 1000
 #define RDHO_ROSTERSMODEL                 1000
-
+// *** <<< eyeCU <<< ***
+#define RDHO_ACTIVITY                     1000
+#define RDHO_MOOD                         1000
+#define RDHO_TUNE                         1000
+#define RDHO_NICK                         900
+#define RDHO_GEOLOC                       1000
+#define RDHO_CLIENTICONS                  1000
+// *** >>> eyeCU >>> ***
 #endif // DEF_ROSTERDATAHOLDERORDERS_H

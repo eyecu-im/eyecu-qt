@@ -89,7 +89,7 @@
 QtLockedFile::QtLockedFile()
     : QFile()
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)||defined(Q_OS_OS2)
     wmutex = 0;
     rmutex = 0;
 #endif
@@ -106,7 +106,7 @@ QtLockedFile::QtLockedFile()
 QtLockedFile::QtLockedFile(const QString &name)
     : QFile(name)
 {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)||defined(Q_OS_OS2)
     wmutex = 0;
     rmutex = 0;
 #endif

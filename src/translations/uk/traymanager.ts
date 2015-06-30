@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk_UA" sourcelanguage="en">
 <context>
     <name>TrayManager</name>
     <message>
@@ -11,7 +13,7 @@
     </message>
     <message>
         <source>Allows other modules to access the icon and context menu in the tray</source>
-        <translation>Дозволяє іншим модулям отримувати доступ до значка і контекстного меню в треї</translation>
+        <translation>Дозволяе іншим модулям отримувати доступ до значка і контекстного меню в треї</translation>
     </message>
 </context>
 </TS>

@@ -1,6 +1,9 @@
 #include "metacontacts.h"
 
 #include <QDir>
+#if QT_VERSION >= 0x050000
+#include <QMimeData>
+#endif
 #include <QMouseEvent>
 #include <QInputDialog>
 #include <QTextDocument>
@@ -26,6 +29,7 @@
 #include <utils/widgetmanager.h>
 #include <utils/shortcuts.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define UPDATE_META_TIMEOUT     0
 #define STORAGE_SAVE_TIMEOUT    100
@@ -1231,7 +1235,7 @@ void MetaContacts::updateMetaRecentItems(const Jid &AStreamJid, const QUuid &AMe
 		}
 		else foreach(const IRecentItem &item, FRecentContacts->streamItems(AStreamJid))
 		{
-			if (item.type==REIT_METACONTACT && item.reference==meta.id)
+			if (item.type==REIT_METACONTACT && QUuid(item.reference)==meta.id)
 			{
 				FUpdatingRecentItem = item;
 				FMetaRecentItems[sRoot].remove(AMetaId);
@@ -2070,10 +2074,10 @@ void MetaContacts::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALab
 				QString statusIconSet = FStatusIcons!=NULL ? FStatusIcons->iconsetByJid(pItem.itemJid) : QString::null;
 				QString statusIconKey = FStatusIcons!=NULL ? FStatusIcons->iconKeyByStatus(pItem.show,SUBSCRIPTION_BOTH,false) : QString::null;
 				QString statusIconFile = FStatusIcons!=NULL ? FStatusIcons->iconFileName(statusIconSet,statusIconKey) : QString::null;
-				AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME+orderShift,QString("<img src='%1'> %2 (%3)").arg(statusIconFile).arg(Qt::escape(pItem.itemJid.uFull())).arg(pItem.priority));
+				AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME+orderShift,QString("<img src='%1'> %2 (%3)").arg(statusIconFile).arg(HTML_ESCAPE(pItem.itemJid.uFull())).arg(pItem.priority)); // *** <<< eyeCU >>> ***
 
 				if (!pItem.status.isEmpty())
-					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT+orderShift,Qt::escape(pItem.status).replace('\n',"<br>"));
+					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT+orderShift,HTML_ESCAPE(pItem.status).replace('\n',"<br>")); // *** <<< eyeCU >>> ***
 
 				if (resIndex < metaPresences.count()-1)
 					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_MIDDLELINE+orderShift,"<hr>");
@@ -2397,5 +2401,6 @@ void MetaContacts::onShortcutActivated(const QString &AId, QWidget *AWidget)
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_metacontacts, MetaContacts)
+#endif

@@ -13,6 +13,7 @@
 #include <utils/widgetmanager.h>
 #include <utils/textmanager.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define PST_ANNOTATIONS       "storage"
 #define PSN_ANNOTATIONS       "storage:rosternotes"
@@ -419,7 +420,7 @@ void Annotations::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabe
 	{
 		QString note = AIndex->data(RDR_ANNOTATIONS).toString();
 		if (!note.isEmpty())
-			AToolTips.insert(RTTO_ANNOTATIONS, tr("<b>Annotation:</b>")+"<br>"+Qt::escape(note).replace("\n","<br>"));
+			AToolTips.insert(RTTO_ANNOTATIONS, tr("<b>Annotation:</b>")+"<br>"+HTML_ESCAPE(note).replace("\n","<br>"));
 	}
 }
 
@@ -443,5 +444,6 @@ void Annotations::onEditNoteDialogDestroyed()
 	if (dialog)
 		FEditDialogs[dialog->streamJid()].remove(dialog->contactJid());
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_annotations, Annotations)
+#endif

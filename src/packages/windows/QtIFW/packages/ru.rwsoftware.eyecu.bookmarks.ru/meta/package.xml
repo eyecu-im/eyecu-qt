@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Bookmarks Russian Translation</DisplayName>
+    <Description>Bookmarks Russian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.bookmarks.ru</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.bookmarks,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

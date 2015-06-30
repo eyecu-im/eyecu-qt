@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Tune Information Requester last.fm Japanese Translation</DisplayName>
+    <Description>Tune Information Requester last.fm Japanese translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.tune.inforequesters.lastfm.ja</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.inforequesters.lastfm,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -613,16 +613,37 @@ QString Options::variantToString(const QVariant &AValue)
 		QRect rect = AValue.toRect();
 		return QString("%1;%2;%3;%4").arg(rect.left()).arg(rect.top()).arg(rect.width()).arg(rect.height());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AValue.type() == QVariant::RectF)
+	{
+		QRectF rect = AValue.toRectF();
+		return QString("%1;%2;%3;%4").arg(rect.left()).arg(rect.top()).arg(rect.width()).arg(rect.height());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AValue.type() == QVariant::Point)
 	{
 		QPoint point = AValue.toPoint();
 		return QString("%1;%2").arg(point.x()).arg(point.y());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AValue.type() == QVariant::PointF)
+	{
+		QPointF point = AValue.toPointF();
+		return QString("%1;%2").arg(point.x()).arg(point.y());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AValue.type() == QVariant::Size)
 	{
 		QSize size = AValue.toSize();
 		return QString("%1;%2").arg(size.width()).arg(size.height());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AValue.type() == QVariant::SizeF)
+	{
+		QSizeF size = AValue.toSizeF();
+		return QString("%1;%2").arg(size.width()).arg(size.height());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AValue.type() == QVariant::ByteArray)
 	{
 		return AValue.toByteArray().toBase64();
@@ -646,18 +667,42 @@ QVariant Options::stringToVariant(const QString &AValue, QVariant::Type AType)
 		if (parts.count() == 4)
 			return QRect(parts.at(0).toInt(),parts.at(1).toInt(),parts.at(2).toInt(),parts.at(3).toInt());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AType == QVariant::RectF)
+	{
+		QList<QString> parts = AValue.split(";",QString::SkipEmptyParts);
+		if (parts.count() == 4)
+			return QRectF(parts.at(0).toDouble(),parts.at(1).toDouble(),parts.at(2).toDouble(),parts.at(3).toDouble());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AType == QVariant::Point)
 	{
 		QList<QString> parts = AValue.split(";",QString::SkipEmptyParts);
 		if (parts.count() == 2)
 			return QPoint(parts.at(0).toInt(),parts.at(1).toInt());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AType == QVariant::PointF)
+	{
+		QList<QString> parts = AValue.split(";",QString::SkipEmptyParts);
+		if (parts.count() == 2)
+			return QPointF(parts.at(0).toDouble(),parts.at(1).toDouble());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AType == QVariant::Size)
 	{
 		QList<QString> parts = AValue.split(";",QString::SkipEmptyParts);
 		if (parts.count() == 2)
 			return QSize(parts.at(0).toInt(),parts.at(1).toInt());
 	}
+// *** <<< eyeCU <<< ***
+	else if (AType == QVariant::SizeF)
+	{
+		QList<QString> parts = AValue.split(";",QString::SkipEmptyParts);
+		if (parts.count() == 2)
+			return QSizeF(parts.at(0).toDouble(),parts.at(1).toDouble());
+	}
+// *** >>> eyeCU >>> ***
 	else if (AType == QVariant::ByteArray)
 	{
 		return QByteArray::fromBase64(AValue.toLatin1());

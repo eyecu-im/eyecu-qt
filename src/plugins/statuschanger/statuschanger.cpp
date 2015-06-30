@@ -1315,5 +1315,6 @@ void StatusChanger::onNotificationActivated(int ANotifyId)
 	if (FNotifyId.values().contains(ANotifyId))
 		FNotifications->removeNotification(ANotifyId);
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_statuschanger, StatusChanger)
+#endif

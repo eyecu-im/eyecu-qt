@@ -1,0 +1,132 @@
+eyeCU base
++ Plugins
+  + Map
+    * Sources
+      + OpenStreetMap
+      + Wikimapia
+      + Google
+      + Yahoo!
+      + Bing (Microsoft)
+      + Here (Nokia)
+      + GeoHub
+      + Vi-Tel
+      + Esri
+      + Navteq
+      + Yandex
+      + 2GIS
+      + Navitel
+      + Kosmosnimki
+      + Mail.ru
+      + Geocenter consulting
+      + Megafon
+      + PROGOROD
+      + Rambler      
+    + Magnifier
+    + Map contacts
+      + Map message
+  + Map search
+    + Provides
+      + Google
+      + OpenStreetMap
+      + 2GIS
+  + Personal events
+    + User Activity
+    + Usr Mood
+    + User Location
+      + Positioning
+        + No positioning
+        + Serial port
+    + User Tune
+      + Tune Listener WINAMP
+      + Tune Listener AIMP
+      + Tune Listener File
+  + File transfer
+    * Methods
+      + SOCKS5
+      + In-band bytestreams
+  + Jabber search
+  + Roster search
+  + Out-of-band data
+  + Multiuser chat
+  + XHTML-IM
+  + Data forms    
+    + Captcha forms
+    + Registration
+    + Session negotiation
+    + Ad-hoc commands
+      + Remote control
+  + Compress
+  + Console
+  + Message archiver
+    + File message archive
+    + Server message archive
+  + Gateways
+  + Bits of binary
+  + Autostatus
+  + Chat states
+  + Message delivery receipts
+  + Attention
+  + Privacy lists
+  + Roster item exchange
+  + Service discovery
+  + Client information
+  + Authentication via iq
+  + Shortcuts
+  + Google statistics
+  + Message carbons
+  + Client icons
+  + vCard  
+    + Avatars  
+    + Birthday reminder
+  + URL Processor
+    + Bob URL handler
+  + Private storage
+    + Bookmarks
+    + Annotations
+    + Rescent contacts
+    + Points of interest
+  + XMPP URI queries  
+  * Message styles
+    + Adium message styles
+      + Renkoo
+      + yMous
+  + Spellchecker
+    + Russian
+    + English (United States)
+    + English (Great Britain)
+    + English (Australia)
+    + English (South Africa)
+  + Emoticons
+    * Sets
+      + Default
+      + Blobs Pink            
+* Status icon sets
+  + AIM
+  + Bot
+  + Car
+  + Conference
+  + Facebook
+  + Gadu-gadu
+  + Google Talk
+  + ICQ
+  + LiveJournal
+  + Mail.ru-agent
+  + MSN
+  + Odnoklassniki
+  + RSS
+  + Skype
+  + SMS
+  + SMTP
+  + Twitter
+  + vKontakte
+  + Weather
+  + Yahoo
+  + YaOnline
+* Translations
+  + Russian
+  + Ukrainian
+  + Polish
+  + Deutch
+  + Dutch
+  + Japanese
++ Documentation

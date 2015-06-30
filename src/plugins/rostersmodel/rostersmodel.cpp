@@ -15,6 +15,10 @@ RostersModel::RostersModel()
 	FRosterManager = NULL;
 	FPresenceManager = NULL;
 	FAccountManager = NULL;
+// *** <<< eyeCU <<< ***
+	FShowSelf = false;
+	FShowOfflineAgents = false;
+// *** >>> eyeCU >>> ***
 
 	FLayout = LayoutSeparately;
 
@@ -591,6 +595,73 @@ void RostersModel::removeRosterDataHolder(int AOrder, IRosterDataHolder *AHolder
 	}
 }
 
+// *** <<< eyeCU <<< ***
+void RostersModel::setShowSelf(bool AShow)
+{
+	FShowSelf=AShow;
+	for (QMap<Jid,IRosterIndex *>::const_iterator i=FStreamIndexes.constBegin(); i!=FStreamIndexes.constEnd(); i++)
+	{
+		IRosterIndex *streamIndex = *i;
+		int s=streamIndex->data(RDR_SHOW).toInt();
+		if (s != IPresence::Offline && s != IPresence::Error)
+		{
+			IRosterIndex *groupIndex = findGroupIndex(RIK_GROUP_MY_RESOURCES, QString::null, streamRoot(streamIndex->data(RDR_STREAM_JID).toString()));
+			IRosterIndex *selfIndex = NULL;
+			if (groupIndex)
+			{
+				QMultiMap<int, QVariant> findData;
+				findData.insertMulti(RDR_KIND, RIK_MY_RESOURCE);
+				findData.insertMulti(RDR_FULL_JID, streamIndex->data(RDR_FULL_JID));
+				QList<IRosterIndex *> resources = groupIndex->findChilds(findData);
+				if (!resources.isEmpty())
+					selfIndex=resources.first();
+			}
+			if (AShow)
+			{
+				if (!selfIndex)
+				{
+					if (!groupIndex)
+						groupIndex = getGroupIndex(RIK_GROUP_MY_RESOURCES, QString::null, streamRoot(streamIndex->data(RDR_STREAM_JID).toString()));
+					selfIndex = newRosterIndex(RIK_MY_RESOURCE);
+					selfIndex->setData(streamIndex->data(RDR_STREAM_JID), RDR_STREAM_JID);
+					selfIndex->setData(streamIndex->data(RDR_FULL_JID), RDR_FULL_JID);
+					selfIndex->setData(streamIndex->data(RDR_PREP_FULL_JID), RDR_PREP_FULL_JID);
+					selfIndex->setData(streamIndex->data(RDR_PREP_BARE_JID), RDR_PREP_BARE_JID);
+					selfIndex->setData(streamIndex->data(RDR_SHOW), RDR_SHOW);
+					selfIndex->setData(streamIndex->data(RDR_STATUS), RDR_STATUS);
+					insertRosterIndex(selfIndex, groupIndex);
+				}
+			}
+			else
+				if (selfIndex)
+					removeRosterIndex(selfIndex);
+		}
+	}
+}
+
+void RostersModel::setShowOfflineAgents(bool AShow)
+{
+	FShowOfflineAgents=AShow;
+	for (QMap<Jid,IRosterIndex *>::const_iterator i=FStreamIndexes.constBegin(); i!=FStreamIndexes.constEnd(); i++)
+	{
+		IRosterIndex *streamIndex = *i;
+		int s=streamIndex->data(RDR_SHOW).toInt();
+		if (s != IPresence::Offline && s != IPresence::Error)
+		{
+			IRosterIndex *groupIndex = findGroupIndex(RIK_GROUP_AGENTS, singleGroupName(RIK_GROUP_AGENTS), streamIndex);
+			if (groupIndex)
+			{
+				QMultiMap<int, QVariant> findData;
+				findData.insertMulti(RDR_KIND, RIK_AGENT);
+				QList<IRosterIndex *> agents = groupIndex->findChilds(findData);
+				for (QList<IRosterIndex *>::iterator it=agents.begin(); it!=agents.end(); it++)
+					(*it)->setData((*it)->data(RDR_FORCE_VISIBLE).toInt()+(AShow?1:-1), RDR_FORCE_VISIBLE);
+			}
+		}
+	}
+}
+// *** >>> eyeCU >>> ***
+
 void RostersModel::updateStreamsLayout()
 {
 	if (FLayout == LayoutMerged)
@@ -834,6 +905,15 @@ void RostersModel::onRosterItemReceived(IRoster *ARoster, const IRosterItem &AIt
 			if (!itemList.contains(itemIndex))
 				removeRosterIndex(itemIndex);
 		}
+// *** <<< eyeCU <<< ***
+		// Set RDR_FORCE_VISIBLE attribute for agents, if "Show offline agents" feature is enabled
+		if (FShowOfflineAgents && (itemKind == RIK_AGENT))
+		{
+			curItemList = findContactIndexes(ARoster->streamJid(), AItem.itemJid);
+			for (QList<IRosterIndex *>::const_iterator it=curItemList.constBegin(); it!=curItemList.constEnd(); it++)
+				(*it)->setData((*it)->data(RDR_FORCE_VISIBLE).toInt()+1, RDR_FORCE_VISIBLE);
+		}
+// *** >>> eyeCU >>> ***
 	}
 }
 
@@ -868,10 +948,51 @@ void RostersModel::onPresenceChanged(IPresence *APresence, int AShow, const QStr
 	{
 		sindex->setData(AShow,RDR_SHOW);
 		sindex->setData(AStatus,RDR_STATUS);
+// *** <<< eyeCU <<< ***
+		IRosterIndex *groupIndex=NULL;
+		IRosterIndex *selfIndex=NULL;
+		if (FShowSelf)
+		{
+			groupIndex = findGroupIndex(RIK_GROUP_MY_RESOURCES, QString::null, streamRoot(APresence->streamJid()));
+			if (groupIndex)
+			{
+				QMultiMap<int, QVariant> findData;
+				findData.insertMulti(RDR_KIND, RIK_MY_RESOURCE);
+				selfIndex=groupIndex->findChilds(findData).first();
+			}
+		}
+// *** >>> eyeCU >>> ***
+
 		if (AShow!=IPresence::Offline && AShow!=IPresence::Error)
+		{	// *** <<< eyeCU >>> ***
 			sindex->setData(APriority,RDR_PRIORITY);
+// *** <<< eyeCU <<< ***
+			if (FShowSelf)
+			{
+				if (!selfIndex)
+				{
+					if (!groupIndex)
+						groupIndex = getGroupIndex(RIK_GROUP_MY_RESOURCES, QString::null, streamRoot(APresence->streamJid()));
+					selfIndex = newRosterIndex(RIK_MY_RESOURCE);
+					selfIndex->setData(APresence->streamJid().pFull(), RDR_STREAM_JID);
+					selfIndex->setData(APresence->streamJid().full(), RDR_FULL_JID);
+					selfIndex->setData(APresence->streamJid().pFull(), RDR_PREP_FULL_JID);
+					selfIndex->setData(APresence->streamJid().pBare(), RDR_PREP_BARE_JID);
+					insertRosterIndex(selfIndex, groupIndex);
+				}
+				selfIndex->setData(AShow, RDR_SHOW);
+				selfIndex->setData(AStatus, RDR_STATUS);
+			}
+		}
+// *** >>> eyeCU >>> ***
 		else
+		{	// *** <<< eyeCU >>> ***
 			sindex->setData(QVariant(),RDR_PRIORITY);
+// *** <<< eyeCU <<< ***
+			if (FShowSelf && selfIndex)
+				removeRosterIndex(selfIndex);
+		}
+// *** >>> eyeCU >>> ***
 	}
 }
 
@@ -950,5 +1071,6 @@ void RostersModel::onPresenceItemReceived(IPresence *APresence, const IPresenceI
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_rostersmodel, RostersModel)
+#endif

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Personal Events Ukrainian Translation</DisplayName>
+    <Description>Personal Events Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

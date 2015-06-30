@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+ <icon><key>edit</key><object mime="image/png">edit.png</object></icon>
+ <icon><key>add</key><object mime="image/png">add.png</object></icon>
+ <icon><key>delete</key><object mime="image/png">delete.png</object></icon>
+ <icon><key>accept</key><object mime="image/png">accept.png</object></icon>
+ <icon><key>decline</key><object mime="image/png">decline.png</object></icon>
+</icondef>

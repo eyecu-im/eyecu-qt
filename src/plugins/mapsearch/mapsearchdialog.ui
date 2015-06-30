@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MapSearchDialog</class>
+ <widget class="QDialog" name="MapSearchDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>446</width>
+    <height>539</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Search on the map</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0">
+   <item>
+    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="0,1,0,0,0,0" columnminimumwidth="0,0,0,0,0,0">
+     <item row="1" column="3">
+      <widget class="QSpinBox" name="spbResultsPerPage">
+       <property name="maximum">
+        <number>9999</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QCheckBox" name="chkLimitSearchRange">
+       <property name="text">
+        <string>Limit search range</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <spacer name="hspSearchParameters">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="1" column="5">
+      <widget class="QToolButton" name="tbMore">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>More</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="lblResultsPerPage">
+       <property name="text">
+        <string>Results per page</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QToolButton" name="tbSearch">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Search</string>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::MenuButtonPopup</enum>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QCheckBox" name="chkDefault">
+       <property name="text">
+        <string>Default</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="5">
+      <widget class="QLineEdit" name="ledSearch"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTreeWidget" name="twFound">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <attribute name="headerShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Type</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Description</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pbClear">
+       <property name="text">
+        <string>Clear list</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="hspButtonList">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkShow">
+       <property name="text">
+        <string>Show on the map</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbSettings">
+       <property name="maximumSize">
+        <size>
+         <width>23</width>
+         <height>23</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Settings</string>
+       </property>
+       <property name="text">
+        <string notr="true"/>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>twFound</sender>
+   <signal>itemActivated(QTreeWidgetItem*,int)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onItemActivated(QTreeWidgetItem*,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ledSearch</sender>
+   <signal>returnPressed()</signal>
+   <receiver>tbSearch</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>19</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>twFound</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onCustomContextMenuRequested(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>147</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbSearch</sender>
+   <signal>clicked()</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onSearchClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>360</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbClear</sender>
+   <signal>clicked()</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onClearListClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>277</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkShow</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onShowPois(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkLimitSearchRange</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onLimitSearchRange(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>65</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbSettings</sender>
+   <signal>clicked()</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>409</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tbMore</sender>
+   <signal>clicked()</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onSearchClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbResultsPerPage</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onResultsPerPageChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>283</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkDefault</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onDefaultToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>342</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbResultsPerPage</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onMapSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>280</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkLimitSearchRange</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onMapSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>65</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ledSearch</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MapSearchDialog</receiver>
+   <slot>onMapSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onItemActivated(QTreeWidgetItem*,int)</slot>
+  <slot>onCustomContextMenuRequested(QPoint)</slot>
+  <slot>onSearchClicked()</slot>
+  <slot>onClearListClicked()</slot>
+  <slot>onShowPois(bool)</slot>
+  <slot>onLimitSearchRange(bool)</slot>
+  <slot>onSettings()</slot>
+  <slot>onDefaultToggled(bool)</slot>
+  <slot>onResultsPerPageChanged(int)</slot>
+  <slot>onMapSettingsChanged()</slot>
+ </slots>
+</ui>

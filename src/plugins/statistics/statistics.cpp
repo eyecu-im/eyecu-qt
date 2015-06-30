@@ -5,6 +5,9 @@
 #include <QAuthenticator>
 #include <QNetworkProxy>
 #include <QNetworkRequest>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <definitions/version.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionvalues.h>
@@ -19,7 +22,9 @@
 #endif
 
 #define MP_VER                       "1"
-#define MP_ID                        "UA-11825394-10"
+// *** <<< eyeCU <<< ***
+#define MP_ID                        "UA-58579215-1"
+// *** >>> eyeCU >>> ***
 #define MP_URL                       "http://www.google-analytics.com/collect"
 
 #define DIR_STATISTICS               "statistics"
@@ -58,7 +63,7 @@ QDataStream &operator<<(QDataStream &AStream, const IStatisticsHit &AHit)
 	AStream << AHit.profile;
 	AStream << AHit.screen;
 	AStream << AHit.timestamp;
-	
+
 	AStream << AHit.event.category;
 	AStream << AHit.event.action;
 	AStream << AHit.event.label;
@@ -254,7 +259,7 @@ QString Statistics::userAgent() const
 	static QString secondPart;
 	static QString thirdPart;
 
-	if (firstPart.isNull() || secondPart.isNull() || thirdPart.isNull()) 
+	if (firstPart.isNull() || secondPart.isNull() || thirdPart.isNull())
 	{
 		QString firstPartTemp;
 		firstPartTemp.reserve(150);
@@ -274,6 +279,10 @@ QString Statistics::userAgent() const
 			// Nothing
 #elif defined Q_WS_X11
 			"X11; "
+// *** <<< eyeCU <<< ***
+#elif defined Q_WS_PM
+			"OS/2; "
+// *** >>> eyeCU >>> ***
 #else
 			"Unknown; "
 #endif
@@ -400,76 +409,94 @@ QString Statistics::windowsVersion() const
 QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 {
 	QUrl url(MP_URL);
+#if QT_VERSION < 0x050000
+#define QUERY_TYPE QByteArray
 	url.setQueryDelimiters('=','&');
+#else
+	#define QUERY_TYPE QString
+#endif
 
-	QList< QPair<QByteArray,QByteArray> > query;
-	query.append(qMakePair<QByteArray,QByteArray>("v",QUrl::toPercentEncoding(MP_VER)));
-	query.append(qMakePair<QByteArray,QByteArray>("tid",QUrl::toPercentEncoding(MP_ID)));
+	QList< QPair<QUERY_TYPE,QUERY_TYPE> > query;
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("v",QUrl::toPercentEncoding(MP_VER)));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("tid",QUrl::toPercentEncoding(MP_ID)));
 
 	QString cid = !AHit.profile.isNull() ? AHit.profile.toString() : FProfileId.toString();
 	cid.remove(0,1); cid.chop(1);
-	query.append(qMakePair<QByteArray,QByteArray>("cid",QUrl::toPercentEncoding(cid)));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("cid",QUrl::toPercentEncoding(cid)));
 
-	query.append(qMakePair<QByteArray,QByteArray>("fl",QUrl::toPercentEncoding(qVersion())));
-
-	qint64 qt = AHit.timestamp.msecsTo(QDateTime::currentDateTime());
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("fl",QUrl::toPercentEncoding(qVersion())));
+// *** <<< eyeCU <<< ***
+	qint64 qt =
+#if QT_VERSION >= 0x040700
+				AHit.timestamp.msecsTo(QDateTime::currentDateTime());
+#else
+				AHit.timestamp.time().msecsTo(QTime::currentTime());
+#endif
+// *** >>> eyeCU >>>***
 	if (qt > 0)
-		query.append(qMakePair<QByteArray,QByteArray>("qt",QUrl::toPercentEncoding(QString::number(qt))));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("qt",QUrl::toPercentEncoding(QString::number(qt))));
 
 	if (!AHit.screen.isEmpty())
-		query.append(qMakePair<QByteArray,QByteArray>("cd",QUrl::toPercentEncoding(AHit.screen)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("cd",QUrl::toPercentEncoding(AHit.screen)));
 
 	if (AHit.session == IStatisticsHit::SessionStart)
-		query.append(qMakePair<QByteArray,QByteArray>("sc",QUrl::toPercentEncoding("start")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sc",QUrl::toPercentEncoding("start")));
 	else if (AHit.session == IStatisticsHit::SessionEnd)
-		query.append(qMakePair<QByteArray,QByteArray>("sc",QUrl::toPercentEncoding("end")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sc",QUrl::toPercentEncoding("end")));
 
 	QString rev =  FPluginManager->revisionDate().date().toString("yyyyddMM");
-	query.append(qMakePair<QByteArray,QByteArray>("an",QUrl::toPercentEncoding(CLIENT_NAME)));
-	query.append(qMakePair<QByteArray,QByteArray>("av",QUrl::toPercentEncoding(FClientVersion)));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("an",QUrl::toPercentEncoding(CLIENT_NAME)));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("av",QUrl::toPercentEncoding(QString("%1.%2").arg(FPluginManager->version(),FPluginManager->revision()))));
 
-	query.append(qMakePair<QByteArray,QByteArray>("ul",QUrl::toPercentEncoding(QLocale().name())));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ul",QUrl::toPercentEncoding(QLocale().name())));
 
 	QRect sr = FDesktopWidget->screenGeometry();
-	query.append(qMakePair<QByteArray,QByteArray>("sr",QUrl::toPercentEncoding(QString("%1.%2").arg(sr.width()).arg(sr.height()))));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sr",QUrl::toPercentEncoding(QString("%1.%2").arg(sr.width()).arg(sr.height()))));
 
 	if (AHit.type == IStatisticsHit::HitView)
 	{
-		query.append(qMakePair<QByteArray,QByteArray>("t",QUrl::toPercentEncoding("appview")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("appview")));
 	}
 	else if (AHit.type == IStatisticsHit::HitEvent)
 	{
-		query.append(qMakePair<QByteArray,QByteArray>("t",QUrl::toPercentEncoding("event")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("event")));
 
-		query.append(qMakePair<QByteArray,QByteArray>("ec",QUrl::toPercentEncoding(AHit.event.category)));
-		query.append(qMakePair<QByteArray,QByteArray>("ea",QUrl::toPercentEncoding(AHit.event.action)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ec",QUrl::toPercentEncoding(AHit.event.category)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ea",QUrl::toPercentEncoding(AHit.event.action)));
 
 		if (!AHit.event.label.isEmpty())
-			query.append(qMakePair<QByteArray,QByteArray>("el",QUrl::toPercentEncoding(AHit.event.label)));
+			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("el",QUrl::toPercentEncoding(AHit.event.label)));
 
 		if (AHit.event.value >= 0)
-			query.append(qMakePair<QByteArray,QByteArray>("ev",QUrl::toPercentEncoding(QString::number(AHit.event.value))));
+			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ev",QUrl::toPercentEncoding(QString::number(AHit.event.value))));
 	}
 	else if (AHit.type == IStatisticsHit::HitTiming)
 	{
-		query.append(qMakePair<QByteArray,QByteArray>("t",QUrl::toPercentEncoding("timing")));
-		query.append(qMakePair<QByteArray,QByteArray>("utc",QUrl::toPercentEncoding(AHit.timing.category)));
-		query.append(qMakePair<QByteArray,QByteArray>("utv",QUrl::toPercentEncoding(AHit.timing.variable)));
-		query.append(qMakePair<QByteArray,QByteArray>("utt",QUrl::toPercentEncoding(QString::number(AHit.timing.time))));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("timing")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utc",QUrl::toPercentEncoding(AHit.timing.category)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utv",QUrl::toPercentEncoding(AHit.timing.variable)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utt",QUrl::toPercentEncoding(QString::number(AHit.timing.time))));
 
 		if (!AHit.timing.label.isEmpty())
-			query.append(qMakePair<QByteArray,QByteArray>("utl",QUrl::toPercentEncoding(AHit.timing.label)));
+			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utl",QUrl::toPercentEncoding(AHit.timing.label)));
 	}
 	else if (AHit.type == IStatisticsHit::HitException)
 	{
-		query.append(qMakePair<QByteArray,QByteArray>("t",QUrl::toPercentEncoding("exception")));
-		query.append(qMakePair<QByteArray,QByteArray>("exd",QUrl::toPercentEncoding(AHit.exception.descr)));
-		query.append(qMakePair<QByteArray,QByteArray>("exf",QUrl::toPercentEncoding(AHit.exception.fatal ? "1" : "0")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("exception")));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("exd",QUrl::toPercentEncoding(AHit.exception.descr)));
+		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("exf",QUrl::toPercentEncoding(AHit.exception.fatal ? "1" : "0")));
 	}
 
-	query.append(qMakePair<QByteArray,QByteArray>("z",QUrl::toPercentEncoding(QString::number(qrand()))));
+	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("z",QUrl::toPercentEncoding(QString::number(qrand()))));
 
+#if QT_VERSION < 0x050000
 	url.setEncodedQueryItems(query);
+#else
+	QUrlQuery urlQuery;
+	urlQuery.setQueryDelimiters('=','&');
+	urlQuery.setQueryItems(query);
+	url.setQuery(urlQuery);
+#endif
 
 	return url;
 }
@@ -505,7 +532,7 @@ void Statistics::onNetworkManagerFinished(QNetworkReply *AReply)
 			FPendingTimer.start(RESEND_TIMEOUT);
 			LOG_WARNING(QString("Failed to send statistics hit: %1").arg(AReply->errorString()));
 		}
-		else 
+		else
 		{
 			if (!FPendingHits.isEmpty())
 				FPendingTimer.start(0);
@@ -637,5 +664,6 @@ void Statistics::onLoggerTimingReported(const QString &AClass, const QString &AC
 		sendStatisticsHit(hit);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_statistics, Statistics)
+#endif

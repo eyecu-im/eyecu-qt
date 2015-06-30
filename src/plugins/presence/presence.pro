@@ -1,3 +1,3 @@
-TARGET = presence 
+TARGET = presence
 include(presence.pri)
 include(../plugins.inc)

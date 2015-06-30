@@ -32,7 +32,10 @@ HEADERS  = utilsexport.h \
            splitterwidget.h \
            logger.h \
            pluginhelper.h \
-           passworddialog.h
+           passworddialog.h \
+		   volumecontrol.h \
+		   microtime.h \
+		   qt4qt5compat.h
 
 SOURCES  = jid.cpp \
            versionparser.cpp \
@@ -67,4 +70,11 @@ SOURCES  = jid.cpp \
            splitterwidget.cpp \
            logger.cpp \
            pluginhelper.cpp \
-           passworddialog.cpp
+           passworddialog.cpp \
+           volumecontrol.cpp \
+		   microtime.cpp
+
+greaterThan(QT_MAJOR_VERSION, 4):unix:!mac:!haiku {
+HEADERS += x11info.h
+SOURCES += x11info.cpp
+}

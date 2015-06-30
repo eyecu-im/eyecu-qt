@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>BOB URL Handler</DisplayName>
+    <Description>Allows URL processor plugin to handle Bits of Binary links (cid: scheme)</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.boburlhandler</Name>
+    <Dependencies>ru.rwsoftware.eyecu.bob</Dependencies>
+    <SortingPriority>5</SortingPriority>
+    <AutoDependOn>ru.rwsoftware.eyecu.bob,ru.rwsoftware.eyecu.urlprocessor</AutoDependOn>
+    <Virtual>true</Virtual>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

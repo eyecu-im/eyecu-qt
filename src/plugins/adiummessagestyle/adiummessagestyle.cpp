@@ -21,6 +21,7 @@
 #include <utils/filestorage.h>
 #include <utils/textmanager.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define SCROLL_TIMEOUT                      100
 #define EVALUTE_TIMEOUT                     10
@@ -166,6 +167,21 @@ QTextDocumentFragment AdiumMessageStyle::textFragmentAt(QWidget *AWidget, const 
 	}
 	return QTextDocumentFragment();
 }
+// *** <<< eyeCU <<< ***
+QImage AdiumMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
+{
+    QWebElement element(hitTest(AWidget, APosition).element());
+    if (element.tagName().toUpper()=="IMG")
+    {
+        QImage image(element.geometry().width(), element.geometry().height(), QImage::Format_ARGB32);
+        QPainter painter(&image);
+        element.render(&painter);
+        painter.end();
+        return image;
+    }
+    return QImage();
+}
+// *** >>> eyeCU >>> ***
 
 bool AdiumMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear)
 {
@@ -413,8 +429,8 @@ QString AdiumMessageStyle::makeStyleTemplate(const IMessageStyleOptions &AOption
 void AdiumMessageStyle::fillStyleKeywords(QString &AHtml, const IMessageStyleOptions &AOptions) const
 {
 	AHtml.replace("%chatName%",AOptions.extended.value(MSO_CHAT_NAME).toString());
-	AHtml.replace("%timeOpened%",Qt::escape(AOptions.extended.value(MSO_START_DATE_TIME).toDateTime().time().toString()));
-	AHtml.replace("%dateOpened%",Qt::escape(AOptions.extended.value(MSO_START_DATE_TIME).toDateTime().date().toString()));
+	AHtml.replace("%timeOpened%",HTML_ESCAPE(AOptions.extended.value(MSO_START_DATE_TIME).toDateTime().time().toString()));
+	AHtml.replace("%dateOpened%",HTML_ESCAPE(AOptions.extended.value(MSO_START_DATE_TIME).toDateTime().date().toString()));
 	AHtml.replace("%sourceName%",AOptions.extended.value(MSO_ACCOUNT_NAME).toString());
 	AHtml.replace("%destinationName%",AOptions.extended.value(MSO_CHAT_NAME).toString());
 	AHtml.replace("%destinationDisplayName%",AOptions.extended.value(MSO_CHAT_NAME).toString());
@@ -564,7 +580,7 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 
 	//AHtml.replace("%messageDirection%", AOptions.isAlignLTR ? "ltr" : "rtl" );
 	AHtml.replace("%senderStatusIcon%",AOptions.senderIcon);
-	AHtml.replace("%shortTime%", Qt::escape(AOptions.time.toString(tr("hh:mm"))));
+	AHtml.replace("%shortTime%", HTML_ESCAPE(AOptions.time.toString(tr("hh:mm"))));
 	AHtml.replace("%service%",QString::null);
 
 	QString avatar = AOptions.senderAvatar;
@@ -574,10 +590,13 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 		if (!isDirectionIn && !QFile::exists(FResourcePath+"/"+avatar))
 			avatar = "Incoming/buddy_icon.png";
 	}
+#if QT_VERSION >= 0x050000
+	AHtml.replace("%userIconPath%",QUrl::fromLocalFile(avatar).toString());
+#else
 	AHtml.replace("%userIconPath%",avatar);
-
+#endif
 	QString timeFormat = !AOptions.timeFormat.isEmpty() ? AOptions.timeFormat : tr("hh:mm:ss");
-	QString time = Qt::escape(AOptions.time.toString(timeFormat));
+	QString time = HTML_ESCAPE(AOptions.time.toString(timeFormat));
 	AHtml.replace("%time%", time);
 
 	QRegExp timeRegExp("%time\\{([^}]*)\\}%");

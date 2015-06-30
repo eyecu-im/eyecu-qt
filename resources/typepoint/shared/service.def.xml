@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>service:arts_centre</key><name>Arts centre</name><object mime="image/png">service/arts_centre.png</object></icon>
+<icon><key>service:clock</key><name>Clock</name><object mime="image/png">service/clock.png</object></icon>
+<icon><key>service:community_centre</key><name>Community centre</name><object mime="image/png">service/community_centre.png</object></icon>
+<icon><key>service:excrement_bags</key><name>Excrement bags</name><object mime="image/png">service/excrement_bags.png</object></icon>
+<icon><key>service:fire_hydrant</key><name>Fire hydrant</name><object mime="image/png">service/fire_hydrant.png</object></icon>
+<icon><key>service:fire_brigade</key><name>Fire brigade</name><object mime="image/png">service/firebrigade.png</object></icon>
+<icon><key>service:police</key><name>Police</name><object mime="image/png">service/police.png</object></icon>
+<icon><key>service:post_box</key><name>Post box</name><object mime="image/png">service/post_box.png</object></icon>
+<icon><key>service:post_office</key><name>Post office</name><object mime="image/png">service/post_office.png</object></icon>
+<icon><key>service:recycling</key><name>Recycling</name><object mime="image/png">service/recycling.png</object></icon>
+<icon><key>service:studio</key><name>Studio</name><object mime="image/png">service/studio.png</object></icon>
+<icon><key>service:telephone</key><name>Telephone</name><object mime="image/png">service/telephone.png</object></icon>
+<icon><key>service:toilets</key><name>Toilets</name><object mime="image/png">service/toilets.png</object></icon>
+<icon><key>service:trash_bin</key><name>Trash bin</name><object mime="image/png">service/recycling/trash-bin.png</object></icon>
+<icon><key>service:waste_disposal</key><name>Waste disposal</name><object mime="image/png">service/recycling/waste_disposal.png</object></icon>
+<icon><key>service:court_of_law</key><name>Court of law</name><object mime="image/png">service/administration/court_of_law.png</object></icon>
+<icon><key>service:embassy</key><name>Embassy</name><object mime="image/png">service/administration/embassy.png</object></icon>
+<icon><key>service:prison</key><name>Prison</name><object mime="image/png">service/administration/prison.png</object></icon>
+<icon><key>service:townhall</key><name>Town Hall</name><object mime="image/png">service/administration/townhall.png</object></icon>
+</icondef>

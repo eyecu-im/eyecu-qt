@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>XHTML-IM Polish Translation</DisplayName>
+    <Description>XHTML-IM Polish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.xhtmlim.pl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.xhtmlim,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

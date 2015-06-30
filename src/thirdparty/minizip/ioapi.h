@@ -39,6 +39,11 @@
                 #define _FILE_OFFSET_BIT 64
         #endif
 
+ // OS/2 (eComStation) do not support 64 bit file API
+	#ifdef __OS2__
+		#define USE_FILE32API
+	#endif
+
 #endif
 
 #include <stdio.h>

@@ -48,8 +48,11 @@
 #define QTLOCKEDFILE_H
 
 #include <QtCore/QFile>
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 #include <QtCore/QVector>
+#elif defined(Q_OS_OS2)
+#define INCL_DOS
+#include <qt_os2.h>
 #endif
 
 #if defined(Q_WS_WIN)
@@ -85,15 +88,19 @@ public:
     LockMode lockMode() const;
 
 private:
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
     Qt::HANDLE wmutex;
     Qt::HANDLE rmutex;
+#if defined (Q_OS_WIN)
     QVector<Qt::HANDLE> rmutexes;
+#elif defined(Q_OS_OS2)
+    PSEMRECORD rmutexes;
+    USHORT     numMutexes;
+#endif
     QString mutexname;
 
     Qt::HANDLE getMutexHandle(int idx, bool doCreate);
     bool waitMutex(Qt::HANDLE mutex, bool doBlock);
-
 #endif
     LockMode m_lock_mode;
 };

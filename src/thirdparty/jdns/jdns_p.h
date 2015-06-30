@@ -32,6 +32,8 @@
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 # define JDNS_OS_WIN
+#elif defined(__OS2__)
+# define JDNS_OS_OS2
 #else
 # define JDNS_OS_UNIX
 #endif
@@ -50,6 +52,10 @@
 
 #ifdef JDNS_OS_WIN
 # include <windows.h>
+#endif
+
+#ifdef JDNS_OS_OS2
+# include <os2.h>
 #endif
 
 #ifdef JDNS_OS_UNIX

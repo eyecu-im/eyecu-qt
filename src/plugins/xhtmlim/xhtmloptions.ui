@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>XhtmlOptions</class>
+ <widget class="QWidget" name="XhtmlOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>336</width>
+    <height>78</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HTML options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="spbMaxEmbedDataSize">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximum">
+      <number>65535</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="spbMaxAge">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhDigitsOnly</set>
+     </property>
+     <property name="maximum">
+      <number>2147483647</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblDefImageFormat">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Default image format</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="lblBytes">
+     <property name="text">
+      <string notr="true">bytes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblMaxEmbedDataSize">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Maximum embedded data size </string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="cmbDefImageFormat">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QComboBox" name="cmbAgeUnits">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <item>
+      <property name="text">
+       <string notr="true">seconds</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">minutes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">hours</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">days</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">weeks</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">months</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">years</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblMaxAge">
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Maximum age</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>spbMaxEmbedDataSize</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>XhtmlOptions</receiver>
+   <slot>onMaxEmbedChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbMaxAge</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>XhtmlOptions</receiver>
+   <slot>onMaxAgeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onMaxEmbedChanged(int)</slot>
+  <slot>onMaxAgeChanged(int)</slot>
+ </slots>
+</ui>

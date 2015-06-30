@@ -189,7 +189,12 @@ void NotifyWidget::animateTo(int AYPos)
 		FAnimateStep = ANIMATE_STEPS;
 	}
 }
-
+// *** <<< eyeCU <<< ***
+void NotifyWidget::setAnimated(bool AAnimated)
+{
+	ui.ntbText->setAnimated(AAnimated);
+}
+// *** >>> eyeCU >>> ***
 void NotifyWidget::enterEvent(QEvent *AEvent)
 {
 	FTimeOut += UNDER_MOUSE_ADD_TIMEOUT;

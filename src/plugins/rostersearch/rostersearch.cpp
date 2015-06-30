@@ -49,7 +49,9 @@ RosterSearch::RosterSearch()
 	FSearchEdit->setSearchMenuVisible(true);
 	FSearchEdit->setSelectTextOnFocusEnabled(false);
 	FSearchEdit->searchMenu()->setIcon(RSR_STORAGE_MENUICONS,MNI_ROSTERSEARCH_MENU);
+#if QT_VERSION >= 0x040700	// *** <<< eyeCU >>> ***
 	FSearchEdit->setPlaceholderText(tr("Search for Contacts"));
+#endif						// *** <<< eyeCU >>> ***
 	connect(FSearchEdit,SIGNAL(searchStart()),SLOT(onSearchEditStart()));
 	FSearchToolBarChanger->insertWidget(FSearchEdit);
 }
@@ -431,5 +433,6 @@ void RosterSearch::onOptionsClosed()
 		Options::node(OPV_ROSTER_SEARCH_FIELDEBANLED,QString::number(dataRole)).setValue(isSearchFieldEnabled(dataRole));
 	Options::node(OPV_ROSTER_SEARCH_ENABLED).setValue(isSearchEnabled());
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_rostersearch, RosterSearch)
+#endif

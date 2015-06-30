@@ -9,8 +9,14 @@
 
 #define MAX_LOG_FILES  10
 
+#if QT_VERSION < 0x050000
 void qtMessagesHandler(QtMsgType AType, const char *AMessage)
 {
+#else
+void qtMessagesHandler(QtMsgType AType, const QMessageLogContext &ALogContext, const QString &AMessage)
+{
+	Q_UNUSED(ALogContext)
+#endif
 	switch (AType)
 	{
 	case QtDebugMsg:
@@ -69,7 +75,11 @@ void Logger::openLog(const QString &APath)
 			QFile::remove(logDir.absoluteFilePath(logFiles.takeFirst()));
 
 #ifndef DEBUG_MODE
+#if QT_VERSION < 0x050000
 		qInstallMsgHandler(qtMessagesHandler);
+#else
+		qInstallMessageHandler(qtMessagesHandler);
+#endif
 #endif
 		q->logFile.setFileName(logDir.absoluteFilePath(DateTime(QDateTime::currentDateTime()).toX85DateTime().replace(":","-") +".log"));
 		q->logFile.open(QFile::WriteOnly|QFile::Truncate);
@@ -150,7 +160,14 @@ void Logger::writeLog(quint32 AType, const QString &AClass, const QString &AMess
 		}
 
 		QString timestamp = curDateTime.toString("hh:mm:ss.zzz");
-		int timeDelta = lastLogTime.msecsTo(curDateTime);
+		int timeDelta =
+#if (QT_VERSION >= 0x040700)
+				lastLogTime.msecsTo(curDateTime);
+#else
+				lastLogTime.time().msecsTo(curDateTime.time());
+				if (timeDelta<0)
+					timeDelta+=24*60*60*1000;
+#endif
 		QString logLine = QString("%1\t+%2\t%3\t[%4] %5").arg(timestamp).arg(timeDelta).arg(typeName,AClass,AMessage);
 		q->logFile.write(logLine.toUtf8());
 		q->logFile.write("\r\n");
@@ -179,7 +196,20 @@ qint64 Logger::checkTiming( const QString &AVariable, const QString &AContext)
 {
 	QMutexLocker locker(&FMutex);
 	QDateTime startTime = instance()->d->timings.value(AVariable).value(AContext);
+// *** <<< eyeCU <<< ***
+#if (QT_VERSION >= 0x040700)
 	return startTime.isValid() ? startTime.msecsTo(QDateTime::currentDateTime()) : -1;
+#else
+	if (startTime.isValid())
+	{
+		qint64 ret = startTime.time().msecsTo(QTime::currentTime());
+		if (ret<0)
+			ret += 24*60*60*1000;
+		return ret;
+	}
+	return -1;
+#endif
+// *** >>> eyeCU >>> ***
 }
 
 qint64 Logger::finishTiming(const QString &AVariable, const QString &AContext)
@@ -193,7 +223,15 @@ qint64 Logger::finishTiming(const QString &AVariable, const QString &AContext)
 		
 	QDateTime startTime = varMap.take(AContext);
 	if (startTime.isValid())
+// *** <<< eyeCU <<< ***
+#if (QT_VERSION >= 0x040700)
 		timing = startTime.msecsTo(QDateTime::currentDateTime());
+#else
+		timing = startTime.time().msecsTo(QTime::currentTime());
+		if (timing<0)
+			timing+=24*60*60*1000;
+#endif
+// *** >>> eyeCU >>> ***
 
 	if (varMap.isEmpty())
 		q->timings.remove(AVariable);

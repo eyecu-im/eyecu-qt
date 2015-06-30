@@ -7,6 +7,7 @@
 #include <QDialog>
 #include <QByteArray>
 #include <QDomElement>
+#include <QPointer>
 #include <utils/options.h>
 
 #define OPTIONSMANAGER_UUID "{d29856c7-8f74-4e95-9aba-b95f4fb42f00}"
@@ -36,7 +37,29 @@ protected:
 	virtual void childApply() =0;
 	virtual void childReset() =0;
 };
+// *** <<< eyeCU <<< ****
+struct TypedOptionsDialogWidget
+{
+public:
+	enum Type {
+		Both,
+		Simplified,
+		Advanced
+	};
 
+	TypedOptionsDialogWidget(IOptionsDialogWidget *AWidget=NULL, Type AType=Both):
+		FWidget(AWidget), FType(AType)
+	{}
+	inline operator IOptionsDialogWidget *()const {return FWidget;}
+	inline IOptionsDialogWidget& operator *() const {return *FWidget;}
+	inline IOptionsDialogWidget* operator ->() const {return FWidget;}
+	Type type() const {return FType;}
+
+private:
+	IOptionsDialogWidget *FWidget;
+	Type FType;
+};
+// *** >>> eyeCU >>> ****
 class IOptionsDialogHolder
 {
 public:
@@ -88,6 +111,7 @@ protected:
 	virtual void optionsDialogHolderRemoved(IOptionsDialogHolder *AHolder) =0;
 	virtual void optionsDialogNodeInserted(const IOptionsDialogNode &ANode) =0;
 	virtual void optionsDialogNodeRemoved(const IOptionsDialogNode &ANode) =0;
+	virtual void optionsModeInitialized(bool AAdvanced) =0; // *** <<< eyeCU >>> ***
 };
 
 Q_DECLARE_INTERFACE(IOptionsDialogWidget,"Vacuum.Plugin.IOptionsDialogWidget/1.1")

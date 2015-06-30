@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>religion:bahai</key><name>Bahai</name><object mime="image/png">religion/bahai.png</object></icon>
+<icon><key>religion:buddhism</key><name>Buddhism</name><object mime="image/png">religion/buddhism.png</object></icon>
+<icon><key>religion:church</key><name>Church</name><object mime="image/png">religion/church.png</object></icon>
+<icon><key>religion:hinduism</key><name>Hinduism</name><object mime="image/png">religion/hinduism.png</object></icon>
+<icon><key>religion:jainism</key><name>Jainism</name><object mime="image/png">religion/jainism.png</object></icon>
+<icon><key>religion:jewish</key><name>Jewish</name><object mime="image/png">religion/jewish.png</object></icon>
+<icon><key>religion:muslim</key><name>Muslim</name><object mime="image/png">religion/muslim.png</object></icon>
+<icon><key>religion:shinto</key><name>Shinto</name><object mime="image/png">religion/shinto.png</object></icon>
+<icon><key>religion:sikhism</key><name>Sikhism</name><object mime="image/png">religion/sikhism.png</object></icon>
+<icon><key>religion:taoism</key><name>Taoism</name><object mime="image/png">religion/taoism.png</object></icon>
+<icon><key>religion:wayside_cross</key><name>Wayside cross</name><object mime="image/png">religion/wayside_cross.png</object></icon>
+<icon><key>religion:wayside_shrine</key><name>Wayside shrine</name><object mime="image/png">religion/wayside_shrine.png</object></icon>
+</icondef>

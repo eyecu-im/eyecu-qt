@@ -416,5 +416,6 @@ void BitsOfBinary::onOfflineTimerTimeout()
 			emit binaryError(contentId,XmppError(IERR_BOB_DATA_LOAD_ERROR));
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_bitsofbinary, BitsOfBinary)
+#endif

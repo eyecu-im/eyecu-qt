@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source Kosmosnimki Ukrainian Translation</DisplayName>
+    <Description>Map Source Kosmosnimki Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.kosmosnimki.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.kosmosnimki,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Privacy Lists Dutch Translation</DisplayName>
+    <Description>Privacy Lists Dutch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.privacylists.nl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.privacylists,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

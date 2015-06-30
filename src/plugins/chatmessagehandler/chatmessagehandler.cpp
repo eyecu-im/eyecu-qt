@@ -27,6 +27,7 @@
 #include <utils/shortcuts.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define HISTORY_MESSAGES          10
 #define HISTORY_TIME_DELTA        5
@@ -722,7 +723,7 @@ void ChatMessageHandler::fillContentOptions(const Jid &AStreamJid, const Jid &AC
 		AOptions.senderId = AContactJid.full();
 		AOptions.senderAvatar = FMessageStyleManager->contactAvatar(AContactJid);
 		AOptions.senderIcon = FMessageStyleManager->contactIcon(AStreamJid,AContactJid);
-		AOptions.senderName = Qt::escape(FMessageStyleManager->contactName(AStreamJid,AContactJid));
+		AOptions.senderName = HTML_ESCAPE(FMessageStyleManager->contactName(AStreamJid,AContactJid));
 		AOptions.senderColor = "blue";
 	}
 	else
@@ -731,9 +732,9 @@ void ChatMessageHandler::fillContentOptions(const Jid &AStreamJid, const Jid &AC
 		AOptions.senderAvatar = FMessageStyleManager->contactAvatar(AStreamJid);
 		AOptions.senderIcon = FMessageStyleManager->contactIcon(AStreamJid);
 		if (AStreamJid.pBare() != AContactJid.pBare())
-			AOptions.senderName = Qt::escape(FMessageStyleManager->contactName(AStreamJid));
+			AOptions.senderName = HTML_ESCAPE(FMessageStyleManager->contactName(AStreamJid));
 		else
-			AOptions.senderName = Qt::escape(!AStreamJid.resource().isEmpty() ? AStreamJid.resource() : AStreamJid.uNode());
+			AOptions.senderName = HTML_ESCAPE(!AStreamJid.resource().isEmpty() ? AStreamJid.resource() : AStreamJid.uNode());
 		AOptions.senderColor = "red";
 	}
 }
@@ -1164,5 +1165,6 @@ void ChatMessageHandler::onStyleOptionsChanged(const IMessageStyleOptions &AOpti
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_chatmessagehandler, ChatMessageHandler)
+#endif

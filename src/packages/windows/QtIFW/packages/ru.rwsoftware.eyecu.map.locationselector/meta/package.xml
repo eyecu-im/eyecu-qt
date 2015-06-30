@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Location Selector</DisplayName>
+    <Description>Allows to select location on the map</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.locationselector</Name>
+    <Dependencies>ru.rwsoftware.eyecu.map</Dependencies>
+    <Virtual>true</Virtual>
+</Package>

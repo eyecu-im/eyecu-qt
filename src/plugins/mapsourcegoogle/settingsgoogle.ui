@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsGoogle</class>
+ <widget class="QWidget" name="SettingsGoogle">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>318</width>
+    <height>119</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Google options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0,0,0,0,0">
+   <item row="0" column="1" rowspan="2" colspan="5">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="6">
+    <widget class="QSpinBox" name="spbSatelliteVersion">
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="5" colspan="2">
+    <widget class="QPushButton" name="pbDefault">
+     <property name="text">
+      <string>Default</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6">
+    <widget class="QSpinBox" name="spbTerrainVersionTerrain">
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="lblTerrainVersionTerrain">
+     <property name="text">
+      <string>Terrain</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="3">
+    <widget class="QSpinBox" name="spbTerrainVersionRoads">
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QSpinBox" name="spbMapVersion">
+     <property name="maximum">
+      <number>999</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="5">
+    <widget class="QLabel" name="lblTerrainVersionRoads">
+     <property name="text">
+      <string>Roads</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblSatelliteVersion">
+     <property name="text">
+      <string>Satellite photo version</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblTerrainVersion">
+     <property name="text">
+      <string>Terrain version</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblMapVersion">
+     <property name="text">
+      <string>Map version</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbDefault</sender>
+   <signal>clicked()</signal>
+   <receiver>SettingsGoogle</receiver>
+   <slot>onDefaultClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>59</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onDefaultClicked()</slot>
+ </slots>
+</ui>

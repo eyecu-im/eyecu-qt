@@ -1,6 +1,7 @@
 #include "stanza.h"
 
 #include <QTextStream>
+#include <QDebug>
 #include "jid.h"
 
 StanzaData::StanzaData(const QString &ATagName)
@@ -179,12 +180,16 @@ QString Stanza::toString(int AIndent) const
 	QTextStream ts(&data, QIODevice::WriteOnly);
 	ts.setCodec("UTF-16");
 	element().save(ts, AIndent);
+// *** <<< eyeCU <<< ***
+    data.replace(QChar::Nbsp, "&#160;");
+    data.replace('\x09', "&#009;");
+// *** >>> eyeCU >>> ***
 	return data;
 }
 
 QByteArray Stanza::toByteArray() const
 {
-	return toString(0).toUtf8();
+    return toString(0).toUtf8();
 }
 
 QDomElement Stanza::findElement(const QDomElement &AParent, const QString &ATagName, const QString &ANamespace)

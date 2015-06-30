@@ -7,6 +7,7 @@
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/irostersview.h>
+#include <interfaces/iwizardaccount.h> // *** <<< eyeCU >>> ***
 
 class AccountsOptionsWidget;
 
@@ -18,6 +19,9 @@ class AccountManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IAccountManager IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IAccountManager")
+#endif
 public:
 	AccountManager();
 	~AccountManager();
@@ -43,6 +47,9 @@ signals:
 	void accountDestroyed(const QUuid &AAccountId);
 	void accountActiveChanged(IAccount *AAccount, bool AActive);
 	void accountOptionsChanged(IAccount *AAcount, const OptionsNode &ANode);
+// *** <<< eyeCU <<< ***
+	void showAccountSettings(const QUuid &AUuid);
+// *** >>> eyeCU >>> ***
 protected:
 	IAccount *insertAccount(const OptionsNode &AOptions);
 	void removeAccount(const QUuid &AAccountId);
@@ -62,13 +69,17 @@ protected slots:
 	void onAccountOptionsChanged(const OptionsNode &ANode);
 protected slots:
 	void onShowAccountOptions(bool);
-	void onShowCreateAccountWizard();
+// *** <<< eyeCU <<< ***
+//	void onShowCreateAccountWizard();
+	void onAddAccountLinkActivated(const QString &ALink);
+// *** >>> eyeCU >>> ***
 	void onResourceComboBoxEditFinished();
 	void onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 private:
 	IOptionsManager *FOptionsManager;
 	IRostersViewPlugin *FRostersViewPlugin;
 	IXmppStreamManager *FXmppStreamManager;
+	IWizardAccount *FWizardAccount; // *** <<< eyeCU >>> ***
 private:
 	QMap<QUuid, IAccount *> FAccounts;
 };

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>public_transport:station</key><name>Station</name><object mime="image/png">transport/station.png</object></icon>
+<icon><key>public_transport:platform</key><name>Platform</name><object mime="image/png">transport/platform.png</object></icon>
+<icon><key>public_transport:stop_position</key><name>Stop position</name><object mime="image/png">transport/stop_position.png</object></icon>
+<icon><key>public_transport:taxi</key><name>Taxi</name><object mime="image/png">transport/taxi.png</object></icon>
+
+<icon><key>railway</key><name>Railway</name><object mime="image/png">transport/railway.png</object></icon>
+<icon><key>railway:buffer_stop</key><name>Buffer stop</name><object mime="image/png">transport/railway/buffer_stop.png</object></icon>
+<icon><key>railway:station</key><name>Railway station</name><object mime="image/png">transport/railway/station.png</object></icon>
+<icon><key>railway:tram</key><name>Tram</name><object mime="image/png">transport/railway/tram.png</object></icon>
+<icon><key>railway:turntable</key><name>Turntable</name><object mime="image/png">transport/railway/turntable.png</object></icon>
+<icon><key>railway:subway</key><name>Subway</name><object mime="image/png">transport/railway/subway.png</object></icon>
+
+<icon><key>aerialway</key><name>Aerial way</name><object mime="image/png">transport/aerialway.png</object></icon>
+<icon><key>aerialway:cable_car</key><name>Cable car</name><object mime="image/png">transport/aerialway/cable_car.png</object></icon>
+<icon><key>aerialway:chair_lift</key><name>Chair lift</name><object mime="image/png">transport/aerialway/chair_lift.png</object></icon>
+<icon><key>aerialway:drag_lift</key><name>Drag lift</name><object mime="image/png">transport/aerialway/drag_lift.png</object></icon>
+<icon><key>aerialway:gondola</key><name>Gondola</name><object mime="image/png">transport/aerialway/gondola.png</object></icon>
+<icon><key>aerialway:goods</key><name>Goods</name><object mime="image/png">transport/aerialway/goods.png</object></icon>
+<icon><key>aerialway:station</key><name>Station</name><object mime="image/png">transport/aerialway/station.png</object></icon>
+
+<icon><key>aeroway</key><name>Airport</name><object mime="image/png">transport/airport.png</object></icon>
+<icon><key>aeroway:airfield</key><name>Airfield</name><object mime="image/png">transport/airport/airfield.png</object></icon>
+<icon><key>aeroway:apron</key><name>Apron</name><object mime="image/png">transport/airport/apron.png</object></icon>
+<icon><key>aeroway:gate</key><name>Gate</name><object mime="image/png">transport/airport/gate.png</object></icon>
+<icon><key>aeroway:hangar</key><name>Hangar</name><object mime="image/png">transport/airport/hangar.png</object></icon>
+<icon><key>aeroway:helipad</key><name>Helipad</name><object mime="image/png">transport/airport/helipad.png</object></icon>
+<icon><key>aeroway:runway</key><name>Runway</name><object mime="image/png">transport/airport/runway.png</object></icon>
+<icon><key>aeroway:taxiway</key><name>Taxiway</name><object mime="image/png">transport/airport/taxiway.png</object></icon>
+<icon><key>aeroway:terminal</key><name>Terminal</name><object mime="image/png">transport/airport/terminal.png</object></icon>
+<icon><key>aeroway:windsock</key><name>Windsock</name><object mime="image/png">transport/airport/windsock.png</object></icon>
+
+<icon><key>highway</key><name>Highway</name><object mime="image/gif">transport/highway.gif</object></icon>
+<icon><key>highway:bus_stop</key><name>Bus stop</name><object mime="image/png">transport/highway/bus_stop.png</object></icon>
+<icon><key>highway:motorway</key><name>Motorway</name><object mime="image/png">transport/highway/motorway.png</object></icon>
+<icon><key>highway:motorway_link</key><name>Motorway link</name><object mime="image/png">transport/highway/motorway.png</object></icon>
+<icon><key>highway:path</key><name>Path</name><object mime="image/png">transport/highway/path.png</object></icon>
+<icon><key>highway:pedestrian</key><name>Pedestrian</name><object mime="image/png">transport/highway/pedestrian.png</object></icon>
+<icon><key>highway:primary</key><name>Primary</name><object mime="image/png">transport/highway/primary.png</object></icon>
+<icon><key>highway:primary_link</key><name>Primary link</name><object mime="image/png">transport/highway/primary.png</object></icon>
+<icon><key>highway:road</key><name>Road</name><object mime="image/png">transport/highway/unclassified.png</object></icon>
+<icon><key>highway:residential</key><name>Residential</name><object mime="image/png">transport/highway/residential.png</object></icon>
+<icon><key>highway:secondary</key><name>Secondary</name><object mime="image/png">transport/highway/secondary.png</object></icon>
+<icon><key>highway:secondary_link</key><name>Secondary link</name><object mime="image/png">transport/highway/secondary.png</object></icon>
+<icon><key>highway:service</key><name>Service</name><object mime="image/png">transport/highway/unclassified.png</object></icon>
+<icon><key>highway:steps</key><name>Steps</name><object mime="image/png">transport/highway/steps.png</object></icon>
+<icon><key>highway:tertiary</key><name>Tertiary</name><object mime="image/png">transport/highway/tertiary.png</object></icon>
+<icon><key>highway:tertiary_link</key><name>Tertiary link</name><object mime="image/png">transport/highway/tertiary.png</object></icon>
+<icon><key>highway:trunk</key><name>Trunk</name><object mime="image/png">transport/highway/trunk.png</object></icon>
+<icon><key>highway:trunk_link</key><name>Trunk link</name><object mime="image/png">transport/highway/trunk.png</object></icon>
+<icon><key>highway:unclassified</key><name>Unclassified</name><object mime="image/png">transport/highway/unclassified.png</object></icon>
+
+<icon><key>waterway</key><name>Waterway</name><object mime="image/gif">transport/waterway.gif</object></icon>
+<icon><key>waterway:canal</key><name>Canal</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:drain</key><name>Drain</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:ditch</key><name>Ditch</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:ferry</key><name>Ferry</name><object mime="image/png">transport/waterway/ferry.png</object></icon>
+<icon><key>waterway:river</key><name>River</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:stream</key><name>Stream</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:riverbank</key><name>River bank</name><object mime="image/png">transport/waterway/river.png</object></icon>
+<icon><key>waterway:boatyard</key><name>Boatyard</name><object mime="image/png">transport/waterway/boatyard.png</object></icon>
+<icon><key>waterway:dam</key><name>Dam</name><object mime="image/png">transport/waterway/dam.png</object></icon>
+<icon><key>waterway:weir</key><name>Weir</name><object mime="image/png">transport/waterway/weir.png</object></icon>
+<icon><key>waterway:lock_gate</key><name>Lock gate</name><object mime="image/png">transport/waterway/lock_gate.png</object></icon>
+<icon><key>waterway:turning_point</key><name>Turning</name><object mime="image/png">transport/waterway/turning.png</object></icon>
+</icondef>

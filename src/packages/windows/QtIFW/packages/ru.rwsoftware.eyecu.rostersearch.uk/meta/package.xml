@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Roster Search Ukrainian Translation</DisplayName>
+    <Description>Roster Search Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.rostersearch.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.rostersearch,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

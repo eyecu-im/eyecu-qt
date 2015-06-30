@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Jabber Session Manager</DisplayName>
+    <Description>Allows to set the session between two entities, which explains the rules of the exchange of XMPP stanzas</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.sessionnegotiation</Name>
+    <Dependencies>ru.rwsoftware.eyecu.dataforms</Dependencies>
+    <SortingPriority>98</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

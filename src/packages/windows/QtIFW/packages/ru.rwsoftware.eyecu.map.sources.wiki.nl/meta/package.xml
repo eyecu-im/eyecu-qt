@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source Wikimapia Dutch Translation</DisplayName>
+    <Description>Map Source Wikimapia Dutch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.wiki.nl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.wiki,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

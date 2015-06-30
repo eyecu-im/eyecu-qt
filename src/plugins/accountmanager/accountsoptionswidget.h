@@ -21,7 +21,12 @@ class AccountsOptionsWidget :
 	Q_OBJECT;
 	Q_INTERFACES(IOptionsDialogWidget);
 public:
-	AccountsOptionsWidget(IAccountManager *AAccountManager, QWidget *AParent);
+	enum Flags {
+		Advanced = 1,
+		NoWizrd = 2
+	};
+
+	AccountsOptionsWidget(IAccountManager *AAccountManager, int AFlags, QWidget *AParent);
 	~AccountsOptionsWidget();
 	virtual QWidget* instance() { return this; }
 public slots:
@@ -46,12 +51,14 @@ protected:
 	void dragEnterEvent(QDragEnterEvent *AEvent);
 	void dragMoveEvent(QDragMoveEvent *AEvent);
 protected slots:
-	void onAddAccountLinkActivated();
+//	void onAddAccountLinkActivated(); *** <<< eyeCU >>> **
 	void onHideShowInactiveAccountsLinkActivated();
 	void onRemoveButtonClicked(const QUuid &AAccountId);
 	void onSettingsButtonClicked(const QUuid &AAccountId);
 	void onAccountInserted(IAccount *AAccount);
 	void onAccountOptionsChanged(IAccount *AAcount, const OptionsNode &ANode);
+signals:
+	void addAccountLinkActivated(const QString &ALink);
 private:
 	Ui::AccountsOptionsClass ui;
 private:

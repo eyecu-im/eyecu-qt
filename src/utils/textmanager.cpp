@@ -1,28 +1,28 @@
+#include <QTextBlock>
+#include <definitions/namespaces.h>
+#include <xmltextdocumentparser.h>
 #include "textmanager.h"
 
-#include <QTextBlock>
-
 TextManager::TextManager()
-{
-
-}
+{}
 
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
-	QRegExp body("<body.*>(.*)</body>");
-	body.setMinimal(false);
-	QString html = ADocument.toHtml();
-	html = html.indexOf(body)>=0 ? body.cap(1).trimmed() : html;
-
-	// XXX Replace <P> inserted by QTextDocument with <SPAN>
-	if (html.leftRef(3).compare("<p ", Qt::CaseInsensitive) == 0 &&
-		html.rightRef(4).compare("</p>", Qt::CaseInsensitive) == 0)
-	{
-		html.replace(1, 1, "span");
-		html.replace(html.length() - 2, 1, "span");
-	}
-
-	return html;
+	QRegExp regExpBody("<body.*>(.*)</body>");
+	regExpBody.setMinimal(false);
+// *** <<< eyeCU <<< ***
+	QDomDocument doc;
+	QDomElement  html=doc.createElementNS(NS_XHTML_IM, "html");
+	QDomElement  body=doc.createElementNS(NS_XHTML, "body");
+	html.appendChild(body);
+	doc.appendChild(html);
+	XmlTextDocumentParser::textToXml(body, ADocument, true);
+	QString xhtml=doc.toString(-1);
+	if (xhtml.indexOf(regExpBody)>=0)
+		xhtml=regExpBody.cap(1).trimmed();
+	xhtml.replace(QChar::Nbsp, "&#160;");
+// *** >>> eyeCU >>> ***
+	return xhtml;
 }
 
 QString TextManager::getTextFragmentHref(const QTextDocumentFragment &AFragment)

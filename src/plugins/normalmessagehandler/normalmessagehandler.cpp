@@ -30,6 +30,7 @@
 #include <utils/shortcuts.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_STREAM_JID            Action::DR_StreamJid
 #define ADR_CONTACT_JID           Action::DR_Parametr1
@@ -756,7 +757,7 @@ void NormalMessageHandler::fillContentOptions(IMessageNormalWindow *AWindow, IMe
 {
 	AOptions.senderColor = "blue";
 	AOptions.senderId = AWindow->contactJid().full();
-	AOptions.senderName = Qt::escape(FMessageStyleManager->contactName(AWindow->streamJid(),AWindow->contactJid()));
+	AOptions.senderName = HTML_ESCAPE(FMessageStyleManager->contactName(AWindow->streamJid(),AWindow->contactJid()));
 	AOptions.senderAvatar = FMessageStyleManager->contactAvatar(AWindow->contactJid());
 	AOptions.senderIcon = FMessageStyleManager->contactIcon(AWindow->streamJid(),AWindow->contactJid());
 }
@@ -780,7 +781,7 @@ void NormalMessageHandler::showStyledMessage(IMessageNormalWindow *AWindow, cons
 	{
 		XmppStanzaError err(AMessage.stanza());
 		QString html = tr("<b>The message with a error is received</b>");
-		html += "<p style='color:red;'>"+Qt::escape(err.errorMessage())+"</p>";
+		html += "<p style='color:red;'>"+HTML_ESCAPE(err.errorMessage())+"</p>";
 		html += "<hr>";
 		options.kind = IMessageStyleContentOptions::KindMessage;
 		AWindow->viewWidget()->appendHtml(html,options);
@@ -1188,5 +1189,6 @@ void NormalMessageHandler::onStyleOptionsChanged(const IMessageStyleOptions &AOp
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_normalmessagehandler, NormalMessageHandler)
+#endif

@@ -21,6 +21,9 @@ class FileStreamsManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IOptionsDialogHolder IFileStreamsManager IDataStreamProfile);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IFileStreamsManager")
+#endif
 public:
 	FileStreamsManager();
 	~FileStreamsManager();

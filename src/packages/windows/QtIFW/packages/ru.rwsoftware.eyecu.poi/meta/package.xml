@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Points of Interest</DisplayName>
+    <Description>Allows to create, store and handle user's Points of Interest</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.poi</Name>
+    <Dependencies>ru.rwsoftware.eyecu.privatestorage,ru.rwsoftware.eyecu.map.locationselector,ru.purplesoft.qtpurple.geo</Dependencies>
+    <SortingPriority>39</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

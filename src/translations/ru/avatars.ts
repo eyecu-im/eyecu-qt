@@ -2,6 +2,33 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru" sourcelanguage="en">
 <context>
+    <name>AvatarOptionsWidget</name>
+    <message>
+        <source>Avatar position</source>
+        <translation>Расположение аватара</translation>
+    </message>
+    <message>
+        <source>At Right</source>
+        <translation>Справа</translation>
+    </message>
+    <message>
+        <source>At Left</source>
+        <translation>Слева</translation>
+    </message>
+    <message>
+        <source>Display avatars for offline contacts grayscaled</source>
+        <translation>Отображать аватары отключённых контактов монохромными</translation>
+    </message>
+    <message>
+        <source>Display empty avatars</source>
+        <translation>Отображать пустые аватары</translation>
+    </message>
+    <message>
+        <source>Display avatars</source>
+        <translation>Отображать аватары</translation>
+    </message>
+</context>
+<context>
     <name>Avatars</name>
     <message>
         <source>Avatar</source>

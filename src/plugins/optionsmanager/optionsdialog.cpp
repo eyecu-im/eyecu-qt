@@ -105,7 +105,7 @@ QWidget *OptionsDialog::createNodeWidget(const QString &ANodeId)
 	{
 		QVBoxLayout *headerLayout = NULL;
 		IOptionsDialogWidget *headerWidget = NULL;
-		foreach(IOptionsDialogWidget *widget, orderedWidgets)
+		foreach(TypedOptionsDialogWidget widget, orderedWidgets)
 		{
 			bool isHeader = qobject_cast<OptionsDialogHeader *>(widget->instance()) != NULL;
 			if (!isHeader)
@@ -137,7 +137,6 @@ QWidget *OptionsDialog::createNodeWidget(const QString &ANodeId)
 			connect(this,SIGNAL(reseted()),widget->instance(),SLOT(reset()));
 			connect(widget->instance(),SIGNAL(modified()),SLOT(onOptionsWidgetModified()));
 		}
-
 		if (headerWidget!=NULL && headerLayout==NULL)
 			delete headerWidget->instance();
 

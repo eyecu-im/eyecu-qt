@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Query Authentication Japanese Translation</DisplayName>
+    <Description>Query Authentication Japanese translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.iqauth.ja</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.iqauth,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

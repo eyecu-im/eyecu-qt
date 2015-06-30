@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   x="0.00000000"
+   y="0.00000000"
+   width="750.00000"
+   height="500.00000"
+   id="svg722"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="Roundel.svg">
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="1004"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="0.472"
+     inkscape:cx="44.491525"
+     inkscape:cy="250"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg722" />
+  <defs
+     id="defs724">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 250 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="750 : 250 : 1"
+       inkscape:persp3d-origin="375 : 166.66667 : 1"
+       id="perspective17" />
+  </defs>
+  <rect
+     width="749.99963"
+     height="499.99979"
+     x="0.00000000"
+     y="0.00020000001"
+     style="font-size:12.000000px;fill:#ffffff;fill-opacity:1.0000000;fill-rule:evenodd;stroke-width:1.0000000pt"
+     id="rect740" />
+  <rect
+     width="166.66660"
+     height="499.99979"
+     x="291.66669"
+     y="4.3721990e-005"
+     style="fill:#dc171d;fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-opacity:1.0000000"
+     id="rect2334" />
+  <rect
+     width="749.99963"
+     height="166.66658"
+     x="0.00000000"
+     y="166.66672"
+     style="font-size:12px;fill:#012a87;fill-opacity:1;fill-rule:evenodd;stroke-width:1pt"
+     id="rect727" />
+  <path
+     d="M 346.15805,326.38883 L 333.21109,315.97216 L 320.33231,325.97215 L 325.44342,310.55550 L 312.50000,300.13883 L 328.05214,300.13883 L 333.50250,284.72217 L 338.45242,300.13883 L 354.16665,300.13883 L 341.70686,310.55550 L 346.15805,326.38883 z "
+     style="font-size:12.000000px;fill:#ffffff;fill-opacity:1.0000000;fill-rule:evenodd;stroke:none;stroke-width:1.0000000pt"
+     id="path2864" />
+  <use
+     transform="translate(83.33000,0.000000)"
+     id="use1316"
+     x="0.00000000"
+     y="0.00000000"
+     width="750.00000"
+     height="500.00000"
+     xlink:href="#path2864" />
+  <use
+     transform="translate(0.000000,-111.1188)"
+     id="use1318"
+     x="0.00000000"
+     y="0.00000000"
+     width="750.00000"
+     height="500.00000"
+     xlink:href="#path2864" />
+  <use
+     transform="translate(80.00000,-111.1188)"
+     id="use1320"
+     x="0.00000000"
+     y="0.00000000"
+     width="750.00000"
+     height="500.00000"
+     xlink:href="#path2864" />
+  <use
+     transform="translate(-69.50000,-55.55583)"
+     id="use1322"
+     x="0.00000000"
+     y="0.00000000"
+     width="750.00000"
+     height="500.00000"
+     xlink:href="#path2864" />
+  <use
+     transform="translate(152.7800,-55.55383)"
+     id="use1324"
+     x="0.00000000"
+     y="0.00000000"
+     width="750.00000"
+     height="500.00000"
+     xlink:href="#path2864" />
+</svg>

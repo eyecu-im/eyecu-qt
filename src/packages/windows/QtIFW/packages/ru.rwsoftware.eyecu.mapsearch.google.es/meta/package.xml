@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Google Spanish Translation</DisplayName>
+    <Description>Google Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.mapsearch.google.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.mapsearch.google,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -22,6 +22,10 @@
 #define OPV_ACCOUNT_CONNECTION_SSLPROTOCOL              "accounts.account.connection.ssl-protocol"
 #define OPV_ACCOUNT_CONNECTION_USELEGACYSSL             "accounts.account.connection.use-legacy-ssl"
 #define OPV_ACCOUNT_CONNECTION_CERTVERIFYMODE           "accounts.account.connection.cert-verify-mode"
+// *** <<< eyeCU <<< ***
+// Registration
+#define OPV_ACCOUNT_REGISTER                            "accounts.account.register-on-server"
+// *** >>> eyeCU >>> ***
 // StatusChanger
 #define OPV_ACCOUNT_AUTOCONNECT                         "accounts.account.auto-connect"
 #define OPV_ACCOUNT_AUTORECONNECT                       "accounts.account.auto-reconnect"
@@ -34,6 +38,22 @@
 // MessageArchiver
 #define OPV_ACCOUNT_HISTORYREPLICATE                    "accounts.account.history-replicate"
 #define OPV_ACCOUNT_HISTORYDUPLICATE                    "accounts.account.history-duplicate"
+// *** <<< eyeCU <<< ***
+#define OPV_ENABLEPOI                                   "enable-poi"
+#define OPV_ACCOUNT_ENABLEPOI                           "accounts.account.enable-poi"
+#define OPV_PUBLISHUSERTUNE                             "publish-user-tune"
+#define OPV_ACCOUNT_PUBLISHUSERTUNE                     "accounts.account.publish-user-tune"
+#define OPV_PUBLISHUSERLOCATION                         "publish-user-location"
+#define OPV_ACCOUNT_PUBLISHUSERLOCATION                 "accounts.account.publish-user-location"
+#define OPV_NICKNAME                                    "nickname"
+#define OPV_ACCOUNT_NICKNAME                            "accounts.account.nickname"
+#define OPV_NICKNAMECHANGE                              "nickname-change"
+#define OPV_ACCOUNT_NICKNAMECHANGE                      "accounts.account.nickname-change"
+#define OPV_NICKNAMESET                                 "nickname-set"
+#define OPV_ACCOUNT_NICKNAMESET                         "accounts.account.nickname-set"
+#define OPV_NICKNAMEBROADCAST                           "nickname-broadcast"
+#define OPV_ACCOUNT_NICKNAMEBROADCAST                   "accounts.account.nickname-broadcast"
+// *** >>> eyeCU >>> ***
 
 // BirthdayReminder
 #define OPV_BIRTHDAYREMINDER_STARTTIME                  "birthdayreminder.start-time"
@@ -65,7 +85,9 @@
 #define OPV_DATASTREAMS_METHOD_FORWARDADDRESS           "datastreams.settings-profile.method.forward-direct-address"
 #define OPV_DATASTREAMS_METHOD_USEACCOUNTSTREAMPROXY    "datastreams.settings-profile.method.use-account-stream-proxy"
 #define OPV_DATASTREAMS_METHOD_USEUSERSTREAMPROXY       "datastreams.settings-profile.method.use-user-stream-proxy"
-#define OPV_DATASTREAMS_METHOD_USERSTREAMPROXY          "datastreams.settings-profile.method.user-stream-proxy"
+// *** <<< eyeCU <<< ***
+#define OPV_DATASTREAMS_METHOD_USERSTREAMPROXYLIST      "datastreams.settings-profile.method.user-stream-proxy-list"
+// *** >>> eyeCU >>> ***
 #define OPV_DATASTREAMS_METHOD_USEACCOUNTNETPROXY       "datastreams.settings-profile.method.use-account-network-proxy"
 #define OPV_DATASTREAMS_METHOD_USERNETWORKPROXY         "datastreams.settings-profile.method.user-network-proxy"
 
@@ -119,7 +141,9 @@
 #define OPV_MUC_GROUPCHAT_REJOINAFTERKICK               "muc.groupchat.rejoin-after-kick"
 #define OPV_MUC_GROUPCHAT_QUITONWINDOWCLOSE             "muc.groupchat.quit-on-window-close"
 #define OPV_MUC_GROUPCHAT_REFERENUMERATION              "muc.groupchat.refer-enumeration"
+// *** <<< eyeCU <<< ***
 #define OPV_MUC_GROUPCHAT_NICKNAMESUFFIX                "muc.groupchat.nickname-suffix"
+// *** >>> eyeCU >>> ***
 // Bookmarks
 #define OPV_MUC_GROUPCHAT_SHOWAUTOJOINED                "muc.groupchat.show-auto-joined"
 
@@ -157,6 +181,7 @@
 // OptionsManager
 #define OPV_COMMON_ROOT                                 "common"
 #define OPV_COMMON_LANGUAGE                             "common.language"
+#define OPV_COMMON_ADVANCED                             "common.advanced"
 #define OPV_COMMON_AUTOSTART                            "common.autostart"
 // ClintInfo
 #define OPV_COMMON_SHAREOSVERSION                       "common.share-os-version"
@@ -177,7 +202,9 @@
 #define OPV_NOTIFICATIONS_POPUPTIMEOUT                  "notifications.popup-timeout"
 #define OPV_NOTIFICATIONS_TYPEKINDS_ITEM                "notifications.type-kinds.type"
 #define OPV_NOTIFICATIONS_KINDENABLED_ITEM              "notifications.kind-enabled.kind"
-
+// *** <<< eyeCU <<< ***
+#define OPV_NOTIFICATIONS_ANIMATIONENABLE               "notifications.animation-enable"
+// *** >>> eyeCU >>> ***
 // ConnectionManager
 #define OPV_PROXY_ROOT                                  "proxy"
 #define OPV_PROXY_DEFAULT                               "proxy.default"
@@ -197,9 +224,16 @@
 #define OPV_ROSTER_SHOWRESOURCE                         "roster.show-resource"
 #define OPV_ROSTER_HIDESCROLLBAR                        "roster.hide-scrollbar"
 #define OPV_ROSTER_MERGESTREAMS                         "roster.merge-streams"
+// >>> eyeCU >>>
+#define OPV_ROSTER_SHOWSELF                             "roster.show-self"
+#define OPV_ROSTER_ALTERNATIONHIGHLITE                  "roster.alternation-highlite"
+#define OPV_ROSTER_SHOWOFFLINEAGENTS                    "roster.show-offline-transports"
+#define OPV_ROSTER_STATUSDISPLAY                        "roster.status-display"
+// <<< eyeCU <<<
 // RosterChanger
 #define OPV_ROSTER_AUTOSUBSCRIBE                        "roster.auto-subscribe"
 #define OPV_ROSTER_AUTOUNSUBSCRIBE                      "roster.auto-unsubscribe"
+
 // RosterSearch
 #define OPV_ROSTER_SEARCH_ENABLED                       "roster.search.enabled"
 #define OPV_ROSTER_SEARCH_FIELDEBANLED                  "roster.search.field-enabled"
@@ -254,5 +288,257 @@
 #define OPV_XMPPSTREAMS_TIMEOUT_DISCONNECT              "xmppstreams.timeout.disconnect"
 // RosterPlugin
 #define OPV_XMPPSTREAMS_TIMEOUT_ROSTERREQUEST           "xmppstreams.timeout.roster-request"
+
+// *** <<< eyeCU <<< ***
+// Avatars
+#define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
+#define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
+#define OPV_ROSTER_AVATARS_DISPLAYEMPTY                 "roster.avatars.display-empty"
+#define OPV_ROSTER_AVATARS_DISPLAYGRAY                  "roster.avatars.display-gray"
+
+// PEP
+#define OPV_PEP_DELETE_RETRACT                          "pep.delete.retract"
+#define OPV_PEP_DELETE_PUBLISHEMPTY                     "pep.delete.publish_empty"
+#define OPV_PEP_NOTIFY_IGNOREOFFLINE                    "pep.notify.ignore_offline"
+
+// Moods
+#define OPV_MOOD_ROOT                                   "mood"
+#define OPV_MOOD_COMMENT                                "mood.comment"
+#define OPV_ROSTER_MOOD_SHOW                            "roster.mood.show"
+#define OPV_MESSAGES_MOOD_DISPLAY                       "messages.mood.display"
+#define OPV_MESSAGES_MOOD_NOTIFY                        "messages.mood.notify"
+
+// Activities
+#define OPV_ACTIVITY_ROOT                               "activ"
+#define OPV_ACTIVITY_COMMENT                            "activ.comment"
+#define OPV_ROSTER_ACTIVITY_SHOW                        "roster.activity.show"
+#define OPV_MESSAGES_ACTIVITY_DISPLAY                   "messages.activity.display"
+#define OPV_MESSAGES_ACTIVITY_NOTIFY                    "messages.activity.notify"
+
+//Tune
+#define OPV_ROSTER_TUNE_SHOW                            "roster.tune.show"
+#define OPV_MESSAGES_TUNE_DISPLAY                       "messages.tune.display"
+#define OPV_MESSAGES_TUNE_NOTIFY                        "messages.tune.notify"
+#define OPV_TUNE_PUBLISH								"roster.tune.publish"
+#define OPV_TUNE_POLLING_INTERVAL                       "roster.tune.polling.interval"
+#define OPV_TUNE_INFOREQUESTER_USED                     "roster.tune.info_requester.used"
+#define OPV_TUNE_INFOREQUESTER_PROXY                    "roster.tune.info_requester.proxy"
+#define OPV_TUNE_INFOREQUESTER_DISPLAYIMAGE             "roster.tune.info_requester.display_image"
+#define OPV_TUNE_INFOREQUESTER_QUERYURL                 "roster.tune.info_requester.query_url"
+// Tune listeners
+#define OPV_TUNE_LISTENER_FILE_NAME                     "roster.tune.listener.file.name"
+#define OPV_TUNE_LISTENER_FILE_FORMAT                   "roster.tune.listener.file.format"
+#define OPV_TUNE_LISTENER_PM123_PIPENAME                "roster.tune.listener.pm123.pipe_name"
+#define OPV_TUNE_LISTENER_QUPLAYER_PIPENAME             "roster.tune.listener.quplayer.pipe_name"
+#define OPV_TUNE_LISTENER_Z_PIPENAME                    "roster.tune.listener.z.pipe_name"
+// Tune info requesters
+#define OPV_TUNE_INFOREQUESTER_LASTFM_IMAGESIZE         "roster.tune.info_requester.last_fm.image_size"
+#define OPV_TUNE_INFOREQUESTER_LASTFM_AUTOCORRECT       "roster.tune.info_requester.last_fm.autocorrect"
+// Multimedia Player
+#define OPV_MMPLAYER_SHOW                               "mmplayer.show"
+#define OPV_MMPLAYER_VOLUME                             "mmplayer.volume"
+#define OPV_MMPLAYER_MUTE                               "mmplayer.mute"
+#define OPV_MMPLAYER_ASPECTRATIOMODE                    "mmplayer.aspect-ratio-mode"
+#define OPV_MMPLAYER_SMOOTHRESIZE                       "mmplayer.smooth-resize"
+#define OPV_MMPLAYER_DIRECTORY                          "mmplayer.directory"
+#define OPV_MMPLAYER_FILTER								"mmplayer.filter"
+
+//Geoloc
+#define OPV_ROSTER_GEOLOC_SHOW                          "roster.geoloc.show"
+#define OPV_MESSAGES_GEOLOC_DISPLAY                     "messages.geoloc.display"
+#define OPV_GEOLOC_EXTSENDER                            "geoloc.extsender"
+
+//Receipts
+#define OPV_RECEIPTS_SHOW                               "receipts.show"
+#define OPV_RECEIPTS_SEND                               "receipts.send"
+
+// POI
+#define OPV_POI_SHOW                                    "poi.show"
+#define OPV_POI_CUR_COUNTRY                             "poi.curcountry"
+#define OPV_POI_TYPE                                    "poi.type"
+#define OPV_POI_FILTER                                  "poi.filter"
+
+#define OPV_POI_PNT_ICONSIZE                            "poi.pnt.size"
+#define OPV_POI_PNT_TEXTCOLOR                           "poi.pnt.textcolor"
+#define OPV_POI_PNT_TEMPTEXTCOLOR                       "poi.pnt.temptextcolor"
+#define OPV_POI_PNT_SHADOWCOLOR                         "poi.pnt.shadowcolor"
+#define OPV_POI_PNT_FONT                                "poi.pnt.font"
+
+// Map
+#define OPV_MAP_ZOOM                                    "map.zoom"
+#define OPV_MAP_SOURCE                                  "map.source"
+#define OPV_MAP_MODE                                    "map.mode"
+#define OPV_MAP_COORDS                                  "map.coords"
+#define OPV_MAP_PROXY                                   "map.proxy"
+#define OPV_MAP_LOADING                                 "map.loading"
+#define OPV_MAP_GEOMETRY                                "map.geometry"
+#define OPV_MAP_SHOWING                                 "map.showing"
+#define OPV_MAP_ATTACH_TO_ROSTER                        "map.attachtoroster"
+#define OPV_MAP_ZOOM_WHEEL                              "map.zoom.wheel"
+#define OPV_MAP_ZOOM_SLIDERTRACK                        "map.zoom.slidertrack"
+
+#define OPV_MAP_OSD_FONT                                "map.osd.font"
+#define OPV_MAP_OSD_TEXT_COLOR                          "map.osd.textcolor"
+
+#define OPV_MAP_OSD_CONTR_FOREGROUND                    "map.osd.contr.foreground"
+#define OPV_MAP_OSD_CONTR_BASE                          "map.osd.contr.base"
+#define OPV_MAP_OSD_CONTR_BUTTON                        "map.osd.contr.button"
+#define OPV_MAP_OSD_CONTR_LIGHT                         "map.osd.contr.light"
+#define OPV_MAP_OSD_CONTR_MIDLIGHT                      "map.osd.contr.midlight"
+#define OPV_MAP_OSD_CONTR_SHADOW                        "map.osd.contr.shadow"
+#define OPV_MAP_OSD_CONTR_DARK                          "map.osd.contr.dark"
+#define OPV_MAP_OSD_CONTR_BACKGROUND_COLOR              "map.osd.contr.background.color"
+#define OPV_MAP_OSD_CONTR_BACKGROUND_ALPHA              "map.osd.contr.background.alpha"
+#define OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT        "map.osd.contr.background.transparent"
+#define OPV_MAP_OSD_CONTR_CMARKER_COLOR                 "map.osd.contr.cmarker.color"
+#define OPV_MAP_OSD_CONTR_CMARKER_ALPHA                 "map.osd.contr.cmarker.alpha"
+#define OPV_MAP_OSD_CONTR_CMARKER_VISIBLE               "map.osd.contr.cmarker.visible"
+
+#define OPV_MAP_OSD_SHADOW_COLOR                        "map.osd.shadowcolor"
+#define OPV_MAP_OSD_SHADOW_ALPHA                        "map.osd.shadowalpha"
+#define OPV_MAP_OSD_SHADOW_BLUR                         "map.osd.shadowblur"
+#define OPV_MAP_OSD_SHADOW_SHIFT                        "map.osd.shadowshift"
+
+#define OPV_MAP_OSD_BOX_FOREGROUND                      "map.osd.box.foreground"
+#define OPV_MAP_OSD_BOX_LIGHT                           "map.osd.box.light"
+#define OPV_MAP_OSD_BOX_MIDLIGHT                        "map.osd.box.midlight"
+#define OPV_MAP_OSD_BOX_DARK                            "map.osd.box.dark"
+#define OPV_MAP_OSD_BOX_BACKGROUND_COLOR                "map.osd.box.background.color"
+#define OPV_MAP_OSD_BOX_BACKGROUND_ALPHA                "map.osd.box.background.alpha"
+#define OPV_MAP_OSD_BOX_BACKGROUND_TRANSPARENT          "map.osd.box.background.transparent"
+#define OPV_MAP_OSD_BOX_SHAPE                           "map.osd.box.shape"
+#define OPV_MAP_OSD_BOX_SHADOW                          "map.osd.box.shadow"
+
+#define OPV_MAP_SOURCE_GOOGLE                           "map.source.google"
+#define OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE         "map.source.google.version.satellite"
+#define OPV_MAP_SOURCE_GOOGLE_VERSION_MAP               "map.source.google.version.map"
+#define OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R         "map.source.google.version.terrain.r"
+#define OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T         "map.source.google.version.terrain.t"
+#define OPV_MAP_SOURCE_YANDEX                           "map.source.yandex"
+#define OPV_MAP_SOURCE_YANDEX_VERSION_SCHEME            "map.source.yandex.version.scheme"
+#define OPV_MAP_SOURCE_YANDEX_VERSION_SATELLITE         "map.source.yandex.version.satellite"
+
+#define OPV_MAP_MAGNIFIER_SIZE                          "map.magnifier.size"
+#define OPV_MAP_MAGNIFIER_ZOOM                          "map.magnifier.zoom"
+#define OPV_MAP_MAGNIFIER_SCALE                         "map.magnifier.scale"
+#define OPV_MAP_MAGNIFIER_RULERS                        "map.magnifier.rulers"
+#define OPV_MAP_MAGNIFIER_OBJECTS                       "map.magnifier.objects"
+#define OPV_MAP_MAGNIFIER_HIGHPRECISION                 "map.magnifier.highprecision"
+#define OPV_MAP_MAGNIFIER_SHADOW_COLOR                  "map.magnifier.shadow.color"
+#define OPV_MAP_MAGNIFIER_SHADOW_OPACITY                "map.magnifier.shadow.opacity"
+#define OPV_MAP_MAGNIFIER_SHADOW_SHIFT                  "map.magnifier.shadow.shift"
+#define OPV_MAP_MAGNIFIER_SHADOW_BLUR                   "map.magnifier.shadow.blur"
+#define OPV_MAP_MAGNIFIER_ZOOMFACTOR                    "map.magnifier.zoomfactor"
+#define OPV_MAP_MAGNIFIER_ZOOMFACTOR_COLOR              "map.magnifier.zoomfactor.color"
+#define OPV_MAP_MAGNIFIER_ZOOMFACTOR_OPACITY            "map.magnifier.zoomfactor.opacity"
+#define OPV_MAP_MAGNIFIER_ZOOMFACTOR_FONT               "map.magnifier.zoomfactor.font"
+
+// Map search
+#define OPV_MAP_SEARCH_LABEL_COLOR                      "map.search.label.color"
+#define OPV_MAP_SEARCH_SHOW                             "map.search.show"
+#define OPV_MAP_SEARCH_LIMITRANGE                       "map.search.limit-range"
+#define OPV_MAP_SEARCH_PAGESIZE                         "map.search.page-size"
+#define OPV_MAP_SEARCH_PAGESIZE_DEFAULT                 "map.search.page-size.default"
+#define OPV_MAP_SEARCH_PROVIDER                         "map.search.provider"
+#define OPV_MAP_SEARCH_PROXY                            "map.search.proxy"
+#define OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE               "map.search.provider.doublegis.type"
+
+// Street View
+#define OPV_MAP_STREETVIEW                              "map.streetview"
+#define OPV_MAP_STREETVIEW_FOV                          "map.streetview.fov"
+#define OPV_MAP_STREETVIEW_SIZE                         "map.streetview.size"
+#define OPV_MAP_STREETVIEW_PROVIDER                     "map.streetview.provider"
+#define OPV_MAP_STREETVIEW_IMAGEDIRECTORY               "map.streetview.image_directory"
+// Place View
+#define OPV_MAP_PLACEVIEW                               "map.placeview"
+#define OPV_MAP_PLACEVIEW_PROVIDER                      "map.placeview.provider"
+#define OPV_MAP_PLACEVIEW_RADIUS                        "map.placeview.radius"
+#define OPV_MAP_PLACEVIEW_TYPE                          "map.placeview.type"
+#define OPV_MAP_PLACEVIEW_RANKBY                        "map.placeview.rankby"
+#define OPV_MAP_PLACEVIEW_WAY                           "map.placeview.way"
+//Weather
+#define OPV_MAP_WEATHER                                 "map.weather"
+#define OPV_MAP_WEATHER_PROVIDER                        "map.weather.provider"
+
+// Map place
+#define OPV_PLACE_GOOGLE_KEY                            "map.place.google.key"
+#define OPV_PLACE_GOOGLE_USERKEY                        "map.place.google.userkey"
+#define OPV_PLACE_GOOGLE_KEY_STATUS                     "map.place.google.keystatus"
+// Map contacts
+#define OPV_MAP_CONTACTS_VIEW                           "map.contacts.view"
+#define OPV_MAP_CONTACTS_FOLLOW                         "map.contacts.follow"
+
+// Contact proximity notifications
+#define OPV_CONTACTPROXIMITYNOTIFICATIONS_DISTANCE      "contact-proximity-notifications.distance"
+#define OPV_CONTACTPROXIMITYNOTIFICATIONS_TRESHOLD      "contact-proximity-notifications.treshold"
+#define OPV_CONTACTPROXIMITYNOTIFICATIONS_IGNOREOWN     "contact-proximity-notifications.ignore-own-resources"
+
+// Map message
+#define OPV_MAP_MESSAGE_AUTOFOCUS                       "map.message.autofocus"
+#define OPV_MAP_MESSAGE_SHOW                            "map.message.show"
+#define OPV_MAP_MESSAGE_ANIMATE                         "map.message.animate"
+
+// Positioning
+#define OPV_POSITIONING_ROOT                            "positioning"
+#define OPV_POSITIONING_METHOD                          "positioning.method"
+// Positioning methods
+// Serial port
+#define OPV_POSITIONING_METHOD_SERIALPORT               "positioning.method.serialport"
+#define OPV_POSITIONING_METHOD_SERIALPORT_NAME          "positioning.method.serialport.name"
+#define OPV_POSITIONING_METHOD_SERIALPORT_BUFFERSIZE    "positioning.method.serialport.buffer-size"
+#define OPV_POSITIONING_METHOD_SERIALPORT_TIMEOUT       "positioning.method.serialport.timeout"
+
+#define OPV_POSITIONING_METHOD_SERIALPORT_BAUDRATE      "positioning.method.serialport.baud-rate"
+#define OPV_POSITIONING_METHOD_SERIALPORT_DATABITS      "positioning.method.serialport.data-bits"
+#define OPV_POSITIONING_METHOD_SERIALPORT_PARITY        "positioning.method.serialport.parity"
+#define OPV_POSITIONING_METHOD_SERIALPORT_FLOWCONTROL   "positioning.method.serialport.flow-control"
+#define OPV_POSITIONING_METHOD_SERIALPORT_STOPBITS      "positioning.method.serialport.stop-bits"
+
+#define OPV_POSITIONING_METHOD_SERIALPORT_TIMETRESHOLD  "positioning.method.serialport.time-treshold"
+#define OPV_POSITIONING_METHOD_SERIALPORT_DISTANCETRESHOLD "positioning.method.serialport.distance-treshold"
+// Manual
+#define OPV_POSITIONING_METHOD_MANUAL_COORDINATES       "positioning.method.manual.coordinates"
+#define OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP         "positioning.method.manual.timestamp"
+#define OPV_POSITIONING_METHOD_MANUAL_INTERVAL          "positioning.method.manual.interval"
+// Location
+#define OPV_POSITIONING_METHOD_LOCATION_INTERVAL        "positioning.method.location.interval"
+// IP
+#define OPV_POSITIONING_METHOD_IP_UPDATERATE            "positioning.method.ip.update-rate"
+#define OPV_POSITIONING_METHOD_IP_PROVIDER              "positioning.method.ip.provider"
+#define OPV_POSITIONING_METHOD_IP_PROXY                 "positioning.method.ip.proxy"
+
+// Tracker
+#define OPV_TRACKER                                     "tracker"
+#define OPV_TRC_LINECOLOR                               "tracker.linecolor"
+#define OPV_TRC_TEXTCOLOR                               "tracker.textcolor"
+#define OPV_TRC_SHADOWCOLOR                             "tracker.shadowcolor"
+#define OPV_TRC_FONT                                    "tracker.font"
+#define OPV_TRC_LINE_TYPE                               "tracker.type"
+#define OPV_TRC_LINE_SIZE                               "tracker.size"
+
+// XHTML-IM
+#define OPV_XHTML                                       "xhtml"
+#define OPV_XHTML_MAXAGE                                "xhtml.maxage"
+#define OPV_XHTML_EMBEDSIZE                             "xhtml.embedsize"
+#define OPV_XHTML_DEFIMAGEFORMAT                        "xhtml.defimageformat"
+#define OPV_XHTML_TABINDENT                             "xhtml.tabindent"
+#define OPV_XHTML_NORICHTEXT                            "xhtml.norichtext"
+#define OPV_XHTML_IMAGESAVEDIRECTORY                    "xhtml.image_save_directory"
+#define OPV_XHTML_IMAGEOPENDIRECTORY                    "xhtml.image_open_directory"
+
+// Attention
+#define OPV_ATTENTION_ROOT                              "attention"
+#define OPV_ATTENTION_NOTIFICATIONPOPUP                 "attention.notification-popup"
+#define OPV_ATTENTION_MAINWINDOWACTIVATE                "attention.mainwindow-activate"
+#define OPV_ATTENTION_AYWAYSPLAYSOUND                   "attention.always-play-sound"
+
+// Jingle RTP
+#define OPV_JINGLERTP                                   "jinglertp"
+#define OPV_JINGLERTP_NOTIFYINTERVAL                    "jinglertp.notify-interval"
+#define OPV_JINGLERTP_USERTCP                           "jinglertp.use-rtcp"
+// Client Icons
+#define OPV_ROSTER_CLIENTICON_SHOW                     "roster.clienticon.show"
+#define OPV_MESSAGES_CLIENTICON_DISPLAY                "messages.clienticon.display"
+// *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONVALUES_H

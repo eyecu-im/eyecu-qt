@@ -7,6 +7,9 @@
 #include <QMetaType>
 #include <QStringRef>
 #include <QSharedData>
+#if QT_VERSION >= 0x050000
+#include <QDataStream>
+#endif
 #include "utilsexport.h"
 
 class JidData :

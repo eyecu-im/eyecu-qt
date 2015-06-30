@@ -7,6 +7,7 @@
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 EditProfilesDialog::EditProfilesDialog(IOptionsManager *AOptionsManager, QWidget *AParent) : QDialog(AParent)
 {
@@ -115,7 +116,7 @@ void EditProfilesDialog::onRemoveProfileClicked()
 	if (listItem)
 	{
 		QString profile = listItem->text();
-		if (QMessageBox::question(this,tr("Remove Profile"),tr("Are you sure you want to delete profile '<b>%1</b>'?").arg(Qt::escape(profile)),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
+		if (QMessageBox::question(this,tr("Remove Profile"),tr("Are you sure you want to delete profile '<b>%1</b>'?").arg(HTML_ESCAPE(profile)),QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
 		{
 			if (!FOptionsManager->removeProfile(profile))
 			{

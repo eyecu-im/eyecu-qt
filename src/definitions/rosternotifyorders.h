@@ -1,6 +1,11 @@
 #ifndef DEF_ROSTERNOTIFYORDERS_H
 #define DEF_ROSTERNOTIFYORDERS_H
 
+// *** <<< eyeCU <<< ***
+#define RNO_ATTENTION                   50
+#define RNO_JINGLE_RTP                 100
+#define RNO_CONTACTPROXIMITY           800
+// *** >>> eyeCU >>> ***
 #define RNO_CHATMESSAGE                200
 #define RNO_NORMALMESSAGE              200
 #define RNO_GROUPCHATMESSAGE           200

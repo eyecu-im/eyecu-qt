@@ -6,20 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>296</width>
-    <height>171</height>
+    <width>320</width>
+    <height>364</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>170</width>
+    <height>170</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>About the program</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="sizeConstraint">
-    <enum>QLayout::SetFixedSize</enum>
-   </property>
-   <property name="margin">
-    <number>5</number>
-   </property>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -73,14 +79,7 @@
         </font>
        </property>
        <property name="text">
-        <string notr="true">Vacuum-IM</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="lblLogo">
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
+        <string notr="true">eyeCU</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -90,25 +89,38 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="lblVersion">
-     <property name="text">
-      <string notr="true">Version: 1.3.0 Alpha of 23.04.2015</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::PlainText</enum>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QSvgWidget" name="svgLogo" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>16</width>
+         <height>16</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>128</width>
+         <height>128</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="QLabel" name="lblRevision">
+    <widget class="QLabel" name="lblVersion">
      <property name="text">
-      <string notr="true">Revision: dc6df15a8901737dcf462959125938096239b5f8</string>
+      <string notr="true">Version: 1.0.0.0 Revision: 0000</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
    </item>
@@ -117,7 +129,11 @@
      <item>
       <widget class="QLabel" name="lblHomePage">
        <property name="text">
-        <string notr="true">&lt;a href='http://www.vacuum-im.org'&gt;www.vacuum-im.org&lt;/a&gt;</string>
+        <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.eyecu.ru&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.eyecu.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="textFormat">
         <enum>Qt::RichText</enum>
@@ -144,15 +160,13 @@
       </spacer>
      </item>
      <item>
-      <widget class="QLabel" name="lblSourcePage">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string notr="true">&lt;a href='https://github.com/Vacuum-IM'&gt;GitHub&lt;/a&gt;</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <string notr="true">&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;a href=&quot;http://www.rwsoftware.ru&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;www.rwsoftware.ru&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -160,8 +174,11 @@
    </item>
    <item>
     <widget class="QLabel" name="lblCopyright">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="text">
-      <string notr="true">This software is released under the terms of the GNU General Public License version 3.</string>
+      <string>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
@@ -191,6 +208,14 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QSvgWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">QSvgWidget</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

@@ -21,6 +21,9 @@ class ConnectionManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IConnectionManager IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IConnectionManager")
+#endif
 public:
 	ConnectionManager();
 	~ConnectionManager();

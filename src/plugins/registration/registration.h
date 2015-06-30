@@ -1,12 +1,14 @@
 #ifndef REGISTRATION_H
 #define REGISTRATION_H
 
+#include <QSet>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iregistraton.h>
 #include <interfaces/idataforms.h>
 #include <interfaces/istanzaprocessor.h>
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/ipresencemanager.h>
+#include <interfaces/iaccountmanager.h>	// *** <<< eyeCU >>> ***
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/ixmppuriqueries.h>
 #include "registerdialog.h"
@@ -20,10 +22,14 @@ class Registration :
 	public IXmppUriHandler,
 	public IDiscoFeatureHandler,
 	public IXmppFeatureFactory,
+	public IOptionsDialogHolder, // *** <<< eyeCU >>> ***
 	public IDataLocalizer
 {
 	Q_OBJECT;
-	Q_INTERFACES(IPlugin IRegistration IStanzaRequestOwner IXmppUriHandler IDiscoFeatureHandler IXmppFeatureFactory IDataLocalizer);
+	Q_INTERFACES(IPlugin IRegistration IStanzaRequestOwner IXmppUriHandler IDiscoFeatureHandler IXmppFeatureFactory IOptionsDialogHolder IDataLocalizer); // *** <<< eyeCU >>> ***
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IRegistration")
+#endif
 	friend class RegisterFeature;
 public:
 	Registration();
@@ -46,6 +52,10 @@ public:
 	//IXmppFeatureFactory
 	virtual QList<QString> xmppFeatures() const;
 	virtual IXmppFeature *newXmppFeature(const QString &AFeatureNS, IXmppStream *AXmppStream);
+// *** <<< eyeCU <<< ***
+	//IOptionsHolder
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+// *** >>> eyeCU >>> ***
 	//IDataLocalizer
 	virtual IDataFormLocale dataFormLocale(const QString &AFormType);
 	//IRegistration
@@ -68,6 +78,7 @@ protected:
 	void registerDiscoFeatures();
 	IRegisterFields readFields(const Jid &AServiceJid, const QDomElement &AQuery) const;
 	bool writeSubmit(QDomElement &AQuery, const IRegisterSubmit &ASubmit) const;
+	void processFields(const QString &AId, const IRegisterFields &AFields); // *** <<< eyeCU >>> ***
 protected slots:
 	void onXmppFeatureFields(const IRegisterFields &AFields);
 	void onXmppFeatureFinished(bool ARestart);
@@ -84,6 +95,11 @@ private:
 	IStanzaProcessor *FStanzaProcessor;
 	IServiceDiscovery *FDiscovery;
 	IPresenceManager *FPresenceManager;
+// *** <<< eyeCU <<< ***
+	IOptionsManager *FOptionsManager;
+	IAccountManager *FAccountManager;
+	QSet<IXmppStream *> FAutoRegisterStreams;
+// *** >>> eyeCU >>> ***
 	IXmppUriQueries *FXmppUriQueries;
 private:
 	QList<QString> FSendRequests;

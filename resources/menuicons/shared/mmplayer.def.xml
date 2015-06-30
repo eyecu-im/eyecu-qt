@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>mmplayer</key>
+    <object mime="image/png">mmplayer.png</object>
+  </icon>
+  <icon>
+    <key>eject</key>
+    <object mime="image/png">eject.png</object>
+  </icon>
+</icondef>

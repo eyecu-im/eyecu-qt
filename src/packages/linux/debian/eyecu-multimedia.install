@@ -1,0 +1,16 @@
+usr/lib/eyecu/plugins/libffmpeg.so
+usr/lib/eyecu/plugins/libmmplayer.so
+usr/share/eyecu/translations/ru/ffmpeg.qm
+usr/share/eyecu/translations/ru/mmplayer.qm
+usr/share/eyecu/translations/uk/ffmpeg.qm
+usr/share/eyecu/translations/uk/mmplayer.qm
+usr/share/eyecu/translations/de/ffmpeg.qm
+usr/share/eyecu/translations/de/mmplayer.qm
+usr/share/eyecu/translations/nl/ffmpeg.qm
+usr/share/eyecu/translations/nl/mmplayer.qm
+usr/share/eyecu/translations/pl/ffmpeg.qm
+usr/share/eyecu/translations/pl/mmplayer.qm
+usr/share/eyecu/translations/es/ffmpeg.qm
+usr/share/eyecu/translations/es/mmplayer.qm
+usr/share/eyecu/translations/ja/ffmpeg.qm
+usr/share/eyecu/translations/ja/mmplayer.qm

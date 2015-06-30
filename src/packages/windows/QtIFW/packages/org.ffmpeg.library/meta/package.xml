@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>FFMpeg</DisplayName>
+    <Description>FFMpeg library</Description>
+    <Version>1.0.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>org.ffmpeg.library</Name>
+    <Virtual>true</Virtual>
+</Package>

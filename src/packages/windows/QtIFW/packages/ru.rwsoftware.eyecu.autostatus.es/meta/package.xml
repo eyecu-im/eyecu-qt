@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Auto Status Spanish Translation</DisplayName>
+    <Description>Auto Status Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.autostatus.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.autostatus,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

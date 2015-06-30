@@ -1,0 +1,1309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MapOptions</class>
+ <widget class="QWidget" name="MapOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>376</width>
+    <height>455</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Map options</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>4</number>
+   </property>
+   <property name="topMargin">
+    <number>4</number>
+   </property>
+   <property name="rightMargin">
+    <number>4</number>
+   </property>
+   <property name="bottomMargin">
+    <number>4</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="gpbOsdBoxes">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Boxes</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>7</number>
+      </property>
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblBoxShadow">
+        <property name="text">
+         <string>Shadow</string>
+        </property>
+        <property name="buddy">
+         <cstring>cmbBoxShadow</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QPushButton" name="pbBackgroundColor">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Background</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="6">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="pbBoxLight">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Light</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbBoxMidlight">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Midlight</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbBoxDark">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Dark</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbBoxForeground">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Foreground</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblBoxShape">
+        <property name="text">
+         <string>Shape</string>
+        </property>
+        <property name="buddy">
+         <cstring>cmbBoxShape</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLCDNumber" name="lcdBgColorTranspar">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>false</bool>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QSlider" name="slBackgroundAlpha">
+        <property name="minimumSize">
+         <size>
+          <width>128</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="invertedControls">
+         <bool>false</bool>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+        <property name="tickInterval">
+         <number>0</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4" colspan="2">
+       <widget class="QCheckBox" name="cbBoxBgTransparent">
+        <property name="text">
+         <string>Transparent</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="5">
+       <widget class="QComboBox" name="cmbBoxShadow">
+        <item>
+         <property name="text">
+          <string>Plain</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Raised</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Sunken</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="5">
+       <widget class="QComboBox" name="cmbBoxShape">
+        <item>
+         <property name="text">
+          <string>No frame</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Box</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Panel</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Windows panel</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Styled panel</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gpbOsdLabels">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Labels</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>7</number>
+      </property>
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="pbTextColor">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Text color</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="pbShadowColor">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Shadow color</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QSlider" name="slShadowAlpha">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLCDNumber" name="lcdShadTranspar">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lblShadBlur">
+        <property name="text">
+         <string>Shadow blur</string>
+        </property>
+        <property name="buddy">
+         <cstring>slShadowBlur</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QSlider" name="slShadowBlur">
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
+        </property>
+        <property name="pageStep">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLCDNumber" name="lcdShadBlur">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="smallDecimalPoint">
+         <bool>true</bool>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="lblShadShiftX">
+        <property name="text">
+         <string>Shadow shift X</string>
+        </property>
+        <property name="buddy">
+         <cstring>slShadowShiftX</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QSlider" name="slShadowShiftX">
+        <property name="minimum">
+         <number>-20</number>
+        </property>
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLCDNumber" name="lcdShadShiftX">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lblShadShiftY">
+        <property name="text">
+         <string>Shadow shift Y</string>
+        </property>
+        <property name="buddy">
+         <cstring>slShadowShiftY</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QSlider" name="slShadowShiftY">
+        <property name="minimum">
+         <number>-20</number>
+        </property>
+        <property name="maximum">
+         <number>20</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLCDNumber" name="lcdShadShiftY">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="pbFont">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Font</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="2">
+       <widget class="QLabel" name="lblFontTest">
+        <property name="text">
+         <string notr="true">Label font test</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gbpOsdControlColors">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>Control colors</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>2</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>7</number>
+      </property>
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item row="7" column="0">
+       <widget class="QPushButton" name="pbCntrlBackground">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Background</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QSlider" name="slCntrlBackgroundAlpha">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>128</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QLCDNumber" name="lcdCntrlBackgroundAlpha">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3">
+       <widget class="QCheckBox" name="cbCntrlBgTransparent">
+        <property name="text">
+         <string>Transparent</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" rowspan="3" colspan="4">
+       <layout class="QGridLayout" name="gridLayout_6">
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pbCntrlBase">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Base</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="pbCntrlForeground">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Foreground</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pbCntrlLight">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Light</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="pbCntrlMidlight">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Midlight</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="pbCntrlShadow">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Shadow</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QPushButton" name="pbCntrlDark">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Dark</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="pbCntrlButton">
+          <property name="minimumSize">
+           <size>
+            <width>60</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Button</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="pbCenterMarkerColor">
+        <property name="text">
+         <string>Center marker</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QSlider" name="slCenterMarkerAlpha">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="pageStep">
+         <number>5</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLCDNumber" name="lcdCntrlCentralMarkerAlpha">
+        <property name="maximumSize">
+         <size>
+          <width>46</width>
+          <height>21</height>
+         </size>
+        </property>
+        <property name="digitCount">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QCheckBox" name="cbCntrlCentralMarkerVisible">
+        <property name="text">
+         <string>Visible</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cmbBoxShape</tabstop>
+  <tabstop>cmbBoxShadow</tabstop>
+  <tabstop>pbBoxLight</tabstop>
+  <tabstop>pbBoxMidlight</tabstop>
+  <tabstop>pbBoxDark</tabstop>
+  <tabstop>pbBoxForeground</tabstop>
+  <tabstop>pbBackgroundColor</tabstop>
+  <tabstop>slBackgroundAlpha</tabstop>
+  <tabstop>cbBoxBgTransparent</tabstop>
+  <tabstop>pbFont</tabstop>
+  <tabstop>pbTextColor</tabstop>
+  <tabstop>pbShadowColor</tabstop>
+  <tabstop>slShadowAlpha</tabstop>
+  <tabstop>slShadowBlur</tabstop>
+  <tabstop>slShadowShiftX</tabstop>
+  <tabstop>slShadowShiftY</tabstop>
+  <tabstop>pbCntrlLight</tabstop>
+  <tabstop>pbCntrlMidlight</tabstop>
+  <tabstop>pbCntrlShadow</tabstop>
+  <tabstop>pbCntrlDark</tabstop>
+  <tabstop>pbCntrlForeground</tabstop>
+  <tabstop>pbCntrlBase</tabstop>
+  <tabstop>pbCntrlButton</tabstop>
+  <tabstop>pbCntrlBackground</tabstop>
+  <tabstop>slCntrlBackgroundAlpha</tabstop>
+  <tabstop>cbCntrlBgTransparent</tabstop>
+  <tabstop>pbCenterMarkerColor</tabstop>
+  <tabstop>slCenterMarkerAlpha</tabstop>
+  <tabstop>cbCntrlCentralMarkerVisible</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbBoxForeground</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyBoxForeground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbBoxLight</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyBoxLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbBoxMidlight</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyBoxMidlight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbBoxDark</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyBoxDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbBackgroundColor</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyBoxBackground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbShadowColor</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyShadowColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFont</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyFont()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>180</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbTextColor</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>205</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlForeground</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlForeground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlBase</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlBase()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlShadow</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlShadow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>235</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlLight</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlLight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>57</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlMidlight</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlMidlight()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlDark</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlDark()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCntrlBackground</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyControlBackground()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>416</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbCenterMarkerColor</sender>
+   <signal>clicked()</signal>
+   <receiver>MapOptions</receiver>
+   <slot>modifyCenterMarkerColor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slBackgroundAlpha</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onBackgroundAlphaChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>126</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slCenterMarkerAlpha</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onCenterMarkerAlphaChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slCntrlBackgroundAlpha</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onBackgroundAlphaChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slShadowAlpha</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onShadowAlphaChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>231</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slShadowBlur</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onShadowBlurChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>257</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slShadowShiftX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onShadowShiftXChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>slShadowShiftY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onShadowShiftYChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>207</x>
+     <y>309</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <signal>modified()</signal>
+  <slot>modifyBoxForeground()</slot>
+  <slot>modifyBoxLight()</slot>
+  <slot>modifyBoxMidlight()</slot>
+  <slot>modifyBoxDark()</slot>
+  <slot>modifyBoxBackground()</slot>
+  <slot>modifyShadowColor()</slot>
+  <slot>modifyFont()</slot>
+  <slot>modifyColor()</slot>
+  <slot>modifyControlForeground()</slot>
+  <slot>modifyControlBase()</slot>
+  <slot>modifyControlButton()</slot>
+  <slot>modifyControlLight()</slot>
+  <slot>modifyControlMidlight()</slot>
+  <slot>modifyControlDark()</slot>
+  <slot>modifyControlShadow()</slot>
+  <slot>modifyControlBackground()</slot>
+  <slot>modifyCenterMarkerColor()</slot>
+  <slot>onBackgroundAlphaChange(int)</slot>
+  <slot>onShadowAlphaChange(int)</slot>
+  <slot>onShadowBlurChange(int)</slot>
+  <slot>onCntrlAlphaChange(int)</slot>
+  <slot>onCenterMarkerAlphaChange(int)</slot>
+  <slot>onShadowShiftXChange(int)</slot>
+  <slot>onShadowShiftYChange(int)</slot>
+ </slots>
+</ui>

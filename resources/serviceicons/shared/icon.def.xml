@@ -234,6 +234,10 @@
 		<object mime='image/png'>gateway_gadugadu.png</object>
 	</icon>
 	<icon>
+		<key>gateway/gtalk</key>
+		<object mime='image/png'>gateway_gtalk.png</object>
+	</icon>	
+	<icon>
 		<key>gateway/http-ws</key>
 		<object mime='image/png'>gateway_httpws.png</object>
 	</icon>
@@ -241,9 +245,13 @@
 		<key>gateway/icq</key>
 		<object mime='image/png'>gateway_icq.png</object>
 	</icon>
+    <icon>
+        <key>gateway/irc</key>
+        <object mime='image/png'>gateway_irc.png</object>
+     </icon>
 	<icon>
 		<key>gateway/lcs</key>
-		<object mime='image/png'>gateway_lcs.png</object>
+		<object mime='image/png'>gateway_mlcs.png</object>
 	</icon>
 	<icon>
 		<key>gateway/msn</key>
@@ -301,7 +309,19 @@
 		<key>gateway/mrim</key>
 		<object mime='image/png'>gateway_mrim.png</object>
 	</icon>
-
+	<icon>
+		<key>gateway/vk</key>
+		<object mime='image/png'>gateway_vkontakte.png</object>
+	</icon>
+	<icon>
+		<key>gateway/twitter</key>
+		<object mime='image/png'>gateway_twitter.png</object>
+	</icon>
+	<icon>
+		<key>gateway/live-journal</key>
+		<object mime='image/png'>gateway_livejournal.png</object>
+	</icon>	
+	
 	<!-- Headline -->
 	<icon>
 		<key>headline</key>

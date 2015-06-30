@@ -8,6 +8,11 @@
 #define TBG_MWTTB_ROSTERSEARCH                                  900
 #define TBG_MWTTB_ROSTERSVIEW                                   10200
 #define TBG_MWTTB_NOTIFICATIONS_SOUND                           10500
+// *** <<< eyeCU <<< ***
+#define TBG_MWTTB_MAPS                                          1100
+#define TBG_MWTTB_POI                                           1700
+#define TBG_MWTTB_MMPLAYER                                      1800
+// *** >>> eyeCU >>> ***
 
 //MessageWidgets - ToolBarWidget
 #define TBG_MWTBW_EMOTICONS                                     200
@@ -15,6 +20,13 @@
 #define TBG_MWTBW_FILETRANSFER                                  500
 #define TBG_MWTBW_ARCHIVE_VIEW                                  700
 #define TBG_MWTBW_VCARD_VIEW                                    900
+// *** <<< eyeCU <<< ***
+#define TBG_MWTBW_ATTENTION_VIEW                                1100
+#define TBG_MWTBW_POI_VIEW                                      1200
+#define TBG_MWTBW_OOB_VIEW                                      1250
+#define TBG_MWTBW_JINGLE_RTP                                    1280
+#define TBG_MWTBW_MOOD_VIEW                                     1290
+// *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
 #define TBG_MWTBW_CHATSTATES                                    10100
 

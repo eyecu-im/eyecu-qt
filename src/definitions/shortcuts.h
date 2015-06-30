@@ -4,7 +4,7 @@
 //PluginManager
 #define SCTG_GLOBAL                                                "global"
 //MainWindow
-#define   SCT_GLOBAL_SHOWROSTER                                    "global.show-roster"
+#define   SCT_GLOBAL_SHOW                                          "global.show" /*** <<< eyeCU >>> ***/
 //ShortcutManager
 #define   SCT_GLOBAL_HIDEALLWIDGETS                                "global.hide-all-widgets"
 //Notifications
@@ -73,4 +73,123 @@
 #define   SCT_TABWINDOW_CLOSEWINDOW                                "tab-window.close-window"
 #define   SCT_TABWINDOW_QUICKTAB                                   "tab-window.quick-tabs.tab%1"
 
+// *** <<< eyeCU <<< ***
+// Client icons
+// Map Contacts
+#define     SCT_MESSAGEWINDOWS_CHAT_SHOWSOFTWAREVERSION            "message-windows.chat-window.show-software-version"
+
+// Attention
+#define     SCT_MESSAGEWINDOWS_CHAT_ATTENTION                      "message-windows.chat-window.attention"
+
+// Link dialog
+#define   SCTG_MESSAGEWINDOWS_LINKDIALOG                           "message-windows.link-dialog"
+#define     SCT_MESSAGEWINDOWS_LINKDIALOG_OK                       "message-windows.link-dialog.ok"
+
+// Map Contacts
+#define   SCT_ROSTERVIEW_SHOWCONTACTONTHEMAP                       "roster-view.show-contact-on-the-map"
+#define     SCT_MESSAGEWINDOWS_CHAT_SHOWCONTACTONTHEMAP            "message-windows.chat-window.show-contact-on-the-map"
+
+// OOB
+#define   SCT_MESSAGEWINDOWS_OOB                                   "message-windows.oob"
+#define     SCT_MESSAGEWINDOWS_OOB_INSERTLINK                      "message-windows.oob.insert-link"
+#define     SCT_MESSAGEWINDOWS_OOB_DELETELINK                      "message-windows.oob.delete-link"
+#define     SCT_MESSAGEWINDOWS_OOB_EDITLINK                        "message-windows.oob.edit-link"
+
+// XHTML-IM
+#define   SCTG_MESSAGEWINDOWS_XHTMLIM								"message-windows.xhtml-im"
+#define     SCTG_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG			"message-windows.xhtml-im.insert-image-dialog"
+#define       SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG_BROWSE	"message-windows.xhtml-im.insert-image-dialog.browse"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE                 "message-windows.xhtml-im.insert-image"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK                  "message-windows.xhtml-im.insert-link"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP                  "message-windows.xhtml-im.insert-nbsp"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE               "message-windows.xhtml-im.insert-newline"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP                  "message-windows.xhtml-im.set-title"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_BOLD                        "message-windows.xhtml-im.bold"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC                      "message-windows.xhtml-im.italic"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE                   "message-windows.xhtml-im.underline"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE                    "message-windows.xhtml-im.overline"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT                   "message-windows.xhtml-im.strikeout"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_CODE                        "message-windows.xhtml-im.code"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_FONT                        "message-windows.xhtml-im.font"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR             "message-windows.xhtml-im.foreground-color"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR             "message-windows.xhtml-im.background-color"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER                 "message-windows.xhtml-im.align-center"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT                  "message-windows.xhtml-im.align-right"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT                   "message-windows.xhtml-im.align-left"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY                "message-windows.xhtml-im.align-justify"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE                "message-windows.xhtml-im.format-remove"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE              "message-windows.xhtml-im.indent-increase"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE              "message-windows.xhtml-im.indent-decrease"
+
+// Map
+#define SCTG_MAP                                                   "map"
+#define   SCT_MAP_SHOW                                             "map.show"
+#define   SCT_MAP_NEWCENTER                                        "map.new-center"
+#define   SCT_MAP_MYLOCATION                                       "map.my-location"
+#define   SCT_MAP_REFRESH                                          "map.reload"
+#define   SCT_MAP_OPTIONS                                          "map.options"
+#define   SCTG_MAP_MAGNIFIER                                       "map.magnifier"
+#define     SCT_MAP_MAGNIFIER_TOGGLE                               "map.magnifier.toggle"
+#define     SCT_MAP_MAGNIFIER_ZOOMIN                               "map.magnifier.zoom-in"
+#define     SCT_MAP_MAGNIFIER_ZOOMOUT                              "map.magnifier.zoom-out"
+#define   SCTG_MAP_MOVE                                            "map.move"
+#define     SCT_MAP_MOVE_RIGHT                                     "map.move.right"
+#define     SCT_MAP_MOVE_LEFT                                      "map.move.left"
+#define     SCT_MAP_MOVE_UP                                        "map.move.up"
+#define     SCT_MAP_MOVE_DOWN                                      "map.move.down"
+#define   SCTG_MAP_ZOOM                                            "map.zoom"
+#define     SCT_MAP_ZOOM_IN                                        "map.zoom.in"
+#define     SCT_MAP_ZOOM_OUT                                       "map.zoom.out"
+#define   SCT_MAP_STOPLOCATIONPUBLICATION                          "map.stop-location-publication"
+
+// POI
+#define SCTG_POI                                                   "poi"
+#define   SCT_POI_VIEW                                             "poi.view"
+#define   SCT_POI_LIST                                             "poi.list"
+#define   SCT_POI_LISTACCOUNT                                      "poi.list-account"
+#define   SCT_POI_SHOW                                             "poi.show"
+#define   SCT_POI_DELETE                                           "poi.delete"
+#define   SCT_POI_REMOVE                                           "poi.remove"
+#define   SCT_POI_EDIT                                             "poi.edit"
+#define   SCT_POI_SAVE                                             "poi.save"
+#define   SCT_POI_HEREIAM                                          "poi.here-i-am"
+#define   SCT_POI_OPENURL                                          "poi.open-url"
+#define SCTG_MESSAGEWINDOWS_POI                                    "message-windows.poi"
+#define   SCT_MESSAGEWINDOWS_POI_INSERT                            "message-windows.poi.insert"
+#define   SCT_MESSAGEWINDOWS_POI_EDIT                              "message-windows.poi.edit"
+#define   SCT_MESSAGEWINDOWS_POI_DELETE                            "message-windows.poi.delete"
+#define   SCT_MESSAGEWINDOWS_POI_INSERTLOCATION                    "message-windows.poi.insert-location"
+
+// Mood
+#define   SCT_APP_SETMOOD											"application.set-mood"
+#define   SCT_ROSTERVIEW_SETMOOD									"roster-view.set-mood"
+#define   SCT_MESSAGEWINDOWS_SETMOOD								"message-windows.set-mood"
+
+// Activity
+#define   SCT_APP_SETACTIVITY										"application.set-activity"
+#define   SCT_ROSTERVIEW_SETACTIVITY								"roster-view.set-activity"
+
+// Tune
+#define   SCT_APP_PUBLISHTUNE										"application.publish-tune"
+
+// Map Search
+#define SCTG_MAPSEARCH												"map-search"
+#define   SCT_MAPSEARCH_SEARCHDIALOG								"map-search.search-dialog"
+#define   SCT_MAPSEARCH_CLEARLIST									"map-search.clear-list"
+#define   SCT_MAPSEARCH_SHOW										"map-search.show"
+#define   SCT_MAPSEARCH_LIMITRANGE									"map-search.limit-range"
+#define   SCT_MAPSEARCH_SELECTPROVIDER								"map-search.select-provider"
+#define   SCT_MESSAGEWINDOWS_POI_INSERTSEARCHRESULT					"message-windows.poi.insert-search-result"
+
+// Multimedia Player
+#define SCTG_MMPLAYER												"multimedia-player"
+#define	  SCT_MMPLAYER_SHOW											"multimedia-player.show"
+#define   SCT_MMPLAYER_OPEN											"multimedia-player.open"
+#define   SCT_MMPLAYER_PLAY											"multimedia-player.play"
+#define   SCT_MMPLAYER_VOLUMEUP										"multimedia-player.volume-up"
+#define   SCT_MMPLAYER_VOLUMEDOWN									"multimedia-player.volume-down"
+#define   SCT_MMPLAYER_MUTE											"multimedia-player.mute"
+#define   SCT_MMPLAYER_OPTIONS										"multimedia-player.options"
+
+// *** >>> eyeCU >>> ***
 #endif // DEF_SHORTCUTS_H

@@ -15,8 +15,11 @@
 MainWindowPlugin::MainWindowPlugin()
 {
 	FPluginManager = NULL;
+// *** <<< eyeCU >>> ***
+#ifndef Q_OS_SYMBIAN
 	FTrayManager = NULL;
-
+// *** <<< eyeCU >>> ***
+#endif
 	FStartShowLoopCount = 0;
 
 	FActivationChanged = QTime::currentTime();
@@ -45,7 +48,8 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 
 	FPluginManager = APluginManager;
 	connect(FPluginManager->instance(),SIGNAL(shutdownStarted()),SLOT(onApplicationShutdownStarted()));
-
+// *** <<< eyeCU >>> ***
+#ifndef Q_OS_SYMBIAN
 	IPlugin *plugin = APluginManager->pluginInterface("ITrayManager").value(0,NULL);
 	if (plugin)
 	{
@@ -56,7 +60,8 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 				SLOT(onTrayNotifyActivated(int,QSystemTrayIcon::ActivationReason)));
 		}
 	}
-
+// *** <<< eyeCU >>> ***
+#endif
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
 
@@ -67,9 +72,8 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 
 bool MainWindowPlugin::initObjects()
 {
-	Shortcuts::declareShortcut(SCT_GLOBAL_SHOWROSTER,tr("Show roster"),QKeySequence::UnknownKey,Shortcuts::GlobalShortcut);
+	Shortcuts::declareShortcut(SCT_GLOBAL_SHOW,tr("Show"),QKeySequence::UnknownKey,Shortcuts::GlobalShortcut); 	// *** <<< eyeCU >>> ***
 	Shortcuts::declareShortcut(SCT_ROSTERVIEW_CLOSEWINDOW,QString::null,tr("Esc","Close main window"));
-	
 	Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_CLOSEWINDOW,FMainWindow);
 
 	Action *quitAction = new Action(this);
@@ -80,8 +84,8 @@ bool MainWindowPlugin::initObjects()
 
 	if (FTrayManager)
 	{
-		Action *showRosterAction = new Action(this);
-		showRosterAction->setText(tr("Show roster"));
+		Action *showRosterAction = new Action(this);		
+		showRosterAction->setText(tr("Show")); // *** <<< eyeCU >>> ***
 		showRosterAction->setIcon(RSR_STORAGE_MENUICONS,MNI_MAINWINDOW_SHOW_ROSTER);
 		connect(showRosterAction,SIGNAL(triggered(bool)),SLOT(onShowMainWindowByAction(bool)));
 		FTrayManager->contextMenu()->addAction(showRosterAction,AG_TMTM_MAINWINDOW,true);
@@ -98,7 +102,7 @@ bool MainWindowPlugin::initSettings()
 
 bool MainWindowPlugin::startPlugin()
 {
-	Shortcuts::setGlobalShortcut(SCT_GLOBAL_SHOWROSTER,true);
+	Shortcuts::setGlobalShortcut(SCT_GLOBAL_SHOW, true); 	// *** <<< eyeCU >>> ***
 	return true;
 }
 
@@ -144,7 +148,7 @@ void MainWindowPlugin::onShowMainWindowByAction(bool)
 
 void MainWindowPlugin::onShortcutActivated(const QString &AId, QWidget *AWidget)
 {
-	if (AWidget==NULL && AId==SCT_GLOBAL_SHOWROSTER)
+	if (AWidget==NULL && AId==SCT_GLOBAL_SHOW) // *** <<< eyeCU >>> ***    
 	{
 		FMainWindow->showWindow();
 	}
@@ -164,5 +168,6 @@ void MainWindowPlugin::onTrayNotifyActivated(int ANotifyId, QSystemTrayIcon::Act
 			FMainWindow->showWindow();
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_mainwindow, MainWindowPlugin)
+#endif

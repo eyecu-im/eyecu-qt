@@ -1,7 +1,7 @@
 <project>
-    <shortName>vacuum</shortName>
-    <fullName>Vacuum-IM</fullName>
-    <version>1.2.0</version>
+    <shortName>eyecu</shortName>
+    <fullName>eyeCU</fullName>
+    <version>1.3.0</version>
     <installerFilename>${product_shortname}_${product_version}_${platform_name}-installer.${platform_exec_suffix}</installerFilename>
     <readmeFile>../../../README</readmeFile>
     <licenseFile>../../../COPYING</licenseFile>
@@ -13,7 +13,7 @@
     <enableTimestamp>1</enableTimestamp>
     <requireInstallationByRootUser>1</requireInstallationByRootUser>
     <saveRelativePaths>1</saveRelativePaths>
-    <vendor>JRuDevels</vendor>
+    <vendor>Road Works Software</vendor>
     <componentList>
         <component>
             <name>default</name>
@@ -23,16 +23,16 @@
             <show>1</show>
             <desktopShortcutList>
                 <shortcut>
-                    <comment>Crossplatform Jabber Client</comment>
+                    <comment>Crossplatform XMPP Client and GIS</comment>
                     <exec></exec>
                     <icon></icon>
                     <name>${product_fullname}</name>
                     <path></path>
                     <platforms>windows</platforms>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}/vacuum.exe</windowsExec>
+                    <windowsExec>${installdir}/eyecu.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/vacuum.exe</windowsIcon>
+                    <windowsIcon>${installdir}/eyecu.exe</windowsIcon>
                     <windowsPath>${installdir}</windowsPath>
                 </shortcut>
             </desktopShortcutList>
@@ -44,7 +44,7 @@
                     <platforms>windows</platforms>
                     <distributionFileList>
                         <distributionFile>
-                            <origin>../../../vacuum.exe</origin>
+                            <origin>../../../eyecu.exe</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
@@ -54,42 +54,44 @@
                     <name>libraries</name>
                     <platforms>windows</platforms>
                     <distributionFileList>
-                        <distributionFile>
-                            <origin>../../../vacuumutils.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../libeay32.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../ssleay32.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../QtCore4.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../QtGui4.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../QtNetwork4.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../QtWebKit4.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../QtXml4.dll</origin>
-                        </distributionFile>
-                        <distributionDirectory>
-                            <origin>../../../imageformats</origin>
-                        </distributionDirectory>
-                        <distributionFile>
-                            <origin>../../../msvcr90.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../msvcp90.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../../../Microsoft.VC90.CRT.manifest</origin>
-                        </distributionFile>
+                        <distributionFile><origin>../../../eyecuutils.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../libeay32.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../ssleay32.dll</origin></distributionFile>
+						<distributionDirectory><origin>../../../imageformats</origin></distributionDirectory>
+						<distributionDirectory><origin>../../../platforms</origin></distributionDirectory>
+                        <!--distributionFile><origin>../../../QtCore4.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../QtGui4.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../QtNetwork4.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../QtWebKit4.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../QtXml4.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../msvcr90.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../msvcp90.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Microsoft.VC90.CRT.manifest</origin></distributionFile-->
+                        <distributionFile><origin>../../../icudt52.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../icuin52.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../icuuc52.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Core.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Gui.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Multimedia.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5MultimediaWidgets.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Network.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5OpenGL.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Positioning.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5PrintSupport.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Qml.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Quick.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Script.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Sensors.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5SerialPort.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Sql.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Sql.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5WebKit.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5WebKitWidgets.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Widgets.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../Qt5Xml.dll</origin></distributionFile>
+						<distributionFile><origin>../../../libgcc_s_dw2-1.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../libstdc++-6.dll</origin></distributionFile>
+                        <distributionFile><origin>../../../libwinpthread-1.dll</origin></distributionFile>
                     </distributionFileList>
                 </folder>
                 <folder>
@@ -98,9 +100,83 @@
                     <name>plugins</name>
                     <platforms>windows</platforms>
                     <distributionFileList>
-                        <distributionDirectory>
-                            <origin>../../../plugins</origin>
-                        </distributionDirectory>
+                        <!--distributionDirectory><origin>../../../plugins</origin></distributionDirectory-->
+						<distributionFile><origin>../../../plugins/accountmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/adiummessagestyle.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/annotations.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/autostatus.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/avatars.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/birthdayreminder.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/bitsofbinary.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/boburlhandler.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/bookmarks.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/captchaforms.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/chatmessagehandler.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/chatstates.dllorigin></distributionFile>
+						<distributionFile><origin>../../../plugins/clienticons.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/clientinfo.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/commands.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/compress.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/connectionmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/console.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/dataforms.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/datastreamsmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/defaultconnection.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/emoticons.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/filemessagearchive.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/filestreamsmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/filetransfer.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/gateways.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/geoloc.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/inbandstreams.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/iqauth.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/jabbersearch.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/mainwindow.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/messagearchiver.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/messagecarbons.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/messageprocessor.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/messagestyles.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/messagewidgets.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/metacontacts.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/multiuserchat.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/normalmessagehandler.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/notifications.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/oob.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/optionsmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/positioning.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/positioningmethodmanual.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/presence.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/privacylists.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/privatestorage.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/pepmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/recentcontacts.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/registration.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/remotecontrol.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/roster.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/rosterchanger.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/rosteritemexchange.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/rostersearch.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/rostersmodel.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/rostersview.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/saslauth.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/servermessagearchive.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/servicediscovery.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/sessionnegotiation.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/shortcutmanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/simplemessagestyle.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/socksstreams.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/spellchecker.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/stanzaprocessor.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/starttls.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/statuschanger.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/statusicons.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/statistics.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/traymanager.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/urlprocessor.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/vcard.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/xmppstreams.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/xmppuriqueries.dll</origin></distributionFile>
+						<distributionFile><origin>../../../plugins/xhtmlim.dll</origin></distributionFile>
                     </distributionFileList>
                 </folder>
                 <folder>
@@ -113,7 +189,7 @@
                             <origin>../../../resources</origin>
                         </distributionDirectory>
                         <distributionFile>
-                            <origin>../../../vacuum.ico</origin>
+                            <origin>../../../eyecu.ico</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
@@ -160,12 +236,12 @@
                     <windowsPath>${installdir}</windowsPath>
                 </startMenuShortcut>
                 <startMenuShortcut>
-                    <comment>Crossplatform Jabber Client</comment>
+                    <comment>Crossplatform XMPP Client and GIS</comment>
                     <name>${product_fullname}</name>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}/vacuum.exe</windowsExec>
+                    <windowsExec>${installdir}/eyecu.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/vacuum.exe</windowsIcon>
+                    <windowsIcon>${installdir}/eyecu.exe</windowsIcon>
                     <windowsPath>${installdir}</windowsPath>
                 </startMenuShortcut>
             </startMenuShortcutList>

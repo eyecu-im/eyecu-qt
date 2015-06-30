@@ -27,27 +27,46 @@
 
 #define START_SHUTDOWN_TIMEOUT      100
 #define DELAYED_SHUTDOWN_TIMEOUT    5000
-
-#define ORGANIZATION_NAME           "JRuDevels"
-#define APPLICATION_NAME            "VacuumIM"
+// *** <<< eyeCU <<< ***
+#define ORGANIZATION_NAME           "RoadWorksSoftware"
+#define APPLICATION_NAME            "eyeCU"
+// *** >>> eyeCU >>> ***
 
 #define FILE_PLUGINS_SETTINGS       "plugins.xml"
 
 #define SVN_DATA_PATH               "DataPath"
 #define SVN_LOCALE_NAME             "Locale"
 
+#ifdef SVNINFO
+#  include "svninfo.h"
+#  define SVN_DATE                  ""
+// *** <<< eyeCU >>> ***
+#  define SVN_BASE_REVISION         -71
+#else
+#  define SVN_DATE                  ""
+#  define SVN_REVISION              "0"
+// *** <<< eyeCU >>> ***
+#  define SVN_BASE_REVISION         0
+#endif
 #ifdef GITINFO
 #  include <gitinfo.h>
 #endif
 
 #define DIR_LOGS                    "logs"
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 #  define ENV_APP_DATA              "APPDATA"
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
+// *** <<< eyeCU <<< ***
+#elif defined(Q_WS_PM)
+#  define ENV_APP_DATA              "HOME"
+#  define DIR_APP_DATA              APPLICATION_NAME
+#  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
+// *** >>> eyeCU >>> ***
 #elif defined(Q_WS_X11)
 #  define ENV_APP_DATA              "HOME"
-#  define DIR_APP_DATA              ".vacuum"
+// *** <<< eyeCU >>> ***
+#  define DIR_APP_DATA              ".eyecu"
 #  define PATH_APP_DATA             DIR_APP_DATA
 #elif defined(Q_WS_MAC)
 #  define ENV_APP_DATA              "HOME"
@@ -57,9 +76,15 @@
 #  define ENV_APP_DATA              "APPDATA"
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
+// *** <<< eyeCU <<< ***
+#elif defined(Q_WS_SIMULATOR) || defined(Q_OS_SYMBIAN)
+#  define ENV_APP_DATA              "APPDATA"
+#  define DIR_APP_DATA              APPLICATION_NAME
+#  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
+// *** >>> eyeCU >>> ***
 #endif
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
 #  define LIB_PREFIX_SIZE           0
 #else
 #  define LIB_PREFIX_SIZE           3
@@ -72,10 +97,6 @@ PluginManager::PluginManager(QApplication *AParent) : QObject(AParent)
 	FCloseStarted = false;
 	FShutdownKind = SK_WORK;
 	FShutdownDelayCount = 0;
-
-	FQtTranslator = new QTranslator(this);
-	FUtilsTranslator = new QTranslator(this);
-	FLoaderTranslator = new QTranslator(this);
 
 	FShutdownTimer.setSingleShot(true);
 	connect(&FShutdownTimer,SIGNAL(timeout()),SLOT(onShutdownTimerTimeout()));
@@ -99,7 +120,15 @@ QString PluginManager::version() const
 
 QString PluginManager::revision() const
 {
-#if defined GIT_HASH
+// *** <<< eyeCU <<< ***
+#ifdef SVN_REVISION
+    static const QString rev = QString(SVN_REVISION).contains(':') ? QString(SVN_REVISION).split(':').value(1) : QString(SVN_REVISION);    bool modified=rev.endsWith('M');
+    QString r(rev);
+    if (modified)
+        r.chop(1);
+    return QString("%1%2").arg(r.toInt()-SVN_BASE_REVISION).arg(modified?"M":"");
+#elif defined GIT_HASH
+// *** >>> eyeCU >>> ***
 	static const QString rev = GIT_HASH;
 #else
 	static const QString rev = "0";
@@ -109,7 +138,11 @@ QString PluginManager::revision() const
 
 QDateTime PluginManager::revisionDate() const
 {
-#if defined GIT_DATE
+// *** <<< eyeCU <<< ***
+#if defined SVN_DATE
+	static const QDateTime date = QDateTime::fromString(SVN_DATE,"yyyy/MM/dd hh:mm:ss");
+#elif defined GIT_DATE
+// *** >>> eyeCU >>> ***
 	static const QDateTime date = QDateTime::fromTime_t(QString(GIT_DATE).toInt());
 #else
 	static const QDateTime date = QDateTime();
@@ -532,10 +565,14 @@ void PluginManager::unloadPlugins()
 {
 	foreach(const QUuid &uid, FPluginItems.keys())
 		unloadPlugin(uid);
-
-	QCoreApplication::removeTranslator(FQtTranslator);
-	QCoreApplication::removeTranslator(FUtilsTranslator);
-	QCoreApplication::removeTranslator(FLoaderTranslator);
+// *** <<< eyeCU <<< ***
+	for (QList<QTranslator *>::ConstIterator it=FTranslators.constBegin(); it!=FTranslators.constEnd(); it++)
+	{
+		QCoreApplication::removeTranslator(*it);
+		(*it)->deleteLater();
+	}
+	FTranslators.clear();
+// *** >>> eyeCU >>> ***
 }
 
 void PluginManager::startClose()
@@ -745,22 +782,41 @@ QList<QUuid> PluginManager::getConflicts(const QUuid &AUuid) const
 
 void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocaleName)
 {
-	if (FQtTranslator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName)) || FQtTranslator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName.left(2))))
-		qApp->installTranslator(FQtTranslator);
-	else if (FQtTranslator->load("qt_"+QLocale().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
-		qApp->installTranslator(FQtTranslator);
+// *** <<< eyeCU <<< ***
+	QTranslator *translator = new QTranslator(this);
+
+	if (translator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName)) || translator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName.left(2))))
+		qApp->installTranslator(translator);
+	else if (translator->load("qt_"+QLocale().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		qApp->installTranslator(translator);
 	else
+	{
 		LOG_DEBUG("Translation for 'Qt' not found");
+		translator->deleteLater();
+		translator=NULL;
+	}
 
-	if (FLoaderTranslator->load("vacuum",ADir.absoluteFilePath(ALocaleName)) || FLoaderTranslator->load("vacuum",ADir.absoluteFilePath(ALocaleName.left(2))))
-		qApp->installTranslator(FLoaderTranslator);
-	else
-		LOG_DEBUG("Translation for 'vacuum' not found");
+	if (translator)
+		FTranslators.append(translator);
 
-	if (FUtilsTranslator->load("vacuumutils",ADir.absoluteFilePath(ALocaleName)) || FUtilsTranslator->load("vacuumutils",ADir.absoluteFilePath(ALocaleName.left(2))))
-		qApp->installTranslator(FUtilsTranslator);
-	else
-		LOG_DEBUG("Translation for 'vacuumutils' not found");
+	FTranslatorNames = QString(EXTRA_TRANSLATORS).split(';', QString::SkipEmptyParts);
+	for (QStringList::ConstIterator it = FTranslatorNames.constBegin(); it!=FTranslatorNames.constEnd(); it++)
+	{
+		translator = new QTranslator(this);
+		if (translator->load(*it, ADir.absoluteFilePath(ALocaleName)) ||
+			translator->load(*it, ADir.absoluteFilePath(ALocaleName.left(2))) ||
+			translator->load(*it+'_'+ALocaleName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+		{
+			qApp->installTranslator(translator);
+			FTranslators.append(translator);
+		}
+		else
+		{
+			LOG_DEBUG(QString("Translation for '%1' not found").arg(*it));
+			translator->deleteLater();
+		}
+	}
+// *** >>> eyeCU >>> ***
 }
 
 bool PluginManager::isPluginEnabled(const QString &AFile) const

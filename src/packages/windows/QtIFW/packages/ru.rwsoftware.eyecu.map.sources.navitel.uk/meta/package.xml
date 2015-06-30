@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Map Source Navitel Russian Translation</DisplayName>
+    <Description>Map Source Navitel Russian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.sources.navitel.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.navitel,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

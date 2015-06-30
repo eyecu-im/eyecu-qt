@@ -16,11 +16,12 @@ class UTILS_EXPORT AnimatedTextBrowser :
 	Q_OBJECT;
 public:
 	AnimatedTextBrowser(QWidget *AParent = NULL);
-	bool isAnimated() const;
-	void setAnimated(bool AAnimated);
+	bool isAnimated() const;	
 	QPair<int,int> visiblePositionBoundary() const;
 	QNetworkAccessManager *networkAccessManager() const;
 	void setNetworkAccessManager(QNetworkAccessManager *ANetworkAccessManager);
+public slots:
+        void setAnimated(bool AAnimated);
 signals:
 	void visiblePositionBoundaryChanged();
 	void resourceLoaded(const QUrl &AName);

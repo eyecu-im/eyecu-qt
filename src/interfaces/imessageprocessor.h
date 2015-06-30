@@ -42,8 +42,8 @@ class IMessageProcessor
 {
 public:
 	enum MessageDirection {
-		DirectionIn,
-		DirectionOut
+        DirectionIn,
+        DirectionOut
 	};
 public:
 	virtual QObject *instance() = 0;

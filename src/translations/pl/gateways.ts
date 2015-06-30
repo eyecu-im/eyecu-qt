@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="pl" sourcelanguage="en">
 <context>
     <name>AddLegacyContactDialog</name>
     <message>
@@ -81,11 +83,19 @@
     </message>
     <message numerus="yes">
         <source>You are assured that wish to remove a transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contacts&lt;/b&gt; from roster?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>You are assured that wish to remove &lt;b&gt;%n transports&lt;/b&gt; and their contacts from roster?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <source>Remove transport and its contacts</source>
@@ -94,6 +104,14 @@
     <message>
         <source>Remove transports and their contacts</source>
         <translation>Usuń transporty i ich kontakty</translation>
+    </message>
+    <message>
+        <source>Reset nick names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset nick name</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

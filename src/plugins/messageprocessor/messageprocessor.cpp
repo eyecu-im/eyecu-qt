@@ -6,6 +6,7 @@
 #include <definitions/messagewriterorders.h>
 #include <definitions/notificationdataroles.h>
 #include <utils/logger.h>
+#include <XmlTextDocumentParser> /*** <<< eyeCU >>> ***/
 
 #define SHC_MESSAGE         "/message"
 
@@ -96,11 +97,11 @@ void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 	if (AOrder == MWO_MESSAGEPROCESSOR)
 	{
 		QTextCursor cursor(ADocument);
-		cursor.insertHtml(prepareBodyForReceive(AMessage.body(ALang)));
+        XmlTextDocumentParser::xmlToText(cursor, prepareBodyForReceive(AMessage.body(ALang))); // *** <<< eyeCU >>> ***
 	}
 	else if (AOrder == MWO_MESSAGEPROCESSOR_ANCHORS)
 	{
-		QRegExp regexp("\\b((https?|ftp)://|www\\.|xmpp:|magnet:|mailto:)\\S+\\b");
+        QRegExp regexp("\\b((https?|ftp)://|www\\.|xmpp:|magnet:|mailto:)[^\\s\\\"\\\'\\[\\]]+\\b"); // *** <<< eyeCU >>> ***
 		regexp.setCaseSensitivity(Qt::CaseInsensitive);
 		for (QTextCursor cursor = ADocument->find(regexp); !cursor.isNull(); cursor = ADocument->find(regexp,cursor))
 		{
@@ -381,13 +382,22 @@ QString MessageProcessor::prepareBodyForSend(const QString &AString) const
 	return result;
 }
 
-QString MessageProcessor::prepareBodyForReceive(const QString &AString) const
+QDomDocument MessageProcessor::prepareBodyForReceive(const QString &AString) const
 {
-	QString result = Qt::escape(AString);
-	result.replace('\n',"<br>");
-	result.replace("  ","&nbsp; ");
-	result.replace('\t',"&nbsp; &nbsp; ");
-	return result;
+	// *** <<< eyeCU <<< ***
+    QDomDocument doc;
+    QDomElement code=doc.createElement("code");
+    code.setAttribute("style", "white-space: pre-wrap;");
+    doc.appendChild(code);
+    QStringList splitted=AString.split('\n');
+    for (QStringList::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); it++)
+    {
+        if (it!=splitted.constBegin())
+           code.appendChild(doc.createElement("br"));
+        code.appendChild(doc.createTextNode(*it));
+    }
+    return doc;
+	// *** >>> eyeCU >>> ***
 }
 
 void MessageProcessor::onNotificationActivated(int ANotifyId)
@@ -418,5 +428,6 @@ void MessageProcessor::onXmppStreamJidChanged(IXmppStream *AXmppStream, const Ji
 		FActiveStreams.insert(AXmppStream->streamJid(),handleId);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_messageprocessor, MessageProcessor)
+#endif

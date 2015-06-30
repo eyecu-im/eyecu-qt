@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+
+  <icon><key>geoloc</key><object mime="image/png">geoloc.png</object></icon>
+  <icon><key>no_geoloc</key><object mime="image/png">no_geoloc.png</object></icon>
+  <icon><key>map</key><object mime="image/png">map.png</object></icon>
+  <icon><key>satellite</key><object mime="image/png">satellite.png</object></icon>
+  <icon><key>satelliteOFF</key><object mime="image/png">satelliteOFF.png</object></icon>
+  <icon><key>satelliteON</key><object mime="image/png">satelliteON.png</object></icon>
+  <icon><key>satelliteONR</key><object mime="image/png">satelliteONR.png</object></icon>
+
+</icondef>

@@ -270,6 +270,57 @@ QString SystemManager::osVersion()
 				osver += ")";
 			}
 		}
+#elif defined(Q_OS_OS2)
+        switch (QSysInfo::os2Version())
+        {
+        case QSysInfo::OV_Unknown:
+            osver = "Unknown IBM OS/2 Version";
+        case QSysInfo::OV_2_0:
+            osver = "IBM OS/2 2.0";
+            break;
+        case QSysInfo::OV_2_1:
+            osver = "IBM OS/2 2.1";
+            break;
+        case QSysInfo::OV_2_11:
+            osver = "IBM OS/2 2.11";
+            break;
+        case QSysInfo::OV_3_0:
+            osver = "IBM OS/2 Warp 3.0";
+            break;
+        case QSysInfo::OV_4_0:
+            osver = "IBM OS/2 Warp 4.0 AKA Merlin";
+            break;
+		case QSysInfo::OV_4_5:
+			osver = "IBM OS/2 Warp Server for e-Buisness 4.5 AKA Aurora";
+			break;
+        case QSysInfo::OV_4_52:
+            osver = "IBM OS/2 Warp 4.52 (Merlin or Aurora Convenience Package 2)";
+            break;
+        case QSysInfo::OV_ECS_Unknown:
+            osver = "Unknown Serenity eComStation Version";
+            break;
+        case QSysInfo::OV_ECS_1_0:
+            osver = "Serenity eComStation 1.0";
+            break;
+        case QSysInfo::OV_ECS_1_1:
+            osver = "Serenity eComStation 1.1";
+            break;
+        case QSysInfo::OV_ECS_1_2:
+            osver = "Serenity eComStation 1.2";
+            break;
+        case QSysInfo::OV_ECS_2_0:
+            osver = "Serenity eComStation 2.0";
+            break;
+		case QSysInfo::OV_ECS_2_1:
+			osver = "Serenity eComStation 2.1";
+			break;
+		case QSysInfo::OV_ECS_2_2:
+			osver = "Serenity eComStation 2.2";
+			break;
+        default:
+            osver = "Unknown OS/2 or eComStation Version";
+            break;
+        }
 #else
 		osver = "Unknown OS";
 #endif

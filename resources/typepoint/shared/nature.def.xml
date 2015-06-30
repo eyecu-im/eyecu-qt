@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>nature:cave_entrance</key><name>Cave entrance</name><object mime="image/png">misc/landmark/cave_entrance.png</object></icon>
+<icon><key>nature:creek</key><name>Creek</name><object mime="image/png">misc/landmark/creek.png</object></icon>
+<icon><key>nature:cape</key><name>Cape</name><object mime="image/png">misc/landmark/cape.png</object></icon>
+<icon><key>nature:glacier</key><name>Glacier</name><object mime="image/png">misc/landmark/glacier.png</object></icon>
+<icon><key>nature:geyser</key><name>Geyser</name><object mime="image/png">misc/landmark/geyser.png</object></icon>
+<icon><key>nature:hill</key><name>Hill</name><object mime="image/png">misc/landmark/hill.png</object></icon>
+<icon><key>nature:peak</key><name>Peak</name><object mime="image/png">misc/landmark/peak.png</object></icon>
+<icon><key>nature:reef</key><name>Reef</name><object mime="image/png">misc/landmark/reef.png</object></icon>
+<icon><key>nature:rock</key><name>Rock</name><object mime="image/png">misc/landmark/rock.png</object></icon>
+<icon><key>nature:spring</key><name>Spring</name><object mime="image/png">misc/landmark/spring.png</object></icon>
+<icon><key>nature:trees</key><name>Trees</name><object mime="image/png">misc/landmark/trees.png</object></icon>
+<icon><key>nature:volcano</key><name>Volcano</name><object mime="image/png">misc/landmark/volcano.png</object></icon>
+<icon><key>nature:waterfall</key><name>Waterfall</name><object mime="image/png">misc/landmark/waterfall.png</object></icon>
+<icon><key>nature:water</key><name>Water</name><object mime="image/png">misc/landmark/water.png</object></icon>
+<icon><key>nature:well</key><name>Well</name><object mime="image/png">misc/landmark/well.png</object></icon>
+</icondef>

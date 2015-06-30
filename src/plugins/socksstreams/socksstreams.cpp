@@ -1,4 +1,5 @@
 #include "socksstreams.h"
+#include "advancedsocksoptionswidget.h"
 
 #include <QCryptographicHash>
 #include <definitions/namespaces.h>
@@ -118,7 +119,7 @@ bool SocksStreams::initSettings()
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_FORWARDADDRESS,QString());
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USEACCOUNTSTREAMPROXY,true);
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USEUSERSTREAMPROXY,true);
-	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USERSTREAMPROXY,QString("proxy.jabbim.cz"));
+	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USERSTREAMPROXYLIST,QStringList("proxy.jabbim.cz"));
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USEACCOUNTNETPROXY,true);
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_USERNETWORKPROXY,QString(APPLICATION_PROXY_REF_UUID));
 	Options::setDefaultValue(OPV_DATASTREAMS_METHOD_CONNECTTIMEOUT,10000);
@@ -153,7 +154,9 @@ IDataStreamSocket *SocksStreams::dataStreamSocket(const QString &ASocketId, cons
 
 IOptionsDialogWidget *SocksStreams::methodSettingsWidget(const OptionsNode &ANode, QWidget *AParent)
 {
-	return new SocksOptionsWidget(this,FConnectionManager,ANode,AParent);
+	return Options::node(OPV_COMMON_ADVANCED).value().toBool()?
+		qobject_cast<IOptionsDialogWidget *>(new AdvancedSocksOptionsWidget(this, FConnectionManager, ANode, AParent)):
+		qobject_cast<IOptionsDialogWidget *>(new SocksOptionsWidget(this, FConnectionManager,ANode,AParent));
 }
 
 void SocksStreams::loadMethodSettings(IDataStreamSocket *ASocket, const OptionsNode &ANode)
@@ -172,18 +175,14 @@ void SocksStreams::loadMethodSettings(IDataStreamSocket *ASocket, const OptionsN
 			stream->setDirectConnectionForwardAddress(hostPort.value(0),listeningPort());
 		stream->setDirectConnectionForwardEnabled(ANode.value("enable-forward-direct").toBool());
 
-		QList<QString> streamProxies;
+		QStringList streamProxies;
+		if (ANode.value("use-user-stream-proxy").toBool())
+			streamProxies = ANode.value("user-stream-proxy-list").toStringList();
 		if (ANode.value("use-account-stream-proxy").toBool())
 		{
 			QString streamProxy = accountStreamProxy(stream->streamJid());
 			if (!streamProxy.isEmpty() && !streamProxies.contains(streamProxy))
-				streamProxies.append(streamProxy);
-		}
-		if (ANode.value("use-user-stream-proxy").toBool())
-		{
-			QString userProxy = ANode.value("user-stream-proxy").toString();
-			if (!userProxy.isEmpty() && !streamProxies.contains(userProxy))
-				streamProxies.append(userProxy);
+				streamProxies.prepend(streamProxy);
 		}
 		stream->setStreamProxyList(streamProxies);
 
@@ -360,5 +359,6 @@ void SocksStreams::onServerConnectionDisconnected()
 		LOG_INFO(QString("Socks local connection disconnected, address=%1").arg(tcpsocket->peerAddress().toString()));
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_socksstreams, SocksStreams);
+#endif

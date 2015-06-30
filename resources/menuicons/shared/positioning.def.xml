@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+
+ <icon><key>positioning</key><object mime="image/png">positioning.png</object></icon>
+ <icon><key>serialport</key><object mime="image/png">serialport.png</object></icon>
+ <icon><key>location</key><object mime="image/png">location.png</object></icon>
+ <icon><key>manual</key><object mime="image/png">manual.png</object></icon>
+ <icon><key>geoip</key><object mime="image/gif">geoip.gif</object></icon>
+ <icon><key>freegeoip</key><object mime="image/png">freegeoip.png</object></icon>
+</icondef>

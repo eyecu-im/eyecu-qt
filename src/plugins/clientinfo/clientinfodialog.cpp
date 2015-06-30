@@ -3,6 +3,7 @@
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 ClientInfoDialog::ClientInfoDialog(IClientInfo *AClientInfo, const Jid &AStreamJid, const Jid &AContactJid, const QString &AContactName, int AInfoTypes, QWidget *AParent) : QDialog(AParent)
 {
@@ -60,19 +61,18 @@ void ClientInfoDialog::setInfoTypes(int AInfoTypes)
 void ClientInfoDialog::updateText()
 {
 	QString itemMask = "%1 %2<br>";
-	QString html = QString("<b>%1</b> (%2)<br><br>").arg(Qt::escape(FContactName)).arg(Qt::escape(FContactJid.uFull()));
-
+	QString html = QString("<b>%1</b> (%2)<br><br>").arg(HTML_ESCAPE(FContactName)).arg(HTML_ESCAPE(FContactJid.uFull()));
 	//Software Info
 	if ((FInfoTypes & IClientInfo::SoftwareVersion)>0)
 	{
 		html += "<b>" + tr("Software Version") + "</b><br>";
 		if (FClientInfo->hasSoftwareInfo(FContactJid))
 		{
-			html += itemMask.arg(tr("Name:")).arg(Qt::escape(FClientInfo->softwareName(FContactJid)));
+			html += itemMask.arg(tr("Name:")).arg(HTML_ESCAPE(FClientInfo->softwareName(FContactJid)));
 			if (!FClientInfo->softwareVersion(FContactJid).isEmpty())
-				html += itemMask.arg(tr("Version:")).arg(Qt::escape(FClientInfo->softwareVersion(FContactJid)));
+				html += itemMask.arg(tr("Version:")).arg(HTML_ESCAPE(FClientInfo->softwareVersion(FContactJid)));
 			if (!FClientInfo->softwareOs(FContactJid).isEmpty())
-				html += itemMask.arg(tr("OS:")).arg(Qt::escape(FClientInfo->softwareOs(FContactJid)));
+				html += itemMask.arg(tr("OS:")).arg(HTML_ESCAPE(FClientInfo->softwareOs(FContactJid)));
 		}
 		else if (FClientInfo->softwareStatus(FContactJid) == IClientInfo::SoftwareError)
 		{
@@ -106,7 +106,7 @@ void ClientInfoDialog::updateText()
 			{
 				html += itemMask.arg(tr("Inactive:")).arg(secsToString(FClientInfo->lastActivityTime(FContactJid).secsTo(QDateTime::currentDateTime())));
 				if (!FClientInfo->lastActivityText(FContactJid).isEmpty())
-					html += itemMask.arg(tr("Status:")).arg(Qt::escape(FClientInfo->lastActivityText(FContactJid)));
+					html += itemMask.arg(tr("Status:")).arg(HTML_ESCAPE(FClientInfo->lastActivityText(FContactJid)));
 			}
 			else
 			{

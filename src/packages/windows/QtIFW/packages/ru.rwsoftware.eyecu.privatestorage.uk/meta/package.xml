@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Private Storage Ukrainian Translation</DisplayName>
+    <Description>Private Storage Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.privatestorage.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.privatestorage,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

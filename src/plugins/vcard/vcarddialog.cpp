@@ -9,6 +9,7 @@
 #include <definitions/vcardvaluenames.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 VCardDialog::VCardDialog(IVCardManager *AVCardPlugin, const Jid &AStreamJid, const Jid &AContactJid, QWidget *AParent) : QDialog(AParent)
 {
@@ -330,8 +331,8 @@ void VCardDialog::onVCardError(const XmppError &AError)
 {
 	QMessageBox::critical(this,tr("Error"),
 		streamJid().pBare() != contactJid().pBare() ? 
-		tr("Failed to load profile: %1").arg(Qt::escape(AError.errorMessage())) :
-		tr("Failed to publish your profile: %1").arg(Qt::escape(AError.errorMessage())));
+		tr("Failed to load profile: %1").arg(HTML_ESCAPE(AError.errorMessage())) :
+		tr("Failed to publish your profile: %1").arg(HTML_ESCAPE(AError.errorMessage())));
 
 	if (!FSaveClicked)
 		deleteLater();

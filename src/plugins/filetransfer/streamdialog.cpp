@@ -13,6 +13,7 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/jid.h>
+#include <utils/qt4qt5compat.h>
 
 StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManager *AFileManager, IFileTransfer *AFileTransfer, IFileStream *AFileStream, QWidget *AParent) : QDialog(AParent)
 {
@@ -46,7 +47,7 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 			ui.cmbMethod->addItem(method->methodName(),method->methodNS());
 	}
 
-	ui.lblContact->setText(Qt::escape(FFileStream->contactJid().uFull()));
+	ui.lblContact->setText(HTML_ESCAPE(FFileStream->contactJid().uFull()));
 
 	connect(FFileStream->instance(),SIGNAL(stateChanged()),SLOT(onStreamStateChanged()));
 	connect(FFileStream->instance(),SIGNAL(speedChanged()),SLOT(onStreamSpeedChanged()));

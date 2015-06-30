@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>pepmanager</key>
+    <object mime="image/png">pepmanager.png</object>
+  </icon>
+</icondef>

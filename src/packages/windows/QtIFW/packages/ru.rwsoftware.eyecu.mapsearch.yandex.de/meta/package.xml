@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Yandex Deutsch Translation</DisplayName>
+    <Description>Yandex Deutsch translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.mapsearch.yandex.de</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.mapsearch.yandex,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

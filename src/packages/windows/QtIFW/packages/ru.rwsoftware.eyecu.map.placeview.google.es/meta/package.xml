@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Place View Provider Google Spanish Translation</DisplayName>
+    <Description>Place View Provider Google Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.placeview.google.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.placeview.google,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

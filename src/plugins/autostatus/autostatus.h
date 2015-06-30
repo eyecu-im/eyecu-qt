@@ -19,6 +19,9 @@ class AutoStatus :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IAutoStatus IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IAutoStatus")
+#endif
 public:
 	AutoStatus();
 	~AutoStatus();

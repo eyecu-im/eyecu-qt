@@ -16,6 +16,7 @@
 #include <utils/filestorage.h>
 #include <utils/xmpperror.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define DIR_CERTIFICATES   "cacertificates"
 
@@ -482,17 +483,17 @@ void ConnectionManager::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALab
 			tooltips += tr("<b>Certificate holder:</b>");
 			for (uint i=0; i<certInfoNamesCount; i++)
 			{
-				QString value = cert.subjectInfo(certInfoNames[i].info);
+				QString value = cert.subjectInfo(certInfoNames[i].info)MAYBE_JOIN;
 				if (!value.isEmpty())
-					tooltips += certInfoNames[i].name.arg(Qt::escape(value));
+					tooltips += certInfoNames[i].name.arg(HTML_ESCAPE(value));
 			}
 
 			tooltips += "<br>" + tr("<b>Certificate issuer:</b>");
 			for (uint i=0; i<certInfoNamesCount; i++)
 			{
-				QString value = cert.issuerInfo(certInfoNames[i].info);
+				QString value = cert.issuerInfo(certInfoNames[i].info)MAYBE_JOIN;
 				if (!value.isEmpty())
-					tooltips += certInfoNames[i].name.arg(Qt::escape(value));
+					tooltips += certInfoNames[i].name.arg(HTML_ESCAPE(value));
 			}
 
 			tooltips += "<br>" + tr("<b>Certificate details:</b>");
@@ -504,5 +505,6 @@ void ConnectionManager::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALab
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_connectionmanager, ConnectionManager)
+#endif

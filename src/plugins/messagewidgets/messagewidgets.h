@@ -30,6 +30,9 @@ class MessageWidgets :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IMessageWidgets IOptionsDialogHolder IMessageViewUrlHandler IMessageEditContentsHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IMessageWidgets")
+#endif
 public:
 	MessageWidgets();
 	~MessageWidgets();

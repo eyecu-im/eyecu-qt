@@ -1,16 +1,69 @@
 #!/usr/bin/make -f
-#export DH_VERBOSE=1
+# -*- makefile -*-
+
+# program
 
 REV=$(shell dpkg-parsechangelog | awk '/^Version: / {print $$2}' | sed 's/.*svn//' | sed 's/-.*//')
 
-override_dh_auto_configure:
-	dh_auto_configure -- -DVER_STRING=$(REV) -DCMAKE_BUILD_TYPE=Release
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-override_dh_install:
-	dh_install --list-missing -XCOPYING -Xlicense.txt
-	for size in 16 24 32 48 64 96 128 ; do \
-	mkdir -p $(CURDIR)/debian/vacuum/usr/share/icons/hicolor/$${size}x$${size}/apps/ && install -Dm644 $(CURDIR)/resources/menuicons/shared/mainwindowlogo$${size}.png $(CURDIR)/debian/vacuum/usr/share/icons/hicolor/$${size}x$${size}/apps/vacuum.png ; \
-	done
+# Include dpatch
+include /usr/share/dpatch/dpatch.make
 
-%:
-	dh $@ --parallel
+# These are used for cross-compiling and for saving the configure script
+# from having to guess our platform (since we know it already)
+DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
+DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_ARCH_OS    ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
+
+ifeq ($(DEB_HOST_ARCH_OS),linux)
+  CONFFLAGS += --config=Linux
+else ifeq ($(DEB_HOST_ARCH_OS),kfreebsd)
+  CONFFLAGS += --config=FreeBSD
+endif
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	#$(MAKE)
+	touch $@
+
+clean: clean-patched unpatch
+clean-patched:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	dh_clean
+
+install:
+	echo $(TEST)
+	dh_testdir
+	dh_testroot
+	dh_prep
+	sh ./debian/build.sh
+
+# Build architecture-independent files here.
+binary-indep: install
+# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: install
+	dh_installchangelogs ../../../CHANGELOG
+	dh_installdocs
+	dh_install --sourcedir=debian/tmp
+# generate lintian overrides for -dbg packages
+#	( cd debian ; for i in *-dbg/usr/lib/*.so.* ; do override=`echo $$i | sed 's|/usr/lib/|: package-name-doesnt-match-sonames |' | sed 's/\.so\.//'` ; pkg=`echo $$i | sed 's|/usr/.*||'` ; dir=`echo $$pkg/usr/share/lintian/overrides` ; mkdir -p $$dir ; file=$$dir/$$pkg ; echo $$override > $$file ; done )
+	dh_link
+	dh_strip -k
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

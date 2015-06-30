@@ -38,6 +38,9 @@ class NormalMessageHandler :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IOptionsDialogHolder IXmppUriHandler IMessageHandler IRostersClickHooker IMessageEditSendHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.INormalMessageHandler")
+#endif
 public:
 	NormalMessageHandler();
 	~NormalMessageHandler();

@@ -41,6 +41,9 @@ class MetaContacts :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IMetaContacts IRosterDataHolder IRostersLabelHolder IRostersClickHooker IRostersDragDropHandler IRostersEditHandler IRecentItemHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IMetaContacts")
+#endif
 public:
 	MetaContacts();
 	~MetaContacts();

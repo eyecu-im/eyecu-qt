@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>Send anonymous statistics to developer</source>
-        <translation>Отправлять анонимную статистику разработчикам</translation>
+        <translation>Отправлять анонимную статистику разработчику</translation>
     </message>
 </context>
 </TS>

@@ -45,7 +45,7 @@ void SocksOptionsWidget::apply()
 	FOptionsNode.setValue(ui.lneForwardDirectAddress->text().trimmed(),"forward-direct-address");
 	FOptionsNode.setValue(ui.chbUseAccountStreamProxy->isChecked(),"use-account-stream-proxy");
 	FOptionsNode.setValue(ui.chbUseUserStreamProxy->isChecked(),"use-user-stream-proxy");
-	FOptionsNode.setValue(ui.lneUserStreamProxy->text().trimmed(),"user-stream-proxy");
+	FOptionsNode.setValue(QStringList(ui.lneUserStreamProxy->text().trimmed()),"user-stream-proxy-list");
 	FOptionsNode.setValue(ui.chbUseAccountNetworkProxy->isChecked(),"use-account-network-proxy");
 
 	emit childApply();
@@ -60,7 +60,7 @@ void SocksOptionsWidget::reset()
 	ui.lneForwardDirectAddress->setText(FOptionsNode.value("forward-direct-address").toString());
 	ui.chbUseAccountStreamProxy->setChecked(FOptionsNode.value("use-account-stream-proxy").toBool());
 	ui.chbUseUserStreamProxy->setChecked(FOptionsNode.value("use-user-stream-proxy").toBool());
-	ui.lneUserStreamProxy->setText(FOptionsNode.value("user-stream-proxy").toString());
+	ui.lneUserStreamProxy->setText(FOptionsNode.value("user-stream-proxy-list").toStringList().first());
 	ui.chbUseAccountNetworkProxy->setChecked(FOptionsNode.value("use-account-network-proxy").toBool());
 
 	emit childReset();

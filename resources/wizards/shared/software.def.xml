@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+ <icon><key>ejabberd</key><object mime="image/png">ejabberd.png</object></icon>
+ <icon><key>jabberd</key><object mime="image/png">jabberd.png</object></icon>
+ <icon><key>prosody</key><object mime="image/png">prosody.png</object></icon>
+ <icon><key>openfire</key><object mime="image/png">openfire.png</object></icon>
+ <icon><key>tigase</key><object mime="image/png">tigase.png</object></icon>
+</icondef>

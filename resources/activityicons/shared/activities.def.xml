@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+
+<icon><key>no_activity</key><name>No activity</name><object mime="image/png">no_activity.png</object></icon>
+
+<icon><key>doing_chores</key><name>Doing chores</name><object mime="image/png">doing_chores.png</object></icon>
+<icon><key>buying_groceries</key><text>doing_chores</text><name>Buying groceries</name><object mime="image/png">buying_groceries.png</object></icon>
+<icon><key>cleaning</key><text>doing_chores</text><name>Cleaning</name><object mime="image/png">cleaning.png</object></icon>
+<icon><key>cooking</key><text>doing_chores</text><name>Cooking</name><object mime="image/png">cooking.png</object></icon>
+<icon><key>doing_maintenance</key><text>doing_chores</text><name>Doing maintenance</name><object mime="image/png">doing_maintenance.png</object></icon>
+<icon><key>doing_the_dishes</key><text>doing_chores</text><name>Doing the dishes</name><object mime="image/png">doing_the_dishes.png</object></icon>
+<icon><key>doing_the_laundry</key><text>doing_chores</text><name>Doing the laundry</name><object mime="image/png">doing_the_laundry.png</object></icon>
+<icon><key>gardening</key><text>doing_chores</text><name>Gardening</name><object mime="image/png">gardening.png</object></icon>
+<icon><key>running_an_errand</key><text>doing_chores</text><name>Running an errand</name><object mime="image/png">running_an_errand.png</object></icon>
+<icon><key>walking_the_dog</key><text>doing_chores</text><name>Walking the dog</name><object mime="image/png">walking_the_dog.png</object></icon>
+
+<icon><key>drinking</key><name>Drinking</name><object mime="image/png">drinking.png</object></icon>
+<icon><key>having_a_beer</key><text>drinking</text><name>Having a beer</name><object mime="image/png">having_a_beer.png</object></icon>
+<icon><key>having_coffee</key><text>drinking</text><name>Having coffee</name><object mime="image/png">having_coffee.png</object></icon>
+<icon><key>having_tea</key><text>drinking</text><name>Having tea</name><object mime="image/png">having_tea.png</object></icon>
+
+<icon><key>eating</key><name>Eating</name><object mime="image/png">eating.png</object></icon>
+<icon><key>having_a_snack</key><text>eating</text><name>Having a snack</name><object mime="image/png">having_a_snack.png</object></icon>
+<icon><key>having_breakfast</key><text>eating</text><name>Having breakfast</name><object mime="image/png">having_breakfast.png</object></icon>
+<icon><key>having_dinner</key><text>eating</text><name>Having dinner</name><object mime="image/png">having_dinner.png</object></icon>
+<icon><key>having_lunch</key><text>eating</text><name>Having lunch</name><object mime="image/png">having_lunch.png</object></icon>
+
+<icon><key>exercising</key><name>Exercising</name><object mime="image/png">exercising.png</object></icon>
+<icon><key>cycling</key><text>exercising</text><name>Cycling</name><object mime="image/png">cycling.png</object></icon>
+<icon><key>dancing</key><text>exercising</text><name>Dancing</name><object mime="image/png">dancing.png</object></icon>
+<icon><key>hiking</key><text>exercising</text><name>Hiking</name><object mime="image/png">hiking.png</object></icon>
+<icon><key>jogging</key><text>exercising</text><name>Jogging</name><object mime="image/png">jogging.png</object></icon>
+<icon><key>playing_sports</key><text>exercising</text><name>Playing sports</name><object mime="image/png">playing_sports.png</object></icon>
+<icon><key>running</key><text>exercising</text><name>Running</name><object mime="image/png">running.png</object></icon>
+<icon><key>skiing</key><text>exercising</text><name>Skiing</name><object mime="image/png">skiing.png</object></icon>
+<icon><key>swimming</key><text>exercising</text><name>Swimming</name><object mime="image/png">swimming.png</object></icon>
+<icon><key>working_out</key><text>exercising</text><name>Working out</name><object mime="image/png">working_out.png</object></icon>
+
+<icon><key>grooming</key><name>Grooming</name><object mime="image/png">grooming.png</object></icon>
+<icon><key>at_the_spa</key><text>grooming</text><name>At the spa</name><object mime="image/png">at_the_spa.png</object></icon>
+<icon><key>brushing_teeth</key><text>grooming</text><name>Brushing teeth</name><object mime="image/png">brushing_teeth.png</object></icon>
+<icon><key>getting_a_haircut</key><text>grooming</text><name>Getting a haircut</name><object mime="image/png">getting_a_haircut.png</object></icon>
+<icon><key>shaving</key><text>grooming</text><name>Shaving</name><object mime="image/png">shaving.png</object></icon>
+<icon><key>taking_a_bath</key><text>grooming</text><name>Taking a bath</name><object mime="image/png">taking_a_bath.png</object></icon>
+<icon><key>taking_a_shower</key><text>grooming</text><name>Taking a shower</name><object mime="image/png">taking_a_shower.png</object></icon>
+
+<icon><key>having_appointment</key><name>Having appointment</name><object mime="image/png">having_appointment.png</object></icon>
+
+<icon><key>inactive</key><name>Inactive</name><object mime="image/png">inactive.png</object></icon>
+<icon><key>day_off</key><text>inactive</text><name>Day off</name><object mime="image/png">day_off.png</object></icon>
+<icon><key>hanging_out</key><text>inactive</text><name>Hanging out</name><object mime="image/png">hanging_out.png</object></icon>
+<icon><key>hiding</key><text>inactive</text><name>Hiding</name><object mime="image/png">hiding.png</object></icon>
+<icon><key>on_vacation</key><text>inactive</text><name>On vacation</name><object mime="image/png">on_vacation.png</object></icon>
+<icon><key>praying</key><text>inactive</text><name>Praying</name><object mime="image/png">praying.png</object></icon>
+<icon><key>scheduled_holiday</key><text>inactive</text><name>Scheduled holiday</name><object mime="image/png">scheduled_holiday.png</object></icon>
+<icon><key>sleeping</key><text>inactive</text><name>Sleeping</name><object mime="image/png">sleeping.png</object></icon>
+<icon><key>thinking</key><text>inactive</text><name>Thinking</name><object mime="image/png">thinking.png</object></icon>
+
+<icon><key>relaxing</key><name>Relaxing</name><object mime="image/png">relaxing.png</object></icon>
+<icon><key>fishing</key><text>relaxing</text><name>Fishing</name><object mime="image/png">fishing.png</object></icon>
+<icon><key>gaming</key><text>relaxing</text><name>Gaming</name><object mime="image/png">gaming.png</object></icon>
+<icon><key>going_out</key><text>relaxing</text><name>Going out</name><object mime="image/png">going_out.png</object></icon>
+<icon><key>partying</key><text>relaxing</text><name>Partying</name><object mime="image/png">partying.png</object></icon>
+<icon><key>reading</key><text>relaxing</text><name>Reading</name><object mime="image/png">reading.png</object></icon>
+<icon><key>rehearsing</key><text>relaxing</text><name>Rehearsing</name><object mime="image/png">rehearsing.png</object></icon>
+<icon><key>shopping</key><text>relaxing</text><name>Shopping</name><object mime="image/png">shopping.png</object></icon>
+<icon><key>smoking</key><text>relaxing</text><name>Smoking</name><object mime="image/png">smoking.png</object></icon>
+<icon><key>socializing</key><text>relaxing</text><name>Socializing</name><object mime="image/png">socializing.png</object></icon>
+<icon><key>sunbathing</key><text>relaxing</text><name>Sunbathing</name><object mime="image/png">sunbathing.png</object></icon>
+<icon><key>watching_tv</key><text>relaxing</text><name>Watching TV</name><object mime="image/png">watching_tv.png</object></icon>
+<icon><key>watching_a_movie</key><text>relaxing</text><name>Watching a movie</name><object mime="image/png">watching_a_movie.png</object></icon>
+
+<icon><key>talking</key><name>Talking</name><object mime="image/png">talking.png</object></icon>
+<icon><key>in_real_life</key><text>talking</text><name>In real life</name><object mime="image/png">in_real_life.png</object></icon>
+<icon><key>on_the_phone</key><text>talking</text><name>On the phone</name><object mime="image/png">on_the_phone.png</object></icon>
+<icon><key>on_video_phone</key><text>talking</text><name>On video phone</name><object mime="image/png">on_video_phone.png</object></icon>
+
+<icon><key>traveling</key><name>Traveling</name><object mime="image/png">traveling.png</object></icon>
+<icon><key>commuting</key><text>traveling</text><name>Commuting</name><object mime="image/png">commuting.png</object></icon>
+<icon><key>cycling2</key><text>traveling</text><name>Cycling</name><object mime="image/png">cycling2.png</object></icon>
+<icon><key>driving</key><text>traveling</text><name>Driving</name><object mime="image/png">driving.png</object></icon>
+<icon><key>in_a_car</key><text>traveling</text><name>In a car</name><object mime="image/png">in_a_car.png</object></icon>
+<icon><key>on_a_bus</key><text>traveling</text><name>On a bus</name><object mime="image/png">on_a_bus.png</object></icon>
+<icon><key>on_a_plane</key><text>traveling</text><name>On a plane</name><object mime="image/png">on_a_plane.png</object></icon>
+<icon><key>on_a_train</key><text>traveling</text><name>On a train</name><object mime="image/png">on_a_train.png</object></icon>
+<icon><key>on_a_trip</key><text>traveling</text><name>On a trip</name><object mime="image/png">on_a_trip.png</object></icon>
+<icon><key>walking</key><text>traveling</text><name>Walking</name><object mime="image/png">walking.png</object></icon>
+
+<icon><key>working</key><name>Working</name><object mime="image/png">working.png</object></icon>
+<icon><key>coding</key><text>working</text><name>Coding</name><object mime="image/png">coding.png</object></icon>
+<icon><key>in_a_meeting</key><text>working</text><name>In a meeting</name><object mime="image/png">in_a_meeting.png</object></icon>
+<icon><key>studying</key><text>working</text><name>Studying</name><object mime="image/png">studying.png</object></icon>
+<icon><key>writing</key><text>working</text><name>Writing</name><object mime="image/png">writing.png</object></icon>
+
+</icondef>

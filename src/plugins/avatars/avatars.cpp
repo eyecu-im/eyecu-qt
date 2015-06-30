@@ -1,9 +1,11 @@
 #include "avatars.h"
+#include "avataroptionswidget.h" /*** <<< eyeCU >>> ***/
 
 #include <QFile>
 #include <QBuffer>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QPainter>				/*** <<< eyeCU >>> ***/
 #include <QImageReader>
 #include <QCryptographicHash>
 #include <definitions/resources.h>
@@ -11,6 +13,9 @@
 #include <definitions/namespaces.h>
 #include <definitions/actiongroups.h>
 #include <definitions/optionvalues.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionnodeorders.h>
+#include <definitions/optionwidgetorders.h>
 #include <definitions/stanzahandlerorders.h>
 #include <definitions/rosterlabels.h>
 #include <definitions/rosterindexkinds.h>
@@ -22,6 +27,7 @@
 #include <utils/imagemanager.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include "utils/qt4qt5compat.h"
 
 #define DIR_AVATARS               "avatars"
 
@@ -47,8 +53,12 @@ Avatars::Avatars()
 	FPresenceManager = NULL;
 	FRostersModel = NULL;
 	FRostersViewPlugin = NULL;
-
-	FAvatarLabelId = 0;
+	FOptionsManager = NULL;	
+/*** <<< eyeCU <<< ***/
+	FAvatarRightLabelId = 0;
+	FAvatarLeftLabelId = 0;
+	FAvatarPosition = Left;
+/*** >>> eyeCU >>> ***/
 	FAvatarsVisible = false;
 	FAvatarSize = QSize(32,32);
 }
@@ -129,7 +139,11 @@ bool Avatars::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 				SLOT(onRostersViewIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
 		}
 	}
-
+// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	if (plugin)
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+// *** >>> eyeCU >>> ***
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
@@ -154,11 +168,17 @@ bool Avatars::initObjects()
 
 	if (FRostersViewPlugin)
 	{
-		AdvancedDelegateItem label(RLID_AVATAR_IMAGE);
-		label.d->kind = AdvancedDelegateItem::CustomData;
-		label.d->data = RDR_AVATAR_IMAGE;
-		FAvatarLabelId = FRostersViewPlugin->rostersView()->registerLabel(label);
-		
+// *** <<< eyeCU <<< ***
+		AdvancedDelegateItem labelRight(RLID_AVATAR_IMAGE_RIGHT);
+		labelRight.d->kind = AdvancedDelegateItem::CustomData;
+		labelRight.d->data = RDR_AVATAR_IMAGE;
+		FAvatarRightLabelId = FRostersViewPlugin->rostersView()->registerLabel(labelRight);
+
+		AdvancedDelegateItem labelLeft(RLID_AVATAR_IMAGE_LEFT);
+		labelLeft.d->kind = AdvancedDelegateItem::CustomData;
+		labelLeft.d->data = RDR_AVATAR_IMAGE;
+		FAvatarLeftLabelId = FRostersViewPlugin->rostersView()->registerLabel(labelLeft);
+// *** >>> eyeCU >>> ***
 		FRostersViewPlugin->rostersView()->insertLabelHolder(RLHO_AVATARS,this);
 	}
 
@@ -167,6 +187,14 @@ bool Avatars::initObjects()
 
 bool Avatars::initSettings()
 {
+// *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAY, true);
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_POSITION, Left);
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAYEMPTY, true);
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAYGRAY, true);
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
+// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -301,7 +329,8 @@ void Avatars::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 		{
 			LOG_STRM_INFO(AStreamJid,QString("Received iq avatar from contact, jid=%1").arg(AStanza.from()));
 			QDomElement dataElem = AStanza.firstElement("query",NS_JABBER_IQ_AVATAR).firstChildElement("data");
-			QByteArray avatarData = QByteArray::fromBase64(dataElem.text().toAscii());
+			QByteArray avatarData = QByteArray::fromBase64(dataElem.text().TOASCII());
+
 			if (!avatarData.isEmpty())
 			{
 				QString hash = saveAvatarData(avatarData);
@@ -335,10 +364,20 @@ QVariant Avatars::rosterData(int AOrder, const IRosterIndex *AIndex, int ARole) 
 		{
 		case RDR_AVATAR_IMAGE:
 			{
-				bool gray = AIndex->data(RDR_SHOW).toInt()==IPresence::Offline || AIndex->data(RDR_SHOW).toInt()==IPresence::Error;
+				bool gray = FShowGrayAvatars && (AIndex->data(RDR_SHOW).toInt()==IPresence::Offline || AIndex->data(RDR_SHOW).toInt()==IPresence::Error);
 				QImage avatar = loadAvatarImage(avatarHash(AIndex->data(RDR_FULL_JID).toString()), FAvatarSize, gray);
+/*** <<< eyeCU <<< ****/
 				if (avatar.isNull())
-					avatar = gray ? FEmptyGrayAvatar : FEmptyAvatar;
+				{
+					if (FShowEmptyAvatars)
+						avatar = gray ? FEmptyGrayAvatar : FEmptyAvatar;
+					else if (FAvatarPosition==Left)	// Dummy avatar for left
+					{
+						avatar = QImage(FAvatarSize.width(), 1, QImage::Format_ARGB32);
+						avatar.fill(0x00000000);
+					}
+				}
+/*** >>> eyeCU >>> ****/
 				return avatar;
 			}
 		case RDR_AVATAR_HASH:
@@ -361,7 +400,7 @@ QList<quint32> Avatars::rosterLabels(int AOrder, const IRosterIndex *AIndex) con
 {
 	QList<quint32> labels;
 	if (AOrder==RLHO_AVATARS && FAvatarsVisible && !AIndex->data(RDR_AVATAR_IMAGE).isNull())
-		labels.append(FAvatarLabelId);
+		labels.append(FAvatarPosition==Right?FAvatarRightLabelId:FAvatarLeftLabelId); // *** <<< eyeCU >>> ***
 	return labels;
 }
 
@@ -370,7 +409,19 @@ AdvancedDelegateItem Avatars::rosterLabel(int AOrder, quint32 ALabelId, const IR
 	Q_UNUSED(AOrder); Q_UNUSED(AIndex);
 	return FRostersViewPlugin->rostersView()->registeredLabel(ALabelId);
 }
-
+/*** <<< eyeCU <<< ***/
+QMultiMap<int, IOptionsDialogWidget *> Avatars::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (FOptionsManager && ANodeId == OPN_ROSTERVIEW)
+	{
+		widgets.insertMulti(OHO_ROSTER_AVATARS, FOptionsManager->newOptionsDialogHeader(tr("Avatars"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_ROSTER_AVATARS, new AvatarOptionsWidget(AParent));
+	}
+	return widgets;
+}
+/*** >>> eyeCU >>> ***/
 QString Avatars::avatarHash(const Jid &AContactJid) const
 {
 	QString hash = FCustomPictures.value(AContactJid.bare());
@@ -825,14 +876,14 @@ void Avatars::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndexe
 
 void Avatars::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips)
 {
-	if ((ALabelId==AdvancedDelegateItem::DisplayId || ALabelId == FAvatarLabelId) && AvatarRosterKinds.contains(AIndex->kind()))
+	if ((ALabelId==AdvancedDelegateItem::DisplayId || ALabelId == FAvatarRightLabelId || ALabelId == FAvatarLeftLabelId) && AvatarRosterKinds.contains(AIndex->kind()))	/*** <<< eyeCU >>> ***/
 	{
 		QString hash = AIndex->data(RDR_AVATAR_HASH).toString();
 		if (hasAvatar(hash))
 		{
 			QString fileName = avatarFileName(hash);
 			QSize imageSize = QImageReader(fileName).size();
-			if (ALabelId!=FAvatarLabelId && (imageSize.height()>64 || imageSize.width()>64))
+			if (ALabelId!=FAvatarRightLabelId && ALabelId!=FAvatarLeftLabelId && (imageSize.height()>64 || imageSize.width()>64))	/*** <<< eyeCU >>> ***/
 				imageSize.scale(QSize(64,64), Qt::KeepAspectRatio);
 			QString avatarMask = "<img src='%1' width=%2 height=%3 />";
 			AToolTips.insert(RTTO_AVATAR_IMAGE,avatarMask.arg(fileName).arg(imageSize.width()).arg(imageSize.height()));
@@ -900,8 +951,12 @@ void Avatars::onOptionsOpened()
 		else
 			++it;
 	}
-
-	onOptionsChanged(Options::node(OPV_ROSTER_VIEWMODE));
+/*** <<< eyeCU <<< ***/
+	onOptionsChanged(Options::node(Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_AVATARS_DISPLAY:OPV_ROSTER_VIEWMODE));
+	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_POSITION));
+	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY));
+	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY));
+/*** >>> eyeCU >>> ***/
 }
 
 void Avatars::onOptionsClosed()
@@ -919,16 +974,36 @@ void Avatars::onOptionsClosed()
 
 void Avatars::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path() == OPV_ROSTER_VIEWMODE)
+/*** <<< eyeCU <<< ***/
+	if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_AVATARS_DISPLAY:OPV_ROSTER_VIEWMODE))
 	{
-		FAvatarsVisible = ANode.value().toInt() == IRostersView::ViewFull;
-		emit rosterLabelChanged(FAvatarLabelId,NULL);
+		FAvatarsVisible = ANode.path() == OPV_ROSTER_AVATARS_DISPLAY?ANode.value().toBool():ANode.value().toInt() != IRostersView::ViewCompact;
+		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
+	else if (ANode.path() == OPV_ROSTER_AVATARS_POSITION)
+	{
+		FAvatarPosition = ANode.value().toInt();
+		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+	}
+	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYEMPTY)
+	{
+		FShowEmptyAvatars = ANode.value().toBool();
+		updateDataHolder();
+	}
+	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYGRAY)
+	{
+		FShowGrayAvatars = ANode.value().toBool();
+		updateDataHolder();
+	}
+/*** >>> eyeCU >>> ***/
 }
 
 inline bool operator<(const QSize &ASize1, const QSize &ASize2)
 {
 	return ASize1.width()==ASize2.width() ? ASize1.height()<ASize2.height() : ASize1.width()<ASize2.width();
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_avatars, Avatars)
+#endif

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>education:college</key><name>College</name><object mime="image/png">education/college.png</object></icon>
+<icon><key>education:driving_school</key><name>Driving school</name><object mime="image/png">education/driving_school.png</object></icon>
+<icon><key>education:kindergarten</key><name>Kindergarten</name><object mime="image/png">education/kindergarten.png</object></icon>
+<icon><key>education:school</key><name>School</name><object mime="image/png">education/school.png</object></icon>
+<icon><key>education:university</key><name>University</name><object mime="image/png">education/university.png</object></icon>
+</icondef>

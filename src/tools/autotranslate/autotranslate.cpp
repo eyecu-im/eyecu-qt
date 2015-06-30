@@ -7,6 +7,7 @@
 #include <QDomDocument>
 #include <QCoreApplication>
 
+#if QT_VERSION < 0x050000
 void myMessageOutput(QtMsgType type, const char *msg)
 {
 	switch (type) 
@@ -25,10 +26,37 @@ void myMessageOutput(QtMsgType type, const char *msg)
 			 abort();
 	}
 }
+#else
+#include <QMessageLogContext>
+void myMessageOutput(QtMsgType AType, const QMessageLogContext &AContext, const QString &AMessage)
+{
+	Q_UNUSED(AContext)
+	QByteArray localMsg = AMessage.toLocal8Bit();
+	switch (AType)
+	{
+		 case QtDebugMsg:
+			 fprintf(stderr, "%s\n", localMsg.constData());
+			 break;
+		 case QtWarningMsg:
+			 fprintf(stderr, "Warning: %s\n", localMsg.constData());
+			 break;
+		 case QtCriticalMsg:
+			 fprintf(stderr, "Critical: %s\n", localMsg.constData());
+			 break;
+		 case QtFatalMsg:
+			 fprintf(stderr, "Fatal: %s\n", localMsg.constData());
+			 abort();
+	}
+}
+#endif
 
 int main(int argc, char *argv[])
 {
+#if QT_VERSION < 0x050000
 	qInstallMsgHandler(myMessageOutput);
+#else
+	qInstallMessageHandler(myMessageOutput);
+#endif
 	QCoreApplication app(argc, argv);
 
 	if (argc != 3)

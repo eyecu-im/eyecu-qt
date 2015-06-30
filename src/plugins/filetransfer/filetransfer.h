@@ -30,6 +30,9 @@ class FileTransfer :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IFileTransfer IOptionsDialogHolder IDiscoFeatureHandler  IRostersDragDropHandler IMessageViewDropHandler IFileStreamsHandler);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IFileTransfer")
+#endif
 public:
 	FileTransfer();
 	~FileTransfer();

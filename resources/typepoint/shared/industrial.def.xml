@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>industrial:mine</key><name>Mine</name><object mime="image/png">misc/landmark/mine.png</object></icon>
+<icon><key>industrial:plant</key><name>Plant</name><object mime="image/png">misc/landmark/plant.png</object></icon>
+<icon><key>industrial:crane</key><name>Crane</name><object mime="image/png">misc/landmark/crane.png</object></icon>
+<icon><key>industrial:farm</key><name>Farm</name><object mime="image/png">misc/landmark/farm.png</object></icon>
+<icon><key>industrial:chimney</key><name>Chimney</name><object mime="image/png">misc/landmark/chimney.png</object></icon>
+<icon><key>industrial:adit</key><name>Adit</name><object mime="image/png">misc/landmark/adit.png</object></icon>
+<icon><key>industrial:gasometer</key><name>Gasometer</name><object mime="image/png">misc/landmark/gasometer.png</object></icon>
+<icon><key>industrial:wastewater_plant</key><name>Wastewater plant</name><object mime="image/png">misc/landmark/wastewater_plant.png</object></icon>
+<icon><key>industrial:wastewater</key><name>Wastewater</name><object mime="image/png">misc/landmark/wastewater.png</object></icon>
+<icon><key>industrial:measurement_station</key><name>Measurement station</name><object mime="image/png">misc/landmark/measurement_station.png</object></icon>
+
+<icon><key>power</key><name>Power</name><object mime="image/png">misc/landmark/power.png</object></icon>
+<icon><key>power:fossil</key><name>Fossil</name><object mime="image/png">misc/landmark/power/fossil.png</object></icon>
+<icon><key>power:hydro</key><name>Hydro</name><object mime="image/png">misc/landmark/power/hydro.png</object></icon>
+<icon><key>power:nuclear</key><name>Nuclear</name><object mime="image/png">misc/landmark/power/nuclear.png</object></icon>
+<icon><key>power:pole</key><name>Pole</name><object mime="image/png">misc/landmark/power/pole.png</object></icon>
+<icon><key>power:tower_small</key><name>Tower small</name><object mime="image/png">misc/landmark/power/tower_small.png</object></icon>
+<icon><key>power:wind</key><name>Wind</name><object mime="image/png">misc/landmark/power/wind.png</object></icon>
+</icondef>

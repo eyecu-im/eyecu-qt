@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>food:bar</key><name>Bar</name><object mime="image/png">food/bar.png</object></icon>
+<icon><key>food:biergarten</key><name>Biergarten</name><object mime="image/png">food/biergarten.png</object></icon>
+<icon><key>food:cafe</key><name>Cafe</name><object mime="image/png">food/cafe.png</object></icon>
+<icon><key>food:drinking_water</key><name>Drinking water</name><object mime="image/png">food/drinking_water.png</object></icon>
+<icon><key>food:fast_food</key><name>Fastfood</name><object mime="image/png">food/fastfood.png</object></icon>
+<icon><key>food:food_court</key><name>Food court</name><object mime="image/png">food/food_court.png</object></icon>
+<icon><key>food:icecream</key><name>Icecream</name><object mime="image/png">food/icecream.png</object></icon>
+<icon><key>food:pub</key><name>Pub</name><object mime="image/png">food/pub.png</object></icon>
+<icon><key>food:restaurant</key><name>Restaurant</name><object mime="image/png">food/restaurant.png</object></icon>
+</icondef>

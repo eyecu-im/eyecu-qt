@@ -8,12 +8,15 @@
 #include <QDomDocument>
 #include <QCoreApplication>
 #include <QTextDocumentFragment>
+#include <QXmlInputSource>
 #include <definitions/resources.h>
 #include <definitions/optionvalues.h>
 #include <utils/filestorage.h>
 #include <utils/textmanager.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
+#include <XmlTextDocumentParser>
 
 #define SCROLL_TIMEOUT                      100
 #define SHARED_STYLE_PATH                   RESOURCES_DIR"/"RSR_STORAGE_SIMPLEMESSAGESTYLES"/"FILE_STORAGE_SHARED_DIR
@@ -125,6 +128,28 @@ QTextDocumentFragment SimpleMessageStyle::textFragmentAt(QWidget *AWidget, const
 	return QTextDocumentFragment();
 }
 
+// *** <<< eyeCU <<< ***
+QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
+{
+    QTextCharFormat format = textFormatAt(AWidget, APosition);
+    if (format.isImageFormat())
+    {
+		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
+        switch (resource.type())
+        {
+            case QMetaType::QImage:
+                return resource.value<QImage>();
+            case QMetaType::QPixmap:
+                return resource.value<QPixmap>().toImage();
+            case QMetaType::QByteArray:
+                return  QImage::fromData(resource.toByteArray());
+            default:;
+        }
+    }
+    return QImage();
+}
+// *** >>> eyeCU >>> ***
+
 bool SimpleMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
@@ -217,7 +242,10 @@ bool SimpleMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, c
 
 		ContentItem content;
 		int startPos = cursor.position();
-		cursor.insertHtml(html);
+
+// <<< *** eyeCU *** <<<
+        XmlTextDocumentParser::htmlToText(cursor, html);
+// >>> *** eyeCU *** >>>
 		content.size = cursor.position()-startPos;
 
 		if (scrollAtEnd)
@@ -468,7 +496,7 @@ void SimpleMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyle
 	AHtml.replace("%messageClasses%", messageClasses.join(" "));
 
 	AHtml.replace("%senderStatusIcon%",AOptions.senderIcon);
-	AHtml.replace("%shortTime%", Qt::escape(AOptions.time.toString(tr("hh:mm"))));
+	AHtml.replace("%shortTime%", HTML_ESCAPE(AOptions.time.toString(tr("hh:mm"))));
 
 	QString avatar = AOptions.senderAvatar;
 	if (!QFile::exists(avatar))
@@ -482,7 +510,7 @@ void SimpleMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyle
 	AHtml.replace("%userIconPath%",avatar);
 
 	QString timeFormat = !AOptions.timeFormat.isEmpty() ? AOptions.timeFormat : tr("hh:mm:ss");
-	QString time = Qt::escape(AOptions.time.toString(timeFormat));
+	QString time = HTML_ESCAPE(AOptions.time.toString(timeFormat));
 	AHtml.replace("%time%", time);
 
 	QString sColor = !AOptions.senderColor.isEmpty() ? AOptions.senderColor : senderColor(AOptions.senderId);

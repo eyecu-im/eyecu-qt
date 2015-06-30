@@ -5,23 +5,23 @@
     <name>StartTLSFeatureFactory</name>
     <message>
         <source>StartTLS</source>
-        <translation>StartTLS</translation>
+        <translation type="unfinished">StartTLS</translation>
     </message>
     <message>
         <source>Allows to establish a secure connection to the server after connecting</source>
-        <translation>Позволяет устанавливать защищённое соединение с сервером после подключения</translation>
+        <translation type="unfinished">Позволяет устанавливать защищённое соединение с сервером после подключения</translation>
     </message>
     <message>
         <source>Failed to begin StartTLS handshake</source>
-        <translation>Не удалось запустить инициализацию StartTLS</translation>
+        <translation type="unfinished">Не удалось запустить инициализацию StartTLS</translation>
     </message>
     <message>
         <source>Wrong StartTLS negotiation response</source>
-        <translation>Неверный ответ при инициализации StartTLS</translation>
+        <translation type="unfinished">Неверный ответ при инициализации StartTLS</translation>
     </message>
     <message>
         <source>StartTLS negotiation failed</source>
-        <translation>Инициализация StartTLS завершилась с ошибкой</translation>
+        <translation type="unfinished">Инициализация StartTLS завершилась с ошибкой</translation>
     </message>
 </context>
 </TS>

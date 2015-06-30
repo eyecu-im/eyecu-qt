@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Avatars Spanish Translation</DisplayName>
+    <Description>Avatars Spanish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.vcard.avatars.es</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.vcard.avatars,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

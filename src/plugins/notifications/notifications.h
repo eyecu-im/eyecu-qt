@@ -47,6 +47,9 @@ class Notifications :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin INotifications IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.INotifications")
+#endif
 public:
 	Notifications();
 	~Notifications();
@@ -90,6 +93,7 @@ signals:
 	void notificationAppended(int ANotifyId, const INotification &ANotification);
 	void notificationHandlerInserted(int AOrder, INotificationHandler *AHandler);
 	void notificationHandlerRemoved(int AOrder, INotificationHandler *AHandler);
+    void enableAnimation(bool);
 protected:
 	int notifyIdByRosterId(int ARosterId) const;
 	int notifyIdByTrayId(int ATrayId) const;

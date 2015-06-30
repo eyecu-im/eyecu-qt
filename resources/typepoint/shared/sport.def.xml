@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+<icon><key>sport:10pin</key><name>10pin</name><object mime="image/png">sport/10pin.png</object></icon>
+<icon><key>sport:archery</key><name>Archery</name><object mime="image/png">sport/archery.png</object></icon>
+<icon><key>sport:athletics</key><name>Athletics</name><object mime="image/png">sport/athletics.png</object></icon>
+<icon><key>sport:baseball</key><name>Baseball</name><object mime="image/png">sport/baseball.png</object></icon>
+<icon><key>sport:basketball</key><name>Basketball</name><object mime="image/png">sport/basketball.png</object></icon>
+<icon><key>sport:beachvolleyball</key><name>Beach volleyball</name><object mime="image/png">sport/beachvolleyball.png</object></icon>
+<icon><key>sport:bicycle</key><name>Bicycle</name><object mime="image/png">sport/bicycle.png</object></icon>
+<icon><key>sport:boule</key><name>Boule</name><object mime="image/png">sport/boule.png</object></icon>
+<icon><key>sport:canoe</key><name>Canoe</name><object mime="image/png">sport/canoe.png</object></icon>
+<icon><key>sport:centre</key><name>Centre</name><object mime="image/png">sport/centre.png</object></icon>
+<icon><key>sport:chess</key><name>Chess</name><object mime="image/png">sport/chess.png</object></icon>
+<icon><key>sport:climbing</key><name>Climbing</name><object mime="image/png">sport/climbing.png</object></icon>
+<icon><key>sport:cricket</key><name>Cricket</name><object mime="image/png">sport/cricket.png</object></icon>
+<icon><key>sport:croquet</key><name>Croquet</name><object mime="image/png">sport/croquet.png</object></icon>
+<icon><key>sport:cycling</key><name>Cycling</name><object mime="image/png">sport/cycling.png</object></icon>
+<icon><key>sport:diving</key><name>Diving</name><object mime="image/png">sport/diving.png</object></icon>
+<icon><key>sport:fishing</key><name>Fishing</name><object mime="image/png">sport/fishing.png</object></icon>
+<icon><key>sport:football</key><name>Football</name><object mime="image/png">sport/football.png</object></icon>
+<icon><key>sport:golf</key><name>Golf</name><object mime="image/png">sport/golf.png</object></icon>
+<icon><key>sport:gymnastics</key><name>Gym</name><object mime="image/png">sport/gymnastics.png</object></icon>
+<icon><key>sport:handball</key><name>Handball</name><object mime="image/png">sport/handball.png</object></icon>
+<icon><key>sport:hockey</key><name>Hockey</name><object mime="image/png">sport/hockey.png</object></icon>
+<icon><key>sport:karting</key><name>Karting</name><object mime="image/png">sport/karting.png</object></icon>
+<icon><key>sport:motocross</key><name>Motocross</name><object mime="image/png">sport/motocross.png</object></icon>
+<icon><key>sport:motor</key><name>Motor</name><object mime="image/png">sport/motor.png</object></icon>
+<icon><key>sport:multi</key><name>Multi</name><object mime="image/png">sport/multi.png</object></icon>
+<icon><key>sport:pelota</key><name>Pelota</name><object mime="image/png">sport/pelota.png</object></icon>
+<icon><key>sport:pitch</key><name>Pitch</name><object mime="image/png">sport/pitch.png</object></icon>
+<icon><key>sport:pool</key><name>Pool</name><object mime="image/png">sport/pool.png</object></icon>
+<icon><key>sport:racquetball</key><name>Racquetball</name><object mime="image/png">sport/racquetball.png</object></icon>
+<icon><key>sport:riding</key><name>Riding</name><object mime="image/png">sport/riding.png</object></icon>
+<icon><key>sport:rowing</key><name>Rowing</name><object mime="image/png">sport/rowing.png</object></icon>
+<icon><key>sport:safety_training</key><name>Safety training</name><object mime="image/png">sport/safety_training.png</object></icon>
+<icon><key>sport:skateboard</key><name>Skateboard</name><object mime="image/png">sport/skateboard.png</object></icon>
+<icon><key>sport:skating</key><name>Skating</name><object mime="image/png">sport/skating.png</object></icon>
+<icon><key>sport:skiing</key><name>Skiing</name><object mime="image/png">sport/skiing.png</object></icon>
+<icon><key>sport:soccer</key><name>Soccer</name><object mime="image/png">sport/soccer.png</object></icon>
+<icon><key>sport:stadium</key><name>Stadium</name><object mime="image/png">sport/stadium.png</object></icon>
+<icon><key>sport:table_tennis</key><name>Table tennis</name><object mime="image/png">sport/table_tennis.png</object></icon>
+<icon><key>sport:tennis</key><name>Tennis</name><object mime="image/png">sport/tennis.png</object></icon>
+<icon><key>sport:track</key><name>Track</name><object mime="image/png">sport/track.png</object></icon>
+<icon><key>sport:volleyball</key><name>Volleyball</name><object mime="image/png">sport/volleyball.png</object></icon>
+</icondef>

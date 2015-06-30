@@ -14,5 +14,25 @@
 #define OPN_SHORTCUTS                    "Shortcuts"
 #define OPN_DATATRANSFER                 "DataTransfer"
 #define OPN_APPEARANCE                   "Appearance"
+// *** <<< eyeCU <<< ***
+#define OPN_MAP                 "Map"
+#define OPN_MAP_GOOGLE          "Map.Google"
+#define OPN_MAP_GOOGLE_KEY      "Map.Google.ApiKey"
+#define OPN_MAP_YANDEX          "Map.Yandex"
+#define OPN_MAPMAGNIFIER        "MapMagnifier"
+#define OPN_MAPSEARCH           "MapSearch"
+#define OPN_MAPSTREETVIEW       "MapStreetView"
+#define OPN_CONTACTPROXIMITY    "ContactProximityNotification"
+#define OPN_URLPROCESSOR        "UrlProcessor"
+#define OPN_XHTML               "XhtmlLim"
+#define OPN_POSITIONING         "Positioning"
+#define OPN_PEP                 "Pep"
+#define OPN_GEOLOC              "Geoloc"
+#define OPN_POI                 "Poi"
+#define OPN_MMPLAYER            "MultimediaPlayer"
+#define OPN_TRACKER             "Tracker"
+#define OPN_JINGLERTP           "Jinglertp"
+#define OPN_WIZARD_ACC          "WizardAcc"
+// *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONNODES_H

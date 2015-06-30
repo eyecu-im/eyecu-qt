@@ -33,7 +33,11 @@
 # include <ws2tcpip.h>
 #endif
 
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_OS2
+# include <socks.h>
+#endif
+
+#if defined (Q_OS_UNIX) || defined (Q_OS_OS2)
 # include <sys/time.h>
 # include <sys/types.h>
 # include <sys/socket.h>

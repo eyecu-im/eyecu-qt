@@ -4,6 +4,9 @@
 #include <definitions/xmppfeatureorders.h>
 #include <definitions/xmppfeaturefactoryorders.h>
 #include <definitions/discofeaturehandlerorders.h>
+#include <definitions/optionvalues.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionwidgetorders.h>
 #include <definitions/dataformtypes.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
@@ -28,6 +31,10 @@ Registration::Registration()
 	FDiscovery = NULL;
 	FPresenceManager = NULL;
 	FXmppUriQueries = NULL;
+// *** <<< eyeCU <<< ***
+	FOptionsManager = NULL;
+	FAccountManager = NULL;
+// *** >>> eyeCU >>> ***
 }
 
 Registration::~Registration()
@@ -85,7 +92,19 @@ bool Registration::initConnections(IPluginManager *APluginManager, int &AInitOrd
 	{
 		FXmppStreamManager = qobject_cast<IXmppStreamManager *>(plugin->instance());
 	}
+// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	if (plugin)
+	{
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+	}
 
+	plugin = APluginManager->pluginInterface("IAccountManager").value(0,NULL);
+	if (plugin)
+	{
+		FAccountManager = qobject_cast<IAccountManager *>(plugin->instance());
+	}
+// *** >>> eyeCU >>> ***
 	return FStanzaProcessor!=NULL && FDataForms!=NULL;
 }
 
@@ -118,6 +137,11 @@ bool Registration::initObjects()
 
 bool Registration::initSettings()
 {
+// *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_ACCOUNT_REGISTER,false);
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
+// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -222,7 +246,26 @@ QList<QString> Registration::xmppFeatures() const
 
 IXmppFeature *Registration::newXmppFeature(const QString &AFeatureNS, IXmppStream *AXmppStream)
 {
-	if (AFeatureNS==NS_FEATURE_REGISTER && FStreamRegisterId.contains(AXmppStream) && !FStreamFeatures.contains(AXmppStream))
+// *** <<< eyeCU <<< ***	
+	if (AFeatureNS==NS_FEATURE_REGISTER)
+	{
+		IAccount *account = FAccountManager!=NULL ? FAccountManager->findAccountByStream(AXmppStream->streamJid()) : NULL;
+		if (account && account->optionsNode().value("register-on-server").toBool() && !FStreamRegisterId.contains(AXmppStream))
+		{
+			LOG_INFO(QString("XMPP account automatic registration started, server=%1").arg(AXmppStream->streamJid().pDomain()));
+			FAutoRegisterStreams.insert(AXmppStream);
+
+			QString id = QUuid::createUuid().toString();
+			FStreamRegisterId.insert(AXmppStream,id);
+
+			connect(AXmppStream->instance(),SIGNAL(opened()),SLOT(onXmppStreamOpened()));
+			connect(AXmppStream->instance(),SIGNAL(closed()),SLOT(onXmppStreamClosed()));
+			connect(AXmppStream->instance(),SIGNAL(error(const XmppError &)),SLOT(onXmppStreamError(const XmppError &)));
+
+			account->optionsNode().setValue(false,"register-on-server");
+		}
+	if (FStreamRegisterId.contains(AXmppStream) && !FStreamFeatures.contains(AXmppStream))
+// *** >>> eyeCU >>> ***
 	{
 		LOG_INFO(QString("XMPP account registration feature created, server=%1").arg(AXmppStream->streamJid().pDomain()));
 
@@ -233,12 +276,27 @@ IXmppFeature *Registration::newXmppFeature(const QString &AFeatureNS, IXmppStrea
 
 		FStreamFeatures.insert(AXmppStream,feature);
 		emit featureCreated(feature);
-
 		return feature;
 	}
+	}	// *** <<< eyeCU >>> ***
 	return NULL;
 }
-
+// *** <<< eyeCU <<< ***
+QMultiMap<int, IOptionsDialogWidget *> Registration::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		QStringList nodeTree = ANodeId.split(".",QString::SkipEmptyParts);
+		if (FOptionsManager && nodeTree.count()==3 && nodeTree.at(0)==OPN_ACCOUNTS && nodeTree.at(2)=="Parameters")
+		{
+			widgets.insertMulti(OHO_ACCOUNT_REGISTRATION, FOptionsManager->newOptionsDialogHeader(tr("Registration"), AParent));
+			widgets.insertMulti(OWO_ACCOUNT_REGISTER, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ACCOUNT_ITEM,nodeTree.at(1)).node("register-on-server"),tr("Register new account on server"),AParent));
+		}
+	}
+	return widgets;
+}
+// *** >>> eyeCU >>> ***
 IDataFormLocale Registration::dataFormLocale(const QString &AFormType)
 {
 	IDataFormLocale locale;
@@ -510,9 +568,135 @@ void Registration::onXmppFeatureFields(const IRegisterFields &AFields)
 	if (feature != NULL)
 	{
 		QString registerId = FStreamRegisterId.value(feature->xmppStream());
+// *** <<< eyeCU <<< ***
+		if (FAutoRegisterStreams.contains(feature->xmppStream()))
+			processFields(registerId, AFields);
+		else
+// *** >>> eyeCU >>> ***
 		emit registerFields(registerId,AFields);
 	}
 }
+// *** <<< eyeCU <<< ***
+void Registration::processFields(const QString &AId, const IRegisterFields &AFields)
+{
+	IXmppStream *xmppStream = FStreamRegisterId.key(AId);
+	if (xmppStream)
+	{
+		IRegisterFields registerFields = AFields;
+		bool extraFields = false;
+		if ((AFields.fieldMask & IRegisterFields::Form) == 0)
+		{
+			registerFields.form.type = DATAFORM_TYPE_FORM;
+			registerFields.form.instructions.append(AFields.instructions);
+			if (AFields.fieldMask & IRegisterFields::Username)
+			{
+				IDataField dataField;
+				dataField.var = "username";
+				dataField.type = DATAFIELD_TYPE_HIDDEN;
+				dataField.value = xmppStream->streamJid().node();
+				registerFields.form.fields.append(dataField);
+			}
+			if (AFields.fieldMask & IRegisterFields::Password)
+			{
+				IDataField dataField;
+				dataField.var = "password";
+				dataField.type = DATAFIELD_TYPE_HIDDEN;
+				dataField.label = tr("Password");
+				dataField.value = xmppStream->password();
+				registerFields.form.fields.append(dataField);
+			}
+			if (AFields.fieldMask & IRegisterFields::Email)
+			{
+				IDataField dataField;
+				dataField.var = "email";
+				dataField.type = DATAFIELD_TYPE_TEXTSINGLE;
+				dataField.label = tr("e-mail");
+				dataField.required = true;
+				registerFields.form.fields.append(dataField);
+				extraFields = true;
+			}
+		}
+		else
+		{
+			for (QList<IDataField>::Iterator it = registerFields.form.fields.begin(); it != registerFields.form.fields.end(); it++)
+			{
+				// Hide unneeded fields
+				if (((*it).type == DATAFIELD_TYPE_TEXTSINGLE) && ((*it).var == "username"))
+				{
+					(*it).value = xmppStream->streamJid().node();
+					(*it).type = DATAFIELD_TYPE_HIDDEN;
+				}
+
+				else if (((*it).type == DATAFIELD_TYPE_TEXTPRIVATE) && ((*it).var == "password"))
+				{
+					(*it).value = xmppStream->password();
+					(*it).type = DATAFIELD_TYPE_HIDDEN;
+				}
+				else
+					extraFields = true;
+			}
+		}
+
+		IRegisterSubmit registerSubmit;
+		registerSubmit.key = registerFields.key;
+		registerSubmit.serviceJid = registerFields.serviceJid;
+		if (extraFields)
+		{
+			QDialog *registerDialog = new QDialog();			
+			if (!registerFields.form.title.isEmpty())
+				registerDialog->setWindowTitle(registerFields.form.title);
+			IDataFormWidget *dfwRegisterForm = FDataForms->formWidget(registerFields.form, registerDialog);
+			dfwRegisterForm->instance()->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+			registerDialog->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+			QVBoxLayout *dialogLayout = new QVBoxLayout(registerDialog);
+			dialogLayout->setMargin(0);
+			dialogLayout->addWidget(dfwRegisterForm->instance());
+			QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok|QDialogButtonBox::Cancel, Qt::Horizontal);
+			dialogLayout->addWidget(buttonBox);
+			dfwRegisterForm->instance()->layout()->setSizeConstraint(QLayout::SetMinimumSize);
+			dialogLayout->setSizeConstraint(QLayout::SetMinimumSize);
+			connect(buttonBox, SIGNAL(accepted()), registerDialog, SLOT(accept()));
+			connect(buttonBox, SIGNAL(rejected()), registerDialog, SLOT(reject()));
+			if (registerDialog->exec()==QDialog::Accepted)
+			{
+				if (registerFields.fieldMask & IRegisterFields::Form)
+				{
+					registerSubmit.form = FDataForms->dataSubmit(dfwRegisterForm ->userDataForm());
+					registerSubmit.fieldMask = IRegisterFields::Form;
+				}
+				else
+				{
+					IDataForm form = dfwRegisterForm ->userDataForm();
+					registerSubmit.username = FDataForms->fieldValue("username",form.fields).toString();
+					registerSubmit.password = FDataForms->fieldValue("password",form.fields).toString();
+					registerSubmit.email = FDataForms->fieldValue("email",form.fields).toString();
+					registerSubmit.fieldMask = registerFields.fieldMask;
+				}
+				submitStreamRegistration(xmppStream, registerSubmit);
+			}
+			else
+				xmppStream->abort(XmppError(IERR_REGISTER_REJECTED_BY_USER));
+			registerDialog->deleteLater();
+		}
+		else
+		{
+			if (registerFields.fieldMask & IRegisterFields::Form)
+			{
+				registerSubmit.form = registerFields.form;
+				registerSubmit.fieldMask = IRegisterFields::Form;
+			}
+			else
+			{
+				registerSubmit.username = registerFields.username;
+				registerSubmit.password = registerFields.password;
+				registerSubmit.email = registerFields.email;
+				registerSubmit.fieldMask = registerFields.fieldMask;
+			}
+			submitStreamRegistration(xmppStream, registerSubmit);
+		}
+	}
+}
+// *** >>> eyeCU >>> ***
 
 void Registration::onXmppFeatureFinished(bool ARestart)
 {
@@ -550,12 +734,19 @@ void Registration::onXmppStreamOpened()
 	IXmppStream *xmppStream = qobject_cast<IXmppStream *>(sender());
 	if (FStreamRegisterId.contains(xmppStream))
 	{
+// *** <<< eyeCU <<< ***
+		if (FAutoRegisterStreams.contains(xmppStream))
+			FAutoRegisterStreams.remove(xmppStream);
+		else
+		{
+// *** >>> eyeCU >>> ***
 		QString registerId = FStreamRegisterId.value(xmppStream);
 		if (FStreamFeatures.contains(xmppStream))
 			emit registerSuccess(registerId);
 		else
 			emit registerError(registerId,XmppError(IERR_REGISTER_UNSUPPORTED));
 		xmppStream->close();
+		} // *** <<< eyeCU >>> ***
 	}
 }
 
@@ -567,6 +758,10 @@ void Registration::onXmppStreamClosed()
 		disconnect(xmppStream->instance());
 		FStreamFeatures.remove(xmppStream);
 		FStreamRegisterId.remove(xmppStream);
+// *** <<< eyeCU <<< ***
+		if (FAutoRegisterStreams.contains(xmppStream))
+			FAutoRegisterStreams.remove(xmppStream);
+// *** >>> eyeCU >>> ***
 	}
 }
 
@@ -575,6 +770,10 @@ void Registration::onXmppStreamError(const XmppError &AError)
 	IXmppStream *xmppStream = qobject_cast<IXmppStream *>(sender());
 	if (FStreamRegisterId.contains(xmppStream))
 	{
+// *** <<< eyeCU <<< ***
+		if (FAutoRegisterStreams.contains(xmppStream))
+			FAutoRegisterStreams.remove(xmppStream);
+// *** >>> eyeCU >>> ***
 		QString registerId = FStreamRegisterId.value(xmppStream);
 		RegisterFeature *feature = FStreamFeatures.value(xmppStream);
 		if (feature!=NULL && feature->isFinished())
@@ -598,4 +797,6 @@ void Registration::onRegisterActionTriggered(bool)
 	}
 }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_registration, Registration)
+#endif

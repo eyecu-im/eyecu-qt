@@ -25,6 +25,9 @@ class CaptchaForms :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin ICaptchaForms IStanzaHandler IStanzaRequestOwner IDataLocalizer);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.ICaptchaForms")
+#endif
 public:
 	CaptchaForms();
 	~CaptchaForms();

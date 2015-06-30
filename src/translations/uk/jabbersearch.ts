@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk_UA" sourcelanguage="en">
 <context>
     <name>JabberSearch</name>
     <message>
@@ -11,15 +13,15 @@
     </message>
     <message>
         <source>First Name</source>
-        <translation>Ім&apos;я</translation>
+        <translation>Ім’я</translation>
     </message>
     <message>
         <source>Last Name</source>
-        <translation>Прізвище</translation>
+        <translation>Призвіще</translation>
     </message>
     <message>
         <source>Nickname</source>
-        <translation>Прізвисько</translation>
+        <translation>Нік</translation>
     </message>
     <message>
         <source>Email Address</source>
@@ -27,11 +29,11 @@
     </message>
     <message>
         <source>Allows to search in the Jabber network</source>
-        <translation>Дозволяє виконувати пошук в джаббер-мережі</translation>
+        <translation>Дозволяе виконувати пошук в джаббер мережі</translation>
     </message>
     <message>
         <source>Supports the searching of the information</source>
-        <translation>Підтримує пошук інформації</translation>
+        <translation>Підтримуе пошук інформації</translation>
     </message>
 </context>
 <context>
@@ -46,7 +48,7 @@
     </message>
     <message>
         <source>Disco info</source>
-        <translation>Інформація</translation>
+        <translation>Информація</translation>
     </message>
     <message>
         <source>Add Contact</source>
@@ -62,14 +64,14 @@
     </message>
     <message>
         <source>Error: Can&apos;t send request to host.</source>
-        <translation>Помилка: неможливо відправити дані на хост.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SearchDialogClass</name>
     <message>
         <source>First:</source>
-        <translation>Ім&apos;я:</translation>
+        <translation>Ім’я:</translation>
     </message>
     <message>
         <source>Last:</source>
@@ -77,7 +79,7 @@
     </message>
     <message>
         <source>Nick:</source>
-        <translation>Прізвисько:</translation>
+        <translation>Нік:</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -89,7 +91,7 @@
     </message>
     <message>
         <source>First</source>
-        <translation>Ім&apos;я</translation>
+        <translation>Ім’я</translation>
     </message>
     <message>
         <source>Last</source>
@@ -97,7 +99,7 @@
     </message>
     <message>
         <source>Nick</source>
-        <translation>Прізвисько</translation>
+        <translation>Нік</translation>
     </message>
     <message>
         <source>EMail</source>

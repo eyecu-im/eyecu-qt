@@ -1,4 +1,10 @@
 #include "pepmanager.h"
+#include <definitions/optionwidgetorders.h>
+#include <definitions/optionnodeorders.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionvalues.h>
+#include <definitions/menuicons.h>
+#include <definitions/resources.h>
 
 #include <definitions/namespaces.h>
 #include <utils/logger.h>
@@ -15,6 +21,11 @@ PEPManager::PEPManager()
 	FDiscovery = NULL;
 	FXmppStreamManager = NULL;
 	FStanzaProcessor = NULL;
+// *** <<< eyeCU <<< ***
+	FOptionsManager = NULL;
+	FMainWindowPlugin = NULL;
+	FMenu = NULL;
+// *** >>> eyeCU >>> ***
 }
 
 PEPManager::~PEPManager()
@@ -26,8 +37,8 @@ void PEPManager::pluginInfo(IPluginInfo *APluginInfo)
 {
 	APluginInfo->name = tr("PEP Manager");
 	APluginInfo->description = tr("Allows other plugins to receive and publish PEP events");
-	APluginInfo->version = "0.9";
-	APluginInfo->author = "Maxim Ignatenko";
+	APluginInfo->version = "1.7";
+	APluginInfo->author = "Maxim Ignatenko / Road Works Software";
 	APluginInfo->homePage = "http://www.vacuum-im.org";
 	APluginInfo->dependences.append(SERVICEDISCOVERY_UUID);
 	APluginInfo->dependences.append(STANZAPROCESSOR_UUID);
@@ -59,8 +70,33 @@ bool PEPManager::initConnections(IPluginManager *APluginManager, int &AInitOrder
 			connect(FXmppStreamManager->instance(),SIGNAL(streamClosed(IXmppStream *)),SLOT(onXmppStreamClosed(IXmppStream *)));
 		}
 	}
+// *** <<< eyeCU <<< ***
+    plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+    if (plugin)
+        FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IMainWindowPlugin").value(0,NULL);
+	if (plugin)
+		FMainWindowPlugin = qobject_cast<IMainWindowPlugin *>(plugin->instance());
+// *** >>> eyeCU >>> ***
 	return FDiscovery!=NULL && FStanzaProcessor!=NULL && FXmppStreamManager!=NULL;
 }
+
+// *** <<< eyeCU <<< ***
+bool PEPManager::initSettings()
+{
+    Options::setDefaultValue(OPV_PEP_DELETE_RETRACT, true);
+    Options::setDefaultValue(OPV_PEP_DELETE_PUBLISHEMPTY, true);
+    Options::setDefaultValue(OPV_PEP_NOTIFY_IGNOREOFFLINE, true);
+    if (FOptionsManager)
+    {
+		IOptionsDialogNode dnode = {ONO_PEP, OPN_PEP, MNI_PEPMANAGER, tr("Personal events")};
+        FOptionsManager->insertOptionsDialogNode(dnode);
+		FOptionsManager->insertOptionsDialogHolder(this);
+    }
+	return true;
+}
+// *** >>> eyeCU >>> ***
 
 bool PEPManager::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
@@ -78,6 +114,38 @@ bool PEPManager::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &A
 	}
 	return false;
 }
+// *** <<< eyeCU <<< ***
+QMultiMap<int, IOptionsDialogWidget *> PEPManager::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (FOptionsManager)
+	{
+		if (ANodeId == OPN_PEP)
+		{
+			widgets.insertMulti(OHO_PEP_DELETE, FOptionsManager->newOptionsDialogHeader(tr("Personal event removal"), AParent));
+			if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			{
+				widgets.insertMulti(OWO_PEP_DELETE_RETRACT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_PEP_DELETE_RETRACT), tr("Retract item"), AParent));
+				widgets.insertMulti(OWO_PEP_DELETE_PUBLISHEMPTY, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_PEP_DELETE_PUBLISHEMPTY), tr("Publish empty item"), AParent));
+			}
+		}
+		else if (ANodeId == OPN_NOTIFICATIONS)
+		{
+			if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+				widgets.insertMulti(OWO_NOTIFICATIONS_PEP_IGNOREOFFLINE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_PEP_NOTIFY_IGNOREOFFLINE), tr("Ignore PEP events for offline contacts"), AParent));
+		}
+		else if (ANodeId == OPN_MESSAGES)
+			widgets.insertMulti(OHO_MESSAGES_PEP, FOptionsManager->newOptionsDialogHeader(tr("Personal event notifications"), AParent));
+		else
+		{
+			QStringList nodeTree = ANodeId.split(".", QString::SkipEmptyParts);
+			if (nodeTree.count()==3 && nodeTree.at(0)==OPN_ACCOUNTS && nodeTree.at(2)=="Additional")
+				widgets.insertMulti(OHO_ACCOUNTS_ADDITIONAL_PEP, FOptionsManager->newOptionsDialogHeader(tr("Personal events"), AParent));
+		}
+	}
+    return widgets;
+}
+// *** >>> eyeCU >>> ***
 
 bool PEPManager::isSupported(const Jid &AStreamJid) const
 {
@@ -116,6 +184,45 @@ bool PEPManager::publishItem(const Jid &AStreamJid, const QString &ANode, const 
 	}
 	return false;
 }
+
+// *** <<< eyeCU <<< ***
+bool PEPManager::deleteItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem)
+{
+    if (FStanzaProcessor && isSupported(AStreamJid))
+    {
+        Stanza iq("iq");
+        iq.setType("set").setId(FStanzaProcessor->newId());
+        QDomElement delItem = iq.addElement("pubsub", NS_PUBSUB)
+                              .appendChild(iq.createElement("retract"))
+                              .toElement();
+        delItem.setAttribute("node", ANode);
+        delItem.setAttribute("notify", 1);
+        delItem.appendChild(AItem.cloneNode(true));
+        return FStanzaProcessor->sendStanzaOut(AStreamJid, iq);
+    }
+    return false;
+}
+
+Action * PEPManager::addAction(int AGroup, bool ASort)
+{
+	if (!FMenu)
+	{		
+		FMenu = new Menu(FMainWindowPlugin->mainWindow()->bottomToolBarChanger()->toolBar());
+		FMenu->setIcon(RSR_STORAGE_MENUICONS, MNI_PEPMANAGER);
+		QToolButton *button = FMainWindowPlugin->mainWindow()->bottomToolBarChanger()->insertAction(FMenu->menuAction());
+		button->setPopupMode(QToolButton::InstantPopup);
+		button->setToolTip(tr("Extended Status"));
+	}
+	Action *action = new Action(FMainWindowPlugin->mainWindow()->topToolBarChanger()->toolBar());
+	FMenu->addAction(action, AGroup, ASort);
+	return action;
+}
+
+QList<Action *> PEPManager::groupActions(int AGroup)
+{
+	return FMenu->actions(AGroup);
+}
+// *** >>> eyeCU >>> ***
 
 IPEPHandler *PEPManager::nodeHandler(int AHandleId) const
 {
@@ -182,5 +289,6 @@ void PEPManager::onPEPHandlerDestroyed(QObject *AHandler)
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_pepmanager, PEPManager)
+#endif

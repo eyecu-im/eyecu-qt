@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>					
+ <servers>					
+  <server>				
+    <jid>isgeek.info</jid>
+    <registration type="web">
+        <url>https://www.isgeek.info/register</url>
+        <instructions>isgeek_info</instructions>
+    </registration>
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>ejabberd</soft>
+    <pep>true</pep><muc>true</muc><archive>true</archive><vjud>true</vjud><proxy>false</proxy>
+    <transports>ICQ,AIM,IRC,Yahoo,Gadu-Gadu,Tlen</transports>
+    <filestore>true</filestore><country>CZ</country><time></time>
+  </server>
+
+  <!--server>				
+    <jid>ezvan.fr</jid>
+    <registration type="in-band" />
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>ejabberd</soft>
+	<pep>true</pep><muc>true</muc><archive>true</archive><vjud>true</vjud><proxy>false</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore><country>FR</country><time></time>
+  </server-->
+  
+  <server>				
+    <jid>jabber.sk</jid>
+    <registration type="web">
+        <url>https://www.jabber.sk/register</url>
+        <instructions>jabber_sk</instructions>
+    </registration>
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>ejabberd</soft>
+    <pep>true</pep><muc>true</muc>
+    <archive>true</archive>
+    <vjud>true</vjud><proxy>true</proxy>
+    <transports>ICQ,AIM,IRC</transports>
+    <filestore>false</filestore><country>SK</country><time></time>
+  </server>  
+ 
+  <server>
+    <jid>jabber.tf-network.de</jid>
+    <registration type="web">
+        <url>http://www.tf-network.de/cms/jabber/anmelden/</url>
+        <instructions>tf-network_de</instructions>
+    </registration>
+    <legacy>false</legacy><trusted>false</trusted><compression>false</compression><soft>openfire</soft>
+    <pep>true</pep><muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <vjud>true</vjud><proxy>false</proxy>
+    <transports>ICQ,IRC,AIM,Gadu-Gadu,Yahoo,Google Talk,Live Jornal,MySpaceIm,QQ,RenRen,SameTime</transports>
+    <filestore>false</filestore><country>DE</country><time></time>
+  </server>
+
+  <server>				
+    <jid>jabber.alpha-labs.net</jid>
+    <registration type="web">
+        <url>https://jabber.alpha-labs.net/plugins/registration/sign-up.jsp</url>
+        <instructions>openfire</instructions>
+    </registration>
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>openfire</soft>
+	<pep>true</pep><muc>true</muc><archive>true</archive><vjud>true</vjud><proxy>true</proxy>
+    <transports>ICQ,AIM,IRC,Yahoo,Gadu-Gadu</transports>
+    <filestore>false</filestore><country>GE</country><time></time>
+  </server>  
+
+  <!-- Those three are strange. DOn't know how to register at them ! -->
+  <!-- server>				
+    <jid>jabber.gathered-geeks.org</jid>
+    <registration type="in-band" />
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>openfire</soft>
+    <pep>true</pep><muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <vjud>true</vjud><proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Gtalk,Yahoo</transports>
+    <filestore>false</filestore><country>DE</country><time></time>
+  </server>  
+
+  <server>				
+    <jid>forumanalogue.fr</jid>
+    <registration type="in-band" />
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>openfire</soft>
+    <pep>true</pep><muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <vjud>true</vjud><proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Gtalk,Yahoo</transports>
+    <filestore>false</filestore><country>FR</country><time></time>
+  </server>
+
+  <server>				
+    <jid>jabber.planetteamspeak.com</jid>
+    <registration type="in-band" />
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>openfire</soft>
+    <pep>true</pep><muc>false</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <vjud>true</vjud><proxy>true</proxy>
+    <transports></transports>
+    <filestore>false</filestore><country>DE</country><time></time>
+  </server -->  
+
+  <server>				
+    <jid>jabber.iitsp.com</jid>
+    <registration type="web">
+        <url>https://jabber.iitsp.com:9091/plugins/registration/sign-up.jsp</url>
+        <instructions>openfire</instructions>        
+    </registration>
+    <legacy>false</legacy><trusted>true</trusted><compression>true</compression><soft>openfire</soft>
+    <pep>true</pep><muc>false</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <vjud>false</vjud><proxy>true</proxy>
+    <transports>AIM,ICQ,Yahoo</transports>
+    <filestore>false</filestore><country>US</country><time></time>
+  </server>  
+
+  <server>
+    <jid>sudouser.ru</jid>
+    <registration type="both">
+        <url>http://sudouser.ru:5281/register/new</url>
+    </registration>
+    <legacy>false</legacy><trusted>false</trusted><compression>false</compression><soft>ejabberd</soft>
+    <pep>true</pep><muc>true</muc><archive>false</archive><vjud>true</vjud><proxy>false</proxy>
+    <transports>ICQ,IRC,MRIM,VK</transports>
+    <filestore>false</filestore><country>RU</country><time></time>	
+  </server>
+
+  <server>
+    <jid>jabber.rootbash.com</jid>
+    <registration type="web">
+      <url>https://jabber.rootbash.com:9091/plugins/registration/sign-up.jsp</url>
+      <instructions>openfire</instructions>	
+    </registration>
+    <legacy>false</legacy><trusted>false</trusted><compression>false</compression>
+    <soft>openfire</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>false</proxy>
+    <transports>ICQ,AIM,Gadu-Gadu,Yahoo,Google Talk,Live Jornal</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+  
+  <server>
+    <jid>jabbim.com</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>    
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>
+  
+  <server>
+    <jid>jabbim.sk</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>  
+
+  <server>
+    <jid>jabbim.cz</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabbster.pl</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>
+
+  <server>
+    <jid>njs.netlab.cz</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.ru</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>false</proxy>
+    <transports>Mail.ru,SMS</transports>
+    <filestore>false</filestore>
+    <country>RU</country><time></time>
+  </server>
+  
+  <server>
+    <jid>xmpp.ru</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>SMS</transports>
+    <filestore>false</filestore>
+    <country>RU</country><time></time>
+  </server>  
+ 
+   <server>
+    <jid>jabber.cz</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>true</filestore>
+    <country>CZ</country><time></time>
+  </server>
+  
+  <server>
+    <jid>richim.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
+    <filestore>false</filestore>
+    <country>CZ</country><time></time>
+  </server>
+
+  <server>
+    <jid>linuxlovers.at</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>false</proxy>
+    <transports>AIM,ICQ,IRC,Yahoo</transports>
+    <filestore>false</filestore>
+    <country>CZ</country><time></time>
+  </server>
+  
+  <server>
+    <jid>palita.net</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>false</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+  
+  <server>
+    <jid>creep.im</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>false</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>RU</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabberpl.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>is-a-furry.org</jid>
+    <registration type="web">
+      <url>https://is-a-furry.org:5281/register_web</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports/>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+ 
+  <server>
+    <jid>jabber.hot-chilli.net</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/transport-pre-registration/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.at</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>Gadu-Gadu,ICQ,IRC</transports>
+    <filestore>false</filestore>
+    <country>AT</country><time></time>
+  </server>
+
+  <server>
+    <jid>xmppnet.de</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,Yahoo,Skype,Twitter,Jabber,SMS</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.no</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>NO</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.rueckgr.at</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,Gadu-Gadu,IRC,Yahoo,Twitter,Jabber</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabberes.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>flase</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>NL</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.yeahnah.co.nz</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>AIM,Yahoo,IRC</transports>
+    <filestore>false</filestore>
+    <country>NZ</country><time></time>
+  </server>
+
+  <server>
+    <jid>suchat.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>chatme.im</jid>
+    <registration type="web">
+      <url>https://webchat.chatme.im/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports/>
+    <filestore>false</filestore>
+    <country>IT</country><time></time>
+  </server>
+
+  <server>
+    <jid>tigase.im</jid>
+    <registration type="web">
+      <url>http://tigase.im/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>tigase</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,Gadu-Gadu,Jabber</transports>
+    <filestore>false</filestore>
+    <country>CA</country><time></time>
+  </server>
+
+  <server>
+    <jid>sure.im</jid>
+    <registration type="web">
+      <url>http://sure.im/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>tigase</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,Gadu-Gadu,Jabber</transports>
+    <filestore>false</filestore>
+    <country>CA</country><time></time>
+  </server>
+
+  <server>
+    <jid>jabber.me</jid>
+    <registration type="web">
+      <url>http://jabber.me/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>tigase</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,Gadu-Gadu,Jabber</transports>
+    <filestore>false</filestore>
+    <country>US</country><time></time>
+  </server>
+
+  <server>
+    <jid>tigase.org</jid>
+    <registration type="web">
+      <url>http://tigase.org/</url>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>tigase</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>true</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports/>
+    <filestore>false</filestore>
+    <country>CA</country><time></time>
+  </server>
+
+  <server>
+    <jid>ubuntu-jabber.de</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>ubuntu-jabber.net</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>brauchen.info</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>deshabfrei.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>draugr.de</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>egbers.info</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>verdammung.org</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>xabber.de</jid>
+    <registration type="in-band"/>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>ejabberd</soft>
+    <pep>true</pep>
+    <muc>true</muc>
+    <archive>false</archive>
+    <proxy>true</proxy>
+    <transports>IRC</transports>
+    <filestore>false</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+ </servers>

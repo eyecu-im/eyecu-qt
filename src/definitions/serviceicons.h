@@ -57,6 +57,7 @@
 #define SRI_HEADLINE_NEWMAIL                SRI_HEADLINE"/newmail"
 #define SRI_HEADLINE_RSS                    SRI_HEADLINE"/rss"
 #define SRI_HEADLINE_WEATHER                SRI_HEADLINE"/weather"
+#define SRI_HEADLINE_CAR                    SRI_HEADLINE"/car"
 
 #define SRI_HIERARCHY                       "hierarchy"
 #define SRI_HIERARCHY_BRANCH                SRI_HIERARCHY"/branch"

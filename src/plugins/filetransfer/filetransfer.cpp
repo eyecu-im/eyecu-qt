@@ -1,5 +1,7 @@
 #include "filetransfer.h"
-
+#if QT_VERSION >= 0x050000
+#include <QMimeData>
+#endif
 #include <QDir>
 #include <QTimer>
 #include <QFileInfo>
@@ -30,6 +32,7 @@
 #include <utils/action.h>
 #include <utils/logger.h>
 #include <utils/jid.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_STREAM_JID                Action::DR_StreamJid
 #define ADR_CONTACT_JID               Action::DR_Parametr1
@@ -645,9 +648,9 @@ StreamDialog *FileTransfer::getStreamDialog(IFileStream *AStream)
 
 		if (FNotifications)
 		{
-			QString name = "<b>"+ Qt::escape(FNotifications->contactName(AStream->streamJid(), AStream->contactJid())) +"</b>";
+			QString name = "<b>"+ HTML_ESCAPE(FNotifications->contactName(AStream->streamJid(), AStream->contactJid())) +"</b>";
 			if (!AStream->contactJid().resource().isEmpty())
-				name += Qt::escape("/" + AStream->contactJid().resource());
+				name += HTML_ESCAPE("/" + AStream->contactJid().resource());
 			dialog->setContactName(name);
 			dialog->installEventFilter(this);
 		}
@@ -802,4 +805,6 @@ void FileTransfer::onToolBarWidgetDestroyed(QObject *AObject)
 			FToolBarActions.remove(widget);
 }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_filetransfer, FileTransfer);
+#endif

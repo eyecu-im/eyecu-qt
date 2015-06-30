@@ -6,6 +6,7 @@
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include "utils/qt4qt5compat.h"
 
 enum Columns {
 	COL_NAME,
@@ -40,13 +41,17 @@ EditBookmarksDialog::EditBookmarksDialog(IBookmarks *ABookmarks, const Jid &AStr
 		IBookmark bookmark = AList.at(row);
 		setBookmarkToRow(row,bookmark);
 	}
-
 	QHeaderView *header = ui.tbwBookmarks->horizontalHeader();
-	header->setClickable(true);
 	header->hideSection(COL_SORT);
-	header->setResizeMode(COL_NAME,QHeaderView::ResizeToContents);
-	header->setResizeMode(COL_VALUE,QHeaderView::Stretch);
-	header->setResizeMode(COL_NICK,QHeaderView::ResizeToContents);
+#if QT_VERSION < 0x050000
+	header->setClickable(true);
+#else
+	header->setSectionsClickable(true);
+#endif
+	header->SETRESIZEMODE(COL_NAME,QHeaderView::ResizeToContents);
+	header->SETRESIZEMODE(COL_VALUE,QHeaderView::Stretch);
+	header->SETRESIZEMODE(COL_NICK,QHeaderView::ResizeToContents);
+
 	connect(header,SIGNAL(sectionClicked(int)),SLOT(onSortingStateChange(int)));
 
 	connect(ui.pbtAdd,SIGNAL(clicked()),SLOT(onEditButtonClicked()));

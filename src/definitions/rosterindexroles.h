@@ -42,6 +42,14 @@ enum RosterIndexDataRoles {
 	RDR_VCARD_SEARCH,
 	//MetaContacts
 	RDR_METACONTACT_ID,
+    // *** <<< eyeCU <<< ***
+    // Moods
+    RDR_MOOD_IMAGE,
+    // Activity
+    RDR_ACTIVITY_IMAGE,
+	// Activity
+	RDR_CLIENTICON_IMAGE,
+    // *** >>> eyeCU >>> ***
 	//Other Roles
 	RDR_USER_ROLE = 128
 };

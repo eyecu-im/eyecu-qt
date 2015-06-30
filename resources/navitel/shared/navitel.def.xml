@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<poitypedef>
+<poitype><text>пер </text><type>street</type></poitype>
+<poitype><text>ул. </text><type>street</type></poitype>
+<poitype><text>пр-кт </text><type>street</type></poitype>
+<poitype><text>пл </text><type>street</type></poitype>
+<poitype><text>г. </text><type>locality</type></poitype>
+<poitype><text>п. </text><type>locality</type></poitype>
+<poitype><text>пгт. </text><type>locality</type></poitype>
+<poitype><text>д. </text><type>locality</type></poitype>
+<poitype><text>с. </text><type>locality</type></poitype>
+<poitype><text>Респ. </text><type>region</type></poitype>
+<poitype><text> обл.</text><type>region</type></poitype>
+<poitype><text> край</text><type>region</type></poitype>
+<poitype><text> р-н</text><type>subregion</type></poitype>
+<poitype><text> с/п</text><type>subregion</type></poitype>
+</poitypedef>

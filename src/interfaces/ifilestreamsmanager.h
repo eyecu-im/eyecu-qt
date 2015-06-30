@@ -62,6 +62,10 @@ public:
 	virtual bool initStream(const QList<QString> &AMethods) =0;
 	virtual bool startStream(const QString &AMethodNS) =0;
 	virtual void abortStream(const XmppError &AError) =0;
+// *** <<< eyeCU <<< ***
+    virtual void addOutputDevice(QIODevice *AIODevice) =0;
+    virtual void removeOutputDevice(QIODevice *AIODevice) =0;
+// *** >>> eyeCU >>> ***
 protected:
 	virtual void stateChanged() =0;
 	virtual void speedChanged() =0;

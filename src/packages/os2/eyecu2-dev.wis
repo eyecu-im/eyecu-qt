@@ -1,0 +1,88 @@
+<WARPIN OS="OS2_2X">
+<HEAD>
+	<TITLE>eyeCU SDK 1.3.0.1198</TITLE>
+
+	<REXX NAME="FindQtSDK">
+		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
+		rc=SysLoadFuncs()
+
+		UNIXROOT = WirexxGetEnv('UNIXROOT')
+		if  \ (UNIXROOT = '') then QTROOT = UNIXROOT||'\usr'
+
+		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
+			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
+		end
+
+		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
+
+		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
+
+		if stream(QCONFIG,'c','open read') = 'READY:' then
+		do while LINES(QCONFIG)
+			parse value linein(QCONFIG) with field '=' val
+			if substr(field,1,10) = 'QT_VERSION' then
+			do
+				parse var val version rest
+				parse value version with major '.' minor '.' patch
+				leave
+			end
+		end
+		rc = stream(QCONFIG,'c','close')
+
+		if major = 4 & minor >= 7 then return
+		else return 'REQUIRES="netlabs.org\Qt\SDK\4\7"'
+	</REXX>
+
+	<REXX NAME="QtSDKPath">
+		return WirexxGetEnv('QT_ROOT_DIR')
+	</REXX>
+
+	<PCK 	INDEX=99
+		PACKAGEID="Road Works Software\eyeCU\SDK\1\3\0\1198"
+		TITLE="SDK for plugin development"
+		REQUIRES="Road Works Software\eyeCU\Base package\1\3\0\1198"
+		=("FindQtSdk")
+		TARGET="$(Road Works Software\eyeCU\Base package\1\3\0\1198)\sdk" BASE
+		SELECT
+		>SDK for plugin development
+	</PCK>
+
+	<PCK 	INDEX=199
+		PACKAGEID="Road Works Software\eyeCU-Extra\SDK\1\3\0\1198"
+		TITLE="SDK for plugin development (Extra)"
+		REQUIRES=99
+		=("FindQtSdk")
+		TARGET="$(99)"
+		EXTERNAL="eyecu2-extra-dev-1.3.0.1198.wpi"
+		SELECT
+		>SDK for plugin development
+	</PCK>
+</HEAD>
+
+<BODY>
+<!-- page 1: introductory page -->
+<PAGE INDEX=1 TYPE=TEXT>
+<NEXTBUTTON TARGET=2>~Next</NEXTBUTTON>
+<TEXT>
+Welcome!
+This is eyeCU Extra feature pack SDK installation.
+Select "Next" to continue.
+Select "Cancel" to abort installation.
+</TEXT>
+</PAGE>
+
+<!-- The TYPE=CONTAINER will list the packages which can be installed. -->
+<PAGE INDEX=2 TYPE=CONTAINER>
+<NEXTBUTTON TARGET=3>~Next</NEXTBUTTON>
+<TEXT>Please, select packages you want to install.</TEXT>
+</PAGE>
+
+<PAGE INDEX=3 TYPE=TEXT>
+<NEXTBUTTON TARGET=0>I~nstall</NEXTBUTTON>
+<TEXT>
+Now everything is ready to install eyeCU Extra feature pack!
+</TEXT>
+</PAGE>
+</PAGE>
+</BODY>
+</WARPIN>

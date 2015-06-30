@@ -16,15 +16,15 @@
     <name>SimpleMessageStyleEngine</name>
     <message>
         <source>Simple Message Style</source>
-        <translation>Упрощённый стиль сообщений</translation>
+        <translation type="unfinished">Упрощённый стиль сообщений</translation>
     </message>
     <message>
         <source>Allows to use a simplified style in message design</source>
-        <translation>Позволяет использовать упрощённый стиль оформления сообщений</translation>
+        <translation type="unfinished">Позволяет использовать упрощённый стиль оформления сообщений</translation>
     </message>
     <message>
         <source>Simple</source>
-        <translation>Простой</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -47,42 +47,42 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Параметры</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Background</source>
-        <translation>Фон</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SimpleOptionsWidgetClass</name>
     <message>
         <source>Variant:</source>
-        <translation>Вариант:</translation>
-    </message>
-    <message>
-        <source>Color:</source>
-        <translation>Цвет:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Font:</source>
-        <translation>Шрифт:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change...</source>
-        <translation>Изменить...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Сбросить</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Image:</source>
-        <translation>Изображение:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>not set</source>
-        <translation>не установлено</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

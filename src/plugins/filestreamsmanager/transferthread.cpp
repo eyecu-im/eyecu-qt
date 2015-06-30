@@ -4,11 +4,15 @@
 
 #define TRANSFER_BUFFER_SIZE      51200
 
-TransferThread::TransferThread(IDataStreamSocket *ASocket, QFile *AFile, int AKind, qint64 ABytes, QObject *AParent) : QThread(AParent)
+TransferThread::TransferThread(IDataStreamSocket *ASocket, QFile *AFile, QList<QIODevice *> *AOutputDevices, QMutex *AOutputMutex, int AKind, qint64 ABytes, QObject *AParent) : QThread(AParent)
 {
 	FKind = AKind;
 	FFile = AFile;
 	FSocket = ASocket;
+// *** <<< eyeCU <<< ***
+    FOutputDevices = AOutputDevices;
+    FOutputMutex = AOutputMutex;
+// *** >>> eyeCU >>> ***
 	FBytesToTransfer = ABytes;
 
 	FAborted = false;
@@ -47,6 +51,12 @@ void TransferThread::run()
 			while (!FAborted && writtenBytes<readedBytes)
 			{
 				qint64 bytes = outDevice->write(buffer+writtenBytes, readedBytes-writtenBytes);
+// *** <<< eyeCU <<< ***
+                FOutputMutex->lock();
+                for (QList<QIODevice *>::iterator it=FOutputDevices->begin(); it!=FOutputDevices->end(); it++)
+                    (*it)->write(buffer+writtenBytes, readedBytes-writtenBytes);
+                FOutputMutex->unlock();
+// *** >>> eyeCU >>> ***
 				if (bytes > 0)
 				{
 					transferedBytes += bytes;

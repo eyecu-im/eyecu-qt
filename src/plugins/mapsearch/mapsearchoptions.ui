@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MapSearchOptions</class>
+ <widget class="QWidget" name="MapSearchOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>38</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Map search options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pbTextColor">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Label color</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbTextColor</sender>
+   <signal>clicked()</signal>
+   <receiver>MapSearchOptions</receiver>
+   <slot>onTextColorDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>108</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onTextColorDialog()</slot>
+ </slots>
+</ui>

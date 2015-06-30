@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QTextDocument>
+#include <utils/qt4qt5compat.h>
 
 enum StatusTableColumns {
 	STC_STATUS,
@@ -173,10 +174,10 @@ StatusOptionsWidget::StatusOptionsWidget(IStatusChanger *AStatusChanger, QWidget
 	connect(tbwStatus,SIGNAL(itemSelectionChanged()),SLOT(onStatusItemSelectionChanged()));
 
 	tbwStatus->setHorizontalHeaderLabels(QStringList() << tr("Status") << tr("Name") << tr("Message") << tr("Priority"));
-	tbwStatus->horizontalHeader()->setResizeMode(STC_STATUS,QHeaderView::ResizeToContents);
-	tbwStatus->horizontalHeader()->setResizeMode(STC_NAME,QHeaderView::ResizeToContents);
-	tbwStatus->horizontalHeader()->setResizeMode(STC_MESSAGE,QHeaderView::Stretch);
-	tbwStatus->horizontalHeader()->setResizeMode(STC_PRIORITY,QHeaderView::ResizeToContents);
+	tbwStatus->horizontalHeader()->SETRESIZEMODE(STC_STATUS,QHeaderView::ResizeToContents);
+	tbwStatus->horizontalHeader()->SETRESIZEMODE(STC_NAME,QHeaderView::ResizeToContents);
+	tbwStatus->horizontalHeader()->SETRESIZEMODE(STC_MESSAGE,QHeaderView::Stretch);
+	tbwStatus->horizontalHeader()->SETRESIZEMODE(STC_PRIORITY,QHeaderView::ResizeToContents);
 
 	QHBoxLayout *hltlayout = new QHBoxLayout;
 	hltlayout->setMargin(0);
@@ -298,7 +299,7 @@ void StatusOptionsWidget::reset()
 				priority->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemIsEditable);
 			}
 
-			tbwStatus->verticalHeader()->setResizeMode(row,QHeaderView::ResizeToContents);
+			tbwStatus->verticalHeader()->SETRESIZEMODE(row,QHeaderView::ResizeToContents);
 			row++;
 		}
 	}

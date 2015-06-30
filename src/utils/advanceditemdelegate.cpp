@@ -12,13 +12,22 @@
 #include <QVBoxLayout>
 #include <QApplication>
 #include <QItemEditorFactory>
+#if QT_VERSION < 0x050000
 #include <QWindowsVistaStyle>
-
+#endif
 static const qreal BlinkHideSteps[] = { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0 };
 static const qreal BlinkFadeSteps[] = { 1.0, 0.8, 0.6, 0.4, 0.2, 0.2, 0.4, 0.6, 0.8, 1.0 };
 static const int BlinkStepsCount = sizeof(BlinkHideSteps)/sizeof(BlinkHideSteps[0]);
 static const int BlinkStepsTime = 1000;
-#define BLINK_STEP ((QDateTime::currentMSecsSinceEpoch() % BlinkStepsTime) * BlinkStepsCount / BlinkStepsTime)
+
+// *** <<< eyeCU <<< ***
+#if (QT_VERSION >= 0x040700)
+# define CURRENT_MSECS QDateTime::currentMSecsSinceEpoch()
+#else
+# define CURRENT_MSECS (QTime::fromString("00:00:00:000", "hh:mm:ss:zzz").msecsTo(QTime::currentTime()))
+#endif
+#define BLINK_STEP ((CURRENT_MSECS % BlinkStepsTime) * BlinkStepsCount / BlinkStepsTime)
+// *** >>> eyeCU >>> ***
 
 const quint32 AdvancedDelegateItem::NullId        = 0;
 const quint32 AdvancedDelegateItem::BranchId      = AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleLeft,128,10);

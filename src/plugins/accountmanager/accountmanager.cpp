@@ -15,7 +15,9 @@
 #include <utils/logger.h>
 #include "account.h"
 #include "accountsoptionswidget.h"
+/*** <<< eyeCU <<< ***
 #include "createaccountwizard.h"
+ *** <<< eyeCU <<< ***/
 
 #define ADR_ACCOUNT_ID              Action::DR_Parametr1
 
@@ -24,6 +26,7 @@ AccountManager::AccountManager()
 	FXmppStreamManager = NULL;
 	FOptionsManager = NULL;
 	FRostersViewPlugin = NULL;
+	FWizardAccount = NULL; // *** <<< eyeCU >>> ***
 }
 
 AccountManager::~AccountManager()
@@ -73,7 +76,11 @@ bool AccountManager::initConnections(IPluginManager *APluginManager, int &AInitO
 				SLOT(onRostersViewIndexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)));
 		}
 	}
-
+// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IWizardAccount").value(0,NULL);
+	if (plugin)
+		FWizardAccount = qobject_cast<IWizardAccount *>(plugin->instance());
+// *** >>> eyeCU >>> ***
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
@@ -86,6 +93,7 @@ bool AccountManager::initSettings()
 	Options::setDefaultValue(OPV_ACCOUNT_DEFAULTRESOURCE, QString(CLIENT_NAME));
 
 	Options::setDefaultValue(OPV_ACCOUNT_ACTIVE, true);
+	Options::setDefaultValue(OPV_ACCOUNT_NAME, tr("New account")); // *** <<< eyeCU >>> ***
 	Options::setDefaultValue(OPV_ACCOUNT_STREAMJID, QString());
 	Options::setDefaultValue(OPV_ACCOUNT_RESOURCE, QString(CLIENT_NAME));
 	Options::setDefaultValue(OPV_ACCOUNT_PASSWORD, QByteArray());
@@ -109,8 +117,17 @@ QMultiMap<int, IOptionsDialogWidget *> AccountManager::optionsDialogWidgets(cons
 		if (ANodeId == OPN_ACCOUNTS)
 		{
 			widgets.insertMulti(OHO_ACCOUNTS_ACCOUNTS, FOptionsManager->newOptionsDialogHeader(tr("Accounts"),AParent));
-			widgets.insertMulti(OWO_ACCOUNTS_ACCOUNTS, new AccountsOptionsWidget(this,AParent));
-
+// *** <<< eyeCU <<< ***
+			int flags = 0;
+			if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+				flags|=AccountsOptionsWidget::Advanced;
+			if (!FWizardAccount)
+				flags|=AccountsOptionsWidget::NoWizrd;
+			AccountsOptionsWidget *widget = new AccountsOptionsWidget(this, flags, AParent);
+			widgets.insertMulti(OWO_ACCOUNTS_ACCOUNTS, widget);
+			connect(widget, SIGNAL(addAccountLinkActivated(const QString &)), SLOT(onAddAccountLinkActivated(const QString &)));
+			connect(this, SIGNAL(showAccountSettings(QUuid)), widget, SLOT(onSettingsButtonClicked(QUuid)));
+// *** >>> eyeCU >>> ***
 			widgets.insertMulti(OHO_ACCOUNTS_COMMON, FOptionsManager->newOptionsDialogHeader(tr("Common account settings"),AParent));
 			
 			QComboBox *resourceCombox = newResourceComboBox(QUuid(),AParent);
@@ -122,6 +139,10 @@ QMultiMap<int, IOptionsDialogWidget *> AccountManager::optionsDialogWidgets(cons
 
 			widgets.insertMulti(OHO_ACCOUNTS_PARAMS_ACCOUNT,FOptionsManager->newOptionsDialogHeader(tr("Account"),AParent));
 			widgets.insertMulti(OWO_ACCOUNTS_PARAMS_NAME,FOptionsManager->newOptionsDialogWidget(options.node("name"),tr("Name:"),AParent));
+// *** <<< eyeCU <<< ***
+			if (!FWizardAccount || Options::node(OPV_COMMON_ADVANCED).value().toBool())
+				widgets.insertMulti(OWO_ACCOUNTS_PARAMS_STREAM_JID,FOptionsManager->newOptionsDialogWidget(options.node("streamJid"),tr("Jabber ID:"),AParent));
+// *** >>> eyeCU >>> ***
 			widgets.insertMulti(OWO_ACCOUNTS_PARAMS_PASSWORD,FOptionsManager->newOptionsDialogWidget(options.node("password"),tr("Password:"),AParent));
 
 			QComboBox *resourceCombox = newResourceComboBox(nodeTree.at(1),AParent);
@@ -164,17 +185,31 @@ IAccount *AccountManager::findAccountByStream(const Jid &AStreamJid) const
 
 IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &AName)
 {
+/*** <<< eyeCU <<< ***
 	if (AAccountJid.isValid() && !AAccountJid.node().isEmpty() && findAccountByStream(AAccountJid)==NULL)
 	{
+ *** >>> eyeCU >>> ***/
 		QUuid accountId = QUuid::createUuid();
-		LOG_DEBUG(QString("Creating account, stream=%1, id=%2").arg(AAccountJid.pFull(), accountId.toString()));
+		LOG_DEBUG(QString("Account created,id=%2").arg(accountId.toString()));
 
 		OptionsNode options = Options::node(OPV_ACCOUNT_ITEM,accountId.toString());
-		options.setValue(AName,"name");
+// *** <<< eyeCU <<< ***
+		if (!AName.isEmpty())
+			options.setValue(AName,"name");
+		if (AAccountJid.isValid() && !AAccountJid.node().isEmpty() && findAccountByStream(AAccountJid)==NULL)
+		{
+			LOG_DEBUG(QString("Setting account options, stream=%1").arg(AAccountJid.pFull()));
+// *** >>> eyeCU >>> ***
 		options.setValue(AAccountJid.bare(),"streamJid");
 		options.setValue(AAccountJid.resource(),"resource");
+// *** <<< eyeCU <<< ***
+		}
+		else
+			LOG_DEBUG(QString("Account stream jid is empty"));
+// *** >>> eyeCU >>> ***
 
 		return insertAccount(options);
+/*** <<< eyeCU <<< ***
 	}
 	else if (!AAccountJid.isValid() || AAccountJid.node().isEmpty())
 	{
@@ -185,6 +220,7 @@ IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &A
 		LOG_ERROR(QString("Failed to create account, stream=%1: Account JID already exists").arg(AAccountJid.pFull()));
 	}
 	return NULL;
+ *** >>> eyeCU >>> ***/
 }
 
 void AccountManager::destroyAccount(const QUuid &AAccountId)
@@ -208,8 +244,10 @@ void AccountManager::destroyAccount(const QUuid &AAccountId)
 IAccount *AccountManager::insertAccount(const OptionsNode &AOptions)
 {
 	Jid streamJid = AOptions.value("streamJid").toString();
+/*** <<< eyeCU <<< ***
 	if (streamJid.isValid() && !streamJid.node().isEmpty() && findAccountByStream(streamJid)==NULL)
 	{
+*** >>> eyeCU >>> ***/
 		Account *account = new Account(FXmppStreamManager,AOptions,this);
 		connect(account,SIGNAL(activeChanged(bool)),SLOT(onAccountActiveChanged(bool)));
 		connect(account,SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onAccountOptionsChanged(const OptionsNode &)));
@@ -220,12 +258,14 @@ IAccount *AccountManager::insertAccount(const OptionsNode &AOptions)
 		emit accountInserted(account);
 
 		return account;
+/*** <<< eyeCU <<< ***
 	}
 	else if (!streamJid.isValid() || streamJid.node().isEmpty())
 	{
 		REPORT_ERROR("Failed to insert account: Invalid parameters");
 	}
 	return NULL;
+ *** >>> eyeCU >>> ***/
 }
 
 void AccountManager::removeAccount(const QUuid &AAccountId)
@@ -290,7 +330,7 @@ QComboBox *AccountManager::newResourceComboBox(const QUuid &AAccountId, QWidget 
 	combox->addItem(tr("Home"), tr("Home"));
 	combox->addItem(tr("Work"), tr("Work"));
 	combox->addItem(tr("Notebook"), tr("Notebook"));
-	
+
 	combox->setEditable(true);
 	connect(combox->lineEdit(),SIGNAL(editingFinished()),SLOT(onResourceComboBoxEditFinished()));
 
@@ -348,9 +388,10 @@ void AccountManager::onOptionsChanged(const OptionsNode &ANode)
 void AccountManager::onProfileOpened(const QString &AProfile)
 {
 	Q_UNUSED(AProfile);
-	if (FAccounts.isEmpty())
-		QTimer::singleShot(100,this,SLOT(onShowCreateAccountWizard()));
-	else foreach(IAccount *account, FAccounts)
+// *** <<< eyeCU <<<
+	if (!FAccounts.isEmpty())
+		foreach(IAccount *account, FAccounts)
+// *** >>> eyeCU >>>
 		account->setActive(account->optionsNode().value("active").toBool());
 }
 
@@ -382,15 +423,25 @@ void AccountManager::onShowAccountOptions(bool)
 		showAccountOptionsDialog(action->data(ADR_ACCOUNT_ID).toString());
 }
 
-void AccountManager::onShowCreateAccountWizard()
+// *** <<< eyeCU <<< ***
+//void AccountManager::onShowCreateAccountWizard()
+//{
+//	if (FOptionsManager && FOptionsManager->isOpened())
+//	{
+//		CreateAccountWizard *wizard = new CreateAccountWizard();
+//		connect(FOptionsManager->instance(),SIGNAL(profileClosed(const QString &)),wizard,SLOT(reject()));
+//		wizard->show();
+//	}
+//}
+
+void AccountManager::onAddAccountLinkActivated(const QString &ALink)
 {
-	if (FOptionsManager && FOptionsManager->isOpened())
-	{
-		CreateAccountWizard *wizard = new CreateAccountWizard();
-		connect(FOptionsManager->instance(),SIGNAL(profileClosed(const QString &)),wizard,SLOT(reject()));
-		wizard->show();
-	}
+	if (ALink == "add_account")
+		emit showAccountSettings(createAccount(Jid(), QString())->accountId());
+	else if (ALink == "use_wizard")
+		FWizardAccount->startWizard(qobject_cast<AccountsOptionsWidget*>(sender())->window());
 }
+// *** >>> eyeCU >>> ***
 
 void AccountManager::onResourceComboBoxEditFinished()
 {
@@ -428,5 +479,6 @@ void AccountManager::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &
 		}
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_accountmanager, AccountManager)
+#endif

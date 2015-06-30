@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Tune Listener AIMP Ukrainian Translation</DisplayName>
+    <Description>Tune Listener AIMP Ukrainian translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.aimp.uk</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.aimp,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

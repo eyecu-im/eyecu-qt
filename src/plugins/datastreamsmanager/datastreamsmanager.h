@@ -27,6 +27,9 @@ class DataStreamsManger :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IDataStreamsManager IStanzaHandler IStanzaRequestOwner IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IDataStreamsManger")
+#endif
 public:
 	DataStreamsManger();
 	~DataStreamsManger();

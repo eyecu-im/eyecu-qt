@@ -29,6 +29,7 @@
 #include <utils/options.h>
 #include <utils/action.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_CLIPBOARD_DATA      Action::DR_Parametr1
 
@@ -181,6 +182,12 @@ bool RostersViewPlugin::initSettings()
 	Options::setDefaultValue(OPV_ROSTER_MERGESTREAMS,true);
 	Options::setDefaultValue(OPV_ROSTER_VIEWMODE,IRostersView::ViewFull);
 	Options::setDefaultValue(OPV_ROSTER_SORTMODE,IRostersView::SortByStatus);
+    // *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_ROSTER_STATUSDISPLAY, true);
+	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLITE, false);
+	Options::setDefaultValue(OPV_ROSTER_SHOWSELF, false);
+    Options::setDefaultValue(OPV_ROSTER_SHOWOFFLINEAGENTS, true);
+    // *** >>> eyeCU >>> ***
 
 	if (FOptionsManager)
 	{
@@ -201,12 +208,24 @@ QMultiMap<int, IOptionsDialogWidget *> RostersViewPlugin::optionsDialogWidgets(c
 		widgets.insertMulti(OWO_ROSTER_MERGESTREAMS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_MERGESTREAMS),tr("Show contacts of all accounts in common list"),AParent));
 		widgets.insertMulti(OWO_ROSTER_SHOWRESOURCE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_SHOWRESOURCE),tr("Show contact resource with highest priority"),AParent));
 		widgets.insertMulti(OWO_ROSTER_HIDESCROLLBAR,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_HIDESCROLLBAR),tr("Hide scroll bars in contact list window"),AParent));
-
+// *** <<< eyeCU <<< ***
+		widgets.insertMulti(OWO_ROSTER_ALTERNATIONHIGHLITE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_ALTERNATIONHIGHLITE),tr("Highlite alternation"),AParent));		
+widgets.insertMulti(OHO_ROSTER_EXTRA_ICONS, FOptionsManager->newOptionsDialogHeader(tr("Extra icons"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+		{
+			widgets.insertMulti(OWO_ROSTER_SHOWOFFLIEAGENTS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_SHOWOFFLINEAGENTS),tr("Always show offline agents"),AParent));
+			widgets.insertMulti(OWO_ROSTER_SHOWSELF,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_SHOWSELF),tr("Show self contact"),AParent));
+			widgets.insertMulti(OWO_ROSTER_STATUSDISPLAY, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_STATUSDISPLAY),tr("Display status"),AParent));
+		}
+		else
+		{
+// *** >>> eyeCU >>> ***
 		QComboBox *cmbViewMode = new QComboBox(AParent);
 		cmbViewMode->addItem(tr("Full"), IRostersView::ViewFull);
 		cmbViewMode->addItem(tr("Simplified"), IRostersView::ViewSimple);
 		cmbViewMode->addItem(tr("Compact"), IRostersView::ViewCompact);
 		widgets.insertMulti(OWO_ROSTER_VIEWMODE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_VIEWMODE),tr("Contacts list view:"),cmbViewMode,AParent));
+		} // *** <<< eyeCU >>> ***
 
 		QComboBox *cmbSortMode = new QComboBox(AParent);
 		cmbSortMode->addItem(tr("by status"), IRostersView::SortByStatus);
@@ -689,16 +708,16 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 		{
 			QString name = AIndex->data(RDR_NAME).toString();
 			if (!name.isEmpty())
-				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_NAME,"<big><b>" + Qt::escape(name) + "</b></big>");
+				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_NAME,"<big><b>" + HTML_ESCAPE(name) + "</b></big>");
 
 			if (streamJid.isValid() && AIndex->kind()!=RIK_STREAM_ROOT && FRostersModel && FRostersModel->streamsLayout()==IRostersModel::LayoutMerged)
 			{
 				IAccount *account = FAccountManager!=NULL ? FAccountManager->findAccountByStream(streamJid) : NULL;
-				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_ACCOUNT,tr("<b>Account:</b> %1").arg(Qt::escape(account!=NULL ? account->name() : streamJid.uBare())));
+				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_ACCOUNT,tr("<b>Account:</b> %1").arg(HTML_ESCAPE(account!=NULL ? account->name() : streamJid.uBare())));
 			}
 
 			if (!contactJid.isEmpty())
-				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_JABBERID,tr("<b>Jabber ID:</b> %1").arg(Qt::escape(contactJid.uBare())));
+				AToolTips.insert(RTTO_ROSTERSVIEW_INFO_JABBERID,tr("<b>Jabber ID:</b> %1").arg(HTML_ESCAPE(contactJid.uBare())));
 
 			QString ask = AIndex->data(RDR_SUBSCRIPTION_ASK).toString();
 			QString subscription = AIndex->data(RDR_SUBSCRIBTION).toString();
@@ -713,9 +732,9 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 					subsName = tr("Provided from you");
 
 				if (ask == SUBSCRIPTION_SUBSCRIBE)
-					AToolTips.insert(RTTO_ROSTERSVIEW_INFO_SUBCRIPTION,tr("<b>Subscription:</b> %1, request sent").arg(Qt::escape(subsName)));
+					AToolTips.insert(RTTO_ROSTERSVIEW_INFO_SUBCRIPTION,tr("<b>Subscription:</b> %1, request sent").arg(HTML_ESCAPE(subsName)));
 				else
-					AToolTips.insert(RTTO_ROSTERSVIEW_INFO_SUBCRIPTION,tr("<b>Subscription:</b> %1").arg(Qt::escape(subsName)));
+					AToolTips.insert(RTTO_ROSTERSVIEW_INFO_SUBCRIPTION,tr("<b>Subscription:</b> %1").arg(HTML_ESCAPE(subsName)));
 			}
 		}
 
@@ -732,10 +751,10 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 				{
 					QString resource = !pItem.itemJid.resource().isEmpty() ? pItem.itemJid.resource() : pItem.itemJid.uBare();
 					QString statusIcon = FStatusIcons!=NULL ? FStatusIcons->iconFileName(streamJid,pItem.itemJid) : QString::null;
-					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME+orderShift,QString("<img src='%1'> %2 (%3)").arg(statusIcon).arg(Qt::escape(resource)).arg(pItem.priority));
+					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME+orderShift,QString("<img src='%1'> %2 (%3)").arg(statusIcon).arg(HTML_ESCAPE(resource)).arg(pItem.priority));
 					
 					if (!pItem.status.isEmpty())
-						AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT+orderShift,Qt::escape(pItem.status).replace('\n',"<br>"));
+						AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT+orderShift,HTML_ESCAPE(pItem.status).replace('\n',"<br>"));
 
 					if (resIndex < resources.count()-1)
 						AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_MIDDLELINE+orderShift,"<hr>");
@@ -757,11 +776,11 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 			QString statusIconSet = FStatusIcons!=NULL ? FStatusIcons->iconsetByJid(contactJid) : QString::null;
 			QString statusIconKey = FStatusIcons!=NULL ? FStatusIcons->iconKeyByStatus(show,subscription,subscription_ask) : QString::null;
 			QString statusIconFile = FStatusIcons!=NULL ? FStatusIcons->iconFileName(statusIconSet,statusIconKey) : QString::null;
-			AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME,QString("<img src='%1'> %2 (%3)").arg(statusIconFile).arg(Qt::escape(resource)).arg(priority));
+			AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME,QString("<img src='%1'> %2 (%3)").arg(statusIconFile).arg(HTML_ESCAPE(resource)).arg(priority));
 
 			QString statusText = AIndex->data(RDR_STATUS).toString();
 			if (!statusText.isEmpty())
-				AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT,Qt::escape(statusText).replace('\n',"<br>"));
+				AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT,HTML_ESCAPE(statusText).replace('\n',"<br>"));
 
 			AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_BOTTOMLINE,"<hr>");
 		}
@@ -805,7 +824,12 @@ void RostersViewPlugin::onRestoreExpandState()
 
 void RostersViewPlugin::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_ROSTER_VIEWMODE));
+	// *** <<< eyeCU <<< ***
+	onOptionsChanged(Options::node(OPV_ROSTER_ALTERNATIONHIGHLITE));
+	onOptionsChanged(Options::node(OPV_ROSTER_SHOWSELF));
+	onOptionsChanged(Options::node(OPV_ROSTER_SHOWOFFLINEAGENTS));
+	onOptionsChanged(Options::node(Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_STATUSDISPLAY:OPV_ROSTER_VIEWMODE));
+	// *** >>> eyeCU >>> ***
 	onOptionsChanged(Options::node(OPV_ROSTER_SORTMODE));
 	onOptionsChanged(Options::node(OPV_ROSTER_SHOWOFFLINE));
 	onOptionsChanged(Options::node(OPV_ROSTER_SHOWRESOURCE));
@@ -836,9 +860,23 @@ void RostersViewPlugin::onOptionsChanged(const OptionsNode &ANode)
 		FRostersView->setVerticalScrollBarPolicy(ANode.value().toBool() ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded);
 		FRostersView->setHorizontalScrollBarPolicy(ANode.value().toBool() ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded);
 	}
-	else if (ANode.path() == OPV_ROSTER_VIEWMODE)
+// *** <<< eyeCU <<< ***
+	else if (ANode.path() == OPV_ROSTER_ALTERNATIONHIGHLITE)
 	{
-		FShowStatus = ANode.value().toInt() == IRostersView::ViewFull;
+		FRostersView->setAlternatingRowColors(ANode.value().toBool());
+	}
+	else if (ANode.path() == OPV_ROSTER_SHOWSELF)
+	{
+		FRostersModel->setShowSelf(ANode.value().toBool());
+	}
+	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINEAGENTS)
+	{
+		FRostersModel->setShowOfflineAgents(ANode.value().toBool());
+	}
+	if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_STATUSDISPLAY:OPV_ROSTER_VIEWMODE))
+	{
+		FShowStatus = ANode.path() == OPV_ROSTER_STATUSDISPLAY?ANode.value().toBool():ANode.value().toInt() != IRostersView::ViewCompact;
+// *** >>> eyeCU >>> ***
 		emit rosterLabelChanged(RLID_ROSTERSVIEW_STATUS);
 	}
 	else if (ANode.path() == OPV_ROSTER_MERGESTREAMS)
@@ -861,4 +899,6 @@ void RostersViewPlugin::onShowOfflineContactsAction(bool)
 	node.setValue(!node.value().toBool());
 }
 
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_rostersview, RostersViewPlugin)
+#endif

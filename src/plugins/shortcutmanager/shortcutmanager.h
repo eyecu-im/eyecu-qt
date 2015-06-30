@@ -17,6 +17,9 @@ class ShortcutManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin IOptionsDialogHolder);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IShortcutManager")
+#endif
 public:
 	ShortcutManager();
 	~ShortcutManager();

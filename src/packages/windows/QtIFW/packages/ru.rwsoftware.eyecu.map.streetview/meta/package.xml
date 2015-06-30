@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Street View</DisplayName>
+    <Description>Allows to view street-level imagery</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.map.streetview</Name>
+    <Dependencies>ru.rwsoftware.eyecu.map</Dependencies>
+    <SortingPriority>9</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

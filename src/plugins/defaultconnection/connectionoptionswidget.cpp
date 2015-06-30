@@ -9,11 +9,16 @@ ConnectionOptionsWidget::ConnectionOptionsWidget(IConnectionManager *AManager, c
 	FManager = AManager;
 	FOptions = ANode;
 	FProxySettings = NULL;
-
 	ui.cmbSslProtocol->addItem(tr("Auto"),QSsl::SecureProtocols);
+#if QT_VERSION < 0x050000
 	ui.cmbSslProtocol->addItem(tr("TLSv1"),QSsl::TlsV1);
-	ui.cmbSslProtocol->addItem(tr("SSLv3"),QSsl::SslV3);
+#else
+	ui.cmbSslProtocol->addItem(tr("TLSv1.0"),QSsl::TlsV1_0);
+	ui.cmbSslProtocol->addItem(tr("TLSv1.1"),QSsl::TlsV1_0);
+	ui.cmbSslProtocol->addItem(tr("TLSv1.2"),QSsl::TlsV1_0);
+#endif
 	ui.cmbSslProtocol->addItem(tr("SSLv2"),QSsl::SslV2);
+	ui.cmbSslProtocol->addItem(tr("SSLv3"),QSsl::SslV3);
 
 	ui.cmbCertCheckMode->addItem(tr("Disable check"),IDefaultConnection::Disabled);
 	ui.cmbCertCheckMode->addItem(tr("Request on errors"),IDefaultConnection::Manual);

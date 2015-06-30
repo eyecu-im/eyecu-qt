@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon><key>textbold</key><object mime="image/png">textbold.png</object></icon>
+  <icon><key>textunder</key><object mime="image/png">textunder.png</object></icon>
+  <icon><key>textover</key><object mime="image/png">textover.png</object></icon>
+  <icon><key>textstrike</key><object mime="image/png">textstrike.png</object></icon>
+  <icon><key>code</key><object mime="image/png">code.png</object></icon>  
+  <icon><key>textitalic</key><object mime="image/png">textitalic.png</object></icon>  
+  <icon><key>textleft</key><object mime="image/png">textleft.png</object></icon>
+  <icon><key>textright</key><object mime="image/png">textright.png</object></icon>
+  <icon><key>textcenter</key><object mime="image/png">textcenter.png</object></icon>
+  <icon><key>textjustify</key><object mime="image/png">textjustify.png</object></icon>
+  
+  <icon><key>xhtml</key><object mime="image/png">xhtml.png</object></icon>
+  <icon><key>insertimage</key><object mime="image/png">InsertImage.png</object></icon>
+  <icon><key>insertlink</key><object mime="image/png">insertlink.png</object></icon>
+  <icon><key>tooltip</key><object mime="image/png">tooltip.png</object></icon>
+  <icon><key>newline</key><object mime="image/png">newline.png</object></icon>
+  <icon><key>nbsp</key><object mime="image/png">nbsp.png</object></icon>
+  
+  <icon><key>heading1</key><object mime="image/png">heading_1.png</object></icon>
+  <icon><key>heading2</key><object mime="image/png">heading_2.png</object></icon>
+  <icon><key>heading3</key><object mime="image/png">heading_3.png</object></icon>
+  <icon><key>heading4</key><object mime="image/png">heading_4.png</object></icon>
+  <icon><key>heading5</key><object mime="image/png">heading_5.png</object></icon>
+  <icon><key>heading6</key><object mime="image/png">heading_6.png</object></icon>
+  
+  <icon><key>preformat</key><object mime="image/png">preformat.png</object></icon>      
+
+  <icon><key>indent</key><object mime="image/png">indent.png</object></icon>
+  <icon><key>outdent</key><object mime="image/png">outdent.png</object></icon>
+
+  <icon><key>clearformat</key><object mime="image/png">clearformat.png</object></icon>
+  <icon><key>removeformat</key><object mime="image/png">removeformat.png</object></icon>
+  <icon><key>formatblack</key><object mime="image/png">formatblack.png</object></icon>
+  <icon><key>formatrich</key><object mime="image/png">formatrich.png</object></icon>
+
+  <icon><key>deflist</key><object mime="image/png">def_list.png</object></icon>
+  <icon><key>orderdec</key><object mime="image/png">ord_dec.png</object></icon>
+  <icon><key>bulcircle</key><object mime="image/png">bul_cirle.png</object></icon>
+  <icon><key>buldisc</key><object mime="image/png">bul_disc.png</object></icon>
+  <icon><key>bulsquare</key>bulsquare<object mime="image/png">bul_square.png</object></icon>
+  <icon><key>ordalphalow</key><object mime="image/png">ord_alpha_low.png</object></icon>
+  <icon><key>ordalphaup</key><object mime="image/png">ord_alpha_up.png</object></icon>
+  <icon><key>ordromanlow</key><object mime="image/png">ord_roman_low.png</object></icon>
+  <icon><key>ordromanup</key><object mime="image/png">ord_roman_up.png</object></icon>
+
+</icondef>

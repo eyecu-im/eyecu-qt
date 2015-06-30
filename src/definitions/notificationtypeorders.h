@@ -16,4 +16,14 @@
 #define NTO_SESSION_NEGOTIATION                650
 #define NTO_CONNECTION_ERROR                   700
 
+// *** <<< eyeCU <<< ***
+#define NTO_ATTENTION_NOTIFY                   50
+#define NTO_RECEIPTS_NOTIFY                    800
+#define NTO_ACTIVITY_CHANGE                    900
+#define NTO_MOOD_CHANGE                        910
+#define NTO_TUNE_CHANGE                        920
+#define NTO_JINGLE_RTP_CALL                    100
+#define NTO_CONTACTPROXIMITY                   1000
+// *** >>> eyeCU >>> ***
+
 #endif //  DEF_NOTIFICATIONTYPEORDERS_H

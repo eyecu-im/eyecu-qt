@@ -13,6 +13,9 @@ class TrayManager :
 {
 	Q_OBJECT;
 	Q_INTERFACES(IPlugin ITrayManager);
+#if QT_VERSION >= 0x050000
+	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.ITrayManager")
+#endif
 public:
 	TrayManager();
 	~TrayManager();

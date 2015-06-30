@@ -6,6 +6,16 @@
 #define RTTO_ROSTERSVIEW_INFO_NAME                  210
 #define RTTO_ROSTERSVIEW_INFO_ACCOUNT               220
 #define RTTO_ROSTERSVIEW_INFO_JABBERID              230
+// *** <<< eyeCU <<< ***
+#define RTTO_NICKNAME                               215
+#define RTTO_MOOD                                   930
+#define RTTO_ACTIVITY                               950
+#define RTTO_GEOLOC_SEPARATOR                       5200
+#define RTTO_GEOLOC                                 5201
+#define RTTO_TUNE_SEPARATOR                         5100
+#define RTTO_TUNE                                   5101
+#define RTTO_CLIENTICONS                            1020
+// *** >>> eyeCU >>> ***
 #define RTTO_ROSTERSVIEW_INFO_SUBCRIPTION           240
 #define RTTO_ROSTERSVIEW_INFO_STREAMS               290
 #define RTTO_BIRTHDAY_NOTIFY                        300
