@@ -181,8 +181,10 @@ QMultiMap<int, IOptionsDialogWidget *> OptionsManager::optionsDialogWidgets(cons
 			QLocale locale(name);
 			if (locale.language() != QLocale::C)
 			{
-				QString langName = locale.nativeLanguageName();
-				QString countryName = locale.nativeCountryName();
+// *** <<< eyeCU <<< ***
+				QString langName = QLocale::languageToString(locale.language());
+				QString countryName = QLocale::countryToString(locale.country());
+// *** <<< eyeCU <<< ***
 				if (!langName.isEmpty() && !countryName.isEmpty())
 				{
 					langName[0] = langName[0].toUpper();

@@ -9,7 +9,14 @@ ConnectionOptionsWidget::ConnectionOptionsWidget(IConnectionManager *AManager, c
 	FManager = AManager;
 	FOptions = ANode;
 	FProxySettings = NULL;
-	ui.cmbSslProtocol->addItem(tr("Auto"),QSsl::SecureProtocols);
+	ui.cmbSslProtocol->addItem(tr("Auto"),
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040800
+								QSsl::SecureProtocols
+#else
+								QSsl::AnyProtocol
+#endif
+							   );
 #if QT_VERSION < 0x050000
 	ui.cmbSslProtocol->addItem(tr("TLSv1"),QSsl::TlsV1);
 #else
@@ -17,6 +24,7 @@ ConnectionOptionsWidget::ConnectionOptionsWidget(IConnectionManager *AManager, c
 	ui.cmbSslProtocol->addItem(tr("TLSv1.1"),QSsl::TlsV1_0);
 	ui.cmbSslProtocol->addItem(tr("TLSv1.2"),QSsl::TlsV1_0);
 #endif
+// *** >>> eyeCU >>> ***
 	ui.cmbSslProtocol->addItem(tr("SSLv2"),QSsl::SslV2);
 	ui.cmbSslProtocol->addItem(tr("SSLv3"),QSsl::SslV3);
 
