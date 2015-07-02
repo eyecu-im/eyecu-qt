@@ -4,6 +4,17 @@
 #include <QDebug>
 #include "jid.h"
 
+static inline bool IsValidXmlChar(quint32 ACode)
+{
+	// w3c xml spec: [2] Char ::= #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+	return ACode == 0x9
+		|| ACode == 0xA
+		|| ACode == 0xD
+		|| (ACode >= 0x20 && ACode <= 0xD7FF)
+		|| (ACode >= 0xE000 && ACode <= 0xFFFD)
+		|| (ACode >= 0x10000 && ACode <= 0x10FFFF);
+}
+
 StanzaData::StanzaData(const QString &ATagName)
 {
 	FDoc.appendChild(FDoc.createElement(ATagName));
@@ -176,20 +187,80 @@ QDomText Stanza::createTextNode(const QString &AData)
 
 QString Stanza::toString(int AIndent) const
 {
-	QString data;
-	QTextStream ts(&data, QIODevice::WriteOnly);
-	ts.setCodec("UTF-16");
+	QString str;
+	QTextStream ts(&str, QIODevice::WriteOnly);
 	element().save(ts, AIndent);
-// *** <<< eyeCU <<< ***
-    data.replace(QChar::Nbsp, "&#160;");
-    data.replace('\x09', "&#009;");
-// *** >>> eyeCU >>> ***
-	return data;
+	return replaceInvalidXmlChars(str);
 }
 
 QByteArray Stanza::toByteArray() const
 {
     return toString(0).toUtf8();
+}
+
+bool Stanza::isValidXmlChar(quint32 ACode)
+{
+	return IsValidXmlChar(ACode);
+}
+
+QString Stanza::replaceInvalidXmlChars(QString &AXml, const QChar &AWithChar)
+{
+	QChar quoteChar;
+	bool inTag = false;
+	bool inQuote = false;
+	int xmlLength = AXml.length();
+	for(int pos = 0; pos<xmlLength; ++pos)
+	{
+		QChar c = AXml.at(pos);
+		if (c == '<')
+		{
+			inTag = true;
+		}
+		else if (c == '>')
+		{
+			if (!inQuote)
+				inTag = false;
+		}
+		else if (c == '\'' || c == '\"')
+		{
+			if(inTag)
+			{
+				if(!inQuote)
+				{
+					inQuote = true;
+					quoteChar = c;
+				}
+				else if (c == quoteChar)
+				{
+					inQuote = false;
+				}
+			}
+		}
+
+		if (inTag && !inQuote)
+		{
+			// don't replace invalid chars in element or attribute names
+		}
+		else if (IsValidXmlChar(c.unicode()))
+		{
+			// c is valid char
+		}
+		else if (c.isHighSurrogate() && pos+1<xmlLength && AXml.at(pos+1).isLowSurrogate())
+		{
+			// unicode surrogate pairs is always valid
+			pos++;
+		}
+		else
+		{
+			// replace invalid char
+			AXml[pos] = AWithChar;
+		}
+	}
+// *** <<< eyeCU <<< ***
+	AXml.replace(QChar::Nbsp, "&#160;");
+	AXml.replace('\x09', "&#009;");
+// *** >>> eyeCU >>> ***
+	return AXml;
 }
 
 QDomElement Stanza::findElement(const QDomElement &AParent, const QString &ATagName, const QString &ANamespace)
