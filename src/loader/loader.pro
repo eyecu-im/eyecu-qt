@@ -25,50 +25,50 @@ symbian {
 }
 
 #SVN Info
-isEmpty(SVN_REVISION) {
-  SVN_REVISION=$$system(svnversion -n -c ./../../)
-  SVN_REVISION_INVALID = $$find(SVN_REVISION,Unversioned) $$find(SVN_REVISION,exported)
-}
+#isEmpty(SVN_REVISION) {
+#  SVN_REVISION=$$system(svnversion -n -c ./../../)
+#  SVN_REVISION_INVALID = $$find(SVN_REVISION,Unversioned) $$find(SVN_REVISION,exported)
+#}
 
-win32|os2|symbian {
-  WIN_OUT_PWD = $$replace(OUT_PWD, /, \\)
-  exists($${WIN_OUT_PWD}\\svninfo.h):system(del $${WIN_OUT_PWD}\\svninfo.h)
-  !isEmpty(SVN_REVISION):count(SVN_REVISION_INVALID,0) {
-    system(mkdir $${WIN_OUT_PWD} & echo $${LITERAL_HASH}define SVN_REVISION \"$${SVN_REVISION}\" >> $${WIN_OUT_PWD}\\svninfo.h) {
-      DEFINES         += SVNINFO
-      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
-    }
-  }
-} else {
-  exists($${OUT_PWD}/svninfo.h):system(rm -f $${OUT_PWD}/svninfo.h)
-  !isEmpty(SVN_REVISION)::count(SVN_REVISION_INVALID,0) {
-    system(mkdir -p $${OUT_PWD} && echo \\$${LITERAL_HASH}define SVN_REVISION \\\"$${SVN_REVISION}\\\" >> $${OUT_PWD}/svninfo.h) {
-      DEFINES         += SVNINFO
-      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
-    }
-  }
-}
-
-#GIT Info
-#GIT_HASH = $$system(git log -n 1 --format=%H)
-#GIT_DATE = $$system(git log -n 1 --format=%ct)
-#GIT_DATE = $$find(GIT_DATE,^\\d*)
-#!isEmpty(GIT_DATE) {
-#  win32 {
-#    WIN_OUT_PWD = $$replace(OUT_PWD, /, \\)
-#    system(mkdir $${WIN_OUT_PWD} & echo $${LITERAL_HASH}define GIT_HASH \"$${GIT_HASH}\" > $${WIN_OUT_PWD}\\gitinfo.h) {
-#      system(echo $${LITERAL_HASH}define GIT_DATE \"$${GIT_DATE}\" >> $${WIN_OUT_PWD}\\gitinfo.h)
-#      DEFINES         += GITINFO
-#      QMAKE_DISTCLEAN += $${OUT_PWD}/gitinfo.h
+#win32|os2|symbian {
+#  WIN_OUT_PWD = $$replace(OUT_PWD, /, \\)
+#  exists($${WIN_OUT_PWD}\\svninfo.h):system(del $${WIN_OUT_PWD}\\svninfo.h)
+#  !isEmpty(SVN_REVISION):count(SVN_REVISION_INVALID,0) {
+#    system(mkdir $${WIN_OUT_PWD} & echo $${LITERAL_HASH}define SVN_REVISION \"$${SVN_REVISION}\" >> $${WIN_OUT_PWD}\\svninfo.h) {
+#      DEFINES         += SVNINFO
+#      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
 #    }
-#  } else {
-#    system(mkdir -p $${OUT_PWD} && echo \\$${LITERAL_HASH}define GIT_HASH \\\"$${GIT_HASH}\\\" > $${OUT_PWD}/gitinfo.h) {
-#      system(echo \\$${LITERAL_HASH}define GIT_DATE \\\"$${GIT_DATE}\\\" >> $${OUT_PWD}/gitinfo.h)
-#      DEFINES         += GITINFO
-#      QMAKE_DISTCLEAN += $${OUT_PWD}/gitinfo.h
+#  }
+#} else {
+#  exists($${OUT_PWD}/svninfo.h):system(rm -f $${OUT_PWD}/svninfo.h)
+#  !isEmpty(SVN_REVISION)::count(SVN_REVISION_INVALID,0) {
+#    system(mkdir -p $${OUT_PWD} && echo \\$${LITERAL_HASH}define SVN_REVISION \\\"$${SVN_REVISION}\\\" >> $${OUT_PWD}/svninfo.h) {
+#      DEFINES         += SVNINFO
+#      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
 #    }
 #  }
 #}
+
+#GIT Info
+GIT_HASH = $$system(git log -n 1 --format=%H)
+GIT_DATE = $$system(git log -n 1 --format=%ct)
+GIT_DATE = $$find(GIT_DATE,^\\d*)
+!isEmpty(GIT_DATE) {
+  win32 {
+    WIN_OUT_PWD = $$replace(OUT_PWD, /, \\)
+    system(mkdir $${WIN_OUT_PWD} & echo $${LITERAL_HASH}define GIT_HASH \"$${GIT_HASH}\" > $${WIN_OUT_PWD}\\gitinfo.h) {
+      system(echo $${LITERAL_HASH}define GIT_DATE \"$${GIT_DATE}\" >> $${WIN_OUT_PWD}\\gitinfo.h)
+      DEFINES         += GITINFO
+      QMAKE_DISTCLEAN += $${OUT_PWD}/gitinfo.h
+    }
+  } else {
+    system(mkdir -p $${OUT_PWD} && echo \\$${LITERAL_HASH}define GIT_HASH \\\"$${GIT_HASH}\\\" > $${OUT_PWD}/gitinfo.h) {
+      system(echo \\$${LITERAL_HASH}define GIT_DATE \\\"$${GIT_DATE}\\\" >> $${OUT_PWD}/gitinfo.h)
+      DEFINES         += GITINFO
+      QMAKE_DISTCLEAN += $${OUT_PWD}/gitinfo.h
+    }
+  }
+}
 
 #Install
 target.path        = $$INSTALL_BINS

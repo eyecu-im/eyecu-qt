@@ -36,20 +36,13 @@
 
 #define SVN_DATA_PATH               "DataPath"
 #define SVN_LOCALE_NAME             "Locale"
-
+// *** <<< eyeCU <<< ***
 #ifdef SVNINFO
 #  include "svninfo.h"
-#  define SVN_DATE                  ""
-// *** <<< eyeCU >>> ***
 #  define SVN_BASE_REVISION         -71
-#else
-#  define SVN_DATE                  ""
-#  define SVN_REVISION              "0"
-// *** <<< eyeCU >>> ***
-#  define SVN_BASE_REVISION         0
-#endif
-#ifdef GITINFO
-#  include <gitinfo.h>
+#elif defined(GITINFO)
+// *** >>> eyeCU >>> ***
+#  include "gitinfo.h"
 #endif
 
 #define DIR_LOGS                    "logs"
