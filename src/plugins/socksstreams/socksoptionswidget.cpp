@@ -23,7 +23,11 @@ SocksOptionsWidget::SocksOptionsWidget(ISocksStreams *ASocksStreams, IConnection
 		connect(this,SIGNAL(childApply()),FProxySettings->instance(),SLOT(apply()));
 		connect(this,SIGNAL(childReset()),FProxySettings->instance(),SLOT(reset()));
 	}
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
+	ui.lneForwardDirectAddress->setPlaceholderText(QApplication::translate("SocksOptionsWidgetClass", "host:port", 0, QApplication::UnicodeUTF8));
+#endif
+// *** >>> eyeCU >>> ***
 	connect(ui.chbEnableDirect,SIGNAL(stateChanged(int)),SIGNAL(modified()));
 	connect(ui.spbListenPort,SIGNAL(valueChanged(int)),SIGNAL(modified()));
 	connect(ui.chbEnableForwardDirect,SIGNAL(stateChanged(int)),SIGNAL(modified()));

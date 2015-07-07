@@ -84,7 +84,11 @@ SetupPluginsDialog::SetupPluginsDialog(IPluginManager *APluginManager, QDomDocum
 	ui.tbvPlugins->verticalHeader()->hide();
 	ui.tbvPlugins->horizontalHeader()->hide();
 	ui.tbvPlugins->setItemDelegate(new AdvancedItemDelegate(ui.tbvPlugins));
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
+	ui.sleSearch->setPlaceholderText(QApplication::translate("SetupPluginsDialogClass", "Search plugin", 0, QApplication::UnicodeUTF8));
+#endif
+// *** >>> eyeCU >>> ***
 	connect(ui.sleSearch,SIGNAL(searchStart()),SLOT(onSearchLineEditSearchStart()));
 	connect(ui.chbDisabled,SIGNAL(clicked(bool)),SLOT(onDisabledCheckButtonClicked()));
 	connect(ui.chbWithErrors,SIGNAL(clicked(bool)),SLOT(onWithErrorsCheckButtonClicked()));

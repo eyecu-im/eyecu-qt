@@ -33,7 +33,11 @@ NormalWindow::NormalWindow(IMessageWidgets *AMessageWidgets, const Jid& AStreamJ
 	FAddress = FMessageWidgets->newAddress(AStreamJid,AContactJid,this);
 
 	FSubjectWidget = new QLineEdit(ui.spwMessageBox);
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
 	FSubjectWidget->setPlaceholderText(tr("Subject"));
+#endif
+// *** >>> eyeCU >>> ***
 	ui.spwMessageBox->insertWidget(MNWW_SUBJECTWIDGET,FSubjectWidget);
 
 	FInfoWidget = FMessageWidgets->newInfoWidget(this,ui.spwMessageBox);

@@ -65,8 +65,11 @@ ConsoleWidget::ConsoleWidget(QWidget *AParent) : QWidget(AParent)
 	FTextHilightTimer.setSingleShot(true);
 	connect(&FTextHilightTimer,SIGNAL(timeout()),SLOT(onTextHilightTimerTimeout()));
 	connect(ui.tbrConsole,SIGNAL(visiblePositionBoundaryChanged()),SLOT(onTextVisiblePositionBoundaryChanged()));
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
 	ui.lneTextSearch->setPlaceholderText(tr("Search"));
+#endif
+// *** >>> eyeCU >>> ***
 	ui.tlbTextSearchNext->setIcon(style()->standardIcon(QStyle::SP_ArrowDown, NULL, this));
 	ui.tlbTextSearchPrev->setIcon(style()->standardIcon(QStyle::SP_ArrowUp, NULL, this));
 	connect(ui.tlbTextSearchNext,SIGNAL(clicked()),SLOT(onTextSearchNextClicked()));

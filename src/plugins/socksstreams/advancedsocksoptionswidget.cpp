@@ -22,8 +22,7 @@ AdvancedSocksOptionsWidget::AdvancedSocksOptionsWidget(ISocksStreams *ASocksStre
 		layout->addWidget(FProxySettings->instance());
 		connect(FProxySettings->instance(),SIGNAL(modified()),SIGNAL(modified()));
 	}
-
-#if QT_VERSION >= 0x040000
+#if QT_VERSION >= 0x040700
 	ui.lneForwardDirectAddress->setPlaceholderText(tr("host:port"));
 #endif
 

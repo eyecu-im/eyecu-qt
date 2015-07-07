@@ -194,8 +194,11 @@ ArchiveViewWindow::ArchiveViewWindow(IMessageArchiver *AArchiver, const QMultiMa
 	ui.lneArchiveSearch->setStartSearchTimeout(-1);
 	ui.lneArchiveSearch->setSelectTextOnFocusEnabled(false);
 	connect(ui.lneArchiveSearch,SIGNAL(searchStart()),SLOT(onArchiveSearchStart()));
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
 	ui.lneTextSearch->setPlaceholderText(tr("Search in text"));
+#endif
+// *** >>> eyeCU >>> ***
 	connect(ui.tlbTextSearchPrev,SIGNAL(clicked()),SLOT(onTextSearchPrevClicked()));
 	connect(ui.tlbTextSearchNext,SIGNAL(clicked()),SLOT(onTextSearchNextClicked()));
 	connect(ui.lneTextSearch,SIGNAL(searchStart()),SLOT(onTextSearchStart()));
@@ -260,11 +263,15 @@ void ArchiveViewWindow::setAddresses(const QMultiMap<Jid,Jid> &AAddresses)
 		if (!FArchiveSearchEnabled)
 		{
 			ui.lneArchiveSearch->clear();
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
 			ui.lneArchiveSearch->setPlaceholderText(tr("Search is not supported"));
 		}
 		else
 		{
 			ui.lneArchiveSearch->setPlaceholderText(tr("Search in history"));
+#endif
+// *** >>> eyeCU >>> ***
 		}
 
 		reset();

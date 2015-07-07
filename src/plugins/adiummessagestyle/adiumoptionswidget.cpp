@@ -28,7 +28,11 @@ AdiumOptionsWidget::AdiumOptionsWidget(AdiumMessageStyleEngine *AEngine, const O
 		ui.cmbColor->addItem(color,color);
 		ui.cmbColor->setItemData(ui.cmbColor->count()-1,QColor(color),Qt::DecorationRole);
 	}
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
+	ui.tlbImageChange->setText(QApplication::translate("AdiumOptionsWidgetClass", "Change...", 0, QApplication::UnicodeUTF8));
+#endif
+// *** >>> eyeCU >>> ***
 	ui.cmbImageLayout->addItem(tr("Normal"),AdiumMessageStyle::ImageNormal);
 	ui.cmbImageLayout->addItem(tr("Center"),AdiumMessageStyle::ImageCenter);
 	ui.cmbImageLayout->addItem(tr("Title"),AdiumMessageStyle::ImageTitle);

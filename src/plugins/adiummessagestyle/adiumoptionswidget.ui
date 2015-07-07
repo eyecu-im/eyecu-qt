@@ -11,7 +11,16 @@
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item row="0" column="0" colspan="4">
@@ -140,9 +149,6 @@
     <widget class="QLineEdit" name="lneImage">
      <property name="readOnly">
       <bool>true</bool>
-     </property>
-     <property name="placeholderText">
-      <string>not set</string>
      </property>
     </widget>
    </item>

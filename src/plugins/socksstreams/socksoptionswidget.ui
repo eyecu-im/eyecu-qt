@@ -7,11 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>388</width>
-    <height>140</height>
+    <height>142</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -87,11 +96,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lneForwardDirectAddress">
-       <property name="placeholderText">
-        <string>host:port</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lneForwardDirectAddress"/>
      </item>
     </layout>
    </item>

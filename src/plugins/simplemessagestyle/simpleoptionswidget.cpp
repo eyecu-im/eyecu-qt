@@ -27,7 +27,11 @@ SimpleOptionsWidget::SimpleOptionsWidget(SimpleMessageStyleEngine *AEngine, cons
 		ui.cmbColor->addItem(color,color);
 		ui.cmbColor->setItemData(ui.cmbColor->count()-1,QColor(color),Qt::DecorationRole);
 	}
-
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
+	ui.lneImage->setPlaceholderText(QApplication::translate("SimpleOptionsWidgetClass", "not set", 0, QApplication::UnicodeUTF8));
+#endif
+// *** >>> eyeCU >>> ***
 	connect(ui.cmbVariant,SIGNAL(currentIndexChanged(int)),SLOT(onVariantChanged(int)));
 	connect(ui.tlbFontChange,SIGNAL(clicked()),SLOT(onFontChangeClicked()));
 	connect(ui.tlbFontReset,SIGNAL(clicked()),SLOT(onFontResetClicked()));

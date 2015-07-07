@@ -14,7 +14,16 @@
    <string>Setup Plugins</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
     <number>5</number>
    </property>
    <item>
@@ -22,11 +31,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="SearchLineEdit" name="sleSearch">
-         <property name="placeholderText">
-          <string>Search plugin</string>
-         </property>
-        </widget>
+        <widget class="SearchLineEdit" name="sleSearch"/>
        </item>
        <item>
         <widget class="QCheckBox" name="chbDisabled">
@@ -74,7 +79,16 @@
       <bool>true</bool>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="margin">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
        <number>5</number>
       </property>
       <item>

@@ -366,8 +366,11 @@ bool Presence::sendPresence(const Jid &AContactJid, int AShow, const QString &AS
 QList<Jid> Presence::itemsJid() const
 {
 	QList<Jid> pitemsJid;
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x040700
 	pitemsJid.reserve(FItems.count());
-
+#endif
+// *** >>> eyeCU >>> ***
 	for (QHash<Jid, QMap<QString, IPresenceItem> >::const_iterator bareIt=FItems.constBegin(); bareIt!=FItems.constEnd(); ++bareIt)
 		for (QMap<QString, IPresenceItem>::const_iterator fullIt=bareIt->constBegin(); fullIt!=bareIt->constEnd(); ++fullIt)
 			pitemsJid.append(fullIt->itemJid);

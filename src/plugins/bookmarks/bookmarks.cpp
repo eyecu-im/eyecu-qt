@@ -1137,7 +1137,13 @@ uint qHash(const IBookmark &AKey)
 	switch (AKey.type)
 	{
 	case IBookmark::Url:
-		return qHash(AKey.url.url);
+// *** <<< eyeCU <<< ***
+		return qHash(AKey.url.url
+#if QT_VERSION < 0x040700
+					 .toString()
+#endif
+					 );
+// *** >>> eyeCU >>> ***
 	case IBookmark::Conference:
 		return qHash(AKey.conference.roomJid);
 	default:
