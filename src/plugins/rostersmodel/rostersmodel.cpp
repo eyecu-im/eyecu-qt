@@ -638,28 +638,6 @@ void RostersModel::setShowSelf(bool AShow)
 		}
 	}
 }
-
-void RostersModel::setShowOfflineAgents(bool AShow)
-{
-	FShowOfflineAgents=AShow;
-	for (QMap<Jid,IRosterIndex *>::const_iterator i=FStreamIndexes.constBegin(); i!=FStreamIndexes.constEnd(); i++)
-	{
-		IRosterIndex *streamIndex = *i;
-		int s=streamIndex->data(RDR_SHOW).toInt();
-		if (s != IPresence::Offline && s != IPresence::Error)
-		{
-			IRosterIndex *groupIndex = findGroupIndex(RIK_GROUP_AGENTS, singleGroupName(RIK_GROUP_AGENTS), streamIndex);
-			if (groupIndex)
-			{
-				QMultiMap<int, QVariant> findData;
-				findData.insertMulti(RDR_KIND, RIK_AGENT);
-				QList<IRosterIndex *> agents = groupIndex->findChilds(findData);
-				for (QList<IRosterIndex *>::iterator it=agents.begin(); it!=agents.end(); it++)
-					(*it)->setData((*it)->data(RDR_FORCE_VISIBLE).toInt()+(AShow?1:-1), RDR_FORCE_VISIBLE);
-			}
-		}
-	}
-}
 // *** >>> eyeCU >>> ***
 
 void RostersModel::updateStreamsLayout()

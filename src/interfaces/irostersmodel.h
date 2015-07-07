@@ -79,10 +79,8 @@ public:
 	virtual void insertRosterDataHolder(int AOrder, IRosterDataHolder *AHolder) =0;
 	virtual void removeRosterDataHolder(int AOrder, IRosterDataHolder *AHolder) =0;
 // *** <<< eyeCU <<< ***
-    virtual bool getShowSelf() const =0;
+    virtual bool showSelf() const =0;
     virtual void setShowSelf(bool AShow) =0;
-    virtual bool getShowOfflineAgents() const =0;
-    virtual void setShowOfflineAgents(bool AShow) =0;
 // *** >>> eyeCU >>> ***
 protected:
 	virtual void streamAdded(const Jid &AStreamJid) =0;

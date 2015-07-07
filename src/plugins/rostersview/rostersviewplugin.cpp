@@ -298,7 +298,7 @@ QVariant RostersViewPlugin::rosterData(int AOrder, const IRosterIndex *AIndex, i
 			if (AIndex->kind() == RIK_STREAM_ROOT)
 				return 1;
 			else if (AIndex->kind() == RIK_AGENT)
-				return 1;
+				return Options::node(OPV_ROSTER_SHOWOFFLINEAGENTS).value().toBool();
 		}
 	}
 	return QVariant();
@@ -873,7 +873,7 @@ void RostersViewPlugin::onOptionsChanged(const OptionsNode &ANode)
 	}
 	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINEAGENTS)
 	{
-		FRostersModel->setShowOfflineAgents(ANode.value().toBool());
+		emit rosterDataChanged(NULL, RDR_FORCE_VISIBLE);
 	}
 	if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_STATUSDISPLAY:OPV_ROSTER_VIEWMODE))
 	{

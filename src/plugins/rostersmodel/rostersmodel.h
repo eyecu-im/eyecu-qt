@@ -63,10 +63,8 @@ public:
 	virtual void insertRosterDataHolder(int AOrder, IRosterDataHolder *AHolder);
 	virtual void removeRosterDataHolder(int AOrder, IRosterDataHolder *AHolder);
 	// *** <<< eyeCU <<< ***
-	virtual bool getShowSelf() const {return FShowSelf;}
+	virtual bool showSelf() const {return FShowSelf;}
 	virtual void setShowSelf(bool AShow);
-	virtual bool getShowOfflineAgents() const {return FShowOfflineAgents;}
-	virtual void setShowOfflineAgents(bool AShow);
 	// *** >>> eyeCU >>> ***
 signals:
 	//IRostersModel
