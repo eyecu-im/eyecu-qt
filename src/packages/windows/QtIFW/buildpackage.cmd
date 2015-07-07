@@ -1,4 +1,5 @@
-echo off
+echo on
+set MSVCREDIST=e:\Soft\Runtime\MSVCREDIST\x86\2008\vcredist_x86(2008 SP1).exe
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0.1201
@@ -18,14 +19,15 @@ goto end
 
 :exists
 
-if exist %windir%\system32 goto winexists
-set windir=c:\WINDOWS
-if exist %windir%\system32 goto winexists
-echo Cannot find Windows installation
+echo MSVCREDIST=%MSVCREDIST%
+
+if exist "%MSVCREDIST%" goto redistexists
+echo Cannot find MSVC Redistributable
 goto end
 
-:winexists
-xcopy %windir%\system32\msvc?90.dll packages\com.microsoft.vcredist\data\ /Y
+:redistexists
+mkdir packages\com.microsoft.vcredist\data\
+copy "%MSVCREDIST%" packages\com.microsoft.vcredist\data\vcredist_x86.exe /Y
 
 for %%f in (phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll) do xcopy %qtdir%\bin\%%f packages\org.digia.qt4\data\ /Y
 

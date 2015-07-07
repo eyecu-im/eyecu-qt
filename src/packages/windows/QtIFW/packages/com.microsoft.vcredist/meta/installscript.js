@@ -41,17 +41,24 @@ Component.prototype.createOperationsForArchive = function(archive)
     // don't use the default operation
     // component.createOperationsForArchive(archive);
 
-	msvcm90 = installer.findLibrary("msvcm90");
-	msvcp90 = installer.findLibrary("msvcp90");
-	msvcr90 = installer.findLibrary("msvcr90");
+//	msvcm90 = installer.findLibrary("msvcm90");
+//	msvcp90 = installer.findLibrary("msvcp90");
+//	msvcr90 = installer.findLibrary("msvcr90");
 
 //    QMessageBox.information("component.infirmation", "Libraries found:", "msvcm90="+msvcm90+"; msvcr90="+msvcr90+"; msvcp90="+msvcp90,
 //                                  QMessageBox.Ok);
 
     // add an extract operation with a modified path
-	windir = installer.environmentVariable("windir");
+	temp = installer.environmentVariable("temp");
+	if (temp == "")
+		temp = installer.environmentVariable("tmp");
 
-//	QMessageBox.information("component.infirmation", "%windir%", windir, QMessageBox.Ok);
-
-    component.addOperation("Extract", archive, windir+"/system32");
+	if (temp != "")
+	{
+		tmpdir = temp+"/msvcrt/";
+		component.addOperation("Extract", archive, tmpdir);
+		component.addOperation("Execute", tmpdir+"vcredist_x86.exe");
+	}
+	else
+		QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
 }
