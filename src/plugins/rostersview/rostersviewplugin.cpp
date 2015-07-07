@@ -873,7 +873,11 @@ void RostersViewPlugin::onOptionsChanged(const OptionsNode &ANode)
 	}
 	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINEAGENTS)
 	{
-		emit rosterDataChanged(NULL, RDR_FORCE_VISIBLE);
+		QMultiMap<int,QVariant> findData;
+		findData.insert(RDR_KIND, RIK_AGENT);
+		QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
+		for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
+			emit rosterDataChanged(*it, RDR_FORCE_VISIBLE);
 	}
 	if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_STATUSDISPLAY:OPV_ROSTER_VIEWMODE))
 	{

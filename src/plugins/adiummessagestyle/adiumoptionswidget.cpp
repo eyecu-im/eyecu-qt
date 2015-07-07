@@ -30,7 +30,7 @@ AdiumOptionsWidget::AdiumOptionsWidget(AdiumMessageStyleEngine *AEngine, const O
 	}
 // *** <<< eyeCU <<< ***
 #if QT_VERSION >= 0x040700
-	ui.tlbImageChange->setText(QApplication::translate("AdiumOptionsWidgetClass", "Change...", 0, QApplication::UnicodeUTF8));
+	ui.tlbImageChange->setText(QApplication::translate("AdiumOptionsWidgetClass", "Change..."));
 #endif
 // *** >>> eyeCU >>> ***
 	ui.cmbImageLayout->addItem(tr("Normal"),AdiumMessageStyle::ImageNormal);

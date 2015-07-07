@@ -25,7 +25,7 @@ SocksOptionsWidget::SocksOptionsWidget(ISocksStreams *ASocksStreams, IConnection
 	}
 // *** <<< eyeCU <<< ***
 #if QT_VERSION >= 0x040700
-	ui.lneForwardDirectAddress->setPlaceholderText(QApplication::translate("SocksOptionsWidgetClass", "host:port", 0, QApplication::UnicodeUTF8));
+	ui.lneForwardDirectAddress->setPlaceholderText(QApplication::translate("SocksOptionsWidgetClass", "host:port"));
 #endif
 // *** >>> eyeCU >>> ***
 	connect(ui.chbEnableDirect,SIGNAL(stateChanged(int)),SIGNAL(modified()));

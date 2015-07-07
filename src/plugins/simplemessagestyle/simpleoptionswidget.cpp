@@ -29,7 +29,7 @@ SimpleOptionsWidget::SimpleOptionsWidget(SimpleMessageStyleEngine *AEngine, cons
 	}
 // *** <<< eyeCU <<< ***
 #if QT_VERSION >= 0x040700
-	ui.lneImage->setPlaceholderText(QApplication::translate("SimpleOptionsWidgetClass", "not set", 0, QApplication::UnicodeUTF8));
+	ui.lneImage->setPlaceholderText(QApplication::translate("SimpleOptionsWidgetClass", "not set"));
 #endif
 // *** >>> eyeCU >>> ***
 	connect(ui.cmbVariant,SIGNAL(currentIndexChanged(int)),SLOT(onVariantChanged(int)));
