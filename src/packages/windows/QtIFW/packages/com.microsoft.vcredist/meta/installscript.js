@@ -49,16 +49,24 @@ Component.prototype.createOperationsForArchive = function(archive)
 //                                  QMessageBox.Ok);
 
     // add an extract operation with a modified path
-	temp = installer.environmentVariable("temp");
-	if (temp == "")
-		temp = installer.environmentVariable("tmp");
+//	temp = installer.environmentVariable("temp");
+//	if (temp == "")
+//		temp = installer.environmentVariable("tmp");
+
+	temp = QDesktopServices.storageLocation(QDesktopServices.TempLocation)
 
 	if (temp != "")
 	{
-		tmpdir = temp+"/msvcrt/";
+		tmpdir = temp+"/eyecu-msvcrt-redist/";
 		component.addOperation("Extract", archive, tmpdir);
-		component.addOperation("Execute", tmpdir+"vcredist_x86.exe");
+		component.addOperation("Execute", tmpdir+"vcredist_x86.exe", "/q");
+		component.addOperation("Delete", tmpdir+"vcredist_x86.exe");
+//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
+//		component.addOperation("Rmdir", tmpdir);
 	}
 	else
+	{
 		QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
+		installer.interrupt();
+	}
 }

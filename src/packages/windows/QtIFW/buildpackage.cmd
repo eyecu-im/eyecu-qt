@@ -1,8 +1,7 @@
 echo on
-set MSVCREDIST=e:\Soft\Runtime\MSVCREDIST\x86\2008\vcredist_x86(2008 SP1).exe
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=1.3.0.1201
+set version=1.3.0
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
@@ -236,3 +235,5 @@ for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\
 binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
 
 :end
+
+pause

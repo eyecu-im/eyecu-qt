@@ -42,7 +42,7 @@
 function Component()
 {
     if (installer.isInstaller())
-        component.loaded.connect(this, Component.prototype.installerLoaded);                
+        component.loaded.connect(this, Component.prototype.installerLoaded);
 }
 
 Component.prototype.createOperations = function()
@@ -52,8 +52,8 @@ Component.prototype.createOperations = function()
 
     if (installer.value("os") === "win") {
 	if (installer.sharedFlag("StartMenu")) {
-            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@StartMenuDir@/eyeCU.lnk", "workingDirectory=@TargetDir@");
-            component.addOperation("CreateShortcut", "@TargetDir@/uninstall.exe", "@StartMenuDir@/Uninstall eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
+            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@TargetMenu@/eyeCU.lnk", "workingDirectory=@TargetDir@");
+            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", "@TargetMenu@/Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
         }
 	if (component.value("Desktop"))
             component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@/eyeCU.lnk", "workingDirectory=@TargetDir@");
@@ -64,17 +64,25 @@ Component.prototype.createOperations = function()
 
 Component.prototype.installerLoaded = function () {
     installer.setSharedFlag("StartMenu", true);
-    installer.installationFinished.connect(this, Component.prototype.installationFinishedPageIsShown);
-    installer.finishButtonClicked.connect(this, Component.prototype.installationFinished);
-
-    if (installer.gainAdminRights())
-        installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
-    else
-        installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
+    
+//    if (installer.value("os") === "win")
+//        installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
+//    else
+//        installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
+        
+    if (installer.addWizardPage(component, "InstallationTypePage", QInstaller.TargetDirectory)) {
+        var widget = gui.pageWidgetByObjectName("DynamicInstallationTypePage");
+        if (widget != null) {
+            widget.installAllUsers.toggled.connect(this, Component.prototype.installAllUsersToggled);
+            widget.installMeOnly.toggled.connect(this, Component.prototype.installMeOnlyToggled);
+            widget.installAllUsers.checked = true;
+            Component.prototype.installAllUsersToggled(true);
+        }
+    }
 
     if (installer.addWizardPageItem(component, "AdditionalOptionsPageForm", QInstaller.StartMenuSelection)) {
         var widget = gui.pageWidgetByObjectName("StartMenuDirectoryPage").AdditionalOptionsPageForm;
-        if (widget != null) {            
+        if (widget != null) {
             widget.desktopCheckBox.toggled.connect(this, Component.prototype.desktopToggled);
             widget.startMenuCheckBox.toggled.connect(this, Component.prototype.startMenuToggled);
             widget.portableCheckBox.toggled.connect(this, Component.prototype.portableToggled);
@@ -104,4 +112,28 @@ Component.prototype.startMenuToggled = function (checked) {
 
 Component.prototype.portableToggled = function (checked) {
     component.setValue("Portable", checked);
+}
+
+Component.prototype.installAllUsersToggled = function (checked) {
+    QMessageBox.information("test", "installAllUsersToggled", checked, QMessageBox.Ok);
+    if (checked) {        
+//        if (ComponentSelectionPage != null)
+//            ComponentSelectionPage.selectDefault();
+//        installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
+        installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
+        if (installer.value("os") === "win")
+           installer.setValue("StartMenuDir", "@AllUsersStartMenuProgramsPath@/eyeCU");
+    }
+}
+
+Component.prototype.installMeOnlyToggled = function (checked) {
+    QMessageBox.information("test", "installMeOnlyToggled", checked, QMessageBox.Ok);
+    if (checked) {
+//        if (ComponentSelectionPage != null)
+//            ComponentSelectionPage.selectAll();
+//        installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
+        installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
+        if (installer.value("os") === "win")
+           installer.setValue("StartMenuDir", "@UserStartMenuProgramsPath@/eyeCU");
+    }
 }

@@ -14,8 +14,9 @@
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Essential>false</Essential>
-    <Script>installscript.qs</Script>
+    <Script>installscript.js</Script>
     <UserInterfaces>
         <UserInterface>additionaloptionspageform.ui</UserInterface>
+        <UserInterface>installationtypepage.ui</UserInterface>
     </UserInterfaces>
 </Package>

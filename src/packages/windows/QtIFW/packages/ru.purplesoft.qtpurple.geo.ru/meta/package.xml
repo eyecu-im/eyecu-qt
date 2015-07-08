@@ -2,7 +2,7 @@
 <Package>
     <DisplayName>Qt Geo Russian Translation</DisplayName>
     <Description>Qt Geo Russian translation</Description>
-    <Version>1.3.0</Version>
+    <Version>1.0.0</Version>
     <ReleaseDate>2015-02-24</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.geo.ru</Name>
     <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>

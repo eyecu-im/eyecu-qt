@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Installer>
     <Name>eyeCU</Name>
-    <Version>1.3.0.1124</Version>
+    <Version>1.3.0</Version>
     <Title>eyeCU</Title>
     <Publisher>Road Works Software</Publisher>
     <StartMenuDir>eyeCU</StartMenuDir>
     <InstallerWindowIcon>eyecu</InstallerWindowIcon>
     <InstallerApplicationIcon>eyecu</InstallerApplicationIcon>
-	<MaintenanceToolName>uninstall</MaintenanceToolName>
+	<MaintenanceToolName>maintain</MaintenanceToolName>
 	<RunProgram>@TargetDir@/eyecu.exe</RunProgram>
     <Logo>logo.png</Logo>
     <Watermark>watermark.png</Watermark>
     <TargetDir>@HomeDir@/Road Works Software/eyecu</TargetDir>
 	<AdminTargetDir>@ApplicationsDir@/Road Works Software/eyecu</AdminTargetDir>
     <AllowSpaceInPath>true</AllowSpaceInPath>
+    <CreateLocalRepository>true</CreateLocalRepository>
 </Installer>
