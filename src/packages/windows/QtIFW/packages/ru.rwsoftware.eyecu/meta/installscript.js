@@ -1,9 +1,9 @@
 /**************************************************************************
 **
-** Copyright (C) 2013 Digia Plc and/or its subsidiary(-ies).
-** Contact: http://www.qt-project.org/legal
+** Copyright (C) 2015 Road Works Software
+** Contact: http://www.rwsoftware.ru
 **
-** This file is part of the Qt Installer Framework.
+** This file is part of eyeCU project.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -34,7 +34,6 @@
 ** ensure the GNU General Public License version 3.0 requirements will be
 ** met: http://www.gnu.org/copyleft/gpl.html.
 **
-**
 ** $QT_END_LICENSE$
 **
 **************************************************************************/
@@ -47,16 +46,16 @@ function Component()
 
 Component.prototype.createOperations = function()
 {
-    // call default implementation to actually install eyeCU!
     component.createOperations();
 
     if (installer.value("os") === "win") {
-	if (installer.sharedFlag("StartMenu")) {
-            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@TargetMenu@/eyeCU.lnk", "workingDirectory=@TargetDir@");
-            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", "@TargetMenu@/Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
+		if (installer.sharedFlag("StartMenu")) {
+			targetMenuDir=installer.value("TargetMenuDir");
+            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", targetMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
+            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", targetMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
         }
-	if (component.value("Desktop"))
-            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@/eyeCU.lnk", "workingDirectory=@TargetDir@");
+		if (component.value("Desktop"))
+            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@\\eyeCU.lnk", "workingDirectory=@TargetDir@");
     }
     if (component.value("Portable"))
         component.addOperation("Mkdir", "@TargetDir@/eyecu");
@@ -64,11 +63,6 @@ Component.prototype.createOperations = function()
 
 Component.prototype.installerLoaded = function () {
     installer.setSharedFlag("StartMenu", true);
-    
-//    if (installer.value("os") === "win")
-//        installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
-//    else
-//        installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
         
     if (installer.addWizardPage(component, "InstallationTypePage", QInstaller.TargetDirectory)) {
         var widget = gui.pageWidgetByObjectName("DynamicInstallationTypePage");
@@ -115,25 +109,17 @@ Component.prototype.portableToggled = function (checked) {
 }
 
 Component.prototype.installAllUsersToggled = function (checked) {
-    QMessageBox.information("test", "installAllUsersToggled", checked, QMessageBox.Ok);
     if (checked) {        
-//        if (ComponentSelectionPage != null)
-//            ComponentSelectionPage.selectDefault();
-//        installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
         installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
         if (installer.value("os") === "win")
-           installer.setValue("StartMenuDir", "@AllUsersStartMenuProgramsPath@/eyeCU");
+           installer.setValue("TargetMenuDir", "@AllUsersStartMenuProgramsPath@/eyeCU");
     }
 }
 
 Component.prototype.installMeOnlyToggled = function (checked) {
-    QMessageBox.information("test", "installMeOnlyToggled", checked, QMessageBox.Ok);
     if (checked) {
-//        if (ComponentSelectionPage != null)
-//            ComponentSelectionPage.selectAll();
-//        installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
         installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
         if (installer.value("os") === "win")
-           installer.setValue("StartMenuDir", "@UserStartMenuProgramsPath@/eyeCU");
+           installer.setValue("TargetMenuDir", "@UserStartMenuProgramsPath@/eyeCU");
     }
 }

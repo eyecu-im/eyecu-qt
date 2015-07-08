@@ -49,14 +49,15 @@ Component.prototype.createOperations = function()
 {
     // call default implementation to actually install documentation!
     component.createOperations();
-    if (installer.value("os") === "win" && installer.sharedFlag("StartMenu"))
+    if (installer.value("os") == "win" && installer.sharedFlag("StartMenu"))
     {
-	component.addOperation("Mkdir", "@StartMenuDir@/Documentation");
-	component.addOperation("CreateShortcut", "@TargetDir@/README.TXT", "@StartMenuDir@/Documentation/README.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-	component.addOperation("CreateShortcut", "@TargetDir@/AUTHORS.TXT", "@StartMenuDir@/Documentation/AUTHORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-	component.addOperation("CreateShortcut", "@TargetDir@/TRANSLATORS.TXT", "@StartMenuDir@/Documentation/TRANSLATORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-	component.addOperation("CreateShortcut", "@TargetDir@/CHANGELOG.TXT", "@StartMenuDir@/Documentation/CHANGELOG.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-	component.addOperation("CreateShortcut", "@TargetDir@/Licenses/LICENSE.TXT", "@StartMenuDir@/Documentation/COPYING.lnk", "workingDirectory=@TargetDir@/Licenses", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+	targetDocMenuDir = installer.value("TargetMenuDir")+"\\Documentation";
+	component.addOperation("Mkdir", targetDocMenuDir);
+	component.addOperation("CreateShortcut", "@TargetDir@/README.TXT", targetDocMenuDir+"\\README.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+	component.addOperation("CreateShortcut", "@TargetDir@/AUTHORS.TXT", targetDocMenuDir+"\\AUTHORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+	component.addOperation("CreateShortcut", "@TargetDir@/TRANSLATORS.TXT", targetDocMenuDir+"\\TRANSLATORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+	component.addOperation("CreateShortcut", "@TargetDir@/CHANGELOG.TXT", targetDocMenuDir+"\\CHANGELOG.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+	component.addOperation("CreateShortcut", "@TargetDir@/Licenses/LICENSE.TXT", targetDocMenuDir+"\\COPYING.lnk", "workingDirectory=@TargetDir@/Licenses", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
     }
 }
 

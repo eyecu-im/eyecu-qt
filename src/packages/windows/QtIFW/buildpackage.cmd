@@ -10,7 +10,7 @@ echo Creating base package
 rem call substver.cmd %packagename% %version%
 del %packagefilename%.exe
 
-goto build
+rem goto build
 
 if exist %qtdir% goto exists
 echo No Qt installation found!
@@ -43,6 +43,7 @@ xcopy %qtdir%\bin\QtMultimediaKit1.dll packages\org.digia.qt4.multimedia\data\ /
 xcopy %qtdir%\bin\QtMultimedia4.dll packages\org.digia.qt4.multimedia\data\ /Y
 )
 
+xcopy %qtdir%\bin\QtSql4.dll packages\org.digia.qt4.sql\data\ /Y
 xcopy %qtdir%\bin\QtScript4.dll packages\org.digia.qt4.script\data\ /Y
 xcopy %qtdir%\bin\QtWebKit4.dll packages\org.digia.qt4.webkit\data\ /Y
 xcopy %qtdir%\bin\QtSerialPort.dll packages\org.digia.qt4.serialport\data\ /Y
@@ -235,5 +236,3 @@ for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\
 binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
 
 :end
-
-pause
