@@ -18,8 +18,6 @@ goto end
 
 :exists
 
-echo MSVCREDIST=%MSVCREDIST%
-
 if exist "%MSVCREDIST%" goto redistexists
 echo Cannot find MSVC Redistributable
 goto end

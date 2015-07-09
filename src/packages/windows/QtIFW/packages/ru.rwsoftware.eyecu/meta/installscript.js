@@ -50,9 +50,13 @@ Component.prototype.createOperations = function()
 
     if (installer.value("os") === "win") {
 		if (installer.sharedFlag("StartMenu")) {
-			targetMenuDir=installer.value("TargetMenuDir");
-            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", targetMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
-            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", targetMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
+			startMenuDir=installer.value("StartMenuDir");
+			if (installer.value("AllUsers"))
+				startMenuDir = startMenuDir.replace(installer.value("UserStartMenuProgramsPath"), installer.value("AllUsersStartMenuProgramsPath"));
+			
+            component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
+            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
+//            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe --uninstall", startMenuDir+"\\Uninstall eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
         }
 		if (component.value("Desktop"))
             component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@\\eyeCU.lnk", "workingDirectory=@TargetDir@");
@@ -112,7 +116,7 @@ Component.prototype.installAllUsersToggled = function (checked) {
     if (checked) {        
         installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
         if (installer.value("os") === "win")
-           installer.setValue("TargetMenuDir", "@AllUsersStartMenuProgramsPath@/eyeCU");
+           installer.setValue("AllUsers", true);
     }
 }
 
@@ -120,6 +124,6 @@ Component.prototype.installMeOnlyToggled = function (checked) {
     if (checked) {
         installer.setValue("TargetDir", "@HomeDir@/Road Works Software/eyecu");
         if (installer.value("os") === "win")
-           installer.setValue("TargetMenuDir", "@UserStartMenuProgramsPath@/eyeCU");
+           installer.setValue("AllUsers", false);
     }
 }
