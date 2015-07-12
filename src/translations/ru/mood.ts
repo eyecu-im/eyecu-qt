@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Mood</name>
     <message>
@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>Interested</source>
-        <translation>Заинтересованне</translation>
+        <translation>Заинтересованное</translation>
     </message>
     <message>
         <source>Intoxicated</source>
