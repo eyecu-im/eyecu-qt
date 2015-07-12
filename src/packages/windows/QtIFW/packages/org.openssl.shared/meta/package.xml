@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>OpenSSL</DisplayName>
+    <Description>OpenSSL Shared Library</Description>
+    <Version>0.9.8.14</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>org.openssl.shared</Name>
+    <Virtual>true</Virtual>
+</Package>

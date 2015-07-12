@@ -6,7 +6,7 @@
     <ReleaseDate>2015-02-25</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.spellchecker.dict_de.de_igerman98</Name>
     <SortingPriority>3</SortingPriority>
-    <Default>true</Default>
+    <Default>false</Default>
     <ForcedInstallation>false</ForcedInstallation>
     <Essential>false</Essential>
 </Package>

@@ -12,7 +12,7 @@ del %packagefilename%.exe
 
 rem goto build
 
-if exist %qtdir% goto exists
+if exist "%qtdir%" goto exists
 echo No Qt installation found!
 goto end
 
@@ -25,6 +25,18 @@ goto end
 :redistexists
 mkdir packages\com.microsoft.vcredist\data\
 copy "%MSVCREDIST%" packages\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+
+if not exist "%OPENSSLDIR%\libeay32.dll"  goto noopenssl
+if not exist "%OPENSSLDIR%\ssleay32.dll"  goto noopenssl
+goto opensslexists
+:noopenssl
+echo Cannot find OpenSSL libraries
+goto end
+
+:opensslexists
+mkdir packages\org.openssl.shared
+for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll packages\org.openssl.shared\data\ /Y
+
 
 for %%f in (phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll) do xcopy %qtdir%\bin\%%f packages\org.digia.qt4\data\ /Y
 
