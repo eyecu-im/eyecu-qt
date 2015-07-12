@@ -88,8 +88,8 @@ call copyplugins ru.rwsoftware.eyecu.statistics statistics
 call copyplugins ru.rwsoftware.eyecu.privacylists privacylists
 call copyplugins ru.rwsoftware.eyecu.compress compress
 call copyplugins ru.rwsoftware.eyecu.vcard vcard
-call copyplugins ru.rwsoftware.eyecu.vcard.birthdayreminder birthdayreminder
-call copyplugins ru.rwsoftware.eyecu.vcard.avatars avatars
+call copyplugins ru.rwsoftware.eyecu.birthdayreminder birthdayreminder
+call copyplugins ru.rwsoftware.eyecu.avatars avatars
 call copyplugins ru.rwsoftware.eyecu.adiummessagestyle adiummessagestyle
 call copyresources ru.rwsoftware.eyecu.adiummessagestyle adiummessagestyles\shared
 call copyresources ru.rwsoftware.eyecu.adiummessagestyle.renkoo adiummessagestyles\renkoo
@@ -123,7 +123,7 @@ call copyplugins ru.rwsoftware.eyecu.sessionnegotiation sessionnegotiation
 call copyplugins ru.rwsoftware.eyecu.captchaforms captchaforms
 call copyplugins ru.rwsoftware.eyecu.registration registration
 call copyplugins ru.rwsoftware.eyecu.commands commands
-call copyplugins ru.rwsoftware.eyecu.commands.remotecontrol remotecontrol
+call copyplugins ru.rwsoftware.eyecu.remotecontrol remotecontrol
 set pluginlist=filetransfer filestreamsmanager datastreamsmanager
 call copyplugins ru.rwsoftware.eyecu.filetransfer
 call copyplugins ru.rwsoftware.eyecu.filetransfer.socks5 socksstreams
