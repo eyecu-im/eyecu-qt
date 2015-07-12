@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Tune</name>
     <message>
@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>User Tune listeners</source>
-        <translation>Слошатели Мелодии Пользоателя</translation>
+        <translation>Слушатели Мелодии Пользоателя</translation>
     </message>
     <message>
         <source>User Tune requesters</source>
