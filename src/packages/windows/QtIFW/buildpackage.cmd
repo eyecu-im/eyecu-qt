@@ -35,12 +35,17 @@ for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm packages\
 
 for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm packages\org.digia.qt4.locales\data\translations\ /Y
 
-if exist %qtdir%\bin\QtMultimediaKit1.dll (
-xcopy %qtdir%\bin\QtMultimediaKit1.dll packages\org.digia.qt4.multimedia\data\ /Y
-) else (
+if exist %qtdir%\bin\QtMultimedia4.dll (
 xcopy %qtdir%\bin\QtMultimedia4.dll packages\org.digia.qt4.multimedia\data\ /Y
-)
+) else if exist %qtdir%\bin\QtMultimediaKit1.dll (
+xcopy %qtdir%\bin\QtMultimediaKit1.dll packages\org.digia.qt4.multimedia\data\ /Y
+) else goto no_multimedia
+goto multimedia
+:no_multimedia
+echo Error! No multimedia framework found!
+goto end
 
+:multimedia
 xcopy %qtdir%\bin\QtSql4.dll packages\org.digia.qt4.sql\data\ /Y
 xcopy %qtdir%\bin\QtScript4.dll packages\org.digia.qt4.script\data\ /Y
 xcopy %qtdir%\bin\QtWebKit4.dll packages\org.digia.qt4.webkit\data\ /Y

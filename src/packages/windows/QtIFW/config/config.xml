@@ -14,5 +14,5 @@
     <TargetDir>@HomeDir@/Road Works Software/eyecu</TargetDir>
 	<AdminTargetDir>@ApplicationsDir@/Road Works Software/eyecu</AdminTargetDir>
     <AllowSpaceInPath>true</AllowSpaceInPath>
-    <CreateLocalRepository>true</CreateLocalRepository>
+    <CreateLocalRepository>false</CreateLocalRepository>
 </Installer>
