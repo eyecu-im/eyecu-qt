@@ -1,4 +1,4 @@
-echo on
+echo off
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
@@ -82,6 +82,23 @@ set resources=menuicons statusicons simplemessagestyles sounds
 call copyresources ru.rwsoftware.eyecu
 copy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu\data /Y
 copy c:\eyecu\eyecuutils.dll packages\ru.rwsoftware.eyecu\data /Y
+
+call copydict en.us en_US
+call copydict en.gb en_GB
+call copydict en.ca en_CA
+call copydict en.au en_AU
+call copydict en.nz en_NZ
+call copydict en.za en_ZA
+call copydict de.de_frami de_DE_frami
+call copydict de.at_frami de_AT_frami
+call copydict de.de_igerman98 de_DE_igerman98
+call copydict ru.ru ru_RU
+call copydict ru.rk russian-rk-ieyo
+call copydict ru.aot russian-aot-ieyo
+call copydict pl pl_PL
+call copydict es es_ES
+call copydict nl nl_NL
+call copydict uk uk_UA
 
 call copyplugins ru.rwsoftware.eyecu.spellchecker spellchecker
 call copyplugins ru.rwsoftware.eyecu.statistics statistics
