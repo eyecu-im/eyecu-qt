@@ -204,7 +204,7 @@
     </message>
     <message>
         <source>Show advanced options</source>
-        <translation type="obsolete">Показать опции для опытных пользователей</translation>
+        <translation>Показать опции для опытных пользователей</translation>
     </message>
     <message>
         <source>Options mode changed</source>

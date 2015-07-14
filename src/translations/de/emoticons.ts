@@ -13,7 +13,11 @@
     </message>
     <message>
         <source>Message windows</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
     <message>
         <source>Do not convert text smileys to images</source>

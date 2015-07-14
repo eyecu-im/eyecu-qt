@@ -223,5 +223,9 @@ Do you want to restart %1 now?</source>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

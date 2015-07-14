@@ -1,5 +1,3 @@
-#include <QtDebug>
-
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>

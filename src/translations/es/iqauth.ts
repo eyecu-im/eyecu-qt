@@ -5,11 +5,11 @@
     <name>IqAuthFeatureFactory</name>
     <message>
         <source>Query Authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Autenticación por consulta</translation>
     </message>
     <message>
         <source>Allow you to log on the Jabber server without support SASL authentication</source>
-        <translation type="unfinished"></translation>
+        <translation>Te permite autenticar en el servidor de Jabber sin soportar autenticación SASL</translation>
     </message>
 </context>
 </TS>

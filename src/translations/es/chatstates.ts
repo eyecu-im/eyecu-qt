@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>Send notifications of your chat activity</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar notificaciones de tu actividad de chat</translation>
     </message>
 </context>
 <context>

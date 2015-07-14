@@ -16,6 +16,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
         <source>Do not convert text smileys to images</source>
         <translation type="unfinished"></translation>
     </message>
