@@ -91,8 +91,14 @@ bool MapContacts::initConnections(IPluginManager *APluginManager, int &AInitOrde
 	{
 		FRostersModel = qobject_cast<IRostersModel *>(plugin->instance());
 		if (FRostersModel)
+		{
 			connect(FRostersModel->instance(), SIGNAL(indexDataChanged(IRosterIndex *, int)),
 											   SLOT(onIndexDataChanged(IRosterIndex*, int)));
+			connect(FRostersModel->instance(), SIGNAL(indexInserted(IRosterIndex *)),
+											   SLOT(onIndexInserted(IRosterIndex*)));
+			connect(FRostersModel->instance(), SIGNAL(indexRemoving(IRosterIndex *)),
+											   SLOT(onIndexRemoving(IRosterIndex*)));
+		}
 	}
 	else
 		return false;
@@ -348,9 +354,7 @@ void MapContacts::objectUpdated(SceneObject *ASceneObject, int ARole)
 				ASceneObject->setFull(full);
 			}
 			else
-			{
-				qWarning() << "objectUpdated(): Item is NULL!!!";
-			}
+				LOG_ERROR("Item is NULL!!!");
 			break;
 		}
 	}
@@ -615,34 +619,63 @@ void MapContacts::onIndexDataChanged(IRosterIndex *AIndex, int ARole)
 	}
 }
 
-void MapContacts::onLocationReceived(const Jid &AStreamJid, const Jid &AContsctJid, const MercatorCoordinates &ACoordinates, bool AReliabilityChanged)
+void MapContacts::addMapContact(const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool AUpdateColor)
 {
-	Q_UNUSED(AStreamJid)
-
-	FResourceHash.insert(AContsctJid.bare(), AContsctJid.full());
-	FContacts.append(AContsctJid.full());
-	MapObject *object=FMap->geoMap()->addObject(MOT_CONTACT, AContsctJid.full(), ACoordinates);
+	FResourceHash.insert(AContactJid.bare(), AContactJid.full());
+	FContacts.append(AContactJid.full());
+	MapObject *object=FMap->geoMap()->addObject(MOT_CONTACT, AContactJid.full(), ACoordinates);
 	if (object)
 	{
 		OptionsNode node=Options::node(OPV_ROSTER_SHOWOFFLINE);
 		if (!node.value().toBool())
-			object->setVisible(isOnline(AContsctJid.full()));
-		if (AReliabilityChanged)
+			object->setVisible(isOnline(AContactJid.full()));
+		if (AUpdateColor)
 		{
-			emit mapDataChanged(MOT_CONTACT, AContsctJid.full(), MDR_CONTACT_LABEL);
-			emit mapDataChanged(MOT_CONTACT, AContsctJid.full(), MDR_CONTACT_AVATAR);
+			emit mapDataChanged(MOT_CONTACT, AContactJid.full(), MDR_CONTACT_LABEL);
+			emit mapDataChanged(MOT_CONTACT, AContactJid.full(), MDR_CONTACT_AVATAR);
 		}
 		object->update(MDR_NONE);
 	}
 }
 
-void MapContacts::onLocationRemoved(const Jid &AStreamJid, Jid AContactJid)
+void MapContacts::removeMapContact(const Jid &AContactJid)
+{
+	FResourceHash.remove(AContactJid.bare(), AContactJid.full());
+	if (FMap->geoMap()->getObject(MOT_CONTACT, AContactJid.full()))
+	{
+		FMap->geoMap()->removeObject(MOT_CONTACT, AContactJid.full());
+		FContacts.removeOne(AContactJid.full());
+	}
+}
+
+
+void MapContacts::onLocationReceived(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool AReliabilityChanged)
 {
 	Q_UNUSED(AStreamJid)
 
-	FResourceHash.remove(AContactJid.bare(), AContactJid.full());
-	FMap->geoMap()->removeObject(MOT_CONTACT, AContactJid.full());
-	FContacts.removeOne(AContactJid.full());
+	if (getRosterIndex(AContactJid.full()))
+		addMapContact(AContactJid, ACoordinates, AReliabilityChanged);
+}
+
+void MapContacts::onLocationRemoved(const Jid &AStreamJid, Jid AContactJid)
+{
+	Q_UNUSED(AStreamJid)
+	removeMapContact(AContactJid);
+}
+
+void MapContacts::onIndexInserted(IRosterIndex *AIndex)
+{
+	if (AIndex->kind()==RIK_CONTACT || AIndex->kind()==RIK_MY_RESOURCE)
+	{
+		Jid contactJid(AIndex->data(RDR_FULL_JID).toString());
+		if (FGeoloc->hasGeoloc(contactJid))
+			addMapContact(contactJid, FGeoloc->getGeoloc(contactJid).coordinates());
+	}
+}
+
+void MapContacts::onIndexRemoving(IRosterIndex *AIndex)
+{
+	removeMapContact(AIndex->data(RDR_FULL_JID).toString());
 }
 
 void MapContacts::onMapObjectInserted(int AType, const QString &AId)

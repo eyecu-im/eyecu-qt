@@ -84,6 +84,9 @@ protected:
 	void updateStatus(MapObject *AContact) const;
 	IRosterIndex *getRosterIndex(const QString &AId) const;
 
+	void addMapContact(const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool AUpdateColor = false);
+	void removeMapContact(const Jid &AContactJid);
+
 protected slots:
 	void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onShowContact(bool);
@@ -94,8 +97,10 @@ protected slots:
 	void onOptionsClosed();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onIndexDataChanged(IRosterIndex *AIndex, int ARole);
-	void onLocationReceived(const Jid &AStreamJid, const Jid &AContsctJid, const MercatorCoordinates &ACoordinates, bool AReliabilityChanged);
+	void onLocationReceived(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool AReliabilityChanged);
 	void onLocationRemoved(const Jid &AStreamJid, Jid AContactJid);
+	void onIndexInserted(IRosterIndex *AIndex);
+	void onIndexRemoving(IRosterIndex *AIndex);
 
 signals:
 	//IMapObjectDataHolder
