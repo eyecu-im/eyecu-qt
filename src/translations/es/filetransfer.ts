@@ -86,15 +86,15 @@
     <message>
         <source>Ctrl+S</source>
         <comment>Send file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <source>Automatically receive files from authorized contacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Recibir archivos automáticamente de contactos autorizados</translation>
     </message>
     <message>
         <source>Hide file transfer dialog after transfer started</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar la ventana de trasferencia de archivos luego de iniciar</translation>
     </message>
 </context>
 <context>
@@ -248,7 +248,7 @@
     </message>
     <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Método:</translation>
     </message>
 </context>
 </TS>

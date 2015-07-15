@@ -5,7 +5,7 @@
     <name>Account</name>
     <message>
         <source>Enter password for account &lt;b&gt;%1&lt;/b&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingresa la contraseña para la cuenta &lt;b&gt;%1&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Account Password</source>
@@ -83,7 +83,7 @@
     </message>
     <message>
         <source>Notebook</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuaderno</translation>
     </message>
     <message>
         <source>(default)</source>
@@ -133,30 +133,11 @@
     </message>
     <message>
         <source>You are assured that wish to remove an account &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;All settings will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro que deseas eliminar la cuenta &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt; Se perderán todos los ajustes.</translation>
     </message>
     <message>
         <source>Use wizard...</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AppendCheckPage</name>
-    <message>
-        <source>Connection to Server</source>
-        <translation type="obsolete">Conexión con el servidor</translation>
-    </message>
-    <message>
-        <source>Show account settings window</source>
-        <translation type="obsolete">Mostrar la ventana de ajustes de la cuenta</translation>
-    </message>
-    <message>
-        <source>Connecting...</source>
-        <translation type="obsolete">Conectando...</translation>
-    </message>
-    <message>
-        <source>Failed to check connection :(</source>
-        <translation type="obsolete">Error al comprobar la conexión :(</translation>
     </message>
 </context>
 </TS>

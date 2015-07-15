@@ -104,9 +104,5 @@
         <source>Image:</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>not set</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 </TS>

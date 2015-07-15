@@ -5,15 +5,15 @@
     <name>InBandOptionsWidgetClass</name>
     <message>
         <source>Size of data in packet:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de los datos en el paquete:</translation>
     </message>
     <message>
         <source> Bytes</source>
-        <translation type="unfinished"></translation>
+        <translation>Bytes</translation>
     </message>
     <message>
         <source>Send data without waiting for acknowledgment of receipt</source>
-        <translation type="unfinished"></translation>
+        <translation>Enviar datos sin esperar acuse de recibo</translation>
     </message>
 </context>
 <context>

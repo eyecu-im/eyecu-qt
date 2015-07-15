@@ -5,186 +5,186 @@
     <name>ArchiveAccountOptionsWidget</name>
     <message>
         <source>Yes, if supported by server</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí, si lo soporta el servidor</translation>
     </message>
     <message>
         <source>Yes, if other archive is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí, si otro archivo no está disponible</translation>
     </message>
     <message>
         <source>No, do not save history on server</source>
-        <translation type="unfinished"></translation>
+        <translation>No, no guardar el historial en el servidor</translation>
     </message>
     <message>
         <source>Yes, if local archive is available</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí, si hay un archivo local disponible</translation>
     </message>
     <message>
         <source>No, do not save history in local archive</source>
-        <translation type="unfinished"></translation>
+        <translation>No, no guardar el historial en un archivo local</translation>
     </message>
     <message>
         <source>Yes, if available</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí, si está disponible</translation>
     </message>
     <message>
         <source>Yes, if other replication method is not used</source>
-        <translation type="unfinished"></translation>
+        <translation>Sí, si no se usa otro método de replicación</translation>
     </message>
     <message>
         <source>No, do not copy local archive to the server</source>
-        <translation type="unfinished"></translation>
+        <translation>No, no copiar el archivo local en el servidor</translation>
     </message>
     <message>
         <source>Save messages with formatting</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar mensajes con formato</translation>
     </message>
     <message>
         <source>Save only messages text</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar solo mensajes de texto</translation>
     </message>
     <message>
         <source>Do not save messages</source>
-        <translation type="unfinished"></translation>
+        <translation>No guardar los mensajes</translation>
     </message>
     <message>
         <source>Allow Off-The-Record sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Permitir sesiones sin registro (OTR)</translation>
     </message>
     <message>
         <source>Forbid Off-The-Record sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Prohibir sesiones sin registro (OTR)</translation>
     </message>
     <message>
         <source>Manually approve Off-The-Record sessions</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprobar manualmente las sesiones sin registro (OTR)</translation>
     </message>
     <message>
         <source>Waiting for host response...</source>
-        <translation type="unfinished"></translation>
+        <translation>Esperando respuesta del host...</translation>
     </message>
     <message>
         <source>History preferences is not available</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes del historial no disponibles</translation>
     </message>
     <message>
         <source>Failed to save archive preferences: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Error al guardar los ajustes del archivo: %1</translation>
     </message>
     <message>
         <source>New item preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes del contacto</translation>
     </message>
     <message>
         <source>Enter item JID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrar JID:</translation>
     </message>
     <message>
         <source>Unacceptable item JID</source>
-        <translation type="unfinished"></translation>
+        <translation>JID incorrecto</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is not valid JID or already exists</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; es un JID inválido o ya existe</translation>
     </message>
     <message>
         <source>Preferences accepted</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes aceptados</translation>
     </message>
 </context>
 <context>
     <name>ArchiveAccountOptionsWidgetClass</name>
     <message>
         <source>Auto archiving preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias de archivado automático</translation>
     </message>
     <message>
         <source>Enable automatic archiving of messages on the server</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar el archivado automático de mensajes en el servidor</translation>
     </message>
     <message>
         <source>Archiving policy</source>
-        <translation type="unfinished"></translation>
+        <translation>Política de archivado</translation>
     </message>
     <message>
         <source>Save history in a local archive?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Guardar el historial en un archivo local?</translation>
     </message>
     <message>
         <source>Save history on server?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Guardar el historial en el servidor?</translation>
     </message>
     <message>
         <source>Copy local archive to the server?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Copiar el archivo local en el servidor?</translation>
     </message>
     <message>
         <source>Default archiving preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de archivado por defecto</translation>
     </message>
     <message>
         <source>Message archiving:</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivado de mensajes:</translation>
     </message>
     <message>
         <source>Off-The-Record sessions:</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesiones sin registro (OTR):</translation>
     </message>
     <message>
         <source>Remove messages after, days:</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar los mensajes después de días:</translation>
     </message>
     <message>
         <source>(0 - do not remove)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 - no borrar)</translation>
     </message>
     <message>
         <source>Individual archiving preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes individuales de archivado</translation>
     </message>
     <message>
         <source>JID</source>
-        <translation type="unfinished"></translation>
+        <translation>JID</translation>
     </message>
     <message>
         <source>Contact identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificador del contacto</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Message archiving</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivado de mensajes</translation>
     </message>
     <message>
         <source>OTR</source>
-        <translation type="unfinished"></translation>
+        <translation>OTR</translation>
     </message>
     <message>
         <source>Off-The-Record sessions </source>
-        <translation type="unfinished"></translation>
+        <translation>Sesiones sin registro (OTR)</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Remove messages after, days</source>
-        <translation type="unfinished"></translation>
+        <translation>Borrar mensajes después de días:</translation>
     </message>
     <message>
         <source>Exact</source>
-        <translation type="unfinished"></translation>
+        <translation>Exactamente</translation>
     </message>
     <message>
         <source>Settings are applied to contact which JID is exactly matches</source>
-        <translation type="unfinished"></translation>
+        <translation>Los ajustes son aplicados a un contacto cuyo JID coincide exactamente</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir</translation>
     </message>
 </context>
 <context>
@@ -408,15 +408,15 @@
     </message>
     <message>
         <source>with &lt;b&gt;%1&lt;/b&gt; for &lt;b&gt;%2 %3&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿con &lt;b&gt;%1&lt;/b&gt; para &lt;b&gt;%2 %3&lt;/b&gt;?</translation>
     </message>
     <message>
         <source>with &lt;b&gt;%1&lt;/b&gt; started at &lt;b&gt;%2&lt;/b&gt;?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿con &lt;b&gt;%1&lt;/b&gt; iniciada en &lt;b&gt;%2 %3&lt;/b&gt;?</translation>
     </message>
     <message>
         <source>with &lt;b&gt;%1&lt;/b&gt; for all time?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿con &lt;b&gt;%1&lt;/b&gt; todo el tiempo?</translation>
     </message>
     <message numerus="yes">
         <source>And %n other conversations</source>
@@ -427,7 +427,7 @@
     </message>
     <message>
         <source>Do you want to remove the following conversations?</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Deseas borrar las siguientes conversaciones?</translation>
     </message>
     <message>
         <source>Remove Selected Conversations</source>
@@ -650,23 +650,23 @@
     </message>
     <message>
         <source>Archive preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de archivado</translation>
     </message>
     <message>
         <source>Archive synchronization</source>
-        <translation type="unfinished"></translation>
+        <translation>Sincronización de archivado</translation>
     </message>
     <message>
         <source>Synchronize history between archives</source>
-        <translation type="unfinished"></translation>
+        <translation>Sincronizar el historial entre archivos</translation>
     </message>
     <message>
         <source>Duplicate messages in local archive (not recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Duplicar los mensajes en el archivo local (no recomendado)</translation>
     </message>
     <message>
         <source>Used history archives</source>
-        <translation type="unfinished"></translation>
+        <translation>Historial de archivos usados</translation>
     </message>
 </context>
 </TS>

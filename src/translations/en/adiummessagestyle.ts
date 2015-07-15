@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>not set</source>
-        <translation>not set</translation>
+        <translation type="obsolete">not set</translation>
     </message>
 </context>
 </TS>

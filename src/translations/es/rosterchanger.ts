@@ -321,7 +321,7 @@
     <message>
         <source>Del</source>
         <comment>Remove contact/group from roster</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Into this Group</source>

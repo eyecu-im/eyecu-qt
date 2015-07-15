@@ -35,6 +35,10 @@
         <source>Save point of interest</source>
         <translation>Сохранить точку интереса</translation>
     </message>
+    <message>
+        <source>Copy picture</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PlaceViewForm</name>

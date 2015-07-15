@@ -61,33 +61,33 @@
     <message>
         <source>Ctrl+T</source>
         <comment>Show file transfers</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+T</translation>
     </message>
     <message>
         <source>File transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia de archivo</translation>
     </message>
     <message>
         <source>Create separate folder for each sender</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear una carpeta separada para cada remitente</translation>
     </message>
     <message>
         <source>Default transfer method:</source>
-        <translation type="unfinished"></translation>
+        <translation>Método de trasmisión por defecto:</translation>
     </message>
 </context>
 <context>
     <name>FileStreamsOptionsWidget</name>
     <message>
         <source>Select default directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir directorio por defecto</translation>
     </message>
 </context>
 <context>
     <name>FileStreamsOptionsWidgetClass</name>
     <message>
         <source>Default directory:</source>
-        <translation type="unfinished"></translation>
+        <translation>Directorio por defecto:</translation>
     </message>
 </context>
 <context>

@@ -45,11 +45,11 @@
     </message>
     <message>
         <source>Data Transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Transmisión de datos</translation>
     </message>
     <message>
         <source>Transfer method %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Método de trasmisión: %1</translation>
     </message>
 </context>
 </TS>

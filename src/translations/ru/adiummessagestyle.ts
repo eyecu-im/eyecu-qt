@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>not set</source>
-        <translation>не установлено</translation>
+        <translation type="obsolete">не установлено</translation>
     </message>
 </context>
 </TS>

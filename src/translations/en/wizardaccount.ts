@@ -540,7 +540,6 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
     <name>WizardAccount</name>
     <message>
         <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="16"/>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
         <source>Connection Wizard</source>
         <translation type="unfinished"></translation>
     </message>
@@ -561,7 +560,12 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
     </message>
     <message>
         <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
-        <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; button on &quot;Accounts&quot; page in the Options dialog.</source>
+        <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; link on &quot;Accounts&quot; page in the Options dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
+        <source>Add account</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -557,7 +557,6 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
     <name>WizardAccount</name>
     <message>
         <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="16"/>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
         <source>Connection Wizard</source>
         <translation>Мастер Подключения</translation>
     </message>
@@ -578,8 +577,17 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
     </message>
     <message>
         <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
+        <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; link on &quot;Accounts&quot; page in the Options dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
+        <source>Add account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; button on &quot;Accounts&quot; page in the Options dialog.</source>
-        <translation>Вы можете запустить Мастер Подключения в любой момент, нажав кнопку &quot;%1&quot; на странице &quot;Аккаунты&quot; в диалоге Настроек.</translation>
+        <translation type="obsolete">Вы можете запустить Мастер Подключения в любой момент, нажав кнопку &quot;%1&quot; на странице &quot;Аккаунты&quot; в диалоге Настроек.</translation>
     </message>
 </context>
 </TS>

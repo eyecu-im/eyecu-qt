@@ -12,10 +12,6 @@
         <translation>Beenden</translation>
     </message>
     <message>
-        <source>Show roster</source>
-        <translation type="obsolete">Roster anzeigen</translation>
-    </message>
-    <message>
         <source>Allows other modules to place their widgets in the main window</source>
         <translation>Erlaubt anderen Modulen ihre Widgets im Hauptfenster zu platzieren</translation>
     </message>
@@ -26,7 +22,7 @@
     </message>
     <message>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeigen</translation>
     </message>
 </context>
 </TS>

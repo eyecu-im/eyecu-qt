@@ -22,7 +22,7 @@
     <message>
         <source>Esc</source>
         <comment>Close main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Esc</translation>
     </message>
     <message>
         <source>Show</source>
