@@ -6,7 +6,7 @@
 #include <QCoreApplication>
 
 #if QT_VERSION < 0x050000
-void myMessageOutput(QtMsgType type, const char *msg)
+void myMessageHandler(QtMsgType type, const char *msg)
 {
 	switch (type) 
 	{
@@ -26,7 +26,7 @@ void myMessageOutput(QtMsgType type, const char *msg)
 }
 #else
 #include <QMessageLogContext>
-void myMessageOutput(QtMsgType AType, const QMessageLogContext &AContext, const QString &AMessage)
+void myMessageHandler(QtMsgType AType, const QMessageLogContext &AContext, const QString &AMessage)
 {
 	Q_UNUSED(AContext)
 	QByteArray localMsg = AMessage.toLocal8Bit();
@@ -51,9 +51,9 @@ void myMessageOutput(QtMsgType AType, const QMessageLogContext &AContext, const 
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < 0x050000
-	qInstallMsgHandler(myMessageOutput);
+	qInstallMsgHandler(myMessageHandler);
 #else
-	qInstallMessageHandler(myMessageOutput);
+	qInstallMessageHandler(myMessageHandler);
 #endif
 	QCoreApplication app(argc, argv);
 
