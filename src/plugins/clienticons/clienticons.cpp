@@ -177,16 +177,13 @@ bool ClientIcons::initSettings()
 QMultiMap<int, IOptionsDialogWidget *> ClientIcons::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (FOptionsManager)
+	if (ANodeId == OPN_ROSTERVIEW)
 	{
-		if (ANodeId == OPN_ROSTERVIEW)
-		{
-			if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
-				widgets.insertMulti(OWO_ROSTER_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_CLIENTICON_SHOW), tr("Show client icons"), NULL));
-		}
-		else if (ANodeId == OPN_MESSAGES)
-			widgets.insertMulti(OWO_MESSAGES_INFOBAR_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_CLIENTICON_DISPLAY), tr("Display client icon"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_ROSTER_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_CLIENTICON_SHOW), tr("Show client icons"), NULL));
 	}
+	else if (ANodeId == OPN_MESSAGES)
+		widgets.insertMulti(OWO_MESSAGES_INFOBAR_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_CLIENTICON_DISPLAY), tr("Display client icon"), AParent));
 	return widgets;
 }
 

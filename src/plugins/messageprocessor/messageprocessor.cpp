@@ -8,9 +8,6 @@
 #include <utils/logger.h>
 // *** <<< eyeCU <<< ***
 #include <utils/options.h>
-#include <definitions/optionnodeorders.h>
-#include <definitions/optionnodes.h>
-#include <definitions/optionwidgetorders.h>
 #include <definitions/optionvalues.h>
 #include <XmlTextDocumentParser>
 // *** >>> eyeCU >>> ***
@@ -79,12 +76,7 @@ bool MessageProcessor::initObjects()
 	insertMessageWriter(MWO_MESSAGEPROCESSOR_ANCHORS,this);
 	return true;
 }
-// *** <<< eyeCU <<< ***
-bool MessageProcessor::initSettings()
-{
-	Options::setDefaultValue(OPV_MESSAGESTYLE_FONT_MONOSPACED, true);
-}
-// *** >>> eyeCU >>> ***
+
 bool MessageProcessor::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
 	if (FActiveStreams.value(AStreamJid) == AHandlerId)
@@ -108,7 +100,7 @@ void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 	if (AOrder == MWO_MESSAGEPROCESSOR)
 	{
 		QTextCursor cursor(ADocument);
-		XmlTextDocumentParser::xmlToText(cursor, prepareBodyForReceive(AMessage.body(ALang), false)); // *** <<< eyeCU >>> ***
+		XmlTextDocumentParser::xmlToText(cursor, prepareBodyForReceive(AMessage.body(ALang), Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED).value().toBool())); // *** <<< eyeCU >>> ***
 	}
 	else if (AOrder == MWO_MESSAGEPROCESSOR_ANCHORS)
 	{

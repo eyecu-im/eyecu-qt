@@ -28,9 +28,7 @@ public:
 	virtual void pluginInfo(IPluginInfo *APluginInfo);
 	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
 	virtual bool initObjects();
-// *** <<< eyeCU <<< ***
-	virtual bool initSettings();
-// *** >>> eyeCU >>> ***
+	virtual bool initSettings() { return true; }
 	virtual bool startPlugin() { return true; }
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);

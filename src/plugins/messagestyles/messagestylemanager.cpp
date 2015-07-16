@@ -84,6 +84,7 @@ bool MessageStyleManager::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_SHOWDATESEPARATORS,true);
 	Options::setDefaultValue(OPV_MESSAGES_MAXMESSAGESINWINDOW,500);
+	Options::setDefaultValue(OPV_MESSAGESTYLE_FONT_MONOSPACED, true); // *** <<< eyeCU >>> ***
 
 	if (FOptionsManager)
 	{
@@ -101,13 +102,15 @@ QMultiMap<int, IOptionsDialogWidget *> MessageStyleManager::optionsDialogWidgets
 		static const QList<int> messageTypes = QList<int>() << Message::Chat << Message::GroupChat << Message::Normal << Message::Headline << Message::Error;
 
 		widgets.insertMulti(OHO_APPEARANCE_MESSAGESTYLE, FOptionsManager->newOptionsDialogHeader(tr("Messages styles"),AParent));
-
 		int index = 0;
 		foreach(int messageType, messageTypes)
 		{
 			widgets.insertMulti(OWO_APPEARANCE_MESSAGETYPESTYLE + index, new StyleSelectOptionsWidget(this,messageType,AParent));
 			index++;
 		}
+		// *** <<< eyeCU <<< ***
+		widgets.insertMulti(OWO_APPEARANCE_MESSAGEFONTMONOSPACED, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED), tr("Use monospaced font for unformatted text"), AParent));
+		// *** >>> eyeCU >>> ***
 	}
 	else if (ANodeId == OPN_MESSAGES)
 	{
