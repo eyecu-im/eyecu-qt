@@ -59,6 +59,8 @@ goto end
 
 :multimedia
 xcopy %qtdir%\bin\QtSql4.dll packages\org.digia.qt4.sql\data\ /Y
+xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll packages\org.digia.qt4.sql\data\sqldrivers\* /Y
+
 xcopy %qtdir%\bin\QtScript4.dll packages\org.digia.qt4.script\data\ /Y
 xcopy %qtdir%\bin\QtWebKit4.dll packages\org.digia.qt4.webkit\data\ /Y
 xcopy %qtdir%\bin\QtSerialPort.dll packages\org.digia.qt4.serialport\data\ /Y
