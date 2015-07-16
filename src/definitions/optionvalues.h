@@ -164,6 +164,9 @@
 
 // MessageStyleManager
 #define OPV_MESSAGESTYLE_ROOT                           "message-styles"
+// *** <<< eyeCU <<< ***
+#define OPV_MESSAGESTYLE_FONT_MONOSPACED				"message-styles.font.monospaced"
+// *** >>> eyeCU >>> ***
 #define OPV_MESSAGESTYLE_MTYPE_ITEM                     "message-styles.message-type"
 #define OPV_MESSAGESTYLE_CONTEXT_ITEM                   "message-styles.message-type.context"
 #define OPV_MESSAGESTYLE_CONTEXT_ENGINEID               "message-styles.message-type.context.engine-id"

@@ -28,7 +28,9 @@ public:
 	virtual void pluginInfo(IPluginInfo *APluginInfo);
 	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
 	virtual bool initObjects();
-	virtual bool initSettings() { return true; }
+// *** <<< eyeCU <<< ***
+	virtual bool initSettings();
+// *** >>> eyeCU >>> ***
 	virtual bool startPlugin() { return true; }
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
@@ -73,7 +75,7 @@ protected:
 	IMessageHandler *findMessageHandler(const Message &AMessage, int ADirection);
 	void notifyMessage(IMessageHandler *AHandler, const Message &AMessage, int ADirection);
 	QString prepareBodyForSend(const QString &AString) const;
-    QDomDocument prepareBodyForReceive(const QString &AString) const;
+	QDomDocument prepareBodyForReceive(const QString &AString, bool AMonospaced) const;
 protected slots:
 	void onNotificationActivated(int ANotifyId);
 	void onNotificationRemoved(int ANotifyId);

@@ -170,6 +170,9 @@
 //Node = OPN_APPEARANCE
 #define OHO_APPEARANCE_MESSAGESTYLE               200
 #define   OWO_APPEARANCE_MESSAGETYPESTYLE         201
+// *** <<< eyeCU <<< ***
+#define   OWO_APPEARANCE_MESSAGEFONTMONOSPACED    250
+// *** >>> eyeCU >>> ***
 #define OHO_APPEARANCE_ROSTER                     400
 #define   OWO_APPEARANCE_STATUSICONS              430
 #define OHO_APPEARANCE_MESSAGES                   700
