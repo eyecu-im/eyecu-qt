@@ -25,18 +25,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/clienticons/clienticons.cpp" line="185"/>
+        <location filename="../../plugins/clienticons/clienticons.cpp" line="183"/>
         <source>Show client icons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/clienticons/clienticons.cpp" line="188"/>
+        <location filename="../../plugins/clienticons/clienticons.cpp" line="186"/>
         <source>Display client icon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../plugins/clienticons/clienticons.cpp" line="273"/>
-        <location filename="../../plugins/clienticons/clienticons.cpp" line="458"/>
+        <location filename="../../plugins/clienticons/clienticons.cpp" line="270"/>
+        <location filename="../../plugins/clienticons/clienticons.cpp" line="455"/>
         <source>Client:</source>
         <translation type="unfinished"></translation>
     </message>

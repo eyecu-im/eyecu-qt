@@ -119,6 +119,10 @@
         <source>hh:mm:ss</source>
         <translation>hh:mm:ss</translation>
     </message>
+    <message>
+        <source>Use monospaced font for unformatted text</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StyleEditOptionsDialog</name>

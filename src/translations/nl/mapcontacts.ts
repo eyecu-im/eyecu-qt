@@ -14,20 +14,20 @@
         <translation>Toon rooster contactpersonen op de kaart</translation>
     </message>
     <message>
-        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="142"/>
+        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="148"/>
         <source>Show contact on the map</source>
         <translation>Toon contactpersoon op de kaart</translation>
     </message>
     <message>
-        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="142"/>
+        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="148"/>
         <source>F10</source>
         <comment>Show contact on the map (roster)</comment>
         <translation>F10</translation>
     </message>
     <message>
-        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="307"/>
-        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="716"/>
-        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="727"/>
+        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="313"/>
+        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="749"/>
+        <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="760"/>
         <source>Show on the map</source>
         <translation>Toon op de kaart</translation>
     </message>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>MessageStyleManager</name>
     <message>
@@ -118,6 +118,10 @@
     <message>
         <source>hh:mm:ss</source>
         <translation>hh:mm:ss</translation>
+    </message>
+    <message>
+        <source>Use monospaced font for unformatted text</source>
+        <translation>Использовать моноширный шрифт для неформатированного текста</translation>
     </message>
 </context>
 <context>
