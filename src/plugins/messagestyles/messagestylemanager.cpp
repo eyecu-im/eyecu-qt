@@ -20,6 +20,7 @@ MessageStyleManager::MessageStyleManager()
 	FVCardManager = NULL;
 	FRosterManager = NULL;
 	FOptionsManager = NULL;
+	FForceUpdate = false; // *** <<< eyeCU >>> ***
 }
 
 MessageStyleManager::~MessageStyleManager()
@@ -109,7 +110,8 @@ QMultiMap<int, IOptionsDialogWidget *> MessageStyleManager::optionsDialogWidgets
 			index++;
 		}
 		// *** <<< eyeCU <<< ***
-		widgets.insertMulti(OWO_APPEARANCE_MESSAGEFONTMONOSPACED, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED), tr("Use monospaced font for unformatted text"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_APPEARANCE_MESSAGEFONTMONOSPACED, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED), tr("Use monospaced font for unformatted text"), AParent));
 		// *** >>> eyeCU >>> ***
 	}
 	else if (ANodeId == OPN_MESSAGES)
@@ -333,6 +335,15 @@ void MessageStyleManager::onOptionsChanged(const OptionsNode &ANode)
 					appendPendingChanges(mtype.toInt(),context);
 		}
 	}
+// *** <<< eyeCU <<< ***
+	else if (cleanPath==OPV_MESSAGESTYLE_FONT_MONOSPACED)
+	{
+		FForceUpdate = true;
+		appendPendingChanges(Message::Chat, QString::null);
+		appendPendingChanges(Message::GroupChat, QString::null);
+		appendPendingChanges(Message::Normal, QString::null);
+	}
+// *** >>> eyeCU >>> ***
 }
 
 void MessageStyleManager::onApplyPendingChanges()
@@ -340,9 +351,12 @@ void MessageStyleManager::onApplyPendingChanges()
 	for (int i=0; i<FPendingChages.count(); i++)
 	{
 		const QPair<int,QString> &item = FPendingChages.at(i);
-		emit styleOptionsChanged(styleOptions(item.first,item.second),item.first,item.second);
+// *** <<< eyeCU <<< ***
+		emit styleOptionsChanged(FForceUpdate?IMessageStyleOptions():styleOptions(item.first,item.second),item.first,item.second);
+// *** >>> eyeCU >>> ***
 	}
 	FPendingChages.clear();
+	FForceUpdate = false; // *** <<< eyeCU >>> ***
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_messagestylemanager, MessageStyleManager)

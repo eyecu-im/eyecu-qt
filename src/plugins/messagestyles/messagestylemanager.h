@@ -66,6 +66,7 @@ private:
 	mutable QMap<Jid, QString> FStreamNames;
 	QList< QPair<int,QString> > FPendingChages;
 	QMap<QString, IMessageStyleEngine *> FStyleEngines;
+	bool FForceUpdate; // *** <<< eyeCU >>> ***
 };
 
 #endif // MESSAGESTYLEMANAGER_H

@@ -388,7 +388,7 @@ QString MessageProcessor::prepareBodyForSend(const QString &AString) const
 QDomDocument MessageProcessor::prepareBodyForReceive(const QString &AString, bool AMonospaced) const
 {
 	// *** <<< eyeCU <<< ***
-    QDomDocument doc;
+    QDomDocument doc;	
 	QDomElement code=doc.createElement(AMonospaced?"code":"span");
     code.setAttribute("style", "white-space: pre-wrap;");
     doc.appendChild(code);
