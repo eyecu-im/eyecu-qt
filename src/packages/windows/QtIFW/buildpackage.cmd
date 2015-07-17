@@ -42,6 +42,8 @@ for %%f in (phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.
 
 xcopy %qtdir%\plugins\imageformats\q*4.dll packages\org.digia.qt4\data\imageformats\ /Y
 del packages\org.digia.qt4\data\imageformats\q*d4.dll /Q
+xcopy %qtdir%\plugins\iconengines\q*4.dll packages\org.digia.qt4\data\iconengines\ /Y
+del packages\org.digia.qt4\data\iconengines\q*d4.dll /Q
 
 for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm packages\org.digia.qt4.%%f\data\translations\ /Y
 
