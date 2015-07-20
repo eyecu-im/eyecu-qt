@@ -175,7 +175,7 @@ NetworkPage::NetworkPage(QWidget *AParent): QWizardPage(AParent)
 				"Please, note, that those XMPP servers usually have implemented their own specific features, "
 				"which cannot be used with standard XMPP clients, like eyeCU. "
 				"At the same time, they implenment only limited set of standard XMPP extensions, "
-				"which could be used with standard XMPP clients."
+				"which could be used with standard clients."
 				"So, it's hardly recommended to use such accounts only as additional account, to have convenient access "
 				"to your social networks and services. To have full-featured XMPP experienece, it's recommended to have "
 				"an account on independent XMPP (Jabber) server. To connect to such server, please, select \"Other XMPP\".\n"

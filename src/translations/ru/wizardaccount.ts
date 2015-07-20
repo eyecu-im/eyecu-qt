@@ -240,7 +240,7 @@
     <message>
         <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="124"/>
         <source>This wizard will help you to create a Jabber account</source>
-        <translation>Этот матер поможет Вам создать аккунт Jabber</translation>
+        <translation>Этот мастер поможет Вам создать аккаунт Jabber</translation>
     </message>
     <message>
         <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="129"/>
@@ -343,10 +343,10 @@
     <message>
         <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="173"/>
         <source>There are some social networks, portals or blogging services, which have their own XMPP servers. If you have an account in some of those networks, you may use it in eyeCU.
-Please, note, that those XMPP servers usually have implemented their own specific features, which cannot be used with standard XMPP clients, like eyeCU. At the same time, they implenment only limited set of standard XMPP extensions, which could be used with standard XMPP clients.So, it&apos;s hardly recommended to use such accounts only as additional account, to have convenient access to your social networks and services. To have full-featured XMPP experienece, it&apos;s recommended to have an account on independent XMPP (Jabber) server. To connect to such server, please, select &quot;Other XMPP&quot;.
+Please, note, that those XMPP servers usually have implemented their own specific features, which cannot be used with standard XMPP clients, like eyeCU. At the same time, they implenment only limited set of standard XMPP extensions, which could be used with standard clients.So, it&apos;s hardly recommended to use such accounts only as additional account, to have convenient access to your social networks and services. To have full-featured XMPP experienece, it&apos;s recommended to have an account on independent XMPP (Jabber) server. To connect to such server, please, select &quot;Other XMPP&quot;.
 If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No&quot; to register in Jabber.</source>
         <translation>Некоторые социальные сети, порталы или службы блогов имеют свои собственные серверы XMPP. Если у Вас есть аккаунт в одной из таких сетей, можете использовать его в eyeCU.
-Обратите внимание, что на этих XMPP-серверах обычно реализованы особенности данной сети, которые невозможно использовать в стандартных клиентах XMPP, типа eyeCU. В то же время, в них реализован лишь ограниченный набор стандартных расширений XMPP, которые могут быть использованы со стандартными клиентами XMPP.
+Обратите внимание, что на этих XMPP-серверах обычно реализованы особенности данной сети, которые невозможно использовать в стандартных клиентах XMPP, типа eyeCU. В то же время, в них реализован лишь ограниченный набор стандартных расширений XMPP, которые могут быть использованы со стандартными клиентами.
 Таким образом, настоятельно рекомендуется использовать такие аккаунты только в качестве дополнительных, чтобы получить удобный доступ к своим социальным сетям и службам. Чтобы использовать все возможности XMPP по полной программе, рекомендуется завести себе аккаунт на независимом XMPP (Jabber) сервере. Для подключения к такому серверу выберите &quot;Другой XMPP&quot;
 Если у Вас до сих пор нет аккаунта в Jabber, пожалуйста, вернитесь Назад и выберите &quot;Нет&quot;, чтобы зарегистрироваться в Jabber.</translation>
     </message>
