@@ -106,14 +106,6 @@ If don&apos;t, please register at legacy network on its web site or using native
         <translation>Сервис обмена мгновенными сообщениями от AOL</translation>
     </message>
     <message>
-        <source>Live journal</source>
-        <translation type="obsolete">Живой Журнал</translation>
-    </message>
-    <message>
-        <source>Odnoklassniki</source>
-        <translation type="obsolete">Одноклассники</translation>
-    </message>
-    <message>
         <source>Network selection</source>
         <translation>Выбор сети</translation>
     </message>
@@ -124,10 +116,6 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>Please select a network from the list</source>
         <translation>Пожалуйста, выберите сеть из списка</translation>
-    </message>
-    <message>
-        <source>Mail.ru - Agent</source>
-        <translation type="obsolete">Mail.ru - Агент</translation>
     </message>
     <message>
         <source>QQ</source>
@@ -148,10 +136,6 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>IRC</source>
         <translation>IRC</translation>
-    </message>
-    <message>
-        <source>Live Journal</source>
-        <translation type="obsolete">Живой Журнал</translation>
     </message>
     <message>
         <source>Renren</source>
@@ -182,10 +166,6 @@ If don&apos;t, please register at legacy network on its web site or using native
         <translation>Yahoo!</translation>
     </message>
     <message>
-        <source>World&apos;s most popular social network</source>
-        <translation type="obsolete">Самая популярная в мире социальная сеть</translation>
-    </message>
-    <message>
         <source>Gadu-Gadu - Polish instant messenger</source>
         <translation>Gadu-Gadu - польская программа обмена мгновенными сообщениями</translation>
     </message>
@@ -198,32 +178,12 @@ If don&apos;t, please register at legacy network on its web site or using native
         <translation>Релейный интернет-чат</translation>
     </message>
     <message>
-        <source>Instant messenger from Microsoft Network (MSN)</source>
-        <translation type="obsolete">Программа обмена мгновенными сообщениями от Microsoft Network (MSN)</translation>
-    </message>
-    <message>
         <source>Instant messenger from Mail.ru portal</source>
         <translation>Программа обмена мгновенными сообщениями от портала Mail.ru</translation>
     </message>
     <message>
-        <source>International social network, Beverly Hills (California, USA)</source>
-        <translation type="obsolete">Международная социальная сеть, Биверли Хиллз (Калифорния, США)</translation>
-    </message>
-    <message>
-        <source>First Russian social network</source>
-        <translation type="obsolete">Первая Российская социальная сеть</translation>
-    </message>
-    <message>
         <source>Tencent QQ - Chinese instant messenger</source>
         <translation>Transcent QQ - китайская программа обмена мгновенными сообщениями</translation>
-    </message>
-    <message>
-        <source>RenRen - Chinese social network with an interface similar to Facebook</source>
-        <translation type="obsolete">RenRen - китайская социальная сеть с интерфейсом, похожим на Facebook</translation>
-    </message>
-    <message>
-        <source>Session Initiation Protocol</source>
-        <translation type="obsolete">Протокол Инициации Сессии</translation>
     </message>
     <message>
         <source>IP-telephony software with voice, video and text communication</source>
@@ -248,10 +208,6 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>Russian social network with an interface similar to Facebook</source>
         <translation>Русская социальная сеть, с интерфейсом, похожим на Facebook</translation>
-    </message>
-    <message>
-        <source>A proprietary freeware instant messaging service for gamers</source>
-        <translation type="obsolete">Проприетарный бесплатный сервис обмена мгновенными сообщениями для геймеров</translation>
     </message>
     <message>
         <source>Instant messenger from Yahoo! portal</source>
