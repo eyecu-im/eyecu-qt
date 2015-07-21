@@ -1,8 +1,6 @@
 #include <QMessageBox>
 #include <QApplication>
-
 #include <definitions/optionvalues.h>
-
 #include "wizardaccount.h"
 
 WizardAccount::WizardAccount(QObject *parent) :
@@ -72,7 +70,7 @@ QWizard * WizardAccount::startWizard(QWidget *AParent)
 
 void WizardAccount::onOptionsModeInitialized(bool AAdvanced)
 {
-	if (!AAdvanced && !Options::node(OPV_ACCOUNT_ROOT).hasNode("account"))
+	if (!AAdvanced && !Options::node(OPV_ACCOUNT_ROOT).childNames().contains("account"))
 		askCreateAccount();
 }
 
