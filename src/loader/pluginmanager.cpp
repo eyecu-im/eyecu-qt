@@ -778,9 +778,10 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 // *** <<< eyeCU <<< ***
 	QTranslator *translator = new QTranslator(this);
 
-	if (translator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName)) || translator->load("qt_"+ALocaleName,ADir.absoluteFilePath(ALocaleName.left(2))))
-		qApp->installTranslator(translator);
-	else if (translator->load("qt_"+QLocale().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+	if (translator->load("qt_"+ALocaleName, ADir.absolutePath()) ||
+		translator->load("qt_"+ALocaleName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)) ||
+		translator->load("qt_"+QLocale().name(), ADir.absolutePath()) ||
+		translator->load("qt_"+QLocale().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		qApp->installTranslator(translator);
 	else
 	{
@@ -798,6 +799,7 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 		translator = new QTranslator(this);
 		if (translator->load(*it, ADir.absoluteFilePath(ALocaleName)) ||
 			translator->load(*it, ADir.absoluteFilePath(ALocaleName.left(2))) ||
+			translator->load(*it+'_'+ALocaleName) ||
 			translator->load(*it+'_'+ALocaleName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		{
 			qApp->installTranslator(translator);

@@ -104,9 +104,5 @@
         <source>Image:</source>
         <translation>Изображение:</translation>
     </message>
-    <message>
-        <source>not set</source>
-        <translation type="obsolete">не установлено</translation>
-    </message>
 </context>
 </TS>

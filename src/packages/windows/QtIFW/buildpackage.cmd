@@ -34,7 +34,7 @@ echo Cannot find OpenSSL libraries
 goto end
 
 :opensslexists
-mkdir packages\org.openssl.shared
+mkdir packages\org.openssl.shared\data
 for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll packages\org.openssl.shared\data\ /Y
 
 

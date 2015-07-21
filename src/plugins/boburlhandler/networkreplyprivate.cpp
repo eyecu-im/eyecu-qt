@@ -32,6 +32,7 @@ qint64 NetworkReplyPrivate::readData(char *data, qint64 maxlen)
         return -1;
     qint64 toRead=maxlen?maxlen<left?maxlen:left:left;
     memcpy(data, FBuffer.data(), toRead);
+	FBuffer.remove(0, toRead);
     return toRead;
 }
 

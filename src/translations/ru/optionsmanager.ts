@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>EditProfilesDialog</name>
     <message>
@@ -222,7 +222,7 @@ Do you want to restart %1 now?</source>
     </message>
     <message>
         <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
-        <translation>Если Вы - обытный пользователь Jabber, нажмите &lt;i&gt;Да&lt;/i&gt;, чтобы отобразить расширенные настройки. Если же Вы новичок в Jabber, нажмите &lt;i&gt;Нет&lt;/i&gt;. Будут отображены упрощённые настройки.</translation>
+        <translation>Если Вы - опытный пользователь Jabber, нажмите &lt;i&gt;Да&lt;/i&gt;, чтобы отобразить расширенные настройки. Если же Вы новичок в Jabber, нажмите &lt;i&gt;Нет&lt;/i&gt;. Будут отображены упрощённые настройки.</translation>
     </message>
     <message>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>

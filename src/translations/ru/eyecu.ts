@@ -4,18 +4,6 @@
 <context>
     <name>AboutBox</name>
     <message>
-        <source>Version: %1 %2 of %3</source>
-        <translation type="obsolete">Версия: %1 %2 от %3</translation>
-    </message>
-    <message>
-        <source>Revision: %1</source>
-        <translation type="obsolete">Ревизия: %1</translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="obsolete">Версия: %1 %2</translation>
-    </message>
-    <message>
         <source>Version: %1.%2 %3</source>
         <translation type="unfinished">Версия: %1.%2 %3</translation>
     </message>
