@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>DiscoInfoWindow</name>
     <message>
@@ -39,12 +37,12 @@
         <translation>Omschrijving:</translation>
     </message>
     <message>
-        <source>Extensions</source>
-        <translation>Extensies</translation>
+        <source>Update</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Update</source>
-        <translation></translation>
+        <source>Extensions</source>
+        <translation>Extensies</translation>
     </message>
 </context>
 <context>
@@ -55,11 +53,11 @@
     </message>
     <message>
         <source>Jid</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Node</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;li&gt;&lt;b&gt;Identity:&lt;/b&gt;&lt;/li&gt;</source>
@@ -89,10 +87,6 @@
 <context>
     <name>DiscoItemsWindow</name>
     <message>
-        <source>Service Discovery - %1</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
@@ -118,65 +112,53 @@
     </message>
     <message>
         <source>vCard</source>
-        <translation></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Service Discovery - %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DiscoItemsWindowClass</name>
     <message>
-        <source>Item:</source>
-        <translation>Item:</translation>
-    </message>
-    <message>
         <source>Node:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Search:</source>
-        <translation>Zoek:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Actions</source>
         <translation>Acties</translation>
+    </message>
+    <message>
+        <source>Item:</source>
+        <translation>Item:</translation>
+    </message>
+    <message>
+        <source>Search:</source>
+        <translation>Zoek:</translation>
     </message>
 </context>
 <context>
     <name>ServiceDiscovery</name>
     <message>
         <source>Service Discovery</source>
-        <translation></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>JID Escaping</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Discovery Info</source>
+        <translation>Discovery informatie</translation>
+    </message>
+    <message>
+        <source>Entity Capabilities</source>
+        <translation>Dienst mogelijkheden</translation>
     </message>
     <message>
         <source>Allows to receive information about Jabber entities</source>
         <translation>Toestaan om informatie te ontvangen over Jabber diensten</translation>
-    </message>
-    <message>
-        <source>Service discovery window</source>
-        <translation type="obsolete">Service discovery venster</translation>
-    </message>
-    <message>
-        <source>Move back</source>
-        <translation type="obsolete">Teruggaan</translation>
-    </message>
-    <message>
-        <source>Move forward</source>
-        <translation type="obsolete">Vooruitgaan</translation>
-    </message>
-    <message>
-        <source>Reload items</source>
-        <translation type="obsolete">Herlaad items</translation>
-    </message>
-    <message>
-        <source>Show discovery info</source>
-        <translation type="obsolete">Toon discovery informatie</translation>
-    </message>
-    <message>
-        <source>Add item to roster</source>
-        <translation type="obsolete">Voeg item toe in rooster</translation>
-    </message>
-    <message>
-        <source>Close discovery window</source>
-        <translation type="obsolete">Sluit discovery venster</translation>
     </message>
     <message>
         <source>Supports the exchange of the discovery information and items</source>
@@ -192,7 +174,7 @@
     </message>
     <message>
         <source>Discovery Items</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Supports the exchange of the discovery items</source>
@@ -207,28 +189,12 @@
         <translation>Ondersteunt de uitgave van de discovery items</translation>
     </message>
     <message>
-        <source>Entity Capabilities</source>
-        <translation>Dienst mogelijkheden</translation>
-    </message>
-    <message>
         <source>Supports the caching of the discovery information</source>
         <translation>Ondersteunt de caching van de discovery informatie</translation>
     </message>
     <message>
-        <source>JID Escaping</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Supports the displaying of the jabber identifiers with disallowed characters</source>
         <translation>Ondersteunt het tonen van de Jabber identificaties met niet toegestane tekens</translation>
-    </message>
-    <message>
-        <source>Discovery Info</source>
-        <translation>Discovery informatie</translation>
-    </message>
-    <message>
-        <source>Show Profile</source>
-        <translation type="obsolete">Toon profiel</translation>
     </message>
 </context>
 </TS>

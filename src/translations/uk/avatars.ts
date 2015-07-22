@@ -1,47 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>AvatarOptionsWidget</name>
     <message>
-        <source>Avatars</source>
-        <translation type="obsolete">Аватари</translation>
-    </message>
-    <message>
-        <source>Show avatars</source>
-        <translation type="obsolete">Показувати аватари</translation>
+        <source>Avatar position</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>At Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>At Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show empty avatars</source>
-        <translation type="obsolete">Показати відсутні аватари</translation>
-    </message>
-    <message>
-        <source>Show grayscaled avatars for offline contacts</source>
-        <translation type="obsolete">Показувати аватари відключених контактів сірим</translation>
-    </message>
-    <message>
-        <source>Avatar position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Display avatars for offline contacts grayscaled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Display empty avatars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Display avatars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
 <context>
     <name>AdiumMessageStyle</name>
     <message>
@@ -106,7 +104,7 @@
     </message>
     <message>
         <source>not set</source>
-        <translation type="obsolete">sin establecer</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

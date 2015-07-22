@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
 <context>
     <name>AddContactDialog</name>
     <message>
@@ -197,10 +195,7 @@
     </message>
     <message numerus="yes">
         <source>You are assured that wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from roster?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Add Contact</source>
@@ -308,24 +303,24 @@
     </message>
     <message>
         <source>Contacts list management</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically accept all subscription requests</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove subscription when you was deleted from contacts list</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Del</source>
         <comment>Remove contact/group from roster</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Into this Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

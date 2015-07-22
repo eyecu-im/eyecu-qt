@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>Activity</name>
     <message>
@@ -48,10 +46,6 @@
         <translation>Werken</translation>
     </message>
     <message>
-        <source>No activity</source>
-        <translation>Geen activiteit</translation>
-    </message>
-    <message>
         <source>Buying groceries</source>
         <translation>Boodschappen doen</translation>
     </message>
@@ -65,11 +59,10 @@
     </message>
     <message>
         <source>Doing maintenance</source>
-        <translation></translation>
+        <translation>Onderhoudswerkzaamheden</translation>
     </message>
     <message>
         <source>Doing the dishes</source>
-        <translatorcomment>Onderhoud doen</translatorcomment>
         <translation>De afwas doen</translation>
     </message>
     <message>
@@ -202,7 +195,7 @@
     </message>
     <message>
         <source>Sleeping</source>
-        <translation></translation>
+        <translation>Slapen</translation>
     </message>
     <message>
         <source>Thinking</source>
@@ -345,10 +338,6 @@
         <translation>Ontvangt een melding van huidige gebruikers activiteit</translation>
     </message>
     <message>
-        <source>Show activity</source>
-        <translation type="obsolete">Toon activiteit</translation>
-    </message>
-    <message>
         <source>%1 changed activity to %2</source>
         <translation>%1 veranderd activiteit naar %2</translation>
     </message>
@@ -359,12 +348,12 @@
     <message>
         <source>Ctrl+F6</source>
         <comment>Set activity (for all accounts)</comment>
-        <translation></translation>
+        <translation>Ctrl+F6</translation>
     </message>
     <message>
         <source>F6</source>
         <comment>Set activity (for an account)</comment>
-        <translation></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <source>When user activity changed</source>
@@ -375,20 +364,20 @@
         <translation>Veranderd activiteit tot: %1</translation>
     </message>
     <message>
-        <source>Display activity in chat</source>
-        <translation type="obsolete">Toon activiteit in chat</translation>
+        <source>No activity</source>
+        <translation>Geen activiteit</translation>
     </message>
     <message>
         <source>Show user activity icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon activiteit pictogram van gebruiker</translation>
     </message>
     <message>
         <source>Display user activity icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon activiteit pictogram van gebruiker</translation>
     </message>
     <message>
         <source>Activity events in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Activiteits gebeurtenissen in de chat</translation>
     </message>
 </context>
 <context>

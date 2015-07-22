@@ -1,12 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>RosterSearch</name>
-    <message>
-        <source>Show search toolbar</source>
-        <translation>Toon zoek werkbalk</translation>
-    </message>
     <message>
         <source>Search toolbar</source>
         <translation>Zoek werkbalk</translation>
@@ -16,8 +10,8 @@
         <translation>Zoek Rooster</translation>
     </message>
     <message>
-        <source>Allows to search for contacts in the roster</source>
-        <translation>Toestaan te zoeken voor contactpersonen in het rooster</translation>
+        <source>Show search toolbar</source>
+        <translation>Toon zoek werkbalk</translation>
     </message>
     <message>
         <source>Name</source>
@@ -30,6 +24,10 @@
     <message>
         <source>Jabber ID</source>
         <translation>Jabber ID</translation>
+    </message>
+    <message>
+        <source>Allows to search for contacts in the roster</source>
+        <translation>Toestaan te zoeken voor contactpersonen in het rooster</translation>
     </message>
     <message>
         <source>Group</source>

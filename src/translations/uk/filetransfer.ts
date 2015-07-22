@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>FileTransfer</name>
     <message>
@@ -60,18 +58,6 @@
         <translation>Підтримує передачу файлу іншому контакту</translation>
     </message>
     <message>
-        <source>Automatically receive files from contacts in roster</source>
-        <translation type="obsolete">Автоматично приймати файли від контактів в ростері</translation>
-    </message>
-    <message>
-        <source>Hide dialog after transfer started</source>
-        <translation type="obsolete">Ховати діалог після початку передачі</translation>
-    </message>
-    <message>
-        <source>Automatically remove finished transfers</source>
-        <translation type="obsolete">Автоматично видаляти завершені передачі</translation>
-    </message>
-    <message>
         <source>File &apos;%1&apos; successfully sent.</source>
         <translation>Файл &apos;%1&apos; успішно надісланий.</translation>
     </message>
@@ -98,15 +84,15 @@
     <message>
         <source>Ctrl+S</source>
         <comment>Send file</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically receive files from authorized contacts</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide file transfer dialog after transfer started</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -259,16 +245,8 @@
         <translation>Статус:</translation>
     </message>
     <message>
-        <source>Profile:</source>
-        <translation type="obsolete">Профіль:</translation>
-    </message>
-    <message>
-        <source>Select data stream and settings profile</source>
-        <translation type="obsolete">Виберіть потік даних і профіль налаштуванням</translation>
-    </message>
-    <message>
         <source>Method:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk_UA" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>EditProfilesDialog</name>
     <message>
@@ -83,48 +81,28 @@
 <context>
     <name>EditProfilesDialogClass</name>
     <message>
-        <source>Edit Profiles</source>
-        <translation type="obsolete">Редагувати профіль</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="obsolete">Додати</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation type="obsolete">Пароль</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="obsolete">переіменувати</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Відалити</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <source>Profiles Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change Password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Rename Profile</source>
-        <translation type="unfinished">Переіменувати Профіль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Profiles Settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -161,12 +139,8 @@
         <translation>Пароль:</translation>
     </message>
     <message>
-        <source>Profiles</source>
-        <translation type="obsolete">Профілі</translation>
-    </message>
-    <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -195,69 +169,61 @@
         <translation>Змінити профіль</translation>
     </message>
     <message>
-        <source>Misc</source>
-        <translation type="obsolete">Різне</translation>
-    </message>
-    <message>
-        <source>Auto run on system startup</source>
-        <translation type="obsolete">Автоматично запускати при старті системи</translation>
-    </message>
-    <message>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <source>Common</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Common settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto run application on system startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;System Language&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Options mode changed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Display advanced options?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

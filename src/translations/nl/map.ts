@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>Map</name>
     <message>
@@ -20,13 +18,9 @@
         <translation>Nieuw centrum</translation>
     </message>
     <message>
-        <source>Update zoom during slider movement</source>
-        <translation type="unfinished">Zoom bijwerken tijdens schuif beweging</translation>
-    </message>
-    <message>
         <source>Ctrl+N</source>
         <comment>New center</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle map</source>
@@ -35,7 +29,7 @@
     <message>
         <source>Ctrl+F10</source>
         <comment>Toggle map</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Refresh</source>
@@ -44,7 +38,7 @@
     <message>
         <source>F5</source>
         <comment>Refresh map</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Movement</source>
@@ -68,16 +62,16 @@
     </message>
     <message>
         <source>Zoom</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>In</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>+</source>
         <comment>Map zoom in</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Out</source>
@@ -86,7 +80,7 @@
     <message>
         <source>-</source>
         <comment>Map zoom out</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ctrl+Left</source>
@@ -115,7 +109,7 @@
     <message>
         <source>Ctrl+O</source>
         <comment>Show options dialog</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Options</source>
@@ -128,32 +122,35 @@
     <message>
         <source>Ctrl+M</source>
         <comment>My location</comment>
-        <translatorcomment>Mijn locatie</translatorcomment>
         <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>Display &quot;Loading&quot; tiles</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Combine map window with contact list</source>
-        <translation type="unfinished">Kaart venster combineren met lijst met contactpersonen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mouse wheel zooming</source>
-        <translation type="unfinished">Muiswiel zoomen</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Update zoom during slider movement</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Relative to map center</source>
-        <translation type="unfinished">Relatief tot middelpunt kaart</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Relative to mouse position</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Follow mouse pointer</source>
-        <translation type="unfinished">Volg muis aanwijzer</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -164,7 +161,7 @@
     </message>
     <message>
         <source>Joystick</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Right</source>
@@ -236,19 +233,19 @@
     </message>
     <message>
         <source>%1S</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>%1N</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>%1W</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>%1E</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -258,12 +255,8 @@
         <translation>Kaart opties</translation>
     </message>
     <message>
-        <source>On-screen display</source>
-        <translation type="obsolete">Schermweergave</translation>
-    </message>
-    <message>
         <source>Labels</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Text color</source>
@@ -355,7 +348,7 @@
     </message>
     <message>
         <source>Box</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Panel</source>
@@ -368,10 +361,6 @@
     <message>
         <source>Styled panel</source>
         <translation>Stijl paneel</translation>
-    </message>
-    <message>
-        <source>Combine map window with contact list</source>
-        <translation type="obsolete">Kaart venster combineren met lijst met contactpersonen</translation>
     </message>
     <message>
         <source>Select text color</source>
@@ -434,22 +423,6 @@
         <translation>Selecteer box achtergrond kleur</translation>
     </message>
     <message>
-        <source>Mouse wheel zooming</source>
-        <translation type="obsolete">Muiswiel zoomen</translation>
-    </message>
-    <message>
-        <source>Relative to mouse pointer position</source>
-        <translation type="obsolete">Relatief tot muis aanwijzer positie</translation>
-    </message>
-    <message>
-        <source>Relative to map center</source>
-        <translation type="obsolete">Relatief tot middelpunt kaart</translation>
-    </message>
-    <message>
-        <source>Follow mouse pointer</source>
-        <translation type="obsolete">Volg muis aanwijzer</translation>
-    </message>
-    <message>
         <source>Center marker</source>
         <translation>Centrale markering</translation>
     </message>
@@ -460,10 +433,6 @@
     <message>
         <source>Select center marker color</source>
         <translation>Selecteer centrale markering kleur</translation>
-    </message>
-    <message>
-        <source>Update zoom during slider movement</source>
-        <translation type="obsolete">Zoom bijwerken tijdens schuif beweging</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>ConnectionManager</name>
     <message>
@@ -73,15 +71,11 @@
     </message>
     <message>
         <source>Connection</source>
-        <translation type="unfinished">З&apos;єднання</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ConnectionOptionsWidgetClass</name>
-    <message>
-        <source>Connection</source>
-        <translation type="obsolete">З&apos;єднання</translation>
-    </message>
     <message>
         <source>Connection:</source>
         <translation>З&apos;єднання:</translation>

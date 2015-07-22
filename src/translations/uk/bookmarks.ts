@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>Bookmarks</name>
     <message>
@@ -10,18 +8,6 @@
     <message>
         <source>Allows to create bookmarks at the jabber conference and web pages</source>
         <translation>Дозволяє створювати закладки для конференцій та веб-сторінок</translation>
-    </message>
-    <message>
-        <source>Edit bookmark</source>
-        <translation type="obsolete">Редагувати закладку</translation>
-    </message>
-    <message>
-        <source>Disable autojoin to conferences</source>
-        <translation type="obsolete">Не входити автоматично до конференцій</translation>
-    </message>
-    <message>
-        <source>Automatically show window of conferences connected at startup</source>
-        <translation type="obsolete">Показувати вікна конференцій, що підключаються автоматично, при старті</translation>
     </message>
     <message>
         <source>Edit Bookmarks</source>
@@ -53,15 +39,15 @@
     </message>
     <message>
         <source>Conferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Disable auto join to conferences on this computer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show windows of auto joined conferences at startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

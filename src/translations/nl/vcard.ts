@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>EditItemDialogClass</name>
     <message>
@@ -10,6 +8,34 @@
 </context>
 <context>
     <name>VCardDialog</name>
+    <message>
+        <source>Save image</source>
+        <translation>Afbeelding opslaan</translation>
+    </message>
+    <message>
+        <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
+        <translation>Afbeelding bestanden (*.png *.jpg *.bmp *.gif)</translation>
+    </message>
+    <message>
+        <source>Open image</source>
+        <translation>Open afbeelding</translation>
+    </message>
+    <message>
+        <source>EMail:</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
+        <source>Phone:</source>
+        <translation>Telefoon:</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translation>Herladen</translation>
+    </message>
+    <message>
+        <source>Service unavailable</source>
+        <translation>Service niet beschikbaar</translation>
+    </message>
     <message>
         <source>&lt;Unset&gt;</source>
         <translation>&lt;Uitgeschakeld&gt;</translation>
@@ -23,40 +49,12 @@
         <translation>Vrouw</translation>
     </message>
     <message>
-        <source>Reload</source>
-        <translation>Herladen</translation>
-    </message>
-    <message>
-        <source>Service unavailable</source>
-        <translation>Service niet beschikbaar</translation>
-    </message>
-    <message>
         <source>Size: %1 Kb</source>
         <translation>Grootte: %1 kb</translation>
     </message>
     <message>
-        <source>Save image</source>
-        <translation>Afbeelding opslaan</translation>
-    </message>
-    <message>
         <source>Image Files (*.%1)</source>
         <translation>Afbeelding bestanden (*.%1)</translation>
-    </message>
-    <message>
-        <source>Open image</source>
-        <translation>Open afbeelding</translation>
-    </message>
-    <message>
-        <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
-        <translation>Afbeelding bestanden (*.png *.jpg *.bmp *.gif)</translation>
-    </message>
-    <message>
-        <source>EMail:</source>
-        <translation>Email:</translation>
-    </message>
-    <message>
-        <source>Phone:</source>
-        <translation>Telefoon:</translation>
     </message>
     <message>
         <source>Profile - %1</source>
@@ -65,10 +63,6 @@
     <message>
         <source>Error</source>
         <translation>Fout</translation>
-    </message>
-    <message>
-        <source>Failed to load profile: %1</source>
-        <translation>Mislukt om profiel te laden: %1</translation>
     </message>
     <message>
         <source>Failed to publish your profile: %1</source>
@@ -81,6 +75,10 @@
     <message>
         <source>Failed to load profile.</source>
         <translation>Mislukt om profiel te laden.</translation>
+    </message>
+    <message>
+        <source>Failed to load profile: %1</source>
+        <translation>Mislukt om profiel te laden: %1</translation>
     </message>
 </context>
 <context>
@@ -111,7 +109,7 @@
     </message>
     <message>
         <source>Jabber Id</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Personal</source>
@@ -128,10 +126,6 @@
     <message>
         <source>Gender</source>
         <translation>Geslacht</translation>
-    </message>
-    <message>
-        <source>Marital status</source>
-        <translation>Burgelijke staat</translation>
     </message>
     <message>
         <source>Occupation</source>
@@ -152,10 +146,6 @@
     <message>
         <source>Home page</source>
         <translation>Startpagina</translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <translation>Adres</translation>
     </message>
     <message>
         <source>Home</source>
@@ -211,7 +201,7 @@
     </message>
     <message>
         <source>Save</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Load</source>
@@ -219,7 +209,7 @@
     </message>
     <message>
         <source>Clear</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Logo</source>
@@ -229,80 +219,57 @@
         <source>Comments</source>
         <translation>Commentaren</translation>
     </message>
+    <message>
+        <source>Marital status</source>
+        <translation>Burgelijke staat</translation>
+    </message>
+    <message>
+        <source>Address</source>
+        <translation>Adres</translation>
+    </message>
 </context>
 <context>
     <name>VCardManager</name>
     <message>
         <source>Visit Card Manager</source>
-        <translation type="unfinished">Bezoek Kaart manager</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Allows to obtain personal contact information</source>
-        <translation type="unfinished">Toelaten om persoonlijke contact informatie te verkrijgen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show contact profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Show contact profile</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>User Profile</source>
-        <translation type="unfinished">Gebruikers Profiel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Restrict maximum vCard images size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Contact Profile</source>
-        <translation type="unfinished">Contactpersoon Profiel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Supports the requesting of the personal contact information</source>
-        <translation type="unfinished">Ondersteunt het aanvragen van de persoonlijke contact informatie</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show Profile</source>
-        <translation type="unfinished">Toon profiel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Edit Profile</source>
-        <translation type="unfinished">Bewerk Profiel</translation>
-    </message>
-</context>
-<context>
-    <name>VCardPlugin</name>
-    <message>
-        <source>Visit Card Manager</source>
-        <translation type="obsolete">Bezoek Kaart manager</translation>
-    </message>
-    <message>
-        <source>Allows to obtain personal contact information</source>
-        <translation type="obsolete">Toelaten om persoonlijke contact informatie te verkrijgen</translation>
-    </message>
-    <message>
-        <source>Supports the requesting of the personal contact information</source>
-        <translation type="obsolete">Ondersteunt het aanvragen van de persoonlijke contact informatie</translation>
-    </message>
-    <message>
-        <source>Show Profile</source>
-        <translation type="obsolete">Toon profiel</translation>
-    </message>
-    <message>
-        <source>Contact Profile</source>
-        <translation type="obsolete">Contactpersoon Profiel</translation>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="obsolete">Bewerk Profiel</translation>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation type="obsolete">Gebruikers Profiel</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -548,32 +548,32 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
 <context>
     <name>WizardAccount</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="16"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="14"/>
         <source>Connection Wizard</source>
         <translation>Мастер Подключения</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="17"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="15"/>
         <source>A Wizard, which helps unexperienced user to connect to Jabber network</source>
         <translation>Мастер, помогающий неопытному пользователю подключиться к сети Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="55"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="53"/>
         <source>Create an account?</source>
         <translation>Создать аккаунт?</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="56"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="54"/>
         <source>It seems, you don&apos;t have a Jabber account yet. Do you want to start a Wizard, which will help you to connect to Jabber?</source>
         <translation>Похоже, у Вас пока нет аккаунта. Вы хотите запустить Мастер, который поможет Вам подключиться к Jabber?</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>
         <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; link on &quot;Accounts&quot; page in the Options dialog.</source>
         <translation>Вы можете запустить Мастер Подключения в любой момент, нажав кнопку &quot;%1&quot; на странице &quot;Аккаунты&quot; в диалоге Настроек.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>
         <source>Add account</source>
         <translation>Добавить аккаунт</translation>
     </message>
