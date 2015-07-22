@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>TuneInfoRequesterLastFm</name>
     <message>
@@ -16,19 +14,15 @@
     <message>
         <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.h" line="50"/>
         <source>last.fm</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>TuneInfoRequesterLastFmOptions</name>
     <message>
-        <source>last.fm options</source>
-        <translation type="obsolete">last fm opties</translation>
-    </message>
-    <message>
         <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="35"/>
         <source>last.fm</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="97"/>
