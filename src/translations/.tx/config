@@ -4,27 +4,22 @@ host = https://www.transifex.com
 [eyecu-qt.rosterchangerts]
 file_filter = <lang>/rosterchanger.ts
 source_lang = en
-type = TS
 
 [eyecu-qt.messageprocessorts]
 file_filter = <lang>/messageprocessor.ts
 source_lang = en
-type = TS
 
 [eyecu-qt.dataformsts]
 file_filter = <lang>/dataforms.ts
 source_lang = en
-type = TS
 
 [eyecu-qt.shortcutmanagerts]
 file_filter = <lang>/shortcutmanager.ts
 source_lang = en
-type = TS
 
 [eyecu-qt.captchaformsts]
 file_filter = <lang>/captchaforms.ts
 source_lang = en
-type = TS
 
 [eyecu-qt.eyecuts]
 file_filter = <lang>/eyecu.ts
@@ -276,4 +271,304 @@ source_lang = en
 
 [eyecu-qt.metacontactsts]
 file_filter = <lang>/metacontacts.ts
+source_lang = en
+
+[eyecu-qt.abbreviationsts]
+file_filter = <lang>/abbreviations.ts
+source_lang = en
+
+[eyecu-qt.activityts]
+file_filter = <lang>/activity.ts
+source_lang = en
+
+[eyecu-qt.attentionts]
+file_filter = <lang>/attention.ts
+source_lang = en
+
+[eyecu-qt.boburlhandlerts]
+file_filter = <lang>/boburlhandler.ts
+source_lang = en
+
+[eyecu-qt.clienticonsts]
+file_filter = <lang>/clienticons.ts
+source_lang = en
+
+[eyecu-qt.contactproximitynotificationts]
+file_filter = <lang>/contactproximitynotification.ts
+source_lang = en
+
+[eyecu-qt.geolocts]
+file_filter = <lang>/geoloc.ts
+source_lang = en
+
+[eyecu-qt.jinglets]
+file_filter = <lang>/jingle.ts
+source_lang = en
+
+[eyecu-qt.jingletransporticeudpts]
+file_filter = <lang>/jingletransporticeudp.ts
+source_lang = en
+
+[eyecu-qt.jingletransportrawudpts]
+file_filter = <lang>/jingletransportrawudp.ts
+source_lang = en
+
+[eyecu-qt.mapts]
+file_filter = <lang>/map.ts
+source_lang = en
+
+[eyecu-qt.mapcontactsts]
+file_filter = <lang>/mapcontacts.ts
+source_lang = en
+
+[eyecu-qt.maplocationselectorts]
+file_filter = <lang>/maplocationselector.ts
+source_lang = en
+
+[eyecu-qt.mapmagnifierts]
+file_filter = <lang>/mapmagnifier.ts
+source_lang = en
+
+[eyecu-qt.mapmessagets]
+file_filter = <lang>/mapmessage.ts
+source_lang = en
+
+[eyecu-qt.mapsearchts]
+file_filter = <lang>/mapsearch.ts
+source_lang = en
+
+[eyecu-qt.mapsearchprovider2gists]
+file_filter = <lang>/mapsearchprovider2gis.ts
+source_lang = en
+
+[eyecu-qt.mapsearchprovidergooglets]
+file_filter = <lang>/mapsearchprovidergoogle.ts
+source_lang = en
+
+[eyecu-qt.mapsearchproviderherets]
+file_filter = <lang>/mapsearchproviderhere.ts
+source_lang = en
+
+[eyecu-qt.mapsearchprovidernavitelts]
+file_filter = <lang>/mapsearchprovidernavitel.ts
+source_lang = en
+
+[eyecu-qt.mapsearchproviderosmts]
+file_filter = <lang>/mapsearchproviderosm.ts
+source_lang = en
+
+[eyecu-qt.mapsearchprovideryandexts]
+file_filter = <lang>/mapsearchprovideryandex.ts
+source_lang = en
+
+[eyecu-qt.mapsource2gists]
+file_filter = <lang>/mapsource2gis.ts
+source_lang = en
+
+[eyecu-qt.mapsourcebingts]
+file_filter = <lang>/mapsourcebing.ts
+source_lang = en
+
+[eyecu-qt.mapsourceesrits]
+file_filter = <lang>/mapsourceesri.ts
+source_lang = en
+
+[eyecu-qt.mapsourcegooglets]
+file_filter = <lang>/mapsourcegoogle.ts
+source_lang = en
+
+[eyecu-qt.mapsourcekosmosnimkits]
+file_filter = <lang>/mapsourcekosmosnimki.ts
+source_lang = en
+
+[eyecu-qt.mapsourcemailruts]
+file_filter = <lang>/mapsourcemailru.ts
+source_lang = en
+
+[eyecu-qt.mapsourcemegafonts]
+file_filter = <lang>/mapsourcemegafon.ts
+source_lang = en
+
+[eyecu-qt.mapsourcenavitelts]
+file_filter = <lang>/mapsourcenavitel.ts
+source_lang = en
+
+[eyecu-qt.mapsourcenavteqts]
+file_filter = <lang>/mapsourcenavteq.ts
+source_lang = en
+
+[eyecu-qt.mapsourceosmts]
+file_filter = <lang>/mapsourceosm.ts
+source_lang = en
+
+[eyecu-qt.mapsourceovits]
+file_filter = <lang>/mapsourceovi.ts
+source_lang = en
+
+[eyecu-qt.mapsourceprogorodts]
+file_filter = <lang>/mapsourceprogorod.ts
+source_lang = en
+
+[eyecu-qt.mapsourcerosreestrts]
+file_filter = <lang>/mapsourcerosreestr.ts
+source_lang = en
+
+[eyecu-qt.mapsourcerumapts]
+file_filter = <lang>/mapsourcerumap.ts
+source_lang = en
+
+[eyecu-qt.mapsourcerumapts]
+file_filter = <lang>/mapsourcerumap.ts
+source_lang = en
+
+[eyecu-qt.mapsourcevitelts]
+file_filter = <lang>/mapsourcevitel.ts
+source_lang = en
+
+[eyecu-qt.activityts]
+file_filter = <lang>/activity.ts
+source_lang = en
+
+[eyecu-qt.mapsourcewikits]
+file_filter = <lang>/mapsourcewiki.ts
+source_lang = en
+
+[eyecu-qt.mapsourceyahoots]
+file_filter = <lang>/mapsourceyahoo.ts
+source_lang = en
+
+[eyecu-qt.mapsourceyandexts]
+file_filter = <lang>/mapsourceyandex.ts
+source_lang = en
+
+[eyecu-qt.activityts]
+file_filter = <lang>/activity.ts
+source_lang = en
+
+[eyecu-qt.mmplayerts]
+file_filter = <lang>/mmplayer.ts
+source_lang = en
+
+[eyecu-qt.moodts]
+file_filter = <lang>/mood.ts
+source_lang = en
+
+[eyecu-qt.nicknamets]
+file_filter = <lang>/nickname.ts
+source_lang = en
+
+[eyecu-qt.oobts]
+file_filter = <lang>/oob.ts
+source_lang = en
+
+[eyecu-qt.placeviewts]
+file_filter = <lang>/placeview.ts
+source_lang = en
+
+[eyecu-qt.placeviewprovidergooglets]
+file_filter = <lang>/placeviewprovidergoogle.ts
+source_lang = en
+
+[eyecu-qt.poits]
+file_filter = <lang>/poi.ts
+source_lang = en
+
+[eyecu-qt.positioningts]
+file_filter = <lang>/positioning.ts
+source_lang = en
+
+[eyecu-qt.positioningmethodipts]
+file_filter = <lang>/positioningmethodip.ts
+source_lang = en
+
+[eyecu-qt.positioningmethodipproviderfreegeoipts]
+file_filter = <lang>/positioningmethodipproviderfreegeoip.ts
+source_lang = en
+
+[eyecu-qt.positioningmethodlocationts]
+file_filter = <lang>/positioningmethodlocation.ts
+source_lang = en
+
+[eyecu-qt.positioningmethodmanualts]
+file_filter = <lang>/positioningmethodmanual.ts
+source_lang = en
+
+[eyecu-qt.positioningmethodserialportts]
+file_filter = <lang>/positioningmethodserialport.ts
+source_lang = en
+
+[eyecu-qt.receiptsts]
+file_filter = <lang>/receipts.ts
+source_lang = en
+
+[eyecu-qt.streetviewts]
+file_filter = <lang>/streetview.ts
+source_lang = en
+
+[eyecu-qt.streetviewprovidergooglets]
+file_filter = <lang>/streetviewprovidergoogle.ts
+source_lang = en
+
+[eyecu-qt.tunets]
+file_filter = <lang>/tune.ts
+source_lang = en
+
+[eyecu-qt.tuneinforequesterlastfmts]
+file_filter = <lang>/tuneinforequesterlastfm.ts
+source_lang = en
+
+[eyecu-qt.tunelisteneraimpts]
+file_filter = <lang>/tunelisteneraimp.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerfilets]
+file_filter = <lang>/tunelistenerfile.ts
+source_lang = en
+
+[eyecu-qt.tunelisteneritunests]
+file_filter = <lang>/tunelisteneritunes.ts
+source_lang = en
+
+[eyecu-qt.tunelistenermprists]
+file_filter = <lang>/tunelistenermpris.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerpm123ts]
+file_filter = <lang>/tunelistenerpm123.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerquplayerts]
+file_filter = <lang>/tunelistenerquplayer.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerquplayerts]
+file_filter = <lang>/tunelistenerquplayer.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerwinampts]
+file_filter = <lang>/tunelistenerwinamp.ts
+source_lang = en
+
+[eyecu-qt.tunelistenerzts]
+file_filter = <lang>/tunelistenerz.ts
+source_lang = en
+
+[eyecu-qt.weatherts]
+file_filter = <lang>/weather.ts
+source_lang = en
+
+[eyecu-qt.weatherprovideropenweatherts]
+file_filter = <lang>/weatherprovideropenweather.ts
+source_lang = en
+
+[eyecu-qt.wizardaccountts]
+file_filter = <lang>/wizardaccount.ts
+source_lang = en
+
+[eyecu-qt.wizardtransportts]
+file_filter = <lang>/wizardtransport.ts
+source_lang = en
+
+[eyecu-qt.xhtmlimts]
+file_filter = <lang>/xhtmlim.ts
 source_lang = en
