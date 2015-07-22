@@ -936,7 +936,11 @@ void RostersModel::onPresenceChanged(IPresence *APresence, int AShow, const QStr
 			{
 				QMultiMap<int, QVariant> findData;
 				findData.insertMulti(RDR_KIND, RIK_MY_RESOURCE);
-				selfIndex=groupIndex->findChilds(findData).first();
+				findData.insertMulti(RDR_FULL_JID, APresence->streamJid().full());
+				findData.insertMulti(RDR_STREAM_JID, APresence->streamJid().full());
+				QList<IRosterIndex *> children = groupIndex->findChilds(findData);
+				if (!children.isEmpty())
+					selfIndex=children.first();
 			}
 		}
 // *** >>> eyeCU >>> ***
