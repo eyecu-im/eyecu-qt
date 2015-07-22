@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="de" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" sourcelanguage="en" version="2.0">
 <context>
     <name>AddContactDialog</name>
     <message>
@@ -197,135 +195,132 @@
     </message>
     <message numerus="yes">
         <source>You are assured that wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from roster?</source>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Add Contact</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add Group with Contacts</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy Group to Root</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move Group to Root</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy Contact to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move Contact to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy Group to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move Group to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create New...</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>To Root</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Without Groups</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add Contact...</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Subscribe Contact</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsubscribe Contact</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Rename</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add to Roster...</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move to Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove from Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove from Roster</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove Contacts</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Rename Contact</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove Contact</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Rename Group</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Contacts list management</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically accept all subscription requests</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove subscription when you was deleted from contacts list</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Del</source>
         <comment>Remove contact/group from roster</comment>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Into this Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

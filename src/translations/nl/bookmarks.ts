@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>Bookmarks</name>
     <message>
@@ -10,26 +8,6 @@
     <message>
         <source>Allows to create bookmarks at the jabber conference and web pages</source>
         <translation>Toestaan om bladwijzers te maken bij een Jabber conferentie en webpagina&apos;s</translation>
-    </message>
-    <message>
-        <source>Edit bookmark</source>
-        <translation type="obsolete">Bewerk bladwijzer</translation>
-    </message>
-    <message>
-        <source>Disable autojoin to conferences</source>
-        <translation type="obsolete">Autojoin uitzetten bij conferenties</translation>
-    </message>
-    <message>
-        <source>Automatically show window of conferences connected at startup</source>
-        <translation type="obsolete">Toon verbinding venster van conferenties automatisch tijdens startup</translation>
-    </message>
-    <message>
-        <source>Rename Bookmark</source>
-        <translation>Hernoem bladwijzer</translation>
-    </message>
-    <message>
-        <source>Enter bookmark name:</source>
-        <translation>Voer bladwijzer naam in:</translation>
     </message>
     <message>
         <source>Edit Bookmarks</source>
@@ -48,20 +26,28 @@
         <translation>Bewerk bladwijzer</translation>
     </message>
     <message>
+        <source>Rename Bookmark</source>
+        <translation>Hernoem bladwijzer</translation>
+    </message>
+    <message>
+        <source>Enter bookmark name:</source>
+        <translation>Voer bladwijzer naam in:</translation>
+    </message>
+    <message>
         <source>Join to Conference at Startup</source>
         <translation>De conferentie binnengaan bij het opstarten</translation>
     </message>
     <message>
         <source>Conferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Disable auto join to conferences on this computer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show windows of auto joined conferences at startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -71,16 +57,16 @@
         <translation>Ongeldige bladwijzer</translation>
     </message>
     <message>
-        <source>In conference bookmark field &apos;Room&apos; should not be empty</source>
-        <translation>In conferentie bladwijzer mag het veld &apos;Kamer&apos;niet leeg zijn</translation>
+        <source>Field &apos;Name&apos; should not be empty</source>
+        <translation>Veld &apos;Naam&apos; mag niet leeg zijn</translation>
     </message>
     <message>
         <source>In URL bookmark field &apos;URL&apos; should not be empty</source>
         <translation>In URL bladwijzer mag het veld &apos;URL&apos; niet leeg zijn</translation>
     </message>
     <message>
-        <source>Field &apos;Name&apos; should not be empty</source>
-        <translation>Veld &apos;Naam&apos; mag niet leeg zijn</translation>
+        <source>In conference bookmark field &apos;Room&apos; should not be empty</source>
+        <translation>In conferentie bladwijzer mag het veld &apos;Kamer&apos;niet leeg zijn</translation>
     </message>
 </context>
 <context>
@@ -119,15 +105,11 @@
     </message>
     <message>
         <source>URL:</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditBookmarksDialog</name>
-    <message>
-        <source>Edit bookmarks - %1</source>
-        <translation>Bewerk Bladwijzers - %1</translation>
-    </message>
     <message>
         <source>Bookmarks not saved</source>
         <translation>Bladwijzer niet opgeslagen</translation>
@@ -135,6 +117,10 @@
     <message>
         <source>Cant save bookmarks to server</source>
         <translation>Kan bladwijzer niet op server opslaan</translation>
+    </message>
+    <message>
+        <source>Edit bookmarks - %1</source>
+        <translation>Bewerk Bladwijzers - %1</translation>
     </message>
 </context>
 <context>
@@ -149,7 +135,7 @@
     </message>
     <message>
         <source>JID/URL</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Nick</source>

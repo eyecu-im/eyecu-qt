@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>PortInfo</name>
     <message>
@@ -36,7 +34,7 @@
     <message>
         <location filename="../../plugins/positioningmethodserialport/portinfo.cpp" line="32"/>
         <source>Status</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/portinfo.cpp" line="32"/>
@@ -115,57 +113,40 @@
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="339"/>
         <source>RTS/CTS</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="340"/>
         <source>XON/XOFF</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="348"/>
         <source>bytes</source>
         <comment>Buffer size units</comment>
-        <translation>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="350"/>
         <source>seconds</source>
         <comment>Time treshold units</comment>
-        <translation>
-            <numerusform>seconde</numerusform>
-            <numerusform>secondes</numerusform>
-        </translation>
+        <translation><numerusform>seconde</numerusform><numerusform>secondes</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="352"/>
         <source>meters</source>
         <comment>Distance treshold units</comment>
-        <translation>
-            <numerusform>meter</numerusform>
-            <numerusform>meters</numerusform>
-        </translation>
+        <translation><numerusform>meter</numerusform><numerusform>meters</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="354"/>
         <source>milliseconds</source>
         <comment>Port timeout units</comment>
-        <translation>
-            <numerusform>milliseconde</numerusform>
-            <numerusform>millisecondes</numerusform>
-        </translation>
+        <translation><numerusform>milliseconde</numerusform><numerusform>millisecondes</numerusform></translation>
     </message>
 </context>
 <context>
     <name>PositioningProviderSerialPortOptions</name>
-    <message>
-        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="458"/>
-        <source>Information</source>
-        <translation>Informatie</translation>
-    </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="197"/>
         <source>Port selection</source>
@@ -179,7 +160,7 @@
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="245"/>
         <source>Baud rate:</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="252"/>
@@ -189,7 +170,12 @@
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="259"/>
         <source>Stop bits:</source>
-        <translation></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="269"/>
+        <source>Parity :</source>
+        <translation>Nominale waarde:</translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="279"/>
@@ -209,7 +195,7 @@
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="379"/>
         <source>Timeout</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="386"/>
@@ -232,14 +218,14 @@
         <translation>Satelieten</translation>
     </message>
     <message>
-        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="151"/>
-        <source>Test</source>
-        <translation></translation>
+        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="458"/>
+        <source>Information</source>
+        <translation>Informatie</translation>
     </message>
     <message>
-        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="269"/>
-        <source>Parity :</source>
-        <translation>Nominale waarde:</translation>
+        <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="151"/>
+        <source>Test</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

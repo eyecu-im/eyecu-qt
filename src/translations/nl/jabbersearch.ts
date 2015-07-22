@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>JabberSearch</name>
     <message>
         <source>Jabber Search</source>
         <translation>Jabber zoek</translation>
-    </message>
-    <message>
-        <source>Allows to search in the Jabber network</source>
-        <translation>Toestaan om in een Jabber netwerk te zoeken</translation>
     </message>
     <message>
         <source>Search</source>
@@ -32,6 +26,10 @@
         <translation>Email adres</translation>
     </message>
     <message>
+        <source>Allows to search in the Jabber network</source>
+        <translation>Toestaan om in een Jabber netwerk te zoeken</translation>
+    </message>
+    <message>
         <source>Supports the searching of the information</source>
         <translation>Ondersteunt het zoeken van informatie</translation>
     </message>
@@ -47,10 +45,6 @@
         <translation>Wacht op reactie van host ...</translation>
     </message>
     <message>
-        <source>Error: Can&apos;t send request to host.</source>
-        <translation>Fout: Kan geen aanvraag naar host versturen.</translation>
-    </message>
-    <message>
         <source>Disco info</source>
         <translation>Disco informatie</translation>
     </message>
@@ -60,11 +54,15 @@
     </message>
     <message>
         <source>vCard</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Requested operation failed: %1</source>
         <translation>Aangevraagde bewerking mislukt: %1</translation>
+    </message>
+    <message>
+        <source>Error: Can&apos;t send request to host.</source>
+        <translation>Fout: Kan geen aanvraag naar host versturen.</translation>
     </message>
 </context>
 <context>
@@ -83,11 +81,11 @@
     </message>
     <message>
         <source>Email:</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>JID</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>First</source>
@@ -103,7 +101,7 @@
     </message>
     <message>
         <source>EMail</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
 <context>
     <name>MainWindowPlugin</name>
     <message>
@@ -13,7 +11,7 @@
     </message>
     <message>
         <source>Show roster</source>
-        <translation type="obsolete">Mostar lista de contactos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Allows other modules to place their widgets in the main window</source>
@@ -26,7 +24,7 @@
     </message>
     <message>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

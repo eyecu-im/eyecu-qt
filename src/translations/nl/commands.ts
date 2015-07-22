@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>CommandDialog</name>
     <message>
@@ -47,16 +45,12 @@
         <translation>Ad Hoc opdrachten</translation>
     </message>
     <message>
-        <source>Allows to perform special commands provided by various services</source>
-        <translation>Maakt het mogelijk om speciale opdrachten door verschillende services te laten uitvoeren</translation>
-    </message>
-    <message>
         <source>Can not understand the specified action</source>
         <translation>Begrijp opgegeven actie niet</translation>
     </message>
     <message>
         <source>Can not accept the specified action</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Can not accept the specified language/locale</source>
@@ -85,6 +79,10 @@
     <message>
         <source>Request commands</source>
         <translation>Verzoek opdrachten</translation>
+    </message>
+    <message>
+        <source>Allows to perform special commands provided by various services</source>
+        <translation>Maakt het mogelijk om speciale opdrachten door verschillende services te laten uitvoeren</translation>
     </message>
     <message>
         <source>Supports the running or performing of the special services commands</source>

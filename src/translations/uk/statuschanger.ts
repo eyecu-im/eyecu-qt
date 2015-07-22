@@ -1,96 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
-<context>
-    <name>EditStatusDialog</name>
-    <message>
-        <source>Enter status name</source>
-        <translation type="obsolete">Введіть ім&apos;я статусу</translation>
-    </message>
-    <message>
-        <source>Status name:</source>
-        <translation type="obsolete">Ім&apos;я статусу:</translation>
-    </message>
-    <message>
-        <source>Wrong status name</source>
-        <translation type="obsolete">Невірне ім&apos;я статусу</translation>
-    </message>
-    <message>
-        <source>Can&apos;t delete status</source>
-        <translation type="obsolete">Неможливо видалити статус</translation>
-    </message>
-    <message>
-        <source>You can not delete standard statuses.</source>
-        <translation type="obsolete">Ви не можете видалити стандартні статуси.</translation>
-    </message>
-    <message>
-        <source>You can not delete active statuses.</source>
-        <translation type="obsolete">Ви не можете видалити активні статуси.</translation>
-    </message>
-    <message>
-        <source>Delete status</source>
-        <translation type="obsolete">Видалити статус</translation>
-    </message>
-    <message>
-        <source>You are assured that wish to remove a status &apos;&lt;b&gt;%1&lt;/b&gt;&apos;?</source>
-        <translation type="obsolete">Ви впевнені що хочете видалити статус &apos;&lt;b&gt;%1&lt;/b&gt;&apos;?</translation>
-    </message>
-    <message>
-        <source>Status with name &apos;&lt;b&gt;%1&lt;/b&gt;&apos; already exists</source>
-        <translation type="obsolete">Статус з ім&apos;ям  &apos;&lt;b&gt;%1&lt;/b&gt;&apos;  уже існує</translation>
-    </message>
-</context>
-<context>
-    <name>EditStatusDialogClass</name>
-    <message>
-        <source>Add</source>
-        <translation type="obsolete">Додати</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-    <message>
-        <source>Edit statuses</source>
-        <translation type="obsolete">Редагувати статуси</translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="obsolete">Ім&apos;я</translation>
-    </message>
-    <message>
-        <source>Status name displayed in status change menu</source>
-        <translation type="obsolete">Ім&apos;я статусу, що показується в меню зміни статусу</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <translation type="obsolete">Повідомлення</translation>
-    </message>
-    <message>
-        <source>Status message</source>
-        <translation type="obsolete">Повідомлення статусу</translation>
-    </message>
-    <message>
-        <source>Priority</source>
-        <translation type="obsolete">Пріоритет</translation>
-    </message>
-    <message>
-        <source>Status priority</source>
-        <translation type="obsolete">Пріоритет статусу</translation>
-    </message>
-    <message>
-        <source>Status type&lt;br&gt;
-Types for standard statuses are grayed out.
-You can set status class for additional statuses defined by you.</source>
-        <translation type="obsolete">Тип статусу&lt;br&gt;
-Типи стандартних статусів виділені сірим кольором.
-Ви можете встановити статус клас для додаткових статусів, визначених вами.</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="obsolete">Тип</translation>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
 <context>
     <name>ModifyStatusDialogClass</name>
     <message>
@@ -189,18 +97,6 @@ You can set status class for additional statuses defined by you.</source>
         <translation>Змінити статус</translation>
     </message>
     <message>
-        <source>Edit Statuses</source>
-        <translation type="obsolete">Редагувати статуси</translation>
-    </message>
-    <message>
-        <source>Auto connect on startup</source>
-        <translation type="obsolete">Авто-підключення при старті</translation>
-    </message>
-    <message>
-        <source>Auto reconnect if disconnected</source>
-        <translation type="obsolete">Автоматично відновлювати з&apos;єднання</translation>
-    </message>
-    <message>
         <source>I&apos;m away from my desk</source>
         <translation>Далеко від клавіатури</translation>
     </message>
@@ -214,54 +110,54 @@ You can set status class for additional statuses defined by you.</source>
     </message>
     <message>
         <source>Connect to server on startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Reconnect to server on connection errors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Standard and users statuses</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>StatusOptionsWidget</name>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Додати</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Статус</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Ім&apos;я</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Message</source>
-        <translation type="unfinished">Повідомлення</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Priority</source>
-        <translation type="unfinished">Пріоритет</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Can&apos;t delete status</source>
-        <translation type="unfinished">Неможливо видалити статус</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can not delete standard statuses.</source>
-        <translation type="unfinished">Ви не можете видалити стандартні статуси.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can not delete active statuses.</source>
-        <translation type="unfinished">Ви не можете видалити активні статуси.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

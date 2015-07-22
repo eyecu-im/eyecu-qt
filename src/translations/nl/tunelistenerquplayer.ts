@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>TuneListenerQuPlayer</name>
     <message>
@@ -16,10 +14,6 @@
 </context>
 <context>
     <name>TuneListenerQuPlayerOptions</name>
-    <message>
-        <source>QuPlayer tune listener options</source>
-        <translation type="obsolete">Quplayer luister melodie opties</translation>
-    </message>
     <message>
         <location filename="../../plugins/tunelistenerquplayer/tunelistenerquplayeroptions.ui" line="35"/>
         <source>QuPlayer</source>

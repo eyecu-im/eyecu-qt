@@ -1,71 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>EditListsDialog</name>
     <message>
         <source>Edit Privacy Lists - %1</source>
         <translation>Bewerk privacy lijst - %1</translation>
-    </message>
-    <message>
-        <source>&lt;None&gt;</source>
-        <translation>&lt;Geen&gt;</translation>
-    </message>
-    <message>
-        <source>jid</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>group</source>
-        <translation>groep</translation>
-    </message>
-    <message>
-        <source>subscription</source>
-        <translation>abonnement</translation>
-    </message>
-    <message>
-        <source>&lt;always&gt;</source>
-        <translation>&lt;altijd&gt;</translation>
-    </message>
-    <message>
-        <source>deny</source>
-        <translation>weiger</translation>
-    </message>
-    <message>
-        <source>allow</source>
-        <translation>toestaan</translation>
-    </message>
-    <message>
-        <source>messages</source>
-        <translation>bericht</translation>
-    </message>
-    <message>
-        <source>queries</source>
-        <translation>vragen</translation>
-    </message>
-    <message>
-        <source>pres-in</source>
-        <translation>indrukken</translation>
-    </message>
-    <message>
-        <source>pres-out</source>
-        <translation>uitdrukken</translation>
-    </message>
-    <message>
-        <source>&lt;any stanza&gt;</source>
-        <translation>&lt;elke stanza&gt;</translation>
-    </message>
-    <message>
-        <source>%1: if %2 = &apos;%3&apos; then %4 [%5 ]</source>
-        <translation>%1: als %2 = &apos;%3&apos; dan %4 [%5 ]</translation>
-    </message>
-    <message>
-        <source>&lt;action&gt;</source>
-        <translation>&lt;actie&gt;</translation>
-    </message>
-    <message>
-        <source>%1: always %2 [%3 ]</source>
-        <translation>%1: altijd %2 [%3 ]</translation>
     </message>
     <message>
         <source>Privacy List Error</source>
@@ -104,6 +42,58 @@
         <translation>Wel je echt privacy list verwijderen &apos;%1&apos; met reglementen?</translation>
     </message>
     <message>
+        <source>&lt;always&gt;</source>
+        <translation>&lt;altijd&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;action&gt;</source>
+        <translation>&lt;actie&gt;</translation>
+    </message>
+    <message>
+        <source>jid</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>group</source>
+        <translation>groep</translation>
+    </message>
+    <message>
+        <source>subscription</source>
+        <translation>abonnement</translation>
+    </message>
+    <message>
+        <source>deny</source>
+        <translation>weiger</translation>
+    </message>
+    <message>
+        <source>allow</source>
+        <translation>toestaan</translation>
+    </message>
+    <message>
+        <source>&lt;None&gt;</source>
+        <translation>&lt;Geen&gt;</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>bericht</translation>
+    </message>
+    <message>
+        <source>queries</source>
+        <translation>vragen</translation>
+    </message>
+    <message>
+        <source>pres-in</source>
+        <translation>indrukken</translation>
+    </message>
+    <message>
+        <source>pres-out</source>
+        <translation>uitdrukken</translation>
+    </message>
+    <message>
+        <source>&lt;any stanza&gt;</source>
+        <translation>&lt;elke stanza&gt;</translation>
+    </message>
+    <message>
         <source>none</source>
         <comment>Subscription type</comment>
         <translation>Geen</translation>
@@ -122,6 +112,14 @@
         <source>both</source>
         <comment>Subscription type</comment>
         <translation>Allebei</translation>
+    </message>
+    <message>
+        <source>%1: if %2 = &apos;%3&apos; then %4 [%5 ]</source>
+        <translation>%1: als %2 = &apos;%3&apos; dan %4 [%5 ]</translation>
+    </message>
+    <message>
+        <source>%1: always %2 [%3 ]</source>
+        <translation>%1: altijd %2 [%3 ]</translation>
     </message>
 </context>
 <context>
@@ -167,12 +165,12 @@
         <translation>Bewerk regel voorwaarde</translation>
     </message>
     <message>
-        <source>if</source>
-        <translation>als</translation>
+        <source>=</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>=</source>
-        <translation></translation>
+        <source>if</source>
+        <translation>als</translation>
     </message>
     <message>
         <source>then</source>
@@ -202,12 +200,8 @@
         <translation>Privacy lijst</translation>
     </message>
     <message>
-        <source>Allows to block unwanted contacts</source>
-        <translation>Toestaan om ongewenste contactpersonen te blokkeren</translation>
-    </message>
-    <message>
         <source>Privacy</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Visible Mode</source>
@@ -234,10 +228,6 @@
         <translation>- vragen: %1</translation>
     </message>
     <message>
-        <source>&lt;b&gt;denied&lt;/b&gt;</source>
-        <translation>&lt;b&gt;ontkende&lt;/b&gt;</translation>
-    </message>
-    <message>
         <source>allowed</source>
         <translation>toegestaan</translation>
     </message>
@@ -252,6 +242,14 @@
     <message>
         <source>- presences out: %1</source>
         <translation>- aanwezig uit: %1</translation>
+    </message>
+    <message>
+        <source>Allows to block unwanted contacts</source>
+        <translation>Toestaan om ongewenste contactpersonen te blokkeren</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;denied&lt;/b&gt;</source>
+        <translation>&lt;b&gt;ontkende&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Disable Privacy Lists</source>

@@ -1,15 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>UrlProcessor</name>
     <message>
-        <source>Allows other plugins to load data from custom types of URLs</source>
-        <translation>Toestaan om andere plugins de gegevens van aangepaste soorten URL&apos;s te laden</translation>
+        <source>URL processor</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>URL processor</source>
-        <translation></translation>
+        <source>Allows other plugins to load data from custom types of URLs</source>
+        <translation>Toestaan om andere plugins de gegevens van aangepaste soorten URL&apos;s te laden</translation>
     </message>
 </context>
 </TS>

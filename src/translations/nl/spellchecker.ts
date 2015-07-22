@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>SpellChecker</name>
     <message>
@@ -12,16 +10,16 @@
         <translation>Markeer woorden die niet correct worden gespeld</translation>
     </message>
     <message>
-        <source>Add &apos;%1&apos; to Dictionary</source>
-        <translation>Voeg &apos;%1&apos; toe aan Map</translation>
+        <source>Dictionary</source>
+        <translation>Woordenboek</translation>
     </message>
     <message>
         <source>Spell Check</source>
         <translation>Spellings Controle</translation>
     </message>
     <message>
-        <source>Dictionary</source>
-        <translation>Woordenboek</translation>
+        <source>Add &apos;%1&apos; to Dictionary</source>
+        <translation>Voeg &apos;%1&apos; toe aan Map</translation>
     </message>
 </context>
 </TS>

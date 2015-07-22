@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>MainWindowPlugin</name>
     <message>
@@ -8,29 +6,25 @@
         <translation>Hoofdvenster</translation>
     </message>
     <message>
-        <source>Allows other modules to place their widgets in the main window</source>
-        <translation>Toestaan dat andere modules hun widgets plaatsen in het hoofdvenster</translation>
-    </message>
-    <message>
-        <source>Main window</source>
-        <translation type="obsolete">Hoofdvenster</translation>
-    </message>
-    <message>
         <source>Quit</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <source>Show</source>
-        <translation>Toon</translation>
+        <source>Show roster</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Hide</source>
-        <translation type="obsolete">Verberg</translation>
+        <source>Allows other modules to place their widgets in the main window</source>
+        <translation>Toestaan dat andere modules hun widgets plaatsen in het hoofdvenster</translation>
     </message>
     <message>
         <source>Esc</source>
         <comment>Close main window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Toon</translation>
     </message>
 </context>
 </TS>

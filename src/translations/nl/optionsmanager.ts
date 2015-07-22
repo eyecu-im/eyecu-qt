@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>EditProfilesDialog</name>
     <message>
@@ -83,48 +81,28 @@
 <context>
     <name>EditProfilesDialogClass</name>
     <message>
-        <source>Edit Profiles</source>
-        <translation type="obsolete">Bewerk profiel</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="obsolete">Toevoegen</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation type="obsolete">Paswoord</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="obsolete">Hernoem</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Verwijder</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translation>Sluit</translation>
     </message>
     <message>
-        <source>Profiles Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change Password</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Rename Profile</source>
-        <translation type="unfinished">Hernoem profiel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Profiles Settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -161,12 +139,8 @@
         <translation>Paswoord:</translation>
     </message>
     <message>
-        <source>Profiles</source>
-        <translation type="obsolete">Profielen</translation>
-    </message>
-    <message>
         <source>Settings...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -191,14 +165,6 @@
         <translation>Opslaan laden en beheren van gebruikers voorkeuren toestaan</translation>
     </message>
     <message>
-        <source>Show change profile dialog</source>
-        <translation type="obsolete">Toon veranderd profiel dialoog</translation>
-    </message>
-    <message>
-        <source>Show options dialog</source>
-        <translation type="obsolete">Toon opties dialoog</translation>
-    </message>
-    <message>
         <source>Change Profile</source>
         <translation>Verander profiel</translation>
     </message>
@@ -207,65 +173,57 @@
         <translation>Opties</translation>
     </message>
     <message>
-        <source>Misc</source>
-        <translation type="obsolete">Overig</translation>
-    </message>
-    <message>
-        <source>Auto run on system startup</source>
-        <translation type="obsolete">Automatisch starten bij systeem start</translation>
-    </message>
-    <message>
-        <source>Common</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Appearance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Common settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto run application on system startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Localization</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;System Language&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Options mode changed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Display advanced options?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

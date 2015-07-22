@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
 <context>
     <name>Annotations</name>
     <message>
@@ -8,16 +6,12 @@
         <translation>Aantekeningen</translation>
     </message>
     <message>
-        <source>Allows to add comments to the contacts in the roster</source>
-        <translation>Toestaan om opmerking toe tevoegen aan contactpersonen in de rooster</translation>
-    </message>
-    <message>
-        <source>Edit annotation</source>
-        <translation type="obsolete">Bewerk aantekeningen</translation>
-    </message>
-    <message>
         <source>Annotation</source>
         <translation>Aantekeningen</translation>
+    </message>
+    <message>
+        <source>Allows to add comments to the contacts in the roster</source>
+        <translation>Toestaan om opmerking toe tevoegen aan contactpersonen in de rooster</translation>
     </message>
     <message>
         <source>&lt;b&gt;Annotation:&lt;/b&gt;</source>
