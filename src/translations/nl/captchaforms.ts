@@ -1,9 +1,19 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>CaptchaForms</name>
     <message>
         <source>CAPTCHA Forms</source>
         <translation>CAPTCHA formulieren</translation>
+    </message>
+    <message>
+        <source>Allows to undergo tests on humanity without the use of browser</source>
+        <translation>Toestaan om tests aangaande de mensheid te ondergaan zonder het gebruik van de browser</translation>
+    </message>
+    <message>
+        <source>When receiving a CAPTCHA challenge</source>
+        <translation>Wanneer heb je CAPTCHA uitdaging ontvangen</translation>
     </message>
     <message>
         <source>CAPTCHA Challenge - %1</source>
@@ -48,14 +58,6 @@
     <message>
         <source>You have received the CAPTCHA challenge</source>
         <translation>Je hebt de CAPTCHA uitdaging ontvangen</translation>
-    </message>
-    <message>
-        <source>Allows to undergo tests on humanity without the use of browser</source>
-        <translation>Toestaan om tests aangaande de mensheid te ondergaan zonder het gebruik van de browser</translation>
-    </message>
-    <message>
-        <source>When receiving a CAPTCHA challenge</source>
-        <translation>Wanneer heb je CAPTCHA uitdaging ontvangen</translation>
     </message>
 </context>
 </TS>

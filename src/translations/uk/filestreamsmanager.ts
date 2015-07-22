@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>FileStream</name>
     <message>
@@ -33,6 +35,10 @@
         <translation>Передачі файлів</translation>
     </message>
     <message>
+        <source>File Transfer</source>
+        <translation type="obsolete">Передача файлів</translation>
+    </message>
+    <message>
         <source>Allows to initiate a thread for transferring files between two XMPP entities</source>
         <translation>Дозволяє ініціювати потік для передачі файлів між двома XMPP-сутностями</translation>
     </message>
@@ -59,33 +65,63 @@
     <message>
         <source>Ctrl+T</source>
         <comment>Show file transfers</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File transfer</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Create separate folder for each sender</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Default transfer method:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FileStreamsOptions</name>
+    <message>
+        <source>Select default directory</source>
+        <translation type="obsolete">Виберіть директорію за замовчуванням</translation>
+    </message>
+</context>
+<context>
+    <name>FileStreamsOptionsClass</name>
+    <message>
+        <source>...</source>
+        <translation type="obsolete">...</translation>
+    </message>
+    <message>
+        <source>Default Downloads Directory:</source>
+        <translation type="obsolete">Директорія завантажень за замовчуванням:</translation>
+    </message>
+    <message>
+        <source>Default Data Stream:</source>
+        <translation type="obsolete">Потік даних за замовчуванням:</translation>
+    </message>
+    <message>
+        <source>Acceptable Data Streams</source>
+        <translation type="obsolete">Дозволені потоки даних</translation>
+    </message>
+    <message>
+        <source>Group downloads by sender</source>
+        <translation type="obsolete">Групувати завантаження за відправником</translation>
     </message>
 </context>
 <context>
     <name>FileStreamsOptionsWidget</name>
     <message>
         <source>Select default directory</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Виберіть директорію за замовчуванням</translation>
     </message>
 </context>
 <context>
     <name>FileStreamsOptionsWidgetClass</name>
     <message>
         <source>Default directory:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

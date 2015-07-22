@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>ShortcutManager</name>
     <message>
@@ -10,12 +12,12 @@
         <translation>Maakt het mogelijk om door de gebruiker gedefinieerde sneltoetsen instellen</translation>
     </message>
     <message>
-        <source>Shortcuts</source>
-        <translation>Snelkoppelingen</translation>
-    </message>
-    <message>
         <source>Hide all windows, tray icon and notifications</source>
         <translation>Verberg alle vensters, symbolen en meldingen</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Snelkoppelingen</translation>
     </message>
     <message>
         <source>Enter profile password:</source>

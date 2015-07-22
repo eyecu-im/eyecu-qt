@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>MapSearchProviderOsm</name>
     <message>
@@ -11,7 +13,7 @@
     </message>
     <message>
         <source>OSM</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
 </context>
 </TS>

@@ -1,11 +1,16 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>Positioning</name>
     <message>
+        <location filename="../../plugins/positioning/positioning.cpp" line="16"/>
+        <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
         <source>Positioning</source>
         <translation>Ligging</translation>
     </message>
     <message>
+        <location filename="../../plugins/positioning/positioning.cpp" line="17"/>
         <source>Allows to determine device position</source>
         <translation>Toelaten om apparaat positie vast te stellen</translation>
     </message>
@@ -13,20 +18,28 @@
 <context>
     <name>PositioningOptions</name>
     <message>
+        <source>Positioning</source>
+        <translation type="obsolete">Ligging</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/positioning/positioningoptions.ui" line="32"/>
         <source>Positioning method </source>
         <translation>Ligging methode</translation>
     </message>
     <message>
+        <location filename="../../plugins/positioning/positioningoptions.ui" line="73"/>
+        <source>Setup positioning method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/positioning/positioningoptions.ui" line="76"/>
+        <source>This button will display settings dialog for selected positioning method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/positioning/positioningoptions.cpp" line="15"/>
         <source>No positioning</source>
         <translation>Geen ligging</translation>
-    </message>
-    <message>
-        <source>Setup positioning method</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>This button will display settings dialog for selected positioning method</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

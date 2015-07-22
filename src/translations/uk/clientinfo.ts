@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>ClientInfo</name>
     <message>
@@ -58,6 +60,10 @@
         <translation>Час простою</translation>
     </message>
     <message>
+        <source>Share information about OS version</source>
+        <translation type="obsolete">Показувати інформацію про версію ОС</translation>
+    </message>
+    <message>
         <source>XMPP Ping</source>
         <translation>Пінг</translation>
     </message>
@@ -67,7 +73,7 @@
     </message>
     <message>
         <source>Share information about your OS version</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

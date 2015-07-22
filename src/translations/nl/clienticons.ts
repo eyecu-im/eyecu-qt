@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>ClientIcons</name>
     <message>
@@ -24,11 +26,11 @@
     <message>
         <source>F3</source>
         <comment>Show software version (chat)</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Display client icon</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

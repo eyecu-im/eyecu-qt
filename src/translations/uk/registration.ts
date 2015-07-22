@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>RegisterDialog</name>
     <message>
@@ -54,6 +56,13 @@
     </message>
 </context>
 <context>
+    <name>RegisterStream</name>
+    <message>
+        <source>Registration on %1</source>
+        <translation type="obsolete">Реєстрація на %1</translation>
+    </message>
+</context>
+<context>
     <name>Registration</name>
     <message>
         <source>Registration</source>
@@ -70,6 +79,10 @@
     <message>
         <source>Change password</source>
         <translation>Змінити пароль</translation>
+    </message>
+    <message>
+        <source>Register new account on server</source>
+        <translation type="unfinished">Зареєструвати новий аккаунт на сервері</translation>
     </message>
     <message>
         <source>Registration Form</source>
@@ -136,24 +149,28 @@
         <translation>Веб-сторінка</translation>
     </message>
     <message>
+        <source>Invalid registration form</source>
+        <translation type="obsolete">Невірна форма реєстрації</translation>
+    </message>
+    <message>
+        <source>Invalid registration dialog</source>
+        <translation type="obsolete">Невірний діалог реєстрації</translation>
+    </message>
+    <message>
         <source>Registration rejected by user</source>
         <translation>Реєстрація відмінена користувачем</translation>
     </message>
     <message>
         <source>Registration is not supported</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid registration fields</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Register new account on server</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>e-mail</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

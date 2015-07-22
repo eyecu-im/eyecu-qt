@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>NormalMessageHandler</name>
     <message>
@@ -59,6 +61,10 @@
         <translation>&lt;b&gt; Отримано повідомлення з помилкою&lt;/b&gt;</translation>
     </message>
     <message>
+        <source>Mark all single messages from user as read when you read the first one</source>
+        <translation type="obsolete">Позначити прочитаними всі одиночні повідомлення від користувача при прочитанні першого</translation>
+    </message>
+    <message>
         <source>Send</source>
         <translation>Надіслати</translation>
     </message>
@@ -88,7 +94,7 @@
     </message>
     <message>
         <source>Consider all single contacts messages as read when read the first</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

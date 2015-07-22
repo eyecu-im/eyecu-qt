@@ -1,9 +1,23 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>ChatStates</name>
     <message>
         <source>Chat State Notifications</source>
-        <translation type="unfinished"/>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Allows to share information about the user&apos;s activity in the chat</source>
+        <translation>Toestaan om informatie te delen over gebruikers activiteit in de chat</translation>
+    </message>
+    <message>
+        <source>When contact is typing the message for you</source>
+        <translation>Wanneer de contactpersoon een bericht voor je tikt</translation>
+    </message>
+    <message>
+        <source>Send chat state notifications</source>
+        <translation type="obsolete">Verstuur chat meldingen</translation>
     </message>
     <message>
         <source>Allow Chat State Notifications</source>
@@ -14,24 +28,16 @@
         <translation>Niet toestaan van chat meldingen</translation>
     </message>
     <message>
-        <source>Allows to share information about the user&apos;s activity in the chat</source>
-        <translation>Toestaan om informatie te delen over gebruikers activiteit in de chat</translation>
+        <source>Typing a message...</source>
+        <translation>Tikt een bericht....</translation>
     </message>
     <message>
         <source>Supports the exchanging of the information about the user&apos;s activity in the chat</source>
         <translation>Ondersteunt de uitwisseling van informatie over gebruikers activiteit in de chat</translation>
     </message>
     <message>
-        <source>When contact is typing the message for you</source>
-        <translation>Wanneer de contactpersoon een bericht voor je tikt</translation>
-    </message>
-    <message>
-        <source>Typing a message...</source>
-        <translation>Tikt een bericht....</translation>
-    </message>
-    <message>
         <source>Send notifications of your chat activity</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -41,8 +47,16 @@
         <translation>Standaard</translation>
     </message>
     <message>
-        <source>Unknown</source>
-        <translation>Onbekend</translation>
+        <source>Always send</source>
+        <translation>Altijd versturen</translation>
+    </message>
+    <message>
+        <source>Never send</source>
+        <translation>Nooit versturen</translation>
+    </message>
+    <message>
+        <source>User chat status</source>
+        <translation>Gebruiker chat status</translation>
     </message>
     <message>
         <source>Active</source>
@@ -57,24 +71,16 @@
         <translation>Pauze</translation>
     </message>
     <message>
-        <source>User chat status</source>
-        <translation>Gebruiker chat status</translation>
-    </message>
-    <message>
-        <source>Always send</source>
-        <translation>Altijd versturen</translation>
-    </message>
-    <message>
-        <source>Never send</source>
-        <translation>Nooit versturen</translation>
-    </message>
-    <message>
         <source>Inactive %1</source>
         <translation>Inactief %1</translation>
     </message>
     <message>
         <source>Gone %1</source>
         <translation>Weg %1</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Onbekend</translation>
     </message>
 </context>
 </TS>

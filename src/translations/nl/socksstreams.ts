@@ -1,107 +1,199 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>AdvancedSocksOptionsWidget</name>
     <message>
-        <source>Allow direct incoming connections on port:</source>
-        <translation type="unfinished"/>
+        <source>Outgoing Connections</source>
+        <translation type="obsolete">Uitgaande verbindingen</translation>
     </message>
     <message>
-        <source>Forward direct incoming connections to host:</source>
-        <translation type="unfinished"/>
+        <source>Use account connection proxy settings</source>
+        <translation type="obsolete">Gebruik account verbinding proxy instellingen</translation>
     </message>
     <message>
-        <source>Use jabber-proxy on your server</source>
-        <translation type="unfinished"/>
+        <source>Incoming Connections</source>
+        <translation type="obsolete">Inkomende verbindingen</translation>
+    </message>
+    <message>
+        <source>Stream Proxy</source>
+        <translation type="obsolete">Stream Proxy</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Toevoegen</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="obsolete">Omhoog</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="obsolete">Omlaag</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Verwijder</translation>
     </message>
     <message>
         <source>host:port</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>AdvancedSocksOptionsWidgetClass</name>
     <message>
         <source>Outgoing Connections</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Uitgaande verbindingen</translation>
     </message>
     <message>
         <source>Connection timeout:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use account connection proxy settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Gebruik account verbinding proxy instellingen</translation>
     </message>
     <message>
         <source>Incoming Connections</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Inkomende verbindingen</translation>
     </message>
     <message>
         <source>Allow direct incoming connections on port:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Forward direct incoming connections to host:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Stream Proxy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Stream Proxy</translation>
     </message>
     <message>
         <source>Use jabber-proxy on your server</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use additional jabber-proxies</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Toevoegen</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Omhoog</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Omlaag</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Verwijder</translation>
+    </message>
+</context>
+<context>
+    <name>SocksOptionsClass</name>
+    <message>
+        <source>Outgoing Connections</source>
+        <translation type="obsolete">Uitgaande verbindingen</translation>
+    </message>
+    <message>
+        <source>Connect timeout:</source>
+        <translation type="obsolete">Verbindings time-out:</translation>
+    </message>
+    <message>
+        <source>seconds</source>
+        <translation type="obsolete">seconden</translation>
+    </message>
+    <message>
+        <source>Connection Proxy</source>
+        <translation type="obsolete">Verbindings proxy</translation>
+    </message>
+    <message>
+        <source>Use account connection proxy settings</source>
+        <translation type="obsolete">Gebruik account verbinding proxy instellingen</translation>
+    </message>
+    <message>
+        <source>Incoming Connections</source>
+        <translation type="obsolete">Inkomende verbindingen</translation>
+    </message>
+    <message>
+        <source>Disable direct connections</source>
+        <translation type="obsolete">Zet directe verbindingen uit</translation>
+    </message>
+    <message>
+        <source>Listening port:</source>
+        <translation type="obsolete">Luisterpoort:</translation>
+    </message>
+    <message>
+        <source>Port Forwarding</source>
+        <translation type="obsolete">Poort forwarding</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation type="obsolete">Poort:</translation>
+    </message>
+    <message>
+        <source>Stream Proxy</source>
+        <translation type="obsolete">Stream Proxy</translation>
+    </message>
+    <message>
+        <source>Use proxy on account server</source>
+        <translation type="obsolete">Gebruik proxy op account server</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Toevoegen</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation type="obsolete">Omhoog</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation type="obsolete">Omlaag</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="obsolete">Verwijder</translation>
     </message>
 </context>
 <context>
     <name>SocksOptionsWidgetClass</name>
     <message>
         <source>Use jabber-proxy on your server</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use additional jabber-proxy:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Allow direct incoming connections on port:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Forward direct incoming connections to host:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use account proxy settings for outgoing connections</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>host:port</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use account proxy settings for outgoing connections</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

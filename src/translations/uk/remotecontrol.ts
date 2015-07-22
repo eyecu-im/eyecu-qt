@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>RemoteControl</name>
     <message>
@@ -139,7 +141,11 @@
     </message>
     <message numerus="yes">
         <source>%n message(s) from &apos;%1&apos;</source>
-        <translation><numerusform>%n повідомлення від &amp;amp;apos;%1&amp;amp;apos;</numerusform><numerusform>%n повідомлень від &amp;amp;apos;%1&amp;amp;apos;</numerusform><numerusform>%n повідомлення(ень) від &amp;amp;apos;%1&amp;amp;apos;</numerusform></translation>
+        <translation>
+            <numerusform>%n повідомлення від &amp;amp;apos;%1&amp;amp;apos;</numerusform>
+            <numerusform>%n повідомлень від &amp;amp;apos;%1&amp;amp;apos;</numerusform>
+            <numerusform>%n повідомлення(ень) від &amp;amp;apos;%1&amp;amp;apos;</numerusform>
+        </translation>
     </message>
     <message>
         <source>There are no unread messages</source>

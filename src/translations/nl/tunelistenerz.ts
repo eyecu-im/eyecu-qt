@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>TuneListenerZ</name>
     <message>
@@ -15,9 +17,13 @@
 <context>
     <name>TuneListenerZOptions</name>
     <message>
+        <source>Z! tune listener options</source>
+        <translation type="obsolete">Z! luister melodie opties</translation>
+    </message>
+    <message>
         <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="35"/>
         <source>Z!</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="56"/>

@@ -1,6 +1,29 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>NormalMessageHandler</name>
+    <message>
+        <source>Normal Messages</source>
+        <translation>Normale berichten</translation>
+    </message>
+    <message>
+        <source>Allows to exchange normal messages</source>
+        <translation>Toestaan om normale berichten uit te wisselen</translation>
+    </message>
+    <message>
+        <source>When receiving new single message</source>
+        <translation>Ontvangt een nieuw enkel bericht</translation>
+    </message>
+    <message>
+        <source>Send message</source>
+        <translation>Stuur bericht</translation>
+    </message>
+    <message>
+        <source>Ctrl+Return</source>
+        <comment>Send message</comment>
+        <translation></translation>
+    </message>
     <message>
         <source>Message from %1</source>
         <translation>Bericht van %1</translation>
@@ -10,20 +33,20 @@
         <translation>Bericht ontvangen</translation>
     </message>
     <message>
-        <source>Composing message</source>
-        <translation>Bericht schrijven</translation>
+        <source>Mark all single messages from user as read when you read the first one</source>
+        <translation type="obsolete">Markeer alle afzonderlijke berichten van gebruiker als gelezen wanneer je de eerste leest</translation>
     </message>
     <message>
         <source>%1 - Message</source>
         <translation>%1 - Bericht</translation>
     </message>
     <message>
-        <source>Re: %1</source>
-        <translation type="unfinished"/>
+        <source>Composing message</source>
+        <translation>Bericht schrijven</translation>
     </message>
     <message>
-        <source>Fw: %1</source>
-        <translation type="unfinished"/>
+        <source>&lt;b&gt;The message with a error is received&lt;/b&gt;</source>
+        <translation>&lt;b&gt;Bericht met een fout is ontvangen&lt;/b&gt;</translation>
     </message>
     <message>
         <source>Subject: %1</source>
@@ -34,29 +57,12 @@
         <translation>&lt;geen onderwerp&gt;</translation>
     </message>
     <message>
-        <source>Normal Messages</source>
-        <translation>Normale berichten</translation>
+        <source>Re: %1</source>
+        <translation></translation>
     </message>
     <message>
-        <source>Allows to exchange normal messages</source>
-        <translation>Toestaan om normale berichten uit te wisselen</translation>
-    </message>
-    <message>
-        <source>Send message</source>
-        <translation>Stuur bericht</translation>
-    </message>
-    <message>
-        <source>Ctrl+Return</source>
-        <comment>Send message</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>When receiving new single message</source>
-        <translation>Ontvangt een nieuw enkel bericht</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;The message with a error is received&lt;/b&gt;</source>
-        <translation>&lt;b&gt;Bericht met een fout is ontvangen&lt;/b&gt;</translation>
+        <source>Fw: %1</source>
+        <translation></translation>
     </message>
     <message>
         <source>Send</source>
@@ -88,7 +94,7 @@
     </message>
     <message>
         <source>Consider all single contacts messages as read when read the first</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

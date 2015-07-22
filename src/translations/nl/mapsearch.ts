@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>MapSearch</name>
     <message>
@@ -24,7 +26,7 @@
     <message>
         <source>Ctrl+C</source>
         <comment>Clear</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Toggle showing search results on the map</source>
@@ -33,7 +35,7 @@
     <message>
         <source>Alt+S</source>
         <comment>Toggle showing search results on the map</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Search dialog</source>
@@ -42,12 +44,12 @@
     <message>
         <source>Alt+F7</source>
         <comment>Search</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Alt+S</source>
         <comment>Add search result</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Select provider</source>
@@ -56,7 +58,7 @@
     <message>
         <source>Alt+P</source>
         <comment>Select provider</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Toggle &quot;Limit search range&quot; option</source>
@@ -65,6 +67,7 @@
     <message>
         <source>Alt+L</source>
         <comment>Toggle &quot;Limit search range&quot; option</comment>
+        <translatorcomment>Wissel.&quot;Beperkt zoekbereik&quot; optie</translatorcomment>
         <translation>Alt+L</translation>
     </message>
 </context>

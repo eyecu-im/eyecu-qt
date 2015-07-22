@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>MessagePoiList</name>
     <message>
@@ -142,7 +144,7 @@
     </message>
     <message>
         <source>Anguilla</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Antigua and Barbuda</source>
@@ -158,7 +160,7 @@
     </message>
     <message>
         <source>Aruba</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Australia</source>
@@ -198,23 +200,23 @@
     </message>
     <message>
         <source>Belize</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Benin</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bermuda</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bhutan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bolivia</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bosnia and Herzegovina</source>
@@ -222,7 +224,7 @@
     </message>
     <message>
         <source>Botswana</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bouvet Island</source>
@@ -233,12 +235,16 @@
         <translation>Brazilie</translation>
     </message>
     <message>
+        <source>British Virgin Islands</source>
+        <translation>Britse Maagdeneiland</translation>
+    </message>
+    <message>
         <source>British Indian Ocean Territory</source>
         <translation>Brits Indische Oceaanterritorium</translation>
     </message>
     <message>
         <source>Brunei Darussalam</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bulgaria</source>
@@ -250,7 +256,7 @@
     </message>
     <message>
         <source>Burundi</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Cambodia</source>
@@ -262,7 +268,7 @@
     </message>
     <message>
         <source>Canada</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Cape Verde</source>
@@ -282,7 +288,7 @@
     </message>
     <message>
         <source>China</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Christmas Island</source>
@@ -298,7 +304,15 @@
     </message>
     <message>
         <source>Comoros</source>
-        <translation type="unfinished"/>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Republic of the Congo</source>
+        <translation>Congo-Brazzaville</translation>
+    </message>
+    <message>
+        <source>Republic of Chile</source>
+        <translation>Chili</translation>
     </message>
     <message>
         <source>Democratic Republic of the Congo</source>
@@ -310,7 +324,7 @@
     </message>
     <message>
         <source>Costa Rica</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Cote d&apos;Ivoire</source>
@@ -322,11 +336,11 @@
     </message>
     <message>
         <source>Cuba</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Cyprus</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Czech Republic</source>
@@ -338,11 +352,11 @@
     </message>
     <message>
         <source>Djibouti</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Dominica</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Dominican Republic</source>
@@ -354,7 +368,7 @@
     </message>
     <message>
         <source>Ecuador</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Egypt</source>
@@ -362,7 +376,7 @@
     </message>
     <message>
         <source>El Salvador</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Equatorial Guinea</source>
@@ -370,7 +384,7 @@
     </message>
     <message>
         <source>Eritrea</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Estonia</source>
@@ -381,6 +395,10 @@
         <translation>Ethiopië</translation>
     </message>
     <message>
+        <source>Falkland (Malvinas) Islands</source>
+        <translation>Falklandeilanden</translation>
+    </message>
+    <message>
         <source>Faroe Islands</source>
         <translation>Faeröer</translation>
     </message>
@@ -389,48 +407,32 @@
         <translation>Somalië</translation>
     </message>
     <message>
+        <source>Federated States of Micronesia</source>
+        <translation>Micronesia</translation>
+    </message>
+    <message>
         <source>Federation of Saint Kitts (Christopher) and Nevis</source>
         <translation>Saint Kitts en Nevis</translation>
     </message>
     <message>
         <source>Fiji</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Finland</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>France</source>
         <translation>Frankrijk</translation>
     </message>
     <message>
-        <source>French Polynesia</source>
-        <translation>Frans Polynesië</translation>
-    </message>
-    <message>
-        <source>Republic of the Congo</source>
-        <translation>Congo-Brazzaville</translation>
-    </message>
-    <message>
-        <source>British Virgin Islands</source>
-        <translation>Britse Maagdeneiland</translation>
-    </message>
-    <message>
-        <source>Republic of Chile</source>
-        <translation>Chili</translation>
-    </message>
-    <message>
-        <source>Falkland (Malvinas) Islands</source>
-        <translation>Falklandeilanden</translation>
-    </message>
-    <message>
-        <source>Federated States of Micronesia</source>
-        <translation>Micronesia</translation>
-    </message>
-    <message>
         <source>French Guiana</source>
         <translation>Frans Guyana</translation>
+    </message>
+    <message>
+        <source>French Polynesia</source>
+        <translation>Frans Polynesië</translation>
     </message>
     <message>
         <source>French Southern and Antarctic Lands</source>
@@ -438,11 +440,11 @@
     </message>
     <message>
         <source>Gabon</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Gambia</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Georgia</source>
@@ -450,7 +452,7 @@
     </message>
     <message>
         <source>Guernsey</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Germany</source>
@@ -458,11 +460,11 @@
     </message>
     <message>
         <source>Ghana</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Gibraltar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Greece</source>
@@ -474,19 +476,19 @@
     </message>
     <message>
         <source>Grenada</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Guam</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Guatemala</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Guinea</source>
@@ -498,11 +500,11 @@
     </message>
     <message>
         <source>Guyana</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Haiti</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Heard and McDonald Islands</source>
@@ -510,11 +512,11 @@
     </message>
     <message>
         <source>Honduras</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Hong Kong</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Hungary</source>
@@ -526,7 +528,7 @@
     </message>
     <message>
         <source>India</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Indonesia</source>
@@ -534,7 +536,7 @@
     </message>
     <message>
         <source>Iran</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Iraq</source>
@@ -558,15 +560,15 @@
     </message>
     <message>
         <source>Jamaica</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Japan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Jersey</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Jordan</source>
@@ -574,15 +576,19 @@
     </message>
     <message>
         <source>Kazakhstan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Kenya</source>
         <translation>Kenia</translation>
     </message>
     <message>
+        <source>Kyrgyz Republic (Kyrgyzstan)</source>
+        <translation>Kirgizië</translation>
+    </message>
+    <message>
         <source>Kiribati</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>North Korea</source>
@@ -610,11 +616,11 @@
     </message>
     <message>
         <source>Lesotho</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Liberia</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Libya</source>
@@ -622,7 +628,7 @@
     </message>
     <message>
         <source>Liechtenstein</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Lithuania</source>
@@ -642,11 +648,11 @@
     </message>
     <message>
         <source>Madagascar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Malawi</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Malaysia</source>
@@ -658,11 +664,11 @@
     </message>
     <message>
         <source>Mali</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Malta</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Morocco</source>
@@ -674,7 +680,7 @@
     </message>
     <message>
         <source>Martinique</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mauritania</source>
@@ -682,15 +688,15 @@
     </message>
     <message>
         <source>Mauritius</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mayotte</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mexico</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Moldova</source>
@@ -698,7 +704,7 @@
     </message>
     <message>
         <source>Monaco</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mongolia</source>
@@ -706,19 +712,19 @@
     </message>
     <message>
         <source>Montenegro</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Montserrat</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mozambique</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Myanmar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Namibia</source>
@@ -726,11 +732,11 @@
     </message>
     <message>
         <source>Nauru</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Nepal</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Netherlands (Holland)</source>
@@ -750,19 +756,19 @@
     </message>
     <message>
         <source>Nicaragua</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Niger</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Nigeria</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Niue</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Norfolk Island</source>
@@ -778,15 +784,15 @@
     </message>
     <message>
         <source>Oman</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Pakistan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Palau</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>State of Palestine</source>
@@ -794,7 +800,7 @@
     </message>
     <message>
         <source>Panama</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Papua New Guinea</source>
@@ -802,11 +808,11 @@
     </message>
     <message>
         <source>Paraguay</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Peru</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Philippines</source>
@@ -826,11 +832,11 @@
     </message>
     <message>
         <source>Puerto Rico</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Qatar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Republic of Suriname</source>
@@ -850,7 +856,7 @@
     </message>
     <message>
         <source>Rwanda</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Saint Helena</source>
@@ -858,7 +864,7 @@
     </message>
     <message>
         <source>Saint Lucia</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Saint Pierre and Miquelon</source>
@@ -870,11 +876,15 @@
     </message>
     <message>
         <source>Samoa</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>San Marino</source>
-        <translation type="unfinished"/>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Democratic Republic of Sao Tome and Principe</source>
+        <translation>Sao Tomé en Principe</translation>
     </message>
     <message>
         <source>Saudi Arabia</source>
@@ -882,7 +892,7 @@
     </message>
     <message>
         <source>Senegal</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Serbia</source>
@@ -894,15 +904,15 @@
     </message>
     <message>
         <source>Sierra Leone</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Singapore</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Sint Maarten</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Slovak Republic (Slovakia)</source>
@@ -938,7 +948,7 @@
     </message>
     <message>
         <source>Sri Lanka</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Sudan</source>
@@ -950,7 +960,7 @@
     </message>
     <message>
         <source>Swaziland</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Sweden</source>
@@ -970,19 +980,19 @@
     </message>
     <message>
         <source>Taiwan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Tanzania</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Thailand</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Togo</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Tokelau</source>
@@ -994,7 +1004,7 @@
     </message>
     <message>
         <source>Trinidad and Tobago</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Tunisia</source>
@@ -1006,15 +1016,15 @@
     </message>
     <message>
         <source>Turkmenistan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Turks and Caicos Islands</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Tuvalu</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Uganda</source>
@@ -1042,7 +1052,7 @@
     </message>
     <message>
         <source>Uruguay</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Uzbekistan</source>
@@ -1050,7 +1060,7 @@
     </message>
     <message>
         <source>Vanuatu</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Vatican City</source>
@@ -1058,15 +1068,7 @@
     </message>
     <message>
         <source>Venezuela</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Kyrgyz Republic (Kyrgyzstan)</source>
-        <translation>Kirgizië</translation>
-    </message>
-    <message>
-        <source>Democratic Republic of Sao Tome and Principe</source>
-        <translation>Sao Tomé en Principe</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Virgin Islands of the United States</source>
@@ -1086,11 +1088,11 @@
     </message>
     <message>
         <source>Zambia</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Zimbabwe</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Mail</source>
@@ -1114,7 +1116,7 @@
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Locatie</translation>
     </message>
     <message>
         <source>Lat</source>
@@ -1129,7 +1131,7 @@
     <name>Poi</name>
     <message>
         <source>POI</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>POI list</source>
@@ -1157,11 +1159,11 @@
     </message>
     <message>
         <source>Lat</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Lon</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Link</source>
@@ -1221,7 +1223,7 @@
     </message>
     <message>
         <source>Open URL</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Delete POI %1</source>
@@ -1269,7 +1271,7 @@
     </message>
     <message>
         <source>Alpine hut</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Apron</source>
@@ -1297,7 +1299,7 @@
     </message>
     <message>
         <source>Atm</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Baby hatch</source>
@@ -1305,7 +1307,7 @@
     </message>
     <message>
         <source>Bahai</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bakery</source>
@@ -1313,11 +1315,11 @@
     </message>
     <message>
         <source>Bank</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Bar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Barrier</source>
@@ -1341,7 +1343,7 @@
     </message>
     <message>
         <source>BBQ</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Beach</source>
@@ -1405,7 +1407,7 @@
     </message>
     <message>
         <source>Boule</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Boundary stone</source>
@@ -1425,7 +1427,7 @@
     </message>
     <message>
         <source>Buffer stop</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Building</source>
@@ -1433,7 +1435,7 @@
     </message>
     <message>
         <source>Bunker</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Butcher</source>
@@ -1445,11 +1447,11 @@
     </message>
     <message>
         <source>Cafe</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Camping</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Canoe</source>
@@ -1473,7 +1475,7 @@
     </message>
     <message>
         <source>Caravan</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Castle</source>
@@ -1501,7 +1503,7 @@
     </message>
     <message>
         <source>Chalet</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Chemist</source>
@@ -1513,7 +1515,7 @@
     </message>
     <message>
         <source>Chicane</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Chimney</source>
@@ -1581,7 +1583,7 @@
     </message>
     <message>
         <source>Computer</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Confectionery</source>
@@ -1617,11 +1619,11 @@
     </message>
     <message>
         <source>Cricket</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Croquet</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Crossing</source>
@@ -1641,7 +1643,7 @@
     </message>
     <message>
         <source>Dam</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Danger</source>
@@ -1801,7 +1803,7 @@
     </message>
     <message>
         <source>Ford</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Fossil</source>
@@ -1821,7 +1823,7 @@
     </message>
     <message>
         <source>Garages</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Garden</source>
@@ -1849,7 +1851,7 @@
     </message>
     <message>
         <source>Golf</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Gondola</source>
@@ -1901,11 +1903,11 @@
     </message>
     <message>
         <source>Hangar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Hardware</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Hearing aids</source>
@@ -1917,7 +1919,7 @@
     </message>
     <message>
         <source>Hi-Fi</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Hill</source>
@@ -1929,7 +1931,7 @@
     </message>
     <message>
         <source>Hockey</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Horse</source>
@@ -1997,7 +1999,7 @@
     </message>
     <message>
         <source>KFC</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Kindergarten</source>
@@ -2005,7 +2007,7 @@
     </message>
     <message>
         <source>Kiosk</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Kitchen</source>
@@ -2073,7 +2075,7 @@
     </message>
     <message>
         <source>McDonald&apos;s</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Measurement station</source>
@@ -2109,11 +2111,11 @@
     </message>
     <message>
         <source>Monument</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Motel</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Motocross</source>
@@ -2121,7 +2123,7 @@
     </message>
     <message>
         <source>Motor</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Motorbike</source>
@@ -2153,7 +2155,7 @@
     </message>
     <message>
         <source>Museum</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Musical instrument</source>
@@ -2237,7 +2239,7 @@
     </message>
     <message>
         <source>Park</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Parking</source>
@@ -2265,7 +2267,7 @@
     </message>
     <message>
         <source>Pier</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Pitch</source>
@@ -2313,7 +2315,7 @@
     </message>
     <message>
         <source>PSV</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Pub</source>
@@ -2325,7 +2327,7 @@
     </message>
     <message>
         <source>Radar</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Railway small</source>
@@ -2357,7 +2359,7 @@
     </message>
     <message>
         <source>Restaurant</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Restricted area</source>
@@ -2401,11 +2403,11 @@
     </message>
     <message>
         <source>Sauna</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>School</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Seafood</source>
@@ -2425,7 +2427,7 @@
     </message>
     <message>
         <source>Shinto</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Shoes</source>
@@ -2437,7 +2439,7 @@
     </message>
     <message>
         <source>Skateboard</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Skating</source>
@@ -2477,7 +2479,7 @@
     </message>
     <message>
         <source>Station</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Stationery</source>
@@ -2489,15 +2491,15 @@
     </message>
     <message>
         <source>Stile</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Storm</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Street lamp</source>
@@ -2505,11 +2507,11 @@
     </message>
     <message>
         <source>Stripclub</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Studio</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Supermarket</source>
@@ -2533,15 +2535,15 @@
     </message>
     <message>
         <source>Tank</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Taoism</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Taxi</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Taxiway</source>
@@ -2553,7 +2555,7 @@
     </message>
     <message>
         <source>Tennis</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Terminal</source>
@@ -2561,7 +2563,7 @@
     </message>
     <message>
         <source>Theater</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Theme park</source>
@@ -2609,7 +2611,7 @@
     </message>
     <message>
         <source>Tsunami</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Turning</source>
@@ -2653,11 +2655,11 @@
     </message>
     <message>
         <source>Viaduct</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Video</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Viewpoint</source>
@@ -2681,11 +2683,11 @@
     </message>
     <message>
         <source>Water</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Water park</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Water tower</source>
@@ -2725,11 +2727,11 @@
     </message>
     <message>
         <source>Wifi</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Wind</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Windmill</source>
@@ -2837,7 +2839,7 @@
     </message>
     <message>
         <source>Sport</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Vehicle</source>
@@ -3009,7 +3011,7 @@
     </message>
     <message>
         <source>Hotel</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>River bank</source>
@@ -3034,7 +3036,7 @@
     <message>
         <source>Ctrl+P</source>
         <comment>POI list (all)</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Display POI list for the account</source>
@@ -3043,22 +3045,22 @@
     <message>
         <source>Alt+P</source>
         <comment>POI list (account)</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Space</source>
         <comment>Show POI</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>F2</source>
         <comment>Save POI</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>F2</source>
         <comment>Edit POI</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Del</source>
@@ -3073,7 +3075,7 @@
     <message>
         <source>F3</source>
         <comment>Open URL in the POI</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Edit POI</source>
@@ -3086,12 +3088,12 @@
     <message>
         <source>Alt+P</source>
         <comment>Insert POI (into message)</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Alt+G</source>
         <comment>Insert location</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Return</source>
@@ -3100,23 +3102,23 @@
     </message>
     <message>
         <source>%1, %2</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>%1S</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>%1N</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>%1W</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>%1E</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Del</source>
@@ -3125,7 +3127,7 @@
     </message>
     <message>
         <source>Bus station</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Railway</source>
@@ -3134,7 +3136,7 @@
     <message>
         <source>Alt+V</source>
         <comment>Toggle view POIs on the map</comment>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Allows to create, store and handle user&apos;s Points of Interest</source>
@@ -3194,7 +3196,7 @@
     </message>
     <message>
         <source>Anime</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Beach resort</source>
@@ -3279,7 +3281,7 @@
     <message>
         <source>Beauty</source>
         <comment>Bauty shop</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3313,7 +3315,7 @@
     <name>PoiOptions</name>
     <message>
         <source>POI filter</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Set shadow color</source>

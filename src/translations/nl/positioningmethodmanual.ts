@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl_NL">
 <context>
     <name>PositioningMethodManual</name>
     <message>
@@ -20,6 +22,7 @@
         <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="68"/>
         <source>Ctrl+R</source>
         <comment>Stop publication</comment>
+        <translatorcomment>Stop publicatie</translatorcomment>
         <translation>Ctrl+R</translation>
     </message>
     <message>
@@ -33,6 +36,7 @@
         <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="69"/>
         <source>F6</source>
         <comment>Here I am! (POI)</comment>
+        <translatorcomment>Hier ben ik! (POI)</translatorcomment>
         <translation>F6</translation>
     </message>
     <message>
@@ -49,7 +53,7 @@
     <message>
         <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="144"/>
         <source>Set my position</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -75,32 +79,32 @@
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="17"/>
         <source>Publish position</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="52"/>
         <source>Latitude</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="89"/>
         <source>Longitude</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="135"/>
         <source>Publish</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="142"/>
         <source>Stop publish</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="165"/>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="es" sourcelanguage="en">
 <context>
     <name>ConnectionOptionsWidget</name>
     <message>
@@ -35,15 +37,15 @@
     </message>
     <message>
         <source>TLSv1.0</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">TLSv1.0</translation>
     </message>
     <message>
         <source>TLSv1.1</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">TLSv1.1</translation>
     </message>
     <message>
         <source>TLSv1.2</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">TLSv1.2</translation>
     </message>
 </context>
 <context>

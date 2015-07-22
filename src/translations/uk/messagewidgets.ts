@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>EditWidget</name>
     <message>
@@ -37,6 +39,22 @@
         <translation>Вікно  з вкладками</translation>
     </message>
     <message>
+        <source>Enable tab windows</source>
+        <translation type="obsolete">Використовувати вікна з вкладками</translation>
+    </message>
+    <message>
+        <source>Show status changes in chat windows</source>
+        <translation type="obsolete">Показувати зміну статусу в вікні чату</translation>
+    </message>
+    <message>
+        <source>Auto resize input field</source>
+        <translation type="obsolete">Автоматично змінювати розмір поля вводу</translation>
+    </message>
+    <message>
+        <source>Save status messages to history</source>
+        <translation type="obsolete">Зберігати повідомлення статусу в історії</translation>
+    </message>
+    <message>
         <source>Tab window</source>
         <translation>Вікно вкладки</translation>
     </message>
@@ -57,6 +75,26 @@
         <translation>Попередня вкладка</translation>
     </message>
     <message>
+        <source>Set tabs closable</source>
+        <translation type="obsolete">Вкладки з закриттям</translation>
+    </message>
+    <message>
+        <source>Show tabs at bottom</source>
+        <translation type="obsolete">Показувати вкладки знизу</translation>
+    </message>
+    <message>
+        <source>Rename tab window</source>
+        <translation type="obsolete">Перейменувати вікно вкладки</translation>
+    </message>
+    <message>
+        <source>Delete tab window</source>
+        <translation type="obsolete">Видалити вікно вкладки</translation>
+    </message>
+    <message>
+        <source>Use as default tab window</source>
+        <translation type="obsolete">Використати як основне вікно вкладки</translation>
+    </message>
+    <message>
         <source>Alt+%1</source>
         <comment>Show tab</comment>
         <translation>Alt+%1</translation>
@@ -64,6 +102,28 @@
     <message>
         <source>Message windows</source>
         <translation>Вікно повідомлення</translation>
+    </message>
+    <message>
+        <source>Chat window</source>
+        <translation type="obsolete">Вікно чату</translation>
+    </message>
+    <message>
+        <source>Send message</source>
+        <translation type="obsolete">Надіслати повідомлення</translation>
+    </message>
+    <message>
+        <source>Return</source>
+        <comment>Send message</comment>
+        <translation type="obsolete">Return</translation>
+    </message>
+    <message>
+        <source>Message window</source>
+        <translation type="obsolete">Вікно повідомлення</translation>
+    </message>
+    <message>
+        <source>Ctrl+Return</source>
+        <comment>Send message</comment>
+        <translation type="obsolete">Ctrl+Return</translation>
     </message>
     <message>
         <source>Edit next message</source>
@@ -89,9 +149,21 @@
         <translation>Ctrl+W</translation>
     </message>
     <message>
+        <source>Show tabs indices</source>
+        <translation type="obsolete">Показувати індекс вкладки</translation>
+    </message>
+    <message>
+        <source>Close tab window</source>
+        <translation type="obsolete">Закрити вікно вкладки</translation>
+    </message>
+    <message>
         <source>Esc</source>
         <comment>Close tab window</comment>
         <translation>Esc</translation>
+    </message>
+    <message>
+        <source>Close message window</source>
+        <translation type="obsolete">Закрити вікно повідомлення</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -133,78 +205,113 @@
         <translation>google.com.ua</translation>
     </message>
     <message>
+        <source>Combine/Split with message windows</source>
+        <translation type="obsolete">Об&apos;єднати/Розділити з вікнами повідомлень</translation>
+    </message>
+    <message>
+        <source>Combine message windows with contact-list</source>
+        <translation type="obsolete">Об&apos;єднати вікна повідомлень з контакт-листом</translation>
+    </message>
+    <message>
+        <source>Show tabs in combined message windows with contact-list mode</source>
+        <translation type="obsolete">Показувати вкладки в режимі об&apos;єднання вікон повідомлень з ростером</translation>
+    </message>
+    <message>
         <source>Quote Selected Text</source>
         <translation>Цитувати виділений текст</translation>
     </message>
     <message>
-        <source>Message window view</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Load last messages from history</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show message windows together with contacts list</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show message windows in tab window</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Automatically resize messages input field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Minimum number of lines in messages input field:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Message window behavior</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show contacts status changes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save contacts status messages in history</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Ctrl+Q</source>
         <comment>Quote selected text</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Send chat message</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Return</source>
         <comment>Send chat message</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Return</translation>
     </message>
     <message>
         <source>Send single message</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ctrl+Return</source>
         <comment>Send single message</comment>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Ctrl+Return</translation>
+    </message>
+    <message>
+        <source>Message window view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load last messages from history</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show message windows together with contacts list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show message windows in tab window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically resize messages input field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum number of lines in messages input field:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Message window behavior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show contacts status changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save contacts status messages in history</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Information bar icons</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MessengerOptionsClass</name>
+    <message>
+        <source>Minimum input field lines:</source>
+        <translation type="obsolete">Мінімальне число строк в полі вводу:</translation>
+    </message>
+    <message>
+        <source>Clean chat windows after closing in </source>
+        <translation type="obsolete">Очищати вікна чату після закриття за </translation>
+    </message>
+    <message>
+        <source> minutes</source>
+        <translation type="obsolete"> хвилин</translation>
+    </message>
+    <message>
+        <source>(0 - do not clean)</source>
+        <translation type="obsolete">(0 - не очищати)</translation>
     </message>
 </context>
 <context>
     <name>NormalWindow</name>
     <message numerus="yes">
         <source>Selected %n contact(s)</source>
-        <translation><numerusform>Вибрано %n контакт</numerusform><numerusform>Вибрано %n контактів</numerusform><numerusform>Вибрано %n контактів</numerusform></translation>
+        <translation>
+            <numerusform>Вибрано %n контакт</numerusform>
+            <numerusform>Вибрано %n контактів</numerusform>
+            <numerusform>Вибрано %n контактів</numerusform>
+        </translation>
     </message>
     <message>
         <source>Subject</source>
@@ -307,13 +414,6 @@
     <message>
         <source>Hide Offline Contacts</source>
         <translation>Не показувати відключені контакти</translation>
-    </message>
-</context>
-<context>
-    <name>ReceiversWidgetClass</name>
-    <message>
-        <source>Search Contacts</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

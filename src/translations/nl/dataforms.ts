@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>DataFormWidget</name>
     <message>
@@ -17,16 +19,12 @@
 <context>
     <name>DataForms</name>
     <message>
-        <source>Data Forms</source>
-        <translation>Gegevens formulieren</translation>
+        <source>Data Forms Manager</source>
+        <translation>Gegevens formulieren manager</translation>
     </message>
     <message>
-        <source>Data Forms Validation</source>
-        <translation>Validatie gegevens formulieren</translation>
-    </message>
-    <message>
-        <source>Data Forms Layout</source>
-        <translation>Opmaak gegevens formulieren</translation>
+        <source>Allows other modules to process and display the form with the data intended for user</source>
+        <translation>Toestaan om andere modules te verwerken en  formulier weer te geven met de gegevens die bestemd zijn voor de gebruiker</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -37,28 +35,32 @@
         <translation>Nee</translation>
     </message>
     <message>
-        <source>Unsupported url scheme</source>
-        <translation>Niet ondersteund url schema</translation>
-    </message>
-    <message>
         <source>Url load failed</source>
         <translation>Laden van url mislukt</translation>
     </message>
     <message>
-        <source>Data Forms Manager</source>
-        <translation>Gegevens formulieren manager</translation>
+        <source>Unsupported url scheme</source>
+        <translation>Niet ondersteund url schema</translation>
     </message>
     <message>
-        <source>Allows other modules to process and display the form with the data intended for user</source>
-        <translation>Toestaan om andere modules te verwerken en  formulier weer te geven met de gegevens die bestemd zijn voor de gebruiker</translation>
+        <source>Data Forms</source>
+        <translation>Gegevens formulieren</translation>
     </message>
     <message>
         <source>Supports the processing and displaying of the forms with the data</source>
         <translation>Ondersteunt de verwerking en weergave van de formulieren met de gegevens</translation>
     </message>
     <message>
+        <source>Data Forms Validation</source>
+        <translation>Validatie gegevens formulieren</translation>
+    </message>
+    <message>
         <source>Supports the validating of the data entered in the form</source>
         <translation>Ondersteunt het valideren van de in het formulier ingevoerde gegevens</translation>
+    </message>
+    <message>
+        <source>Data Forms Layout</source>
+        <translation>Opmaak gegevens formulieren</translation>
     </message>
     <message>
         <source>Supports the layouting of the form, including the layout of form fields, pages and sections</source>

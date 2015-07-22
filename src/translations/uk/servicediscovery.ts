@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
 <context>
     <name>DiscoInfoWindow</name>
     <message>
@@ -195,6 +197,53 @@
     <message>
         <source>Supports the displaying of the jabber identifiers with disallowed characters</source>
         <translation>Підтримує перегляд джаббер ідентифікаторів з забороненими символами</translation>
+    </message>
+    <message>
+        <source>Service discovery window</source>
+        <translation type="obsolete">Вікно огляду сервісів</translation>
+    </message>
+    <message>
+        <source>Move back</source>
+        <translation type="obsolete">Піти назад</translation>
+    </message>
+    <message>
+        <source>Move forward</source>
+        <translation type="obsolete">Піти вперед</translation>
+    </message>
+    <message>
+        <source>Discover item</source>
+        <translation type="obsolete">Переглянути </translation>
+    </message>
+    <message>
+        <source>Reload items</source>
+        <translation type="obsolete">Перезавантажити </translation>
+    </message>
+    <message>
+        <source>Show discovery info</source>
+        <translation type="obsolete">Показати оглядову інформацію </translation>
+    </message>
+    <message>
+        <source>Add item to roster</source>
+        <translation type="obsolete">Додати до ростеру</translation>
+    </message>
+    <message>
+        <source>Close discovery window</source>
+        <translation type="obsolete">Закрити вікно оглядової інформації</translation>
+    </message>
+    <message>
+        <source>Esc</source>
+        <comment>Close discovery window</comment>
+        <translation type="obsolete">Esc</translation>
+    </message>
+    <message>
+        <source>Show Profile</source>
+        <translation type="obsolete">Показати особисті дані</translation>
+    </message>
+    <message>
+        <source>Ctrl+I</source>
+        <comment>Show Profile</comment>
+        <translatorcomment>Показать личные данные</translatorcomment>
+        <translation type="obsolete">Ctrl+I</translation>
     </message>
 </context>
 </TS>

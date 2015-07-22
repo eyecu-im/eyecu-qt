@@ -1,28 +1,45 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>AdiumMessageStyle</name>
     <message>
         <source>hh:mm</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>hh:mm:ss</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>AdiumMessageStyleEngine</name>
     <message>
         <source>Adium Message Style</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Adium berichten stijl</translation>
     </message>
     <message>
         <source>Allows to use a Adium style in message design</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Toestaan om Adium stijl in berichtontwerp te gebruiken</translation>
     </message>
     <message>
         <source>Adium</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AdiumMessageStylePlugin</name>
+    <message>
+        <source>Adium Message Style</source>
+        <translation type="obsolete">Adium berichten stijl</translation>
+    </message>
+    <message>
+        <source>Allows to use a Adium style in message design</source>
+        <translation type="obsolete">Toestaan om Adium stijl in berichtontwerp te gebruiken</translation>
+    </message>
+    <message>
+        <source>Adium Style</source>
+        <translation type="obsolete">Adium stijl</translation>
     </message>
 </context>
 <context>
@@ -65,22 +82,46 @@
     </message>
     <message>
         <source>Parameters</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Background</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AdiumOptionsWidgetClass</name>
     <message>
+        <source>Message Style:</source>
+        <translation type="obsolete">Bericht stijl:</translation>
+    </message>
+    <message>
         <source>Variant:</source>
-        <translation type="unfinished"/>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Text Font:</source>
+        <translation type="obsolete">Tekst lettertype:</translation>
+    </message>
+    <message>
+        <source>Set Font...</source>
+        <translation type="obsolete">Instellen lettertype...</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="obsolete">Standaard</translation>
+    </message>
+    <message>
+        <source>Background:</source>
+        <translation type="obsolete">Achtergrond:</translation>
     </message>
     <message>
         <source>Color:</source>
         <translation>Kleur:</translation>
+    </message>
+    <message>
+        <source>Set Image...</source>
+        <translation type="obsolete">Instellen afbeelding...</translation>
     </message>
     <message>
         <source>Layout:</source>
@@ -88,23 +129,19 @@
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change...</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Image:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>not set</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

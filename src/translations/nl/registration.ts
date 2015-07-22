@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>RegisterDialog</name>
     <message>
@@ -8,6 +10,10 @@
     <message>
         <source>Waiting for host response ...</source>
         <translation>Wachten op antwoord van host ...</translation>
+    </message>
+    <message>
+        <source>Error: Can&apos;t send request to host.</source>
+        <translation>Fout: Kan aanvraag niet zenden naar host.</translation>
     </message>
     <message>
         <source>Do you really want to remove registration from %1?</source>
@@ -33,10 +39,6 @@
         <source>Requested operation failed: %1</source>
         <translation>aangevraagde bewerking mislukt: %1</translation>
     </message>
-    <message>
-        <source>Error: Can&apos;t send request to host.</source>
-        <translation>Fout: Kan aanvraag niet zenden naar host.</translation>
-    </message>
 </context>
 <context>
     <name>RegisterDialogClass</name>
@@ -50,7 +52,14 @@
     </message>
     <message>
         <source>Email:</source>
-        <translation type="unfinished"/>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>RegisterStream</name>
+    <message>
+        <source>Registration on %1</source>
+        <translation type="obsolete">Registratie bij %1</translation>
     </message>
 </context>
 <context>
@@ -58,6 +67,10 @@
     <message>
         <source>Registration</source>
         <translation>Registratie</translation>
+    </message>
+    <message>
+        <source>Allows to register on the Jabber servers and services</source>
+        <translation>Toestaan om te registreren op de Jabber servers en services</translation>
     </message>
     <message>
         <source>Register</source>
@@ -70,6 +83,10 @@
     <message>
         <source>Change password</source>
         <translation>Verander paswoord</translation>
+    </message>
+    <message>
+        <source>Register new account on server</source>
+        <translation type="unfinished">Registreer nieuwe account op de server</translation>
     </message>
     <message>
         <source>Registration Form</source>
@@ -90,6 +107,14 @@
     <message>
         <source>Full Name</source>
         <translation>Volledige naam</translation>
+    </message>
+    <message>
+        <source>Given Name</source>
+        <translation>Voornaam</translation>
+    </message>
+    <message>
+        <source>Family Name</source>
+        <translation>Familienaam</translation>
     </message>
     <message>
         <source>Email Address</source>
@@ -116,24 +141,20 @@
         <translation>Telefoonnummer</translation>
     </message>
     <message>
-        <source>Allows to register on the Jabber servers and services</source>
-        <translation>Toestaan om te registreren op de Jabber servers en services</translation>
+        <source>Your Web Page</source>
+        <translation>Eigen webpagina</translation>
     </message>
     <message>
         <source>Supports the registration</source>
         <translation>Ondersteunt de registratie</translation>
     </message>
     <message>
-        <source>Given Name</source>
-        <translation>Voornaam</translation>
+        <source>Invalid registration form</source>
+        <translation type="obsolete">Ongeldige registratie formulier</translation>
     </message>
     <message>
-        <source>Family Name</source>
-        <translation>Familienaam</translation>
-    </message>
-    <message>
-        <source>Your Web Page</source>
-        <translation>Eigen webpagina</translation>
+        <source>Invalid registration dialog</source>
+        <translation type="obsolete">Geldige registratie dialoog</translation>
     </message>
     <message>
         <source>Registration rejected by user</source>
@@ -141,19 +162,15 @@
     </message>
     <message>
         <source>Registration is not supported</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Invalid registration fields</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Register new account on server</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>e-mail</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

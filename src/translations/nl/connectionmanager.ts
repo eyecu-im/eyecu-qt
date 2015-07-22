@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="nl" sourcelanguage="en">
 <context>
     <name>ConnectionManager</name>
     <message>
@@ -10,12 +12,12 @@
         <translation>Toestaan om verschillende soorten verbindingen te gebruiken voor een ​​Jabber server</translation>
     </message>
     <message>
-        <source>&lt;No Proxy&gt;</source>
-        <translation>&lt;Geen proxy&gt;</translation>
-    </message>
-    <message>
         <source>New Proxy</source>
         <translation>Nieuw proxy</translation>
+    </message>
+    <message>
+        <source>&lt;No Proxy&gt;</source>
+        <translation>&lt;Geen proxy&gt;</translation>
     </message>
     <message>
         <source>Connection error</source>
@@ -71,11 +73,15 @@
     </message>
     <message>
         <source>Connection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Verbinding</translation>
     </message>
 </context>
 <context>
     <name>ConnectionOptionsWidgetClass</name>
+    <message>
+        <source>Connection</source>
+        <translation type="obsolete">Verbinding</translation>
+    </message>
     <message>
         <source>Connection:</source>
         <translation>Verbinding:</translation>
@@ -85,11 +91,11 @@
     <name>EditProxyDialog</name>
     <message>
         <source>HTTP Proxy</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Socks5 Proxy</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>New Proxy</source>
@@ -100,7 +106,7 @@
     <name>EditProxyDialogClass</name>
     <message>
         <source>Proxy Manager</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Name:</source>
@@ -112,7 +118,7 @@
     </message>
     <message>
         <source>Host:</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Port:</source>
@@ -150,7 +156,7 @@
     <name>ProxySettingsWidgetClass</name>
     <message>
         <source>Proxy:</source>
-        <translation type="unfinished"/>
+        <translation></translation>
     </message>
     <message>
         <source>Edit</source>

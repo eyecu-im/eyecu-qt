@@ -1,17 +1,49 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="uk" sourcelanguage="en">
+<context>
+    <name>InBandOptions</name>
+    <message>
+        <source>Packet-Query (recommended)</source>
+        <translation type="obsolete">Пакет-Запит (рекомендується)</translation>
+    </message>
+    <message>
+        <source>Packet-Message</source>
+        <translation type="obsolete">Пакет-Повідомлення</translation>
+    </message>
+</context>
+<context>
+    <name>InBandOptionsClass</name>
+    <message>
+        <source> Bytes</source>
+        <translation type="obsolete"> Байт</translation>
+    </message>
+    <message>
+        <source>Size of data in packet:</source>
+        <translation type="obsolete">Розмір даних в пакеті:</translation>
+    </message>
+    <message>
+        <source>Maximum size of data in packet:</source>
+        <translation type="obsolete">Макс. розмір даних в пакеті:</translation>
+    </message>
+    <message>
+        <source>Packet type:</source>
+        <translation type="obsolete">Тип пакету:</translation>
+    </message>
+</context>
 <context>
     <name>InBandOptionsWidgetClass</name>
     <message>
         <source>Size of data in packet:</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Розмір даних в пакеті:</translation>
     </message>
     <message>
         <source> Bytes</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"> Байт</translation>
     </message>
     <message>
         <source>Send data without waiting for acknowledgment of receipt</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
