@@ -11,7 +11,7 @@ goto end
 
 :all
 echo Pushing all translations to transifex
-tx.exe push -t -f --no-interactive -l ru,pl,de,uk,es,nl,ja
+tx.exe push -t -f --no-interactive -l ru,pl,de,uk,es,nl,ja --skip
 
 :end
 echo Done!
