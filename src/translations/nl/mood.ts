@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>Mood</name>
     <message>
@@ -368,10 +366,6 @@
         <translation>Ontvangt kennisgeving gebruikers stemming</translation>
     </message>
     <message>
-        <source>Show moods</source>
-        <translation type="obsolete">Toon stemming</translation>
-    </message>
-    <message>
         <source>%1 changed mood to %2</source>
         <translation>%1 veranderd stemming naar %2</translation>
     </message>
@@ -386,17 +380,17 @@
     <message>
         <source>Ctrl+F4</source>
         <comment>Set mood (for all accounts)</comment>
-        <translation></translation>
+        <translation>Ctrl+F4</translation>
     </message>
     <message>
         <source>F4</source>
         <comment>Set mood (for an account)</comment>
-        <translation></translation>
+        <translation>F4</translation>
     </message>
     <message>
         <source>F4</source>
         <comment>Set mood (for a message)</comment>
-        <translation></translation>
+        <translation>F4</translation>
     </message>
     <message>
         <source>When user mood changed</source>
@@ -407,20 +401,16 @@
         <translation>Verander de stemming naar: %1</translation>
     </message>
     <message>
-        <source>Display mood in chat</source>
-        <translation type="obsolete">Toon stemming in chat</translation>
-    </message>
-    <message>
         <source>Show user mood icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon stemmings pictogrammen van gebruiker </translation>
     </message>
     <message>
         <source>Display user mood icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon stemmings pictogram van gebruiker</translation>
     </message>
     <message>
         <source>Mood events in chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Stemming van gebeurtenissen in de chat</translation>
     </message>
 </context>
 <context>
