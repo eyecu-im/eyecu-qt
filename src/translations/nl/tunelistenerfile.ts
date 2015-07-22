@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0" language="nl_NL">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
 <context>
     <name>TuneListenerFile</name>
     <message>
@@ -14,10 +12,6 @@
 </context>
 <context>
     <name>TuneListenerFileOptions</name>
-    <message>
-        <source>File tune listener options</source>
-        <translation type="obsolete">Luister melodie Bestand opties</translation>
-    </message>
     <message>
         <source>File path</source>
         <translation>Bestand pad</translation>
@@ -40,7 +34,7 @@
     </message>
     <message>
         <source>XML</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Plain text (*.txt *.log)</source>
@@ -48,7 +42,7 @@
     </message>
     <message>
         <source>XML (*.xml)</source>
-        <translation></translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File</source>
