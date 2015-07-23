@@ -1120,7 +1120,7 @@ void ArchiveViewWindow::onTextSearchStart()
 			cursor.clearSelection();
 			ui.tbrMessages->setTextCursor(cursor);
 		}
-		ui.lblTextSearchInfo->setText(tr("Phrase was not found"));
+		ui.lblTextSearchInfo->setText(tr("Phrase not found"));
 	}
 
 	if (!ui.lneTextSearch->text().isEmpty() && FSearchResults.isEmpty())
@@ -1209,7 +1209,7 @@ void ArchiveViewWindow::onRemoveCollectionsByAction()
 		if (conversationSet.count() > 15)
 		{
 			conversationList = conversationList.mid(0,10);
-			conversationList += tr("And %n other conversations","",conversationSet.count()-conversationList.count());
+			conversationList += tr("And %n other conversation(s)","",conversationSet.count()-conversationList.count());
 		}
 
 		if (QMessageBox::question(this,
