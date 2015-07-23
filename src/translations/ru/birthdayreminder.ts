@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>BirthdayReminder</name>
     <message>
@@ -27,14 +27,6 @@
             <numerusform>День рождения через %n дней!</numerusform>
         </translation>
     </message>
-    <message numerus="yes">
-        <source>%1 marks %n years</source>
-        <translation>
-            <numerusform>%1 исполняется %n год</numerusform>
-            <numerusform>%1 исполняется %n года</numerusform>
-            <numerusform>%1 исполняется %n лет</numerusform>
-        </translation>
-    </message>
     <message>
         <source>When reminding of upcoming birthdays</source>
         <translation>При напоминании о наступающем дне рождения</translation>
@@ -49,6 +41,14 @@
 %1</numerusform>
             <numerusform>День рождения через %n дней,
 %1</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 turns %n</source>
+        <translation>
+            <numerusform>%1 исполняется %n год</numerusform>
+            <numerusform>%1 исполняется %n года</numerusform>
+            <numerusform>%1 исполняется %n лет</numerusform>
         </translation>
     </message>
 </context>

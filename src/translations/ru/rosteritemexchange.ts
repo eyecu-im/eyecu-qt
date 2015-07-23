@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>ExchangeApproveDialog</name>
     <message>
@@ -86,14 +86,6 @@
         <translation>%1 предлагает сделать вам несколько изменений в вашем контакт-листе.</translation>
     </message>
     <message numerus="yes">
-        <source>%n contact(s) have been sent</source>
-        <translation>
-            <numerusform>%n контакт был отправлен</numerusform>
-            <numerusform>%n контакта было отправлено</numerusform>
-            <numerusform>%n контактов было отправлено</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
         <source>Failed to send %n contact(s)</source>
         <translation>
             <numerusform>Не удалось отправить %n контакт</numerusform>
@@ -108,6 +100,14 @@
     <message>
         <source>Allow gateways and group services manage your contacts list</source>
         <translation>Разрешить управлять вашим списком контактов транспортам и сервисам групп</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n contact(s) sent</source>
+        <translation>
+            <numerusform>%n контакт был отправлен</numerusform>
+            <numerusform>%n контакта было отправлено</numerusform>
+            <numerusform>%n контактов было отправлено</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

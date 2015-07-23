@@ -172,7 +172,7 @@ QMultiMap<int, IOptionsDialogWidget *> Attention::optionsDialogWidgets(const QSt
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_NOTIFICATIONS )
 	{
-		widgets.insertMulti(OHO_ATTENTION, FOptionsManager->newOptionsDialogHeader("Attention", AParent));
+		widgets.insertMulti(OHO_ATTENTION, FOptionsManager->newOptionsDialogHeader(tr("Attention"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_NOTIFICATIONPOPUP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_NOTIFICATIONPOPUP), tr("Notification pop-up"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_MAINWINDOWACTIVATE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_MAINWINDOWACTIVATE), tr("Activate main window"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_AYWAYSPLAYSOUND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_AYWAYSPLAYSOUND), tr("Always play sound"), AParent));

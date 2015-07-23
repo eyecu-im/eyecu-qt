@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>AboutBox</name>
     <message>
         <source>Version: %1.%2 %3</source>
-        <translation type="unfinished">Версия: %1.%2 %3</translation>
+        <translation>Версия: %1.%2 %3</translation>
     </message>
 </context>
 <context>
@@ -14,7 +14,7 @@
         <source>About the program</source>
         <translation>О Программе</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -28,10 +28,6 @@
     <message>
         <source>Wrong plugin interface</source>
         <translation>Неверный интерфейс плагина</translation>
-    </message>
-    <message>
-        <source>Dependences not found</source>
-        <translation>Зависимости не найдены</translation>
     </message>
     <message>
         <source>Conflict with plugin %1</source>
@@ -60,6 +56,10 @@
     <message>
         <source>Application shortcuts</source>
         <translation>Горячие клавиши приложения</translation>
+    </message>
+    <message>
+        <source>Dependencies not found</source>
+        <translation>Зависимости не найдены</translation>
     </message>
 </context>
 <context>
@@ -105,7 +105,7 @@
         <translation>Другие плагины не зависят от этого плагина.</translation>
     </message>
     <message numerus="yes">
-        <source>Not found %n dependences.</source>
+        <source>%n dependency(ies) not found.</source>
         <translation>
             <numerusform>Не найдена %n зависимость.</numerusform>
             <numerusform>Не найдено %n зависимости.</numerusform>

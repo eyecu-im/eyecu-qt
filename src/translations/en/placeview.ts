@@ -1,638 +1,800 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0">
-<context>
-    <name>PlaceView</name>
-    <message>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View photos of places</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allows you to view the photos of places</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save picture</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View Center</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save point of interest</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy picture</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PlaceViewForm</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>20.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>40.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>50.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Search status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save image to disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Provider</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Place Viewer From eyeCU</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please wait....</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rating</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Price level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Scope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Accounting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Airport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Amusement park</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Aquarium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Art gallery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Atm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bakery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Beauty salon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bicycle store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bowling alley</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bus station</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cafe</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Campground</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car dealer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car rental</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car repair</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Car wash</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Casino</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cemetery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Church</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>City hall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clothing store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Convenience store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dentist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Department store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electrician</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Electronics store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Embassy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Establishment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Finance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fire station</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Florist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Food</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Funeral home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Furniture store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gas station</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General contractor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Grocery or supermarket</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gym</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hair care</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Health</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hindu temple</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Home goods store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hospital</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jewelry store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Laundry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lawyer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Liquor store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Localgovernment office</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Meal delivery</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Meal takeaway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mosque</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Movie rental</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Movie theater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moving company</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Museum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Night club</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Painter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Park</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Parking</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pet store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pharmacy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Physiotherapist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Place of worship</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Plumber</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Police</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Post office</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Real estate agency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restaurant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Roofing contractor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rv park</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>School</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shoe store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Shopping mall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Spa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stadium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Storage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Subway station</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synagogue</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Taxi stand</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Train station</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Travel agency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>University</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Veterinary care</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Near by search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radar search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Text search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key Word</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Way To Search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radius, km</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rankby</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type of place</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Way to search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move to location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error HTTP!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ready!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vicinity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>INVALID REQUEST!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ZERO RESULTS!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>OVER QUERY LIMIT!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>REQUEST DENIED!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1, %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1N</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1W</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1E</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Book store</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Court house</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Insurance agency</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Locksmith</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Lodging</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clearing the map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Now: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rank by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prominence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Distance</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
+<TS version="2.0" language="en">
+ <context>
+  <name>PlaceView</name>
+  <message>
+   <location line="36" filename="../../plugins/placeview/placeview.cpp"/>
+   <location line="83" filename="../../plugins/placeview/placeview.cpp"/>
+   <location line="101" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>View photos of places</source>
+   <translation>View photos of places</translation>
+  </message>
+  <message>
+   <location line="37" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Allows you to view the photos of places</source>
+   <translation>Allows you to view the photos of places</translation>
+  </message>
+  <message>
+   <location line="145" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>View</source>
+   <translation>View</translation>
+  </message>
+  <message>
+   <location line="153" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Close</source>
+   <translation>Close</translation>
+  </message>
+  <message>
+   <location line="163" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Save point of interest</source>
+   <translation>Save point of interest</translation>
+  </message>
+  <message>
+   <location line="175" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Save picture</source>
+   <translation>Save picture</translation>
+  </message>
+  <message>
+   <location line="183" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Copy picture</source>
+   <translation>Copy picture</translation>
+  </message>
+  <message>
+   <location line="252" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>Save file</source>
+   <translation>Save file</translation>
+  </message>
+  <message>
+   <location line="464" filename="../../plugins/placeview/placeview.cpp"/>
+   <source>View Center</source>
+   <translation>View Center</translation>
+  </message>
+ </context>
+ <context>
+  <name>PlaceViewForm</name>
+  <message>
+   <location line="26" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Form</source>
+   <translation>Form</translation>
+  </message>
+  <message>
+   <location line="89" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Type of place</source>
+   <translation>Type of place</translation>
+  </message>
+  <message>
+   <location line="96" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Way to search</source>
+   <translation>Way to search</translation>
+  </message>
+  <message>
+   <location line="103" filename="../../plugins/placeview/placeviewform.ui"/>
+   <location line="148" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Radius, km</source>
+   <translation>Radius, km</translation>
+  </message>
+  <message>
+   <location line="116" filename="../../plugins/placeview/placeviewform.ui"/>
+   <location line="375" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Type</source>
+   <translation>Type</translation>
+  </message>
+  <message>
+   <location line="129" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Way To Search</source>
+   <translation>Way To Search</translation>
+  </message>
+  <message>
+   <location line="152" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>0.5</source>
+   <translation>0.5</translation>
+  </message>
+  <message>
+   <location line="157" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>1.0</source>
+   <translation>1.0</translation>
+  </message>
+  <message>
+   <location line="162" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>3.0</source>
+   <translation>3.0</translation>
+  </message>
+  <message>
+   <location line="167" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>5.0</source>
+   <translation>5.0</translation>
+  </message>
+  <message>
+   <location line="172" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>10.0</source>
+   <translation>10.0</translation>
+  </message>
+  <message>
+   <location line="177" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>20.0</source>
+   <translation>20.0</translation>
+  </message>
+  <message>
+   <location line="182" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>40.0</source>
+   <translation>40.0</translation>
+  </message>
+  <message>
+   <location line="187" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>50.0</source>
+   <translation>50.0</translation>
+  </message>
+  <message>
+   <location line="195" filename="../../plugins/placeview/placeviewform.ui"/>
+   <location line="208" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Key Word</source>
+   <translation>Key Word</translation>
+  </message>
+  <message>
+   <location line="218" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Rank by</source>
+   <translation>Rank by</translation>
+  </message>
+  <message>
+   <location line="231" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Rankby</source>
+   <translation>Rankby</translation>
+  </message>
+  <message>
+   <location line="250" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Search status</source>
+   <translation>Search status</translation>
+  </message>
+  <message>
+   <location line="272" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Clearing the map</source>
+   <translation>Clearing the map</translation>
+  </message>
+  <message>
+   <location line="275" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Clear</source>
+   <translation>Clear</translation>
+  </message>
+  <message>
+   <location line="306" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Save image to disk</source>
+   <translation>Save image to disk</translation>
+  </message>
+  <message>
+   <location line="309" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Save</source>
+   <translation>Save</translation>
+  </message>
+  <message>
+   <location line="350" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Select Provider</source>
+   <translation>Select Provider</translation>
+  </message>
+  <message>
+   <location line="353" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>View</source>
+   <translation>View</translation>
+  </message>
+  <message>
+   <location line="384" filename="../../plugins/placeview/placeviewform.ui"/>
+   <source>Move to location</source>
+   <translation>Move to location</translation>
+  </message>
+  <message>
+   <location line="38" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Place Viewer From eyeCU</source>
+   <translation>Place Viewer From eyeCU</translation>
+  </message>
+  <message>
+   <location line="82" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Please wait....</source>
+   <translation>Please wait....</translation>
+  </message>
+  <message>
+   <location line="191" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Error HTTP!</source>
+   <translation>Error HTTP!</translation>
+  </message>
+  <message>
+   <location line="279" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Ready!</source>
+   <translation>Ready!</translation>
+  </message>
+  <message>
+   <location line="357" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Name</source>
+   <translation>Name</translation>
+  </message>
+  <message>
+   <location line="381" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Rating</source>
+   <translation>Rating</translation>
+  </message>
+  <message>
+   <location line="387" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Price level</source>
+   <translation>Price level</translation>
+  </message>
+  <message>
+   <location line="398" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Open</source>
+   <translation>Open</translation>
+  </message>
+  <message>
+   <location line="400" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Close</source>
+   <translation>Close</translation>
+  </message>
+  <message>
+   <location line="401" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Now: </source>
+   <translation>Now: </translation>
+  </message>
+  <message>
+   <location line="407" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Vicinity</source>
+   <translation>Vicinity</translation>
+  </message>
+  <message>
+   <location line="414" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Address</source>
+   <translation>Address</translation>
+  </message>
+  <message>
+   <location line="441" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Location</source>
+   <translation>Location</translation>
+  </message>
+  <message>
+   <location line="448" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Scope</source>
+   <translation>Scope</translation>
+  </message>
+  <message>
+   <location line="531" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>INVALID REQUEST!</source>
+   <translation>INVALID REQUEST!</translation>
+  </message>
+  <message>
+   <location line="536" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>ZERO RESULTS!</source>
+   <translation>ZERO RESULTS!</translation>
+  </message>
+  <message>
+   <location line="540" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>OVER QUERY LIMIT!</source>
+   <translation>OVER QUERY LIMIT!</translation>
+  </message>
+  <message>
+   <location line="544" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>REQUEST DENIED!</source>
+   <translation>REQUEST DENIED!</translation>
+  </message>
+  <message>
+   <location line="555" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>%1, %2</source>
+   <translation>%1, %2</translation>
+  </message>
+  <message>
+   <location line="555" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>%1S</source>
+   <translation>%1S</translation>
+  </message>
+  <message>
+   <location line="555" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>%1N</source>
+   <translation>%1N</translation>
+  </message>
+  <message>
+   <location line="556" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>%1W</source>
+   <translation>%1W</translation>
+  </message>
+  <message>
+   <location line="556" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>%1E</source>
+   <translation>%1E</translation>
+  </message>
+  <message>
+   <location line="661" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Accounting</source>
+   <translation>Accounting</translation>
+  </message>
+  <message>
+   <location line="662" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Airport</source>
+   <translation>Airport</translation>
+  </message>
+  <message>
+   <location line="663" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Amusement park</source>
+   <translation>Amusement park</translation>
+  </message>
+  <message>
+   <location line="664" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Aquarium</source>
+   <translation>Aquarium</translation>
+  </message>
+  <message>
+   <location line="665" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Art gallery</source>
+   <translation>Art gallery</translation>
+  </message>
+  <message>
+   <location line="666" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Atm</source>
+   <translation>Atm</translation>
+  </message>
+  <message>
+   <location line="667" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bakery</source>
+   <translation>Bakery</translation>
+  </message>
+  <message>
+   <location line="668" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bank</source>
+   <translation>Bank</translation>
+  </message>
+  <message>
+   <location line="669" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bar</source>
+   <translation>Bar</translation>
+  </message>
+  <message>
+   <location line="670" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Beauty salon</source>
+   <translation>Beauty salon</translation>
+  </message>
+  <message>
+   <location line="671" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bicycle store</source>
+   <translation>Bicycle store</translation>
+  </message>
+  <message>
+   <location line="672" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Book store</source>
+   <translation>Book store</translation>
+  </message>
+  <message>
+   <location line="673" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bowling alley</source>
+   <translation>Bowling alley</translation>
+  </message>
+  <message>
+   <location line="674" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Bus station</source>
+   <translation>Bus station</translation>
+  </message>
+  <message>
+   <location line="675" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Cafe</source>
+   <translation>Cafe</translation>
+  </message>
+  <message>
+   <location line="676" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Campground</source>
+   <translation>Campground</translation>
+  </message>
+  <message>
+   <location line="677" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Car dealer</source>
+   <translation>Car dealer</translation>
+  </message>
+  <message>
+   <location line="678" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Car rental</source>
+   <translation>Car rental</translation>
+  </message>
+  <message>
+   <location line="679" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Car repair</source>
+   <translation>Car repair</translation>
+  </message>
+  <message>
+   <location line="680" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Car wash</source>
+   <translation>Car wash</translation>
+  </message>
+  <message>
+   <location line="681" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Casino</source>
+   <translation>Casino</translation>
+  </message>
+  <message>
+   <location line="682" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Cemetery</source>
+   <translation>Cemetery</translation>
+  </message>
+  <message>
+   <location line="683" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Church</source>
+   <translation>Church</translation>
+  </message>
+  <message>
+   <location line="684" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>City hall</source>
+   <translation>City hall</translation>
+  </message>
+  <message>
+   <location line="685" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Clothing store</source>
+   <translation>Clothing store</translation>
+  </message>
+  <message>
+   <location line="686" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Convenience store</source>
+   <translation>Convenience store</translation>
+  </message>
+  <message>
+   <location line="687" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Court house</source>
+   <translation>Court house</translation>
+  </message>
+  <message>
+   <location line="688" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Dentist</source>
+   <translation>Dentist</translation>
+  </message>
+  <message>
+   <location line="689" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Department store</source>
+   <translation>Department store</translation>
+  </message>
+  <message>
+   <location line="690" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Doctor</source>
+   <translation>Doctor</translation>
+  </message>
+  <message>
+   <location line="691" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Electrician</source>
+   <translation>Electrician</translation>
+  </message>
+  <message>
+   <location line="692" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Electronics store</source>
+   <translation>Electronics store</translation>
+  </message>
+  <message>
+   <location line="693" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Embassy</source>
+   <translation>Embassy</translation>
+  </message>
+  <message>
+   <location line="694" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Establishment</source>
+   <translation>Establishment</translation>
+  </message>
+  <message>
+   <location line="695" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Finance</source>
+   <translation>Finance</translation>
+  </message>
+  <message>
+   <location line="696" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Fire station</source>
+   <translation>Fire station</translation>
+  </message>
+  <message>
+   <location line="697" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Florist</source>
+   <translation>Florist</translation>
+  </message>
+  <message>
+   <location line="698" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Food</source>
+   <translation>Food</translation>
+  </message>
+  <message>
+   <location line="699" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Funeral home</source>
+   <translation>Funeral home</translation>
+  </message>
+  <message>
+   <location line="700" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Furniture store</source>
+   <translation>Furniture store</translation>
+  </message>
+  <message>
+   <location line="701" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Gas station</source>
+   <translation>Gas station</translation>
+  </message>
+  <message>
+   <location line="702" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>General contractor</source>
+   <translation>General contractor</translation>
+  </message>
+  <message>
+   <location line="703" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Grocery or supermarket</source>
+   <translation>Grocery or supermarket</translation>
+  </message>
+  <message>
+   <location line="704" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Gym</source>
+   <translation>Gym</translation>
+  </message>
+  <message>
+   <location line="705" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Hair care</source>
+   <translation>Hair care</translation>
+  </message>
+  <message>
+   <location line="706" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Hardware store</source>
+   <translation>Hardware store</translation>
+  </message>
+  <message>
+   <location line="707" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Health</source>
+   <translation>Health</translation>
+  </message>
+  <message>
+   <location line="708" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Hindu temple</source>
+   <translation>Hindu temple</translation>
+  </message>
+  <message>
+   <location line="709" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Home goods store</source>
+   <translation>Home goods store</translation>
+  </message>
+  <message>
+   <location line="710" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Hospital</source>
+   <translation>Hospital</translation>
+  </message>
+  <message>
+   <location line="711" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Insurance agency</source>
+   <translation>Insurance agency</translation>
+  </message>
+  <message>
+   <location line="712" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Jewelry store</source>
+   <translation>Jewelry store</translation>
+  </message>
+  <message>
+   <location line="713" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Laundry</source>
+   <translation>Laundry</translation>
+  </message>
+  <message>
+   <location line="714" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Lawyer</source>
+   <translation>Lawyer</translation>
+  </message>
+  <message>
+   <location line="715" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Library</source>
+   <translation>Library</translation>
+  </message>
+  <message>
+   <location line="716" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Liquor store</source>
+   <translation>Liquor store</translation>
+  </message>
+  <message>
+   <location line="717" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Localgovernment office</source>
+   <translation>Localgovernment office</translation>
+  </message>
+  <message>
+   <location line="718" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Locksmith</source>
+   <translation>Locksmith</translation>
+  </message>
+  <message>
+   <location line="719" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Lodging</source>
+   <translation>Lodging</translation>
+  </message>
+  <message>
+   <location line="720" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Meal delivery</source>
+   <translation>Meal delivery</translation>
+  </message>
+  <message>
+   <location line="721" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Meal takeaway</source>
+   <translation>Meal takeaway</translation>
+  </message>
+  <message>
+   <location line="722" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Mosque</source>
+   <translation>Mosque</translation>
+  </message>
+  <message>
+   <location line="723" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Movie rental</source>
+   <translation>Movie rental</translation>
+  </message>
+  <message>
+   <location line="724" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Movie theater</source>
+   <translation>Movie theater</translation>
+  </message>
+  <message>
+   <location line="725" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Moving company</source>
+   <translation>Moving company</translation>
+  </message>
+  <message>
+   <location line="726" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Museum</source>
+   <translation>Museum</translation>
+  </message>
+  <message>
+   <location line="727" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Night club</source>
+   <translation>Night club</translation>
+  </message>
+  <message>
+   <location line="728" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Painter</source>
+   <translation>Painter</translation>
+  </message>
+  <message>
+   <location line="729" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Park</source>
+   <translation>Park</translation>
+  </message>
+  <message>
+   <location line="730" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Parking</source>
+   <translation>Parking</translation>
+  </message>
+  <message>
+   <location line="731" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Pet store</source>
+   <translation>Pet store</translation>
+  </message>
+  <message>
+   <location line="732" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Pharmacy</source>
+   <translation>Pharmacy</translation>
+  </message>
+  <message>
+   <location line="733" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Physiotherapist</source>
+   <translation>Physiotherapist</translation>
+  </message>
+  <message>
+   <location line="734" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Place of worship</source>
+   <translation>Place of worship</translation>
+  </message>
+  <message>
+   <location line="735" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Plumber</source>
+   <translation>Plumber</translation>
+  </message>
+  <message>
+   <location line="736" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Police</source>
+   <translation>Police</translation>
+  </message>
+  <message>
+   <location line="737" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Post office</source>
+   <translation>Post office</translation>
+  </message>
+  <message>
+   <location line="738" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Real estate agency</source>
+   <translation>Real estate agency</translation>
+  </message>
+  <message>
+   <location line="739" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Restaurant</source>
+   <translation>Restaurant</translation>
+  </message>
+  <message>
+   <location line="740" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Roofing contractor</source>
+   <translation>Roofing contractor</translation>
+  </message>
+  <message>
+   <location line="741" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Rv park</source>
+   <translation>Rv park</translation>
+  </message>
+  <message>
+   <location line="742" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>School</source>
+   <translation>School</translation>
+  </message>
+  <message>
+   <location line="743" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Shoe store</source>
+   <translation>Shoe store</translation>
+  </message>
+  <message>
+   <location line="744" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Shopping mall</source>
+   <translation>Shopping mall</translation>
+  </message>
+  <message>
+   <location line="745" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Spa</source>
+   <translation>Spa</translation>
+  </message>
+  <message>
+   <location line="746" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Stadium</source>
+   <translation>Stadium</translation>
+  </message>
+  <message>
+   <location line="747" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Storage</source>
+   <translation>Storage</translation>
+  </message>
+  <message>
+   <location line="748" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Store</source>
+   <translation>Store</translation>
+  </message>
+  <message>
+   <location line="749" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Subway station</source>
+   <translation>Subway station</translation>
+  </message>
+  <message>
+   <location line="750" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Synagogue</source>
+   <translation>Synagogue</translation>
+  </message>
+  <message>
+   <location line="751" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Taxi stand</source>
+   <translation>Taxi stand</translation>
+  </message>
+  <message>
+   <location line="752" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Train station</source>
+   <translation>Train station</translation>
+  </message>
+  <message>
+   <location line="753" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Travel agency</source>
+   <translation>Travel agency</translation>
+  </message>
+  <message>
+   <location line="754" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>University</source>
+   <translation>University</translation>
+  </message>
+  <message>
+   <location line="755" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Veterinary care</source>
+   <translation>Veterinary care</translation>
+  </message>
+  <message>
+   <location line="765" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Near by search</source>
+   <translation>Near by search</translation>
+  </message>
+  <message>
+   <location line="765" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Radar search</source>
+   <translation>Radar search</translation>
+  </message>
+  <message>
+   <location line="765" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Text search</source>
+   <translation>Text search</translation>
+  </message>
+  <message>
+   <location line="770" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Prominence</source>
+   <translation>Prominence</translation>
+  </message>
+  <message>
+   <location line="770" filename="../../plugins/placeview/placeviewform.cpp"/>
+   <source>Distance</source>
+   <translation>Distance</translation>
+  </message>
+ </context>
 </TS>
