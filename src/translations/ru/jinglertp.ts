@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Audio</name>
     <message>
@@ -135,7 +135,7 @@
     </message>
     <message>
         <source>Sample rate, Hz</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота дискретизации, Гц</translation>
     </message>
 </context>
 </TS>

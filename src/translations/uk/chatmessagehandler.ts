@@ -1,62 +1,77 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
-<context>
-    <name>ChatMessageHandler</name>
-    <message>
-        <source>Chat Messages</source>
-        <translation>Чат-повідомлення</translation>
-    </message>
-    <message>
-        <source>Message from %1</source>
-        <translation>Повідомлення від %1</translation>
-    </message>
-    <message>
-        <source>Message received</source>
-        <translation>Вхідне повідомлення</translation>
-    </message>
-    <message>
-        <source>%1 - Chat</source>
-        <translation>%1 - Чат</translation>
-    </message>
-    <message>
-        <source>%1 changed status to [%2] %3</source>
-        <translation>%1 змінив(ла) статус на [%2] %3</translation>
-    </message>
-    <message>
-        <source>Allows to exchange chat messages</source>
-        <translation>Дозволяє обмінюватись чат-повідомленнями</translation>
-    </message>
-    <message>
-        <source>Clear Chat Window</source>
-        <translation>Очистити вікно чату</translation>
-    </message>
-    <message>
-        <source>Open chat dialog</source>
-        <translation>Відкрити вікно чату</translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <comment>Open chat dialog</comment>
-        <translation>Return</translation>
-    </message>
-    <message>
-        <source>When receiving new chat message</source>
-        <translation>При отриманні нового повідомлення чату</translation>
-    </message>
-    <message>
-        <source>Loading history...</source>
-        <translation>Завантаження історії...</translation>
-    </message>
-    <message>
-        <source>Failed to load history: %1</source>
-        <translation>Не вдалося завантажити історію: %1</translation>
-    </message>
-    <message>
-        <source>Contact resource</source>
-        <translation>Ресурс контакту</translation>
-    </message>
-    <message>
-        <source>&lt;Absent&gt;</source>
-        <translation>&lt;Відсутній&gt;</translation>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+ <context>
+  <name>ChatMessageHandler</name>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="68"/>
+   <source>Chat Messages</source>
+   <translation>Чат-повідомлення</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="69"/>
+   <source>Allows to exchange chat messages</source>
+   <translation>Дозволяє обмінюватись чат-повідомленнями</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="218"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1143"/>
+   <source>Open chat dialog</source>
+   <translation>Відкрити вікно чату</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="218"/>
+   <source>Return</source>
+   <comment>Open chat dialog</comment>
+   <translation>Return</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="225"/>
+   <source>When receiving new chat message</source>
+   <translation>При отриманні нового повідомлення чату</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="344"/>
+   <source>Message from %1</source>
+   <translation>Повідомлення від %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="351"/>
+   <source>Message received</source>
+   <translation>Вхідне повідомлення</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="478"/>
+   <source>Contact resource</source>
+   <translation>Ресурс контакту</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="499"/>
+   <source>Clear Chat Window</source>
+   <translation>Очистити вікно чату</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="558"/>
+   <source>&lt;Absent&gt;</source>
+   <translation>&lt;Відсутній&gt;</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="565"/>
+   <source>%1 - Chat</source>
+   <translation>%1 - Чат</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="655"/>
+   <source>Loading history...</source>
+   <translation>Завантаження історії...</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1052"/>
+   <source>%1 changed status to [%2] %3</source>
+   <translation>%1 змінив(ла) статус на [%2] %3</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1121"/>
+   <source>Failed to load history: %1</source>
+   <translation>Не вдалося завантажити історію: %1</translation>
+  </message>
+ </context>
 </TS>

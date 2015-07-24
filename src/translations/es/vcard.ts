@@ -1,275 +1,365 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
-<context>
-    <name>EditItemDialogClass</name>
-    <message>
-        <source>Edit item</source>
-        <translation>Editar elemento</translation>
-    </message>
-</context>
-<context>
-    <name>VCardDialog</name>
-    <message>
-        <source>Save image</source>
-        <translation>Guardar imagen</translation>
-    </message>
-    <message>
-        <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
-        <translation>Archivos de imagen (*.png *.jpg *.bmp *.gif)</translation>
-    </message>
-    <message>
-        <source>Open image</source>
-        <translation>Abrir imagen</translation>
-    </message>
-    <message>
-        <source>EMail:</source>
-        <translation>E-mail:</translation>
-    </message>
-    <message>
-        <source>Phone:</source>
-        <translation>Teléfono:</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translation>Actualizar</translation>
-    </message>
-    <message>
-        <source>Service unavailable</source>
-        <translation>Servicio inaccesible</translation>
-    </message>
-    <message>
-        <source>&lt;Unset&gt;</source>
-        <translation>&lt;Sin establecer&gt;</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Masculino</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Femenino</translation>
-    </message>
-    <message>
-        <source>Size: %1 Kb</source>
-        <translation>Tamaño: %1 Kb</translation>
-    </message>
-    <message>
-        <source>Image Files (*.%1)</source>
-        <translation>Imágenes (*.%1)</translation>
-    </message>
-    <message>
-        <source>Profile - %1</source>
-        <translation>Perfil - %1</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Failed to publish your profile: %1</source>
-        <translation>Error al publicar tu perfil: %1</translation>
-    </message>
-    <message>
-        <source>Failed to publish your profile.</source>
-        <translation>Error al publicar tu perfil.</translation>
-    </message>
-    <message>
-        <source>Failed to load profile.</source>
-        <translation>Error al cargar el perfil.</translation>
-    </message>
-    <message>
-        <source>Failed to load profile: %1</source>
-        <translation>Error al cargar el perfil: %1</translation>
-    </message>
-</context>
-<context>
-    <name>VCardDialogClass</name>
-    <message>
-        <source>General</source>
-        <translation>General</translation>
-    </message>
-    <message>
-        <source>Full name</source>
-        <translation>Nombre completo</translation>
-    </message>
-    <message>
-        <source>First name</source>
-        <translation>Nombre</translation>
-    </message>
-    <message>
-        <source>Middle name</source>
-        <translation>Segundo nombre</translation>
-    </message>
-    <message>
-        <source>Last name</source>
-        <translation>Apellido</translation>
-    </message>
-    <message>
-        <source>Nick name</source>
-        <translation>Apodo</translation>
-    </message>
-    <message>
-        <source>Jabber Id</source>
-        <translation>JID</translation>
-    </message>
-    <message>
-        <source>Personal</source>
-        <translation>Personal</translation>
-    </message>
-    <message>
-        <source>Birthday</source>
-        <translation>Cumpleaños</translation>
-    </message>
-    <message>
-        <source>dd.MMMM.yyyy</source>
-        <translation>dd.MMMM.yyyy</translation>
-    </message>
-    <message>
-        <source>Gender</source>
-        <translation>Género</translation>
-    </message>
-    <message>
-        <source>Occupation</source>
-        <translation>Ocupación</translation>
-    </message>
-    <message>
-        <source>Company</source>
-        <translation>Compañía</translation>
-    </message>
-    <message>
-        <source>Department</source>
-        <translation>Departamento</translation>
-    </message>
-    <message>
-        <source>Role</source>
-        <translation>Rol</translation>
-    </message>
-    <message>
-        <source>Home page</source>
-        <translation>Página de inicio</translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation>Domicilio</translation>
-    </message>
-    <message>
-        <source>Street</source>
-        <translation>Calle</translation>
-    </message>
-    <message>
-        <source>City</source>
-        <translation>Ciudad</translation>
-    </message>
-    <message>
-        <source>State</source>
-        <translation>Estado</translation>
-    </message>
-    <message>
-        <source>Zip code</source>
-        <translation>Código postal</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation>País</translation>
-    </message>
-    <message>
-        <source>Work</source>
-        <translation>Trabajo</translation>
-    </message>
-    <message>
-        <source>Contacts</source>
-        <translation>Contactos</translation>
-    </message>
-    <message>
-        <source>E-Mail</source>
-        <translation>E-mail</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Añadir</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>Eliminar</translation>
-    </message>
-    <message>
-        <source>Phone</source>
-        <translation>Teléfono</translation>
-    </message>
-    <message>
-        <source>Photo</source>
-        <translation>Foto</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Guardar</translation>
-    </message>
-    <message>
-        <source>Load</source>
-        <translation>Cargar</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation>Limpiar</translation>
-    </message>
-    <message>
-        <source>Logo</source>
-        <translation>Logotipo</translation>
-    </message>
-    <message>
-        <source>Comments</source>
-        <translation>Comentarios</translation>
-    </message>
-    <message>
-        <source>Marital status</source>
-        <translation>Estado civil</translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <translation>Dirección</translation>
-    </message>
-</context>
-<context>
-    <name>VCardManager</name>
-    <message>
-        <source>Visit Card Manager</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Allows to obtain personal contact information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show contact profile</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Ctrl+I</source>
-        <comment>Show contact profile</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>User Profile</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Restrict maximum vCard images size</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Contact Profile</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Supports the requesting of the personal contact information</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show Profile</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Edit Profile</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
+ <context>
+  <name>EditItemDialogClass</name>
+  <message>
+   <location filename="../../plugins/vcard/edititemdialog.ui" line="17"/>
+   <location filename="../../plugins/vcard/edititemdialog.ui" line="26"/>
+   <source>Edit item</source>
+   <translation>Editar elemento</translation>
+  </message>
+ </context>
+ <context>
+  <name>VCardDialog</name>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="19"/>
+   <source>Profile - %1</source>
+   <translation>Perfil - %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="28"/>
+   <source>&lt;Unset&gt;</source>
+   <translation>&lt;Sin establecer&gt;</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="29"/>
+   <source>Male</source>
+   <translation>Masculino</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="30"/>
+   <source>Female</source>
+   <translation>Femenino</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="36"/>
+   <source>Reload</source>
+   <translation>Actualizar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="66"/>
+   <source>Service unavailable</source>
+   <translation>Servicio inaccesible</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="264"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="277"/>
+   <source>Size: %1 Kb</source>
+   <translation>Tamaño: %1 Kb</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="332"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="483"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="495"/>
+   <source>Error</source>
+   <translation>Error</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="334"/>
+   <source>Failed to load profile: %1</source>
+   <translation>Error al cargar el perfil: %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="335"/>
+   <source>Failed to publish your profile: %1</source>
+   <translation>Error al publicar tu perfil: %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="356"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="380"/>
+   <source>Save image</source>
+   <translation>Guardar imagen</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="356"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="380"/>
+   <source>Image Files (*.%1)</source>
+   <translation>Imágenes (*.%1)</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="364"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="388"/>
+   <source>Open image</source>
+   <translation>Abrir imagen</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="364"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="388"/>
+   <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
+   <translation>Archivos de imagen (*.png *.jpg *.bmp *.gif)</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="402"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="423"/>
+   <source>EMail:</source>
+   <translation>E-mail:</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="436"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="457"/>
+   <source>Phone:</source>
+   <translation>Teléfono:</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="483"/>
+   <source>Failed to publish your profile.</source>
+   <translation>Error al publicar tu perfil.</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="495"/>
+   <source>Failed to load profile.</source>
+   <translation>Error al cargar el perfil.</translation>
+  </message>
+ </context>
+ <context>
+  <name>VCardDialogClass</name>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="27"/>
+   <source>General</source>
+   <translation>General</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="36"/>
+   <source>Full name</source>
+   <translation>Nombre completo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="52"/>
+   <source>First name</source>
+   <translation>Nombre</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="68"/>
+   <source>Middle name</source>
+   <translation>Segundo nombre</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="84"/>
+   <source>Last name</source>
+   <translation>Apellido</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="100"/>
+   <source>Nick name</source>
+   <translation>Apodo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="116"/>
+   <source>Jabber Id</source>
+   <translation>JID</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="133"/>
+   <source>Personal</source>
+   <translation>Personal</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="142"/>
+   <source>Birthday</source>
+   <translation>Cumpleaños</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="183"/>
+   <source>dd.MMMM.yyyy</source>
+   <translation>dd.MMMM.yyyy</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="193"/>
+   <source>Gender</source>
+   <translation>Género</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="218"/>
+   <source>Marital status</source>
+   <translation>Estado civil</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="234"/>
+   <source>Occupation</source>
+   <translation>Ocupación</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="250"/>
+   <source>Company</source>
+   <translation>Compañía</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="266"/>
+   <source>Department</source>
+   <translation>Departamento</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="282"/>
+   <source>Role</source>
+   <translation>Rol</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="298"/>
+   <source>Home page</source>
+   <translation>Página de inicio</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="315"/>
+   <source>Address</source>
+   <translation>Dirección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="324"/>
+   <source>Home</source>
+   <translation>Domicilio</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="336"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="431"/>
+   <source>Street</source>
+   <translation>Calle</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="352"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="447"/>
+   <source>City</source>
+   <translation>Ciudad</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="368"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="463"/>
+   <source>State</source>
+   <translation>Estado</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="384"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="479"/>
+   <source>Zip code</source>
+   <translation>Código postal</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="400"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="495"/>
+   <source>Country</source>
+   <translation>País</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="419"/>
+   <source>Work</source>
+   <translation>Trabajo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="515"/>
+   <source>Contacts</source>
+   <translation>Contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="524"/>
+   <source>E-Mail</source>
+   <translation>E-mail</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="547"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="595"/>
+   <source>Add</source>
+   <translation>Añadir</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="560"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="608"/>
+   <source>Delete</source>
+   <translation>Eliminar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="572"/>
+   <source>Phone</source>
+   <translation>Teléfono</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="621"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="636"/>
+   <source>Photo</source>
+   <translation>Foto</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="679"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="766"/>
+   <source>Save</source>
+   <translation>Guardar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="692"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="779"/>
+   <source>Load</source>
+   <translation>Cargar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="705"/>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="792"/>
+   <source>Clear</source>
+   <translation>Limpiar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="723"/>
+   <source>Logo</source>
+   <translation>Logotipo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcarddialog.ui" line="805"/>
+   <source>Comments</source>
+   <translation>Comentarios</translation>
+  </message>
+ </context>
+ <context>
+  <name>VCardManager</name>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="75"/>
+   <source>Visit Card Manager</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="76"/>
+   <source>Allows to obtain personal contact information</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="187"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="188"/>
+   <source>Show contact profile</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="187"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="188"/>
+   <source>Ctrl+I</source>
+   <comment>Show contact profile</comment>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="213"/>
+   <source>User Profile</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="347"/>
+   <source>Restrict maximum vCard images size</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="467"/>
+   <source>Contact Profile</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="468"/>
+   <source>Supports the requesting of the personal contact information</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="580"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="697"/>
+   <source>Show Profile</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
+   <source>Edit Profile</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
 </TS>

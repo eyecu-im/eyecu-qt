@@ -1,401 +1,493 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
-<context>
-    <name>EditWidget</name>
-    <message>
-        <source>Send</source>
-        <translation>Enviar</translation>
-    </message>
-</context>
-<context>
-    <name>MessageWidgets</name>
-    <message>
-        <source>Messages</source>
-        <translation>Mensajes</translation>
-    </message>
-    <message>
-        <source>Tab Window %1</source>
-        <translation>Ventana con pestañas %1</translation>
-    </message>
-    <message>
-        <source>Main Tab Window</source>
-        <translation>Ventana principal</translation>
-    </message>
-    <message>
-        <source>Message Widgets Manager</source>
-        <translation>Administrador de componentes visuales de mensajes</translation>
-    </message>
-    <message>
-        <source>Allows other modules to use standard widgets for messaging</source>
-        <translation>Permite a otros módulos el uso de componentes visuales estándares para la mensajería</translation>
-    </message>
-    <message>
-        <source>Quote selected text</source>
-        <translation>Citar el texto seleccionado</translation>
-    </message>
-    <message>
-        <source>Tab Window</source>
-        <translation>Ventana con pestaña</translation>
-    </message>
-    <message>
-        <source>Tab window</source>
-        <translation>Ventana con pestaña</translation>
-    </message>
-    <message>
-        <source>Close tab</source>
-        <translation>Cerrar pestaña</translation>
-    </message>
-    <message>
-        <source>Detach tab to separate window</source>
-        <translation>Despegar la pestaña a una ventana separada</translation>
-    </message>
-    <message>
-        <source>Next tab</source>
-        <translation>Siguiente pestaña</translation>
-    </message>
-    <message>
-        <source>Previous tab</source>
-        <translation>Pestaña anterior</translation>
-    </message>
-    <message>
-        <source>Alt+%1</source>
-        <comment>Show tab</comment>
-        <translation>Alt+%1</translation>
-    </message>
-    <message>
-        <source>Message windows</source>
-        <translation>Ventana de mensajes</translation>
-    </message>
-    <message>
-        <source>Edit next message</source>
-        <translation>Editar el siguiente mensaje</translation>
-    </message>
-    <message>
-        <source>Ctrl+Down</source>
-        <comment>Edit next message</comment>
-        <translation>Ctrl+Down</translation>
-    </message>
-    <message>
-        <source>Edit previous message</source>
-        <translation>Editar el mensaje anterior</translation>
-    </message>
-    <message>
-        <source>Ctrl+Up</source>
-        <comment>Edit previous message</comment>
-        <translation>Ctrl+Up</translation>
-    </message>
-    <message>
-        <source>Ctrl+W</source>
-        <comment>Close tab</comment>
-        <translation>Ctrl+W</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <comment>Close tab window</comment>
-        <translation>Esc</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <comment>Close message window</comment>
-        <translation>Esc</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation>Copiar</translation>
-    </message>
-    <message>
-        <source>Send mail</source>
-        <translation>Enviar correo</translation>
-    </message>
-    <message>
-        <source>Open link</source>
-        <translation>Abrir enlace</translation>
-    </message>
-    <message>
-        <source>Copy address</source>
-        <translation>Copiar dirección</translation>
-    </message>
-    <message>
-        <source>Search on Google &apos;%1&apos;</source>
-        <translation>Buscar en Google &apos;%1&apos;</translation>
-    </message>
-    <message>
-        <source>Close other tabs</source>
-        <translation>Cerrar las otras pestañas</translation>
-    </message>
-    <message>
-        <source>Ctrl+Shift+W</source>
-        <comment>Close other tabs</comment>
-        <translation>Ctrl+Shift+W</translation>
-    </message>
-    <message>
-        <source>google.com</source>
-        <comment>Your google domain</comment>
-        <translation>google.com</translation>
-    </message>
-    <message>
-        <source>Quote Selected Text</source>
-        <translation>Citar el texto seleccionado</translation>
-    </message>
-    <message>
-        <source>Message window view</source>
-        <translation>Vista de la ventana de mensaje</translation>
-    </message>
-    <message>
-        <source>Load last messages from history</source>
-        <translation>Cargar los últimos mensajes del historial</translation>
-    </message>
-    <message>
-        <source>Show message windows together with contacts list</source>
-        <translation>Mostrar la ventana de mensaje junto a la lista de contactos</translation>
-    </message>
-    <message>
-        <source>Show message windows in tab window</source>
-        <translation>Mostrar las ventanas de mensaje en una ventana de pestañas</translation>
-    </message>
-    <message>
-        <source>Automatically resize messages input field</source>
-        <translation>Cambiar automáticamente el tamaño del campo de entrada</translation>
-    </message>
-    <message>
-        <source>Minimum number of lines in messages input field:</source>
-        <translation>Cantidad mínima de líneas en los campos de entrada:</translation>
-    </message>
-    <message>
-        <source>Message window behavior</source>
-        <translation>Comportamiento de la ventana de mensaje</translation>
-    </message>
-    <message>
-        <source>Show contacts status changes</source>
-        <translation>Mostrar los cambios de estado de los contactos</translation>
-    </message>
-    <message>
-        <source>Save contacts status messages in history</source>
-        <translation>Guardar los mensajes de estado de los contactos en el historial</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <comment>Quote selected text</comment>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
-        <source>Send chat message</source>
-        <translation>Enviar mensaje de chat</translation>
-    </message>
-    <message>
-        <source>Return</source>
-        <comment>Send chat message</comment>
-        <translation>Return</translation>
-    </message>
-    <message>
-        <source>Send single message</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Ctrl+Return</source>
-        <comment>Send single message</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Information bar icons</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>NormalWindow</name>
-    <message numerus="yes">
-        <source>Selected %n contact(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Subject</source>
-        <translation>Asunto</translation>
-    </message>
-</context>
-<context>
-    <name>NormalWindowClass</name>
-    <message>
-        <source>Fast choice</source>
-        <translation>Elección rápida</translation>
-    </message>
-</context>
-<context>
-    <name>ReceiversWidget</name>
-    <message>
-        <source>Receivers</source>
-        <translation>Destinatarios</translation>
-    </message>
-    <message>
-        <source>Not in Roster</source>
-        <translation>No está en la lista de contactos</translation>
-    </message>
-    <message>
-        <source>Agents</source>
-        <translation>Agentes</translation>
-    </message>
-    <message>
-        <source>Without Groups</source>
-        <translation>Sin grupos</translation>
-    </message>
-    <message>
-        <source>Select All Contacts</source>
-        <translation>Seleccionar todos los contactos</translation>
-    </message>
-    <message>
-        <source>Select Online Contact</source>
-        <translation>Seleccionar los contactos conectados</translation>
-    </message>
-    <message>
-        <source>Select Available Contacts</source>
-        <translation>Seleccionar los contactos disponibles</translation>
-    </message>
-    <message>
-        <source>Clear Selection</source>
-        <translation>Limpiar la selección</translation>
-    </message>
-    <message>
-        <source>Load Selection</source>
-        <translation>Cargar selección</translation>
-    </message>
-    <message>
-        <source>Save Selection</source>
-        <translation>Guardar la selección</translation>
-    </message>
-    <message>
-        <source>Load Contacts from File</source>
-        <translation>Cargar contactos desde un archivo</translation>
-    </message>
-    <message>
-        <source>Failed to Load Contacts</source>
-        <translation>Error al cargar los contactos</translation>
-    </message>
-    <message>
-        <source>Incorrect file format</source>
-        <translation>Formato de archivo inválido</translation>
-    </message>
-    <message>
-        <source>Failed to read file: %1</source>
-        <translation>Error al leer el archivo: %1</translation>
-    </message>
-    <message>
-        <source>Failed to open file: %1</source>
-        <translation>Error al abrir el archivo: %1</translation>
-    </message>
-    <message>
-        <source>Save Contacts to File</source>
-        <translation>Guardar los contactos al archivo</translation>
-    </message>
-    <message>
-        <source>Failed to Save Contacts</source>
-        <translation>Error al guardar los contactos al archivo</translation>
-    </message>
-    <message>
-        <source>Failed to create file: %1</source>
-        <translation>Error al crear el archivo: %1</translation>
-    </message>
-    <message>
-        <source>Load Last Selection</source>
-        <translation>Cargar la última selección</translation>
-    </message>
-    <message>
-        <source>Expand All Groups</source>
-        <translation>Expandir todos los grupos</translation>
-    </message>
-    <message>
-        <source>Collapse All Groups</source>
-        <translation>Cerrar todos los grupos</translation>
-    </message>
-    <message>
-        <source>Hide Offline Contacts</source>
-        <translation>Ocultar contactos desconectados</translation>
-    </message>
-</context>
-<context>
-    <name>ReceiversWidgetClass</name>
-    <message>
-        <source>Search Contacts</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>TabWindow</name>
-    <message>
-        <source>Close Tab</source>
-        <translation>Cerrar pestaña</translation>
-    </message>
-    <message>
-        <source>Next Tab</source>
-        <translation>Pestaña siguiente</translation>
-    </message>
-    <message>
-        <source>Prev. Tab</source>
-        <translation>Pestaña anterior</translation>
-    </message>
-    <message>
-        <source>Tabs Closable</source>
-        <translation>Pestaña que se puede cerrar</translation>
-    </message>
-    <message>
-        <source>Detach to Separate Window</source>
-        <translation>Despegar a una ventana separada</translation>
-    </message>
-    <message>
-        <source>Join to</source>
-        <translation>Unirse a</translation>
-    </message>
-    <message>
-        <source>New Tab Window</source>
-        <translation>Nueva ventana con pestañas</translation>
-    </message>
-    <message>
-        <source>Use as Default Tab Window</source>
-        <translation>Usar como ventana con pestañas por defecto</translation>
-    </message>
-    <message>
-        <source>Rename Tab Window</source>
-        <translation>Renombrar ventana</translation>
-    </message>
-    <message>
-        <source>Delete Tab Window</source>
-        <translation>Eliminar ventana</translation>
-    </message>
-    <message>
-        <source>Tab window name:</source>
-        <translation>Nombre de la ventana:</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete this tab window?</source>
-        <translation>¿Estás seguro de que deseas eliminar esta ventana con pestañas?</translation>
-    </message>
-    <message>
-        <source>Show Tabs at Bottom of the Window</source>
-        <translation>Mostrar las pestañas en la parte inferior de la ventana</translation>
-    </message>
-    <message>
-        <source>Show Tabs Indices</source>
-        <translation>Mostrar índices de las pestañas</translation>
-    </message>
-    <message>
-        <source>Close Tab Window</source>
-        <translation>Cerrar la ventana con pestañas</translation>
-    </message>
-    <message>
-        <source>Remove all tabs on window close</source>
-        <translation>Borrar todas las pestañas al cerrar la ventana</translation>
-    </message>
-    <message>
-        <source>%1) %2</source>
-        <translation>%1) %2</translation>
-    </message>
-    <message>
-        <source>Close Other Tabs</source>
-        <translation>Cerrar las otras pestañas</translation>
-    </message>
-</context>
-<context>
-    <name>TabWindowClass</name>
-    <message>
-        <source>Tab 1</source>
-        <translation>Pestaña 1</translation>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
+ <context>
+  <name>EditWidget</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/editwidget.cpp" line="49"/>
+   <source>Send</source>
+   <translation>Enviar</translation>
+  </message>
+ </context>
+ <context>
+  <name>MessageWidgets</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="47"/>
+   <source>Message Widgets Manager</source>
+   <translation>Administrador de componentes visuales de mensajes</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="48"/>
+   <source>Allows other modules to use standard widgets for messaging</source>
+   <translation>Permite a otros módulos el uso de componentes visuales estándares para la mensajería</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="81"/>
+   <source>Tab window</source>
+   <translation>Ventana con pestaña</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
+   <source>Close tab</source>
+   <translation>Cerrar pestaña</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
+   <source>Ctrl+W</source>
+   <comment>Close tab</comment>
+   <translation>Ctrl+W</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
+   <source>Close other tabs</source>
+   <translation>Cerrar las otras pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
+   <source>Ctrl+Shift+W</source>
+   <comment>Close other tabs</comment>
+   <translation>Ctrl+Shift+W</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="84"/>
+   <source>Detach tab to separate window</source>
+   <translation>Despegar la pestaña a una ventana separada</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="85"/>
+   <source>Next tab</source>
+   <translation>Siguiente pestaña</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="86"/>
+   <source>Previous tab</source>
+   <translation>Pestaña anterior</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="87"/>
+   <source>Esc</source>
+   <comment>Close tab window</comment>
+   <translation>Esc</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="90"/>
+   <source>Alt+%1</source>
+   <comment>Show tab</comment>
+   <translation>Alt+%1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="92"/>
+   <source>Message windows</source>
+   <translation>Ventana de mensajes</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="93"/>
+   <source>Esc</source>
+   <comment>Close message window</comment>
+   <translation>Esc</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="563"/>
+   <source>Quote selected text</source>
+   <translation>Citar el texto seleccionado</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
+   <source>Ctrl+Q</source>
+   <comment>Quote selected text</comment>
+   <translation>Ctrl+Q</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
+   <source>Edit next message</source>
+   <translation>Editar el siguiente mensaje</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
+   <source>Ctrl+Down</source>
+   <comment>Edit next message</comment>
+   <translation>Ctrl+Down</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <source>Edit previous message</source>
+   <translation>Editar el mensaje anterior</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <source>Ctrl+Up</source>
+   <comment>Edit previous message</comment>
+   <translation>Ctrl+Up</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
+   <source>Send chat message</source>
+   <translation>Enviar mensaje de chat</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
+   <source>Return</source>
+   <comment>Send chat message</comment>
+   <translation>Return</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
+   <source>Send single message</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
+   <source>Ctrl+Return</source>
+   <comment>Send single message</comment>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="117"/>
+   <source>Tab Window</source>
+   <translation>Ventana con pestaña</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="123"/>
+   <source>Messages</source>
+   <translation>Mensajes</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="136"/>
+   <source>Message window view</source>
+   <translation>Vista de la ventana de mensaje</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="137"/>
+   <source>Load last messages from history</source>
+   <translation>Cargar los últimos mensajes del historial</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>
+   <source>Show message windows together with contacts list</source>
+   <translation>Mostrar la ventana de mensaje junto a la lista de contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
+   <source>Show message windows in tab window</source>
+   <translation>Mostrar las ventanas de mensaje en una ventana de pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>
+   <source>Automatically resize messages input field</source>
+   <translation>Cambiar automáticamente el tamaño del campo de entrada</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>
+   <source>Minimum number of lines in messages input field:</source>
+   <translation>Cantidad mínima de líneas en los campos de entrada:</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="143"/>
+   <source>Message window behavior</source>
+   <translation>Comportamiento de la ventana de mensaje</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="144"/>
+   <source>Show contacts status changes</source>
+   <translation>Mostrar los cambios de estado de los contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
+   <source>Save contacts status messages in history</source>
+   <translation>Guardar los mensajes de estado de los contactos en el historial</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>
+   <source>Information bar icons</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="378"/>
+   <source>Tab Window %1</source>
+   <translation>Ventana con pestañas %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="562"/>
+   <source>Quote Selected Text</source>
+   <translation>Citar el texto seleccionado</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="587"/>
+   <source>Send mail</source>
+   <translation>Enviar correo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="587"/>
+   <source>Open link</source>
+   <translation>Abrir enlace</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="594"/>
+   <source>Copy address</source>
+   <translation>Copiar dirección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="603"/>
+   <source>Copy</source>
+   <translation>Copiar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="615"/>
+   <source>Search on Google &apos;%1&apos;</source>
+   <translation>Buscar en Google &apos;%1&apos;</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="647"/>
+   <source>google.com</source>
+   <comment>Your google domain</comment>
+   <translation>google.com</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="757"/>
+   <source>Main Tab Window</source>
+   <translation>Ventana principal</translation>
+  </message>
+ </context>
+ <context>
+  <name>NormalWindow</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="38"/>
+   <source>Subject</source>
+   <translation>Asunto</translation>
+  </message>
+  <message numerus="yes">
+   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="351"/>
+   <source>Selected %n contact(s)</source>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+  </message>
+ </context>
+ <context>
+  <name>NormalWindowClass</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/normalwindow.ui" line="52"/>
+   <source>Fast choice</source>
+   <translation>Elección rápida</translation>
+  </message>
+ </context>
+ <context>
+  <name>ReceiversWidget</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="88"/>
+   <source>Receivers</source>
+   <translation>Destinatarios</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="215"/>
+   <source>Select All Contacts</source>
+   <translation>Seleccionar todos los contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="221"/>
+   <source>Select Online Contact</source>
+   <translation>Seleccionar los contactos conectados</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="227"/>
+   <source>Select Available Contacts</source>
+   <translation>Seleccionar los contactos disponibles</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="233"/>
+   <source>Clear Selection</source>
+   <translation>Limpiar la selección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="239"/>
+   <source>Expand All Groups</source>
+   <translation>Expandir todos los grupos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="245"/>
+   <source>Collapse All Groups</source>
+   <translation>Cerrar todos los grupos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="253"/>
+   <source>Load Last Selection</source>
+   <translation>Cargar la última selección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="259"/>
+   <source>Load Selection</source>
+   <translation>Cargar selección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="264"/>
+   <source>Save Selection</source>
+   <translation>Guardar la selección</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="269"/>
+   <source>Hide Offline Contacts</source>
+   <translation>Ocultar contactos desconectados</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="299"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="928"/>
+   <source>Without Groups</source>
+   <translation>Sin grupos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="310"/>
+   <source>Not in Roster</source>
+   <translation>No está en la lista de contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <source>Failed to Load Contacts</source>
+   <translation>Error al cargar los contactos</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
+   <source>Incorrect file format</source>
+   <translation>Formato de archivo inválido</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
+   <source>Failed to read file: %1</source>
+   <translation>Error al leer el archivo: %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <source>Failed to open file: %1</source>
+   <translation>Error al abrir el archivo: %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <source>Failed to Save Contacts</source>
+   <translation>Error al guardar los contactos al archivo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <source>Failed to create file: %1</source>
+   <translation>Error al crear el archivo: %1</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="923"/>
+   <source>Agents</source>
+   <translation>Agentes</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="972"/>
+   <source>Load Contacts from File</source>
+   <translation>Cargar contactos desde un archivo</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="977"/>
+   <source>Save Contacts to File</source>
+   <translation>Guardar los contactos al archivo</translation>
+  </message>
+ </context>
+ <context>
+  <name>TabWindow</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="287"/>
+   <source>Next Tab</source>
+   <translation>Pestaña siguiente</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="293"/>
+   <source>Prev. Tab</source>
+   <translation>Pestaña anterior</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="299"/>
+   <source>Tabs Closable</source>
+   <translation>Pestaña que se puede cerrar</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="306"/>
+   <source>Show Tabs at Bottom of the Window</source>
+   <translation>Mostrar las pestañas en la parte inferior de la ventana</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="313"/>
+   <source>Show Tabs Indices</source>
+   <translation>Mostrar índices de las pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="319"/>
+   <source>Remove all tabs on window close</source>
+   <translation>Borrar todas las pestañas al cerrar la ventana</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="325"/>
+   <source>Use as Default Tab Window</source>
+   <translation>Usar como ventana con pestañas por defecto</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="331"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
+   <source>Rename Tab Window</source>
+   <translation>Renombrar ventana</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="336"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="544"/>
+   <source>Close Tab Window</source>
+   <translation>Cerrar la ventana con pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="342"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <source>Delete Tab Window</source>
+   <translation>Eliminar ventana</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="421"/>
+   <source>%1) %2</source>
+   <translation>%1) %2</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="489"/>
+   <source>Close Tab</source>
+   <translation>Cerrar pestaña</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="497"/>
+   <source>Close Other Tabs</source>
+   <translation>Cerrar las otras pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="508"/>
+   <source>Detach to Separate Window</source>
+   <translation>Despegar a una ventana separada</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="516"/>
+   <source>Join to</source>
+   <translation>Unirse a</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="534"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <source>New Tab Window</source>
+   <translation>Nueva ventana con pestañas</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <source>Tab window name:</source>
+   <translation>Nombre de la ventana:</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <source>Are you sure you want to delete this tab window?</source>
+   <translation>¿Estás seguro de que deseas eliminar esta ventana con pestañas?</translation>
+  </message>
+ </context>
+ <context>
+  <name>TabWindowClass</name>
+  <message>
+   <location filename="../../plugins/messagewidgets/tabwindow.ui" line="22"/>
+   <source>Tab 1</source>
+   <translation>Pestaña 1</translation>
+  </message>
+ </context>
 </TS>
