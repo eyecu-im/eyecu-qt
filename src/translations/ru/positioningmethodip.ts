@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>PositioningMethodIp</name>
     <message>
@@ -41,9 +41,9 @@
     <message numerus="yes">
         <source>second(s)</source>
         <translation>
-            <numerusform>Секунда</numerusform>
-            <numerusform>Секунды</numerusform>
-            <numerusform>Секунд</numerusform>
+            <numerusform>cекунда</numerusform>
+            <numerusform>cекунды</numerusform>
+            <numerusform>cекунд</numerusform>
         </translation>
     </message>
 </context>

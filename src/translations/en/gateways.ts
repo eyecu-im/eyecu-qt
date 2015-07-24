@@ -81,10 +81,10 @@
   </message>
   <message numerus="yes">
    <location line="728" filename="../../plugins/gateways/gateways.cpp"/>
-   <source>Are you sure you wish to remove a transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contact(s)&lt;/b> from the roster?</source>
+   <source>Are you sure you wish to remove transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contact(s)&lt;/b> from the roster?</source>
    <translation>
-    <numerusform>Are you sure you wish to remove a transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contact&lt;/b> from the roster?</numerusform>
-    <numerusform>Are you sure you wish to remove a transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contacts&lt;/b> from the roster?</numerusform>
+    <numerusform>Are you sure you wish to remove transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contact&lt;/b> from the roster?</numerusform>
+    <numerusform>Are you sure you wish to remove transport '&lt;b>%1&lt;/b>' and its &lt;b>%n contacts&lt;/b> from the roster?</numerusform>
    </translation>
   </message>
   <message>

@@ -27,9 +27,9 @@
     <number>6</number>
    </property>
    <item row="0" column="3">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="lblIntervalUnits">
      <property name="text">
-      <string>sec</string>
+      <string notr="true">second(s)</string>
      </property>
     </widget>
    </item>
@@ -164,5 +164,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>boxInterval</sender>
+   <signal>editTextChanged(QString)</signal>
+   <receiver>PositioningMethodManualOptions</receiver>
+   <slot>onEditTextChanged(QString)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>270</x>
+     <y>11</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>186</x>
+     <y>13</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onEditTextChanged(QString)</slot>
+ </slots>
 </ui>

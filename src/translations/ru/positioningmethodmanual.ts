@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>PositioningMethodManual</name>
     <message>
@@ -22,12 +22,12 @@
     <message>
         <source>Ctrl+R</source>
         <comment>Stop publication</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ctrl+R</translation>
     </message>
     <message>
         <source>F6</source>
         <comment>Here I am! (POI)</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">F6</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -45,16 +45,21 @@
 <context>
     <name>PositioningMethodManualOptions</name>
     <message>
-        <source>sec</source>
-        <translation>сек</translation>
-    </message>
-    <message>
         <source>Send position automatically every</source>
         <translation>Слать местоположение автоматически каждые</translation>
     </message>
     <message>
         <source>Disable</source>
         <translation>Запретить</translation>
+    </message>
+    <message numerus="yes">
+        <source>second(s)</source>
+        <comment>Send interval units</comment>
+        <translation>
+            <numerusform>секунда</numerusform>
+            <numerusform>секунды</numerusform>
+            <numerusform>секунд</numerusform>
+        </translation>
     </message>
 </context>
 <context>

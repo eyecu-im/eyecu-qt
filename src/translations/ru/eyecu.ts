@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
-        <translation type="unfinished"></translation>
+        <translation>© 2010-2020 Константин Козлов, Вячеслав Целых, Сергей Потапов. Данное ПО выпускается на условиях GNU General Public License версии 3.</translation>
     </message>
 </context>
 <context>
@@ -80,25 +80,9 @@
         <source>With errors (%1)</source>
         <translation>С ошибками (%1)</translation>
     </message>
-    <message numerus="yes">
-        <source>This plugin depends on %n other plugins.</source>
-        <translation>
-            <numerusform>Этот плагин зависит от %n другого плагина.</numerusform>
-            <numerusform>Этот плагин зависит от %n других плагинов.</numerusform>
-            <numerusform>Этот плагин зависит от %n других плагинов.</numerusform>
-        </translation>
-    </message>
     <message>
         <source>This plugin does not depend on other plugins.</source>
         <translation>Этот плагин не зависит от других плагинов.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Other %n plugins depend on this plugin.</source>
-        <translation>
-            <numerusform>Другой %n плагин зависит от этого плагина.</numerusform>
-            <numerusform>Другие %n плагина зависят от этого плагина.</numerusform>
-            <numerusform>Другие %n плагинов зависят от этого плагина.</numerusform>
-        </translation>
     </message>
     <message>
         <source>Other plugins don&apos;t depend on this plugin.</source>
@@ -111,6 +95,26 @@
             <numerusform>Не найдено %n зависимости.</numerusform>
             <numerusform>Не найдено %n зависимостей.</numerusform>
         </translation>
+    </message>
+    <message numerus="yes">
+        <source>This plugin depends on %n other plugin(s).</source>
+        <translation>
+            <numerusform>Этот плагин зависит от %n другого плагина.</numerusform>
+            <numerusform>Этот плагин зависит от %n других плагинов.</numerusform>
+            <numerusform>Этот плагин зависит от %n других плагинов.</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Other %n plugin(s) depend on this plugin.</source>
+        <translation>
+            <numerusform>Другой %n плагин зависит от этого плагина.</numerusform>
+            <numerusform>Другие %n плагина зависят от этого плагина.</numerusform>
+            <numerusform>Другие %n плагинов зависят от этого плагина.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Another plugin depends on this plugin.</source>
+        <translation>Другой плагин зависит от этого плагина.</translation>
     </message>
 </context>
 <context>

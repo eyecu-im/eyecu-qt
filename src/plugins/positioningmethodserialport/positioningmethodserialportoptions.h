@@ -15,7 +15,7 @@
 #include "portsetings.h"
 
 namespace Ui {
-    class PositioningProviderSerialPortOptions;
+	class PositioningMethodSerialPortOptions;
 }
 
 class PositioningMethodSerialPort;
@@ -61,7 +61,7 @@ signals:
     void childReset();
 
 private:
-    Ui::PositioningProviderSerialPortOptions *ui;
+	Ui::PositioningMethodSerialPortOptions *ui;
     PositioningMethodSerialPort *FSerialPort;
     PortInfo *      FPortInfo;
     QMap<QString,QString> FPortInfoMap;

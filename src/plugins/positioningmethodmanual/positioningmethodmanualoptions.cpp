@@ -36,5 +36,10 @@ void PositioningMethodManualOptions::changeEvent(QEvent *e)
         break;
     default:
         break;
-    }
+	}
+}
+
+void PositioningMethodManualOptions::onEditTextChanged(const QString &AText)
+{
+	ui->lblIntervalUnits->setText(tr("second(s)", "Send interval units", AText.toInt()));
 }

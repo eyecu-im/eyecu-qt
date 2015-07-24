@@ -31,6 +31,9 @@ public slots:
 protected:
     void changeEvent(QEvent *e);
 
+protected slots:
+	void onEditTextChanged(const QString &AText);
+
 signals:
     void modified();
     void childApply();

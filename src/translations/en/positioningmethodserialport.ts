@@ -124,118 +124,119 @@
   </message>
   <message numerus="yes">
    <location line="348" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp"/>
-   <source>bytes</source>
+   <source>byte(s)</source>
    <comment>Buffer size units</comment>
-   <translation type="unfinished">
-    <numerusform/>
+   <translation>
+    <numerusform>byte</numerusform>
+    <numerusform>bytes</numerusform>
    </translation>
   </message>
   <message numerus="yes">
    <location line="350" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp"/>
-   <source>seconds</source>
+   <source>second(s)</source>
    <comment>Time treshold units</comment>
-   <translation type="unfinished">
-    <numerusform/>
+   <translation>
+    <numerusform>second</numerusform>
+    <numerusform>seconds</numerusform>
    </translation>
   </message>
   <message numerus="yes">
    <location line="352" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp"/>
-   <source>meters</source>
+   <source>meter(s)</source>
    <comment>Distance treshold units</comment>
-   <translation type="unfinished">
-    <numerusform/>
+   <translation>
+    <numerusform>meter</numerusform>
+    <numerusform>meters</numerusform>
    </translation>
   </message>
   <message numerus="yes">
    <location line="354" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp"/>
-   <source>milliseconds</source>
+   <source>millisecond(s)</source>
    <comment>Port timeout units</comment>
-   <translation type="unfinished">
-    <numerusform/>
+   <translation>
+    <numerusform>millisecond</numerusform>
+    <numerusform>milliseconds</numerusform>
    </translation>
   </message>
- </context>
- <context>
-  <name>PositioningProviderSerialPortOptions</name>
   <message>
    <location line="38" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Diagnostics</source>
-   <translation>Diagnostics</translation>
+   <translation type="unfinished">Diagnostics</translation>
   </message>
   <message>
    <location line="151" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Test</source>
-   <translation>Test</translation>
+   <translation type="unfinished">Test</translation>
   </message>
   <message>
    <location line="174" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Satellites</source>
-   <translation>Satellites</translation>
+   <translation type="unfinished">Satellites</translation>
   </message>
   <message>
    <location line="197" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Port selection</source>
-   <translation>Port selection</translation>
+   <translation type="unfinished">Port selection</translation>
   </message>
   <message>
    <location line="239" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Port settings</source>
-   <translation>Port settings</translation>
+   <translation type="unfinished">Port settings</translation>
   </message>
   <message>
    <location line="245" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Baud rate:</source>
-   <translation>Baud rate:</translation>
+   <translation type="unfinished">Baud rate:</translation>
   </message>
   <message>
    <location line="252" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Data bits:</source>
-   <translation>Data bits:</translation>
+   <translation type="unfinished">Data bits:</translation>
   </message>
   <message>
    <location line="259" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Stop bits:</source>
-   <translation>Stop bits:</translation>
+   <translation type="unfinished">Stop bits:</translation>
   </message>
   <message>
    <location line="269" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Parity :</source>
-   <translation>Parity :</translation>
+   <translation type="unfinished">Parity :</translation>
   </message>
   <message>
-   <location line="279" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <location line="288" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Flow control :</source>
-   <translation>Flow control :</translation>
+   <translation type="unfinished">Flow control :</translation>
   </message>
   <message>
-   <location line="298" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <location line="314" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>NMEA parser settings</source>
-   <translation>NMEA parser settings</translation>
+   <translation type="unfinished">NMEA parser settings</translation>
   </message>
   <message>
-   <location line="318" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
-   <source>Time treshold</source>
-   <translation>Time treshold</translation>
-  </message>
-  <message>
-   <location line="379" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
-   <source>Timeout</source>
-   <translation>Timeout</translation>
-  </message>
-  <message>
-   <location line="386" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <location line="320" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Distance treshold</source>
-   <translation>Distance treshold</translation>
+   <translation type="unfinished">Distance treshold</translation>
   </message>
   <message>
-   <location line="393" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <location line="384" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Buffer size</source>
-   <translation>Buffer size</translation>
+   <translation type="unfinished">Buffer size</translation>
   </message>
   <message>
-   <location line="458" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <location line="430" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <source>Time treshold</source>
+   <translation type="unfinished">Time treshold</translation>
+  </message>
+  <message>
+   <location line="440" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
+   <source>Timeout</source>
+   <translation type="unfinished">Timeout</translation>
+  </message>
+  <message>
+   <location line="474" filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui"/>
    <source>Information</source>
-   <translation>Information</translation>
+   <translation type="unfinished">Information</translation>
   </message>
  </context>
 </TS>

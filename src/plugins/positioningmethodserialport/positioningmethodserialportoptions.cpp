@@ -2,7 +2,7 @@
 
 PositioningMethodSerialPortOptions::PositioningMethodSerialPortOptions(PositioningMethodSerialPort *ASerialPort, QWidget *AParent) :
     QWidget(AParent),
-    ui(new Ui::PositioningProviderSerialPortOptions),
+	ui(new Ui::PositioningMethodSerialPortOptions),
     FSerialPort(ASerialPort)
 {
     ui->setupUi(this);
@@ -345,11 +345,11 @@ void PositioningMethodSerialPortOptions::setupControls()
 void PositioningMethodSerialPortOptions::updateUnits(int AValue)
 {
     if (sender() == ui->spbBufferSize)
-        ui->lblBufferSizeUnits->setText(tr("bytes", "Buffer size units", AValue));
+		ui->spbBufferSize->setSuffix(" "+tr("byte(s)", "Buffer size units", AValue));
     else if (sender() == ui->spbTimeTreshold)
-        ui->lblTimeTresholdUnits->setText(tr("seconds", "Time treshold units", AValue));
+		ui->spbTimeTreshold->setSuffix(" "+tr("second(s)", "Time treshold units", AValue));
     else if (sender() == ui->spbDistanceTreshold)
-        ui->lblDistanceTresholdUnits->setText(tr("meters", "Distance treshold units", AValue));
+		ui->spbDistanceTreshold->setSuffix(" "+tr("meter(s)", "Distance treshold units", AValue));
     else if (sender() == ui->spbTimeout)
-        ui->lblTimeoutUnits->setText(tr("milliseconds", "Port timeout units", AValue));
+		ui->spbTimeout->setSuffix(" "+tr("millisecond(s)", "Port timeout units", AValue));
 }

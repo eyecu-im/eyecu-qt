@@ -87,34 +87,39 @@
    <source>With errors (%1)</source>
    <translation>With errors (%1)</translation>
   </message>
-  <message numerus="yes">
-   <location line="242" filename="../../loader/setuppluginsdialog.cpp"/>
-   <source>This plugin depends on %n other plugins.</source>
-   <translation>
-    <numerusform>This plugin depends on %n other plugin.</numerusform>
-    <numerusform>This plugin depends on %n other plugins.</numerusform>
-   </translation>
-  </message>
   <message>
    <location line="244" filename="../../loader/setuppluginsdialog.cpp"/>
    <source>This plugin does not depend on other plugins.</source>
    <translation>This plugin does not depend on other plugins.</translation>
   </message>
   <message numerus="yes">
-   <location line="248" filename="../../loader/setuppluginsdialog.cpp"/>
-   <source>Other %n plugins depend on this plugin.</source>
+   <location line="242" filename="../../loader/setuppluginsdialog.cpp"/>
+   <source>This plugin depends on %n other plugin(s).</source>
+   <translation>
+    <numerusform>This plugin depends on %n other plugin.</numerusform>
+    <numerusform>This plugin depends on %n other plugins.</numerusform>
+   </translation>
+  </message>
+  <message numerus="yes">
+   <location line="249" filename="../../loader/setuppluginsdialog.cpp"/>
+   <source>Other %n plugin(s) depend on this plugin.</source>
    <translation>
     <numerusform>Other %n plugin depend on this plugin.</numerusform>
     <numerusform>Other %n plugins depend on this plugin.</numerusform>
    </translation>
   </message>
   <message>
-   <location line="250" filename="../../loader/setuppluginsdialog.cpp"/>
+   <location line="249" filename="../../loader/setuppluginsdialog.cpp"/>
+   <source>Another plugin depends on this plugin.</source>
+   <translation>Another plugin depends on this plugin.</translation>
+  </message>
+  <message>
+   <location line="252" filename="../../loader/setuppluginsdialog.cpp"/>
    <source>Other plugins don't depend on this plugin.</source>
    <translation>Other plugins don't depend on this plugin.</translation>
   </message>
   <message numerus="yes">
-   <location line="269" filename="../../loader/setuppluginsdialog.cpp"/>
+   <location line="271" filename="../../loader/setuppluginsdialog.cpp"/>
    <source>%n dependency(ies) not found.</source>
    <translation>
     <numerusform>%n dependency not found.</numerusform>
@@ -122,12 +127,12 @@
    </translation>
   </message>
   <message>
-   <location line="283" filename="../../loader/setuppluginsdialog.cpp"/>
+   <location line="285" filename="../../loader/setuppluginsdialog.cpp"/>
    <source>Restart Application</source>
    <translation>Restart Application</translation>
   </message>
   <message>
-   <location line="283" filename="../../loader/setuppluginsdialog.cpp"/>
+   <location line="285" filename="../../loader/setuppluginsdialog.cpp"/>
    <source>Settings saved. Do you want to restart application?</source>
    <translation>Settings saved. Do you want to restart application?</translation>
   </message>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>PortInfo</name>
     <message>
@@ -69,42 +69,6 @@
         <source>Error %1</source>
         <translation>Ошибка %1</translation>
     </message>
-    <message numerus="yes">
-        <source>bytes</source>
-        <comment>Buffer size units</comment>
-        <translation>
-            <numerusform>байт</numerusform>
-            <numerusform>байта</numerusform>
-            <numerusform>байт</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>seconds</source>
-        <comment>Time treshold units</comment>
-        <translation>
-            <numerusform>секунда</numerusform>
-            <numerusform>секунды</numerusform>
-            <numerusform>секунд</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>meters</source>
-        <comment>Distance treshold units</comment>
-        <translation>
-            <numerusform>метр</numerusform>
-            <numerusform>метра</numerusform>
-            <numerusform>метров</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>milliseconds</source>
-        <comment>Port timeout units</comment>
-        <translation>
-            <numerusform>миллисекунда</numerusform>
-            <numerusform>миллисекунды</numerusform>
-            <numerusform>миллисекунд</numerusform>
-        </translation>
-    </message>
     <message>
         <source>None</source>
         <translation>Нет</translation>
@@ -133,9 +97,54 @@
         <source>XON/XOFF</source>
         <translation>XON/XOFF</translation>
     </message>
-</context>
-<context>
-    <name>PositioningProviderSerialPortOptions</name>
+    <message numerus="yes">
+        <source>byte(s)</source>
+        <comment>Buffer size units</comment>
+        <translation>
+            <numerusform>байт</numerusform>
+            <numerusform>байта</numerusform>
+            <numerusform>байт</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>second(s)</source>
+        <comment>Time treshold units</comment>
+        <translation>
+            <numerusform>секунда</numerusform>
+            <numerusform>секунды</numerusform>
+            <numerusform>секунд</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>meter(s)</source>
+        <comment>Distance treshold units</comment>
+        <translation>
+            <numerusform>метр</numerusform>
+            <numerusform>метра</numerusform>
+            <numerusform>метров</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>millisecond(s)</source>
+        <comment>Port timeout units</comment>
+        <translation>
+            <numerusform>миллисекунда</numerusform>
+            <numerusform>миллисекунды</numerusform>
+            <numerusform>миллисекунд</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Diagnostics</source>
+        <translation>Диагностика</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Тест</translation>
+    </message>
+    <message>
+        <source>Satellites</source>
+        <translation>Спутники</translation>
+    </message>
     <message>
         <source>Port selection</source>
         <translation>Выбор порта</translation>
@@ -169,14 +178,6 @@
         <translation>Настройки парсера NMEA</translation>
     </message>
     <message>
-        <source>Time treshold</source>
-        <translation>Временной порог</translation>
-    </message>
-    <message>
-        <source>Timeout</source>
-        <translation>Таймаут</translation>
-    </message>
-    <message>
         <source>Distance treshold</source>
         <translation>Порог перемещения</translation>
     </message>
@@ -185,20 +186,16 @@
         <translation>Размер буфера</translation>
     </message>
     <message>
+        <source>Time treshold</source>
+        <translation>Временной порог</translation>
+    </message>
+    <message>
+        <source>Timeout</source>
+        <translation>Таймаут</translation>
+    </message>
+    <message>
         <source>Information</source>
         <translation>Информация</translation>
-    </message>
-    <message>
-        <source>Test</source>
-        <translation>Тест</translation>
-    </message>
-    <message>
-        <source>Diagnostics</source>
-        <translation>Диагностика</translation>
-    </message>
-    <message>
-        <source>Satellites</source>
-        <translation>Спутники</translation>
     </message>
 </context>
 </TS>

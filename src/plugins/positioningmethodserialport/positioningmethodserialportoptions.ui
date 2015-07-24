@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PositioningProviderSerialPortOptions</class>
- <widget class="QWidget" name="PositioningProviderSerialPortOptions">
+ <class>PositioningMethodSerialPortOptions</class>
+ <widget class="QWidget" name="PositioningMethodSerialPortOptions">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>569</height>
+    <width>444</width>
+    <height>506</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -273,13 +273,6 @@
          <item row="3" column="2">
           <widget class="QComboBox" name="cmbParity"/>
          </item>
-         <item row="4" column="0" colspan="2">
-          <widget class="QLabel" name="lblFlowControl">
-           <property name="text">
-            <string>Flow control :</string>
-           </property>
-          </widget>
-         </item>
          <item row="4" column="2">
           <widget class="QComboBox" name="cmbFlowControl"/>
          </item>
@@ -288,6 +281,29 @@
          </item>
          <item row="0" column="2">
           <widget class="QComboBox" name="cmbBaudRate"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="lblFlowControl">
+           <property name="text">
+            <string>Flow control :</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" rowspan="5">
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>4</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -298,38 +314,14 @@
          <string>NMEA parser settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_4">
-         <item row="2" column="4">
-          <widget class="QLabel" name="lblBufferSizeUnits">
+         <item row="1" column="0">
+          <widget class="QLabel" name="lblDistanceTreshold">
            <property name="text">
-            <string notr="true">bytes</string>
+            <string>Distance treshold</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="lblDistanceTresholdUnits">
-           <property name="text">
-            <string notr="true">meters</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="lblTimeTreshold">
-           <property name="text">
-            <string>Time treshold</string>
-           </property>
-           <property name="wordWrap">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="4">
-          <widget class="QLabel" name="lblTimeoutUnits">
-           <property name="text">
-            <string notr="true">milliseconds</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0" colspan="5">
+         <item row="4" column="0" colspan="3">
           <widget class="QLabel" name="lblWait">
            <property name="palette">
             <palette>
@@ -373,17 +365,16 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="lblTimeout">
-           <property name="text">
-            <string>Timeout</string>
+         <item row="1" column="2">
+          <widget class="QSpinBox" name="spbDistanceTreshold">
+           <property name="suffix">
+            <string notr="true"> meter(s)</string>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lblDistanceTreshold">
-           <property name="text">
-            <string>Distance treshold</string>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>100</number>
            </property>
           </widget>
          </item>
@@ -394,35 +385,24 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="3">
-          <widget class="QSpinBox" name="spbBufferSize">
+         <item row="3" column="2">
+          <widget class="QSpinBox" name="spbTimeout">
+           <property name="suffix">
+            <string notr="true"> millisecond(s)</string>
+           </property>
            <property name="minimum">
-            <number>128</number>
-           </property>
-           <property name="maximum">
-            <number>2048</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QSpinBox" name="spbDistanceTreshold">
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
             <number>100</number>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="lblTimeTresholdUnits">
-           <property name="text">
-            <string notr="true">seconds</string>
+           <property name="maximum">
+            <number>5000</number>
            </property>
           </widget>
          </item>
-         <item row="0" column="3">
+         <item row="0" column="2">
           <widget class="QSpinBox" name="spbTimeTreshold">
+           <property name="suffix">
+            <string notr="true"> second(s)</string>
+           </property>
            <property name="minimum">
             <number>1</number>
            </property>
@@ -431,15 +411,51 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="3">
-          <widget class="QSpinBox" name="spbTimeout">
+         <item row="2" column="2">
+          <widget class="QSpinBox" name="spbBufferSize">
+           <property name="suffix">
+            <string notr="true"> byte(s)</string>
+           </property>
            <property name="minimum">
-            <number>100</number>
+            <number>128</number>
            </property>
            <property name="maximum">
-            <number>5000</number>
+            <number>2048</number>
            </property>
           </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lblTimeTreshold">
+           <property name="text">
+            <string>Time treshold</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="lblTimeout">
+           <property name="text">
+            <string>Timeout</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1" rowspan="4">
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::MinimumExpanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>4</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
@@ -498,7 +514,7 @@
   <connection>
    <sender>cmbPortName</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>onPortSelected(QString)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -514,7 +530,7 @@
   <connection>
    <sender>pbTest</sender>
    <signal>clicked(bool)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>onTest(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -530,7 +546,7 @@
   <connection>
    <sender>spbBufferSize</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>updateUnits(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -546,7 +562,7 @@
   <connection>
    <sender>spbDistanceTreshold</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>updateUnits(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -562,7 +578,7 @@
   <connection>
    <sender>spbTimeTreshold</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>updateUnits(int)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -578,7 +594,7 @@
   <connection>
    <sender>spbTimeout</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>PositioningProviderSerialPortOptions</receiver>
+   <receiver>PositioningMethodSerialPortOptions</receiver>
    <slot>updateUnits(int)</slot>
    <hints>
     <hint type="sourcelabel">
