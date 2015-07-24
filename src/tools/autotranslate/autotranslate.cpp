@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		qCritical("Usage: autotranslate <destination-dir> <source-dir>.");
+		qCritical("Usage: autotranslate <target-dir>");
 		return -1;
 	}
 
