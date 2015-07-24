@@ -12,6 +12,7 @@ class MapSources;
 class MapSources : public QWidget, public IOptionsDialogWidget
 {
 	Q_OBJECT
+	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
 	MapSources(IOptionsManager *AOptionsManager, QWidget *AParent = 0);
