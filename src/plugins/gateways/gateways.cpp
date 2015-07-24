@@ -725,7 +725,7 @@ void Gateways::onRemoveActionTriggered(bool)
 		{
 			Jid serviceJid = services.first();
 			button = QMessageBox::question(NULL,tr("Remove transport and its contacts"),
-				tr("Are you sure you wish to remove a transport '<b>%1</b>' and its <b>%n contact(s)</b> from the roster?","",serviceContacts(streams.first(),serviceJid).count())
+				tr("Are you sure you wish to remove transport '<b>%1</b>' and its <b>%n contact(s)</b> from the roster?","",serviceContacts(streams.first(),serviceJid).count()).arg(Qt::escape(serviceJid.domain())),
 					.arg(HTML_ESCAPE(serviceJid.domain())),
 				QMessageBox::Yes | QMessageBox::No);
 		}
