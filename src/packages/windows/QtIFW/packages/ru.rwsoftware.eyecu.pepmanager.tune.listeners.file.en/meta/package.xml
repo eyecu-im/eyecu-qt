@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Tune Listener File English Translation</DisplayName>
+    <Description>Tune Listener File English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.file.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.file,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

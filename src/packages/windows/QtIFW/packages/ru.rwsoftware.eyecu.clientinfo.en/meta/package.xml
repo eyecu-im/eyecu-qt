@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Client Information English Translation</DisplayName>
+    <Description>Client Information English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.clientinfo.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.clientinfo,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

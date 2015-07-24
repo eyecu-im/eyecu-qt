@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Client Icons English Translation</DisplayName>
+    <Description>Client Icons English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.clienticons.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.clienticons,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

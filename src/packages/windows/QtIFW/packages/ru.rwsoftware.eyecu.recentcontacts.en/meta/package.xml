@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Recent Contacts English Translation</DisplayName>
+    <Description>Recent Contacts English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.recentcontacts.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.recentcontacts,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>
