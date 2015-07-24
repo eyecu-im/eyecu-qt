@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>IP-Based Positioning Method Provider freegeoip.net English Translation</DisplayName>
+    <Description>IP-Based Positioning Method Provider freegeoip.net English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.freegeoip.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.freegeoip,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

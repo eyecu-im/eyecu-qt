@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>BOB URL Handler English Translation</DisplayName>
+    <Description>BOB URL Handler English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.boburlhandler.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.boburlhandler,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

@@ -1,7 +1,7 @@
 @echo off
 if "%packages%" == "" packages=packages
 md %packages%\%1\data\plugins
-set locales=de es ja nl pl ru uk
+set locales=en de es ja nl pl ru uk
 if not "%2" == "" set pluginlist=%2
 FOR %%P IN (%pluginlist%) DO copy c:\eyecu\plugins\%%P.dll %packages%\%1\data\plugins\ /Y
 set transdir=%1

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>File Message Archive English Translation</DisplayName>
+    <Description>File Message Archive English translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.messagearchiver.file.en</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.messagearchiver.file,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>
