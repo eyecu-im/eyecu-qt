@@ -1,5 +1,5 @@
 eyeCU
----------
+-----
 Full-featured crossplatform Jabber/XMPP client.
 The core program is just a plugin loader, all functionality is made available
 via plugins. This enforces modularity and ensures well defined component
@@ -18,8 +18,8 @@ Jabber conference:
   eyecu@conf.isgeek.info
 
 
-Main Features
--------------
+Main Features (inherited form Vacuum-IM)
+----------------------------------------
   * Nested roster groups
   * Multiple accounts in profile
   * Support for Adium message styles
@@ -35,6 +35,35 @@ Main Features
   * Ability to set different status icons for individual contacts, and groups of contacts are connected through transport
   * Support for avatars with the ability to specify a contact an arbitrary image as an avatar
   * Ability to add annotation to contact
+
+
+Extra Features (eyeCU specific)
+-------------------------------
+  * Personal Events
+    - User Mood
+    - User Activity
+    - User Tune (supports several Multimrdia Players, platform specific)
+    - User Nickname (both PEP and presence based)
+    - User Location (supports several positioning methods: Manual Location Specification, Based on IP address, using NMEA-compatible positioning module, attached to real or virtual serial port)
+  * Map
+    - 18 sources
+    - Contacts on the Map
+    - Messages on the Map
+    - Magnifier
+    - Search (6 providers available)
+    - Street View
+    - Photos of Places (experimental)
+  * Points of Interest
+    - Stored in a private storage on the XMPP server
+    - Could be exchanged via messaging
+    - Could be displayed on the map
+  * Contact proximity notification
+  * Out-of-Band Data (as an element of Message)
+  * XHTML-IM
+  * Message delivery receipts
+  * Attention
+  * Client icons
+  * Built-in Multimedia Player (could be used to play multimedia stream during file transfer)
 
 
 Portable Version
