@@ -181,7 +181,7 @@
   <message numerus="yes">
    <location filename="../../plugins/remotecontrol/remotecontrol.cpp" line="649"/>
    <source>%n message(s) from &apos;%1&apos;</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n bericht van &apos;%1&apos;</numerusform><numerusform>%n berichten van &apos;%1&apos;</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/remotecontrol/remotecontrol.cpp" line="661"/>

@@ -12,8 +12,8 @@ IF '%1' == '' (
   set LOADER_TS_FILE=
   set PLUGINS_TS_FILE=
 ) ELSE (
-  set UTILS_TS_FILE=-ts %TS_DIR%/%1/vacuumutils.ts
-  set LOADER_TS_FILE=-ts %TS_DIR%/%1/vacuumutils.ts
+  set UTILS_TS_FILE=-ts %TS_DIR%/%1/eyecuutils.ts
+  set LOADER_TS_FILE=-ts %TS_DIR%/%1/eyecuutils.ts
   set PLUGINS_TS_FILE=-ts %TS_DIR%/%1/%%d.ts
 )
 

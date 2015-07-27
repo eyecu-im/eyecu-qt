@@ -1,2 +1,2 @@
-autotranslate.exe en ru
+autotranslate.exe en
 pause

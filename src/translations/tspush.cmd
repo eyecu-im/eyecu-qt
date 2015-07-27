@@ -3,6 +3,8 @@
 echo Pushing source translation (en) to transifex
 tx.exe push -s -f --no-interactive -l en
 
+pause
+
 if "%1" == "all" goto all
 
 echo Pushing Russian translation to transifex

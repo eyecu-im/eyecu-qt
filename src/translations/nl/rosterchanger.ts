@@ -218,7 +218,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="643"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1185"/>
    <source>Are you sure you wish to remove a contact &lt;b&gt;%1&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"/>
+   <translation>Ben je er zeker van dat je contact &lt;b&gt;%1&lt;/b&gt;van rooster wilt verwijderen?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="657"/>
@@ -228,7 +228,7 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="658"/>
    <source>Are you sure you wish to subscribe for a contact &lt;b&gt;%1&lt;/b&gt; presence?</source>
-   <translation type="unfinished"/>
+   <translation>Ben je er zeker van dat je contact &lt;b&gt;%1&lt;/b&gt;aanmeld voor aanwezigheid?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="672"/>
@@ -238,7 +238,7 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="673"/>
    <source>Are you sure you wish to unsubscribe from a contact &lt;b&gt;%1&lt;/b&gt; presence?</source>
-   <translation type="unfinished"/>
+   <translation>Ben je er zeker van dat je contact &lt;b&gt;%1&lt;/b&gt;afmeld voor aanwezigheid?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="776"/>
@@ -324,7 +324,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1196"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1323"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Ben je er zeker van dat je de contact &lt;b&gt; van rooster wilt verwijderen &lt;b&gt;%n ?</numerusform><numerusform>Ben je er zeker van dat je de contacten &lt;b&gt; van rooster wilt verwijderen &lt;b&gt;%n?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1235"/>
