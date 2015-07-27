@@ -105,8 +105,8 @@
         <source>%n contact(s) sent</source>
         <translation>
             <numerusform>%n контакт был отправлен</numerusform>
-            <numerusform>%n контакта было отправлено</numerusform>
-            <numerusform>%n контактов было отправлено</numerusform>
+            <numerusform>%n контакта были отправлены</numerusform>
+            <numerusform>%n контактов были отправлены</numerusform>
         </translation>
     </message>
 </context>

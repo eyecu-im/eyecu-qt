@@ -1,9 +1,10 @@
 #include "statistics.h"
 
 #include <QDir>
+#include <QSslError>
 #include <QDataStream>
-#include <QAuthenticator>
 #include <QNetworkProxy>
+#include <QAuthenticator>
 #include <QNetworkRequest>
 #if QT_VERSION >= 0x050000
 #include <QUrlQuery>
@@ -25,7 +26,11 @@
 // *** <<< eyeCU <<< ***
 #define MP_ID                        "UA-58579215-1"
 // *** >>> eyeCU >>> ***
-#define MP_URL                       "http://www.google-analytics.com/collect"
+#if !defined(DEBUG_MODE)
+#  define MP_URL                     "https://www.google-analytics.com/collect"
+#else
+#  define MP_URL                     "https://www.google-analytics.com/debug/collect"
+#endif
 
 #define DIR_STATISTICS               "statistics"
 #define FILE_COOKIES                 "cookies.dat"
@@ -63,7 +68,7 @@ QDataStream &operator<<(QDataStream &AStream, const IStatisticsHit &AHit)
 	AStream << AHit.profile;
 	AStream << AHit.screen;
 	AStream << AHit.timestamp;
-
+	
 	AStream << AHit.event.category;
 	AStream << AHit.event.action;
 	AStream << AHit.event.label;
@@ -82,9 +87,18 @@ QDataStream &operator<<(QDataStream &AStream, const IStatisticsHit &AHit)
 
 Statistics::Statistics()
 {
+	FBookmarks = NULL;
+	FDiscovery = NULL;
+	FClientInfo = NULL;
+	FStatusChanger = NULL;
 	FPluginManager = NULL;
+	FRosterManager = NULL;
 	FOptionsManager = NULL;
+	FAccountManager = NULL;
+	FMessageWidgets = NULL;
 	FConnectionManager = NULL;
+	FXmppStreamManager = NULL;
+	FMultiChatManager = NULL;
 
 	FSendHits = true;
 	FDesktopWidget = new QDesktopWidget;
@@ -92,10 +106,12 @@ Statistics::Statistics()
 	FNetworkManager = new QNetworkAccessManager(this);
 	connect(FNetworkManager,SIGNAL(proxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *)),
 		SLOT(onNetworkManagerProxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *)));
+	connect(FNetworkManager,SIGNAL(sslErrors(QNetworkReply *, const QList<QSslError> &)),
+		SLOT(onNetworkManagerSSLErrors(QNetworkReply *, const QList<QSslError> &)));
 	connect(FNetworkManager,SIGNAL(finished(QNetworkReply *)),SLOT(onNetworkManagerFinished(QNetworkReply *)));
 
 	FPendingTimer.setSingleShot(true);
-	connect(&FPendingTimer,SIGNAL(timeout()),SLOT(onPendingTimerTimeout()));
+	connect(&FPendingTimer,SIGNAL(timeout()),SLOT(onPendingHitsTimerTimeout()));
 
 	FSessionTimer.setSingleShot(false);
 	FSessionTimer.setInterval(SESSION_TIMEOUT);
@@ -146,6 +162,68 @@ bool Statistics::initConnections(IPluginManager *APluginManager, int &AInitOrder
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 	}
 
+	plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
+	if (plugin)
+	{
+		FXmppStreamManager = qobject_cast<IXmppStreamManager *>(plugin->instance());
+		if (FXmppStreamManager)
+		{
+			connect(FXmppStreamManager->instance(),SIGNAL(streamOpened(IXmppStream *)),SLOT(onXmppStreamOpened(IXmppStream *)));
+		}
+	}
+
+	plugin = APluginManager->pluginInterface("IClientInfo").value(0,NULL);
+	if (plugin)
+	{
+		FClientInfo = qobject_cast<IClientInfo *>(plugin->instance());
+		if (FClientInfo)
+		{
+			connect(FClientInfo->instance(),SIGNAL(softwareInfoChanged(const Jid &)),SLOT(onSoftwareInfoChanged(const Jid &)));
+		}
+	}
+
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	if (plugin)
+	{
+		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IAccountManager").value(0,NULL);
+	if (plugin)
+	{
+		FAccountManager = qobject_cast<IAccountManager *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+	if (plugin)
+	{
+		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,NULL);
+	if (plugin)
+	{
+		FMultiChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IRosterManager").value(0,NULL);
+	if (plugin)
+	{
+		FRosterManager = qobject_cast<IRosterManager *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IBookmarks").value(0,NULL);
+	if (plugin)
+	{
+		FBookmarks = qobject_cast<IBookmarks *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IStatusChanger").value(0,NULL);
+	if (plugin)
+	{
+		FStatusChanger = qobject_cast<IStatusChanger *>(plugin->instance());
+	}
+
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
@@ -159,9 +237,10 @@ bool Statistics::initObjects()
 		FClientVersion = QString("%1.%2").arg(FPluginManager->version(),FPluginManager->revisionDate().date().toString("yyyyMMdd"));
 	else
 		FClientVersion = QString("%1.0").arg(FPluginManager->version());
+	LOG_DEBUG(QString("Statistics application name=%1 and version=%2").arg(CLIENT_NAME).arg(FClientVersion));
 
 	FUserAgent = userAgent();
-	LOG_DEBUG(QString("Statistics User-Agent header - %1").arg(FUserAgent));
+	LOG_DEBUG(QString("Statistics user-agent header=%1").arg(FUserAgent));
 
 	if (FOptionsManager)
 	{
@@ -194,27 +273,45 @@ QUuid Statistics::profileId() const
 
 bool Statistics::isValidHit(const IStatisticsHit &AHit) const
 {
+	if (AHit.screen.isEmpty() || AHit.screen.size()>2048)
+		return false;
+
 	if (!AHit.timestamp.isValid() || AHit.timestamp>QDateTime::currentDateTime())
 		return false;
+
+	for (QMap<int, qint64>::const_iterator it=AHit.metrics.constBegin(); it!=AHit.metrics.constEnd(); ++it)
+		if (it.key() > 20)
+			return false;
+
+	for (QMap<int, QString>::const_iterator it=AHit.dimensions.constBegin(); it!=AHit.dimensions.constEnd(); ++it)
+		if (it.key()>20 || it.value().size() > 150)
+			return false;
 
 	switch (AHit.type)
 	{
 	case IStatisticsHit::HitView:
-		if (AHit.screen.isEmpty())
-			return false;
 		break;
 	case IStatisticsHit::HitEvent:
-		if (AHit.event.category.isEmpty() || AHit.event.action.isEmpty())
+
+		if (AHit.event.category.isEmpty() || AHit.event.category.size()>150)
+			return false;
+		if (AHit.event.action.isEmpty() || AHit.event.action.size()>500)
+			return false;
+		if (AHit.event.label.size() > 500)
+			return false;
+		if (AHit.event.value < 0)
 			return false;
 		break;
 	case IStatisticsHit::HitTiming:
-		if (AHit.timing.category.isEmpty() || AHit.timing.variable.isEmpty())
+		if (AHit.timing.category.isEmpty() || AHit.timing.category.size()>150)
+			return false;
+		if (AHit.timing.variable.isEmpty() || AHit.timing.variable.size()>500)
 			return false;
 		if (AHit.timing.time < 0)
 			return false;
 		break;
 	case IStatisticsHit::HitException:
-		if (AHit.exception.descr.isEmpty())
+		if (AHit.exception.descr.isEmpty() || AHit.exception.descr.size()>150)
 			return false;
 		break;
 	default:
@@ -226,7 +323,6 @@ bool Statistics::isValidHit(const IStatisticsHit &AHit) const
 
 bool Statistics::sendStatisticsHit(const IStatisticsHit &AHit)
 {
-#if !defined(DEBUG_MODE) || defined(DEBUG_STATISTICS)
 	if (FSendHits && isValidHit(AHit))
 	{
 		if (!FProfileId.isNull() || !AHit.profile.isNull())
@@ -247,9 +343,10 @@ bool Statistics::sendStatisticsHit(const IStatisticsHit &AHit)
 		}
 		return true;
 	}
-#else
-	Q_UNUSED(AHit);
-#endif
+	else if (FSendHits)
+	{
+		LOG_ERROR(QString("Failed to send statistics hit, type=%1, screen=%2: Invalid hit").arg(AHit.type).arg(AHit.screen));
+	}
 	return false;
 }
 
@@ -416,15 +513,15 @@ QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 	#define QUERY_TYPE QString
 #endif
 
-	QList< QPair<QUERY_TYPE,QUERY_TYPE> > query;
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("v",QUrl::toPercentEncoding(MP_VER)));
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("tid",QUrl::toPercentEncoding(MP_ID)));
 
-	QString cid = !AHit.profile.isNull() ? AHit.profile.toString() : FProfileId.toString();
-	cid.remove(0,1); cid.chop(1);
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("cid",QUrl::toPercentEncoding(cid)));
+	// Protocol Version
+	url.addQueryItem("v",MP_VER);
 
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("fl",QUrl::toPercentEncoding(qVersion())));
+
+	// Tracking ID
+	url.addQueryItem("tid",MP_ID);
+
+	// Queue Time
 // *** <<< eyeCU <<< ***
 	qint64 qt =
 #if QT_VERSION >= 0x040700
@@ -434,69 +531,102 @@ QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 #endif
 // *** >>> eyeCU >>>***
 	if (qt > 0)
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("qt",QUrl::toPercentEncoding(QString::number(qt))));
+		url.addQueryItem("qt",QString::number(qt));
 
-	if (!AHit.screen.isEmpty())
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("cd",QUrl::toPercentEncoding(AHit.screen)));
+	// Client ID
+	QString cid = !AHit.profile.isNull() ? AHit.profile.toString() : FProfileId.toString();
+	cid.remove(0,1); cid.chop(1);
+	url.addQueryItem("cid",cid);
 
+	// Session Control
 	if (AHit.session == IStatisticsHit::SessionStart)
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sc",QUrl::toPercentEncoding("start")));
+		url.addQueryItem("sc","start");
 	else if (AHit.session == IStatisticsHit::SessionEnd)
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sc",QUrl::toPercentEncoding("end")));
+		url.addQueryItem("sc","end");
 
-	QString rev =  FPluginManager->revisionDate().date().toString("yyyyddMM");
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("an",QUrl::toPercentEncoding(CLIENT_NAME)));
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("av",QUrl::toPercentEncoding(QString("%1.%2").arg(FPluginManager->version(),FPluginManager->revision()))));
-
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ul",QUrl::toPercentEncoding(QLocale().name())));
-
+	// Screen Resolution
 	QRect sr = FDesktopWidget->screenGeometry();
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("sr",QUrl::toPercentEncoding(QString("%1.%2").arg(sr.width()).arg(sr.height()))));
+	url.addQueryItem("sr",QString("%1.%2").arg(sr.width()).arg(sr.height()));
+
+	// User Language
+	url.addQueryItem("ul",QLocale().name());
+
+	// Flash Version (Qt Version)
+	url.addQueryItem("fl",qVersion());
+
+	// Screen Name
+	url.addQueryItem("cd",AHit.screen);
+
+	// Application Name
+	url.addQueryItem("an",CLIENT_NAME);
+
+	// Application Version
+	url.addQueryItem("av",FClientVersion);
+
+	// Custom Metric
+	for (QMap<int, qint64>::const_iterator it=AHit.metrics.constBegin(); it!=AHit.metrics.constEnd(); ++it)
+		url.addQueryItem(QString("cm%1").arg(it.key()),QString::number(it.value()));
+
+	// Custom Dimension
+	for (QMap<int, QString>::const_iterator it=AHit.dimensions.constBegin(); it!=AHit.dimensions.constEnd(); ++it)
+		url.addQueryItem(QString("cd%1").arg(it.key()),it.value());
 
 	if (AHit.type == IStatisticsHit::HitView)
 	{
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("appview")));
+		// Hit Type
+		url.addQueryItem("t","screenview");
 	}
 	else if (AHit.type == IStatisticsHit::HitEvent)
 	{
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("event")));
+		// Hit Type
+		url.addQueryItem("t","event");
 
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ec",QUrl::toPercentEncoding(AHit.event.category)));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ea",QUrl::toPercentEncoding(AHit.event.action)));
+		// Event Category
+		url.addQueryItem("ec",AHit.event.category);
 
+		// Event Action
+		url.addQueryItem("ea",AHit.event.action);
+
+		// Event Label
 		if (!AHit.event.label.isEmpty())
-			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("el",QUrl::toPercentEncoding(AHit.event.label)));
+			url.addQueryItem("el",AHit.event.label);
 
+		// Event Value
 		if (AHit.event.value >= 0)
-			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("ev",QUrl::toPercentEncoding(QString::number(AHit.event.value))));
+			url.addQueryItem("ev",QString::number(AHit.event.value));
 	}
 	else if (AHit.type == IStatisticsHit::HitTiming)
 	{
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("timing")));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utc",QUrl::toPercentEncoding(AHit.timing.category)));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utv",QUrl::toPercentEncoding(AHit.timing.variable)));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utt",QUrl::toPercentEncoding(QString::number(AHit.timing.time))));
+		// Hit Type
+		url.addQueryItem("t","timing");
 
+		// User timing category
+		url.addQueryItem("utc",AHit.timing.category);
+
+		// User timing variable name
+		url.addQueryItem("utv",AHit.timing.variable);
+
+		// User timing time
+		url.addQueryItem("utt",QString::number(AHit.timing.time));
+
+		// User timing label
 		if (!AHit.timing.label.isEmpty())
-			query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("utl",QUrl::toPercentEncoding(AHit.timing.label)));
+			url.addQueryItem("utl",AHit.timing.label);
 	}
 	else if (AHit.type == IStatisticsHit::HitException)
 	{
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("t",QUrl::toPercentEncoding("exception")));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("exd",QUrl::toPercentEncoding(AHit.exception.descr)));
-		query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("exf",QUrl::toPercentEncoding(AHit.exception.fatal ? "1" : "0")));
+		// Hit Type
+		url.addQueryItem("t","exception");
+
+		// Exception Description
+		url.addQueryItem("exd",AHit.exception.descr);
+
+		// Is Exception Fatal?
+		url.addQueryItem("exf",AHit.exception.fatal ? "1" : "0");
 	}
 
-	query.append(qMakePair<QUERY_TYPE,QUERY_TYPE>("z",QUrl::toPercentEncoding(QString::number(qrand()))));
-
-#if QT_VERSION < 0x050000
-	url.setEncodedQueryItems(query);
-#else
-	QUrlQuery urlQuery;
-	urlQuery.setQueryDelimiters('=','&');
-	urlQuery.setQueryItems(query);
-	url.setQuery(urlQuery);
-#endif
+	// Cache Buster
+	url.addQueryItem("z",QString::number(qrand()));
 
 	return url;
 }
@@ -519,6 +649,61 @@ QString Statistics::getStatisticsFilePath(const QString &AFileName) const
 	return dir.absoluteFilePath(AFileName);
 }
 
+IStatisticsHit Statistics::makeViewHit() const
+{
+	IStatisticsHit hit;
+	hit.type = IStatisticsHit::HitView;
+	hit.screen = staticMetaObject.className();
+	return hit;
+}
+
+IStatisticsHit Statistics::makeEventHit(const QString &AParams, int AValue) const
+{
+	QStringList params = QString(AParams).split("|");
+
+	IStatisticsHit hit;
+	hit.type = IStatisticsHit::HitEvent;
+	hit.screen = staticMetaObject.className();
+	hit.event.category = params.value(0);
+	hit.event.action = params.value(0)+"-"+params.value(1);
+	hit.event.label = params.value(2);
+	hit.event.value = AValue;
+	return hit;
+}
+
+IStatisticsHit Statistics::makeSessionEvent(const QString &AParams, int ASession) const
+{
+	IStatisticsHit hit = makeEventHit(AParams);
+	hit.session = ASession;
+	return hit;
+}
+
+void Statistics::sendServerInfoHit(const QString &AName, const QString &AVersion)
+{
+	if (!AName.isEmpty())
+	{
+		IStatisticsHit hit = makeEventHit(SEVP_STATISTICS_SERVERS);
+
+		hit.dimensions[SCDP_SERVER_NAME] = AName;
+		if (!AVersion.isEmpty())
+			hit.dimensions[SCDP_SERVER_VERSION] = AVersion;
+		else
+			hit.dimensions[SCDP_SERVER_VERSION] = "Unknown";
+
+		sendStatisticsHit(hit);
+	}
+}
+
+void Statistics::onPendingHitsTimerTimeout()
+{
+	bool sent = false;
+	while (!FPendingHits.isEmpty() && !sent)
+	{
+		IStatisticsHit hit = FPendingHits.takeFirst();
+		sent = sendStatisticsHit(hit);
+	}
+}
+
 void Statistics::onNetworkManagerFinished(QNetworkReply *AReply)
 {
 	AReply->deleteLater();
@@ -530,22 +715,32 @@ void Statistics::onNetworkManagerFinished(QNetworkReply *AReply)
 			hit.profile = FProfileId;
 			FPendingHits.append(hit);
 			FPendingTimer.start(RESEND_TIMEOUT);
-			LOG_WARNING(QString("Failed to send statistics hit: %1").arg(AReply->errorString()));
+			LOG_WARNING(QString("Failed to send statistics hit, type=%1, screen=%2: %3").arg(hit.type).arg(hit.screen).arg(AReply->errorString()));
 		}
 		else
 		{
-			if (!FPendingHits.isEmpty())
-				FPendingTimer.start(0);
-			LOG_DEBUG(QString("Statistics hit sent, type=%1, screen=%2").arg(hit.type).arg(hit.screen));
+			FPendingTimer.start(0);
+			LOG_DEBUG(QString("Statistics hit sent, type=%1, screen=%2: %3").arg(hit.type).arg(hit.screen).arg(AReply->request().url().toString()));
 		}
 		FPluginManager->continueShutdown();
 	}
+}
+
+void Statistics::onNetworkManagerSSLErrors(QNetworkReply *AReply, const QList<QSslError> &AErrors)
+{
+	LOG_WARNING(QString("Statistics connection SSL error: %1").arg(AErrors.value(0).errorString()));
+	AReply->ignoreSslErrors();
 }
 
 void Statistics::onNetworkManagerProxyAuthenticationRequired(const QNetworkProxy &AProxy, QAuthenticator *AAuth)
 {
 	AAuth->setUser(AProxy.user());
 	AAuth->setPassword(AProxy.password());
+}
+
+void Statistics::onDefaultConnectionProxyChanged(const QUuid &AProxyId)
+{
+	FNetworkManager->setProxy(FConnectionManager->proxyById(AProxyId).proxy);
 }
 
 void Statistics::onOptionsOpened()
@@ -563,13 +758,13 @@ void Statistics::onOptionsOpened()
 		FNetworkManager->cookieJar()->deleteLater();
 	FNetworkManager->setCookieJar(new FileCookieJar(getStatisticsFilePath(FILE_COOKIES)));
 
-	REPORT_EVENT(SEVP_SESSION_STARTED,1);
+	sendStatisticsHit(makeSessionEvent(SEVP_SESSION_STARTED,IStatisticsHit::SessionStart));
 	FSessionTimer.start();
 }
 
 void Statistics::onOptionsClosed()
 {
-	REPORT_EVENT(SEVP_SESSION_FINISHED,1);
+	sendStatisticsHit(makeSessionEvent(SEVP_SESSION_FINISHED,IStatisticsHit::SessionEnd));
 	FSessionTimer.stop();
 }
 
@@ -580,34 +775,101 @@ void Statistics::onOptionsChanged(const OptionsNode &ANode)
 		if (ANode.value().toBool())
 		{
 			FSendHits = true;
-			onLoggerEventReported("Statistics","statistics","statistics-enabled","Statistics Enabled",1); // SEVP_STATISTICS_ENABLED
+			sendStatisticsHit(makeEventHit(SEVP_STATISTICS_ENABLED));
 		}
 		else
 		{
-			onLoggerEventReported("Statistics","statistics","statistics-disabled","Statistics Disabled",1); // SEVP_STATISTICS_DISABLED
+			sendStatisticsHit(makeEventHit(SEVP_STATISTICS_DISABLED));
 			FSendHits = false;
 		}
 	}
 }
 
-void Statistics::onPendingTimerTimeout()
+void Statistics::onSessionTimerTimeout()
 {
-	bool sent = false;
-	while (!FPendingHits.isEmpty() && !sent)
+	IStatisticsHit hit = makeEventHit(SEVP_STATISTICS_METRICS);
+
+	QList<Jid> streams;
+	if (FAccountManager)
 	{
-		IStatisticsHit hit = FPendingHits.takeFirst();
-		sent = sendStatisticsHit(hit);
+		foreach(IAccount *account, FAccountManager->accounts())
+		{
+			if (account->isActive())
+				streams.append(account->xmppStream()->streamJid());
+		}
+		hit.metrics[SCMP_ACCOUNTS_COUNT] = streams.count();
+	}
+
+	if (FRosterManager)
+	{
+		int agentsCount = 0;
+		int contactsCount = 0;
+		QSet<QString> groups;
+		foreach(IRoster *roster, FRosterManager->rosters())
+		{
+			foreach(const IRosterItem &ritem, roster->items())
+			{
+				if (ritem.itemJid.node().isEmpty())
+					agentsCount++;
+				else
+					contactsCount++;
+			}
+			groups += roster->groups();
+		}
+		hit.metrics[SCMP_CONTACTS_COUNT] = contactsCount;
+		hit.metrics[SCMP_AGENTS_COUNT] = agentsCount;
+		hit.metrics[SCMP_GROUPS_COUNT] = groups.count();
+	}
+
+	if (FMessageWidgets)
+		hit.metrics[SCMP_CHATWINDOWS_COUNT] = FMessageWidgets->chatWindows().count();
+
+	if (FMultiChatManager)
+		hit.metrics[SCMP_MULTICHATWINDOWS_COUNT] = FMultiChatManager->multiChatWindows().count();
+
+	if (FBookmarks)
+	{
+		foreach(const Jid &streamJid, streams)
+			hit.metrics[SCMP_BOOKMARKS_COUNT] += FBookmarks->bookmarks(streamJid).count();
+	}
+
+	if (FStatusChanger)
+	{
+		foreach(int statusId, FStatusChanger->statusItems())
+		{
+			if (statusId > STATUS_NULL_ID)
+				hit.metrics[SCMP_STATUSITEMS_COUNT] += 1;
+		}
+	}
+
+	sendStatisticsHit(hit);
+}
+
+void Statistics::onXmppStreamOpened(IXmppStream *AXmppStream)
+{
+	if (FClientInfo)
+	{
+		if (FClientInfo->requestSoftwareInfo(AXmppStream->streamJid(),AXmppStream->streamJid().domain()))
+			FSoftwareRequests.insert(AXmppStream->streamJid().domain(),AXmppStream->streamJid());
 	}
 }
 
-void Statistics::onSessionTimerTimeout()
+void Statistics::onSoftwareInfoChanged(const Jid &AContactJid)
 {
-	REPORT_EVENT(SEVP_SESSION_CONTINUED,1);
-}
-
-void Statistics::onDefaultConnectionProxyChanged(const QUuid &AProxyId)
-{
-	FNetworkManager->setProxy(FConnectionManager->proxyById(AProxyId).proxy);
+	if (FSoftwareRequests.contains(AContactJid))
+	{
+		Jid streamJid = FSoftwareRequests.take(AContactJid);
+		if (FClientInfo->hasSoftwareInfo(AContactJid))
+		{
+			sendServerInfoHit(FClientInfo->softwareName(AContactJid),FClientInfo->softwareVersion(AContactJid));
+		}
+		else if (FDiscovery && FDiscovery->hasDiscoInfo(streamJid,AContactJid))
+		{
+			IDiscoInfo info = FDiscovery->discoInfo(streamJid,AContactJid);
+			int index = FDiscovery->findIdentity(info.identity,"server","im");
+			sendServerInfoHit(index>=0 ? info.identity.value(index).name : QString::null, QString::null);
+		}
+	}
 }
 
 void Statistics::onLoggerViewReported(const QString &AClass)

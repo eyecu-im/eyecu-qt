@@ -106,7 +106,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <source>Are you sure you wish to remove transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
+        <source>Are you sure you wish to remove &lt;b&gt;%n transport(s)&lt;/b&gt; and their contacts from the roster?</source>
         <translation>
             <numerusform>Вы уверены, что хотите убрать транспорт &apos;&lt;b&gt;%1&lt;/b&gt;&apos; и его &lt;b&gt;%n контакт&lt;/b&gt; из ростера?</numerusform>
             <numerusform>Вы уверены, что хотите убрать транспорт &apos;&lt;b&gt;%1&lt;/b&gt;&apos; и его &lt;b&gt;%n контакта&lt;/b&gt; из ростера?</numerusform>
