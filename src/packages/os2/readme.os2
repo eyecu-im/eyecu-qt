@@ -1,15 +1,60 @@
 
+
          eyeCU
+
 
 XMPP client with positioning
 for OS/2 and eComStation
 
 This document describes OS/2(eCS)-specific notes for eyeCU.
 
-1. Installation.
 
-eyeCU needs some third-party runtime libraries to work. Unfortunately, WarpIN package allows to specify dependencies for other WarpIN packages only. So, it cannot check if all the necessary libraries installed in the system. You have to check and install it manually.
-1.1 Qt4 version 4.7.3.2 or newer. Could be installed automatically with RPM/YUM or manually, by downloading and unpacking ZIP-archive from Netlabs FTP server. In eComStation 2.2 or later it should be installed during OS installation.
-1.2 Open SSL 1.0.0a or newer. Could be installed automatically with RPM/YUM or manually, by downloading and unpacking ZIP-archive from Netlabs FTP server. In eComStation 2.2 or later it should be installed during OS installation.
-1.3 eCo Software Runtime version 2011.08.04 or later. Could be installed automatically with WarpIN. In eComStation 2.1 or later it should be installed during OS installation.
-1.4 Extended System Tray version 0.1.1 or later. Could be installed automatically with WarpIN. In eComStation 2.2 or later it should be installed during OS installation.
+1. Installation
+---------------
+ 1.1 Prerequisites
+  eyeCU needs some third-party runtime libraries to work. Unfortunately, WarpIN package allows to specify dependencies for other WarpIN packages only. So, it cannot check if all the necessary libraries installed in the system. You have to check and install it manually.
+
+  1.1.1 Qt4 version 4.7.3.2 or newer. Could be installed automatically with RPM/YUM or manually, by downloading and unpacking ZIP-archive from Netlabs FTP server. In eComStation 2.2 or later it should be installed during OS installation.
+
+  1.1.2 Open SSL 1.0.0a or newer. Could be installed automatically with RPM/YUM or manually, by downloading and unpacking ZIP-archive from Netlabs FTP server. In eComStation 2.2 or later it should be installed during OS installation.
+
+  1.1.3 eCo Software Runtime version 2011.08.04 or later. Could be installed automatically with WarpIN. In eComStation 2.1 or later it should be installed during OS installation.
+
+  1.1.4 Extended System Tray version 0.1.1 or later. Could be installed automatically with WarpIN. In eComStation 2.2 or later it should be installed during OS installation.
+
+ 1.2 Component selection
+  eyeCU installation package consists of a lot of packages. Some of them are grouped together for your convenience. Most of them are selected by default and the only reason to deselect them is to reduce disk space needed on installation drive. You may always disable any plugin after installation,so if you're unsure if you need feature or not, you'd better not deselect it during installation.
+
+  1.2.1 eyeCU base
+   eyeCU back package contains eyeCU core and essential plugins and resources, needed for eyeCU to run and implement basic XMPP functionality. You cannot deselect it.
+
+  1.2.2 Language selection
+   By default, all the languages are selected. eyeCU will use localization, based on your system settings. You may also select preferred language manually. If you surely do not plan using some languages, you may deselect them during installation.
+
+  1.2.3 Spell checker dictionaries
+   By default, most of spell checking dictionaries are selected. If you surely do not plan using some of them, you may deselect them during installation. Also, you may deselect spellchecker itself, if you beleive you don't need it. No dictionaries will be installed in that case.
+
+  1.2.4 Emoticon sets.
+   There are 2 emoticon sets in eyeCU package. European-type :-) "Default" and Asian-type (^_^) "Blobs purple". You may deselect either of them if you feel you don't need it.
+
+  1.2.5 Status icons
+   There is a pile of status icon sets in eyeCU package. Most of them are network-specific. Others are just for fun. You may deselect any of them if you don't plan to use them or connect to a legacy network via transport/gateway. You may also deselect "Gateways" featue, if you don't plan to use gaytways/transports.
+
+
+2. OS/2-specific plugins
+------------------------
+ 2.1 Tune Listeners
+ Tune listeners are multimedia player-specific plugins, which listening multimedia players to determine, what are they playing right now, receive meta data of currently playing tune and provide this information to User Tune plugin. There are 3 such plugins are available in OS/2 (eComStation):
+  2.1.1 Qu Player
+   VIO and PM MP3 player by Anton Malykh. Abandoned since 2001.
+  2.1.2 Z!
+   MP3 player by dink. Abandoned since 2008.
+  2.1.3 PM123 / PM123 Classic
+   A powerful PM audio player by Glassman. Currently under active development.
+   
+3. Known issues
+---------------
+  There are a few issues in Qt4 for OS/2 and eComStation, which affect eyeCU:
+  3.1 Bugs
+   3.1.1 "Show corresponding window minimazed in taskbar" notification option cause problems with notifications. This notification type should be off for every event.
+   3.1.2 SHortcuts (hotkeys) are keyboard layer dependent. So, 
