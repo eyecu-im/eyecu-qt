@@ -19,15 +19,19 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle(ANotification.data.value(NDR_POPUP_TITLE).toString());
     IconStorage *iconStorage=IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-    setWindowIcon(iconStorage->getIcon(MNI_NOTIFICATIONS));
-    QString fullName = iconStorage->fileFullName(MNI_BELL);
+	setWindowIcon(iconStorage->getIcon(MNI_ATTENTION));
 
-    QMovie *movie = new QMovie(fullName, QByteArray(), this);   // Set "this" as parent, to delete it automatically when not needed
+	QMovie *movie = new QMovie(iconStorage->fileFullName(MNI_BELL), QByteArray(), this);   // Set "this" as parent, to delete it automatically when not needed
     ui->lblBell1->setMovie(movie);
     ui->lblBell2->setMovie(movie);
     ui->lblBell3->setMovie(movie);
     ui->lblBell4->setMovie(movie);
     movie->start();
+
+	movie = new QMovie(iconStorage->fileFullName(MNI_EXCLAMATION), QByteArray(), this);   // Set "this" as parent, to delete it automatically when not needed
+	ui->lblExclamation1->setMovie(movie);
+	ui->lblExclamation2->setMovie(movie);
+	movie->start();
 
     QVariant avatarFileName=ANotification.data.value(NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME);
     if (avatarFileName.isValid())   // Has avatar data

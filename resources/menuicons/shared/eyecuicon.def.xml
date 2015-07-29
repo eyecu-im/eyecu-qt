@@ -7,7 +7,6 @@
  <icon><key>voip_active</key><object mime="image/png">voip_active.png</object></icon>
  <icon><key>receipts</key><object mime="image/png">receipts.png</object></icon>
  <icon><key>tune</key><object mime="image/png">tune.png</object></icon>
- <icon><key>bell</key><object mime="image/gif">bell.gif</object></icon>
  <icon><key>tracker</key><object mime="image/png">tracker.png</object></icon>
  <icon><key>lastfm</key><object mime="image/png">lastfm.png</object></icon>
  <icon><key>streetview</key><object mime="image/png">mapstreetview.png</object></icon>

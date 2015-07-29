@@ -143,7 +143,7 @@ bool Attention::initObjects()
     {
         INotificationType notifyType;
         notifyType.order = NTO_ATTENTION_NOTIFY;
-        notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
         notifyType.title = tr("When contact attempts to attract user's attention");
         notifyType.kindMask = INotification::RosterNotify|INotification::TrayNotify|INotification::TrayAction|
                               INotification::PopupWindow|INotification::SoundPlay|INotification::AlertWidget|
@@ -185,7 +185,7 @@ void Attention::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.var = NS_ATTENTION;
     dfeature.active = true;
-    dfeature.icon = FIconStorage->getIcon(MNI_NOTIFICATIONS);
+	dfeature.icon = FIconStorage->getIcon(MNI_ATTENTION);
     dfeature.name = tr("Attention");
     dfeature.description = tr("Implements XEP-0224: Allows to attract user's attention");
     FDiscovery->insertDiscoFeature(dfeature);
@@ -238,7 +238,7 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
                         notify.kinds  = INotification::SoundPlay;
                     else
                     {
-                        QIcon icon   = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+						QIcon icon   = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
                         QString name = ANotifications->contactName(AMessage.to(),AMessage.from());
 
                         notify.kinds  = kinds;
@@ -333,7 +333,7 @@ void Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument 
         {
             QTextCursor cursor(ADocument);
             QString html = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" />")
-                            .arg(FIconStorage->fileFullName(MNI_NOTIFICATIONS))  // MNI_ATTENTION
+							.arg(FIconStorage->fileFullName(MNI_ATTENTION))
                             .arg(tr("Attention"));
 
             cursor.insertHtml(html);            
@@ -368,7 +368,7 @@ void Attention::updateWindow(IMessageChatWindow *AWindow)
 {
     QIcon icon;
     if (AWindow->instance()->isWindow() && FNotifiedMessages.contains(AWindow))
-        icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
     else if (FStatusIcons)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
     QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString();
@@ -475,7 +475,7 @@ void Attention::onChatWindowCreated(IMessageChatWindow *AWindow)
         Jid streamJid = AWindow->streamJid();
         Action *action = new Action(AWindow->toolBarWidget()->instance());
         action->setText(tr("Attention"));
-        action->setIcon(RSR_STORAGE_MENUICONS, MNI_NOTIFICATIONS);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_ATTENTION);
         action->setData(ADR_CONTACT_JID, contactJid.full());
         action->setData(ADR_STREAM_JID, streamJid.full());
         action->setShortcutId(SCT_MESSAGEWINDOWS_CHAT_ATTENTION);
