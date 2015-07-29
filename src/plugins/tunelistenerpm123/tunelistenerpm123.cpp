@@ -59,7 +59,7 @@ bool TuneListenerPm123::initSettings()
 {
     Options::setDefaultValue(OPV_TUNE_LISTENER_PM123_PIPENAME, "\\PIPE\\PM123");
     if (FOptionsManager)
-        FOptionsManager->insertOptionsHolder(this);
+        FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 

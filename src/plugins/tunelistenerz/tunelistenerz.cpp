@@ -50,7 +50,7 @@ bool TuneListenerZ::initSettings()
 {
     Options::setDefaultValue(OPV_TUNE_LISTENER_Z_PIPENAME, "\\PIPE\\ZMP3");
     if (FOptionsManager)
-        FOptionsManager->insertOptionsHolder(this);
+        FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 

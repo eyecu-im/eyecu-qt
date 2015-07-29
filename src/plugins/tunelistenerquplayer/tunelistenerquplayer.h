@@ -11,11 +11,11 @@
 #define TUNELISTENERQUPLAYER_UUID "{bcf35d8a-4b29-c71c-08a1-c920b536da24}"
 
 class TuneListenerQuPlayer: public QObject,
-            public IPlugin,
-            public ITuneListener,
+			public IPlugin,
+			public ITuneListener,
 			public IOptionsDialogHolder
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_INTERFACES(IPlugin ITuneListener IOptionsDialogHolder)
     
 public:

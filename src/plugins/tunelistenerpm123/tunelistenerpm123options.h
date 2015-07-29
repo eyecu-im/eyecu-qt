@@ -11,7 +11,7 @@ class TuneListenerPm123Options;
 class TuneListenerPm123Options : public QWidget, public IOptionsDialogWidget
 {
     Q_OBJECT
-    Q_INTERFACES(IOptionsWidget)
+    Q_INTERFACES(IOptionsDialogWidget)
     
 public:
     explicit TuneListenerPm123Options(QWidget *parent = 0);

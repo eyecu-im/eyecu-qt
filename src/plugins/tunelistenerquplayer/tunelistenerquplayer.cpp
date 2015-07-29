@@ -49,7 +49,7 @@ bool TuneListenerQuPlayer::initSettings()
 {
     Options::setDefaultValue(OPV_TUNE_LISTENER_QUPLAYER_PIPENAME, "\\PIPE\\QU2");
     if (FOptionsManager)
-        FOptionsManager->insertOptionsHolder(this);
+        FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 
