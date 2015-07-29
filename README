@@ -1,9 +1,6 @@
 eyeCU
 -----
-Full-featured crossplatform Jabber/XMPP client.
-The core program is just a plugin loader, all functionality is made available
-via plugins. This enforces modularity and ensures well defined component
-interaction via interfaces.
+Full-featured crossplatform Jabber/XMPP client, a Vacuum-IM fork. The core program is just a plugin loader, all functionality is made available via plugins. This enforces modularity and ensures well defined component interaction via interfaces. The main idea of eyeCU is improving Jabbercommunication by adding geolocation-oriented features, like Map, Positioning and Points of Interest with an ability to exchange location with your buddies. The second is implementation of mordern advanced XMPP extensions, like Personal Events (PEP), XHTML-IM, Message Delivery Receipts, Attention and so on.
 
 Web Site:
   http://www.eyecu.ru
@@ -81,6 +78,7 @@ Known Issues
 ------------
   - on GTalk accounts allways used default nested roster group delimiter
   - not native look and feel in Mac OS
+  - When switching Map Magnifier off, application may crash. Seems to be a Qt bug.
 
 
 List of plugins that SHOULD NOT be disabled
