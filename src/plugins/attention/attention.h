@@ -113,7 +113,6 @@ protected slots:
     //-----
     void onNotificationAppended(int ANotifyId, const INotification &ANotification);
     void onNotificationRemoved(int ANotifyId);
-    void onDelayedMainWindowActivation();
     //-----
     void onWindowActivated();
 };

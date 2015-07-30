@@ -265,6 +265,8 @@
 
 // Attention
 #define MNI_BELL                        "bell"
+#define MNI_ATTENTION                   "attention"
+#define MNI_EXCLAMATION                 "exclamation"
 
 // Message receipts
 #define MNI_RECEIPTS                    "receipts"
@@ -315,7 +317,6 @@
 #define MNI_STREETVIEWMAN               "streetviewman"
 //Map Place view
 #define MNI_MAP_PLACEVIEW              "viewcenter"
-#define MNI_MAP_KEY                    "key16"
 #define MNI_COPY_CLBOARD               "clipboard-copy"
 //Weather
 #define MNI_MAP_WEATHER                "weather"

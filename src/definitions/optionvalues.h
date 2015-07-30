@@ -532,7 +532,6 @@
 // Attention
 #define OPV_ATTENTION_ROOT                              "attention"
 #define OPV_ATTENTION_NOTIFICATIONPOPUP                 "attention.notification-popup"
-#define OPV_ATTENTION_MAINWINDOWACTIVATE                "attention.mainwindow-activate"
 #define OPV_ATTENTION_AYWAYSPLAYSOUND                   "attention.always-play-sound"
 
 // Jingle RTP

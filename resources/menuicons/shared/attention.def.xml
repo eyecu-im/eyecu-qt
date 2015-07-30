@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon><key>attention</key><object mime="image/png">attention.png</object></icon>
+  <icon><key>bell</key><object mime="image/gif">bell.gif</object></icon>
+  <icon><key>exclamation</key><object mime="image/gif">exclamation.gif</object></icon>
+</icondef>

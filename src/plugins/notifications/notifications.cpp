@@ -209,7 +209,9 @@ bool Notifications::initSettings()
 	Options::setDefaultValue(OPV_NOTIFICATIONS_SOUNDCOMMAND,QString("aplay"));
 	Options::setDefaultValue(OPV_NOTIFICATIONS_TYPEKINDS_ITEM,0);
 	Options::setDefaultValue(OPV_NOTIFICATIONS_KINDENABLED_ITEM,true);
-
+// *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_NOTIFICATIONS_ANIMATIONENABLE,true);
+// *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode notificationsNode = { ONO_NOTIFICATIONS, OPN_NOTIFICATIONS, MNI_NOTIFICATIONS, tr("Notifications") };
@@ -237,9 +239,12 @@ QMultiMap<int, IOptionsDialogWidget *> Notifications::optionsDialogWidgets(const
 		widgets.insertMulti(OWO_NOTIFICATIONS_DISABLEIFDND,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_SILENTIFDND),tr("Disable sounds and popup windows if status is 'Do not disturb'"),AParent));
 		widgets.insertMulti(OWO_NOTIFICATIONS_NATIVEPOPUPS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_NATIVEPOPUPS),tr("Use native popup notifications if available"),AParent));
 		widgets.insertMulti(OWO_NOTIFICATIONS_FORCESOUND,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_FORCESOUND),tr("Play notification sound when received a message in the active window"),AParent));
-		widgets.insertMulti(OWO_NOTIFICATIONS_HIDEMESSAGE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_HIDEMESSAGE),tr("Do not show the message body in the popup window"),AParent));
+		widgets.insertMulti(OWO_NOTIFICATIONS_HIDEMESSAGE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_HIDEMESSAGE),tr("Do not show the message body in the popup window"),AParent));		
 		widgets.insertMulti(OWO_NOTIFICATIONS_EXPANDGROUPS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_EXPANDGROUPS),tr("Expand contact groups in roster"),AParent));
-		
+// *** <<< eyeCU <<< ***
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_NOTIFICATIONS_ANIMATIONENABLE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_ANIMATIONENABLE),tr("Enable animation"),AParent));
+// *** >>> eyeCU >>> ***
 		QSpinBox *spbPopupTimeout = new QSpinBox(AParent);
 		spbPopupTimeout->setRange(0,120);
 		spbPopupTimeout->setSuffix(tr(" seconds"));
@@ -821,6 +826,10 @@ void Notifications::onOptionsChanged(const OptionsNode &ANode)
 			WidgetManager::setWidgetAlertEnabled(ANode.value().toBool());
 		}
 	}
+// *** <<< eyeCU <<< ***
+	else if (ANode.path()==OPV_NOTIFICATIONS_ANIMATIONENABLE)
+		emit enableAnimation(ANode.value().toBool());
+// *** >>> eyeCU >>> ***
 }
 
 void Notifications::onShortcutActivated(const QString &AId, QWidget *AWidget)

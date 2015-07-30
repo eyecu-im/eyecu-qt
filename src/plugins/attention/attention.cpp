@@ -21,6 +21,7 @@
 #include <utils/options.h>
 #include <utils/shortcuts.h>
 #include <utils/textmanager.h>
+#include <utils/widgetmanager.h>
 #include <utils/qt4qt5compat.h>
 
 #include "attention.h"
@@ -143,7 +144,7 @@ bool Attention::initObjects()
     {
         INotificationType notifyType;
         notifyType.order = NTO_ATTENTION_NOTIFY;
-        notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
         notifyType.title = tr("When contact attempts to attract user's attention");
         notifyType.kindMask = INotification::RosterNotify|INotification::TrayNotify|INotification::TrayAction|
                               INotification::PopupWindow|INotification::SoundPlay|INotification::AlertWidget|
@@ -160,7 +161,6 @@ bool Attention::initObjects()
 bool Attention::initSettings()
 {
     Options::setDefaultValue(OPV_ATTENTION_NOTIFICATIONPOPUP, true);
-    Options::setDefaultValue(OPV_ATTENTION_MAINWINDOWACTIVATE, true);
     Options::setDefaultValue(OPV_ATTENTION_AYWAYSPLAYSOUND, true);
     if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
@@ -174,7 +174,6 @@ QMultiMap<int, IOptionsDialogWidget *> Attention::optionsDialogWidgets(const QSt
 	{
 		widgets.insertMulti(OHO_ATTENTION, FOptionsManager->newOptionsDialogHeader(tr("Attention"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_NOTIFICATIONPOPUP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_NOTIFICATIONPOPUP), tr("Notification pop-up"), AParent));
-		widgets.insertMulti(OWO_ATTENTION_MAINWINDOWACTIVATE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_MAINWINDOWACTIVATE), tr("Activate main window"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_AYWAYSPLAYSOUND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_AYWAYSPLAYSOUND), tr("Always play sound"), AParent));
 	}
     return widgets;
@@ -185,7 +184,7 @@ void Attention::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.var = NS_ATTENTION;
     dfeature.active = true;
-    dfeature.icon = FIconStorage->getIcon(MNI_NOTIFICATIONS);
+	dfeature.icon = FIconStorage->getIcon(MNI_ATTENTION);
     dfeature.name = tr("Attention");
     dfeature.description = tr("Implements XEP-0224: Allows to attract user's attention");
     FDiscovery->insertDiscoFeature(dfeature);
@@ -238,7 +237,7 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
                         notify.kinds  = INotification::SoundPlay;
                     else
                     {
-                        QIcon icon   = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+						QIcon icon   = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
                         QString name = ANotifications->contactName(AMessage.to(),AMessage.from());
 
                         notify.kinds  = kinds;
@@ -268,9 +267,6 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
                         notify.data.insert(NDR_TABPAGE_PRIORITY, TPNP_ATTENTION);
                         notify.data.insert(NDR_TABPAGE_ICONBLINK, true);
                         notify.data.insert(NDR_SHOWMINIMIZED_WIDGET, (qint64)window->instance());
-
-                        if (Options::node(OPV_ATTENTION_MAINWINDOWACTIVATE).value().toBool())
-                            notify.data.insert(NDR_MAIN_WINDOW_ACTIVATE, true);
 
                         FNotifiedMessages.insertMulti(window, AMessage.data(MDR_MESSAGE_ID).toInt());
                         updateWindow(window);
@@ -333,7 +329,7 @@ void Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument 
         {
             QTextCursor cursor(ADocument);
             QString html = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" />")
-                            .arg(FIconStorage->fileFullName(MNI_NOTIFICATIONS))  // MNI_ATTENTION
+							.arg(FIconStorage->fileFullName(MNI_ATTENTION))
                             .arg(tr("Attention"));
 
             cursor.insertHtml(html);            
@@ -368,7 +364,7 @@ void Attention::updateWindow(IMessageChatWindow *AWindow)
 {
     QIcon icon;
     if (AWindow->instance()->isWindow() && FNotifiedMessages.contains(AWindow))
-        icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS);
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
     else if (FStatusIcons)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
     QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString();
@@ -475,7 +471,7 @@ void Attention::onChatWindowCreated(IMessageChatWindow *AWindow)
         Jid streamJid = AWindow->streamJid();
         Action *action = new Action(AWindow->toolBarWidget()->instance());
         action->setText(tr("Attention"));
-        action->setIcon(RSR_STORAGE_MENUICONS, MNI_NOTIFICATIONS);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_ATTENTION);
         action->setData(ADR_CONTACT_JID, contactJid.full());
         action->setData(ADR_STREAM_JID, streamJid.full());
         action->setShortcutId(SCT_MESSAGEWINDOWS_CHAT_ATTENTION);
@@ -534,12 +530,13 @@ void Attention::onNotificationAppended(int ANotifyId, const INotification &ANoti
         if (ANotification.kinds & AttentionPopup)
         {
             AttentionDialog *dialog=new AttentionDialog(ANotifyId, ANotification, FNotifications);
+			dialog->setWindowFlags(Qt::WindowStaysOnTopHint);
+#if Q_WS_X11
+			dialog->setWindowFlags(Qt::X11BypassWindowManagerHint);
+#endif
             FAttentionDialogs.insert(ANotifyId, dialog);
-            dialog->show();
+			WidgetManager::showActivateRaiseWindow(dialog);
         }
-
-        if (ANotification.data.value(NDR_MAIN_WINDOW_ACTIVATE).toBool())
-            QTimer::singleShot(0, this, SLOT(onDelayedMainWindowActivation()));
     }
 }
 
@@ -549,11 +546,6 @@ void Attention::onNotificationRemoved(int ANotifyId)
         FAttentionDialogs.take(ANotifyId)->accept();
 }
 
-void Attention::onDelayedMainWindowActivation()
-{
-    FMainWindow->show();
-    FMainWindow->activateWindow();
-}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_attention, Attention)
 #endif
