@@ -1,5 +1,4 @@
 #include <QMovie>
-
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/notificationdataroles.h>
@@ -36,7 +35,7 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
     QVariant avatarFileName=ANotification.data.value(NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME);
     if (avatarFileName.isValid())   // Has avatar data
     {
-        QMovie *movie=new QMovie(avatarFileName.toString(), QByteArray(), this); // Set "this" as parent, to delete it automatically when not needed
+        QMovie *movie=new QMovie(avatarFileName.toString(), QByteArray(), this); // Set "this" as parent, to delete it automatically when not needed		
         if (movie->isValid())
         {
             ui->lblAvatar->setMovie(movie);
@@ -48,7 +47,6 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
     if (!text.isEmpty())
         ui->lblText->setText(text);
     connect(this->ui->pushButton,SIGNAL(clicked()),SLOT(onOkClick()));
-	updateGeometry();
 }
 
 AttentionDialog::~AttentionDialog()
