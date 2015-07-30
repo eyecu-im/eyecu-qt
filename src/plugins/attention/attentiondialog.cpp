@@ -48,6 +48,7 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
     if (!text.isEmpty())
         ui->lblText->setText(text);
     connect(this->ui->pushButton,SIGNAL(clicked()),SLOT(onOkClick()));
+	updateGeometry();
 }
 
 AttentionDialog::~AttentionDialog()
