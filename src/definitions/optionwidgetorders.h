@@ -143,7 +143,10 @@
 #define OHO_NOTIFICATIONS                         100
 #define   OWO_NOTIFICATIONS_DISABLEIFAWAY         110
 #define   OWO_NOTIFICATIONS_DISABLEIFDND          120
+// *** <<< eyeCU <<< ***
 #define   OWO_NOTIFICATIONS_PEP_IGNOREOFFLINE     125
+#define   OWO_NOTIFICATIONS_ANIMATIONENABLE       127
+// *** >>> eyeCU >>> ***
 #define   OWO_NOTIFICATIONS_NATIVEPOPUPS          130
 #define   OWO_NOTIFICATIONS_FORCESOUND            140
 #define   OWO_NOTIFICATIONS_HIDEMESSAGE           150

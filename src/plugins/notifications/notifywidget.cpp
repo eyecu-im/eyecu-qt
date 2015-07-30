@@ -102,7 +102,7 @@ NotifyWidget::NotifyWidget(const INotification &ANotification)
 			cursor.insertText("...");
 		}
 
-		ui.ntbText->setAnimated(true);
+		ui.ntbText->setAnimated(Options::node(OPV_NOTIFICATIONS_ANIMATIONENABLE).value().toBool()); // *** <<< eyeCU >>> ***
 		ui.ntbText->setContentsMargins(0,0,0,0);
 		ui.ntbText->document()->setDocumentMargin(0);
 		ui.ntbText->setNetworkAccessManager(FNetworkManager);
