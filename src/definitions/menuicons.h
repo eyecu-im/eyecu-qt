@@ -317,7 +317,6 @@
 #define MNI_STREETVIEWMAN               "streetviewman"
 //Map Place view
 #define MNI_MAP_PLACEVIEW              "viewcenter"
-#define MNI_MAP_KEY                    "key16"
 #define MNI_COPY_CLBOARD               "clipboard-copy"
 //Weather
 #define MNI_MAP_WEATHER                "weather"

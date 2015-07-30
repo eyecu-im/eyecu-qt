@@ -12,7 +12,6 @@
  <icon><key>streetview</key><object mime="image/png">mapstreetview.png</object></icon>
  <icon><key>streetviewman</key><object mime="image/png">streetman.png</object></icon>
  <icon><key>viewcenter</key><object mime="image/png">viewcenter.png</object></icon>
- <icon><key>key16</key><object mime="image/png">key16.png</object></icon>
  <icon><key>clipboard-copy</key><object mime="image/png">clipboard_copy_gr.png</object></icon>
  <icon><key>yes</key><object mime="image/png">yes.png</object></icon>
  <icon><key>no</key><object mime="image/png">no.png</object></icon>

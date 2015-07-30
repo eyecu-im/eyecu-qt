@@ -21,6 +21,7 @@
 #include <utils/options.h>
 #include <utils/shortcuts.h>
 #include <utils/textmanager.h>
+#include <utils/widgetmanager.h>
 #include <utils/qt4qt5compat.h>
 
 #include "attention.h"
@@ -160,7 +161,6 @@ bool Attention::initObjects()
 bool Attention::initSettings()
 {
     Options::setDefaultValue(OPV_ATTENTION_NOTIFICATIONPOPUP, true);
-    Options::setDefaultValue(OPV_ATTENTION_MAINWINDOWACTIVATE, true);
     Options::setDefaultValue(OPV_ATTENTION_AYWAYSPLAYSOUND, true);
     if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
@@ -174,7 +174,6 @@ QMultiMap<int, IOptionsDialogWidget *> Attention::optionsDialogWidgets(const QSt
 	{
 		widgets.insertMulti(OHO_ATTENTION, FOptionsManager->newOptionsDialogHeader(tr("Attention"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_NOTIFICATIONPOPUP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_NOTIFICATIONPOPUP), tr("Notification pop-up"), AParent));
-		widgets.insertMulti(OWO_ATTENTION_MAINWINDOWACTIVATE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_MAINWINDOWACTIVATE), tr("Activate main window"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_AYWAYSPLAYSOUND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_AYWAYSPLAYSOUND), tr("Always play sound"), AParent));
 	}
     return widgets;
@@ -268,9 +267,6 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
                         notify.data.insert(NDR_TABPAGE_PRIORITY, TPNP_ATTENTION);
                         notify.data.insert(NDR_TABPAGE_ICONBLINK, true);
                         notify.data.insert(NDR_SHOWMINIMIZED_WIDGET, (qint64)window->instance());
-
-                        if (Options::node(OPV_ATTENTION_MAINWINDOWACTIVATE).value().toBool())
-                            notify.data.insert(NDR_MAIN_WINDOW_ACTIVATE, true);
 
                         FNotifiedMessages.insertMulti(window, AMessage.data(MDR_MESSAGE_ID).toInt());
                         updateWindow(window);
@@ -534,12 +530,13 @@ void Attention::onNotificationAppended(int ANotifyId, const INotification &ANoti
         if (ANotification.kinds & AttentionPopup)
         {
             AttentionDialog *dialog=new AttentionDialog(ANotifyId, ANotification, FNotifications);
+			dialog->setWindowFlags(Qt::WindowStaysOnTopHint);
+#if Q_WS_X11
+			dialog->setWindowFlags(Qt::X11BypassWindowManagerHint);
+#endif
             FAttentionDialogs.insert(ANotifyId, dialog);
-            dialog->show();
+			WidgetManager::showActivateRaiseWindow(dialog);
         }
-
-        if (ANotification.data.value(NDR_MAIN_WINDOW_ACTIVATE).toBool())
-            QTimer::singleShot(0, this, SLOT(onDelayedMainWindowActivation()));
     }
 }
 
@@ -549,11 +546,6 @@ void Attention::onNotificationRemoved(int ANotifyId)
         FAttentionDialogs.take(ANotifyId)->accept();
 }
 
-void Attention::onDelayedMainWindowActivation()
-{
-    FMainWindow->show();
-    FMainWindow->activateWindow();
-}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_attention, Attention)
 #endif

@@ -112,7 +112,7 @@ NotifyWidget::NotifyWidget(const INotification &ANotification)
 	}
 	else
 	{
-		ui.ntbText->setHtml(QString("<i>%1</i>").arg(tr("Message is empty or hidden")));
+		ui.ntbText->setVisible(false);
 	}
 
 	if (!ANotification.actions.isEmpty())

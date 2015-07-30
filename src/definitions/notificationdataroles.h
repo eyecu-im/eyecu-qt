@@ -34,8 +34,6 @@ enum NotificationDataRoles {
 	// ShowMinimized
 	NDR_SHOWMINIMIZED_WIDGET,
     // *** <<< eyeCU <<< ***
-    // Suppress attention dialog
-    NDR_MAIN_WINDOW_ACTIVATE,
     // Avatar data for Attention dialog
     NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME,
     // Jingle call type
