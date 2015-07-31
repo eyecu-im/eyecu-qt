@@ -223,11 +223,8 @@
 #define MNI_ROSTERVIEW_CLIPBOARD        "rosterviewClipboard"
 
 //ServiceDiscovery
-#define MNI_SDISCOVERY_ARROW_LEFT       "sdiscoveryArrowLeft"
-#define MNI_SDISCOVERY_ARROW_RIGHT      "sdiscoveryArrowRight"
 #define MNI_SDISCOVERY_DISCOINFO        "sdiscoveryDiscoInfo"
 #define MNI_SDISCOVERY_DISCOVER         "sdiscoveryDiscover"
-#define MNI_SDISCOVERY_RELOAD           "sdiscoveryReload"
 
 //SessionNegotiation
 #define MNI_SNEGOTIATION                "snegotiation"

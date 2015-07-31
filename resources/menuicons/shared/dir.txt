@@ -68,7 +68,6 @@ datastreamsmanager.png
 decline.png
 delete.png
 description.png
-dir.txt
 edit.def.xml
 edit.png
 eject.png
@@ -281,7 +280,6 @@ schangermodifystatus.png
 sdiscovery.def.xml
 sdiscoverydiscoinfo.png
 sdiscoverydiscover.png
-sdiscoveryreload.png
 serialport.png
 shortcuts.def.xml
 shortcuts.png
