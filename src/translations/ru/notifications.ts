@@ -79,6 +79,10 @@
         <source>Highlight the corresponding window in the taskbar</source>
         <translation>Подсвечивать соответствующее окно в панели задач</translation>
     </message>
+    <message>
+        <source>Enable animation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NotifyKindOptionsWidget</name>
@@ -103,7 +107,7 @@
     <name>NotifyWidget</name>
     <message>
         <source>Message is empty or hidden</source>
-        <translation>Сообщение пустое или скрыто</translation>
+        <translation type="obsolete">Сообщение пустое или скрыто</translation>
     </message>
 </context>
 </TS>

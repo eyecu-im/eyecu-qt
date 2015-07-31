@@ -33,11 +33,6 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="177"/>
-   <source>Activate main window</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/attention/attention.cpp" line="178"/>
    <source>Always play sound</source>
    <translation type="unfinished"/>
@@ -67,8 +62,8 @@
   <name>AttentionDialog</name>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="198"/>
-   <source>ATTENTION!</source>
-   <translation>Attentie!</translation>
+   <source>ATTENTION</source>
+   <translation>ATTENTIE</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="275"/>

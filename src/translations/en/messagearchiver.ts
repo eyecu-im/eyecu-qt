@@ -75,42 +75,42 @@
    <translation>Manually approve Off-The-Record sessions</translation>
   </message>
   <message>
-   <location line="401" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="402" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Waiting for host response...</source>
    <translation>Waiting for host response...</translation>
   </message>
   <message>
-   <location line="403" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="404" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>History preferences is not available</source>
    <translation>History preferences is not available</translation>
   </message>
   <message>
-   <location line="405" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="406" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Failed to save archive preferences: %1</source>
    <translation>Failed to save archive preferences: %1</translation>
   </message>
   <message>
-   <location line="504" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="505" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>New item preferences</source>
    <translation>New item preferences</translation>
   </message>
   <message>
-   <location line="504" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="505" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Enter item JID:</source>
    <translation>Enter item JID:</translation>
   </message>
   <message>
-   <location line="514" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="515" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Unacceptable item JID</source>
    <translation>Unacceptable item JID</translation>
   </message>
   <message>
-   <location line="514" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="515" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>'%1' is not valid JID or already exists</source>
    <translation>'%1' is not valid JID or already exists</translation>
   </message>
   <message>
-   <location line="595" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="408" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Preferences accepted</source>
    <translation>Preferences accepted</translation>
   </message>

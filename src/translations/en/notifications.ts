@@ -40,63 +40,68 @@
    <translation>Pending Notifications</translation>
   </message>
   <message>
-   <location line="215" filename="../../plugins/notifications/notifications.cpp"/>
-   <location line="235" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="217" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="237" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Notifications</source>
    <translation>Notifications</translation>
   </message>
   <message>
-   <location line="236" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="238" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Disable sounds and popup windows if status is 'Away'</source>
    <translation>Disable sounds and popup windows if status is 'Away'</translation>
   </message>
   <message>
-   <location line="237" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="239" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Disable sounds and popup windows if status is 'Do not disturb'</source>
    <translation>Disable sounds and popup windows if status is 'Do not disturb'</translation>
   </message>
   <message>
-   <location line="238" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="240" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Use native popup notifications if available</source>
    <translation>Use native popup notifications if available</translation>
   </message>
   <message>
-   <location line="239" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="241" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation>Play notification sound when received a message in the active window</translation>
   </message>
   <message>
-   <location line="240" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="242" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Do not show the message body in the popup window</source>
    <translation>Do not show the message body in the popup window</translation>
   </message>
   <message>
-   <location line="241" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="243" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Expand contact groups in roster</source>
    <translation>Expand contact groups in roster</translation>
   </message>
   <message>
-   <location line="245" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="246" filename="../../plugins/notifications/notifications.cpp"/>
+   <source>Enable animation</source>
+   <translation>Enable animation</translation>
+  </message>
+  <message>
+   <location line="250" filename="../../plugins/notifications/notifications.cpp"/>
    <source> seconds</source>
    <translation> seconds</translation>
   </message>
   <message>
-   <location line="246" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="251" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
    <translation>Time to display a pop-up window (0 - always visible):</translation>
   </message>
   <message>
-   <location line="249" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="254" filename="../../plugins/notifications/notifications.cpp"/>
    <source>System command to play sound:</source>
    <translation>System command to play sound:</translation>
   </message>
   <message>
-   <location line="252" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="257" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Notification kinds</source>
    <translation>Notification kinds</translation>
   </message>
   <message>
-   <location line="253" filename="../../plugins/notifications/notifications.cpp"/>
+   <location line="258" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Highlight the corresponding window in the taskbar</source>
    <translation>Highlight the corresponding window in the taskbar</translation>
   </message>
@@ -127,9 +132,8 @@
  <context>
   <name>NotifyWidget</name>
   <message>
-   <location line="115" filename="../../plugins/notifications/notifywidget.cpp"/>
    <source>Message is empty or hidden</source>
-   <translation>Message is empty or hidden</translation>
+   <translation type="obsolete">Message is empty or hidden</translation>
   </message>
  </context>
 </TS>
