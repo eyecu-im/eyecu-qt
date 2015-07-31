@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
-	<icon>
-    <key>logo</key>
-    <object mime="image/svg">eyecu.svg</object>
-  </icon>
   <icon>
     <key>mainwindowLogo16</key>
     <object mime="image/png">mainwindowlogo16.png</object>
@@ -49,7 +45,7 @@
     <object mime="image/png">mainwindowmenu.png</object>
   </icon>
   <icon>
-    <key>mainwindowShow</key>
+    <key>mainwindowShowRoster</key>
     <object mime="image/png">mainwindowshowroster.png</object>
   </icon>
 </icondef>

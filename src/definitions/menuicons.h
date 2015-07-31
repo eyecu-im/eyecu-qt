@@ -320,12 +320,9 @@
 #define MNI_COPY_CLBOARD               "clipboard-copy"
 //Weather
 #define MNI_MAP_WEATHER                "weather"
-#define MNI_MAP_WEATHER_KEY            "key16"
 
 //Positioning
 #define MNI_POSITIONING                 "positioning"
-#define MNI_POSITIONING_GPS_ON          "satelliteON"
-#define MNI_POSITIONING_GPS_OFF         "satelliteOFF"
 #define MNI_SERIALPORT                  "serialport"
 #define MNI_MANUAL                      "manual"
 #define MNI_LOCATION                    "location"
@@ -352,7 +349,6 @@
 //OOB
 #define MNI_LINK                        "link"
 #define MNI_LINK_ADD                    "linkadd"
-#define MNI_LINK_READY                  "linkready"
 
 //Multimedia player
 #define MNI_MMPLAYER                    "mmplayer"
