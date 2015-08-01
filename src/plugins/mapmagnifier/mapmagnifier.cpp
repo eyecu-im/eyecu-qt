@@ -94,7 +94,7 @@ bool MapMagnifier::initObjects()
 	FMap->geoMap()->registerDataType(MDR_MAGNIFIER, MOT_MAGNIFIER, 100, MOP_NONE, MOP_CENTER);
 	FMap->geoMap()->addDataHolder(MOT_MAGNIFIER, this);
 
-    Action *action = FMap->addMenuAction(tr("Magnifier"), QString(RSR_STORAGE_MENUICONS),QString(MNI_MAGNFIER), 1);
+	Action *action = FMap->addMenuAction(tr("Magnifier"), QString(RSR_STORAGE_MENUICONS),QString(MNI_MAPMAGNFIER), 1);
     action->setCheckable(true);
     action->setShortcutId(SCT_MAP_MAGNIFIER_TOGGLE);
     connect(action, SIGNAL(triggered(bool)), SLOT(onMaginifier()));
@@ -122,7 +122,7 @@ bool MapMagnifier::initSettings()
 
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_MAPMAGNIFIER, OPN_MAPMAGNIFIER, MNI_MAGNFIER, tr("Map magnifier")};
+		IOptionsDialogNode dnode = {ONO_MAPMAGNIFIER, OPN_MAPMAGNIFIER, MNI_MAPMAGNFIER, tr("Map magnifier")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }

@@ -69,7 +69,7 @@ PlayerWindow::PlayerWindow(QObject *APlugin, QWidget *AParent):
     ui->setupUi(this);
     setWindowTitle(tr("Multimedia player - %1").arg(CLIENT_NAME));
 
-	ui->btnOpen->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_EJECT));
+	ui->btnOpen->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MMPLAYER_EJECT));
 	ui->btnOpen->setToolTip(tr("Open..."));
 
 	init(APlugin);
@@ -442,7 +442,7 @@ void PlayerWindow::setupControls(int AState)
 			break;
 		case MediaStreamer::Error:
 		case MediaStreamer::Finished:
-			ui->btnOpen->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_EJECT));
+			ui->btnOpen->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MMPLAYER_EJECT));
 			ui->btnOpen->setToolTip(tr("Open..."));
 			ui->btnOpen->setEnabled(true);
 			ui->btnPlay->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));

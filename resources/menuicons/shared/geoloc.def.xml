@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
-
-  <icon><key>map</key><object mime="image/png">map.png</object></icon>
-
+  <icon>
+    <key>geoloc</key>
+    <object mime="image/png">geoloc.png</object>
+  </icon>
+  <icon>
+    <key>geolocOff</key>
+    <object mime="image/png">geolocOff.png</object>
+  </icon>
 </icondef>

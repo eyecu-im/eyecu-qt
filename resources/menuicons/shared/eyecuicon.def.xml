@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
  <icon><key>logo</key><object mime="image/svg">eyecu.svg</object></icon>
- <icon><key>viewcenter</key><object mime="image/png">viewcenter.png</object></icon>
 </icondef>

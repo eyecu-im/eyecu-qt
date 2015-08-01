@@ -243,19 +243,25 @@
 #define MNI_VCARD                       "VCard"
 
 // <<< eyeCU <<<
+#define MNI_DESCRIPTION                 "description"
+#define MNI_MESSAGECARBONS              "messageCarbons"
 // Pep
-#define MNI_PEPMANAGER                  "pepmanager"
+#define MNI_PEPMANAGER                  "pepManager"
+// User Activity
 #define MNI_ACTIVITY                    "activity"
+// User Mood
 #define MNI_MOOD                        "mood"
+// User Tune
 #define MNI_TUNE                        "tune"
 #define MNI_TUNE_REQUESTER_LASTFM       "lastfm"
+// User Location
 #define MNI_GEOLOC                      "geoloc"
-#define MNI_GEOLOC_OFF                  "no_geoloc"
-#define MNI_DESCRIPTION                 "description"
+#define MNI_GEOLOC_OFF                  "geolocOff"
+
+// User Nickname
 #define MNI_NICKNAME                    "nickname"
 #define MNI_NICKNAME_RESOLVE            "nicknameResolve"
 #define MNI_NICKNAME_RESET              "nicknameReset"
-#define MNI_MESSAGECARBONS              "messagecarbons"
 
 // Contact proximity notification
 #define MNI_PROXIMITY                   "proximity"
@@ -304,17 +310,18 @@
 #define MNI_MAP_VITEL                   "vitel"
 
 //Map Magnifier
-#define MNI_MAGNFIER                    "magnifier"
+#define MNI_MAPMAGNFIER                 "mapMagnifier"
 
 //Map Search
-#define MNI_MAPSEARCH                   "mapsearch"
+#define MNI_MAPSEARCH                   "mapSearch"
 
 //Map Street view
-#define MNI_STREETVIEW                  "streetview"
-#define MNI_STREETVIEWMAN               "streetviewman"
+#define MNI_STREETVIEW                  "streetView"
+#define MNI_STREETVIEWMAN               "streetViewMan"
+
 //Map Place view
 #define MNI_MAP_PLACEVIEW              "viewcenter"
-#define MNI_COPY_CLBOARD               "clipboard-copy"
+
 //Weather
 #define MNI_MAP_WEATHER                "weather"
 
@@ -329,19 +336,19 @@
 #define MNI_POSITIONING_PROV_FREEGEOIP  "freegeoip"
 
 //Edit
-#define MNI_EDIT_EDIT                   "edit"
-#define MNI_EDIT_ADD                    "add"
-#define MNI_EDIT_DELETE                 "delete"
-#define MNI_EDIT_ACCEPT                 "accept"
-#define MNI_EDIT_DECLINE                "decline"
+#define MNI_EDIT                        "edit"
+#define MNI_EDIT_COPY                   "editCopy"
+#define MNI_EDIT_ADD                    "editAdd"
+#define MNI_EDIT_DELETE                 "editDelete"
+#define MNI_EDIT_ACCEPT                 "editAccept"
+#define MNI_EDIT_DECLINE                "editDecline"
 
 //Tracker
 #define MNI_TRACKER                     "tracker"
 
 //Mapmessage
-#define MNI_MAPMESSAGE                  "mapmessage"
-#define MNI_CLOSE_ACTIVE                "close_active"
-#define MNI_CLOSE_INACTIVE              "close_inactive"
+#define MNI_CLOSE_ACTIVE                "closeActive"
+#define MNI_CLOSE_INACTIVE              "closeInactive"
 
 //OOB
 #define MNI_LINK                        "link"
@@ -349,80 +356,14 @@
 
 //Multimedia player
 #define MNI_MMPLAYER                    "mmplayer"
-#define MNI_EJECT                       "eject"
+#define MNI_MMPLAYER_EJECT              "mmplayerEject"
 
 //XHTML-IM
 #define MNI_XHTML                       "xhtml"
-#define MNI_XHTML_TEXT_BOLD             "textbold"
-#define MNI_XHTML_TEXT_ITALIC           "textitalic"
-#define MNI_XHTML_TEXT_UNDERLINE        "textunder"
-#define MNI_XHTML_TEXT_OVERLINE         "textover"
-#define MNI_XHTML_TEXT_STRIKEOUT        "textstrike"
-#define MNI_XHTML_ALIGN_LEFT            "textleft"
-#define MNI_XHTML_ALIGN_CENTER          "textcenter"
-#define MNI_XHTML_ALIGN_RIGHT           "textright"
-#define MNI_XHTML_ALIGN_JUSTIFY         "textjustify"
-#define MNI_XHTML_INSERT_IMAGE          "insertimage"
-#define MNI_XHTML_INSERT_NEWLINE        "newline"
-#define MNI_XHTML_INSERT_NBSP           "nbsp"
-#define MNI_XHTML_SET_TOOLTIP           "tooltip"
-#define MNI_XHTML_INDENT                "indent"
-#define MNI_XHTML_OUTDENT               "outdent"
-#define MNI_XHTML_FORMAT_CLEAR          "removeformat"
-#define MNI_XHTML_FORMAT_PLAIN          "formatblack"
-#define MNI_XHTML_FORMAT_RICH           "formatrich"
-#define MNI_XHTML_LIST_BULLET_CIRCLE    "bulcircle"
-#define MNI_XHTML_LIST_BULLET_DISC      "buldisc"
-#define MNI_XHTML_LIST_BULLET_SQUARE    "bulsquare"
-#define MNI_XHTML_LIST_ORDER_DECIMAL    "orderdec"
-#define MNI_XHTML_LIST_ORDER_ALPHA_LOW  "ordalphalow"
-#define MNI_XHTML_LIST_ORDER_ALPHA_UP   "ordalphaup"
-#define MNI_XHTML_LIST_ORDER_ROMAN_LOW  "ordromanlow"
-#define MNI_XHTML_LIST_ORDER_ROMAN_UP   "ordromanup"
-#define MNI_XHTML_LIST_DEFINITION       "deflist"
-
-#define MNI_XHTML_HEADING1              "heading1"
-#define MNI_XHTML_HEADING2              "heading2"
-#define MNI_XHTML_HEADING3              "heading3"
-#define MNI_XHTML_HEADING4              "heading4"
-#define MNI_XHTML_HEADING5              "heading5"
-#define MNI_XHTML_HEADING6              "heading6"
-
-#define MNI_XHTML_CODE                  "code"
-#define MNI_XHTML_PREFORMAT             "preformat"
 
 //JINGLE
 #define MNI_JINGLE                      "jingle"
-#define MNI_JINGLE_RTP                  "voip"
-#define MNI_JINGLE_RTP_MIC_ON           "micOn"
-#define MNI_JINGLE_RTP_MIC_OFF          "micOff"
-#define MNI_JINGLE_RTP_SPEAKER_ON       "speakerOn"
-#define MNI_JINGLE_RTP_SPEAKER_OFF      "speakerOff"
-#define MNI_JINGLE_RTP_TEST_ON          "testOn"
-#define MNI_JINGLE_RTP_TEST_OFF         "testOff"
-#define MNI_JINGLE_RTP_CALL             "call"
-#define MNI_JINGLE_RTP_CALL_VIDEO       "call_video"
-#define MNI_JINGLE_RTP_INCOMING         "incoming"
-#define MNI_JINGLE_RTP_INCOMING_VIDEO   "incoming_video"
-#define MNI_JINGLE_RTP_OUTGOING         "outgoing"
-#define MNI_JINGLE_RTP_OUTGOING_VIDEO   "outgoing_video"
-#define MNI_JINGLE_RTP_CONNECT          "connect"
-#define MNI_JINGLE_RTP_CONNECT_VIDEO    "connect_video"
-#define MNI_JINGLE_RTP_TALK             "talk"
-#define MNI_JINGLE_RTP_TALK_VIDEO       "talk_video"
-#define MNI_JINGLE_RTP_HANGUP           "hangup"
-#define MNI_JINGLE_RTP_ERROR            "error"
-
-//wizards
-#define MNI_WIZARD                      "wizard"
-#define MNI_WIZARD_ACC1                 "wizard_acc1"
-#define MNI_WIZARD_ACC2                 "wizard_acc2"
-#define MNI_WIZARD_ACC_BAN              "wiz_acc_bann"
-#define MNI_WIZARD_GT_BEG               "wiz_trans"
-#define MNI_WIZARD_GT_END               "wiz_trans_end"
-
-#define MNI_YES							"yes"
-#define MNI_NO							"no"
+#define MNI_JINGLE_RTP                  "jinglertp"
 
 // >>> eyeCU >>>
 
