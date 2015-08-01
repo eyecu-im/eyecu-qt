@@ -10,6 +10,7 @@
 #include "wizardpages.h"
 #include <definitions/optionvalues.h>
 #include <definitions/menuicons.h>
+#include <definitions/wizardicons.h>
 #include <definitions/serviceicons.h>
 #include <definitions/resources.h>
 #include <utils/options.h>
@@ -64,10 +65,10 @@ TransportWizard::TransportWizard(const Jid &AStreamJid,
     setWizardStyle(ModernStyle);
 #endif
 
-    QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD);
+	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_WIZARD);
     setPixmap(QWizard::LogoPixmap, QPixmap(fileName));//LogoPixmap WatermarkPixmap
 
-    fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD_ACC_BAN);
+	fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_BANNER);
     setPixmap(QWizard::BannerPixmap, QPixmap(fileName));
 
 	setWindowTitle(tr("Legacy network connection Wizard"));
@@ -94,7 +95,7 @@ IntroPage::IntroPage(QWidget *parent): QWizardPage(parent)
 	setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Legacy network connection")));
 	setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("This Wizard will help you to connect to a legacy network via transport (gateway)")));
 
-    QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD_GT_BEG);
+	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_TRANSPORT);
     setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 
 	QVBoxLayout *layout = new QVBoxLayout;
@@ -381,10 +382,10 @@ void GatewayPage::setItemStatus(QTreeWidgetItem *AItem, GatewayPage::TransportSt
 	switch (AStatus)
 	{
 		case Available:
-			AItem->setIcon(0, FIconStorageMenu->getIcon(MNI_YES));
+			AItem->setIcon(0, FIconStorageWizards->getIcon(WZI_YES));
 			break;
 		case Unavailable:
-			AItem->setIcon(0, FIconStorageMenu->getIcon(MNI_NO));
+			AItem->setIcon(0, FIconStorageWizards->getIcon(WZI_NO));
 			break;
 		case Unknown:
 			AItem->setIcon(0, FIconStorageServices->getIcon(SRI_SERVICE_WAIT));
@@ -905,7 +906,7 @@ ConclusionPage::ConclusionPage(NetworksPage *ANetworkPage, QWidget *parent):
     setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Done!")));
     setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Transport Wizard completed successfuly")));
 
-    QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD_GT_END);
+	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_TRANSPORT_END);
     setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 	FLblTitle = new QLabel(QString("<center><h2 style='color:green;'>%2</h2></center>").arg(tr("Congratulations!")));
 	FLblTitle->setWordWrap(true);

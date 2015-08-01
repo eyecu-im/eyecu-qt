@@ -1,0 +1,42 @@
+#ifndef DEF_XHTMLICONS_H
+#define DEF_XHTMLICONS_H
+
+#define XHI_TEXT_BOLD             "textBold"
+#define XHI_TEXT_ITALIC           "textItalic"
+#define XHI_TEXT_UNDERLINE        "textUnder"
+#define XHI_TEXT_OVERLINE         "textOver"
+#define XHI_TEXT_STRIKEOUT        "textStrike"
+#define XHI_ALIGN_LEFT            "alignLeft"
+#define XHI_ALIGN_CENTER          "alignCenter"
+#define XHI_ALIGN_RIGHT           "alignRight"
+#define XHI_ALIGN_JUSTIFY         "alignJustify"
+#define XHI_INSERT_IMAGE          "insertImage"
+#define XHI_INSERT_NEWLINE        "newLine"
+#define XHI_INSERT_NBSP           "nbsp"
+#define XHI_SET_TOOLTIP           "toolTip"
+#define XHI_INDENT                "indent"
+#define XHI_OUTDENT               "outdent"
+#define XHI_FORMAT_CLEAR          "removeFormat"
+#define XHI_FORMAT_PLAIN          "formatBlack"
+#define XHI_FORMAT_RICH           "formatRich"
+#define XHI_LIST_BULLET_CIRCLE    "bulletCircle"
+#define XHI_LIST_BULLET_DISC      "bulletDisc"
+#define XHI_LIST_BULLET_SQUARE    "bulletSquare"
+#define XHI_LIST_ORDER_DECIMAL    "orderDecimal"
+#define XHI_LIST_ORDER_ALPHA_LOW  "orderAlphaLow"
+#define XHI_LIST_ORDER_ALPHA_UP   "orderAlphaUp"
+#define XHI_LIST_ORDER_ROMAN_LOW  "orderRomanLow"
+#define XHI_LIST_ORDER_ROMAN_UP   "orderRomanUp"
+#define XHI_LIST_DEFINITION       "definitionList"
+
+#define XHI_HEADING1              "heading1"
+#define XHI_HEADING2              "heading2"
+#define XHI_HEADING3              "heading3"
+#define XHI_HEADING4              "heading4"
+#define XHI_HEADING5              "heading5"
+#define XHI_HEADING6              "heading6"
+
+#define XHI_CODE                  "code"
+#define XHI_PREFORMAT             "preformat"
+
+#endif

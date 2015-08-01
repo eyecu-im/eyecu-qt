@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
  <icon><key>edit</key><object mime="image/png">edit.png</object></icon>
- <icon><key>add</key><object mime="image/png">add.png</object></icon>
- <icon><key>delete</key><object mime="image/png">delete.png</object></icon>
- <icon><key>accept</key><object mime="image/png">accept.png</object></icon>
- <icon><key>decline</key><object mime="image/png">decline.png</object></icon>
+ <icon><key>editCopy</key><object mime="image/png">editcopy.png</object></icon>
+ <icon><key>editAdd</key><object mime="image/png">editadd.png</object></icon>
+ <icon><key>editDelete</key><object mime="image/png">editdelete.png</object></icon>
+ <icon><key>editAccept</key><object mime="image/png">editaccept.png</object></icon>
+ <icon><key>editDecline</key><object mime="image/png">editdecline.png</object></icon>
 </icondef>
