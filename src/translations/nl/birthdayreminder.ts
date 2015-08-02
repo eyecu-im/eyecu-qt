@@ -25,7 +25,7 @@
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
  %1</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verjaardag in %n dag,\n %1</numerusform><numerusform>Verjaardag in %n dagen,\n %1</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
@@ -36,12 +36,12 @@
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>
    <source>%1 turns %n</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%1 beurt %n</numerusform><numerusform>%1 beurten %n</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday in %n day(s)!</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verjaardag in %n dag!</numerusform><numerusform>Verjaardag in %n dagen!</numerusform></translation>
   </message>
  </context>
 </TS>

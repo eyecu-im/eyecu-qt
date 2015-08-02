@@ -80,7 +80,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="728"/>
    <source>Are you sure you wish to remove transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Bent je er zeker van om een transport te verwijderen &apos;&lt;b&gt;%1&lt;/b&gt;&apos; en zijn &lt;b&gt;%n contactpersoon&lt;/b&gt; van rooster?</numerusform><numerusform>Bent je er zeker van om een transport te verwijderen &apos;&lt;b&gt;%1&lt;/b&gt;&apos; en zijn &lt;b&gt;%n contactpersonen&lt;/b&gt; van rooster?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="734"/>
@@ -90,7 +90,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n transport(s)&lt;/b&gt; and their contacts from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Bent je er zeker van om een transport&lt;/b&gt; te verwijderen &lt;b&gt;%n en zijn contactpersoon van rooster?</numerusform><numerusform>Bent je er zeker van om een transport&lt;/b&gt; te verwijderen &lt;b&gt;%n en zijn contactpersonen van rooster?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="816"/>

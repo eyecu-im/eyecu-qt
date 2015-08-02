@@ -64,7 +64,7 @@
   <message>
    <location filename="../../plugins/registration/registerdialog.ui" line="92"/>
    <source>Email:</source>
-   <translation type="unfinished"/>
+   <translation>Email:</translation>
   </message>
  </context>
  <context>
@@ -85,12 +85,12 @@
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="113"/>
    <source>Registration is not supported</source>
-   <translation type="unfinished"/>
+   <translation>Registratie wordt niet ondersteund</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="114"/>
    <source>Invalid registration fields</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige registratie velden</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="115"/>
@@ -115,7 +115,7 @@
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="294"/>
    <source>Register new account on server</source>
-   <translation type="unfinished"/>
+   <translation>Registreer nieuwe account op de server</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="305"/>
@@ -196,7 +196,7 @@
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="613"/>
    <source>e-mail</source>
-   <translation type="unfinished"/>
+   <translation>e-mail</translation>
   </message>
  </context>
 </TS>

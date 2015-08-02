@@ -10,7 +10,7 @@
   <message>
    <location filename="../../plugins/receipts/receipts.cpp" line="36"/>
    <source>Sends, receives and displays message delivery receipts</source>
-   <translation type="unfinished"/>
+   <translation>Verzend, Ontvangt  en toont ontvangstbevestigingen</translation>
   </message>
   <message>
    <location filename="../../plugins/receipts/receipts.cpp" line="97"/>
