@@ -10,8 +10,6 @@ EmoticonsOptions::EmoticonsOptions(IEmoticons *AEmoticons, QWidget *AParent) : Q
 	ui.setupUi(this);
 //	IconStorage *storage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	QStyle *style = QApplication::style();
-//	storage->insertAutoIcon(ui.tbtUp,MNI_EMOTICONS_ARROW_UP);
-//	storage->insertAutoIcon(ui.tbtDown,MNI_EMOTICONS_ARROW_DOWN);
 	ui.tbtUp->setIcon(style->standardIcon(QStyle::SP_ArrowUp));
 	ui.tbtDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
 

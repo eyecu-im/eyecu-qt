@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+ <icon><key>streetView</key><object mime="image/png">streetview.png</object></icon>
+ <icon><key>streetViewMan</key><object mime="image/png">streetviewman.png</object></icon>
+</icondef>

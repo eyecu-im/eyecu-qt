@@ -181,7 +181,7 @@ bool PlaceView::contextMenu(const QString &AId, QMenu *AMenu)
 
 				action=new Action(menu);
 				action->setText(tr("Copy picture"));
-				action->setIcon(RSR_STORAGE_MENUICONS, MNI_COPY_CLBOARD);
+				action->setIcon(RSR_STORAGE_MENUICONS, MNI_EDIT_COPY);
 				action->setData(SDR_ID, AId);
 				action->setData(SDR_ACTION, ACTION5);
 				connect(action, SIGNAL(triggered()), SLOT(onViewActionTriggered()));

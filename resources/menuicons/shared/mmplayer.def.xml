@@ -5,7 +5,7 @@
     <object mime="image/png">mmplayer.png</object>
   </icon>
   <icon>
-    <key>eject</key>
-    <object mime="image/png">eject.png</object>
+    <key>mmplayerEject</key>
+    <object mime="image/png">mmplayereject.png</object>
   </icon>
 </icondef>

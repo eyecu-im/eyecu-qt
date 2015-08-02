@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>map</key>
+    <object mime="image/png">map.png</object>
+  </icon>
+  <icon>
+    <key>viewcenter</key>
+    <object mime="image/png">viewcenter.png</object>
+  </icon>
+</icondef>

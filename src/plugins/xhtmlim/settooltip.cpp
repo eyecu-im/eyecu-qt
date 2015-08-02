@@ -1,5 +1,5 @@
 #include <definitions/resources.h>
-#include <definitions/menuicons.h>
+#include <definitions/xhtmlicons.h>
 #include <utils/iconstorage.h>
 
 #include "settooltip.h"
@@ -9,7 +9,7 @@ SetToolTip::SetToolTip(int AType, const QString &ATitleText, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetToolTip)
 {
-	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_HTML)->getIcon(MNI_XHTML_SET_TOOLTIP));
+	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_HTML)->getIcon(XHI_SET_TOOLTIP));
     ui->setupUi(this);
     ui->ledToolTipText->setText(ATitleText);
     ui->cmbType->setCurrentIndex(AType);

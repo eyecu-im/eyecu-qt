@@ -1,13 +1,9 @@
 #ifndef AUDIO_H
 #define AUDIO_H
 
-#include <QWidget>
 #include <QAudioDeviceInfo>
 #include <QAudioOutput>
 #include <QAudioInput>
-#include <QFile>
-#include <definitions/resources.h>
-#include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
 
 #include "audioinfo.h"

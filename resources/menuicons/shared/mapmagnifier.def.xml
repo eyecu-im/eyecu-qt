@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
   <icon>
-    <key>magnifier</key>
-    <object mime="image/png">magnifier.png</object>
+    <key>mapMagnifier</key>
+    <object mime="image/png">mapmagnifier.png</object>
   </icon>
 </icondef>

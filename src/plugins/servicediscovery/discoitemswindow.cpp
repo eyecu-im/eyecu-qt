@@ -184,15 +184,16 @@ QMenu *DiscoItemsWindow::createPopupMenu()
 
 void DiscoItemsWindow::createToolBarActions()
 {
+	QStyle *style = QApplication::style();// *** <<< eyeCU >>> **
 	FMoveBack = new Action(FToolBarChanger);
 	FMoveBack->setText(tr("Back"));
-	FMoveBack->setIcon(RSR_STORAGE_MENUICONS,MNI_SDISCOVERY_ARROW_LEFT);
+	qobject_cast<QAction *>(FMoveBack)->setIcon(style->standardIcon(QStyle::SP_ArrowLeft)); // *** <<< eyeCU >>> **
 	FToolBarChanger->insertAction(FMoveBack,TBG_DIWT_DISCOVERY_NAVIGATE);
 	connect(FMoveBack,SIGNAL(triggered(bool)),SLOT(onToolBarActionTriggered(bool)));
 
 	FMoveForward = new Action(FToolBarChanger);
 	FMoveForward->setText(tr("Forward"));
-	FMoveForward->setIcon(RSR_STORAGE_MENUICONS,MNI_SDISCOVERY_ARROW_RIGHT);
+	qobject_cast<QAction *>(FMoveForward)->setIcon(style->standardIcon(QStyle::SP_ArrowRight)); // *** <<< eyeCU >>> **
 	FToolBarChanger->insertAction(FMoveForward,TBG_DIWT_DISCOVERY_NAVIGATE);
 	connect(FMoveForward,SIGNAL(triggered(bool)),SLOT(onToolBarActionTriggered(bool)));
 
@@ -204,7 +205,7 @@ void DiscoItemsWindow::createToolBarActions()
 
 	FReloadCurrent = new Action(FToolBarChanger);
 	FReloadCurrent->setText(tr("Reload"));
-	FReloadCurrent->setIcon(RSR_STORAGE_MENUICONS,MNI_SDISCOVERY_RELOAD);
+	qobject_cast<QAction *>(FReloadCurrent)->setIcon(style->standardIcon(QStyle::SP_BrowserReload)); // *** <<< eyeCU >>> **
 	FToolBarChanger->insertAction(FReloadCurrent,TBG_DIWT_DISCOVERY_DEFACTIONS);
 	connect(FReloadCurrent,SIGNAL(triggered(bool)),SLOT(onToolBarActionTriggered(bool)));
 
