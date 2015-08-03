@@ -4,6 +4,7 @@
 #include <QUdpSocket>
 
 #include <definitions/menuicons.h>
+#include <definitions/jingleicons.h>
 #include <definitions/resources.h>
 #include <definitions/toolbargroups.h>
 #include <definitions/notificationtypes.h>
@@ -156,7 +157,7 @@ bool JingleRtp::initObjects()
     {
         INotificationType notifyType;
         notifyType.order = NTO_JINGLE_RTP_CALL;
-        notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(MNI_JINGLE_RTP_CALL);
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL);
         notifyType.title = tr("When incoming voice or video call received");
         notifyType.kindMask = INotification::RosterNotify|INotification::TrayNotify|INotification::TrayAction|
                               INotification::PopupWindow|INotification::SoundPlay|INotification::AlertWidget|
@@ -164,7 +165,7 @@ bool JingleRtp::initObjects()
         notifyType.kindDefs = notifyType.kindMask & ~(INotification::AutoActivate);
         FNotifications->registerNotificationType(NNT_JINGLE_RTP_CALL, notifyType);
 
-        notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(MNI_JINGLE_RTP_HANGUP);
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_HANGUP);
         notifyType.title = tr("When incoming voice or video call missed");
         FNotifications->registerNotificationType(NNT_JINGLE_RTP_MISSED, notifyType);
 
@@ -395,8 +396,8 @@ INotification JingleRtp::callNotify(const Jid &AStreamJid, const QString &ASid, 
         notification.kinds = FNotifications->enabledTypeNotificationKinds(ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED);
         if (notification.kinds > 0)
         {
-            QIcon icon = FIconStorage->getIcon(ACallType==Called?(video?MNI_JINGLE_RTP_CALL_VIDEO:MNI_JINGLE_RTP_CALL)
-                                                                       :MNI_JINGLE_RTP_HANGUP);
+			QIcon icon = FIconStorage->getIcon(ACallType==Called?(video?JNI_RTP_CALL_VIDEO:JNI_RTP_CALL)
+																	   :JNI_RTP_HANGUP);
             QString name = FNotifications->contactName(AStreamJid, contactJid);
 
             notification.typeId = ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED;
@@ -447,7 +448,7 @@ void JingleRtp::updateWindow(IMessageChatWindow *AWindow)
 {
     QIcon icon;
     if (AWindow->instance()->isWindow() && windowNotified(AWindow))
-        icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
     else if (FStatusIcons)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
     QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString();
@@ -494,7 +495,7 @@ void JingleRtp::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.active = true;
     dfeature.var = NS_JINGLE_APPS_RTP;
-    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
     dfeature.name = tr("Jingle RTP Sessions");
     dfeature.description = tr("Audio/Video chat via Jingle RTP");
     FServiceDiscovery->insertDiscoFeature(dfeature);
@@ -661,25 +662,25 @@ bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType A
     {
         case Called:
             message=video?image.arg(FIconStorage->fileFullName(outgoing
-                                                               ?MNI_JINGLE_RTP_OUTGOING_VIDEO
-                                                               :MNI_JINGLE_RTP_INCOMING_VIDEO)).arg(tr("Video call"))
+															   ?JNI_RTP_OUTGOING_VIDEO
+															   :JNI_RTP_INCOMING_VIDEO)).arg(tr("Video call"))
 
                          :image.arg(FIconStorage->fileFullName(outgoing
-                                                               ?MNI_JINGLE_RTP_OUTGOING
-                                                               :MNI_JINGLE_RTP_INCOMING)).arg(tr("Voice call"));
+															   ?JNI_RTP_OUTGOING
+															   :JNI_RTP_INCOMING)).arg(tr("Voice call"));
             break;
         case Cancelled:
-            message=image.arg(FIconStorage->fileFullName(MNI_JINGLE_RTP_HANGUP)).arg(tr("Call cancelled"));
+			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call cancelled"));
             break;
         case Rejected:
-            message=image.arg(FIconStorage->fileFullName(MNI_JINGLE_RTP_HANGUP)).arg(tr("Call rejected"));
+			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call rejected"));
             break;
         case Finished:
-            message=image.arg(FIconStorage->fileFullName(MNI_JINGLE_RTP_HANGUP)).arg(tr("Call finished"));
+			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call finished"));
             break;
         case Error:
             QString errorMessage = FJingle->errorMessage(AReason);
-            message=image.arg(FIconStorage->fileFullName(MNI_JINGLE_RTP_ERROR)).arg(errorMessage.isEmpty()?tr("Call error")
+			message=image.arg(FIconStorage->fileFullName(JNI_RTP_ERROR)).arg(errorMessage.isEmpty()?tr("Call error")
                                                                                                            :tr("Call error (%1)").arg(errorMessage));
 			options.status=IMessageStyleContentOptions::StatusError;
             break;
@@ -708,9 +709,9 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
             Action *action=toolBarChanger->handleAction(*it);
             Command command=(Command)action->data(ADR_COMMAND).toInt();
             if (command==VoiceCall) // Voice call
-                action->setIcon(RSR_STORAGE_JINGLE, MNI_JINGLE_RTP_CALL);
+				action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
             else if (command==VideoCall) // Video call
-                action->setIcon(RSR_STORAGE_JINGLE, MNI_JINGLE_RTP_CALL_VIDEO);
+				action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
             else if (command==Hangup)
                 action->setEnabled(false);
         }
@@ -726,18 +727,18 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
             if (command==VoiceCall) // Voice call
             {
                 if (video)
-                    action->setIcon(RSR_STORAGE_JINGLE, MNI_JINGLE_RTP_CALL);
+					action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
                 else
-                    action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated?(outgoing?MNI_JINGLE_RTP_OUTGOING:MNI_JINGLE_RTP_INCOMING):
-                                                        status==IJingle::Accepted ?MNI_JINGLE_RTP_CONNECT:MNI_JINGLE_RTP_TALK);
+					action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated?(outgoing?JNI_RTP_OUTGOING:JNI_RTP_INCOMING):
+														status==IJingle::Accepted ?JNI_RTP_CONNECT:JNI_RTP_TALK);
             }
             else if (command==VideoCall) // Video call
             {
                 if (video)
-                    action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated?(outgoing?MNI_JINGLE_RTP_OUTGOING_VIDEO:MNI_JINGLE_RTP_INCOMING_VIDEO):
-                                                        status==IJingle::Accepted ?MNI_JINGLE_RTP_CONNECT_VIDEO:MNI_JINGLE_RTP_TALK_VIDEO);
+					action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated?(outgoing?JNI_RTP_OUTGOING_VIDEO:JNI_RTP_INCOMING_VIDEO):
+														status==IJingle::Accepted ?JNI_RTP_CONNECT_VIDEO:JNI_RTP_TALK_VIDEO);
                 else
-                    action->setIcon(RSR_STORAGE_JINGLE, MNI_JINGLE_RTP_CALL_VIDEO);
+					action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
             }
             else if (command==Hangup)
                 action->setEnabled(true);
@@ -760,7 +761,7 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 
             Action *action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Voice call"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_CALL));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL));
             //action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
             //action->setData(ADR_ACTION, ACT_CONST);
             action->setData(ADR_CONTACT_JID, contactJid.full());
@@ -771,7 +772,7 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 
             action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Video call"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_CALL_VIDEO));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL_VIDEO));
             //action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
             //action->setData(ADR_ACTION, ACT_CONST);
             action->setData(ADR_CONTACT_JID, contactJid.full());
@@ -782,7 +783,7 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 
             action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Hangup"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_HANGUP));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_HANGUP));
             //action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
             //action->setData(ADR_ACTION, ACT_CONST);
             action->setData(ADR_CONTACT_JID, contactJid.full());
@@ -794,7 +795,7 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 //----------------
             action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Microphone OFF"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_OFF));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
             action->setData(ADR_CONTACT_JID, contactJid.full());
             action->setData(ADR_STREAM_JID, streamJid.full());
             action->setCheckable(true);
@@ -994,7 +995,7 @@ void JingleRtp::onTestMicr(bool state)//! -----TEST MICROPHONE -----
         if(state)
         {
             action->setText(tr("Microphone ON"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_ON));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_ON));
 
             QString formatName ="rtp";     //! ogg,rtp,mp3
             QString codecName ="libspeex";  //! libspeex,libmp3lame,libopus,g729
@@ -1015,7 +1016,7 @@ void JingleRtp::onTestMicr(bool state)//! -----TEST MICROPHONE -----
         else
         {
             action->setText(tr("Microphone OFF"));
-            action->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_OFF));
+			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
 			MediaSender *mediaSender = (MediaSender *)(action->data(STREAM_STREAM).toULongLong());
             mediaSender->stop();
             QFile *fileDvOut =(QFile *)(action->data(STREAM_CONTACT).toULongLong());

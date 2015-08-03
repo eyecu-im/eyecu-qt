@@ -15,17 +15,17 @@
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="207"/>
    <source>Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Vergaderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="208"/>
    <source>Disable auto join to conferences on this computer</source>
-   <translation type="unfinished"/>
+   <translation>Schakel auto-join voor vergaderingen uit op deze computer</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="212"/>
    <source>Show windows of auto joined conferences at startup</source>
-   <translation type="unfinished"/>
+   <translation>Toon vensters van auto-join vergaderingen met opstarten</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="520"/>
@@ -136,7 +136,7 @@
   <message>
    <location filename="../../plugins/bookmarks/editbookmarkdialog.ui" line="114"/>
    <source>URL:</source>
-   <translation type="unfinished"/>
+   <translation>URL:</translation>
   </message>
  </context>
  <context>
@@ -172,7 +172,7 @@
   <message>
    <location filename="../../plugins/bookmarks/editbookmarksdialog.ui" line="56"/>
    <source>JID/URL</source>
-   <translation type="unfinished"/>
+   <translation>JID/URL</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/editbookmarksdialog.ui" line="61"/>

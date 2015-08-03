@@ -1820,7 +1820,7 @@ bool Poi::contextMenu(const QString &AId, Menu *AMenu)
     else
     {
         action->setText(tr("Edit"));
-        action->setIcon(RSR_STORAGE_MENUICONS, MNI_EDIT_EDIT);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_EDIT);
         action->setData(ADR_ACTION, PA_EDIT);
     }
     action->setData(ADR_ID, AId);

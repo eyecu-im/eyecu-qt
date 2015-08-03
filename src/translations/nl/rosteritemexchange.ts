@@ -93,7 +93,7 @@
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="528"/>
    <source>Send %n Contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verstuur %n Contactpersoon</numerusform><numerusform>Verstuur %n Contactpersonen</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="650"/>
@@ -113,12 +113,12 @@
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="810"/>
    <source>%n contact(s) sent</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verstuur %n Contactpersoon</numerusform><numerusform>Verstuur %n Contactpersonen</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="812"/>
    <source>Failed to send %n contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Mislukt om te verzenden %n contactpersoon</numerusform><numerusform>Mislukt om te verzenden %n contactpersonen</numerusform></translation>
   </message>
  </context>
 </TS>

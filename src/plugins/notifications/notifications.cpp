@@ -247,7 +247,10 @@ QMultiMap<int, IOptionsDialogWidget *> Notifications::optionsDialogWidgets(const
 // *** >>> eyeCU >>> ***
 		QSpinBox *spbPopupTimeout = new QSpinBox(AParent);
 		spbPopupTimeout->setRange(0,120);
-		spbPopupTimeout->setSuffix(tr(" seconds"));
+// *** <<< eyeCU <<< ***
+//		spbPopupTimeout->setSuffix(tr(" seconds"));
+		connect(spbPopupTimeout, SIGNAL(valueChanged(int)), SLOT(onSpinBoxValueChanged(int)));
+// *** >>> eyeCU >>> ***
 		widgets.insertMulti(OWO_NOTIFICATIONS_POPUPTIMEOUT,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_POPUPTIMEOUT),tr("Time to display a pop-up window (0 - always visible):"),spbPopupTimeout,AParent));
 
 #if defined Q_WS_X11 && 0 
@@ -846,6 +849,12 @@ void Notifications::onShortcutActivated(const QString &AId, QWidget *AWidget)
 		}
 	}
 }
+// *** <<< eyeCU <<< ***
+void Notifications::onSpinBoxValueChanged(int value)
+{
+	qobject_cast<QSpinBox *>(sender())->setSuffix(" "+tr("second(s)", "", value));
+}
+// *** >>> eyeCU >>> ***
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_notifications, Notifications)
 #endif

@@ -9,6 +9,7 @@
 
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/wizardicons.h>
 #include <definitions/networkicons.h>
 #include <definitions/serviceicons.h>
 #include <definitions/version.h>
@@ -75,10 +76,10 @@ ConnectionWizard::ConnectionWizard(QWidget *AParent):
 	setWizardStyle(ModernStyle);
 #endif
 
-	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD);
+	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_WIZARD);
 	setPixmap(QWizard::LogoPixmap, QPixmap(fileName));//LogoPixmap WatermarkPixmap
 
-	fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(MNI_WIZARD_ACC_BAN);
+	fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_BANNER);
 	setPixmap(QWizard::BannerPixmap, QPixmap(fileName));
 
 	setWindowTitle(tr("Connection Wizard"));
@@ -123,7 +124,7 @@ IntroPage::IntroPage(QWidget *parent):
     setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Connect to Jabber")));
     setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("This wizard will help you to create a Jabber account")));
 
-    setPixmap(QWizard::WatermarkPixmap, IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->getIcon(MNI_WIZARD_ACC1).pixmap(2048));
+	setPixmap(QWizard::WatermarkPixmap, IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->getIcon(WZI_ACCOUNT).pixmap(2048));
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(FLblTop               = new QLabel(QString("<span %1>%2</span>").arg(style).arg(tr("Are you already registered at Jabber network?"))));
@@ -1207,7 +1208,7 @@ ConclusionPage::ConclusionPage(IAccountManager *AAccountManager, IConnectionEngi
 	FConnectionEngine(AConnectionEngine),
 	FConnectionSettingsWidget(AConnectionSettingsWidget)
 {
-    setPixmap(QWizard::WatermarkPixmap, IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->getIcon(MNI_WIZARD_ACC2).pixmap(2048));
+	setPixmap(QWizard::WatermarkPixmap, IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->getIcon(WZI_ACCOUNT_END).pixmap(2048));
 
 	QGridLayout *layout = new QGridLayout;
 	FLblTitle = new QLabel();

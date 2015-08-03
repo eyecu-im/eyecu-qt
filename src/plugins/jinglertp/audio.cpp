@@ -1,6 +1,9 @@
 #include <QDebug>
 #include <QStyle>
 
+#include <definitions/resources.h>
+#include <definitions/jingleicons.h>
+
 #include "audio.h"
 
 //------Constants-------------------------------------------------------------
@@ -25,10 +28,10 @@ Audio::Audio(QWidget *parent)
     FIconStorage = IconStorage::staticStorage(RSR_STORAGE_JINGLE);
 
     style = QApplication::style();
-    ui->pbMicrophone->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_OFF));
+	ui->pbMicrophone->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
     //ui->pbSpeaker->setIcon(FIconStorage->getIcon(MNI_JINGLERTP_SPEAKER_ON));
     ui->pbSpeaker->setIcon(style->standardIcon(QStyle::SP_MediaVolumeMuted));
-    ui->pbTest->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_TEST_OFF));
+	ui->pbTest->setIcon(FIconStorage->getIcon(JNI_RTP_TEST_OFF));
 
     ui->pbMicrophone->setCheckable(true);
     ui->pbTest->setCheckable(true);
@@ -101,10 +104,10 @@ void Audio::onPbTest(bool ch)
 {
     forTest=ch;
     if(ch){
-        ui->pbTest->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_TEST_ON));
+		ui->pbTest->setIcon(FIconStorage->getIcon(JNI_RTP_TEST_ON));
     }
     else{
-        ui->pbTest->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_TEST_OFF));
+		ui->pbTest->setIcon(FIconStorage->getIcon(JNI_RTP_TEST_OFF));
     }
 }
 
@@ -114,14 +117,14 @@ void Audio::onPbMicrophone(bool ch)
         progressBar->start(audioInfo);
         startInputAudio();
         startOutputAudio();
-        ui->pbMicrophone->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_ON));
+		ui->pbMicrophone->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_ON));
     }
     else{
         progressBar->stop();
 //        disconnect(progressBar, 0, this, 0);//--???---
         stopInputAudio();
         stopOutputAudio();
-        ui->pbMicrophone->setIcon(FIconStorage->getIcon(MNI_JINGLE_RTP_MIC_OFF));
+		ui->pbMicrophone->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
     }
 }
 

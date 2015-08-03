@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
   <icon>
-    <key>messagecarbons</key>
+    <key>messageCarbons</key>
     <object mime="image/png">messagecarbons.png</object>
   </icon>
 </icondef>

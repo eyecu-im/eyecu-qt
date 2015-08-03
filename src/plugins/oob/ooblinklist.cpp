@@ -68,7 +68,7 @@ void OobLinkList::addLink(const QUrl &AUrl, const QString &ADescription)
     item->setIcon(0, FIconStorage->getIcon(MNI_LINK));
     item->setSizeHint(0, QSize(18,18));
 
-    item->setIcon(2, FIconStorage->getIcon(MNI_EDIT_EDIT));
+	item->setIcon(2, FIconStorage->getIcon(MNI_EDIT));
     item->setSizeHint(2, QSize(18,18));
     item->setToolTip(2, tr("Edit"));
 

@@ -49,7 +49,7 @@
     <name>AttentionDialog</name>
     <message>
         <source>Ok</source>
-        <translation></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>ATTENTION</source>

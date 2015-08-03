@@ -80,7 +80,7 @@ void MessagePoiList::addPoi(const GeolocElement &APoi)
         font.setBold(false);
         font.setItalic(true);
         item->setFont(1, font);
-        item->setIcon(3, FIconStorage->getIcon(MNI_EDIT_EDIT));
+		item->setIcon(3, FIconStorage->getIcon(MNI_EDIT));
         item->setSizeHint(3, QSize(18,18));        
         item->setToolTip(3, tr("Edit"));
         item->setIcon(4, FIconStorage->getIcon(MNI_EDIT_DELETE));

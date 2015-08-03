@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="106"/>
    <source>Zoom gain</source>
-   <translation type="unfinished"/>
+   <translation>Zoom gain</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="113"/>
@@ -125,7 +125,7 @@
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="89"/>
    <source>F8</source>
    <comment>Magnifier</comment>
-   <translation type="unfinished"/>
+   <translation>F8</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="90"/>
@@ -136,7 +136,7 @@
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="90"/>
    <source>Alt++</source>
    <comment>Zoom In</comment>
-   <translation type="unfinished"/>
+   <translation>Alt++</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="91"/>
@@ -147,7 +147,7 @@
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="91"/>
    <source>Alt+-</source>
    <comment>Zoom Out</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+-</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="125"/>
@@ -158,7 +158,7 @@
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="240"/>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="499"/>
    <source>x%1</source>
-   <translation type="unfinished"/>
+   <translation>x%1</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="257"/>

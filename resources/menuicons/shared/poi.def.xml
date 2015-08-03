@@ -8,8 +8,6 @@
  <icon><key>poiview</key><object mime="image/png">poiview.png</object></icon>
  <icon><key>globus</key><object mime="image/png">globus.png</object></icon>
  <icon><key>flag24</key><object mime="image/png">flag24.png</object></icon>
- <icon><key>tracker</key><object mime="image/png">tracker.png</object></icon>
- <icon><key>mapmessage</key><object mime="image/png">mapmessage.png</object></icon>
  <icon><key>description</key><object mime="image/png">description.png</object></icon>
 
  <icon><key>connect</key><object mime="image/png">connect.png</object></icon>

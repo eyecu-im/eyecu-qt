@@ -96,6 +96,7 @@ set pluginlist=accountmanager chatmessagehandler connectionmanager defaultconnec
 call copyplugins ru.rwsoftware.eyecu
 set resources=menuicons statusicons simplemessagestyles sounds
 call copyresources ru.rwsoftware.eyecu
+
 copy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu\data /Y
 copy c:\eyecu\eyecuutils.dll packages\ru.rwsoftware.eyecu\data /Y
 

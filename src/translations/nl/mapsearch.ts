@@ -22,7 +22,7 @@
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="85"/>
    <source>Ctrl+C</source>
    <comment>Clear</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+C</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="86"/>
@@ -33,7 +33,7 @@
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="86"/>
    <source>Alt+S</source>
    <comment>Toggle showing search results on the map</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+S</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="87"/>
@@ -55,7 +55,7 @@
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="88"/>
    <source>Alt+P</source>
    <comment>Select provider</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+P</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="89"/>
@@ -66,7 +66,7 @@
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="89"/>
    <source>Alt+F7</source>
    <comment>Search</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+F7</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="90"/>
@@ -79,7 +79,7 @@
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="90"/>
    <source>Alt+S</source>
    <comment>Add search result</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+S</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="94"/>

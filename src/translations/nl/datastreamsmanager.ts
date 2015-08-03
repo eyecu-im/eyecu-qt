@@ -54,12 +54,12 @@
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="128"/>
    <source>Data Transfer</source>
-   <translation type="unfinished"/>
+   <translation>Gegevensoverdracht</translation>
   </message>
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="143"/>
    <source>Transfer method %1</source>
-   <translation type="unfinished"/>
+   <translation>Overdracht methode %1</translation>
   </message>
  </context>
 </TS>

@@ -11,6 +11,7 @@
 
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/xhtmlicons.h>
 #include <definitions/shortcuts.h>
 #include <definitions/actiongroups.h>
 #include <definitions/optionvalues.h>
@@ -78,7 +79,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
     if (AEnableReset)
     {
         FActionResetFormat = new Action(this);
-        FActionResetFormat->setIcon(QIcon::fromTheme("message format", FIconStorage->getIcon(MNI_XHTML_FORMAT_PLAIN)));
+		FActionResetFormat->setIcon(QIcon::fromTheme("message format", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
         FActionResetFormat->setText(tr("Reset formatting on message send"));
         //removeFormat->setShortcut(Qt::CTRL + Qt::Key_B);
         FActionResetFormat->setPriority(QAction::LowPriority);
@@ -117,7 +118,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Insert image
     FActionInsertImage=new Action(this);
-    FActionInsertImage->setIcon(QIcon::fromTheme("insert-image",FIconStorage->getIcon(MNI_XHTML_INSERT_IMAGE)));
+	FActionInsertImage->setIcon(QIcon::fromTheme("insert-image",FIconStorage->getIcon(XHI_INSERT_IMAGE)));
     FActionInsertImage->setText(tr("Insert image"));
     FActionInsertImage->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE);
     FActionInsertImage->setPriority(QAction::LowPriority);
@@ -127,7 +128,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Set tool tip
     FActionSetTitle=new Action(this);
-    FActionSetTitle->setIcon(QIcon::fromTheme("set-tooltip", FIconStorage->getIcon(MNI_XHTML_SET_TOOLTIP)));
+	FActionSetTitle->setIcon(QIcon::fromTheme("set-tooltip", FIconStorage->getIcon(XHI_SET_TOOLTIP)));
     FActionSetTitle->setText(tr("Set tool tip"));
     FActionSetTitle->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP);
     FActionSetTitle->setPriority(QAction::LowPriority);
@@ -138,14 +139,14 @@ void EditHtml::setupFontActions(bool AEnableReset)
     // Special formatting
     FMenuSpecial = new Menu(this);
     FMenuSpecial->setTitle(tr("Insert special symbol"));
-    FMenuSpecial->menuAction()->setIcon(RSR_STORAGE_HTML, MNI_XHTML_INSERT_NBSP);
+	FMenuSpecial->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
     FMenuSpecial->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
     connect(FMenuSpecial->menuAction(), SIGNAL(triggered()), SLOT(onInsertSpecial()));
     QActionGroup *group=new QActionGroup(FMenuSpecial);
 
     Action *action = new Action(group);
     action->setText(tr("Non-breaking space"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_INSERT_NBSP);
+	action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
     action->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP);
     action->setCheckable(true);
@@ -156,7 +157,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
     action = new Action(group);
     action->setText(tr("New line"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_INSERT_NEWLINE);
+	action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NEWLINE);
     action->setData(ADR_SPECIAL_SYMBOL, QChar::LineSeparator);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE);
     action->setCheckable(true);
@@ -172,7 +173,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 //  *** Font options ***
 //  Bold
     FActionTextBold=new Action(this);
-    FActionTextBold->setIcon(QIcon::fromTheme("format-text-bold",FIconStorage->getIcon(MNI_XHTML_TEXT_BOLD)));
+	FActionTextBold->setIcon(QIcon::fromTheme("format-text-bold",FIconStorage->getIcon(XHI_TEXT_BOLD)));
     FActionTextBold->setText(tr("Bold"));
     FActionTextBold->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD);
     FActionTextBold->setPriority(QAction::LowPriority);
@@ -185,7 +186,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Italic
     FActionTextItalic=new Action(this);
-    FActionTextItalic->setIcon(QIcon::fromTheme("format-text-italic",FIconStorage->getIcon(MNI_XHTML_TEXT_ITALIC)));
+	FActionTextItalic->setIcon(QIcon::fromTheme("format-text-italic",FIconStorage->getIcon(XHI_TEXT_ITALIC)));
     FActionTextItalic->setText(tr("Italic"));
     FActionTextItalic->setPriority(QAction::LowPriority);
     FActionTextItalic->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC);
@@ -198,7 +199,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Underline
     FActionTextUnderline=new Action(this);
-    FActionTextUnderline->setIcon(QIcon::fromTheme("format-text-underline",FIconStorage->getIcon(MNI_XHTML_TEXT_UNDERLINE)));
+	FActionTextUnderline->setIcon(QIcon::fromTheme("format-text-underline",FIconStorage->getIcon(XHI_TEXT_UNDERLINE)));
     FActionTextUnderline->setText(tr("Underline"));
     FActionTextUnderline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE);
     FActionTextUnderline->setPriority(QAction::LowPriority);
@@ -211,7 +212,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
     //  Overline
     FActionTextOverline=new Action(this);
-    FActionTextOverline->setIcon(QIcon::fromTheme("format-text-overline", FIconStorage->getIcon(MNI_XHTML_TEXT_OVERLINE)));
+	FActionTextOverline->setIcon(QIcon::fromTheme("format-text-overline", FIconStorage->getIcon(XHI_TEXT_OVERLINE)));
     FActionTextOverline->setText(tr("Overline"));
     FActionTextOverline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE);
     FActionTextOverline->setPriority(QAction::LowPriority);
@@ -224,7 +225,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Striketrough
     FActionTextStrikeout=new Action(this);
-    FActionTextStrikeout->setIcon(QIcon::fromTheme("format-text-strikethrough",FIconStorage->getIcon(MNI_XHTML_TEXT_STRIKEOUT)));
+	FActionTextStrikeout->setIcon(QIcon::fromTheme("format-text-strikethrough",FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
     FActionTextStrikeout->setText(tr("Strikethrough"));
     FActionTextStrikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
     FActionTextStrikeout->setPriority(QAction::LowPriority);
@@ -234,7 +235,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 //  Code
     FActionTextCode=new Action(this);
-    FActionTextCode->setIcon(QIcon::fromTheme("format-text-code", FIconStorage->getIcon(MNI_XHTML_CODE)));
+	FActionTextCode->setIcon(QIcon::fromTheme("format-text-code", FIconStorage->getIcon(XHI_CODE)));
     FActionTextCode->setText(tr("Code"));
     FActionTextCode->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CODE);
     FActionTextCode->setPriority(QAction::LowPriority);
@@ -257,7 +258,7 @@ void EditHtml::setupTextActions()
 
 //-----
     FActionRemoveFormat=new Action(this);
-    FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(MNI_XHTML_FORMAT_CLEAR)));
+	FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
     FActionRemoveFormat->setText(tr("Remove format"));
     FActionRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
     FActionRemoveFormat->setPriority(QAction::LowPriority);
@@ -267,7 +268,7 @@ void EditHtml::setupTextActions()
     addSeparator();
 //------------------------
     FActionIndentLess= new Action(this);
-    FActionIndentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(MNI_XHTML_OUTDENT)));
+	FActionIndentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(XHI_OUTDENT)));
     FActionIndentLess->setText(tr("Decrease indent"));
     FActionIndentLess->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE);
     FActionIndentLess->setPriority(QAction::LowPriority);
@@ -276,7 +277,7 @@ void EditHtml::setupTextActions()
     addAction(FActionIndentLess);
 
     FActionIndentMore=new Action(this);
-    FActionIndentMore->setIcon(QIcon::fromTheme("format-indent-more",FIconStorage->getIcon(MNI_XHTML_INDENT)));
+	FActionIndentMore->setIcon(QIcon::fromTheme("format-indent-more",FIconStorage->getIcon(XHI_INDENT)));
     FActionIndentMore->setText(tr("Increase indent"));
     FActionIndentMore->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE);
     FActionIndentMore->setPriority(QAction::LowPriority);
@@ -295,7 +296,7 @@ void EditHtml::setupTextActions()
     QActionGroup *group=new QActionGroup(FMenuAlign);
     Action *action = new Action(group);
     action->setText(tr("Left"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_ALIGN_LEFT);
+	action->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_LEFT);
     action->setData(ADR_ALIGN_TYPE, int(Qt::AlignLeft|Qt::AlignAbsolute));
     action->setCheckable(true);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT);
@@ -307,7 +308,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Center"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_ALIGN_CENTER);
+	action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_CENTER);
     action->setData(ADR_ALIGN_TYPE, Qt::AlignHCenter);
     action->setCheckable(true);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER);
@@ -318,7 +319,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Right"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_ALIGN_RIGHT);
+	action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_RIGHT);
     action->setData(ADR_ALIGN_TYPE, int(Qt::AlignRight|Qt::AlignAbsolute));
     action->setCheckable(true);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT);
@@ -329,7 +330,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Justify"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_ALIGN_JUSTIFY);
+	action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_JUSTIFY);
     action->setData(ADR_ALIGN_TYPE, Qt::AlignJustify);
     action->setCheckable(true);
     action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY);
@@ -343,7 +344,7 @@ void EditHtml::setupTextActions()
     // Text list
     FMenuList = new Menu(this);
     FMenuList->setTitle(tr("List"));
-    FMenuList->setIcon(RSR_STORAGE_HTML, MNI_XHTML_LIST_BULLET_DISC);
+	FMenuList->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
     FMenuList->menuAction()->setEnabled(true);
     FMenuList->menuAction()->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
     connect(FMenuList->menuAction(), SIGNAL(triggered()), SLOT(onInsertList()));
@@ -351,7 +352,7 @@ void EditHtml::setupTextActions()
     group=new QActionGroup(FMenuList);
     action = new Action(group);
     action->setText(tr("Disc"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_LIST_BULLET_DISC);
+	action->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -362,7 +363,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Circle"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_BULLET_CIRCLE);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_CIRCLE);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListCircle);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -372,7 +373,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Square"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_BULLET_SQUARE);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_SQUARE);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListSquare);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -382,7 +383,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Decimal"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_ORDER_DECIMAL);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_DECIMAL);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListDecimal);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -392,7 +393,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Alpha lower"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_ORDER_ALPHA_LOW);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_LOW);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerAlpha);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -402,7 +403,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Alpha upper"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_ORDER_ALPHA_UP);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_UP);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperAlpha);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -412,7 +413,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Roman lower"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_ORDER_ROMAN_LOW);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_LOW);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerRoman);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -422,7 +423,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Roman upper"));
-    action->setIcon(RSR_STORAGE_HTML,MNI_XHTML_LIST_ORDER_ROMAN_UP);
+	action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_UP);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperRoman);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -432,7 +433,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Definition list"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_LIST_DEFINITION);
+	action->setIcon(RSR_STORAGE_HTML, XHI_LIST_DEFINITION);
     action->setData(ADR_LIST_TYPE, QTextListFormat::ListStyleUndefined);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -450,7 +451,7 @@ void EditHtml::setupTextActions()
     group=new QActionGroup(FMenuFormat);
     action = new Action(group);
     action->setText(tr("Preformatted text"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_PREFORMAT);
+	action->setIcon(RSR_STORAGE_HTML, XHI_PREFORMAT);
     action->setData(ADR_FORMATTING_TYPE, FMT_PREFORMAT);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -461,7 +462,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 1"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING1);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING1);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING1);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -471,7 +472,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 2"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING2);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING2);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING2);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -481,7 +482,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 3"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING3);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING3);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING3);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -491,7 +492,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 4"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING4);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING4);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING4);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -501,7 +502,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 5"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING5);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING5);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING5);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -511,7 +512,7 @@ void EditHtml::setupTextActions()
 
     action = new Action(group);
     action->setText(tr("Heading 6"));
-    action->setIcon(RSR_STORAGE_HTML, MNI_XHTML_HEADING6);
+	action->setIcon(RSR_STORAGE_HTML, XHI_HEADING6);
     action->setData(ADR_FORMATTING_TYPE, FMT_HEADING6);
     action->setCheckable(true);
     action->setPriority(QAction::LowPriority);
@@ -564,12 +565,12 @@ void EditHtml::onResetFormat(bool AStatus)
 {
     if(!AStatus)
     {
-        FActionResetFormat->setIcon(FIconStorage->getIcon(MNI_XHTML_FORMAT_PLAIN));
+		FActionResetFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_PLAIN));
         FActionResetFormat->setToolTip(tr("Reset formatting on message send"));
     }
     else
     {
-        FActionResetFormat->setIcon(FIconStorage->getIcon(MNI_XHTML_FORMAT_RICH));
+		FActionResetFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_RICH));
         FActionResetFormat->setToolTip(tr("Keep formatting within chat session"));
     }
 }
@@ -599,7 +600,7 @@ void EditHtml::onInsertImage()
 
 	InsertImage *inserImage = new InsertImage(FXhtmlIm, FNetworkAccessManager, imageData, imageUrl, size, alt);
 
-    inserImage->setWindowIcon(FIconStorage->getIcon(MNI_XHTML_INSERT_IMAGE));
+	inserImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
     if(!supportBoB)
         inserImage->ui->pbBrowse->hide();
     if(inserImage->exec() == QDialog::Accepted)

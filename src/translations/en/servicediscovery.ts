@@ -113,37 +113,37 @@
    <translation>Service Discovery - %1</translation>
   </message>
   <message>
-   <location line="188" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="189" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Back</source>
    <translation>Back</translation>
   </message>
   <message>
-   <location line="194" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="195" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Forward</source>
    <translation>Forward</translation>
   </message>
   <message>
-   <location line="200" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="201" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Discover</source>
    <translation>Discover</translation>
   </message>
   <message>
-   <location line="206" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="207" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Reload</source>
    <translation>Reload</translation>
   </message>
   <message>
-   <location line="212" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="213" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Disco info</source>
    <translation>Disco info</translation>
   </message>
   <message>
-   <location line="218" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="219" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Add Contact</source>
    <translation>Add Contact</translation>
   </message>
   <message>
-   <location line="224" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
+   <location line="225" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>vCard</source>
    <translation>vCard</translation>
   </message>

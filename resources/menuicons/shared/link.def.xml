@@ -2,5 +2,4 @@
 <icondef>
   <icon><key>link</key><object mime="image/png">link.png</object></icon>
   <icon><key>linkadd</key><object mime="image/png">linkadd.png</object></icon>
-  <icon><key>linkready</key><object mime="image/png">linkready.png</object></icon>
 </icondef>

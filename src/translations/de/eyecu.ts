@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
  <context>
   <name>AboutBox</name>
   <message>
@@ -14,7 +14,7 @@
    <source>About the program</source>
    <translation>Über das Programm</translation>
   </message>
-  <message>
+  <message utf8="true">
    <location filename="../../loader/aboutbox.ui" line="181"/>
    <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
    <translation type="unfinished"/>

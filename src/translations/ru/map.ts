@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>Map</name>
     <message>
@@ -26,7 +26,7 @@
     <message>
         <source>Ctrl+N</source>
         <comment>New center</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+N</translation>
     </message>
     <message>
         <source>Toggle map</source>
@@ -35,7 +35,7 @@
     <message>
         <source>Ctrl+F10</source>
         <comment>Toggle map</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F10</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -44,7 +44,7 @@
     <message>
         <source>F5</source>
         <comment>Refresh map</comment>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message>
         <source>Movement</source>
@@ -77,7 +77,7 @@
     <message>
         <source>+</source>
         <comment>Map zoom in</comment>
-        <translation type="unfinished"></translation>
+        <translation>+</translation>
     </message>
     <message>
         <source>Out</source>
@@ -86,27 +86,27 @@
     <message>
         <source>-</source>
         <comment>Map zoom out</comment>
-        <translation type="unfinished"></translation>
+        <translation>-</translation>
     </message>
     <message>
         <source>Ctrl+Left</source>
         <comment>Map move Left</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Left</translation>
     </message>
     <message>
         <source>Ctrl+Right</source>
         <comment>Map move Right</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Right</translation>
     </message>
     <message>
         <source>Ctrl+Up</source>
         <comment>Map move Up</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Up</translation>
     </message>
     <message>
         <source>Ctrl+Down</source>
         <comment>Map move Down</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Down</translation>
     </message>
     <message>
         <source>Show options dialog</source>
@@ -115,7 +115,7 @@
     <message>
         <source>Ctrl+O</source>
         <comment>Show options dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Options</source>
@@ -128,7 +128,7 @@
     <message>
         <source>Ctrl+M</source>
         <comment>My location</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>Display &quot;Loading&quot; tiles</source>

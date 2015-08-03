@@ -29,7 +29,7 @@
   <message>
    <location filename="../../plugins/oob/newlink.ui" line="124"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ok</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/newlink.ui" line="158"/>
@@ -57,13 +57,13 @@
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="87"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ok</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="87"/>
    <source>Ctrl+Return</source>
    <comment>Ok</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Enter</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="88"/>
@@ -81,7 +81,7 @@
    <location filename="../../plugins/oob/oob.cpp" line="89"/>
    <source>Alt+O</source>
    <comment>Add and OOB link</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+O</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="90"/>

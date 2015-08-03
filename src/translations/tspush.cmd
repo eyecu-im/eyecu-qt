@@ -1,14 +1,12 @@
 @echo off
 
 echo Pushing source translation (en) to transifex
-tx.exe push -s -f --no-interactive -l en
-
-pause
+rem tx.exe push -s -f --no-interactive -l en
 
 if "%1" == "all" goto all
 
 echo Pushing Russian translation to transifex
-tx.exe push -t -f --no-interactive -l ru
+tx.exe push -t -f --no-interactive --skip -l ru
 goto end
 
 :all
