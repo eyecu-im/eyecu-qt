@@ -1,7 +1,7 @@
 @echo off
 
 echo Pushing source translation (en) to transifex
-rem tx.exe push -s -f --no-interactive -l en
+tx.exe push -s -f --no-interactive -l en
 
 if "%1" == "all" goto all
 

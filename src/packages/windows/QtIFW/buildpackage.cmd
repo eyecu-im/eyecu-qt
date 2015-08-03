@@ -255,15 +255,15 @@ call copyplugins ru.rwsoftware.eyecu.mapsearch.navitel mapsearchprovidernavitel
 call copyplugins ru.rwsoftware.eyecu.mapsearch.osm mapsearchproviderosm
 call copyplugins ru.rwsoftware.eyecu.mapsearch.yandex mapsearchprovideryandex
 
-set resources=wizards\shared\wizard.def.xml wizards\shared\wizard.png wizards\shared\wiz-banner.png
+set resources=wizards\shared\wizard.def.xml wizards\shared\wizard.png wizards\shared\banner.png
 call copyresources1 ru.rwsoftware.eyecu.wizards
 
 call copyplugins ru.rwsoftware.eyecu.wizards.transport wizardtransport
-set resources=wizards\shared\*.html wizards\shared\servers.xml wizards\shared\software.def.xml wizards\shared\ejabberd.png wizards\shared\jabberd.png wizards\shared\openfire.png wizards\shared\prosody.png wizards\shared\gtalk.png wizards\shared\yaonline.png wizards\shared\wiz-acc.png wizards\shared\wiz-acc2.png
+set resources=wizards\shared\*.html wizards\shared\servers.xml wizards\shared\software.def.xml wizards\shared\ejabberd.png wizards\shared\jabberd.png wizards\shared\openfire.png wizards\shared\prosody.png wizards\shared\gtalk.png wizards\shared\yaonline.png wizards\shared\account.png wizards\shared\accountend.png
 call copyresources1 ru.rwsoftware.eyecu.wizards.transport
 
 call copyplugins ru.rwsoftware.eyecu.wizards.account wizardaccount
-set resources=wizards\shared\wiz-trans.png wizards\shared\wiz-trans-end.png wizards\shared\gateway.def.xml
+set resources=wizards\shared\transport.png wizards\shared\transportend.png wizards\shared\gateway.def.xml
 call copyresources1 ru.rwsoftware.eyecu.wizards.account
 
 md packages\ru.rwsoftware.eyecu.docs\data
