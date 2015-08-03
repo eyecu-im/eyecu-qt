@@ -4,27 +4,27 @@
  <context>
   <name>Attention</name>
   <message>
-   <location line="50" filename="../../plugins/attention/attention.cpp"/>
-   <location line="155" filename="../../plugins/attention/attention.cpp"/>
+   <location line="51" filename="../../plugins/attention/attention.cpp"/>
+   <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <location line="175" filename="../../plugins/attention/attention.cpp"/>
-   <location line="189" filename="../../plugins/attention/attention.cpp"/>
-   <location line="337" filename="../../plugins/attention/attention.cpp"/>
-   <location line="477" filename="../../plugins/attention/attention.cpp"/>
+   <location line="188" filename="../../plugins/attention/attention.cpp"/>
+   <location line="333" filename="../../plugins/attention/attention.cpp"/>
+   <location line="473" filename="../../plugins/attention/attention.cpp"/>
    <source>Attention</source>
    <translation>Attention</translation>
   </message>
   <message>
-   <location line="51" filename="../../plugins/attention/attention.cpp"/>
+   <location line="52" filename="../../plugins/attention/attention.cpp"/>
    <source>Implements XEP-0224: Attention</source>
    <translation>Implements XEP-0224: Attention</translation>
   </message>
   <message>
-   <location line="147" filename="../../plugins/attention/attention.cpp"/>
+   <location line="148" filename="../../plugins/attention/attention.cpp"/>
    <source>When contact attempts to attract user's attention</source>
    <translation>When contact attempts to attract user's attention</translation>
   </message>
   <message>
-   <location line="155" filename="../../plugins/attention/attention.cpp"/>
+   <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
    <translation>Shift+Return</translation>
@@ -35,32 +35,31 @@
    <translation>Notification pop-up</translation>
   </message>
   <message>
-   <location line="177" filename="../../plugins/attention/attention.cpp"/>
    <source>Activate main window</source>
-   <translation>Activate main window</translation>
+   <translation type="obsolete">Activate main window</translation>
   </message>
   <message>
-   <location line="178" filename="../../plugins/attention/attention.cpp"/>
+   <location line="177" filename="../../plugins/attention/attention.cpp"/>
    <source>Always play sound</source>
    <translation>Always play sound</translation>
   </message>
   <message>
-   <location line="190" filename="../../plugins/attention/attention.cpp"/>
+   <location line="189" filename="../../plugins/attention/attention.cpp"/>
    <source>Implements XEP-0224: Allows to attract user's attention</source>
    <translation>Implements XEP-0224: Allows to attract user's attention</translation>
   </message>
   <message>
-   <location line="247" filename="../../plugins/attention/attention.cpp"/>
+   <location line="246" filename="../../plugins/attention/attention.cpp"/>
    <source>Attention from %1</source>
    <translation>Attention from %1</translation>
   </message>
   <message>
-   <location line="257" filename="../../plugins/attention/attention.cpp"/>
+   <location line="256" filename="../../plugins/attention/attention.cpp"/>
    <source>ATTENTION!!!</source>
    <translation>ATTENTION!!!</translation>
   </message>
   <message>
-   <location line="375" filename="../../plugins/attention/attention.cpp"/>
+   <location line="371" filename="../../plugins/attention/attention.cpp"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
@@ -68,12 +67,16 @@
  <context>
   <name>AttentionDialog</name>
   <message>
-   <location line="198" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>ATTENTION!</source>
-   <translation>ATTENTION!</translation>
+   <translation type="obsolete">ATTENTION!</translation>
   </message>
   <message>
-   <location line="275" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="185" filename="../../plugins/attention/attentiondialog.ui"/>
+   <source>ATTENTION</source>
+   <translation>ATTENTION</translation>
+  </message>
+  <message>
+   <location line="310" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>Ok</source>
    <translation>Ok</translation>
   </message>

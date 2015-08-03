@@ -57,213 +57,213 @@
  <context>
   <name>EditHtml</name>
   <message>
-   <location line="82" filename="../../plugins/xhtmlim/edithtml.cpp"/>
-   <location line="568" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="83" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="569" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Reset formatting on message send</source>
    <translation>Reset formatting on message send</translation>
   </message>
   <message>
-   <location line="111" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="112" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Insert link</source>
    <translation>Insert link</translation>
   </message>
   <message>
-   <location line="121" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="122" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Insert image</source>
    <translation>Insert image</translation>
   </message>
   <message>
-   <location line="131" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="132" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Set tool tip</source>
    <translation>Set tool tip</translation>
   </message>
   <message>
-   <location line="140" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="141" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Insert special symbol</source>
    <translation>Insert special symbol</translation>
   </message>
   <message>
-   <location line="147" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="148" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Non-breaking space</source>
    <translation>Non-breaking space</translation>
   </message>
   <message>
-   <location line="158" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="159" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>New line</source>
    <translation>New line</translation>
   </message>
   <message>
-   <location line="176" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="177" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Bold</source>
    <translation>Bold</translation>
   </message>
   <message>
-   <location line="189" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="190" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Italic</source>
    <translation>Italic</translation>
   </message>
   <message>
-   <location line="202" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="203" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Underline</source>
    <translation>Underline</translation>
   </message>
   <message>
-   <location line="215" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="216" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Overline</source>
    <translation>Overline</translation>
   </message>
   <message>
-   <location line="228" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="229" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Strikethrough</source>
    <translation>Strikethrough</translation>
   </message>
   <message>
-   <location line="238" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="239" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Code</source>
    <translation>Code</translation>
   </message>
   <message>
-   <location line="249" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="250" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Color</source>
    <translation>Color</translation>
   </message>
   <message>
-   <location line="261" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="262" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Remove format</source>
    <translation>Remove format</translation>
   </message>
   <message>
-   <location line="271" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="272" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Decrease indent</source>
    <translation>Decrease indent</translation>
   </message>
   <message>
-   <location line="280" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="281" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Increase indent</source>
    <translation>Increase indent</translation>
   </message>
   <message>
-   <location line="291" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="292" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Text align</source>
    <translation>Text align</translation>
   </message>
   <message>
-   <location line="297" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="298" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Left</source>
    <translation>Left</translation>
   </message>
   <message>
-   <location line="309" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="310" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Center</source>
    <translation>Center</translation>
   </message>
   <message>
-   <location line="320" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="321" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Right</source>
    <translation>Right</translation>
   </message>
   <message>
-   <location line="331" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="332" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Justify</source>
    <translation>Justify</translation>
   </message>
   <message>
-   <location line="345" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="346" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>List</source>
    <translation>List</translation>
   </message>
   <message>
-   <location line="353" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="354" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Disc</source>
    <translation>Disc</translation>
   </message>
   <message>
-   <location line="364" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="365" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Circle</source>
    <translation>Circle</translation>
   </message>
   <message>
-   <location line="374" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="375" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Square</source>
    <translation>Square</translation>
   </message>
   <message>
-   <location line="384" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="385" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Decimal</source>
    <translation>Decimal</translation>
   </message>
   <message>
-   <location line="394" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="395" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Alpha lower</source>
    <translation>Alpha lower</translation>
   </message>
   <message>
-   <location line="404" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="405" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Alpha upper</source>
    <translation>Alpha upper</translation>
   </message>
   <message>
-   <location line="414" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="415" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Roman lower</source>
    <translation>Roman lower</translation>
   </message>
   <message>
-   <location line="424" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="425" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Roman upper</source>
    <translation>Roman upper</translation>
   </message>
   <message>
-   <location line="434" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="435" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Definition list</source>
    <translation>Definition list</translation>
   </message>
   <message>
-   <location line="446" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="447" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Formatting type</source>
    <translation>Formatting type</translation>
   </message>
   <message>
-   <location line="452" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="453" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Preformatted text</source>
    <translation>Preformatted text</translation>
   </message>
   <message>
-   <location line="463" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="464" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 1</source>
    <translation>Heading 1</translation>
   </message>
   <message>
-   <location line="473" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="474" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 2</source>
    <translation>Heading 2</translation>
   </message>
   <message>
-   <location line="483" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="484" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 3</source>
    <translation>Heading 3</translation>
   </message>
   <message>
-   <location line="493" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="494" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 4</source>
    <translation>Heading 4</translation>
   </message>
   <message>
-   <location line="503" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="504" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 5</source>
    <translation>Heading 5</translation>
   </message>
   <message>
-   <location line="513" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="514" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Heading 6</source>
    <translation>Heading 6</translation>
   </message>
   <message>
-   <location line="573" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="574" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Keep formatting within chat session</source>
    <translation>Keep formatting within chat session</translation>
   </message>
   <message>
-   <location line="760" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="761" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Add link</source>
    <translation>Add link</translation>
   </message>

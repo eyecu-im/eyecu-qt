@@ -75,42 +75,42 @@
    <translation>Manually approve Off-The-Record sessions</translation>
   </message>
   <message>
-   <location line="401" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="402" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Waiting for host response...</source>
    <translation>Waiting for host response...</translation>
   </message>
   <message>
-   <location line="403" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="404" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>History preferences is not available</source>
    <translation>History preferences is not available</translation>
   </message>
   <message>
-   <location line="405" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="406" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Failed to save archive preferences: %1</source>
    <translation>Failed to save archive preferences: %1</translation>
   </message>
   <message>
-   <location line="504" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="505" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>New item preferences</source>
    <translation>New item preferences</translation>
   </message>
   <message>
-   <location line="504" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="505" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Enter item JID:</source>
    <translation>Enter item JID:</translation>
   </message>
   <message>
-   <location line="514" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="515" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Unacceptable item JID</source>
    <translation>Unacceptable item JID</translation>
   </message>
   <message>
-   <location line="514" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="515" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>'%1' is not valid JID or already exists</source>
    <translation>'%1' is not valid JID or already exists</translation>
   </message>
   <message>
-   <location line="595" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
+   <location line="408" filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp"/>
    <source>Preferences accepted</source>
    <translation>Preferences accepted</translation>
   </message>
@@ -617,8 +617,8 @@
   <message>
    <location line="86" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <location line="257" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2181" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2255" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2182" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2256" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>History</source>
    <translation>History</translation>
   </message>
@@ -717,128 +717,128 @@
    <translation>Disallow all message logging</translation>
   </message>
   <message>
-   <location line="2137" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2138" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Messages Archiving</source>
    <translation>Messages Archiving</translation>
   </message>
   <message>
-   <location line="2138" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2139" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the archiving of the messages</source>
    <translation>Supports the archiving of the messages</translation>
   </message>
   <message>
-   <location line="2145" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2146" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Automatic Messages Archiving</source>
    <translation>Automatic Messages Archiving</translation>
   </message>
   <message>
-   <location line="2146" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2147" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the automatic archiving of the messages</source>
    <translation>Supports the automatic archiving of the messages</translation>
   </message>
   <message>
-   <location line="2153" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2154" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Managing Archived Messages</source>
    <translation>Managing Archived Messages</translation>
   </message>
   <message>
-   <location line="2154" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2155" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the managing of the archived messages</source>
    <translation>Supports the managing of the archived messages</translation>
   </message>
   <message>
-   <location line="2161" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2162" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Manual Messages Archiving</source>
    <translation>Manual Messages Archiving</translation>
   </message>
   <message>
-   <location line="2162" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2163" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the manual archiving of the messages</source>
    <translation>Supports the manual archiving of the messages</translation>
   </message>
   <message>
-   <location line="2169" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2170" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Messages Archive Preferences</source>
    <translation>Messages Archive Preferences</translation>
   </message>
   <message>
-   <location line="2170" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2171" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the storing of the archive preferences</source>
    <translation>Supports the storing of the archive preferences</translation>
   </message>
   <message>
-   <location line="2261" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2886" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2262" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2887" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>View History</source>
    <translation>View History</translation>
   </message>
   <message>
-   <location line="2274" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2275" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Automatic Archiving</source>
    <translation>Automatic Archiving</translation>
   </message>
   <message>
-   <location line="2285" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2286" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Save Messages with Formatting</source>
    <translation>Save Messages with Formatting</translation>
   </message>
   <message>
-   <location line="2295" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2296" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Save Only Messages Text</source>
    <translation>Save Only Messages Text</translation>
   </message>
   <message>
-   <location line="2305" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2306" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Do not Save Messages</source>
    <translation>Do not Save Messages</translation>
   </message>
   <message>
-   <location line="2320" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2321" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Allow Off-The-Record Sessions</source>
    <translation>Allow Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2330" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2331" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Forbid Off-The-Record Sessions</source>
    <translation>Forbid Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2340" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2341" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Manually Approve Off-The-Record Sessions</source>
    <translation>Manually Approve Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2357" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2358" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Use Default Options</source>
    <translation>Use Default Options</translation>
   </message>
   <message>
-   <location line="2369" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2370" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Options...</source>
    <translation>Options...</translation>
   </message>
   <message>
-   <location line="2867" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session negotiated: message logging %1</source>
    <translation>Session negotiated: message logging %1</translation>
   </message>
   <message>
-   <location line="2867" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>disallowed</source>
    <translation>disallowed</translation>
   </message>
   <message>
-   <location line="2867" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>allowed</source>
    <translation>allowed</translation>
   </message>
   <message>
-   <location line="2878" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2879" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session terminated</source>
    <translation>Session terminated</translation>
   </message>
   <message>
-   <location line="2880" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2881" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session failed: %1</source>
    <translation>Session failed: %1</translation>
   </message>

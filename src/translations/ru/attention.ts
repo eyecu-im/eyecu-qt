@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Attention</name>
     <message>
@@ -42,7 +42,7 @@
     </message>
     <message>
         <source>Activate main window</source>
-        <translation>Сделать активным главное окно приложения</translation>
+        <translation type="obsolete">Сделать активным главное окно приложения</translation>
     </message>
     <message>
         <source>Always play sound</source>
@@ -53,11 +53,15 @@
     <name>AttentionDialog</name>
     <message>
         <source>ATTENTION!</source>
-        <translation>ВНИМАНИЕ!</translation>
+        <translation type="obsolete">ВНИМАНИЕ!</translation>
     </message>
     <message>
         <source>Ok</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>ATTENTION</source>
+        <translation>ВНИМАНИЕ</translation>
     </message>
 </context>
 </TS>

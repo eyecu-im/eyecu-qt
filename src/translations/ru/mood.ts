@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Mood</name>
     <message>
@@ -382,17 +382,17 @@
     <message>
         <source>Ctrl+F4</source>
         <comment>Set mood (for all accounts)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F4</translation>
     </message>
     <message>
         <source>F4</source>
         <comment>Set mood (for an account)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F4</translation>
     </message>
     <message>
         <source>F4</source>
         <comment>Set mood (for a message)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F4</translation>
     </message>
     <message>
         <source>When user mood changed</source>

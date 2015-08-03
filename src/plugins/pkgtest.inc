@@ -1,5 +1,4 @@
 #Check availability of optional featires
-message(FEATURE_DIR=$$FEATURE_DIR)
 greaterThan(QT_MAJOR_VERSION, 4): QT_CONFIG *= serialport multimedia webkit script
 else {
 	exists($$QMAKESPEC): FEATURE_DIR=$$QMAKESPEC/../features

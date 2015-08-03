@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>Activity</name>
     <message>
@@ -350,12 +350,12 @@
     <message>
         <source>Ctrl+F6</source>
         <comment>Set activity (for all accounts)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F6</translation>
     </message>
     <message>
         <source>F6</source>
         <comment>Set activity (for an account)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <source>When user activity changed</source>
