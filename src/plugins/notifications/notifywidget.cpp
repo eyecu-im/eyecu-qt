@@ -111,8 +111,8 @@ NotifyWidget::NotifyWidget(const INotification &ANotification)
 		ui.ntbText->setMaxHeight(ui.ntbText->fontMetrics().height()*MAX_TEXT_LINES + (ui.ntbText->frameWidth() + qRound(ui.ntbText->document()->documentMargin()))*2);
 	}
 	else
-	{
-		ui.ntbText->setVisible(false);
+	{		
+		ui.ntbText->setVisible(false); // *** <<< eyeCU >>> ***
 	}
 
 	if (!ANotification.actions.isEmpty())

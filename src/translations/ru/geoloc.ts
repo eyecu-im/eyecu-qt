@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Geoloc</name>
     <message>
@@ -50,7 +50,7 @@
     <message>
         <source>F10</source>
         <comment>Show contact on the map (chat)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F10</translation>
     </message>
     <message>
         <source>m</source>

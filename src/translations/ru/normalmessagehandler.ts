@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>NormalMessageHandler</name>
     <message>
@@ -91,6 +91,10 @@
     <message>
         <source>Consider all single contacts messages as read when read the first</source>
         <translation>Считать прочитанными все одиночные сообщения контакта при прочтении первого</translation>
+    </message>
+    <message>
+        <source>Message text hidden</source>
+        <translation>Текст сообщения скрыт</translation>
     </message>
 </context>
 </TS>

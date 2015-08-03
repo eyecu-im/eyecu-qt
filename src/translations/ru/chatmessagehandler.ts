@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>ChatMessageHandler</name>
     <message>
@@ -59,6 +59,10 @@
     <message>
         <source>&lt;Absent&gt;</source>
         <translation>&lt;Отсутствует&gt;</translation>
+    </message>
+    <message>
+        <source>Message text hidden</source>
+        <translation>Текст сообщения скрыт</translation>
     </message>
 </context>
 </TS>

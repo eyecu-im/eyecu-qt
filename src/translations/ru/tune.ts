@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Tune</name>
     <message>
@@ -53,7 +53,7 @@
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Rating</source>
@@ -78,7 +78,7 @@
     <message>
         <source>Ctrl+F5</source>
         <comment>Switch Publish Tune</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+F5</translation>
     </message>
     <message>
         <source>Show user tune icons</source>

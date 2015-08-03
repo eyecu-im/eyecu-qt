@@ -117,6 +117,7 @@ protected slots:
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onShortcutActivated(const QString &AId, QWidget *AWidget);
+	void onSpinBoxValueChanged(int value);
 private:
 	IAvatars *FAvatars;
 	IRosterManager *FRosterManager;
