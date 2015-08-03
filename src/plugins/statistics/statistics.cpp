@@ -3,7 +3,6 @@
 #include <QDir>
 #include <QSslError>
 #include <QDataStream>
-#include <QNetworkProxy>
 #include <QAuthenticator>
 #include <QNetworkRequest>
 #if QT_VERSION >= 0x050000
@@ -506,128 +505,126 @@ QString Statistics::windowsVersion() const
 QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 {
 	QUrl url(MP_URL);
-#if QT_VERSION < 0x050000
-#define QUERY_TYPE QByteArray
 	url.setQueryDelimiters('=','&');
+#if QT_VERSION >= 0x050000
+	QList< QPair<QString,QString> > query;
+#define APPEND_QUERY(NAME,VALUE) query.append(qMakePair<QString,QString>(NAME,QUrl::toPercentEncoding(VALUE)))
 #else
-	#define QUERY_TYPE QString
+#define APPEND_QUERY(NAME,VALUE) url.addQueryItem(NAME,VALUE)
 #endif
-
-
 	// Protocol Version
-	url.addQueryItem("v",MP_VER);
-
+	APPEND_QUERY("v",MP_VER);
 
 	// Tracking ID
-	url.addQueryItem("tid",MP_ID);
+	APPEND_QUERY("tid",MP_ID);
 
 	// Queue Time
-// *** <<< eyeCU <<< ***
 	qint64 qt =
 #if QT_VERSION >= 0x040700
 				AHit.timestamp.msecsTo(QDateTime::currentDateTime());
 #else
 				AHit.timestamp.time().msecsTo(QTime::currentTime());
 #endif
-// *** >>> eyeCU >>>***
 	if (qt > 0)
-		url.addQueryItem("qt",QString::number(qt));
+		APPEND_QUERY("qt",QString::number(qt));
 
 	// Client ID
 	QString cid = !AHit.profile.isNull() ? AHit.profile.toString() : FProfileId.toString();
 	cid.remove(0,1); cid.chop(1);
-	url.addQueryItem("cid",cid);
+	APPEND_QUERY("cid",cid);
 
 	// Session Control
 	if (AHit.session == IStatisticsHit::SessionStart)
-		url.addQueryItem("sc","start");
+		APPEND_QUERY("sc","start");
 	else if (AHit.session == IStatisticsHit::SessionEnd)
-		url.addQueryItem("sc","end");
+		APPEND_QUERY("sc","end");
 
 	// Screen Resolution
 	QRect sr = FDesktopWidget->screenGeometry();
-	url.addQueryItem("sr",QString("%1.%2").arg(sr.width()).arg(sr.height()));
+	APPEND_QUERY("sr",QString("%1.%2").arg(sr.width()).arg(sr.height()));
 
 	// User Language
-	url.addQueryItem("ul",QLocale().name());
+	APPEND_QUERY("ul",QLocale().name());
 
 	// Flash Version (Qt Version)
-	url.addQueryItem("fl",qVersion());
+	APPEND_QUERY("fl",qVersion());
 
 	// Screen Name
-	url.addQueryItem("cd",AHit.screen);
+	if (!AHit.screen.isEmpty())
+		APPEND_QUERY("cd",AHit.screen);
 
 	// Application Name
-	url.addQueryItem("an",CLIENT_NAME);
+	APPEND_QUERY("an",CLIENT_NAME);
 
 	// Application Version
-	url.addQueryItem("av",FClientVersion);
+	APPEND_QUERY("av",FClientVersion);
 
 	// Custom Metric
 	for (QMap<int, qint64>::const_iterator it=AHit.metrics.constBegin(); it!=AHit.metrics.constEnd(); ++it)
-		url.addQueryItem(QString("cm%1").arg(it.key()),QString::number(it.value()));
+		APPEND_QUERY(QString("cm%1").arg(it.key()),QString::number(it.value()));
 
 	// Custom Dimension
 	for (QMap<int, QString>::const_iterator it=AHit.dimensions.constBegin(); it!=AHit.dimensions.constEnd(); ++it)
-		url.addQueryItem(QString("cd%1").arg(it.key()),it.value());
+		APPEND_QUERY(QString("cd%1").arg(it.key()),it.value());
 
 	if (AHit.type == IStatisticsHit::HitView)
 	{
 		// Hit Type
-		url.addQueryItem("t","screenview");
+		APPEND_QUERY("t","screenview");
 	}
 	else if (AHit.type == IStatisticsHit::HitEvent)
 	{
 		// Hit Type
-		url.addQueryItem("t","event");
+		APPEND_QUERY("t","event");
 
 		// Event Category
-		url.addQueryItem("ec",AHit.event.category);
+		APPEND_QUERY("ec",AHit.event.category);
 
 		// Event Action
-		url.addQueryItem("ea",AHit.event.action);
+		APPEND_QUERY("ea",AHit.event.action);
 
 		// Event Label
 		if (!AHit.event.label.isEmpty())
-			url.addQueryItem("el",AHit.event.label);
+			APPEND_QUERY("el",AHit.event.label);
 
 		// Event Value
 		if (AHit.event.value >= 0)
-			url.addQueryItem("ev",QString::number(AHit.event.value));
+			APPEND_QUERY("ev",QString::number(AHit.event.value));
 	}
 	else if (AHit.type == IStatisticsHit::HitTiming)
 	{
 		// Hit Type
-		url.addQueryItem("t","timing");
-
+		APPEND_QUERY("t","timing");
 		// User timing category
-		url.addQueryItem("utc",AHit.timing.category);
-
+		APPEND_QUERY("utc",AHit.timing.category);
 		// User timing variable name
-		url.addQueryItem("utv",AHit.timing.variable);
-
+		APPEND_QUERY("utv",AHit.timing.variable);
 		// User timing time
-		url.addQueryItem("utt",QString::number(AHit.timing.time));
+		APPEND_QUERY("utt",QString::number(AHit.timing.time));
 
 		// User timing label
 		if (!AHit.timing.label.isEmpty())
-			url.addQueryItem("utl",AHit.timing.label);
+			APPEND_QUERY("utl",AHit.timing.label);
 	}
 	else if (AHit.type == IStatisticsHit::HitException)
 	{
 		// Hit Type
-		url.addQueryItem("t","exception");
-
+		APPEND_QUERY("t","exception");
 		// Exception Description
-		url.addQueryItem("exd",AHit.exception.descr);
-
+		APPEND_QUERY("exd",AHit.exception.descr);
 		// Is Exception Fatal?
-		url.addQueryItem("exf",AHit.exception.fatal ? "1" : "0");
+		APPEND_QUERY("exf",AHit.exception.fatal ? "1" : "0");
 	}
 
 	// Cache Buster
-	url.addQueryItem("z",QString::number(qrand()));
+	APPEND_QUERY("z",QString::number(qrand()));
 
+#if QT_VERSION >= 0x050000
+	QUrlQuery urlQuery;
+	urlQuery.setQueryDelimiters('=','&');
+	urlQuery.setQueryItems(query);
+	url.setQuery(urlQuery);
+#endif
 	return url;
 }
 
