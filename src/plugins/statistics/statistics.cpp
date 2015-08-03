@@ -504,13 +504,13 @@ QString Statistics::windowsVersion() const
 
 QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 {
-	QUrl url(MP_URL);
+	QUrl url(MP_URL);	
+#if QT_VERSION < 0x050000
 	url.setQueryDelimiters('=','&');
-#if QT_VERSION >= 0x050000
+#define APPEND_QUERY(NAME,VALUE) url.addQueryItem(NAME,VALUE)
+#else
 	QList< QPair<QString,QString> > query;
 #define APPEND_QUERY(NAME,VALUE) query.append(qMakePair<QString,QString>(NAME,QUrl::toPercentEncoding(VALUE)))
-#else
-#define APPEND_QUERY(NAME,VALUE) url.addQueryItem(NAME,VALUE)
 #endif
 	// Protocol Version
 	APPEND_QUERY("v",MP_VER);
