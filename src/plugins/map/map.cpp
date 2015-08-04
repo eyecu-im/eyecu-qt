@@ -15,6 +15,7 @@
 #include <definitions/actiongroups.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/mapicons.h>
 #include <definitions/rostertooltiporders.h>
 #include <definitions/optionvalues.h>
 
@@ -138,12 +139,12 @@ bool Map::initObjects()
 
 	FMenuMap = new Menu;
 	FMenuMap->setTitle(tr("Map"));
-	FMenuMap->setIcon(RSR_STORAGE_MAP, MNI_MAP);
+	FMenuMap->setIcon(RSR_STORAGE_MAP, MPI_MAP);
 	FMenuMap->menuAction()->setEnabled(true);
 
 	FMenuToolbar = new Menu;
 	FMenuToolbar->setTitle(tr("Map"));
-	FMenuToolbar->setIcon(RSR_STORAGE_MAP, MNI_MAP);
+	FMenuToolbar->setIcon(RSR_STORAGE_MAP, MPI_MAP);
 	FMenuToolbar->menuAction()->setEnabled(true);
 	FMenuToolbar->menuAction()->setCheckable(true);
 
@@ -287,7 +288,7 @@ void Map::onShutdownStarted()
 void Map::fillMenu()
 {
 	Action *action;
-	FMyLocation = addMenuAction(tr("My location"), QString(RSR_STORAGE_MAP), QString(MNI_MAP_MYLOCATION), 1);
+	FMyLocation = addMenuAction(tr("My location"), QString(RSR_STORAGE_MAP), QString(MPI_MYLOCATION), 1);
 	FMyLocation->setShortcutId(SCT_MAP_MYLOCATION);
 	FMyLocation->setDisabled(FFollowMyLocation);
 	FMapForm->showMapCenter(!FFollowMyLocation);
@@ -296,7 +297,7 @@ void Map::fillMenu()
 	FMenuMap->insertSeparator(FMyLocation);
 	FMenuToolbar->insertSeparator(FMyLocation);
 
-	action = addMenuAction(tr("New center"), QString(RSR_STORAGE_MAP), QString(MNI_MAP_NEWCENTER), 1);
+	action = addMenuAction(tr("New center"), QString(RSR_STORAGE_MAP), QString(MPI_NEWCENTER), 1);
 	action->setShortcutId(SCT_MAP_NEWCENTER);
 	connect(action, SIGNAL(triggered(bool)), FMapForm, SLOT(onSetNewCenter()));
 
@@ -307,7 +308,7 @@ void Map::fillMenu()
 
 void Map::fillSources()
 {
-	FMapForm->addMapSource(tr("No map"), FIconStorage->getIcon(MNI_MAP_NOMAP));
+	FMapForm->addMapSource(tr("No map"), FIconStorage->getIcon(MPI_NOMAP));
 
 	IconStorage *storage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	for (QList<IMapSource*>::const_iterator it=FMapSources.constBegin(); it!=FMapSources.constEnd(); it++)

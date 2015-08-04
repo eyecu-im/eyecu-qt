@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
   <icon>
-    <key>nomap</key>
-    <object mime="image/png">nomap.png</object>
+    <key>noMap</key>
+    <object mime="image/png">noMap.png</object>
   </icon>
   <icon>
-    <key>map</key>
-    <object mime="image/png">map.png</object>
-  </icon>
-  <icon>
-    <key>newcenter</key>
+    <key>newCenter</key>
     <object mime="image/png">newcenter.png</object>
   </icon>
   <icon>
@@ -17,35 +13,39 @@
     <object mime="image/png">hourglass.jpg</object>
   </icon>
   <icon>
-    <key>logo_hyb</key>
-    <object mime="image/png">logo_hyb.png</object>
+    <key>hybrid</key>
+    <object mime="image/png">hybrid.png</object>
   </icon>
   <icon>
-    <key>logo_hyb2</key>
-    <object mime="image/png">logo_hyb2.png</object>
+    <key>hybrid2</key>
+    <object mime="image/png">hybrid2.png</object>
   </icon>
    <icon>
-    <key>logo_map</key>
-    <object mime="image/png">logo_map.png</object>
+    <key>map</key>
+    <object mime="image/png">map.png</object>
   </icon>
   <icon>
-    <key>logo_map1</key>
-    <object mime="image/png">logo_map1.png</object>
+    <key>map1</key>
+    <object mime="image/png">map1.png</object>
   </icon>
   <icon>
-    <key>logo_map2</key>
-    <object mime="image/png">logo_map2.png</object>
+    <key>map2</key>
+    <object mime="image/png">map2.png</object>
   </icon>
   <icon>
-    <key>logo_sat</key>
-    <object mime="image/png">logo_sat.png</object>
+    <key>satellite</key>
+    <object mime="image/png">satellite.png</object>
   </icon>
   <icon>
-    <key>logo_terr</key>
-    <object mime="image/png">logo_terr.png</object>
+    <key>terrain</key>
+    <object mime="image/png">terrain.png</object>
   </icon>
   <icon>
-    <key>mylocation</key>
+    <key>myLocation</key>
     <object mime="image/png">mylocation.png</object>
+  </icon>
+  <icon>
+    <key>viewCenter</key>
+    <object mime="image/png">viewcenter.png</object>
   </icon>
 </icondef>

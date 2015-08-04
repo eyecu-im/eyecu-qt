@@ -285,9 +285,7 @@
 
 //Map
 #define MNI_MAP                         "map"
-#define MNI_MAP_NOMAP                   "nomap"
-#define MNI_MAP_MYLOCATION              "mylocation"
-#define MNI_MAP_NEWCENTER               "newcenter"
+
 //Map sources
 #define MNI_MAP_GOOGLE                  "google"
 #define MNI_MAP_YANDEX                  "yandex"
@@ -317,10 +315,9 @@
 
 //Map Street view
 #define MNI_STREETVIEW                  "streetView"
-#define MNI_STREETVIEWMAN               "streetViewMan"
 
 //Map Place view
-#define MNI_MAP_PLACEVIEW              "viewcenter"
+#define MNI_MAP_PLACEVIEW              "placeview"
 
 //Weather
 #define MNI_MAP_WEATHER                "weather"

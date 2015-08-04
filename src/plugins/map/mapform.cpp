@@ -8,6 +8,7 @@
 #include <utils/widgetmanager.h>
 
 #include <definitions/menuicons.h>
+#include <definitions/mapicons.h>
 #include <definitions/resources.h>
 #include <definitions/shortcuts.h>
 #include <definitions/optionvalues.h>
@@ -170,7 +171,7 @@ void MapForm::showCentralPage(bool AMinimized)
 QIcon MapForm::centralPageIcon() const
 {
 	return FMapSource?IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(FMapSource->getIconId())
-					 :IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MNI_MAP);
+					 :IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_MAP);
 }
 
 QString MapForm::centralPageCaption() const
@@ -819,7 +820,7 @@ void MapForm::removeOwnLocation()
 
 void MapForm::onSetNewCenter()
 {
-	SetLocation *newCenter = new SetLocation(FMapScene->mapCenter(), FMap->getIcon(MNI_MAP_NEWCENTER), this);
+	SetLocation *newCenter = new SetLocation(FMapScene->mapCenter(), FMap->getIcon(MPI_NEWCENTER), this);
 	if(newCenter->exec())
 		FMapScene->setMapCenter(newCenter->coordinates());
 	newCenter->deleteLater();

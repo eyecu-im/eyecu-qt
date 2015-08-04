@@ -138,7 +138,7 @@ QGraphicsItem *StreetView::mapData(SceneObject *ASceneObject, int ARole, QGraphi
         {
             case MDR_STREETVIEW_MAN:
             {
-                QIcon icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_STREETVIEWMAN);
+				QIcon icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_STREETVIEW);
                 if (!icon.isNull())
                     ACurrentElement = new QGraphicsPixmapItem(icon.pixmap(icon.availableSizes().first()));
                 break;
