@@ -70,8 +70,8 @@ Activity::Activity():
 	FMapContacts(NULL),
 	FNotifications(NULL),
 	FIconStorage(NULL),
-	FRosterLabelId(-1),
 	FSimpleContactsView(false),
+	FRosterLabelId(-1),	
 	FRosterIndexKinds(QList<int>() << RIK_CONTACT << RIK_METACONTACT << RIK_METACONTACT_ITEM << RIK_RECENT_ITEM << RIK_MY_RESOURCE << RIK_STREAM_ROOT)
 {
 	if(false)

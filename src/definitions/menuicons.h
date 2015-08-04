@@ -317,7 +317,7 @@
 #define MNI_STREETVIEW                  "streetView"
 
 //Map Place view
-#define MNI_MAP_PLACEVIEW              "placeview"
+#define MNI_MAP_PLACEVIEW              "placeView"
 
 //Weather
 #define MNI_MAP_WEATHER                "weather"

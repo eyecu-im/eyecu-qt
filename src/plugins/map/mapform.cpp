@@ -615,22 +615,22 @@ void MapForm::setImage(QLabel *ALabel, int AType)
 	switch (AType)
 	{
 		case ICON_MAP:
-			ALabel->setPixmap(FMap->getIcon("logo_map").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_MAP).pixmap(16));
 			break;
 		case ICON_MAP1:
-			ALabel->setPixmap(FMap->getIcon("logo_map1").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_MAP1).pixmap(16));
 			break;
 		case ICON_MAP2:
-			ALabel->setPixmap(FMap->getIcon("logo_map2").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_MAP2).pixmap(16));
 			break;
 		case ICON_SATELLITE:
-			ALabel->setPixmap(FMap->getIcon("logo_sat").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_SATELLITE).pixmap(16));
 			break;
 		case ICON_HYBRID:
-			ALabel->setPixmap(FMap->getIcon("logo_hyb").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_HYBRID).pixmap(16));
 			break;
 		case ICON_TERRAIN:
-			ALabel->setPixmap(FMap->getIcon("logo_terr").pixmap(16));
+			ALabel->setPixmap(FMap->getIcon(MPI_TERRAIN).pixmap(16));
 			break;
 	}
 }

@@ -27,6 +27,8 @@ void PlaceViewProviderGoogle::pluginInfo(IPluginInfo *APluginInfo)
 
 bool PlaceViewProviderGoogle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
+	Q_UNUSED(APluginManager)
+	Q_UNUSED(AInitOrder)
     return true;
 }
 

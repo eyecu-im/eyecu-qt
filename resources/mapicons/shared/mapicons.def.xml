@@ -9,16 +9,12 @@
     <object mime="image/png">newcenter.png</object>
   </icon>
   <icon>
-    <key>loading</key>
+    <key>hourglass</key>
     <object mime="image/png">hourglass.jpg</object>
   </icon>
   <icon>
     <key>hybrid</key>
     <object mime="image/png">hybrid.png</object>
-  </icon>
-  <icon>
-    <key>hybrid2</key>
-    <object mime="image/png">hybrid2.png</object>
   </icon>
    <icon>
     <key>map</key>

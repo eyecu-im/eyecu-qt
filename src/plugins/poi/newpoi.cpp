@@ -6,7 +6,7 @@
 
 #include <definitions/resources.h>
 #include <definitions/namespaces.h>
-#include "definitions/menuicons.h"
+#include "definitions/mapicons.h"
 
 #include "newpoi.h"
 #include "ui_newpoi.h"
@@ -62,7 +62,7 @@ void NewPoi::onMoreClicked()
 void NewPoi::init()
 {
     if (FMapLocationSelector)
-        ui->selectLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MNI_MAP_NEWCENTER));
+		ui->selectLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_NEWCENTER));
     ui->pbTimestamp->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_CLIENTINFO_TIME));
 
     fillCountryMap();

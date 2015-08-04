@@ -11,7 +11,6 @@
 #define MPI_MAP1                    "map1"
 #define MPI_MAP2                    "map2"
 #define MPI_HYBRID                  "hybrid"
-#define MPI_HYBRID1                 "hybrid1"
 #define MPI_SATELLITE               "satellite"
 #define MPI_TERRAIN                 "terrain"
 

@@ -6,6 +6,7 @@
 
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/mapicons.h>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionwidgetorders.h>
@@ -305,7 +306,7 @@ QGraphicsItem *PlaceView::mapData(SceneObject *ASceneObject, int ARole, QGraphic
     switch (ARole)
     {
         case MDR_PLACEVIEW_ICON:
-            pixmap = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MAP_PLACEVIEW).pixmap(32);
+			pixmap = IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_VIEWCENTER).pixmap(32);
             if (!pixmap.isNull())
             {
                 if (ACurrentElement)
