@@ -48,7 +48,7 @@ public:
     virtual bool requestTuneInfo(QNetworkAccessManager *ANetworkAccessManager, const QString &AArtist, const QString &AAlbum = QString(), const QString &ATrack = QString());
     virtual QHash<QString, QString> parseResult(const QByteArray &AResult) const;
     virtual QString serviceName() const {return tr("last.fm");}
-    virtual QIcon   serviceIcon() const {return IconStorage::staticStorage(RSR_STORAGE_TUNE)->getIcon(MNI_TUNE_REQUESTER_LASTFM);}
+	virtual QIcon   serviceIcon() const {return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_TUNE_REQUESTER_LASTFM);}
 
 signals:
     void tuneInfoReceived(const QString &AArtist, const QString &AAlbum, const QString &ATrack, const QHash<QString, QString> &ATuneInfo);

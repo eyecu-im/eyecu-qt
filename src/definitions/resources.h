@@ -14,7 +14,6 @@
 #define RSR_STORAGE_MOOD                    "moodicons"
 #define RSR_STORAGE_GEOLOC                  "menuicons"
 #define RSR_STORAGE_TUNE                    "menuicons"
-#define RSR_STORAGE_SERIALPORT              "menuicons"
 #define RSR_STORAGE_POSITIONING             "menuicons"
 #define RSR_STORAGE_POI                     "menuicons"
 #define RSR_STORAGE_COUNTRY                 "country"

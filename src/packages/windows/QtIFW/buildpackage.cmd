@@ -344,6 +344,7 @@ set files=proximity.def.xml proximity.png
 call copyresources2 ru.rwsoftware.eyecu.contactproximitynotification menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.poi poi
+call copyresources ru.rwsoftware.eyecu.poi typepoint\shared
 set files=poi.def.xml poi.png poiadd.png poinone.png poinotype.png poitoolbar.png poiview.png description.png flag24.png globus.png connect.png connectend.png connectlong.png bgrmap.png bgrsat.png folder.png folderopen.png
 call copyresources2 ru.rwsoftware.eyecu.poi menuicons\shared
 
@@ -400,9 +401,10 @@ call copyresources2 ru.rwsoftware.eyecu.mapsearch menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.mapsearch.2gis mapsearchprovider2gis
 call copyplugins ru.rwsoftware.eyecu.mapsearch.google mapsearchprovidergoogle
 call copyplugins ru.rwsoftware.eyecu.mapsearch.here mapsearchproviderhere
-call copyplugins ru.rwsoftware.eyecu.mapsearch.navitel mapsearchprovidernavitel
 call copyplugins ru.rwsoftware.eyecu.mapsearch.osm mapsearchproviderosm
 call copyplugins ru.rwsoftware.eyecu.mapsearch.yandex mapsearchprovideryandex
+call copyplugins ru.rwsoftware.eyecu.mapsearch.navitel mapsearchprovidernavitel
+call copyresources ru.rwsoftware.eyecu.mapsearch.navitel navitel\shared
 
 set resources=wizard.def.xml wizard.png banner.png
 call copyresources1 ru.rwsoftware.eyecu.wizards wizards\shared
@@ -424,6 +426,9 @@ call copyresources2 ru.rwsoftware.eyecu.menuicons.edit menuicons\shared
 
 set files=link.def.xml link.png linkadd.png
 call copyresources2 ru.rwsoftware.eyecu.menuicons.link menuicons\shared
+
+rem Country
+call copyresources ru.rwsoftware.eyecu.resources.country country\shared
 
 md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y

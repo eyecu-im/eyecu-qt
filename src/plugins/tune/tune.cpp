@@ -278,7 +278,7 @@ bool Tune::initObjects()
 
 	Action *action = FPEPManager->addAction(AG_TUNE);
 	action->setText(tr("Publish Tune"));
-	action->setIcon(RSR_STORAGE_TUNE, MNI_TUNE);
+	action->setIcon(RSR_STORAGE_MENUICONS, MNI_TUNE);
 	action->setCheckable(true);
 	action->setShortcutId(SCT_APP_PUBLISHTUNE);
 	connect(action, SIGNAL(triggered(bool)), SLOT(onPublishUserTuneTriggered(bool)));
