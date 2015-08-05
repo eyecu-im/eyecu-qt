@@ -5,6 +5,7 @@
     <Version>1.3.0</Version>
     <ReleaseDate>2015-02-24</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.oob</Name>
+    <Dependencies>ru.rwsoftware.eyecu.menuicons.link</Dependencies>
     <SortingPriority>29</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

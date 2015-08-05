@@ -6,7 +6,6 @@
     <ReleaseDate>2015-02-24</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.boburlhandler</Name>
     <Dependencies>ru.rwsoftware.eyecu.bob</Dependencies>
-    <SortingPriority>5</SortingPriority>
     <AutoDependOn>ru.rwsoftware.eyecu.bob,ru.rwsoftware.eyecu.urlprocessor</AutoDependOn>
     <Virtual>true</Virtual>
     <ForcedInstallation>false</ForcedInstallation>

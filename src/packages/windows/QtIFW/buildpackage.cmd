@@ -96,8 +96,7 @@ set pluginlist=accountmanager chatmessagehandler connectionmanager defaultconnec
 call copyplugins ru.rwsoftware.eyecu
 set resources=statusicons simplemessagestyles sounds
 call copyresources ru.rwsoftware.eyecu
-
-set files=eyecuicon.def.xml eyecu.svg mainwindow.def.xml mainwindowlogo128.png mainwindowlogo16.png mainwindowlogo20.png mainwindowlogo24.png mainwindowlogo32.png mainwindowlogo40.png mainwindowlogo48.png mainwindowlogo64.png mainwindowlogo96.png mainwindowmenu.png mainwindowquit.png mainwindowshowroster.png pluginmanager.def.xml pluginmanagerabout.png pluginmanageraboutqt.png pluginmanagersetup.png account.png accountchange.png accountlist.png accountmanager.def.xml accountmove.png chatmessagehandler.def.xml chatmessagehandlerclearchat.png chatmessagehandlermessage.png connection.def.xml connectionencrypted.png
+set files=eyecuicon.def.xml eyecu.svg mainwindow.def.xml mainwindowlogo128.png mainwindowlogo16.png mainwindowlogo20.png mainwindowlogo24.png mainwindowlogo32.png mainwindowlogo40.png mainwindowlogo48.png mainwindowlogo64.png mainwindowlogo96.png mainwindowmenu.png mainwindowquit.png mainwindowshowroster.png pluginmanager.def.xml pluginmanagerabout.png pluginmanageraboutqt.png pluginmanagersetup.png account.png accountchange.png accountlist.png accountmanager.def.xml accountmove.png chatmessagehandler.def.xml chatmessagehandlerclearchat.png chatmessagehandlermessage.png connection.def.xml connectionencrypted.png messagewidgets.def.xml messagewidgetsquote.png messagewidgetsselect.png messagewidgetssend.png messagewidgetstabmenu.png normalmessagehandler.def.xml normalmessagehandlerforward.png normalmessagehandlermessage.png normalmessagehandlernext.png normalmessagehandlerreply.png normalmessagehandlersend.png notifications.def.xml notifications.png notificationsactivateall.png notificationspopupwindow.png notificationsremoveall.png notificationsshowminimized.png notificationssoundoff.png notificationssoundon.png notificationssoundplay.png options.def.xml optionsappearance.png optionsdialog.png optionseditprofiles.png optionsprofile.png optionsprofiles.png rchanger.def.xml rchangeraddcontact.png rchangercopygroup.png rchangercreategroup.png rchangergroup.png rchangermovegroup.png rchangerremovecontact.png rchangerremovecontacts.png rchangerremovefromgroup.png rchangerremovegroup.png rchangerrename.png rchangerrootgroup.png rchangersubscribe.png rchangersubscription.png rchangerthisgroup.png rchangerunsubscribe.png rosterview.def.xml rosterviewclipboard.png rosterviewcontacts.png rosterviewhideoffline.png rosterviewoptions.png rosterviewshowoffline.png schanger.def.xml schangerconnecting.png schangereditstatuses.png schangermodifystatus.png
 call copyresources2 ru.rwsoftware.eyecu menuicons\shared
 
 copy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu\data /Y
@@ -128,7 +127,10 @@ set files=privacylists.def.xml privacylists.png	privacylistsadvanced.png privacy
 call copyresources2 ru.rwsoftware.eyecu.privacylists menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.compress compress
+
 call copyplugins ru.rwsoftware.eyecu.vcard vcard
+set files=vcard.def.xml vcard.png
+call copyresources2 ru.rwsoftware.eyecu.vcard menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.birthdayreminder birthdayreminder
 set files=birthdayreminder.def.xml birthdayremindernotify.png
@@ -144,14 +146,22 @@ call copyresources ru.rwsoftware.eyecu.adiummessagestyle.renkoo adiummessagestyl
 call copyresources ru.rwsoftware.eyecu.adiummessagestyle.ymous adiummessagestyles\yMous
 
 call copyplugins ru.rwsoftware.eyecu.gateways gateways
-set files=gateways.def.xml gateways.png gatewaysaddcontact.png gatewayschange.png gatewayskeepconnection.png gatewayslogin.png gatewayslogout.png gatewaysremove.png gatewaysresolve.png
+set files=gateways.def.xml gateways.png gatewaysaddcontact.png gatewayschange.png gatewayskeepconnection.png gatewayslogin.png gatewayslogout.png gatewaysremove.png gatewaysreset.png gatewaysresolve.png
 call copyresources2 ru.rwsoftware.eyecu.gateways menuicons\shared
 
-
 call copyplugins ru.rwsoftware.eyecu.shortcutmanager shortcutmanager
+set files=shortcuts.def.xml shortcuts.png
+call copyresources2 ru.rwsoftware.eyecu.shortcutmanager menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.servicediscovery servicediscovery
+set files=sdiscovery.def.xml sdiscoverydiscoinfo.png sdiscoverydiscover.png
+call copyresources2 ru.rwsoftware.eyecu.servicediscovery menuicons\shared
+
 call copyresources ru.rwsoftware.eyecu.servicediscovery serviceicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.messagecarbons messagecarbons
+set files=messagecarbons.def.xml messagecarbons.png
+call copyresources2 ru.rwsoftware.eyecu.messagecarbons menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.console console
 set files=console.def.xml console.png
@@ -163,22 +173,32 @@ call copyresources2 ru.rwsoftware.eyecu.messagearchiver menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.messagearchiver.file filemessagearchive
 call copyplugins ru.rwsoftware.eyecu.messagearchiver.server servermessagearchive
+
 call copyplugins ru.rwsoftware.eyecu.rostersearch rostersearch
+set files=rostersearch.def.xml rostersearch.png
+call copyresources2 ru.rwsoftware.eyecu.rostersearch menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.jabbersearch jabbersearch
 set files=jsearch.def.xml jsearch.png
 call copyresources2 ru.rwsoftware.eyecu.jabbersearch menuicons\shared
 
-
 call copyplugins ru.rwsoftware.eyecu.rosteritemexchange rosteritemexchange
+set files=rosterexchange.def.xml rosterexchangerequest.png
+call copyresources2 ru.rwsoftware.eyecu.rosteritemexchange menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.multiuserchat multiuserchat
+set files=muc.def.xml mucchangenick.png mucchangetopic.png mucclearchat.png mucconference.png mucconference1.png mucconfigureroom.png mucdatamessage.png mucdestroyroom.png muceditadminslist.png muceditbanlist.png muceditmemberslist.png muceditownerslist.png mucenterroom.png mucexitroom.png mucinvite.png mucjoin.png mucmessage.png mucprivatemessage.png mucrequestvoice.png mucusermenu.png
+call copyresources2 ru.rwsoftware.eyecu.multiuserchat menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.chatstates chatstates
 set files=chatstates.def.xml chatstatesactive.png chatstatescomposing.png chatstatesgone.png chatstatesinactive.png chatstatespaused.png chatstatesunknown.png
 call copyresources2 ru.rwsoftware.eyecu.chatstates menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.privatestorage privatestorage
+
 call copyplugins ru.rwsoftware.eyecu.metacontacts metacontacts
+set files=metacontacts.def.xml metacontactscombine.png metacontactsdestroy.png metacontactsdetach.png
+call copyresources2 ru.rwsoftware.eyecu.metacontacts menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.bookmarks bookmarks
 set files=bookmarks.def.xml bookmarks.png bookmarksadd.png bookmarksedit.png bookmarksremove.png bookmarksroom.png bookmarksurl.png
@@ -189,6 +209,8 @@ set files=annotations.def.xml annotations.png
 call copyresources2 ru.rwsoftware.eyecu.annotations menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.recentcontacts recentcontacts
+set files=recentcontacts.def.xml recentcontacts.png recentcontactsfavorite.png recentcontactsinsertfavorite.png recentcontactsremovefavorite.png recentcontactsremoverecent.png
+call copyresources2 ru.rwsoftware.eyecu.recentcontacts menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.clientinfo clientinfo
 set files=clientinfo.def.xml clientinfo.png clientinfoactivity.png clientinfotime.png
@@ -199,13 +221,18 @@ call copyplugins ru.rwsoftware.eyecu.bob bitsofbinary
 call copyplugins ru.rwsoftware.eyecu.boburlhandler boburlhandler
 call copyplugins ru.rwsoftware.eyecu.xmppuriqueries xmppuriqueries
 call copyplugins ru.rwsoftware.eyecu.dataforms dataforms
+
 call copyplugins ru.rwsoftware.eyecu.sessionnegotiation sessionnegotiation
+set files=snegotiation.def.xml snegotiation.png snegotiationinit.png snegotiationterminate.png
+call copyresources2 ru.rwsoftware.eyecu.sessionnegotiation menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.captchaforms captchaforms
 set files=captchaforms.def.xml captchaforms.png
 call copyresources2 ru.rwsoftware.eyecu.captchaforms menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.registration registration
+set files=register.def.xml register.png registerchange.png registerremove.png
+call copyresources2 ru.rwsoftware.eyecu.registration menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.commands commands
 set files=commands.def.xml commands.png
@@ -216,10 +243,8 @@ call copyplugins ru.rwsoftware.eyecu.remotecontrol remotecontrol
 
 set pluginlist=filetransfer filestreamsmanager datastreamsmanager
 call copyplugins ru.rwsoftware.eyecu.filetransfer
-set files=datastreamsmanager.def.xml datastreamsmanager.png
-call copyresources2 ru.rwsoftware.eyecu.datastreamsmanager menuicons\shared
-set files=filestreamsmanager.def.xml filestreamsmanager.png filetransfer.def.xml filetransferreceive.png filetransfersend.png
-call copyresources2 ru.rwsoftware.eyecu.filestreamsmanager menuicons\shared
+set files=datastreamsmanager.def.xml datastreamsmanager.png filestreamsmanager.def.xml filestreamsmanager.png filetransfer.def.xml filetransferreceive.png filetransfersend.png
+call copyresources2 ru.rwsoftware.eyecu.filetransfer menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.filetransfer.socks5 socksstreams
 call copyplugins ru.rwsoftware.eyecu.filetransfer.ibb inbandstreams
@@ -237,6 +262,8 @@ call copyplugins ru.rwsoftware.eyecu.pepmanager.activity activity
 call copyresources ru.rwsoftware.eyecu.pepmanager.activity activityicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.tune tune
+set files=tune.def.xml tune.png
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.tune menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.tune.inforequesters.lastfm tuneinforequesterlastfm
 set files=lastfm.def.xml lastfm.png
@@ -248,13 +275,16 @@ call copyplugins ru.rwsoftware.eyecu.pepmanager.tune.listeners.file tunelistener
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc geoloc
 set files=geoloc.def.xml geoloc.png geolocoff.png
-call copyresources2 ru.rwsoftware.eyecu.geoloc menuicons\shared
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning positioning
+set files=positioning.def.xml positioning.png manual.png location.png serialport.png geoip.gif freegeoip.png
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc.positioning menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual positioningmethodmanual
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip positioningmethodip
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.freegeoip positioningmethodipproviderfreegeoip
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport positioningmethodserialport
+
 call copyresources ru.rwsoftware.eyecu.statusicons.aim statusicons\aim
 call copyresources ru.rwsoftware.eyecu.statusicons.bot statusicons\bot
 call copyresources ru.rwsoftware.eyecu.statusicons.car statusicons\car
@@ -279,10 +309,18 @@ call copyresources ru.rwsoftware.eyecu.statusicons.yaonline statusicons\yaonline
 call copyplugins ru.rwsoftware.eyecu.emoticons emoticons
 call copyresources ru.rwsoftware.eyecu.emoticons.default emoticons\default
 call copyresources ru.rwsoftware.eyecu.emoticons.blobs_purple emoticons\blobs_purple
+
 call copyplugins ru.rwsoftware.eyecu.xhtmlim xhtmlim
 call copyresources ru.rwsoftware.eyecu.xhtmlim xhtml\shared
+set files=xhtml.def.xml xhtml.png
+call copyresources2 ru.rwsoftware.eyecu.xhtmlim menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.oob oob
+
 call copyplugins ru.rwsoftware.eyecu.nickname nickname
+set files=nickname.def.xml nickname.png
+call copyresources2 ru.rwsoftware.eyecu.nickname menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.abbreviations abbreviations
 call copyresources ru.rwsoftware.eyecu.abbreviations abbreviations\shared
 
@@ -291,10 +329,19 @@ set files=attention.def.xml attention.png bell.gif exclamation.gif
 call copyresources2 ru.rwsoftware.eyecu.attention menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.receipts receipts
+set files=receipts.def.xml receipts.png
+call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer
+set files=mmplayer.def.xml mmplayer.png mmplayereject.png
+call copyresources2 ru.rwsoftware.eyecu.mmplayer menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.clienticons clienticons
 call copyresources ru.rwsoftware.eyecu.clienticons clienticons\shared
+
 call copyplugins ru.rwsoftware.eyecu.contactproximitynotification contactproximitynotification
+set files=proximity.def.xml proximity.png
+call copyresources2 ru.rwsoftware.eyecu.contactproximitynotification menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.poi poi
 set files=poi.def.xml poi.png poiadd.png poinone.png poinotype.png poitoolbar.png poiview.png description.png flag24.png globus.png connect.png connectend.png connectlong.png bgrmap.png bgrsat.png folder.png folderopen.png
@@ -306,19 +353,26 @@ call copyresources2 ru.rwsoftware.eyecu.map menuicons\shared
 
 call copyresources ru.rwsoftware.eyecu.map mapicons\shared
 call copyplugins ru.rwsoftware.eyecu.map.locationselector maplocationselector
+
 call copyplugins ru.rwsoftware.eyecu.map.magnifier mapmagnifier
+set files=mapmagnifier.def.xml mapmagnifier.png
+call copyresources2 ru.rwsoftware.eyecu.map.magnifier menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.map.contacts mapcontacts
+
 call copyplugins ru.rwsoftware.eyecu.map.streetview streetview
+set files=streetview.def.xml streetview.png
+call copyresources2 ru.rwsoftware.eyecu.map.streetview menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.map.streetview.google streetviewprovidergoogle
+
 call copyplugins ru.rwsoftware.eyecu.map.placeview placeview
+set files=placeview.def.xml placeview.png
+call copyresources2 ru.rwsoftware.eyecu.map.placeview menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.map.placeview.google placeviewprovidergoogle
 
 call copyplugins ru.rwsoftware.eyecu.map.message mapmessage
 set files=close.def.xml closeactive.png closeinactive.png
 call copyresources2 ru.rwsoftware.eyecu.map.message menuicons\shared
-
-set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png mail.ru.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
-call copyresources2 ru.rwsoftware.eyecu.map.sources menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.map.sources.osm mapsourceosm
 call copyplugins ru.rwsoftware.eyecu.map.sources.wiki mapsourcewiki
@@ -338,7 +392,11 @@ call copyplugins ru.rwsoftware.eyecu.map.sources.navteq mapsourcenavteq
 call copyplugins ru.rwsoftware.eyecu.map.sources.rosreestr mapsourcerosreestr
 call copyplugins ru.rwsoftware.eyecu.map.sources.rumap mapsourcerumap
 call copyplugins ru.rwsoftware.eyecu.map.sources.vitel mapsourcevitel
+
 call copyplugins ru.rwsoftware.eyecu.mapsearch mapsearch
+set files=mapsearch.def.xml mapsearch.png
+call copyresources2 ru.rwsoftware.eyecu.mapsearch menuicons\shared
+
 call copyplugins ru.rwsoftware.eyecu.mapsearch.2gis mapsearchprovider2gis
 call copyplugins ru.rwsoftware.eyecu.mapsearch.google mapsearchprovidergoogle
 call copyplugins ru.rwsoftware.eyecu.mapsearch.here mapsearchproviderhere
@@ -346,16 +404,26 @@ call copyplugins ru.rwsoftware.eyecu.mapsearch.navitel mapsearchprovidernavitel
 call copyplugins ru.rwsoftware.eyecu.mapsearch.osm mapsearchproviderosm
 call copyplugins ru.rwsoftware.eyecu.mapsearch.yandex mapsearchprovideryandex
 
-set resources=wizards\shared\wizard.def.xml wizards\shared\wizard.png wizards\shared\banner.png
-call copyresources1 ru.rwsoftware.eyecu.wizards
+set resources=wizard.def.xml wizard.png banner.png
+call copyresources1 ru.rwsoftware.eyecu.wizards wizards\shared
 
 call copyplugins ru.rwsoftware.eyecu.wizards.transport wizardtransport
-set resources=wizards\shared\*.html wizards\shared\servers.xml wizards\shared\software.def.xml wizards\shared\ejabberd.png wizards\shared\jabberd.png wizards\shared\openfire.png wizards\shared\prosody.png wizards\shared\gtalk.png wizards\shared\yaonline.png wizards\shared\account.png wizards\shared\accountend.png
-call copyresources1 ru.rwsoftware.eyecu.wizards.transport
+set resources=transport.png transportend.png gateway.def.xml
+call copyresources1 ru.rwsoftware.eyecu.wizards.transport wizards\shared
 
 call copyplugins ru.rwsoftware.eyecu.wizards.account wizardaccount
-set resources=wizards\shared\transport.png wizards\shared\transportend.png wizards\shared\gateway.def.xml
-call copyresources1 ru.rwsoftware.eyecu.wizards.account
+set resources=*.html servers.xml software.def.xml ejabberd.png jabberd.png openfire.png prosody.png gtalk.png yaonline.png account.png accountend.png
+call copyresources1 ru.rwsoftware.eyecu.wizards.account wizards\shared
+
+rem Menu Icons
+set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png mail.ru.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
+call copyresources2 ru.rwsoftware.eyecu.menuicons.mapsources menuicons\shared
+
+set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png
+call copyresources2 ru.rwsoftware.eyecu.menuicons.edit menuicons\shared
+
+set files=link.def.xml link.png linkadd.png
+call copyresources2 ru.rwsoftware.eyecu.menuicons.link menuicons\shared
 
 md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y

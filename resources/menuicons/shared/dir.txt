@@ -40,13 +40,13 @@
 	folder.png
 	folderopen.png
 
-edit.def.xml
-edit.png
-editaccept.png
-editadd.png
-editcopy.png
-editdecline.png
-editdelete.png
+	edit.def.xml
+	edit.png
+	editaccept.png
+	editadd.png
+	editcopy.png
+	editdecline.png
+	editdelete.png
 
 	close.def.xml
 	closeactive.png
@@ -80,10 +80,6 @@ editdelete.png
 
 	captchaforms.def.xml
 	captchaforms.png
-
-	chatmessagehandler.def.xml
-	chatmessagehandlerclearchat.png
-	chatmessagehandlermessage.png
 
 	chatstates.def.xml
 	chatstatesactive.png
@@ -121,6 +117,7 @@ editdelete.png
 	gatewayslogin.png
 	gatewayslogout.png
 	gatewaysremove.png
+	gatewaysreset.png
 	gatewaysresolve.png
 
 	geoloc.def.xml
@@ -137,96 +134,66 @@ editdelete.png
 	lastfm.def.xml
 	lastfm.png
 
-link.def.xml
-link.png
-linkadd.png
+	link.def.xml
+	link.png
+	linkadd.png
 
-streetview.def.xml
-streetview.png
-streetviewman.png
+	streetview.def.xml
+	streetview.png
 
-positioning.def.xml
-positioning.png
-manual.png
-location.png
-serialport.png
-geoip.gif
-freegeoip.png
+	placeview.def.xml
+	placeview.png
 
-mapmagnifier.def.xml
-mapmagnifier.png
+	positioning.def.xml
+	positioning.png
+	manual.png
+	location.png
+	serialport.png
+	geoip.gif
+	freegeoip.png
 
-mapsearch.def.xml
-mapsearch.png
+	mapmagnifier.def.xml
+	mapmagnifier.png
 
-messagecarbons.def.xml
-messagecarbons.png
+	mapsearch.def.xml
+	mapsearch.png
 
-messagewidgets.def.xml
-messagewidgetsquote.png
-messagewidgetsselect.png
-messagewidgetssend.png
-messagewidgetstabmenu.png
+	messagecarbons.def.xml
+	messagecarbons.png
 
-metacontacts.def.xml
-metacontactscombine.png
-metacontactsdestroy.png
-metacontactsdetach.png
+	metacontacts.def.xml
+	metacontactscombine.png
+	metacontactsdestroy.png
+	metacontactsdetach.png
 
-mmplayer.def.xml
-mmplayer.png
-mmplayereject.png
+	mmplayer.def.xml
+	mmplayer.png
+	mmplayereject.png
 
-muc.def.xml
-mucchangenick.png
-mucchangetopic.png
-mucclearchat.png
-mucconference.png
-mucconference1.png
-mucconfigureroom.png
-mucdatamessage.png
-mucdestroyroom.png
-muceditadminslist.png
-muceditbanlist.png
-muceditmemberslist.png
-muceditownerslist.png
-mucenterroom.png
-mucexitroom.png
-mucinvite.png
-mucjoin.png
-mucmessage.png
-mucprivatemessage.png
-mucrequestvoice.png
-mucusermenu.png
+	muc.def.xml
+	mucchangenick.png
+	mucchangetopic.png
+	mucclearchat.png
+	mucconference.png
+	mucconference1.png
+	mucconfigureroom.png
+	mucdatamessage.png
+	mucdestroyroom.png
+	muceditadminslist.png
+	muceditbanlist.png
+	muceditmemberslist.png
+	muceditownerslist.png
+	mucenterroom.png
+	mucexitroom.png
+	mucinvite.png
+	mucjoin.png
+	mucmessage.png
+	mucprivatemessage.png
+	mucrequestvoice.png
+	mucusermenu.png
 
-nickname.def.xml
-nickname.png
-nicknamereset.png
-nicknameresolve.png
-
-normalmessagehandler.def.xml
-normalmessagehandlerforward.png
-normalmessagehandlermessage.png
-normalmessagehandlernext.png
-normalmessagehandlerreply.png
-normalmessagehandlersend.png
-
-notifications.def.xml
-notifications.png
-notificationsactivateall.png
-notificationspopupwindow.png
-notificationsremoveall.png
-notificationsshowminimized.png
-notificationssoundoff.png
-notificationssoundon.png
-notificationssoundplay.png
-
-options.def.xml
-optionsappearance.png
-optionsdialog.png
-optionseditprofiles.png
-optionsprofile.png
-optionsprofiles.png
+	nickname.def.xml
+	nickname.png
 
 	pepmanager.def.xml
 	pepmanager.png
@@ -242,79 +209,50 @@ optionsprofiles.png
 	privacylistslist.png
 	privacylistsvisible.png
 
-proximity.def.xml
-proximity.png
+	proximity.def.xml
+	proximity.png
 
-rchanger.def.xml
-rchangeraddcontact.png
-rchangercopygroup.png
-rchangercreategroup.png
-rchangergroup.png
-rchangermovegroup.png
-rchangerremovecontact.png
-rchangerremovecontacts.png
-rchangerremovefromgroup.png
-rchangerremovegroup.png
-rchangerrename.png
-rchangerrootgroup.png
-rchangersubscribe.png
-rchangersubscription.png
-rchangerthisgroup.png
-rchangerunsubscribe.png
+	receipts.def.xml
+	receipts.png
 
-receipts.def.xml
-receipts.png
+	recentcontacts.def.xml
+	recentcontacts.png
+	recentcontactsfavorite.png
+	recentcontactsinsertfavorite.png
+	recentcontactsremovefavorite.png
+	recentcontactsremoverecent.png
 
-recentcontacts.def.xml
-recentcontacts.png
-recentcontactsfavorite.png
-recentcontactsinsertfavorite.png
-recentcontactsremovefavorite.png
-recentcontactsremoverecent.png
+	register.def.xml
+	register.png
+	registerchange.png
+	registerremove.png
 
-register.def.xml
-register.png
-registerchange.png
-registerremove.png
+	rosterexchange.def.xml
+	rosterexchangerequest.png
 
-rosterexchange.def.xml
-rosterexchangerequest.png
+	rostersearch.def.xml
+	rostersearch.png
 
-rostersearch.def.xml
-rostersearch.png
+	sdiscovery.def.xml
+	sdiscoverydiscoinfo.png
+	sdiscoverydiscover.png
 
-rosterview.def.xml
-rosterviewclipboard.png
-rosterviewcontacts.png
-rosterviewhideoffline.png
-rosterviewoptions.png
-rosterviewshowoffline.png
+	shortcuts.def.xml
+	shortcuts.png
 
-schanger.def.xml
-schangerconnecting.png
-schangereditstatuses.png
-schangermodifystatus.png
+	snegotiation.def.xml
+	snegotiation.png
+	snegotiationinit.png
+	snegotiationterminate.png
 
-sdiscovery.def.xml
-sdiscoverydiscoinfo.png
-sdiscoverydiscover.png
+	tune.def.xml
+	tune.png
 
-shortcuts.def.xml
-shortcuts.png
+	vcard.def.xml
+	vcard.png
 
-snegotiation.def.xml
-snegotiation.png
-snegotiationinit.png
-snegotiationterminate.png
-
-tune.def.xml
-tune.png
-
-vcard.def.xml
-vcard.png
-
-xhtml.def.xml
-xhtml.png
+	xhtml.def.xml
+	xhtml.png
 
 
 
@@ -370,13 +308,71 @@ accountlist.png
 accountmanager.def.xml
 accountmove.png
 
+chatmessagehandler.def.xml
+chatmessagehandlerclearchat.png
+chatmessagehandlermessage.png
+
 connection.def.xml
 connectionencrypted.png
 
+messagewidgets.def.xml
+messagewidgetsquote.png
+messagewidgetsselect.png
+messagewidgetssend.png
+messagewidgetstabmenu.png
 
+normalmessagehandler.def.xml
+normalmessagehandlerforward.png
+normalmessagehandlermessage.png
+normalmessagehandlernext.png
+normalmessagehandlerreply.png
+normalmessagehandlersend.png
 
+notifications.def.xml
+notifications.png
+notificationsactivateall.png
+notificationspopupwindow.png
+notificationsremoveall.png
+notificationsshowminimized.png
+notificationssoundoff.png
+notificationssoundon.png
+notificationssoundplay.png
 
+options.def.xml
+optionsappearance.png
+optionsdialog.png
+optionseditprofiles.png
+optionsprofile.png
+optionsprofiles.png
 
+rchanger.def.xml
+rchangeraddcontact.png
+rchangercopygroup.png
+rchangercreategroup.png
+rchangergroup.png
+rchangermovegroup.png
+rchangerremovecontact.png
+rchangerremovecontacts.png
+rchangerremovefromgroup.png
+rchangerremovegroup.png
+rchangerrename.png
+rchangerrootgroup.png
+rchangersubscribe.png
+rchangersubscription.png
+rchangerthisgroup.png
+rchangerunsubscribe.png
+
+rosterview.def.xml
+rosterviewclipboard.png
+rosterviewcontacts.png
+rosterviewhideoffline.png
+rosterviewoptions.png
+rosterviewshowoffline.png
+
+schanger.def.xml
+schangerconnecting.png
+schangereditstatuses.png
+schangermodifystatus.png
 
 
 

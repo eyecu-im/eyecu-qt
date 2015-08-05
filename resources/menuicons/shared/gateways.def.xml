@@ -25,11 +25,15 @@
     <object mime="image/png">gatewayschange.png</object>
   </icon>
   <icon>
+    <key>gatewaysRemove</key>
+    <object mime="image/png">gatewaysremove.png</object>
+  </icon>
+  <icon>
     <key>gatewaysResolve</key>
     <object mime="image/png">gatewaysresolve.png</object>
   </icon>
   <icon>
-    <key>gatewaysRemove</key>
-    <object mime="image/png">gatewaysremove.png</object>
-  </icon>
+    <key>gatewaysReset</key>
+    <object mime="image/png">gatewaysreset.png</object>
+  </icon>  
 </icondef>

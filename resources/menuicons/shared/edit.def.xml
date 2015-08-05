@@ -4,6 +4,4 @@
  <icon><key>editCopy</key><object mime="image/png">editcopy.png</object></icon>
  <icon><key>editAdd</key><object mime="image/png">editadd.png</object></icon>
  <icon><key>editDelete</key><object mime="image/png">editdelete.png</object></icon>
- <icon><key>editAccept</key><object mime="image/png">editaccept.png</object></icon>
- <icon><key>editDecline</key><object mime="image/png">editdecline.png</object></icon>
 </icondef>

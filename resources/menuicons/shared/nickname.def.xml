@@ -4,12 +4,4 @@
     <key>nickname</key>
     <object mime="image/png">nickname.png</object>
   </icon>
-  <icon>
-    <key>nicknameResolve</key>
-    <object mime="image/png">nicknameresolve.png</object>
-  </icon>
-  <icon>
-    <key>nicknameReset</key>
-    <object mime="image/png">nicknamereset.png</object>
-  </icon>
 </icondef>

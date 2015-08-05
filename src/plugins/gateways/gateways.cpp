@@ -814,7 +814,7 @@ void Gateways::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndex
 			{
 				Action *action = new Action(AMenu);
 				action->setText(indexKind==RIK_AGENT ? tr("Resolve nick names") : tr("Resolve nick name"));
-				action->setIcon(RSR_STORAGE_MENUICONS,MNI_GATEWAYS_RESOLVE);
+				action->setIcon(RSR_STORAGE_MENUICONS,MNI_GATEWAYS_RESOLVE); // *** <<< eyeCU >>> ***
 				action->setData(ADR_STREAM_JID,rolesMap.value(RDR_STREAM_JID));
 				action->setData(ADR_SERVICE_JID,rolesMap.value(RDR_PREP_BARE_JID));
 				connect(action,SIGNAL(triggered(bool)),SLOT(onResolveActionTriggered(bool)));
@@ -839,7 +839,7 @@ void Gateways::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndex
 				disabled=false;
 			Action *action = new Action(AMenu);
 			action->setText(indexKind==RIK_AGENT ? tr("Reset nick names") : tr("Reset nick name"));
-            action->setIcon(RSR_STORAGE_MENUICONS,MNI_NICKNAME_RESET);
+			action->setIcon(RSR_STORAGE_MENUICONS,MNI_GATEWAYS_RESET);
 			action->setData(ADR_STREAM_JID,rolesMap.value(RDR_STREAM_JID));
 			action->setData(ADR_SERVICE_JID,rolesMap.value(RDR_PREP_BARE_JID));
 			action->setData(ADR_ACTION_RESOLVE, false);
