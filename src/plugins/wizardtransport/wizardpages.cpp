@@ -16,8 +16,7 @@
 #include <utils/options.h>
 #include <utils/qt4qt5compat.h>
 
-#define GATEWAY_DEF  "gateway.def.xml"
-#define NETWORKS_DEF "networks"
+#define TRANSPORT_LIST	"transports.xml"
 
 #define FIELD_TYPE_HIDDEN       "hidden"
 #define FIELD_TYPE_FIXED		"fixed"
@@ -33,8 +32,6 @@
 #define VALIDATE_TYPE_DATETIME  "xs:dateTime"
 #define VALIDATE_TYPE_DATE      "xs:date"
 #define VALIDATE_TYPE_TIME      "xs:time"
-
-
 
 TransportWizard::TransportWizard(const Jid &AStreamJid,
 						 IRegistration *ARegistration, IServiceDiscovery *AServiceDiscovery,
@@ -191,7 +188,7 @@ void NetworksPage::loadNetworksList()
 		pItem->setText(0, *it);
 		pItem->setData(0, SelectableTreeWidget::ValueRole, it.key());
         if(icon.isNull())
-            icon=FIconStorage->getIcon("gateway");
+			icon=FIconStorage->getIcon(SRI_GATEWAY);
         pItem->setIcon(0,icon);
 		pItem->setText(1,networkDesc.value(it.key()));
 	}
@@ -279,7 +276,7 @@ void GatewayPage::loadGatewayList()
 	QDir dir(FIconStorageWizards->resourcesDirs().first());
 	dir.cd(FIconStorageWizards->storage());
 	dir.cd(FIconStorageWizards->subStorage());
-    QFile file(dir.absoluteFilePath(GATEWAY_DEF));
+	QFile file(dir.absoluteFilePath(TRANSPORT_LIST));
     FExcepFields.clear();
     if(file.open(QFile::ReadOnly))
     {

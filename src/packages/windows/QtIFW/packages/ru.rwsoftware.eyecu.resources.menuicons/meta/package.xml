@@ -4,6 +4,6 @@
     <Description>Menu Icons, used by multiple pugins</Description>
     <Version>1.3.0</Version>
     <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.menuicons</Name>
+    <Name>ru.rwsoftware.eyecu.resources.menuicons</Name>
     <Virtual>true</Virtual>
 </Package>

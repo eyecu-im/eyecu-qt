@@ -3,6 +3,7 @@
 #include <definitions/optionwidgetorders.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/serviceicons.h>
 #include <definitions/optionvalues.h>
 #include <definitions/actiongroups.h>
 #include <definitions/rosterindexroles.h>
@@ -13,7 +14,6 @@
 #include "wizardtransport.h"
 
 #define ADR_STREAM_JID      Action::DR_StreamJid
-#define MNI_WIZ_GATEWAY     "gateway"
 
 WizardTransport::WizardTransport(QObject *parent) :
     QObject(parent)
@@ -93,7 +93,7 @@ void WizardTransport::onRosterIndexContextMenu(const QList<IRosterIndex *> &AInd
                 Action *action = new Action(AMenu);
                 action->setData(ADR_STREAM_JID, (*it)->data(RDR_STREAM_JID).toString());
 				action->setText(tr("Connect to legacy network"));
-				action->setIcon(RSR_STORAGE_SERVICEICONS, MNI_WIZ_GATEWAY);
+				action->setIcon(RSR_STORAGE_SERVICEICONS, SRI_GATEWAY);
 				connect(action, SIGNAL(triggered()), SLOT(onAddGateway()));
                 AMenu->addAction(action, AG_RVCM_GATEWAY,true);
             }

@@ -5,7 +5,7 @@
     <Version>1.3.0</Version>
     <ReleaseDate>2015-02-24</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.mapsearch</Name>
-    <Dependencies>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.menuicons.edit,ru.rwsoftware.eyecu.menuicons.mapsources</Dependencies>
+    <Dependencies>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.resources.menuicons.edit,ru.rwsoftware.eyecu.resources.menuicons.mapsources</Dependencies>
     <SortingPriority>35</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

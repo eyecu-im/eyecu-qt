@@ -410,26 +410,29 @@ set resources=wizard.def.xml wizard.png banner.png
 call copyresources1 ru.rwsoftware.eyecu.wizards wizards\shared
 
 call copyplugins ru.rwsoftware.eyecu.wizards.transport wizardtransport
-set resources=transport.png transportend.png gateway.def.xml
+set resources=transports.xml transport.png transportend.png yes.png no.png
 call copyresources1 ru.rwsoftware.eyecu.wizards.transport wizards\shared
 
 call copyplugins ru.rwsoftware.eyecu.wizards.account wizardaccount
-set resources=*.html servers.xml software.def.xml ejabberd.png jabberd.png openfire.png prosody.png gtalk.png yaonline.png account.png accountend.png
+set resources=servers.xml software.def.xml networks.def.xml ejabberd.png jabberd.png openfire.png prosody.png tigase.png gtalk.png livejournal.png odnoklassniki.png qip.png xmpp.png yaonline.png account.png accountend.png
 call copyresources1 ru.rwsoftware.eyecu.wizards.account wizards\shared
+xcopy c:\eyecu\resources\wizards\shared\*.html %packages%\ru.rwsoftware.eyecu.wizards.account\data\resources\wizards\shared\* /S /Y
 
-rem Menu Icons
-set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png mail.ru.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
-call copyresources2 ru.rwsoftware.eyecu.menuicons.mapsources menuicons\shared
-
-set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png
-call copyresources2 ru.rwsoftware.eyecu.menuicons.edit menuicons\shared
-
-set files=link.def.xml link.png linkadd.png
-call copyresources2 ru.rwsoftware.eyecu.menuicons.link menuicons\shared
-
-rem Country
+rem *** Resources ***
+rem   Country
 call copyresources ru.rwsoftware.eyecu.resources.country country\shared
 
+rem   Menu Icons
+set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png mail.ru.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
+call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.mapsources menuicons\shared
+
+set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png
+call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.edit menuicons\shared
+
+set files=link.def.xml link.png linkadd.png
+call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.link menuicons\shared
+
+rem *** Documentaion ***
 md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 

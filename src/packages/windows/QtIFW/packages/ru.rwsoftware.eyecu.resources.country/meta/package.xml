@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Country Flags</DisplayName>
+    <Description>Country flag icons, used by multiple pugins</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.resources.country</Name>
+    <Virtual>true</Virtual>
+</Package>

@@ -1,4 +1,3 @@
-@echo off
 if "%packages%" == "" packages=packages
 md %packages%\%1\data\plugins
 set locales=en de es ja nl pl ru uk

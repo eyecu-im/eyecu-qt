@@ -4,6 +4,6 @@
     <Description>Edit Icons</Description>
     <Version>1.3.0</Version>
     <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.menuicons.edit</Name>
+    <Name>ru.rwsoftware.eyecu.resources.menuicons.edit</Name>
     <Virtual>true</Virtual>
 </Package>

@@ -21,7 +21,7 @@
 #include "networkwarning.h"
 
 #define ACCOUNT_CONNECTION_OPTIONS     Options::node(OPV_ACCOUNT_CONNECTION_ITEM,"CreateAccountWizard")
-#define SERVERS_DEF  "servers.xml"
+#define SERVER_LIST	"servers.xml"
 
 // Field names
 #define WF_NETWORK_SELECTED		"network.selected"
@@ -111,9 +111,7 @@ void ConnectionWizard::onCurrentIdChanged(int AId)
 		page(Page_Connect)->cleanupPage();
 		page(Page_Connect)->initializePage();
 	}
-//		back();
-//	else
-		FCurrentId = AId;
+	FCurrentId = AId;
 }
 
 //!------------------------------
@@ -299,7 +297,7 @@ void ServerPage::loadServerList()
     QDir dir(storageWizards->resourcesDirs().first());
     dir.cd(storageWizards->storage());
     dir.cd(storageWizards->subStorage());
-    QFile file(dir.absoluteFilePath(SERVERS_DEF));
+	QFile file(dir.absoluteFilePath(SERVER_LIST));
 
     if(file.open(QFile::ReadOnly))
     {
