@@ -14,7 +14,8 @@ AboutBox::AboutBox(IPluginManager *APluginManager, QWidget *AParent) : QDialog(A
 
 	ui.lblName->setText(CLIENT_NAME);
     ui.svgLogo->load(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->fileFullName(MNI_EYECU_LOGO));
-	ui.lblVersion->setText(tr("Version: %1.%2 %3").arg(APluginManager->version()).arg(APluginManager->revision()).arg(CLIENT_VERSION_SUFFIX));
+	ui.lblVersion->setText(tr("Version: %1.%2 %3").arg(APluginManager->version()).arg(APluginManager->revisionDate().date().toString("yyyyMMdd")).arg(CLIENT_VERSION_SUFFIX));
+	ui.lblRevision->setText(tr("Revision: %1").arg(APluginManager->revision()));
 
 	connect(ui.lblHomePage,SIGNAL(linkActivated(const QString &)),SLOT(onLabelLinkActivated(const QString &)));
 }

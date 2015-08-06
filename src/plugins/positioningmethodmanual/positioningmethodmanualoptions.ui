@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
+    <width>299</width>
     <height>28</height>
    </rect>
   </property>
@@ -26,132 +26,32 @@
    <property name="bottomMargin">
     <number>6</number>
    </property>
-   <item row="0" column="3">
-    <widget class="QLabel" name="lblIntervalUnits">
-     <property name="text">
-      <string notr="true">second(s)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="0" column="2">
-    <widget class="QComboBox" name="boxInterval">
-     <property name="minimumSize">
-      <size>
-       <width>90</width>
-       <height>20</height>
-      </size>
+    <widget class="QSpinBox" name="spbAutoSendInterval">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
+     <property name="specialValueText">
+      <string>Disable</string>
      </property>
-     <property name="editable">
-      <bool>true</bool>
+     <property name="suffix">
+      <string notr="true"/>
      </property>
-     <item>
-      <property name="text">
-       <string>Disable</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">5</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">10</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">15</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">30</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">60</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">90</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">120</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">240</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">300</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">600</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">1200</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">2400</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">3600</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">7200</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">14400</string>
-      </property>
-     </item>
+     <property name="maximum">
+      <number>3600</number>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
-    <widget class="QLabel" name="lbl_Interv">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>14</height>
-      </size>
+    <widget class="QLabel" name="lblAutoSendInterval">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="text">
       <string>Send position automatically every</string>
@@ -161,28 +61,44 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
   </layout>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>boxInterval</sender>
-   <signal>editTextChanged(QString)</signal>
+   <sender>spbAutoSendInterval</sender>
+   <signal>valueChanged(int)</signal>
    <receiver>PositioningMethodManualOptions</receiver>
-   <slot>onEditTextChanged(QString)</slot>
+   <slot>onSpinValueChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>270</x>
+     <x>248</x>
      <y>11</y>
     </hint>
     <hint type="destinationlabel">
-     <x>186</x>
+     <x>149</x>
      <y>13</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>onEditTextChanged(QString)</slot>
+  <slot>onSpinValueChanged(int)</slot>
  </slots>
 </ui>

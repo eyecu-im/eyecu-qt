@@ -32,7 +32,7 @@ protected:
     void changeEvent(QEvent *e);
 
 protected slots:
-	void onEditTextChanged(const QString &AText);
+	void onSpinValueChanged(int AValue);
 
 signals:
     void modified();

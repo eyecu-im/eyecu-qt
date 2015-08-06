@@ -77,7 +77,7 @@ bool PositioningMethodManual::initSettings()
 {
     Options::setDefaultValue(OPV_POSITIONING_METHOD_MANUAL_COORDINATES, QPointF(0.0, 51.47772));
     Options::setDefaultValue(OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP, QString());
-    Options::setDefaultValue(OPV_POSITIONING_METHOD_MANUAL_INTERVAL, QString("600"));
+	Options::setDefaultValue(OPV_POSITIONING_METHOD_MANUAL_INTERVAL, 0);
 
     if (FOptionsManager)
     {
