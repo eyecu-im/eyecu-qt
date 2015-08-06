@@ -117,10 +117,17 @@
    <item>
     <widget class="QLabel" name="lblVersion">
      <property name="text">
-      <string notr="true">Version: 1.0.0.0 Revision: 0000</string>
+      <string notr="true">Version:</string>
      </property>
      <property name="textFormat">
       <enum>Qt::PlainText</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblRevision">
+     <property name="text">
+      <string notr="true">Revision:</string>
      </property>
     </widget>
    </item>

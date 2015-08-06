@@ -5,7 +5,7 @@ PositioningMethodManualOptions::PositioningMethodManualOptions(QWidget *parent) 
     ui(new Ui::PositioningMethodManualOptions)
 {
     ui->setupUi(this);
-    connect(ui->boxInterval,SIGNAL(activated(int)),SIGNAL(modified()));
+	connect(ui->spbAutoSendInterval,SIGNAL(valueChanged(int)),SIGNAL(modified()));
     reset();
 
 }
@@ -17,13 +17,13 @@ PositioningMethodManualOptions::~PositioningMethodManualOptions()
 
 void PositioningMethodManualOptions::apply()
 {
-    Options::node(OPV_POSITIONING_METHOD_MANUAL_INTERVAL).setValue(ui->boxInterval->currentText());
+	Options::node(OPV_POSITIONING_METHOD_MANUAL_INTERVAL).setValue(ui->spbAutoSendInterval->value());
     emit childApply();
 }
 
 void PositioningMethodManualOptions::reset()
 {
-    ui->boxInterval->setCurrentIndex(ui->boxInterval->findText(Options::node(OPV_POSITIONING_METHOD_MANUAL_INTERVAL).value().toString()));
+	ui->spbAutoSendInterval->setValue(Options::node(OPV_POSITIONING_METHOD_MANUAL_INTERVAL).value().toInt());
     emit childReset();
 }
 
@@ -39,7 +39,7 @@ void PositioningMethodManualOptions::changeEvent(QEvent *e)
 	}
 }
 
-void PositioningMethodManualOptions::onEditTextChanged(const QString &AText)
+void PositioningMethodManualOptions::onSpinValueChanged(int AValue)
 {
-	ui->lblIntervalUnits->setText(tr("second(s)", "Send interval units", AText.toInt()));
+	ui->spbAutoSendInterval->setSuffix(" "+tr("second(s)", "Send interval units", AValue));
 }

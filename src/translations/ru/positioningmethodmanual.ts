@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
   <context>
     <name>PositioningMethodManual</name>
     <message>
@@ -22,12 +22,12 @@
     <message>
       <source>Ctrl+R</source>
       <comment>Stop publication</comment>
-      <translation type="unfinished">Ctrl+R</translation>
+      <translation>Ctrl+R</translation>
     </message>
     <message>
       <source>F6</source>
       <comment>Here I am! (POI)</comment>
-      <translation type="unfinished">F6</translation>
+      <translation>F6</translation>
     </message>
     <message>
       <source>Manual</source>

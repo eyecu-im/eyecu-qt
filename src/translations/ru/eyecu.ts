@@ -7,6 +7,10 @@
       <source>Version: %1.%2 %3</source>
       <translation>Версия: %1.%2 %3</translation>
     </message>
+    <message>
+      <source>Revision: %1</source>
+      <translation>Ревизия: %1</translation>
+    </message>
   </context>
   <context>
     <name>AboutBoxClass</name>

@@ -1,295 +1,295 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
- <context>
-  <name>EditProfilesDialog</name>
-  <message>
-   <location line="44" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>New Profile</source>
-   <translation>New Profile</translation>
-  </message>
-  <message>
-   <location line="44" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Enter profile name:</source>
-   <translation>Enter profile name:</translation>
-  </message>
-  <message>
-   <location line="47" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="70" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="73" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Profile Password</source>
-   <translation>Profile Password</translation>
-  </message>
-  <message>
-   <location line="47" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Enter profile password:</source>
-   <translation>Enter profile password:</translation>
-  </message>
-  <message>
-   <location line="48" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="74" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Confirm Password</source>
-   <translation>Confirm Password</translation>
-  </message>
-  <message>
-   <location line="48" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="74" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Reenter password:</source>
-   <translation>Reenter password:</translation>
-  </message>
-  <message>
-   <location line="53" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="58" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="79" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="84" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="89" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="107" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="124" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Error</source>
-   <translation>Error</translation>
-  </message>
-  <message>
-   <location line="53" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Could not create profile, maybe this profile already exists</source>
-   <translation>Could not create profile, maybe this profile already exists</translation>
-  </message>
-  <message>
-   <location line="58" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <location line="84" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Passwords did not match</source>
-   <translation>Passwords did not match</translation>
-  </message>
-  <message>
-   <location line="70" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Enter current profile password:</source>
-   <translation>Enter current profile password:</translation>
-  </message>
-  <message>
-   <location line="73" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Enter new profile password:</source>
-   <translation>Enter new profile password:</translation>
-  </message>
-  <message>
-   <location line="79" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Failed to change profile password</source>
-   <translation>Failed to change profile password</translation>
-  </message>
-  <message>
-   <location line="89" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Entered password is not valid</source>
-   <translation>Entered password is not valid</translation>
-  </message>
-  <message>
-   <location line="101" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Rename Profile</source>
-   <translation>Rename Profile</translation>
-  </message>
-  <message>
-   <location line="101" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Enter new name for profile:</source>
-   <translation>Enter new name for profile:</translation>
-  </message>
-  <message>
-   <location line="107" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Failed to rename profile</source>
-   <translation>Failed to rename profile</translation>
-  </message>
-  <message>
-   <location line="119" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Remove Profile</source>
-   <translation>Remove Profile</translation>
-  </message>
-  <message>
-   <location line="119" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Are you sure you want to delete profile '&lt;b>%1&lt;/b>'?</source>
-   <translation>Are you sure you want to delete profile '&lt;b>%1&lt;/b>'?</translation>
-  </message>
-  <message>
-   <location line="124" filename="../../plugins/optionsmanager/editprofilesdialog.cpp"/>
-   <source>Failed to remove profile</source>
-   <translation>Failed to remove profile</translation>
-  </message>
- </context>
- <context>
-  <name>EditProfilesDialogClass</name>
-  <message>
-   <location line="14" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Profiles Settings</source>
-   <translation>Profiles Settings</translation>
-  </message>
-  <message>
-   <location line="35" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Add Profile</source>
-   <translation>Add Profile</translation>
-  </message>
-  <message>
-   <location line="49" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Change Password</source>
-   <translation>Change Password</translation>
-  </message>
-  <message>
-   <location line="56" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Rename Profile</source>
-   <translation>Rename Profile</translation>
-  </message>
-  <message>
-   <location line="63" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Delete Profile</source>
-   <translation>Delete Profile</translation>
-  </message>
-  <message>
-   <location line="90" filename="../../plugins/optionsmanager/editprofilesdialog.ui"/>
-   <source>Close</source>
-   <translation>Close</translation>
-  </message>
- </context>
- <context>
-  <name>LoginDialog</name>
-  <message>
-   <location line="62" filename="../../plugins/optionsmanager/logindialog.cpp"/>
-   <source>Profile Blocked</source>
-   <translation>Profile Blocked</translation>
-  </message>
-  <message>
-   <location line="62" filename="../../plugins/optionsmanager/logindialog.cpp"/>
-   <source>This profile is now blocked by another program</source>
-   <translation>This profile is now blocked by another program</translation>
-  </message>
-  <message>
-   <location line="66" filename="../../plugins/optionsmanager/logindialog.cpp"/>
-   <source>Wrong Password</source>
-   <translation>Wrong Password</translation>
-  </message>
-  <message>
-   <location line="66" filename="../../plugins/optionsmanager/logindialog.cpp"/>
-   <source>Entered profile password is not correct</source>
-   <translation>Entered profile password is not correct</translation>
-  </message>
- </context>
- <context>
-  <name>LoginDialogClass</name>
-  <message>
-   <location line="14" filename="../../plugins/optionsmanager/logindialog.ui"/>
-   <source>Open Profile</source>
-   <translation>Open Profile</translation>
-  </message>
-  <message>
-   <location line="25" filename="../../plugins/optionsmanager/logindialog.ui"/>
-   <source>Profile:</source>
-   <translation>Profile:</translation>
-  </message>
-  <message>
-   <location line="38" filename="../../plugins/optionsmanager/logindialog.ui"/>
-   <source>Password:</source>
-   <translation>Password:</translation>
-  </message>
-  <message>
-   <location line="66" filename="../../plugins/optionsmanager/logindialog.ui"/>
-   <source>Settings...</source>
-   <translation>Settings...</translation>
-  </message>
- </context>
- <context>
-  <name>OptionsDialog</name>
-  <message>
-   <location line="35" filename="../../plugins/optionsmanager/optionsdialog.cpp"/>
-   <source>Options</source>
-   <translation>Options</translation>
-  </message>
-  <message>
-   <location line="148" filename="../../plugins/optionsmanager/optionsdialog.cpp"/>
-   <source>Options are absent</source>
-   <translation>Options are absent</translation>
-  </message>
- </context>
- <context>
-  <name>OptionsManager</name>
-  <message>
-   <location line="61" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Options Manager</source>
-   <translation>Options Manager</translation>
-  </message>
-  <message>
-   <location line="62" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Allows to save, load and manage user preferences</source>
-   <translation>Allows to save, load and manage user preferences</translation>
-  </message>
-  <message>
-   <location line="101" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Change Profile</source>
-   <translation>Change Profile</translation>
-  </message>
-  <message>
-   <location line="106" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Options</source>
-   <translation>Options</translation>
-  </message>
-  <message>
-   <location line="134" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Common</source>
-   <translation>Common</translation>
-  </message>
-  <message>
-   <location line="137" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Appearance</source>
-   <translation>Appearance</translation>
-  </message>
-  <message>
-   <location line="165" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Common settings</source>
-   <translation>Common settings</translation>
-  </message>
-  <message>
-   <location line="166" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Show advanced options</source>
-   <translation>Show advanced options</translation>
-  </message>
-  <message>
-   <location line="168" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Auto run application on system startup</source>
-   <translation>Auto run application on system startup</translation>
-  </message>
-  <message>
-   <location line="173" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Localization</source>
-   <translation>Localization</translation>
-  </message>
-  <message>
-   <location line="198" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>&lt;System Language></source>
-   <translation>&lt;System Language></translation>
-  </message>
-  <message>
-   <location line="202" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Language:</source>
-   <translation>Language:</translation>
-  </message>
-  <message>
-   <location line="805" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Options mode changed</source>
-   <translation>Options mode changed</translation>
-  </message>
-  <message>
-   <location line="805" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>To switch options mode, %1 needs to be restarted.
+<context>
+    <name>EditProfilesDialog</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="44"/>
+        <source>New Profile</source>
+        <translation>New Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="44"/>
+        <source>Enter profile name:</source>
+        <translation>Enter profile name:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="47"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="70"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="73"/>
+        <source>Profile Password</source>
+        <translation>Profile Password</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="47"/>
+        <source>Enter profile password:</source>
+        <translation>Enter profile password:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="48"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="74"/>
+        <source>Confirm Password</source>
+        <translation>Confirm Password</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="48"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="74"/>
+        <source>Reenter password:</source>
+        <translation>Reenter password:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="53"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="58"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="79"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="84"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="89"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="107"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="124"/>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="53"/>
+        <source>Could not create profile, maybe this profile already exists</source>
+        <translation>Could not create profile, maybe this profile already exists</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="58"/>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="84"/>
+        <source>Passwords did not match</source>
+        <translation>Passwords did not match</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="70"/>
+        <source>Enter current profile password:</source>
+        <translation>Enter current profile password:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="73"/>
+        <source>Enter new profile password:</source>
+        <translation>Enter new profile password:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="79"/>
+        <source>Failed to change profile password</source>
+        <translation>Failed to change profile password</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="89"/>
+        <source>Entered password is not valid</source>
+        <translation>Entered password is not valid</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="101"/>
+        <source>Rename Profile</source>
+        <translation>Rename Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="101"/>
+        <source>Enter new name for profile:</source>
+        <translation>Enter new name for profile:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="107"/>
+        <source>Failed to rename profile</source>
+        <translation>Failed to rename profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="119"/>
+        <source>Remove Profile</source>
+        <translation>Remove Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="119"/>
+        <source>Are you sure you want to delete profile &apos;&lt;b&gt;%1&lt;/b&gt;&apos;?</source>
+        <translation>Are you sure you want to delete profile &apos;&lt;b&gt;%1&lt;/b&gt;&apos;?</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.cpp" line="124"/>
+        <source>Failed to remove profile</source>
+        <translation>Failed to remove profile</translation>
+    </message>
+</context>
+<context>
+    <name>EditProfilesDialogClass</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="14"/>
+        <source>Profiles Settings</source>
+        <translation>Profiles Settings</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="35"/>
+        <source>Add Profile</source>
+        <translation>Add Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="49"/>
+        <source>Change Password</source>
+        <translation>Change Password</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="56"/>
+        <source>Rename Profile</source>
+        <translation>Rename Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="63"/>
+        <source>Delete Profile</source>
+        <translation>Delete Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="90"/>
+        <source>Close</source>
+        <translation>Close</translation>
+    </message>
+</context>
+<context>
+    <name>LoginDialog</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.cpp" line="62"/>
+        <source>Profile Blocked</source>
+        <translation>Profile Blocked</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.cpp" line="62"/>
+        <source>This profile is now blocked by another program</source>
+        <translation>This profile is now blocked by another program</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.cpp" line="66"/>
+        <source>Wrong Password</source>
+        <translation>Wrong Password</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.cpp" line="66"/>
+        <source>Entered profile password is not correct</source>
+        <translation>Entered profile password is not correct</translation>
+    </message>
+</context>
+<context>
+    <name>LoginDialogClass</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.ui" line="14"/>
+        <source>Open Profile</source>
+        <translation>Open Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.ui" line="25"/>
+        <source>Profile:</source>
+        <translation>Profile:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.ui" line="38"/>
+        <source>Password:</source>
+        <translation>Password:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/logindialog.ui" line="66"/>
+        <source>Settings...</source>
+        <translation>Settings...</translation>
+    </message>
+</context>
+<context>
+    <name>OptionsDialog</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsdialog.cpp" line="35"/>
+        <source>Options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsdialog.cpp" line="148"/>
+        <source>Options are absent</source>
+        <translation>Options are absent</translation>
+    </message>
+</context>
+<context>
+    <name>OptionsManager</name>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="61"/>
+        <source>Options Manager</source>
+        <translation>Options Manager</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="62"/>
+        <source>Allows to save, load and manage user preferences</source>
+        <translation>Allows to save, load and manage user preferences</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="101"/>
+        <source>Change Profile</source>
+        <translation>Change Profile</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="106"/>
+        <source>Options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="134"/>
+        <source>Common</source>
+        <translation>Common</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="137"/>
+        <source>Appearance</source>
+        <translation>Appearance</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="165"/>
+        <source>Common settings</source>
+        <translation>Common settings</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="166"/>
+        <source>Show advanced options</source>
+        <translation>Show advanced options</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
+        <source>Auto run application on system startup</source>
+        <translation>Auto run application on system startup</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="173"/>
+        <source>Localization</source>
+        <translation>Localization</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="198"/>
+        <source>&lt;System Language&gt;</source>
+        <translation>&lt;System Language&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="202"/>
+        <source>Language:</source>
+        <translation>Language:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
+        <source>Options mode changed</source>
+        <translation>Options mode changed</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
+        <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
-   <translation>To switch options mode, %1 needs to be restarted.
+        <translation>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</translation>
-  </message>
-  <message>
-   <location line="855" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>Display advanced options?</source>
-   <translation>Display advanced options?</translation>
-  </message>
-  <message>
-   <location line="856" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>If you're experienced Jabber user, press &lt;i>Yes&lt;/i> to display advanced options. If you're new in Jabber, press &lt;i>No&lt;/i>. Simplified options will be displayed. </source>
-   <translation>If you're experienced Jabber user, press &lt;i>Yes&lt;/i> to display advanced options. If you're new in Jabber, press &lt;i>No&lt;/i>. Simplified options will be displayed. </translation>
-  </message>
-  <message>
-   <location line="863" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
-   <source>You can always change options mode on &lt;b>Common&lt;/b> page.</source>
-   <translation>You can always change options mode on &lt;b>Common&lt;/b> page.</translation>
-  </message>
- </context>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="855"/>
+        <source>Display advanced options?</source>
+        <translation>Display advanced options?</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="856"/>
+        <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
+        <translation>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </translation>
+    </message>
+    <message>
+        <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="863"/>
+        <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
+        <translation>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</translation>
+    </message>
+</context>
 </TS>
