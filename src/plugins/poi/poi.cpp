@@ -699,7 +699,7 @@ bool Poi::initObjects()
     {
         FMenuToolbar = new Menu();
         FMenuToolbar->setTitle(tr("POI"));
-        FMenuToolbar->setIcon(RSR_STORAGE_POI, MNI_POI_TLB);
+		FMenuToolbar->setIcon(RSR_STORAGE_MENUICONS, MNI_POI_TLB);
         FMenuToolbar->menuAction()->setEnabled(true);
 
         IMainWindow *mainWindow = FMainWindowPlugin->mainWindow();
@@ -709,7 +709,7 @@ bool Poi::initObjects()
 
         Action *action = new Action();
         action->setText(tr("POI list"));
-        action->setIcon(RSR_STORAGE_POI, MNI_POI_VIEW);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_POI_VIEW);
         action->setShortcutId(SCT_POI_LIST);
         connect(action, SIGNAL(triggered(bool)), SLOT(onPoiList(bool)));
 
@@ -719,7 +719,7 @@ bool Poi::initObjects()
         action = new Action();
         action->setCheckable(true);
         action->setText(tr("Show POI"));
-        action->setIcon(RSR_STORAGE_POI, MNI_POI);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_POI);
         action->setData(Action::DR_UserDefined, MNO_SHOW_POI);
         action->setShortcutId(SCT_POI_VIEW);
 		connect(action, SIGNAL(triggered()), SLOT(onPoiShow()));
@@ -870,7 +870,7 @@ void Poi::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.var = NS_X_POI;
     dfeature.active = true;
-    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_POI)->getIcon(MNI_POI);
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_POI);
     dfeature.name = tr("Points of Interest");
     dfeature.description = tr("Allows to store and exchange with Points of Interest");
     FDiscovery->insertDiscoFeature(dfeature);
@@ -1117,12 +1117,12 @@ void Poi::onNormalWindowCreated(IMessageNormalWindow *AWindow)
     {
         Menu *menu = new Menu(new MessagePoiList(this, FMapLocationSelector, &FPoiAccounts, FIconStorage, AWindow->instance()));
         menu->setTitle(tr("Add POI"));
-        menu->setIcon(RSR_STORAGE_POI, MNI_POI_TLB);
+		menu->setIcon(RSR_STORAGE_MENUICONS, MNI_POI_TLB);
         menu->menuAction()->setEnabled(true);
 
         Action *action = new Action(menu);
         action->setText(tr("Insert POI"));
-        action->setIcon(RSR_STORAGE_POI,MNI_POI_TLB);
+		action->setIcon(RSR_STORAGE_MENUICONS,MNI_POI_TLB);
         action->setData(ADR_MESSAGE_TYPE, Message::Normal);
         action->setData(ADR_CONTACT_JID, contactJid.full());
         action->setData(ADR_STREAM_JID, streamJid.full());
@@ -1235,7 +1235,7 @@ void Poi::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint3
                     Action *action = new Action(AMenu);
                     action->setData(ADR_STREAM_JID, streamJid.full());
                     action->setText(tr("POI list"));
-                    action->setIcon(RSR_STORAGE_POI,MNI_POI_VIEW);
+					action->setIcon(RSR_STORAGE_MENUICONS,MNI_POI_VIEW);
                     connect(action, SIGNAL(triggered(bool)), SLOT(onPoiList(bool)));
                     AMenu->addAction(action, AG_RVCM_VIEW_POI,true);
 
@@ -1247,7 +1247,7 @@ void Poi::addMenuMap()
 {
 	if (FMap)
     {
-		FActionNewPOI = FMap->addMenuAction(tr("Add POI"), QString(RSR_STORAGE_POI),QString(MNI_POI_ADD),0);
+		FActionNewPOI = FMap->addMenuAction(tr("Add POI"), QString(RSR_STORAGE_MENUICONS),QString(MNI_POI_ADD),0);
         connect(FActionNewPOI, SIGNAL(triggered()), SLOT(addNewPoi()));
     }
 }
@@ -1609,12 +1609,12 @@ void Poi::updateChatWindowActions(IMessageChatWindow *AChatWindow)
                 poiList->show();
             Menu *menu = new Menu(poiList);
             menu->setTitle(tr("Points of Interest"));
-            menu->setIcon(RSR_STORAGE_POI, MNI_POI_TLB);
+			menu->setIcon(RSR_STORAGE_MENUICONS, MNI_POI_TLB);
             menu->menuAction()->setEnabled(true);
 
             Action *action = new Action(menu);
             action->setText(tr("Insert POI"));
-            action->setIcon(RSR_STORAGE_POI,MNI_POI_TLB);
+			action->setIcon(RSR_STORAGE_MENUICONS,MNI_POI_TLB);
             action->setData(ADR_MESSAGE_TYPE, Message::Chat);
             action->setData(ADR_CONTACT_JID, AChatWindow->contactJid().full());
             action->setData(ADR_STREAM_JID, AChatWindow->streamJid().full());

@@ -143,7 +143,7 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Geoloc::initObjects()
 {
-	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_GEOLOC);
+	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	if (FMapContacts)
 		Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CHAT_SHOWCONTACTONTHEMAP, tr("Show contact on the map"), tr("F10", "Show contact on the map (chat)"), Shortcuts::WindowShortcut);
@@ -303,7 +303,7 @@ void Geoloc::registerDiscoFeatures()
 	IDiscoFeature dfeature;
 	dfeature.var = NS_PEP_GEOLOC;
 	dfeature.active = true;
-	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_GEOLOC)->getIcon(MNI_GEOLOC);//
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC);//
 	dfeature.name = tr("User Location");
 	dfeature.description = tr("Supports user Geolocation");
 	FDiscovery->insertDiscoFeature(dfeature);

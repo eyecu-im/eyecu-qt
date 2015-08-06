@@ -49,7 +49,7 @@ PlaceViewForm::PlaceViewForm(QHash<QUuid, IPlaceViewProvider *> AProviders, IMap
     ui->pbClear->setStyleSheet("text-align: left");
     ui->pbClear->setDisabled(true);
 
-    ui->btnMoveToLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_GEOLOC)->getIcon(MNI_GEOLOC));
+	ui->btnMoveToLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
 
     connect(ui->tbGetView, SIGNAL(clicked()),SLOT(onGetView()));
 

@@ -37,7 +37,7 @@ StreetViewForm::StreetViewForm(QHash<QUuid, IStreetViewProvider *> AProviders, I
     ui->setupUi(this);    
     setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_STREETVIEW));
     QStyle *style = QApplication::style();
-    ui->pbMoveToLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_GEOLOC)->getIcon(MNI_GEOLOC));
+	ui->pbMoveToLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
     ui->tbView->setStyleSheet("text-align: left");
     ui->pbSaveToDisk->setIcon(style->standardIcon(QStyle::SP_DialogSaveButton));
     ui->pbSaveToDisk->setStyleSheet("text-align: left");

@@ -129,9 +129,9 @@ void PositioningMethodManual::addMenu()
     {
         if(!FActionHereIAm)
         {
-			FActionHereIAm = FMap->addMenuAction(tr("Here I am!"), RSR_STORAGE_GEOLOC, MNI_GEOLOC, 0);
+			FActionHereIAm = FMap->addMenuAction(tr("Here I am!"), RSR_STORAGE_MENUICONS, MNI_GEOLOC, 0);
             connect(FActionHereIAm,SIGNAL(triggered(bool)),SLOT(hereIam()));
-            FActionStopPublish = FMap->addMenuAction(tr("Stop publication"),QString(RSR_STORAGE_GEOLOC),QString(MNI_GEOLOC_OFF),1);
+			FActionStopPublish = FMap->addMenuAction(tr("Stop publication"),QString(RSR_STORAGE_MENUICONS),QString(MNI_GEOLOC_OFF),1);
             FActionStopPublish->setShortcutId(SCT_MAP_STOPLOCATIONPUBLICATION);
             connect(FActionStopPublish,SIGNAL(triggered(bool)),SLOT(retractGeoloc()));
         }
@@ -142,7 +142,7 @@ void PositioningMethodManual::addMenu()
 		{
 			FActionSetPosition = new Action();
 			FActionSetPosition->setText(tr("Set my position"));
-			FActionSetPosition->setIcon(IconStorage::staticStorage(RSR_STORAGE_GEOLOC)->getIcon(MNI_GEOLOC));
+			FActionSetPosition->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
 			FActionSetPosition->setEnabled(true);
 			FMainWindowPlugin->mainWindow()->topToolBarChanger()->insertAction(FActionSetPosition, TBG_MWTTB_MAPS);
 			connect(FActionSetPosition,SIGNAL(triggered(bool)),SLOT(setPosition()));
@@ -152,7 +152,7 @@ void PositioningMethodManual::addMenu()
     {
         if(!FPoiActionHereIAm)
         {
-            FPoiActionHereIAm = FPoi->addMenuAction(tr("Here I am!"),QString(RSR_STORAGE_GEOLOC),QString(MNI_GEOLOC));
+			FPoiActionHereIAm = FPoi->addMenuAction(tr("Here I am!"),QString(RSR_STORAGE_MENUICONS),QString(MNI_GEOLOC));
             connect(FPoiActionHereIAm,SIGNAL(triggered(bool)), SLOT(onPoiActionTriggered()));
         }
     }
@@ -220,7 +220,7 @@ void PositioningMethodManual::setPosition()
 {
 	QPointF coords = Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).value().toPointF();
 	MercatorCoordinates coordinates(coords.y(), coords.x());
-	SetLocation *setLocation = new SetLocation(coordinates, IconStorage::staticStorage(RSR_STORAGE_GEOLOC)->getIcon(MNI_GEOLOC));
+	SetLocation *setLocation = new SetLocation(coordinates, IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
 	switch (setLocation->exec())
 	{
 		case SetLocation::Accepted:
