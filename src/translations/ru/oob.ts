@@ -53,7 +53,7 @@
     <message>
         <source>Ctrl+Return</source>
         <comment>Ok</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Return</translation>
     </message>
     <message>
         <source>Out-of-Band data</source>
@@ -75,7 +75,7 @@
     <message>
         <source>Return</source>
         <comment>Edit OOB link</comment>
-        <translation type="unfinished"></translation>
+        <translation>Return</translation>
     </message>
     <message>
         <source>Add link</source>
@@ -92,7 +92,7 @@
     <message>
         <source>Alt+O</source>
         <comment>Add and OOB link</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+O</translation>
     </message>
     <message>
         <source>Out of Band Data</source>

@@ -3036,7 +3036,7 @@
     <message>
         <source>Ctrl+P</source>
         <comment>POI list (all)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+P</translation>
     </message>
     <message>
         <source>Display POI list for the account</source>
@@ -3045,37 +3045,37 @@
     <message>
         <source>Alt+P</source>
         <comment>POI list (account)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+P</translation>
     </message>
     <message>
         <source>Space</source>
         <comment>Show POI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>F2</source>
         <comment>Save POI</comment>
-        <translation type="unfinished"></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <source>F2</source>
         <comment>Edit POI</comment>
-        <translation type="unfinished"></translation>
+        <translation>F2</translation>
     </message>
     <message>
         <source>Del</source>
         <comment>Delete POI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Del</source>
         <comment>Remove POI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>F3</source>
         <comment>Open URL in the POI</comment>
-        <translation type="unfinished"></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <source>Edit POI</source>
@@ -3088,17 +3088,17 @@
     <message>
         <source>Alt+P</source>
         <comment>Insert POI (into message)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+P</translation>
     </message>
     <message>
         <source>Alt+G</source>
         <comment>Insert location</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+G</translation>
     </message>
     <message>
         <source>Return</source>
         <comment>Edit POI (in message)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Return</translation>
     </message>
     <message>
         <source>%1, %2</source>
@@ -3136,7 +3136,7 @@
     <message>
         <source>Alt+V</source>
         <comment>Toggle view POIs on the map</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+V</translation>
     </message>
     <message>
         <source>Allows to create, store and handle user&apos;s Points of Interest</source>

@@ -59,7 +59,7 @@ PlaceViewForm::PlaceViewForm(QHash<QUuid, IPlaceViewProvider *> AProviders, IMap
 
     connect(ui->cBoxType, SIGNAL(currentIndexChanged(int)),SLOT(onCurrentIndexChanged(int)));
 
-    connect(ui->cBoxRadius, SIGNAL(currentIndexChanged(int)),SLOT(onCurrentRadiusChanged(int)));
+	connect(ui->dSpbRadius, SIGNAL(valueChanged(double)),SLOT(onCurrentRadiusChanged(double)));
     connect(ui->cBoxRankby, SIGNAL(currentIndexChanged(int)),SLOT(onBoxRankby(int)));
     connect(ui->cBoxWay, SIGNAL(currentIndexChanged(int)),SLOT(onBoxWay(int)));
 
@@ -94,11 +94,11 @@ void PlaceViewForm::onGetView()
     QString AKeyword= ui->lineKeyword->text();
     QString AId="request";
     QString ALanguage=QLocale().name().left(2);
-    long    ARadius;
+	double	ARadius;
     if(ARankby=="distance")
         ARadius=0;
     else
-        ARadius=ui->cBoxRadius->currentText().toFloat()*1000;
+		ARadius=ui->dSpbRadius->value()*1000;
     FProviders[FCurrentProvider]->getAboutPlace(FLat,FLng,ARadius,ATypes,ARankby,AKeyword,AWayToSearch,FNextPage,ALanguage,AId);
 }
 
@@ -168,7 +168,7 @@ void PlaceViewForm::onCurrentIndexChanged(int AType)
     Options::node(OPV_MAP_PLACEVIEW_TYPE).setValue(AType);
 //    Options::node(OPV_MAP_PLACEVIEW_TYPE).setValue(FHashPoiTypes.key(ui->cBoxType->currentText()));
 }
-void PlaceViewForm::onCurrentRadiusChanged(int ARadius)
+void PlaceViewForm::onCurrentRadiusChanged(double ARadius)
 {
     Options::node(OPV_MAP_PLACEVIEW_RADIUS).setValue(ARadius);
 }
@@ -176,7 +176,7 @@ void PlaceViewForm::onCurrentRadiusChanged(int ARadius)
 void PlaceViewForm::onBoxRankby(int APos)
 {
     Options::node(OPV_MAP_PLACEVIEW_RANKBY).setValue(APos);
-    ui->cBoxRadius->setDisabled(APos);
+	ui->dSpbRadius->setDisabled(APos);
 }
 
 void PlaceViewForm::onBoxWay(int APos)
@@ -318,7 +318,7 @@ void PlaceViewForm::onOptionsChanged(const OptionsNode &ANode)
          ui->cBoxType->setCurrentIndex(ANode.value().toInt());
 
     else if(ANode.path()==OPV_MAP_PLACEVIEW_RADIUS)
-        ui->cBoxRadius->setCurrentIndex(ANode.value().toInt());
+		ui->dSpbRadius->setValue(ANode.value().toDouble());
     else if(ANode.path()==OPV_MAP_PLACEVIEW_RANKBY)
         ui->cBoxRankby->setCurrentIndex(ANode.value().toInt());
     else if(ANode.path()==OPV_MAP_PLACEVIEW_WAY)

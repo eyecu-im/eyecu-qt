@@ -247,7 +247,7 @@
     <message>
         <source>Ctrl+I</source>
         <comment>Show contact profile</comment>
-        <translation></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>User Profile</source>

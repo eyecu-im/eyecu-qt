@@ -17,8 +17,8 @@ PlaceViewProviderGoogle::PlaceViewProviderGoogle(QObject *parent): QObject(paren
 
 void PlaceViewProviderGoogle::pluginInfo(IPluginInfo *APluginInfo)
 {
-    APluginInfo->name = tr("View photos of places From Google");
-    APluginInfo->description = tr("Allows View photos of places From Google");
+	APluginInfo->name = tr("Place view provider Google");
+	APluginInfo->description = tr("Allows to view photos of places from Google");
     APluginInfo->version = "1.0";
     APluginInfo->author = "Road Works Software";
     APluginInfo->homePage = "http://www.eyecu.ru";

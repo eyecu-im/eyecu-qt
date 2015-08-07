@@ -20,7 +20,16 @@
    <string>Street view</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="1,0">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
     <number>3</number>
    </property>
    <property name="spacing">
@@ -263,17 +272,17 @@
           </property>
           <item>
            <property name="text">
-            <string>400x300</string>
+            <string notr="true">400x300</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>640x480</string>
+            <string notr="true">640x480</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>640x640</string>
+            <string notr="true">640x640</string>
            </property>
           </item>
          </widget>

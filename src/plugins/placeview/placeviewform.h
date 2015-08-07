@@ -47,7 +47,7 @@ protected slots:
     void onClearToMap();
     void onMoveToPosition();
     void onCurrentIndexChanged(int AType);
-    void onCurrentRadiusChanged(int ARadius);
+	void onCurrentRadiusChanged(double ARadius);
     void onBoxRankby(int APos);
     void onBoxWay(int APos);
 

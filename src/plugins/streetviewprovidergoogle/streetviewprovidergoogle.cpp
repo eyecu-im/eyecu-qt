@@ -10,7 +10,7 @@ StreetViewProviderGoogle::StreetViewProviderGoogle(QObject *parent) :
 }
 void StreetViewProviderGoogle::pluginInfo(IPluginInfo *APluginInfo)
 {
-    APluginInfo->name = tr("Street View Provider Google");
+	APluginInfo->name = tr("Street View Provider Google");
     APluginInfo->description = tr("Allows to use Google as a Street View provider");
     APluginInfo->version = "1.0";
     APluginInfo->author = "Road Works Software";

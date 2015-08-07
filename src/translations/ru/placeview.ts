@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>PlaceView</name>
     <message>
@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Copy picture</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопировать картинку</translation>
     </message>
 </context>
 <context>
@@ -45,38 +45,6 @@
     <message>
         <source>Form</source>
         <translation>Форма</translation>
-    </message>
-    <message>
-        <source>0.5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>3.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>5.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>10.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>20.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>40.0</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>50.0</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Search status</source>
@@ -520,27 +488,23 @@
     </message>
     <message>
         <source>Key Word</source>
-        <translation>Ключевое слово</translation>
+        <translation type="obsolete">Ключевое слово</translation>
     </message>
     <message>
         <source>Way To Search</source>
-        <translation>Способ поиска</translation>
+        <translation type="obsolete">Способ поиска</translation>
     </message>
     <message>
         <source>Radius, km</source>
-        <translation>Радиус, км</translation>
-    </message>
-    <message>
-        <source>Rankby</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Радиус, км</translation>
     </message>
     <message>
         <source>Type of place</source>
-        <translation>Тип места</translation>
+        <translation type="obsolete">Тип места</translation>
     </message>
     <message>
         <source>Way to search</source>
-        <translation>Способ поиска</translation>
+        <translation type="obsolete">Способ поиска</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -633,6 +597,26 @@
     <message>
         <source>Distance</source>
         <translation>Дистанции</translation>
+    </message>
+    <message>
+        <source>Place type</source>
+        <translation>Тип места</translation>
+    </message>
+    <message>
+        <source>Search criteria</source>
+        <translation>Критерий поиска</translation>
+    </message>
+    <message>
+        <source>Radius</source>
+        <translation>Радиус</translation>
+    </message>
+    <message>
+        <source> kilometers</source>
+        <translation>километра</translation>
+    </message>
+    <message>
+        <source>Keyword</source>
+        <translation>Ключевое слово</translation>
     </message>
 </context>
 </TS>

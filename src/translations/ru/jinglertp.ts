@@ -100,11 +100,11 @@
     </message>
     <message>
         <source>Microphone OFF</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофон ВЫКЛ</translation>
     </message>
     <message>
         <source>Microphone ON</source>
-        <translation type="unfinished"></translation>
+        <translation>Микрофон ВКЛ</translation>
     </message>
 </context>
 <context>

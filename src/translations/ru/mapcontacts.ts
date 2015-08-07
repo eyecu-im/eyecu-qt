@@ -22,7 +22,7 @@
     <message>
         <source>F10</source>
         <comment>Show contact on the map (roster)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F10</translation>
     </message>
 </context>
 <context>

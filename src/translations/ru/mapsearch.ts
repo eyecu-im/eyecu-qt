@@ -26,7 +26,7 @@
     <message>
         <source>Ctrl+C</source>
         <comment>Clear</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+C</translation>
     </message>
     <message>
         <source>Toggle showing search results on the map</source>
@@ -35,7 +35,7 @@
     <message>
         <source>Alt+S</source>
         <comment>Toggle showing search results on the map</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+S</translation>
     </message>
     <message>
         <source>Search dialog</source>
@@ -44,12 +44,12 @@
     <message>
         <source>Alt+F7</source>
         <comment>Search</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+F7</translation>
     </message>
     <message>
         <source>Alt+S</source>
         <comment>Add search result</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+S</translation>
     </message>
     <message>
         <source>Select provider</source>
@@ -58,7 +58,7 @@
     <message>
         <source>Alt+P</source>
         <comment>Select provider</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+P</translation>
     </message>
     <message>
         <source>Toggle &quot;Limit search range&quot; option</source>
@@ -67,7 +67,7 @@
     <message>
         <source>Alt+L</source>
         <comment>Toggle &quot;Limit search range&quot; option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+L</translation>
     </message>
 </context>
 <context>

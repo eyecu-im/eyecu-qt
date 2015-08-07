@@ -14,7 +14,7 @@
     <message>
         <source>Space</source>
         <comment>Pause/Play</comment>
-        <translation type="unfinished"></translation>
+        <translation>Space</translation>
     </message>
     <message>
         <source>Mute/Unmute</source>
@@ -23,7 +23,7 @@
     <message>
         <source>M</source>
         <comment>Mute/Unmute</comment>
-        <translation type="unfinished"></translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>Volume up</source>
@@ -32,7 +32,7 @@
     <message>
         <source>Up</source>
         <comment>Volume up</comment>
-        <translation type="unfinished"></translation>
+        <translation>Up</translation>
     </message>
     <message>
         <source>Volume down</source>
@@ -41,7 +41,7 @@
     <message>
         <source>Down</source>
         <comment>Volume down</comment>
-        <translation type="unfinished"></translation>
+        <translation>Down</translation>
     </message>
     <message>
         <source>Show options dialog</source>
@@ -50,7 +50,7 @@
     <message>
         <source>Ctrl+O</source>
         <comment>Show options dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <source>Open/Stop</source>
@@ -59,7 +59,7 @@
     <message>
         <source>Return</source>
         <comment>Open/Stop</comment>
-        <translation type="unfinished"></translation>
+        <translation>Return</translation>
     </message>
     <message>
         <source>Show/Hide player window</source>
@@ -68,7 +68,7 @@
     <message>
         <source>F9</source>
         <comment>Show/Hide</comment>
-        <translation type="unfinished"></translation>
+        <translation>F9</translation>
     </message>
     <message>
         <source>Allows to play multimedia streams during file transfer</source>

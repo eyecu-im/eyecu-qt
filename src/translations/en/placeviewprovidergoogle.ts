@@ -1,22 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
-<context>
-    <name>PlaceViewProviderGoogle</name>
-    <message>
-        <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="20"/>
-        <source>View photos of places From Google</source>
-        <translation>View photos of places From Google</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="21"/>
-        <source>Allows View photos of places From Google</source>
-        <translation>Allows View photos of places From Google</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.h" line="39"/>
-        <source>Google</source>
-        <translation>Google</translation>
-    </message>
-</context>
+ <context>
+  <name>PlaceViewProviderGoogle</name>
+  <message>
+   <source>View photos of places From Google</source>
+   <translation type="obsolete">View photos of places From Google</translation>
+  </message>
+  <message>
+   <source>Allows View photos of places From Google</source>
+   <translation type="obsolete">Allows View photos of places From Google</translation>
+  </message>
+  <message>
+   <location line="39" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.h"/>
+   <source>Google</source>
+   <translation>Google</translation>
+  </message>
+  <message>
+   <location line="20" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
+   <source>Place view provider Google</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location line="21" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
+   <source>Allows to view photos of places from Google</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
 </TS>

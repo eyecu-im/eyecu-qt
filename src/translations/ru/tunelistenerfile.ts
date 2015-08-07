@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>XML</source>
-        <translation type="unfinished"></translation>
+        <translation>XML</translation>
     </message>
     <message>
         <source>Plain text (*.txt *.log)</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>XML (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>XML (*.xml)</translation>
     </message>
     <message>
         <source>File</source>

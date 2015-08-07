@@ -41,18 +41,6 @@
         <translation>Просмотр</translation>
     </message>
     <message>
-        <source>400x300</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>640x480</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>640x640</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please wait....</source>
         <translation>Пожалуйста, подождите...</translation>
     </message>

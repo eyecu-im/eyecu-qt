@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>I&apos;m away from my desk</source>
-        <translation type="unfinished"></translation>
+        <translation>Я отошёл от рабочего места</translation>
     </message>
 </context>
 <context>

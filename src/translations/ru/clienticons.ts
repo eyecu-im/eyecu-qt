@@ -26,11 +26,11 @@
     <message>
         <source>F3</source>
         <comment>Show software version (chat)</comment>
-        <translation type="unfinished"></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <source>Display client icon</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображать иконку клиента</translation>
     </message>
 </context>
 </TS>

@@ -109,7 +109,7 @@
     <message>
         <source>F8</source>
         <comment>Magnifier</comment>
-        <translation type="unfinished"></translation>
+        <translation>F8</translation>
     </message>
     <message>
         <source>x%1</source>
@@ -126,7 +126,7 @@
     <message>
         <source>Alt++</source>
         <comment>Zoom In</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt++</translation>
     </message>
     <message>
         <source>Zoom out</source>
@@ -135,7 +135,7 @@
     <message>
         <source>Alt+-</source>
         <comment>Zoom Out</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alt+-</translation>
     </message>
 </context>
 </TS>
