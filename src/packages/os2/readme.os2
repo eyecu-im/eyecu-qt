@@ -57,4 +57,4 @@ This document describes OS/2(eCS)-specific notes for eyeCU.
   There are a few issues in Qt4 for OS/2 and eComStation, which affect eyeCU:
   3.1 Bugs
    3.1.1 "Show corresponding window minimazed in taskbar" notification option cause problems with notifications. This notification type should be off for every event.
-   3.1.2 SHortcuts (hotkeys) are keyboard layer dependent. So, 
+   3.1.2 Shortcuts (hotkeys) are keyboard layer dependent. So, 
