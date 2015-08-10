@@ -525,18 +525,11 @@ void Attention::onWindowActivated()
 
 void Attention::onNotificationAppended(int ANotifyId, const INotification &ANotification)
 {
-    if (ANotification.typeId==NNT_ATTENTION)
+	if (ANotification.typeId==NNT_ATTENTION && (ANotification.kinds & AttentionPopup))
     {
-        if (ANotification.kinds & AttentionPopup)
-        {
-            AttentionDialog *dialog=new AttentionDialog(ANotifyId, ANotification, FNotifications);
-			dialog->setWindowFlags(Qt::WindowStaysOnTopHint);
-#if Q_WS_X11
-			dialog->setWindowFlags(Qt::X11BypassWindowManagerHint);
-#endif
-            FAttentionDialogs.insert(ANotifyId, dialog);
-			WidgetManager::showActivateRaiseWindow(dialog);
-        }
+		AttentionDialog *dialog=new AttentionDialog(ANotifyId, ANotification, FNotifications);
+		FAttentionDialogs.insert(ANotifyId, dialog);
+		WidgetManager::showActivateRaiseWindow(dialog);
     }
 }
 

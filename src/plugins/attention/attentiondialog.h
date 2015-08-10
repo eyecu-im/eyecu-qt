@@ -13,7 +13,7 @@ class AttentionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AttentionDialog(int ANotifyId, const INotification &ANotification, INotifications *ANotifications=0, QWidget *parent=0);
+	AttentionDialog(int ANotifyId, const INotification &ANotification, INotifications *ANotifications=0, QWidget *parent=0);
     ~AttentionDialog();
     Ui::AttentionDialog *ui;
 

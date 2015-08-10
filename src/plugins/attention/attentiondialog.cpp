@@ -16,6 +16,11 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+	Qt::WindowFlags flags = Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowSystemMenuHint|Qt::WindowStaysOnTopHint;
+#if Q_WS_X11
+	flags|=Qt::X11BypassWindowManagerHint;
+#endif
+	setWindowFlags(flags);
     setWindowTitle(ANotification.data.value(NDR_POPUP_TITLE).toString());
     IconStorage *iconStorage=IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	setWindowIcon(iconStorage->getIcon(MNI_ATTENTION));
