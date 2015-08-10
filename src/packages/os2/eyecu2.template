@@ -1464,6 +1464,8 @@
 	>Symbol files
 </PCK>
 
+<GROUP TITLE="Qt Serial Port">
+
 <PCK 	INDEX=300
 	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\0"
 	TITLE="QtSerialPort runtime"
@@ -1486,10 +1488,14 @@
 	(c) Road Works Software
 </PCK>
 
+</GROUP>
+
+<GROUP TITLE="Qt Purple">
+
 <PCK 	INDEX=400
 	PACKAGEID="Purple Soft\QtPurple\Util\1\0\0"
 	TITLE="QtUtil library"
-	EXTERNAL="QtPurple2-1.0.0.wpi"
+	EXTERNAL="qtpurple-1.0.0.wpi"
 	TARGET='=("FindQtRuntime")\lib'
 	FIXED
 	SELECT
@@ -1500,7 +1506,7 @@
 <PCK 	INDEX=410
 	PACKAGEID="Purple Soft\QtPurple\Geo\1\0\0"
 	TITLE="QtGeo library"
-	EXTERNAL="QtPurple2-1.0.0.wpi"
+	EXTERNAL="qtpurple-1.0.0.wpi"
 	TARGET='=("FindQtRuntime")\lib'
 	FIXED
 	SELECT
@@ -1508,12 +1514,14 @@
 	(c) Porple Soft
 </PCK>
 
-<GROUP TITLE="Language packs">
+</GROUP>
+
+<GROUP TITLE="Language packs (Qt Purple)">
 	<PCK 	INDEX=411
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1524,7 +1532,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1535,7 +1543,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1546,7 +1554,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1557,7 +1565,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1568,7 +1576,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1579,7 +1587,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT
@@ -1590,7 +1598,7 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="QtPurple2-1.0.0.wpi"
+		EXTERNAL="qtpurple-1.0.0.wpi"
 		TARGET='=("FindQtRuntime")\share\qt4\translations'
 		FIXED
 		SELECT

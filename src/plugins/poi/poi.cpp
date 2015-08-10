@@ -1132,7 +1132,7 @@ void Poi::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 
         action = new Action(menu);
         action->setText(tr("Insert location"));
-		action->setIcon(RSR_STORAGE_MAP,MPI_NEWCENTER);
+		action->setIcon(RSR_STORAGE_MAPICONS,MPI_NEWCENTER);
         action->setData(ADR_MESSAGE_TYPE, Message::Normal);
         action->setData(ADR_CONTACT_JID, contactJid.full());
         action->setData(ADR_STREAM_JID, streamJid.full());
@@ -1624,7 +1624,7 @@ void Poi::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 
             action = new Action(menu);
             action->setText(tr("Insert location"));
-			action->setIcon(RSR_STORAGE_MAP,MPI_NEWCENTER);
+			action->setIcon(RSR_STORAGE_MAPICONS,MPI_NEWCENTER);
             action->setData(ADR_MESSAGE_TYPE, Message::Chat);
             action->setData(ADR_CONTACT_JID, AChatWindow->contactJid().full());
             action->setData(ADR_STREAM_JID, AChatWindow->streamJid().full());
