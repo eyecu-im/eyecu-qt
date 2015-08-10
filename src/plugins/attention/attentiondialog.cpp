@@ -16,8 +16,11 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-	Qt::WindowFlags flags = Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowSystemMenuHint|Qt::WindowStaysOnTopHint;
-#if Q_WS_X11
+	Qt::WindowFlags flags = Qt::Dialog|Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowStaysOnTopHint;
+#ifndef Q_WS_PM
+	flags|=Qt::WindowSystemMenuHint;
+#endif
+#ifdef Q_WS_X11
 	flags|=Qt::X11BypassWindowManagerHint;
 #endif
 	setWindowFlags(flags);
