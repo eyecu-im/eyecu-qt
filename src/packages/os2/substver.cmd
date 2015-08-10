@@ -5,7 +5,6 @@ parse arg FILENAME VERSION
 say 'filename="'||FILENAME||'"'
 say 'version="'||VERSION||'"'
 
-
 parse var VERSION MAJOR '.' MINOR '.' PATCH '.' REV
 
 say "MAJOR="||MAJOR

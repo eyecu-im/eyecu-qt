@@ -306,7 +306,7 @@ QGraphicsItem *PlaceView::mapData(SceneObject *ASceneObject, int ARole, QGraphic
     switch (ARole)
     {
         case MDR_PLACEVIEW_ICON:
-			pixmap = IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_VIEWCENTER).pixmap(32);
+			pixmap = IconStorage::staticStorage(RSR_STORAGE_MAPICONS)->getIcon(MPI_VIEWCENTER).pixmap(32);
             if (!pixmap.isNull())
             {
                 if (ACurrentElement)

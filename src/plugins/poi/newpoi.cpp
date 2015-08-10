@@ -62,7 +62,7 @@ void NewPoi::onMoreClicked()
 void NewPoi::init()
 {
     if (FMapLocationSelector)
-		ui->selectLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_NEWCENTER));
+		ui->selectLocation->setIcon(IconStorage::staticStorage(RSR_STORAGE_MAPICONS)->getIcon(MPI_NEWCENTER));
     ui->pbTimestamp->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_CLIENTINFO_TIME));
 
     fillCountryMap();
