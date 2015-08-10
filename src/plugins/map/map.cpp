@@ -132,19 +132,18 @@ bool Map::initObjects()
 	Shortcuts::declareShortcut(SCT_MAP_ZOOM_OUT, tr("Out"), tr("-", "Map zoom out"), Shortcuts::WindowShortcut);
 
 	MapTile::buildNotFound();
-	MapTile::setLoading(IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_HOURGLASS).pixmap(256, 256));
-	MapHttpQuery::setNetworkAccessManager(FNetworkAccessManager);
-
-	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MAP);
+	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MAPICONS);
+	MapTile::setLoading(FIconStorage->getIcon(MPI_HOURGLASS).pixmap(256, 256));
+	MapHttpQuery::setNetworkAccessManager(FNetworkAccessManager);	
 
 	FMenuMap = new Menu;
 	FMenuMap->setTitle(tr("Map"));
-	FMenuMap->setIcon(RSR_STORAGE_MAP, MPI_MAP);
+	FMenuMap->setIcon(RSR_STORAGE_MENUICONS, MNI_MAP);
 	FMenuMap->menuAction()->setEnabled(true);
 
 	FMenuToolbar = new Menu;
 	FMenuToolbar->setTitle(tr("Map"));
-	FMenuToolbar->setIcon(RSR_STORAGE_MAP, MPI_MAP);
+	FMenuToolbar->setIcon(RSR_STORAGE_MENUICONS, MNI_MAP);
 	FMenuToolbar->menuAction()->setEnabled(true);
 	FMenuToolbar->menuAction()->setCheckable(true);
 
@@ -288,7 +287,7 @@ void Map::onShutdownStarted()
 void Map::fillMenu()
 {
 	Action *action;
-	FMyLocation = addMenuAction(tr("My location"), RSR_STORAGE_MAP, MPI_MYLOCATION, 1);
+	FMyLocation = addMenuAction(tr("My location"), RSR_STORAGE_MAPICONS, MPI_MYLOCATION, 1);
 	FMyLocation->setShortcutId(SCT_MAP_MYLOCATION);
 	FMyLocation->setDisabled(FFollowMyLocation);
 	FMapForm->showMapCenter(!FFollowMyLocation);
@@ -297,7 +296,7 @@ void Map::fillMenu()
 	FMenuMap->insertSeparator(FMyLocation);
 	FMenuToolbar->insertSeparator(FMyLocation);
 
-	action = addMenuAction(tr("New center"), RSR_STORAGE_MAP, MPI_NEWCENTER, 1);
+	action = addMenuAction(tr("New center"), RSR_STORAGE_MAPICONS, MPI_NEWCENTER, 1);
 	action->setShortcutId(SCT_MAP_NEWCENTER);
 	connect(action, SIGNAL(triggered(bool)), FMapForm, SLOT(onSetNewCenter()));
 

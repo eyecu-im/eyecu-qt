@@ -12,11 +12,12 @@ PositioningOptions::PositioningOptions(IPositioning *APosition, QHash<QUuid, IPo
 	Q_UNUSED(APosition)
 
     ui->setupUi(this);
-    ui->cBoxSource->addItem(tr("No positioning"), QUuid().toString());
+	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
+	ui->cBoxSource->addItem(menuicons->getIcon(MNI_GEOLOC_OFF), tr("No positioning"), QUuid().toString());
     for (QHash<QUuid, IPositioningMethod *>::ConstIterator it=ASenderList.constBegin(); it!=ASenderList.constEnd(); it++)
-        ui->cBoxSource->addItem((*it)->name(), it.key().toString());
+		ui->cBoxSource->addItem(menuicons->getIcon((*it)->iconId()), (*it)->name(), it.key().toString());
 
-	ui->pbOptions->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OPTIONS_DIALOG));
+	ui->pbOptions->setIcon(menuicons->getIcon(MNI_OPTIONS_DIALOG));
 
     connect(ui->cBoxSource,SIGNAL(currentIndexChanged(int)),SIGNAL(modified()));
     reset();

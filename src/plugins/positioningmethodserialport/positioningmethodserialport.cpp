@@ -57,7 +57,7 @@ bool PositioningMethodSerialPort::initSettings()
 
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_SERIALPORT, OPN_POSITIONING"."+pluginUuid().toString(), MNI_SERIALPORT, tr("Serial port")};
+		IOptionsDialogNode dnode = {ONO_SERIALPORT, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_SERIALPORT, tr("Serial port")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }

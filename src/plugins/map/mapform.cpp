@@ -170,8 +170,7 @@ void MapForm::showCentralPage(bool AMinimized)
 
 QIcon MapForm::centralPageIcon() const
 {
-	return FMapSource?IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(FMapSource->getIconId())
-					 :IconStorage::staticStorage(RSR_STORAGE_MAP)->getIcon(MPI_MAP);
+	return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(FMapSource?FMapSource->getIconId():MNI_MAP);
 }
 
 QString MapForm::centralPageCaption() const

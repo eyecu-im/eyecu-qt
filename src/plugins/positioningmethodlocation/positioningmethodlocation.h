@@ -37,10 +37,12 @@ public:
     virtual bool initObjects();
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
-    //IPositioningProvider
+
+	//IPositioningMethod
     virtual QString name() const {return tr("Location", "This is the name of positioning method. Please, leave it untranslated, if not sure, what does that mean!");}
     virtual bool select(bool ASelect);
     virtual State state() const {return FCurrentState;}
+	virtual QString iconId() const {return MNI_POSITIONING_LOCATION;}
 
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)

@@ -40,7 +40,7 @@ QString PositioningMethodIpProviderFreegeoip::name() const
 
 QIcon PositioningMethodIpProviderFreegeoip::icon() const
 {
-	return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_POSITIONING_PROV_FREEGEOIP);
+	return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_POSITIONING_IP_FREEGEOIP);
 }
 
 void PositioningMethodIpProviderFreegeoip::parseResult(QByteArray ASearchResult)

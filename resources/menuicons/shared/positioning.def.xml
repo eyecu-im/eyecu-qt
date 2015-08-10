@@ -4,6 +4,6 @@
  <icon><key>positioningSerialport</key><object mime="image/png">serialport.png</object></icon>
  <icon><key>positioningLocation</key><object mime="image/png">location.png</object></icon>
  <icon><key>positioningManual</key><object mime="image/png">manual.png</object></icon>
- <icon><key>positioningGeoIp</key><object mime="image/gif">geoip.gif</object></icon>
- <icon><key>positioningFreeGeoIp</key><object mime="image/png">freegeoip.png</object></icon>
+ <icon><key>positioningGeoip</key><object mime="image/gif">geoip.gif</object></icon>
+ <icon><key>positioningIpFreegeoip</key><object mime="image/png">freegeoip.png</object></icon>
 </icondef>

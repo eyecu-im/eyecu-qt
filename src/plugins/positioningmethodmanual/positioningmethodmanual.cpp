@@ -81,7 +81,7 @@ bool PositioningMethodManual::initSettings()
 
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_MANUAL, OPN_POSITIONING"."+pluginUuid().toString(), MNI_MANUAL, tr("Manual")};
+		IOptionsDialogNode dnode = {ONO_MANUAL, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_MANUAL, tr("Manual")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }

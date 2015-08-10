@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
-
- <icon><key>jingle</key><object mime="image/png">jingle.png</object></icon>
- <icon><key>voip</key><object mime="image/png">voip.png</object></icon>
- <icon><key>voip_active</key><object mime="image/png">voip_active.png</object></icon>
-
+ <icon>
+  <key>jingle</key>
+  <object mime="image/png">jingle.png</object>
+ </icon>
+ <icon>
+  <key>jingleRtp</key>
+  <object mime="image/png">jinglertp.png</object>
+ </icon>
 </icondef>

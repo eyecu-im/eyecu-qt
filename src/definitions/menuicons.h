@@ -323,13 +323,13 @@
 
 //Positioning
 #define MNI_POSITIONING                 "positioning"
-#define MNI_SERIALPORT                  "serialport"
-#define MNI_MANUAL                      "manual"
-#define MNI_LOCATION                    "location"
-#define MNI_GEOIP                       "geoip"
+#define MNI_POSITIONING_SERIALPORT      "positioningSerialport"
+#define MNI_POSITIONING_MANUAL          "positioningManual"
+#define MNI_POSITIONING_LOCATION        "positioningLocation"
+#define MNI_POSITIONING_GEOIP           "positioningGeoip"
 
 //Positioning providers
-#define MNI_POSITIONING_PROV_FREEGEOIP  "freegeoip"
+#define MNI_POSITIONING_IP_FREEGEOIP    "positioningIpFreegeoip"
 
 //Edit
 #define MNI_EDIT                        "edit"
@@ -359,7 +359,7 @@
 
 //JINGLE
 #define MNI_JINGLE                      "jingle"
-#define MNI_JINGLE_RTP                  "jinglertp"
+#define MNI_JINGLE_RTP                  "jingleRtp"
 
 // >>> eyeCU >>>
 

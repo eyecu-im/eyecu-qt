@@ -41,10 +41,11 @@ public:
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
 
-    //IPositioningProvider
+	//IPositioningMethod
     virtual QString name() const {return tr("Serial port");}
     virtual bool select(bool ASelect);
     virtual State state() const {return FCurrentState;}
+	virtual QString iconId() const {return MNI_POSITIONING_SERIALPORT;}
 
     bool isActive() const {return FSerialRead != NULL && FDataSend;}
     SerialRead *reader() const {return FSerialRead;}
@@ -66,7 +67,7 @@ protected slots:
     void startPort(bool AStart);
 
 signals:
-    //IPositioningProvider
+	//IPositioningMethod
     void stateChanged(int AState);
 	void newPositionAvailable(const GeolocElement &APosition);
     void newSatelliteDataAvailable(const SatelliteDataMap &ASateliteData);

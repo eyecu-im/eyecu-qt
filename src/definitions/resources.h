@@ -8,7 +8,7 @@
 #define RSR_STORAGE_SOUNDS                  "sounds"
 #define RSR_STORAGE_ADIUMMESSAGESTYLES      "adiummessagestyles"
 #define RSR_STORAGE_SIMPLEMESSAGESTYLES     "simplemessagestyles"
-#define RSR_STORAGE_MAP                     "mapicons"
+#define RSR_STORAGE_MAPICONS                "mapicons"
 #define RSR_STORAGE_MAPSEARCH_NAVITEL       "navitel"
 #define RSR_STORAGE_ACTIVITY                "activityicons"
 #define RSR_STORAGE_MOOD                    "moodicons"

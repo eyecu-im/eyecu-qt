@@ -45,10 +45,11 @@ public:
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
 
-    //IPositioningProvider
+	//IPositioningMethod
     virtual QString name() const {return tr("Manual");}
     virtual bool select(bool ASelect);
     virtual State state() const {return FCurrentState;}
+	virtual QString iconId() const {return MNI_POSITIONING_MANUAL;}
 
     //IOptionsHolder
     virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);    

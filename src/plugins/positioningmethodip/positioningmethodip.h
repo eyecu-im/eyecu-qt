@@ -3,11 +3,13 @@
 
 #include <QTimer>
 
+#include <definitions/menuicons.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipositioning.h>
 #include <interfaces/ipositioningmethodipprovider.h>
 #include <interfaces/iconnectionmanager.h>
+
 #include <GeolocElement>
 
 #include "positioningmethodipoptions.h"
@@ -36,10 +38,12 @@ public:
     virtual bool initObjects();
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
-    //IPositioningProvider
+
+	//IPositioningMethod
 	virtual QString name() const {return tr("IP-based");}
     virtual bool select(bool ASelect);
     virtual State state() const {return FCurrentState;}
+	virtual QString iconId() const {return MNI_POSITIONING_GEOIP;}
 
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);

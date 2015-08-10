@@ -2,7 +2,6 @@
 #include <definitions/optionwidgetorders.h>
 #include <definitions/optionnodeorders.h>
 #include <definitions/optionvalues.h>
-#include <definitions/menuicons.h>
 
 #include "positioningmethodip.h"
 
@@ -73,7 +72,7 @@ bool PositioningMethodIp::initSettings()
 	Options::setDefaultValue(OPV_POSITIONING_METHOD_IP_PROXY, APPLICATION_PROXY_REF_UUID);
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_POSITIONING, OPN_POSITIONING"."+pluginUuid().toString(), MNI_GEOIP, tr("IP-based")};
+		IOptionsDialogNode dnode = {ONO_POSITIONING, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_GEOIP, tr("IP-based")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
