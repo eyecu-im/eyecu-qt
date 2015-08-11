@@ -21,6 +21,8 @@ This document describes OS/2(eCS)-specific notes for eyeCU.
   1.1.3 eCo Software Runtime version 2011.08.04 or later. Could be installed automatically with WarpIN. In eComStation 2.1 or later it should be installed during OS installation.
 
   1.1.4 Extended System Tray version 0.1.1 or later. Could be installed automatically with WarpIN. In eComStation 2.2 or later it should be installed during OS installation.
+  1.1.5 Qt Purple libraries v1.0.0 or later. Could be installed automatically with WarpIN. Just put qtpurple-1.0.0.wpi where eyecu-1.3.0.xxxxxxxx.wpi resides.
+  1.1.6 Qt Serial Port library v1.1.0 or later needs for Serial Port Positioning Mthod to be installed. Could be installed automatically with WarpIN. Just put qtserialport-1.1.0.wpi where eyecu-1.3.0.xxxxxxxx.wpi resides.
 
  1.2 Component selection
   eyeCU installation package consists of a lot of packages. Some of them are grouped together for your convenience. Most of them are selected by default and the only reason to deselect them is to reduce disk space needed on installation drive. You may always disable any plugin after installation,so if you're unsure if you need feature or not, you'd better not deselect it during installation.
@@ -51,10 +53,3 @@ This document describes OS/2(eCS)-specific notes for eyeCU.
    MP3 player by dink. Abandoned since 2008.
   2.1.3 PM123 / PM123 Classic
    A powerful PM audio player by Glassman. Currently under active development.
-   
-3. Known issues
----------------
-  There are a few issues in Qt4 for OS/2 and eComStation, which affect eyeCU:
-  3.1 Bugs
-   3.1.1 "Show corresponding window minimazed in taskbar" notification option cause problems with notifications. This notification type should be off for every event.
-   3.1.2 Shortcuts (hotkeys) are keyboard layer dependent. So, 

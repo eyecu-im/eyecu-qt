@@ -108,15 +108,6 @@
 	>Start eyeCU automatically, by placing its shadow into Startup folder
 </PCK>
 
-<PCK 	INDEX=3
-	PACKAGEID="Road Works Software\eyeCU\Spellchecker\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Spellchecker"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=1
-	>Highlits possibly wrongly spelled words
-</PCK>
-
 <PCK 	INDEX=4
 	PACKAGEID="Road Works Software\eyeCU\Statistics\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Google statistics"
@@ -183,7 +174,7 @@
 <GROUP TITLE="Adium message styles">
 
 <PCK 	INDEX=11
-	PACKAGEID="Road Works Software\eyeCU\Adium style: Renkoo\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	PACKAGEID="Road Works Software\eyeCU\Adium style: Renkoo\2\5"
 	TITLE="Adium message style: Renkoo"
 	TARGET="$(1)" FIXED
 	SELECT
@@ -193,7 +184,7 @@
 </PCK>
 
 <PCK 	INDEX=12
-	PACKAGEID="Road Works Software\eyeCU\Adium style: yMous\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	PACKAGEID="Road Works Software\eyeCU\Adium style: yMous\1\3\6"
 	TITLE="Adium message style: yMous"
 	TARGET="$(1)" FIXED
 	SELECT
@@ -204,6 +195,24 @@
 
 </GROUP>
 
+<PCK 	INDEX=13
+	PACKAGEID="Road Works Software\eyeCU\Autostatus\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Autostatus"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to change user's presence automatically, due to inactivity
+</PCK>
+
+<PCK 	INDEX=14
+	PACKAGEID="Road Works Software\eyeCU\Iq authentication\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Authentication via iq queries"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=1
+	>Allows to authenticate on Jabber server
+	without SASL authentication
+</PCK>
 
 <PCK 	INDEX=15
 	PACKAGEID="Road Works Software\eyeCU\Gateways\%MAJOR%\%MINOR%\%PATCH%\%REV%"
@@ -427,118 +436,145 @@
 </PCK>
 
 <PCK 	INDEX=40
-	PACKAGEID="Road Works Software\eyeCU\Data forms\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Data forms"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Spellchecker"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=1
-	>eyeCU - Data forms plugin
-	(c) Road Works Software
+	>Highlits possibly msspelled words
 </PCK>
 
+<GROUP TITLE="Spell checker dictionaries">
+
 <PCK 	INDEX=41
-	PACKAGEID="Road Works Software\eyeCU\Commands\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Ad-hoc commands"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_GB\2\26"
+	TITLE="English (Great Britain)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=40
-	>eyeCU - Ad-hoc commands plugin
-	(c) Road Works Software
+	>English (Great Britain) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=42
-	PACKAGEID="Road Works Software\eyeCU\Captcha\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Captcha forms"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_US\1\0"
+	TITLE="English (United States)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=37
-	REQUIRES=40
-	>eyeCU - Captcha forms plugin
-	(c) Road Works Software
+	>English (United States) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=43
-	PACKAGEID="Road Works Software\eyeCU\Remote control\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Remote control"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_NZ\1\14"
+	TITLE="English (New Zeland)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=40
-	REQUIRES=41
-	>eyeCU - Remote control plugin
-	(c) Road Works Software
+	>English (New Zeland) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=44
-	PACKAGEID="Road Works Software\eyeCU\Registration\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Registration"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_CA\1\0"
+	TITLE="English (Canada)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=40
-	REQUIRES=41
-	>eyeCU - Registration plugin
-	(c) Road Works Software
+	>English (Canada) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=45
-	PACKAGEID="Road Works Software\eyeCU\Session negotiation\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Session negotiation"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_AU\1\1\0"
+	TITLE="English (Australia)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=40
-	>Allows to negotiate a session between two entities, which defines rules of XMPP stanza exchange
+	>English (Australia) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=46
-	PACKAGEID="Road Works Software\eyeCU\File transfer\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="File transfer"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_ZA\1\18"
+	TITLE="English (South Africa)"
 	TARGET="$(1)" FIXED
 	SELECT
-	>eyeCU - Plugins for File transfer
-	(c) Road Works Software
+	>English (South Africa) Spellchecker dictionary
 </PCK>
 
-<GROUP TITLE="File stream types">
-
 <PCK 	INDEX=47
-	PACKAGEID="Road Works Software\eyeCU\SOCKS5\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="SOCKS5 streams"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RU\1\0"
+	TITLE="Russian (Russia)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=46
-	>eyeCU - SOCKS5 streams plugin
-	(c) Road Works Software
+	>Russian (Russia) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=48
-	PACKAGEID="Road Works Software\eyeCU\IBB\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="In-band bytestreams"
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_AOT\0\3\9"
+	TITLE="Russian (AOT)"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES=46
-	>eyeCU - In-band bytestreams plugin
-	(c) Road Works Software
+	>Russian (AOT) Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=49
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RK\1\0"
+	TITLE="Russian (Roganoff-Knizhnik)"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Russian (Roganoff-Knizhnik) Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=50
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_AT_frami\2013\12\06"
+	TITLE="Deutsch (Austria/Frami)"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Deutsch (Austria/Frami) Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=51
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_frami\2013\12\06"
+	TITLE="Deutsch (Germany/Frami)"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Deutsch (Germany/Frami) Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=52
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_igerman98\2011\06\09"
+	TITLE="Deutsch (Germany/igerman98)"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Deutsch (Germany/igerman98) Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=53
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-pl_PL\1\0"
+	TITLE="Polish"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Polish Spellchecker dictionary
+</PCK>
+
+
+<PCK 	INDEX=54
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-uk_UA\1\0"
+	TITLE="Ukrainian"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Ukrainian Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=55
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-nl_NL\2\0\b2"
+	TITLE="Dutch"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Dutch Spellchecker dictionary
+</PCK>
+
+<PCK 	INDEX=56
+	PACKAGEID="Road Works Software\eyeCU\Spellchecker-es_ES\1\0"
+	TITLE="Spanish"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Spanish Spellchecker dictionary
 </PCK>
 
 </GROUP>
-
-<PCK 	INDEX=58
-	PACKAGEID="Road Works Software\eyeCU\Autostatus\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Autostatus"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=1
-	>Allows to change user's presence automatically, due to inactivity
-</PCK>
-
-<PCK 	INDEX=59
-	PACKAGEID="Road Works Software\eyeCU\Iq authentication\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Authentication via iq queries"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=1
-	>Allows to authenticate on Jabber server
-	without SASL authentication
-</PCK>
 
 <GROUP TITLE="Status icons">
 
@@ -1088,24 +1124,47 @@
 </PCK>
 
 <PCK 	INDEX=140
-	PACKAGEID="Road Works Software\eyeCU\Street view\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Street view"
+	PACKAGEID="Road Works Software\eyeCU\Data forms\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Data forms"
 	TARGET="$(1)" FIXED
 	SELECT
-	>Allows to view street-level imagery
+	REQUIRES=1
+	>eyeCU - Data forms plugin
+	(c) Road Works Software
 </PCK>
 
-<GROUP TITLE="Street view providers">
-	<PCK 	INDEX=141
-		PACKAGEID="Road Works Software\eyeCU\Street view provider: Google\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-		TITLE="Google street view provider"
-		TARGET="$(1)" FIXED
-		SELECT
-		REQUIRES=140
-		>Allows to use Google as a Street View provider
-	</PCK>
+<PCK 	INDEX=141
+	PACKAGEID="Road Works Software\eyeCU\Commands\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Ad-hoc commands"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=140
+	>eyeCU - Ad-hoc commands plugin
+	(c) Road Works Software
+</PCK>
 
-</GROUP>
+<PCK 	INDEX=142
+	PACKAGEID="Road Works Software\eyeCU\Captcha\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Captcha forms"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=37
+	REQUIRES=140
+	>eyeCU - Captcha forms plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=143
+	PACKAGEID="Road Works Software\eyeCU\Remote control\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Remote control"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=140
+	REQUIRES=141
+	>eyeCU - Remote control plugin
+	(c) Road Works Software
+</PCK>
+
 
 <PCK 	INDEX=145
 	PACKAGEID="Road Works Software\eyeCU\Place view\%MAJOR%\%MINOR%\%PATCH%\%REV%"
@@ -1124,6 +1183,26 @@
 		SELECT
 		REQUIRES=45
 		>Allows to use Google as a Place View provider
+	</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=147
+	PACKAGEID="Road Works Software\eyeCU\Street view\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Street view"
+	TARGET="$(1)" FIXED
+	SELECT
+	>Allows to view street-level imagery
+</PCK>
+
+<GROUP TITLE="Street view providers">
+	<PCK 	INDEX=148
+		PACKAGEID="Road Works Software\eyeCU\Street view provider: Google\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+		TITLE="Google street view provider"
+		TARGET="$(1)" FIXED
+		SELECT
+		REQUIRES=147
+		>Allows to use Google as a Street View provider
 	</PCK>
 
 </GROUP>
@@ -1374,7 +1453,60 @@
 
 </GROUP>
 
+<PCK 	INDEX=183
+	PACKAGEID="Road Works Software\eyeCU\Registration\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Registration"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=140
+	REQUIRES=141
+	>eyeCU - Registration plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=184
+	PACKAGEID="Road Works Software\eyeCU\Session negotiation\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Session negotiation"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=140
+	>Allows to negotiate a session between two entities, which defines rules of XMPP stanza exchange
+</PCK>
+
 <PCK 	INDEX=185
+	PACKAGEID="Road Works Software\eyeCU\File transfer\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="File transfer"
+	TARGET="$(1)" FIXED
+	SELECT
+	>eyeCU - Plugins for File transfer
+	(c) Road Works Software
+</PCK>
+
+<GROUP TITLE="File stream types">
+
+<PCK 	INDEX=186
+	PACKAGEID="Road Works Software\eyeCU\SOCKS5\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="SOCKS5 streams"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=46
+	>eyeCU - SOCKS5 streams plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=187
+	PACKAGEID="Road Works Software\eyeCU\IBB\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="In-band bytestreams"
+	TARGET="$(1)" FIXED
+	SELECT
+	REQUIRES=46
+	>eyeCU - In-band bytestreams plugin
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<PCK 	INDEX=189
 	PACKAGEID="Road Works Software\eyeCU\Documentation\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Documentation"
 	TARGET="$(1)\doc"
