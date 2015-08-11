@@ -465,7 +465,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_NZ\1\14"
 	TITLE="English (New Zeland)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>English (New Zeland) Spellchecker dictionary
 </PCK>
 
@@ -473,7 +472,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_CA\1\0"
 	TITLE="English (Canada)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>English (Canada) Spellchecker dictionary
 </PCK>
 
@@ -481,7 +479,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_AU\1\1\0"
 	TITLE="English (Australia)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>English (Australia) Spellchecker dictionary
 </PCK>
 
@@ -489,7 +486,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_ZA\1\18"
 	TITLE="English (South Africa)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>English (South Africa) Spellchecker dictionary
 </PCK>
 
@@ -505,7 +501,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_AOT\0\3\9"
 	TITLE="Russian (AOT)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>Russian (AOT) Spellchecker dictionary
 </PCK>
 
@@ -513,7 +508,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RK\1\0"
 	TITLE="Russian (Roganoff-Knizhnik)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>Russian (Roganoff-Knizhnik) Spellchecker dictionary
 </PCK>
 
@@ -521,7 +515,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_AT_frami\2013\12\06"
 	TITLE="Deutsch (Austria/Frami)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>Deutsch (Austria/Frami) Spellchecker dictionary
 </PCK>
 
@@ -537,7 +530,6 @@
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_igerman98\2011\06\09"
 	TITLE="Deutsch (Germany/igerman98)"
 	TARGET="$(1)" FIXED
-	SELECT
 	>Deutsch (Germany/igerman98) Spellchecker dictionary
 </PCK>
 
