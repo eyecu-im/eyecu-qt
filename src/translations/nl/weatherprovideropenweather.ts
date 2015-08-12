@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/weatherprovideropenweather/weatherprovideropenweather.cpp" line="14"/>
    <source>Allows to use OpenWeatherMap as a Weather Provider</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om OpenWeatherMap als een Weer Provider te gebruiken</translation>
   </message>
   <message>
    <location filename="../../plugins/weatherprovideropenweather/weatherprovideropenweather.cpp" line="33"/>

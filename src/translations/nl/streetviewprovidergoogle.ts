@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="14"/>
    <source>Allows to use Google as a Street View provider</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om Google als Straat uitzicht provider te gebruiken</translation>
   </message>
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="33"/>

@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/saslauth/saslfeaturefactory.cpp" line="24"/>
    <source>Allows to log in to Jabber server using SASL authentication</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan in te loggen op de Jabber server met ondersteuning van SASL verificatie</translation>
   </message>
   <message>
    <location filename="../../plugins/saslauth/saslfeaturefactory.cpp" line="48"/>

@@ -9,12 +9,12 @@
   <message>
    <location filename="../../plugins/inbandstreams/inbandoptionswidget.ui" line="41"/>
    <source> Bytes</source>
-   <translation type="unfinished"/>
+   <translation>Bytes</translation>
   </message>
   <message>
    <location filename="../../plugins/inbandstreams/inbandoptionswidget.ui" line="59"/>
    <source>Send data without waiting for acknowledgment of receipt</source>
-   <translation type="unfinished"/>
+   <translation>Verzenden van gegevens zonder te wachten op bevestiging van ontvangst</translation>
   </message>
  </context>
  <context>

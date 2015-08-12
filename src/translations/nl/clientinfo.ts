@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="218"/>
    <source>Share information about your OS version</source>
-   <translation type="unfinished"/>
+   <translation>Deel info over je OS2 versie</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="360"/>

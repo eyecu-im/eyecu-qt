@@ -9,7 +9,7 @@
   <message>
    <location filename="../../utils/passworddialog.cpp" line="18"/>
    <source>Save password</source>
-   <translation type="unfinished"/>
+   <translation>Paswoord opslaan</translation>
   </message>
  </context>
  <context>

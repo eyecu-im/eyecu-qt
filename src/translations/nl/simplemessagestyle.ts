@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simplemessagestyle.cpp" line="512"/>
    <source>hh:mm:ss</source>
-   <translation type="unfinished"/>
+   <translation>hh:mm:ss</translation>
   </message>
  </context>
  <context>

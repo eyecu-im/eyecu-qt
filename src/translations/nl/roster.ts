@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/roster/rostermanager.cpp" line="25"/>
    <source>Allows other modules to get information about contacts in the roster</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om van andere modules informatie te verkrijgen over contacten in de rooster</translation>
   </message>
   <message>
    <location filename="../../plugins/roster/rostermanager.cpp" line="59"/>
