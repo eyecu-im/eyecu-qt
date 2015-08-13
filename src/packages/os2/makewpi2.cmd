@@ -1,7 +1,7 @@
 @echo on
 set packagename=eyecu2
 set devpackagename=%packagename%-dev
-set version=1.3.0.20150808
+set version=1.3.0.20150813
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 
@@ -34,8 +34,6 @@ wic -a %packagefilename%.wpi 180 -cc:\eyecu resources\wizards\shared\wizard.def.
 wic -a %packagefilename%.wpi 181 -cc:\eyecu plugins\waccount.dll resources\wizards\shared\*.html resources\wizards\shared\servers.xml resources\wizards\shared\software.def.xml resources\wizards\shared\networks.def.xml resources\wizards\shared\ejabberd.png resources\wizards\shared\jabberd.png resources\wizards\shared\openfire.png resources\wizards\shared\prosody.png resources\wizards\shared\tigase.png resources\wizards\shared\gtalk.png resources\wizards\shared\livejournal.png resources\wizards\shared\odnoklassniki.png resources\wizards\shared\qip.png resources\wizards\shared\xmpp.png resources\wizards\shared\yaonline.png resources\wizards\shared\account.png resources\wizards\shared\accountend.png
 wic -a %packagefilename%.wpi 182 -cc:\eyecu plugins\wtrnsprt.dll resources\wizards\shared\transports.xml resources\wizards\shared\transport.png resources\wizards\shared\transportend.png resources\wizards\shared\yes.png resources\wizards\shared\no.png
 wic -a %packagefilename%.wpi 183 -cc:\eyecu plugins\registrn.dll 184 -cc:\eyecu plugins\sessnego.dll 185 -cc:\eyecu plugins\filetran.dll plugins\fstrmmgr.dll plugins\dstrmmgr.dll 186 -cc:\eyecu plugins\sockstrm.dll 187 -cc:\eyecu plugins\ibbstrms.dll
-
-
 copy README.OS2 c:\eyecu
 wic -a %packagefilename%.wpi 189 -cc:\eyecu AUTHORS CHANGELOG COPYING README TRANSLATORS README.OS2 
 del c:\eyecu\README.OS2
