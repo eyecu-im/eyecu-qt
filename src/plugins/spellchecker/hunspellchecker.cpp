@@ -15,7 +15,7 @@
 
 HunspellChecker::HunspellChecker() : FHunSpell(NULL), FDictCodec(NULL)
 {
-#if defined (Q_WS_WIN)
+#if defined(Q_WS_WIN) || defined(Q_WS_PM) // *** <<< eyeCU >>> ***
 	FDictsPaths.append(QString("%1/hunspell").arg(QCoreApplication::applicationDirPath()));
 #elif defined (Q_WS_X11)
 	FDictsPaths.append("/usr/share/hunspell");
