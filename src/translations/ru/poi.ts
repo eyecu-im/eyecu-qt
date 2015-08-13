@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>MessagePoiList</name>
     <message>
@@ -440,7 +440,7 @@
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation></translation>
+        <translation>Гваделупа</translation>
     </message>
     <message>
         <source>Guam</source>
@@ -1807,7 +1807,7 @@
     </message>
     <message>
         <source>Hi-Fi</source>
-        <translation></translation>
+        <translation>Hi-Fi</translation>
     </message>
     <message>
         <source>Hill</source>
@@ -3050,7 +3050,7 @@
     <message>
         <source>Space</source>
         <comment>Show POI</comment>
-        <translation></translation>
+        <translation>Space</translation>
     </message>
     <message>
         <source>F2</source>
@@ -3123,7 +3123,7 @@
     <message>
         <source>Del</source>
         <comment>Delete POI (from message)</comment>
-        <translation></translation>
+        <translation>Del</translation>
     </message>
     <message>
         <source>Bus station</source>

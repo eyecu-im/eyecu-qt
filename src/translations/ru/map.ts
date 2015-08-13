@@ -158,10 +158,6 @@
 <context>
     <name>MapForm</name>
     <message>
-        <source>ScrollArea</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>My Location</source>
         <translation>Моё Положение</translation>
     </message>
