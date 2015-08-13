@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
   <context>
     <name>AddLink</name>
     <message>
@@ -223,7 +223,7 @@
     </message>
     <message>
       <source>URL</source>
-      <translation/>
+      <translation>URL</translation>
     </message>
     <message>
       <source>Image format</source>
@@ -371,7 +371,7 @@
     <name>XhtmlIm</name>
     <message>
       <source>XHTML-IM</source>
-      <translation/>
+      <translation>XHTML-IM</translation>
     </message>
     <message>
       <source>Implements XEP-0071: XHTML-IM</source>
@@ -383,7 +383,7 @@
     </message>
     <message>
       <source>XHTML</source>
-      <translation/>
+      <translation>XHTML</translation>
     </message>
     <message>
       <source>Save image...</source>
