@@ -9,7 +9,7 @@
   <message>
    <location filename="../../loader/aboutbox.cpp" line="18"/>
    <source>Revision: %1</source>
-   <translation type="unfinished"/>
+   <translation>Revisie: %1</translation>
   </message>
  </context>
  <context>

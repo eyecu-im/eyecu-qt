@@ -572,3 +572,27 @@ source_lang = en
 [eyecu-qt.xhtmlimts]
 file_filter = <lang>/xhtmlim.ts
 source_lang = en
+
+[eyecu-qt.jinglertpts]
+file_filter = <lang>/jinglertp.ts
+source_lang = en
+
+[eyecu-qt.servermessagearchivets]
+file_filter = <lang>/servermessagearchive.ts
+source_lang = en
+
+[eyecu-qt.statisticsts]
+file_filter = <lang>/statistics.ts
+source_lang = en
+
+[eyecu-qt.trackerts]
+file_filter = <lang>/tracker.ts
+source_lang = en
+
+[eyecu-qt.eyecubotts]
+file_filter = <lang>/eyecubot.ts
+source_lang = en
+
+[eyecu-qt.filemessagearchivets]
+file_filter = <lang>/filemessagearchive.ts
+source_lang = en

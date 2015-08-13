@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="25"/>
    <source>Status</source>
-   <translation type="unfinished"/>
+   <translation>Status</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="41"/>

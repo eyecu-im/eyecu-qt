@@ -12,7 +12,7 @@
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="19"/>
    <source>XMPP Streams Manager</source>
-   <translation type="unfinished"/>
+   <translation>XMPP Streams manager</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="20"/>

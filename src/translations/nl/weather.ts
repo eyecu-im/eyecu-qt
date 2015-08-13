@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="33"/>
    <source>Provides data about the weather</source>
-   <translation type="unfinished"/>
+   <translation>Levert gegevens over het weer</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="78"/>

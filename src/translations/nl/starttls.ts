@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="23"/>
    <source>Allows to establish a secure connection to the server after connecting</source>
-   <translation type="unfinished"/>
+   <translation>Maakt het mogelijk om een veilige verbinding met de server tot stand te brengen na het verbinden</translation>
   </message>
   <message>
    <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="45"/>

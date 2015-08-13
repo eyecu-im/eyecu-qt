@@ -10,7 +10,7 @@
   <message>
    <location filename="../../plugins/streetview/streetview.cpp" line="43"/>
    <source>Allows to view street-level imagery</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om beelden op straatniveau te bekijken</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetview.cpp" line="99"/>
