@@ -10,7 +10,7 @@ DEPENDPATH        += ..
 INCLUDEPATH       += ..
 DESTDIR            = ../..
 
-DEFINES           += EXTRA_TRANSLATORS=\\\"$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;\\\"
+DEFINES           += EXTRA_TRANSLATORS=\"$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;\"
 
 include(loader.pri)
 #Appication icon
@@ -86,7 +86,7 @@ include(../translations/languages.inc)
 #Linux desktop install
 unix:!macx {
   icons.path       = $$INSTALL_PREFIX/$$INSTALL_RES_DIR/pixmaps
-  icons.files      = ../../resources/menuicons/shared/vacuum.png
+  icons.files      = ../../resources/menuicons/shared/eyecu.png
   INSTALLS        += icons
 
   desktop.path     = $$INSTALL_PREFIX/$$INSTALL_RES_DIR/applications

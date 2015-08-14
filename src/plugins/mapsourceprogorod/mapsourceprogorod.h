@@ -4,7 +4,7 @@
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/imap.h>
 #include <definitions/menuicons.h>
-#include <SourceProgorod>
+#include <SourceProGorod>
 
 #define MAPSOURCPROGOROD_UUID "{4dbf3cf8-2ab4-0ed6-b7af-dc76e30bd14a}"
 

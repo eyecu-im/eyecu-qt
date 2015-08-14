@@ -505,7 +505,7 @@
   <customwidget>
    <class>SatelliteStatus</class>
    <extends>QWidget</extends>
-   <header location="global">qtgeo/satellitestatus.h</header>
+   <header location="global">QtGeo/satellitestatus.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

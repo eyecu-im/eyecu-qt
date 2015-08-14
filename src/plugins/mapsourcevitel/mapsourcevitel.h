@@ -4,7 +4,7 @@
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/imap.h>
 #include <definitions/menuicons.h>
-#include <SourceVitel>
+#include <SourceViTel>
 
 #define MAPSOURCEVITEL_UUID "{2d385bed-f67d-a601-b47d-9c828db1f63b}"
 

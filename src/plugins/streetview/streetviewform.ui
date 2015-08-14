@@ -527,7 +527,7 @@
   <customwidget>
    <class>ElevationSelector</class>
    <extends>QWidget</extends>
-   <header location="global">qtgeo/elevationselector.h</header>
+   <header location="global">QtGeo/elevationselector.h</header>
    <container>1</container>
    <slots>
     <signal>elevationChanged(qreal)</signal>
@@ -538,7 +538,7 @@
   <customwidget>
    <class>DirectionSelector</class>
    <extends>QWidget</extends>
-   <header location="global">qtgeo/directionselector.h</header>
+   <header location="global">QtGeo/directionselector.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

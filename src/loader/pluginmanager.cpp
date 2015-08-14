@@ -30,6 +30,7 @@
 // *** <<< eyeCU <<< ***
 #define ORGANIZATION_NAME           "RoadWorksSoftware"
 #define APPLICATION_NAME            "eyeCU"
+#define QUOTED(X)					#X
 // *** >>> eyeCU >>> ***
 
 #define FILE_PLUGINS_SETTINGS       "plugins.xml"
@@ -793,7 +794,7 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 	if (translator)
 		FTranslators.append(translator);
 
-	FTranslatorNames = QString(EXTRA_TRANSLATORS).split(';', QString::SkipEmptyParts);
+	FTranslatorNames = QString(QUOTED(EXTRA_TRANSLATORS)).split(';', QString::SkipEmptyParts);
 	for (QStringList::ConstIterator it = FTranslatorNames.constBegin(); it!=FTranslatorNames.constEnd(); it++)
 	{
 		translator = new QTranslator(this);
