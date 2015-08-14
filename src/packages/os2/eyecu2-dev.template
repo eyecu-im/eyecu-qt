@@ -37,23 +37,12 @@
 		return WirexxGetEnv('QT_ROOT_DIR')
 	</REXX>
 
-	<PCK 	INDEX=99
+	<PCK 	INDEX=199
 		PACKAGEID="Road Works Software\eyeCU\SDK\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 		TITLE="SDK for plugin development"
 		REQUIRES="Road Works Software\eyeCU\Base package\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 		=("FindQtSdk")
 		TARGET="$(Road Works Software\eyeCU\Base package\%MAJOR%\%MINOR%\%PATCH%\%REV%)\sdk" BASE
-		SELECT
-		>SDK for plugin development
-	</PCK>
-
-	<PCK 	INDEX=199
-		PACKAGEID="Road Works Software\eyeCU-Extra\SDK\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-		TITLE="SDK for plugin development (Extra)"
-		REQUIRES=99
-		=("FindQtSdk")
-		TARGET="$(99)"
-		EXTERNAL="eyecu2-extra-dev-%VERSION%.wpi"
 		SELECT
 		>SDK for plugin development
 	</PCK>
