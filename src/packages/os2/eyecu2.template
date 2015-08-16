@@ -2,48 +2,64 @@
 <HEAD>
 	<TITLE>eyeCU %VERSION%</TITLE>
 		<REXX NAME="FindQtRuntime">
-			rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
-			rc=SysLoadFuncs()
+			call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
+			call SysLoadFuncs
 
-			QTDIR = WirexxGetEnv('QTDIR')
+			BootDrive=left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
+			ProdConfig=BootDrive || '\CONFIG.SYS'
+			rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
+			if rc = 0 then rc = libp.0 = 0
+			if ! (rc = 0) then return ''
 
-			if QTDIR = '' then
-			do
-				UNIXROOT = WirexxGetEnv('UNIXROOT')
-				if  \ (UNIXROOT = '') then QTDIR = UNIXROOT||'\usr'
-			end
+			lix = libp.0                            /* Point to last occurrence           */
+			DO FOREVER                              /* Until we find a real one           */
+				PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
+				IF LPCmd = 'LIBPATH' THEN DO          /* If this is a LIBPATH command       */
+					LEAVE                               /* This was the final LIBPATH -- done */
+				END
 
-			do while stream(QTDIR||'\lib\QtCore4.dll', 'c', 'query exists') = ''
-				QTDIR = WirexxVarPrompt('QTDIR')
-			end
-
-			DO WHILE \ (QUEUED() = 0)
-				PULL
+				lix = lix-1                           /* Check for an earlier statement     */
+				IF lix = 0 THEN return ''
 			END
 
-			address cmd 'bldlevel '||QTDIR||'\lib\QtCore4.dll | rxqueue'
+			WorkPath=CmdTail
 
-			do while \ (QUEUED() = 0)
-				pull LINE 
-				parse value LINE with 'FILE VERSION:' VAL
-				if \ (VAL='') then parse var VAL VER REST
-			end
+			DO FOREVER                              /* Until 'exit'                       */
+				PARSE VAR WorkPath SearchPath';'WorkPath  /* Pull consecutive 'path's       */
+				if SearchPath = '' THEN return ''
+				SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
+				if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
 
-			parse value VER with MAJOR '.' MINOR '.' PATCH
+				rc = SysFileTree( SearchPath||'\'||QtCore4.dll||'*', 'MatchList', 'F' )
+				if \ (rc = 0) then return ''
+			END
 
-			if \ (MAJOR = 4) then
-			do
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of Qt Purple requires Qt4', 0x0020)
-				call WirexxCancel
-			end
+			if \ (MatchList.0 =0 ) then DO
+				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
 
-			if \ (MINOR > 6) then
-			do
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of Qt Purple requires Qt 4.7.3 or later', 0x0020)
-				call WirexxCancel
-			end
+				DO while \ (QUEUED() = 0)
+					pull LINE 
+					parse value LINE with 'FILE VERSION:' VAL
+					if \ (VAL='') then parse var VAL VER REST
+				END
 
-			return QTDIR
+				parse value VER with MAJOR '.' MINOR '.' PATCH
+
+				if \ (MAJOR = 4) then DO
+					rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt4', 0x0020)
+					call WirexxCancel
+				DO
+
+				if \ (MINOR > 6) then DO
+					rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt 4.7.3 or later', 0x0020)
+					call WirexxCancel
+				END
+
+				return SearchPath
+			END
+
+			rc = WirexxShowMessage('No Qt4 runtime found', 'This release of eyeCU requires Qt 4.7.3 runtime', 0x0020)
+			call WirexxCancel
 		</REXX>
 
 <PCK 	INDEX=1
@@ -1557,7 +1573,7 @@
 	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\0"
 	TITLE="QtSerialPort runtime"
 	EXTERNAL="qtserialport-1.1.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	TARGET='=("FindQtRuntime")'
 	FIXED
 	SELECT
 	>QtPurple runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1570,7 +1586,7 @@
 	PACKAGEID="Purple Soft\QtPurple\Util\1\0\0"
 	TITLE="QtUtil library"
 	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	TARGET='=("FindQtRuntime")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1581,7 +1597,7 @@
 	PACKAGEID="Purple Soft\QtPurple\Geo\1\0\0"
 	TITLE="QtGeo library"
 	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	TARGET='=("FindQtRuntime")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
