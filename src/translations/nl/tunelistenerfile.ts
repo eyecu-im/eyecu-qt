@@ -32,7 +32,7 @@
   <message>
    <location filename="../../plugins/tunelistenerfile/tunelistenerfileoptions.ui" line="72"/>
    <source>XML</source>
-   <translation type="unfinished"/>
+   <translation>XML</translation>
   </message>
   <message>
    <location filename="../../plugins/tunelistenerfile/tunelistenerfileoptions.ui" line="80"/>

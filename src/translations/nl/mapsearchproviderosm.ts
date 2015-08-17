@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/mapsearchproviderosm/mapsearchproviderosm.cpp" line="55"/>
    <source>OSM</source>
-   <translation type="unfinished"/>
+   <translation>OSM</translation>
   </message>
  </context>
 </TS>

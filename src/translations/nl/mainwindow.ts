@@ -21,7 +21,7 @@
    <location filename="../../plugins/mainwindow/mainwindowplugin.cpp" line="76"/>
    <source>Esc</source>
    <comment>Close main window</comment>
-   <translation type="unfinished"/>
+   <translation>Esc</translation>
   </message>
   <message>
    <location filename="../../plugins/mainwindow/mainwindowplugin.cpp" line="80"/>

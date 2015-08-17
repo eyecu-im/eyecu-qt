@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="14"/>
    <source>Allows Map plugin to use Wikimapia as map source</source>
-   <translation>Toestaan om kaart plugin Wikimapia te gebruiken als kaart source dienst</translation>
+   <translation>Toestaan om kaart plugin Wikimapia te gebruiken als kaart </translation>
   </message>
  </context>
 </TS>

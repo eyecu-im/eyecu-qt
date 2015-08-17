@@ -40,7 +40,7 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="484"/>
    <source>Dependencies not found</source>
-   <translation type="unfinished"/>
+   <translation>Afhankelijkheden niet gevonden</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="491"/>
@@ -83,12 +83,12 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="204"/>
    <source>Disabled (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Uitgeschakeld (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="207"/>
    <source>With errors (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Met fouten (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>

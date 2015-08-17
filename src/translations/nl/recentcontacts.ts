@@ -25,22 +25,22 @@
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="334"/>
    <source>Recent contacts</source>
-   <translation type="unfinished"/>
+   <translation>Recente Contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
    <source>Hide inactive contacts</source>
-   <translation type="unfinished"/>
+   <translation>Verberg inactieve contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
    <source>Sort contacts by last activity</source>
-   <translation type="unfinished"/>
+   <translation>Sorteer contacten op laatste activiteit</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
    <source>Always show offline contacts</source>
-   <translation type="unfinished"/>
+   <translation>Toon altijd offline contacten</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>

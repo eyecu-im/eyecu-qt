@@ -15,17 +15,17 @@
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="76"/>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.h" line="40"/>
    <source>IP-based</source>
-   <translation type="unfinished"/>
+   <translation>Op basis van IP</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="109"/>
    <source>General</source>
-   <translation type="unfinished"/>
+   <translation>Algemeen</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="111"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>Verbinding</translation>
   </message>
  </context>
  <context>
@@ -33,17 +33,17 @@
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="38"/>
    <source>Update rate</source>
-   <translation type="unfinished"/>
+   <translation>Tarief bijwerken</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="64"/>
    <source>Do not update</source>
-   <translation type="unfinished"/>
+   <translation>Niet updaten</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="89"/>
    <source>Geo IP provider</source>
-   <translation type="unfinished"/>
+   <translation>Geo IP provider</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.cpp" line="35"/>

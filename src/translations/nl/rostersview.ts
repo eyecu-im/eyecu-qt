@@ -27,7 +27,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="134"/>
    <source>Contact-List</source>
-   <translation type="unfinished"/>
+   <translation>Lijst contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="135"/>
@@ -38,12 +38,12 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="194"/>
    <source>Contacts List</source>
-   <translation type="unfinished"/>
+   <translation>Lijst contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="206"/>
    <source>Contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Lijst contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="207"/>
@@ -78,7 +78,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="216"/>
    <source>Always show offline agents</source>
-   <translation type="unfinished"/>
+   <translation>Toon altijd offline agents</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="217"/>
@@ -88,7 +88,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="218"/>
    <source>Display status</source>
-   <translation type="unfinished"/>
+   <translation>Toon status</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="224"/>

@@ -16,32 +16,32 @@
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="146"/>
    <source>View</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="154"/>
    <source>Close</source>
-   <translation type="unfinished"/>
+   <translation>Sluit</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="164"/>
    <source>Save point of interest</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan POI</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="176"/>
    <source>Save picture</source>
-   <translation type="unfinished"/>
+   <translation>Foto opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="184"/>
    <source>Copy picture</source>
-   <translation type="unfinished"/>
+   <translation>Kopieer foto</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="253"/>
    <source>Save file</source>
-   <translation type="unfinished"/>
+   <translation>Bestand opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="465"/>
@@ -135,7 +135,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="60"/>
    <source>Clearing the map</source>
-   <translation type="unfinished"/>
+   <translation>Map opschonen</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="63"/>

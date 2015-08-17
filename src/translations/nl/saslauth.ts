@@ -14,12 +14,12 @@
   <message>
    <location filename="../../plugins/saslauth/saslfeaturefactory.cpp" line="48"/>
    <source>Wrong SASL authentication response</source>
-   <translation type="unfinished"/>
+   <translation>Verkeerde SASL verificatie antwoord</translation>
   </message>
   <message>
    <location filename="../../plugins/saslauth/saslfeaturefactory.cpp" line="49"/>
    <source>Invalid XMPP stream JID in SASL bind response</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige XMPP stream JID in SASL bind reactie</translation>
   </message>
  </context>
 </TS>

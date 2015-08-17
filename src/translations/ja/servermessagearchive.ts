@@ -1,23 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.0">
-<context>
-    <name>ServerMessageArchive</name>
-    <message>
-        <source>Server Message Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allows to save the history of communications on the server</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Standard Server Side Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>History of conversations is stored on your jabber server</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.0">
+ <context>
+  <name>ServerMessageArchive</name>
+  <message>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="31"/>
+   <source>Server Message Archive</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="32"/>
+   <source>Allows to save the history of communications on the server</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="241"/>
+   <source>Standard Server Side Archive</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="246"/>
+   <source>History of conversations is stored on your jabber server</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
 </TS>

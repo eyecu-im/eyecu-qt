@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/mapsource2gis/mapsource2gis.cpp" line="7"/>
    <source>Allows Map plugin to use 2GIS service as map source</source>
-   <translation>Toestaan om kaart plugin 2GIS dienst te gebruiken als kaart source</translation>
+   <translation>Toestaan om kaart plugin 2GIS te gebruiken als service kaart </translation>
   </message>
  </context>
 </TS>

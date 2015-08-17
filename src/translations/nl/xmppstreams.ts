@@ -17,27 +17,28 @@
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="20"/>
    <source>Allows other modules to create XMPP streams and get access to them</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan dat anderen, modules van XMPP streams maken en die krijgen toegang tot deze
+</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="34"/>
    <source>XMPP stream destroyed</source>
-   <translation type="unfinished"/>
+   <translation>XMPP stream vernietigd</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="35"/>
    <source>Secure connection is not established</source>
-   <translation type="unfinished"/>
+   <translation>Veilige verbinding niet tot stand gebracht</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="36"/>
    <source>Connection closed unexpectedly</source>
-   <translation type="unfinished"/>
+   <translation>Verbinding is onverwachts afgesloten</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="37"/>
    <source>Failed to start connection</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om de verbinding te starten</translation>
   </message>
  </context>
 </TS>

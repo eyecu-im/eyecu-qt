@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/mapsourceesri/mapsourceesri.cpp" line="7"/>
    <source>Allows Map plugin to use Esri service as map source</source>
-   <translation>Toestaan om kaart plugin Esri te gebruiken als dienst kaart source</translation>
+   <translation>Toestaan om kaart plugin Esri te gebruiken als service kaart </translation>
   </message>
  </context>
 </TS>

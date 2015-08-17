@@ -33,7 +33,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
    <source>Ctrl+W</source>
    <comment>Close tab</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+W</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
@@ -44,7 +44,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
    <source>Ctrl+Shift+W</source>
    <comment>Close other tabs</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Shift+W</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="84"/>
@@ -82,7 +82,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="93"/>
    <source>Esc</source>
    <comment>Close message window</comment>
-   <translation type="unfinished"/>
+   <translation>Esc</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
@@ -94,7 +94,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
    <source>Ctrl+Q</source>
    <comment>Quote selected text</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Q</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>

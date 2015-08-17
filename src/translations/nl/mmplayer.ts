@@ -17,24 +17,24 @@
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="67"/>
    <source>Show/Hide player window</source>
-   <translation type="unfinished"/>
+   <translation>Toon/Verberg speler venster</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="67"/>
    <source>F9</source>
    <comment>Show/Hide</comment>
-   <translation type="unfinished"/>
+   <translation>F9</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="68"/>
    <source>Open/Stop</source>
-   <translation type="unfinished"/>
+   <translation>Open/Stop</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="68"/>
    <source>Return</source>
    <comment>Open/Stop</comment>
-   <translation type="unfinished"/>
+   <translation>Terug</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="69"/>

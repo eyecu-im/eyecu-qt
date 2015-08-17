@@ -264,7 +264,7 @@ Indien niet, dan kunt u zich registreren met een legacy-netwerk op zijn website 
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="177"/>
    <source>An adware licensed Polish instant messaging service, fully compatible with Gadu-Gadu</source>
-   <translation>Een Poolse adware licentie instant messenger dienst, volledig compatibel met Gadu-Gadu</translation>
+   <translation>Een Poolse adware licentie instant messenger service, volledig compatibel met Gadu-Gadu</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="178"/>

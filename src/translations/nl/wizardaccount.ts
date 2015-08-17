@@ -286,7 +286,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="157"/>
    <source>A social network and chat service from Google</source>
-   <translation>Een sociaal netwerk en chatdienst van Google</translation>
+   <translation>Een sociaal netwerk en chatservice van Google</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="159"/>

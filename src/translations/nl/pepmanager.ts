@@ -20,17 +20,17 @@
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="125"/>
    <source>Personal event removal</source>
-   <translation type="unfinished"/>
+   <translation>Persoonlijke gebeurtenis verwijderen</translation>
   </message>
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="128"/>
    <source>Retract item</source>
-   <translation type="unfinished"/>
+   <translation>Punt intrekken</translation>
   </message>
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="129"/>
    <source>Publish empty item</source>
-   <translation type="unfinished"/>
+   <translation>Publiceer leeg item</translation>
   </message>
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="135"/>
@@ -40,7 +40,7 @@
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="138"/>
    <source>Personal event notifications</source>
-   <translation type="unfinished"/>
+   <translation>Persoonlijke gebeurtenis notificatie</translation>
   </message>
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="214"/>

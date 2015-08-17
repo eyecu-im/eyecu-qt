@@ -17,7 +17,7 @@
   <message>
    <location filename="../../plugins/presence/presencemanager.cpp" line="37"/>
    <source>Allows other modules to obtain information about the status of contacts in the roster</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan dat andere modules informatie verkrijgen over de status van de contacten in het rooster</translation>
   </message>
  </context>
 </TS>

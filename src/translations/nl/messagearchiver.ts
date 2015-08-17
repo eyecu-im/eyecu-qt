@@ -15,32 +15,32 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="264"/>
    <source>No, do not save history on server</source>
-   <translation type="unfinished"/>
+   <translation>Nee, geen geschiedenis opslaan op de server</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="266"/>
    <source>Yes, if local archive is available</source>
-   <translation type="unfinished"/>
+   <translation>Ja, als lokaal archief beschikbaar is</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="268"/>
    <source>No, do not save history in local archive</source>
-   <translation type="unfinished"/>
+   <translation>Nee, geen geschiedenis opslaan in lokaal archief</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="270"/>
    <source>Yes, if available</source>
-   <translation type="unfinished"/>
+   <translation>Ja, indien beschikbaar</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="271"/>
    <source>Yes, if other replication method is not used</source>
-   <translation type="unfinished"/>
+   <translation>Ja, als ander kopiëer methode niet wordt gebruikt</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="272"/>
    <source>No, do not copy local archive to the server</source>
-   <translation type="unfinished"/>
+   <translation>Nee, kopieer lokale archief niet naar server</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="274"/>
@@ -75,12 +75,12 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="402"/>
    <source>Waiting for host response...</source>
-   <translation type="unfinished"/>
+   <translation>Wacht op reactie van host ...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="404"/>
    <source>History preferences is not available</source>
-   <translation type="unfinished"/>
+   <translation>Geschiedenis voorkeur niet beschikbaar</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="406"/>

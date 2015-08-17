@@ -24,7 +24,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
    <source>Software</source>
-   <translation type="unfinished"/>
+   <translation>Software</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
@@ -36,7 +36,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
    <source>OS</source>
-   <translation type="unfinished"/>
+   <translation>OS</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
@@ -46,7 +46,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="612"/>
    <source>Service Uptime</source>
-   <translation type="unfinished"/>
+   <translation>Service uptime</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="614"/>
@@ -83,7 +83,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="674"/>
    <source>XMPP Ping</source>
-   <translation type="unfinished"/>
+   <translation>XMPP ping</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>

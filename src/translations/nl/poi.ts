@@ -3134,7 +3134,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="406"/>
    <source>Services</source>
-   <translation>Diensten</translation>
+   <translation>Services</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="407"/>
@@ -3734,7 +3734,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="531"/>
    <source>Service</source>
-   <translation>Dienst</translation>
+   <translation>Service</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="532"/>

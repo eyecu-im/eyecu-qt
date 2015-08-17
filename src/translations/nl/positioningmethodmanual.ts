@@ -68,7 +68,7 @@
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanualoptions.cpp" line="44"/>
    <source>second(s)</source>
    <comment>Send interval units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
  </context>
  <context>
@@ -81,7 +81,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="52"/>
    <source>Latitude</source>
-   <translation type="unfinished"/>
+   <translation>Breedte</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="89"/>
@@ -91,7 +91,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="135"/>
    <source>Publish</source>
-   <translation type="unfinished"/>
+   <translation>Publiceer</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="142"/>

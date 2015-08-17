@@ -76,7 +76,7 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="246"/>
    <source>Enable animation</source>
-   <translation type="unfinished"/>
+   <translation>Schakel animatie in</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/notifications/notifications.cpp" line="855"/>

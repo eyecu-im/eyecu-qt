@@ -21,7 +21,7 @@
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="150"/>
    <source>Ctrl+S</source>
    <comment>Send file</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+S</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="152"/>
@@ -41,7 +41,7 @@
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="202"/>
    <source>Automatically receive files from authorized contacts</source>
-   <translation type="unfinished"/>
+   <translation>Bestanden automatisch ontvangen van erkende contacten</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="203"/>

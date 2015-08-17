@@ -27,7 +27,7 @@
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="60"/>
    <source>Status Manager</source>
-   <translation type="unfinished"/>
+   <translation>Status manager</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="61"/>
@@ -75,12 +75,12 @@
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="567"/>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="591"/>
    <source>Online</source>
-   <translation type="unfinished"/>
+   <translation>Online</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="569"/>
    <source>Chat</source>
-   <translation type="unfinished"/>
+   <translation>Chat</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="571"/>

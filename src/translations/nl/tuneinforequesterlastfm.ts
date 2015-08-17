@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.h" line="50"/>
    <source>last.fm</source>
-   <translation type="unfinished"/>
+   <translation>last.fm</translation>
   </message>
  </context>
  <context>
@@ -22,7 +22,7 @@
   <message>
    <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="35"/>
    <source>last.fm</source>
-   <translation type="unfinished"/>
+   <translation>last.fm</translation>
   </message>
   <message>
    <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="63"/>

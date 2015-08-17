@@ -17,12 +17,12 @@
   <message>
    <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="20"/>
    <source>Place view provider Google</source>
-   <translation type="unfinished"/>
+   <translation>Plaats uitzicht provider Google</translation>
   </message>
   <message>
    <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="21"/>
    <source>Allows to view photos of places from Google</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om foto&apos;s van plaatsen te bekijken met Google</translation>
   </message>
  </context>
 </TS>

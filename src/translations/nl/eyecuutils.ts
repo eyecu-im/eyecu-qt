@@ -30,22 +30,22 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="419"/>
    <source>Authorization aborted</source>
-   <translation type="unfinished"/>
+   <translation>Toestemming afgebroken</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="420"/>
    <source>Account disabled</source>
-   <translation type="unfinished"/>
+   <translation>Account uitgeschakeld</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="421"/>
    <source>Credentials expired</source>
-   <translation type="unfinished"/>
+   <translation>Referenties verlopen</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="422"/>
    <source>Encryption required</source>
-   <translation type="unfinished"/>
+   <translation>Encryptie verplicht</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="423"/>
@@ -75,12 +75,12 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="428"/>
    <source>Not authorized</source>
-   <translation type="unfinished"/>
+   <translation>Niet bevoegd</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="429"/>
    <source>Temporary authentication failure</source>
-   <translation type="unfinished"/>
+   <translation>Tijdelijke verificatie storing</translation>
   </message>
  </context>
  <context>

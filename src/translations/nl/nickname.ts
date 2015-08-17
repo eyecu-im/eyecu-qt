@@ -15,32 +15,32 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="266"/>
    <source>User Nickname</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="267"/>
    <source>Supports user nickname</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunt gebruikers bijnaam</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="271"/>
    <source>User Nickname Notification</source>
-   <translation type="unfinished"/>
+   <translation>Melding gebruikers bijnaam </translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="272"/>
    <source>Receives notification of user nickname change</source>
-   <translation type="unfinished"/>
+   <translation>Ontvangt melding als gebruiker bijnaam veranderd</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="355"/>
    <source>User nickname</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="357"/>
    <source>Nickname:</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam:</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="360"/>

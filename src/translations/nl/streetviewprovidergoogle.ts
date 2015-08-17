@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="33"/>
    <source>Google</source>
-   <translation type="unfinished"/>
+   <translation>Google</translation>
   </message>
  </context>
 </TS>

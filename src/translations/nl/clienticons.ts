@@ -20,7 +20,7 @@
    <location filename="../../plugins/clienticons/clienticons.cpp" line="164"/>
    <source>F3</source>
    <comment>Show software version (chat)</comment>
-   <translation type="unfinished"/>
+   <translation>F3</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="183"/>
@@ -30,7 +30,7 @@
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="186"/>
    <source>Display client icon</source>
-   <translation type="unfinished"/>
+   <translation>Toon cliënt pictogram </translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="270"/>

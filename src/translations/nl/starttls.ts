@@ -14,17 +14,17 @@
   <message>
    <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="45"/>
    <source>Failed to begin StartTLS handshake</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om StartTLS handshake te starten</translation>
   </message>
   <message>
    <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="46"/>
    <source>Wrong StartTLS negotiation response</source>
-   <translation type="unfinished"/>
+   <translation>Verkeerde SASL verhandelings antwoord</translation>
   </message>
   <message>
    <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="47"/>
    <source>StartTLS negotiation failed</source>
-   <translation type="unfinished"/>
+   <translation>StartTLS verhandeling mislukt</translation>
   </message>
  </context>
 </TS>

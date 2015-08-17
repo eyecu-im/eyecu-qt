@@ -9,7 +9,7 @@
   <message numerus="yes">
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.cpp" line="137"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
  </context>
  <context>
@@ -17,27 +17,27 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="29"/>
    <source>Outgoing Connections</source>
-   <translation type="unfinished"/>
+   <translation>Uitgaande verbindingen</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="49"/>
    <source>Connection timeout:</source>
-   <translation type="unfinished"/>
+   <translation>Time-out verbinding:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="71"/>
    <source>Use account connection proxy settings</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik account proxy-instellingen</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="84"/>
    <source>Incoming Connections</source>
-   <translation type="unfinished"/>
+   <translation>Inkomende verbindingen</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="116"/>
    <source>Allow direct incoming connections on port:</source>
-   <translation type="unfinished"/>
+   <translation>Sta inkomende verbindingen op poort toe:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="146"/>
@@ -67,17 +67,17 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="247"/>
    <source>Up</source>
-   <translation type="unfinished"/>
+   <translation>Omhoog</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="257"/>
    <source>Down</source>
-   <translation type="unfinished"/>
+   <translation>Omlaag</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="267"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder</translation>
   </message>
  </context>
  <context>

@@ -17,17 +17,17 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simplemessagestyleengine.cpp" line="27"/>
    <source>Simple Message Style</source>
-   <translation type="unfinished"/>
+   <translation>Simpele berichten stijl</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simplemessagestyleengine.cpp" line="28"/>
    <source>Allows to use a simplified style in message design</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om een eenvoudige stijl te gebruiken in berichtenontwerp</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simplemessagestyleengine.cpp" line="74"/>
    <source>Simple</source>
-   <translation type="unfinished"/>
+   <translation>Eenvoudig</translation>
   </message>
  </context>
  <context>
@@ -35,12 +35,12 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="11"/>
    <source>Parameters</source>
-   <translation type="unfinished"/>
+   <translation>Parameters</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="12"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Achtergrond</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="20"/>
@@ -86,7 +86,7 @@
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="95"/>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="165"/>
    <source>Reset</source>
-   <translation type="unfinished"/>
+   <translation>Herstel</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="112"/>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="138"/>
    <source>Image:</source>
-   <translation type="unfinished"/>
+   <translation>Afbeelding:</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="32"/>

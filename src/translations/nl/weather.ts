@@ -15,17 +15,17 @@
    <location filename="../../plugins/weather/weather.cpp" line="78"/>
    <location filename="../../plugins/weather/weather.cpp" line="97"/>
    <source>View Weather</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk weer</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="139"/>
    <source>View</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="147"/>
    <source>Close</source>
-   <translation type="unfinished"/>
+   <translation>Sluit</translation>
   </message>
  </context>
 </TS>

@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/positioningmethodipproviderfreegeoip/positioningmethodipproviderfreegeoip.cpp" line="38"/>
    <source>freegeoip.net</source>
-   <translation type="unfinished"/>
+   <translation>freegeoip.net</translation>
   </message>
  </context>
 </TS>

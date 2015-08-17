@@ -21,22 +21,22 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="149"/>
    <source>F10</source>
    <comment>Show contact on the map (chat)</comment>
-   <translation type="unfinished"/>
+   <translation>F10</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="185"/>
    <source>Show user location icons</source>
-   <translation type="unfinished"/>
+   <translation>Toon gebruikerslocatie pictogram</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="188"/>
    <source>Display user location icon</source>
-   <translation type="unfinished"/>
+   <translation>Toon locatie pictogram gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="193"/>
    <source>Publish location</source>
-   <translation type="unfinished"/>
+   <translation>Publiseer locatie</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="308"/>
@@ -77,7 +77,7 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="532"/>
    <source>m</source>
    <comment>Short for &quot;meters&quot;</comment>
-   <translation type="unfinished"/>
+   <translation>m</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="568"/>

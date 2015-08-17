@@ -22,7 +22,7 @@
   <message>
    <location filename="../../plugins/tunelistenerpm123/tunelistenerpm123options.ui" line="35"/>
    <source>PM123</source>
-   <translation type="unfinished"/>
+   <translation>PM123</translation>
   </message>
   <message>
    <location filename="../../plugins/tunelistenerpm123/tunelistenerpm123options.ui" line="56"/>

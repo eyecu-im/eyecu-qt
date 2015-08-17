@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="93"/>
    <source>None of the available streams are acceptable</source>
-   <translation>Geen van de beschikbare stromen zijn acceptabel</translation>
+   <translation>Geen van de beschikbare streams zijn acceptabel</translation>
   </message>
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="95"/>
@@ -39,7 +39,7 @@
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="114"/>
    <source>Data Streams Initiation</source>
-   <translation>Inleiding Gegevensstromen</translation>
+   <translation>Inleiding Gegevensstreams</translation>
   </message>
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="115"/>

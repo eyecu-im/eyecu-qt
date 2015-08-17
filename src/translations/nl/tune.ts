@@ -16,13 +16,13 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="219"/>
    <source>Publish tune</source>
-   <translation type="unfinished"/>
+   <translation>Publiceer melodie</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="219"/>
    <source>Ctrl+F5</source>
    <comment>Switch Publish Tune</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+F5</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="273"/>
@@ -32,17 +32,17 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="280"/>
    <source>Publish Tune</source>
-   <translation type="unfinished"/>
+   <translation>Publiceer melodie</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="314"/>
    <source>Show user tune icons</source>
-   <translation type="unfinished"/>
+   <translation>Toon gebruiker zijn melodie pictogram</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="318"/>
    <source>Display user tune icon</source>
-   <translation type="unfinished"/>
+   <translation>Toon melodie pictogram van gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="319"/>

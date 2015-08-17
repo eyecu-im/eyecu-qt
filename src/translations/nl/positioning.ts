@@ -23,12 +23,12 @@
   <message>
    <location filename="../../plugins/positioning/positioningoptions.ui" line="73"/>
    <source>Setup positioning method</source>
-   <translation type="unfinished"/>
+   <translation>Instellen Ligging methode</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioningoptions.ui" line="76"/>
    <source>This button will display settings dialog for selected positioning method</source>
-   <translation type="unfinished"/>
+   <translation>Deze knop zal de instellingen dialoogvenster weergegeven voor de geselecteerde methode van positiebepaling</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioningoptions.cpp" line="15"/>

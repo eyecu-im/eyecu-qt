@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp" line="42"/>
    <source>Yandex</source>
-   <translation type="unfinished"/>
+   <translation>Yandex</translation>
   </message>
  </context>
 </TS>

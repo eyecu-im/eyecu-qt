@@ -17,13 +17,13 @@
    <location filename="../../plugins/streetview/streetview.cpp" line="113"/>
    <source>Street view</source>
    <comment>Menu option</comment>
-   <translation type="unfinished"/>
+   <translation>Straat uitzicht</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetview.cpp" line="271"/>
    <location filename="../../plugins/streetview/streetview.cpp" line="282"/>
    <source>Street view</source>
-   <translation type="unfinished"/>
+   <translation>Straat uitzicht</translation>
   </message>
  </context>
  <context>
@@ -31,22 +31,22 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="20"/>
    <source>Street view</source>
-   <translation type="unfinished"/>
+   <translation>Straat uitzicht</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="145"/>
    <source>Azimuth</source>
-   <translation type="unfinished"/>
+   <translation>Azimuth</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="152"/>
    <source>Elevation</source>
-   <translation type="unfinished"/>
+   <translation>Verhoging</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="179"/>
    <source>Picture size</source>
-   <translation type="unfinished"/>
+   <translation>Foto grootte</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="217"/>
@@ -88,17 +88,17 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="412"/>
    <source>Save</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="444"/>
    <source>Select Provider</source>
-   <translation type="unfinished"/>
+   <translation>Selekteer aanbieder</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="447"/>
    <source>View</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="464"/>

@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/console/consoleplugin.cpp" line="58"/>
    <source>XML Console</source>
-   <translation type="unfinished"/>
+   <translation>XML Console</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consoleplugin.cpp" line="68"/>
@@ -27,7 +27,7 @@
   <message>
    <location filename="../../plugins/console/consolewidget.cpp" line="29"/>
    <source>&lt;All Streams&gt;</source>
-   <translation>&lt;Alle stromen&gt;</translation>
+   <translation>&lt;Alle streams&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consolewidget.cpp" line="70"/>
@@ -37,7 +37,7 @@
   <message>
    <location filename="../../plugins/console/consolewidget.cpp" line="140"/>
    <source>XML Console - %1</source>
-   <translation type="unfinished"/>
+   <translation>XML Console - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consolewidget.cpp" line="252"/>
@@ -80,7 +80,7 @@
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="33"/>
    <source>Filter</source>
-   <translation type="unfinished"/>
+   <translation>Filter</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="42"/>

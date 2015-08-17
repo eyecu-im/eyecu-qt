@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/roster/rostermanager.cpp" line="59"/>
    <source>Roster request failed</source>
-   <translation type="unfinished"/>
+   <translation>Rooster verzoek is mislukt</translation>
   </message>
  </context>
 </TS>

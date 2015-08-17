@@ -17,7 +17,7 @@
   <message>
    <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="35"/>
    <source>Z!</source>
-   <translation type="unfinished"/>
+   <translation>Z!</translation>
   </message>
   <message>
    <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="56"/>

@@ -108,7 +108,7 @@
   <message>
    <location filename="../../plugins/commands/commands.cpp" line="543"/>
    <source>Supports the running or performing of the special services commands</source>
-   <translation>Ondersteunt het functioneren of het uitvoeren van de speciale dienst opdrachten</translation>
+   <translation>Ondersteunt het functioneren of het uitvoeren van de speciale services opdrachten</translation>
   </message>
  </context>
 </TS>

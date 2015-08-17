@@ -14,27 +14,27 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="23"/>
    <source>TLSv1.0</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.0</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="24"/>
    <source>TLSv1.1</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="25"/>
    <source>TLSv1.2</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.2</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="28"/>
    <source>SSLv2</source>
-   <translation type="unfinished"/>
+   <translation>SSLv2</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="29"/>
    <source>SSLv3</source>
-   <translation type="unfinished"/>
+   <translation>SSLv3</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="31"/>
@@ -77,7 +77,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="97"/>
    <source>Certificate:</source>
-   <translation type="unfinished"/>
+   <translation>Certificaat:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="116"/>
@@ -91,7 +91,7 @@
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="26"/>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="97"/>
    <source>Default Connection</source>
-   <translation type="unfinished"/>
+   <translation>Standaard verbinding</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="27"/>

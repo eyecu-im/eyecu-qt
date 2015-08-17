@@ -32,7 +32,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="45"/>
    <source>File Streams Manager</source>
-   <translation>Stromen bestandsbeheer</translation>
+   <translation>Streams bestandsbeheer</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="46"/>
@@ -78,7 +78,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="143"/>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>Bestandsoverdracht</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="145"/>

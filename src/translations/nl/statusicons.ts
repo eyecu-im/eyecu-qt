@@ -24,12 +24,12 @@
   <message>
    <location filename="../../plugins/statusicons/statusicons.cpp" line="182"/>
    <source>Contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Lijst contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/statusicons/statusicons.cpp" line="183"/>
    <source>Status icons:</source>
-   <translation type="unfinished"/>
+   <translation>Status pictogrammen:</translation>
   </message>
  </context>
 </TS>

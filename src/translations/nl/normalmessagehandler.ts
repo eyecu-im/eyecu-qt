@@ -20,7 +20,7 @@
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="184"/>
    <source>Ctrl+Return</source>
    <comment>Send message</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Enter</translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="191"/>
@@ -40,7 +40,7 @@
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="344"/>
    <source>Message text hidden</source>
-   <translation type="unfinished"/>
+   <translation>Tekstbericht verborgen </translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="412"/>
