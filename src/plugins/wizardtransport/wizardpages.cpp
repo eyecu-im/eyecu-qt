@@ -843,8 +843,8 @@ ResultPage::ResultPage(Jid &AStreamJid, IRegistration *ARegistration, ProcessPag
     FErrorLabel->setWordWrap(true);
     FErrorLabel->setAlignment(Qt::AlignHCenter);
 
-    layout = new QVBoxLayout;
-    setLayout(layout);
+    FLayout = new QVBoxLayout;
+    setLayout(FLayout);
 
     if (FRegistration)
     {
@@ -865,7 +865,7 @@ void ResultPage::onRegisterError(const QString &AId, const XmppError &AError)
 {
     if (FRequestId == AId)
     {
-        layout->addWidget(FErrorLabel);
+        FLayout->addWidget(FErrorLabel);
 
         FWizardGo=false;
         emit completeChanged();

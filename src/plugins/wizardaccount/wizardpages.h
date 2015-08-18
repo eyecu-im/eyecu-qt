@@ -73,7 +73,7 @@ protected slots:
     void onClicked();
 
 private:
-	QLabel *FLblTop;
+	QLabel				*FLblTop;
     QCommandLinkButton	*FClbHaveAccountYes;
     QCommandLinkButton	*FClbHaveAccountNo;	
 	int					FNextId;
@@ -150,8 +150,9 @@ class ServerPage : public QWizardPage
 public:
 	ServerPage(NetworkPage *ANtworkPage, QWidget *AParent = 0);
 	QUrl	getRegistrationUrl() const;
-	QString	getInstructions() const;
+	QString	getInstructions() const;	
 	int		getFlags() const;
+	QString getServerName() const;
 
 public:
 	//QWizardPage

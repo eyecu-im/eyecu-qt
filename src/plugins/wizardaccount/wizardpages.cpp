@@ -273,17 +273,23 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 
 QUrl ServerPage::getRegistrationUrl() const
 {
-	return FServerInfo.value(field(WF_SERVER_NAME).toString()).url;
+	return FServerInfo.value(getServerName()).url;
 }
 
 QString ServerPage::getInstructions() const
 {
-	return FServerInfo.value(field(WF_SERVER_NAME).toString()).instructions;
+	return FServerInfo.value(getServerName()).instructions;
 }
 
 int ServerPage::getFlags() const
 {
-	return FServerInfo.value(field(WF_SERVER_NAME).toString()).flags;
+	return FServerInfo.value(getServerName()).flags;
+}
+
+QString ServerPage::getServerName() const
+{
+	QVariant value = field(WF_SERVER_NAME);
+	return (value.isNull()?field(WF_SERVER_NAME_PRE):value).toString();
 }
 
 //! listig fields

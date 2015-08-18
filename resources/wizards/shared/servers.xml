@@ -115,7 +115,7 @@
         <url>http://sudouser.ru:5281/register/new</url>
     </registration>
     <legacy>false</legacy><trusted>false</trusted><compression>false</compression><soft>ejabberd</soft>
-    <pep>true</pep><muc>true</muc><archive>false</archive><vjud>true</vjud><proxy>false</proxy>
+    <pep>false</pep><muc>true</muc><archive>false</archive><vjud>true</vjud><proxy>false</proxy>
     <transports>ICQ,IRC,MRIM,VK</transports>
     <filestore>false</filestore><country>RU</country><time></time>	
   </server>

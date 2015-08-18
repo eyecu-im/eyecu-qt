@@ -191,7 +191,7 @@ protected slots:
     void onRegisterError(const QString &AId, const XmppError &AError);
     void onRegisterSuccessful(const QString &AId);
 private:
-    QVBoxLayout *layout;
+	QVBoxLayout		*FLayout;
     QLabel          *FErrorLabel;
     Jid             FStreamJid;
     IRegistration   *FRegistration;
