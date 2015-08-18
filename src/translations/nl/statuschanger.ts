@@ -49,12 +49,12 @@
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="1152"/>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="1162"/>
    <source>Status</source>
-   <translation type="unfinished"/>
+   <translation>Status</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="259"/>
    <source>Connect to server on startup</source>
-   <translation type="unfinished"/>
+   <translation>Tijdens opstarten verbinden met server </translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="260"/>
@@ -160,29 +160,29 @@
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="158"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Toevoegen</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="162"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Status</source>
-   <translation type="unfinished"/>
+   <translation>Status</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="316"/>
    <source>Name</source>
-   <translation type="unfinished"/>
+   <translation>Naam</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="330"/>
    <source>Message</source>
-   <translation type="unfinished"/>
+   <translation>Bericht</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>

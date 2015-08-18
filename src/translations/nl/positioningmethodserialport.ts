@@ -124,13 +124,13 @@
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="348"/>
    <source>byte(s)</source>
    <comment>Buffer size units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>byte</numerusform><numerusform>Bytes</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="350"/>
    <source>second(s)</source>
    <comment>Time treshold units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="352"/>
@@ -142,27 +142,27 @@
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="354"/>
    <source>millisecond(s)</source>
    <comment>Port timeout units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>milliseconde</numerusform><numerusform>milliseconden</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="38"/>
    <source>Diagnostics</source>
-   <translation type="unfinished"/>
+   <translation>Diagnose</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="151"/>
    <source>Test</source>
-   <translation type="unfinished"/>
+   <translation>Test</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="174"/>
    <source>Satellites</source>
-   <translation type="unfinished"/>
+   <translation>Satelieten</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="197"/>
    <source>Port selection</source>
-   <translation type="unfinished"/>
+   <translation>Poort selectie</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="239"/>

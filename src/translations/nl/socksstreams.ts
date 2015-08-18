@@ -47,7 +47,7 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="165"/>
    <source>Stream Proxy</source>
-   <translation type="unfinished"/>
+   <translation>Stream Proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="186"/>

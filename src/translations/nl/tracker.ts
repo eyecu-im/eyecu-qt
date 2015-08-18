@@ -49,12 +49,12 @@
   <message>
    <location filename="../../plugins/tracker/trackoptions.ui" line="227"/>
    <source>4</source>
-   <translation type="unfinished"/>
+   <translation>4</translation>
   </message>
   <message>
    <location filename="../../plugins/tracker/trackoptions.ui" line="246"/>
    <source>Line siize, px</source>
-   <translation type="unfinished"/>
+   <translation>Lijn grootte, px</translation>
   </message>
   <message>
    <location filename="../../plugins/tracker/trackoptions.ui" line="264"/>
@@ -94,7 +94,7 @@
   <message>
    <location filename="../../plugins/tracker/trackoptions.cpp" line="77"/>
    <source>Select Shadow color</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer schaduw kleur</translation>
   </message>
  </context>
  <context>
@@ -104,7 +104,7 @@
    <location filename="../../plugins/tracker/tracker.cpp" line="24"/>
    <location filename="../../plugins/tracker/tracker.cpp" line="79"/>
    <source>Tracker</source>
-   <translation type="unfinished"/>
+   <translation>Tracker</translation>
   </message>
  </context>
 </TS>

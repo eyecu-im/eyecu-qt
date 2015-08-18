@@ -52,7 +52,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="187"/>
    <source>Update</source>
-   <translation type="unfinished"/>
+   <translation>Bijwerken</translation>
   </message>
  </context>
  <context>
@@ -65,7 +65,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="131"/>
    <source>Jid</source>
-   <translation type="unfinished"/>
+   <translation>Jid</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="133"/>
@@ -143,7 +143,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="225"/>
    <source>vCard</source>
-   <translation type="unfinished"/>
+   <translation>vCard</translation>
   </message>
  </context>
  <context>

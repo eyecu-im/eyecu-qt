@@ -48,7 +48,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="207"/>
    <source>Show disconnected contacts</source>
-   <translation type="unfinished"/>
+   <translation>Toon contacten die offline zijn</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="208"/>
@@ -93,7 +93,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="224"/>
    <source>Full</source>
-   <translation type="unfinished"/>
+   <translation>Vol</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="225"/>
@@ -123,7 +123,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="233"/>
    <source>Sort contacts list:</source>
-   <translation type="unfinished"/>
+   <translation>Sorteer contactlijst:</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="718"/>

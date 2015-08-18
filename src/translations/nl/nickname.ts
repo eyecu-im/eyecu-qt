@@ -45,12 +45,12 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="360"/>
    <source>Set contact name when added</source>
-   <translation type="unfinished"/>
+   <translation>Stel contactnaam in wanneer het is toegevoegd</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="361"/>
    <source>Change automatically</source>
-   <translation type="unfinished"/>
+   <translation>Wijzig automatisch</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="362"/>

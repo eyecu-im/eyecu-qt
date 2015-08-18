@@ -48,7 +48,7 @@
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
    <source>Ctrl+T</source>
    <comment>Show file transfers</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+T</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="91"/>
@@ -104,7 +104,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.ui" line="20"/>
    <source>Default directory:</source>
-   <translation type="unfinished"/>
+   <translation>Standaard map:</translation>
   </message>
  </context>
  <context>
@@ -184,7 +184,7 @@
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="333"/>
    <source>/sec</source>
-   <translation type="unfinished"/>
+   <translation>/sec</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="229"/>

@@ -47,7 +47,7 @@
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="61"/>
    <source>Click this button to rise priority of selected emoticon set</source>
-   <translation type="unfinished"/>
+   <translation>Klik op deze knop om de prioriteit van de geselecteerde emoticon te stellen</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="71"/>

@@ -65,7 +65,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="87"/>
    <source>Esc</source>
    <comment>Close tab window</comment>
-   <translation type="unfinished"/>
+   <translation>Esc</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="90"/>
@@ -132,7 +132,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
    <source>Send single message</source>
-   <translation type="unfinished"/>
+   <translation>Zend een bericht</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
@@ -168,7 +168,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
    <source>Show message windows in tab window</source>
-   <translation type="unfinished"/>
+   <translation>Toon berichtvenster in de tabvenster</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>

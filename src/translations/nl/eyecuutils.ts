@@ -50,17 +50,17 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="423"/>
    <source>Incorrect encoding</source>
-   <translation type="unfinished"/>
+   <translation>Verkeerde codering</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="424"/>
    <source>Invalid authorization id</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige machtiging id</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="425"/>
    <source>Invalid mechanism</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige mechanisme</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="426"/>

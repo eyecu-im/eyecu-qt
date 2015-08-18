@@ -45,22 +45,22 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="274"/>
    <source>Save messages with formatting</source>
-   <translation type="unfinished"/>
+   <translation>Berichten opslaan met opmaak</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="275"/>
    <source>Save only messages text</source>
-   <translation type="unfinished"/>
+   <translation>Alleen tekstberichten opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="276"/>
    <source>Do not save messages</source>
-   <translation type="unfinished"/>
+   <translation>Berichten niet opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="278"/>
    <source>Allow Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Off-The-Record sessies toestaan</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="279"/>
@@ -90,7 +90,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
    <source>New item preferences</source>
-   <translation type="unfinished"/>
+   <translation>Nieuwe item voorkeuren </translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
@@ -158,7 +158,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="202"/>
    <source>Off-The-Record sessions:</source>
-   <translation type="unfinished"/>
+   <translation>Off-The-Record sessies:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="215"/>

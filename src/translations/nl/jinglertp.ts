@@ -48,22 +48,22 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="408"/>
    <source>video</source>
-   <translation type="unfinished"/>
+   <translation>video</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="408"/>
    <source>voice</source>
-   <translation type="unfinished"/>
+   <translation>Stem</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="419"/>
    <source>Missed call!</source>
-   <translation type="unfinished"/>
+   <translation>Gemiste oproep!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="419"/>
    <source>Incoming call!</source>
-   <translation type="unfinished"/>
+   <translation>Inkomend gesprek!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="455"/>
@@ -95,7 +95,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="673"/>
    <source>Call cancelled</source>
-   <translation type="unfinished"/>
+   <translation>Oproep geannuleerd</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="676"/>
@@ -110,17 +110,17 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="683"/>
    <source>Call error</source>
-   <translation type="unfinished"/>
+   <translation>Bel fout</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="684"/>
    <source>Call error (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Bel fout (%1)</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="785"/>
    <source>Hangup</source>
-   <translation type="unfinished"/>
+   <translation>Ophangen</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="797"/>
@@ -131,7 +131,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="997"/>
    <source>Microphone ON</source>
-   <translation type="unfinished"/>
+   <translation>Microfoon aan</translation>
   </message>
  </context>
  <context>
@@ -165,7 +165,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="191"/>
    <source>Video</source>
-   <translation type="unfinished"/>
+   <translation>Video</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="241"/>

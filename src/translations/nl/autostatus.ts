@@ -176,7 +176,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="138"/>
    <source>Time Format:</source>
-   <translation type="unfinished"/>
+   <translation>Tijd formaat:</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="139"/>

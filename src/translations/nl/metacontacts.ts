@@ -43,23 +43,23 @@
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="204"/>
    <source>Detach from metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Los maken van metacontactnaam</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="519"/>
    <source>Copy Metacontact to Group</source>
-   <translation type="unfinished"/>
+   <translation>Kopieer Metacontacten naar groep</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="525"/>
    <source>Move Metacontact to Group</source>
-   <translation type="unfinished"/>
+   <translation>Verplaats Metacontact naar groep</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="565"/>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1937"/>
    <source>Combine Contacts...</source>
-   <translation type="unfinished"/>
+   <translation>Combineer Contacten...</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1150"/>
@@ -89,7 +89,7 @@
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1974"/>
    <source>Rename</source>
-   <translation type="unfinished"/>
+   <translation>Hernoem</translation>
   </message>
  </context>
 </TS>

@@ -59,7 +59,7 @@
         <location filename="../../plugins/map/map.cpp" line="121"/>
         <source>F5</source>
         <comment>Refresh map</comment>
-        <translation type="unfinished"/>
+        <translation>F5</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="122"/>
@@ -70,7 +70,7 @@
         <location filename="../../plugins/map/map.cpp" line="122"/>
         <source>Ctrl+O</source>
         <comment>Show options dialog</comment>
-        <translation type="unfinished"/>
+        <translation>Ctrl+O</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="124"/>
@@ -124,12 +124,12 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="130"/>
         <source>Zoom</source>
-        <translation type="unfinished"/>
+        <translation>Inzoomen</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="131"/>
         <source>In</source>
-        <translation type="unfinished"/>
+        <translation>In</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="131"/>
@@ -171,7 +171,7 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="801"/>
         <source>Mouse wheel zooming</source>
-        <translation type="unfinished"/>
+        <translation>Muiswiel inzoomen</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="802"/>

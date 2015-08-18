@@ -45,7 +45,7 @@
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
    <source>Show only favorite contacts</source>
-   <translation type="unfinished"/>
+   <translation>Toon alleen de favoriete contacten</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>

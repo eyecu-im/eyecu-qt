@@ -45,7 +45,7 @@
   <message>
    <location filename="../../plugins/pepmanager/pepmanager.cpp" line="214"/>
    <source>Extended Status</source>
-   <translation type="unfinished"/>
+   <translation>Uitgebreide status</translation>
   </message>
  </context>
 </TS>

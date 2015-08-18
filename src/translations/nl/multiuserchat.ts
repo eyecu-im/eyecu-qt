@@ -169,7 +169,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchat.cpp" line="951"/>
    <source>Your nick was changed by server to &apos;%1&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Je bijnaam is veranderd door de server naar &apos;%1&apos;</translation>
   </message>
  </context>
  <context>
@@ -189,7 +189,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="213"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1016"/>
    <source>Join conference</source>
-   <translation type="unfinished"/>
+   <translation>Neem deel aan conferentie</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="213"/>

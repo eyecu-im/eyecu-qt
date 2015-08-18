@@ -46,7 +46,7 @@
   <message>
    <location filename="../../plugins/placeview/placeview.cpp" line="465"/>
    <source>View Center</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk middelpunt</translation>
   </message>
  </context>
  <context>
@@ -54,7 +54,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="14"/>
    <source>Form</source>
-   <translation type="unfinished"/>
+   <translation>Form</translation>
   </message>
   <message>
    <source>Type of place</source>
@@ -150,7 +150,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="97"/>
    <source>Save</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="113"/>
@@ -180,12 +180,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="256"/>
    <source>Radius</source>
-   <translation type="unfinished"/>
+   <translation>Straal</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="266"/>
    <source> kilometers</source>
-   <translation type="unfinished"/>
+   <translation>Kilometers</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="38"/>
@@ -205,17 +205,17 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="279"/>
    <source>Ready!</source>
-   <translation type="unfinished"/>
+   <translation>Klaar!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="357"/>
    <source>Name</source>
-   <translation type="unfinished"/>
+   <translation>Naam</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="381"/>
    <source>Rating</source>
-   <translation type="unfinished"/>
+   <translation>Waardering</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="387"/>
@@ -225,12 +225,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="398"/>
    <source>Open</source>
-   <translation type="unfinished"/>
+   <translation>Open</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="400"/>
    <source>Close</source>
-   <translation type="unfinished"/>
+   <translation>Sluit</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="401"/>

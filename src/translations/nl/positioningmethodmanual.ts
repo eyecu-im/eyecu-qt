@@ -49,7 +49,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="144"/>
    <source>Set my position</source>
-   <translation type="unfinished"/>
+   <translation>Stel positie in</translation>
   </message>
  </context>
  <context>
@@ -101,7 +101,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="165"/>
    <source>Cancel</source>
-   <translation type="unfinished"/>
+   <translation>Annuleer</translation>
   </message>
  </context>
 </TS>

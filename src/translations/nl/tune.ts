@@ -47,7 +47,7 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="319"/>
    <source>Tune events in chat</source>
-   <translation type="unfinished"/>
+   <translation>Melodie gebeurtenissen in chat</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="333"/>
@@ -57,7 +57,7 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="334"/>
    <source>User Tune listeners</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker melodie luisteraars</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="335"/>
@@ -123,7 +123,7 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="695"/>
    <source>URL</source>
-   <translation type="unfinished"/>
+   <translation>URL</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="736"/>

@@ -46,12 +46,12 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="238"/>
    <source>Disable sounds and popup windows if status is &apos;Away&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Geluiden en popups vensters uitzetten als de status &apos;away&apos; is</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="239"/>
    <source>Disable sounds and popup windows if status is &apos;Do not disturb&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Geluiden en popups vensters uitzetten als de status &apos;Niet storen&apos; is</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="240"/>
@@ -61,7 +61,7 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
    <source>Play notification sound when received a message in the active window</source>
-   <translation type="unfinished"/>
+   <translation>Speel geluid af wanneer je een bericht ontvangt in een actieve venster</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="242"/>
@@ -81,7 +81,7 @@
   <message numerus="yes">
    <location filename="../../plugins/notifications/notifications.cpp" line="855"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
   <message>
    <source> seconds</source>

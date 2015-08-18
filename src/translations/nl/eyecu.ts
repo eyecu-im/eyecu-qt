@@ -141,7 +141,7 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.ui" line="76"/>
    <source>Plugin Information</source>
-   <translation type="unfinished"/>
+   <translation>Plugin informatie</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>

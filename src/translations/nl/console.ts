@@ -118,7 +118,7 @@
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="188"/>
    <source>Console</source>
-   <translation type="unfinished"/>
+   <translation>Console</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="298"/>

@@ -51,12 +51,12 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="217"/>
    <source>Longitude</source>
-   <translation type="unfinished"/>
+   <translation>Lengte</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="236"/>
    <source>Move to location</source>
-   <translation type="unfinished"/>
+   <translation>Verplaats naar locatie</translation>
   </message>
   <message>
    <source>400x300</source>
@@ -73,7 +73,7 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="312"/>
    <source>Latitude</source>
-   <translation type="unfinished"/>
+   <translation>Breedte</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="377"/>
@@ -113,12 +113,12 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="150"/>
    <source>HTTP error</source>
-   <translation type="unfinished"/>
+   <translation>HTTP fout</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="258"/>
    <source>Save file</source>
-   <translation type="unfinished"/>
+   <translation>Bestand opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="258"/>

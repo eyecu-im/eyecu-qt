@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="25"/>
    <source>Host:</source>
-   <translation type="unfinished"/>
+   <translation>Host:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="41"/>
@@ -116,7 +116,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="182"/>
    <source>Subunit: %1</source>
-   <translation type="unfinished"/>
+   <translation>Subeenheid: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="183"/>
@@ -131,7 +131,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="185"/>
    <source>State/Province: %1</source>
-   <translation type="unfinished"/>
+   <translation>Staat/Provincie: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="201"/>
@@ -161,7 +161,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="218"/>
    <source>Serial number: %1</source>
-   <translation type="unfinished"/>
+   <translation>Serienummer: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="222"/>
@@ -176,7 +176,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="226"/>
    <source>Disconnect</source>
-   <translation type="unfinished"/>
+   <translation>Niet verbonden</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="230"/>

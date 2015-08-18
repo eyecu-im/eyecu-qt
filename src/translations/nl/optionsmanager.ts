@@ -133,7 +133,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="63"/>
    <source>Delete Profile</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="90"/>
@@ -184,7 +184,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/logindialog.ui" line="66"/>
    <source>Settings...</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen...</translation>
   </message>
  </context>
  <context>

@@ -56,7 +56,7 @@
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="70"/>
    <source>M</source>
    <comment>Mute/Unmute</comment>
-   <translation type="unfinished"/>
+   <translation>M</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="71"/>
@@ -186,7 +186,7 @@
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="73"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="446"/>
    <source>Open...</source>
-   <translation type="unfinished"/>
+   <translation>Open...</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="78"/>

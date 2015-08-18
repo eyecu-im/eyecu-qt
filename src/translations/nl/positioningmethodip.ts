@@ -48,7 +48,7 @@
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.cpp" line="35"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>seconde</numerusform><numerusform>Seconden</numerusform></translation>
   </message>
  </context>
 </TS>

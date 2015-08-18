@@ -52,7 +52,7 @@
   <message>
    <location filename="../../plugins/tunelistenerfile/tunelistenerfileoptions.cpp" line="40"/>
    <source>XML (*.xml)</source>
-   <translation type="unfinished"/>
+   <translation>XML (*.xml)</translation>
   </message>
   <message>
    <location filename="../../plugins/tunelistenerfile/tunelistenerfileoptions.cpp" line="41"/>

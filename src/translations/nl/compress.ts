@@ -47,7 +47,7 @@
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="69"/>
    <source>Invalid or incomplete deflate data</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige of onvolledige deflate gegevens</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="70"/>
