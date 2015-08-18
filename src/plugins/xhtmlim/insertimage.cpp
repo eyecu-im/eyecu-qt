@@ -9,6 +9,7 @@
 #include <definitions/optionvalues.h>
 #include <definitions/shortcuts.h>
 #include <utils/options.h>
+#include <utils/logger.h>
 
 #include "insertimage.h"
 #include "xhtmlim.h"
@@ -395,9 +396,8 @@ void InsertImage::readImageData(const QUrl &AUrl)
     }
     else
     {
-        QBuffer *buf=new QBuffer(&FOriginalImageData, this);
-        buf->open(QBuffer::ReadOnly);
-        QImageReader reader(buf);
+		QBuffer buffer(&FOriginalImageData);
+		QImageReader reader(&buffer);
         FOriginalFormat=reader.format();
         QSize size=reader.size();
         FMimeType=(FOriginalFormat.isEmpty())?QString():QString("image/").append(QString(FOriginalFormat));
@@ -425,11 +425,8 @@ void InsertImage::readImageData(const QUrl &AUrl)
 
         if (reader.canRead())
         {
-            disableCommon(false);            
-            ui->lblInfo->setText(tr("%1: %2x%3 px; %n byte(s)", "FORMAT: WIDTHxHEIGHT px; SIZE byte(s)", buf->size())
-                                .arg(QString(FOriginalFormat).toUpper())
-                                .arg(FSizeOld.width())
-                                .arg(FSizeOld.height()));
+			disableCommon(false);
+			updateInfoLine(buffer.size(), FOriginalFormat, FSizeOld.width(), FSizeOld.height());
             ui->cmbType->blockSignals(true);
             if (!ui->cmbType->itemData(0).toByteArray().isNull())
                 ui->cmbType->insertItem(0, tr("Do not change"));
@@ -438,7 +435,7 @@ void InsertImage::readImageData(const QUrl &AUrl)
 
             if (reader.supportsAnimation())
             {
-                QMovie *movie = new QMovie(buf, FOriginalFormat, this);                
+				QMovie *movie = new QMovie(&buffer, FOriginalFormat, this);
                 if (movie->isValid())
                 {
                     movie->setScaledSize(size);
@@ -477,25 +474,46 @@ void InsertImage::calculateUrl(const QByteArray &AImageData)
 {
     FUrlCurrent.setPath(FBitsOfBinary->contentIdentifier(AImageData));
     FUrlCurrent.setScheme("cid");
-    ui->ledUrl->setText(FUrlCurrent.toString());
+	ui->ledUrl->setText(FUrlCurrent.toString());
+}
+
+void InsertImage::updateInfoLine(qint64 AImageSize, const QByteArray &AImageFormat, int AWidth, int AHeight)
+{
+	ui->lblInfo->setText(tr("%1: %2x%3 px; %n byte(s)", "FORMAT: WIDTHxHEIGHT px; SIZE byte(s)", AImageSize)
+						.arg(QString(AImageFormat).toUpper())
+						.arg(AWidth)
+						.arg(AHeight));
 }
 
 void InsertImage::recalculateImageData()
 {
+	QByteArray format;
     QSize size = ui->chbPhysResize->isChecked()?QSize(ui->spbWidth->value(), ui->spbHeight->value()):FSizeOld;
     if (size == FSizeOld && (ui->cmbType->currentIndex()==0 || FWriterFormats.at(ui->cmbType->currentIndex()-1)==FOriginalFormat))
         FImageData = FOriginalImageData;
     else
     {
-        QByteArray format = ui->cmbType->currentIndex()?FWriterFormats.at(ui->cmbType->currentIndex()-1):FOriginalFormat;
-        QBuffer *buf=new QBuffer(&FImageData, this);
+		FImageData.clear();
+		QVariant data = ui->cmbType->itemData(ui->cmbType->currentIndex());
+		format = data.isNull()?FOriginalFormat:data.toByteArray();
+		LOG_INFO(QString("Image format: %1").arg(format.data()));
+		QBuffer buffer(&FImageData);
         QImage image = QImage::fromData(FOriginalImageData);
         if (!image.isNull())
-            image.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).save(buf, format.data());
-        buf->deleteLater();
+		{
+			if (image.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).save(&buffer, format.data()))
+				LOG_INFO("Image saved successfuly");
+			else
+				LOG_ERROR("Image save failed!");
+		}
+		else
+			LOG_ERROR("Image read failed!");
     }
     if (!FImageData.isEmpty())
+	{
         calculateUrl(FImageData);
+		updateInfoLine(FImageData.size(), format, size.width(), size.height());
+	}
 }
 
 void InsertImage::enableInsert()
