@@ -241,12 +241,14 @@ void InsertImage::onCheckBoxKeepAspect(int AState)
 
 void InsertImage::onCheckBoxPhysResize(int AState)
 {
+	QVariant data = ui->cmbType->itemData(ui->cmbType->currentIndex());
+	QByteArray format = data.isNull()?FOriginalFormat:data.toByteArray();
 	if (AState==Qt::Checked)
     {
         if (ui->cmbType->itemData(0).toByteArray().isNull())
         {
             ui->cmbType->removeItem(0);
-            ui->cmbType->setCurrentIndex(ui->cmbType->findData(FOriginalFormat));
+			ui->cmbType->setCurrentIndex(ui->cmbType->findData(format));
         }
     }
     else
@@ -254,7 +256,7 @@ void InsertImage::onCheckBoxPhysResize(int AState)
         if (!ui->cmbType->itemData(0).toByteArray().isNull())
         {
             ui->cmbType->insertItem(0, tr("Do not change"));
-            ui->cmbType->setCurrentIndex(0);
+			ui->cmbType->setCurrentIndex(format==FOriginalFormat?0:ui->cmbType->findData(format));
         }
     }
 }
@@ -426,7 +428,7 @@ void InsertImage::readImageData(const QUrl &AUrl)
         if (reader.canRead())
         {
 			disableCommon(false);
-			updateInfoLine(buffer.size(), FOriginalFormat, FSizeOld.width(), FSizeOld.height());
+			updateInfoLine(FOriginalImageData.size(), FOriginalFormat, FSizeOld.width(), FSizeOld.height());
             ui->cmbType->blockSignals(true);
             if (!ui->cmbType->itemData(0).toByteArray().isNull())
                 ui->cmbType->insertItem(0, tr("Do not change"));
