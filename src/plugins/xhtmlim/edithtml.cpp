@@ -629,26 +629,6 @@ void EditHtml::onInsertImage()
                 if(supportBoB)
                 {
                     QByteArray imageData=inserImage->getImageData();
-                    QByteArray selectedFormat=inserImage->getSelectedFormat();
-                    if (inserImage->physResize() ||
-                       (!selectedFormat.isNull() &&
-                        inserImage->getOriginalFormat()!=selectedFormat))
-                    {
-                        QBuffer buffer(&imageData);
-                        buffer.open(QIODevice::ReadOnly);
-                        QImageReader reader(&buffer, inserImage->getOriginalFormat());
-                        QImage image=reader.read();
-                        buffer.close();
-
-                        imageData.clear();
-                        buffer.open(QIODevice::WriteOnly);
-                        if (selectedFormat.isEmpty())
-                            selectedFormat=inserImage->getOriginalFormat();
-                        QImageWriter writer(&buffer, selectedFormat);
-                        writer.write(inserImage->physResize()?image.scaled(inserImage->newWidth(), inserImage->newHeight(), Qt::KeepAspectRatio, Qt::SmoothTransformation)
-                                                             :image);
-                        buffer.close();
-                    }
                     QString contentId=FBitsOfBinary->contentIdentifier(imageData);
                     QString uri=QString("cid:").append(contentId);
                     imageFormat.setName(uri);

@@ -18,7 +18,7 @@ class InsertImage : public QDialog
     Q_OBJECT
 
 public:
-	explicit InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent = 0);
+	InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent = 0);
     ~InsertImage();
     Ui::InsertImage *ui;
 
@@ -48,6 +48,7 @@ protected:
     void disableBOB(bool ADisable=true);
     void readImageData(const QUrl &AUrl);
     void calculateUrl(const QByteArray &AImageData);
+	void updateInfoLine(qint64 AImageSize, const QByteArray &AImageFormat, int AWidth, int AHeight);
     void recalculateImageData();
     void enableInsert();
 	void updateSpinboxPixels(QSpinBox *ASpinBox);
@@ -92,6 +93,7 @@ private:
     bool    FIgnoreSpbH;
     bool    FIgnoreDspbW;
     bool    FIgnoreDspbH;
+	int		FFormatOffset;
     static  IBitsOfBinary *FBitsOfBinary;
 };
 
