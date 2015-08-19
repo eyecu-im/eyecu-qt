@@ -69,18 +69,18 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="39"/>
    <source>Variant:</source>
-   <translation type="unfinished"/>
+   <translation>Variant:</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="65"/>
    <source>Font:</source>
-   <translation type="unfinished"/>
+   <translation>Lettertype:</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="85"/>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="158"/>
    <source>Change...</source>
-   <translation type="unfinished"/>
+   <translation>Verander...</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="95"/>
@@ -101,7 +101,7 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="32"/>
    <source>not set</source>
-   <translation type="unfinished"/>
+   <translation>niet ingesteld</translation>
   </message>
  </context>
 </TS>

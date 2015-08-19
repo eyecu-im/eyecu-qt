@@ -72,7 +72,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="80"/>
    <source>SSL Protocol:</source>
-   <translation type="unfinished"/>
+   <translation>SSL Protocol:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="97"/>
@@ -96,22 +96,22 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="27"/>
    <source>Allows to set a standard TCP connection to Jabber server</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan voor een standaard TCP verbinding naar Jabber server</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="61"/>
    <source>Host certificate is not in trusted list</source>
-   <translation type="unfinished"/>
+   <translation>Host certificaat staat niet in betrouwbare lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="180"/>
    <source>Name: %1</source>
-   <translation type="unfinished"/>
+   <translation>Naam: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="181"/>
    <source>Organization: %1</source>
-   <translation type="unfinished"/>
+   <translation>Organisatie: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="182"/>
@@ -121,12 +121,12 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="183"/>
    <source>Country: %1</source>
-   <translation type="unfinished"/>
+   <translation>Land: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="184"/>
    <source>Locality: %1</source>
-   <translation type="unfinished"/>
+   <translation>Plaats: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="185"/>

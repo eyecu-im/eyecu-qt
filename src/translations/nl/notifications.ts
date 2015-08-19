@@ -56,7 +56,7 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="240"/>
    <source>Use native popup notifications if available</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik natieve popup meldingen indien beschikbaar</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
@@ -66,7 +66,7 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="242"/>
    <source>Do not show the message body in the popup window</source>
-   <translation type="unfinished"/>
+   <translation>Toon geen hoofdtekst bericht in popup venster</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="243"/>
@@ -90,17 +90,17 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="254"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
-   <translation type="unfinished"/>
+   <translation>Tijd om een popup venster weer tegeven(0 - altijd zichtbaar):</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="257"/>
    <source>System command to play sound:</source>
-   <translation type="unfinished"/>
+   <translation>Systeem opdracht om geluid af te spelen:</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="260"/>
    <source>Notification kinds</source>
-   <translation type="unfinished"/>
+   <translation>Notificatie soorten</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
@@ -113,12 +113,12 @@
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="41"/>
    <source>Event</source>
-   <translation type="unfinished"/>
+   <translation>Evenement</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="45"/>
    <source>Play sound at the notification</source>
-   <translation type="unfinished"/>
+   <translation>Speel geluid af bij een melding</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="49"/>

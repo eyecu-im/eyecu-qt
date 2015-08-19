@@ -59,17 +59,17 @@
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="260"/>
    <source>Reconnect to server on connection errors</source>
-   <translation type="unfinished"/>
+   <translation>Opnieuw verbinden met server als je verbindings fouten krijgt</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="264"/>
    <source>Standard and users statuses</source>
-   <translation type="unfinished"/>
+   <translation>Standaard en gebruikers statussen</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="565"/>
    <source>Offline</source>
-   <translation type="unfinished"/>
+   <translation>Niet verbonden</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="567"/>

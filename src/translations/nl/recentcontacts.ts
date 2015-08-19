@@ -50,7 +50,7 @@
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
    <source>Simplify recent contacts view</source>
-   <translation type="unfinished"/>
+   <translation>Vereenvoudig recent bekeken contacten</translation>
   </message>
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1391"/>
@@ -70,7 +70,7 @@
   <message>
    <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1450"/>
    <source>&lt;b&gt;Account:&lt;/b&gt; %1</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;Account:&lt;/b&gt;%1</translation>
   </message>
  </context>
 </TS>

@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="335"/>
    <source>User Tune requesters</source>
-   <translation type="unfinished"/>
+   <translation>Aanvragen gebruiker melodie </translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="341"/>

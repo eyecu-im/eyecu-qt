@@ -71,7 +71,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="90"/>
    <source>Alt+%1</source>
    <comment>Show tab</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+%1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="92"/>
@@ -105,7 +105,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
    <source>Ctrl+Down</source>
    <comment>Edit next message</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Omlaag</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
@@ -116,18 +116,18 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
    <source>Ctrl+Up</source>
    <comment>Edit previous message</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Omhoog</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
    <source>Send chat message</source>
-   <translation type="unfinished"/>
+   <translation>Stuur chat bericht</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
    <source>Return</source>
    <comment>Send chat message</comment>
-   <translation type="unfinished"/>
+   <translation>Terug</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>

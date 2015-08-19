@@ -65,12 +65,12 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="279"/>
    <source>Forbid Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Verboden Off-The-Record sessies</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="280"/>
    <source>Manually approve Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Handmatig goedgekeurde Off-The-Record sessies</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="402"/>
@@ -85,7 +85,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="406"/>
    <source>Failed to save archive preferences: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om archief voorkeuren op te slaan: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
@@ -95,22 +95,22 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
    <source>Enter item JID:</source>
-   <translation type="unfinished"/>
+   <translation>Voer JID item in:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="515"/>
    <source>Unacceptable item JID</source>
-   <translation type="unfinished"/>
+   <translation>Onacceptabel JID item</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="515"/>
    <source>&apos;%1&apos; is not valid JID or already exists</source>
-   <translation type="unfinished"/>
+   <translation>&apos;%1&apos; is een ongeldige JID of bestaat al</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="408"/>
    <source>Preferences accepted</source>
-   <translation type="unfinished"/>
+   <translation>Voorkeuren geaccepteerd</translation>
   </message>
  </context>
  <context>
@@ -118,7 +118,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="26"/>
    <source>Auto archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Automatische archief voorkeuren</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="41"/>

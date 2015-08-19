@@ -135,7 +135,7 @@
         <location filename="../../plugins/map/map.cpp" line="131"/>
         <source>+</source>
         <comment>Map zoom in</comment>
-        <translation type="unfinished"/>
+        <translation>+</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="132"/>

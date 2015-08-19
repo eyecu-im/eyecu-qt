@@ -52,12 +52,12 @@
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="70"/>
    <source>Invalid compression level</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige compressie level</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="100"/>
    <source>Enable data compression transferred between client and server</source>
-   <translation type="unfinished"/>
+   <translation>Schakel datacompressie in tussen cliënt en server</translation>
   </message>
  </context>
 </TS>

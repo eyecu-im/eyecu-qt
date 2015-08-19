@@ -75,7 +75,7 @@
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="14"/>
    <source>XML Console</source>
-   <translation type="unfinished"/>
+   <translation>XML Console</translation>
   </message>
   <message>
    <location filename="../../plugins/console/consolewidget.ui" line="33"/>

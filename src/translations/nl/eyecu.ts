@@ -70,12 +70,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="945"/>
    <source>Global shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Globale snelkoppelingen</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="946"/>
    <source>Application shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Programmasnelkoppelingen</translation>
   </message>
  </context>
  <context>
@@ -93,27 +93,27 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>
    <source>This plugin does not depend on other plugins.</source>
-   <translation type="unfinished"/>
+   <translation>Deze plugin is niet afhankelijk van andere plugins.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
    <source>This plugin depends on %n other plugin(s).</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Deze plugin is afhankelijk van %n andere plugin.</numerusform><numerusform>Deze plugin is afhankelijk van %n andere plugins.</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n plugin is afhankelijk van deze plugin.</numerusform><numerusform>%n plugins zijn afhankelijk van deze plugin.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Another plugin depends on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>Een andere plugin is afhankelijk van deze plugin.</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>
    <source>Other plugins don&apos;t depend on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>Andere plugins zijn niet afhankelijk van deze pluging.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>

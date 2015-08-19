@@ -65,12 +65,12 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="426"/>
    <source>Malformed request</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldige aanvraag</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="427"/>
    <source>Mechanism is too weak</source>
-   <translation type="unfinished"/>
+   <translation>Mechanisme is te zwak</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="428"/>

@@ -68,12 +68,12 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="455"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Chat</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="499"/>
    <source>Jingle RTP Sessions</source>
-   <translation type="unfinished"/>
+   <translation>Jingle RTP sessie</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="500"/>
@@ -100,12 +100,12 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="676"/>
    <source>Call rejected</source>
-   <translation type="unfinished"/>
+   <translation>Oproep afgewezen</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="679"/>
    <source>Call finished</source>
-   <translation type="unfinished"/>
+   <translation>Oproep voltooid</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="683"/>
@@ -126,7 +126,7 @@
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="797"/>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="1018"/>
    <source>Microphone OFF</source>
-   <translation type="unfinished"/>
+   <translation>Microfoon UIT</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="997"/>

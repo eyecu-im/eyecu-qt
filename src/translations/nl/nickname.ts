@@ -55,7 +55,7 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="362"/>
    <source>Broadcast within presence (violates XEP-0172!)</source>
-   <translation type="unfinished"/>
+   <translation>Uitzending binnen aanwezigheid (overtreedt XEP-0172!)</translation>
   </message>
  </context>
 </TS>

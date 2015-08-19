@@ -118,7 +118,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="239"/>
    <source>Code</source>
-   <translation type="unfinished"/>
+   <translation>Code</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="250"/>

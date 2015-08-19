@@ -71,12 +71,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="375"/>
    <source>Type</source>
-   <translation type="unfinished"/>
+   <translation>Soort</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="236"/>
    <source>Search criteria</source>
-   <translation type="unfinished"/>
+   <translation>Zoekopdracht</translation>
   </message>
   <message>
    <source>Way To Search</source>
@@ -121,7 +121,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="191"/>
    <source>Rank by</source>
-   <translation type="unfinished"/>
+   <translation>Rangschikken op</translation>
   </message>
   <message>
    <source>Rankby</source>
@@ -130,7 +130,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="210"/>
    <source>Search status</source>
-   <translation type="unfinished"/>
+   <translation>Zoek status</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="60"/>
@@ -140,12 +140,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="63"/>
    <source>Clear</source>
-   <translation type="unfinished"/>
+   <translation>Leegmaken</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="94"/>
    <source>Save image to disk</source>
-   <translation type="unfinished"/>
+   <translation>Afbeelding opslaan op schijf</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="97"/>
@@ -155,27 +155,27 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="113"/>
    <source>Select Provider</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer aanbieder</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="116"/>
    <source>View</source>
-   <translation type="unfinished"/>
+   <translation>Bekijk</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="147"/>
    <source>Move to location</source>
-   <translation type="unfinished"/>
+   <translation>Verplaats naar locatie</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="181"/>
    <source>Keyword</source>
-   <translation type="unfinished"/>
+   <translation>Trefwoord</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="223"/>
    <source>Place type</source>
-   <translation type="unfinished"/>
+   <translation>Type plaats</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="256"/>

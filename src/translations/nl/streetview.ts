@@ -78,12 +78,12 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="377"/>
    <source>Copy</source>
-   <translation type="unfinished"/>
+   <translation>Kopiëer</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="409"/>
    <source>Save image to disk</source>
-   <translation type="unfinished"/>
+   <translation>Afbeelding opslaan op schijf</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="412"/>
@@ -103,12 +103,12 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="464"/>
    <source>Field of view</source>
-   <translation type="unfinished"/>
+   <translation>Gezichtsveld</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="112"/>
    <source>Please wait....</source>
-   <translation type="unfinished"/>
+   <translation>Wacht AUB....</translation>
   </message>
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="150"/>
@@ -123,7 +123,7 @@
   <message>
    <location filename="../../plugins/streetview/streetviewform.cpp" line="258"/>
    <source>JPEG fles (*.jpg *.jpeg)</source>
-   <translation type="unfinished"/>
+   <translation>JPEG bestanden (*.jpg *.jpeg)</translation>
   </message>
  </context>
 </TS>

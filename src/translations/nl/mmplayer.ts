@@ -89,12 +89,12 @@
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="73"/>
    <source>Ctrl+O</source>
    <comment>Show options dialog</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+O</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="143"/>
    <source>Play multimedia data during file transfer</source>
-   <translation type="unfinished"/>
+   <translation>Speel media bestanden af tijdens overdracht</translation>
   </message>
  </context>
  <context>

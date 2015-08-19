@@ -42,7 +42,7 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="146"/>
    <source>Forward direct incoming connections to host:</source>
-   <translation type="unfinished"/>
+   <translation>Het direct doorsturen van inkomende verbindingen naar host:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="165"/>
@@ -52,17 +52,17 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="186"/>
    <source>Use jabber-proxy on your server</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik jabber-proxy op je server</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="193"/>
    <source>Use additional jabber-proxies</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik een extra jabber-proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="237"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Toevoegen</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="247"/>
@@ -85,32 +85,32 @@
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.ui" line="29"/>
    <source>Use jabber-proxy on your server</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik jabber-proxy op je server</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.ui" line="41"/>
    <source>Use additional jabber-proxy:</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik extra jabber-proxy:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.ui" line="58"/>
    <source>Allow direct incoming connections on port:</source>
-   <translation type="unfinished"/>
+   <translation>Sta inkomende verbindingen op poort toe:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.ui" line="91"/>
    <source>Forward direct incoming connections to host:</source>
-   <translation type="unfinished"/>
+   <translation>Het direct doorsturen van inkomende verbindingen naar host:</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.ui" line="106"/>
    <source>Use account proxy settings for outgoing connections</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik account proxy-instellingen voor uitgaande verbindingen</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/socksoptionswidget.cpp" line="28"/>
    <source>host:port</source>
-   <translation type="unfinished"/>
+   <translation>host:poort</translation>
   </message>
  </context>
  <context>

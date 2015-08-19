@@ -64,12 +64,12 @@
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1150"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Chat</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
    <source>Rename Metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Hernoem Metacontact</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
@@ -79,12 +79,12 @@
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1950"/>
    <source>Detach from Metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Los maken van metacontact</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1962"/>
    <source>Destroy Metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Vernietig metacontact</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1974"/>

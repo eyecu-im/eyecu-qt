@@ -52,12 +52,12 @@
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="71"/>
    <source>Priority Down</source>
-   <translation type="unfinished"/>
+   <translation>Prioriteit laag</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="74"/>
    <source>Click this button to lower prioroty of selected emoticon set</source>
-   <translation type="unfinished"/>
+   <translation>Klik op deze knop om de prioriteit te verlagen van de geselecteerde emoticon set</translation>
   </message>
  </context>
 </TS>

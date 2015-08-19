@@ -113,22 +113,22 @@
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="14"/>
    <source>Profiles Settings</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen van profielen</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="35"/>
    <source>Add Profile</source>
-   <translation type="unfinished"/>
+   <translation>Profiel toevoegen</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="49"/>
    <source>Change Password</source>
-   <translation type="unfinished"/>
+   <translation>Verander paswoord</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="56"/>
    <source>Rename Profile</source>
-   <translation type="unfinished"/>
+   <translation>Hernoem profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/editprofilesdialog.ui" line="63"/>

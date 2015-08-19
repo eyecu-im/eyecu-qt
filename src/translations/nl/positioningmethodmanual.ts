@@ -76,7 +76,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="17"/>
    <source>Publish position</source>
-   <translation type="unfinished"/>
+   <translation>Publiseer positie</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="52"/>
@@ -86,7 +86,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="89"/>
    <source>Longitude</source>
-   <translation type="unfinished"/>
+   <translation>Lengte</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="135"/>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="142"/>
    <source>Stop publish</source>
-   <translation type="unfinished"/>
+   <translation>Stop publicatie</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/setlocation.ui" line="165"/>

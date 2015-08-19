@@ -46,7 +46,7 @@
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="203"/>
    <source>Hide file transfer dialog after transfer started</source>
-   <translation type="unfinished"/>
+   <translation>Verberg bestandsoverdracht dialoog als overdracht is begonnen</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="222"/>

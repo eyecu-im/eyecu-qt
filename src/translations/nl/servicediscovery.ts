@@ -70,7 +70,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="133"/>
    <source>Node</source>
-   <translation type="unfinished"/>
+   <translation>Knooppunt</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="234"/>
@@ -108,7 +108,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="50"/>
    <source>Service Discovery - %1</source>
-   <translation type="unfinished"/>
+   <translation>Discovery service - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="189"/>

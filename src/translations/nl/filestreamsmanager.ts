@@ -83,12 +83,12 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="145"/>
    <source>Create separate folder for each sender</source>
-   <translation type="unfinished"/>
+   <translation>Maak een aparte map voor elke afzender</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="155"/>
    <source>Default transfer method:</source>
-   <translation type="unfinished"/>
+   <translation>Standaard overdrachts methode:</translation>
   </message>
  </context>
  <context>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.cpp" line="33"/>
    <source>Select default directory</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer standaard map</translation>
   </message>
  </context>
  <context>

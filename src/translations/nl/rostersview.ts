@@ -53,17 +53,17 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="208"/>
    <source>Show contacts of all accounts in common list</source>
-   <translation type="unfinished"/>
+   <translation>Toon van alle accounts de contacten in algemene lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="209"/>
    <source>Show contact resource with highest priority</source>
-   <translation type="unfinished"/>
+   <translation>Toon contacten met hoogste prioriteit</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="210"/>
    <source>Hide scroll bars in contact list window</source>
-   <translation type="unfinished"/>
+   <translation>Verberg schuifbalken in venster van contactpersonen lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="212"/>
@@ -73,7 +73,7 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="213"/>
    <source>Extra icons</source>
-   <translation type="unfinished"/>
+   <translation>Extra pictogrammen</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="216"/>
@@ -98,27 +98,27 @@
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="225"/>
    <source>Simplified</source>
-   <translation type="unfinished"/>
+   <translation>Vereenvoudigd</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="226"/>
    <source>Compact</source>
-   <translation type="unfinished"/>
+   <translation>Compact</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="227"/>
    <source>Contacts list view:</source>
-   <translation type="unfinished"/>
+   <translation>Toon Contactenlijst:</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="231"/>
    <source>by status</source>
-   <translation type="unfinished"/>
+   <translation>op status</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="232"/>
    <source>alphabetically</source>
-   <translation type="unfinished"/>
+   <translation>In alfabetische volgorde</translation>
   </message>
   <message>
    <location filename="../../plugins/rostersview/rostersviewplugin.cpp" line="233"/>

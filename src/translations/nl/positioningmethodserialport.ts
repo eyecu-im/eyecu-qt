@@ -113,12 +113,12 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="339"/>
    <source>RTS/CTS</source>
-   <translation type="unfinished"/>
+   <translation>RTS/CTS</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="340"/>
    <source>XON/XOFF</source>
-   <translation type="unfinished"/>
+   <translation>XON/XOFF</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="348"/>

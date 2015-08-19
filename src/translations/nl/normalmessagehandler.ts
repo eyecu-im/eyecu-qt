@@ -105,12 +105,12 @@
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="1015"/>
    <source>Re: %1</source>
-   <translation type="unfinished"/>
+   <translation>Re: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="1030"/>
    <source>Fw: %1</source>
-   <translation type="unfinished"/>
+   <translation>Fw: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="1166"/>
