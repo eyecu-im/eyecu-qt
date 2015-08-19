@@ -16,7 +16,7 @@ public:
     explicit MapOptions(QWidget *parent = 0);
     ~MapOptions();
 
-// IOptionsWidget
+// IOptionsDialoWidget
     QWidget* instance() {return this; }
 
 public slots:

@@ -17,7 +17,6 @@
 // *** <<< eyeCU <<< ***
 #define OPN_MAP                 "Map"
 #define OPN_MAP_GOOGLE          "Map.Google"
-#define OPN_MAP_GOOGLE_KEY      "Map.Google.ApiKey"
 #define OPN_MAP_YANDEX          "Map.Yandex"
 #define OPN_MAPMAGNIFIER        "MapMagnifier"
 #define OPN_MAPSEARCH           "MapSearch"

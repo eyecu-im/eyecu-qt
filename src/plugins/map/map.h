@@ -94,7 +94,7 @@ public:
 	void mapSceneWheelEvent(QGraphicsSceneWheelEvent * wheelEvent);
 	void mapSceneContextMenuEvent(QGraphicsSceneContextMenuEvent * contextMenuEvent);
 
-	// IOptionsHolder
+	// IOptionsDialogHolder
 	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
 
 	void zoomIn();
@@ -164,8 +164,8 @@ private:
 	QStackedWidget		*FMapsWidget;
 	IMapMouseGrabber	*FMouseGrabber;
 	Action				*FMyLocation;
-	MapSources			*FMapSourcesWidget;
 	bool				FFollowMyLocation;
+	QList<IOptionsDialogNode> FOptionsDialogNodes;
 
 	QPointF				FMousePosition;
 	// Button processing

@@ -37,29 +37,7 @@ protected:
 	virtual void childApply() =0;
 	virtual void childReset() =0;
 };
-// *** <<< eyeCU <<< ****
-struct TypedOptionsDialogWidget
-{
-public:
-	enum Type {
-		Both,
-		Simplified,
-		Advanced
-	};
 
-	TypedOptionsDialogWidget(IOptionsDialogWidget *AWidget=NULL, Type AType=Both):
-		FWidget(AWidget), FType(AType)
-	{}
-	inline operator IOptionsDialogWidget *()const {return FWidget;}
-	inline IOptionsDialogWidget& operator *() const {return *FWidget;}
-	inline IOptionsDialogWidget* operator ->() const {return FWidget;}
-	Type type() const {return FType;}
-
-private:
-	IOptionsDialogWidget *FWidget;
-	Type FType;
-};
-// *** >>> eyeCU >>> ****
 class IOptionsDialogHolder
 {
 public:

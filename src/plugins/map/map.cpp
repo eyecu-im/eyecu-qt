@@ -42,7 +42,6 @@ Map::Map():
 	FMapsWidget(NULL),
 	FMouseGrabber(NULL),
 	FMyLocation(NULL),
-	FMapSourcesWidget(NULL),
 	FFollowMyLocation(false)
 {}
 
@@ -644,9 +643,7 @@ void Map::unsetCursor()
 
 void Map::insertOptionsDialogNode(const IOptionsDialogNode &ANode)
 {
-	if (!FMapSourcesWidget)
-		FMapSourcesWidget = new MapSources(FOptionsManager);
-	FMapSourcesWidget->addMapSource(ANode);
+	FOptionsDialogNodes.append(ANode);
 	FOptionsManager->insertOptionsDialogNode(ANode);
 }
 
@@ -787,7 +784,7 @@ void Map::zoomOut()
 }
 
 QMultiMap<int, IOptionsDialogWidget *> Map::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
-{
+{	
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MAP )
 	{
@@ -803,8 +800,13 @@ QMultiMap<int, IOptionsDialogWidget *> Map::optionsDialogWidgets(const QString &
 		widgets.insertMulti(OHO_MAP_OSD, FOptionsManager->newOptionsDialogHeader("On-screen display", AParent));
 		widgets.insertMulti(OWO_MAP_OSD, new MapOptions(AParent));		
 		widgets.insertMulti(OHO_MAP_SOURCES, FOptionsManager->newOptionsDialogHeader("Setup map sources", AParent));
-		if (FMapSourcesWidget)
-			widgets.insertMulti(OWO_MAP_SOURCES, FMapSourcesWidget);
+		if (!FOptionsDialogNodes.isEmpty())
+		{
+			MapSources *mapSources = new MapSources(FOptionsManager);
+			for (QList<IOptionsDialogNode>::ConstIterator it=FOptionsDialogNodes.constBegin(); it!=FOptionsDialogNodes.constEnd(); it++)
+				mapSources->addMapSource(*it);
+			widgets.insertMulti(OWO_MAP_SOURCES, mapSources);
+		}
 	}
 	return widgets;
 }
