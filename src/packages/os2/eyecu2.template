@@ -1,66 +1,126 @@
 <WARPIN OS="OS2_2X">
 <HEAD>
 	<TITLE>eyeCU %VERSION%</TITLE>
-		<REXX NAME="FindQtRuntime">
-			call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
-			call SysLoadFuncs
+	<REXX NAME="FindQtRuntime">
+		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
+		call SysLoadFuncs
 
-			BootDrive=left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
-			ProdConfig=BootDrive || '\CONFIG.SYS'
-			rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
-			if rc = 0 then rc = libp.0 = 0
-			if ! (rc = 0) then return ''
-
-			lix = libp.0                            /* Point to last occurrence           */
-			DO FOREVER                              /* Until we find a real one           */
-				PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
-				IF LPCmd = 'LIBPATH' THEN DO          /* If this is a LIBPATH command       */
-					LEAVE                               /* This was the final LIBPATH -- done */
-				END
-
-				lix = lix-1                           /* Check for an earlier statement     */
-				IF lix = 0 THEN return ''
-			END
-
-			WorkPath=CmdTail
-
-			DO FOREVER                              /* Until 'exit'                       */
-				PARSE VAR WorkPath SearchPath';'WorkPath  /* Pull consecutive 'path's       */
-				if SearchPath = '' THEN return ''
-				SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
-				if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
-
-				rc = SysFileTree( SearchPath||'\'||QtCore4.dll||'*', 'MatchList', 'F' )
-				if \ (rc = 0) then return ''
-			END
-
-			if \ (MatchList.0 =0 ) then DO
-				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
-
-				DO while \ (QUEUED() = 0)
-					pull LINE 
-					parse value LINE with 'FILE VERSION:' VAL
-					if \ (VAL='') then parse var VAL VER REST
-				END
-
-				parse value VER with MAJOR '.' MINOR '.' PATCH
-
-				if \ (MAJOR = 4) then DO
-					rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt4', 0x0020)
-					call WirexxCancel
-				DO
-
-				if \ (MINOR > 6) then DO
-					rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt 4.7.3 or later', 0x0020)
-					call WirexxCancel
-				END
-
-				return SearchPath
-			END
-
-			rc = WirexxShowMessage('No Qt4 runtime found', 'This release of eyeCU requires Qt 4.7.3 runtime', 0x0020)
+		BootDrive=left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
+		ProdConfig=BootDrive || '\CONFIG.SYS'
+		rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
+		if rc = 0 then rc = libp.0 = 0
+		if ! (rc = 0) then DO
+			rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
 			call WirexxCancel
-		</REXX>
+		END
+
+		lix = libp.0                            /* Point to last occurrence           */
+		DO FOREVER                              /* Until we find a real one           */
+			PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
+			IF LPCmd = 'LIBPATH' THEN DO          /* If this is a LIBPATH command       */
+				LEAVE                               /* This was the final LIBPATH -- done */
+			END
+			lix = lix-1                           /* Check for an earlier statement     */
+			if lix = 0 then DO
+				rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
+				call WirexxCancel
+			END
+		END
+
+		WorkPath=CmdTail
+
+		DO FOREVER                              /* Until 'exit'                       */
+			PARSE VAR WorkPath SearchPath';'WorkPath  /* Pull consecutive 'path's       */
+			if SearchPath = '' then return ''
+			SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
+			if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
+
+			rc = SysFileTree( SearchPath||'\'||QtCore4.dll||'*', 'MatchList', 'F' )
+			if \ (rc = 0) then DO
+				rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
+				call WirexxCancel
+			END
+		END
+
+		if \ (MatchList.0 =0 ) then DO
+			address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
+
+			DO while \ (QUEUED() = 0)
+				pull LINE 
+				parse value LINE with 'FILE VERSION:' VAL
+				if \ (VAL='') then parse var VAL VER REST
+			END
+
+			parse value VER with MAJOR '.' MINOR '.' PATCH
+			if \ (MAJOR = 4) then DO
+				rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt4', 0x0020)
+				call WirexxCancel
+			DO
+
+			if \ (MINOR > 6) then DO
+				rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt 4.7.3 or later', 0x0020)
+				call WirexxCancel
+			END
+			WirexxPutEnv('QTDLL',SearchPath)
+
+			file = filespec("File", SearchPath)
+			path = filespec("Path", SearchPath)
+			drive = filespec("Drive", SearchPath)
+
+			if file = 'lib' then DO /* *nix way */
+				qtsdk = drive||path
+				qtdir = qtsdk||"share\qt4"
+			END
+			else DO	/* windoze way */
+				qtsdk = drive||path
+				qtdir = qtsdk
+			END
+			WirexxPutEnv('QTDIR',qtdir)
+			WirexxPutEnv('QTSDK',qtsdk)
+		END
+
+		rc = WirexxShowMessage('No Qt4 runtime found', 'This release of eyeCU requires Qt 4.7.3 runtime', 0x0020)
+		call WirexxCancel
+	</REXX>
+
+	<REXX NAME="FindQtDir">
+		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
+		rc=SysLoadFuncs()
+
+		QTDIR = WirexxGetEnv('QTDIR')
+
+		if QTDIR='' then DO
+			UNIXROOT = WirexxGetEnv('UNIXROOT')
+			if  \ (UNIXROOT = '') then QTDIR = UNIXROOT||'\usr\share\qt4'
+		END
+
+		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
+			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
+		end
+
+		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
+
+		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
+
+		if stream(QCONFIG,'c','open read') = 'READY:' then
+		do while LINES(QCONFIG)
+			parse value linein(QCONFIG) with field '=' val
+			if substr(field,1,10) = 'QT_VERSION' then
+			do
+				parse var val version rest
+				parse value version with major '.' minor '.' patch
+				leave
+			end
+		end
+		rc = stream(QCONFIG,'c','close')
+
+		if major = 4 & minor >= 7 then return 1
+		else return '"netlabs.org\Qt\SDK\4\7"'
+	</REXX>
+
+	<REXX NAME="QtSDKPath">
+		return WirexxGetEnv('QT_ROOT_DIR')
+	</REXX>
 
 <PCK 	INDEX=1
 	PACKAGEID="Road Works Software\eyeCU\Base package\%MAJOR%\%MINOR%\%PATCH%\%REV%"
@@ -1758,7 +1818,7 @@ This software released under GNU General Public License version 3</TEXT>
 Now everything is ready to install eyeCU!
 Press "Install" to begin installing this archive.
 
-NOTE: Thou installer will try to kill eyeCU automatically, it is recommended to exit eyeCU before you start installing a new version.
+NOTE: Though installer will try to kill eyeCU automatically, it is recommended to exit eyeCU before you start installing a new version.
 </TEXT>
 </PAGE>
 </BODY>
