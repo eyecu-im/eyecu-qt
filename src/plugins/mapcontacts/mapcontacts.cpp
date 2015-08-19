@@ -544,7 +544,7 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 						for (QList<QGraphicsItem *>::const_iterator it=items.constBegin(); it!=items.constEnd(); it++ )
 							if ((*it)->type()==QGraphicsPixmapItem::Type)
 							{
-								pixmap=qgraphicsitem_cast<QGraphicsPixmapItem *>(ACurrentElement);
+								pixmap=qgraphicsitem_cast<QGraphicsPixmapItem *>(*it);
 								if (pixmap)
 									pixmap->setPixmap(QPixmap::fromImage(avatar));
 								else

@@ -317,11 +317,14 @@ void Geoloc::registerDiscoFeatures()
 
 void Geoloc::sendGeoloc(const GeolocElement &APosition, const Jid &AStreamJid)
 {
-	QDomDocument doc;
-	QDomElement item=doc.createElement("item");
-	item.setAttribute("id", QString("#resource:").append(AStreamJid.resource()));
-	APosition.exportElement(item);
-	FPEPManager->publishItem(AStreamJid, NS_PEP_GEOLOC, item);
+	if (FXmppStreams->findXmppStream(AStreamJid)->isConnected())
+	{
+		QDomDocument doc;
+		QDomElement item=doc.createElement("item");
+		item.setAttribute("id", QString("#resource:").append(AStreamJid.resource()));
+		APosition.exportElement(item);
+		FPEPManager->publishItem(AStreamJid, NS_PEP_GEOLOC, item);
+	}
 }
 
 void Geoloc::updateChatWindows()
