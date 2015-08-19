@@ -1,5 +1,4 @@
 #include <QDir>
-#include <QDebug>
 #include <definitions/optionvalues.h>
 
 #include "tuneoptions.h"

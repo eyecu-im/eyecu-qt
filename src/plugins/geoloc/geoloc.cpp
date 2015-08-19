@@ -706,7 +706,7 @@ void Geoloc::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefor
 
 void Geoloc::onPresenceActiveChanged(IPresence *APresence, bool AActive)
 {
-	if (AActive)
+	if (FPositioning && AActive)
 	{
 		GeolocElement position = FPositioning->currentPosition();
 		if (position.isValid())

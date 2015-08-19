@@ -391,7 +391,7 @@ void Tune::onOptionsChanged(const OptionsNode &ANode)
     {
         if (FCurrentRequester)
             FCurrentRequester->instance()->disconnect(SIGNAL(tuneInfoReceived(QString,QString,QString,QHash<QString, QString>)), this, SLOT(onTuneInfoReceived(QString,QString,QString,QHash<QString, QString>)));
-        FCurrentRequester = FRequesters[Options::node(OPV_TUNE_INFOREQUESTER_USED).value().toString()];
+		FCurrentRequester = FRequesters.value(Options::node(OPV_TUNE_INFOREQUESTER_USED).value().toString());
 		if (FCurrentRequester)
 			connect(FCurrentRequester->instance(), SIGNAL(tuneInfoReceived(QString,QString,QString,QHash<QString, QString>)), SLOT(onTuneInfoReceived(QString,QString,QString,QHash<QString, QString>)));
     }
