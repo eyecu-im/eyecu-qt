@@ -5,11 +5,14 @@
 		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
 		call SysLoadFuncs
 
-		BootDrive=left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
-		ProdConfig=BootDrive || '\CONFIG.SYS'
+		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
+
+		ProdConfig = BootDrive || '\CONFIG.SYS'
+
 		rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
+
 		if rc = 0 then rc = libp.0 = 0
-		if ! (rc = 0) then DO
+		if \ (rc = 0) then DO
 			rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
 			call WirexxCancel
 		END
@@ -29,97 +32,73 @@
 
 		WorkPath=CmdTail
 
+
 		DO FOREVER                              /* Until 'exit'                       */
-			PARSE VAR WorkPath SearchPath';'WorkPath  /* Pull consecutive 'path's       */
-			if SearchPath = '' then return ''
+			PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
+			
+			if SearchPath = '' then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"' /* QtCore4.dll not found in LIBPATH */
+
 			SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
 			if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
 
-			rc = SysFileTree( SearchPath||'\'||QtCore4.dll||'*', 'MatchList', 'F' )
+			rc = SysFileTree( SearchPath||'\QtCore4.dll', 'MatchList', 'F' )
 			if \ (rc = 0) then DO
 				rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
 				call WirexxCancel
 			END
-		END
 
-		if \ (MatchList.0 =0 ) then DO
-			address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
+			if \ (MatchList.0 = 0) then DO
+				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
 
-			DO while \ (QUEUED() = 0)
-				pull LINE 
-				parse value LINE with 'FILE VERSION:' VAL
-				if \ (VAL='') then parse var VAL VER REST
-			END
+				DO while \ (QUEUED() = 0)
+					pull LINE 
+					parse value LINE with 'FILE VERSION:' VAL
+					if \ (VAL='') then parse var VAL VER REST
+				END
 
-			parse value VER with MAJOR '.' MINOR '.' PATCH
-			if \ (MAJOR = 4) then DO
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt4', 0x0020)
-				call WirexxCancel
-			DO
+				parse value VER with MAJOR '.' MINOR '.' PATCH
 
-			if \ (MINOR > 6) then DO
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of eyeCU requires Qt 4.7.3 or later', 0x0020)
-				call WirexxCancel
-			END
-			WirexxPutEnv('QTDLL',SearchPath)
+				if \ (MAJOR = 4) then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"'
+				if \ (MINOR > 6) then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"'
+				if \ (PATCH > 2) then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"'
 
-			file = filespec("File", SearchPath)
-			path = filespec("Path", SearchPath)
-			drive = filespec("Drive", SearchPath)
+				rc = WirexxPutEnv('QTDLL',SearchPath)
 
-			if file = 'lib' then DO /* *nix way */
-				qtsdk = drive||path
+				file = filespec("File", SearchPath)
+				path = filespec("Path", SearchPath)
+				drive = filespec("Drive", SearchPath)
+
+				if file = 'lib' then DO /* *nix way */
+					qtsdk = drive||path
 				qtdir = qtsdk||"share\qt4"
-			END
-			else DO	/* windoze way */
-				qtsdk = drive||path
-				qtdir = qtsdk
-			END
-			WirexxPutEnv('QTDIR',qtdir)
-			WirexxPutEnv('QTSDK',qtsdk)
+				END
+				else DO	/* windoze way */
+					qtsdk = drive||path
+					qtdir = qtsdk
+				END
+				rc = WirexxPutEnv('QTDIR',qtdir)
+				rc = WirexxPutEnv('QTSDK',qtsdk)
+
+				return ''
+			EN
 		END
 
-		rc = WirexxShowMessage('No Qt4 runtime found', 'This release of eyeCU requires Qt 4.7.3 runtime', 0x0020)
-		call WirexxCancel
+		return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"'
 	</REXX>
 
-	<REXX NAME="FindQtDir">
-		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
-		rc=SysLoadFuncs()
-
-		QTDIR = WirexxGetEnv('QTDIR')
-
-		if QTDIR='' then DO
-			UNIXROOT = WirexxGetEnv('UNIXROOT')
-			if  \ (UNIXROOT = '') then QTDIR = UNIXROOT||'\usr\share\qt4'
-		END
-
-		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
-			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
-		end
-
-		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
-
-		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
-
-		if stream(QCONFIG,'c','open read') = 'READY:' then
-		do while LINES(QCONFIG)
-			parse value linein(QCONFIG) with field '=' val
-			if substr(field,1,10) = 'QT_VERSION' then
-			do
-				parse var val version rest
-				parse value version with major '.' minor '.' patch
-				leave
-			end
-		end
-		rc = stream(QCONFIG,'c','close')
-
-		if major = 4 & minor >= 7 then return 1
-		else return '"netlabs.org\Qt\SDK\4\7"'
+	<REXX NAME="QtDLL">
+		rc = WirexxShowMessage('TEST', 'QtDLL', 0x0020)
+		return WirexxGetEnv('QTDLL')
 	</REXX>
 
-	<REXX NAME="QtSDKPath">
-		return WirexxGetEnv('QT_ROOT_DIR')
+	<REXX NAME="QtDIR">
+		rc = WirexxShowMessage('TEST', 'QtDIR', 0x0020)
+		return WirexxGetEnv('QTDIR')
+	</REXX>
+
+	<REXX NAME="QtSDK">
+		rc = WirexxShowMessage('TEST', 'QtSDK', 0x0020)
+		return WirexxGetEnv('QTSDK')
 	</REXX>
 
 <PCK 	INDEX=1
@@ -131,6 +110,7 @@
 	REQUIRES="netlabs.org\Qt4\SysTray\100\1\1\843" 
 	REQUIRES="netlabs.org\Qt4\SysTrayDLL\100\1\1\843" 
 	REQUIRES="Purple Soft\QtPurple\Util\1\0\0"
+	=("FindQtRuntime")
 	KILLPROCESS="eyecu.exe"
 	CREATEOBJECT="WPFolder|eyeCU|<WP_APPSFOLDER>|OBJECTID=<EYECU_FOLDER>;"
 	CREATEOBJECT="REPLACE WPProgram|eyeCU|<EYECU_FOLDER>|EXENAME=$(1)\eyecu.exe;OBJECTID=<EYECU_EXE>;BIGICONFILE=$(1)\resources\menuicons\shared\mainwindowlogo96.png;"
@@ -1633,7 +1613,7 @@
 	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\0"
 	TITLE="QtSerialPort runtime"
 	EXTERNAL="qtserialport-1.1.0.wpi"
-	TARGET='=("FindQtRuntime")'
+	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
 	>QtPurple runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1646,7 +1626,7 @@
 	PACKAGEID="Purple Soft\QtPurple\Util\1\0\0"
 	TITLE="QtUtil library"
 	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")'
+	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1657,7 +1637,7 @@
 	PACKAGEID="Purple Soft\QtPurple\Geo\1\0\0"
 	TITLE="QtGeo library"
 	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")'
+	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1672,7 +1652,7 @@
 		REQUIRES=410
 		TITLE="English"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>English language pack for Qt Geo library
@@ -1683,7 +1663,7 @@
 		REQUIRES=410
 		TITLE="Russian"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Ukrainian language pack for Qt Geo library
@@ -1694,7 +1674,7 @@
 		REQUIRES=410
 		TITLE="Ukrainian"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Ukrainian language pack for Qt Geo library
@@ -1705,7 +1685,7 @@
 		REQUIRES=410
 		TITLE="Polish"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Polish language pack for Qt Geo library
@@ -1716,7 +1696,7 @@
 		REQUIRES=410
 		TITLE="German"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>German language pack for Qt Geo library
@@ -1727,7 +1707,7 @@
 		REQUIRES=410
 		TITLE="Spanish"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Spanish language pack for Qt Geo library
@@ -1738,7 +1718,7 @@
 		REQUIRES=410
 		TITLE="Dutch"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Dutch language pack for Qt Geo library
@@ -1749,7 +1729,7 @@
 		REQUIRES=410
 		TITLE="Japanese"
 		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Japanese language pack for Qt Geo library
