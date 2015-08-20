@@ -123,12 +123,13 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="41"/>
    <source>Enable automatic archiving of messages on the server</source>
-   <translation type="unfinished"/>
+   <translation>
+Schakel automatisch archiveren van berichten op de server in</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="59"/>
    <source>Archiving policy</source>
-   <translation type="unfinished"/>
+   <translation>Archiefbeleid</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="94"/>
@@ -178,12 +179,12 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="310"/>
    <source>JID</source>
-   <translation type="unfinished"/>
+   <translation>JID</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="313"/>
    <source>Contact identifier</source>
-   <translation type="unfinished"/>
+   <translation>Contact identificatie</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="318"/>

@@ -184,7 +184,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="135"/>
    <source>Ping, msec:</source>
-   <translation type="unfinished"/>
+   <translation>Ping, msec:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="143"/>

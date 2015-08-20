@@ -187,7 +187,7 @@
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Priority</source>
-   <translation type="unfinished"/>
+   <translation>Prioriteit</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>

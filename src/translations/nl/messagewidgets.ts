@@ -138,7 +138,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
    <source>Ctrl+Return</source>
    <comment>Send single message</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Enter</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="117"/>

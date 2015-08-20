@@ -167,7 +167,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="239"/>
    <source>Port settings</source>
-   <translation type="unfinished"/>
+   <translation>Poort instellingen</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="245"/>

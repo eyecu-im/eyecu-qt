@@ -134,7 +134,7 @@
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="683"/>
    <source>Location</source>
-   <translation type="unfinished"/>
+   <translation>Locatie</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="702"/>

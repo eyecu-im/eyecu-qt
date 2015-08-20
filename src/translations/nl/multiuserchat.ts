@@ -195,7 +195,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="213"/>
    <source>Ctrl+J</source>
    <comment>Join conference</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+J</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="242"/>

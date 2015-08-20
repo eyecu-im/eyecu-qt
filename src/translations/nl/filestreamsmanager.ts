@@ -190,7 +190,7 @@
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="229"/>
    <source>B</source>
    <comment>Byte</comment>
-   <translation type="unfinished"/>
+   <translation>B</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="235"/>

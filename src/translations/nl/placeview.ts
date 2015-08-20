@@ -235,7 +235,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="401"/>
    <source>Now: </source>
-   <translation type="unfinished"/>
+   <translation>Nu:</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="407"/>

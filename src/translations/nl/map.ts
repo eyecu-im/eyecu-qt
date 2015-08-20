@@ -146,7 +146,7 @@
         <location filename="../../plugins/map/map.cpp" line="132"/>
         <source>-</source>
         <comment>Map zoom out</comment>
-        <translation type="unfinished"/>
+        <translation>-</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="303"/>
@@ -191,7 +191,7 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="817"/>
         <source>Follow mouse pointer</source>
-        <translation type="unfinished"/>
+        <translation>Volg muisaanwijzer</translation>
     </message>
 </context>
 <context>
@@ -203,7 +203,7 @@
     <message>
         <location filename="../../plugins/map/mapform.ui" line="161"/>
         <source>Joystick</source>
-        <translation type="unfinished"/>
+        <translation>Joystick</translation>
     </message>
     <message>
         <location filename="../../plugins/map/mapform.ui" line="203"/>

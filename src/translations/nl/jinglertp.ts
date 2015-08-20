@@ -144,7 +144,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="46"/>
    <source>Audio</source>
-   <translation type="unfinished"/>
+   <translation>Audio</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="147"/>

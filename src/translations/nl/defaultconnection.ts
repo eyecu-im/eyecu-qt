@@ -181,12 +181,12 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="230"/>
    <source>Connect Once</source>
-   <translation type="unfinished"/>
+   <translation>Verbind eenmaal</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="234"/>
    <source>Connect Always</source>
-   <translation type="unfinished"/>
+   <translation>Verbind altijd</translation>
   </message>
  </context>
 </TS>

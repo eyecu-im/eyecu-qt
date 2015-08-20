@@ -105,7 +105,7 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
    <source>Highlight the corresponding window in the taskbar</source>
-   <translation type="unfinished"/>
+   <translation>Markeer de bijbehorende venster in de taakbalk</translation>
   </message>
  </context>
  <context>
@@ -123,12 +123,12 @@
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="49"/>
    <source>Display a notification in popup window</source>
-   <translation type="unfinished"/>
+   <translation>Toon een melding in popup-venster</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="53"/>
    <source>Show the corresponding window minimized in the taskbar</source>
-   <translation type="unfinished"/>
+   <translation>Toon de overeenkomstige venster geminimaliseerd in de taakbalk</translation>
   </message>
  </context>
  <context>
