@@ -1,6 +1,8 @@
 <WARPIN OS="OS2_2X">
 <HEAD>
 	<TITLE>eyeCU %VERSION%</TITLE>
+	<VARPROMPT NAME=QTDIR TYPE=PATH>Please specify the Qt 4.7 installation directory (e.g. C:\Qt4):</VARPROMPT>
+
 	<REXX NAME="FindQtRuntime">
 		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
 		call SysLoadFuncs
@@ -31,7 +33,6 @@
 		END
 
 		WorkPath=CmdTail
-
 
 		DO FOREVER                              /* Until 'exit'                       */
 			PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
@@ -64,40 +65,35 @@
 
 				rc = WirexxPutEnv('QTDLL',SearchPath)
 
-				file = filespec("File", SearchPath)
-				path = filespec("Path", SearchPath)
-				drive = filespec("Drive", SearchPath)
+				name = filespec("name", SearchPath)
+				path = filespec("path", SearchPath)
+				drive = filespec("drive", SearchPath)
+				qtsdk = drive||path
 
-				if file = 'lib' then DO /* *nix way */
-					qtsdk = drive||path
-				qtdir = qtsdk||"share\qt4"
-				END
-				else DO	/* windoze way */
-					qtsdk = drive||path
-					qtdir = qtsdk
-				END
-				rc = WirexxPutEnv('QTDIR',qtdir)
+				if name = 'LIB' then qtdir = qtsdk||"share\qt4" /* *nix way */
+				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
+				else qtdir = '' /* Unknown path */
+
+				if \ (qtdir = '') then rc = WirexxPutEnv('QTDIR',qtdir)
+
 				rc = WirexxPutEnv('QTSDK',qtsdk)
 
 				return ''
-			EN
+			END
 		END
 
 		return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"'
 	</REXX>
 
 	<REXX NAME="QtDLL">
-		rc = WirexxShowMessage('TEST', 'QtDLL', 0x0020)
 		return WirexxGetEnv('QTDLL')
 	</REXX>
 
 	<REXX NAME="QtDIR">
-		rc = WirexxShowMessage('TEST', 'QtDIR', 0x0020)
-		return WirexxGetEnv('QTDIR')
+		return WirexxVarPrompt('QTDIR')
 	</REXX>
 
 	<REXX NAME="QtSDK">
-		rc = WirexxShowMessage('TEST', 'QtSDK', 0x0020)
 		return WirexxGetEnv('QTSDK')
 	</REXX>
 
