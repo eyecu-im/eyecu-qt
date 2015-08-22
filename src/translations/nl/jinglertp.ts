@@ -139,7 +139,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="14"/>
    <source>Jingle RTP options</source>
-   <translation type="unfinished"/>
+   <translation>Jingle RTP opties</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="46"/>
@@ -150,12 +150,12 @@
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="147"/>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="221"/>
    <source>Codec</source>
-   <translation type="unfinished"/>
+   <translation>Codec</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="160"/>
    <source>Notify Interval, ms</source>
-   <translation type="unfinished"/>
+   <translation>Meld interval, ms</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="170"/>

@@ -153,12 +153,12 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="136"/>
    <source>Message window view</source>
-   <translation type="unfinished"/>
+   <translation>Berichtenvenster</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="137"/>
    <source>Load last messages from history</source>
-   <translation type="unfinished"/>
+   <translation>Laatste bericht van geschiedenis laden</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>

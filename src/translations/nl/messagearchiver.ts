@@ -134,22 +134,22 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="94"/>
    <source>Save history in a local archive?</source>
-   <translation type="unfinished"/>
+   <translation>Geschiedenis opslaan in lokaal archief?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="107"/>
    <source>Save history on server?</source>
-   <translation type="unfinished"/>
+   <translation>Geschiedenis opslaan op server?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="120"/>
    <source>Copy local archive to the server?</source>
-   <translation type="unfinished"/>
+   <translation>Kopieer lokaal archief naar de server?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="154"/>
    <source>Default archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Standaard archief voorkeuren</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="179"/>

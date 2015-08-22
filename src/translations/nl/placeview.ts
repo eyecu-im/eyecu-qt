@@ -190,17 +190,17 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="38"/>
    <source>Place Viewer From eyeCU</source>
-   <translation type="unfinished"/>
+   <translation>Plaats kijker van eyeCU</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="82"/>
    <source>Please wait....</source>
-   <translation type="unfinished"/>
+   <translation>Wacht AUB....</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="191"/>
    <source>Error HTTP!</source>
-   <translation type="unfinished"/>
+   <translation>Fout HTTP!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="279"/>

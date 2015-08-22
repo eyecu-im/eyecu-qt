@@ -146,7 +146,7 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>
    <source>Search plugin</source>
-   <translation type="unfinished"/>
+   <translation>Zoek plugin</translation>
   </message>
  </context>
 </TS>

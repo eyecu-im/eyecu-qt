@@ -136,7 +136,7 @@
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="352"/>
    <source>meter(s)</source>
    <comment>Distance treshold units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>meter</numerusform><numerusform>meters</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="354"/>

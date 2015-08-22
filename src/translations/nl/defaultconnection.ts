@@ -136,22 +136,22 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="201"/>
    <source>Certificate holder:</source>
-   <translation type="unfinished"/>
+   <translation>Certificaat houder:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="208"/>
    <source>Certificate issuer:</source>
-   <translation type="unfinished"/>
+   <translation>Certificaat Uitgever:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="215"/>
    <source>Certificate details:</source>
-   <translation type="unfinished"/>
+   <translation>Certificaat details:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="216"/>
    <source>Effective from: %1</source>
-   <translation type="unfinished"/>
+   <translation>Met ingang van: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="217"/>

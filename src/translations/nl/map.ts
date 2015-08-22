@@ -161,7 +161,7 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="798"/>
         <source>Display &quot;Loading&quot; tiles</source>
-        <translation type="unfinished"/>
+        <translation>Toon &quot;laden&quot; tegels</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="799"/>

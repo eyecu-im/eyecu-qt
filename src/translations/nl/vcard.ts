@@ -145,7 +145,7 @@
   <message>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="116"/>
    <source>Jabber Id</source>
-   <translation type="unfinished"/>
+   <translation>Jabber Id</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="133"/>

@@ -149,7 +149,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="103"/>
    <source>Uptime:</source>
-   <translation type="unfinished"/>
+   <translation>Uptime:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="107"/>

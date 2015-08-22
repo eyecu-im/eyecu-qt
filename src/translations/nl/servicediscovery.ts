@@ -156,7 +156,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="61"/>
    <source>Node:</source>
-   <translation type="unfinished"/>
+   <translation>Knooppunt:</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="90"/>

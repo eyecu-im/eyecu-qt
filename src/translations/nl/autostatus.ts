@@ -146,12 +146,12 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="132"/>
    <source>   M - the month as number without a leading zero (1-12)</source>
-   <translation type="unfinished"/>
+   <translation>M - De maand als nummer zonder een voorafgaande nul (1-12)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="133"/>
    <source>   MM - the month as number with a leading zero (01-12)</source>
-   <translation type="unfinished"/>
+   <translation>MM - de maand als nummer met een voorafgaande nul (01-12)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="134"/>

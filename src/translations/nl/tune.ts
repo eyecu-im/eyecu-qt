@@ -136,7 +136,7 @@
   <message>
    <location filename="../../plugins/tune/tuneoptions.ui" line="41"/>
    <source>Tune information requester</source>
-   <translation type="unfinished"/>
+   <translation>Aanvraag melodie informatie </translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tuneoptions.ui" line="48"/>

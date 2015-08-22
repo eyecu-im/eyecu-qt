@@ -164,7 +164,7 @@
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="189"/>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="220"/>
    <source>Volume</source>
-   <translation type="unfinished"/>
+   <translation>Volume</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="266"/>

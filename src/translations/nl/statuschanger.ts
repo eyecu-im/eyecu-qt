@@ -142,7 +142,7 @@
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="859"/>
    <source>%1 - %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 - %2</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statuschanger.cpp" line="987"/>
