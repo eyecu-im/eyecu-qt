@@ -203,7 +203,7 @@
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="364"/>
    <source>You can not delete active statuses.</source>
-   <translation type="unfinished"/>
+   <translation>Je kan geen actieve statussen verwijderen.</translation>
   </message>
  </context>
 </TS>

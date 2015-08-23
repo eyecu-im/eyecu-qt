@@ -205,7 +205,7 @@
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="188"/>
    <source>B</source>
    <comment>Byte</comment>
-   <translation type="unfinished"/>
+   <translation>B</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="194"/>
@@ -217,7 +217,7 @@
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="199"/>
    <source>MB</source>
    <comment>Megabyte</comment>
-   <translation type="unfinished"/>
+   <translation>MB</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="204"/>

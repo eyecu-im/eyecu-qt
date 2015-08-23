@@ -156,7 +156,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="217"/>
    <source>Expired at: %1</source>
-   <translation type="unfinished"/>
+   <translation>Verlopen op: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="218"/>
@@ -166,7 +166,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="222"/>
    <source>SSL Authentication Error</source>
-   <translation type="unfinished"/>
+   <translation>SSL Verificatie fout</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="223"/>

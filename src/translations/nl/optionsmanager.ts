@@ -225,7 +225,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="134"/>
    <source>Common</source>
-   <translation type="unfinished"/>
+   <translation>Gemeenschappelijk</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="137"/>

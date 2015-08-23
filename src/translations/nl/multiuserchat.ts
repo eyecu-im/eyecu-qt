@@ -178,7 +178,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="79"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="846"/>
    <source>Multi-User Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie met meerdere gebruikers</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="80"/>

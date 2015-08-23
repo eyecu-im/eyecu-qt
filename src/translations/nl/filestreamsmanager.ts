@@ -202,13 +202,13 @@
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="240"/>
    <source>MB</source>
    <comment>Megabyte</comment>
-   <translation type="unfinished"/>
+   <translation>MB</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="245"/>
    <source>GB</source>
    <comment>Gigabyte</comment>
-   <translation type="unfinished"/>
+   <translation>GB</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="331"/>

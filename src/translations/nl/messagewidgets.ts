@@ -163,7 +163,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>
    <source>Show message windows together with contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Toon berichtvenster en contactlijst samen</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
@@ -173,7 +173,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>
    <source>Automatically resize messages input field</source>
-   <translation type="unfinished"/>
+   <translation>Automatisch berichten invoerveld aanpassen</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>

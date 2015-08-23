@@ -166,7 +166,7 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="799"/>
         <source>Combine map window with contact list</source>
-        <translation type="unfinished"/>
+        <translation>Combineer mapvenster met contact lijst</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="801"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="../../plugins/map/map.cpp" line="802"/>
         <source>Update zoom during slider movement</source>
-        <translation type="unfinished"/>
+        <translation>Zoom-update tijdens schuif beweging</translation>
     </message>
     <message>
         <location filename="../../plugins/map/map.cpp" line="815"/>

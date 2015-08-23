@@ -154,7 +154,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="179"/>
    <source>Message archiving:</source>
-   <translation type="unfinished"/>
+   <translation>Bericht archiveren:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="202"/>
@@ -164,7 +164,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="215"/>
    <source>Remove messages after, days:</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder berichten na, dagen:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="240"/>
@@ -199,7 +199,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="329"/>
    <source>OTR</source>
-   <translation type="unfinished"/>
+   <translation>OTR</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="332"/>

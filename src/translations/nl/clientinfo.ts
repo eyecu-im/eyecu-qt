@@ -159,7 +159,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="109"/>
    <source>Status:</source>
-   <translation type="unfinished"/>
+   <translation>Status:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="113"/>

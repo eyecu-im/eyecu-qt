@@ -169,7 +169,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="266"/>
    <source>The number of tracks in the playlist</source>
-   <translation type="unfinished"/>
+   <translation>Aantal tracknummers in speellijst</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="316"/>
@@ -180,7 +180,7 @@
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="70"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="191"/>
    <source>Multimedia player - %1</source>
-   <translation type="unfinished"/>
+   <translation>Multimedia speler - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="73"/>

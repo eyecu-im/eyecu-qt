@@ -160,7 +160,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="170"/>
    <source>Sample rate, Hz</source>
-   <translation type="unfinished"/>
+   <translation>Sample rate, Hz</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="191"/>
@@ -170,7 +170,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="241"/>
    <source>Use RTCP</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik RTCP</translation>
   </message>
  </context>
 </TS>

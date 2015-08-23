@@ -220,7 +220,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="387"/>
    <source>Price level</source>
-   <translation type="unfinished"/>
+   <translation>Prijsniveau</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="398"/>
@@ -245,12 +245,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="414"/>
    <source>Address</source>
-   <translation type="unfinished"/>
+   <translation>Adres</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="441"/>
    <source>Location</source>
-   <translation type="unfinished"/>
+   <translation>Locatie</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="448"/>

@@ -177,12 +177,12 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="252"/>
    <source>Data bits:</source>
-   <translation type="unfinished"/>
+   <translation>Gegevens bits:</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="259"/>
    <source>Stop bits:</source>
-   <translation type="unfinished"/>
+   <translation>Stop bits:</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="269"/>

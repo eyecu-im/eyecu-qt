@@ -156,22 +156,22 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="134"/>
    <source>   MMM - the abbreviated localized month name (e.g. &apos;Jan&apos; to &apos;Dec&apos;)</source>
-   <translation type="unfinished"/>
+   <translation>MMM - de verkorte lokale maand naam (e.g. &apos;Jan tot Dec&apos;)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="135"/>
    <source>   MMMM - the long localized month name (e.g. &apos;January&apos; to &apos;December&apos;)</source>
-   <translation type="unfinished"/>
+   <translation>MMMM - de lange lokale maand naam (e.g. &apos;Januari tot &apos;December&apos;)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="136"/>
    <source>   yy - the year as two digit number (00-99)</source>
-   <translation type="unfinished"/>
+   <translation>yy - het jaar als twee cijfers (00-99)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="137"/>
    <source>   yyyy - the year as four digit number</source>
-   <translation type="unfinished"/>
+   <translation>yyyy - het jaar als vier cijfers </translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="138"/>
@@ -201,7 +201,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="143"/>
    <source>   m - the minute without a leading zero (0 to 59)</source>
-   <translation type="unfinished"/>
+   <translation>m - de minuut zonder een voorafgaande nul (0 tot 59)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="144"/>
