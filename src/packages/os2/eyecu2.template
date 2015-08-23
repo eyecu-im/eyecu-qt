@@ -22,10 +22,10 @@
 		lix = libp.0                            /* Point to last occurrence           */
 		DO FOREVER                              /* Until we find a real one           */
 			PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
-			IF LPCmd = 'LIBPATH' THEN DO          /* If this is a LIBPATH command       */
-				LEAVE                               /* This was the final LIBPATH -- done */
+			IF LPCmd = 'LIBPATH' THEN DO 	/* If this is a LIBPATH command       */
+				LEAVE			/* This was the final LIBPATH -- done */
 			END
-			lix = lix-1                           /* Check for an earlier statement     */
+			lix = lix-1			/* Check for an earlier statement     */
 			if lix = 0 then DO
 				rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
 				call WirexxCancel

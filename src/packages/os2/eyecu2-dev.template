@@ -2,39 +2,101 @@
 <HEAD>
 	<TITLE>eyeCU SDK %VERSION%</TITLE>
 
-	<REXX NAME="FindQtSDK">
-		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
-		rc=SysLoadFuncs()
+	<REXX NAME="FindQtSdk">
+		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
+		call SysLoadFuncs
 
-		UNIXROOT = WirexxGetEnv('UNIXROOT')
-		if  \ (UNIXROOT = '') then QTROOT = UNIXROOT||'\usr'
+		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
 
-		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
-			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
-		end
+		ProdConfig = BootDrive || '\CONFIG.SYS'
 
-		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
+		rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
 
-		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
+		if rc = 0 then rc = libp.0 = 0
+		if \ (rc = 0) then DO
+			rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
+			call WirexxCancel
+		END
 
-		if stream(QCONFIG,'c','open read') = 'READY:' then
-		do while LINES(QCONFIG)
-			parse value linein(QCONFIG) with field '=' val
-			if substr(field,1,10) = 'QT_VERSION' then
-			do
-				parse var val version rest
-				parse value version with major '.' minor '.' patch
-				leave
-			end
-		end
-		rc = stream(QCONFIG,'c','close')
+		lix = libp.0                            /* Point to last occurrence           */
+		DO FOREVER                              /* Until we find a real one           */
+			PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
+			IF LPCmd = 'LIBPATH' THEN DO 	/* If this is a LIBPATH command       */
+				LEAVE			/* This was the final LIBPATH -- done */
+			END
+			lix = lix-1			/* Check for an earlier statement     */
+			if lix = 0 then DO
+				rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
+				call WirexxCancel
+			END
+		END
 
-		if major = 4 & minor >= 7 then return
-		else return 'REQUIRES="netlabs.org\Qt\SDK\4\7"'
-	</REXX>
+		WorkPath=CmdTail
 
-	<REXX NAME="QtSDKPath">
-		return WirexxGetEnv('QT_ROOT_DIR')
+		DO FOREVER                              /* Until 'exit'                       */
+			PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
+			
+			if SearchPath = '' then return 'REQUIRES="Netlabs\Qt\Runtime\4\7"' /* QtCore4.dll not found in LIBPATH */
+
+			SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
+			if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
+
+			rc = SysFileTree( SearchPath||'\QtCore4.dll', 'MatchList', 'F' )
+			if \ (rc = 0) then DO
+				rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
+				call WirexxCancel
+			END
+
+			if \ (MatchList.0 = 0) then DO
+				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
+
+				DO while \ (QUEUED() = 0)
+					pull LINE 
+					parse value LINE with 'FILE VERSION:' VAL
+					if \ (VAL='') then parse var VAL VER REST
+				END
+
+				parse value VER with MAJOR '.' MINOR '.' PATCH
+
+				if \ ( (MAJOR = 4) & (MINOR > 6) ) then return 'REQUIRES="Netlabs\Qt\SDK\4\7"'
+
+				rc = WirexxPutEnv('QTDLL',SearchPath)
+
+				name = filespec("name", SearchPath)
+				path = filespec("path", SearchPath)
+				drive = filespec("drive", SearchPath)
+				qtsdk = drive||path
+
+				if name = 'LIB' then qtdir = qtsdk||"share\qt4" /* *nix way */
+				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
+				else qtdir = '' /* Unknown path */
+
+				if \ (qtdir = '') then rc = WirexxPutEnv('QTDIR',qtdir)
+
+				DO FOREVER
+					qtdir = WirexxVarPrompt('QTDIR')
+
+					QCONFIG = qtdir||'\mkspecs\qconfig.pri'
+
+					if stream(QCONFIG,'c','open read') = 'READY:' then DO
+						DO while LINES(QCONFIG)
+							parse value linein(QCONFIG) with field '=' val
+							if substr(field,1,10) = 'QT_VERSION' then DO
+								PARSE VAR val version rest
+								PARSE VALUE version with major '.' minor '.' patch
+								LEAVE
+							END
+						END
+						rc = stream(QCONFIG,'c','close')
+
+						if (major = 4) & (minor >= 7) then return ""
+						else return 'REQUIRES="netlabs.org\Qt\SDK\4\7"'
+					END
+				END
+			END
+		END
+
+		return 'REQUIRES="Netlabs\Qt\SDK\4\7\3"'
 	</REXX>
 
 	<PCK 	INDEX=199

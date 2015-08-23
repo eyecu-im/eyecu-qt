@@ -1,7 +1,7 @@
 @echo on
 set packagename=eyecu2
 set devpackagename=%packagename%-dev
-set version=1.3.0.20150814
+set version=1.3.0.20150822
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 
