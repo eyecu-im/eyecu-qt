@@ -246,8 +246,6 @@ void MapContacts::showContact(QString AJid, bool AShowMap) const
 	{		
 		FMap->geoMap()->getScene()->setMapCenter(FGeoloc->getGeoloc(AJid).coordinates(), true);
 		FMap->showMap();
-//TODO: Use MapScene::mapCenterChanged() signal instead
-		FMap->stopFollowing();
 	}
 }
 //------------------------------

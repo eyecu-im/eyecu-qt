@@ -341,12 +341,10 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 					scene->setMapCenter(center.latitude()+coordsOld.latitude()-coordsNew.latitude(),
 										center.longitude()+coordsOld.longitude()-coordsNew.longitude(),
 										true);
-					stopFollowing();
 					break;
 				}
 				case FollowMousePointer:
 					scene->setMapCenter(coordsOld, true);
-					stopFollowing();
 					break;
 				case RelativeToMapCenter:
 					break;
@@ -703,7 +701,6 @@ void Map::mapSceneMouseMoveEvent(QGraphicsSceneMouseEvent *event)
 		{
 			FMapForm->mapScene()->shiftMap(-shift);
 			FMapForm->mapScene()->setIgnoreMouseMovement(false);
-			stopFollowing();
 			event->accept();
 		}
 	}
