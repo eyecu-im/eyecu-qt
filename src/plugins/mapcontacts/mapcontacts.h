@@ -89,7 +89,7 @@ protected:
 
 protected slots:
 	void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
-	void onShowContact(bool);
+	void onShowContact();
 	void onShortcutActivated(const QString &AId, QWidget *AWidget);
 	void onRosterOpened(IRoster *ARoster);
 	void onRosterClosed(IRoster *ARoster);

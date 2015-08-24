@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
@@ -243,6 +242,13 @@ void MapContacts::showContact(QString AJid, bool AShowMap) const
 		AJid=FResourceHash.value(AJid);
 	if (hasGeoloc(AJid))
 		FMap->showObject(MOT_CONTACT, AJid, Options::node(OPV_MAP_CONTACTS_FOLLOW).value().toBool(), AShowMap);
+	else if (FGeoloc->hasGeoloc(AJid))
+	{		
+		FMap->geoMap()->getScene()->setMapCenter(FGeoloc->getGeoloc(AJid).coordinates(), true);
+		FMap->showMap();
+//TODO: Use MapScene::mapCenterChanged() signal instead
+		FMap->stopFollowing();
+	}
 }
 //------------------------------
 
@@ -706,7 +712,7 @@ void MapContacts::onRosterClosed(IRoster *ARoster)
 	FRosterList.removeOne(ARoster);
 }
 
-void MapContacts::onShowContact(bool)
+void MapContacts::onShowContact()
 {
 	Action *action = qobject_cast<Action *>(sender());
 	if (action)
@@ -732,6 +738,7 @@ void MapContacts::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes
 		QStringList list;
 
 		for(QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
 			if((*it)->kind() == RIK_MY_RESOURCE || (*it)->kind() == RIK_CONTACT || (*it)->kind() == RIK_AGENT || (*it)->kind() == RIK_STREAM_ROOT)
 			{
 				QStringList resources=(*it)->data(RDR_RESOURCES).toStringList();
@@ -741,6 +748,7 @@ void MapContacts::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes
 					if(!FGeoloc->getGeoloc(*rit).isEmpty())
 						list.append(*rit);
 			}
+		}
 
 		Menu *menu;
 		if (list.size()>1)
@@ -773,7 +781,7 @@ void MapContacts::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes
 				action->setIcon(RSR_STORAGE_MENUICONS, MNI_GEOLOC);
 			}
 			menu->addAction(action, AG_RVCM_GEOLOC, true);
-			connect(action,SIGNAL(triggered(bool)),SLOT(onShowContact(bool)));
+			connect(action,SIGNAL(triggered(bool)),SLOT(onShowContact()));
 		}
 	}
 }

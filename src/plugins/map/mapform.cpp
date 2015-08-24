@@ -855,10 +855,10 @@ void MapForm::onSceneRectChanged(QRectF rect)
 }
 
 //----------------
-void MapForm::onStepLeft(int delta){ FMapScene->shiftMap(-delta, 0); }
-void MapForm::onStepRight(int delta){ FMapScene->shiftMap(delta, 0); }
-void MapForm::onStepUp(int delta){ FMapScene->shiftMap(0, -delta); }
-void MapForm::onStepDown(int delta){ FMapScene->shiftMap(0, delta); }
+void MapForm::onStepLeft(int delta){ FMapScene->shiftMap(-delta, 0); FMap->stopFollowing();}
+void MapForm::onStepRight(int delta){ FMapScene->shiftMap(delta, 0); FMap->stopFollowing();}
+void MapForm::onStepUp(int delta){ FMapScene->shiftMap(0, -delta); FMap->stopFollowing();}
+void MapForm::onStepDown(int delta){ FMapScene->shiftMap(0, delta); FMap->stopFollowing();}
 
 void MapForm::adjustCentralRulers(const QPointF &ACenter)
 {
