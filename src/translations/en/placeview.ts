@@ -78,7 +78,7 @@
   <message>
    <location line="236" filename="../../plugins/placeview/placeviewform.ui"/>
    <source>Search criteria</source>
-   <translation type="unfinished"/>
+   <translation>Search criteria</translation>
   </message>
   <message>
    <source>Way To Search</source>
@@ -172,22 +172,22 @@
   <message>
    <location line="181" filename="../../plugins/placeview/placeviewform.ui"/>
    <source>Keyword</source>
-   <translation type="unfinished"/>
+   <translation>Keyword</translation>
   </message>
   <message>
    <location line="223" filename="../../plugins/placeview/placeviewform.ui"/>
    <source>Place type</source>
-   <translation type="unfinished"/>
+   <translation>Place type</translation>
   </message>
   <message>
    <location line="256" filename="../../plugins/placeview/placeviewform.ui"/>
    <source>Radius</source>
-   <translation type="unfinished"/>
+   <translation>Radius</translation>
   </message>
   <message>
    <location line="266" filename="../../plugins/placeview/placeviewform.ui"/>
    <source> kilometers</source>
-   <translation type="unfinished"/>
+   <translation> kilometers</translation>
   </message>
   <message>
    <location line="38" filename="../../plugins/placeview/placeviewform.cpp"/>

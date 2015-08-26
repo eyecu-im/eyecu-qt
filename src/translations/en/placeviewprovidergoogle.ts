@@ -19,12 +19,12 @@
   <message>
    <location line="20" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
    <source>Place view provider Google</source>
-   <translation type="unfinished"/>
+   <translation>Place view provider Google</translation>
   </message>
   <message>
    <location line="21" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
    <source>Allows to view photos of places from Google</source>
-   <translation type="unfinished"/>
+   <translation>Allows to view photos of places from Google</translation>
   </message>
  </context>
 </TS>

@@ -1133,16 +1133,14 @@ WebRegistrationInfo::WebRegistrationInfo(ServerPage *AServerPage, QWidget *APare
 	FLblHeader->setAlignment(Qt::AlignCenter);
 	FLblHeader->setStyleSheet("color:green;");
 	FLblHeader->setFont(font);
-	FLblHeader->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+	FLblHeader->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	FLblHeader->setWordWrap(true);
 	layout->addWidget(FLblHeader);
 
-	FLblInstructions=new QLabel;
-	FLblInstructions->setWordWrap(true);
+	FLblInstructions=new QTextBrowser;
 	FLblInstructions->setFrameShape(QFrame::Panel);
 	FLblInstructions->setFrameShadow(QFrame::Raised);
 	FLblInstructions->setBackgroundRole(QPalette::Window);
-	FLblInstructions->setMargin(10);
 	layout->addWidget(FLblInstructions);
 
 	FClbOpenLink = new QCommandLinkButton(tr("Open registration website"));
@@ -1156,7 +1154,7 @@ WebRegistrationInfo::WebRegistrationInfo(ServerPage *AServerPage, QWidget *APare
 void WebRegistrationInfo::initializePage()
 {
 	FComplete = false;
-	FLblHeader->setText(tr("How to register at %1").arg(field(WF_SERVER_NAME).toString()));
+	FLblHeader->setText(tr("How to register at %1").arg(wizard()->property("serverName").toString()));
 
 	FRegisterUrl	= FServerPage->getRegistrationUrl();
 	FClbOpenLink->setDescription(FRegisterUrl.toString());

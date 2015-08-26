@@ -15,6 +15,7 @@
 #include <QProgressBar>
 #include <QStackedWidget>
 #include <SelectableTreeWidget>
+#include <QScrollArea>
 
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/iconnectionmanager.h>
@@ -325,7 +326,7 @@ protected slots:
 
 private:
 	QLabel		*FLblHeader;
-	QLabel		*FLblInstructions;
+	QTextBrowser	*FLblInstructions;
 	QCommandLinkButton *FClbOpenLink;
     IconStorage *FIconStorage;
 	ServerPage	*FServerPage;
