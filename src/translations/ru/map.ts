@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>Map</name>
     <message>
@@ -153,6 +153,22 @@
     <message>
         <source>Follow mouse pointer</source>
         <translation>Следовать за указателем мыши</translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation>Подключение</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Основное</translation>
+    </message>
+    <message>
+        <source>On-screen display</source>
+        <translation>Элементы на экране</translation>
+    </message>
+    <message>
+        <source>Setup map sources</source>
+        <translation>Настроить источники карт</translation>
     </message>
 </context>
 <context>

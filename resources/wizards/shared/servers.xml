@@ -183,7 +183,7 @@
     <country>CZ</country><time></time>
   </server>
 
-  <server>
+  <!-- server>
     <jid>jabbster.pl</jid>
     <registration type="in-band"/>
     <legacy>false</legacy>
@@ -197,7 +197,7 @@
     <transports>ICQ,IRC,Gadu-Gadu,Yahoo,Skype,Twitter,Jabber,SMS,Mail</transports>
     <filestore>true</filestore>
     <country>CZ</country><time></time>
-  </server>
+  </server -->
 
   <server>
     <jid>njs.netlab.cz</jid>
@@ -277,7 +277,7 @@
     <country>CZ</country><time></time>
   </server>
 
-  <server>
+  <-- server>
     <jid>linuxlovers.at</jid>
     <registration type="in-band"/>
     <legacy>false</legacy>
@@ -291,9 +291,9 @@
     <transports>AIM,ICQ,IRC,Yahoo</transports>
     <filestore>false</filestore>
     <country>CZ</country><time></time>
-  </server>
+  </server -->
   
-  <server>
+  <!-- server>
     <jid>palita.net</jid>
     <registration type="in-band"/>
     <legacy>false</legacy>
@@ -307,7 +307,7 @@
     <transports>IRC</transports>
     <filestore>false</filestore>
     <country>DE</country><time></time>
-  </server>
+  </server -->
   
   <server>
     <jid>creep.im</jid>
@@ -377,7 +377,9 @@
 
   <server>
     <jid>jabber.at</jid>
-    <registration type="in-band"/>
+    <registration type="web">
+      <url>https://account.jabber.at/</url>
+    </registration>
     <legacy>false</legacy>
     <trusted>false</trusted>
     <compression>false</compression>
@@ -398,7 +400,7 @@
     <trusted>false</trusted>
     <compression>false</compression>
     <soft>ejabberd</soft>
-    <pep>true</pep>
+    <pep>false</pep>
     <muc>true</muc>
     <archive>false</archive>
     <proxy>true</proxy>

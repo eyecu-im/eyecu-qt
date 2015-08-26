@@ -789,18 +789,18 @@ QMultiMap<int, IOptionsDialogWidget *> Map::optionsDialogWidgets(const QString &
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MAP )
 	{
-		widgets.insertMulti(OHO_MAP_CONNECTION, FOptionsManager->newOptionsDialogHeader("Connection", AParent));
+		widgets.insertMulti(OHO_MAP_CONNECTION, FOptionsManager->newOptionsDialogHeader(tr("Connection"), AParent));
 		if (FConnectionManager)
 			widgets.insertMulti(OWO_MAP_CONNECTION, FConnectionManager->proxySettingsWidget(Options::node(OPV_MAP_PROXY), AParent));
-		widgets.insertMulti(OHO_MAP_GENERAL, FOptionsManager->newOptionsDialogHeader("General", AParent));
+		widgets.insertMulti(OHO_MAP_GENERAL, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
 		widgets.insertMulti(OWO_MAP_LOADING, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_LOADING), tr("Display \"Loading\" tiles"), AParent));
 		widgets.insertMulti(OWO_MAP_ATTACH_TO_ROSTER, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_ATTACH_TO_ROSTER), tr("Combine map window with contact list"), AParent));
-		widgets.insertMulti(OHO_MAP_ZOOM, FOptionsManager->newOptionsDialogHeader("Zoom", AParent));
+		widgets.insertMulti(OHO_MAP_ZOOM, FOptionsManager->newOptionsDialogHeader(tr("Zoom"), AParent));
 		widgets.insertMulti(OWO_MAP_ZOOM_WHEEL, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_ZOOM_WHEEL), tr("Mouse wheel zooming"), newWheelZoomComboBox(AParent), AParent));
 		widgets.insertMulti(OWO_MAP_ZOOM_SLIDERTRACK, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_ZOOM_SLIDERTRACK), tr("Update zoom during slider movement"), AParent));
-		widgets.insertMulti(OHO_MAP_OSD, FOptionsManager->newOptionsDialogHeader("On-screen display", AParent));
+		widgets.insertMulti(OHO_MAP_OSD, FOptionsManager->newOptionsDialogHeader(tr("On-screen display"), AParent));
 		widgets.insertMulti(OWO_MAP_OSD, new MapOptions(AParent));		
-		widgets.insertMulti(OHO_MAP_SOURCES, FOptionsManager->newOptionsDialogHeader("Setup map sources", AParent));
+		widgets.insertMulti(OHO_MAP_SOURCES, FOptionsManager->newOptionsDialogHeader(tr("Setup map sources"), AParent));
 		if (!FOptionsDialogNodes.isEmpty())
 		{
 			MapSources *mapSources = new MapSources(FOptionsManager);

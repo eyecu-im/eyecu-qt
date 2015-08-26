@@ -208,7 +208,7 @@ QMultiMap<int, IOptionsDialogWidget *> MapContacts::optionsDialogWidgets(const Q
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MAP)
 	{
-		widgets.insertMulti(OHO_MAP_CONTACTS, FOptionsManager->newOptionsDialogHeader("Contacts", AParent));
+		widgets.insertMulti(OHO_MAP_CONTACTS, FOptionsManager->newOptionsDialogHeader(tr("Contacts"), AParent));
 		widgets.insertMulti(OWO_MAP_CONTACTS, new MapContactsOptions(AParent));
 	}
 	return widgets;

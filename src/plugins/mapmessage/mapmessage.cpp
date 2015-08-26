@@ -159,7 +159,7 @@ QMultiMap<int, IOptionsDialogWidget *> MapMessage::optionsDialogWidgets(const QS
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_MAP)
     {
-		widgets.insertMulti(OHO_MAP_MESSAGE, FOptionsManager->newOptionsDialogHeader("Messages", AParent));
+		widgets.insertMulti(OHO_MAP_MESSAGE, FOptionsManager->newOptionsDialogHeader(tr("Messages"), AParent));
 		widgets.insertMulti(OWO_MAP_MESSAGE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_MESSAGE_AUTOFOCUS),tr("Autofocus on the map"), AParent));
 		widgets.insertMulti(OWO_MAP_MESSAGE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_MESSAGE_SHOW),tr("Show messages on the map"), AParent));
 		widgets.insertMulti(OWO_MAP_MESSAGE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MAP_MESSAGE_ANIMATE),tr("Enable animation in the messages on the map"), AParent));

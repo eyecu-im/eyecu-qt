@@ -4,194 +4,215 @@
 <context>
     <name>Map</name>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="62"/>
-        <location filename="../../plugins/map/map.cpp" line="117"/>
-        <location filename="../../plugins/map/map.cpp" line="140"/>
-        <location filename="../../plugins/map/map.cpp" line="145"/>
-        <location filename="../../plugins/map/map.cpp" line="228"/>
+        <location filename="../../plugins/map/map.cpp" line="61"/>
+        <location filename="../../plugins/map/map.cpp" line="116"/>
+        <location filename="../../plugins/map/map.cpp" line="139"/>
+        <location filename="../../plugins/map/map.cpp" line="144"/>
+        <location filename="../../plugins/map/map.cpp" line="227"/>
         <source>Map</source>
         <translation>Map</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="63"/>
+        <location filename="../../plugins/map/map.cpp" line="62"/>
         <source>Retrieves and displays world map from different sources</source>
         <translation>Retrieves and displays world map from different sources</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="118"/>
-        <location filename="../../plugins/map/map.cpp" line="299"/>
+        <location filename="../../plugins/map/map.cpp" line="117"/>
+        <location filename="../../plugins/map/map.cpp" line="298"/>
         <source>New center</source>
         <translation>New center</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="118"/>
+        <location filename="../../plugins/map/map.cpp" line="117"/>
         <source>Ctrl+N</source>
         <comment>New center</comment>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="119"/>
-        <location filename="../../plugins/map/map.cpp" line="290"/>
+        <location filename="../../plugins/map/map.cpp" line="118"/>
+        <location filename="../../plugins/map/map.cpp" line="289"/>
         <source>My location</source>
         <translation>My location</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="119"/>
+        <location filename="../../plugins/map/map.cpp" line="118"/>
         <source>Ctrl+M</source>
         <comment>My location</comment>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="120"/>
+        <location filename="../../plugins/map/map.cpp" line="119"/>
         <source>Toggle map</source>
         <translation>Toggle map</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="120"/>
+        <location filename="../../plugins/map/map.cpp" line="119"/>
         <source>Ctrl+F10</source>
         <comment>Toggle map</comment>
         <translation>Ctrl+F10</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="121"/>
+        <location filename="../../plugins/map/map.cpp" line="120"/>
         <source>Refresh</source>
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="121"/>
+        <location filename="../../plugins/map/map.cpp" line="120"/>
         <source>F5</source>
         <comment>Refresh map</comment>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="122"/>
+        <location filename="../../plugins/map/map.cpp" line="121"/>
         <source>Show options dialog</source>
         <translation>Show options dialog</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="122"/>
+        <location filename="../../plugins/map/map.cpp" line="121"/>
         <source>Ctrl+O</source>
         <comment>Show options dialog</comment>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="124"/>
+        <location filename="../../plugins/map/map.cpp" line="123"/>
         <source>Movement</source>
         <translation>Movement</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="125"/>
+        <location filename="../../plugins/map/map.cpp" line="124"/>
         <source>Left</source>
         <translation>Left</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="125"/>
+        <location filename="../../plugins/map/map.cpp" line="124"/>
         <source>Ctrl+Left</source>
         <comment>Map move Left</comment>
         <translation>Ctrl+Left</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="126"/>
+        <location filename="../../plugins/map/map.cpp" line="125"/>
         <source>Right</source>
         <translation>Right</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="126"/>
+        <location filename="../../plugins/map/map.cpp" line="125"/>
         <source>Ctrl+Right</source>
         <comment>Map move Right</comment>
         <translation>Ctrl+Right</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="127"/>
+        <location filename="../../plugins/map/map.cpp" line="126"/>
         <source>Up</source>
         <translation>Up</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="127"/>
+        <location filename="../../plugins/map/map.cpp" line="126"/>
         <source>Ctrl+Up</source>
         <comment>Map move Up</comment>
         <translation>Ctrl+Up</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="128"/>
+        <location filename="../../plugins/map/map.cpp" line="127"/>
         <source>Down</source>
         <translation>Down</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="128"/>
+        <location filename="../../plugins/map/map.cpp" line="127"/>
         <source>Ctrl+Down</source>
         <comment>Map move Down</comment>
         <translation>Ctrl+Down</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="130"/>
+        <location filename="../../plugins/map/map.cpp" line="129"/>
+        <location filename="../../plugins/map/map.cpp" line="798"/>
         <source>Zoom</source>
         <translation>Zoom</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="131"/>
+        <location filename="../../plugins/map/map.cpp" line="130"/>
         <source>In</source>
         <translation>In</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="131"/>
+        <location filename="../../plugins/map/map.cpp" line="130"/>
         <source>+</source>
         <comment>Map zoom in</comment>
         <translation>+</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="132"/>
+        <location filename="../../plugins/map/map.cpp" line="131"/>
         <source>Out</source>
         <translation>Out</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="132"/>
+        <location filename="../../plugins/map/map.cpp" line="131"/>
         <source>-</source>
         <comment>Map zoom out</comment>
         <translation>-</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="303"/>
+        <location filename="../../plugins/map/map.cpp" line="302"/>
         <source>Options</source>
         <translation>Options</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="310"/>
+        <location filename="../../plugins/map/map.cpp" line="309"/>
         <source>No map</source>
         <translation>No map</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="798"/>
+        <location filename="../../plugins/map/map.cpp" line="792"/>
+        <source>Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/map/map.cpp" line="795"/>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/map/map.cpp" line="796"/>
         <source>Display &quot;Loading&quot; tiles</source>
         <translation>Display &quot;Loading&quot; tiles</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="799"/>
+        <location filename="../../plugins/map/map.cpp" line="797"/>
         <source>Combine map window with contact list</source>
         <translation>Combine map window with contact list</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="801"/>
+        <location filename="../../plugins/map/map.cpp" line="799"/>
         <source>Mouse wheel zooming</source>
         <translation>Mouse wheel zooming</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="802"/>
+        <location filename="../../plugins/map/map.cpp" line="800"/>
         <source>Update zoom during slider movement</source>
         <translation>Update zoom during slider movement</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="815"/>
+        <location filename="../../plugins/map/map.cpp" line="801"/>
+        <source>On-screen display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/map/map.cpp" line="803"/>
+        <source>Setup map sources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/map/map.cpp" line="818"/>
         <source>Relative to map center</source>
         <translation>Relative to map center</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="816"/>
+        <location filename="../../plugins/map/map.cpp" line="819"/>
         <source>Relative to mouse position</source>
         <translation>Relative to mouse position</translation>
     </message>
     <message>
-        <location filename="../../plugins/map/map.cpp" line="817"/>
+        <location filename="../../plugins/map/map.cpp" line="820"/>
         <source>Follow mouse pointer</source>
         <translation>Follow mouse pointer</translation>
     </message>

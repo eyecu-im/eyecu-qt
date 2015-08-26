@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>MapMessage</name>
     <message>
@@ -26,6 +26,10 @@
     <message>
         <source>Subject</source>
         <translation>Тема</translation>
+    </message>
+    <message>
+        <source>Messages</source>
+        <translation>Сообщения</translation>
     </message>
 </context>
 </TS>

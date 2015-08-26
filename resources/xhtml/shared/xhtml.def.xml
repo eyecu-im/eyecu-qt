@@ -5,7 +5,7 @@
   <icon><key>textOver</key><object mime="image/png">textover.png</object></icon>
   <icon><key>textStrike</key><object mime="image/png">textstrike.png</object></icon>
   <icon><key>textItalic</key><object mime="image/png">textitalic.png</object></icon>  
-  <icon><key>alingLeft</key><object mime="image/png">alignleft.png</object></icon>
+  <icon><key>alignLeft</key><object mime="image/png">alignleft.png</object></icon>
   <icon><key>alignRight</key><object mime="image/png">alignright.png</object></icon>
   <icon><key>alignCenter</key><object mime="image/png">aligncenter.png</object></icon>
   <icon><key>alignJustify</key><object mime="image/png">alignjustify.png</object></icon>
