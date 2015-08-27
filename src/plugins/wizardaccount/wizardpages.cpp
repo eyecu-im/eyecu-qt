@@ -1182,7 +1182,10 @@ void WebRegistrationInfo::loadInstructions(const QString &AInstructions, const Q
 			file.setFileName(dir.absoluteFilePath(fileName.arg("en")));
 			file.open(QFile::ReadOnly);
 		}
-		FLblInstructions->setText(file.isOpen()?QString::fromUtf8(file.readAll()).arg(AServerName)
+		QString instructions = QString::fromUtf8(file.readAll());
+		if (instructions.contains("%1"))
+			instructions = instructions.arg(AServerName);
+		FLblInstructions->setText(file.isOpen()?instructions
                                                :QString("<span %1><b>%2</b></span><br><span %3>%4</span>")
                                                 .arg(styleRed).arg(tr("Warning!"))
                                                 .arg(style).arg(tr("Cannot open instructions.")));
