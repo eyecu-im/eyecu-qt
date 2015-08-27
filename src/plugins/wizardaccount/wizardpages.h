@@ -27,6 +27,7 @@
 #include <utils/jid.h>
 #include <utils/iconstorage.h>
 
+//!---------- Connection Wizard -----------
 class ConnectionWizard : public QWizard
 {
     Q_OBJECT
@@ -35,7 +36,7 @@ class ConnectionWizard : public QWizard
 	Q_PROPERTY(QString streamJid READ streamJid)
 
 public:
-	enum {Page_Intro, Page_Network, Page_Server, Page_Credentials, Page_Connection, Page_InfoWeb, Page_Connect, Page_Submit, Page_Conclusion};
+	enum {Page_Intro, Page_Network, Page_Server, Page_InfoWeb, Page_Credentials, Page_Connection, Page_Connect, Page_Submit, Page_Conclusion};
     enum {No, Yes, Unknown};
 
 	ConnectionWizard(QWidget *AParent = 0);
@@ -60,7 +61,7 @@ private:
 	bool				FRegisterAccount;
 };
 
-//!---------------------
+//!---------- Intro Page -----------
 class IntroPage : public QWizardPage
 {
     Q_OBJECT
@@ -80,7 +81,7 @@ private:
 	int					FNextId;
 };
 
-//!---------------------		
+//!---------- Network Page -----------
 class NetworkPage : public QWizardPage
 {
 	Q_OBJECT
@@ -126,7 +127,7 @@ private:
 	QMap<NetworkType, NetworkInfo> FNetworks;
 };
 
-//!---------------------
+//!---------- Server Page -----------
 struct ServerInfo
 {
 	enum ServerFlags {
@@ -151,7 +152,7 @@ class ServerPage : public QWizardPage
 public:
 	ServerPage(NetworkPage *ANtworkPage, QWidget *AParent = 0);
 	QUrl	getRegistrationUrl() const;
-	QString	getInstructions() const;	
+	QString	getInstructions(const QString &AServerName) const;
 	int		getFlags() const;
 	QString getServerName() const;
 
@@ -192,7 +193,36 @@ signals:
 	void currentItemTextChanged(const QString &AText);
 };
 
-//!---------------------
+//!------ Web Registration Info Page -------
+class WebRegistrationInfo : public QWizardPage
+{
+	Q_OBJECT
+public:
+	WebRegistrationInfo(ServerPage *AServerPage, QWidget *AParent = 0);
+
+	// QWizardPage interface
+	void initializePage();
+	void cleanupPage();
+	bool isComplete() const {return FComplete;}
+
+protected:
+	void loadInstructions(const QString &AInstructions, const QString &AServerName);
+
+protected slots:
+	void onOpenLinkClicked();
+
+private:
+	QLabel		*FLblHeader;
+	QTextBrowser	*FLblInstructions;
+	QCommandLinkButton *FClbOpenLink;
+	IconStorage *FIconStorage;
+	ServerPage	*FServerPage;
+	QUrl		FRegisterUrl;
+	bool		FComplete;
+};
+
+
+//!---------- Credentials Page -----------
 class CredentialsPage : public QWizardPage
 {
     Q_OBJECT
@@ -226,7 +256,6 @@ public:
 	ConnectionPage(ServerPage *AServerPage, IOptionsDialogWidget *AConnectionSettingsWidget, QWidget *AParent = 0);
 
 	// QWizardPage interface
-	int nextId() const;
 	bool validatePage();
 
 private:
@@ -234,7 +263,7 @@ private:
 	IOptionsDialogWidget *FConnectionSettingsWidget;
 };
 
-//!---------------------
+//!--------- Connect Page ------------
 class ConnectPage : public QWizardPage
 {
     Q_OBJECT
@@ -251,7 +280,7 @@ public:
 	int nextId() const;
 
 protected:
-	IXmppStream *createXmppStream() const;
+	IXmppStream *createXmppStream(bool ARegister) const;
 
 protected slots:
 	void onXmppStreamError(const XmppError &AError);
@@ -277,7 +306,7 @@ private:
 	QString			FRegisterId;
 };
 
-//!------- RegisterSubmitPage --------------
+//!------- Register Submit Page --------------
 class RegisterSubmitPage : public QWizardPage
 {
 	Q_OBJECT
@@ -305,36 +334,7 @@ private:
 	ConnectPage		*FConnectPage;
 };
 
-//!------InfoWebPage-------
-
-class WebRegistrationInfo : public QWizardPage
-{
-    Q_OBJECT
-public:
-    WebRegistrationInfo(ServerPage *AServerPage, QWidget *AParent = 0);
-
-	// QWizardPage interface
-    void initializePage();
-	void cleanupPage();
-	bool isComplete() const {return FComplete;}
-
-protected:
-	void loadInstructions(const QString &AInstructions);
-
-protected slots:
-	void onOpenLinkClicked();
-
-private:
-	QLabel		*FLblHeader;
-	QTextBrowser	*FLblInstructions;
-	QCommandLinkButton *FClbOpenLink;
-    IconStorage *FIconStorage;
-	ServerPage	*FServerPage;
-	QUrl		FRegisterUrl;
-	bool		FComplete;
-};
-
-//!---------------------
+//!---------- Conclusion Page -----------
 
 class ConclusionPage : public QWizardPage
 {

@@ -345,6 +345,7 @@
     <jid>is-a-furry.org</jid>
     <registration type="web">
       <url>https://is-a-furry.org:5281/register_web</url>
+      <instructions>is-a-furry_org</instructions>
     </registration>
     <legacy>false</legacy>
     <trusted>false</trusted>
@@ -362,7 +363,93 @@
   <server>
     <jid>jabber.hot-chilli.net</jid>
     <registration type="web">
-      <url>https://jabber.hot-chilli.net/account/transport-pre-registration/</url>
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+  
+  <server>
+    <jid>jabber.hot-chilli.eu</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>hot-chilli.net</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>hot-chilli.eu</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+  
+  <server>
+    <jid>im.hot-chilli.net</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
+    </registration>
+    <legacy>false</legacy>
+    <trusted>false</trusted>
+    <compression>false</compression>
+    <soft>prosody</soft><pep>true</pep><muc>true</muc>
+    <archive>false</archive><carbons>true</carbons>
+    <proxy>true</proxy>
+    <transports>AIM,ICQ,IRC,Gadu-Gadu,Yahoo,Jabber,SMS,SIPE,Mail</transports>
+    <filestore>true</filestore>
+    <country>DE</country><time></time>
+  </server>
+
+  <server>
+    <jid>im.hot-chilli.eu</jid>
+    <registration type="web">
+      <url>https://jabber.hot-chilli.net/account/create/</url>
+      <instructions>hot-chilli_net</instructions>
     </registration>
     <legacy>false</legacy>
     <trusted>false</trusted>

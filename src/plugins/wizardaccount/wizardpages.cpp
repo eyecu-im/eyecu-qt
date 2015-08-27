@@ -273,12 +273,12 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 
 QUrl ServerPage::getRegistrationUrl() const
 {
-	return FServerInfo.value(getServerName()).url;
+	return FServerInfo.value(field(WF_SERVER_NAME_PRE).toString()).url;
 }
 
-QString ServerPage::getInstructions() const
+QString ServerPage::getInstructions(const QString &AServerName) const
 {
-	return FServerInfo.value(getServerName()).instructions;
+	return FServerInfo.value(AServerName).instructions;
 }
 
 int ServerPage::getFlags() const
@@ -449,7 +449,10 @@ bool ServerPage::validatePage()
 
 int ServerPage::nextId() const
 {
-	return wizard()->property("registerAccount").toBool()?ConnectionWizard::Page_Connection:ConnectionWizard::Page_Credentials;
+	int flags = FServerInfo.value(FLedSelectedServer->text().toLower()).flags;
+	return wizard()->property("registerAccount").toBool()?((flags&ServerInfo::Valid) && !(flags&ServerInfo::InBandRegistration))?ConnectionWizard::Page_InfoWeb:
+																																ConnectionWizard::Page_Connection
+														 :ConnectionWizard::Page_Credentials;
 }
 
 void ServerPage::onButtonClicked(QAbstractButton *AButton)
@@ -672,14 +675,6 @@ bool ConnectionPage::validatePage()
 	return QWizardPage::validatePage();
 }
 
-int ConnectionPage::nextId() const
-{
-	int flags = FServerPage->getFlags();
-	return (wizard()->property("registerAccount").toBool() && (flags&ServerInfo::Valid) && !(flags&ServerInfo::InBandRegistration))
-			?ConnectionWizard::Page_InfoWeb
-			:ConnectionWizard::Page_Connect;
-}
-
 //!------------------------------
 ConnectPage::ConnectPage(IConnectionEngine *AConnectionEngine, QWidget *parent):
 	QWizardPage(parent),
@@ -749,18 +744,18 @@ void ConnectPage::cleanupPage()
 
 void ConnectPage::initializePage()
 {
-	FLblStatus->setVisible(true);
-	FXmppStream = createXmppStream();
+	int flags = qobject_cast<ServerPage *>(wizard()->page(ConnectionWizard::Page_Server))->getFlags();
+	bool registration = wizard()->property("registerAccount").toBool() && (flags&ServerInfo::InBandRegistration || !(flags&ServerInfo::Valid));
+	FLblStatus->setVisible(true);	
+	FXmppStream = createXmppStream(registration);
 
 	if (FXmppStream)
 	{
-		QString style="style='color:blue;'";
-		int flags = qobject_cast<ServerPage *>(wizard()->page(ConnectionWizard::Page_Server))->getFlags();
+		QString style="style='color:blue;'";		
 
 		FLblStatus->setText(QString("<span %1>%2</span>")
 							.arg(style)
-							.arg(wizard()->property("registerAccount").toBool() && (flags&ServerInfo::InBandRegistration || !(flags&ServerInfo::Valid))?
-									 tr("Requesting registration form..."):tr("Connecting...")));
+							.arg(registration?tr("Requesting registration form..."):tr("Connecting...")));
 		FProgressBar->setMaximum(0);
 		FProgressBar->setPalette(QPalette());   // Reset palette
 
@@ -1002,14 +997,15 @@ void ConnectPage::onFormDeleted()
 	FDfwRegisterForm = NULL;
 }
 
-IXmppStream *ConnectPage::createXmppStream() const
+IXmppStream *ConnectPage::createXmppStream(bool ARegister) const
 {
 	IXmppStreamManager *xmppStreamManager = PluginHelper::pluginInstance<IXmppStreamManager>();
 	IConnectionManager *connManager = PluginHelper::pluginInstance<IConnectionManager>();
 	if (xmppStreamManager!=NULL && connManager!=NULL && FConnectionEngine!=NULL)
 	{
 		IXmppStream *xmppStream;
-		if (wizard()->property("registerAccount").toBool())
+//		if (wizard()->property("registerAccount").toBool())
+		if (ARegister)
 			xmppStream = xmppStreamManager->createXmppStream(field(WF_SERVER_NAME_PRE).toString());
 		else
 			xmppStream = xmppStreamManager->createXmppStream(Jid(field(WF_USER_NAME).toString(), field(WF_SERVER_NAME).toString(), "Wizard"));
@@ -1153,13 +1149,14 @@ WebRegistrationInfo::WebRegistrationInfo(ServerPage *AServerPage, QWidget *APare
 
 void WebRegistrationInfo::initializePage()
 {
+	QString serverName = field(WF_SERVER_NAME_PRE).toString();
 	FComplete = false;
-	FLblHeader->setText(tr("How to register at %1").arg(wizard()->property("serverName").toString()));
+	FLblHeader->setText(tr("How to register at %1").arg(serverName));
 
 	FRegisterUrl	= FServerPage->getRegistrationUrl();
 	FClbOpenLink->setDescription(FRegisterUrl.toString());
 
-	loadInstructions(FServerPage->getInstructions());
+	loadInstructions(FServerPage->getInstructions(serverName), serverName);
 }
 
 void WebRegistrationInfo::cleanupPage()
@@ -1168,7 +1165,7 @@ void WebRegistrationInfo::cleanupPage()
 	FLblHeader->clear();
 }
 
-void WebRegistrationInfo::loadInstructions(const QString &AInstructions)
+void WebRegistrationInfo::loadInstructions(const QString &AInstructions, const QString &AServerName)
 {
 	if(!AInstructions.isEmpty())
     {		
@@ -1185,7 +1182,7 @@ void WebRegistrationInfo::loadInstructions(const QString &AInstructions)
 			file.setFileName(dir.absoluteFilePath(fileName.arg("en")));
 			file.open(QFile::ReadOnly);
 		}
-        FLblInstructions->setText(file.isOpen()?QString::fromUtf8(file.readAll())
+		FLblInstructions->setText(file.isOpen()?QString::fromUtf8(file.readAll()).arg(AServerName)
                                                :QString("<span %1><b>%2</b></span><br><span %3>%4</span>")
                                                 .arg(styleRed).arg(tr("Warning!"))
                                                 .arg(style).arg(tr("Cannot open instructions.")));
