@@ -10,7 +10,10 @@ DEPENDPATH        += ..
 INCLUDEPATH       += ..
 DESTDIR            = ../..
 
-DEFINES           += EXTRA_TRANSLATORS=\"$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;\"
+unix:!macx: MAYBE_QUOTE=
+else: MAYBE_QUOTE=\\\"
+
+DEFINES           += EXTRA_TRANSLATORS=\"$${MAYBE_QUOTE}$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;$${MAYBE_QUOTE}\"
 
 include(loader.pri)
 #Appication icon
@@ -23,31 +26,6 @@ symbian {
     TARGET.EPOCSTACKSIZE = 0x14000
     TARGET.EPOCHEAPSIZE = 0x020000 0x800000
 }
-
-#SVN Info
-#isEmpty(SVN_REVISION) {
-#  SVN_REVISION=$$system(svnversion -n -c ./../../)
-#  SVN_REVISION_INVALID = $$find(SVN_REVISION,Unversioned) $$find(SVN_REVISION,exported)
-#}
-
-#win32|os2|symbian {
-#  WIN_OUT_PWD = $$replace(OUT_PWD, /, \\)
-#  exists($${WIN_OUT_PWD}\\svninfo.h):system(del $${WIN_OUT_PWD}\\svninfo.h)
-#  !isEmpty(SVN_REVISION):count(SVN_REVISION_INVALID,0) {
-#    system(mkdir $${WIN_OUT_PWD} & echo $${LITERAL_HASH}define SVN_REVISION \"$${SVN_REVISION}\" >> $${WIN_OUT_PWD}\\svninfo.h) {
-#      DEFINES         += SVNINFO
-#      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
-#    }
-#  }
-#} else {
-#  exists($${OUT_PWD}/svninfo.h):system(rm -f $${OUT_PWD}/svninfo.h)
-#  !isEmpty(SVN_REVISION)::count(SVN_REVISION_INVALID,0) {
-#    system(mkdir -p $${OUT_PWD} && echo \\$${LITERAL_HASH}define SVN_REVISION \\\"$${SVN_REVISION}\\\" >> $${OUT_PWD}/svninfo.h) {
-#      DEFINES         += SVNINFO
-#      QMAKE_DISTCLEAN += $${OUT_PWD}/svninfo.h
-#    }
-#  }
-#}
 
 #GIT Info
 GIT_HASH = $$system(git log -n 1 --format=%H)

@@ -37,12 +37,7 @@
 
 #define SVN_DATA_PATH               "DataPath"
 #define SVN_LOCALE_NAME             "Locale"
-// *** <<< eyeCU <<< ***
-#ifdef SVNINFO
-#  include "svninfo.h"
-#  define SVN_BASE_REVISION         -71
-#elif defined(GITINFO)
-// *** >>> eyeCU >>> ***
+#ifdef GITINFO
 #  include "gitinfo.h"
 #endif
 
@@ -52,17 +47,17 @@
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** <<< eyeCU <<< ***
-#elif defined(Q_WS_PM)
+#elif defined(Q_OS_OS2)
 #  define ENV_APP_DATA              "HOME"
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** >>> eyeCU >>> ***
-#elif defined(Q_WS_X11)
+#elif defined(Q_OS_LINUX)
 #  define ENV_APP_DATA              "HOME"
 // *** <<< eyeCU >>> ***
 #  define DIR_APP_DATA              ".eyecu"
 #  define PATH_APP_DATA             DIR_APP_DATA
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
 #  define ENV_APP_DATA              "HOME"
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             "Library/Application Support/"DIR_APP_DATA
@@ -114,15 +109,7 @@ QString PluginManager::version() const
 
 QString PluginManager::revision() const
 {
-// *** <<< eyeCU <<< ***
-#ifdef SVN_REVISION
-    static const QString rev = QString(SVN_REVISION).contains(':') ? QString(SVN_REVISION).split(':').value(1) : QString(SVN_REVISION);    bool modified=rev.endsWith('M');
-    QString r(rev);
-    if (modified)
-        r.chop(1);
-    return QString("%1%2").arg(r.toInt()-SVN_BASE_REVISION).arg(modified?"M":"");
-#elif defined GIT_HASH
-// *** >>> eyeCU >>> ***
+#if defined GIT_HASH
 	static const QString rev = GIT_HASH;
 #else
 	static const QString rev = "0";
@@ -132,11 +119,7 @@ QString PluginManager::revision() const
 
 QDateTime PluginManager::revisionDate() const
 {
-// *** <<< eyeCU <<< ***
-#if defined SVN_DATE
-	static const QDateTime date = QDateTime::fromString(SVN_DATE,"yyyy/MM/dd hh:mm:ss");
-#elif defined GIT_DATE
-// *** >>> eyeCU >>> ***
+#if defined GIT_DATE
 	static const QDateTime date = QDateTime::fromTime_t(QString(GIT_DATE).toInt());
 #else
 	static const QDateTime date = QDateTime();
@@ -794,7 +777,7 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 	if (translator)
 		FTranslators.append(translator);
 
-	FTranslatorNames = QString(QUOTED(EXTRA_TRANSLATORS)).split(';', QString::SkipEmptyParts);
+	FTranslatorNames = QString(EXTRA_TRANSLATORS).split(';', QString::SkipEmptyParts);
 	for (QStringList::ConstIterator it = FTranslatorNames.constBegin(); it!=FTranslatorNames.constEnd(); it++)
 	{
 		translator = new QTranslator(this);
