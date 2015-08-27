@@ -65,13 +65,11 @@
 				name = filespec("name", SearchPath)
 				path = filespec("path", SearchPath)
 				drive = filespec("drive", SearchPath)
-				qtsdk = drive||path
+				qtsdk = drive||LEFT(path, LENGTH(path)-1)
 
-				if name = 'LIB' then qtdir = qtsdk||"share\qt4" /* *nix way */
+				if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
 				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
 				else qtdir = '' /* Unknown path */
-
-				if \ (qtdir = '') then rc = WirexxPutEnv('QTDIR',qtdir)
 
 				DO FOREVER
 					qtdir = WirexxVarPrompt('QTDIR')
