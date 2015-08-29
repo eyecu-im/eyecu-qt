@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+﻿<?xml version='1.0' encoding='UTF-8'?>
 <icondef>
   <name>Emoji</name>
   <version>1.0</version>
@@ -7,51 +7,116 @@
   <home>www.eyecu.ru</home>
   <author>Yagiza</author>
   <icon>
-    <text>&#x1F600;</text>
+    <text>😀</text>
     <object mime="image/gif">1f600.png</object>
   </icon>
   <icon>
-    <text>&#x1F601;</text>
+    <text>😁</text>
     <object mime="image/gif">1f601.png</object>
   </icon>
   <icon>
-    <text>&#x1F602;</text>
+    <text>😂</text>
     <object mime="image/gif">1f602.png</object>
   </icon>
   <icon>
-    <text>&#x1F603;</text>
+    <text>😃</text>
     <object mime="image/gif">1f603.png</object>
   </icon>
   <icon>
-    <text>&#x1F604;</text>
+    <text>😄</text>
     <object mime="image/gif">1f604.png</object>
   </icon>
   <icon>
-    <text>&#x1F605;</text>
+    <text>😅</text>
     <object mime="image/gif">1f605.png</object>
   </icon>
   <icon>
-    <text>&#x1F606;</text>
+    <text>😆</text>
     <object mime="image/gif">1f606.png</object>
   </icon>
   <icon>
-    <text>&#x1F609;</text>
+    <text>😉</text>
     <object mime="image/gif">1f609.png</object>
   </icon>
   <icon>
-    <text>&#x1F60a;</text>
+    <text>😊</text>
     <object mime="image/gif">1f60a.png</object>
   </icon>
   <icon>
-    <text>&#x1F60b;</text>
+    <text>😋</text>
     <object mime="image/gif">1f60b.png</object>
   </icon>
   <icon>
-    <text>&#x1F60e;</text>
+    <text>😎</text>
     <object mime="image/gif">1f60e.png</object>
   </icon>
   <icon>
-    <text>&#x1F60d;</text>
+    <text>😍</text>
     <object mime="image/gif">1f60d.png</object>
   </icon>
+  <icon>
+    <text>😘</text>
+    <object mime="image/gif">1f618.png</object>
+  </icon>
+  <icon>
+    <text>😗</text>
+    <object mime="image/gif">1f617.png</object>
+  </icon>
+  <icon>
+    <text>😙</text>
+    <object mime="image/gif">1f619.png</object>
+  </icon>
+  <icon>
+    <text>😚</text>
+    <object mime="image/gif">1f61a.png</object>
+  </icon>
+  <icon>
+    <text>☺️</text>
+    <object mime="image/gif">263a.png</object>
+  </icon>
+  <icon>
+    <text>🙂</text>
+    <object mime="image/gif">1f642.png</object>
+  </icon>
+  <icon>
+    <text>😇</text>
+    <object mime="image/gif">1f607.png</object>
+  </icon>
+  <icon>
+    <text>😐</text>
+    <object mime="image/gif">1f610.png</object>
+  </icon>
+  <icon>
+    <text>😑</text>
+    <object mime="image/gif">1f611.png</object>
+  </icon>
+  <icon>
+    <text>😶</text>
+    <object mime="image/gif">1f636.png</object>
+  </icon>
+  <icon>
+    <text>😏</text>
+    <object mime="image/gif">1f60f.png</object>
+  </icon>
+  <icon>
+    <text>😣</text>
+    <object mime="image/gif">1f623.png</object>
+  </icon>
+  <icon>
+    <text>😥</text>
+    <object mime="image/gif">1f625.png</object>
+  </icon>
+  <icon>
+    <text>😮</text>
+    <object mime="image/gif">1f62e.png</object>
+  </icon>
+  <icon>
+    <text>😯</text>
+    <object mime="image/gif">1f62f.png</object>
+  </icon>
+  <icon>
+    <text>😪</text>
+    <object mime="image/gif">1f62a.png</object>
+  </icon>
+
 </icondef>
