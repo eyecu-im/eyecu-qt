@@ -45,9 +45,7 @@ protected slots:
 
 private:
 	IXmppStreamManager	*FXmppStreamManager;
-	IRegistration		*FRegistration;
 	IRostersViewPlugin	*FRostersViewPlugin;
-	IServiceDiscovery	*FServiceDiscovery;
 	QMap<Jid, QString>	FStreamGateWay;
 	QPointer<TransportWizard> FTransportWizard;
 	bool				FAutoSubscribe;

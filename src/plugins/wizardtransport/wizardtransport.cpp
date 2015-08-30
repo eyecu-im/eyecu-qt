@@ -18,7 +18,6 @@
 WizardTransport::WizardTransport(QObject *parent) :
     QObject(parent)
     ,FXmppStreamManager(NULL)
-    ,FRegistration(NULL)
     ,FRostersViewPlugin(NULL)
 {}
 
@@ -36,14 +35,6 @@ bool WizardTransport::initConnections(IPluginManager *APluginManager, int &AInit
 	IPlugin *plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
     if (plugin)
 		FXmppStreamManager = qobject_cast<IXmppStreamManager *>(plugin->instance());
-
-    plugin = APluginManager->pluginInterface("IRegistration").value(0,NULL);
-    if (plugin)
-        FRegistration = qobject_cast<IRegistration *>(plugin->instance());
-
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
-	if (plugin)
-		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
     if (plugin)
@@ -121,7 +112,7 @@ void WizardTransport::onStreamClosed(IXmppStream *AXmppStream)
 QWizard * WizardTransport::startTransportWizard(const Jid &AStreamJid)
 {
     FAutoSubscribe=Options::node(OPV_ROSTER_AUTOSUBSCRIBE).value().toBool();
-	FTransportWizard = new TransportWizard(AStreamJid, FRegistration, FServiceDiscovery);
+	FTransportWizard = new TransportWizard(AStreamJid);
 	FTransportWizard->show();
 	connect(FTransportWizard,SIGNAL(finished(int)),SLOT(onWizardFinished(int)));
 	return FTransportWizard;

@@ -21,25 +21,28 @@
 
 #include <interfaces/iregistraton.h>
 #include <interfaces/iservicediscovery.h>
-
 #include <utils/iconstorage.h>
 
 class TransportWizard : public QWizard
 {
     Q_OBJECT
 public:
-    enum {Page_Intro,Page_Networks,Page_Gateway,Page_Process,Page_Result,Page_Conclusion};
-	explicit TransportWizard(const Jid &AStreamJid, IRegistration *ARegistration, IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
+	enum {Page_Intro,Page_Transports,Page_Networks,Page_Gateway,Page_Process,Page_Result,Page_Conclusion};
+	TransportWizard(const Jid &AStreamJid, QWidget *parent = 0);
+
 signals:
     void getGateway();
     void getRegister();
+
 protected slots:
     void onCurIdChange(int id);
+
 protected:
     void accept();
+
 private:
     Jid             FStreamJid;
-    IRegistration   *FRegistration;
+//    IRegistration   *FRegistration;
 };
 
 //!---------------------
@@ -48,7 +51,37 @@ class IntroPage : public QWizardPage
     Q_OBJECT
 public:
     IntroPage(QWidget *parent = 0);
-    int nextId() const;
+	// QWizardPage interface
+	int nextId() const {return FNextId;}
+	bool isComplete() const {return false;}
+
+protected slots:
+	void onClicked();
+
+private:
+	QCommandLinkButton	*FClbConnectLegacyNetwork;
+	QCommandLinkButton	*FClbChangeTransport;
+	int					FNextId;
+};
+
+//!---------------------
+class TransportsPage : public QWizardPage
+{
+    Q_OBJECT
+public:
+	TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
+	// QWizardPage interface
+	int nextId() const;
+	void initializePage();
+
+protected slots:
+	void onTransportSelected(const QString &ATransportJid);
+
+private:
+	const IServiceDiscovery *FServiceDiscovery;
+	const Jid				FStreamJid;
+	SelectableTreeWidget	*FTransportsList;
+	IconStorage				*FIconStorage;
 };
 
 //!---------------------
@@ -57,7 +90,7 @@ class NetworksPage : public QWizardPage
     Q_OBJECT
 public:
     NetworksPage(QWidget *parent = 0);
-	QString networkName(const QString &ANetworkId) const {return FNetworkHash.value(ANetworkId);}
+	QString networkName(const QString &ANetworkId) const {return FNetworkNames.value(ANetworkId);}
 	// QWizardPage interface
     int nextId() const;
 	void initializePage();
@@ -68,7 +101,8 @@ protected:
 private:
 	SelectableTreeWidget	*FNetworksList;
 	IconStorage				*FIconStorage;
-	QHash<QString, QString> FNetworkHash;
+	QHash<QString, QString>	FNetworkNames;
+	QHash<QString,QString>	FNetworkDescriptions;
 };
 
 //!---------------------
@@ -76,7 +110,7 @@ class GatewayPage : public QWizardPage
 {
     Q_OBJECT
 public:
-	GatewayPage(IServiceDiscovery *AServiceDiscovery, const Jid &AStreamJid, QWidget *parent = 0);
+	GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
     QList <QDomElement> getExcepFields(){return FExcepFields; }
 
 	// QWizardPage interface

@@ -7,14 +7,20 @@
 #include <QMessageBox>
 #include <QLineEdit>
 
-#include "wizardpages.h"
+//#include <interfaces/irostersmodel.h>
+#include <interfaces/igateways.h>
 #include <definitions/optionvalues.h>
 #include <definitions/menuicons.h>
 #include <definitions/wizardicons.h>
 #include <definitions/serviceicons.h>
 #include <definitions/resources.h>
+#include <definitions/rosterindexroles.h>
+#include <definitions/rosterindexkinds.h>
 #include <utils/options.h>
+#include <utils/pluginhelper.h>
 #include <utils/qt4qt5compat.h>
+
+#include "wizardpages.h"
 
 #define TRANSPORT_LIST	"transports.xml"
 
@@ -33,26 +39,27 @@
 #define VALIDATE_TYPE_DATE      "xs:date"
 #define VALIDATE_TYPE_TIME      "xs:time"
 
-TransportWizard::TransportWizard(const Jid &AStreamJid,
-						 IRegistration *ARegistration, IServiceDiscovery *AServiceDiscovery,
-						 QWidget *parent) :
+TransportWizard::TransportWizard(const Jid &AStreamJid, QWidget *parent) :
     QWizard(parent),
-    FStreamJid(AStreamJid),
-    FRegistration(ARegistration)
+	FStreamJid(AStreamJid)
 {
+	IRegistration *registration = PluginHelper::pluginInstance<IRegistration>();
+	IServiceDiscovery *serviceDiscovery = PluginHelper::pluginInstance<IServiceDiscovery>();
     setPage(Page_Intro, new IntroPage);
-	NetworksPage *networkPage = new NetworksPage();
-	setPage(Page_Networks, networkPage);
-	GatewayPage *Gateway =new GatewayPage(AServiceDiscovery, FStreamJid);
+	TransportsPage *transportsPage = new TransportsPage(FStreamJid, serviceDiscovery);
+	setPage(Page_Transports, transportsPage);
+	NetworksPage *networksPage = new NetworksPage();
+	setPage(Page_Networks, networksPage);
+	GatewayPage *Gateway =new GatewayPage(FStreamJid, serviceDiscovery);
 	setPage(Page_Gateway, Gateway);
-    ProcessPage *Process = new ProcessPage(FStreamJid,FRegistration,Gateway);
+	ProcessPage *Process = new ProcessPage(FStreamJid, registration, Gateway);
     setPage(Page_Process,Process);
     connect(this,SIGNAL(getGateway()),Process,SLOT(createGateway()));
-    ResultPage *Result=new ResultPage(FStreamJid,FRegistration,Process);
+	ResultPage *Result=new ResultPage(FStreamJid, registration, Process);
     setPage(Page_Result,Result);
     connect(this,SIGNAL(getRegister()),Result,SLOT(onGetRegister()));
 
-	setPage(Page_Conclusion, new ConclusionPage(networkPage));
+	setPage(Page_Conclusion, new ConclusionPage(networksPage));
     setStartId(Page_Intro);
 
     setOptions(NoBackButtonOnLastPage|NoBackButtonOnStartPage|NoCancelButton);
@@ -90,26 +97,131 @@ IntroPage::IntroPage(QWidget *parent): QWizardPage(parent)
 {
     QString style="style='color:blue;'";
 	setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Legacy network connection")));
-	setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("This Wizard will help you to connect to a legacy network via transport (gateway)")));
+	setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("This Wizard will help you to connect to a legacy network via transport or change transport to another one")));
 
 	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_TRANSPORT);
     setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 
 	QVBoxLayout *layout = new QVBoxLayout;
-	QLabel *lblText = new QLabel(tr("Before running this Wizard, make sure you have an account at legacy network.\n"
-									"If don't, please register at legacy network on its web site or using native client."));
-	lblText->setWordWrap(true);
+//	QLabel *lblText = new QLabel(tr("Before running this Wizard, make sure you have an account at legacy network.\n"
+//									"If don't, please register at legacy network on its web site or using native client."));
+//	lblText->setWordWrap(true);
+//	layout->addWidget(lblText);
+
+	QLabel *lblText = new QLabel(QString("<span %1>%2</span>").arg(style).arg(tr("What do you want to do?")));
 	layout->addWidget(lblText);
+	lblText->setWordWrap(true);
+	layout->addWidget(FClbConnectLegacyNetwork	= new QCommandLinkButton(tr("&Connect to a legacy network")));
+	layout->addWidget(FClbChangeTransport		= new QCommandLinkButton(tr("&Change transport")));
+	setLayout(layout);
+
+	connect(FClbConnectLegacyNetwork, SIGNAL(clicked()), SLOT(onClicked()));
+	connect(FClbChangeTransport, SIGNAL(clicked()), SLOT(onClicked()));
+
 	setLayout(layout);
 }
 
-int IntroPage::nextId() const
+void IntroPage::onClicked()
 {
-	return TransportWizard::Page_Networks;
+	if (sender() == FClbChangeTransport)
+	{
+		wizard()->setProperty("changeTransport", true);
+		FNextId = TransportWizard::Page_Transports;
+	}
+	else
+	{
+		wizard()->setProperty("changeTransport", false);
+		FNextId = TransportWizard::Page_Networks;
+	}
+	wizard()->next();
 }
 
 //!------------------------------
-NetworksPage::NetworksPage(QWidget *parent): QWizardPage(parent)
+TransportsPage::TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *AServiceDiscovery, QWidget *parent):
+	QWizardPage(parent), FStreamJid(AStreamJid), FServiceDiscovery(AServiceDiscovery)
+{
+	QString style="style='color:blue;'";
+	setTitle(QString("<span %2>%1</span>").arg(tr("Transport selection")).arg(style));
+	setSubTitle(QString("<span %2>%1</span>").arg(tr("Choose a transport you want to change")).arg(style));
+
+	QLabel *lblTransportsList = new QLabel(QString("<b>%1:</b>").arg(tr("Please select a transport from the list")));
+	FTransportsList = new SelectableTreeWidget();
+	QStringList headers;
+	headers << tr("Transport") << tr("Name") << tr("Type");
+	FTransportsList->setHeaderLabels(headers);
+
+	lblTransportsList->setBuddy(FTransportsList);
+	registerField("transport*", FTransportsList, "value", SIGNAL(valueChanged(QString)));
+
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->addWidget(lblTransportsList);
+	layout->addWidget(FTransportsList);
+	setLayout(layout);
+
+	connect(FTransportsList, SIGNAL(valueChanged(QString)), SLOT(onTransportSelected(QString)));
+}
+
+int TransportsPage::nextId() const
+{
+	Jid jid(field("transport").toString());
+	IDiscoInfo discoInfo = FServiceDiscovery->discoInfo(FStreamJid, jid);
+	QString name, type;
+	for (QList<IDiscoIdentity>::ConstIterator iti = discoInfo.identity.constBegin(); iti!=discoInfo.identity.constEnd(); ++iti)
+		if ((*iti).category=="gateway")
+		{
+			name = (*iti).name;
+			type = (*iti).type;
+			break;
+		}
+	return type.isEmpty()?TransportWizard::Page_Networks:TransportWizard::Page_Gateway;
+}
+
+void TransportsPage::initializePage()
+{
+	IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
+	QList<Jid> agents = gateways->streamServices(FStreamJid);
+	FTransportsList->clear();
+	for (QList<Jid>::ConstIterator it = agents.constBegin(); it != agents.constEnd(); ++it)
+	{
+		QTreeWidgetItem *item = new QTreeWidgetItem(FTransportsList);
+
+		IDiscoInfo discoInfo = FServiceDiscovery->discoInfo(FStreamJid, *it);
+		QString name, type;
+		for (QList<IDiscoIdentity>::ConstIterator iti = discoInfo.identity.constBegin(); iti!=discoInfo.identity.constEnd(); ++iti)
+			if ((*iti).category=="gateway")
+			{
+				name = (*iti).name;
+				type = (*iti).type;
+				break;
+			}
+		item->setIcon(0, FServiceDiscovery->identityIcon(discoInfo.identity));
+		item->setText(0, (*it).full());
+		item->setData(0, SelectableTreeWidget::ValueRole, (*it).full());
+		item->setText(1, name);
+		item->setText(2, type);
+		FTransportsList->addTopLevelItem(item);
+	}
+	connect(FTransportsList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), wizard(), SLOT(next()), Qt::UniqueConnection);
+}
+
+void TransportsPage::onTransportSelected(const QString &ATransportJid)
+{
+	qDebug() << "TransportsPage::onTransportSelected(" << ATransportJid << ")";
+	IDiscoInfo discoInfo = FServiceDiscovery->discoInfo(FStreamJid, ATransportJid);
+	QString type;
+	for (QList<IDiscoIdentity>::ConstIterator iti = discoInfo.identity.constBegin(); iti!=discoInfo.identity.constEnd(); ++iti)
+		if ((*iti).category=="gateway")
+		{
+			type = (*iti).type;
+			break;
+		}
+	qDebug() << "type=" << type;
+	setField("network", type);
+	qDebug() << "field(\"network\")=" << field("network").toString();
+}
+
+//!------------------------------
+NetworksPage::NetworksPage(QWidget *parent): QWizardPage(parent), FIconStorage(IconStorage::staticStorage(RSR_STORAGE_SERVICEICONS))
 {
     QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Network selection")).arg(style));
@@ -117,80 +229,68 @@ NetworksPage::NetworksPage(QWidget *parent): QWizardPage(parent)
 
     QLabel *lblNetworksList = new QLabel(QString("<b>%1:</b>").arg(tr("Please select a network from the list")));
 	FNetworksList = new SelectableTreeWidget();
-    lblNetworksList->setBuddy(lblNetworksList);
+	lblNetworksList->setBuddy(FNetworksList);
 	registerField("network*", FNetworksList, "value", SIGNAL(valueChanged(QString)));
+
+	FNetworksList->sortItems(0, Qt::AscendingOrder);
+
+	QStringList headers;
+	headers << tr("Netwok") << tr("Comment");
+	FNetworksList->setHeaderLabels(headers);
+
+	FNetworkNames.insert("aim", tr("AIM"));
+	FNetworkNames.insert("gadu-gadu", tr("Gadu-Gadu"));
+	FNetworkNames.insert("icq", tr("ICQ"));
+	FNetworkNames.insert("irc", tr("IRC"));
+	FNetworkNames.insert("mrim", tr("Mail.Ru Agent"));
+	FNetworkNames.insert("qq", tr("QQ"));
+	FNetworkNames.insert("renren", tr("Renren"));
+	FNetworkNames.insert("skype", tr("Skype"));
+	FNetworkNames.insert("sametime", tr("IBM Sametime"));
+	FNetworkNames.insert("sms", tr("SMS"));
+	FNetworkNames.insert("twitter", tr("Twitter"));
+	FNetworkNames.insert("x-tlen", tr("Tlen.pl"));
+	FNetworkNames.insert("vk", tr("vKontakte"));
+	FNetworkNames.insert("yahoo", tr("Yahoo!"));
+
+	FNetworkDescriptions.insert("aim", tr("AOL Instant Messenger"));
+	FNetworkDescriptions.insert("gadu-gadu", tr("Gadu-Gadu - Polish instant messenger"));
+	FNetworkDescriptions.insert("icq", tr("\"I seek You\" instant messenger, popular in exUSSR and Germany"));
+	FNetworkDescriptions.insert("irc", tr("Internet Relay Chat"));
+	FNetworkDescriptions.insert("mrim", tr("Instant messenger from Mail.ru portal"));
+	FNetworkDescriptions.insert("qq", tr("Tencent QQ - Chinese instant messenger"));
+	FNetworkDescriptions.insert("renren", tr("Chinese social network with an interface similar to Facebook"));
+	FNetworkDescriptions.insert("skype", tr("IP-telephony software with voice, video and text communication"));
+	FNetworkDescriptions.insert("sametime", tr("Real-time communication services from IBM (formerly IBM Lotus Sametime)"));
+	FNetworkDescriptions.insert("sms", tr("Sending Short Messages (SMS) to mobile phones"));
+	FNetworkDescriptions.insert("twitter", tr("An online social networking service that enables users to send and read short 140-character messages called \"tweets\""));
+	FNetworkDescriptions.insert("x-tlen", tr("An adware licensed Polish instant messaging service, fully compatible with Gadu-Gadu"));
+	FNetworkDescriptions.insert("vk", tr("Russian social network with an interface similar to Facebook"));
+	FNetworkDescriptions.insert("yahoo", tr("Instant messenger from Yahoo! portal"));
+
+	FNetworksList->setColumnWidth(0,160);
+	FNetworksList->setColumnWidth(1,440);
 
     QVBoxLayout *layout = new QVBoxLayout;
     layout->addWidget(lblNetworksList);
     layout->addWidget(FNetworksList);
     setLayout(layout);
 
-    loadNetworksList();	
+	loadNetworksList();
 }
 
 void NetworksPage::loadNetworksList()
 {
-    FIconStorage = IconStorage::staticStorage(RSR_STORAGE_SERVICEICONS);
-    QTreeWidgetItem* pItem;
-    FNetworksList->sortItems(0, Qt::AscendingOrder);
-
-    QStringList headers;
-    headers << tr("Netwok") << tr("Comment");
-    FNetworksList->setHeaderLabels(headers);
-
-	FNetworkHash.insert("aim", tr("AIM"));
-//	FNetworkHash.insert("facebook", tr("Facebook"));
-	FNetworkHash.insert("gadu-gadu", tr("Gadu-Gadu"));
-	FNetworkHash.insert("icq", tr("ICQ"));
-	FNetworkHash.insert("irc", tr("IRC"));
-//	FNetworkHash.insert("msn", tr("Windows Live Messenger"));
-	FNetworkHash.insert("mrim", tr("Mail.Ru Agent"));
-//	FNetworkHash.insert("myspaceim", tr("MySpace"));
-	FNetworkHash.insert("qq", tr("QQ"));
-	FNetworkHash.insert("renren", tr("Renren"));
-//	FNetworkHash.insert("sip", tr("SIP"));
-	FNetworkHash.insert("skype", tr("Skype"));
-	FNetworkHash.insert("sametime", tr("IBM Sametime"));
-	FNetworkHash.insert("sms", tr("SMS"));
-	FNetworkHash.insert("twitter", tr("Twitter"));
-	FNetworkHash.insert("x-tlen", tr("Tlen.pl"));
-	FNetworkHash.insert("vk", tr("vKontakte"));
-//	FNetworkHash.insert("xfire", tr("Xfire"));
-	FNetworkHash.insert("yahoo", tr("Yahoo!"));
-
-	QHash<QString,QString> networkDesc;
-	networkDesc.insert("aim", tr("AOL Instant Messenger"));
-//	networkDesc.insert("facebook", tr("World's most popular social network"));
-	networkDesc.insert("gadu-gadu", tr("Gadu-Gadu - Polish instant messenger"));
-	networkDesc.insert("icq", tr("\"I seek You\" instant messenger, popular in exUSSR and Germany"));
-	networkDesc.insert("irc", tr("Internet Relay Chat"));
-//	networkDesc.insert("msn", tr("Instant messenger from Microsoft Network (MSN)"));
-	networkDesc.insert("mrim", tr("Instant messenger from Mail.ru portal"));
-//	networkDesc.insert("myspaceim", tr("International social network, Beverly Hills (California, USA)"));
-	networkDesc.insert("qq", tr("Tencent QQ - Chinese instant messenger"));
-	networkDesc.insert("renren", tr("Chinese social network with an interface similar to Facebook"));
-//	networkDesc.insert("sip", tr("Session Initiation Protocol"));
-	networkDesc.insert("skype", tr("IP-telephony software with voice, video and text communication"));
-	networkDesc.insert("sametime", tr("Real-time communication services from IBM (formerly IBM Lotus Sametime)"));
-	networkDesc.insert("sms", tr("Sending Short Messages (SMS) to mobile phones"));
-	networkDesc.insert("twitter", tr("An online social networking service that enables users to send and read short 140-character messages called \"tweets\""));
-	networkDesc.insert("x-tlen", tr("An adware licensed Polish instant messaging service, fully compatible with Gadu-Gadu"));
-	networkDesc.insert("vk", tr("Russian social network with an interface similar to Facebook"));
-//	networkDesc.insert("xfire", tr("A proprietary freeware instant messaging service for gamers"));
-	networkDesc.insert("yahoo", tr("Instant messenger from Yahoo! portal"));
-
-    FNetworksList->setColumnWidth(0,160);
-    FNetworksList->setColumnWidth(1,440);
-	for(QHash<QString,QString>::ConstIterator it=FNetworkHash.constBegin(); it!=FNetworkHash.constEnd(); ++it)
+	for(QHash<QString,QString>::ConstIterator it=FNetworkNames.constBegin(); it!=FNetworkNames.constEnd(); ++it)
     {
-        pItem = new QTreeWidgetItem(FNetworksList);
+		QTreeWidgetItem* item = new QTreeWidgetItem(FNetworksList);
 		QIcon icon=FIconStorage->getIcon(it.key());
-		pItem->setText(0, *it);
-		pItem->setData(0, SelectableTreeWidget::ValueRole, it.key());
+		item->setText(0, *it);
+		item->setData(0, SelectableTreeWidget::ValueRole, it.key());
         if(icon.isNull())
 			icon=FIconStorage->getIcon(SRI_GATEWAY);
-        pItem->setIcon(0,icon);
-		pItem->setText(1,networkDesc.value(it.key()));
+		item->setIcon(0, icon);
+		item->setText(1, FNetworkDescriptions.value(it.key()));
 	}
 }
 
@@ -205,8 +305,8 @@ int NetworksPage::nextId() const
 }
 
 //!------------------------------
-GatewayPage::GatewayPage(IServiceDiscovery *AServiceDiscovery, const Jid &AStreamJid, QWidget *parent):
-    QWizardPage(parent), FServiceDiscovery(AServiceDiscovery), FStreamJid(AStreamJid) // , FDiscoItemsReceived(false)
+GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent):
+	QWizardPage(parent), FStreamJid(AStreamJid), FServiceDiscovery(AServiceDiscovery) // , FDiscoItemsReceived(false)
 {
     QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Gateway selection")).arg(style));
@@ -232,7 +332,9 @@ GatewayPage::GatewayPage(IServiceDiscovery *AServiceDiscovery, const Jid &AStrea
 
 void GatewayPage::initializePage()
 {
-    if (FNetwork!=field("network").toString())
+	qDebug() << "GatewayPage::initializePage()";
+	qDebug() << "field(\"network\")=" << field("network").toString();
+	if (FNetwork != field("network").toString())
     {
         FNetwork = field("network").toString();
 		FDiscoItems = IDiscoItems();
@@ -240,8 +342,7 @@ void GatewayPage::initializePage()
     }	
     FlblGatewaysList->setText(QString("<span><b>%2 %3</b></span>").arg(QString(tr("List of Gateways for"))).arg(FNetwork));
 	if (FServiceDiscovery && FDiscoItems.streamJid.isEmpty())
-		FServiceDiscovery->requestDiscoItems(FStreamJid, FStreamJid.domain());
-	connect(FTransportList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), wizard(), SLOT(next()), Qt::UniqueConnection);
+		FServiceDiscovery->requestDiscoItems(FStreamJid, FStreamJid.domain());	
 }
 
 bool GatewayPage::validatePage()
