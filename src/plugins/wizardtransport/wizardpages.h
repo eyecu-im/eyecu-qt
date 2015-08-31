@@ -196,6 +196,7 @@ private:
 
     QLabel      *FInstrLabel;
     QLabel      *FErrorLabel;
+	Jid         FServiceFrom;
     Jid         FServiceTo;
     QString     FRequestId;
     IRegisterSubmit FSubmit;

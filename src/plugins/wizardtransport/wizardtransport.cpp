@@ -83,14 +83,14 @@ void WizardTransport::onRosterIndexContextMenu(const QList<IRosterIndex *> &AInd
             {
                 Action *action = new Action(AMenu);
                 action->setData(ADR_STREAM_JID, (*it)->data(RDR_STREAM_JID).toString());
-				action->setText(tr("Connect to legacy network"));
+				action->setText(tr("Trasport Wizard"));
 				action->setIcon(RSR_STORAGE_SERVICEICONS, SRI_GATEWAY);
-				connect(action, SIGNAL(triggered()), SLOT(onAddGateway()));
+				connect(action, SIGNAL(triggered()), SLOT(onTransportWizard()));
                 AMenu->addAction(action, AG_RVCM_GATEWAY,true);
             }
 }
 
-void WizardTransport::onAddGateway()
+void WizardTransport::onTransportWizard()
 {
 	if (FTransportWizard)
 		showTransportWizard();
@@ -111,7 +111,7 @@ void WizardTransport::onStreamClosed(IXmppStream *AXmppStream)
 
 QWizard * WizardTransport::startTransportWizard(const Jid &AStreamJid)
 {
-    FAutoSubscribe=Options::node(OPV_ROSTER_AUTOSUBSCRIBE).value().toBool();
+	FAutoSubscribe = Options::node(OPV_ROSTER_AUTOSUBSCRIBE).value().toBool();
 	FTransportWizard = new TransportWizard(AStreamJid);
 	FTransportWizard->show();
 	connect(FTransportWizard,SIGNAL(finished(int)),SLOT(onWizardFinished(int)));

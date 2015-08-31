@@ -43,6 +43,7 @@ TransportWizard::TransportWizard(const Jid &AStreamJid, QWidget *parent) :
     QWizard(parent),
 	FStreamJid(AStreamJid)
 {
+	setAttribute(Qt::WA_DeleteOnClose);
 	IRegistration *registration = PluginHelper::pluginInstance<IRegistration>();
 	IServiceDiscovery *serviceDiscovery = PluginHelper::pluginInstance<IServiceDiscovery>();
     setPage(Page_Intro, new IntroPage);
@@ -103,22 +104,15 @@ IntroPage::IntroPage(QWidget *parent): QWizardPage(parent)
     setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 
 	QVBoxLayout *layout = new QVBoxLayout;
-//	QLabel *lblText = new QLabel(tr("Before running this Wizard, make sure you have an account at legacy network.\n"
-//									"If don't, please register at legacy network on its web site or using native client."));
-//	lblText->setWordWrap(true);
-//	layout->addWidget(lblText);
-
 	QLabel *lblText = new QLabel(QString("<span %1>%2</span>").arg(style).arg(tr("What do you want to do?")));
 	layout->addWidget(lblText);
 	lblText->setWordWrap(true);
 	layout->addWidget(FClbConnectLegacyNetwork	= new QCommandLinkButton(tr("&Connect to a legacy network")));
-	layout->addWidget(FClbChangeTransport		= new QCommandLinkButton(tr("&Change transport")));
+	layout->addWidget(FClbChangeTransport		= new QCommandLinkButton(tr("&Change transport")));	
 	setLayout(layout);
 
 	connect(FClbConnectLegacyNetwork, SIGNAL(clicked()), SLOT(onClicked()));
 	connect(FClbChangeTransport, SIGNAL(clicked()), SLOT(onClicked()));
-
-	setLayout(layout);
 }
 
 void IntroPage::onClicked()
@@ -138,7 +132,7 @@ void IntroPage::onClicked()
 
 //!------------------------------
 TransportsPage::TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *AServiceDiscovery, QWidget *parent):
-	QWizardPage(parent), FStreamJid(AStreamJid), FServiceDiscovery(AServiceDiscovery)
+	QWizardPage(parent), FServiceDiscovery(AServiceDiscovery), FStreamJid(AStreamJid)
 {
 	QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Transport selection")).arg(style));
@@ -215,9 +209,7 @@ void TransportsPage::onTransportSelected(const QString &ATransportJid)
 			type = (*iti).type;
 			break;
 		}
-	qDebug() << "type=" << type;
 	setField("network", type);
-	qDebug() << "field(\"network\")=" << field("network").toString();
 }
 
 //!------------------------------
@@ -306,7 +298,7 @@ int NetworksPage::nextId() const
 
 //!------------------------------
 GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent):
-	QWizardPage(parent), FStreamJid(AStreamJid), FServiceDiscovery(AServiceDiscovery) // , FDiscoItemsReceived(false)
+	QWizardPage(parent), FServiceDiscovery(AServiceDiscovery), FStreamJid(AStreamJid)
 {
     QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Gateway selection")).arg(style));
@@ -543,18 +535,28 @@ ProcessPage::ProcessPage(Jid &AStreamJid, IRegistration *ARegistration, GatewayP
 }
 
 void ProcessPage::createGateway()
-{
-    //!-- doRegister --
+{    
     FServiceTo = Jid::fromUserInput(field("gatewayselected").toString().trimmed());
-	FRequestId = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
-    QString style="style='color:brown;'";
-    if (!FRequestId.isEmpty())
-		FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Waiting for host response ...")));
+
+	if (field("changeTransport").toBool())
+	{
+		IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
+		FServiceFrom = Jid::fromUserInput(field("transport").toString().trimmed());
+		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true))
+			FRequestId = FRegistration!=NULL ?  FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
+	}
 	else
 	{
-        style="style='color:red;'";
-		FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Error: Can't send request to host.")));
-    }
+		FRequestId = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
+		QString style="style='color:brown;'";
+		if (!FRequestId.isEmpty())
+			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Waiting for host response ...")));
+		else
+		{
+			style="style='color:red;'";
+			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Error: Can't send request to host.")));
+		}
+	}
 }
 
 void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AFields)

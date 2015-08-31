@@ -41,7 +41,7 @@ protected slots:
     void onStreamOpened(IXmppStream *AXmppStream);
     void onStreamClosed(IXmppStream *AXmppStream);
 	void onWizardFinished(int AStatus);
-	void onAddGateway();
+	void onTransportWizard();
 
 private:
 	IXmppStreamManager	*FXmppStreamManager;
