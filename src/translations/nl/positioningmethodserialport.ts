@@ -172,7 +172,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="245"/>
    <source>Baud rate:</source>
-   <translation type="unfinished"/>
+   <translation>Baud rate:</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="252"/>
@@ -187,7 +187,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="269"/>
    <source>Parity :</source>
-   <translation type="unfinished"/>
+   <translation>Nominale waarde:</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="288"/>
@@ -197,17 +197,17 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="314"/>
    <source>NMEA parser settings</source>
-   <translation type="unfinished"/>
+   <translation>NMEA parser instellingen</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="320"/>
    <source>Distance treshold</source>
-   <translation type="unfinished"/>
+   <translation>Afstand tot grens</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="384"/>
    <source>Buffer size</source>
-   <translation type="unfinished"/>
+   <translation>Buffer grootte</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="430"/>
@@ -222,7 +222,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="474"/>
    <source>Information</source>
-   <translation type="unfinished"/>
+   <translation>Informatie</translation>
   </message>
  </context>
 </TS>

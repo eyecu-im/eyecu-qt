@@ -279,7 +279,7 @@
    <location filename="../../plugins/vcard/vcarddialog.ui" line="679"/>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="766"/>
    <source>Save</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="692"/>
@@ -291,7 +291,7 @@
    <location filename="../../plugins/vcard/vcarddialog.ui" line="705"/>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="792"/>
    <source>Clear</source>
-   <translation type="unfinished"/>
+   <translation>Leegmaken</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcarddialog.ui" line="723"/>
@@ -309,7 +309,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="75"/>
    <source>Visit Card Manager</source>
-   <translation type="unfinished"/>
+   <translation>Bezoek naamkaart manager</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="76"/>
@@ -327,7 +327,7 @@
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="188"/>
    <source>Ctrl+I</source>
    <comment>Show contact profile</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+I</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="213"/>
@@ -342,7 +342,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="467"/>
    <source>Contact Profile</source>
-   <translation type="unfinished"/>
+   <translation>Gebruikers profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="468"/>

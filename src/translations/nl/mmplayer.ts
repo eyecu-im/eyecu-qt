@@ -208,7 +208,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="165"/>
    <source>%1</source>
-   <translation type="unfinished"/>
+   <translation>%1</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="167"/>
@@ -239,7 +239,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="471"/>
    <source>Select file</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer bestand</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="472"/>
@@ -249,7 +249,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="473"/>
    <source>Audio</source>
-   <translation type="unfinished"/>
+   <translation>Audio</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="474"/>
@@ -259,7 +259,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="475"/>
    <source>All Files</source>
-   <translation type="unfinished"/>
+   <translation>Alle bestanden</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="608"/>

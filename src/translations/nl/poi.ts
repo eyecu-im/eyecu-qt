@@ -209,7 +209,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="13"/>
    <source>Anguilla</source>
-   <translation type="unfinished"/>
+   <translation>Anguilla</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="14"/>
@@ -229,7 +229,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="17"/>
    <source>Aruba</source>
-   <translation type="unfinished"/>
+   <translation>Aruba</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="18"/>
@@ -279,17 +279,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="27"/>
    <source>Belize</source>
-   <translation type="unfinished"/>
+   <translation>Belize</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="28"/>
    <source>Benin</source>
-   <translation type="unfinished"/>
+   <translation>Benin</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="29"/>
    <source>Bermuda</source>
-   <translation type="unfinished"/>
+   <translation>Bermuda</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="30"/>
@@ -299,7 +299,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="31"/>
    <source>Bolivia</source>
-   <translation type="unfinished"/>
+   <translation>Bolivia</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="32"/>
@@ -349,7 +349,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="41"/>
    <source>Burundi</source>
-   <translation type="unfinished"/>
+   <translation>Burundi</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="42"/>

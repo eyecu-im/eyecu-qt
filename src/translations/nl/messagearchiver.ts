@@ -169,12 +169,12 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="240"/>
    <source>(0 - do not remove)</source>
-   <translation type="unfinished"/>
+   <translation>(0 -  niet verwijderen)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="276"/>
    <source>Individual archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Individuele archivering voorkeuren</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="310"/>
@@ -189,7 +189,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="318"/>
    <source>Save</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="321"/>
@@ -210,17 +210,17 @@ Schakel automatisch archiveren van berichten op de server in</translation>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="340"/>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="390"/>
    <source>Remove</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="343"/>
    <source>Remove messages after, days</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder berichten na, dagen</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="351"/>
    <source>Exact</source>
-   <translation type="unfinished"/>
+   <translation>Precies</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="354"/>
@@ -230,7 +230,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="383"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Toevoegen</translation>
   </message>
  </context>
  <context>
@@ -238,17 +238,17 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="42"/>
    <source>%n year(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n jaar</numerusform><numerusform>%n jaren</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="48"/>
    <source>%n month(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n maand</numerusform><numerusform>%n maanden</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="54"/>
    <source>%n day(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n dag</numerusform><numerusform>%n dagen</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="59"/>
@@ -341,7 +341,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="177"/>
    <source>Export</source>
-   <translation type="unfinished"/>
+   <translation>Uitvoer</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="199"/>
@@ -351,7 +351,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="251"/>
    <source>Conversation History</source>
-   <translation type="unfinished"/>
+   <translation>Chatgeschiedenis</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="268"/>

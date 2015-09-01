@@ -286,7 +286,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.ui" line="119"/>
    <source>File</source>
-   <translation type="unfinished"/>
+   <translation>Bestand</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.ui" line="210"/>

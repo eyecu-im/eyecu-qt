@@ -202,7 +202,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="941"/>
    <source>Discovery Items</source>
-   <translation type="unfinished"/>
+   <translation>Discovery items</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="942"/>
@@ -232,7 +232,7 @@
   <message>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="962"/>
    <source>JID Escaping</source>
-   <translation type="unfinished"/>
+   <translation>JID Ontsnapt</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="963"/>

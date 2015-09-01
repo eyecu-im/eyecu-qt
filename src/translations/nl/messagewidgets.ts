@@ -178,17 +178,17 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>
    <source>Minimum number of lines in messages input field:</source>
-   <translation type="unfinished"/>
+   <translation>Minimum aantal lijnen in berichten invoerveld:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="143"/>
    <source>Message window behavior</source>
-   <translation type="unfinished"/>
+   <translation>Bericht venster gedrag</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="144"/>
    <source>Show contacts status changes</source>
-   <translation type="unfinished"/>
+   <translation>Toon contacten status veranderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
@@ -198,7 +198,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>
    <source>Information bar icons</source>
-   <translation type="unfinished"/>
+   <translation>Informatie pictogrammen</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="378"/>
@@ -257,7 +257,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="351"/>
    <source>Selected %n contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Selecteer %n contact</numerusform><numerusform>Selecteer %n contacten</numerusform></translation>
   </message>
  </context>
  <context>
@@ -371,7 +371,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="923"/>
    <source>Agents</source>
-   <translation type="unfinished"/>
+   <translation>Agents</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="972"/>

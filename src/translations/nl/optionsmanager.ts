@@ -230,17 +230,17 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="137"/>
    <source>Appearance</source>
-   <translation type="unfinished"/>
+   <translation>Uiterlijk</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="165"/>
    <source>Common settings</source>
-   <translation type="unfinished"/>
+   <translation>Algemene instellingen</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="166"/>
    <source>Show advanced options</source>
-   <translation type="unfinished"/>
+   <translation>Toon geavanceerde opties</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
@@ -260,7 +260,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="202"/>
    <source>Language:</source>
-   <translation type="unfinished"/>
+   <translation>Taal:</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
@@ -276,7 +276,7 @@ Do you want to restart %1 now?</source>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="855"/>
    <source>Display advanced options?</source>
-   <translation type="unfinished"/>
+   <translation>Toon geavanceerde opties?</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="856"/>

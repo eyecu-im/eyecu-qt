@@ -2,30 +2,35 @@
  <context>
   <name>MapContacts</name>
   <message>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="42"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="41"/>
    <source>Map Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="43"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="42"/>
    <source>Displays roster contacts on the map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="148"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="147"/>
    <source>Show contact on the map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="148"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="147"/>
    <source>F10</source>
    <comment>Show contact on the map (roster)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="313"/>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="749"/>
-   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="760"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="211"/>
+   <source>Contacts</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="317"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="755"/>
+   <location filename="../../plugins/mapcontacts/mapcontacts.cpp" line="766"/>
    <source>Show on the map</source>
    <translation type="unfinished"/>
   </message>

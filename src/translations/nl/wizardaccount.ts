@@ -296,12 +296,12 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="159"/>
    <source>A popular Russian portal (internet serach, e-mail, news, chat and so on)</source>
-   <translation type="unfinished"/>
+   <translation>Een populaire Russische portaal (internet zoeken, e-mail, nieuws, chat, enzovoort)</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="161"/>
    <source>Odnoklassniki</source>
-   <translation type="unfinished"/>
+   <translation>Odnoklassniki</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="161"/>
@@ -316,7 +316,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="163"/>
    <source>A popular blogging service</source>
-   <translation type="unfinished"/>
+   <translation>Een populaire blogdienst</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="165"/>
@@ -331,7 +331,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="169"/>
    <source>Network selection</source>
-   <translation type="unfinished"/>
+   <translation>Netwerk selectie</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="170"/>
@@ -366,12 +366,12 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1070"/>
    <source>Registering...</source>
-   <translation type="unfinished"/>
+   <translation>Registreren...</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1082"/>
    <source>Failed to register :(</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt te registreren :(</translation>
   </message>
  </context>
  <context>

@@ -118,7 +118,7 @@
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
    <source>%n dependency(ies) not found.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n Afhankelijkheid niet gevonden</numerusform><numerusform>%n Afhankelijkheden niet gevonden.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
