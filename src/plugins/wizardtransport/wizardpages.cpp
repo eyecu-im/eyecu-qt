@@ -1042,8 +1042,13 @@ int ConclusionPage::nextId() const
 void ConclusionPage::initializePage()
 {
 	FLblText1->setText(QString("<span style='align:justify'>%1</span>")
-					  .arg(tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
-																		.arg(field(WF_TRANSPORT_TO).toString())));
+					  .arg(wizard()->property(WP_CHANGE_TRANSPORT).toBool()?
+							tr("You successfuly changed %1 transport from %2 to %3.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
+																			.arg(field(WF_TRANSPORT_FROM).toString())
+																			.arg(field(WF_TRANSPORT_TO).toString()):
+							tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
+																		.arg(field(WF_TRANSPORT_TO).toString())
+						   ));
 }
 
 void ProcessPage::localTextLabel()

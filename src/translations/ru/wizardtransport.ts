@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -33,6 +33,10 @@
 If you receive such message, please rerun the Wizard to register at transport with correct credentials.</source>
         <translation>Некоторые транспорты могут сообщать об успешной регистрации, даже если предоставлены неверные учётные данные. Они могут позже сообщить об ошибке авторизации, прислав сообщение.
 Если вы получите такое сообщение, пожалуйста, запустите Мастер снова, чтобы зарегистрироваться в транспорте с правильными учётными данными.</translation>
+    </message>
+    <message>
+        <source>You successfuly changed %1 transport from %2 to %3.</source>
+        <translation>Вы успешно сменили транспорт %1 %2 на %3.</translation>
     </message>
 </context>
 <context>
@@ -82,13 +86,29 @@ If you receive such message, please rerun the Wizard to register at transport wi
     </message>
     <message>
         <source>This Wizard will help you to connect to a legacy network via transport (gateway)</source>
-        <translation>Этот Мастер поможет Вам подключиться к сторонней сети через транспорт (шлюз)</translation>
+        <translation type="obsolete">Этот Мастер поможет Вам подключиться к сторонней сети через транспорт (шлюз)</translation>
     </message>
     <message>
         <source>Before running this Wizard, make sure you have an account at legacy network.
 If don&apos;t, please register at legacy network on its web site or using native client.</source>
-        <translation>Перед запуском данного Мастера убедитесь, что у вас есть учётная запись в сторонней сети.
+        <translation type="obsolete">Перед запуском данного Мастера убедитесь, что у вас есть учётная запись в сторонней сети.
 Если нет, зарегистрируйтесь в сторонней сети на её веб-сайте или используя родной клиент.</translation>
+    </message>
+    <message>
+        <source>This Wizard will help you to connect to a legacy network via transport or change transport to another one</source>
+        <translation>Данный Мастер поможет Вам подключиться к сторонней сети через транспорт, либо поменять транспорт на другой</translation>
+    </message>
+    <message>
+        <source>What do you want to do?</source>
+        <translation>Что Вы хотите сделать?</translation>
+    </message>
+    <message>
+        <source>&amp;Connect to a legacy network</source>
+        <translation>&amp;Подключиться к сторонней сети</translation>
+    </message>
+    <message>
+        <source>&amp;Change transport</source>
+        <translation>&amp;Заменить транспорт</translation>
     </message>
 </context>
 <context>
@@ -404,6 +424,33 @@ If don&apos;t, please register at legacy network on its web site or using native
     </message>
 </context>
 <context>
+    <name>TransportsPage</name>
+    <message>
+        <source>Transport selection</source>
+        <translation>Выбор транспорта</translation>
+    </message>
+    <message>
+        <source>Choose a transport you want to change</source>
+        <translation>Выберите транспорт, который хотите поменять</translation>
+    </message>
+    <message>
+        <source>Please select a transport from the list</source>
+        <translation>Выберите транспорт из списка</translation>
+    </message>
+    <message>
+        <source>Transport</source>
+        <translation>Транспорт</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Тип</translation>
+    </message>
+</context>
+<context>
     <name>WizardTransport</name>
     <message>
         <source>Transport Wizard</source>
@@ -415,7 +462,11 @@ If don&apos;t, please register at legacy network on its web site or using native
     </message>
     <message>
         <source>Connect to legacy network</source>
-        <translation>Подключиться к сторонней сети</translation>
+        <translation type="obsolete">Подключиться к сторонней сети</translation>
+    </message>
+    <message>
+        <source>Trasport Wizard</source>
+        <translation>Мастер Транспортов</translation>
     </message>
 </context>
 </TS>
