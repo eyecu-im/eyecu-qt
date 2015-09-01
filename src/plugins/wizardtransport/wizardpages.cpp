@@ -39,76 +39,72 @@
 #define VALIDATE_TYPE_DATE      "xs:date"
 #define VALIDATE_TYPE_TIME      "xs:time"
 
+#define WF_TRANSPORT_FROM		"transportFrom"
+#define WF_TRANSPORT_TO			"transportTo"
+#define WF_NETWORK				"network"
+#define WF_AUTO_SUBSCRIBE		"autoSubscribe"
+
+#define WP_CHANGE_TRANSPORT		"changeTransport"
+
 TransportWizard::TransportWizard(const Jid &AStreamJid, QWidget *parent) :
-    QWizard(parent),
+	QWizard(parent),
 	FStreamJid(AStreamJid)
 {
 	setAttribute(Qt::WA_DeleteOnClose);
 	IRegistration *registration = PluginHelper::pluginInstance<IRegistration>();
 	IServiceDiscovery *serviceDiscovery = PluginHelper::pluginInstance<IServiceDiscovery>();
-    setPage(Page_Intro, new IntroPage);
-	TransportsPage *transportsPage = new TransportsPage(FStreamJid, serviceDiscovery);
+	setPage(Page_Intro, new IntroPage);
+	TransportsPage *transportsPage = new TransportsPage(FStreamJid, serviceDiscovery, this);
 	setPage(Page_Transports, transportsPage);
-	NetworksPage *networksPage = new NetworksPage();
+	NetworksPage *networksPage = new NetworksPage(this);
 	setPage(Page_Networks, networksPage);
-	GatewayPage *Gateway =new GatewayPage(FStreamJid, serviceDiscovery);
+	GatewayPage *Gateway =new GatewayPage(FStreamJid, serviceDiscovery, this);
 	setPage(Page_Gateway, Gateway);
-	ProcessPage *Process = new ProcessPage(FStreamJid, registration, Gateway);
-    setPage(Page_Process,Process);
-    connect(this,SIGNAL(getGateway()),Process,SLOT(createGateway()));
-	ResultPage *Result=new ResultPage(FStreamJid, registration, Process);
-    setPage(Page_Result,Result);
-    connect(this,SIGNAL(getRegister()),Result,SLOT(onGetRegister()));
-
+	ProcessPage *Process = new ProcessPage(FStreamJid, registration, Gateway, this);
+	setPage(Page_Process,Process);
+	ResultPage *Result=new ResultPage(FStreamJid, registration, Process, this);
+	setPage(Page_Result,Result);
 	setPage(Page_Conclusion, new ConclusionPage(networksPage));
-    setStartId(Page_Intro);
-
-    setOptions(NoBackButtonOnLastPage|NoBackButtonOnStartPage|NoCancelButton);
-    connect(this,SIGNAL(currentIdChanged(int)),this,SLOT(onCurIdChange(int)));
+	setStartId(Page_Intro);
+	setOptions(NoBackButtonOnLastPage|NoBackButtonOnStartPage|NoCancelButton);
 
 #ifndef Q_WS_MAC
-    setWizardStyle(ModernStyle);
+	setWizardStyle(ModernStyle);
 #endif
 
 	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_WIZARD);
-    setPixmap(QWizard::LogoPixmap, QPixmap(fileName));//LogoPixmap WatermarkPixmap
+	setPixmap(QWizard::LogoPixmap, QPixmap(fileName));//LogoPixmap WatermarkPixmap
 
 	fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_BANNER);
-    setPixmap(QWizard::BannerPixmap, QPixmap(fileName));
+	setPixmap(QWizard::BannerPixmap, QPixmap(fileName));
 
 	setWindowTitle(tr("Legacy network connection Wizard"));
-    setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MAINWINDOW_LOGO16));
+	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MAINWINDOW_LOGO16));
 }
 
-void TransportWizard::onCurIdChange(int id)
+void TransportWizard::onFinished(int AStatus)
 {
-    if(id==Page_Process)
-        emit getGateway();
-    if(id==Page_Result)
-        emit getRegister();
-}
-
-void TransportWizard::accept()
-{
-    QDialog::accept();   //QDialog::done(1);
+	Q_UNUSED(AStatus)
+	if (field(WF_AUTO_SUBSCRIBE).toBool())
+		Options::node(OPV_ROSTER_AUTOSUBSCRIBE).setValue(FAutoSubscribe);
 }
 
 //!------------------------------
 IntroPage::IntroPage(QWidget *parent): QWizardPage(parent)
 {
-    QString style="style='color:blue;'";
+	QString style="style='color:blue;'";
 	setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Legacy network connection")));
 	setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("This Wizard will help you to connect to a legacy network via transport or change transport to another one")));
 
 	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_TRANSPORT);
-    setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
+	setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 
 	QVBoxLayout *layout = new QVBoxLayout;
 	QLabel *lblText = new QLabel(QString("<span %1>%2</span>").arg(style).arg(tr("What do you want to do?")));
 	layout->addWidget(lblText);
 	lblText->setWordWrap(true);
 	layout->addWidget(FClbConnectLegacyNetwork	= new QCommandLinkButton(tr("&Connect to a legacy network")));
-	layout->addWidget(FClbChangeTransport		= new QCommandLinkButton(tr("&Change transport")));	
+	layout->addWidget(FClbChangeTransport		= new QCommandLinkButton(tr("&Change transport")));
 	setLayout(layout);
 
 	connect(FClbConnectLegacyNetwork, SIGNAL(clicked()), SLOT(onClicked()));
@@ -119,12 +115,12 @@ void IntroPage::onClicked()
 {
 	if (sender() == FClbChangeTransport)
 	{
-		wizard()->setProperty("changeTransport", true);
+		wizard()->setProperty(WP_CHANGE_TRANSPORT, true);
 		FNextId = TransportWizard::Page_Transports;
 	}
 	else
 	{
-		wizard()->setProperty("changeTransport", false);
+		wizard()->setProperty(WP_CHANGE_TRANSPORT, false);
 		FNextId = TransportWizard::Page_Networks;
 	}
 	wizard()->next();
@@ -145,7 +141,7 @@ TransportsPage::TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *A
 	FTransportsList->setHeaderLabels(headers);
 
 	lblTransportsList->setBuddy(FTransportsList);
-	registerField("transport*", FTransportsList, "value", SIGNAL(valueChanged(QString)));
+	registerField(WF_TRANSPORT_FROM"*", FTransportsList, "value", SIGNAL(valueChanged(QString)));
 
 	QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(lblTransportsList);
@@ -153,11 +149,12 @@ TransportsPage::TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *A
 	setLayout(layout);
 
 	connect(FTransportsList, SIGNAL(valueChanged(QString)), SLOT(onTransportSelected(QString)));
+	connect(FTransportsList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), parent, SLOT(next()));
 }
 
 int TransportsPage::nextId() const
 {
-	Jid jid(field("transport").toString());
+	Jid jid(field(WF_TRANSPORT_FROM).toString());
 	IDiscoInfo discoInfo = FServiceDiscovery->discoInfo(FStreamJid, jid);
 	QString name, type;
 	for (QList<IDiscoIdentity>::ConstIterator iti = discoInfo.identity.constBegin(); iti!=discoInfo.identity.constEnd(); ++iti)
@@ -195,12 +192,10 @@ void TransportsPage::initializePage()
 		item->setText(2, type);
 		FTransportsList->addTopLevelItem(item);
 	}
-	connect(FTransportsList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), wizard(), SLOT(next()), Qt::UniqueConnection);
 }
 
 void TransportsPage::onTransportSelected(const QString &ATransportJid)
 {
-	qDebug() << "TransportsPage::onTransportSelected(" << ATransportJid << ")";
 	IDiscoInfo discoInfo = FServiceDiscovery->discoInfo(FStreamJid, ATransportJid);
 	QString type;
 	for (QList<IDiscoIdentity>::ConstIterator iti = discoInfo.identity.constBegin(); iti!=discoInfo.identity.constEnd(); ++iti)
@@ -209,20 +204,20 @@ void TransportsPage::onTransportSelected(const QString &ATransportJid)
 			type = (*iti).type;
 			break;
 		}
-	setField("network", type);
+	setField(WF_NETWORK, type);
 }
 
 //!------------------------------
 NetworksPage::NetworksPage(QWidget *parent): QWizardPage(parent), FIconStorage(IconStorage::staticStorage(RSR_STORAGE_SERVICEICONS))
 {
-    QString style="style='color:blue;'";
+	QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Network selection")).arg(style));
 	setSubTitle(QString("<span %2>%1</span>").arg(tr("Choose a legacy network you want to connect")).arg(style));
 
-    QLabel *lblNetworksList = new QLabel(QString("<b>%1:</b>").arg(tr("Please select a network from the list")));
+	QLabel *lblNetworksList = new QLabel(QString("<b>%1:</b>").arg(tr("Please select a network from the list")));
 	FNetworksList = new SelectableTreeWidget();
 	lblNetworksList->setBuddy(FNetworksList);
-	registerField("network*", FNetworksList, "value", SIGNAL(valueChanged(QString)));
+	registerField(WF_NETWORK"*", FNetworksList, "value", SIGNAL(valueChanged(QString)));
 
 	FNetworksList->sortItems(0, Qt::AscendingOrder);
 
@@ -263,23 +258,25 @@ NetworksPage::NetworksPage(QWidget *parent): QWizardPage(parent), FIconStorage(I
 	FNetworksList->setColumnWidth(0,160);
 	FNetworksList->setColumnWidth(1,440);
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(lblNetworksList);
-    layout->addWidget(FNetworksList);
-    setLayout(layout);
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->addWidget(lblNetworksList);
+	layout->addWidget(FNetworksList);
+	setLayout(layout);
 
 	loadNetworksList();
+
+	connect(FNetworksList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), parent, SLOT(next()));
 }
 
 void NetworksPage::loadNetworksList()
 {
 	for(QHash<QString,QString>::ConstIterator it=FNetworkNames.constBegin(); it!=FNetworkNames.constEnd(); ++it)
-    {
+	{
 		QTreeWidgetItem* item = new QTreeWidgetItem(FNetworksList);
 		QIcon icon=FIconStorage->getIcon(it.key());
 		item->setText(0, *it);
 		item->setData(0, SelectableTreeWidget::ValueRole, it.key());
-        if(icon.isNull())
+		if(icon.isNull())
 			icon=FIconStorage->getIcon(SRI_GATEWAY);
 		item->setIcon(0, icon);
 		item->setText(1, FNetworkDescriptions.value(it.key()));
@@ -288,7 +285,7 @@ void NetworksPage::loadNetworksList()
 
 void NetworksPage::initializePage()
 {
-	connect(FNetworksList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), wizard(), SLOT(next()), Qt::UniqueConnection);
+
 }
 
 int NetworksPage::nextId() const
@@ -300,41 +297,40 @@ int NetworksPage::nextId() const
 GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent):
 	QWizardPage(parent), FServiceDiscovery(AServiceDiscovery), FStreamJid(AStreamJid)
 {
-    QString style="style='color:blue;'";
+	QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Gateway selection")).arg(style));
 	setSubTitle(QString("<span %2>%1</span>").arg(tr("Choose a gateway you want to use")).arg(style));
 
-    FlblGatewaysList = new QLabel(QString("<b>%1:</b>").arg(tr("Gateways &list")));
+	FlblGatewaysList = new QLabel(QString("<b>%1:</b>").arg(tr("Gateways &list")));
 	FTransportList = new SelectableTreeWidget();
 	FlblGatewaysList->setBuddy(FTransportList);
 
-	registerField("gatewayselected*", FTransportList, "value", SIGNAL(valueChanged(QString)));
+	registerField(WF_TRANSPORT_TO, FTransportList, "value", SIGNAL(valueChanged(QString)));
 
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(FlblGatewaysList);
+	QVBoxLayout *layout = new QVBoxLayout;
+	layout->addWidget(FlblGatewaysList);
 	layout->addWidget(FTransportList);
-    setLayout(layout);
+	setLayout(layout);
 
 	FIconStorageWizards = IconStorage::staticStorage(RSR_STORAGE_WIZARDS);
 	FIconStorageMenu = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	connect(FServiceDiscovery->instance(), SIGNAL(discoItemsReceived(IDiscoItems)), SLOT(onDiscoItemsReceived(IDiscoItems)));
 	connect(FServiceDiscovery->instance(), SIGNAL(discoInfoReceived(IDiscoInfo)), SLOT(onDiscoInfoReceived(IDiscoInfo)));
+	connect(FTransportList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), parent, SLOT(next()));
 }
 
 void GatewayPage::initializePage()
 {
-	qDebug() << "GatewayPage::initializePage()";
-	qDebug() << "field(\"network\")=" << field("network").toString();
-	if (FNetwork != field("network").toString())
-    {
-        FNetwork = field("network").toString();
+	if (FNetwork != field(WF_NETWORK).toString())
+	{
+		FNetwork = field(WF_NETWORK).toString();
 		FDiscoItems = IDiscoItems();
-        loadGatewayList();
-    }	
-    FlblGatewaysList->setText(QString("<span><b>%2 %3</b></span>").arg(QString(tr("List of Gateways for"))).arg(FNetwork));
+		loadTransportList();
+	}
+	FlblGatewaysList->setText(QString("<span><b>%2 %3</b></span>").arg(QString(tr("List of Gateways for"))).arg(FNetwork));
 	if (FServiceDiscovery && FDiscoItems.streamJid.isEmpty())
-		FServiceDiscovery->requestDiscoItems(FStreamJid, FStreamJid.domain());	
+		FServiceDiscovery->requestDiscoItems(FStreamJid, FStreamJid.domain());
 }
 
 bool GatewayPage::validatePage()
@@ -363,59 +359,59 @@ bool GatewayPage::validatePage()
 }
 
 //!--to make the file download session once-
-void GatewayPage::loadGatewayList()
+void GatewayPage::loadTransportList()
 {
 	FTransportList->clear();
 	QDir dir(FIconStorageWizards->resourcesDirs().first());
 	dir.cd(FIconStorageWizards->storage());
 	dir.cd(FIconStorageWizards->subStorage());
 	QFile file(dir.absoluteFilePath(TRANSPORT_LIST));
-    FExcepFields.clear();
-    if(file.open(QFile::ReadOnly))
-    {
-        QDomDocument FDocGateway;
-        FDocGateway.clear();
-        if(FDocGateway.setContent(file.readAll(), true))
-        {
+	FExcepFields.clear();
+	if(file.open(QFile::ReadOnly))
+	{
+		QDomDocument doc;
+		doc.clear();
+		if(doc.setContent(file.readAll(), true))
+		{
 			FIconStorageServices = IconStorage::staticStorage(RSR_STORAGE_SERVICEICONS);
 			FTransportList->sortItems(0, Qt::AscendingOrder);
-            QStringList headers;
-            headers << tr("Gateway") << tr("Software");
+			QStringList headers;
+			headers << tr("Gateway") << tr("Software");
 
 			FTransportList->setHeaderLabels(headers);
 			FTransportList->sortItems(0, Qt::AscendingOrder);
 			FTransportList->setColumnWidth(0,180);
 			FTransportList->setColumnWidth(1,180);
-            for (QDomElement e = FDocGateway.documentElement().firstChildElement("gateway");
-                 !e.isNull();
-                 e = e.nextSiblingElement("gateway"))
-            {
-                if(e.attribute("name")== FNetwork)
+			for (QDomElement e = doc.documentElement().firstChildElement("gateway");
+				 !e.isNull();
+				 e = e.nextSiblingElement("gateway"))
+			{
+				if(e.attribute("name")== FNetwork)
 					for(QDomElement s=e.firstChildElement("server"); !s.isNull(); s = s.nextSiblingElement("server"))
-                    {
-						QTreeWidgetItem *pItem = new QTreeWidgetItem(FTransportList);
+					{
+						QTreeWidgetItem *item = new QTreeWidgetItem(FTransportList);
 						QString jid = s.firstChildElement("jid").text();
-						pItem->setText(0, jid);
-						pItem->setData(0, SelectableTreeWidget::ValueRole, jid);
+						item->setText(0, jid);
+						item->setData(0, SelectableTreeWidget::ValueRole, jid);
 						FPendingItemsListed.append(jid);
 						if (FServiceDiscovery->hasDiscoInfo(FStreamJid, jid))
-							setItemStatus(pItem, Available);
+							setItemStatus(item, FServiceDiscovery->findIdentity(FServiceDiscovery->discoInfo(FStreamJid, jid).identity, "gateway", FNetwork)==-1?Unavailable:Available);
 						else
 						{
 							FServiceDiscovery->requestDiscoInfo(FStreamJid, jid);
-							setItemStatus(pItem, Unknown);
+							setItemStatus(item, Unknown);
 						}
-						pItem->setText(1, s.firstChildElement("software").text());
-                        //!---------------
-                        if(!s.firstChildElement("exception").isNull())
+						item->setText(1, s.firstChildElement("software").text());
+						//!---------------
+						if(!s.firstChildElement("exception").isNull())
 							for(QDomElement f=s.firstChildElement("exception").firstChildElement("field"); !f.isNull(); f = f.nextSiblingElement("field"))
-                            {
-                                f.setAttribute("jid",s.firstChildElement("jid").text());
-                                FExcepFields.append(f);
-                            }
-                    }
-            }
-        }
+							{
+								f.setAttribute("jid",s.firstChildElement("jid").text());
+								FExcepFields.append(f);
+							}
+					}
+			}
+		}
 	}
 }
 
@@ -424,10 +420,11 @@ void GatewayPage::appendLocalTransport(const IDiscoInfo &ADiscoInfo)
 	int identity = FServiceDiscovery->findIdentity(ADiscoInfo.identity, "gateway", FNetwork);
 	if (identity!=-1)
 	{
-		QTreeWidgetItem *pItem = new QTreeWidgetItem(FTransportList);
-		pItem->setText(0, ADiscoInfo.contactJid.full());
-		pItem->setText(1, ADiscoInfo.identity.at(identity).name);
-		setItemStatus(pItem, Available);
+		QTreeWidgetItem *item = new QTreeWidgetItem(FTransportList);
+		item->setText(0, ADiscoInfo.contactJid.full());
+		item->setData(0, SelectableTreeWidget::ValueRole, ADiscoInfo.contactJid.full());
+		item->setText(1, ADiscoInfo.identity.at(identity).name);
+		setItemStatus(item, Available);
 	}
 }
 
@@ -485,35 +482,35 @@ void GatewayPage::setItemStatus(QTreeWidgetItem *AItem, GatewayPage::TransportSt
 
 //!------------------------------
 ProcessPage::ProcessPage(Jid &AStreamJid, IRegistration *ARegistration, GatewayPage *AGatewayPage, QWidget *parent):
-    QWizardPage(parent),
-    FStreamJid(AStreamJid),
-    FRegistration(ARegistration),
+	QWizardPage(parent),
+	FStreamJid(AStreamJid),
+	FRegistration(ARegistration),
 	FGatewayPage(AGatewayPage),
 	FGridLayout(NULL),
 	FFieldWidth(300)
 {
-    QString style="style='color:blue;'";
-    setTitle(QString("<span %2>%1</span>").arg(tr("The registration page")).arg(style));
-    setSubTitle(QString("<span %2>%1</span>").arg(tr("Fill in the fields")).arg(style));
+	QString style="style='color:blue;'";
+	setTitle(QString("<span %2>%1</span>").arg(tr("The registration page")).arg(style));
+	setSubTitle(QString("<span %2>%1</span>").arg(tr("Fill in the fields")).arg(style));
 
 	FScrollArea=new QScrollArea;
-    //scrollArea->setBackgroundRole(QPalette::Dark);
+	//scrollArea->setBackgroundRole(QPalette::Dark);
 	FScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 	FScrollArea->setWidgetResizable(true);
 	FScrollArea->resize(460,300);
 
-    FInstrLabel=new QLabel;
-    FInstrLabel->setWordWrap(true);
-    FInstrLabel->setAlignment(Qt::AlignHCenter);
+	FInstrLabel=new QLabel;
+	FInstrLabel->setWordWrap(true);
+	FInstrLabel->setAlignment(Qt::AlignHCenter);
 
-    FErrorLabel=new QLabel;
-    FErrorLabel->setWordWrap(true);
-    FErrorLabel->setAlignment(Qt::AlignHCenter);
+	FErrorLabel=new QLabel;
+	FErrorLabel->setWordWrap(true);
+	FErrorLabel->setAlignment(Qt::AlignHCenter);
 
 	FAutoRegCheckBox= new QCheckBox(tr("Automatically accept subscription requests"));
-	registerField("authorization", FAutoRegCheckBox);
-	FAutoRegCheckBox->setChecked(false);
-	connect(FAutoRegCheckBox,SIGNAL(clicked(bool)),SLOT(onClicked(bool)));
+	registerField(WF_AUTO_SUBSCRIBE, FAutoRegCheckBox);
+	FAutoRegCheckBox->setChecked(true);
+//	connect(FAutoRegCheckBox,SIGNAL(clicked(bool)),SLOT(onClicked(bool)));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->insertWidget(0, FInstrLabel);
@@ -522,38 +519,46 @@ ProcessPage::ProcessPage(Jid &AStreamJid, IRegistration *ARegistration, GatewayP
 	mainLayout->insertWidget(3, FErrorLabel);
 	setLayout(mainLayout);
 
-    localTextLabel();
+	localTextLabel();
 
-    //!------------
-    if (FRegistration)
-    {
-        connect(FRegistration->instance(),SIGNAL(registerFields(const QString &, const IRegisterFields &)),
-            SLOT(onRegisterFields(const QString &, const IRegisterFields &)));
-        connect(FRegistration->instance(),SIGNAL(registerError(const QString &, const XmppError &)),
-            SLOT(onRegisterError(const QString &, const XmppError &)));
+	//!------------
+	if (FRegistration)
+	{
+		connect(FRegistration->instance(),SIGNAL(registerFields(const QString &, const IRegisterFields &)),
+			SLOT(onRegisterFields(const QString &, const IRegisterFields &)));
+		connect(FRegistration->instance(),SIGNAL(registerError(const QString &, const XmppError &)),
+			SLOT(onRegisterError(const QString &, const XmppError &)));
 	}
 }
 
 void ProcessPage::createGateway()
-{    
-    FServiceTo = Jid::fromUserInput(field("gatewayselected").toString().trimmed());
+{
+	if (field(WF_AUTO_SUBSCRIBE).toBool())
+	{
+		qobject_cast<TransportWizard*>(wizard())->setAutoSubscribe(Options::node(OPV_ROSTER_AUTOSUBSCRIBE).value().toBool());
+		Options::node(OPV_ROSTER_AUTOSUBSCRIBE).setValue(true);
+	}
 
-	if (field("changeTransport").toBool())
+	FServiceTo = Jid::fromUserInput(field(WF_TRANSPORT_TO).toString().trimmed());
+
+	if (wizard()->property(WP_CHANGE_TRANSPORT).toBool())
 	{
 		IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
-		FServiceFrom = Jid::fromUserInput(field("transport").toString().trimmed());
+		FServiceFrom = Jid::fromUserInput(field(WF_TRANSPORT_FROM).toString().trimmed());
 		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true))
 			FRequestId = FRegistration!=NULL ?  FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
 	}
 	else
 	{
 		FRequestId = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
-		QString style="style='color:brown;'";
 		if (!FRequestId.isEmpty())
+		{
+			QString style="style='color:brown;'";
 			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Waiting for host response ...")));
+		}
 		else
 		{
-			style="style='color:red;'";
+			QString style="style='color:red;'";
 			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Error: Can't send request to host.")));
 		}
 	}
@@ -561,20 +566,20 @@ void ProcessPage::createGateway()
 
 void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AFields)
 {
-    if (FRequestId == AId)
-    {
+	if (FRequestId == AId)
+	{
 		FSubmit.serviceJid = FServiceTo;
-        FSubmit.fieldMask = AFields.fieldMask;
-        FSubmit.key = AFields.key;
+		FSubmit.fieldMask = AFields.fieldMask;
+		FSubmit.key = AFields.key;
 
 		FTmpFields.clear();
-        FUserName.clear();
-        FPassword.clear();
-        FEmail.clear();
-        FUrl.clear();
+		FUserName.clear();
+		FPassword.clear();
+		FEmail.clear();
+		FUrl.clear();
 
-        FExcepFields.clear();
-        FExcepFields=FGatewayPage->getExcepFields();
+		FExcepFields.clear();
+		FExcepFields=FGatewayPage->getExcepFields();
 
 		QString		instructions;
 		QLabel		*lblUser	= new QLabel(tr("User Name"));
@@ -589,36 +594,36 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 		ledPassword->setEchoMode(QLineEdit::Password);
 
 		int i=0;
-        if(AFields.form.type.isEmpty())//if(AFields.registered)
-        {
-            FDirection=true;
-            if (!AFields.instructions.isEmpty())
+		if(AFields.form.type.isEmpty())//if(AFields.registered)
+		{
+			FDirection=true;
+			if (!AFields.instructions.isEmpty())
 				instructions=AFields.instructions;
 
 			if(AFields.fieldMask & IRegisterFields::Username)
 			{
 				FGridLayout->addWidget(lblUser, i, 0);//,Qt::AlignLeft
 				FGridLayout->addWidget(ledUser, i++, 1);
-                if(!AFields.username.isNull())
+				if(!AFields.username.isNull())
 					ledUser->setText(AFields.username);
 				connect(ledUser,SIGNAL(textChanged(QString)),SLOT(onUserEditChanged(QString)));
-            }
+			}
 			if(AFields.fieldMask & IRegisterFields::Password)
 			{
 				FGridLayout->addWidget(lblPassword, i, 0);
 				FGridLayout->addWidget(ledPassword, i++, 1);
-                if(!AFields.password.isNull())
+				if(!AFields.password.isNull())
 					ledPassword->setText(AFields.password);
 				connect(ledPassword,SIGNAL(textChanged(QString)),SLOT(onPassEditChanged(QString)));
-            }
+			}
 			if(AFields.fieldMask & IRegisterFields::Email)
 			{
 				FGridLayout->addWidget(lblEmail, i, 0);
 				FGridLayout->addWidget(ledEmail, i++, 1);
-                if(!AFields.email.isNull())
+				if(!AFields.email.isNull())
 					ledEmail->setText(AFields.email);
 				connect(ledEmail,SIGNAL(textChanged(QString)),SLOT(onEmailEditChanged(QString)));
-            }
+			}
 //FIXME: Redirect should not work this way!
 			if(AFields.fieldMask & IRegisterFields::Redirect)
 			{
@@ -628,25 +633,25 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 					ledUrl->setText(AFields.redirect.toString());
 			   connect(ledUrl,SIGNAL(textChanged(QString)),SLOT(onUrlEditChanged(QString)));
 			}
-        }
-        else //! form.type = "form"
-        {
-            FDirection=false;
-            if (!AFields.form.instructions.isEmpty())   //! many instr...
+		}
+		else //! form.type = "form"
+		{
+			FDirection=false;
+			if (!AFields.form.instructions.isEmpty())   //! many instr...
 				instructions=AFields.form.instructions[0];
-            QList<IDataField> fields= AFields.form.fields;
+			QList<IDataField> fields= AFields.form.fields;
 			for(QList<IDataField>::ConstIterator it=fields.constBegin(); it!=fields.constEnd(); it++)
-            {
+			{
 				if((*it).type==FIELD_TYPE_HIDDEN)    //! similar to an <INPUT> tag
-                {
+				{
 					if((*it).var=="FORM_TYPE")
 						FTmpFields.insert((*it).var, (*it).value.toString());
-                }
-                else
-                {
-                    //!--exception Handling
+				}
+				else
+				{
+					//!--exception Handling
 					if(checkField((*it), FServiceTo.full()))
-                    {
+					{
 						QWidget *widget = getWidget(*it);
 						if(widget)
 						{
@@ -655,33 +660,33 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 							lbl->setWordWrap(true);
 							FGridLayout->addWidget(lbl, i, 0, Qt::AlignLeft);
 							FGridLayout->addWidget(widget, i++, 1, Qt::AlignLeft);
-                            if (qobject_cast<QLineEdit*>(widget) || qobject_cast<QLineEdit*>(widget))
-                                registerField((*it).var+'*', widget);
+							if (qobject_cast<QLineEdit*>(widget))
+								registerField((*it).var, widget);
 						}
-                    }
-                }
-            }			
-        }
+					}
+				}
+			}
+		}
 		FGridLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), i, 2);
 		FInstrLabel->setText(QString("%1").arg(instructions));
 		emit completeChanged();
-    }
+	}
 }
 
 bool ProcessPage::checkField(const IDataField AField, QString AGateWay)
 {
 	bool visible = true;
-    for(int i=0;i<FExcepFields.size();i++)
-    {
-        QDomElement f=FExcepFields[i];
-        if(AGateWay==f.attribute("jid") && AField.var==f.attribute("var"))
-        {
-            visible = false;
+	for(int i=0;i<FExcepFields.size();i++)
+	{
+		QDomElement f=FExcepFields[i];
+		if(AGateWay==f.attribute("jid") && AField.var==f.attribute("var"))
+		{
+			visible = false;
 			QDomElement value = f.firstChildElement("value");
 			if(!value.isNull())
 				FTmpFields.insert(AField.var, value.text().isEmpty()?AField.value:value.text());
-        }
-    }
+		}
+	}
 	return visible;
 }
 
@@ -689,6 +694,7 @@ void ProcessPage::initializePage()
 {
 	FScrollArea->setWidget(new QWidget);
 	FScrollArea->widget()->setLayout(FGridLayout = new QGridLayout);
+	createGateway();
 }
 
 //! bool required; QString var; QString type; QString desc; QVariant value;
@@ -712,26 +718,26 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 	else if(AField.type==FIELD_TYPE_FIXED )
 	{
 		QLabel *lbl=new QLabel(value.toString());
-        lbl->setWordWrap(true);
-        lbl->setTextFormat(Qt::AutoText);
+		lbl->setWordWrap(true);
+		lbl->setTextFormat(Qt::AutoText);
 		lbl->setToolTip(descr);
 		lbl->setFixedWidth(FFieldWidth);
-        return lbl;
+		return lbl;
 	}
 	else if(AField.type==FIELD_TYPE_BOOLEAN)
 	{
-        QCheckBox *checkBox=new QCheckBox;
+		QCheckBox *checkBox=new QCheckBox;
 		checkBox->setObjectName(var);
 		checkBox->setText(label);
 		checkBox->setToolTip(descr);
 		checkBox->setChecked(value.toBool());
 		FTmpFields.insert(var,value);
-        connect(checkBox,SIGNAL(clicked(bool)),SLOT(onFormClicked(bool)));
-        return checkBox;
+		connect(checkBox,SIGNAL(clicked(bool)),SLOT(onFormClicked(bool)));
+		return checkBox;
 	}
 	else if(AField.type==FIELD_TYPE_TEXTSINGLE)
 	{
-        QLineEdit *edit=new QLineEdit;
+		QLineEdit *edit=new QLineEdit;
 		edit->setObjectName(var);
 		edit->setToolTip(descr);
 		edit->setFixedWidth(FFieldWidth);
@@ -739,59 +745,59 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 		{
 			edit->setText(value.toString());
 			FTmpFields.insert(var,value);
-        }
-        connect(edit,SIGNAL(textChanged(QString)),SLOT(onTextChanged(QString)));
-        return edit;
+		}
+		connect(edit,SIGNAL(textChanged(QString)),SLOT(onTextChanged(QString)));
+		return edit;
 	}
 	else if(AField.type==FIELD_TYPE_TEXTPRIVATE)
 	{
-        QLineEdit *editPass=new QLineEdit;
-        editPass->setEchoMode(QLineEdit::Password);
+		QLineEdit *editPass=new QLineEdit;
+		editPass->setEchoMode(QLineEdit::Password);
 		editPass->setObjectName(var);
 		editPass->setToolTip(descr);
 		editPass->setFixedWidth(FFieldWidth);
-        connect(editPass,SIGNAL(textChanged(QString)),SLOT(onTextChanged(QString)));
-        return editPass;
+		connect(editPass,SIGNAL(textChanged(QString)),SLOT(onTextChanged(QString)));
+		return editPass;
 	}
 	else if(AField.type==FIELD_TYPE_LISTSINGLE || AField.type==FIELD_TYPE_JIDSINGLE)
 	{
-        QComboBox *comBox=new QComboBox;
+		QComboBox *comBox=new QComboBox;
 		comBox->setObjectName(var);
 		comBox->setToolTip(descr);
 		for(QList<IDataOption>::ConstIterator it=AField.options.constBegin(); it!=AField.options.constEnd(); it++)
 			comBox->addItem((*it).label, (*it).value);
 		comBox->setEditText(value.toString());
 		FTmpFields.insert(var,value);
-        comBox->setFixedWidth(comBox->sizeHint().width());
-        connect(comBox,SIGNAL(currentIndexChanged(QString)),SLOT(onComBoxChanged(QString)));
-        return comBox;
-        //  FLineEdit->setText(Jid(AValue.toString()).uFull());
+		comBox->setFixedWidth(comBox->sizeHint().width());
+		connect(comBox,SIGNAL(currentIndexChanged(QString)),SLOT(onComBoxChanged(QString)));
+		return comBox;
+		//  FLineEdit->setText(Jid(AValue.toString()).uFull());
 	}
 	else if(AField.type==FIELD_TYPE_TEXTMULTI)
 	{
-        QTextEdit *editText=new QTextEdit;
+		QTextEdit *editText=new QTextEdit;
 		editText->setObjectName(var);
-        editText->setAcceptRichText(false);
+		editText->setAcceptRichText(false);
 		editText->setToolTip(descr);
 		editText->setFixedWidth(FFieldWidth);
-        editText->clear();
+		editText->clear();
 		if(!value.isNull())
 		{
 			QStringList list = value.toStringList();
 			for(QStringList::ConstIterator it = list.constBegin(); it!=list.constEnd(); it++)
 				editText->append(*it);
-        }
+		}
 		FTmpFields.insert(var,value);
-        connect(editText,SIGNAL(textChanged()),SLOT(onMultiTextChanged()));
-        return editText;
+		connect(editText,SIGNAL(textChanged()),SLOT(onMultiTextChanged()));
+		return editText;
 	}
 	else if(AField.type==FIELD_TYPE_JIDMULTI){
-        QTextEdit *editText=new QTextEdit;
+		QTextEdit *editText=new QTextEdit;
 		editText->setObjectName(var);
-        editText->setAcceptRichText(false);
+		editText->setAcceptRichText(false);
 		editText->setToolTip(descr);
 		editText->setFixedWidth(FFieldWidth);
-        editText->clear();
+		editText->clear();
 		if(!value.isNull())
 		{
 			QStringList list = value.toStringList();
@@ -800,129 +806,125 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 		}
 		FTmpFields.insert(var,value);
 		connect(editText,SIGNAL(textChanged()),SLOT(onMultiTextChanged()));
-        return editText;
+		return editText;
 	}
 	else if(AField.type==FIELD_TYPE_LISTMULTI)
 	{
-        QListWidget *listWdg=new QListWidget;
+		QListWidget *listWdg=new QListWidget;
 		listWdg->setObjectName(var);
 		listWdg->setToolTip(descr);
 		listWdg->setFixedWidth(FFieldWidth);
 		for(QList<IDataOption>::ConstIterator it=AField.options.constBegin(); it!=AField.options.constEnd(); it++)
-        {
+		{
 			QListWidgetItem *item = new QListWidgetItem((*it).label);
 			item->setData(Qt::UserRole, (*it).value);
-            item->setFlags(!true ? Qt::ItemIsEnabled|Qt::ItemIsUserCheckable : Qt::ItemIsEnabled);
-            listWdg->addItem(item);
-        }
-        listWdg->setWrapping(true);
+			item->setFlags(!true ? Qt::ItemIsEnabled|Qt::ItemIsUserCheckable : Qt::ItemIsEnabled);
+			listWdg->addItem(item);
+		}
+		listWdg->setWrapping(true);
 		connect(listWdg,SIGNAL(currentTextChanged(QString)),SLOT(onListMultiChanged(QString)));
-        return listWdg;
-    }
+		return listWdg;
+	}
 	return NULL;
 }
 //! FField.validate.method == DATAVALIDATE_METHOD_OPEN
 //! FField.validate.type == DATAVALIDATE_TYPE_DATE
 //! FField.validate.type == DATAVALIDATE_TYPE_TIME
 
-void ProcessPage::onFormClicked(bool st)
+void ProcessPage::onFormClicked(bool AState)
 {
-    QCheckBox *obj= qobject_cast<QCheckBox *>(sender());
-    if(obj)
-		FTmpFields.insert(obj->objectName(),st);
+	QCheckBox *obj= qobject_cast<QCheckBox *>(sender());
+	if(obj)
+		FTmpFields.insert(obj->objectName(),AState);
 }
-void ProcessPage::onTextChanged(QString text)
+void ProcessPage::onTextChanged(QString AText)
 {
-    QLineEdit *obj= qobject_cast<QLineEdit *>(sender());
-    if(obj)
-		FTmpFields.insert(obj->objectName(),text);   //! var-name,value
+	QLineEdit *obj= qobject_cast<QLineEdit *>(sender());
+	if(obj)
+		FTmpFields.insert(obj->objectName(),AText);   //! var-name,value
 }
-void ProcessPage::onComBoxChanged(QString text)
+void ProcessPage::onComBoxChanged(QString AText)
 {
-    QComboBox *obj= qobject_cast<QComboBox *>(sender());
-    if(obj)
-		FTmpFields.insert(obj->objectName(),text);
+	QComboBox *obj= qobject_cast<QComboBox *>(sender());
+	if(obj)
+		FTmpFields.insert(obj->objectName(), AText);
 }
-void ProcessPage::onListMultiChanged(QString text)
+void ProcessPage::onListMultiChanged(QString AText)
 {
-    QListWidget *obj= qobject_cast<QListWidget *>(sender());
-    if(obj)
-		FTmpFields.insert(obj->objectName(),text);
+	QListWidget *obj= qobject_cast<QListWidget *>(sender());
+	if(obj)
+		FTmpFields.insert(obj->objectName(), AText);
 }
 void ProcessPage::onMultiTextChanged()
 {
-    QTextEdit *obj= qobject_cast<QTextEdit *>(sender());
-    if(!obj->document()->isEmpty())
+	QTextEdit *obj= qobject_cast<QTextEdit *>(sender());
+	if(!obj->document()->isEmpty())
 		FTmpFields.insert(obj->objectName(),obj->toPlainText());
 }
 void ProcessPage::onLinkActivated()
 {
-    QPushButton *obj= qobject_cast<QPushButton *>(sender());
-    if(!obj->text().isNull())
-        QDesktopServices::openUrl(QUrl(obj->text()));
+	QPushButton *obj= qobject_cast<QPushButton *>(sender());
+	if(!obj->text().isNull())
+		QDesktopServices::openUrl(QUrl(obj->text()));
 }
 
-void ProcessPage::onUserEditChanged(QString text)	{FUserName=text;}
-void ProcessPage::onPassEditChanged(QString text)	{FPassword=text;}
-void ProcessPage::onEmailEditChanged(QString text)	{FEmail=text;}
-void ProcessPage::onUrlEditChanged(QString text)	{FUrl=text;}
+void ProcessPage::onUserEditChanged(QString AText)	{FUserName=AText;}
+void ProcessPage::onPassEditChanged(QString AText)	{FPassword=AText;}
+void ProcessPage::onEmailEditChanged(QString AText)	{FEmail=AText;}
+void ProcessPage::onUrlEditChanged(QString AText)	{FUrl=AText;}
 
-void ProcessPage::onClicked(bool st)
+IRegisterSubmit ProcessPage::getSubmit()
 {
-    Options::node(OPV_ROSTER_AUTOSUBSCRIBE).setValue(st);
-}
-
-void ProcessPage::doSubmit()
-{
-    //! FOperation = IRegistration::Register
-     if(FDirection)
-     {
-         FSubmit.username   = FUserName;
-         FSubmit.password   = FPassword;
-         FSubmit.email      = FEmail;
-         FSubmit.form       = IDataForm();
-     }
-     else
-     {
-         QList<IDataField> FNewFields;
-		 QHashIterator<QString, QVariant> i(FTmpFields);
-         while (i.hasNext())
-         {
-             IDataField field;
-             i.next();
-             field.var=i.key();
-             field.value=i.value();
-             FNewFields.append(field);
-         }
-         FForm.fields=FNewFields;
-         FForm.type="submit";
-         if(!FForm.instructions.isEmpty())
-            FForm.instructions.clear();
-         if(!FForm.title.isEmpty())
-            FForm.title.clear();
-         FSubmit.form = FForm;
-     }
+	//! FOperation = IRegistration::Register
+	if(FDirection)
+	{
+		 FSubmit.username   = FUserName;
+		 FSubmit.password   = FPassword;
+		 FSubmit.email      = FEmail;
+		 FSubmit.form       = IDataForm();
+	}
+	else
+	{
+		QList<IDataField> newFields;
+		QHashIterator<QString, QVariant> i(FTmpFields);
+		while (i.hasNext())
+		{
+			IDataField field;
+			i.next();
+			field.var=i.key();
+			field.value=i.value();
+			newFields.append(field);
+		}
+		FForm.fields=newFields;
+		FForm.type="submit";
+		if(!FForm.instructions.isEmpty())
+		FForm.instructions.clear();
+		if(!FForm.title.isEmpty())
+		FForm.title.clear();
+		FSubmit.form = FForm;
+	}
+	return FSubmit;
 }
 
 void ProcessPage::onRegisterError(const QString &AId, const XmppError &AError)
 {
-    if (FRequestId == AId)
-    {
-        //! "Remote server not found"
-        QString style="style='color:red;'";
-        FErrorLabel->setText(QString("<h2>%1:<span %2><br/>%3</span></h2>")
+	if (FRequestId == AId)
+	{
+		//! "Remote server not found"
+		QString style="style='color:red;'";
+		FErrorLabel->setText(QString("<h2>%1:<span %2><br/>%3</span></h2>")
 							 .arg(tr("Requested operation failed")).arg(style).arg(AError.errorMessage()));
-        FInstrLabel->clear();
+		FInstrLabel->clear();
 		FAutoRegCheckBox->setVisible(false);
-    }
+	}
 }
 
 QString ProcessPage::getLocalText(QString AKey)
 {
-    if(FLocalText.value(AKey).isEmpty())
-        return AKey;
-    else
-        return FLocalText.value(AKey);
+	if(FLocalText.value(AKey).isEmpty())
+		return AKey;
+	else
+		return FLocalText.value(AKey);
 }
 
 int ProcessPage::nextId() const
@@ -932,33 +934,33 @@ int ProcessPage::nextId() const
 
 //!------------------------------
 ResultPage::ResultPage(Jid &AStreamJid, IRegistration *ARegistration, ProcessPage *AProcess, QWidget *parent):
-    QWizardPage(parent),
-    FStreamJid(AStreamJid),
-    FRegistration(ARegistration),
-    FProcess(AProcess),
-    FWizardGo(false)
+	QWizardPage(parent),
+	FStreamJid(AStreamJid),
+	FRegistration(ARegistration),
+	FProcess(AProcess),
+	FWizardGo(false)
 {
-    QString style="style='color:blue;'";
+	QString style="style='color:blue;'";
 	setTitle(QString("<span %2>%1</span>").arg(tr("Result Page")).arg(style));
 	setSubTitle(QString("<span %2>%1</span>").arg(tr("Result Page")).arg(style));
 
-    FErrorLabel =new QLabel;
-    FErrorLabel->setWordWrap(true);
-    FErrorLabel->setAlignment(Qt::AlignHCenter);
+	FErrorLabel =new QLabel;
+	FErrorLabel->setWordWrap(true);
+	FErrorLabel->setAlignment(Qt::AlignHCenter);
 
-    FLayout = new QVBoxLayout;
-    setLayout(FLayout);
+	FLayout = new QVBoxLayout;
+	setLayout(FLayout);
 
-    if (FRegistration)
-    {
-        connect(FRegistration->instance(),SIGNAL(registerError(const QString &, const XmppError &)),
-            SLOT(onRegisterError(const QString &, const XmppError &)));
+	if (FRegistration)
+	{
+		connect(FRegistration->instance(),SIGNAL(registerError(const QString &, const XmppError &)),
+			SLOT(onRegisterError(const QString &, const XmppError &)));
 		connect(FRegistration->instance(),SIGNAL(registerSuccess(const QString &)),
-            SLOT(onRegisterSuccessful(const QString &)));
-    }
+			SLOT(onRegisterSuccessful(const QString &)));
+	}
 }
 
-void ResultPage::onGetRegister()
+void ResultPage::initializePage()
 {
 	FSubmit = FProcess->getSubmit();
 	FRequestId = FRegistration->sendRequestSubmit(FStreamJid,FSubmit);
@@ -966,29 +968,29 @@ void ResultPage::onGetRegister()
 
 void ResultPage::onRegisterError(const QString &AId, const XmppError &AError)
 {
-    if (FRequestId == AId)
-    {
-        FLayout->addWidget(FErrorLabel);
+	if (FRequestId == AId)
+	{
+		FLayout->addWidget(FErrorLabel);
 
-        FWizardGo=false;
-        emit completeChanged();
-        QString style="style='color:red;'";
-        FErrorLabel->setText(QString("<h2>%1 <span %2><br/>%3</span></h2>")
+		FWizardGo=false;
+		emit completeChanged();
+		QString style="style='color:red;'";
+		FErrorLabel->setText(QString("<h2>%1 <span %2><br/>%3</span></h2>")
 				 .arg(tr("Requested operation failed:")).arg(style).arg(AError.errorMessage()));
 		if(AError.errorString()=="Undefined error condition")
-            setButtonText(QWizard::BackButton,tr("Retry"));
-    }
+			setButtonText(QWizard::BackButton,tr("Retry"));
+	}
 }
 
 void ResultPage::onRegisterSuccessful(const QString &AId)
 {
-    if (FRequestId == AId)
-        wizard()->next();
+	if (FRequestId == AId)
+		wizard()->next();
 }
 
 bool ResultPage::isComplete() const
 {
-    return FWizardGo;
+	return FWizardGo;
 }
 
 int ResultPage::nextId() const
@@ -1002,12 +1004,12 @@ ConclusionPage::ConclusionPage(NetworksPage *ANetworkPage, QWidget *parent):
 	QWizardPage(parent),
 	FNetworkPage(ANetworkPage)
 {
-    QString style="style='color:blue;'";
-    setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Done!")));
-    setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Transport Wizard completed successfuly")));
+	QString style="style='color:blue;'";
+	setTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Done!")));
+	setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Transport Wizard completed successfuly")));
 
 	QString fileName = IconStorage::staticStorage(RSR_STORAGE_WIZARDS)->fileFullName(WZI_TRANSPORT_END);
-    setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
+	setPixmap(QWizard::WatermarkPixmap, QPixmap(fileName));
 	FLblTitle = new QLabel(QString("<center><h2 style='color:green;'>%2</h2></center>").arg(tr("Congratulations!")));
 	FLblTitle->setWordWrap(true);
 
@@ -1023,60 +1025,60 @@ ConclusionPage::ConclusionPage(NetworksPage *ANetworkPage, QWidget *parent):
 	FLblText3 = new QLabel(tr("Press \"Finish\" button to close Wizard.", "\"Finish\" should match the text of an appropriate Qt Wizard button"));
 	FLblText3->setWordWrap(true);
 
-    QVBoxLayout *layout = new QVBoxLayout;
+	QVBoxLayout *layout = new QVBoxLayout;
 	layout->addWidget(FLblTitle);
 	layout->addSpacerItem(new QSpacerItem(0, 10, QSizePolicy::Fixed));
 	layout->addWidget(FLblText1);
 	layout->addWidget(FLblText2);
 	layout->addWidget(FLblText3);
-    setLayout(layout);
+	setLayout(layout);
 }
 
 int ConclusionPage::nextId() const
 {
-    return -1;
+	return -1;
 }
 
 void ConclusionPage::initializePage()
 {
 	FLblText1->setText(QString("<span style='align:justify'>%1</span>")
-					  .arg(tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field("network").toString()))
-																		.arg(field("gatewayselected").toString())));
+					  .arg(tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
+																		.arg(field(WF_TRANSPORT_TO).toString())));
 }
 
 void ProcessPage::localTextLabel()
 {
-    FLocalText.insert("address",tr("Street"));
-    FLocalText.insert("action",tr("Select Action"));
-    FLocalText.insert("birthyear",tr("Birth Year"));
-    FLocalText.insert("born",tr("Born"));
-    FLocalText.insert("city",tr("City"));
-    FLocalText.insert("connections_params",tr("Connections Parameters"));
-    FLocalText.insert("email",tr("Email Address"));
-    FLocalText.insert("encoding",tr("Encoding"));
-    FLocalText.insert("first",tr("Given Name"));
-    FLocalText.insert("firstname",tr("First Name"));
-    FLocalText.insert("familyname",tr("Family Name"));
-    FLocalText.insert("familycity",tr("Family City"));
-    FLocalText.insert("friends_only",tr("Friends Only"));
-    FLocalText.insert("invisible",tr("Invisible"));
-    FLocalText.insert("gender",tr("Gender"));
-    FLocalText.insert("lastname",tr("Last Name"));
-    FLocalText.insert("last",tr("Family Name"));
-    FLocalText.insert("language",tr("Language"));
-    FLocalText.insert("link",tr("Link"));
-    FLocalText.insert("locale",tr("Language"));
-    FLocalText.insert("nick",tr("Nick Name"));
-    FLocalText.insert("name",tr("Full Name"));
-    FLocalText.insert("Password",tr("Password"));
-    FLocalText.insert("password",tr("Password"));
+	FLocalText.insert("address",tr("Street"));
+	FLocalText.insert("action",tr("Select Action"));
+	FLocalText.insert("birthyear",tr("Birth Year"));
+	FLocalText.insert("born",tr("Born"));
+	FLocalText.insert("city",tr("City"));
+	FLocalText.insert("connections_params",tr("Connections Parameters"));
+	FLocalText.insert("email",tr("Email Address"));
+	FLocalText.insert("encoding",tr("Encoding"));
+	FLocalText.insert("first",tr("Given Name"));
+	FLocalText.insert("firstname",tr("First Name"));
+	FLocalText.insert("familyname",tr("Family Name"));
+	FLocalText.insert("familycity",tr("Family City"));
+	FLocalText.insert("friends_only",tr("Friends Only"));
+	FLocalText.insert("invisible",tr("Invisible"));
+	FLocalText.insert("gender",tr("Gender"));
+	FLocalText.insert("lastname",tr("Last Name"));
+	FLocalText.insert("last",tr("Family Name"));
+	FLocalText.insert("language",tr("Language"));
+	FLocalText.insert("link",tr("Link"));
+	FLocalText.insert("locale",tr("Language"));
+	FLocalText.insert("nick",tr("Nick Name"));
+	FLocalText.insert("name",tr("Full Name"));
+	FLocalText.insert("Password",tr("Password"));
+	FLocalText.insert("password",tr("Password"));
 	FLocalText.insert("phone",tr("Phone Number"));
-    FLocalText.insert("state",tr("Region"));
-    FLocalText.insert("uin",tr("UIN"));
-    FLocalText.insert("unregister",tr("Unregister"));
-    FLocalText.insert("url",tr("Your Web Page"));
+	FLocalText.insert("state",tr("Region"));
+	FLocalText.insert("uin",tr("UIN"));
+	FLocalText.insert("unregister",tr("Unregister"));
+	FLocalText.insert("url",tr("Your Web Page"));
 	FLocalText.insert("username",tr("User Name"));
-    FLocalText.insert("use_password",tr("Access-token"));
-    FLocalText.insert("userlist",tr("User List"));
-    FLocalText.insert("zip",tr("Zip Code"));
+	FLocalText.insert("use_password",tr("Access-token"));
+	FLocalText.insert("userlist",tr("User List"));
+	FLocalText.insert("zip",tr("Zip Code"));
 }

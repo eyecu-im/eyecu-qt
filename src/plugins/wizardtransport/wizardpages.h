@@ -25,32 +25,26 @@
 
 class TransportWizard : public QWizard
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	enum {Page_Intro,Page_Transports,Page_Networks,Page_Gateway,Page_Process,Page_Result,Page_Conclusion};
 	TransportWizard(const Jid &AStreamJid, QWidget *parent = 0);
-
-signals:
-    void getGateway();
-    void getRegister();
+	void setAutoSubscribe(bool AAutoSubscribe) {FAutoSubscribe = AAutoSubscribe;}
 
 protected slots:
-    void onCurIdChange(int id);
-
-protected:
-    void accept();
+	void onFinished(int AStatus);
 
 private:
-    Jid             FStreamJid;
-//    IRegistration   *FRegistration;
+	Jid             FStreamJid;
+	bool			FAutoSubscribe;
 };
 
 //!---------------------
 class IntroPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    IntroPage(QWidget *parent = 0);
+	IntroPage(QWidget *parent = 0);
 	// QWizardPage interface
 	int nextId() const {return FNextId;}
 	bool isComplete() const {return false;}
@@ -67,7 +61,7 @@ private:
 //!---------------------
 class TransportsPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	TransportsPage(const Jid &AStreamJid, const IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
 	// QWizardPage interface
@@ -87,16 +81,16 @@ private:
 //!---------------------
 class NetworksPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    NetworksPage(QWidget *parent = 0);
+	NetworksPage(QWidget *parent = 0);
 	QString networkName(const QString &ANetworkId) const {return FNetworkNames.value(ANetworkId);}
 	// QWizardPage interface
-    int nextId() const;
+	int nextId() const;
 	void initializePage();
 
 protected:
-    void loadNetworksList();
+	void loadNetworksList();
 
 private:
 	SelectableTreeWidget	*FNetworksList;
@@ -108,10 +102,10 @@ private:
 //!---------------------
 class GatewayPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
-    QList <QDomElement> getExcepFields(){return FExcepFields; }
+	QList <QDomElement> getExcepFields(){return FExcepFields; }
 
 	// QWizardPage interface
 	void initializePage();
@@ -127,7 +121,7 @@ protected:
 	};
 
 	void setItemStatus(QTreeWidgetItem *AItem, TransportStatus AStatus);
-    void loadGatewayList();
+	void loadTransportList();
 	void appendLocalTransport(const IDiscoInfo &ADiscoInfo); //TODO: Get rid of it
 
 protected slots:
@@ -152,18 +146,15 @@ private:
 //! ---Page_Process----
 class ProcessPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    ProcessPage(Jid &AStreamJid, IRegistration *ARegistration,GatewayPage *AGatewayPage ,QWidget *parent = 0);
-	IRegisterSubmit getSubmit(){doSubmit(); return FSubmit;}
+	ProcessPage(Jid &AStreamJid, IRegistration *ARegistration,GatewayPage *AGatewayPage ,QWidget *parent = 0);
+	void createGateway();
+	IRegisterSubmit getSubmit();
 
 	// QWizardPage interface
 	void initializePage();
-    int nextId() const;
-
-public slots:
-    void createGateway();
-    void doSubmit();
+	int nextId() const;
 
 protected:
 	QWidget	*getWidget(const IDataField &AField);
@@ -172,78 +163,79 @@ protected:
 	bool	checkField(const IDataField AField, QString AGateWay);
 
 protected slots:
-    void onRegisterFields(const QString &AId, const IRegisterFields &AFields);
-    void onRegisterError(const QString &AId, const XmppError &AError);
-    void onClicked(bool st);
-    void onTextChanged(QString text);
-    void onComBoxChanged(QString text);
-    void onFormClicked(bool st);
-    void onMultiTextChanged();
-    void onUserEditChanged(QString text);
-    void onPassEditChanged(QString text);
-    void onEmailEditChanged(QString text);
-    void onUrlEditChanged(QString text);
-    void onListMultiChanged(QString text);
+	void onRegisterFields(const QString &AId, const IRegisterFields &AFields);
+	void onRegisterError(const QString &AId, const XmppError &AError);
+	void onTextChanged(QString AText);
+	void onComBoxChanged(QString AText);
+	void onFormClicked(bool AState);
+	void onMultiTextChanged();
+	void onUserEditChanged(QString AText);
+	void onPassEditChanged(QString AText);
+	void onEmailEditChanged(QString AText);
+	void onUrlEditChanged(QString AText);
+	void onListMultiChanged(QString AText);
 	void onLinkActivated();
 
 private:
-    Jid         FStreamJid;
-    IRegistration *FRegistration;
+	Jid         FStreamJid;
+	IRegistration *FRegistration;
 	GatewayPage	*FGatewayPage;
 	QScrollArea *FScrollArea;
-    QGridLayout *FGridLayout;
+	QGridLayout *FGridLayout;
 	QCheckBox   *FAutoRegCheckBox;
 
-    QLabel      *FInstrLabel;
-    QLabel      *FErrorLabel;
+	QLabel      *FInstrLabel;
+	QLabel      *FErrorLabel;
 	Jid         FServiceFrom;
-    Jid         FServiceTo;
-    QString     FRequestId;
-    IRegisterSubmit FSubmit;
-    bool        FDirection;
+	Jid         FServiceTo;
+	QString     FRequestId;
+	IRegisterSubmit FSubmit;
+	bool        FDirection;
 	IDataForm	FForm;
 	QHash<QString,QVariant> FTmpFields;
-    QString     FUserName;
-    QString     FPassword;
-    QString     FEmail;
-    QString     FUrl;
+	QString     FUserName;
+	QString     FPassword;
+	QString     FEmail;
+	QString     FUrl;
 	QList <QDomElement>	FExcepFields;
-    QHash<QString,QString> FLocalText;
+	QHash<QString,QString> FLocalText;
 	const int	FFieldWidth;
 };
 
 //!-------ResultPage--------------
 class ResultPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    ResultPage(Jid &AStreamJid, IRegistration *ARegistration,ProcessPage *AProcess,QWidget *parent = 0);
-    int nextId() const;
-    bool isComplete() const;
-public slots:
-    void onGetRegister();
+	ResultPage(Jid &AStreamJid, IRegistration *ARegistration,ProcessPage *AProcess,QWidget *parent = 0);
+
+	// QWizardPage interface
+	int nextId() const;
+	bool isComplete() const;
+	void initializePage();
+
 protected slots:
-    void onRegisterError(const QString &AId, const XmppError &AError);
-    void onRegisterSuccessful(const QString &AId);
+	void onRegisterError(const QString &AId, const XmppError &AError);
+	void onRegisterSuccessful(const QString &AId);
 private:
 	QVBoxLayout		*FLayout;
-    QLabel          *FErrorLabel;
-    Jid             FStreamJid;
-    IRegistration   *FRegistration;
-    IRegisterSubmit FSubmit;
-    ProcessPage     *FProcess;
-    QString         FRequestId;
-    bool            FWizardGo;
+	QLabel          *FErrorLabel;
+	Jid             FStreamJid;
+	IRegistration   *FRegistration;
+	IRegisterSubmit FSubmit;
+	ProcessPage     *FProcess;
+	QString         FRequestId;
+	bool            FWizardGo;
 };
 
 //!---------------------
 class ConclusionPage : public QWizardPage
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
 	ConclusionPage(NetworksPage *ANetworkPage, QWidget *parent = 0);
-    void initializePage();
-    int nextId() const;
+	void initializePage();
+	int nextId() const;
 private:
 	QLabel *FLblTitle;
 	QLabel *FLblText1;

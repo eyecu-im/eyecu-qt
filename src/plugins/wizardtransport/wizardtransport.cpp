@@ -114,7 +114,6 @@ QWizard * WizardTransport::startTransportWizard(const Jid &AStreamJid)
 	FAutoSubscribe = Options::node(OPV_ROSTER_AUTOSUBSCRIBE).value().toBool();
 	FTransportWizard = new TransportWizard(AStreamJid);
 	FTransportWizard->show();
-	connect(FTransportWizard,SIGNAL(finished(int)),SLOT(onWizardFinished(int)));
 	return FTransportWizard;
 }
 
@@ -125,11 +124,6 @@ QWizard *WizardTransport::showTransportWizard()
 	return FTransportWizard;
 }
 
-void WizardTransport::onWizardFinished(int AStatus)
-{
-	Q_UNUSED(AStatus)
-    Options::node(OPV_ROSTER_AUTOSUBSCRIBE).setValue(FAutoSubscribe);
-}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_wizardtransport, WizardTransport)
 #endif

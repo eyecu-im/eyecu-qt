@@ -40,7 +40,6 @@ protected slots:
     void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);    
     void onStreamOpened(IXmppStream *AXmppStream);
     void onStreamClosed(IXmppStream *AXmppStream);
-	void onWizardFinished(int AStatus);
 	void onTransportWizard();
 
 private:
