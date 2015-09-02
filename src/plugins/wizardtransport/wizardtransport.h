@@ -33,7 +33,7 @@ public:
     virtual bool startPlugin(){return true;}
 
 	virtual QWizard * transportWizard() {return FTransportWizard;}
-	virtual QWizard * startTransportWizard(const Jid &AStreamJid);
+	virtual QWizard * startTransportWizard(const Jid &AStreamJid, const Jid &ATransportJid = Jid::null);
 	virtual QWizard * showTransportWizard();
 
 protected slots:
@@ -45,7 +45,7 @@ protected slots:
 private:
 	IXmppStreamManager	*FXmppStreamManager;
 	IRostersViewPlugin	*FRostersViewPlugin;
-	QMap<Jid, QString>	FStreamGateWay;
+	QStringList			FStreamGateWay;
 	QPointer<TransportWizard> FTransportWizard;
 	bool				FAutoSubscribe;
 };

@@ -28,7 +28,7 @@ class TransportWizard : public QWizard
 	Q_OBJECT
 public:
 	enum {Page_Intro,Page_Transports,Page_Networks,Page_Gateway,Page_Process,Page_Result,Page_Conclusion};
-	TransportWizard(const Jid &AStreamJid, QWidget *parent = 0);
+	TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid = Jid::null, QWidget *parent = 0);
 	void setAutoSubscribe(bool AAutoSubscribe) {FAutoSubscribe = AAutoSubscribe;}
 
 protected slots:
@@ -87,7 +87,6 @@ public:
 	QString networkName(const QString &ANetworkId) const {return FNetworkNames.value(ANetworkId);}
 	// QWizardPage interface
 	int nextId() const;
-	void initializePage();
 
 protected:
 	void loadNetworksList();

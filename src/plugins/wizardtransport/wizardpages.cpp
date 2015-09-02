@@ -46,7 +46,7 @@
 
 #define WP_CHANGE_TRANSPORT		"changeTransport"
 
-TransportWizard::TransportWizard(const Jid &AStreamJid, QWidget *parent) :
+TransportWizard::TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid, QWidget *parent) :
 	QWizard(parent),
 	FStreamJid(AStreamJid)
 {
@@ -65,7 +65,33 @@ TransportWizard::TransportWizard(const Jid &AStreamJid, QWidget *parent) :
 	ResultPage *Result=new ResultPage(FStreamJid, registration, Process, this);
 	setPage(Page_Result,Result);
 	setPage(Page_Conclusion, new ConclusionPage(networksPage));
-	setStartId(Page_Intro);
+	if (ATransportJid.isEmpty())
+		setStartId(Page_Intro);
+	else
+	{
+		QString network;
+		setField(WF_TRANSPORT_FROM, ATransportJid.full());
+		IServiceDiscovery *serviceDiscovery = PluginHelper::pluginInstance<IServiceDiscovery>();
+		if (serviceDiscovery->hasDiscoInfo(AStreamJid, ATransportJid))
+		{
+			IDiscoInfo discoInfo = serviceDiscovery->discoInfo(AStreamJid, ATransportJid);
+			for (QList<IDiscoIdentity>::ConstIterator it = discoInfo.identity.constBegin(); it!=discoInfo.identity.constEnd(); ++it)
+				if ((*it).category=="gateway")
+				{
+					network = (*it).type;
+					break;
+				}
+		}
+
+		if (network.isEmpty())
+			setStartId(Page_Networks);
+		else
+		{
+			setField(WF_NETWORK, network);
+			setStartId(Page_Gateway);
+		}
+
+	}
 	setOptions(NoBackButtonOnLastPage|NoBackButtonOnStartPage|NoCancelButton);
 
 #ifndef Q_WS_MAC
@@ -283,11 +309,6 @@ void NetworksPage::loadNetworksList()
 	}
 }
 
-void NetworksPage::initializePage()
-{
-
-}
-
 int NetworksPage::nextId() const
 {
 	return TransportWizard::Page_Gateway;
@@ -322,6 +343,9 @@ GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDisco
 
 void GatewayPage::initializePage()
 {
+	qDebug() << "GatewayPage::initializePage()";
+	qDebug() << "from=" << field(WF_TRANSPORT_FROM).toString();
+	qDebug() << "network=" << field(WF_NETWORK).toString();
 	if (FNetwork != field(WF_NETWORK).toString())
 	{
 		FNetwork = field(WF_NETWORK).toString();
@@ -389,26 +413,29 @@ void GatewayPage::loadTransportList()
 				if(e.attribute("name")== FNetwork)
 					for(QDomElement s=e.firstChildElement("server"); !s.isNull(); s = s.nextSiblingElement("server"))
 					{
-						QTreeWidgetItem *item = new QTreeWidgetItem(FTransportList);
 						QString jid = s.firstChildElement("jid").text();
-						item->setText(0, jid);
-						item->setData(0, SelectableTreeWidget::ValueRole, jid);
-						FPendingItemsListed.append(jid);
-						if (FServiceDiscovery->hasDiscoInfo(FStreamJid, jid))
-							setItemStatus(item, FServiceDiscovery->findIdentity(FServiceDiscovery->discoInfo(FStreamJid, jid).identity, "gateway", FNetwork)==-1?Unavailable:Available);
-						else
+						if (jid != field(WF_TRANSPORT_FROM).toString())
 						{
-							FServiceDiscovery->requestDiscoInfo(FStreamJid, jid);
-							setItemStatus(item, Unknown);
-						}
-						item->setText(1, s.firstChildElement("software").text());
-						//!---------------
-						if(!s.firstChildElement("exception").isNull())
-							for(QDomElement f=s.firstChildElement("exception").firstChildElement("field"); !f.isNull(); f = f.nextSiblingElement("field"))
+							QTreeWidgetItem *item = new QTreeWidgetItem(FTransportList);
+							item->setText(0, jid);
+							item->setData(0, SelectableTreeWidget::ValueRole, jid);
+							FPendingItemsListed.append(jid);
+							if (FServiceDiscovery->hasDiscoInfo(FStreamJid, jid))
+								setItemStatus(item, FServiceDiscovery->findIdentity(FServiceDiscovery->discoInfo(FStreamJid, jid).identity, "gateway", FNetwork)==-1?Unavailable:Available);
+							else
 							{
-								f.setAttribute("jid",s.firstChildElement("jid").text());
-								FExcepFields.append(f);
+								FServiceDiscovery->requestDiscoInfo(FStreamJid, jid);
+								setItemStatus(item, Unknown);
 							}
+							item->setText(1, s.firstChildElement("software").text());
+							//!---------------
+							if(!s.firstChildElement("exception").isNull())
+								for(QDomElement f=s.firstChildElement("exception").firstChildElement("field"); !f.isNull(); f = f.nextSiblingElement("field"))
+								{
+									f.setAttribute("jid",s.firstChildElement("jid").text());
+									FExcepFields.append(f);
+								}
+						}
 					}
 			}
 		}
@@ -418,7 +445,7 @@ void GatewayPage::loadTransportList()
 void GatewayPage::appendLocalTransport(const IDiscoInfo &ADiscoInfo)
 {
 	int identity = FServiceDiscovery->findIdentity(ADiscoInfo.identity, "gateway", FNetwork);
-	if (identity!=-1)
+	if (identity!=-1 && (ADiscoInfo.contactJid.full() != field(WF_TRANSPORT_FROM).toString()))
 	{
 		QTreeWidgetItem *item = new QTreeWidgetItem(FTransportList);
 		item->setText(0, ADiscoInfo.contactJid.full());

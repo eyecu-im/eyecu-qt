@@ -11,7 +11,7 @@ public:
     virtual QObject *instance() = 0;
 	virtual QWizard * transportWizard() = 0;
 	virtual QWizard * showTransportWizard() = 0;
-	virtual QWizard * startTransportWizard(const Jid &AStreamJid) = 0;
+	virtual QWizard * startTransportWizard(const Jid &AStreamJid, const Jid &ATransportJid) = 0;
 };
 
 Q_DECLARE_INTERFACE(IWizardTransport, "RWS.Plugin.IWizardTransport/1.0")

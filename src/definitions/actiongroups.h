@@ -81,7 +81,7 @@
 #define AG_RVCM_MOODS                                           550
 #define AG_RVCM_VIEW_POI                                        550
 #define AG_RVCM_GEOLOC                                          550
-#define AG_RVCM_GATEWAY                                         550
+#define AG_RVCM_GATEWAYS_CHANGE_TRANSPORT                       800
 // >>> eyeCU >>>
 #define AG_RVCM_PRIVACYLISTS                                    500
 #define AG_RVCM_STATUSICONS                                     500
