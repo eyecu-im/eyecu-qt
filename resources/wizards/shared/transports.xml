@@ -18,7 +18,6 @@
         <server><jid>icq.isgeek.info</jid><software>ICQ Transport</software></server>
         <server><jid>icq2.isgeek.info</jid><software>Spectrum ICQ Transport</software></server>
         <server><jid>icq.jabber.org.ru</jid><software>ICQ Transport</software></server>
-        <server><jid>icq.alpha-labs.net</jid><software>ICQ Transport</software></server>
         <server><jid>icq.sudouser.ru</jid><software>ICQ Transport</software></server>
     </gateway>
     <gateway name="irc">

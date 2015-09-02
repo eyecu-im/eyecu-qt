@@ -7,7 +7,6 @@
 #include <QMessageBox>
 #include <QLineEdit>
 
-//#include <interfaces/irostersmodel.h>
 #include <interfaces/igateways.h>
 #include <definitions/optionvalues.h>
 #include <definitions/menuicons.h>
@@ -44,8 +43,6 @@
 #define WF_NETWORK				"network"
 #define WF_AUTO_SUBSCRIBE		"autoSubscribe"
 
-#define WP_CHANGE_TRANSPORT		"changeTransport"
-
 TransportWizard::TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid, QWidget *parent) :
 	QWizard(parent),
 	FStreamJid(AStreamJid)
@@ -53,20 +50,24 @@ TransportWizard::TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid
 	setAttribute(Qt::WA_DeleteOnClose);
 	IRegistration *registration = PluginHelper::pluginInstance<IRegistration>();
 	IServiceDiscovery *serviceDiscovery = PluginHelper::pluginInstance<IServiceDiscovery>();
-	setPage(Page_Intro, new IntroPage);
-	TransportsPage *transportsPage = new TransportsPage(FStreamJid, serviceDiscovery, this);
-	setPage(Page_Transports, transportsPage);
+
 	NetworksPage *networksPage = new NetworksPage(this);
 	setPage(Page_Networks, networksPage);
-	GatewayPage *Gateway =new GatewayPage(FStreamJid, serviceDiscovery, this);
+	GatewayPage *Gateway = new GatewayPage(FStreamJid, serviceDiscovery, !ATransportJid.isEmpty(), this);
 	setPage(Page_Gateway, Gateway);
 	ProcessPage *Process = new ProcessPage(FStreamJid, registration, Gateway, this);
 	setPage(Page_Process,Process);
-	ResultPage *Result=new ResultPage(FStreamJid, registration, Process, this);
-	setPage(Page_Result,Result);
+	ResultPage *Result = new ResultPage(FStreamJid, registration, Process, this);
+	setPage(Page_Result, Result);
 	setPage(Page_Conclusion, new ConclusionPage(networksPage));
+
 	if (ATransportJid.isEmpty())
+	{
+		setPage(Page_Intro, new IntroPage);
+		TransportsPage *transportsPage = new TransportsPage(FStreamJid, serviceDiscovery, this);
+		setPage(Page_Transports, transportsPage);
 		setStartId(Page_Intro);
+	}
 	else
 	{
 		QString network;
@@ -90,7 +91,6 @@ TransportWizard::TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid
 			setField(WF_NETWORK, network);
 			setStartId(Page_Gateway);
 		}
-
 	}
 	setOptions(NoBackButtonOnLastPage|NoBackButtonOnStartPage|NoCancelButton);
 
@@ -140,15 +140,9 @@ IntroPage::IntroPage(QWidget *parent): QWizardPage(parent)
 void IntroPage::onClicked()
 {
 	if (sender() == FClbChangeTransport)
-	{
-		wizard()->setProperty(WP_CHANGE_TRANSPORT, true);
 		FNextId = TransportWizard::Page_Transports;
-	}
 	else
-	{
-		wizard()->setProperty(WP_CHANGE_TRANSPORT, false);
 		FNextId = TransportWizard::Page_Networks;
-	}
 	wizard()->next();
 }
 
@@ -315,7 +309,7 @@ int NetworksPage::nextId() const
 }
 
 //!------------------------------
-GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent):
+GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, bool ATransport, QWidget *parent):
 	QWizardPage(parent), FServiceDiscovery(AServiceDiscovery), FStreamJid(AStreamJid)
 {
 	QString style="style='color:blue;'";
@@ -325,6 +319,13 @@ GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDisco
 	FlblGatewaysList = new QLabel(QString("<b>%1:</b>").arg(tr("Gateways &list")));
 	FTransportList = new SelectableTreeWidget();
 	FlblGatewaysList->setBuddy(FTransportList);
+
+	if (ATransport)
+	{
+		QLineEdit *ledTransport = new QLineEdit(this);	// Just dummy editor
+		ledTransport->setVisible(false);
+		registerField(WF_TRANSPORT_FROM, ledTransport);
+	}
 
 	registerField(WF_TRANSPORT_TO, FTransportList, "value", SIGNAL(valueChanged(QString)));
 
@@ -343,9 +344,6 @@ GatewayPage::GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDisco
 
 void GatewayPage::initializePage()
 {
-	qDebug() << "GatewayPage::initializePage()";
-	qDebug() << "from=" << field(WF_TRANSPORT_FROM).toString();
-	qDebug() << "network=" << field(WF_NETWORK).toString();
 	if (FNetwork != field(WF_NETWORK).toString())
 	{
 		FNetwork = field(WF_NETWORK).toString();
@@ -537,7 +535,6 @@ ProcessPage::ProcessPage(Jid &AStreamJid, IRegistration *ARegistration, GatewayP
 	FAutoRegCheckBox= new QCheckBox(tr("Automatically accept subscription requests"));
 	registerField(WF_AUTO_SUBSCRIBE, FAutoRegCheckBox);
 	FAutoRegCheckBox->setChecked(true);
-//	connect(FAutoRegCheckBox,SIGNAL(clicked(bool)),SLOT(onClicked(bool)));
 
 	QVBoxLayout *mainLayout = new QVBoxLayout;
 	mainLayout->insertWidget(0, FInstrLabel);
@@ -568,14 +565,7 @@ void ProcessPage::createGateway()
 
 	FServiceTo = Jid::fromUserInput(field(WF_TRANSPORT_TO).toString().trimmed());
 
-	if (wizard()->property(WP_CHANGE_TRANSPORT).toBool())
-	{
-		IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
-		FServiceFrom = Jid::fromUserInput(field(WF_TRANSPORT_FROM).toString().trimmed());
-		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true))
-			FRequestId = FRegistration!=NULL ?  FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
-	}
-	else
+	if (field(WF_TRANSPORT_FROM).isNull())
 	{
 		FRequestId = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
 		if (!FRequestId.isEmpty())
@@ -588,6 +578,13 @@ void ProcessPage::createGateway()
 			QString style="style='color:red;'";
 			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Error: Can't send request to host.")));
 		}
+	}
+	else
+	{
+		IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
+		FServiceFrom = Jid::fromUserInput(field(WF_TRANSPORT_FROM).toString().trimmed());
+		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true))
+			FRequestId = FRegistration!=NULL ?  FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
 	}
 }
 
@@ -1069,12 +1066,12 @@ int ConclusionPage::nextId() const
 void ConclusionPage::initializePage()
 {
 	FLblText1->setText(QString("<span style='align:justify'>%1</span>")
-					  .arg(wizard()->property(WP_CHANGE_TRANSPORT).toBool()?
+					  .arg(field(WF_TRANSPORT_FROM).isNull()?
+							tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
+																		 .arg(field(WF_TRANSPORT_TO).toString()):
 							tr("You successfuly changed %1 transport from %2 to %3.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
 																			.arg(field(WF_TRANSPORT_FROM).toString())
-																			.arg(field(WF_TRANSPORT_TO).toString()):
-							tr("You successfuly connected to %1 via %2.").arg(FNetworkPage->networkName(field(WF_NETWORK).toString()))
-																		.arg(field(WF_TRANSPORT_TO).toString())
+																			.arg(field(WF_TRANSPORT_TO).toString())
 						   ));
 }
 

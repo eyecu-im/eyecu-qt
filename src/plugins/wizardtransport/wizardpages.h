@@ -103,7 +103,7 @@ class GatewayPage : public QWizardPage
 {
 	Q_OBJECT
 public:
-	GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, QWidget *parent = 0);
+	GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, bool ATransport, QWidget *parent = 0);
 	QList <QDomElement> getExcepFields(){return FExcepFields; }
 
 	// QWizardPage interface
