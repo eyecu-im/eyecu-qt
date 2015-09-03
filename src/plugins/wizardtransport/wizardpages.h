@@ -166,9 +166,9 @@ protected slots:
 	void onRegisterError(const QString &AId, const XmppError &AError);
 	void onTextChanged(QString AText);
 	void onComBoxChanged(QString AText);
-	void onFormClicked(bool AState);
+	void onCheckBoxClicked(bool AState);
 	void onMultiTextChanged();
-	void onListMultiChanged(QString AText);
+	void onListMultiSelectionChanged();
 	void onLinkActivated();
 	void onOldFieldsReceived();
 
@@ -192,6 +192,7 @@ private:
 	IRegisterSubmit FSubmit;
 	bool        FHasForm;
 	IDataForm	FForm;
+
 	QHash<QString,QVariant> FTmpFields;
 	QList <QDomElement>	FExcepFields;
 	QHash<QString,QString> FLocalText;

@@ -605,9 +605,9 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 
 		FTmpFields.clear();
 		FExcepFields.clear();
-		FExcepFields=FGatewayPage->getExcepFields();
+		FExcepFields = FGatewayPage->getExcepFields();
 
-		QString		instructions;
+		QString	instructions;
 
 		int i=0;
 		if(AFields.form.type.isEmpty())//if(AFields.registered)
@@ -621,12 +621,13 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 				QLabel		*lblUsername = new QLabel(tr("User Name"));
 				QLineEdit	*ledUsername = new QLineEdit;
 				ledUsername->setEnabled(false);
+				ledUsername->setObjectName("username");
 
 				FGridLayout->addWidget(lblUsername, i, 0);//,Qt::AlignLeft
 				FGridLayout->addWidget(ledUsername, i++, 1);
 				if(!AFields.username.isNull())
 					ledUsername->setText(AFields.username);
-				registerField("username*", ledUsername);
+				connect(ledUsername, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)));
 
 			}
 			if(AFields.fieldMask & IRegisterFields::Password)
@@ -635,34 +636,36 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 				QLineEdit	*ledPassword = new QLineEdit;
 				ledPassword->setEnabled(false);
 				ledPassword->setEchoMode(QLineEdit::Password);
+				ledPassword->setObjectName("password");
 				FGridLayout->addWidget(lblPassword, i, 0);
 				FGridLayout->addWidget(ledPassword, i++, 1);
 				if(!AFields.password.isNull())
 					ledPassword->setText(AFields.password);
-				registerField("password*", ledPassword);
+				connect(ledPassword, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)));
 			}
 			if(AFields.fieldMask & IRegisterFields::Email)
 			{
 				QLabel		*lblEmail = new QLabel(tr("e-mail"));
 				QLineEdit	*ledEmail = new QLineEdit;
 				ledEmail->setEnabled(false);
+				ledEmail->setObjectName("email");
 				FGridLayout->addWidget(lblEmail, i, 0);
 				FGridLayout->addWidget(ledEmail, i++, 1);
 				if(!AFields.email.isNull())
 					ledEmail->setText(AFields.email);
-				registerField("email*", ledEmail);
+				connect(ledEmail, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)));
 			}
-//FIXME: Redirect should not work this way!
 			if(AFields.fieldMask & IRegisterFields::Redirect)
 			{
-				QLabel		*lblRedirect	= new QLabel(tr("Web Link"));
-				QLineEdit	*ledRedirect	= new QLineEdit;
-				ledRedirect->setEnabled(false);
-				FGridLayout->addWidget(lblRedirect, i, 0);
-				FGridLayout->addWidget(ledRedirect, i++, 1);
-				if(AFields.redirect.isValid())
-					ledRedirect->setText(AFields.redirect.toString());
-			   registerField("redirect*", ledRedirect);
+//FIXME: Redirect should not work this way!
+//				QLabel		*lblRedirect	= new QLabel(tr("Web Link"));
+//				QLineEdit	*ledRedirect	= new QLineEdit;
+//				ledRedirect->setEnabled(false);
+//				FGridLayout->addWidget(lblRedirect, i, 0);
+//				FGridLayout->addWidget(ledRedirect, i++, 1);
+//				if(AFields.redirect.isValid())
+//					ledRedirect->setText(AFields.redirect.toString());
+//			   registerField("redirect", ledRedirect);
 			}
 		}
 		else //! form.type = "form"
@@ -686,6 +689,9 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 						QWidget *widget = getWidget(*it);
 						if(widget)
 						{
+							qDebug() << "var=" << (*it).var;
+							qDebug() << "widget=" << widget;
+							qDebug() << "widget name=" << widget->objectName();
 							widget->setEnabled(false);
 							QLabel *lbl=new QLabel(getLocalText((*it).var));
 							lbl->setFixedWidth(100);
@@ -693,7 +699,10 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 							FGridLayout->addWidget(lbl, i, 0, Qt::AlignLeft);
 							FGridLayout->addWidget(widget, i++, 1, Qt::AlignLeft);
 							if (qobject_cast<QLineEdit*>(widget))
-								registerField((*it).var, widget);
+								registerField((*it).var+'*', widget);
+
+							QLineEdit *lineEdit = findChild<QLineEdit*>((*it).var);
+							qDebug() << "lineEdit=" << lineEdit;
 						}
 					}
 				}
@@ -735,12 +744,120 @@ void ProcessPage::onRegisterError(const QString &AId, const XmppError &AError)
 
 void ProcessPage::onOldFieldsReceived()
 {
+	qDebug() << "ProcessPage::onOldFieldsReceived()";
+	if (FOldFields.form.type.isEmpty())
+	{
+		qDebug() << "No form";
+		if (!FOldFields.username.isEmpty())
+		{
+			QLineEdit *lineEdit = findChild<QLineEdit*>("username");
+			if (lineEdit)
+				lineEdit->setText(FOldFields.username);
+		}
+		if (!FOldFields.password.isEmpty())
+		{
+			QLineEdit *lineEdit = findChild<QLineEdit*>("password");
+			if (lineEdit)
+				lineEdit->setText(FOldFields.password);
+		}
+		if (!FOldFields.email.isEmpty())
+		{
+			QLineEdit *lineEdit = findChild<QLineEdit*>("email");
+			if (lineEdit)
+				lineEdit->setText(FOldFields.email);
+		}
+//		QLineEdit *lineEdit = qobject_cast<QLineEdit *>(widget);
+//		if (lineEdit)
+//		{
+//			if (var == "username" && !FOldFields.username.isEmpty())
+//				lineEdit->setText(FOldFields.username);
+//			else if (var == "password" && !FOldFields.password.isEmpty())
+//				lineEdit->setText(FOldFields.password);
+//			else if (var == "email" && !FOldFields.email.isEmpty())
+//				lineEdit->setText(FOldFields.email);
+//		}
+	}
+	else
+	{
+		qDebug() << "Form!";
+		for (QList<IDataField>::ConstIterator it=FOldFields.form.fields.constBegin(); it!=FOldFields.form.fields.constEnd(); ++it)
+		{
+			qDebug() << "var=" << (*it).var << "; type=" << (*it).type;
+			qDebug() << "value=" << (*it).value << "value type=" << (*it).value.type();
+
+			if((*it).type==FIELD_TYPE_BOOLEAN && (*it).value.type()==QVariant::Bool)				
+			{
+				QCheckBox *checkBox = findChild<QCheckBox*>((*it).var);
+				if (checkBox)
+					checkBox->setChecked((*it).value.toBool());
+			}
+			else if(((*it).type==FIELD_TYPE_TEXTSINGLE || (*it).type==FIELD_TYPE_TEXTPRIVATE) && (*it).value.type()==QVariant::String)
+			{
+				qDebug() << "HERE!!!";
+				QLineEdit *lineEdit = findChild<QLineEdit*>((*it).var);
+				qDebug() << "lineEdit=" << lineEdit;
+				if (lineEdit)
+					lineEdit->setText((*it).value.toString());
+			}
+			else if(((*it).type==FIELD_TYPE_LISTSINGLE || (*it).type==FIELD_TYPE_JIDSINGLE) && (*it).value.type()==QVariant::String)
+			{
+				QComboBox *comboBox = findChild<QComboBox*>((*it).var);
+				if (comboBox)
+					comboBox->setEditText((*it).value.toString());
+			}
+			else if(((*it).type==FIELD_TYPE_TEXTMULTI || (*it).type==FIELD_TYPE_JIDMULTI) && (*it).value.type()==QVariant::String)
+			{
+				QTextEdit *textEdit = findChild<QTextEdit*>((*it).var);
+				if (textEdit)
+					textEdit->setText((*it).value.toString());
+			}
+			else if((*it).type==FIELD_TYPE_LISTMULTI && (*it).value.type()==QVariant::StringList)
+			{
+				QListWidget *listWidget = findChild<QListWidget*>((*it).var);
+				if (listWidget)
+				{
+					QStringList values = (*it).value.toStringList();
+					for (int i=0; i<listWidget->count(); i++)
+					{
+						QListWidgetItem *item = listWidget->item(i);
+						item->setCheckState(values.contains(item->data(Qt::UserRole).toString()) ? Qt::Checked  : Qt::Unchecked);
+					}
+				}
+			}
+		}
+	}
+
+	// Enable all widgets
 	int count = FGridLayout->count();
 	for (int i = 0; i<count; i++)
 	{
 		QWidget *widget = FGridLayout->itemAt(i)->widget();
 		if (widget && !widget->isEnabled())
-			FGridLayout->itemAt(i)->widget()->setEnabled(true);
+		{
+			widget->setEnabled(true);
+//			QString var = widget->objectName();
+//			if (!var.isEmpty())
+//			{
+//				if (FOldFields.form.type.isEmpty())
+//				{
+//					QLineEdit *lineEdit = qobject_cast<QLineEdit *>(widget);
+//					if (lineEdit)
+//					{
+//						if (var == "username" && !FOldFields.username.isEmpty())
+//							lineEdit->setText(FOldFields.username);
+//						else if (var == "password" && !FOldFields.password.isEmpty())
+//							lineEdit->setText(FOldFields.password);
+//						else if (var == "email" && !FOldFields.email.isEmpty())
+//							lineEdit->setText(FOldFields.email);
+//					}
+//				}
+//				else
+//				{
+//					FGridLayout->findChild();
+//					FOldFields.form.fields.contains()
+//				}
+//			}
+		}
 	}
 }
 
@@ -803,7 +920,7 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 		checkBox->setToolTip(descr);
 		checkBox->setChecked(value.toBool());
 		FTmpFields.insert(var,value);
-		connect(checkBox,SIGNAL(clicked(bool)),SLOT(onFormClicked(bool)));
+		connect(checkBox,SIGNAL(clicked(bool)),SLOT(onCheckBoxClicked(bool)));
 		return checkBox;
 	}
 	else if(AField.type==FIELD_TYPE_TEXTSINGLE)
@@ -893,7 +1010,7 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 			listWdg->addItem(item);
 		}
 		listWdg->setWrapping(true);
-		connect(listWdg,SIGNAL(currentTextChanged(QString)),SLOT(onListMultiChanged(QString)));
+		connect(listWdg,SIGNAL(itemSelectionChanged()),SLOT(onListMultiSelectionChanged(QString)));
 		return listWdg;
 	}
 	return NULL;
@@ -902,7 +1019,7 @@ QWidget *ProcessPage::getWidget(const IDataField &AField)
 //! FField.validate.type == DATAVALIDATE_TYPE_DATE
 //! FField.validate.type == DATAVALIDATE_TYPE_TIME
 
-void ProcessPage::onFormClicked(bool AState)
+void ProcessPage::onCheckBoxClicked(bool AState)
 {
 	QCheckBox *obj= qobject_cast<QCheckBox *>(sender());
 	if(obj)
@@ -910,6 +1027,8 @@ void ProcessPage::onFormClicked(bool AState)
 }
 void ProcessPage::onTextChanged(QString AText)
 {
+	qDebug() << "ProcessPage::onTextChanged(" << AText << ")";
+	qDebug() << "objectName=" << sender()->objectName();
 	QLineEdit *obj= qobject_cast<QLineEdit *>(sender());
 	if(obj)
 		FTmpFields.insert(obj->objectName(),AText);   //! var-name,value
@@ -920,11 +1039,20 @@ void ProcessPage::onComBoxChanged(QString AText)
 	if(obj)
 		FTmpFields.insert(obj->objectName(), AText);
 }
-void ProcessPage::onListMultiChanged(QString AText)
-{
+void ProcessPage::onListMultiSelectionChanged()
+{	
 	QListWidget *obj= qobject_cast<QListWidget *>(sender());
 	if(obj)
-		FTmpFields.insert(obj->objectName(), AText);
+	{
+		QStringList selectedItems;
+		QList<QListWidgetItem*> items = obj->selectedItems();
+		for(QList<QListWidgetItem*>::ConstIterator it=items.constBegin(); it!=items.constEnd(); it++)
+		{
+			if ((*it)->isSelected())
+				selectedItems.append((*it)->data(Qt::UserRole).toString());
+		}
+		FTmpFields.insert(obj->objectName(), selectedItems);
+	}
 }
 void ProcessPage::onMultiTextChanged()
 {
@@ -941,27 +1069,33 @@ void ProcessPage::onLinkActivated()
 
 IRegisterSubmit ProcessPage::getSubmit()
 {
+	qDebug() << "ProcessPage::getSubmit()";
+	qDebug() << "FHasForm=" << FHasForm;
 	if(!FHasForm)
-	{		
-		 FSubmit.username   = field("username").toString();
-		 FSubmit.password   = field("pasword").toString();
-		 FSubmit.email      = field("email").toString();
-		 FSubmit.form       = IDataForm();
+	{
+		qDebug() << "username=" << FTmpFields.value("username").toString();
+		qDebug() << "password=" << FTmpFields.value("password").toString();
+		qDebug() << "email=" << FTmpFields.value("email").toString();
+		FSubmit.username   = FTmpFields.value("username").toString();
+		FSubmit.password   = FTmpFields.value("pasword").toString();
+		FSubmit.email      = FTmpFields.value("email").toString();
+		FSubmit.form       = IDataForm();
 	}
 	else
 	{
 		QList<IDataField> newFields;
 		QHashIterator<QString, QVariant> i(FTmpFields);
 		while (i.hasNext())
-		{
+		{			
 			IDataField field;
 			i.next();
-			field.var=i.key();
-			field.value=i.value();
+			qDebug() << "key=" << i.key() << "; value=" << i.value();
+			field.var = i.key();
+			field.value = i.value();
 			newFields.append(field);
 		}
-		FForm.fields=newFields;
-		FForm.type="submit";
+		FForm.fields = newFields;
+		FForm.type = "submit";
 		if(!FForm.instructions.isEmpty())
 		FForm.instructions.clear();
 		if(!FForm.title.isEmpty())
