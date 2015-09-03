@@ -1,0 +1,149 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <name>Emoji vKontakte (small)</name>
+  <version>1.0</version>
+  <creation>2015-08-28</creation>
+  <description>eyeCU emoji iconset</description>
+  <home>www.eyecu.ru</home>
+  <author>Yagiza</author>
+  <icon>
+    <text>&#xD83D;&#xDE0A;</text>
+    <object mime="image/gif">D83DDE0A.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE03;</text>
+    <object mime="image/gif">D83DDE03.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE09;</text>
+    <object mime="image/gif">D83DDE09.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE06;</text>
+    <object mime="image/gif">D83DDE06.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1C;</text>
+    <object mime="image/gif">D83DDE1C.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0B;</text>
+    <object mime="image/gif">D83DDE0B.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0D;</text>
+    <object mime="image/gif">D83DDE0D.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0E;</text>
+    <object mime="image/gif">D83DDE0E.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE12;</text>
+    <object mime="image/gif">D83DDE12.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0A;</text>
+    <object mime="image/gif">D83DDE0F.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE14;</text>
+    <object mime="image/gif">D83DDE14.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE22;</text>
+    <object mime="image/gif">D83DDE22.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE2D;</text>
+    <object mime="image/gif">D83DDE2D.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE29;</text>
+    <object mime="image/gif">D83DDE29.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE28;</text>
+    <object mime="image/gif">D83DDE28.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE10;</text>
+    <object mime="image/gif">D83DDE10.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0c;</text>
+    <object mime="image/gif">D83DDE0C.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE04;</text>
+    <object mime="image/gif">D83DDE04.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE07;</text>
+    <object mime="image/gif">D83DDE07.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE30;</text>
+    <object mime="image/gif">D83DDE30.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE32;</text>
+    <object mime="image/gif">D83DDE32.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE33;</text>
+    <object mime="image/gif">D83DDE33.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE37;</text>
+    <object mime="image/gif">D83DDE37.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE02;</text>
+    <object mime="image/gif">D83DDE02.png</object>
+  </icon>
+  <icon>
+    <text>&#x2764;</text>
+    <object mime="image/gif">2764.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1A;</text>
+    <object mime="image/gif">D83DDE1A.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE15;</text>
+    <object mime="image/gif">D83DDE15.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE2F;</text>
+    <object mime="image/gif">D83DDE2F.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE26;</text>
+    <object mime="image/gif">D83DDE26.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE35;</text>
+    <object mime="image/gif">D83DDE35.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE20;</text>
+    <object mime="image/gif">D83DDE20.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE21;</text>
+    <object mime="image/gif">D83DDE21.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1D;</text>
+    <object mime="image/gif">D83DDE1D.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE34;</text>
+    <object mime="image/gif">D83DDE34.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE18;</text>
+    <object mime="image/gif">D83DDE18.png</object>
+  </icon>
+</icondef>

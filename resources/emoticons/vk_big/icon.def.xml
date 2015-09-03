@@ -1,0 +1,149 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <name>Emoji vKontakte (big)</name>
+  <version>1.0</version>
+  <creation>2015-08-28</creation>
+  <description>eyeCU emoji iconset</description>
+  <home>www.eyecu.ru</home>
+  <author>Yagiza</author>
+  <icon>
+    <text>&#xD83D;&#xDE0A;</text>
+    <object mime="image/gif">D83DDE0A_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE03;</text>
+    <object mime="image/gif">D83DDE03_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE09;</text>
+    <object mime="image/gif">D83DDE09_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE06;</text>
+    <object mime="image/gif">D83DDE06_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1C;</text>
+    <object mime="image/gif">D83DDE1C_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0B;</text>
+    <object mime="image/gif">D83DDE0B_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0D;</text>
+    <object mime="image/gif">D83DDE0D_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0E;</text>
+    <object mime="image/gif">D83DDE0E_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE12;</text>
+    <object mime="image/gif">D83DDE12_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0A;</text>
+    <object mime="image/gif">D83DDE0F_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE14;</text>
+    <object mime="image/gif">D83DDE14_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE22;</text>
+    <object mime="image/gif">D83DDE22_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE2D;</text>
+    <object mime="image/gif">D83DDE2D_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE29;</text>
+    <object mime="image/gif">D83DDE29_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE28;</text>
+    <object mime="image/gif">D83DDE28_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE10;</text>
+    <object mime="image/gif">D83DDE10_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE0c;</text>
+    <object mime="image/gif">D83DDE0C_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE04;</text>
+    <object mime="image/gif">D83DDE04_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE07;</text>
+    <object mime="image/gif">D83DDE07_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE30;</text>
+    <object mime="image/gif">D83DDE30_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE32;</text>
+    <object mime="image/gif">D83DDE32_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE33;</text>
+    <object mime="image/gif">D83DDE33_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE37;</text>
+    <object mime="image/gif">D83DDE37_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE02;</text>
+    <object mime="image/gif">D83DDE02_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2764;</text>
+    <object mime="image/gif">2764_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1A;</text>
+    <object mime="image/gif">D83DDE1A_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE15;</text>
+    <object mime="image/gif">D83DDE15_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE2F;</text>
+    <object mime="image/gif">D83DDE2F_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE26;</text>
+    <object mime="image/gif">D83DDE26_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE35;</text>
+    <object mime="image/gif">D83DDE35_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE20;</text>
+    <object mime="image/gif">D83DDE20_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE21;</text>
+    <object mime="image/gif">D83DDE21_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE1D;</text>
+    <object mime="image/gif">D83DDE1D_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE34;</text>
+    <object mime="image/gif">D83DDE34_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDE18;</text>
+    <object mime="image/gif">D83DDE18_2x.png</object>
+  </icon>
+</icondef>
