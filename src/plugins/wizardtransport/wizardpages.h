@@ -168,12 +168,12 @@ protected slots:
 	void onComBoxChanged(QString AText);
 	void onFormClicked(bool AState);
 	void onMultiTextChanged();
-	void onUserEditChanged(QString AText);
-	void onPassEditChanged(QString AText);
-	void onEmailEditChanged(QString AText);
-	void onUrlEditChanged(QString AText);
 	void onListMultiChanged(QString AText);
 	void onLinkActivated();
+	void onOldFieldsReceived();
+
+signals:
+	void oldFieldsReceived();
 
 private:
 	Jid         FStreamJid;
@@ -187,17 +187,17 @@ private:
 	QLabel      *FErrorLabel;
 	Jid         FServiceFrom;
 	Jid         FServiceTo;
-	QString     FRequestId;
+	QString     FRequestIdTo;
+	QString     FRequestIdFrom;
 	IRegisterSubmit FSubmit;
-	bool        FDirection;
+	bool        FHasForm;
 	IDataForm	FForm;
 	QHash<QString,QVariant> FTmpFields;
-	QString     FUserName;
-	QString     FPassword;
-	QString     FEmail;
-	QString     FUrl;
 	QList <QDomElement>	FExcepFields;
 	QHash<QString,QString> FLocalText;
+	IRegisterFields FOldFields;
+	bool		FOldFieldsReceived;
+	bool		FNewFieldsReceived;
 	const int	FFieldWidth;
 };
 

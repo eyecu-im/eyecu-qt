@@ -552,6 +552,7 @@ ProcessPage::ProcessPage(Jid &AStreamJid, IRegistration *ARegistration, GatewayP
 			SLOT(onRegisterFields(const QString &, const IRegisterFields &)));
 		connect(FRegistration->instance(),SIGNAL(registerError(const QString &, const XmppError &)),
 			SLOT(onRegisterError(const QString &, const XmppError &)));
+		connect(this, SIGNAL(oldFieldsReceived()), SLOT(onOldFieldsReceived()));
 	}
 }
 
@@ -567,8 +568,8 @@ void ProcessPage::createGateway()
 
 	if (field(WF_TRANSPORT_FROM).isNull())
 	{
-		FRequestId = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
-		if (!FRequestId.isEmpty())
+		FRequestIdTo = FRegistration!=NULL ? FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
+		if (!FRequestIdTo.isEmpty())
 		{
 			QString style="style='color:brown;'";
 			FInstrLabel->setText(QString("<span %1>%2</span>").arg(style).arg(tr("Waiting for host response ...")));
@@ -583,84 +584,90 @@ void ProcessPage::createGateway()
 	{
 		IGateways *gateways = PluginHelper::pluginInstance<IGateways>();
 		FServiceFrom = Jid::fromUserInput(field(WF_TRANSPORT_FROM).toString().trimmed());
-		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true))
-			FRequestId = FRegistration!=NULL ?  FRegistration->sendRegisterRequest(FStreamJid, FServiceTo) : QString::null;
+		if (gateways->changeService(FStreamJid, FServiceFrom, FServiceTo, true, true) && FRegistration)
+		{
+			FRequestIdTo = FRegistration->sendRegisterRequest(FStreamJid, FServiceTo);
+			FNewFieldsReceived = false;
+			FRequestIdFrom = FRegistration->sendRegisterRequest(FStreamJid, FServiceFrom);
+			FOldFields = IRegisterFields();
+			FOldFieldsReceived = false;
+		}
 	}
 }
 
 void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AFields)
 {
-	if (FRequestId == AId)
+	if (AId == FRequestIdTo)	// Registration fields
 	{
 		FSubmit.serviceJid = FServiceTo;
 		FSubmit.fieldMask = AFields.fieldMask;
 		FSubmit.key = AFields.key;
 
 		FTmpFields.clear();
-		FUserName.clear();
-		FPassword.clear();
-		FEmail.clear();
-		FUrl.clear();
-
 		FExcepFields.clear();
 		FExcepFields=FGatewayPage->getExcepFields();
 
 		QString		instructions;
-		QLabel		*lblUser	= new QLabel(tr("User Name"));
-		QLabel		*lblPassword= new QLabel(tr("Password"));
-		QLabel		*lblEmail	= new QLabel(tr("e-mail"));
-		QLabel		*lblUrl		= new QLabel(tr("Web Link"));
-		QLineEdit	*ledUser	= new QLineEdit;
-		QLineEdit	*ledEmail	= new QLineEdit;
-		QLineEdit	*ledUrl		= new QLineEdit;
-		QLineEdit	*ledPassword= new QLineEdit;
-
-		ledPassword->setEchoMode(QLineEdit::Password);
 
 		int i=0;
 		if(AFields.form.type.isEmpty())//if(AFields.registered)
 		{
-			FDirection=true;
+			FHasForm=false;
 			if (!AFields.instructions.isEmpty())
 				instructions=AFields.instructions;
 
 			if(AFields.fieldMask & IRegisterFields::Username)
 			{
-				FGridLayout->addWidget(lblUser, i, 0);//,Qt::AlignLeft
-				FGridLayout->addWidget(ledUser, i++, 1);
+				QLabel		*lblUsername = new QLabel(tr("User Name"));
+				QLineEdit	*ledUsername = new QLineEdit;
+				ledUsername->setEnabled(false);
+
+				FGridLayout->addWidget(lblUsername, i, 0);//,Qt::AlignLeft
+				FGridLayout->addWidget(ledUsername, i++, 1);
 				if(!AFields.username.isNull())
-					ledUser->setText(AFields.username);
-				connect(ledUser,SIGNAL(textChanged(QString)),SLOT(onUserEditChanged(QString)));
+					ledUsername->setText(AFields.username);
+				registerField("username*", ledUsername);
+
 			}
 			if(AFields.fieldMask & IRegisterFields::Password)
 			{
+				QLabel		*lblPassword = new QLabel(tr("Password"));
+				QLineEdit	*ledPassword = new QLineEdit;
+				ledPassword->setEnabled(false);
+				ledPassword->setEchoMode(QLineEdit::Password);
 				FGridLayout->addWidget(lblPassword, i, 0);
 				FGridLayout->addWidget(ledPassword, i++, 1);
 				if(!AFields.password.isNull())
 					ledPassword->setText(AFields.password);
-				connect(ledPassword,SIGNAL(textChanged(QString)),SLOT(onPassEditChanged(QString)));
+				registerField("password*", ledPassword);
 			}
 			if(AFields.fieldMask & IRegisterFields::Email)
 			{
+				QLabel		*lblEmail = new QLabel(tr("e-mail"));
+				QLineEdit	*ledEmail = new QLineEdit;
+				ledEmail->setEnabled(false);
 				FGridLayout->addWidget(lblEmail, i, 0);
 				FGridLayout->addWidget(ledEmail, i++, 1);
 				if(!AFields.email.isNull())
 					ledEmail->setText(AFields.email);
-				connect(ledEmail,SIGNAL(textChanged(QString)),SLOT(onEmailEditChanged(QString)));
+				registerField("email*", ledEmail);
 			}
 //FIXME: Redirect should not work this way!
 			if(AFields.fieldMask & IRegisterFields::Redirect)
 			{
-				FGridLayout->addWidget(lblUrl, i, 0);
-				FGridLayout->addWidget(ledUrl, i++, 1);
+				QLabel		*lblRedirect	= new QLabel(tr("Web Link"));
+				QLineEdit	*ledRedirect	= new QLineEdit;
+				ledRedirect->setEnabled(false);
+				FGridLayout->addWidget(lblRedirect, i, 0);
+				FGridLayout->addWidget(ledRedirect, i++, 1);
 				if(AFields.redirect.isValid())
-					ledUrl->setText(AFields.redirect.toString());
-			   connect(ledUrl,SIGNAL(textChanged(QString)),SLOT(onUrlEditChanged(QString)));
+					ledRedirect->setText(AFields.redirect.toString());
+			   registerField("redirect*", ledRedirect);
 			}
 		}
 		else //! form.type = "form"
 		{
-			FDirection=false;
+			FHasForm=true;
 			if (!AFields.form.instructions.isEmpty())   //! many instr...
 				instructions=AFields.form.instructions[0];
 			QList<IDataField> fields= AFields.form.fields;
@@ -679,6 +686,7 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 						QWidget *widget = getWidget(*it);
 						if(widget)
 						{
+							widget->setEnabled(false);
 							QLabel *lbl=new QLabel(getLocalText((*it).var));
 							lbl->setFixedWidth(100);
 							lbl->setWordWrap(true);
@@ -693,7 +701,46 @@ void ProcessPage::onRegisterFields(const QString &AId, const IRegisterFields &AF
 		}
 		FGridLayout->addItem(new QSpacerItem(0, 0, QSizePolicy::Minimum, QSizePolicy::Expanding), i, 2);
 		FInstrLabel->setText(QString("%1").arg(instructions));
+		FNewFieldsReceived = true;
 		emit completeChanged();
+		if (FOldFieldsReceived)
+			QTimer::singleShot(0, this, SLOT(onOldFieldsReceived()));
+	}
+	else if (AId == FRequestIdFrom)	// Old fields
+	{
+		FOldFields = AFields;
+		FOldFieldsReceived = true;
+		if (FNewFieldsReceived)
+			emit oldFieldsReceived();
+	}
+}
+
+void ProcessPage::onRegisterError(const QString &AId, const XmppError &AError)
+{
+	if (AId == FRequestIdTo)
+	{
+		//! "Remote server not found"
+		QString style="style='color:red;'";
+		FErrorLabel->setText(QString("<h2>%1:<span %2><br/>%3</span></h2>")
+							 .arg(tr("Requested operation failed")).arg(style).arg(AError.errorMessage()));
+		FInstrLabel->clear();
+		FAutoRegCheckBox->setVisible(false);
+	}
+	else if (AId == FRequestIdFrom)
+	{
+		if (FNewFieldsReceived)
+			emit oldFieldsReceived();
+	}
+}
+
+void ProcessPage::onOldFieldsReceived()
+{
+	int count = FGridLayout->count();
+	for (int i = 0; i<count; i++)
+	{
+		QWidget *widget = FGridLayout->itemAt(i)->widget();
+		if (widget && !widget->isEnabled())
+			FGridLayout->itemAt(i)->widget()->setEnabled(true);
 	}
 }
 
@@ -892,19 +939,13 @@ void ProcessPage::onLinkActivated()
 		QDesktopServices::openUrl(QUrl(obj->text()));
 }
 
-void ProcessPage::onUserEditChanged(QString AText)	{FUserName=AText;}
-void ProcessPage::onPassEditChanged(QString AText)	{FPassword=AText;}
-void ProcessPage::onEmailEditChanged(QString AText)	{FEmail=AText;}
-void ProcessPage::onUrlEditChanged(QString AText)	{FUrl=AText;}
-
 IRegisterSubmit ProcessPage::getSubmit()
 {
-	//! FOperation = IRegistration::Register
-	if(FDirection)
-	{
-		 FSubmit.username   = FUserName;
-		 FSubmit.password   = FPassword;
-		 FSubmit.email      = FEmail;
+	if(!FHasForm)
+	{		
+		 FSubmit.username   = field("username").toString();
+		 FSubmit.password   = field("pasword").toString();
+		 FSubmit.email      = field("email").toString();
 		 FSubmit.form       = IDataForm();
 	}
 	else
@@ -928,19 +969,6 @@ IRegisterSubmit ProcessPage::getSubmit()
 		FSubmit.form = FForm;
 	}
 	return FSubmit;
-}
-
-void ProcessPage::onRegisterError(const QString &AId, const XmppError &AError)
-{
-	if (FRequestId == AId)
-	{
-		//! "Remote server not found"
-		QString style="style='color:red;'";
-		FErrorLabel->setText(QString("<h2>%1:<span %2><br/>%3</span></h2>")
-							 .arg(tr("Requested operation failed")).arg(style).arg(AError.errorMessage()));
-		FInstrLabel->clear();
-		FAutoRegCheckBox->setVisible(false);
-	}
 }
 
 QString ProcessPage::getLocalText(QString AKey)
