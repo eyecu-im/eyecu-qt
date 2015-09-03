@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>ModifyStatusDialogClass</name>
     <message>
@@ -112,7 +112,7 @@
     </message>
     <message>
         <source>Reconnect to server on connection errors</source>
-        <translation>Подключаться знова при ошибках соединения</translation>
+        <translation>Подключаться снова при ошибках соединения</translation>
     </message>
     <message>
         <source>Standard and users statuses</source>
