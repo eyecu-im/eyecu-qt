@@ -14,11 +14,30 @@
         <server><jid>gg.jabber.rueckgr.at</jid><software>Gadu-Gadu Transport</software></server>
     </gateway>
     <gateway name="icq">
-        <server><jid>icq-dev.isgeek.info</jid><software>ICQ Transport</software></server>
-        <server><jid>icq.isgeek.info</jid><software>ICQ Transport</software></server>
-        <server><jid>icq2.isgeek.info</jid><software>Spectrum ICQ Transport</software></server>
-        <server><jid>icq.jabber.org.ru</jid><software>ICQ Transport</software></server>
-        <server><jid>icq.sudouser.ru</jid><software>ICQ Transport</software></server>
+        <server><jid>icq-dev.isgeek.info</jid><software>PyICQt</software></server>
+        <server><jid>icq.isgeek.info</jid><software>PyICQt</software></server>
+        <!--server><jid>icq2.isgeek.info</jid><software>Spectrum</software></server-->
+        <server><jid>icq.isgeek.info</jid><software>PyICQt</software></server>
+        <server><jid>icq.jabbers.org.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.sudouser.ru</jid><software>Spectrum</software></server>
+        <server><jid>icq.jabber.mipt.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.darkk.net.ru</jid><software>PyICQt</software></server>
+        <server><jid>pyicq.gryg.net</jid><software>PyICQt</software></server>
+        <server><jid>icq.talk.mipt.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.jabber.rfei.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.mo.pp.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.debianforum.de</jid><software>PyICQt</software></server>
+        <server><jid>icq.headcounter.org</jid><software>PyICQt</software></server>
+        <server><jid>icq.ojab.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq.lvk.cs.msu.su</jid><software>PyICQt</software></server>
+        <server><jid>pyicq.jabber.kiev.ua</jid><software>PyICQt</software></server>
+        <server><jid>icq.jabbim.org.ru</jid><software>PyICQt</software></server>
+        <server><jid>icq3.silper.cz</jid><software>PyICQt</software></server>
+        <server><jid>icq.jabber.org.by</jid><software>Spectrum</software></server>
+        <server><jid>icq.jabbim.cz</jid><software>Spectrum</software></server>
+        <server><jid>icq.blasux.ru</jid><software>Spectrum</software></server>
+        <server><jid>icq.skovpen.org</jid><software>Spectrum</software></server>        
+        <!--server><jid>icq.jabber.hot-chilli.net</jid><software>Spectrum</software></server-->
     </gateway>
     <gateway name="irc">
         <server><jid>irc.isgeek.info</jid><software>IRC Transport</software></server>
@@ -31,6 +50,12 @@
         <server><jid>mrim.sudouser.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
         <server><jid>mrim.jabbercity.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
         <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+        <server><jid>mrim.jid.su</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
+        <server><jid>mrim.shevaldin.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server> 
+        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
+        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
+        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
+        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
     </gateway>
     <gateway name="myspaceim"></gateway>
     <gateway name="qq">
@@ -46,6 +71,7 @@
     </gateway>
     <gateway name="sip"></gateway>
     <gateway name="skype">
+        <server><jid>skype.moobi.jabbercity.ru</jid><software>Skype gateway</software></server>
         <server><jid>skype.jabbim.com</jid><software>Skype gateway</software></server>
     </gateway>
     <gateway name="sametime">
