@@ -17,7 +17,6 @@
         <server><jid>icq-dev.isgeek.info</jid><software>PyICQt</software></server>
         <server><jid>icq.isgeek.info</jid><software>PyICQt</software></server>
         <!--server><jid>icq2.isgeek.info</jid><software>Spectrum</software></server-->
-        <server><jid>icq.isgeek.info</jid><software>PyICQt</software></server>
         <server><jid>icq.jabbers.org.ru</jid><software>PyICQt</software></server>
         <server><jid>icq.sudouser.ru</jid><software>Spectrum</software></server>
         <server><jid>icq.jabber.mipt.ru</jid><software>PyICQt</software></server>
