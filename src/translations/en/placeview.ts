@@ -59,18 +59,6 @@
    <translation>Form</translation>
   </message>
   <message>
-   <source>Type of place</source>
-   <translation type="obsolete">Type of place</translation>
-  </message>
-  <message>
-   <source>Way to search</source>
-   <translation type="obsolete">Way to search</translation>
-  </message>
-  <message>
-   <source>Radius, km</source>
-   <translation type="obsolete">Radius, km</translation>
-  </message>
-  <message>
    <location line="375" filename="../../plugins/placeview/placeviewform.cpp"/>
    <source>Type</source>
    <translation>Type</translation>
@@ -81,53 +69,9 @@
    <translation>Search criteria</translation>
   </message>
   <message>
-   <source>Way To Search</source>
-   <translation type="obsolete">Way To Search</translation>
-  </message>
-  <message>
-   <source>0.5</source>
-   <translation type="obsolete">0.5</translation>
-  </message>
-  <message>
-   <source>1.0</source>
-   <translation type="obsolete">1.0</translation>
-  </message>
-  <message>
-   <source>3.0</source>
-   <translation type="obsolete">3.0</translation>
-  </message>
-  <message>
-   <source>5.0</source>
-   <translation type="obsolete">5.0</translation>
-  </message>
-  <message>
-   <source>10.0</source>
-   <translation type="obsolete">10.0</translation>
-  </message>
-  <message>
-   <source>20.0</source>
-   <translation type="obsolete">20.0</translation>
-  </message>
-  <message>
-   <source>40.0</source>
-   <translation type="obsolete">40.0</translation>
-  </message>
-  <message>
-   <source>50.0</source>
-   <translation type="obsolete">50.0</translation>
-  </message>
-  <message>
-   <source>Key Word</source>
-   <translation type="obsolete">Key Word</translation>
-  </message>
-  <message>
    <location line="191" filename="../../plugins/placeview/placeviewform.ui"/>
    <source>Rank by</source>
    <translation>Rank by</translation>
-  </message>
-  <message>
-   <source>Rankby</source>
-   <translation type="obsolete">Rankby</translation>
   </message>
   <message>
    <location line="210" filename="../../plugins/placeview/placeviewform.ui"/>

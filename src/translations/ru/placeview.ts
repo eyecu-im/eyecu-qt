@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>PlaceView</name>
     <message>
@@ -485,26 +485,6 @@
     <message>
         <source>Text search</source>
         <translation>Текстовый поиск</translation>
-    </message>
-    <message>
-        <source>Key Word</source>
-        <translation type="obsolete">Ключевое слово</translation>
-    </message>
-    <message>
-        <source>Way To Search</source>
-        <translation type="obsolete">Способ поиска</translation>
-    </message>
-    <message>
-        <source>Radius, km</source>
-        <translation type="obsolete">Радиус, км</translation>
-    </message>
-    <message>
-        <source>Type of place</source>
-        <translation type="obsolete">Тип места</translation>
-    </message>
-    <message>
-        <source>Way to search</source>
-        <translation type="obsolete">Способ поиска</translation>
     </message>
     <message>
         <source>Clear</source>

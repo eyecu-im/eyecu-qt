@@ -4,28 +4,28 @@
  <context>
   <name>PositioningMethodIp</name>
   <message>
-   <location line="24" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
+   <location line="23" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
    <source>Positioning Method IP</source>
    <translation>Positioning Method IP</translation>
   </message>
   <message>
-   <location line="25" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
+   <location line="24" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
    <source>Positioning method, which determines position based on your IP address</source>
    <translation>Positioning method, which determines position based on your IP address</translation>
   </message>
   <message>
-   <location line="76" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
-   <location line="40" filename="../../plugins/positioningmethodip/positioningmethodip.h"/>
+   <location line="75" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
+   <location line="43" filename="../../plugins/positioningmethodip/positioningmethodip.h"/>
    <source>IP-based</source>
    <translation>IP-based</translation>
   </message>
   <message>
-   <location line="109" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
+   <location line="108" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
    <source>General</source>
    <translation>General</translation>
   </message>
   <message>
-   <location line="111" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
+   <location line="110" filename="../../plugins/positioningmethodip/positioningmethodip.cpp"/>
    <source>Connection</source>
    <translation>Connection</translation>
   </message>

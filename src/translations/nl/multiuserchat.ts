@@ -200,7 +200,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="242"/>
    <source>When receiving an invitation to the conference</source>
-   <translation type="unfinished"/>
+   <translation>Het ontvangen van een uitnodiging voor de vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="250"/>
@@ -312,7 +312,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="438"/>
    <source>User ID</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker ID</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="439"/>
@@ -322,12 +322,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="440"/>
    <source>Grant Voice?</source>
-   <translation type="unfinished"/>
+   <translation>Stem toekennen?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="444"/>
    <source>Configure conference</source>
-   <translation type="unfinished"/>
+   <translation>Configureer vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="445"/>
@@ -353,7 +353,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="449"/>
    <source>Enable Logging of Room Conversations?</source>
-   <translation type="unfinished"/>
+   <translation>Activeer het loggen van kamergesprekken</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="450"/>

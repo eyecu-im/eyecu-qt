@@ -89,10 +89,6 @@
    </translation>
   </message>
   <message>
-   <source> seconds</source>
-   <translation type="obsolete"> seconds</translation>
-  </message>
-  <message>
    <location line="254" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
    <translation>Time to display a pop-up window (0 - always visible):</translation>
@@ -134,13 +130,6 @@
    <location line="53" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
    <source>Show the corresponding window minimized in the taskbar</source>
    <translation>Show the corresponding window minimized in the taskbar</translation>
-  </message>
- </context>
- <context>
-  <name>NotifyWidget</name>
-  <message>
-   <source>Message is empty or hidden</source>
-   <translation type="obsolete">Message is empty or hidden</translation>
   </message>
  </context>
 </TS>

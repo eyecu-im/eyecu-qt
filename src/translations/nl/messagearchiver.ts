@@ -331,7 +331,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="128"/>
    <source>Conversations are not found</source>
-   <translation type="unfinished"/>
+   <translation>Gesprekken zijn niet gevonden</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="140"/>

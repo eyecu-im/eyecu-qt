@@ -294,7 +294,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="30"/>
    <source>Bhutan</source>
-   <translation type="unfinished"/>
+   <translation>Bhutan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="31"/>
@@ -309,7 +309,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="33"/>
    <source>Botswana</source>
-   <translation type="unfinished"/>
+   <translation>Botswana</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="34"/>

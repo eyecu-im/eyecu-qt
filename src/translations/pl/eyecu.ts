@@ -28,52 +28,52 @@
  <context>
   <name>PluginManager</name>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="457"/>
+   <location filename="../../loader/pluginmanager.cpp" line="441"/>
    <source>Duplicate plugin uuid</source>
    <translation>Zdublowany UUID wtyczki</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="464"/>
+   <location filename="../../loader/pluginmanager.cpp" line="448"/>
    <source>Wrong plugin interface</source>
    <translation>Zły interfejs wtyczki</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="484"/>
+   <location filename="../../loader/pluginmanager.cpp" line="468"/>
    <source>Dependencies not found</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="491"/>
+   <location filename="../../loader/pluginmanager.cpp" line="475"/>
    <source>Conflict with plugin %1</source>
    <translation>Konflikt z wtyczką %1</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="528"/>
+   <location filename="../../loader/pluginmanager.cpp" line="512"/>
    <source>Initialization failed</source>
    <translation>Inicjalizacja zakończona błędem</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="924"/>
+   <location filename="../../loader/pluginmanager.cpp" line="908"/>
    <source>About Qt</source>
    <translation>O Qt</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="930"/>
+   <location filename="../../loader/pluginmanager.cpp" line="914"/>
    <source>About the program</source>
    <translation>O programie</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="936"/>
+   <location filename="../../loader/pluginmanager.cpp" line="920"/>
    <source>Setup plugins</source>
    <translation>Ustawienia wtyczek</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="945"/>
+   <location filename="../../loader/pluginmanager.cpp" line="929"/>
    <source>Global shortcuts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="946"/>
+   <location filename="../../loader/pluginmanager.cpp" line="930"/>
    <source>Application shortcuts</source>
    <translation type="unfinished"/>
   </message>

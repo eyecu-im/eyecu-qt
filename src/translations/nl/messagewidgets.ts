@@ -193,7 +193,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
    <source>Save contacts status messages in history</source>
-   <translation type="unfinished"/>
+   <translation>Sla gebruikers statusbericht op in geschiedenis</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>

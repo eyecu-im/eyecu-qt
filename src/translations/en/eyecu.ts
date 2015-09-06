@@ -30,52 +30,52 @@
  <context>
   <name>PluginManager</name>
   <message>
-   <location line="457" filename="../../loader/pluginmanager.cpp"/>
+   <location line="441" filename="../../loader/pluginmanager.cpp"/>
    <source>Duplicate plugin uuid</source>
    <translation>Duplicate plugin uuid</translation>
   </message>
   <message>
-   <location line="464" filename="../../loader/pluginmanager.cpp"/>
+   <location line="448" filename="../../loader/pluginmanager.cpp"/>
    <source>Wrong plugin interface</source>
    <translation>Wrong plugin interface</translation>
   </message>
   <message>
-   <location line="484" filename="../../loader/pluginmanager.cpp"/>
+   <location line="468" filename="../../loader/pluginmanager.cpp"/>
    <source>Dependencies not found</source>
    <translation>Dependencies not found</translation>
   </message>
   <message>
-   <location line="491" filename="../../loader/pluginmanager.cpp"/>
+   <location line="475" filename="../../loader/pluginmanager.cpp"/>
    <source>Conflict with plugin %1</source>
    <translation>Conflict with plugin %1</translation>
   </message>
   <message>
-   <location line="528" filename="../../loader/pluginmanager.cpp"/>
+   <location line="512" filename="../../loader/pluginmanager.cpp"/>
    <source>Initialization failed</source>
    <translation>Initialization failed</translation>
   </message>
   <message>
-   <location line="924" filename="../../loader/pluginmanager.cpp"/>
+   <location line="908" filename="../../loader/pluginmanager.cpp"/>
    <source>About Qt</source>
    <translation>About Qt</translation>
   </message>
   <message>
-   <location line="930" filename="../../loader/pluginmanager.cpp"/>
+   <location line="914" filename="../../loader/pluginmanager.cpp"/>
    <source>About the program</source>
    <translation>About the program</translation>
   </message>
   <message>
-   <location line="936" filename="../../loader/pluginmanager.cpp"/>
+   <location line="920" filename="../../loader/pluginmanager.cpp"/>
    <source>Setup plugins</source>
    <translation>Setup plugins</translation>
   </message>
   <message>
-   <location line="945" filename="../../loader/pluginmanager.cpp"/>
+   <location line="929" filename="../../loader/pluginmanager.cpp"/>
    <source>Global shortcuts</source>
    <translation>Global shortcuts</translation>
   </message>
   <message>
-   <location line="946" filename="../../loader/pluginmanager.cpp"/>
+   <location line="930" filename="../../loader/pluginmanager.cpp"/>
    <source>Application shortcuts</source>
    <translation>Application shortcuts</translation>
   </message>

@@ -195,7 +195,7 @@
    <translation>Optionen</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsdialog.cpp" line="148"/>
+   <location filename="../../plugins/optionsmanager/optionsdialog.cpp" line="149"/>
    <source>Options are absent</source>
    <translation>Keine weiteren Optionen</translation>
   </message>

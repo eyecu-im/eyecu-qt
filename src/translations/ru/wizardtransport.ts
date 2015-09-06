@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -33,6 +33,10 @@
 If you receive such message, please rerun the Wizard to register at transport with correct credentials.</source>
         <translation>Некоторые транспорты могут сообщать об успешной регистрации, даже если предоставлены неверные учётные данные. Они могут позже сообщить об ошибке авторизации, прислав сообщение.
 Если вы получите такое сообщение, пожалуйста, запустите Мастер снова, чтобы зарегистрироваться в транспорте с правильными учётными данными.</translation>
+    </message>
+    <message>
+        <source>You successfuly changed %1 transport from %2 to %3.</source>
+        <translation>Вы успешно сменили транспорт %1 %2 на %3.</translation>
     </message>
 </context>
 <context>
@@ -81,14 +85,20 @@ If you receive such message, please rerun the Wizard to register at transport wi
         <translation>Подключение к сторонней сети</translation>
     </message>
     <message>
-        <source>This Wizard will help you to connect to a legacy network via transport (gateway)</source>
-        <translation>Этот Мастер поможет Вам подключиться к сторонней сети через транспорт (шлюз)</translation>
+        <source>This Wizard will help you to connect to a legacy network via transport or change transport to another one</source>
+        <translation>Данный Мастер поможет Вам подключиться к сторонней сети через транспорт, либо поменять транспорт на другой</translation>
     </message>
     <message>
-        <source>Before running this Wizard, make sure you have an account at legacy network.
-If don&apos;t, please register at legacy network on its web site or using native client.</source>
-        <translation>Перед запуском данного Мастера убедитесь, что у вас есть учётная запись в сторонней сети.
-Если нет, зарегистрируйтесь в сторонней сети на её веб-сайте или используя родной клиент.</translation>
+        <source>What do you want to do?</source>
+        <translation>Что Вы хотите сделать?</translation>
+    </message>
+    <message>
+        <source>&amp;Connect to a legacy network</source>
+        <translation>&amp;Подключиться к сторонней сети</translation>
+    </message>
+    <message>
+        <source>&amp;Change transport</source>
+        <translation>&amp;Заменить транспорт</translation>
     </message>
 </context>
 <context>
@@ -369,16 +379,28 @@ If don&apos;t, please register at legacy network on its web site or using native
         <translation>e-mail</translation>
     </message>
     <message>
-        <source>Web Link</source>
-        <translation>Выб-ссылка</translation>
-    </message>
-    <message>
         <source>Phone Number</source>
         <translation>Номер телефона</translation>
     </message>
     <message>
         <source>Unregister</source>
         <translation>Удалить регистрацию</translation>
+    </message>
+    <message>
+        <source>Web registration required</source>
+        <translation>Требуется регистрация через веб</translation>
+    </message>
+    <message>
+        <source>Open registration page</source>
+        <translation>Открыть страницу регистрации</translation>
+    </message>
+    <message>
+        <source>Press the button to open vKontakte logon page in the system browser. Proceed logon (if not logged on already). After you see a blank page with a single text message on it, copy contents of browser&apos;s address line and close web browser.</source>
+        <translation>Нажмите эту кнопку, чтобы открыть страницу входа вКонтакте в системном браузере. Выполните вход (если он уже не выполнен). Как только увидите чистую страницу с единственным текстовым сообщением на ней, скопируйте содержимое адресной строки и закройте браузер.</translation>
+    </message>
+    <message>
+        <source>Insert copied browser&apos;s address line here</source>
+        <translation>Вставьте скопированную адресную строку браузера сюда</translation>
     </message>
 </context>
 <context>
@@ -395,12 +417,43 @@ If don&apos;t, please register at legacy network on its web site or using native
         <source>Retry</source>
         <translation>Попытаться ещё раз</translation>
     </message>
+    <message>
+        <source>Cannot change service</source>
+        <translation>Не могу заменить службу</translation>
+    </message>
 </context>
 <context>
     <name>TransportWizard</name>
     <message>
         <source>Legacy network connection Wizard</source>
         <translation>Мастер подключения к сторонней сети</translation>
+    </message>
+</context>
+<context>
+    <name>TransportsPage</name>
+    <message>
+        <source>Transport selection</source>
+        <translation>Выбор транспорта</translation>
+    </message>
+    <message>
+        <source>Choose a transport you want to change</source>
+        <translation>Выберите транспорт, который хотите поменять</translation>
+    </message>
+    <message>
+        <source>Please select a transport from the list</source>
+        <translation>Выберите транспорт из списка</translation>
+    </message>
+    <message>
+        <source>Transport</source>
+        <translation>Транспорт</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Тип</translation>
     </message>
 </context>
 <context>
@@ -414,8 +467,12 @@ If don&apos;t, please register at legacy network on its web site or using native
         <translation>Мастер, помогающий полключиться к сторонним сетям через XMPP-транспорты (шлюзы)</translation>
     </message>
     <message>
-        <source>Connect to legacy network</source>
-        <translation>Подключиться к сторонней сети</translation>
+        <source>Trasport Wizard</source>
+        <translation>Мастер Транспортов</translation>
+    </message>
+    <message>
+        <source>Change transport</source>
+        <translation>Сменить транспорт</translation>
     </message>
 </context>
 </TS>

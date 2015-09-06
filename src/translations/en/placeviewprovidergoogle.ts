@@ -4,14 +4,6 @@
  <context>
   <name>PlaceViewProviderGoogle</name>
   <message>
-   <source>View photos of places From Google</source>
-   <translation type="obsolete">View photos of places From Google</translation>
-  </message>
-  <message>
-   <source>Allows View photos of places From Google</source>
-   <translation type="obsolete">Allows View photos of places From Google</translation>
-  </message>
-  <message>
    <location line="39" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.h"/>
    <source>Google</source>
    <translation>Google</translation>

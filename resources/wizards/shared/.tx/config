@@ -1,0 +1,30 @@
+[main]
+host = https://www.transifex.com
+
+[eyecu-qt-conneection-wizard-instructions.hot-chilli_net_html]
+file_filter = hot-chilli_net.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.is-a-furry_org_html]
+file_filter = is-a-furry_org.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.isgeek_info_html]
+file_filter = isgeek_info.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.jabber_at_html]
+file_filter = jabber_at.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.jabber_sk_html]
+file_filter = jabber_sk.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.openfire_html]
+file_filter = openfire.<lang>.html
+source_lang = en
+
+[eyecu-qt-conneection-wizard-instructions.tf-network_de_html]
+file_filter = tf-network_de.<lang>.html
+source_lang = en

@@ -35,10 +35,6 @@
    <translation>Notification pop-up</translation>
   </message>
   <message>
-   <source>Activate main window</source>
-   <translation type="obsolete">Activate main window</translation>
-  </message>
-  <message>
    <location line="177" filename="../../plugins/attention/attention.cpp"/>
    <source>Always play sound</source>
    <translation>Always play sound</translation>
@@ -67,16 +63,12 @@
  <context>
   <name>AttentionDialog</name>
   <message>
-   <source>ATTENTION!</source>
-   <translation type="obsolete">ATTENTION!</translation>
-  </message>
-  <message>
-   <location line="185" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="168" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>ATTENTION</source>
    <translation>ATTENTION</translation>
   </message>
   <message>
-   <location line="310" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="293" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>Ok</source>
    <translation>Ok</translation>
   </message>

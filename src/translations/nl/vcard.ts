@@ -320,7 +320,7 @@
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="187"/>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="188"/>
    <source>Show contact profile</source>
-   <translation type="unfinished"/>
+   <translation>Toon contact profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="187"/>
@@ -332,7 +332,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="213"/>
    <source>User Profile</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="347"/>
@@ -354,12 +354,12 @@
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="697"/>
    <source>Show Profile</source>
-   <translation type="unfinished"/>
+   <translation>Toon profiel</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
    <source>Edit Profile</source>
-   <translation type="unfinished"/>
+   <translation>Bewerk profiel</translation>
   </message>
  </context>
 </TS>

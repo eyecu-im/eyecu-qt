@@ -360,12 +360,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="672"/>
    <source>Book store</source>
-   <translation type="unfinished"/>
+   <translation>Boekhandel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="673"/>
    <source>Bowling alley</source>
-   <translation type="unfinished"/>
+   <translation>Bowlingbaan</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="674"/>
@@ -380,12 +380,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="676"/>
    <source>Campground</source>
-   <translation type="unfinished"/>
+   <translation>Camping</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="677"/>
    <source>Car dealer</source>
-   <translation type="unfinished"/>
+   <translation>Auto dealer</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="678"/>

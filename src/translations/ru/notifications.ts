@@ -60,10 +60,6 @@
       <translation>Не отображать текст сообщения во всплывающем окне</translation>
     </message>
     <message>
-      <source> seconds</source>
-      <translation type="obsolete"> секунд</translation>
-    </message>
-    <message>
       <source>Time to display a pop-up window (0 - always visible):</source>
       <translation>Время отображения всплывающего окна (0 - не закрывать):</translation>
     </message>

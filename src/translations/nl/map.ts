@@ -192,7 +192,7 @@
   <message>
    <location filename="../../plugins/map/map.cpp" line="801"/>
    <source>On-screen display</source>
-   <translation type="unfinished"/>
+   <translation>Toon schermweergave</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="803"/>
@@ -202,7 +202,7 @@
   <message>
    <location filename="../../plugins/map/map.cpp" line="818"/>
    <source>Relative to map center</source>
-   <translation type="unfinished"/>
+   <translation>In verhouding tot centrum</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="819"/>

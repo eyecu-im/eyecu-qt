@@ -61,18 +61,6 @@
    <translation>Move to location</translation>
   </message>
   <message>
-   <source>400x300</source>
-   <translation type="obsolete">400x300</translation>
-  </message>
-  <message>
-   <source>640x480</source>
-   <translation type="obsolete">640x480</translation>
-  </message>
-  <message>
-   <source>640x640</source>
-   <translation type="obsolete">640x640</translation>
-  </message>
-  <message>
    <location line="312" filename="../../plugins/streetview/streetviewform.ui"/>
    <source>Latitude</source>
    <translation>Latitude</translation>

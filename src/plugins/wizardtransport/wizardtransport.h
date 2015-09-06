@@ -7,6 +7,7 @@
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/irostersview.h>
 #include <interfaces/iregistraton.h>
+#include <interfaces/igateways.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/iservicediscovery.h>
@@ -33,22 +34,19 @@ public:
     virtual bool startPlugin(){return true;}
 
 	virtual QWizard * transportWizard() {return FTransportWizard;}
-	virtual QWizard * startTransportWizard(const Jid &AStreamJid);
+	virtual QWizard * startTransportWizard(const Jid &AStreamJid, const Jid &ATransportJid = Jid::null);
 	virtual QWizard * showTransportWizard();
 
 protected slots:
     void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);    
     void onStreamOpened(IXmppStream *AXmppStream);
     void onStreamClosed(IXmppStream *AXmppStream);
-	void onWizardFinished(int AStatus);
-	void onAddGateway();
+	void onTransportWizard();
 
 private:
 	IXmppStreamManager	*FXmppStreamManager;
-	IRegistration		*FRegistration;
 	IRostersViewPlugin	*FRostersViewPlugin;
-	IServiceDiscovery	*FServiceDiscovery;
-	QMap<Jid, QString>	FStreamGateWay;
+	QStringList			FStreamGateWay;
 	QPointer<TransportWizard> FTransportWizard;
 	bool				FAutoSubscribe;
 };

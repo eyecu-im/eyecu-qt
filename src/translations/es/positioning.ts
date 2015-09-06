@@ -31,7 +31,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioning/positioningoptions.cpp" line="15"/>
+   <location filename="../../plugins/positioning/positioningoptions.cpp" line="16"/>
    <source>No positioning</source>
    <translation type="unfinished"/>
   </message>
