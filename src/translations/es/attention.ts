@@ -69,12 +69,12 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="185"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
    <source>ATTENTION</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="310"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="293"/>
    <source>Ok</source>
    <translation type="unfinished"/>
   </message>

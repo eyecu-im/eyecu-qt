@@ -28,7 +28,7 @@ class TransportWizard : public QWizard
 	Q_OBJECT
 public:
 	enum {Page_Intro,Page_Transports,Page_Networks,Page_Gateway,Page_Process,Page_Result,Page_Conclusion};
-	TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid = Jid::null, QWidget *parent = 0);
+	TransportWizard(const Jid &AStreamJid, const Jid &ATransportJid = Jid::null, QWidget *Parent = 0);
 	void setAutoSubscribe(bool AAutoSubscribe) {FAutoSubscribe = AAutoSubscribe;}
 
 protected slots:
@@ -104,7 +104,7 @@ class GatewayPage : public QWizardPage
 	Q_OBJECT
 public:
 	GatewayPage(const Jid &AStreamJid, IServiceDiscovery *AServiceDiscovery, bool ATransport, QWidget *parent = 0);
-	QList <QDomElement> getExcepFields(){return FExcepFields; }
+	const QHash<Jid, QHash<QString, QHash<QString, QString> > > &exceptFields() const {return FExceptFields;}
 
 	// QWizardPage interface
 	void initializePage();
@@ -134,7 +134,7 @@ private:
 	IconStorage			*FIconStorageWizards;
 	IconStorage			*FIconStorageServices;
 	IconStorage			*FIconStorageMenu;
-	QList<QDomElement>	FExcepFields;
+	QHash<Jid, QHash<QString, QHash<QString, QString> > > FExceptFields;
 	IDiscoItems			FDiscoItems;
 	QList<Jid>			FPendingItems;
 	QList<Jid>			FPendingItemsListed;
@@ -156,10 +156,9 @@ public:
 	int nextId() const;
 
 protected:
-	QWidget	*getWidget(const IDataField &AField);
+	void	addWidget(const IDataField &AField, const Jid &ATransportJid, QVBoxLayout *ALayout, bool ADisable);
 	void	localTextLabel();
 	QString	getLocalText(QString AKey);
-	bool	checkField(const IDataField AField, QString AGateWay);
 
 protected slots:
 	void onRegisterFields(const QString &AId, const IRegisterFields &AFields);
@@ -169,8 +168,8 @@ protected slots:
 	void onCheckBoxClicked(bool AState);
 	void onMultiTextChanged();
 	void onListMultiSelectionChanged();
-	void onLinkActivated();
 	void onOldFieldsReceived();
+	void onOpenPage();
 
 signals:
 	void oldFieldsReceived();
@@ -180,7 +179,7 @@ private:
 	IRegistration *FRegistration;
 	GatewayPage	*FGatewayPage;
 	QScrollArea *FScrollArea;
-	QGridLayout *FGridLayout;
+	QVBoxLayout *FLayout;
 	QCheckBox   *FAutoRegCheckBox;
 
 	QLabel      *FInstrLabel;
@@ -194,7 +193,9 @@ private:
 	IDataForm	FForm;
 
 	QHash<QString,QVariant> FTmpFields;
-	QList <QDomElement>	FExcepFields;
+
+	QHash<Jid, QHash<QString, QHash<QString, QString> > > FExceptFields;
+
 	QHash<QString,QString> FLocalText;
 	IRegisterFields FOldFields;
 	bool		FOldFieldsReceived;
@@ -207,10 +208,10 @@ class ResultPage : public QWizardPage
 {
 	Q_OBJECT
 public:
-	ResultPage(Jid &AStreamJid, IRegistration *ARegistration,ProcessPage *AProcess,QWidget *parent = 0);
+	ResultPage(Jid &AStreamJid, IRegistration *ARegistration, ProcessPage *AProcess, QWidget *parent = 0);
 
 	// QWizardPage interface
-	int nextId() const;
+	int nextId() const {return FNextId;}
 	bool isComplete() const;
 	void initializePage();
 
@@ -226,6 +227,7 @@ private:
 	ProcessPage     *FProcess;
 	QString         FRequestId;
 	bool            FWizardGo;
+	int				FNextId;
 };
 
 //!---------------------

@@ -31,7 +31,7 @@
    <translation>Deze knop zal de instellingen dialoogvenster weergegeven voor de geselecteerde methode van positiebepaling</translation>
   </message>
   <message>
-   <location filename="../../plugins/positioning/positioningoptions.cpp" line="15"/>
+   <location filename="../../plugins/positioning/positioningoptions.cpp" line="16"/>
    <source>No positioning</source>
    <translation>Geen ligging</translation>
   </message>

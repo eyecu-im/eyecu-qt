@@ -7,6 +7,7 @@
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/irostersview.h>
 #include <interfaces/iregistraton.h>
+#include <interfaces/igateways.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/iservicediscovery.h>

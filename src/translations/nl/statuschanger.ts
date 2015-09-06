@@ -193,12 +193,12 @@
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="364"/>
    <source>Can&apos;t delete status</source>
-   <translation type="unfinished"/>
+   <translation>Kan status niet verwijderen</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>
    <source>You can not delete standard statuses.</source>
-   <translation type="unfinished"/>
+   <translation>Je kan geen standaard statussen verwijderen.</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="364"/>

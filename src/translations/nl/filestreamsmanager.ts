@@ -196,7 +196,7 @@
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="235"/>
    <source>KB</source>
    <comment>Kilobyte</comment>
-   <translation type="unfinished"/>
+   <translation>KB</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="240"/>

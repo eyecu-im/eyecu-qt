@@ -240,7 +240,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="407"/>
    <source>Vicinity</source>
-   <translation type="unfinished"/>
+   <translation>Omgeving</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="414"/>
@@ -265,22 +265,22 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="536"/>
    <source>ZERO RESULTS!</source>
-   <translation type="unfinished"/>
+   <translation>NUL RESULTATEN!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="540"/>
    <source>OVER QUERY LIMIT!</source>
-   <translation type="unfinished"/>
+   <translation>OVER DE VRAAG LIMIET!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="544"/>
    <source>REQUEST DENIED!</source>
-   <translation type="unfinished"/>
+   <translation>VERZOEK GEWEIGERD!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="555"/>
    <source>%1, %2</source>
-   <translation type="unfinished"/>
+   <translation>%1, %2</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="555"/>
@@ -290,12 +290,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="555"/>
    <source>%1N</source>
-   <translation type="unfinished"/>
+   <translation>%1N</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="556"/>
    <source>%1W</source>
-   <translation type="unfinished"/>
+   <translation>%1W</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="556"/>
@@ -310,82 +310,82 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="662"/>
    <source>Airport</source>
-   <translation type="unfinished"/>
+   <translation>Luchthaven</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="663"/>
    <source>Amusement park</source>
-   <translation type="unfinished"/>
+   <translation>Pretpark</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="664"/>
    <source>Aquarium</source>
-   <translation type="unfinished"/>
+   <translation>Aquarium</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="665"/>
    <source>Art gallery</source>
-   <translation type="unfinished"/>
+   <translation>Kunstgallerij</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="666"/>
    <source>Atm</source>
-   <translation type="unfinished"/>
+   <translation>Atm</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="667"/>
    <source>Bakery</source>
-   <translation type="unfinished"/>
+   <translation>Bakkerij</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="668"/>
    <source>Bank</source>
-   <translation type="unfinished"/>
+   <translation>Bank</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="669"/>
    <source>Bar</source>
-   <translation type="unfinished"/>
+   <translation>Bar</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="670"/>
    <source>Beauty salon</source>
-   <translation type="unfinished"/>
+   <translation>Schoonheidssalon</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="671"/>
    <source>Bicycle store</source>
-   <translation type="unfinished"/>
+   <translation>Fietswinkel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="672"/>
    <source>Book store</source>
-   <translation type="unfinished"/>
+   <translation>Boekhandel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="673"/>
    <source>Bowling alley</source>
-   <translation type="unfinished"/>
+   <translation>Bowlingbaan</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="674"/>
    <source>Bus station</source>
-   <translation type="unfinished"/>
+   <translation>Halte</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="675"/>
    <source>Cafe</source>
-   <translation type="unfinished"/>
+   <translation>Cafe</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="676"/>
    <source>Campground</source>
-   <translation type="unfinished"/>
+   <translation>Camping</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="677"/>
    <source>Car dealer</source>
-   <translation type="unfinished"/>
+   <translation>Auto dealer</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="678"/>
@@ -395,17 +395,17 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="679"/>
    <source>Car repair</source>
-   <translation type="unfinished"/>
+   <translation>Garage</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="680"/>
    <source>Car wash</source>
-   <translation type="unfinished"/>
+   <translation>Autowassen</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="681"/>
    <source>Casino</source>
-   <translation type="unfinished"/>
+   <translation>Casino</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="682"/>

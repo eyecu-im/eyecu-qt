@@ -12,6 +12,11 @@
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/mapmessage/mapmessage.cpp" line="162"/>
+   <source>Messages</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="163"/>
    <source>Autofocus on the map</source>
    <translation type="unfinished"/>

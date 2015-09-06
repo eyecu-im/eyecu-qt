@@ -33,7 +33,7 @@
    <translation>This button will display settings dialog for selected positioning method</translation>
   </message>
   <message>
-   <location line="15" filename="../../plugins/positioning/positioningoptions.cpp"/>
+   <location line="16" filename="../../plugins/positioning/positioningoptions.cpp"/>
    <source>No positioning</source>
    <translation>No positioning</translation>
   </message>

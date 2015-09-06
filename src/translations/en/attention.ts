@@ -71,12 +71,12 @@
    <translation type="obsolete">ATTENTION!</translation>
   </message>
   <message>
-   <location line="185" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="168" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>ATTENTION</source>
    <translation>ATTENTION</translation>
   </message>
   <message>
-   <location line="310" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="293" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>Ok</source>
    <translation>Ok</translation>
   </message>

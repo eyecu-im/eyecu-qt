@@ -390,7 +390,7 @@ If don&apos;t, please register at legacy network on its web site or using native
     </message>
     <message>
         <source>Web Link</source>
-        <translation>Выб-ссылка</translation>
+        <translation type="obsolete">Выб-ссылка</translation>
     </message>
     <message>
         <source>Phone Number</source>
@@ -399,6 +399,22 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>Unregister</source>
         <translation>Удалить регистрацию</translation>
+    </message>
+    <message>
+        <source>Web registration required</source>
+        <translation>Требуется регистрация через веб</translation>
+    </message>
+    <message>
+        <source>Open registration page</source>
+        <translation>Открыть страницу регистрации</translation>
+    </message>
+    <message>
+        <source>Press the button to open vKontakte logon page in the system browser. Proceed logon (if not logged on already). After you see a blank page with a single text message on it, copy contents of browser&apos;s address line and close web browser.</source>
+        <translation>Нажмите эту кнопку, чтобы открыть страницу входа вКонтакте в системном браузере. Выполните вход (если он уже не выполнен). Как только увидите чистую страницу с единственным текстовым сообщением на ней, скопируйте содержимое адресной строки и закройте браузер.</translation>
+    </message>
+    <message>
+        <source>Insert copied browser&apos;s address line here</source>
+        <translation>Вставьте скопированную адресную строку браузера сюда</translation>
     </message>
 </context>
 <context>
@@ -414,6 +430,10 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>Retry</source>
         <translation>Попытаться ещё раз</translation>
+    </message>
+    <message>
+        <source>Cannot change service</source>
+        <translation>Не могу заменить службу</translation>
     </message>
 </context>
 <context>
@@ -467,6 +487,10 @@ If don&apos;t, please register at legacy network on its web site or using native
     <message>
         <source>Trasport Wizard</source>
         <translation>Мастер Транспортов</translation>
+    </message>
+    <message>
+        <source>Change transport</source>
+        <translation>Сменить транспорт</translation>
     </message>
 </context>
 </TS>

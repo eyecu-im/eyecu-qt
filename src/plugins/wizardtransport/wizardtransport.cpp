@@ -29,6 +29,9 @@ void WizardTransport::pluginInfo(IPluginInfo *APluginInfo)
 	APluginInfo->version = "1.0";
 	APluginInfo->author = "Road Works Software";
 	APluginInfo->homePage = "http://www.eyecu.ru";
+	APluginInfo->dependences.append(SERVICEDISCOVERY_UUID);
+	APluginInfo->dependences.append(REGISTRATION_UUID);
+	APluginInfo->dependences.append(GATEWAYS_UUID);
 }
 
 bool WizardTransport::initConnections(IPluginManager *APluginManager, int &AInitOrder)

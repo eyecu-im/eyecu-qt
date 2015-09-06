@@ -19,7 +19,7 @@
    <translation>Location</translation>
   </message>
   <message>
-   <location line="41" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.h"/>
+   <location line="42" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.h"/>
    <source>Location</source>
    <comment>This is the name of positioning method. Please, leave it untranslated, if not sure, what does that mean!</comment>
    <translation>Location</translation>

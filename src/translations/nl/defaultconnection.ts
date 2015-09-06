@@ -171,7 +171,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="223"/>
    <source>Connection to &lt;b&gt;%1&lt;/b&gt; can not be considered completely safe due to errors in servers certificate check:</source>
-   <translation type="unfinished"/>
+   <translation>Verbinding met &lt;b&gt;% 1&lt;/b&gt; kan niet als volledig veilig worden beschouwd dit als gevolg van fouten op de servers certificaat check:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="226"/>

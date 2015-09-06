@@ -183,7 +183,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="80"/>
    <source>Allows to use Jabber multi-user conferences</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om Jabber multi-user conferenties te gebruiken</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="213"/>
@@ -200,12 +200,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="242"/>
    <source>When receiving an invitation to the conference</source>
-   <translation type="unfinished"/>
+   <translation>Het ontvangen van een uitnodiging voor de vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="250"/>
    <source>When receiving a new private message in conference</source>
-   <translation type="unfinished"/>
+   <translation>Het ontvangen van een nieuw prive bericht in vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="258"/>
@@ -227,17 +227,17 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="320"/>
    <source>Show users connections and disconnections</source>
-   <translation type="unfinished"/>
+   <translation>Toon de verbindingen en verbrekingen van gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="321"/>
    <source>Show users status changes</source>
-   <translation type="unfinished"/>
+   <translation>Toon gebruiker de status veranderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="322"/>
    <source>Save users status messages in history</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker statusbericht opslaan in geschiedenis</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="323"/>
@@ -272,7 +272,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="427"/>
    <source>EMail Address</source>
-   <translation type="unfinished"/>
+   <translation>Emailadres</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="428"/>
@@ -282,52 +282,52 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="429"/>
    <source>Given Name</source>
-   <translation type="unfinished"/>
+   <translation>Roepnaam</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="430"/>
    <source>Family Name</source>
-   <translation type="unfinished"/>
+   <translation>Familienaam</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="431"/>
    <source>Desired Nickname</source>
-   <translation type="unfinished"/>
+   <translation>Gewenste bijnaam</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="432"/>
    <source>Your URL</source>
-   <translation type="unfinished"/>
+   <translation>de URL</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="436"/>
    <source>Request for voice</source>
-   <translation type="unfinished"/>
+   <translation>Aanvraag voor stem</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="437"/>
    <source>Requested Role</source>
-   <translation type="unfinished"/>
+   <translation>Rol aanvraag</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="438"/>
    <source>User ID</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker ID</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="439"/>
    <source>Room Nickname</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="440"/>
    <source>Grant Voice?</source>
-   <translation type="unfinished"/>
+   <translation>Stem toekennen?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="444"/>
    <source>Configure conference</source>
-   <translation type="unfinished"/>
+   <translation>Configureer vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="445"/>
@@ -338,7 +338,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="446"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="469"/>
    <source>Allow Occupants to Send Private Messages?</source>
-   <translation type="unfinished"/>
+   <translation>Inzittenden toestaan om een privéberichten te sturen?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="447"/>
@@ -353,7 +353,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="449"/>
    <source>Enable Logging of Room Conversations?</source>
-   <translation type="unfinished"/>
+   <translation>Activeer het loggen van kamergesprekken</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="450"/>
@@ -368,7 +368,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="452"/>
    <source>Natural Language for Room Discussions</source>
-   <translation type="unfinished"/>
+   <translation>Normale taal voor kamer gesprekken</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="453"/>

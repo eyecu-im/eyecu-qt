@@ -12,6 +12,11 @@
    <translation>Toon bericht op de kaart</translation>
   </message>
   <message>
+   <location filename="../../plugins/mapmessage/mapmessage.cpp" line="162"/>
+   <source>Messages</source>
+   <translation>Berichten</translation>
+  </message>
+  <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="163"/>
    <source>Autofocus on the map</source>
    <translation>Autofocus op de kaart</translation>

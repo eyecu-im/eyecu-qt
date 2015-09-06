@@ -263,7 +263,7 @@
    <translation>Keep formatting within chat session</translation>
   </message>
   <message>
-   <location line="761" filename="../../plugins/xhtmlim/edithtml.cpp"/>
+   <location line="741" filename="../../plugins/xhtmlim/edithtml.cpp"/>
    <source>Add link</source>
    <translation>Add link</translation>
   </message>
@@ -362,14 +362,14 @@
    <translation>Alternative text</translation>
   </message>
   <message>
-   <location line="255" filename="../../plugins/xhtmlim/insertimage.cpp"/>
-   <location line="435" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="258" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="434" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Do not change</source>
    <translation>Do not change</translation>
   </message>
   <message numerus="yes">
-   <location line="263" filename="../../plugins/xhtmlim/insertimage.cpp"/>
-   <location line="508" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="266" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="528" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>pixels</source>
    <translation>
     <numerusform>pixel</numerusform>
@@ -377,22 +377,22 @@
    </translation>
   </message>
   <message>
-   <location line="349" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="352" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Please, choose image file</source>
    <translation>Please, choose image file</translation>
   </message>
   <message>
-   <location line="349" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="352" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Images (%1)</source>
    <translation>Images (%1)</translation>
   </message>
   <message>
-   <location line="392" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="395" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Error: image data is empty!</source>
    <translation>Error: image data is empty!</translation>
   </message>
   <message numerus="yes">
-   <location line="429" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="484" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>%1: %2x%3 px; %n byte(s)</source>
    <comment>FORMAT: WIDTHxHEIGHT px; SIZE byte(s)</comment>
    <translation>
@@ -401,17 +401,17 @@
    </translation>
   </message>
   <message>
-   <location line="450" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="449" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Error: cannot create movie!</source>
    <translation>Error: cannot create movie!</translation>
   </message>
   <message>
-   <location line="469" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="468" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Error: cannot read image!</source>
    <translation>Error: cannot read image!</translation>
   </message>
   <message>
-   <location line="527" filename="../../plugins/xhtmlim/insertimage.cpp"/>
+   <location line="547" filename="../../plugins/xhtmlim/insertimage.cpp"/>
    <source>Error: %1</source>
    <translation>Error: %1</translation>
   </message>

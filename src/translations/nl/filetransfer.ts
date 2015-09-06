@@ -211,7 +211,7 @@
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="194"/>
    <source>KB</source>
    <comment>Kilobyte</comment>
-   <translation type="unfinished"/>
+   <translation>KB</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="199"/>
@@ -223,7 +223,7 @@
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="204"/>
    <source>GB</source>
    <comment>Gigabyte</comment>
-   <translation type="unfinished"/>
+   <translation>GB</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="268"/>
@@ -239,7 +239,7 @@
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="268"/>
    <source>/sec</source>
-   <translation type="unfinished"/>
+   <translation>/sec</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.cpp" line="303"/>
@@ -297,7 +297,7 @@
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.ui" line="69"/>
    <source>...</source>
-   <translation type="unfinished"/>
+   <translation>...</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.ui" line="78"/>
@@ -312,12 +312,12 @@
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.ui" line="127"/>
    <source>Status:</source>
-   <translation type="unfinished"/>
+   <translation>Status:</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.ui" line="172"/>
    <source>Method:</source>
-   <translation type="unfinished"/>
+   <translation>Methode:</translation>
   </message>
  </context>
 </TS>

@@ -95,89 +95,111 @@
         <server>
             <jid>vkontakte.jabberon.ru</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone" />
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vktest.jabberon.ru</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.clsv.ru</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.helldev.net</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.im.etersoft.ru</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.jabbercity.ru</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server> 
 		<server>
             <jid>vk.kap.sh</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk4xmpp.kap.sh</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
-			</exception>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
         </server>
 		<server>
             <jid>vk.mnezius.me</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.psynet.su</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
 		<server>
             <jid>vk.xmpp.tankserv.org</jid>
             <software>VK4XMPP Transport</software>
-            <exception>
-                <field var="link"></field>
-                <field var="use_password" type="boolean"><value>true</value></field>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
             </exception>
         </server>
     </gateway>

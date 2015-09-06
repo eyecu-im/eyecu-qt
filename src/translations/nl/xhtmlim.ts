@@ -261,7 +261,7 @@
    <translation>Houd opmaak binnen chatsessie</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/edithtml.cpp" line="761"/>
+   <location filename="../../plugins/xhtmlim/edithtml.cpp" line="741"/>
    <source>Add link</source>
    <translation>koppeling toevoegen</translation>
   </message>
@@ -286,7 +286,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.ui" line="119"/>
    <source>File</source>
-   <translation type="unfinished"/>
+   <translation>Bestand</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.ui" line="210"/>
@@ -360,50 +360,50 @@
    <translation>Alternatieve tekst</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="255"/>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="435"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="258"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="434"/>
    <source>Do not change</source>
    <translation>Niet veranderen</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="263"/>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="508"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="266"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="528"/>
    <source>pixels</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="349"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="352"/>
    <source>Please, choose image file</source>
    <translation>AUB, kies een afbeelding bestand</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="349"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="352"/>
    <source>Images (%1)</source>
    <translation>Afbeeldingen (%1)</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="392"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="395"/>
    <source>Error: image data is empty!</source>
    <translation>Fout: Afbeelding gegevens zijn leeg!</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="429"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="484"/>
    <source>%1: %2x%3 px; %n byte(s)</source>
    <comment>FORMAT: WIDTHxHEIGHT px; SIZE byte(s)</comment>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="450"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="449"/>
    <source>Error: cannot create movie!</source>
    <translation>Fout: Kan geen film maken!</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="469"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="468"/>
    <source>Error: cannot read image!</source>
    <translation>Fout: Kan afbeelding niet lezen!</translation>
   </message>
   <message>
-   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="527"/>
+   <location filename="../../plugins/xhtmlim/insertimage.cpp" line="547"/>
    <source>Error: %1</source>
    <translation>Fout: %1</translation>
   </message>

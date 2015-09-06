@@ -56,33 +56,33 @@
    <translation>Receives notification of current user Geolocation</translation>
   </message>
   <message>
-   <location line="505" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="508" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>S</source>
    <translation>S</translation>
   </message>
   <message>
-   <location line="509" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="512" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>N</source>
    <translation>N</translation>
   </message>
   <message>
-   <location line="517" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="520" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>W</source>
    <translation>W</translation>
   </message>
   <message>
-   <location line="521" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="524" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>E</source>
    <translation>E</translation>
   </message>
   <message>
-   <location line="532" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="535" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>m</source>
    <comment>Short for "meters"</comment>
    <translation>m</translation>
   </message>
   <message>
-   <location line="568" filename="../../plugins/geoloc/geoloc.cpp"/>
+   <location line="571" filename="../../plugins/geoloc/geoloc.cpp"/>
    <source>Location</source>
    <translation>Location</translation>
   </message>
