@@ -126,6 +126,7 @@
     <text>3-|</text> 
     <text>3|</text> 
     <text>*SLEEP*</text> 
+	<text>&#xD83D;&#xDE34;</text>
     <object mime="image/gif">lazy.gif</object>
   </icon>
   <icon>
@@ -242,6 +243,8 @@
     <object mime="image/gif">hmmm.gif</object>
   </icon>
   <icon>
+    <text>&gt;:-@</text>
+	<text>&gt;:o</text>
     <text>:-@</text>
     <text>*MAT*</text>
     <text>*mat*</text>
@@ -252,7 +255,7 @@
     <text>:MAD:</text>
 	<text>:mad:</text>
 	<text>:@</text>
-	<text>&gt;:o</text>
+	<text>&#xD83D;&#xDE34;</text>
     <object mime="image/gif">mad.gif</object>
   </icon>
     <icon>
@@ -467,6 +470,8 @@
 	<text>*show*</text> 
     <object mime="image/gif">show.gif</object>
   </icon>
+
+
   <icon>
 	<text>*nose*</text> 
     <object mime="image/gif">nose.gif</object>
@@ -508,6 +513,7 @@
     <text>8=x</text> 
 	<text>*SKULL*</text> 
     <text>:skull:</text> 
+	<text>&#x2620;</text>
     <object mime="image/gif">skull.gif</object>
   </icon>
   <icon>
@@ -562,12 +568,15 @@
   </icon>
   <icon>
 	<text>:idea:</text>
+	<text>&#xD83D;&#xDCA1;</text>
     <object mime="image/gif">lamp.gif</object>
   </icon>
   <icon>
 	<text>*Bombus*</text>
     <text>*bombus*</text>
 	<text>*bee*</text>
+	<text>*honeybee*</text>
+	<text>&#xD83D;&#xDC1D;</text>
     <object mime="image/gif">bee.gif</object>
   </icon>
   <icon>
@@ -692,6 +701,10 @@
     <text>*BYE*</text> 
     <object mime="image/gif">bye.gif</object>
   </icon>
+
+
+
+
   <icon>
     <text>&lt;:o)</text>
     <text>:o)</text>
@@ -713,7 +726,7 @@
   </icon>
   <icon>
     <text>*KING*</text>
-   	<text>&#xD83D;&#DC51;</text>
+   	<text>&#xD83D;&#xDC51;</text>
     <object mime="image/gif">king.gif</object>
   </icon>
   <icon>
@@ -798,6 +811,20 @@
 	<text>:hospital:</text>
     <object mime="image/gif">hospital.gif</object>
   </icon>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <icon>
 	<text>*GIRL DRUNK*</text>
     <text>*GIRL_DRUNK*</text>
@@ -1004,4 +1031,10 @@
     <text>*bajan*</text>
     <object mime="image/gif">bayan.gif</object>
   </icon>
+
+
+
+
+
+
 </icondef>
