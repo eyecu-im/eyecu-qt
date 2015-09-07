@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml07.09.2015 version='1.0' encoding='UTF-8'?>
 <icondef>
   <name>Default</name>
   <version>1.0</version>
@@ -167,6 +167,7 @@
   </icon>  		
   <icon>
     <text>*DANCE*</text> 
+	<text>&#xD83D;&#xDC83;</text>
     <object mime="image/gif">dance.gif</object>
   </icon>
   <icon>
@@ -284,6 +285,7 @@
   <icon>
     <text>*BRAVO*</text> 
 	<text>*bravo*</text> 
+	<text>&#xD83D;&#xDC4F;</text>
     <object mime="image/gif">clapping.gif</object>
   </icon>
   <icon>
@@ -300,6 +302,7 @@
     <text>*STOP*</text>
 	<text>*stop*</text>
 	<text>STOP</text>
+	<text>&#x270D;</text>
     <object mime="image/gif">stop.gif</object>
   </icon>
     <icon>
@@ -392,15 +395,19 @@
     <object mime="image/gif">figa.gif</object>
   </icon>
   <icon>
+    <text>:ok:</text>
 	<text>(ok)</text>
 	<text>(OK)</text>
 	<text>*ok*</text>
     <text>*OK*</text>
+	<text>&#xD83D;&#xDC4C;</text>
     <object mime="image/gif">ok.gif</object>
   </icon>
   <icon>
+    <text>:v:</text>
 	<text>*VICTORY*</text>
 	<text>*PIECE*</text>
+	<text>&#xD83D;&#xDCC4;</text>
     <object mime="image/gif">victory.gif</object>
   </icon>  		
   <icon>
@@ -611,10 +618,12 @@
     <text>(B)</text>
     <text>(b)</text>
     <text>:beer:</text>
+	<text>&#xD83C;&#xDF7B;</text>
     <object mime="image/gif">beer.gif</object>
   </icon>
   <icon>
     <text>(pl)</text>
+	<text>&#xD83D;&#xDF7D;</text>
     <object mime="image/gif">food.gif</object>
   </icon>
   <icon>
@@ -626,6 +635,7 @@
 	<text>:PEPSI:</text>
 	<text>(D)</text>
 	<text>(d)</text>
+	<text>&#xD83C;&#xDF78;</text>
     <object mime="image/gif">drink.gif</object>
   </icon>
   <icon>
@@ -635,6 +645,7 @@
   </icon>
     <icon>
     <text>:apple:</text>
+	<text>&#xD83C;&#xDF4E;</text>
     <object mime="image/gif">apple.gif</object>
   </icon>
   <icon>
@@ -649,11 +660,13 @@
 	<text>*voskl*</text>
 	<text>:VOSKL:</text>
 	<text>:voskl:</text>
+    <text>&#x26A0;</text>
     <object mime="image/gif">exclimation.gif</object>
   </icon>
   <icon>
 	<text>*TV*</text>
     <text>*tv*</text>
+	<text>&#xD83D;&#xDCFA;</text>
     <object mime="image/gif">tv.gif</object>
   </icon>
   <icon>
@@ -701,10 +714,6 @@
     <text>*BYE*</text> 
     <object mime="image/gif">bye.gif</object>
   </icon>
-
-
-
-
   <icon>
     <text>&lt;:o)</text>
     <text>:o)</text>
