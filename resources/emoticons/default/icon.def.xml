@@ -11,18 +11,21 @@
     <text>:)</text>
     <text>=)</text>
     <text>+)</text>
+    <text>&#xD83D;&#xDE0A;</text>
     <object mime="image/gif">smile.gif</object>
   </icon>
   <icon>
-    <text>:-(</text> 
-    <text>:(</text> 
-    <text>+(</text> 
-    <text>=(</text> 
+    <text>:-(</text>
+    <text>:(</text>
+    <text>+(</text>
+    <text>=(</text>
+    <text>&#xD83D;&#xDE12;</text>
     <object mime="image/gif">sad.gif</object>
   </icon>
   <icon>
     <text>;-)</text> 
     <text>;)</text> 
+    <text>&#xD83D;&#xDE09;</text>
     <object mime="image/gif">wink.gif</object>
   </icon>
   <icon>
@@ -76,6 +79,7 @@
 	<text>-=:-O</text>
 	<text>-=:-o</text>
 	<text>-=:O</text>
+	<text>&#xD83D;&#xDE28;</text>
     <object mime="image/gif">shock.gif</object>
   </icon>
   <icon>
@@ -518,17 +522,21 @@
     <object mime="image/gif">ass.gif</object>
   </icon>
   <icon>
+    <text>:like:</text>
 	<text>*THUMBS UP*</text>
 	<text>*THUMBS_UP*</text>
     <text>*thumbs up*</text>
 	<text>*thumbs_up*</text>
+	<text>&#xD83D;&#xDC4D;</text>
     <object mime="image/gif">thumbsup.gif</object>
   </icon>
   <icon>
+    <text>:dislike:</text>
 	<text>*THUMBS DOWN*</text>
 	<text>*THUMBS_DOWN*</text>
     <text>*thumbs down*</text>
 	<text>*thumbs_down*</text>
+	<text>&#xD83D;&#xDC4E;</text>
     <object mime="image/gif">thumbsdown.gif</object>
   </icon>
   <icon>
@@ -544,6 +552,7 @@
 	<text>@};-</text>
     <text>@}-:--</text>
     <text>@>}--`---</text> 
+    <text>&#xD83C;&#xDF39;</text>
     <object mime="image/gif">rose.gif</object>
   </icon>
   <icon>
@@ -571,6 +580,7 @@
     <object mime="image/gif">firebox.gif</object>
   </icon>
   <icon>
+    <text>}:)</text>
     <text>]:-&gt;</text>
     <text>}:-&gt;</text>
     <text>]:&gt;</text>
@@ -579,22 +589,12 @@
     <text>&gt;:]</text>
 	<text>(6)</text>
     <text>*DIABLO*</text> 
+    <text>&#xD83D;&#xDC8B;</text>
     <object mime="image/gif">diablo.gif</object>
   </icon>
   <icon>
 	<text>(exit)</text>
     <object mime="image/gif">exit.gif</object>
-  </icon>
-  <icon>
-    <text>]:-&gt;</text>
-    <text>}:-&gt;</text>
-    <text>]:&gt;</text>
-    <text>}:&gt;</text>
-    <text>&gt;:-]</text>
-    <text>&gt;:]</text>
-	<text>(6)</text>
-    <text>*DIABLO*</text>
-    <object mime="image/gif">diablo.gif</object>
   </icon>
   <icon>
     <text>*BEER*</text>
@@ -702,7 +702,9 @@
     <object mime="image/gif">clown.gif</object>
   </icon>
   <icon>
+    <text>&lt;3</text>
     <text>*HEART*</text>
+    <text>&#x2764;</text>
     <object mime="image/gif">heart.gif</object>
   </icon>
   <icon>
@@ -711,6 +713,7 @@
   </icon>
   <icon>
     <text>*KING*</text>
+   	<text>&#xD83D;&#DC51;</text>
     <object mime="image/gif">king.gif</object>
   </icon>
   <icon>
@@ -768,6 +771,7 @@
 	<text>*GIRL_KISS*</text>
 	<text>:girl_kissing:</text>
 	<text>:girl_kiss:</text>
+	<text>&#xD83D;&#xDC8B;</text>
     <object mime="image/gif">girlkiss.gif</object>
   </icon>
   <icon>
@@ -892,6 +896,7 @@
     <text>B)</text>
 	<text>(H)</text>
 	<text>(h)</text>
+	<text>&#xD83D;&#xDE0E;</text>
     <object mime="image/gif">dark_glasses.gif</object>
   </icon>
   <icon>
