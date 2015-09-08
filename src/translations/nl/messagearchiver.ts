@@ -194,7 +194,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="321"/>
    <source>Message archiving</source>
-   <translation type="unfinished"/>
+   <translation>Bericht archiveren</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="329"/>
@@ -204,7 +204,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="332"/>
    <source>Off-The-Record sessions </source>
-   <translation type="unfinished"/>
+   <translation>Off-The-Record sessies</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="340"/>
@@ -225,7 +225,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="354"/>
    <source>Settings are applied to contact which JID is exactly matches</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen worden toegepast op contacten welke exact kloppen met JID</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="383"/>
@@ -336,7 +336,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="140"/>
    <source>Conversation is not selected</source>
-   <translation type="unfinished"/>
+   <translation>Gesprek is niet geselecteerd</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="177"/>
@@ -356,7 +356,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="268"/>
    <source>Search is not supported</source>
-   <translation type="unfinished"/>
+   <translation>Zoeken wordt niet ondersteund</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="272"/>
@@ -366,22 +366,22 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="600"/>
    <source>Load more conversations</source>
-   <translation type="unfinished"/>
+   <translation>Meer gesprekken laden</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="602"/>
    <source>All conversations loaded</source>
-   <translation type="unfinished"/>
+   <translation>Alle gesprekken geladen</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="606"/>
    <source>%n conversation header(s) found</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n Gesprekken van koptekst gevonden</numerusform><numerusform>%n Gesprekken van kopteksten gevonden</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="608"/>
    <source>Conversation headers are not found</source>
-   <translation type="unfinished"/>
+   <translation>Kopteksten van gesprekken niet gevonden</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="615"/>
@@ -391,7 +391,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="622"/>
    <source>Retry</source>
-   <translation type="unfinished"/>
+   <translation>Herhaal</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="625"/>
@@ -401,12 +401,12 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="638"/>
    <source>Select conversation to show</source>
-   <translation type="unfinished"/>
+   <translation>Toon een geselecteerd gesprek </translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="640"/>
    <source>%n conversation(s) shown</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n gesprek getoond</numerusform><numerusform>%n gesprekken getoond</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="646"/>
@@ -416,7 +416,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="648"/>
    <source>Shown %1 of %2 conversations...</source>
-   <translation type="unfinished"/>
+   <translation>Toon %1 van %2 gesprekken...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="652"/>
@@ -433,47 +433,47 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="920"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2 in %3</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; met %2 in %3</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="926"/>
    <source>&lt;b&gt;%1&lt;/b&gt; in %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; in %2</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="932"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; met %2 </translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1113"/>
    <source>Found %n occurrence(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n gebeurtenis gevonden</numerusform><numerusform>%n gebeurtenissen gevonden</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1123"/>
    <source>Phrase not found</source>
-   <translation type="unfinished"/>
+   <translation>Aanduiding niet gevonden</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1194"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for &lt;b&gt;%2 %3&lt;/b&gt;?</source>
-   <translation type="unfinished"/>
+   <translation>met &lt;b&gt;%1&lt;/b&gt; voor &lt;b&gt;%2 %3&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1200"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; started at &lt;b&gt;%2&lt;/b&gt;?</source>
-   <translation type="unfinished"/>
+   <translation>met &lt;b&gt;%1&lt;/b&gt; gestart &lt;b&gt;%2&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1204"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for all time?</source>
-   <translation type="unfinished"/>
+   <translation>met &lt;b&gt;%1&lt;/b&gt; voor alle tijden?</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1212"/>
    <source>And %n other conversation(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>En %n ander gesprek</numerusform><numerusform>En %n andere gesprekken</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1216"/>
@@ -483,7 +483,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1217"/>
    <source>Do you want to remove the following conversations?</source>
-   <translation type="unfinished"/>
+   <translation>Wil je het volgend gesprek verwijderen?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1233"/>
@@ -499,22 +499,22 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1286"/>
    <source>Remove Selected Conversations</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder het geselecteerd gesprek</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1297"/>
    <source>Show Contact History</source>
-   <translation type="unfinished"/>
+   <translation>Toon contactgeschiedenis</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1304"/>
    <source>Remove all History with %1</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder alle geschiedenis met %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1315"/>
    <source>Remove History for %1</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder geschiedenis voor %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1326"/>
@@ -524,37 +524,37 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1347"/>
    <source>Print Conversation History</source>
-   <translation type="unfinished"/>
+   <translation>Print de gespreksgeschiedenis</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1362"/>
    <source>HTML file (*.html)</source>
-   <translation type="unfinished"/>
+   <translation>HTML bestand (*.html)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1362"/>
    <source>Text file (*.txt)</source>
-   <translation type="unfinished"/>
+   <translation>Tekst bestand (*.txt)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1363"/>
    <source>Save Conversations to File</source>
-   <translation type="unfinished"/>
+   <translation>Gesprekken opslaan naar bestand</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1392"/>
    <source>Print...</source>
-   <translation type="unfinished"/>
+   <translation>Print...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1398"/>
    <source>Save as HTML</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan als HTML</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1404"/>
    <source>Save as Text</source>
-   <translation type="unfinished"/>
+   <translation>Opslaan als tekst</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1574"/>
@@ -616,7 +616,7 @@ Schakel automatisch archiveren van berichten op de server in</translation>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="235"/>
    <source>Ctrl+H</source>
    <comment>Show history</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+H</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="237"/>
@@ -656,28 +656,28 @@ Schakel automatisch archiveren van berichten op de server in</translation>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="433"/>
    <source>Archive preferences</source>
-   <translation type="unfinished"/>
+   <translation>Voorkeuren archief</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="448"/>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="454"/>
    <source>Archive synchronization</source>
-   <translation type="unfinished"/>
+   <translation>Archief synchronisatie</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="449"/>
    <source>Synchronize history between archives</source>
-   <translation type="unfinished"/>
+   <translation>Synchronisatie geschiedenis tussen archieven</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="455"/>
    <source>Duplicate messages in local archive (not recommended)</source>
-   <translation type="unfinished"/>
+   <translation>Duplicaat bericht in lokaal archief (niet aanbevolen)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="462"/>
    <source>Used history archives</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik geschiedenisarchief</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="672"/>

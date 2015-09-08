@@ -4,478 +4,478 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="79"/>
    <source>Doing chores</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo tareas</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="79"/>
    <source>Drinking</source>
-   <translation type="unfinished"/>
+   <translation>Bebiendo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="79"/>
    <source>Eating</source>
-   <translation type="unfinished"/>
+   <translation>Comiendo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="79"/>
    <source>Exercising</source>
-   <translation type="unfinished"/>
+   <translation>Ejercitando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="80"/>
    <source>Grooming</source>
-   <translation type="unfinished"/>
+   <translation>Aseo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="80"/>
    <source>Having appointment</source>
-   <translation type="unfinished"/>
+   <translation>En una cita</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="80"/>
    <source>Inactive</source>
-   <translation type="unfinished"/>
+   <translation>Inactivo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="80"/>
    <source>Relaxing</source>
-   <translation type="unfinished"/>
+   <translation>Descansando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="81"/>
    <source>Talking</source>
-   <translation type="unfinished"/>
+   <translation>Conversando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="81"/>
    <source>Traveling</source>
-   <translation type="unfinished"/>
+   <translation>De viaje</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="81"/>
    <source>Working</source>
-   <translation type="unfinished"/>
+   <translation>Trabajando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="81"/>
    <source>Buying groceries</source>
-   <translation type="unfinished"/>
+   <translation>De compras</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Cleaning</source>
-   <translation type="unfinished"/>
+   <translation>Limpiando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Cooking</source>
-   <translation type="unfinished"/>
+   <translation>Cocinando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Doing maintenance</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo mantenimiento</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Writing</source>
-   <translation type="unfinished"/>
+   <translation>Escribiendo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Doing the dishes</source>
-   <translation type="unfinished"/>
+   <translation>Lavando platos</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Doing the laundry</source>
-   <translation type="unfinished"/>
+   <translation>Lavando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Gardening</source>
-   <translation type="unfinished"/>
+   <translation>Jardinería</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Running an errand</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo mandados</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Walking the dog</source>
-   <translation type="unfinished"/>
+   <translation>Paseando al perro</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Having a beer</source>
-   <translation type="unfinished"/>
+   <translation>Tomando cerveza</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Having coffee</source>
-   <translation type="unfinished"/>
+   <translation>Tomando café</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Having tea</source>
-   <translation type="unfinished"/>
+   <translation>Tomando té</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Having a snack</source>
-   <translation type="unfinished"/>
+   <translation>Merendando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Having breakfast</source>
-   <translation type="unfinished"/>
+   <translation>Desayunando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Having dinner</source>
-   <translation type="unfinished"/>
+   <translation>Cenando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Having lunch</source>
-   <translation type="unfinished"/>
+   <translation>Almorzando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Cycling</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo ciclismo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Dancing</source>
-   <translation type="unfinished"/>
+   <translation>Bailando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Hiking</source>
-   <translation type="unfinished"/>
+   <translation>De excursión</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Jogging</source>
-   <translation type="unfinished"/>
+   <translation>Trotando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Playing sports</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo deportes</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Running</source>
-   <translation type="unfinished"/>
+   <translation>Corriendo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Skiing</source>
-   <translation type="unfinished"/>
+   <translation>Esquiando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Swimming</source>
-   <translation type="unfinished"/>
+   <translation>Nadando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Working out</source>
-   <translation type="unfinished"/>
+   <translation>Haciendo ejercicios</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>At the spa</source>
-   <translation type="unfinished"/>
+   <translation>En el spa</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Brushing teeth</source>
-   <translation type="unfinished"/>
+   <translation>Cepillándome los dientes</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Getting a haircut</source>
-   <translation type="unfinished"/>
+   <translation>Dándome un corte de pelo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Shaving</source>
-   <translation type="unfinished"/>
+   <translation>Afeitándome</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Taking a bath</source>
-   <translation type="unfinished"/>
+   <translation>Dándome un baño</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Taking a shower</source>
-   <translation type="unfinished"/>
+   <translation>Tomando una ducha</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Day off</source>
-   <translation type="unfinished"/>
+   <translation>Día libre</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Hanging out</source>
-   <translation type="unfinished"/>
+   <translation>Pasando el rato</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Hiding</source>
-   <translation type="unfinished"/>
+   <translation>Oculto</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>On vacation</source>
-   <translation type="unfinished"/>
+   <translation>De vacaciones</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Praying</source>
-   <translation type="unfinished"/>
+   <translation>Rezando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Scheduled holiday</source>
-   <translation type="unfinished"/>
+   <translation>Vacaciones programadas</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Sleeping</source>
-   <translation type="unfinished"/>
+   <translation>Durmiendo</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Thinking</source>
-   <translation type="unfinished"/>
+   <translation>Pensando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Fishing</source>
-   <translation type="unfinished"/>
+   <translation>Pescando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Gaming</source>
-   <translation type="unfinished"/>
+   <translation>Jugando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Going out</source>
-   <translation type="unfinished"/>
+   <translation>De salida</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Partying</source>
-   <translation type="unfinished"/>
+   <translation>De fiesta</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Reading</source>
-   <translation type="unfinished"/>
+   <translation>Leyend</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Rehearsing</source>
-   <translation type="unfinished"/>
+   <translation>Ensayando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Shopping</source>
-   <translation type="unfinished"/>
+   <translation>De compras</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Smoking</source>
-   <translation type="unfinished"/>
+   <translation>Fumando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Socializing</source>
-   <translation type="unfinished"/>
+   <translation>Socializando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Sunbathing</source>
-   <translation type="unfinished"/>
+   <translation>Tomando el sol</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Watching TV</source>
-   <translation type="unfinished"/>
+   <translation>Viendo la TV</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Watching a movie</source>
-   <translation type="unfinished"/>
+   <translation>Viendo una película</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>In real life</source>
-   <translation type="unfinished"/>
+   <translation>En la vida real</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>On the phone</source>
-   <translation type="unfinished"/>
+   <translation>Al teléfono</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>On video phone</source>
-   <translation type="unfinished"/>
+   <translation>En una videoconferencia</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Commuting</source>
-   <translation type="unfinished"/>
+   <translation>De ida y vuelta</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Travelling by bicycle</source>
-   <translation type="unfinished"/>
+   <translation>Montando bicicleta</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Driving</source>
-   <translation type="unfinished"/>
+   <translation>Manejando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>In a car</source>
-   <translation type="unfinished"/>
+   <translation>En el auto</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>On a bus</source>
-   <translation type="unfinished"/>
+   <translation>En el autobús</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>On a plane</source>
-   <translation type="unfinished"/>
+   <translation>En el avión</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>On a train</source>
-   <translation type="unfinished"/>
+   <translation>En el tren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>On a trip</source>
-   <translation type="unfinished"/>
+   <translation>En un viaje</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Walking</source>
-   <translation type="unfinished"/>
+   <translation>Caminando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Coding</source>
-   <translation type="unfinished"/>
+   <translation>Escribiendo código</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>In a meeting</source>
-   <translation type="unfinished"/>
+   <translation>En una reunión</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>Studying</source>
-   <translation type="unfinished"/>
+   <translation>Estudiando</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>No activity</source>
-   <translation type="unfinished"/>
+   <translation>Sin actividad</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="107"/>
    <location filename="../../plugins/activity/activity.cpp" line="393"/>
    <source>User Activity</source>
-   <translation type="unfinished"/>
+   <translation>Actividad usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="108"/>
    <source>Implements XEP-0108: User Activity</source>
-   <translation type="unfinished"/>
+   <translation>Implementa XEP-0108: Actividad de usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="208"/>
    <location filename="../../plugins/activity/activity.cpp" line="209"/>
    <source>Set activity</source>
-   <translation type="unfinished"/>
+   <translation>Establecer actividad</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="208"/>
    <source>Ctrl+F6</source>
    <comment>Set activity (for all accounts)</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+F6</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="209"/>
    <source>F6</source>
    <comment>Set activity (for an account)</comment>
-   <translation type="unfinished"/>
+   <translation>F6</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="244"/>
    <source>When user activity changed</source>
-   <translation type="unfinished"/>
+   <translation>Cuando cambie la actividad de usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="251"/>
    <location filename="../../plugins/activity/activity.cpp" line="534"/>
    <location filename="../../plugins/activity/activity.cpp" line="754"/>
    <source>Activity</source>
-   <translation type="unfinished"/>
+   <translation>Actividad</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="394"/>
    <source>Supports publishing of current user activity</source>
-   <translation type="unfinished"/>
+   <translation>Soporta la publicación de la actividad de usuario actual</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="398"/>
    <source>User Activity Notification</source>
-   <translation type="unfinished"/>
+   <translation>Notificación de actividad de usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="399"/>
    <source>Receives notification of current user activity</source>
-   <translation type="unfinished"/>
+   <translation>Recibe la notificación de la actividad de usuario actual</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="496"/>
    <source>Show user activity icons</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar iconos de actividad de usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="500"/>
    <source>Display user activity icon</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar icono de actividad de usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="501"/>
    <source>Activity events in chat</source>
-   <translation type="unfinished"/>
+   <translation>Eventos de actividad en la ventana de chat</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="642"/>
    <source>%1 changed activity to %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 ha cambiado su actividad a %2</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="791"/>
    <source>Changed activity to: %1</source>
-   <translation type="unfinished"/>
+   <translation>Actividad cambiada a: %1</translation>
   </message>
  </context>
  <context>
@@ -483,7 +483,7 @@
   <message>
    <location filename="../../plugins/activity/activityselect.ui" line="26"/>
    <source>Activity select</source>
-   <translation type="unfinished"/>
+   <translation>Selección de actividad</translation>
   </message>
  </context>
 </TS>

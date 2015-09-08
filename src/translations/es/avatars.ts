@@ -4,32 +4,32 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="41"/>
    <source>Avatar position</source>
-   <translation type="unfinished"/>
+   <translation>Posición del avatar</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="54"/>
    <source>Display avatars for offline contacts grayscaled</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar en gris los avatares de los contactos desconectados</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="67"/>
    <source>Display empty avatars</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar avatares vacíos</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="81"/>
    <source>At Right</source>
-   <translation type="unfinished"/>
+   <translation>A la derecha</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="86"/>
    <source>At Left</source>
-   <translation type="unfinished"/>
+   <translation>A la izquierda</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="94"/>
    <source>Display avatars</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar avatares</translation>
   </message>
  </context>
  <context>

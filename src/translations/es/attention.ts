@@ -9,28 +9,28 @@
    <location filename="../../plugins/attention/attention.cpp" line="333"/>
    <location filename="../../plugins/attention/attention.cpp" line="473"/>
    <source>Attention</source>
-   <translation type="unfinished"/>
+   <translation>Atención</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="52"/>
    <source>Implements XEP-0224: Attention</source>
-   <translation type="unfinished"/>
+   <translation>Implementa XEP-0224: Atención</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
    <source>When contact attempts to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>Cuando un contacto intenta llamar la atención del usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation type="unfinished"/>
+   <translation>Shift+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
    <source>Notification pop-up</source>
-   <translation type="unfinished"/>
+   <translation>Ventana emergente de notificación</translation>
   </message>
   <message>
    <source>Activate main window</source>
@@ -39,27 +39,27 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
    <source>Always play sound</source>
-   <translation type="unfinished"/>
+   <translation>Emitir siempre un sonido</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="189"/>
    <source>Implements XEP-0224: Allows to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>Implementa XEP-0224: Permite llamar la atención de un usuario</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="246"/>
    <source>Attention from %1</source>
-   <translation type="unfinished"/>
+   <translation>Atención de %1</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="256"/>
    <source>ATTENTION!!!</source>
-   <translation type="unfinished"/>
+   <translation>¡¡¡ATENCIÓN!!!</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="371"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Chat</translation>
   </message>
  </context>
  <context>
@@ -71,12 +71,12 @@
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
    <source>ATTENTION</source>
-   <translation type="unfinished"/>
+   <translation>ATENCIÓN</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="293"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Vale</translation>
   </message>
  </context>
 </TS>

@@ -584,12 +584,12 @@ If don&apos;t, please register at legacy network on its web site or using native
  <context>
   <name>WizardTransport</name>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="26"/>
+   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="27"/>
    <source>Transport Wizard</source>
    <translation>Transport Wizard</translation>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="27"/>
+   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="28"/>
    <source>Wizard, which helps to connect to legacy networks via XMPP transports (gateways)</source>
    <translation>Wizard, die help je om te verbinden met legacy netwerken via XMPP diensten (gateways)</translation>
   </message>

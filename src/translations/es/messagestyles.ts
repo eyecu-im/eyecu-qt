@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="114"/>
    <source>Use monospaced font for unformatted text</source>
-   <translation type="unfinished"/>
+   <translation>Usar tipo de letra monoespaciada para texto sin formato</translation>
   </message>
   <message>
    <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="119"/>

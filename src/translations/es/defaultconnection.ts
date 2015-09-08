@@ -14,17 +14,17 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="23"/>
    <source>TLSv1.0</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.0</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="24"/>
    <source>TLSv1.1</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="25"/>
    <source>TLSv1.2</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.2</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="28"/>

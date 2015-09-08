@@ -4,39 +4,39 @@
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="37"/>
    <source>Client Icons</source>
-   <translation type="unfinished"/>
+   <translation>Iconos de cliente</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="38"/>
    <source>Displays a client icon in the roster</source>
-   <translation type="unfinished"/>
+   <translation>Muestra los iconos de los clientes en la lista de contactos</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="164"/>
    <source>Show software version</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar versión del software</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="164"/>
    <source>F3</source>
    <comment>Show software version (chat)</comment>
-   <translation type="unfinished"/>
+   <translation>F3</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="183"/>
    <source>Show client icons</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar los iconos de los clientes</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="186"/>
    <source>Display client icon</source>
-   <translation type="unfinished"/>
+   <translation>Mostrar icono de cliente</translation>
   </message>
   <message>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="270"/>
    <location filename="../../plugins/clienticons/clienticons.cpp" line="455"/>
    <source>Client:</source>
-   <translation type="unfinished"/>
+   <translation>Cliente:</translation>
   </message>
  </context>
 </TS>

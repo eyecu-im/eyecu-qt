@@ -41,7 +41,7 @@
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="373"/>
    <source>Message text hidden</source>
-   <translation type="unfinished"/>
+   <translation>Mensaje de texto oculto</translation>
   </message>
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="481"/>

@@ -35,7 +35,7 @@
   <message>
    <location filename="../../plugins/accountmanager/accountmanager.cpp" line="96"/>
    <source>New account</source>
-   <translation type="unfinished"/>
+   <translation>Nueva cuenta</translation>
   </message>
   <message>
    <location filename="../../plugins/accountmanager/accountmanager.cpp" line="104"/>
@@ -66,7 +66,7 @@
   <message>
    <location filename="../../plugins/accountmanager/accountmanager.cpp" line="144"/>
    <source>Jabber ID:</source>
-   <translation type="unfinished"/>
+   <translation>ID de Jabber:</translation>
   </message>
   <message>
    <location filename="../../plugins/accountmanager/accountmanager.cpp" line="146"/>
@@ -150,7 +150,7 @@
   <message>
    <location filename="../../plugins/accountmanager/accountsoptionswidget.cpp" line="32"/>
    <source>Use wizard...</source>
-   <translation type="unfinished"/>
+   <translation>Usar asistente...</translation>
   </message>
   <message>
    <location filename="../../plugins/accountmanager/accountsoptionswidget.cpp" line="116"/>

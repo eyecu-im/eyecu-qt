@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui" line="29"/>
    <source>Move history to:</source>
-   <translation type="unfinished"/>
+   <translation>Mover el historial a:</translation>
   </message>
  </context>
  <context>

@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="50"/>
    <source>Birthday Reminder</source>
-   <translation type="unfinished"/>
+   <translation>Recordatorio de cumpleaños</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="51"/>
    <source>Reminds about birthdays of your friends</source>
-   <translation type="unfinished"/>
+   <translation>Recuerda los cumpleaños de tus amigos</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="144"/>
@@ -19,19 +19,19 @@
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="284"/>
    <source>Birthday remind</source>
-   <translation type="unfinished"/>
+   <translation>Recordatorio de cumpleaños</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
  %1</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Cumpleaños en %n día,\n %1</numerusform><numerusform>Cumpleaños en %n días,\n %1</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday today!</source>
-   <translation type="unfinished"/>
+   <translation>¡Hoy cumple años!</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>
@@ -41,7 +41,7 @@
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday in %n day(s)!</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>¡Cumple años en %n día!</numerusform><numerusform>¡Cumple años en %n días!</numerusform></translation>
   </message>
  </context>
 </TS>

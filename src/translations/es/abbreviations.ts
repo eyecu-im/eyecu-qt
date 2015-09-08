@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/abbreviations/abbreviations.cpp" line="36"/>
    <source>Abbreviations</source>
-   <translation type="unfinished"/>
+   <translation>Abreviaciones</translation>
   </message>
   <message>
    <location filename="../../plugins/abbreviations/abbreviations.cpp" line="37"/>
    <source>Translates abbreviations frequently used in network communities</source>
-   <translation type="unfinished"/>
+   <translation>Traduce las abreviaciones usadas con frecuencia en las comunidades de red</translation>
   </message>
  </context>
 </TS>
