@@ -113,6 +113,7 @@
   <icon>
     <text>*ROFL*</text> 
 	<text>*ROTFL*</text> 
+	<text>&#xD83D;&#xDE02;</text>
     <object mime="image/gif">rofl.gif</object>
   </icon>
   <icon>
@@ -120,6 +121,13 @@
 	<text>:|</text> 
     <text>*SCRATCH*</text> 
     <object mime="image/gif">scratch_one-s_head.gif</object>
+  </icon>
+  <icon>
+    <text>*-)</text>
+	<text>*THINKING*</text>
+	<text>:thinking:</text>
+	<text>&#xD83E;&#xDD14;</text>
+    <object mime="image/gif">thinking.gif</object>
   </icon>
   <icon>
 	<text>3-|{</text> 
@@ -140,6 +148,9 @@
     <text>&gt;+O</text>
     <text>&gt;+o</text>
     <text>&gt;=o</text>
+    <text>*FIST*</text>
+    <text>:fist:</text>
+    <text>&#xD83D;&#xDC4A;</text>
     <object mime="image/gif">aggressive.gif</object>
   </icon>
   <icon>
@@ -222,6 +233,7 @@
     <text>:!</text>
     <text>:-Q</text>
 	<text>:Q</text>
+	<text>&#xD83D;&#xDEAC;</text>
     <object mime="image/gif">big_boss.gif</object>
   </icon>
     <icon>
@@ -232,8 +244,9 @@
     <object mime="image/gif">yess.gif</object>
   </icon>
     <icon>
-    <text>%)</text> 
-    <text>%-)</text> 
+    <text>%)</text>
+    <text>%-)</text>
+    <text>&#xD83D;&#xDE32;</text>
     <object mime="image/gif">wacko.gif</object>
   </icon>
   <icon>
@@ -280,6 +293,7 @@
 	<text>|-)</text>
 	<text>[:|]</text>
 	<text>[:]</text>
+	<text>&#xD83D;&#xDD75;</text>
     <object mime="image/gif">ninja.gif</object>
   </icon>
   <icon>
@@ -324,10 +338,12 @@
     <object mime="image/gif">hi.gif</object>
   </icon>
   <icon>
+    <text>&gt;(</text> 
 	<text>&gt;:-(</text> 
     <text>&gt;:(</text> 
 	<text>&gt;-(</text> 
 	<text>&gt;:=(</text> 
+	<text>&#xD83D;&#xDE20;</text>
     <object mime="image/gif">angry.gif</object>
   </icon>
   <icon>
@@ -439,6 +455,7 @@
     <text>&gt;:)</text>
 	<text>&gt;-)</text>
     <text>&gt;:=)</text>
+    <text>&#xD83D;&#xDE08;</text>
     <object mime="image/gif">devil.gif</object>
   </icon>
   <icon>
@@ -475,17 +492,12 @@
   </icon>
   <icon>
 	<text>*show*</text> 
+	<text>*THIS*</text> 
     <object mime="image/gif">show.gif</object>
   </icon>
-
-
   <icon>
 	<text>*nose*</text> 
     <object mime="image/gif">nose.gif</object>
-  </icon>
-  <icon>
-	<text>*THIS*</text> 
-    <object mime="image/gif">this.gif</object>
   </icon>
   <icon>
     <text>*SORRY*</text> 
@@ -502,6 +514,7 @@
   <icon>
 	<text>*FROZEN*</text> 
     <text>*frozen*</text> 
+    <text>&#xD83D;&#xDE31;</text>
     <object mime="image/gif">frozen.gif</object>
   </icon>
   <icon>
@@ -521,6 +534,7 @@
 	<text>*SKULL*</text> 
     <text>:skull:</text> 
 	<text>&#x2620;</text>
+    <text>&#xD83D;&#xDC80;</text>
     <object mime="image/gif">skull.gif</object>
   </icon>
   <icon>
@@ -576,7 +590,7 @@
   <icon>
 	<text>:idea:</text>
 	<text>&#xD83D;&#xDCA1;</text>
-    <object mime="image/gif">lamp.gif</object>
+    <object mime="image/png">bulb.png</object>
   </icon>
   <icon>
 	<text>*Bombus*</text>
@@ -591,9 +605,11 @@
     <object mime="image/gif">rip.gif</object>
   </icon>
   <icon>
+    <text>:fire:</text>
 	<text>:firebox:</text>
     <text>:burn:</text>
-    <object mime="image/gif">firebox.gif</object>
+    <text>&#xD83D;&#xDD25;</text>
+    <object mime="image/gif">fire.gif</object>
   </icon>
   <icon>
     <text>}:)</text>
@@ -610,7 +626,8 @@
   </icon>
   <icon>
 	<text>(exit)</text>
-    <object mime="image/gif">exit.gif</object>
+	<text>&#xD83D;&#xDEAA;</text>
+    <object mime="image/png">exit.png</object>
   </icon>
   <icon>
     <text>*BEER*</text>
@@ -618,6 +635,7 @@
     <text>(B)</text>
     <text>(b)</text>
     <text>:beer:</text>
+    <text>&#xD83C;&#xDF7A;</text>
 	<text>&#xD83C;&#xDF7B;</text>
     <object mime="image/gif">beer.gif</object>
   </icon>
@@ -636,14 +654,42 @@
 	<text>(D)</text>
 	<text>(d)</text>
 	<text>&#xD83C;&#xDF78;</text>
+	<text>&#xD83C;&#xDF79;</text>
     <object mime="image/gif">drink.gif</object>
   </icon>
   <icon>
 	<text>(C)</text>
     <text>(c)</text>
-    <object mime="image/gif">cup.gif</object>
+    <text>&#x00A9;</text>
+    <object mime="image/gif">copyright.gif</object>
   </icon>
-    <icon>
+  <icon>
+	<text>*COFFEE*</text>
+    <text>:coffee:</text>
+	<text>*CUP*</text>
+    <text>:cup:</text>
+	<text>*COFFEECUP*</text>
+    <text>:coffeecup:</text>
+    <text>&#x2615;</text>
+    <object mime="image/gif">cup.gif</object>
+  </icon>  
+  <icon>
+	<text>:bottle:</text>
+    <text>*BOTTLE*</text>
+    <text>:winebottle:</text>
+    <text>*WINEBOTTLE*</text>
+    <object mime="image/png">bottle.png</object>
+    <text>&#xD83C;&#xDF7E;</text>
+  </icon>
+  <icon>
+	<text>:glass:</text>
+    <text>*GLASS*</text>
+    <text>:wineglass:</text>
+    <text>*WINEGLASS*</text>
+    <text>&#xD83C;&#xDF77;</text>
+    <object mime="image/png">glass.png</object>
+  </icon>  
+  <icon>
     <text>:apple:</text>
 	<text>&#xD83C;&#xDF4E;</text>
     <object mime="image/gif">apple.gif</object>
@@ -674,6 +720,7 @@
     <text>[:}</text>
     <text>[:-)</text>
     <text>[:)</text>
+    <text>&#xD83C;&#xDFA7;</text>
     <object mime="image/gif">music.gif</object>
   </icon>
   <icon>
@@ -704,6 +751,7 @@
   </icon>
   <icon>
     <text>*HAT*</text>
+    <text>&#xD83C;&#xDFA9;</text>
     <object mime="image/gif">hat.gif</object>
   </icon>
   <icon>
@@ -711,7 +759,8 @@
     <object mime="image/gif">attention.gif</object>
   </icon>
   <icon>
-    <text>*BYE*</text> 
+    <text>*BYE*</text>
+    <text>&#xD83D;&#xDC4B;</text>
     <object mime="image/gif">bye.gif</object>
   </icon>
   <icon>
@@ -727,6 +776,8 @@
     <text>&lt;3</text>
     <text>*HEART*</text>
     <text>&#x2764;</text>
+    <text>&#xD83D;&#xDC93;</text>
+    <text>&#xD83D;&#xDC97;</text>
     <object mime="image/gif">heart.gif</object>
   </icon>
   <icon>
@@ -807,6 +858,8 @@
 	<text>*=)</text>
     <text>*:-D</text>
     <text>*:D</text>
+    <text>&#xD83D;&#xDC67;</text>
+    <text>&#xD83D;&#xDC69;</text>
     <object mime="image/gif">girl.gif</object>
   </icon>
   <icon>
@@ -820,20 +873,6 @@
 	<text>:hospital:</text>
     <object mime="image/gif">hospital.gif</object>
   </icon>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <icon>
 	<text>*GIRL DRUNK*</text>
     <text>*GIRL_DRUNK*</text>
@@ -899,6 +938,13 @@
     <object mime="image/gif">girlboobs.gif</object>
   </icon>
   <icon>
+    <text>(.Y.)</text>
+    <text>(.)(.)</text>
+    <text>( . Y . )</text>
+    <text>( . )( . )</text>
+    <object mime="image/gif">tits.gif</object>
+  </icon>
+  <icon>
 	<text>*BB*</text>
     <object mime="image/gif">bb.gif</object>
   </icon>
@@ -908,11 +954,13 @@
   </icon>
   <icon>
 	<text>*baby*</text>
+	<text>&#xD83D;&#xDC76;</text>
     <object mime="image/gif">baby.gif</object>
   </icon>
   <icon>
     <text>*TIRED*</text> 
     <text>|-0</text> 
+    <text>&#xD83D;&#xDE29;</text>
     <object mime="image/gif">boredom.gif</object>
   </icon>
   <icon>
@@ -921,6 +969,7 @@
   </icon>
   <icon>
 	<text>*THANK*</text>
+	<text>&#xD83D;&#xDE4F;</text>
     <object mime="image/gif">thank.gif</object>
   </icon>
   <icon>
@@ -1033,6 +1082,11 @@
     <object mime="image/gif">mail.gif</object>
   </icon>
   <icon>
+    <text>*SARCASM*</text>
+    <text>:sarcasm:</text>
+    <object mime="image/gif">sarcasm.gif</object>
+  </icon>
+  <icon>
     <text>[:||||:]</text>
     <text>*BAYAN*</text>
     <text>*bayan*</text>
@@ -1040,10 +1094,10 @@
     <text>*bajan*</text>
     <object mime="image/gif">bayan.gif</object>
   </icon>
-
-
-
-
-
-
+  <icon>
+    <text>*RUSSIAN*</text>
+    <text>:russian:</text>
+    <object mime="image/gif">russian.gif</object>
+  </icon>
+  
 </icondef>
