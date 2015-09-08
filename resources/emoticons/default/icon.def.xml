@@ -658,10 +658,10 @@
     <object mime="image/gif">drink.gif</object>
   </icon>
   <icon>
+    <text>&#x00A9;</text>
 	<text>(C)</text>
     <text>(c)</text>
-    <text>&#x00A9;</text>
-    <object mime="image/gif">copyright.gif</object>
+    <object mime="image/png">copyright.png</object>
   </icon>
   <icon>
 	<text>*COFFEE*</text>
