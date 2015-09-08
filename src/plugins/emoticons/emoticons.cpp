@@ -389,7 +389,10 @@ int Emoticons::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int A
 			if (!url.isEmpty())
 			{
 				cursor.setPosition(it.key()-posOffset);
-				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,it->length());
+// *** <<< eyeCU <<< ***
+//				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,it->length());
+				cursor.setPosition(cursor.position()+it->length(), QTextCursor::KeepAnchor);
+// *** >>> eyeCU >>> ***
 				if (!ADocument->resource(QTextDocument::ImageResource,url).isValid())
 					cursor.insertImage(QImage(url.toLocalFile()),url.toString());
 				else
