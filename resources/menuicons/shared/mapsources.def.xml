@@ -33,10 +33,6 @@
     <object mime="image/png">navitel.png</object>
   </icon>
   <icon>
-    <key>mail.ru</key>
-    <object mime="image/png">mail.ru.png</object>
-  </icon>
-  <icon>
     <key>here</key>
     <object mime="image/png">here.png</object>
   </icon>

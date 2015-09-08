@@ -294,7 +294,6 @@
 #define MNI_MAP_BING                    "bing"
 #define MNI_MAP_OSM                     "osm"
 #define MNI_MAP_WIKI                    "wiki"
-#define MNI_MAP_MAILRU                  "mail.ru"
 #define MNI_MAP_HERE                    "here"
 #define MNI_MAP_ROSREESTR               "rosreestr"
 #define MNI_MAP_2GIS                    "2gis"
