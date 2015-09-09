@@ -3,7 +3,6 @@
 #include <QPushButton>
 #include <MapObject>
 #include <MapTile>
-#include <QDebug>
 
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
@@ -292,9 +291,6 @@ void Map::fillMenu()
 	FMyLocation->setDisabled(FFollowMyLocation);
 	FMapForm->showMapCenter(!FFollowMyLocation);
 	connect(FMyLocation, SIGNAL(triggered(bool)), SLOT(showMyLocation()));
-
-	FMenuMap->insertSeparator(FMyLocation);
-	FMenuToolbar->insertSeparator(FMyLocation);
 
 	action = addMenuAction(tr("New center"), RSR_STORAGE_MAPICONS, MPI_NEWCENTER, 1);
 	action->setShortcutId(SCT_MAP_NEWCENTER);
@@ -596,6 +592,7 @@ bool Map::showObject(int AType, const QString &AId, bool AFollow, bool AShowMap)
 			showMap();
 			centerMousePointer();
 		}
+		return true;
 	}
 	return false;
 }
@@ -845,31 +842,19 @@ void Map::onMapCenterChanged(double ALatitude, double ALongitude, bool AManual)
 
 void Map::showMap(bool AShow, bool AActivate)
 {
-	qDebug() << "Map::showMap(" << AShow << "," << AActivate << ")";
 	if (AShow)
 	{
 		if (Options::node(OPV_MAP_ATTACH_TO_ROSTER).value().toBool())
 		{
-			qDebug() << "Appending central page...";
 			FMainWindow->mainCentralWidget()->appendCentralPage(FMapForm);
 			if (AActivate)
-			{
-				qDebug() << "Showing...";
 				FMapForm->showWindow();
-			}
 		}
 		else
-		{
-			qDebug() << "Showing...";
 			FMapForm->showWindow();
-		}
 	}
 	else
-	{
-		qDebug() << "Hiding..";
 		FMapForm->hideWindow();
-	}
-	qDebug() << "Done!";
 }
 
 void Map::onShortcutActivated(const QString &AId, QWidget *AWidget)
