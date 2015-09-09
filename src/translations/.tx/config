@@ -381,10 +381,6 @@ source_lang = en
 file_filter = <lang>/mapsourcekosmosnimki.ts
 source_lang = en
 
-[eyecu-qt.mapsourcemailruts]
-file_filter = <lang>/mapsourcemailru.ts
-source_lang = en
-
 [eyecu-qt.mapsourcemegafonts]
 file_filter = <lang>/mapsourcemegafon.ts
 source_lang = en
