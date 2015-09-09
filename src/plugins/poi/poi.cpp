@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QMessageBox>
 #include <QCryptographicHash>
 #include <QDesktopServices>
@@ -1436,10 +1437,12 @@ void Poi::onPoiList(bool)
 
 void Poi::showPoiList(const QString &AStreamBareJid)
 {
+	qDebug() << "Poi::showPoiList(" << AStreamBareJid << ")";
     if (FPoiLists.contains(AStreamBareJid))
         FPoiLists[AStreamBareJid]->activateWindow();
     else
     {
+		qDebug() << "Here!";
         FPoiLists.insert(AStreamBareJid, new PoiList(this));
         FPoiLists[AStreamBareJid]->setWindowTitle(AStreamBareJid.isEmpty()?tr("Point of interest list")
                                                  :tr("Point of interest list for %1").arg(AStreamBareJid));
@@ -1450,8 +1453,12 @@ void Poi::showPoiList(const QString &AStreamBareJid)
         else
             FPoiLists[AStreamBareJid]->fillTable(FGeolocHash[AStreamBareJid], AStreamBareJid);//------
 
+		qDebug() << "Showing POI list...";
         if (FPoiLists[AStreamBareJid]->exec())
+		{
+			qDebug() << "Ok! Showing POI";
             poiShow(FPoiLists[AStreamBareJid]->selectedId());
+		}
         FPoiLists.take(AStreamBareJid)->deleteLater();
     }
 }
@@ -1459,8 +1466,10 @@ void Poi::showPoiList(const QString &AStreamBareJid)
 // POI actions
 void Poi::poiShow(const QString &APoiId) const
 {
-	if(FGeoMap && !FGeoMap->showObject(MOT_POI, APoiId, false))
+	qDebug() << "Poi::poiShow(" << APoiId << ")";
+	if(FMap && !FMap->showObject(MOT_POI, APoiId))
     {   // Failed to show POI as a map object (filtered?)
+		qDebug() << "failed to show object!";
         GeolocElement poi=getPoi(APoiId);
         if (poi.hasProperty(GeolocElement::Lat) && poi.hasProperty(GeolocElement::Lon))
         {

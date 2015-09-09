@@ -3,6 +3,7 @@
 #include <QPushButton>
 #include <MapObject>
 #include <MapTile>
+#include <QDebug>
 
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
@@ -844,19 +845,31 @@ void Map::onMapCenterChanged(double ALatitude, double ALongitude, bool AManual)
 
 void Map::showMap(bool AShow, bool AActivate)
 {
+	qDebug() << "Map::showMap(" << AShow << "," << AActivate << ")";
 	if (AShow)
 	{
 		if (Options::node(OPV_MAP_ATTACH_TO_ROSTER).value().toBool())
 		{
+			qDebug() << "Appending central page...";
 			FMainWindow->mainCentralWidget()->appendCentralPage(FMapForm);
 			if (AActivate)
+			{
+				qDebug() << "Showing...";
 				FMapForm->showWindow();
+			}
 		}
 		else
+		{
+			qDebug() << "Showing...";
 			FMapForm->showWindow();
+		}
 	}
 	else
+	{
+		qDebug() << "Hiding..";
 		FMapForm->hideWindow();
+	}
+	qDebug() << "Done!";
 }
 
 void Map::onShortcutActivated(const QString &AId, QWidget *AWidget)

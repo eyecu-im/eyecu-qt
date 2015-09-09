@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QGraphicsDropShadowEffect>
 #include <QToolTip>
 #include <MapObject>
@@ -162,6 +163,7 @@ MapForm::~MapForm()
 
 void MapForm::showCentralPage(bool AMinimized)
 {
+	qDebug() << "MapForm::showCentralPage(" << AMinimized << ")";
 	if (!AMinimized)
 		showWindow();
 	else
@@ -271,8 +273,12 @@ bool MapForm::event(QEvent *AEvent)
 
 void MapForm::showWindow()
 {
+	qDebug() << "MapForm::showWindow()";
 	if (isWindow())
+	{
+		qDebug() << "Showing...";
 		WidgetManager::showActivateRaiseWindow(this);
+	}
 	else
 		emit centralPageShow(false);
 }
