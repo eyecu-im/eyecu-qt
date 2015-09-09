@@ -235,6 +235,7 @@ bool Map::initSettings()
 //-------
 void Map::onOptionsOpened()
 {
+	qDebug() << "Map::onOptionsOpened()";
 	FMapForm->selectMapSource(Options::node(OPV_MAP_SOURCE).value().toString());
 
 	onOptionsChanged(Options::node(OPV_MAP_PROXY));
@@ -268,6 +269,8 @@ void Map::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_MAP_MODE));
 	onOptionsChanged(Options::node(OPV_MAP_ZOOM));
 	onOptionsChanged(Options::node(OPV_MAP_COORDS));
+	onOptionsChanged(Options::node(OPV_MAP_ZOOM_WHEEL));
+	onOptionsChanged(Options::node(OPV_MAP_ZOOM_SLIDERTRACK));
 
 	QPointF coords=Options::node(OPV_MAP_COORDS).value().toPointF();
 	FMapForm->mapScene()->setMapCenter(coords.y(), coords.x());
@@ -362,7 +365,11 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 		emit zoomChanged(ANode.value().toInt());
 	}
 	else if (ANode.path()==OPV_MAP_ZOOM_SLIDERTRACK)
+	{
+		qDebug() << "OPV_MAP_ZOOM_SLIDERTRACK";
+		qDebug() << "value=" << ANode.value().toBool();
 		FMapForm->setZoomSliderTracknig(ANode.value().toBool());
+	}
 	else if (ANode.path()==OPV_MAP_OSD_FONT)
 	{
 		FMapForm->setOsdFont(Options::node(OPV_MAP_OSD_FONT).value().value<QFont>());
@@ -823,9 +830,10 @@ QComboBox *Map::newWheelZoomComboBox(QWidget *AParent)
 }
 
 /******************* Protected slots *************************/
-void Map::onSliderValueChanged(int position)
+void Map::onSliderValueChanged(int APosition)
 {
-	Options::node(OPV_MAP_ZOOM).setValue(position);
+	qDebug() << "Map::onSliderValueChanged(" << APosition << ")";
+	Options::node(OPV_MAP_ZOOM).setValue(APosition);
 }
 
 void Map::onMapCenterChanged(double ALatitude, double ALongitude, bool AManual)
@@ -885,7 +893,7 @@ void Map::onNewPositionAvailable(const GeolocElement &APosition)
 {
 	if (APosition.isValid())
 	{
-		FMapForm->setOwnLocation(APosition.propertyAsString(GeolocElement::Lat), APosition.propertyAsString(GeolocElement::Lat), APosition.reliability());
+		FMapForm->setOwnLocation(APosition.propertyAsString(GeolocElement::Lat), APosition.propertyAsString(GeolocElement::Lon), APosition.reliability());
 		if (FFollowMyLocation)
 		{
 			FMapForm->mapScene()->setMapCenter(APosition.lat(), APosition.lon());

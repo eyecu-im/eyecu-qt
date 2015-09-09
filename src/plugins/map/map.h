@@ -101,7 +101,7 @@ public:
 	void zoomOut();
 
 public slots:
-	void onSliderValueChanged(int position);
+	void onSliderValueChanged(int APosition);
 	void updateScene();
 	void showMap(bool AShow=true, bool AActivate=true);
 

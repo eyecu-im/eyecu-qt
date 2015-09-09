@@ -31,6 +31,7 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	FOldType(TYPE_NONE),
 	FHideEventEnabled(false)
 {
+	qDebug() << "MapForm()";
 	FTypes[0]=-1;
 	FTypes[1]=-1;
 	FTypes[2]=-1;
@@ -536,6 +537,7 @@ void MapForm::setOsdCenterMarkerVisible(bool AVisible)
 
 void MapForm::setZoomSliderTracknig(bool AEnable)
 {
+	qDebug() << "MapForm::setZoomSliderTracknig(" << AEnable << ")";
 	ui->sldScale->setTracking(AEnable);
 }
 
