@@ -2,7 +2,6 @@
 #include <QToolTip>
 #include <MapObject>
 
-#include <interfaces/imap.h>
 #include <utils/menu.h>
 #include <utils/options.h>
 #include <utils/widgetmanager.h>
@@ -30,7 +29,6 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	FOldType(TYPE_NONE),
 	FHideEventEnabled(false)
 {
-	qDebug() << "MapForm()";
 	FTypes[0]=-1;
 	FTypes[1]=-1;
 	FTypes[2]=-1;

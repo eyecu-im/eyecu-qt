@@ -193,7 +193,25 @@ void Attention::registerDiscoFeatures()
 bool Attention::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
     return FDiscovery==NULL || !FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
-                            || FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_ATTENTION);
+			|| FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_ATTENTION);
+}
+
+void Attention::updateToolbar(IMessageChatWindow *AWindow)
+{
+	Action *action;
+	QList<QAction *> actions = AWindow->editWidget()->editToolBarChanger()->groupItems(TBG_MWTBW_ATTENTION_SEND);
+	if (!actions.isEmpty())
+	{
+		action = AWindow->editWidget()->editToolBarChanger()->handleAction(actions.first());
+		Jid contactJid = AWindow->contactJid();
+		if (isSupported(AWindow->streamJid(), contactJid) && AWindow->toolBarWidget() && AWindow->viewWidget())
+		{
+			action->setData(ADR_CONTACT_JID, contactJid.full());
+			action->setVisible(true);
+		}
+		else
+			action->setVisible(false);
+	}
 }
 
 //IMeassageHandler
@@ -465,19 +483,24 @@ void Attention::showStyledMessage(IMessageChatWindow *AWindow, const Message &AM
 // SLOTS
 void Attention::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
-    if (isSupported(AWindow->streamJid(), AWindow->contactJid()) && AWindow->toolBarWidget() && AWindow->viewWidget())
-    {
-        Jid contactJid = AWindow->contactJid();
-        Jid streamJid = AWindow->streamJid();
-        Action *action = new Action(AWindow->toolBarWidget()->instance());
-        action->setText(tr("Attention"));
-		action->setIcon(RSR_STORAGE_MENUICONS, MNI_ATTENTION);
-        action->setData(ADR_CONTACT_JID, contactJid.full());
-        action->setData(ADR_STREAM_JID, streamJid.full());
-        action->setShortcutId(SCT_MESSAGEWINDOWS_CHAT_ATTENTION);
-        connect(action,SIGNAL(triggered(bool)),SLOT(onSetAttentionByAction(bool)));
-        AWindow->editWidget()->editToolBarChanger()->insertAction(action,TBG_MWTBW_ATTENTION_VIEW);
-    }
+	Jid streamJid = AWindow->streamJid();
+	Action *action = new Action(AWindow->toolBarWidget()->instance());
+	action->setText(tr("Attention"));
+	action->setIcon(RSR_STORAGE_MENUICONS, MNI_ATTENTION);
+	action->setShortcutId(SCT_MESSAGEWINDOWS_CHAT_ATTENTION);
+	action->setData(ADR_STREAM_JID, streamJid.full());
+	connect(action,SIGNAL(triggered(bool)),SLOT(onSetAttentionByAction(bool)));
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+	AWindow->editWidget()->editToolBarChanger()->insertAction(action,TBG_MWTBW_ATTENTION_SEND);
+	updateToolbar(AWindow);
+}
+
+void Attention::onAddressChanged(const Jid &AJidBefore, const Jid &AJidAfter)
+{
+	IMessageAddress *address=qobject_cast<IMessageAddress *>(sender());
+	IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(), address->contactJid());
+	if (window)
+		updateToolbar(window);
 }
 
 void  Attention::onSetAttentionByAction(bool)

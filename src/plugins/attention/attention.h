@@ -78,6 +78,7 @@ public:
 protected:
     void registerDiscoFeatures();
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	void updateToolbar(IMessageChatWindow *AWindow);
 
 // Imported Lion's code
     IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
@@ -109,6 +110,7 @@ private:
 
 protected slots:
     void onChatWindowCreated(IMessageChatWindow *AWindow);
+	void onAddressChanged(const Jid &AJidBefore, const Jid &AJidAfter);
     void onSetAttentionByAction(bool);
     //-----
     void onNotificationAppended(int ANotifyId, const INotification &ANotification);
