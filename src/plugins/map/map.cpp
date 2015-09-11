@@ -234,7 +234,6 @@ bool Map::initSettings()
 //-------
 void Map::onOptionsOpened()
 {
-	qDebug() << "Map::onOptionsOpened()";
 	FMapForm->selectMapSource(Options::node(OPV_MAP_SOURCE).value().toString());
 
 	onOptionsChanged(Options::node(OPV_MAP_PROXY));
@@ -361,11 +360,7 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 		emit zoomChanged(ANode.value().toInt());
 	}
 	else if (ANode.path()==OPV_MAP_ZOOM_SLIDERTRACK)
-	{
-		qDebug() << "OPV_MAP_ZOOM_SLIDERTRACK";
-		qDebug() << "value=" << ANode.value().toBool();
 		FMapForm->setZoomSliderTracknig(ANode.value().toBool());
-	}
 	else if (ANode.path()==OPV_MAP_OSD_FONT)
 	{
 		FMapForm->setOsdFont(Options::node(OPV_MAP_OSD_FONT).value().value<QFont>());
@@ -829,7 +824,6 @@ QComboBox *Map::newWheelZoomComboBox(QWidget *AParent)
 /******************* Protected slots *************************/
 void Map::onSliderValueChanged(int APosition)
 {
-	qDebug() << "Map::onSliderValueChanged(" << APosition << ")";
 	Options::node(OPV_MAP_ZOOM).setValue(APosition);
 }
 
