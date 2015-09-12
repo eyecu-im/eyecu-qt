@@ -309,6 +309,8 @@ call copyresources ru.rwsoftware.eyecu.statusicons.yaonline statusicons\yaonline
 call copyplugins ru.rwsoftware.eyecu.emoticons emoticons
 call copyresources ru.rwsoftware.eyecu.emoticons.default emoticons\default
 call copyresources ru.rwsoftware.eyecu.emoticons.blobs_purple emoticons\blobs_purple
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vk_big emoticons\vk_big
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vk_small emoticons\vk_small
 
 call copyplugins ru.rwsoftware.eyecu.xhtmlim xhtmlim
 call copyresources ru.rwsoftware.eyecu.xhtmlim xhtml\shared
@@ -384,7 +386,6 @@ call copyplugins ru.rwsoftware.eyecu.map.sources.2gis mapsource2gis
 call copyplugins ru.rwsoftware.eyecu.map.sources.yahoo mapsourceyahoo
 call copyplugins ru.rwsoftware.eyecu.map.sources.ovi mapsourceovi
 call copyplugins ru.rwsoftware.eyecu.map.sources.bing mapsourcebing
-call copyplugins ru.rwsoftware.eyecu.map.sources.mailru mapsourcemailru
 call copyplugins ru.rwsoftware.eyecu.map.sources.navitel mapsourcenavitel
 call copyplugins ru.rwsoftware.eyecu.map.sources.progorod mapsourceprogorod
 call copyplugins ru.rwsoftware.eyecu.map.sources.esri mapsourceesri
@@ -423,7 +424,7 @@ rem   Country
 call copyresources ru.rwsoftware.eyecu.resources.country country\shared
 
 rem   Menu Icons
-set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png mail.ru.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
+set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
 call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.mapsources menuicons\shared
 
 set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png

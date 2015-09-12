@@ -56,7 +56,7 @@ Component.prototype.createOperations = function()
 			
             component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
 //			component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
-            component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Uninstall eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
+            component.addOperation("CreateShortcut", "@TargetDir@/uninstall.exe", startMenuDir+"\\Uninstall eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=32");
         }
 		if (component.value("Desktop"))
             component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@\\eyeCU.lnk", "workingDirectory=@TargetDir@");
@@ -71,10 +71,20 @@ Component.prototype.installerLoaded = function () {
     if (installer.addWizardPage(component, "InstallationTypePage", QInstaller.TargetDirectory)) {
         var widget = gui.pageWidgetByObjectName("DynamicInstallationTypePage");
         if (widget != null) {
+			widget.windowTitle = "Select installation type";
             widget.installAllUsers.toggled.connect(this, Component.prototype.installAllUsersToggled);
             widget.installMeOnly.toggled.connect(this, Component.prototype.installMeOnlyToggled);
-            widget.installAllUsers.checked = true;
-            Component.prototype.installAllUsersToggled(true);
+			if (installer.gainAdminRights())
+			{
+				widget.installAllUsers.checked = true;
+				Component.prototype.installAllUsersToggled(true);
+			}
+			else
+			{
+				widget.installMeOnly.checked = true;
+				widget.installAllUsers.enabled = false;
+				Component.prototype.installMeOnlyToggled(true);
+			}
         }
     }
 
@@ -84,7 +94,6 @@ Component.prototype.installerLoaded = function () {
             widget.desktopCheckBox.toggled.connect(this, Component.prototype.desktopToggled);
             widget.startMenuCheckBox.toggled.connect(this, Component.prototype.startMenuToggled);
             widget.portableCheckBox.toggled.connect(this, Component.prototype.portableToggled);
-            widget.windowTitle = "Select Installation Type";
             widget.startMenuCheckBox.checked=true;
         }
     }
