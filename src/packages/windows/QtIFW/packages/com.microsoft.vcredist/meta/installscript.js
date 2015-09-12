@@ -38,35 +38,27 @@ function Component()
 
 Component.prototype.createOperationsForArchive = function(archive)
 {
-    // don't use the default operation
-    // component.createOperationsForArchive(archive);
+    if (installer.gainAdminRights())
+    {
+		temp = QDesktopServices.storageLocation(QDesktopServices.TempLocation)
 
-//	msvcm90 = installer.findLibrary("msvcm90");
-//	msvcp90 = installer.findLibrary("msvcp90");
-//	msvcr90 = installer.findLibrary("msvcr90");
-
-//    QMessageBox.information("component.infirmation", "Libraries found:", "msvcm90="+msvcm90+"; msvcr90="+msvcr90+"; msvcp90="+msvcp90,
-//                                  QMessageBox.Ok);
-
-    // add an extract operation with a modified path
-//	temp = installer.environmentVariable("temp");
-//	if (temp == "")
-//		temp = installer.environmentVariable("tmp");
-
-	temp = QDesktopServices.storageLocation(QDesktopServices.TempLocation)
-
-	if (temp != "")
-	{
-		tmpdir = temp+"/eyecu-msvcrt-redist/";
-		component.addOperation("Extract", archive, tmpdir);
-		component.addOperation("Execute", tmpdir+"vcredist_x86.exe", "/q");
-		component.addOperation("Delete", tmpdir+"vcredist_x86.exe");
-//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
-//		component.addOperation("Rmdir", tmpdir);
+		if (temp != "")
+		{
+			tmpdir = temp+"/eyecu-msvcrt-redist/";
+			component.addElevatedOperation("Extract", archive, tmpdir);
+			component.addElevatedOperation("Execute", tmpdir+"vcredist_x86.exe", "/q");
+			component.addElevatedOperation("Delete", tmpdir+"vcredist_x86.exe");
+	//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
+	//		component.addOperation("Rmdir", tmpdir);
+		}
+		else
+		{
+			QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
+			installer.interrupt();
+		}
 	}
 	else
 	{
-		QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
-		installer.interrupt();
+		QMessageBox.error("component.error", "Error!", "Failed to gain admin rights!", QMessageBox.Ok);
 	}
 }
