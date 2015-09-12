@@ -817,6 +817,7 @@ void Gateways::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndex
 				action->setIcon(RSR_STORAGE_MENUICONS,MNI_GATEWAYS_RESOLVE); // *** <<< eyeCU >>> ***
 				action->setData(ADR_STREAM_JID,rolesMap.value(RDR_STREAM_JID));
 				action->setData(ADR_SERVICE_JID,rolesMap.value(RDR_PREP_BARE_JID));
+				action->setData(ADR_ACTION_RESOLVE, true);
 				connect(action,SIGNAL(triggered(bool)),SLOT(onResolveActionTriggered(bool)));
 				AMenu->addAction(action,AG_RVCM_GATEWAYS_RESOLVE);
 			}
