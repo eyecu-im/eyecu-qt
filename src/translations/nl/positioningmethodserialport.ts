@@ -192,7 +192,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="288"/>
    <source>Flow control :</source>
-   <translation type="unfinished"/>
+   <translation>Stroom regeling:</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="314"/>
@@ -212,12 +212,12 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="430"/>
    <source>Time treshold</source>
-   <translation type="unfinished"/>
+   <translation>Tijd grens</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="440"/>
    <source>Timeout</source>
-   <translation type="unfinished"/>
+   <translation>Time-out</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="474"/>

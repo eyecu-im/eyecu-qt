@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="144"/>
    <source>When reminding of upcoming birthdays</source>
-   <translation type="unfinished"/>
+   <translation>Al recordar los próximos cumpleaños</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="284"/>

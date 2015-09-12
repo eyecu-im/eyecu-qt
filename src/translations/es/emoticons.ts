@@ -19,12 +19,12 @@
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="139"/>
    <source>Do not convert text smileys to images</source>
-   <translation type="unfinished"/>
+   <translation>No convertir las caritas en texto a imágenes</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="154"/>
    <source>Smileys:</source>
-   <translation type="unfinished"/>
+   <translation>Caritas:</translation>
   </message>
  </context>
  <context>
@@ -42,7 +42,7 @@
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="58"/>
    <source>Priority Up</source>
-   <translation type="unfinished"/>
+   <translation>Subir prioridad</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="61"/>
@@ -52,7 +52,7 @@
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="71"/>
    <source>Priority Down</source>
-   <translation type="unfinished"/>
+   <translation>Bajar prioridad</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="74"/>

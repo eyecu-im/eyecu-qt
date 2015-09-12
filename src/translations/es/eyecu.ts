@@ -4,12 +4,12 @@
   <message>
    <location filename="../../loader/aboutbox.cpp" line="17"/>
    <source>Version: %1.%2 %3</source>
-   <translation type="unfinished"/>
+   <translation>Versión: %1.%2 %3</translation>
   </message>
   <message>
    <location filename="../../loader/aboutbox.cpp" line="18"/>
    <source>Revision: %1</source>
-   <translation type="unfinished"/>
+   <translation>Revisión: %1</translation>
   </message>
  </context>
  <context>
@@ -22,7 +22,7 @@
   <message utf8="true">
    <location filename="../../loader/aboutbox.ui" line="188"/>
    <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
-   <translation type="unfinished"/>
+   <translation>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. Este software ha sido liberado bajo los términos de la Licencia Pública General de GNU versión 3.</translation>
   </message>
  </context>
  <context>
@@ -40,7 +40,7 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="468"/>
    <source>Dependencies not found</source>
-   <translation type="unfinished"/>
+   <translation>No se encontraron las dependencias</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="475"/>
@@ -70,12 +70,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="929"/>
    <source>Global shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Atajos globales</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="930"/>
    <source>Application shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Atajos de la aplicación</translation>
   </message>
  </context>
  <context>
@@ -83,42 +83,42 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="204"/>
    <source>Disabled (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Inhabilitado (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="207"/>
    <source>With errors (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Con errores (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>
    <source>This plugin does not depend on other plugins.</source>
-   <translation type="unfinished"/>
+   <translation>Este complemento no depende de otros.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
    <source>This plugin depends on %n other plugin(s).</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Este complemento depende de otro.</numerusform><numerusform>Este complemento depende de otros %n.</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Otro complemento depende de este.</numerusform><numerusform>Otros %n complementos dependen de este.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Another plugin depends on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>Otro complemento depende de este.</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>
    <source>Other plugins don&apos;t depend on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>No hay complementos que dependan de este.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
    <source>%n dependency(ies) not found.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>No se ha encontrado %n dependencia.</numerusform><numerusform>No se han encontrado %n dependencias.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
@@ -141,12 +141,12 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.ui" line="76"/>
    <source>Plugin Information</source>
-   <translation type="unfinished"/>
+   <translation>Información del complemento</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>
    <source>Search plugin</source>
-   <translation type="unfinished"/>
+   <translation>Buscar complemento</translation>
   </message>
  </context>
 </TS>

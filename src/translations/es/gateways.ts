@@ -80,7 +80,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="728"/>
    <source>Are you sure you wish to remove transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>¿Seguro que deseas eliminar el transporte &quot;&lt;b&gt;%1&lt;/b&gt;&quot; y su &lt;b&gt;contacto&lt;/b&gt; de la lista de contactos?</numerusform><numerusform>¿Seguro que deseas eliminar el transporte &quot;&lt;b&gt;%1&lt;/b&gt;&quot; y sus &lt;b&gt;%n contactos&lt;/b&gt; de la lista de contactos?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="734"/>
@@ -90,7 +90,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n transport(s)&lt;/b&gt; and their contacts from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>¿Seguro que deseas eliminar el transporte y sus contactos de la lista de contactos?</numerusform><numerusform>¿Seguro que deseas eliminar los %n transportes y sus contactos de la lista de contactos?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="816"/>
@@ -105,12 +105,12 @@
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="841"/>
    <source>Reset nick names</source>
-   <translation type="unfinished"/>
+   <translation>Restablecer apodos</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="841"/>
    <source>Reset nick name</source>
-   <translation type="unfinished"/>
+   <translation>Restablecer apodo</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="854"/>

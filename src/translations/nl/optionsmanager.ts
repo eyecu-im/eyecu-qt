@@ -245,17 +245,17 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
    <source>Auto run application on system startup</source>
-   <translation type="unfinished"/>
+   <translation>Start EYECU als systeem wordt opgestart</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="173"/>
    <source>Localization</source>
-   <translation type="unfinished"/>
+   <translation>Lokalisatie</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="198"/>
    <source>&lt;System Language&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;Systeem Taal&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="202"/>
@@ -265,13 +265,14 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
    <source>Options mode changed</source>
-   <translation type="unfinished"/>
+   <translation>Opties mode is veranderd</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
-   <translation type="unfinished"/>
+   <translation>Om opties om teschakelen, %1 moet worden geherstart.
+Wil je dat %1 wordt geherstart?</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="855"/>

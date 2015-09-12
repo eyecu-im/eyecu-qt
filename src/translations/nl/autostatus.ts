@@ -211,32 +211,32 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="145"/>
    <source>   s - the second without a leading zero (0 to 59)</source>
-   <translation type="unfinished"/>
+   <translation>s - een seconde zonder een voorafgaande nul (0 tot 59)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="146"/>
    <source>   ss - the second with a leading zero (00 to 59)</source>
-   <translation type="unfinished"/>
+   <translation>ss - een seconde met een voorafgaande nul (00 tot 59)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="147"/>
    <source>   z - the milliseconds without leading zeroes (0 to 999)</source>
-   <translation type="unfinished"/>
+   <translation>z - een milliseconde zonder voorafgaande nullen (0 tot 999)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="148"/>
    <source>   zzz - the milliseconds with leading zeroes (000 to 999)</source>
-   <translation type="unfinished"/>
+   <translation>zz - milliseconden met voorafgaande nullen (000 tot 999)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="149"/>
    <source>   AP or A - interpret as an AM/PM time. AP must be either &apos;AM&apos; or &apos;PM&apos;</source>
-   <translation type="unfinished"/>
+   <translation>AP of A - interpreteren als een AM / PM tijd. AP moet zijn &apos;AM&apos; of &apos;PM&apos;</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="150"/>
    <source>   ap or a - interpret as an AM/PM time. ap must be either &apos;am&apos; or &apos;pm&apos;</source>
-   <translation type="unfinished"/>
+   <translation>ap of a - interpreteren als een AM / PM tijd. ap moet zijn &apos;am&apos; of &apos;pm&apos;</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="151"/>

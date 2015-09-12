@@ -239,7 +239,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="647"/>
    <source>google.com</source>
    <comment>Your google domain</comment>
-   <translation type="unfinished"/>
+   <translation>google.com</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="757"/>

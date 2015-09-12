@@ -222,7 +222,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="319"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1029"/>
    <source>Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Vergaderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="320"/>
@@ -242,32 +242,32 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="323"/>
    <source>Leave the conference when window closed</source>
-   <translation type="unfinished"/>
+   <translation>Verlaat conferentie als venster wordt gesloten</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="324"/>
    <source>Automatically rejoin to conference after kick</source>
-   <translation type="unfinished"/>
+   <translation>Automatisch weer aan aan conferentie deelname na de kick</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="325"/>
    <source>Select a user to refer by enumeration in the input field</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een gebruiker door te verwijzen naar opsomming in het invoerveld</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="328"/>
    <source>Add this suffix when referring to the user</source>
-   <translation type="unfinished"/>
+   <translation>Voeg deze achtervoegsel toe bij het verwijzen naar de gebruiker</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="425"/>
    <source>Register in conference</source>
-   <translation type="unfinished"/>
+   <translation>Registreer in de conferentie</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="426"/>
    <source>Allow this person to register with the room?</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan dat deze persoon zich inschrijft bij de kamer?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="427"/>
@@ -277,7 +277,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="428"/>
    <source>Rules and Notes</source>
-   <translation type="unfinished"/>
+   <translation>Regels en notities</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="429"/>

@@ -224,12 +224,12 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="392"/>
    <source>File open error!</source>
-   <translation type="unfinished"/>
+   <translation>Open bestand fout!</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="392"/>
    <source>An error occured while opening &quot;%1&quot;</source>
-   <translation type="unfinished"/>
+   <translation>Er is een fout opgetreden bij het openen van &quot;%1&quot;</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="432"/>
@@ -244,7 +244,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="472"/>
    <source>All Supported Formats</source>
-   <translation type="unfinished"/>
+   <translation>Alle formaten worden ondersteund</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="473"/>
@@ -254,7 +254,7 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="474"/>
    <source>Video</source>
-   <translation type="unfinished"/>
+   <translation>Video</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="475"/>

@@ -260,7 +260,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="531"/>
    <source>INVALID REQUEST!</source>
-   <translation type="unfinished"/>
+   <translation>ONGELDIGE AANVRAAG!</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="536"/>
@@ -285,7 +285,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="555"/>
    <source>%1S</source>
-   <translation type="unfinished"/>
+   <translation>%1S</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="555"/>
@@ -300,12 +300,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="556"/>
    <source>%1E</source>
-   <translation type="unfinished"/>
+   <translation>%1E</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="661"/>
    <source>Accounting</source>
-   <translation type="unfinished"/>
+   <translation>Boekhouding</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="662"/>
