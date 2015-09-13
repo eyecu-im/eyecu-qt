@@ -67,15 +67,17 @@
 				path = filespec("path", SearchPath)
 				drive = filespec("drive", SearchPath)
 				qtsdk = drive||LEFT(path, LENGTH(path)-1)
+				rc = WirexxPutEnv('QTSDK',qtsdk)
 
 				if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
 				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
 				else qtdir = '' /* Unknown path */
 
-				if \ (qtdir = '') then rc = WirexxPutEnv('QTDIR',qtdir)
-
-				rc = WirexxPutEnv('QTSDK',qtsdk)
-
+				DO while (qtdir = '')
+					qtdir = WirexxVarPrompt('QTDIR')
+					if stream(qtdir||'\translations','c','query exists') = '' then qtdir = ''
+					else call WirexxPutEnv 'QTDIR', qtdir
+				END
 				return ''
 			END
 		END
@@ -88,7 +90,7 @@
 	</REXX>
 
 	<REXX NAME="QtDIR">
-		return WirexxVarPrompt('QTDIR')
+		return WirexxGetEnv('QTDIR')
 	</REXX>
 
 	<REXX NAME="QtSDK">
@@ -460,9 +462,11 @@
 
 <GROUP TITLE="Spell checker dictionaries">
 
+<GROUP TITLE="English">
+
 <PCK 	INDEX=41
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_GB\2\26"
-	TITLE="English (Great Britain)"
+	TITLE="Great Britain"
 	TARGET="$(1)" FIXED
 	SELECT
 	>English (Great Britain) Spellchecker dictionary
@@ -470,7 +474,7 @@
 
 <PCK 	INDEX=42
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_US\1\0"
-	TITLE="English (United States)"
+	TITLE="United States"
 	TARGET="$(1)" FIXED
 	SELECT
 	>English (United States) Spellchecker dictionary
@@ -478,35 +482,39 @@
 
 <PCK 	INDEX=43
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_NZ\1\14"
-	TITLE="English (New Zeland)"
+	TITLE="New Zeland"
 	TARGET="$(1)" FIXED
 	>English (New Zeland) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=44
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_CA\1\0"
-	TITLE="English (Canada)"
+	TITLE="Canada"
 	TARGET="$(1)" FIXED
 	>English (Canada) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=45
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_AU\1\1\0"
-	TITLE="English (Australia)"
+	TITLE="Australia"
 	TARGET="$(1)" FIXED
 	>English (Australia) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=46
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_ZA\1\18"
-	TITLE="English (South Africa)"
+	TITLE="South Africa"
 	TARGET="$(1)" FIXED
 	>English (South Africa) Spellchecker dictionary
 </PCK>
 
+</GROUP>
+
+<GROUP TITLE="Russian">
+
 <PCK 	INDEX=47
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RU\1\0"
-	TITLE="Russian (Russia)"
+	TITLE="Russia"
 	TARGET="$(1)" FIXED
 	SELECT
 	>Russian (Russia) Spellchecker dictionary
@@ -514,28 +522,32 @@
 
 <PCK 	INDEX=48
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_AOT\0\3\9"
-	TITLE="Russian (AOT)"
+	TITLE="AOT"
 	TARGET="$(1)" FIXED
 	>Russian (AOT) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=49
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RK\1\0"
-	TITLE="Russian (Roganoff-Knizhnik)"
+	TITLE="Roganoff-Knizhnik"
 	TARGET="$(1)" FIXED
 	>Russian (Roganoff-Knizhnik) Spellchecker dictionary
 </PCK>
 
+</GROUP>
+
+<GROUP TITLE="Deutsch">
+
 <PCK 	INDEX=50
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_AT_frami\2013\12\06"
-	TITLE="Deutsch (Austria/Frami)"
+	TITLE="Austria/Frami"
 	TARGET="$(1)" FIXED
 	>Deutsch (Austria/Frami) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=51
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_frami\2013\12\06"
-	TITLE="Deutsch (Germany/Frami)"
+	TITLE="Germany/Frami"
 	TARGET="$(1)" FIXED
 	SELECT
 	>Deutsch (Germany/Frami) Spellchecker dictionary
@@ -543,10 +555,12 @@
 
 <PCK 	INDEX=52
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_igerman98\2011\06\09"
-	TITLE="Deutsch (Germany/igerman98)"
+	TITLE="Germany/igerman98"
 	TARGET="$(1)" FIXED
 	>Deutsch (Germany/igerman98) Spellchecker dictionary
 </PCK>
+
+</GROUP>
 
 <PCK 	INDEX=53
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-pl_PL\1\0"
@@ -555,7 +569,6 @@
 	SELECT
 	>Polish Spellchecker dictionary
 </PCK>
-
 
 <PCK 	INDEX=54
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-uk_UA\1\0"
@@ -811,7 +824,7 @@
 
 <PCK 	INDEX=86
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Default\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Emoticons - default package"
+	TITLE="Default"
 	TARGET="$(1)\resources\emoticons\default" FIXED
 	SELECT
 	REQUIRES=85
@@ -821,7 +834,7 @@
 
 <PCK 	INDEX=87
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Blobs Purple\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Emoticons - Blobs Purple"
+	TITLE="Blobs Purple"
 	TARGET="$(1)\resources\emoticons\blobs_purple" FIXED
 	SELECT
 	REQUIRES=85
@@ -829,9 +842,33 @@
 	(c) Road Works Software
 </PCK>
 
-</GROUP>
+<GROUP TITLE="Emoji">
+
+<PCK 	INDEX=88
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="vKontakte (small)"
+	TARGET="$(1)\resources\emoticons\vk_small" FIXED
+	SELECT
+	REQUIRES=85
+	>eyeCU - Emoji - Small vKontakte emoticon set
+	(c) Road Works Software
+</PCK>
 
 <PCK 	INDEX=89
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="vKontakte (big)"
+	TARGET="$(1)\resources\emoticons\vk_big" FIXED
+	SELECT
+	REQUIRES=85
+	>eyeCU - Emoji - Big vKontakte emoticon set
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+</GROUP>
+
+<PCK 	INDEX=90
 	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="XHTML-IM"
 	TARGET="$(1)" FIXED
@@ -975,15 +1012,6 @@
 	SELECT
 	REQUIRES=103
 	>Allows Map plugin use Kosmosnimki as map source
-</PCK>
-
-<PCK 	INDEX=118
-	PACKAGEID="Road Works Software\eyeCU\Map source: Mail.ru\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Mail.ru map source"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=103
-	>Allows Map plugin use Mail.ru as map source
 </PCK>
 
 <PCK 	INDEX=119
@@ -1617,9 +1645,9 @@
 <GROUP TITLE="Qt Purple">
 
 <PCK 	INDEX=400
-	PACKAGEID="Purple Soft\QtPurple\Util\1\0\1"
+	PACKAGEID="Purple Soft\QtPurple\Util\1\0\2"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.0.1.wpi"
+	EXTERNAL="qtpurple-1.1.0.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1628,9 +1656,9 @@
 </PCK>
 
 <PCK 	INDEX=410
-	PACKAGEID="Purple Soft\QtPurple\Geo\1\0\0"
+	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\0"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.0.1.wpi"
+	EXTERNAL="qtpurple-1.1.0.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1638,14 +1666,12 @@
 	(c) Porple Soft
 </PCK>
 
-</GROUP>
-
-<GROUP TITLE="Language packs (Qt Purple)">
+<GROUP TITLE="Language packs">
 	<PCK 	INDEX=411
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1656,7 +1682,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1667,7 +1693,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1678,7 +1704,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1689,7 +1715,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1700,7 +1726,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1711,7 +1737,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1722,14 +1748,18 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.0.1.wpi"
+		EXTERNAL="qtpurple-1.1.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Japanese language pack for Qt Geo library
 	(c) Purple Soft
 	</PCK>
+
 </GROUP>
+
+</GROUP>
+
 </HEAD>
 
 <BODY>
