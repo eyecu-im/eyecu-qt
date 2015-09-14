@@ -317,7 +317,7 @@ void Geoloc::registerDiscoFeatures()
 
 void Geoloc::sendGeoloc(const GeolocElement &APosition, const Jid &AStreamJid)
 {
-	if (FXmppStreams->findXmppStream(AStreamJid)->isConnected())
+	if (FXmppStreams->findXmppStream(AStreamJid)->isConnected() && FPEPManager->isSupported(AStreamJid))
 	{
 		QDomDocument doc;
 		QDomElement item=doc.createElement("item");
@@ -390,27 +390,30 @@ void Geoloc::sendGeoloc(GeolocElement APosition)
 {
 	if (APosition.hasProperty("course"))	// Extra non-standard property from Positioning Provider Serial Port.
 		APosition.removeProperty("course");
-	for (QList<Jid>::ConstIterator it = FXMPPStreams.constBegin(); it!=FXMPPStreams.constEnd(); it++)
+	for (QList<Jid>::ConstIterator it = FStreamsOnline.constBegin(); it!=FStreamsOnline.constEnd(); it++)
 		if (FAccountManager->findAccountByStream(*it)->optionsNode().value(OPV_PUBLISHUSERLOCATION).toBool())
 			sendGeoloc(APosition, *it);  //public data on server
 }
 
 void Geoloc::retractGeoloc()
 {
-	for (int i=0; i<FXMPPStreams.size(); i++)
+	for (int i=0; i<FStreamsOnline.size(); i++)
 	{
 		QDomDocument doc;
 		QDomElement item=doc.createElement("item");
-		Jid streamJid=FXMPPStreams.at(i);
-		item.setAttribute("id", FIdHash.value(streamJid, QString("#resource:").append(streamJid.resource())));
-
-		if (Options::node(OPV_PEP_DELETE_PUBLISHEMPTY).value().toBool())
+		Jid streamJid=FStreamsOnline.at(i);
+		if (FPEPManager->isSupported(streamJid))
 		{
-			item.appendChild(doc.createElementNS(NS_PEP_GEOLOC, "geoloc"));
-			FPEPManager->publishItem(streamJid, NS_PEP_GEOLOC, item);
+			item.setAttribute("id", FIdHash.value(streamJid, QString("#resource:").append(streamJid.resource())));
+
+			if (Options::node(OPV_PEP_DELETE_PUBLISHEMPTY).value().toBool())
+			{
+				item.appendChild(doc.createElementNS(NS_PEP_GEOLOC, "geoloc"));
+				FPEPManager->publishItem(streamJid, NS_PEP_GEOLOC, item);
+			}
+			if (Options::node(OPV_PEP_DELETE_RETRACT).value().toBool())
+				FPEPManager->deleteItem(streamJid, NS_PEP_GEOLOC, item);
 		}
-		if (Options::node(OPV_PEP_DELETE_RETRACT).value().toBool())
-			FPEPManager->deleteItem(streamJid, NS_PEP_GEOLOC, item);
 	}
 }
 
@@ -596,12 +599,12 @@ void Geoloc::removeGeoloc(const Jid &AStreamJid, const Jid &AContactJid)
 //----SLOTS----
 void Geoloc::onStreamOpened(IXmppStream *AXmppStream)
 {
-	FXMPPStreams.append(AXmppStream->streamJid());
+	FStreamsOnline.append(AXmppStream->streamJid());
 }
 
 void Geoloc::onStreamClosed(IXmppStream *AXmppStream)
 {
-	FXMPPStreams.removeOne(AXmppStream->streamJid());
+	FStreamsOnline.removeOne(AXmppStream->streamJid());
 }
 
 void Geoloc::onRosterIndexInserted(IRosterIndex *AIndex)

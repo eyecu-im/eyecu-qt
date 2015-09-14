@@ -168,7 +168,7 @@ private:
     QNetworkAccessManager *FNetworkAccessManager;
 
 	IconStorage			*FIconStorage;
-	QList<Jid>			FOpenStreams;
+	QSet<Jid>			FStreamsOnline;
     QHash<QString, TuneData > FTuneHash;
 	QHash<Jid, QString>	FIdHash;
 	QTimer				FPollingTimer;

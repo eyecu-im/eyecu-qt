@@ -159,7 +159,7 @@ private:
 	IconStorage			*FIconStorage;
 	bool				FSimpleContactsView;
 	quint32				FRosterLabelId;
-	QMap<Jid, QString>	FStreamActivity;
+	QSet<Jid>			FStreamsOnline;
 	QHash<QString, ActivityData> FActivityHash;
 	QHash<QString, QStringList> FActivityTextLists;
 	const QList<int>	FRosterIndexKinds;

@@ -281,7 +281,7 @@ bool Nickname::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 
 void Nickname::sendNick(const QString &ANickname, const Jid &AStreamJid)
 {
-	if (FPEPManager)
+	if (FPEPManager && FPEPManager->isSupported(AStreamJid))
 	{
 		QDomDocument doc;
 		QDomElement item=doc.createElement("item");
