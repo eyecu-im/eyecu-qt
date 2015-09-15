@@ -116,7 +116,7 @@ private:
 	quint32				FRosterLabelId;
 	bool				FSimpleContactsView;
 	bool				FToggleSend;
-	QList<Jid>			FXMPPStreams;
+	QList<Jid>			FStreamsOnline;
 	QHash<Jid, GeolocElement>		FGeolocHash;
 	QHash<QString, GeolocElement>	FGeolocBareHash;
 	QHash<Jid, QString>	FIdHash;

@@ -29,10 +29,10 @@
 
 #include "moodselect.h"
 
-#define ADR_STREAM_JID          Action::DR_StreamJid
-#define ADR_CONTACT_JID         Action::DR_Parametr4
-#define ADR_GROUP_SHIFT1        Action::DR_Parametr1
-#define ADR_MESSAGE_TYPE        Action::DR_UserDefined
+#define ADR_STREAM_JIDS		Action::DR_StreamJid
+#define ADR_CONTACT_JID		Action::DR_Parametr4
+#define ADR_GROUP_SHIFT1	Action::DR_Parametr1
+#define ADR_MESSAGE_TYPE	Action::DR_UserDefined
 #define MT_CHAT     1
 #define MT_NORMAL   2
 
@@ -282,8 +282,9 @@ void Mood::showMoodSelector(bool)
         MoodData moodData = myMood->moodData();
         if (!moodData.isEmpty())
             saveComments(moodData);
-        for (QMap<Jid, QString>::iterator it = FStreamMood.begin(); it != FStreamMood.end(); ++it)
-            sendMood(moodData, it.key());
+		for (QSet<Jid>::ConstIterator it = FStreamsOnline.begin(); it != FStreamsOnline.end(); ++it)
+			if (FPEPManager->isSupported(*it))
+				sendMood(moodData, *it);
     }
     myMood->deleteLater();
 }
@@ -299,11 +300,8 @@ void Mood::onShortcutActivated(const QString &AString, QWidget *AWidget)
             if ((*it)->kind()==RIK_STREAM_ROOT)
             {
                 Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
-                if (FStreamMood.contains(streamJid))
-                {
+				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
                     setMoodForAccount(streamJid);
-                    break;
-                }
             }
     }
 }
@@ -524,12 +522,12 @@ QMultiMap<int, IOptionsDialogWidget *> Mood::optionsDialogWidgets(const QString 
 
 void Mood::onStreamOpened(IXmppStream *AXmppStream)
 {
-    FStreamMood.insert(AXmppStream->streamJid(), NULL);
+	FStreamsOnline.insert(AXmppStream->streamJid());
 }
 
 void Mood::onStreamClosed(IXmppStream *AXmppStream)
 {
-    FStreamMood.remove(AXmppStream->streamJid());
+	FStreamsOnline.remove(AXmppStream->streamJid());
 }
 
 void Mood::onRosterIndexInserted(IRosterIndex *AIndex)
@@ -541,17 +539,25 @@ void Mood::onRosterIndexInserted(IRosterIndex *AIndex)
 
 void Mood::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {
+	QStringList streamJids;
     if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
         for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
-            if ((*it)->kind() == RIK_STREAM_ROOT && FStreamMood.contains((*it)->data(RDR_STREAM_JID).toString()))
-            {
-                Action *action = new Action(AMenu);
-                action->setText(tr("Mood"));
-                action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
-                action->setData(ADR_STREAM_JID, (*it)->data(RDR_STREAM_JID).toString());
-                connect(action, SIGNAL(triggered(bool)), SLOT(onSetMoodByAction(bool)));
-                AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
-            }
+			if ((*it)->kind() == RIK_STREAM_ROOT)
+			{
+				Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
+				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
+					streamJids.append((*it)->data(RDR_STREAM_JID).toString());
+			}
+
+	if (!streamJids.isEmpty())
+	{
+		Action *action = new Action(AMenu);
+		action->setText(tr("Mood"));
+		action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+		action->setData(ADR_STREAM_JIDS, streamJids);
+		connect(action, SIGNAL(triggered(bool)), SLOT(onSetMoodByAction(bool)));
+		AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
+	}
 }
 
 void Mood::onRosterIndexToolTips(IRosterIndex * AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
@@ -582,7 +588,9 @@ void Mood::setMoodForAccount(Jid AStreamJid)
 
 void Mood::onSetMoodByAction(bool)
 {
-    setMoodForAccount(qobject_cast<Action *>(sender())->data(ADR_STREAM_JID).toString());
+	QStringList streamJids = qobject_cast<Action *>(sender())->data(ADR_STREAM_JIDS).toStringList();
+	for (QStringList::ConstIterator it = streamJids.constBegin(); it !=  streamJids.constEnd(); ++it)
+		setMoodForAccount(*it);
 }
 
 void Mood::updateChatWindows(bool AInfoBar)
@@ -765,7 +773,7 @@ void Mood::updateChatWindowActions(IMessageChatWindow *AChatWindow)
             action->setData(ADR_MESSAGE_TYPE, MT_CHAT);
             action->setShortcutId(SCT_MESSAGEWINDOWS_SETMOOD);
             action->setData(ADR_CONTACT_JID, address->contactJid().full());
-            action->setData(ADR_STREAM_JID, address->streamJid().full());
+			action->setData(ADR_STREAM_JIDS, address->streamJid().full());
             connect(action,SIGNAL(triggered(bool)),SLOT(onAddMood(bool)));			
 			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_MOOD_VIEW);
         }
@@ -915,7 +923,7 @@ void Mood::onNormalWindowCreated(IMessageNormalWindow *AWindow)
         action->setData(ADR_MESSAGE_TYPE, MT_NORMAL);
         action->setShortcutId(SCT_MESSAGEWINDOWS_SETMOOD);
         action->setData(ADR_CONTACT_JID, AWindow->contactJid().full());
-        action->setData(ADR_STREAM_JID, AWindow->streamJid().full());
+		action->setData(ADR_STREAM_JIDS, AWindow->streamJid().full());
         connect(action, SIGNAL(triggered(bool)), SLOT(onAddMood(bool)));//----
         AWindow->toolBarWidget()->toolBarChanger()->insertAction(action,TBG_MWTBW_MOOD_VIEW);
     }
@@ -926,7 +934,7 @@ void Mood::onAddMood(bool)
     Action *action = qobject_cast<Action *>(sender());
     if (action)
     {
-        Jid streamJid = action->data(ADR_STREAM_JID).toString();
+		Jid streamJid = action->data(ADR_STREAM_JIDS).toString();
         Jid contactJid = action->data(ADR_CONTACT_JID).toString();
         int messageType = action->data(ADR_MESSAGE_TYPE).toInt();
 

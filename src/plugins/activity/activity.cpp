@@ -27,10 +27,10 @@
 
 #include "activityselect.h"
 
-#define ADR_STREAM_JID      Action::DR_StreamJid
-#define NO_ACTIVITY         "no_activity"
-#define ACTIVITIES_DEF      "activities.def.xml"
-#define TAG_NAME            "activity"
+#define ADR_STREAM_JIDS		Action::DR_StreamJid
+#define NO_ACTIVITY			"no_activity"
+#define ACTIVITIES_DEF		"activities.def.xml"
+#define TAG_NAME			"activity"
 #define MDR_ACTIVITY_ICON   1000
 
 
@@ -273,9 +273,9 @@ void Activity::menuActivity()
 	{
 		ActivityData activityData = activitySelect->activityData();
 		saveComments(activityData);
-		QMap<Jid, QString>::iterator it = FStreamActivity.begin();
-		for (;it != FStreamActivity.end(); ++it)
-			sendActivity(activityData, it.key());
+		for (QSet<Jid>::ConstIterator it = FStreamsOnline.begin(); it != FStreamsOnline.end(); ++it)
+			if (FPEPManager->isSupported(*it))
+				sendActivity(activityData, *it);
 	}
 	activitySelect->deleteLater();
 }
@@ -508,12 +508,12 @@ QMultiMap<int, IOptionsDialogWidget *> Activity::optionsDialogWidgets(const QStr
 
 void Activity::onStreamOpened(IXmppStream *AXmppStream)
 {
-	FStreamActivity.insert(AXmppStream->streamJid(), NULL);
+	FStreamsOnline.insert(AXmppStream->streamJid());
 }
 
 void Activity::onStreamClosed(IXmppStream *AXmppStream)
 {
-	FStreamActivity.remove(AXmppStream->streamJid());
+	FStreamsOnline.remove(AXmppStream->streamJid());
 }
 
 void Activity::onRosterIndexInserted(IRosterIndex *AIndex)
@@ -525,18 +525,28 @@ void Activity::onRosterIndexInserted(IRosterIndex *AIndex)
 
 void Activity::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {
+	QStringList streamJids;
 	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
 		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
-			if ((*it)->kind() == RIK_STREAM_ROOT && FStreamActivity.contains((*it)->data(RDR_STREAM_JID).toString()))
+		{
+			if ((*it)->kind() == RIK_STREAM_ROOT)
 			{
-				Jid streamJid = (*it)->data(RDR_STREAM_JID).toString();
-				Action *action = new Action(AMenu);
-				action->setText(tr("Activity"));
-				action->setIcon(RSR_STORAGE_ACTIVITY, MNI_ACTIVITY);
-				action->setData(ADR_STREAM_JID, streamJid.full());
-				connect(action, SIGNAL(triggered(bool)), SLOT(onSetActivityByAction(bool)));
-				AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
+				Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
+				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
+					streamJids.append((*it)->data(RDR_STREAM_JID).toString());
 			}
+		}
+
+//	Jid streamJid = (*it)->data(RDR_STREAM_JID).toString();
+	if (!streamJids.isEmpty())
+	{
+		Action *action = new Action(AMenu);
+		action->setText(tr("Activity"));
+		action->setIcon(RSR_STORAGE_ACTIVITY, MNI_ACTIVITY);
+		action->setData(ADR_STREAM_JIDS, streamJids);
+		connect(action, SIGNAL(triggered(bool)), SLOT(onSetActivityByAction(bool)));
+		AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
+	}
 }
 
 void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
@@ -551,7 +561,9 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 
 void Activity::onSetActivityByAction(bool)
 {
-	setActivityForAccount(qobject_cast<Action *>(sender())->data(ADR_STREAM_JID).toString());
+	QStringList streamJids = qobject_cast<Action *>(sender())->data(ADR_STREAM_JIDS).toStringList();
+	for (QStringList::ConstIterator it = streamJids.constBegin(); it != streamJids.constEnd(); ++it)
+		setActivityForAccount(*it);
 }
 
 void Activity::setActivityForAccount(Jid AStreamJid)
@@ -578,11 +590,8 @@ void Activity::onShortcutActivated(const QString &AString, QWidget *AWidget)
 			if ((*it)->kind()==RIK_STREAM_ROOT)
 			{
 				Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
-				if (FStreamActivity.contains(streamJid))
-				{
+				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
 					setActivityForAccount(streamJid);
-					break;
-				}
 			}
 	}
 }

@@ -643,12 +643,12 @@ void Tune::updateRosterLabels(const Jid &AContactJid)
 
 void Tune::onStreamOpened(IXmppStream *AXmppStream)
 {    
-    FOpenStreams.append(AXmppStream->streamJid());
+	FStreamsOnline.insert(AXmppStream->streamJid());
 }
 
 void Tune::onStreamClosed(IXmppStream *AXmppStream)
 {
-    FOpenStreams.removeOne(AXmppStream->streamJid());
+	FStreamsOnline.remove(AXmppStream->streamJid());
 }
 
 void Tune::onRosterIndexInserted(IRosterIndex *AIndex)
@@ -1234,7 +1234,8 @@ void Tune::onPublishUserTuneTriggered(bool APublish) const
 void Tune::onPresenceOpened(IPresence *APresence)
 {
 	if (Options::node(OPV_TUNE_PUBLISH).value().toBool() &&
-		FAccountManager->findAccountByStream(APresence->streamJid())->optionsNode().value(OPV_PUBLISHUSERTUNE).toBool())
+		FAccountManager->findAccountByStream(APresence->streamJid())->optionsNode().value(OPV_PUBLISHUSERTUNE).toBool()
+		&& FPEPManager->isSupported(APresence->streamJid()))
 		sendTune(FCurrentTuneData, APresence->streamJid());
 }
 
@@ -1261,8 +1262,8 @@ void Tune::onStopped()
 
 void Tune::publishCurrentTune(bool ARetract) const
 {
-	for (QList<Jid>::const_iterator it=FOpenStreams.constBegin(); it!=FOpenStreams.constEnd(); it++)
-		if (FAccountManager->findAccountByStream(*it)->optionsNode().value(OPV_PUBLISHUSERTUNE).toBool())
+	for (QSet<Jid>::const_iterator it=FStreamsOnline.constBegin(); it!=FStreamsOnline.constEnd(); it++)
+		if (FAccountManager->findAccountByStream(*it)->optionsNode().value(OPV_PUBLISHUSERTUNE).toBool() && FPEPManager->isSupported(*it))
 			sendTune(ARetract?TuneData():FCurrentTuneData, *it);
 }
 

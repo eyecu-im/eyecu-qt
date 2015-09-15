@@ -172,7 +172,7 @@ private:
 	quint32				FRosterLabelId;
     QHash<Jid, QHash<QString, MoodData> > FCurrentChatMood;
 
-    QMap<Jid, QString>  FStreamMood;
+	QSet<Jid>			FStreamsOnline;
 	QHash<Jid, MoodData> FMoodHash;
     QHash<QString, QStringList> FMoodTextLists;
 	const QList<int>    FRosterIndexKinds;
