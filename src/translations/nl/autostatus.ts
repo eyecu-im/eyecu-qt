@@ -181,22 +181,22 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="139"/>
    <source>   h - the hour without a leading zero (0 to 23 or 1 to 12 if AM/PM display)</source>
-   <translation type="unfinished"/>
+   <translation>h -  het uur zonder een voorafgaande nul (0 tot 23 of 1 tot 12 als AM/PM weergave)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="140"/>
    <source>   hh - the hour with a leading zero (00 to 23 or 01 to 12 if AM/PM display)</source>
-   <translation type="unfinished"/>
+   <translation>hh - het uur met een voorafgaande nul (00 tot 23 of 01 tot 12 als AM/PM weergave)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="141"/>
    <source>   H - the hour without a leading zero (0 to 23, even with AM/PM display)</source>
-   <translation type="unfinished"/>
+   <translation>H - het uur zonder een voorafgaande nul (0 tot 23, zelfs met AM/PM weergave)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="142"/>
    <source>   HH - the hour with a leading zero (00 to 23, even with AM/PM display)</source>
-   <translation type="unfinished"/>
+   <translation>HH - het uur met een voorafgaande nul (00 tot 23, zelfs met AM/PM weergave)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="143"/>
@@ -206,7 +206,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="144"/>
    <source>   mm - the minute with a leading zero (00 to 59)</source>
-   <translation type="unfinished"/>
+   <translation>mm - de minuut met een voorafgaande nul (00 tot 59)</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="145"/>

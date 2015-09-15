@@ -596,12 +596,12 @@ If don&apos;t, please register at legacy network on its web site or using native
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="100"/>
    <source>Trasport Wizard</source>
-   <translation type="unfinished"/>
+   <translation>Transport Wizard</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="112"/>
    <source>Change transport</source>
-   <translation type="unfinished"/>
+   <translation>Verander transport</translation>
   </message>
   <message>
    <source>Connect to legacy network</source>

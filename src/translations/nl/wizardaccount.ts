@@ -394,62 +394,62 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="251"/>
    <source>Or enter manually</source>
-   <translation type="unfinished"/>
+   <translation>Of handmatig invoeren</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="316"/>
    <source>Server</source>
-   <translation type="unfinished"/>
+   <translation>Server</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="316"/>
    <source>Registration</source>
-   <translation type="unfinished"/>
+   <translation>Registratie</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="316"/>
    <source>PEP</source>
-   <translation type="unfinished"/>
+   <translation>PEP</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="316"/>
    <source>Message Archive</source>
-   <translation type="unfinished"/>
+   <translation>Bericht archief</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="317"/>
    <source>Message Carbons</source>
-   <translation type="unfinished"/>
+   <translation>Bericht Carbons</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="317"/>
    <source>User Search</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker zoekt</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="317"/>
    <source>MUC</source>
-   <translation type="unfinished"/>
+   <translation>MUC</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="317"/>
    <source>Proxy</source>
-   <translation type="unfinished"/>
+   <translation>Proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="318"/>
    <source>File Store</source>
-   <translation type="unfinished"/>
+   <translation>Bestand bewaren</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="318"/>
    <source>Transports</source>
-   <translation type="unfinished"/>
+   <translation>Transporten</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="318"/>
    <source>Country</source>
-   <translation type="unfinished"/>
+   <translation>Land</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="375"/>
@@ -459,7 +459,7 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="415"/>
    <source>Warning!</source>
-   <translation type="unfinished"/>
+   <translation>Waarschuwing!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="416"/>

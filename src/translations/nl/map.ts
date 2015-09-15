@@ -207,7 +207,7 @@
   <message>
    <location filename="../../plugins/map/map.cpp" line="819"/>
    <source>Relative to mouse position</source>
-   <translation type="unfinished"/>
+   <translation>Ten opzichte van de muispositie</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="820"/>
@@ -420,7 +420,7 @@
   <message>
    <location filename="../../plugins/map/mapoptions.ui" line="271"/>
    <source>Box</source>
-   <translation type="unfinished"/>
+   <translation>Box</translation>
   </message>
   <message>
    <location filename="../../plugins/map/mapoptions.ui" line="276"/>
@@ -440,7 +440,7 @@
   <message>
    <location filename="../../plugins/map/mapoptions.ui" line="303"/>
    <source>Labels</source>
-   <translation type="unfinished"/>
+   <translation>Labels</translation>
   </message>
   <message>
    <location filename="../../plugins/map/mapoptions.ui" line="336"/>

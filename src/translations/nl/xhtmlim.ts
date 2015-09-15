@@ -390,7 +390,7 @@
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="484"/>
    <source>%1: %2x%3 px; %n byte(s)</source>
    <comment>FORMAT: WIDTHxHEIGHT px; SIZE byte(s)</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%1: %2x%3 px; %n byte</numerusform><numerusform>%1: %2x%3 px; %n bytes</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="449"/>
@@ -436,7 +436,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/settooltip.ui" line="50"/>
    <source>Acronym</source>
-   <translation type="unfinished"/>
+   <translation>Afkorting</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/settooltip.ui" line="55"/>
@@ -566,7 +566,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="130"/>
    <source>Alt+C</source>
    <comment>Code</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+C</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="131"/>
@@ -577,7 +577,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="131"/>
    <source>Ctrl+F</source>
    <comment>Font</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+F</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="132"/>
@@ -588,7 +588,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="132"/>
    <source>Alt+F</source>
    <comment>Foreground color</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+F</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="133"/>
@@ -599,7 +599,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="133"/>
    <source>Alt+B</source>
    <comment>Background color</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+B</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="134"/>
@@ -610,7 +610,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="134"/>
    <source>Ctrl+E</source>
    <comment>Align center</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+E</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="135"/>
@@ -621,7 +621,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="135"/>
    <source>Ctrl+L</source>
    <comment>Align left</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+L</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="136"/>
@@ -632,7 +632,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="136"/>
    <source>Ctrl+R</source>
    <comment>Align right</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+R</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="137"/>
@@ -643,7 +643,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="137"/>
    <source>Ctrl+J</source>
    <comment>Align justify</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+J</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="138"/>
@@ -654,7 +654,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="138"/>
    <source>Alt+R</source>
    <comment>Remove formatting</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+R</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="139"/>

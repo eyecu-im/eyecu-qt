@@ -210,12 +210,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="258"/>
    <source>When receiving a new message in conference</source>
-   <translation type="unfinished"/>
+   <translation>Het ontvangen van een nieuw bericht in vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="266"/>
    <source>When referring to you at the conference</source>
-   <translation type="unfinished"/>
+   <translation>Wanneer wordt verwezen naar u op de conferentie</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="279"/>
@@ -393,7 +393,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="457"/>
    <source>Make Room Persistent?</source>
-   <translation type="unfinished"/>
+   <translation>De kamer blijvend maken?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="458"/>
@@ -403,33 +403,33 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="459"/>
    <source>Allow Public Searching for Room?</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan voor publiekelijk zoeken in kamer?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="460"/>
    <source>Full List of Room Administrators</source>
-   <translation type="unfinished"/>
+   <translation>Volledige lijst van kamer beheerders</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="461"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="483"/>
    <source>Description of Room</source>
-   <translation type="unfinished"/>
+   <translation>Omschrijving kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="462"/>
    <source>Natural-Language Room Name</source>
-   <translation type="unfinished"/>
+   <translation>Moedertaal voor kamer gesprekken.</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="463"/>
    <source>Full List of Room Owners</source>
-   <translation type="unfinished"/>
+   <translation>Volledige lijst van Kamer eigenaren</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="464"/>
    <source>The Room Password</source>
-   <translation type="unfinished"/>
+   <translation>Het kamer paswoord</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="465"/>
@@ -439,17 +439,17 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="467"/>
    <source>Make Participants List Public?</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemers Lijst Openbaar maken?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="468"/>
    <source>Make all Occupants as Participants?</source>
-   <translation type="unfinished"/>
+   <translation>Alle bewoners deelnemers maken?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="470"/>
    <source>Allow Occupants to Query Other Occupants?</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan dat bewoners andere bewoners doorzoeken?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="471"/>
@@ -459,7 +459,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="472"/>
    <source>Make this Room CAPTCHA Protected?</source>
-   <translation type="unfinished"/>
+   <translation>Deze kamer CAPTCHA beschermd maken?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="473"/>
@@ -574,17 +574,17 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="864"/>
    <source>Moderated room</source>
-   <translation type="unfinished"/>
+   <translation>Moderated kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="865"/>
    <source>A room in which only those with &apos;voice&apos; may send messages to all occupants</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer waar alleen mensen zitten die  &apos;voice&apos; hebben  kunnen berichten zenden naar alle inzittenden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="869"/>
    <source>Non-anonymous room</source>
-   <translation type="unfinished"/>
+   <translation>Geen anonieme kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="870"/>
@@ -594,7 +594,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="874"/>
    <source>Open room</source>
-   <translation type="unfinished"/>
+   <translation>Open kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="875"/>
@@ -605,18 +605,18 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="879"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="884"/>
    <source>Password-protected room</source>
-   <translation type="unfinished"/>
+   <translation>Kamer beveiligd met een paswoord</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="880"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="885"/>
    <source>A room that a user cannot enter without first providing the correct password</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die een gebruiker niet kan betreden zonder eerst het juiste wachtwoord in te geven</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="889"/>
    <source>Persistent room</source>
-   <translation type="unfinished"/>
+   <translation>Kamer aanhouden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="890"/>
@@ -626,7 +626,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="894"/>
    <source>Public room</source>
-   <translation type="unfinished"/>
+   <translation>Publieke kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="895"/>
@@ -636,7 +636,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="899"/>
    <source>Semi-anonymous room</source>
-   <translation type="unfinished"/>
+   <translation>Deels een anonieme kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="900"/>
@@ -646,7 +646,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="904"/>
    <source>Temporary room</source>
-   <translation type="unfinished"/>
+   <translation>Tijdelijke kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="905"/>
