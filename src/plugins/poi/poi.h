@@ -136,7 +136,7 @@ protected:
 
     bool    loadPoiList(const Jid &AStreamJid);
     bool    savePoiList(const Jid &AStreamJid);    
-    void    showPoiList(const QString &AStreamBareJid);
+	void    showPoiList(const QSet<QString> &AStreamBareJids);
 
     bool    poiEdit(QString id, QWidget *AParent);
     bool    poiSave(QString AId, const IAccount *AAccount=NULL, QWidget *AParent=NULL);
@@ -202,7 +202,8 @@ private:
     IMapLocationSelector *FMapLocationSelector;
 	IMapMessage			*FMapMessage;
 	Action				*FActionNewPOI;
-    QHash<QString, PoiList *> FPoiLists;
+//	QHash<QSet<QString>, PoiList *> FPoiList;
+	QPointer<PoiList>	FPoiList;
     QHash<QString, PoiList *> FPoiInsertLists;
 
 	IconStorage			*FTypeStorage;
