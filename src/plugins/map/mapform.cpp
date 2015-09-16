@@ -529,7 +529,6 @@ void MapForm::setOsdCenterMarkerVisible(bool AVisible)
 
 void MapForm::setZoomSliderTracknig(bool AEnable)
 {
-	qDebug() << "MapForm::setZoomSliderTracknig(" << AEnable << ")";
 	ui->sldScale->setTracking(AEnable);
 }
 

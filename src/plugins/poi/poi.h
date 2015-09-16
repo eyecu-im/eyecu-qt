@@ -202,7 +202,6 @@ private:
     IMapLocationSelector *FMapLocationSelector;
 	IMapMessage			*FMapMessage;
 	Action				*FActionNewPOI;
-//	QHash<QSet<QString>, PoiList *> FPoiList;
 	QPointer<PoiList>	FPoiList;
     QHash<QString, PoiList *> FPoiInsertLists;
 

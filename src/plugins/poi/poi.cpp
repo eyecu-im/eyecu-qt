@@ -1218,7 +1218,6 @@ void Poi::addPoiToMessage(Message &AMessage, GeolocElement &element)
 {
     QDomElement x=AMessage.stanza().document().createElementNS(NS_X_POI, "x");
     element.exportElement(x);
-//    buildGeolocElement(element, x);
     AMessage.stanza().element().appendChild(x);
 }
 
@@ -1464,13 +1463,13 @@ void Poi::showPoiList(const QSet<QString> &AStreamBareJids)
 		FPoiList->setWindowIcon(getIcon(MNI_POI_ADD));
 
 		if (AStreamBareJids.isEmpty())
-			FPoiList->fillTable(FGeolocHash);//------
+			FPoiList->fillTable(FGeolocHash);
 		else
 		{
 			QHash<QString, PoiHash> geolocHash;
 			for (QSet<QString>::ConstIterator it = AStreamBareJids.constBegin(); it!=AStreamBareJids.constEnd(); ++it)
 				geolocHash.insert(*it, FGeolocHash[*it]);
-			FPoiList->fillTable(geolocHash);//------
+			FPoiList->fillTable(geolocHash);
 		}
 
 		if (FPoiList->exec())
@@ -1697,7 +1696,7 @@ const QHash<QString, QString> &Poi::getTranslatedTypes() const
 bool Poi::loadPoiTypes()
 {
     FSubTypes.clear();
-    FTranslatedTypes.clear();//-------
+	FTranslatedTypes.clear();
     FTranslatedTypes.insert("none", tr("None"));
 
     QDir dir(FTypeStorage->resourcesDirs()[0]);
@@ -2159,7 +2158,7 @@ void Poi::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocu
         QTextBlockFormat format;
         format.setProperty(QTextFormat::BlockTrailingHorizontalRulerWidth, QTextLength(QTextLength::PercentageLength, 100));
         cursor.insertBlock(format);
-        cursor.insertBlock(QTextBlockFormat());//-------
+		cursor.insertBlock(QTextBlockFormat());
         cursor.insertHtml(poiElement);
     }
 }
