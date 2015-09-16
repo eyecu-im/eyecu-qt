@@ -1225,22 +1225,28 @@ void Poi::addPoiToMessage(Message &AMessage, GeolocElement &element)
 void Poi::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {
     if (ALabelId == AdvancedDelegateItem::DisplayId)
+	{
+		QStringList bareJids;
         for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
-            if ((*it)->kind() == RIK_STREAM_ROOT)
+			if ((*it)->kind() == RIK_STREAM_ROOT)
             {
                 Jid streamJid = (*it)->data(RDR_STREAM_JID).toString();
 				IAccount *account=FAccountManager->findAccountByStream(streamJid);
                 if (FPoiAccounts.contains(account))
-                {
-                    Action *action = new Action(AMenu);
-                    action->setData(ADR_STREAM_JID, streamJid.full());
-                    action->setText(tr("POI list"));
-					action->setIcon(RSR_STORAGE_MENUICONS,MNI_POI_VIEW);
-                    connect(action, SIGNAL(triggered(bool)), SLOT(onPoiList(bool)));
-                    AMenu->addAction(action, AG_RVCM_VIEW_POI,true);
-
-                }
+					bareJids.append(streamJid.bare());
            }
+
+		if (!bareJids.isEmpty())
+		{
+			Action *action = new Action(AMenu);
+			action->setData(ADR_STREAM_JID, bareJids);
+			action->setText(tr("POI list"));
+			action->setIcon(RSR_STORAGE_MENUICONS,MNI_POI_VIEW);
+			action->setDisabled(FPoiList);
+			connect(action, SIGNAL(triggered(bool)), SLOT(onPoiList(bool)));
+			AMenu->addAction(action, AG_RVCM_VIEW_POI, true);
+		}
+	}
 }
 
 void Poi::addMenuMap()
@@ -1331,9 +1337,15 @@ void Poi::onShortcutActivated(const QString &AId, QWidget *AWidget)
     if (AId==SCT_POI_LISTACCOUNT)
     {
         IRostersView *rostersView=FRostersViewPlugin->rostersView();
-        if (AWidget==rostersView->instance() && !rostersView->hasMultiSelection())
-            if (rostersView->instance()->currentIndex().data(RDR_KIND)==RIK_STREAM_ROOT)
-                showPoiList(Jid(rostersView->instance()->currentIndex().data(RDR_FULL_JID).toString()).bare());
+		if (AWidget==rostersView->instance())
+		{
+			QList<IRosterIndex*> indexes = rostersView->selectedRosterIndexes();
+			QSet<QString> bareJids;
+			for (QList<IRosterIndex*>::ConstIterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
+				if ((*it)->data()==RIK_STREAM_ROOT)
+					bareJids.insert(Jid(rostersView->instance()->currentIndex().data(RDR_FULL_JID).toString()).bare());
+			showPoiList(bareJids);
+		}
     }
     else
     {
@@ -1431,28 +1443,39 @@ void Poi::onPoiList(bool)
 {
     Action *action = qobject_cast<Action *>(sender());
     if(action)
-        showPoiList(Jid((action->data(ADR_STREAM_JID).toString())).bare());
+	{		
+		QStringList   bareJids = action->data(ADR_STREAM_JID).toStringList();
+		QSet<QString> streamBareJids;
+		for (QStringList::ConstIterator it = bareJids.constBegin(); it!=bareJids.constEnd(); it++)
+			streamBareJids.insert(*it);
+		showPoiList(streamBareJids);
+	}
 }
 
-void Poi::showPoiList(const QString &AStreamBareJid)
+void Poi::showPoiList(const QSet<QString> &AStreamBareJids)
 {
-    if (FPoiLists.contains(AStreamBareJid))
-        FPoiLists[AStreamBareJid]->activateWindow();
+	if (FPoiList)
+		FPoiList->activateWindow();
     else
     {
-        FPoiLists.insert(AStreamBareJid, new PoiList(this));
-        FPoiLists[AStreamBareJid]->setWindowTitle(AStreamBareJid.isEmpty()?tr("Point of interest list")
-                                                 :tr("Point of interest list for %1").arg(AStreamBareJid));
-        FPoiLists[AStreamBareJid]->setWindowIcon(getIcon(MNI_POI_ADD));
+		FPoiList = new PoiList(this);
+		FPoiList->setWindowTitle(AStreamBareJids.size() == 1?tr("Point of interest list for %1").arg(*(AStreamBareJids.constBegin()))
+																			 :tr("Point of interest list"));
+		FPoiList->setWindowIcon(getIcon(MNI_POI_ADD));
 
-        if (AStreamBareJid.isEmpty())
-            FPoiLists[AStreamBareJid]->fillTable(FGeolocHash);//------
-        else
-            FPoiLists[AStreamBareJid]->fillTable(FGeolocHash[AStreamBareJid], AStreamBareJid);//------
+		if (AStreamBareJids.isEmpty())
+			FPoiList->fillTable(FGeolocHash);//------
+		else
+		{
+			QHash<QString, PoiHash> geolocHash;
+			for (QSet<QString>::ConstIterator it = AStreamBareJids.constBegin(); it!=AStreamBareJids.constEnd(); ++it)
+				geolocHash.insert(*it, FGeolocHash[*it]);
+			FPoiList->fillTable(geolocHash);//------
+		}
 
-        if (FPoiLists[AStreamBareJid]->exec())
-            poiShow(FPoiLists[AStreamBareJid]->selectedId());
-        FPoiLists.take(AStreamBareJid)->deleteLater();
+		if (FPoiList->exec())
+			poiShow(FPoiList->selectedId());
+		FPoiList->deleteLater();
     }
 }
 
