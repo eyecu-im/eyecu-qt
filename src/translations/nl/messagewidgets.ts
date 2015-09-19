@@ -442,7 +442,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="421"/>
    <source>%1) %2</source>
-   <translation type="unfinished"/>
+   <translation>%1) %2</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="489"/>

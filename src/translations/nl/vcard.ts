@@ -337,7 +337,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="347"/>
    <source>Restrict maximum vCard images size</source>
-   <translation type="unfinished"/>
+   <translation>Beperk de maximale vCard afbeeldingen grootte</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="467"/>
@@ -347,7 +347,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="468"/>
    <source>Supports the requesting of the personal contact information</source>
-   <translation type="unfinished"/>
+   <translation>Steunt het aanvragen van persoonlijke contactgegevens</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="580"/>

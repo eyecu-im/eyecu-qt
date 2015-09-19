@@ -527,7 +527,7 @@ If don&apos;t, please register at legacy network on its web site or using native
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1177"/>
    <source>Cannot change service</source>
-   <translation type="unfinished"/>
+   <translation>Kan dienst niet veranderen</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1190"/>
@@ -558,27 +558,27 @@ If don&apos;t, please register at legacy network on its web site or using native
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="154"/>
    <source>Choose a transport you want to change</source>
-   <translation type="unfinished"/>
+   <translation>Kies een transport dat u wilt wijzigen</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="156"/>
    <source>Please select a transport from the list</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een transport van de lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="159"/>
    <source>Transport</source>
-   <translation type="unfinished"/>
+   <translation>Transport</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="159"/>
    <source>Name</source>
-   <translation type="unfinished"/>
+   <translation>Naam</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="159"/>
    <source>Type</source>
-   <translation type="unfinished"/>
+   <translation>Soort</translation>
   </message>
  </context>
  <context>

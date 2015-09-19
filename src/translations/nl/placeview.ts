@@ -410,22 +410,22 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="682"/>
    <source>Cemetery</source>
-   <translation type="unfinished"/>
+   <translation>Begraafplaats</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="683"/>
    <source>Church</source>
-   <translation type="unfinished"/>
+   <translation>Kerk</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="684"/>
    <source>City hall</source>
-   <translation type="unfinished"/>
+   <translation>Stadshuis</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="685"/>
    <source>Clothing store</source>
-   <translation type="unfinished"/>
+   <translation>Kledingwinkel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="686"/>
@@ -500,12 +500,12 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="700"/>
    <source>Furniture store</source>
-   <translation type="unfinished"/>
+   <translation>Meubelzaak</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="701"/>
    <source>Gas station</source>
-   <translation type="unfinished"/>
+   <translation>Benzine pomp</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="702"/>
@@ -515,42 +515,42 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="703"/>
    <source>Grocery or supermarket</source>
-   <translation type="unfinished"/>
+   <translation>Supermarkt</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="704"/>
    <source>Gym</source>
-   <translation type="unfinished"/>
+   <translation>Sportschool</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="705"/>
    <source>Hair care</source>
-   <translation type="unfinished"/>
+   <translation>Haarverzorging</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="706"/>
    <source>Hardware store</source>
-   <translation type="unfinished"/>
+   <translation>IJzerhandel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="707"/>
    <source>Health</source>
-   <translation type="unfinished"/>
+   <translation>Gezondheid</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="708"/>
    <source>Hindu temple</source>
-   <translation type="unfinished"/>
+   <translation>Hindu tempel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="709"/>
    <source>Home goods store</source>
-   <translation type="unfinished"/>
+   <translation>Opslag van goederen</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="710"/>
    <source>Hospital</source>
-   <translation type="unfinished"/>
+   <translation>Ziekenhuis</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="711"/>
@@ -560,27 +560,27 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="712"/>
    <source>Jewelry store</source>
-   <translation type="unfinished"/>
+   <translation>Juwelier</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="713"/>
    <source>Laundry</source>
-   <translation type="unfinished"/>
+   <translation>Was</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="714"/>
    <source>Lawyer</source>
-   <translation type="unfinished"/>
+   <translation>Advocaat</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="715"/>
    <source>Library</source>
-   <translation type="unfinished"/>
+   <translation>Bibliotheek</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="716"/>
    <source>Liquor store</source>
-   <translation type="unfinished"/>
+   <translation>Slijterij</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="717"/>
@@ -590,7 +590,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="718"/>
    <source>Locksmith</source>
-   <translation type="unfinished"/>
+   <translation>Slotenmaker</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="719"/>
@@ -600,7 +600,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="720"/>
    <source>Meal delivery</source>
-   <translation type="unfinished"/>
+   <translation>Maaltijd bezorging</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="721"/>
@@ -700,107 +700,107 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="740"/>
    <source>Roofing contractor</source>
-   <translation type="unfinished"/>
+   <translation>Dakdekker</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="741"/>
    <source>Rv park</source>
-   <translation type="unfinished"/>
+   <translation>Rv park</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="742"/>
    <source>School</source>
-   <translation type="unfinished"/>
+   <translation>School</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="743"/>
    <source>Shoe store</source>
-   <translation type="unfinished"/>
+   <translation>Schoenenwinkel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="744"/>
    <source>Shopping mall</source>
-   <translation type="unfinished"/>
+   <translation>Winkelcentrum</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="745"/>
    <source>Spa</source>
-   <translation type="unfinished"/>
+   <translation>Spa</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="746"/>
    <source>Stadium</source>
-   <translation type="unfinished"/>
+   <translation>Stadion</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="747"/>
    <source>Storage</source>
-   <translation type="unfinished"/>
+   <translation>Opslag</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="748"/>
    <source>Store</source>
-   <translation type="unfinished"/>
+   <translation>Winkel</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="749"/>
    <source>Subway station</source>
-   <translation type="unfinished"/>
+   <translation>Metrostation</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="750"/>
    <source>Synagogue</source>
-   <translation type="unfinished"/>
+   <translation>Synagoge</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="751"/>
    <source>Taxi stand</source>
-   <translation type="unfinished"/>
+   <translation>Taxi standplaats</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="752"/>
    <source>Train station</source>
-   <translation type="unfinished"/>
+   <translation>Trein station</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="753"/>
    <source>Travel agency</source>
-   <translation type="unfinished"/>
+   <translation>Reis agent</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="754"/>
    <source>University</source>
-   <translation type="unfinished"/>
+   <translation>Universiteit</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="755"/>
    <source>Veterinary care</source>
-   <translation type="unfinished"/>
+   <translation>Diergeneeskundige zorg</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="765"/>
    <source>Near by search</source>
-   <translation type="unfinished"/>
+   <translation>Dichtbij zoeken</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="765"/>
    <source>Radar search</source>
-   <translation type="unfinished"/>
+   <translation>Radar onderzoek</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="765"/>
    <source>Text search</source>
-   <translation type="unfinished"/>
+   <translation>Zoek op tekst</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="770"/>
    <source>Prominence</source>
-   <translation type="unfinished"/>
+   <translation>Bekendheid</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="770"/>
    <source>Distance</source>
-   <translation type="unfinished"/>
+   <translation>Afstand</translation>
   </message>
  </context>
 </TS>

@@ -666,65 +666,65 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="914"/>
    <source>Unsecured room</source>
-   <translation type="unfinished"/>
+   <translation>Onbeveiligde kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="915"/>
    <source>A room that anyone is allowed to enter without first providing the correct password</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer waar het iedereen is toegestaan om zonder eerst het juiste wachtwoord in te voeren</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="992"/>
    <source>Invite to</source>
-   <translation type="unfinished"/>
+   <translation>Uitnodigen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1001"/>
    <source>%1 from %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 van %2</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1352"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1382"/>
    <source>Enter</source>
-   <translation type="unfinished"/>
+   <translation>Invoeren</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1361"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1393"/>
    <source>Exit</source>
-   <translation type="unfinished"/>
+   <translation>Uitgang</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1371"/>
    <source>Open Conference Dialog</source>
-   <translation type="unfinished"/>
+   <translation>Open conferentie dialoog</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1516"/>
    <source>I&apos;m too busy right now</source>
-   <translation type="unfinished"/>
+   <translation>Ben te druk nu</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1517"/>
    <source>Decline invite</source>
-   <translation type="unfinished"/>
+   <translation>Uitnodiging weigeren</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1517"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1543"/>
    <source>Enter a reason</source>
-   <translation type="unfinished"/>
+   <translation>Een reden invoeren</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1542"/>
    <source>Please, enter this conference!</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie!</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1543"/>
    <source>Invite user</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker uitnodigen</translation>
   </message>
  </context>
  <context>
@@ -816,7 +816,7 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="762"/>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="836"/>
    <source>Moderator</source>
-   <translation type="unfinished"/>
+   <translation>Moderator</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="772"/>
@@ -850,7 +850,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="825"/>
    <source>&lt;b&gt;Jabber ID:&lt;/b&gt; %1</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;Jabber ID:&lt;/b&gt; %1</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="837"/>
@@ -1064,7 +1064,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1526"/>
    <source>%1 (%2)</source>
-   <translation type="unfinished"/>
+   <translation>%1 (%2)</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1527"/>

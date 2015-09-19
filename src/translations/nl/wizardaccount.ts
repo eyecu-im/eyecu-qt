@@ -306,7 +306,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="161"/>
    <source>A popular Russian social network, owned by Mail.Ru Group</source>
-   <translation type="unfinished"/>
+   <translation>Een populaire Russische sociaal netwerk, eigendom van Mail.Ru Group</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="163"/>
@@ -326,7 +326,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="165"/>
    <source>A popular Russian portal (internet serach, e-mail, news, chat and so on), owned by OOO &quot;Media Mir&quot;, mostly known by its multiprotocol IM client</source>
-   <translation type="unfinished"/>
+   <translation>Een populaire Russische portaaal (internet zoeken, e-mail, nieuws, chat, enzovoort), eigendom van OOO &quot;Media Mir&quot;, vooral bekend door zijn multiprotocol IM-client</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="169"/>
@@ -336,7 +336,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="170"/>
    <source>Please, select a network, you have registered in</source>
-   <translation type="unfinished"/>
+   <translation>Alstublieft, selecteer een netwerk, welke je hebt geregistreerd</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="172"/>
@@ -379,17 +379,17 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="242"/>
    <source>Server selection</source>
-   <translation type="unfinished"/>
+   <translation>Server selectie</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="243"/>
    <source>Specify a server you want to use.</source>
-   <translation type="unfinished"/>
+   <translation>Kies een server welke je wilt gebruiken.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="245"/>
    <source>Please select a server from the list</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een server van de lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="251"/>
@@ -454,7 +454,7 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="375"/>
    <source>In-band registration available</source>
-   <translation type="unfinished"/>
+   <translation>In-band registratie beschikbaar</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="415"/>
@@ -473,7 +473,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="428"/>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="443"/>
    <source>Attention!</source>
-   <translation type="unfinished"/>
+   <translation>Attentie!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="429"/>
@@ -485,7 +485,7 @@ Please, choose another server. If you have an account in such network, please, g
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="439"/>
    <source>%1 website</source>
-   <translation type="unfinished"/>
+   <translation>%1 website</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="443"/>
@@ -500,37 +500,37 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1114"/>
    <source>Web registration</source>
-   <translation type="unfinished"/>
+   <translation>Web registratie</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1117"/>
    <source>The server you selected doesn&apos;t support in-band registration.</source>
-   <translation type="unfinished"/>
+   <translation>De server die je selecteerde ondersteunt geen in-band registratie.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1118"/>
    <source>Follow instructions below to register via web.</source>
-   <translation type="unfinished"/>
+   <translation>Volg onderstaande instructies op om te registreren via web.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1142"/>
    <source>Open registration website</source>
-   <translation type="unfinished"/>
+   <translation>Open registratie van website</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1154"/>
    <source>How to register at %1</source>
-   <translation type="unfinished"/>
+   <translation>Hoe te registreren bij %1</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1190"/>
    <source>Warning!</source>
-   <translation type="unfinished"/>
+   <translation>Waarschuwing!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1191"/>
    <source>Cannot open instructions.</source>
-   <translation type="unfinished"/>
+   <translation>Kan instructies niet openen.</translation>
   </message>
  </context>
  <context>
@@ -538,7 +538,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="14"/>
    <source>Connection Wizard</source>
-   <translation type="unfinished"/>
+   <translation>Verbindings Wizard</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="15"/>
@@ -548,7 +548,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="53"/>
    <source>Create an account?</source>
-   <translation type="unfinished"/>
+   <translation>Account aanmaken?</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="54"/>
@@ -563,7 +563,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>
    <source>Add account</source>
-   <translation type="unfinished"/>
+   <translation>Account toevoegen</translation>
   </message>
  </context>
 </TS>

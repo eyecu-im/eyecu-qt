@@ -369,7 +369,7 @@
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="266"/>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="528"/>
    <source>pixels</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>pixel</numerusform><numerusform>pixels</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="352"/>
@@ -431,7 +431,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/settooltip.ui" line="45"/>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>Geen</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/settooltip.ui" line="50"/>
@@ -467,7 +467,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="121"/>
    <source>Alt+I</source>
    <comment>Insert image</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+I</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="122"/>
@@ -478,7 +478,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="122"/>
    <source>Alt+L</source>
    <comment>Insert link</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+L</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="123"/>
@@ -489,7 +489,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="123"/>
    <source>Ctrl+Space</source>
    <comment>Insert NBSP</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Space</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="124"/>
@@ -500,7 +500,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="124"/>
    <source>Alt+Return</source>
    <comment>Insert new line</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="125"/>
@@ -511,7 +511,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="125"/>
    <source>Alt+T</source>
    <comment>Insert link</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+T</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="126"/>
@@ -522,7 +522,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="126"/>
    <source>Ctrl+B</source>
    <comment>Bold</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+B</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="127"/>
@@ -533,7 +533,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="127"/>
    <source>Ctrl+I</source>
    <comment>Italic</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+I</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="128"/>
@@ -544,7 +544,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="128"/>
    <source>Ctrl+U</source>
    <comment>Underline</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+U</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="129"/>
@@ -555,12 +555,12 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="129"/>
    <source>Ctrl+S</source>
    <comment>Strikeout</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+S</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="130"/>
    <source>Code</source>
-   <translation type="unfinished"/>
+   <translation>Code</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="130"/>
@@ -670,7 +670,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="140"/>
    <source>Shift+Tab</source>
    <comment>Decerease indent</comment>
-   <translation type="unfinished"/>
+   <translation>Shift+Tab</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="142"/>
@@ -686,7 +686,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="143"/>
    <source>Ctrl+B</source>
    <comment>Browse</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+B</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="145"/>
@@ -696,13 +696,13 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="146"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ok</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="146"/>
    <source>Ctrl+Return</source>
    <comment>Ok</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Enter</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="179"/>
@@ -717,7 +717,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="232"/>
    <source>General</source>
-   <translation type="unfinished"/>
+   <translation>Algemeen</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="233"/>
@@ -727,12 +727,12 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="234"/>
    <source>Do not send rich text without formatting</source>
-   <translation type="unfinished"/>
+   <translation>De RTF niet verzenden zonder opmaak</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="237"/>
    <source>Bits of binary</source>
-   <translation type="unfinished"/>
+   <translation>Stukjes van binair</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="323"/>
@@ -747,7 +747,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="338"/>
    <source>Copy image</source>
-   <translation type="unfinished"/>
+   <translation>Kopiëer afbeelding </translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="351"/>
@@ -762,37 +762,37 @@
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="712"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="713"/>
    <source>minute(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>minuut</numerusform><numerusform>minuten</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="714"/>
    <source>hour(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>uur</numerusform><numerusform>uren</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="715"/>
    <source>day(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>dag</numerusform><numerusform>dagen</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="716"/>
    <source>week(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>week</numerusform><numerusform>weken</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="717"/>
    <source>month(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>maand</numerusform><numerusform>maanden</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="718"/>
    <source>year(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>jaar</numerusform><numerusform>jaren</numerusform></translation>
   </message>
  </context>
  <context>
@@ -800,12 +800,12 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="14"/>
    <source>HTML options</source>
-   <translation type="unfinished"/>
+   <translation>HTML opties</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="85"/>
    <source>Default image format</source>
-   <translation type="unfinished"/>
+   <translation>Standaard afbeeldings formaat</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="137"/>
@@ -815,12 +815,12 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="217"/>
    <source>Maximum age</source>
-   <translation type="unfinished"/>
+   <translation>Maximum leeftijd</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmloptions.cpp" line="78"/>
    <source>byte(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>byte</numerusform><numerusform>bytes</numerusform></translation>
   </message>
  </context>
 </TS>

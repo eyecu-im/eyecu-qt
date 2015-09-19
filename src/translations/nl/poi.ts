@@ -364,7 +364,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="44"/>
    <source>Canada</source>
-   <translation type="unfinished"/>
+   <translation>Canada</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="45"/>
@@ -449,12 +449,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="61"/>
    <source>Cuba</source>
-   <translation type="unfinished"/>
+   <translation>Cuba</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="62"/>
    <source>Cyprus</source>
-   <translation type="unfinished"/>
+   <translation>Cyprus</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="63"/>
@@ -469,12 +469,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="65"/>
    <source>Djibouti</source>
-   <translation type="unfinished"/>
+   <translation>Djibouti</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="66"/>
    <source>Dominica</source>
-   <translation type="unfinished"/>
+   <translation>Dominica</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="67"/>
@@ -489,7 +489,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="69"/>
    <source>Ecuador</source>
-   <translation type="unfinished"/>
+   <translation>Ecuador</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="70"/>
@@ -499,7 +499,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="71"/>
    <source>El Salvador</source>
-   <translation type="unfinished"/>
+   <translation>El Salvador</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="72"/>
@@ -509,7 +509,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="73"/>
    <source>Eritrea</source>
-   <translation type="unfinished"/>
+   <translation>Eritrea</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="74"/>
@@ -656,12 +656,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="103"/>
    <source>Guyana</source>
-   <translation type="unfinished"/>
+   <translation>Guyana</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="104"/>
    <source>Haiti</source>
-   <translation type="unfinished"/>
+   <translation>Haiti</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="105"/>
@@ -671,12 +671,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="106"/>
    <source>Honduras</source>
-   <translation type="unfinished"/>
+   <translation>Honduras</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="107"/>
    <source>Hong Kong</source>
-   <translation type="unfinished"/>
+   <translation>Hong Kong</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="108"/>
@@ -691,7 +691,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="110"/>
    <source>India</source>
-   <translation type="unfinished"/>
+   <translation>India</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="111"/>
@@ -701,7 +701,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="112"/>
    <source>Iran</source>
-   <translation type="unfinished"/>
+   <translation>Iran</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="113"/>
@@ -731,17 +731,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="118"/>
    <source>Jamaica</source>
-   <translation type="unfinished"/>
+   <translation>Jamaica</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="119"/>
    <source>Japan</source>
-   <translation type="unfinished"/>
+   <translation>Japan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="120"/>
    <source>Jersey</source>
-   <translation type="unfinished"/>
+   <translation>Jersey</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="121"/>
@@ -751,7 +751,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="122"/>
    <source>Kazakhstan</source>
-   <translation type="unfinished"/>
+   <translation>Kazachstan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="123"/>
@@ -766,7 +766,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="125"/>
    <source>Kiribati</source>
-   <translation type="unfinished"/>
+   <translation>Kiribati</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="126"/>
@@ -801,12 +801,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="132"/>
    <source>Lesotho</source>
-   <translation type="unfinished"/>
+   <translation>Lesotho</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="133"/>
    <source>Liberia</source>
-   <translation type="unfinished"/>
+   <translation>Liberia</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="134"/>
@@ -841,12 +841,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="140"/>
    <source>Madagascar</source>
-   <translation type="unfinished"/>
+   <translation>Madagascar</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="141"/>
    <source>Malawi</source>
-   <translation type="unfinished"/>
+   <translation>Malawi</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="142"/>
@@ -861,12 +861,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="144"/>
    <source>Mali</source>
-   <translation type="unfinished"/>
+   <translation>Mali</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="145"/>
    <source>Malta</source>
-   <translation type="unfinished"/>
+   <translation>Malta</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="146"/>
@@ -881,7 +881,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="148"/>
    <source>Martinique</source>
-   <translation type="unfinished"/>
+   <translation>Martinique</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="149"/>
@@ -891,17 +891,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="150"/>
    <source>Mauritius</source>
-   <translation type="unfinished"/>
+   <translation>Mauritius</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="151"/>
    <source>Mayotte</source>
-   <translation type="unfinished"/>
+   <translation>Mayotte</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="152"/>
    <source>Mexico</source>
-   <translation type="unfinished"/>
+   <translation>Mexico</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="153"/>
@@ -911,7 +911,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="154"/>
    <source>Monaco</source>
-   <translation type="unfinished"/>
+   <translation>Monaco</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="155"/>
@@ -921,12 +921,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="156"/>
    <source>Montenegro</source>
-   <translation type="unfinished"/>
+   <translation>Montenegro</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="157"/>
    <source>Montserrat</source>
-   <translation type="unfinished"/>
+   <translation>Montserrat</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="158"/>
@@ -936,7 +936,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="159"/>
    <source>Myanmar</source>
-   <translation type="unfinished"/>
+   <translation>Myanmar</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="160"/>
@@ -946,12 +946,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="161"/>
    <source>Nauru</source>
-   <translation type="unfinished"/>
+   <translation>Nauru</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="162"/>
    <source>Nepal</source>
-   <translation type="unfinished"/>
+   <translation>Nepal</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="163"/>
@@ -976,22 +976,22 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="167"/>
    <source>Nicaragua</source>
-   <translation type="unfinished"/>
+   <translation>Nicaragua</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="168"/>
    <source>Niger</source>
-   <translation type="unfinished"/>
+   <translation>Niger</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="169"/>
    <source>Nigeria</source>
-   <translation type="unfinished"/>
+   <translation>Nigeria</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="170"/>
    <source>Niue</source>
-   <translation type="unfinished"/>
+   <translation>Niue</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="171"/>
@@ -1011,17 +1011,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="174"/>
    <source>Oman</source>
-   <translation type="unfinished"/>
+   <translation>Oman</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="175"/>
    <source>Pakistan</source>
-   <translation type="unfinished"/>
+   <translation>Pakistan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="176"/>
    <source>Palau</source>
-   <translation type="unfinished"/>
+   <translation>Palau</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="177"/>
@@ -1031,7 +1031,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="178"/>
    <source>Panama</source>
-   <translation type="unfinished"/>
+   <translation>Panama</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="179"/>
@@ -1041,12 +1041,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="180"/>
    <source>Paraguay</source>
-   <translation type="unfinished"/>
+   <translation>Paraguay</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="181"/>
    <source>Peru</source>
-   <translation type="unfinished"/>
+   <translation>Peru</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="182"/>
@@ -1071,12 +1071,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="186"/>
    <source>Puerto Rico</source>
-   <translation type="unfinished"/>
+   <translation>Puerto Rico</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="187"/>
    <source>Qatar</source>
-   <translation type="unfinished"/>
+   <translation>Qatar</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="188"/>
@@ -1101,7 +1101,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="192"/>
    <source>Rwanda</source>
-   <translation type="unfinished"/>
+   <translation>Rwanda</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="193"/>
@@ -1111,7 +1111,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="195"/>
    <source>Saint Lucia</source>
-   <translation type="unfinished"/>
+   <translation>Saint Lucia</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="196"/>
@@ -1126,12 +1126,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="198"/>
    <source>Samoa</source>
-   <translation type="unfinished"/>
+   <translation>Samoa</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="199"/>
    <source>San Marino</source>
-   <translation type="unfinished"/>
+   <translation>San Marino</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="200"/>
@@ -1146,7 +1146,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="202"/>
    <source>Senegal</source>
-   <translation type="unfinished"/>
+   <translation>Senegal</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="203"/>
@@ -1161,17 +1161,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="205"/>
    <source>Sierra Leone</source>
-   <translation type="unfinished"/>
+   <translation>Sierra Leone</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="206"/>
    <source>Singapore</source>
-   <translation type="unfinished"/>
+   <translation>Singapore</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="207"/>
    <source>Sint Maarten</source>
-   <translation type="unfinished"/>
+   <translation>Sint Maarten</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="208"/>
@@ -1216,7 +1216,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="216"/>
    <source>Sri Lanka</source>
-   <translation type="unfinished"/>
+   <translation>Sri Lanka</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="217"/>
@@ -1231,7 +1231,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="219"/>
    <source>Swaziland</source>
-   <translation type="unfinished"/>
+   <translation>Swaziland</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="220"/>
@@ -1256,22 +1256,22 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="224"/>
    <source>Taiwan</source>
-   <translation type="unfinished"/>
+   <translation>Taiwan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="225"/>
    <source>Tanzania</source>
-   <translation type="unfinished"/>
+   <translation>Tanzania</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="226"/>
    <source>Thailand</source>
-   <translation type="unfinished"/>
+   <translation>Thailand</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="227"/>
    <source>Togo</source>
-   <translation type="unfinished"/>
+   <translation>Togo</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="228"/>
@@ -1286,7 +1286,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="230"/>
    <source>Trinidad and Tobago</source>
-   <translation type="unfinished"/>
+   <translation>Trinidad en Tobago</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="231"/>
@@ -1301,17 +1301,17 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="233"/>
    <source>Turkmenistan</source>
-   <translation type="unfinished"/>
+   <translation>Turkmenistan</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="234"/>
    <source>Turks and Caicos Islands</source>
-   <translation type="unfinished"/>
+   <translation>Turks- en Caicoseilanden</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="235"/>
    <source>Tuvalu</source>
-   <translation type="unfinished"/>
+   <translation>Tuvalu</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="236"/>
@@ -1346,7 +1346,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="242"/>
    <source>Uruguay</source>
-   <translation type="unfinished"/>
+   <translation>Uruguay</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="243"/>
@@ -1356,7 +1356,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="244"/>
    <source>Vanuatu</source>
-   <translation type="unfinished"/>
+   <translation>Vanuatu</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="245"/>
@@ -1366,7 +1366,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="246"/>
    <source>Venezuela</source>
-   <translation type="unfinished"/>
+   <translation>Venezuela</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="247"/>
@@ -1391,12 +1391,12 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="251"/>
    <source>Zambia</source>
-   <translation type="unfinished"/>
+   <translation>Zambia</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="252"/>
    <source>Zimbabwe</source>
-   <translation type="unfinished"/>
+   <translation>Zimbabwe</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.cpp" line="364"/>
@@ -1464,12 +1464,12 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="73"/>
    <source>Alpine hut</source>
-   <translation type="unfinished"/>
+   <translation>Alpine hut</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="74"/>
    <source>Anime</source>
-   <translation type="unfinished"/>
+   <translation>Anime</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="75"/>
@@ -1504,7 +1504,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="81"/>
    <source>Atm</source>
-   <translation type="unfinished"/>
+   <translation>Atm</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="82"/>
@@ -1519,7 +1519,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="84"/>
    <source>Bahai</source>
-   <translation type="unfinished"/>
+   <translation>Bahai</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="85"/>
@@ -1529,12 +1529,12 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="86"/>
    <source>Bank</source>
-   <translation type="unfinished"/>
+   <translation>Bank</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="87"/>
    <source>Bar</source>
-   <translation type="unfinished"/>
+   <translation>Bar</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="88"/>
@@ -1564,7 +1564,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="93"/>
    <source>BBQ</source>
-   <translation type="unfinished"/>
+   <translation>BBQ</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="94"/>
@@ -1590,7 +1590,7 @@
    <location filename="../../plugins/poi/poi.cpp" line="98"/>
    <source>Beauty</source>
    <comment>Bauty shop</comment>
-   <translation type="unfinished"/>
+   <translation>Schoonheid</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="99"/>
@@ -1655,7 +1655,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="111"/>
    <source>Boule</source>
-   <translation type="unfinished"/>
+   <translation>jeu de boules</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="112"/>
