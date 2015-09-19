@@ -35,7 +35,7 @@ private:
     QFontComboBox *FCmbFont;
     QComboBox     *FCmbSize;
 
-    Action  *FActionResetFormat,
+	Action  *FActionAutoRemoveFormat,
             *FActionRemoveFormat,
             *FActionInsertImage,
             *FActionInsertLink,

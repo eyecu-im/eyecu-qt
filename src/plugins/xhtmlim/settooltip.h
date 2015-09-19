@@ -19,7 +19,7 @@ public:
         Abbreviation
     };
 
-    explicit SetToolTip(int AType, const QString &ATitleText=QString(), QWidget *parent = 0);
+	SetToolTip(int AType, const QString &ATitleText=QString(), QWidget *parent = 0);
     ~SetToolTip();
     QString toolTipText() const;
     int type() const;

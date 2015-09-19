@@ -497,6 +497,9 @@ void Attention::onChatWindowCreated(IMessageChatWindow *AWindow)
 
 void Attention::onAddressChanged(const Jid &AJidBefore, const Jid &AJidAfter)
 {
+	Q_UNUSED(AJidBefore)
+	Q_UNUSED(AJidAfter)
+
 	IMessageAddress *address=qobject_cast<IMessageAddress *>(sender());
 	IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(), address->contactJid());
 	if (window)

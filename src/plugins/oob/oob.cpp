@@ -85,7 +85,7 @@ bool Oob::initObjects()
 {
     Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS_LINKDIALOG, tr("\"Add link\" dialog"), SGO_MESSAGEWINDOWS_LINKDIALOG);
     Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_LINKDIALOG_OK, tr("Ok"), tr("Ctrl+Return", "Ok"), Shortcuts::WidgetShortcut);
-    Shortcuts::declareGroup(SCT_MESSAGEWINDOWS_OOB, tr("Out-of-Band data"), SGO_MESSAGEWINDOWS_OOB);
+	Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS_OOB, tr("Out-of-Band data"), SGO_MESSAGEWINDOWS_OOB);
     Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_INSERTLINK, tr("Add link"), tr("Alt+O", "Add and OOB link"), Shortcuts::WindowShortcut);
     Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_DELETELINK, tr("Delete link"), tr("Delete", "Delete OOB link"), Shortcuts::WidgetShortcut);
     Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_EDITLINK, tr("Edit link"), tr("Return", "Edit OOB link"), Shortcuts::WidgetShortcut);

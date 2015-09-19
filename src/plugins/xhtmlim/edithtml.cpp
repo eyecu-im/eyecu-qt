@@ -78,14 +78,14 @@ void EditHtml::setupFontActions(bool AEnableReset)
 //-----
     if (AEnableReset)
     {
-        FActionResetFormat = new Action(this);
-		FActionResetFormat->setIcon(QIcon::fromTheme("message format", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
-        FActionResetFormat->setText(tr("Reset formatting on message send"));
-        //removeFormat->setShortcut(Qt::CTRL + Qt::Key_B);
-        FActionResetFormat->setPriority(QAction::LowPriority);
-        connect(FActionResetFormat, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
-        FActionResetFormat->setCheckable(true);
-        addAction(FActionResetFormat);
+		FActionAutoRemoveFormat = new Action(this);
+		FActionAutoRemoveFormat->setIcon(QIcon::fromTheme("message format", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
+		FActionAutoRemoveFormat->setText(tr("Reset formatting on message send"));
+		FActionAutoRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTOREMOVE);
+		FActionAutoRemoveFormat->setPriority(QAction::LowPriority);
+		connect(FActionAutoRemoveFormat, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
+		FActionAutoRemoveFormat->setCheckable(true);
+		addAction(FActionAutoRemoveFormat);
     }
 //-----
 
@@ -525,7 +525,7 @@ void EditHtml::setupTextActions()
 //----slots-----
 void EditHtml::onMessageSent()
 {
-    if (!FActionResetFormat->isChecked())
+	if (!FActionAutoRemoveFormat->isChecked())
         clearFormatOnWordOrSelection(true);
 }
 
@@ -565,13 +565,13 @@ void EditHtml::onResetFormat(bool AStatus)
 {
     if(!AStatus)
     {
-		FActionResetFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_PLAIN));
-        FActionResetFormat->setToolTip(tr("Reset formatting on message send"));
+		FActionAutoRemoveFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_PLAIN));
+		FActionAutoRemoveFormat->setToolTip(tr("Reset formatting on message send"));
     }
     else
     {
-		FActionResetFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_RICH));
-        FActionResetFormat->setToolTip(tr("Keep formatting within chat session"));
+		FActionAutoRemoveFormat->setIcon(FIconStorage->getIcon(XHI_FORMAT_RICH));
+		FActionAutoRemoveFormat->setToolTip(tr("Keep formatting within chat session"));
     }
 }
 
@@ -1262,9 +1262,9 @@ void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 
 void EditHtml::fontChanged(const QTextCharFormat &ACharFormat)
 {
-    if (ACharFormat.hasProperty(QTextFormat::FontFamily))
-        FCmbFont->setCurrentFont(ACharFormat.font());
-
+	FCmbFont->blockSignals(true);
+	FCmbFont->setCurrentFont(ACharFormat.hasProperty(QTextFormat::FontFamily)?ACharFormat.font():FTextEdit->font());
+	FCmbFont->blockSignals(false);
 /*
     else if (ACharFormat.hasProperty(QTextFormat::FontStyleHint))
     {

@@ -62,7 +62,6 @@
 //vCard
 #define   SCT_MESSAGEWINDOWS_SHOWVCARD                             "message-windows.show-vcard"
 
-
 //MessageWidgets
 #define SCTG_TABWINDOW                                             "tab-window"
 #define   SCT_TABWINDOW_NEXTTAB                                    "tab-window.next-tab"
@@ -75,51 +74,51 @@
 
 // *** <<< eyeCU <<< ***
 // Client icons
-// Map Contacts
-#define     SCT_MESSAGEWINDOWS_CHAT_SHOWSOFTWAREVERSION            "message-windows.chat-window.show-software-version"
+#define   SCT_MESSAGEWINDOWS_CHAT_SHOWSOFTWAREVERSION              "message-windows.show-software-version"
 
 // Attention
-#define     SCT_MESSAGEWINDOWS_CHAT_ATTENTION                      "message-windows.chat-window.attention"
+#define   SCT_MESSAGEWINDOWS_CHAT_ATTENTION                        "message-windows.attention"
 
 // Link dialog
-#define   SCTG_MESSAGEWINDOWS_LINKDIALOG                           "message-windows.link-dialog"
-#define     SCT_MESSAGEWINDOWS_LINKDIALOG_OK                       "message-windows.link-dialog.ok"
+#define SCTG_MESSAGEWINDOWS_LINKDIALOG                             "message-windows.link-dialog"
+#define   SCT_MESSAGEWINDOWS_LINKDIALOG_OK                         "message-windows.link-dialog.ok"
 
 // Map Contacts
 #define   SCT_ROSTERVIEW_SHOWCONTACTONTHEMAP                       "roster-view.show-contact-on-the-map"
-#define     SCT_MESSAGEWINDOWS_CHAT_SHOWCONTACTONTHEMAP            "message-windows.chat-window.show-contact-on-the-map"
+#define   SCT_MESSAGEWINDOWS_CHAT_SHOWCONTACTONTHEMAP              "message-windows.show-contact-on-the-map"
 
 // OOB
-#define   SCT_MESSAGEWINDOWS_OOB                                   "message-windows.oob"
-#define     SCT_MESSAGEWINDOWS_OOB_INSERTLINK                      "message-windows.oob.insert-link"
-#define     SCT_MESSAGEWINDOWS_OOB_DELETELINK                      "message-windows.oob.delete-link"
-#define     SCT_MESSAGEWINDOWS_OOB_EDITLINK                        "message-windows.oob.edit-link"
+#define SCTG_MESSAGEWINDOWS_OOB                                    "message-windows.oob"
+#define   SCT_MESSAGEWINDOWS_OOB_INSERTLINK                        "message-windows.oob.insert-link"
+#define   SCT_MESSAGEWINDOWS_OOB_DELETELINK                        "message-windows.oob.delete-link"
+#define   SCT_MESSAGEWINDOWS_OOB_EDITLINK                          "message-windows.oob.edit-link"
 
 // XHTML-IM
-#define   SCTG_MESSAGEWINDOWS_XHTMLIM								"message-windows.xhtml-im"
-#define     SCTG_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG			"message-windows.xhtml-im.insert-image-dialog"
-#define       SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG_BROWSE	"message-windows.xhtml-im.insert-image-dialog.browse"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE                 "message-windows.xhtml-im.insert-image"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK                  "message-windows.xhtml-im.insert-link"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP                  "message-windows.xhtml-im.insert-nbsp"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE               "message-windows.xhtml-im.insert-newline"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP                  "message-windows.xhtml-im.set-title"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_BOLD                        "message-windows.xhtml-im.bold"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC                      "message-windows.xhtml-im.italic"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE                   "message-windows.xhtml-im.underline"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE                    "message-windows.xhtml-im.overline"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT                   "message-windows.xhtml-im.strikeout"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_CODE                        "message-windows.xhtml-im.code"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_FONT                        "message-windows.xhtml-im.font"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR             "message-windows.xhtml-im.foreground-color"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR             "message-windows.xhtml-im.background-color"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER                 "message-windows.xhtml-im.align-center"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT                  "message-windows.xhtml-im.align-right"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT                   "message-windows.xhtml-im.align-left"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY                "message-windows.xhtml-im.align-justify"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE                "message-windows.xhtml-im.format-remove"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE              "message-windows.xhtml-im.indent-increase"
-#define     SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE              "message-windows.xhtml-im.indent-decrease"
+#define SCTG_MESSAGEWINDOWS_XHTMLIM				                   "message-windows.xhtml-im"
+#define   SCTG_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG            "message-windows.xhtml-im.insert-image-dialog"
+#define     SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG_BROWSE    "message-windows.xhtml-im.insert-image-dialog.browse"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE                   "message-windows.xhtml-im.insert-image"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK                    "message-windows.xhtml-im.insert-link"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP                    "message-windows.xhtml-im.insert-nbsp"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE                 "message-windows.xhtml-im.insert-newline"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP                    "message-windows.xhtml-im.set-title"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_BOLD                          "message-windows.xhtml-im.bold"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC                        "message-windows.xhtml-im.italic"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE                     "message-windows.xhtml-im.underline"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE                      "message-windows.xhtml-im.overline"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT                     "message-windows.xhtml-im.strikeout"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_CODE                          "message-windows.xhtml-im.code"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_FONT                          "message-windows.xhtml-im.font"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR               "message-windows.xhtml-im.foreground-color"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR               "message-windows.xhtml-im.background-color"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER                   "message-windows.xhtml-im.align-center"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT                    "message-windows.xhtml-im.align-right"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT                     "message-windows.xhtml-im.align-left"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY                  "message-windows.xhtml-im.align-justify"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE                  "message-windows.xhtml-im.format-remove"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTOREMOVE              "message-windows.xhtml-im.format-auto-remove"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE                "message-windows.xhtml-im.indent-increase"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE                "message-windows.xhtml-im.indent-decrease"
 
 // Map
 #define SCTG_MAP                                                   "map"
