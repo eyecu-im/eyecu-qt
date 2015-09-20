@@ -199,7 +199,7 @@ bool Attention::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 void Attention::updateToolbar(IMessageChatWindow *AWindow)
 {
 	Action *action;
-	QList<QAction *> actions = AWindow->editWidget()->editToolBarChanger()->groupItems(TBG_MWTBW_ATTENTION_SEND);
+	QList<QAction *> actions = AWindow->editWidget()->editToolBarChanger()->groupItems(TBG_MWEWTB_ATTENTION_SEND);
 	if (!actions.isEmpty())
 	{
 		action = AWindow->editWidget()->editToolBarChanger()->handleAction(actions.first());
@@ -491,7 +491,7 @@ void Attention::onChatWindowCreated(IMessageChatWindow *AWindow)
 	action->setData(ADR_STREAM_JID, streamJid.full());
 	connect(action,SIGNAL(triggered(bool)),SLOT(onSetAttentionByAction(bool)));
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
-	AWindow->editWidget()->editToolBarChanger()->insertAction(action,TBG_MWTBW_ATTENTION_SEND);
+	AWindow->editWidget()->editToolBarChanger()->insertAction(action,TBG_MWEWTB_ATTENTION_SEND);
 	updateToolbar(AWindow);
 }
 
