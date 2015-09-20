@@ -6,7 +6,7 @@
 		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
 		call SysLoadFuncs
 
-		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'),2)
+		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'), 2)
 
 		ProdConfig = BootDrive || '\CONFIG.SYS'
 
@@ -69,9 +69,7 @@
 
 				if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
 				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
-				else qtdir = '' /* Unknown path */
-
-				DO FOREVER
+				else DO 
 					qtdir = WirexxVarPrompt('QTDIR')
 
 					QCONFIG = qtdir||'\mkspecs\qconfig.pri'
@@ -88,7 +86,6 @@
 						rc = stream(QCONFIG,'c','close')
 
 						if (major = 4) & (minor >= 7) then return ""
-						else return 'REQUIRES="netlabs.org\Qt\SDK\4\7"'
 					END
 				END
 			END
