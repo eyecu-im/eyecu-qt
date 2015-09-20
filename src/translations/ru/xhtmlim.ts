@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
   <context>
     <name>AddLink</name>
     <message>
@@ -684,6 +684,19 @@
     <message>
       <source>Bits of binary</source>
       <translation>Бинарные данные</translation>
+    </message>
+    <message>
+      <source>Toggle remove formatting on message send</source>
+      <translation>Включить/выключить убирание форматирования при отправке сообщения</translation>
+    </message>
+    <message>
+      <source>Alt+A</source>
+      <comment>Toggle remove formatting on message send</comment>
+      <translation>Alt+A</translation>
+    </message>
+    <message>
+      <source>Show rich text editor toolbar</source>
+      <translation>Показывать тулбар форматирования текста</translation>
     </message>
   </context>
   <context>

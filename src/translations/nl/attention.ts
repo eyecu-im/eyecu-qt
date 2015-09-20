@@ -33,10 +33,6 @@
    <translation>Melding pop-up</translation>
   </message>
   <message>
-   <source>Activate main window</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
    <source>Always play sound</source>
    <translation>Speel altijd geluid</translation>
@@ -64,10 +60,6 @@
  </context>
  <context>
   <name>AttentionDialog</name>
-  <message>
-   <source>ATTENTION!</source>
-   <translation type="unfinished"/>
-  </message>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
    <source>ATTENTION</source>

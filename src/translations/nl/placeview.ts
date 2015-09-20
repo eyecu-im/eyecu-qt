@@ -57,18 +57,6 @@
    <translation>Form</translation>
   </message>
   <message>
-   <source>Type of place</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Way to search</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Radius, km</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="375"/>
    <source>Type</source>
    <translation>Soort</translation>
@@ -79,53 +67,9 @@
    <translation>Zoekopdracht</translation>
   </message>
   <message>
-   <source>Way To Search</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>0.5</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>1.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>3.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>5.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>10.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>20.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>40.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>50.0</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Key Word</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="191"/>
    <source>Rank by</source>
    <translation>Rangschikken op</translation>
-  </message>
-  <message>
-   <source>Rankby</source>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.ui" line="210"/>

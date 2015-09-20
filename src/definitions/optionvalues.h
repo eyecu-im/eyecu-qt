@@ -522,12 +522,13 @@
 // XHTML-IM
 #define OPV_XHTML                                       "xhtml"
 #define OPV_XHTML_MAXAGE                                "xhtml.maxage"
-#define OPV_XHTML_EMBEDSIZE                             "xhtml.embedsize"
-#define OPV_XHTML_DEFIMAGEFORMAT                        "xhtml.defimageformat"
-#define OPV_XHTML_TABINDENT                             "xhtml.tabindent"
-#define OPV_XHTML_NORICHTEXT                            "xhtml.norichtext"
-#define OPV_XHTML_IMAGESAVEDIRECTORY                    "xhtml.image_save_directory"
-#define OPV_XHTML_IMAGEOPENDIRECTORY                    "xhtml.image_open_directory"
+#define OPV_XHTML_EMBEDSIZE                             "xhtml.embed-size"
+#define OPV_XHTML_DEFAULTIMAGEFORMAT                    "xhtml.default-image-format"
+#define OPV_XHTML_TABINDENT                             "xhtml.tab-indent"
+#define OPV_XHTML_NORICHTEXT                            "xhtml.no-rich-text"
+#define OPV_XHTML_IMAGESAVEDIRECTORY                    "xhtml.image-save-directory"
+#define OPV_XHTML_IMAGEOPENDIRECTORY                    "xhtml.image-open-directory"
+#define OPV_XHTML_EDITORTOOLBAR                         "xhtml.editor-toolbar"
 
 // Attention
 #define OPV_ATTENTION_ROOT                              "attention"

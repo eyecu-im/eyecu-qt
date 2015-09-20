@@ -39,7 +39,7 @@ void XhtmlOptions::apply()
 	}
 	Options::node(OPV_XHTML_MAXAGE).setValue(maxAge);
     Options::node(OPV_XHTML_EMBEDSIZE).setValue(ui->spbMaxEmbedDataSize->value());
-    Options::node(OPV_XHTML_DEFIMAGEFORMAT).setValue(ui->cmbDefImageFormat->itemData(ui->cmbDefImageFormat->currentIndex()));
+	Options::node(OPV_XHTML_DEFAULTIMAGEFORMAT).setValue(ui->cmbDefImageFormat->itemData(ui->cmbDefImageFormat->currentIndex()));
     emit childApply();
 }
 
@@ -69,7 +69,7 @@ void XhtmlOptions::reset()
 
 	ui->cmbAgeUnits->setCurrentIndex(units);	
     ui->spbMaxEmbedDataSize->setValue(Options::node(OPV_XHTML_EMBEDSIZE).value().toInt());	
-    ui->cmbDefImageFormat->setCurrentIndex(ui->cmbDefImageFormat->findData(Options::node(OPV_XHTML_DEFIMAGEFORMAT).value()));
+	ui->cmbDefImageFormat->setCurrentIndex(ui->cmbDefImageFormat->findData(Options::node(OPV_XHTML_DEFAULTIMAGEFORMAT).value()));
 	emit childReset();
 }
 

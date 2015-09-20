@@ -43,4 +43,6 @@
   <icon><key>orderAlphaUp</key><object mime="image/png">orderalphaup.png</object></icon>
   <icon><key>orderRomanLow</key><object mime="image/png">orderromanlow.png</object></icon>
   <icon><key>orderRomanUp</key><object mime="image/png">orderromanup.png</object></icon>
+
+  <icon><key>richText</key><object mime="image/png">richtext.png</object></icon>
 </icondef>

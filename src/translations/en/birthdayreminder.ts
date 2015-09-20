@@ -25,7 +25,7 @@
   </message>
   <message numerus="yes">
    <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
-   <source>Birthday in %n day(s),
+   <source>Birthday in %n day(s),&#xd;
  %1</source>
    <translation>
     <numerusform>Birthday in %n day,\n %1</numerusform>

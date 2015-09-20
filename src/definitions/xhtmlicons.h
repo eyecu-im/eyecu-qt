@@ -39,4 +39,5 @@
 #define XHI_CODE                  "code"
 #define XHI_PREFORMAT             "preformat"
 
+#define XHI_RICHTEXT              "richText"
 #endif

@@ -62,8 +62,7 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation>Los parámetros de la sala son inválidos.
-Comprueba la configuración y vuelve a intentarlo.</translation>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -970,15 +969,7 @@ Comprueba la configuración y vuelve a intentarlo.</translation>
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation>Lista de comandos soportados:
-/ban &lt;apodo&gt; [comentario]
-/invite &lt;jid&gt; [comentario]
-/join &lt;sala&gt; [contraseña]
-/kick &lt;apodo&gt; [comentario]
-/msg &lt;apodo&gt; &lt;mensaje&gt;
-/nick &lt;nuevo_apodo&gt;
-/leave [comentario]
-/topic &lt;tema&gt;</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1338"/>

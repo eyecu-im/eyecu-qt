@@ -121,15 +121,6 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
    <source>&amp;Change transport</source>
    <translation>&amp;Wijzig transport</translation>
   </message>
-  <message>
-   <source>This Wizard will help you to connect to a legacy network via transport (gateway)</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Before running this Wizard, make sure you have an account at legacy network.
-If don&apos;t, please register at legacy network on its web site or using native client.</source>
-   <translation type="unfinished"/>
-  </message>
  </context>
  <context>
   <name>NetworksPage</name>
@@ -343,10 +334,6 @@ If don&apos;t, please register at legacy network on its web site or using native
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="669"/>
    <source>e-mail</source>
    <translation>e-mail</translation>
-  </message>
-  <message>
-   <source>Web Link</source>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="684"/>
@@ -602,10 +589,6 @@ If don&apos;t, please register at legacy network on its web site or using native
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="112"/>
    <source>Change transport</source>
    <translation>Verander transport</translation>
-  </message>
-  <message>
-   <source>Connect to legacy network</source>
-   <translation type="unfinished"/>
   </message>
  </context>
 </TS>

@@ -30,6 +30,7 @@
 #include <definitions/optionnodeorders.h>
 #include <definitions/optionwidgetorders.h>
 #include <definitions/resources.h>
+#include <definitions/xhtmlicons.h>
 
 #include <utils/textmanager.h>
 #include <utils/animatedtextbrowser.h>
@@ -106,8 +107,6 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
     if (!FNetworkAccessManager)
         FNetworkAccessManager=new QNetworkAccessManager(this);
 
-    connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
-    connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
     connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
 
     //AInitOrder = 100;   // This one should be initialized AFTER ...
@@ -178,7 +177,34 @@ void XhtmlIm::registerDiscoFeatures()
     dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_XHTML);
     dfeature.name = tr("XHTML-IM");
     dfeature.description = tr("Supports XHTML message formating");
-    FDiscovery->insertDiscoFeature(dfeature);
+	FDiscovery->insertDiscoFeature(dfeature);
+}
+
+void XhtmlIm::updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger)
+{
+	QList<QAction *> actions = AToolBarChanger->groupItems(TBG_MWTBW_RICHTEXT_EDITOR);
+	QAction *action = actions.isEmpty()?NULL:actions.first();
+	if (ASupported)
+	{
+		if (!action)
+		{
+			Action *action = new Action();
+			action->setText(tr("Show rich text editor toolbar"));
+			action->setIcon(FIconStorage->getIcon(XHI_RICHTEXT));
+			action->setCheckable(true);
+			action->setChecked(AEnabled);
+			AToolBarChanger->insertAction(action, TBG_MWTBW_RICHTEXT_EDITOR);
+			connect(action, SIGNAL(toggled(bool)), SLOT(onRichTextEditorToggled(bool)));
+		}
+	}
+	else
+	{
+		if (action)
+		{
+			AToolBarChanger->removeItem(action);
+			action->deleteLater();
+		}
+	}
 }
 
 bool XhtmlIm::initSettings()
@@ -210,9 +236,10 @@ bool XhtmlIm::initSettings()
 #endif
 	Options::setDefaultValue(OPV_XHTML_MAXAGE, 2565000); // 1 month
     Options::setDefaultValue(OPV_XHTML_EMBEDSIZE, 1024);
-    Options::setDefaultValue(OPV_XHTML_DEFIMAGEFORMAT, "png");
+	Options::setDefaultValue(OPV_XHTML_DEFAULTIMAGEFORMAT, "png");
     Options::setDefaultValue(OPV_XHTML_TABINDENT, true);
     Options::setDefaultValue(OPV_XHTML_NORICHTEXT, true);
+	Options::setDefaultValue(OPV_XHTML_EDITORTOOLBAR, true);
 	Options::setDefaultValue(OPV_XHTML_IMAGESAVEDIRECTORY, pictures);
 	Options::setDefaultValue(OPV_XHTML_IMAGEOPENDIRECTORY, pictures);
 
@@ -231,8 +258,9 @@ QMultiMap<int, IOptionsDialogWidget *> XhtmlIm::optionsDialogWidgets(const QStri
     if (ANodeId == OPN_XHTML)
 	{
 		widgets.insertMulti(OHO_XHTML_GENERAL, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
-		widgets.insertMulti(OWO_XHTML_TABINDENT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_NORICHTEXT), tr("Use indentation instead of tabulation at the beginning of the paragraph"), AParent));
+		widgets.insertMulti(OWO_XHTML_TABINDENT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_TABINDENT), tr("Use indentation instead of tabulation at the beginning of the paragraph"), AParent));
 		widgets.insertMulti(OWO_XHTML_NORICHTEXT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_NORICHTEXT), tr("Do not send rich text without formatting"), AParent));
+		widgets.insertMulti(OWO_XHTML_EDITORTOOLBAR, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_EDITORTOOLBAR), tr("Show rich text editor toolbar"), AParent));
 		if (FBitsOfBinary)
 		{
 			widgets.insertMulti(OHO_XHTML_BOB, FOptionsManager->newOptionsDialogHeader(tr("Bits of binary"), AParent));
@@ -245,7 +273,12 @@ QMultiMap<int, IOptionsDialogWidget *> XhtmlIm::optionsDialogWidgets(const QStri
 bool XhtmlIm::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
     return FDiscovery==NULL || !FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
-            || FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_XHTML_IM);
+			|| FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_XHTML_IM);
+}
+
+bool XhtmlIm::isSupported(const IMessageAddress *AMessageAddress) const
+{
+	return isSupported(AMessageAddress->streamJid(), AMessageAddress->contactJid())	;
 }
 
 void XhtmlIm::addRichTextEditToolbar(SplitterWidget *ASplitterWidget, int AOrderId, IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset)
@@ -253,24 +286,52 @@ void XhtmlIm::addRichTextEditToolbar(SplitterWidget *ASplitterWidget, int AOrder
 	ASplitterWidget->insertWidget(AOrderId, new EditHtml(AEditWidget, AEnableFormatAutoReset, FBitsOfBinary, FNetworkAccessManager, this));
 }
 
-void XhtmlIm::updateChatWindowActions(IMessageChatWindow *AChatWindow)
+void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *AChatWindow)
 {
+	bool supported = isSupported(AChatWindow->address());
+	updateToolbar(supported, ARichTextEditor, AChatWindow->toolBarWidget()->toolBarChanger());
     QWidget *xhtmlEdit = AChatWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
-    if(isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
+	if(ARichTextEditor && supported)
     {
         if (!xhtmlEdit)
-        {
-            addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
-            connect(AChatWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
-                                                           SLOT(onViewContextMenu(QPoint, Menu*)));
-        }
+			addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
     }
     else
         if (xhtmlEdit)
         {
             AChatWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
-            xhtmlEdit->deleteLater();
-        }
+            xhtmlEdit->deleteLater();			
+		}
+}
+
+void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow)
+{
+	bool supported = isSupported(ANormalWindow->address());
+	updateToolbar(supported, ARichTextEditor, ANormalWindow->toolBarWidget()->toolBarChanger());
+	QWidget *xhtmlEdit = ANormalWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
+	if(ARichTextEditor && supported)
+	{
+		if (!xhtmlEdit)
+			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), true);
+	}
+	else
+		if (xhtmlEdit)
+		{
+			ANormalWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
+			xhtmlEdit->deleteLater();
+		}
+}
+
+
+void XhtmlIm::updateMessageWindows(bool ARichTextEditor)
+{
+	QList<IMessageChatWindow *> chatWindows = FMessageWidgets->chatWindows();
+	for (QList<IMessageChatWindow *>::ConstIterator it = chatWindows.constBegin(); it!=chatWindows.constEnd(); ++it)
+		updateChatWindowActions(ARichTextEditor, *it);
+
+	QList<IMessageNormalWindow *> normalWindows = FMessageWidgets->normalWindows();
+	for (QList<IMessageNormalWindow *>::ConstIterator it = normalWindows.constBegin(); it!=normalWindows.constEnd(); ++it)
+		updateNormalWindowActions(ARichTextEditor, *it);
 }
 
 void XhtmlIm::fixHtml(QString &AHtmlCode)
@@ -281,10 +342,11 @@ void XhtmlIm::fixHtml(QString &AHtmlCode)
 
 void XhtmlIm::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 {
-    if(isSupported(AWindow->streamJid(), AWindow->contactJid()))
+	if(isSupported(AWindow->streamJid(), AWindow->contactJid()))
     {
         if (AWindow->mode()==IMessageNormalWindow::WriteMode) // Only for sending!!!
-            addRichTextEditToolbar(AWindow->messageWidgetsBox(), MNWW_RICHTEXTTOOLBARWIDGET, AWindow->editWidget(), false);
+//            addRichTextEditToolbar(AWindow->messageWidgetsBox(), MNWW_RICHTEXTTOOLBARWIDGET, AWindow->editWidget(), false);
+			updateNormalWindowActions(Options::node(OPV_XHTML_EDITORTOOLBAR).value().toBool(), AWindow);
         else
             connect(AWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
                                                        SLOT(onViewContextMenu(QPoint, Menu*)));
@@ -299,13 +361,21 @@ void XhtmlIm::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefo
     IMessageAddress *address=qobject_cast<IMessageAddress *>(sender());
     IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(), address->contactJid());
     if (window)
-        updateChatWindowActions(window);
+		updateChatWindowActions(Options::node(OPV_XHTML_EDITORTOOLBAR).value().toBool(), window);
+}
+
+void XhtmlIm::onRichTextEditorToggled(bool AChecked)
+{
+	Options::node(OPV_XHTML_EDITORTOOLBAR).setValue(AChecked);
 }
 
 void XhtmlIm::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
-    updateChatWindowActions(AWindow);
+	updateChatWindowActions(Options::node(OPV_XHTML_EDITORTOOLBAR).value().toBool(), AWindow);
     connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+	connect(AWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
+											   SLOT(onViewContextMenu(QPoint, Menu*)));
+
 }
 
 void XhtmlIm::onViewContextMenu(const QPoint &APosition, Menu *AMenu)
@@ -620,7 +690,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 
                 if (format.isEmpty())
                 {
-                    format=Options::node(OPV_XHTML_DEFIMAGEFORMAT).value().toByteArray();
+					format=Options::node(OPV_XHTML_DEFAULTIMAGEFORMAT).value().toByteArray();
                     mimeType=QString("image/").append(format);
                 }
 
@@ -666,17 +736,11 @@ bool XhtmlIm::messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget
     return false;
 }
 
-void XhtmlIm::onOptionsOpened()
-{
-}
-
-void XhtmlIm::onOptionsClosed()
-{
-}
-
 void XhtmlIm::onOptionsChanged(const OptionsNode &ANode)
 {
 	Q_UNUSED(ANode)
+	if (ANode.path() == OPV_XHTML_EDITORTOOLBAR)
+		updateMessageWindows(ANode.value().toBool());
 }
 
 void XhtmlIm::onBobUrlOpen(QUrl AUrl)

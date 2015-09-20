@@ -59,18 +59,6 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>400x300</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>640x480</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>640x640</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/streetview/streetviewform.ui" line="312"/>
    <source>Latitude</source>
    <translation type="unfinished"/>

@@ -215,6 +215,7 @@
 #define OHO_XHTML_GENERAL                         500
 #define   OWO_XHTML_NORICHTEXT                    520
 #define   OWO_XHTML_TABINDENT                     530
+#define   OWO_XHTML_EDITORTOOLBAR                 540
 #define OHO_XHTML_BOB                             600
 #define   OWO_XHTML_BOB                           610
 //Node = ON_POSITIONING

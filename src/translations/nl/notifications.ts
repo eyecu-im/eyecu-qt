@@ -84,10 +84,6 @@
    <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
   <message>
-   <source> seconds</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="254"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
    <translation>Tijd om een popup venster weer tegeven(0 - altijd zichtbaar):</translation>
@@ -129,13 +125,6 @@
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="53"/>
    <source>Show the corresponding window minimized in the taskbar</source>
    <translation>Toon de overeenkomstige venster geminimaliseerd in de taakbalk</translation>
-  </message>
- </context>
- <context>
-  <name>NotifyWidget</name>
-  <message>
-   <source>Message is empty or hidden</source>
-   <translation type="unfinished"/>
   </message>
  </context>
 </TS>

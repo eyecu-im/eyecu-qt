@@ -62,8 +62,7 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation>Conferentie parameters zijn niet geaccepteerd.
-Check waarden en probeer opnieuw</translation>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -970,15 +969,7 @@ Check waarden en probeer opnieuw</translation>
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation>Ondersteunde lijst van commando&apos;s: 
- /ban &lt;kamerbijnaam&gt; [Commentaar] 
- /invite &lt;jid&gt; [Commentaar] 
- /join &lt;kamerbijnaam&gt; [paswoord] 
- /kick &lt;kamerbijnaam&gt; [Commentaar] 
- /msg &lt;kamerbijnaam&gt; &lt;foo&gt; 
- /nick &lt;nieuwebijnaam&gt; 
- /leave [Commentaar] 
- /topic &lt;foo&gt;</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1338"/>

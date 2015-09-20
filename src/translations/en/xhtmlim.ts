@@ -432,22 +432,22 @@
    <translation>Set tool tip</translation>
   </message>
   <message>
-   <location line="32" filename="../../plugins/xhtmlim/settooltip.ui"/>
+   <location line="86" filename="../../plugins/xhtmlim/settooltip.ui"/>
    <source>Tool tip text</source>
    <translation>Tool tip text</translation>
   </message>
   <message>
-   <location line="45" filename="../../plugins/xhtmlim/settooltip.ui"/>
+   <location line="46" filename="../../plugins/xhtmlim/settooltip.ui"/>
    <source>None</source>
    <translation>None</translation>
   </message>
   <message>
-   <location line="50" filename="../../plugins/xhtmlim/settooltip.ui"/>
+   <location line="51" filename="../../plugins/xhtmlim/settooltip.ui"/>
    <source>Acronym</source>
    <translation>Acronym</translation>
   </message>
   <message>
-   <location line="55" filename="../../plugins/xhtmlim/settooltip.ui"/>
+   <location line="56" filename="../../plugins/xhtmlim/settooltip.ui"/>
    <source>Abbreviation</source>
    <translation>Abbreviation</translation>
   </message>
@@ -455,214 +455,225 @@
  <context>
   <name>XhtmlIm</name>
   <message>
-   <location line="59" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
-   <location line="120" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="60" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="119" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <location line="178" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>XHTML-IM</source>
    <translation>XHTML-IM</translation>
   </message>
   <message>
-   <location line="60" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="61" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Implements XEP-0071: XHTML-IM</source>
    <translation>Implements XEP-0071: XHTML-IM</translation>
   </message>
   <message>
-   <location line="121" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="120" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Insert image</source>
    <translation>Insert image</translation>
   </message>
   <message>
-   <location line="121" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="120" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+I</source>
    <comment>Insert image</comment>
    <translation>Alt+I</translation>
   </message>
   <message>
-   <location line="122" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="121" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Insert link</source>
    <translation>Insert link</translation>
   </message>
   <message>
-   <location line="122" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="121" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+L</source>
    <comment>Insert link</comment>
    <translation>Alt+L</translation>
   </message>
   <message>
-   <location line="123" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="122" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Insert non-breaking space</source>
    <translation>Insert non-breaking space</translation>
   </message>
   <message>
-   <location line="123" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="122" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+Space</source>
    <comment>Insert NBSP</comment>
    <translation>Ctrl+Space</translation>
   </message>
   <message>
-   <location line="124" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="123" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Insert new line</source>
    <translation>Insert new line</translation>
   </message>
   <message>
-   <location line="124" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="123" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+Return</source>
    <comment>Insert new line</comment>
    <translation>Alt+Return</translation>
   </message>
   <message>
-   <location line="125" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="124" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Set tool tip</source>
    <translation>Set tool tip</translation>
   </message>
   <message>
-   <location line="125" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="124" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+T</source>
    <comment>Insert link</comment>
    <translation>Alt+T</translation>
   </message>
   <message>
-   <location line="126" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="125" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Bold</source>
    <translation>Bold</translation>
   </message>
   <message>
-   <location line="126" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="125" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+B</source>
    <comment>Bold</comment>
    <translation>Ctrl+B</translation>
   </message>
   <message>
-   <location line="127" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="126" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Italic</source>
    <translation>Italic</translation>
   </message>
   <message>
-   <location line="127" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="126" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+I</source>
    <comment>Italic</comment>
    <translation>Ctrl+I</translation>
   </message>
   <message>
-   <location line="128" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="127" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Underline</source>
    <translation>Underline</translation>
   </message>
   <message>
-   <location line="128" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="127" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+U</source>
    <comment>Underline</comment>
    <translation>Ctrl+U</translation>
   </message>
   <message>
-   <location line="129" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="128" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Strikeout</source>
    <translation>Strikeout</translation>
   </message>
   <message>
-   <location line="129" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="128" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+S</source>
    <comment>Strikeout</comment>
    <translation>Ctrl+S</translation>
   </message>
   <message>
-   <location line="130" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="129" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Code</source>
    <translation>Code</translation>
   </message>
   <message>
-   <location line="130" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="129" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+C</source>
    <comment>Code</comment>
    <translation>Alt+C</translation>
   </message>
   <message>
-   <location line="131" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="130" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Font</source>
    <translation>Font</translation>
   </message>
   <message>
-   <location line="131" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="130" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+F</source>
    <comment>Font</comment>
    <translation>Ctrl+F</translation>
   </message>
   <message>
-   <location line="132" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="131" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Foreground color</source>
    <translation>Foreground color</translation>
   </message>
   <message>
-   <location line="132" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="131" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+F</source>
    <comment>Foreground color</comment>
    <translation>Alt+F</translation>
   </message>
   <message>
-   <location line="133" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="132" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Background color</source>
    <translation>Background color</translation>
   </message>
   <message>
-   <location line="133" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="132" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+B</source>
    <comment>Background color</comment>
    <translation>Alt+B</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="133" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Center</source>
    <translation>Center</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="133" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+E</source>
    <comment>Align center</comment>
    <translation>Ctrl+E</translation>
   </message>
   <message>
-   <location line="135" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="134" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Left</source>
    <translation>Left</translation>
   </message>
   <message>
-   <location line="135" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="134" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+L</source>
    <comment>Align left</comment>
    <translation>Ctrl+L</translation>
   </message>
   <message>
-   <location line="136" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="135" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Right</source>
    <translation>Right</translation>
   </message>
   <message>
-   <location line="136" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="135" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+R</source>
    <comment>Align right</comment>
    <translation>Ctrl+R</translation>
   </message>
   <message>
-   <location line="137" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="136" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Justify</source>
    <translation>Justify</translation>
   </message>
   <message>
-   <location line="137" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="136" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Ctrl+J</source>
    <comment>Align justify</comment>
    <translation>Ctrl+J</translation>
   </message>
   <message>
-   <location line="138" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="137" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Remove formatting</source>
    <translation>Remove formatting</translation>
   </message>
   <message>
-   <location line="138" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="137" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Alt+R</source>
    <comment>Remove formatting</comment>
    <translation>Alt+R</translation>
+  </message>
+  <message>
+   <location line="138" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <source>Toggle remove formatting on message send</source>
+   <translation>Toggle remove formatting on message send</translation>
+  </message>
+  <message>
+   <location line="138" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <source>Alt+A</source>
+   <comment>Toggle remove formatting on message send</comment>
+   <translation>Alt+A</translation>
   </message>
   <message>
    <location line="139" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
@@ -718,57 +729,63 @@
    <translation>Supports XHTML message formating</translation>
   </message>
   <message>
-   <location line="220" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="192" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="263" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <source>Show rich text editor toolbar</source>
+   <translation>Show rich text editor toolbar</translation>
+  </message>
+  <message>
+   <location line="248" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>XHTML</source>
    <translation>XHTML</translation>
   </message>
   <message>
-   <location line="232" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="260" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>General</source>
    <translation>General</translation>
   </message>
   <message>
-   <location line="233" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="261" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Use indentation instead of tabulation at the beginning of the paragraph</source>
    <translation>Use indentation instead of tabulation at the beginning of the paragraph</translation>
   </message>
   <message>
-   <location line="234" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="262" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Do not send rich text without formatting</source>
    <translation>Do not send rich text without formatting</translation>
   </message>
   <message>
-   <location line="237" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="266" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Bits of binary</source>
    <translation>Bits of binary</translation>
   </message>
   <message>
-   <location line="323" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="394" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Save image...</source>
    <translation>Save image...</translation>
   </message>
   <message>
-   <location line="330" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="401" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Open image in the system</source>
    <translation>Open image in the system</translation>
   </message>
   <message>
-   <location line="338" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="409" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Copy image</source>
    <translation>Copy image</translation>
   </message>
   <message>
-   <location line="351" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="422" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Copy image link</source>
    <translation>Copy image link</translation>
   </message>
   <message>
-   <location line="404" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="475" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>Please, choose image file</source>
    <translation>Please, choose image file</translation>
   </message>
   <message numerus="yes">
-   <location line="712" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="777" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>second(s)</source>
    <translation>
     <numerusform>second</numerusform>
@@ -776,7 +793,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="713" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="778" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>minute(s)</source>
    <translation>
     <numerusform>minute</numerusform>
@@ -784,7 +801,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="714" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="779" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>hour(s)</source>
    <translation>
     <numerusform>hour</numerusform>
@@ -792,7 +809,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="715" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="780" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>day(s)</source>
    <translation>
     <numerusform>day</numerusform>
@@ -800,7 +817,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="716" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="781" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>week(s)</source>
    <translation>
     <numerusform>week</numerusform>
@@ -808,7 +825,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="717" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="782" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>month(s)</source>
    <translation>
     <numerusform>month</numerusform>
@@ -816,7 +833,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location line="718" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
+   <location line="783" filename="../../plugins/xhtmlim/xhtmlim.cpp"/>
    <source>year(s)</source>
    <translation>
     <numerusform>year</numerusform>

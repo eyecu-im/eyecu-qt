@@ -21,11 +21,12 @@
 #define TBG_MWTBW_ARCHIVE_VIEW                                  700
 #define TBG_MWTBW_VCARD_VIEW                                    900
 // *** <<< eyeCU <<< ***
-#define TBG_MWTBW_ATTENTION_SEND                                1100
+#define TBG_MWETBW_ATTENTION_SEND                               1100
 #define TBG_MWTBW_POI_VIEW                                      1200
 #define TBG_MWTBW_OOB_VIEW                                      1250
 #define TBG_MWTBW_JINGLE_RTP                                    1280
 #define TBG_MWTBW_MOOD_VIEW                                     1290
+#define TBG_MWTBW_RICHTEXT_EDITOR                               10050
 // *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
 #define TBG_MWTBW_CHATSTATES                                    10100

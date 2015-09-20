@@ -62,8 +62,7 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation>Konferenz Parameter nicht akzeptierbar.
-Werte überprüfen und neu probieren</translation>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -970,15 +969,7 @@ Werte überprüfen und neu probieren</translation>
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation>Liste unterstützer Befehle:
- /ban &lt;nick&gt; [kommentar] 
- /invite &lt;jid&gt; [kommentar] 
- /join &lt;raum&gt; [pass] 
- /kick &lt;nick&gt; [kommentar] 
- /msg &lt;nick&gt; &lt;foo&gt; 
- /nick &lt;neuer nick&gt; 
- /leave [kommentar] 
- /topic &lt;foo&gt;</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1338"/>

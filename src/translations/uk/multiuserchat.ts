@@ -62,8 +62,7 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation>Параметри конференції неприйнятні.
-Перевірте параметри та спробуйте ще раз</translation>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -970,15 +969,7 @@ Check values and try again</source>
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation>Список команд що підтримуються:
- /ban &lt;прізвисько&gt; [коментар] 
- /invite &lt;jid&gt; [коментар] 
- /join &lt;кімната&gt; [пароль] 
- /kick &lt;прізвисько&gt; [коментар] 
- /msg &lt;прізвисько&gt; &lt;повідомлення&gt; 
- /nick &lt;новий_прізвисько&gt; 
- /leave [коментар] 
- /topic &lt;тема&gt;</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1338"/>

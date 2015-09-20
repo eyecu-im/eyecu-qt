@@ -69,14 +69,34 @@ public:
     bool messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData);
     bool messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData, QTextDocument *ADocument);
     bool messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget, int &APosition, int &ARemoved, int &AAdded);
+public slots:
+	void onBobUrlOpen(QUrl AUrl);
 
 protected:
     static void fixHtml(QString &AHtmlCode);
-
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	bool isSupported(const IMessageAddress *AMessageAddress) const;
     void addRichTextEditToolbar(SplitterWidget *AplitterWidget, int AOrderId, IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset);
-    void updateChatWindowActions(IMessageChatWindow *AChatWindow);
+	void updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *AChatWindow);
+	void updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow);
+	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
+	void updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger);
+
+protected slots:
+	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
+	void onImageCopy();
+	void onImageCopyLink();
+	void onImageSave();
+	void onImageOpen();
+
+	void onChatWindowCreated(IMessageChatWindow *AWindow);
+	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
+	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+	void onRichTextEditorToggled(bool AChecked);
+
+protected slots:
+	void onOptionsChanged(const OptionsNode &ANode);
 
 private:
     IOptionsManager*        FOptionsManager;
@@ -87,27 +107,6 @@ private:
     QNetworkAccessManager*  FNetworkAccessManager;
     IconStorage*            FIconStorage;
     QStringList             FValidSchemes;
-
-
-
-protected slots:
-    void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
-    void onImageCopy();
-    void onImageCopyLink();    
-    void onImageSave();
-    void onImageOpen();
-
-    void onChatWindowCreated(IMessageChatWindow *AWindow);
-    void onNormalWindowCreated(IMessageNormalWindow *AWindow);
-    void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
-
-protected slots:
-    void onOptionsOpened();
-    void onOptionsClosed();
-    void onOptionsChanged(const OptionsNode &ANode);
-
-public slots:
-    void onBobUrlOpen(QUrl AUrl);	
 };
 
 #endif // XHTMLIM_H

@@ -62,9 +62,9 @@
   </message>
   <message>
    <location line="147" filename="../../plugins/multiuserchat/joinmultichatdialog.cpp"/>
-   <source>Conference parameters is not acceptable.
+   <source>Conference parameters is not acceptable.&#xd;
 Check values and try again</source>
-   <translation>Conference parameters is not acceptable.
+   <translation>Conference parameters is not acceptable.&#xd;
 Check values and try again</translation>
   </message>
  </context>
@@ -963,23 +963,23 @@ Check values and try again</translation>
   </message>
   <message>
    <location line="1268" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Supported list of commands: 
- /ban &lt;roomnick> [comment] 
- /invite &lt;jid> [comment] 
- /join &lt;roomname> [pass] 
- /kick &lt;roomnick> [comment] 
- /msg &lt;roomnick> &lt;foo> 
- /nick &lt;newnick> 
- /leave [comment] 
+   <source>Supported list of commands: &#xd;
+ /ban &lt;roomnick> [comment] &#xd;
+ /invite &lt;jid> [comment] &#xd;
+ /join &lt;roomname> [pass] &#xd;
+ /kick &lt;roomnick> [comment] &#xd;
+ /msg &lt;roomnick> &lt;foo> &#xd;
+ /nick &lt;newnick> &#xd;
+ /leave [comment] &#xd;
  /topic &lt;foo></source>
-   <translation>Supported list of commands: 
- /ban &lt;roomnick> [comment] 
- /invite &lt;jid> [comment] 
- /join &lt;roomname> [pass] 
- /kick &lt;roomnick> [comment] 
- /msg &lt;roomnick> &lt;foo> 
- /nick &lt;newnick> 
- /leave [comment] 
+   <translation>Supported list of commands: &#xd;
+ /ban &lt;roomnick> [comment] &#xd;
+ /invite &lt;jid> [comment] &#xd;
+ /join &lt;roomname> [pass] &#xd;
+ /kick &lt;roomnick> [comment] &#xd;
+ /msg &lt;roomnick> &lt;foo> &#xd;
+ /nick &lt;newnick> &#xd;
+ /leave [comment] &#xd;
  /topic &lt;foo></translation>
   </message>
   <message>

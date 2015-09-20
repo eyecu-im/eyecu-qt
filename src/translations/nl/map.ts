@@ -218,10 +218,6 @@
  <context>
   <name>MapForm</name>
   <message>
-   <source>ScrollArea</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/map/mapform.ui" line="161"/>
    <source>Joystick</source>
    <translation>Joystick</translation>

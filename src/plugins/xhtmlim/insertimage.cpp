@@ -108,7 +108,7 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
                 if (FUrlCurrent.isValid())
                     format = QImageReader::imageFormat(FUrlCurrent.path());
                 if (format.isEmpty())
-                    format = Options::node(OPV_XHTML_DEFIMAGEFORMAT).value().toByteArray();
+					format = Options::node(OPV_XHTML_DEFAULTIMAGEFORMAT).value().toByteArray();
                 QImage image = data->imageData().value<QImage>();
                 QBuffer buffer(&FOriginalImageData);
                 image.save(&buffer, format.data());
