@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Basic</DisplayName>
+    <Description>Basic vKontakte emoticon set (big)</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-09-18</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.emoticons.vkontakte.big.basic</Name>
+    <SortingPriority>2</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>

@@ -309,8 +309,10 @@ call copyresources ru.rwsoftware.eyecu.statusicons.yaonline statusicons\yaonline
 call copyplugins ru.rwsoftware.eyecu.emoticons emoticons
 call copyresources ru.rwsoftware.eyecu.emoticons.default emoticons\default
 call copyresources ru.rwsoftware.eyecu.emoticons.blobs_purple emoticons\blobs_purple
-call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vk_big emoticons\vk_big
-call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vk_small emoticons\vk_small
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vkontakte.big.basic emoticons\vk_big
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vkontakte.small.basic emoticons\vk_small
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vkontakte.big.extra emoticons\vk_extra_big
+call copyresources ru.rwsoftware.eyecu.emoticons.emoji.vkontakte.small.extra emoticons\vk_extra_small
 
 call copyplugins ru.rwsoftware.eyecu.xhtmlim xhtmlim
 call copyresources ru.rwsoftware.eyecu.xhtmlim xhtml\shared
