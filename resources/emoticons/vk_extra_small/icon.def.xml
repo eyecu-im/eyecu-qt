@@ -1,0 +1,277 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <name>Emoji vKontakte Extra (small)</name>
+  <version>1.0</version>
+  <creation>2015-09-15</creation>
+  <description>vKontakte emoji iconset (big)</description>
+  <home>www.eyecu.ru</home>
+  <author>Yagiza</author>
+  <icon>
+    <text>&#x0030;&#x20E3;</text>
+    <object mime="image/png">003020E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0031;&#x20E3;</text>
+    <object mime="image/png">003120E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0032;&#x20E3;</text>
+    <object mime="image/png">003220E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0033;&#x20E3;</text>
+    <object mime="image/png">003320E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0034;&#x20E3;</text>
+    <object mime="image/png">003420E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0035;&#x20E3;</text>
+    <object mime="image/png">003520E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0036;&#x20E3;</text>
+    <object mime="image/png">003620E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0037;&#x20E3;</text>
+    <object mime="image/png">003720E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0038;&#x20E3;</text>
+    <object mime="image/png">003820E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x0039;&#x20E3;</text>
+    <object mime="image/png">003920E3.png</object>
+  </icon>
+  <icon>
+    <text>&#x203C;</text>
+    <object mime="image/png">203C.png</object>
+  </icon>
+  <icon>
+    <text>&#x2049;</text>
+    <object mime="image/png">2049.png</object>
+  </icon>
+  <icon>
+    <text>&#x2139;</text>
+    <object mime="image/png">2139.png</object>
+  </icon>
+  <icon>
+    <text>&#x2194;</text>
+    <object mime="image/png">2194.png</object>
+  </icon>
+  <icon>
+    <text>&#x2195;</text>
+    <object mime="image/png">2195.png</object>
+  </icon>
+  <icon>
+    <text>&#x2196;</text>
+    <object mime="image/png">2196.png</object>
+  </icon>
+  <icon>
+    <text>&#x2197;</text>
+    <object mime="image/png">2197.png</object>
+  </icon>
+  <icon>
+    <text>&#x2198;</text>
+    <object mime="image/png">2198.png</object>
+  </icon>
+  <icon>
+    <text>&#x2199;</text>
+    <object mime="image/png">2199.png</object>
+  </icon>
+  <icon>
+    <text>&#x21A9;</text>
+    <object mime="image/png">21A9.png</object>
+  </icon>
+  <icon>
+    <text>&#x21AA;</text>
+    <object mime="image/png">21AA.png</object>
+  </icon>
+  <icon>
+    <text>&#x231A;</text>
+    <object mime="image/png">231A.png</object>
+  </icon>
+  <icon>
+    <text>&#x231B;</text>
+    <object mime="image/png">231B.png</object>
+  </icon>
+  <icon>
+    <text>&#x23E9;</text>
+    <object mime="image/png">23E9.png</object>
+  </icon>
+  <icon>
+    <text>&#x23EA;</text>
+    <object mime="image/png">23EA.png</object>
+  </icon>
+  <icon>
+    <text>&#x23EB;</text>
+    <object mime="image/png">23EB.png</object>
+  </icon>
+  <icon>
+    <text>&#x23EC;</text>
+    <object mime="image/png">23EC.png</object>
+  </icon>
+  <icon>
+    <text>&#x24C2;</text>
+    <object mime="image/png">24C2.png</object>
+  </icon>
+  <icon>
+    <text>&#x25AA;</text>
+    <object mime="image/png">25AA.png</object>
+  </icon>
+  <icon>
+    <text>&#x25AB;</text>
+    <object mime="image/png">25AB.png</object>
+  </icon>
+  <icon>
+    <text>&#x25B6;</text>
+    <object mime="image/png">25B6.png</object>
+  </icon>
+  <icon>
+    <text>&#x25C0;</text>
+    <object mime="image/png">25C0.png</object>
+  </icon>
+  <icon>
+    <text>&#x25FB;</text>
+    <object mime="image/png">25FB.png</object>
+  </icon>
+  <icon>
+    <text>&#x25FC;</text>
+    <object mime="image/png">25FC.png</object>
+  </icon>
+  <icon>
+    <text>&#x25FD;</text>
+    <object mime="image/png">25FD.png</object>
+  </icon>
+  <icon>
+    <text>&#x25FE;</text>
+    <object mime="image/png">25FE.png</object>
+  </icon>
+  <icon>
+    <text>&#x2611;</text>
+    <object mime="image/png">2611.png</object>
+  </icon>
+  <icon>
+    <text>&#x2614;</text>
+    <object mime="image/png">2614.png</object>
+  </icon>
+  <icon>
+    <text>&#x2648;</text>
+    <object mime="image/png">2648.png</object>
+  </icon>
+  <icon>
+    <text>&#x2649;</text>
+    <object mime="image/png">2649.png</object>
+  </icon>
+  <icon>
+    <text>&#x264A;</text>
+    <object mime="image/png">264A.png</object>
+  </icon>
+  <icon>
+    <text>&#x264B;</text>
+    <object mime="image/png">264B.png</object>
+  </icon>
+  <icon>
+    <text>&#x264C;</text>
+    <object mime="image/png">264C.png</object>
+  </icon>
+  <icon>
+    <text>&#x264D;</text>
+    <object mime="image/png">264D.png</object>
+  </icon>
+  <icon>
+    <text>&#x264E;</text>
+    <object mime="image/png">264E.png</object>
+  </icon>
+  <icon>
+    <text>&#x264F;</text>
+    <object mime="image/png">264F.png</object>
+  </icon>
+  <icon>
+    <text>&#x2650;</text>
+    <object mime="image/png">2650.png</object>
+  </icon>
+  <icon>
+    <text>&#x2651;</text>
+    <object mime="image/png">2651.png</object>
+  </icon>
+  <icon>
+    <text>&#x2652;</text>
+    <object mime="image/png">2652.png</object>
+  </icon>
+  <icon>
+    <text>&#x2653;</text>
+    <object mime="image/png">2653.png</object>
+  </icon>
+  <icon>
+    <text>&#x2660;</text>
+    <object mime="image/png">2660.png</object>
+  </icon>
+  <icon>
+    <text>&#x2663;</text>
+    <object mime="image/png">2663.png</object>
+  </icon>
+  <icon>
+    <text>&#x2665;</text>
+    <object mime="image/png">2665.png</object>
+  </icon>
+  <icon>
+    <text>&#x2666;</text>
+    <object mime="image/png">2666.png</object>
+  </icon>
+  <icon>
+    <text>&#x2668;</text>
+    <object mime="image/png">2668.png</object>
+  </icon>
+  <icon>
+    <text>&#x267F;</text>
+    <object mime="image/png">267F.png</object>
+  </icon>
+  <icon>
+    <text>&#x2693;</text>
+    <object mime="image/png">2693.png</object>
+  </icon>
+  <icon>
+    <text>&#x26AA;</text>
+    <object mime="image/png">26AA.png</object>
+  </icon>
+  <icon>
+    <text>&#x26AB;</text>
+    <object mime="image/png">26AB.png</object>
+  </icon>
+  <icon>
+    <text>&#x26CE;</text>
+    <object mime="image/png">26CE.png</object>
+  </icon>
+  <icon>
+    <text>&#x26F2;</text>
+    <object mime="image/png">26F2.png</object>
+  </icon>
+  <icon>
+    <text>&#x26FA;</text>
+    <object mime="image/png">26FA.png</object>
+  </icon>
+  <icon>
+    <text>&#x2705;</text>
+    <object mime="image/png">2705.png</object>
+  </icon>
+  <icon>
+    <text>&#x2714;</text>
+    <object mime="image/png">2714.png</object>
+  </icon>
+  <icon>
+    <text>&#x2716;</text>
+    <object mime="image/png">2716.png</object>
+  </icon>
+  <icon>
+    <text>&#x2733;</text>
+    <object mime="image/png">2733.png</object>
+  </icon>
+  <icon>
+    <text>&#x2734;</text>
+    <object mime="image/png">2734.png</object>
+  </icon>
+</icondef>
