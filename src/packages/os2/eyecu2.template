@@ -1627,9 +1627,9 @@
 </PCK>
 
 <PCK 	INDEX=300
-	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\0"
+	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\1"
 	TITLE="QtSerialPort runtime"
-	EXTERNAL="qtserialport-1.1.0.wpi"
+	EXTERNAL="qtserialport-1.1.1.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
