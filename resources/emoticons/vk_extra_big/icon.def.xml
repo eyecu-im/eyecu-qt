@@ -274,4 +274,144 @@
     <text>&#x2734;</text>
     <object mime="image/png">2734_2x.png</object>
   </icon>
+  <icon>
+    <text>&#x2747;</text>
+    <object mime="image/png">2747_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x274C;</text>
+    <object mime="image/png">274C_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x274E;</text>
+    <object mime="image/png">274E_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2753;</text>
+    <object mime="image/png">2753_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2754;</text>
+    <object mime="image/png">2754_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2755;</text>
+    <object mime="image/png">2755_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2757;</text>
+    <object mime="image/png">2757_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2795;</text>
+    <object mime="image/png">2795_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2796;</text>
+    <object mime="image/png">2796_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2797;</text>
+    <object mime="image/png">2797_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x27A1;</text>
+    <object mime="image/png">27A1_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x27B0;</text>
+    <object mime="image/png">27B0_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x27BF;</text>
+    <object mime="image/png">27BF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2934;</text>
+    <object mime="image/png">2934_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2935;</text>
+    <object mime="image/png">2935_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B05;</text>
+    <object mime="image/png">2B05_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B06;</text>
+    <object mime="image/png">2B06_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B07;</text>
+    <object mime="image/png">2B07_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B1B;</text>
+    <object mime="image/png">2B1B_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B1C;</text>
+    <object mime="image/png">2B1C_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B50;</text>
+    <object mime="image/png">2B50_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x2B55;</text>
+    <object mime="image/png">2B55_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x3030;</text>
+    <object mime="image/png">3030_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x303D;</text>
+    <object mime="image/png">303D_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD70;</text>
+    <object mime="image/png">D83CDD70_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD71;</text>
+    <object mime="image/png">D83CDD71_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD7E;</text>
+    <object mime="image/png">D83CDD7E_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD7F;</text>
+    <object mime="image/png">D83CDD7F_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD8E;</text>
+    <object mime="image/png">D83CDD8E_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD91;</text>
+    <object mime="image/png">D83CDD91_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD92;</text>
+    <object mime="image/png">D83CDD92_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD93;</text>
+    <object mime="image/png">D83CDD93_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD94;</text>
+    <object mime="image/png">D83CDD94_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD95;</text>
+    <object mime="image/png">D83CDD95_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDD96;</text>
+    <object mime="image/png">D83CDD96_2x.png</object>
+  </icon>
 </icondef>
