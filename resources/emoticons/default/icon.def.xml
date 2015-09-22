@@ -65,6 +65,7 @@
     <icon>
 	<text>*GIVE HEART*</text>
     <text>*GIVE_HEART*</text>
+	<text>&#xD83D;&#xDC9D;</text>
     <object mime="image/gif">giveheart.gif</object>
   </icon>
   <icon>
@@ -91,7 +92,7 @@
 	<text>:")</text>
 	<text>:-")</text>
     <text>*KISSED*</text> 
-    <object mime="image/gif">air_kiss.gif</object>
+    <object mime="image/gif">kissed.gif</object>
   </icon>
   <icon>
     <text>:&apos;(</text>
@@ -777,7 +778,13 @@
     <text>*HEART*</text>
     <text>&#x2764;</text>
     <text>&#xD83D;&#xDC93;</text>
+    <text>&#xD83D;&#xDC96;</text>
     <text>&#xD83D;&#xDC97;</text>
+    <text>&#xD83D;&#xDC99;</text>
+    <text>&#xD83D;&#xDC9A;</text>
+    <text>&#xD83D;&#xDC9B;</text>
+    <text>&#xD83D;&#xDC9C;</text>
+    <text>&#xD83D;&#xDC9F;</text>
     <object mime="image/gif">heart.gif</object>
   </icon>
   <icon>
@@ -802,6 +809,8 @@
   <icon>
     <text>@=</text>
 	<text>*BOMB*</text>
+	<text>&#xD83D;&#xDCA3;</text>
+	<text>&#xD83D;&#xDCA5;</text>
     <object mime="image/gif">bomb.gif</object>
   </icon>
   <icon>
@@ -828,6 +837,7 @@
 	<text>*KISS*</text>
 	<text>(K)</text>
 	<text>(k)</text>
+	<text>&#xD83D;&#xDC8F;</text>
     <object mime="image/gif">kiss.gif</object>
   </icon>
   <icon>
@@ -847,6 +857,12 @@
 	<text>&#xD83D;&#xDC8B;</text>
     <object mime="image/gif">girlkiss.gif</object>
   </icon>
+  <icon>
+	<text>*AIR_KISS*</text>
+	<text>:air_kiss:</text>
+	<text>&#xD83D;&#xDE18;</text>
+    <object mime="image/gif">air_kiss.gif</object>
+  </icon>  
   <icon>
     <text>8:-)</text>
     <text>8:)</text>
@@ -1003,6 +1019,7 @@
 	<text>8-Q</text>
     <text>8Q</text>
     <text>8-Y</text>
+   	<text>&#xD83D;&#xDEAC;</text>
     <object mime="image/gif">smoking.gif</object>
   </icon>
   <icon>
