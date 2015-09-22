@@ -7,87 +7,70 @@
   <home>www.eyecu.ru</home>
   <author>Yagiza</author>
   <icon>
-    <text>:-)</text>
     <text>&#xD83D;&#xDE0A;</text>
     <object mime="image/png">D83DDE0A.png</object>
   </icon>
   <icon>
-    <text>:-D</text>
     <text>&#xD83D;&#xDE03;</text>
     <object mime="image/png">D83DDE03.png</object>
   </icon>
   <icon>
-    <text>;-)</text>
     <text>&#xD83D;&#xDE09;</text>
     <object mime="image/png">D83DDE09.png</object>
   </icon>
   <icon>
-    <text>xD</text>
     <text>&#xD83D;&#xDE06;</text>
     <object mime="image/png">D83DDE06.png</object>
   </icon>
   <icon>
-    <text>;-P</text>
     <text>&#xD83D;&#xDE1C;</text>
     <object mime="image/png">D83DDE1C.png</object>
   </icon>
   <icon>
-    <text>:-p</text>
     <text>&#xD83D;&#xDE0B;</text>
     <object mime="image/png">D83DDE0B.png</object>
   </icon>
   <icon>
-    <text>8-)</text>
     <text>&#xD83D;&#xDE0D;</text>
     <object mime="image/png">D83DDE0D.png</object>
   </icon>
   <icon>
-    <text>B-)</text>
     <text>&#xD83D;&#xDE0E;</text>
     <object mime="image/png">D83DDE0E.png</object>
   </icon>
   <icon>
-    <text>:-(</text>
     <text>&#xD83D;&#xDE12;</text>
     <object mime="image/png">D83DDE12.png</object>
   </icon>
   <icon>
-    <text>;-]</text>
     <text>&#xD83D;&#xDE0F;</text>
     <object mime="image/png">D83DDE0F.png</object>
   </icon>
   <icon>
-    <text>3(</text>
     <text>&#xD83D;&#xDE14;</text>
     <object mime="image/png">D83DDE14.png</object>
   </icon>
   <icon>
-    <text>:'(</text>
     <text>&#xD83D;&#xDE22;</text>
     <object mime="image/png">D83DDE22.png</object>
   </icon>
   <icon>
-    <text>:_)</text>
     <text>&#xD83D;&#xDE2D;</text>
     <object mime="image/png">D83DDE2D.png</object>
   </icon>
   <icon>
-    <text>:((</text>
     <text>&#xD83D;&#xDE29;</text>
     <object mime="image/png">D83DDE29.png</object>
   </icon>
   <icon>
-    <text>:o</text>
     <text>&#xD83D;&#xDE28;</text>
     <object mime="image/png">D83DDE28.png</object>
   </icon>
   <icon>
-    <text>:|</text>
     <text>&#xD83D;&#xDE10;</text>
     <object mime="image/png">D83DDE10.png</object>
   </icon>
   <icon>
-    <text>3-)</text>
     <text>&#xD83D;&#xDE0C;</text>
     <object mime="image/png">D83DDE0C.png</object>
   </icon>
@@ -96,27 +79,22 @@
     <object mime="image/png">D83DDE04.png</object>
   </icon>
   <icon>
-    <text>O:)</text>
     <text>&#xD83D;&#xDE07;</text>
     <object mime="image/png">D83DDE07.png</object>
   </icon>  
   <icon>
-    <text>;o</text>
     <text>&#xD83D;&#xDE30;</text>
     <object mime="image/png">D83DDE30.png</object>
   </icon>
   <icon>
-    <text>8o</text>
     <text>&#xD83D;&#xDE32;</text>
     <object mime="image/png">D83DDE32.png</object>
   </icon>
   <icon>
-    <text>8|</text>
     <text>&#xD83D;&#xDE33;</text>
     <object mime="image/png">D83DDE33.png</object>
   </icon>
   <icon>
-    <text>8X</text>
     <text>&#xD83D;&#xDE37;</text>
     <object mime="image/png">D83DDE37.png</object>
   </icon>
@@ -125,12 +103,10 @@
     <object mime="image/png">D83DDE02.png</object>
   </icon>
   <icon>
-    <text>&lt;3</text>
     <text>&#x2764;</text>
     <object mime="image/png">2764.png</object>
   </icon>
   <icon>
-    <text>:-*</text>
     <text>&#xD83D;&#xDE1A;</text>
     <object mime="image/png">D83DDE1A.png</object>
   </icon>
@@ -151,12 +127,10 @@
     <object mime="image/png">D83DDE35.png</object>
   </icon>
   <icon>
-    <text>&gt;(</text>
     <text>&#xD83D;&#xDE20;</text>
     <object mime="image/png">D83DDE20.png</object>
   </icon>
   <icon>
-    <text>&gt;((</text>
     <text>&#xD83D;&#xDE21;</text>
     <object mime="image/png">D83DDE21.png</object>
   </icon>
@@ -193,7 +167,6 @@
     <object mime="image/png">D83DDE2B.png</object>
   </icon>
   <icon>
-    <text>:-]</text>
     <text>&#x263A;</text>
     <object mime="image/png">263A.png</object>
   </icon>
@@ -258,7 +231,6 @@
     <object mime="image/png">D83DDE31.png</object>
   </icon>
   <icon>
-    <text>}:)</text>
     <text>&#xD83D;&#xDE08;</text>
     <object mime="image/png">D83DDE08.png</object>
   </icon>
@@ -271,27 +243,22 @@
     <object mime="image/png">D83DDC7D.png</object>
   </icon>
   <icon>
-    <text>:like:</text>
     <text>&#xD83D;&#xDC4D;</text>
     <object mime="image/png">D83DDC4D.png</object>
   </icon>
   <icon>
-    <text>:dislike:</text>
     <text>&#xD83D;&#xDC4E;</text>
     <object mime="image/png">D83DDC4E.png</object>
   </icon>
   <icon>
-    <text>:up:</text>
     <text>&#x261D;</text>
     <object mime="image/png">261D.png</object>
   </icon>
   <icon>
-    <text>:v:</text>
     <text>&#x270C;</text>
     <object mime="image/png">270C.png</object>
   </icon>
   <icon>
-    <text>:ok:</text>
     <text>&#xD83D;&#xDC4C;</text>
     <object mime="image/png">D83DDC4C.png</object>
   </icon>
