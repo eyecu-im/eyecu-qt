@@ -1,7 +1,8 @@
 #include "selecticonwidget.h"
-
 #include <QCursor>
 #include <QToolTip>
+#include <QTextDocument>
+#include <utils/qt4qt5compat.h>
 
 SelectIconWidget::SelectIconWidget(IconStorage *AStorage, QWidget *AParent) : QWidget(AParent)
 {
@@ -38,7 +39,7 @@ void SelectIconWidget::createLabels()
 		label->setAlignment(Qt::AlignCenter);
 		label->setFrameShape(QFrame::Box);
 		label->setFrameShadow(QFrame::Sunken);
-		label->setToolTip(QString("<span>%1</span>").arg(key));
+		label->setToolTip(QString("<span>%1</span>").arg(HTML_ESCAPE(key)));
 		label->installEventFilter(this);
 		FStorage->insertAutoIcon(label,key,0,0,"pixmap");
 		FKeyByLabel.insert(label,key);
