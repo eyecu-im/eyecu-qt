@@ -2,97 +2,97 @@
 <HEAD>
 	<TITLE>eyeCU SDK %VERSION%</TITLE>
 
-	<REXX NAME="FindQtSdk">
-		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
-		call SysLoadFuncs
+		<REXX NAME="FindQtSDK">
+			call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
+			call SysLoadFuncs
 
-		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'), 2)
+			BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'), 2)
 
-		ProdConfig = BootDrive || '\CONFIG.SYS'
+			ProdConfig = BootDrive || '\CONFIG.SYS'
 
-		rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
+			rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
 
-		if rc = 0 then rc = libp.0 = 0
-		if \ (rc = 0) then DO
-			rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
-			call WirexxCancel
-		END
-
-		lix = libp.0                            /* Point to last occurrence           */
-		DO FOREVER                              /* Until we find a real one           */
-			PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
-			IF LPCmd = 'LIBPATH' THEN DO 	/* If this is a LIBPATH command       */
-				LEAVE			/* This was the final LIBPATH -- done */
-			END
-			lix = lix-1			/* Check for an earlier statement     */
-			if lix = 0 then DO
-				rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
-				call WirexxCancel
-			END
-		END
-
-		WorkPath=CmdTail
-
-		DO FOREVER                              /* Until 'exit'                       */
-			PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
-			
-			if SearchPath = '' then return 'REQUIRES="Netlabs\Qt\Runtime\4\7"' /* QtCore4.dll not found in LIBPATH */
-
-			SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
-			if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
-
-			rc = SysFileTree( SearchPath||'\QtCore4.dll', 'MatchList', 'F' )
+			if rc = 0 then rc = libp.0 = 0
 			if \ (rc = 0) then DO
-				rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
+				rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
 				call WirexxCancel
 			END
 
-			if \ (MatchList.0 = 0) then DO
-				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
+			lix = libp.0                            /* Point to last occurrence           */
+			DO FOREVER                              /* Until we find a real one           */
+				PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
+				IF LPCmd = 'LIBPATH' THEN DO 	/* If this is a LIBPATH command       */
+					LEAVE			/* This was the final LIBPATH -- done */
+				END
+				lix = lix-1			/* Check for an earlier statement     */
+				if lix = 0 then DO
+					rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
+					call WirexxCancel
+				END
+			END
 
-				DO while \ (QUEUED() = 0)
-					pull LINE 
-					parse value LINE with 'FILE VERSION:' VAL
-					if \ (VAL='') then parse var VAL VER REST
+			WorkPath=CmdTail
+
+			DO FOREVER                              /* Until 'exit'                       */
+				PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
+			
+				if SearchPath = '' then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"' /* QtCore4.dll not found in LIBPATH */
+
+				SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
+				if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
+
+				rc = SysFileTree( SearchPath||'\QtCore4.dll', 'MatchList', 'F' )
+				if \ (rc = 0) then DO
+					rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
+					call WirexxCancel
 				END
 
-				parse value VER with MAJOR '.' MINOR '.' PATCH
+				if \ (MatchList.0 = 0) then DO
+					call WirexxPutEnv 'QTDLL', SearchPath
+					name = filespec("name", SearchPath)
+					path = filespec("path", SearchPath)
+					drive = filespec("drive", SearchPath)
+					qtsdk = drive||LEFT(path, LENGTH(path)-1)
+					call WirexxPutEnv 'QTSDK', qtsdk
+					if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
+					else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
+					else qtdir = WirexxVarPrompt('QTDIR')		/* Try to ask user or look into QTDIR environment variable */
 
-				if \ ( (MAJOR = 4) & (MINOR > 6) ) then return 'REQUIRES="Netlabs\Qt\SDK\4\7"'
-
-				rc = WirexxPutEnv('QTDLL',SearchPath)
-
-				name = filespec("name", SearchPath)
-				path = filespec("path", SearchPath)
-				drive = filespec("drive", SearchPath)
-				qtsdk = drive||LEFT(path, LENGTH(path)-1)
-
-				if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
-				else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
-				else DO 
-					qtdir = WirexxVarPrompt('QTDIR')
-
-					QCONFIG = qtdir||'\mkspecs\qconfig.pri'
-
-					if stream(QCONFIG,'c','open read') = 'READY:' then DO
-						DO while LINES(QCONFIG)
-							parse value linein(QCONFIG) with field '=' val
-							if substr(field,1,10) = 'QT_VERSION' then DO
-								PARSE VAR val version rest
-								PARSE VALUE version with major '.' minor '.' patch
-								LEAVE
+					if  \ (qtdir = '') then DO
+						qconfig = qtdir||'\mkspecs\qconfig.pri'
+						if \ (stream(qconfig, 'c', 'query exists') = '') then DO
+							if stream(qconfig,'c','open read') = 'READY:' then DO
+								DO while LINES(QCONFIG)
+									parse value linein(QCONFIG) with field '=' val
+									if substr(field,1,10) = 'QT_VERSION' then DO
+										parse var val version rest
+										parse value version with major '.' minor '.' patch
+										leave
+									END
+								END
+								rc = stream(QCONFIG,'c','close')
+								if major = 4 & minor >= 7 then return ''
 							END
-						END
-						rc = stream(QCONFIG,'c','close')
 
-						if (major = 4) & (minor >= 7) then return ""
+						END
 					END
 				END
 			END
-		END
 
-		return 'REQUIRES="Netlabs\Qt\SDK\4\7\3"'
-	</REXX>
+			return 'REQUIRES="Netlabs\Qt\Runtime\4\7"'
+		</REXX>
+
+		<REXX NAME="QtDLL">
+			return WirexxGetEnv('QTDLL')
+		</REXX>
+
+		<REXX NAME="QtDIR">
+			return WirexxGetEnv('QTDIR')
+		</REXX>
+
+		<REXX NAME="QtSDK">
+			return WirexxGetEnv('QTSDK')
+		</REXX>
 
 	<PCK 	INDEX=199
 		PACKAGEID="Road Works Software\eyeCU\SDK\%MAJOR%\%MINOR%\%PATCH%\%REV%"
