@@ -40,7 +40,9 @@
 	<text>:b</text>
     <text>:-b</text>    
     <text>+b</text>
-    <text>=b</text> 
+    <text>=b</text>
+	<text>&#xD83D;&#xDE0B;</text>
+	<text>&#xD83D;&#xDC45;</text>
     <object mime="image/gif">blum.gif</object>
   </icon>
   <icon>
@@ -428,9 +430,13 @@
     <object mime="image/gif">victory.gif</object>
   </icon>  		
   <icon>
-	<text>&gt;:P</text>
-	<text>/;P</text>
-	<text>/;p</text>
+	<text>X-P</text>
+	<text>x-P</text>
+	<text>X-p</text>
+	<text>x-p</text>
+	<text>X-b</text>
+	<text>x-b</text>
+	<text>&#xD83D;&#xDE1D;</text>
     <object mime="image/gif">xtongue.gif</object>
   </icon>
   <icon>
@@ -837,6 +843,7 @@
 	<text>*KISS*</text>
 	<text>(K)</text>
 	<text>(k)</text>
+	<text>&#xD83D;&#xDE1A;</text>
 	<text>&#xD83D;&#xDC8F;</text>
     <object mime="image/gif">kiss.gif</object>
   </icon>
