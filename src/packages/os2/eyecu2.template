@@ -806,6 +806,15 @@
 </GROUP>
 
 <PCK 	INDEX=85
+	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="XHTML-IM"
+	TARGET="$(1)" FIXED
+	SELECT
+	>eyeCU - XHTML-IM plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=90
 	PACKAGEID="Road Works Software\eyeCU\Emoticons\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Emoticons"
 	TARGET="$(1)" FIXED
@@ -817,60 +826,83 @@
 
 <GROUP TITLE="Emoticon sets">
 
-<PCK 	INDEX=86
+<PCK 	INDEX=91
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Default\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Default"
 	TARGET="$(1)\resources\emoticons\default" FIXED
 	SELECT
-	REQUIRES=85
+	REQUIRES=90
 	>eyeCU - Default emoticon set
 	(c) Road Works Software
 </PCK>
 
-<PCK 	INDEX=87
+<PCK 	INDEX=92
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Blobs Purple\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Blobs Purple"
 	TARGET="$(1)\resources\emoticons\blobs_purple" FIXED
 	SELECT
-	REQUIRES=85
+	REQUIRES=90
 	>eyeCU - Blobs Pink emoticon set
 	(c) Road Works Software
 </PCK>
 
 <GROUP TITLE="Emoji">
 
-<PCK 	INDEX=88
-	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="vKontakte (small)"
-	TARGET="$(1)\resources\emoticons\vk_small" FIXED
-	SELECT
-	REQUIRES=85
-	>eyeCU - Emoji - Small vKontakte emoticon set
-	(c) Road Works Software
-</PCK>
+<GROUP TITLE="vKontakte">
 
-<PCK 	INDEX=89
+<GROUP TITLE="Big">
+
+<PCK 	INDEX=93
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="vKontakte (big)"
+	TITLE="Basic"
 	TARGET="$(1)\resources\emoticons\vk_big" FIXED
 	SELECT
-	REQUIRES=85
-	>eyeCU - Emoji - Big vKontakte emoticon set
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Basic emoticon set (big)
 	(c) Road Works Software
 </PCK>
 
-</GROUP>
-
-</GROUP>
-
-<PCK 	INDEX=90
-	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="XHTML-IM"
-	TARGET="$(1)" FIXED
+<PCK 	INDEX=94
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK-Extra (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Extra"
+	TARGET="$(1)\resources\emoticons\vk_extra_big" FIXED
 	SELECT
-	>eyeCU - XHTML-IM plugin
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Extra emoticon set (big)
 	(c) Road Works Software
 </PCK>
+
+</GROUP>
+
+<GROUP TITLE="Small">
+
+<PCK 	INDEX=95
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Basic"
+	TARGET="$(1)\resources\emoticons\vk_small" FIXED
+	SELECT
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Basic emoticon set (small)
+	(c) Road Works Software
+</PCK>6
+
+<PCK 	INDEX=96
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK-Extra (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Extra"
+	TARGET="$(1)\resources\emoticons\vk_extra_small" FIXED
+	SELECT
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Extra emoticon set (small)
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+</GROUP>
+
+</GROUP>
+
+</GROUP>
 
 <PCK 	INDEX=103
 	PACKAGEID="Road Works Software\eyeCU\Map\%MAJOR%\%MINOR%\%PATCH%\%REV%"
@@ -1631,6 +1663,7 @@
 	TITLE="QtSerialPort runtime"
 	EXTERNAL="qtserialport-1.1.1.wpi"
 	TARGET='=("QtDLL")'
+	REQUIRES=1
 	FIXED
 	SELECT
 	>QtPurple runtime: optional Qt package, used to access serial port devices from Qt applications
