@@ -682,4 +682,144 @@
     <text>&#xD83C;&#xDFA5;</text>
     <object mime="image/png">D83CDFA5_2x.png</object>
   </icon>
+  <icon>
+    <text>&#xD83C;&#xDFA6;</text>
+    <object mime="image/png">D83CDFA6_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFAE;</text>
+    <object mime="image/png">D83CDFAE_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFB5;</text>
+    <object mime="image/png">D83CDFB5_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFB6;</text>
+    <object mime="image/png">D83CDFB6_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFBC;</text>
+    <object mime="image/png">D83CDFBC_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE0;</text>
+    <object mime="image/png">D83CDFE0_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE1;</text>
+    <object mime="image/png">D83CDFE1_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE2;</text>
+    <object mime="image/png">D83CDFE2_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE3;</text>
+    <object mime="image/png">D83CDFE3_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE4;</text>
+    <object mime="image/png">D83CDFE4_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE5;</text>
+    <object mime="image/png">D83CDFE5_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE7;</text>
+    <object mime="image/png">D83CDFE7_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE8;</text>
+    <object mime="image/png">D83CDFE8_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFE9;</text>
+    <object mime="image/png">D83CDFE9_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFEA;</text>
+    <object mime="image/png">D83CDFEA_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFEB;</text>
+    <object mime="image/png">D83CDFEB_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFEC;</text>
+    <object mime="image/png">D83CDFEC_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFED;</text>
+    <object mime="image/png">D83CDFED_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFEE;</text>
+    <object mime="image/png">D83CDFEE_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFEF;</text>
+    <object mime="image/png">D83CDFEF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFF0;</text>
+    <object mime="image/png">D83CDFF0_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDC49;</text>
+    <object mime="image/png">D83DDC49_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDC65;</text>
+    <object mime="image/png">D83DDC65_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCA0;</text>
+    <object mime="image/png">D83DDCA0_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCA2;</text>
+    <object mime="image/png">D83DDCA2_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCA4;</text>
+    <object mime="image/png">D83DDCA4_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCAB;</text>
+    <object mime="image/png">D83DDCAB_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCAE;</text>
+    <object mime="image/png">D83DDCAE_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCAF;</text>
+    <object mime="image/png">D83DDCAF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCB1;</text>
+    <object mime="image/png">D83DDCB1_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCB2;</text>
+    <object mime="image/png">D83DDCB2_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCB9;</text>
+    <object mime="image/png">D83DDCB9_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCC0;</text>
+    <object mime="image/png">D83DDCC0_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCC1;</text>
+    <object mime="image/png">D83DDCC1_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDCC2;</text>
+    <object mime="image/png">D83DDCC2_2x.png</object>
+  </icon>
 </icondef>
