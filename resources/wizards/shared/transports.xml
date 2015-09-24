@@ -163,16 +163,6 @@
             </exception>
         </server>
 		<server>
-            <jid>vk4xmpp.kap.sh</jid>
-            <software>VK4XMPP Transport</software>
-            <exception class="vk4xmpp">
-                <field var="link" essential="true" />
-				<field var="phone"></field>
-                <field var="use_password" type="boolean" value="false"/>
-				<field var="password" />
-            </exception>
-        </server>
-		<server>
             <jid>vk.mnezius.me</jid>
             <software>VK4XMPP Transport</software>
             <exception class="vk4xmpp">
@@ -192,7 +182,7 @@
 				<field var="password" />
             </exception>
         </server>
-		<server>
+		<!--server>
             <jid>vk.xmpp.tankserv.org</jid>
             <software>VK4XMPP Transport</software>
             <exception class="vk4xmpp">
@@ -201,7 +191,7 @@
                 <field var="use_password" type="boolean" value="false"/>
 				<field var="password" />
             </exception>
-        </server>
+        </server-->
 		<server>
             <jid>vk.pztrn.name</jid>
             <software>VK4XMPP Transport</software>
