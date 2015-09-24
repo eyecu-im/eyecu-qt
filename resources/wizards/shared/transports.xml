@@ -202,6 +202,96 @@
 				<field var="password" />
             </exception>
         </server>
+		<server>
+            <jid>vk.pztrn.name</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.sarov.ws</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.xmppserv.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.sudouser.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.stv-fian.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.kvazimoda.pro</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.jid.su</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.jabberik.ru</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
+		<server>
+            <jid>vk.beerseller.org</jid>
+            <software>VK4XMPP Transport</software>
+            <exception class="vk4xmpp">
+                <field var="link" essential="true" />
+				<field var="phone"></field>
+                <field var="use_password" type="boolean" value="false"/>
+				<field var="password" />
+            </exception>
+        </server>
     </gateway>
     <gateway name="xfire"></gateway>
     <gateway name="yahoo">

@@ -36,7 +36,12 @@
 	<abbreviation><key>FYI</key><value>For your information</value></abbreviation>
 	<abbreviation><key>GIWIST</key><value>Gee I wish Ifd said that</value></abbreviation>
 	<abbreviation><key>HHTYAY</key><value>Happy holidays to you and yours</value></abbreviation>
-	<abbreviation><key>IANAL</key><value>I am not a lawyer</value></abbreviation>	
+	<abbreviation><key>IAAL</key><value>I am a lawyer</value></abbreviation>
+	<abbreviation><key>IANACL</key><value>I am not a copyright lawyer</value></abbreviation>
+	<abbreviation><key>IANAL</key><value>I am not a lawyer</value></abbreviation>
+	<abbreviation><key>IANAMD</key><value>I am not a medical doctor</value></abbreviation>
+	<abbreviation><key>IANYL</key><value>I am not your lawyer</value></abbreviation>
+	<abbreviation><key>IIRC</key><value>If I remember correctly</value></abbreviation>
 	<abbreviation><key>IMCO</key><value>In my considered opinion</value></abbreviation>
 	<abbreviation><key>IMHO</key><value>In my humble opinion</value></abbreviation>
 	<abbreviation><key>IMNSHO</key><value>In my not so humble opinion</value></abbreviation>
@@ -44,6 +49,8 @@
 	<abbreviation><key>IOW</key><value>In other words</value></abbreviation>
 	<abbreviation><key>IRL</key><value>In real life</value></abbreviation>
 	<abbreviation><key>ITSFWI</key><value>If the shoe fits, wear it</value></abbreviation>
+	<abbreviation><key>JFGI</key><value>Just fucking google it</value></abbreviation>
+	<abbreviation><key>JFL</key><value>Just for lulz</value></abbreviation>
 	<abbreviation><key>JK</key><value>Just kidding</value></abbreviation>
 	<abbreviation><key>JSNM</key><value>Just stark naked magic</value></abbreviation>
 	<abbreviation><key>KISS</key><value>Keep it simple, sillyhead!</value></abbreviation>
@@ -57,6 +64,7 @@
 	<abbreviation><key>MYOB</key><value>Mind your own business</value></abbreviation>
 	<abbreviation><key>NBFD</key><value>No big fucking deal</value></abbreviation>
 	<abbreviation><key>NSFW</key><value>Not safe for work</value></abbreviation>
+	<abbreviation><key>NYPA</key><value>Not your personal army</value></abbreviation>
 	<abbreviation><key>IC</key><value>I see</value></abbreviation>
 	<abbreviation><key>OIC</key><value>Oh, I see</value></abbreviation>	
 	<abbreviation><key>OOTQ</key><value>Out of the question</value></abbreviation>
@@ -79,8 +87,8 @@
 	<abbreviation><key>TANSTAAFL</key><value>There ain’t no such thing as a free lunch</value></abbreviation>
 	<abbreviation><key>TANSTAASQ</key><value>There ain’t no such thing as a stupid question</value></abbreviation>
 	<abbreviation><key>TFTHAOT</key><value>Thanx for the help ahead of time</value></abbreviation>
-	<abbreviation><key>TL;DR;</key><value>Too long; Didn't read</value></abbreviation>
-	<abbreviation><key>TLDR;</key><value>Too long, didn't read</value></abbreviation>
+	<abbreviation><key>TL;DR</key><value>Too long; Didn't read</value></abbreviation>
+	<abbreviation><key>TLDR</key><value>Too long, didn't read</value></abbreviation>
 	<abbreviation><key>TNX</key><value>Thanx</value></abbreviation>
 	<abbreviation><key>TOBAL</key><value>There oughta be a law</value></abbreviation>
 	<abbreviation><key>TOBG</key><value>There oughta be good</value></abbreviation>
