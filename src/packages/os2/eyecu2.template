@@ -1,84 +1,95 @@
 <WARPIN OS="OS2_2X">
 <HEAD>
 	<TITLE>eyeCU %VERSION%</TITLE>
-		<REXX NAME="FindQtRuntime">
-			rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
-			rc=SysLoadFuncs()
+	<VARPROMPT NAME=QTDIR TYPE=PATH>Please specify the Qt 4.7 installation directory (e.g. C:\Qt4):</VARPROMPT>
 
-			QTDIR = WirexxGetEnv('QTDIR')
+	<REXX NAME="FindQtRuntime">
+		call RxFuncAdd SysLoadFuncs, RexxUtil, SysLoadFuncs
+		call SysLoadFuncs
 
-			if QTDIR = '' then
-			do
-				UNIXROOT = WirexxGetEnv('UNIXROOT')
-				if  \ (UNIXROOT = '') then QTDIR = UNIXROOT||'\usr'
-			end
+		BootDrive = left(value('GLOSSARY',,'OS2ENVIRONMENT'), 2)
 
-			do while stream(QTDIR||'\lib\QtCore4.dll', 'c', 'query exists') = ''
-				QTDIR = WirexxVarPrompt('QTDIR')
-			end
+		ProdConfig = BootDrive || '\CONFIG.SYS'
 
-			DO WHILE \ (QUEUED() = 0)
-				PULL
+		rc = SysFileSearch('LIBPATH', ProdConfig, 'libp.')
+
+		if rc = 0 then rc = libp.0 = 0
+		if \ (rc = 0) then DO
+			rc = WirexxShowMessage('Error!', "Cannot find a libpath statement in "ProdConfig, 0x0020)
+			call WirexxCancel
+		END
+
+		lix = libp.0                            /* Point to last occurrence           */
+		DO FOREVER                              /* Until we find a real one           */
+			PARSE UPPER VALUE libp.lix WITH LPCmd '=' CmdTail
+			IF LPCmd = 'LIBPATH' THEN DO 	/* If this is a LIBPATH command       */
+				LEAVE			/* This was the final LIBPATH -- done */
+			END
+			lix = lix-1			/* Check for an earlier statement     */
+			if lix = 0 then DO
+				rc = WirexxShowMessage('Error!', "Cannot find a legitimate libpath statement in "ProdConfig, 0x0020)
+				call WirexxCancel
+			END
+		END
+
+		WorkPath=CmdTail
+
+		DO FOREVER                              /* Until 'exit'                       */
+			PARSE VAR WorkPath SearchPath ';' WorkPath  /* Pull consecutive 'path's       */
+			
+			if SearchPath = '' then return 'REQUIRES="Netlabs\Qt\Runtime\4\7\3\2"' /* QtCore4.dll not found in LIBPATH */
+
+			SearchPath = STRIP(SearchPath)        /* Remove blanks (should not be!)     */
+			if RIGHT( SearchPath, 1 ) = '\' THEN SearchPath = LEFT(SearchPath, LENGTH(SearchPath)-1)  /* Strip it       */
+
+			rc = SysFileTree( SearchPath||'\QtCore4.dll', 'MatchList', 'F' )
+			if \ (rc = 0) then DO
+				rc = WirexxShowMessage('Seriaous error!', 'insufficient memory to run SysFileTree.  Error 'rc, 0x0020)
+				call WirexxCancel
 			END
 
-			address cmd 'bldlevel '||QTDIR||'\lib\QtCore4.dll | rxqueue'
+			if \ (MatchList.0 = 0) then DO
+				address cmd 'bldlevel '||SearchPath||'\QtCore4.dll | rxqueue'
 
-			do while \ (QUEUED() = 0)
-				pull LINE 
-				parse value LINE with 'FILE VERSION:' VAL
-				if \ (VAL='') then parse var VAL VER REST
-			end
+				DO while \ (QUEUED() = 0)
+					pull LINE 
+					parse value LINE with 'FILE VERSION:' VAL
+					if \ (VAL='') then parse var VAL VER REST
+				END
 
-			parse value VER with MAJOR '.' MINOR '.' PATCH
+				parse value VER with MAJOR '.' MINOR '.' PATCH
 
-			if \ (MAJOR = 4) then
-			do
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of Qt Purple requires Qt4', 0x0020)
-				call WirexxCancel
-			end
+				if ( (MAJOR = 4) & (MINOR > 6) ) then DO
+					call WirexxPutEnv 'QTDLL', SearchPath
+					name = filespec("name", SearchPath)
+					path = filespec("path", SearchPath)
+					drive = filespec("drive", SearchPath)
+					qtsdk = drive||LEFT(path, LENGTH(path)-1)
+					call WirexxPutEnv 'QTSDK', qtsdk
+					if name = 'LIB' then qtdir = qtsdk||"\share\qt4" /* *nix way */
+					else if name = 'BIN' then qtdir = qtsdk		/* windoze way */
+					else qtdir = WirexxVarPrompt('QTDIR')		/* Try to ask user or look into QTDIR environment variable */
+					if \ (stream(qtdir||'\translations\*.qm','c','query exists') = '') then DO
+						call WirexxPutEnv 'QTDIR', qtdir
+						return ''
+					END
+				END
+			END
+		END
 
-			if \ (MINOR > 6) then
-			do
-				rc = WirexxShowMessage('Wrong Qt version', 'This release of Qt Purple requires Qt 4.7.3 or later', 0x0020)
-				call WirexxCancel
-			end
-
-			return QTDIR
-		</REXX>
-
-	<REXX NAME="FindQtSDK">
-		rc=rxFuncAdd('SysLoadFuncs','REXXUTIL','SysLoadFuncs')
-		rc=SysLoadFuncs()
-
-		UNIXROOT = WirexxGetEnv('UNIXROOT')
-		if  \ (UNIXROOT = '') then QTROOT = UNIXROOT||'\usr'
-
-		do while stream(QTROOT||'\share\qt4\mkspecs\qconfig.pri', 'c', 'query exists') = ''
-			QTROOT = WirexxVarPrompt(QT_ROOT_DIR)
-		end
-
-		QCONFIG = QTROOT||'\share\qt4\mkspecs\qconfig.pri'
-
-		WirexxPutEnv('QT_ROOT_DIR', QTROOT)
-
-		if stream(QCONFIG,'c','open read') = 'READY:' then
-		do while LINES(QCONFIG)
-			parse value linein(QCONFIG) with field '=' val
-			if substr(field,1,10) = 'QT_VERSION' then
-			do
-				parse var val version rest
-				parse value version with major '.' minor '.' patch
-				leave
-			end
-		end
-		rc = stream(QCONFIG,'c','close')
-
-		if major = 4 & minor >= 7 then return 1
-		else return '"netlabs.org\Qt\SDK\4\7"'
+		return 'REQUIRES="Netlabs\Qt\Runtime\4\7"'
 	</REXX>
 
-	<REXX NAME="QtSDKPath">
-		return WirexxGetEnv('QT_ROOT_DIR')
+	<REXX NAME="QtDLL">
+		return WirexxGetEnv('QTDLL')
+	</REXX>
+
+	<REXX NAME="QtDIR">
+		return WirexxGetEnv('QTDIR')
+	</REXX>
+
+	<REXX NAME="QtSDK">
+		return WirexxGetEnv('QTSDK')
 	</REXX>
 
 <PCK 	INDEX=1
@@ -90,6 +101,7 @@
 	REQUIRES="netlabs.org\Qt4\SysTray\100\1\1\843" 
 	REQUIRES="netlabs.org\Qt4\SysTrayDLL\100\1\1\843" 
 	REQUIRES="Purple Soft\QtPurple\Util\1\0\0"
+	=("FindQtRuntime")
 	KILLPROCESS="eyecu.exe"
 	CREATEOBJECT="WPFolder|eyeCU|<WP_APPSFOLDER>|OBJECTID=<EYECU_FOLDER>;"
 	CREATEOBJECT="REPLACE WPProgram|eyeCU|<EYECU_FOLDER>|EXENAME=$(1)\eyecu.exe;OBJECTID=<EYECU_EXE>;BIGICONFILE=$(1)\resources\menuicons\shared\mainwindowlogo96.png;"
@@ -445,9 +457,11 @@
 
 <GROUP TITLE="Spell checker dictionaries">
 
+<GROUP TITLE="English">
+
 <PCK 	INDEX=41
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_GB\2\26"
-	TITLE="English (Great Britain)"
+	TITLE="Great Britain"
 	TARGET="$(1)" FIXED
 	SELECT
 	>English (Great Britain) Spellchecker dictionary
@@ -455,7 +469,7 @@
 
 <PCK 	INDEX=42
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_US\1\0"
-	TITLE="English (United States)"
+	TITLE="United States"
 	TARGET="$(1)" FIXED
 	SELECT
 	>English (United States) Spellchecker dictionary
@@ -463,35 +477,39 @@
 
 <PCK 	INDEX=43
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_NZ\1\14"
-	TITLE="English (New Zeland)"
+	TITLE="New Zeland"
 	TARGET="$(1)" FIXED
 	>English (New Zeland) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=44
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_CA\1\0"
-	TITLE="English (Canada)"
+	TITLE="Canada"
 	TARGET="$(1)" FIXED
 	>English (Canada) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=45
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_AU\1\1\0"
-	TITLE="English (Australia)"
+	TITLE="Australia"
 	TARGET="$(1)" FIXED
 	>English (Australia) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=46
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-en_ZA\1\18"
-	TITLE="English (South Africa)"
+	TITLE="South Africa"
 	TARGET="$(1)" FIXED
 	>English (South Africa) Spellchecker dictionary
 </PCK>
 
+</GROUP>
+
+<GROUP TITLE="Russian">
+
 <PCK 	INDEX=47
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RU\1\0"
-	TITLE="Russian (Russia)"
+	TITLE="Russia"
 	TARGET="$(1)" FIXED
 	SELECT
 	>Russian (Russia) Spellchecker dictionary
@@ -499,28 +517,32 @@
 
 <PCK 	INDEX=48
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_AOT\0\3\9"
-	TITLE="Russian (AOT)"
+	TITLE="AOT"
 	TARGET="$(1)" FIXED
 	>Russian (AOT) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=49
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-ru_RK\1\0"
-	TITLE="Russian (Roganoff-Knizhnik)"
+	TITLE="Roganoff-Knizhnik"
 	TARGET="$(1)" FIXED
 	>Russian (Roganoff-Knizhnik) Spellchecker dictionary
 </PCK>
 
+</GROUP>
+
+<GROUP TITLE="Deutsch">
+
 <PCK 	INDEX=50
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_AT_frami\2013\12\06"
-	TITLE="Deutsch (Austria/Frami)"
+	TITLE="Austria/Frami"
 	TARGET="$(1)" FIXED
 	>Deutsch (Austria/Frami) Spellchecker dictionary
 </PCK>
 
 <PCK 	INDEX=51
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_frami\2013\12\06"
-	TITLE="Deutsch (Germany/Frami)"
+	TITLE="Germany/Frami"
 	TARGET="$(1)" FIXED
 	SELECT
 	>Deutsch (Germany/Frami) Spellchecker dictionary
@@ -528,10 +550,12 @@
 
 <PCK 	INDEX=52
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-de_DE_igerman98\2011\06\09"
-	TITLE="Deutsch (Germany/igerman98)"
+	TITLE="Germany/igerman98"
 	TARGET="$(1)" FIXED
 	>Deutsch (Germany/igerman98) Spellchecker dictionary
 </PCK>
+
+</GROUP>
 
 <PCK 	INDEX=53
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-pl_PL\1\0"
@@ -540,7 +564,6 @@
 	SELECT
 	>Polish Spellchecker dictionary
 </PCK>
-
 
 <PCK 	INDEX=54
 	PACKAGEID="Road Works Software\eyeCU\Spellchecker-uk_UA\1\0"
@@ -783,6 +806,15 @@
 </GROUP>
 
 <PCK 	INDEX=85
+	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="XHTML-IM"
+	TARGET="$(1)" FIXED
+	SELECT
+	>eyeCU - XHTML-IM plugin
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=90
 	PACKAGEID="Road Works Software\eyeCU\Emoticons\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Emoticons"
 	TARGET="$(1)" FIXED
@@ -794,36 +826,83 @@
 
 <GROUP TITLE="Emoticon sets">
 
-<PCK 	INDEX=86
+<PCK 	INDEX=91
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Default\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Emoticons - default package"
+	TITLE="Default"
 	TARGET="$(1)\resources\emoticons\default" FIXED
 	SELECT
-	REQUIRES=85
+	REQUIRES=90
 	>eyeCU - Default emoticon set
 	(c) Road Works Software
 </PCK>
 
-<PCK 	INDEX=87
+<PCK 	INDEX=92
 	PACKAGEID="Road Works Software\eyeCU\Emoticons: Blobs Purple\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Emoticons - Blobs Purple"
+	TITLE="Blobs Purple"
 	TARGET="$(1)\resources\emoticons\blobs_purple" FIXED
 	SELECT
-	REQUIRES=85
+	REQUIRES=90
 	>eyeCU - Blobs Pink emoticon set
+	(c) Road Works Software
+</PCK>
+
+<GROUP TITLE="Emoji">
+
+<GROUP TITLE="vKontakte">
+
+<GROUP TITLE="Big">
+
+<PCK 	INDEX=93
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Basic"
+	TARGET="$(1)\resources\emoticons\vk_big" FIXED
+	SELECT
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Basic emoticon set (big)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=94
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK-Extra (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Extra"
+	TARGET="$(1)\resources\emoticons\vk_extra_big" FIXED
+	SELECT
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Extra emoticon set (big)
 	(c) Road Works Software
 </PCK>
 
 </GROUP>
 
-<PCK 	INDEX=89
-	PACKAGEID="Road Works Software\eyeCU\XHTML-IM\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="XHTML-IM"
-	TARGET="$(1)" FIXED
+<GROUP TITLE="Small">
+
+<PCK 	INDEX=95
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Basic"
+	TARGET="$(1)\resources\emoticons\vk_small" FIXED
 	SELECT
-	>eyeCU - XHTML-IM plugin
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Basic emoticon set (small)
+	(c) Road Works Software
+</PCK>6
+
+<PCK 	INDEX=96
+	PACKAGEID="Road Works Software\eyeCU\Emoticons: VK-Extra (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="Extra"
+	TARGET="$(1)\resources\emoticons\vk_extra_small" FIXED
+	SELECT
+	REQUIRES=90
+	>eyeCU - Emoji - vKontakte Extra emoticon set (small)
 	(c) Road Works Software
 </PCK>
+
+</GROUP>
+
+</GROUP>
+
+</GROUP>
+
+</GROUP>
 
 <PCK 	INDEX=103
 	PACKAGEID="Road Works Software\eyeCU\Map\%MAJOR%\%MINOR%\%PATCH%\%REV%"
@@ -960,15 +1039,6 @@
 	SELECT
 	REQUIRES=103
 	>Allows Map plugin use Kosmosnimki as map source
-</PCK>
-
-<PCK 	INDEX=118
-	PACKAGEID="Road Works Software\eyeCU\Map source: Mail.ru\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Mail.ru map source"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=103
-	>Allows Map plugin use Mail.ru as map source
 </PCK>
 
 <PCK 	INDEX=119
@@ -1588,49 +1658,25 @@
 	>Symbol files
 </PCK>
 
-<PCK 	INDEX=199
-	PACKAGEID="Road Works Software\eyeCU\SDK\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="SDK for plugin development"
-	EXTERNAL="eyecu2-dev-%MAJOR%.%MINOR%.%PATCH%.%REV%.wpi"
-	REQUIRES=1
-	REQUIRES==("FindQtSdk")
-	TARGET="$(1)\sdk"
-	>SDK for plugin development
-</PCK>
-
-<GROUP TITLE="Qt Serial Port">
-
 <PCK 	INDEX=300
-	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\0"
+	PACKAGEID="Road Works Software\QtSerialPort\Runtime\1\1\1"
 	TITLE="QtSerialPort runtime"
-	EXTERNAL="qtserialport-1.1.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	EXTERNAL="qtserialport-1.1.1.wpi"
+	TARGET='=("QtDLL")'
+	REQUIRES=1
 	FIXED
 	SELECT
 	>QtPurple runtime: optional Qt package, used to access serial port devices from Qt applications
 	(c) Road Works Software
 </PCK>
 
-<PCK 	INDEX=310
-	PACKAGEID="Road Works Software\QtSerialPort\SDK\1\1\0"
-	TITLE="QtSerialPort SDK"
-	EXTERNAL="qtserialport-1.1.0.wpi"
-	REQUIRES==("FindQtSdk")
-	TARGET='=("QtSdkPath")'
-	FIXED
-	>QtSerialPort SDK: development files (LIBs and headers) for QtSerialPort library
-	(c) Road Works Software
-</PCK>
-
-</GROUP>
-
 <GROUP TITLE="Qt Purple">
 
 <PCK 	INDEX=400
-	PACKAGEID="Purple Soft\QtPurple\Util\1\0\0"
+	PACKAGEID="Purple Soft\QtPurple\Util\1\0\2"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	EXTERNAL="qtpurple-1.1.0.wpi"
+	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1638,25 +1684,23 @@
 </PCK>
 
 <PCK 	INDEX=410
-	PACKAGEID="Purple Soft\QtPurple\Geo\1\0\0"
+	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\0"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.0.0.wpi"
-	TARGET='=("FindQtRuntime")\lib'
+	EXTERNAL="qtpurple-1.1.0.wpi"
+	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
 	>QtSerialPort runtime: optional Qt package, used to access serial port devices from Qt applications
 	(c) Porple Soft
 </PCK>
 
-</GROUP>
-
-<GROUP TITLE="Language packs (Qt Purple)">
+<GROUP TITLE="Language packs">
 	<PCK 	INDEX=411
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>English language pack for Qt Geo library
@@ -1666,8 +1710,8 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Ukrainian language pack for Qt Geo library
@@ -1677,8 +1721,8 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Ukrainian language pack for Qt Geo library
@@ -1688,8 +1732,8 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Polish language pack for Qt Geo library
@@ -1699,8 +1743,8 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>German language pack for Qt Geo library
@@ -1710,8 +1754,8 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Spanish language pack for Qt Geo library
@@ -1721,8 +1765,8 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Dutch language pack for Qt Geo library
@@ -1732,14 +1776,18 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.0.0.wpi"
-		TARGET='=("FindQtRuntime")\share\qt4\translations'
+		EXTERNAL="qtpurple-1.1.0.wpi"
+		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Japanese language pack for Qt Geo library
 	(c) Purple Soft
 	</PCK>
+
 </GROUP>
+
+</GROUP>
+
 </HEAD>
 
 <BODY>
@@ -1802,7 +1850,7 @@ This software released under GNU General Public License version 3</TEXT>
 Now everything is ready to install eyeCU!
 Press "Install" to begin installing this archive.
 
-NOTE: Thou installer will try to kill eyeCU automatically, it is recommended to exit eyeCU before you start installing a new version.
+NOTE: Though installer will try to kill eyeCU automatically, it is recommended to exit eyeCU before you start installing a new version.
 </TEXT>
 </PAGE>
 </BODY>
