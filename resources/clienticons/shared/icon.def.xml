@@ -460,4 +460,9 @@
     <client>YaOnline</client>
     <object mime="image/png">yaonline.png</object>
   </icon>
+  <icon>
+    <key>http://www.igniterealtime.org/projects/smack/</key>
+    <client>Xabber</client>
+    <object mime="image/png">xabber.png</object>
+  </icon>
 </icondef>
