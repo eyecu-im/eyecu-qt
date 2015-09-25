@@ -94,6 +94,11 @@ protected slots:
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onRichTextEditorToggled(bool AChecked);
+	void onEditWidgetCreated(IMessageEditWidget *AWidget);
+	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
+
+	void onRemoveFormat();
+	void clearFormatOnWordOrSelection(bool AWholeDocument = false);
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -107,6 +112,7 @@ private:
     QNetworkAccessManager*  FNetworkAccessManager;
     IconStorage*            FIconStorage;
     QStringList             FValidSchemes;
+	QTextEdit				*FCurrentTextEdit;
 };
 
 #endif // XHTMLIM_H
