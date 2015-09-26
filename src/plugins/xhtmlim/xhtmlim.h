@@ -110,6 +110,7 @@ protected slots:
 	void onInsertLink();
 	void onInsertImage();
 	void onSetToolTip();
+	void onInsertSpecial();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);

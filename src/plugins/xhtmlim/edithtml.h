@@ -31,7 +31,7 @@ private:
 
 private:
     QFontComboBox *FCmbFont;
-    QComboBox     *FCmbSize;
+	QComboBox     *FCmbFontSize;
 
 	Action  *FActionAutoRemoveFormat,
             *FActionRemoveFormat,
@@ -48,8 +48,6 @@ private:
             *FActionTextCode,
             *FActionIndentMore,
             *FActionIndentLess;
-
-    Menu    *FMenuSpecial;
 
     Menu    *FMenuAlign;
     Action  *FActionLastAlign;

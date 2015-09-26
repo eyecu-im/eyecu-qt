@@ -49,6 +49,7 @@
 #include "settooltip.h"
 
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
+#define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
 
 #define DT_UNDERLINE 1
 #define DT_OVERLINE	 2
@@ -481,6 +482,38 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
 			menu->addAction(setToolTip);
 
+
+			// Special formatting
+			Menu *special = new Menu(menu);
+			special->setTitle(tr("Insert special symbol"));
+			special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
+			special->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+			connect(special->menuAction(), SIGNAL(triggered()), SLOT(onInsertSpecial()));
+
+			QActionGroup *group=new QActionGroup(special);
+
+			Action *action = new Action(group);
+			action->setText(tr("Non-breaking space"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
+			action->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP);
+			action->setCheckable(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertSpecial()));
+			special->addAction(action, AG_DEFAULT);
+
+			action = new Action(group);
+			action->setText(tr("New line"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NEWLINE);
+			action->setData(ADR_SPECIAL_SYMBOL, QChar::LineSeparator);
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE);
+			action->setCheckable(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertSpecial()));
+			special->addAction(action, AG_DEFAULT);
+			menu->addAction(special->menuAction());
 			menu->addSeparator();
 
 			Action *removeFormat=new Action(menu);
@@ -581,6 +614,7 @@ void XhtmlIm::onInsertLink()
 			charFmt.setAnchorHref(addLink->url().toEncoded());
 			charFmt.setFontUnderline(true);
 			charFmt.setForeground(QBrush(Qt::blue));
+			cursor.beginEditBlock();
 			if (needsToBeInserted)
 			{
 				cursor.insertText(addLink->description(), charFmt);
@@ -588,12 +622,14 @@ void XhtmlIm::onInsertLink()
 			}
 			else
 				cursor.mergeCharFormat(charFmt);
+			cursor.endEditBlock();
 			break;
 		}
 
 		case AddLink::Remove:
 		{
 			QTextCharFormat charFmt;
+			cursor.beginEditBlock();
 			if (cursor.hasSelection())
 			{
 				charFmt.setAnchor(false);
@@ -609,6 +645,7 @@ void XhtmlIm::onInsertLink()
 				charFmt.clearProperty(QTextFormat::IsAnchor);
 				cursor.setCharFormat(charFmt);
 			}
+			cursor.endEditBlock();
 			break;
 		}
 	}
@@ -619,10 +656,10 @@ void XhtmlIm::onInsertImage()
 {
 	QUrl        imageUrl;
 	QByteArray  imageData;
-	QTextCursor cursor = getCursor();
-	QTextCharFormat charFmtCurrent=cursor.charFormat();
 	QSize       size;
 	QString     alt;
+	QTextCursor cursor = getCursor();
+	QTextCharFormat charFmtCurrent=cursor.charFormat();
 
 	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(FCurrentMessageEditWidget->messageWindow()->streamJid(), FCurrentMessageEditWidget->messageWindow()->contactJid());
 
@@ -648,6 +685,7 @@ void XhtmlIm::onInsertImage()
 	{
 		if(!inserImage->getUrl().isEmpty())
 		{
+			cursor.beginEditBlock();
 			QTextImageFormat imageFormat;
 			QString          alt=inserImage->getAlternativeText();
 			if (!alt.isEmpty())
@@ -679,6 +717,7 @@ void XhtmlIm::onInsertImage()
 					cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
 					cursor.insertImage(imageFormat);
 				}
+			cursor.endEditBlock();
 		}
 	}
 	inserImage->deleteLater();
@@ -697,10 +736,9 @@ void XhtmlIm::onSetToolTip()
 
 	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), action->parentWidget()->window());
 
-
-	qDebug() << "BBBB";
 	if(setToolTip->exec() == QDialog::Accepted)
 	{
+		cursor.beginEditBlock();
 		if (setToolTip->toolTipText().isEmpty())	// Remove tooltip
 		{
 			if (cursor.hasSelection())
@@ -745,8 +783,22 @@ void XhtmlIm::onSetToolTip()
 			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
 			cursor.mergeCharFormat(format);
 		}
+		cursor.endEditBlock();
 	}
 	setToolTip->deleteLater();
+}
+
+void XhtmlIm::onInsertSpecial()
+{
+	Action *action = qobject_cast<Action *>(sender());
+	QChar specialSybmol = (QChar)(action->data(ADR_SPECIAL_SYMBOL).toInt());
+	Menu *special = qobject_cast<Menu *>(action->parentWidget());
+	special->menuAction()->setData(ADR_SPECIAL_SYMBOL, specialSybmol);
+	special->menuAction()->setIcon(action->icon());
+	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
+	cursor.beginEditBlock();
+	cursor.insertText(specialSybmol);
+	cursor.endEditBlock();
 }
 
 QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument)
@@ -769,7 +821,11 @@ QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument)
 void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat)
 {
 	if (ACursor.hasSelection())
+	{
+		ACursor.beginEditBlock();
 		ACursor.mergeCharFormat(AFormat);
+		ACursor.endEditBlock();
+	}
 	else
 		FCurrentMessageEditWidget->textEdit()->mergeCurrentCharFormat(AFormat);
 }
@@ -777,9 +833,11 @@ void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharF
 
 void XhtmlIm::clearFormatOnWordOrSelection()
 {
-	QTextCursor cursor = getCursor(true);
 	QTextCharFormat emptyCharFormat;
+	QTextCursor cursor = getCursor(true);
+	cursor.beginEditBlock();
 	cursor.setCharFormat(emptyCharFormat);
+	cursor.endEditBlock();
 	FCurrentMessageEditWidget->textEdit()->setCurrentCharFormat(emptyCharFormat);
 }
 
