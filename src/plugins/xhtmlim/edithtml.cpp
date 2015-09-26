@@ -20,6 +20,8 @@
 
 #include "edithtml.h"
 #include "xhtmlim.h"
+#include "insertimage.h"
+#include "addlink.h"
 #include "settooltip.h"
 
 #define ADR_ALIGN_TYPE      Action::DR_Parametr1
@@ -738,8 +740,7 @@ void EditHtml::onInsertLink()
 
     Action *action=qobject_cast<Action *>(sender());
 
-    AddLink *addLink = new AddLink(tr("Add link"),
-                                   IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
+	AddLink *addLink = new AddLink(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
                                    QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), cursor.selectedText(), action->parentWidget()->parentWidget());
     switch (addLink->exec())
     {
@@ -778,14 +779,6 @@ void EditHtml::onInsertLink()
 				charFmt.clearProperty(QTextFormat::IsAnchor);
 				cursor.setCharFormat(charFmt);
 			}
-//            charFmt.setFontFamily(charFmtCurrent.fontFamily());
-//            charFmt.setFontItalic(charFmtCurrent.fontItalic());
-//            charFmt.setFontStrikeOut(charFmtCurrent.fontStrikeOut());
-//            charFmt.setFontWeight(charFmtCurrent.fontWeight());
-//            charFmt.setFontPointSize(charFmtCurrent.fontPointSize());
-//            charFmt.setBackground(charFmt.background());
-//            cursor.setCharFormat(charFmt);
-
             break;
         }
     }

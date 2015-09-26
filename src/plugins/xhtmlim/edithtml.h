@@ -4,6 +4,7 @@
 #include <QFontComboBox>
 #include <QTextFragment>
 #include <ColorToolButton>
+#include <QNetworkAccessManager>
 
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/ibitsofbinary.h>
@@ -11,9 +12,6 @@
 #include <definitions/optionvalues.h>
 
 #include <utils/options.h>
-
-#include "insertimage.h"
-#include "addlink.h"
 
 class XhtmlIm;
 

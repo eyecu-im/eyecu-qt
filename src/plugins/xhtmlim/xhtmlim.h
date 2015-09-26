@@ -1,6 +1,8 @@
 #ifndef XHTMLIM_H
 #define XHTMLIM_H
 
+#include <QNetworkAccessManager>
+
 #include <interfaces/ixhtmlim.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
@@ -83,6 +85,11 @@ protected:
 	void registerDiscoFeatures();
 	void updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger);
 
+
+	QTextCursor getCursor(bool ASelectWholeDocument=false);
+	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);
+	void clearFormatOnWordOrSelection();
+
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
 	void onImageCopy();
@@ -98,7 +105,11 @@ protected slots:
 	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
 
 	void onRemoveFormat();
-	void clearFormatOnWordOrSelection(bool AWholeDocument = false);
+	void onSelectFont();
+	void onSelectDecoration(bool ASelected);
+	void onInsertLink();
+	void onInsertImage();
+	void onSetToolTip();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -112,7 +123,8 @@ private:
     QNetworkAccessManager*  FNetworkAccessManager;
     IconStorage*            FIconStorage;
     QStringList             FValidSchemes;
-	QTextEdit				*FCurrentTextEdit;
+	IMessageEditWidget		*FCurrentMessageEditWidget;
+	int						FCurrentCursorPosition;
 };
 
 #endif // XHTMLIM_H

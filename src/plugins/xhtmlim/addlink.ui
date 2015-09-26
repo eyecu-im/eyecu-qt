@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>New link</string>
+   <string>Insert link</string>
   </property>
   <property name="modal">
    <bool>true</bool>

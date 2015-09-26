@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QMainWindow>
@@ -5,6 +6,7 @@
 #include <QBuffer>
 #include <QClipboard>
 #include <QFileDialog>
+#include <QFontDialog>
 #include <QDesktopServices>
 #if QT_VERSION >= 0x050000
 #include <QMimeData>
@@ -42,6 +44,15 @@
 #include "savequery.h"
 #include "resourceretriever.h"
 #include "imageopenthread.h"
+#include "insertimage.h"
+#include "addlink.h"
+#include "settooltip.h"
+
+#define ADR_DECORATION_TYPE Action::DR_Parametr1
+
+#define DT_UNDERLINE 1
+#define DT_OVERLINE	 2
+#define DT_STRIKEOUT 3
 
 XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
@@ -314,7 +325,7 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 	if(ARichTextEditor && supported)
 	{
 		if (!xhtmlEdit)
-			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), true);
+			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);
 	}
 	else
 		if (xhtmlEdit)
@@ -380,21 +391,97 @@ void XhtmlIm::onEditWidgetCreated(IMessageEditWidget *AWidget)
 
 void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu)
 {
-	IMessageEditWidget *editWidget = qobject_cast<IMessageEditWidget *>(sender());
-	if (editWidget)
+	FCurrentMessageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
+	if (FCurrentMessageEditWidget)
 	{
-		FCurrentTextEdit = editWidget->textEdit();
 		if (true)
 		{
-			QTextCursor cursor = editWidget->textEdit()->cursorForPosition(APosition);
-//			FCurrentCursorPosition = cursor.position();
-			if (!cursor.hasSelection())
-				cursor.select(QTextCursor::WordUnderCursor);
+			QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->cursorForPosition(APosition);
+			FCurrentCursorPosition = cursor.atEnd()?-1:cursor.position();
+			if (FCurrentCursorPosition != -1)
+				cursor.setPosition(FCurrentCursorPosition);
+			QTextCharFormat charFormat = cursor.charFormat();
 
 			Menu *menu = new Menu(AMenu);
 			menu->setTitle(tr("Format"));
 			AMenu->addAction(menu->menuAction(),AG_XHTMLIM_FORMATTING);
-			QActionGroup *group = new QActionGroup(menu);
+//			QActionGroup *group = new QActionGroup(menu);
+
+			Action *font=new Action(menu);
+			font->setIcon(QIcon::fromTheme("format-text-font", FIconStorage->getIcon(XHI_FORMAT_RICH)));
+			font->setText(tr("Font"));
+			font->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			font->setPriority(QAction::LowPriority);
+			connect(font, SIGNAL(triggered()), this, SLOT(onSelectFont()));
+			font->setCheckable(false);
+			menu->addAction(font);
+
+			Action *underline=new Action(menu);
+			underline->setIcon(QIcon::fromTheme("format-text-underline", FIconStorage->getIcon(XHI_TEXT_UNDERLINE)));
+			underline->setText(tr("Underline"));
+			underline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE);
+			underline->setData(ADR_DECORATION_TYPE, DT_UNDERLINE);
+			connect(underline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
+			underline->setCheckable(true);
+			underline->setChecked(charFormat.fontUnderline());
+			menu->addAction(underline);
+
+			Action *overline=new Action(menu);
+			overline->setIcon(QIcon::fromTheme("format-text-overline", FIconStorage->getIcon(XHI_TEXT_OVERLINE)));
+			overline->setText(tr("Overline"));
+			overline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE);
+			overline->setData(ADR_DECORATION_TYPE, DT_OVERLINE);
+			connect(overline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
+			overline->setCheckable(true);
+			overline->setChecked(charFormat.fontOverline());
+			menu->addAction(overline);
+
+			Action *strikeout=new Action(menu);
+			strikeout->setIcon(QIcon::fromTheme("format-text-strikethrough", FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
+			strikeout->setText(tr("Strikethrough"));
+			strikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
+			strikeout->setData(ADR_DECORATION_TYPE, DT_STRIKEOUT);
+			connect(strikeout, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
+			strikeout->setCheckable(true);
+			strikeout->setChecked(charFormat.fontStrikeOut());
+			menu->addAction(strikeout);
+
+			menu->addSeparator();
+
+			//  *** Special options ***
+			//  Insert link
+			Action *insertLink=new Action(menu);
+			insertLink->setIcon(QIcon::fromTheme("insert-link",IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK)));
+			insertLink->setText(tr("Insert link"));
+			insertLink->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK);
+			insertLink->setCheckable(true);
+			insertLink->setChecked(charFormat.isAnchor());
+			connect(insertLink, SIGNAL(triggered()), SLOT(onInsertLink()));
+			menu->addAction(insertLink);
+
+			//  Insert image
+			Action *insertImage=new Action(menu);
+			insertImage->setIcon(QIcon::fromTheme("insert-image",FIconStorage->getIcon(XHI_INSERT_IMAGE)));
+			insertImage->setText(tr("Insert image"));
+			insertImage->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE);
+			insertImage->setPriority(QAction::LowPriority);
+			connect(insertImage, SIGNAL(triggered()), SLOT(onInsertImage()));
+			insertImage->setCheckable(true);
+			insertImage->setChecked(charFormat.isImageFormat());
+			menu->addAction(insertImage);
+
+			//  Set tool tip
+			Action *setToolTip=new Action(menu);
+			setToolTip->setIcon(QIcon::fromTheme("set-tooltip", FIconStorage->getIcon(XHI_SET_TOOLTIP)));
+			setToolTip->setText(tr("Set tool tip"));
+			setToolTip->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP);
+			setToolTip->setPriority(QAction::LowPriority);
+			connect(setToolTip, SIGNAL(triggered()), SLOT(onSetToolTip()));
+			setToolTip->setCheckable(true);
+			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
+			menu->addAction(setToolTip);
+
+			menu->addSeparator();
 
 			Action *removeFormat=new Action(menu);
 			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
@@ -404,7 +491,9 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(removeFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
 			removeFormat->setCheckable(false);
 			menu->addAction(removeFormat);
-			menu->setEnabled(!menu->isEmpty());
+
+
+//			menu->setEnabled(!menu->isEmpty());
 		}
 	}
 }
@@ -414,22 +503,284 @@ void XhtmlIm::onRemoveFormat()
 	clearFormatOnWordOrSelection();
 }
 
-void XhtmlIm::clearFormatOnWordOrSelection(bool AWholeDocument)
+void XhtmlIm::onSelectFont()
 {
-	QTextCursor cursor = FCurrentTextEdit->textCursor();
+	bool ok;
+	QTextCursor cursor = getCursor();
+	QFont font = QFontDialog::getFont(&ok, cursor.charFormat().font(), FCurrentMessageEditWidget->textEdit()->window());
+	if (ok)
+	{
+		QTextCharFormat charFormat;
+		charFormat.setFont(font);
+		mergeFormatOnWordOrSelection(cursor, charFormat);
+	}
+}
+
+void XhtmlIm::onSelectDecoration(bool ASelected)
+{
+	Action *action = qobject_cast<Action *>(sender());
+	QTextCursor cursor = getCursor();
+	QTextCharFormat charFormat = cursor.charFormat();
+	switch (action->data(ADR_DECORATION_TYPE).toInt())
+	{
+		case DT_OVERLINE:
+			charFormat.setFontOverline(ASelected);
+			break;
+		case DT_UNDERLINE:
+			charFormat.setFontUnderline(ASelected);
+			break;
+		case DT_STRIKEOUT:
+			charFormat.setFontStrikeOut(ASelected);
+			break;
+	}
+	mergeFormatOnWordOrSelection(cursor, charFormat);
+}
+
+void XhtmlIm::onInsertLink()
+{
+	QTextCursor cursor = getCursor();
+
+	QTextCharFormat charFmtCurrent=cursor.charFormat();
+
+	if (!cursor.hasSelection())
+	{
+		if (charFmtCurrent.isAnchor())
+		{
+			QTextBlock block=cursor.block();
+			for (QTextBlock::iterator it = block.begin(); !(it.atEnd()); ++it)
+			{
+				QTextFragment currentFragment = it.fragment();
+				if (currentFragment.isValid())
+				{
+					if (currentFragment.contains(cursor.position()))
+					{
+						cursor.setPosition(currentFragment.position());
+						cursor.setPosition(currentFragment.position()+currentFragment.length(), QTextCursor::KeepAnchor);
+						break;
+					}
+				}
+			}
+		}
+		else
+			cursor.select(QTextCursor::WordUnderCursor);
+	}
+
+	bool needsToBeInserted=(cursor.selection().isEmpty());
+
+	Action *action=qobject_cast<Action *>(sender());
+
+	AddLink *addLink = new AddLink(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
+								   QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), cursor.selectedText(), action->parentWidget()->window());
+
+	switch (addLink->exec())
+	{
+		case AddLink::Add:
+		{
+			QTextCharFormat charFmt=charFmtCurrent;
+			charFmt.setAnchor(true);
+			charFmt.setAnchorHref(addLink->url().toEncoded());
+			charFmt.setFontUnderline(true);
+			charFmt.setForeground(QBrush(Qt::blue));
+			if (needsToBeInserted)
+			{
+				cursor.insertText(addLink->description(), charFmt);
+				cursor.insertText(" ", charFmtCurrent);
+			}
+			else
+				cursor.mergeCharFormat(charFmt);
+			break;
+		}
+
+		case AddLink::Remove:
+		{
+			QTextCharFormat charFmt;
+			if (cursor.hasSelection())
+			{
+				charFmt.setAnchor(false);
+				charFmt.setAnchorHref(QString());
+				charFmt.setAnchorName(QString());
+				cursor.mergeCharFormat(charFmt);
+			}
+			else
+			{
+				charFmt = charFmtCurrent;
+				charFmt.clearProperty(QTextFormat::AnchorHref);
+				charFmt.clearProperty(QTextFormat::AnchorName);
+				charFmt.clearProperty(QTextFormat::IsAnchor);
+				cursor.setCharFormat(charFmt);
+			}
+			break;
+		}
+	}
+	addLink->deleteLater();
+}
+
+void XhtmlIm::onInsertImage()
+{
+	QUrl        imageUrl;
+	QByteArray  imageData;
+	QTextCursor cursor = getCursor();
+	QTextCharFormat charFmtCurrent=cursor.charFormat();
+	QSize       size;
+	QString     alt;
+
+	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(FCurrentMessageEditWidget->messageWindow()->streamJid(), FCurrentMessageEditWidget->messageWindow()->contactJid());
+
+	if (!cursor.hasSelection())
+		if (charFmtCurrent.isImageFormat())
+		{
+			QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
+			cursor.select(QTextCursor::WordUnderCursor);
+			imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
+			imageData=FCurrentMessageEditWidget->document()->resource(QTextDocument::ImageResource, imageUrl).toByteArray();
+			size.setWidth(imageFormat.width());
+			size.setHeight(imageFormat.height());
+			alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+		}
+
+	Action *action=qobject_cast<Action *>(sender());
+	InsertImage *inserImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, action->parentWidget()->window());
+
+	inserImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
+	if(!supportBoB)
+		inserImage->ui->pbBrowse->hide();
+	if(inserImage->exec() == QDialog::Accepted)
+	{
+		if(!inserImage->getUrl().isEmpty())
+		{
+			QTextImageFormat imageFormat;
+			QString          alt=inserImage->getAlternativeText();
+			if (!alt.isEmpty())
+				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
+			if (!inserImage->physResize())
+			{
+				if(inserImage->newHeight()!=inserImage->originalHeight())
+					imageFormat.setHeight(inserImage->newHeight());
+				if(inserImage->newWidth()!=inserImage->originalWidth())
+					imageFormat.setWidth(inserImage->newWidth());
+			}
+			if(inserImage->isRemote())
+			{
+				QUrl url=inserImage->getUrl();
+				imageFormat.setName(url.toEncoded());
+				cursor.document()->addResource(QTextDocument::ImageResource, url, inserImage->getImageData());
+				cursor.insertImage(imageFormat);
+			}
+			else
+				if(supportBoB)
+				{
+					QByteArray imageData=inserImage->getImageData();
+					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
+					QString uri=QString("cid:").append(contentId);
+					imageFormat.setName(uri);
+					imageFormat.setProperty(XhtmlIm::PMaxAge, inserImage->getMaxAge());
+					imageFormat.setProperty(XhtmlIm::PMimeType, inserImage->getFileType());
+					imageFormat.setProperty(XhtmlIm::PEmbed, inserImage->embed());
+					cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
+					cursor.insertImage(imageFormat);
+				}
+		}
+	}
+	inserImage->deleteLater();
+}
+
+void XhtmlIm::onSetToolTip()
+{
+	QTextCursor cursor = getCursor();
+	QTextCharFormat charFormat=cursor.charFormat();
+	if (!charFormat.hasProperty(QTextFormat::TextToolTip) &&
+		!cursor.hasSelection())
+		cursor.select(QTextCursor::WordUnderCursor);
+
+	Action *action=qobject_cast<Action *>(sender());
+	int toolTipType = charFormat.intProperty(XmlTextDocumentParser::ToolTipType);
+
+	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), action->parentWidget()->window());
+
+
+	qDebug() << "BBBB";
+	if(setToolTip->exec() == QDialog::Accepted)
+	{
+		if (setToolTip->toolTipText().isEmpty())	// Remove tooltip
+		{
+			if (cursor.hasSelection())
+			{
+				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
+				charFormat.setProperty(XmlTextDocumentParser::ToolTipType, XmlTextDocumentParser::None);
+				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
+				{
+					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
+					charFormat.setUnderlineColor(QColor());
+				}
+				cursor.mergeCharFormat(charFormat);
+			}
+			else
+			{
+				charFormat.clearProperty(QTextFormat::TextToolTip);
+				charFormat.clearProperty(XmlTextDocumentParser::ToolTipType);
+				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
+				{
+					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
+					charFormat.clearProperty(QTextFormat::TextUnderlineColor);
+				}
+				cursor.setCharFormat(charFormat);
+			}
+		}
+		else
+		{
+			QTextCharFormat format;
+			format.setProperty(QTextFormat::TextToolTip, setToolTip->toolTipText());
+			if (setToolTip->type()!=SetToolTip::None)
+			{
+				format.setUnderlineStyle(QTextCharFormat::DotLine);
+				format.setUnderlineColor(Qt::red);
+			}
+			else
+				if (charFormat.underlineStyle()==QTextCharFormat::DotLine &&
+					charFormat.underlineColor()==Qt::red)
+				{
+					format.setUnderlineStyle(QTextCharFormat::NoUnderline);
+					format.setUnderlineColor(QColor());
+				}
+			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
+			cursor.mergeCharFormat(format);
+		}
+	}
+	setToolTip->deleteLater();
+}
+
+QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument)
+{
+	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
+	if (FCurrentCursorPosition != -1)
+	{
+		if (FCurrentCursorPosition < cursor.selectionStart() || FCurrentCursorPosition > cursor.selectionEnd())
+			cursor.setPosition(FCurrentCursorPosition);
+		if (!cursor.hasSelection())
+			cursor.select(QTextCursor::WordUnderCursor);
+	}
+	else
+		if (ASelectWholeDocument)
+			cursor.select(QTextCursor::Document);
+
+	return cursor;
+}
+
+void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat)
+{
+	if (ACursor.hasSelection())
+		ACursor.mergeCharFormat(AFormat);
+	else
+		FCurrentMessageEditWidget->textEdit()->mergeCurrentCharFormat(AFormat);
+}
+
+
+void XhtmlIm::clearFormatOnWordOrSelection()
+{
+	QTextCursor cursor = getCursor(true);
 	QTextCharFormat emptyCharFormat;
-	if (AWholeDocument)
-	{
-		cursor.select(QTextCursor::Document);
-		cursor.setBlockCharFormat(emptyCharFormat);
-	}
-	else if (!cursor.hasSelection())
-	{
-		cursor.select(QTextCursor::BlockUnderCursor);
-		cursor.setBlockCharFormat(emptyCharFormat);
-	}
 	cursor.setCharFormat(emptyCharFormat);
-	FCurrentTextEdit->setCurrentCharFormat(emptyCharFormat);
+	FCurrentMessageEditWidget->textEdit()->setCurrentCharFormat(emptyCharFormat);
 }
 
 void XhtmlIm::onChatWindowCreated(IMessageChatWindow *AWindow)
