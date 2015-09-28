@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
+#include <QColorDialog>
 #include <QMainWindow>
 #include <QTextObject>
 #include <QBuffer>
@@ -50,10 +51,14 @@
 
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
+#define ADR_COLOR_TYPE		Action::DR_Parametr1
 
 #define DT_UNDERLINE 1
 #define DT_OVERLINE	 2
 #define DT_STRIKEOUT 3
+
+#define CT_FOREGROUND 0
+#define CT_BACKGROUND 1
 
 XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
@@ -149,7 +154,7 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, tr("Right"), tr("Ctrl+R", "Align right"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, tr("Justify"), tr("Ctrl+J", "Align justify"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, tr("Remove formatting"), tr("Alt+R", "Remove formatting"), Shortcuts::WindowShortcut);
-	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTOREMOVE, tr("Toggle remove formatting on message send"), tr("Alt+A", "Toggle remove formatting on message send"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, tr("Toggle reset formatting on message send"), tr("Alt+A", "Toggle reset formatting on message send"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, tr("Increase indent"), tr("", "Incerease indent"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, tr("Decrease indent"), tr("Shift+Tab", "Decerease indent"), Shortcuts::WindowShortcut);
 
@@ -254,6 +259,7 @@ bool XhtmlIm::initSettings()
 	Options::setDefaultValue(OPV_XHTML_TABINDENT, true);
 	Options::setDefaultValue(OPV_XHTML_NORICHTEXT, true);
 	Options::setDefaultValue(OPV_XHTML_EDITORTOOLBAR, true);
+	Options::setDefaultValue(OPV_XHTML_FORMATAURORESET, true);
 	Options::setDefaultValue(OPV_XHTML_IMAGESAVEDIRECTORY, pictures);
 	Options::setDefaultValue(OPV_XHTML_IMAGEOPENDIRECTORY, pictures);
 
@@ -359,7 +365,6 @@ void XhtmlIm::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 	if(isSupported(AWindow->streamJid(), AWindow->contactJid()))
 	{
 		if (AWindow->mode()==IMessageNormalWindow::WriteMode) // Only for sending!!!
-//            addRichTextEditToolbar(AWindow->messageWidgetsBox(), MNWW_RICHTEXTTOOLBARWIDGET, AWindow->editWidget(), false);
 			updateNormalWindowActions(Options::node(OPV_XHTML_EDITORTOOLBAR).value().toBool(), AWindow);
 		else
 			connect(AWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
@@ -415,7 +420,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			font->setPriority(QAction::LowPriority);
 			connect(font, SIGNAL(triggered()), this, SLOT(onSelectFont()));
 			font->setCheckable(false);
-			menu->addAction(font);
+			menu->addAction(font, AG_XHTMLIM_FONT);
 
 			Action *underline=new Action(menu);
 			underline->setIcon(QIcon::fromTheme("format-text-underline", FIconStorage->getIcon(XHI_TEXT_UNDERLINE)));
@@ -425,7 +430,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(underline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			underline->setCheckable(true);
 			underline->setChecked(charFormat.fontUnderline());
-			menu->addAction(underline);
+			menu->addAction(underline, AG_XHTMLIM_FONT);
 
 			Action *overline=new Action(menu);
 			overline->setIcon(QIcon::fromTheme("format-text-overline", FIconStorage->getIcon(XHI_TEXT_OVERLINE)));
@@ -435,7 +440,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(overline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			overline->setCheckable(true);
 			overline->setChecked(charFormat.fontOverline());
-			menu->addAction(overline);
+			menu->addAction(overline, AG_XHTMLIM_FONT);
 
 			Action *strikeout=new Action(menu);
 			strikeout->setIcon(QIcon::fromTheme("format-text-strikethrough", FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
@@ -445,10 +450,38 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(strikeout, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			strikeout->setCheckable(true);
 			strikeout->setChecked(charFormat.fontStrikeOut());
-			menu->addAction(strikeout);
+			menu->addAction(strikeout, AG_XHTMLIM_FONT);
 
-			menu->addSeparator();
+			//  Code
+			Action *code=new Action(menu);
+			code->setIcon(QIcon::fromTheme("format-text-code", FIconStorage->getIcon(XHI_CODE)));
+			code->setText(tr("Code"));
+			code->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CODE);
+			code->setPriority(QAction::LowPriority);
+			connect(code, SIGNAL(toggled(bool)), SLOT(onTextCode(bool)));
+			code->setCheckable(true);
+			code->setChecked(getCursor().charFormat().fontFixedPitch());
+			menu->addAction(code, AG_XHTMLIM_FONT);
 
+			// Color
+			Menu *color = new Menu(menu);
+			color->setTitle(tr("Color"));
+//			special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
+//			special->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+
+			Action *foregroundColor = new Action(menu);
+			foregroundColor->setText(tr("Foreground"));
+			foregroundColor->setData(ADR_COLOR_TYPE, CT_FOREGROUND);
+			connect(foregroundColor, SIGNAL(triggered()), SLOT(onColor()));
+			color->addAction(foregroundColor);
+
+			Action *backgroundColor = new Action(menu);
+			backgroundColor->setText(tr("Background"));
+			backgroundColor->setData(ADR_COLOR_TYPE, CT_BACKGROUND);
+			connect(backgroundColor, SIGNAL(triggered()), SLOT(onColor()));
+			color->addAction(backgroundColor);
+
+			menu->addAction(color->menuAction(), AG_XHTMLIM_FONT);
 			//  *** Special options ***
 			//  Insert link
 			Action *insertLink=new Action(menu);
@@ -458,7 +491,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			insertLink->setCheckable(true);
 			insertLink->setChecked(charFormat.isAnchor());
 			connect(insertLink, SIGNAL(triggered()), SLOT(onInsertLink()));
-			menu->addAction(insertLink);
+			menu->addAction(insertLink, AG_XHTMLIM_INSERT);
 
 			//  Insert image
 			Action *insertImage=new Action(menu);
@@ -469,7 +502,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(insertImage, SIGNAL(triggered()), SLOT(onInsertImage()));
 			insertImage->setCheckable(true);
 			insertImage->setChecked(charFormat.isImageFormat());
-			menu->addAction(insertImage);
+			menu->addAction(insertImage, AG_XHTMLIM_INSERT);
 
 			//  Set tool tip
 			Action *setToolTip=new Action(menu);
@@ -480,7 +513,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(setToolTip, SIGNAL(triggered()), SLOT(onSetToolTip()));
 			setToolTip->setCheckable(true);
 			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
-			menu->addAction(setToolTip);
+			menu->addAction(setToolTip, AG_XHTMLIM_INSERT);
 
 
 			// Special formatting
@@ -501,7 +534,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setPriority(QAction::LowPriority);
 			action->setActionGroup(group);
 			connect(action, SIGNAL(triggered()), SLOT(onInsertSpecial()));
-			special->addAction(action, AG_DEFAULT);
+			special->addAction(action);
 
 			action = new Action(group);
 			action->setText(tr("New line"));
@@ -512,9 +545,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setPriority(QAction::LowPriority);
 			action->setActionGroup(group);
 			connect(action, SIGNAL(triggered()), SLOT(onInsertSpecial()));
-			special->addAction(action, AG_DEFAULT);
-			menu->addAction(special->menuAction());
-			menu->addSeparator();
+			special->addAction(action);
+			menu->addAction(special->menuAction(), AG_XHTMLIM_INSERT);
 
 			Action *removeFormat=new Action(menu);
 			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
@@ -523,7 +555,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			removeFormat->setPriority(QAction::LowPriority);
 			connect(removeFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
 			removeFormat->setCheckable(false);
-			menu->addAction(removeFormat);
+			menu->addAction(removeFormat, AG_XHTMLIM_SPECIAL);
 
 
 //			menu->setEnabled(!menu->isEmpty());
@@ -795,20 +827,56 @@ void XhtmlIm::onInsertSpecial()
 	Menu *special = qobject_cast<Menu *>(action->parentWidget());
 	special->menuAction()->setData(ADR_SPECIAL_SYMBOL, specialSybmol);
 	special->menuAction()->setIcon(action->icon());
-	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
+	QTextCursor cursor = getCursor(false, false);
 	cursor.beginEditBlock();
 	cursor.insertText(specialSybmol);
 	cursor.endEditBlock();
 }
 
-QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument)
+void XhtmlIm::onTextCode(bool AChecked)
+{
+	QTextCursor cursor = getCursor();
+	cursor.beginEditBlock();
+	if (AChecked)
+	{
+		QTextCharFormat charFormat;
+		charFormat.setFontFixedPitch(true);
+		mergeFormatOnWordOrSelection(cursor, charFormat);
+	}
+	else
+	{
+		QTextCharFormat charFormat = cursor.charFormat();
+		charFormat.clearProperty(QTextFormat::FontFixedPitch);
+		cursor.setCharFormat(charFormat);
+	}
+	cursor.endEditBlock();
+}
+
+void XhtmlIm::onColor()
+{
+	QTextCursor cursor = getCursor();
+	QTextCharFormat charFormat = cursor.charFormat();
+	Action *action = qobject_cast<Action *>(sender());
+	int type = action->data(ADR_COLOR_TYPE).toInt();
+	QColor color = QColorDialog::getColor((type==CT_FOREGROUND?charFormat.foreground():charFormat.background()).color(), action->parentWidget()->window());
+	if (!color.isValid())
+		return;
+	QTextCharFormat newCharFormat;
+	if (type==CT_FOREGROUND)
+		newCharFormat.setForeground(color);
+	else
+		newCharFormat.setBackground(color);
+	mergeFormatOnWordOrSelection(cursor, newCharFormat);
+}
+
+QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)
 {
 	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
 	if (FCurrentCursorPosition != -1)
 	{
 		if (FCurrentCursorPosition < cursor.selectionStart() || FCurrentCursorPosition > cursor.selectionEnd())
 			cursor.setPosition(FCurrentCursorPosition);
-		if (!cursor.hasSelection())
+		if (!cursor.hasSelection() && ASelect)
 			cursor.select(QTextCursor::WordUnderCursor);
 	}
 	else

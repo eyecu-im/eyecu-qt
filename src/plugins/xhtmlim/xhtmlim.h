@@ -86,7 +86,7 @@ protected:
 	void updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger);
 
 
-	QTextCursor getCursor(bool ASelectWholeDocument=false);
+	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true);
 	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);
 	void clearFormatOnWordOrSelection();
 
@@ -111,6 +111,8 @@ protected slots:
 	void onInsertImage();
 	void onSetToolTip();
 	void onInsertSpecial();
+	void onTextCode(bool AChecked);
+	void onColor();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);

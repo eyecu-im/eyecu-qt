@@ -15,14 +15,15 @@
 
 class XhtmlIm;
 
-class EditHtml :
-    public QToolBar
+class EditHtml: public QToolBar
 {
     Q_OBJECT
 public:
 	EditHtml(IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset, IBitsOfBinary *BOB, QNetworkAccessManager *ANetworkAccessManager, XhtmlIm *AXhtmlIm, QWidget *parent=NULL);
+	ToolBarChanger *changer() const {return FToolBarChanger;}
 
 private:
+	ToolBarChanger		*FToolBarChanger;
 	IMessageEditWidget	*FEditWidget;
 	QTextEdit			*FTextEdit;
 	IconStorage			*FIconStorage;
@@ -30,11 +31,11 @@ private:
 	XhtmlIm				*FXhtmlIm;
 
 private:
-    QFontComboBox *FCmbFont;
-	QComboBox     *FCmbFontSize;
+	QFontComboBox		*FCmbFont;
+	QComboBox			*FCmbFontSize;
 
-	Action  *FActionAutoRemoveFormat,
-            *FActionRemoveFormat,
+//	Action  *FActionAutoRemoveFormat,
+	Action  *FActionRemoveFormat,
             *FActionInsertImage,
             *FActionInsertLink,
             *FActionInsertNewline,

@@ -529,6 +529,7 @@
 #define OPV_XHTML_IMAGESAVEDIRECTORY                    "xhtml.image-save-directory"
 #define OPV_XHTML_IMAGEOPENDIRECTORY                    "xhtml.image-open-directory"
 #define OPV_XHTML_EDITORTOOLBAR                         "xhtml.editor-toolbar"
+#define OPV_XHTML_FORMATAURORESET                       "xhtml.format-auto-reset"
 
 // Attention
 #define OPV_ATTENTION_ROOT                              "attention"
