@@ -347,7 +347,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="448"/>
    <source>Allow Occupants to Change Subject?</source>
-   <translation type="unfinished"/>
+   <translation>Inzittenden toestaan om onderwerp te veranderen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="449"/>
@@ -372,7 +372,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="453"/>
    <source>Maximum Number of Room Occupants</source>
-   <translation type="unfinished"/>
+   <translation>Maximale aantal inzittenden van een kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="454"/>

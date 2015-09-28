@@ -338,12 +338,12 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="684"/>
    <source>Web registration required</source>
-   <translation type="unfinished"/>
+   <translation>Web registratie verplicht</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="685"/>
    <source>Open registration page</source>
-   <translation type="unfinished"/>
+   <translation>Open registratie pagina</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="736"/>

@@ -356,7 +356,7 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1033"/>
    <source>Connect to Jabber server</source>
-   <translation type="unfinished"/>
+   <translation>Verbonden met Jabber server</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1034"/>
