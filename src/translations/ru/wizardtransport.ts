@@ -467,7 +467,7 @@ If you receive such message, please rerun the Wizard to register at transport wi
         <translation>Мастер, помогающий полключиться к сторонним сетям через XMPP-транспорты (шлюзы)</translation>
     </message>
     <message>
-        <source>Trasport Wizard</source>
+        <source>Transport Wizard</source>
         <translation>Мастер Транспортов</translation>
     </message>
     <message>

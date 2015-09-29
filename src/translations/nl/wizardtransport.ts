@@ -582,7 +582,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="100"/>
-   <source>Trasport Wizard</source>
+   <source>Transport Wizard</source>
    <translation>Transport Wizard</translation>
   </message>
   <message>
