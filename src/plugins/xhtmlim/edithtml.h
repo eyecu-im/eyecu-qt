@@ -34,8 +34,8 @@ private:
 	QFontComboBox		*FCmbFont;
 	QComboBox			*FCmbFontSize;
 
-//	Action  *FActionAutoRemoveFormat,
-	Action  *FActionRemoveFormat,
+	Action  *FActionAutoRemoveFormat,
+			*FActionRemoveFormat,
             *FActionInsertImage,
             *FActionInsertLink,
             *FActionInsertNewline,
@@ -118,6 +118,9 @@ protected slots:
 
     void onShortcutActivated(const QString &AId, QWidget *AWidget);
     void onMessageSent();
+
+protected slots:
+	void onOptionsChanged(const OptionsNode &ANode);
 };
 
 #endif // EDITHTML_H

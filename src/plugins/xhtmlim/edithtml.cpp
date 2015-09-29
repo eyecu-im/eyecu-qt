@@ -236,29 +236,29 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	special->addAction(action);
 	FToolBarChanger->insertAction(special->menuAction(), AG_XHTMLIM_INSERT);
 
-//-----
 	//-----
-		FActionRemoveFormat=new Action(this);
-		FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
-		FActionRemoveFormat->setText(tr("Remove format"));
-		FActionRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
-		FActionRemoveFormat->setPriority(QAction::LowPriority);
-		connect(FActionRemoveFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
-		FActionRemoveFormat->setCheckable(false);
-		FToolBarChanger->insertAction(FActionRemoveFormat, AG_XHTMLIM_SPECIAL);
+	FActionRemoveFormat=new Action(this);
+	FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
+	FActionRemoveFormat->setText(tr("Remove format"));
+	FActionRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
+	FActionRemoveFormat->setPriority(QAction::LowPriority);
+	connect(FActionRemoveFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
+	FActionRemoveFormat->setCheckable(false);
+	FToolBarChanger->insertAction(FActionRemoveFormat, AG_XHTMLIM_SPECIAL);
 	//------------------------
 
 	if (AEnableReset)
 	{
-		Action *formatAutoReset = new Action(this);
-		formatAutoReset->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
-		formatAutoReset->setText(tr("Reset formatting on message send"));
-		formatAutoReset->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
-		formatAutoReset->setPriority(QAction::LowPriority);
-		connect(formatAutoReset, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
-		formatAutoReset->setCheckable(true);
-		formatAutoReset->setChecked(Options::node(OPV_XHTML_FORMATAURORESET).value().toBool());
-		FToolBarChanger->insertAction(formatAutoReset, AG_XHTMLIM_SPECIAL);
+		FActionAutoRemoveFormat = new Action(this);
+		FActionAutoRemoveFormat->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
+		FActionAutoRemoveFormat->setText(tr("Reset formatting on message send"));
+		FActionAutoRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
+		FActionAutoRemoveFormat->setPriority(QAction::LowPriority);
+		connect(FActionAutoRemoveFormat, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
+		FActionAutoRemoveFormat->setCheckable(true);
+		FActionAutoRemoveFormat->setChecked(Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
+		FToolBarChanger->insertAction(FActionAutoRemoveFormat, AG_XHTMLIM_SPECIAL);
+		connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));
 	}
 //-----
 }
@@ -526,8 +526,19 @@ void EditHtml::setupTextActions()
 //----slots-----
 void EditHtml::onMessageSent()
 {
-	if (Options::node(OPV_XHTML_FORMATAURORESET).value().toBool())
+	if (Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool())
 		clearFormatOnWordOrSelection(true);
+}
+
+void EditHtml::onOptionsChanged(const OptionsNode &ANode)
+{
+	qDebug() << "EditHtml::onOptionsChanged(" << ANode.path() << ")";
+	qDebug() << "value=" << ANode.value();
+	if (ANode.path() == OPV_XHTML_FORMATAUTORESET)
+	{
+		qDebug() << "checking...";
+		FActionAutoRemoveFormat->setChecked(ANode.value().toBool());
+	}
 }
 
 void EditHtml::onShortcutActivated(const QString &AId, QWidget *AWidget)
@@ -564,7 +575,7 @@ void EditHtml::onColorClicked(bool ABackground)
 
 void EditHtml::onResetFormat(bool AStatus)
 {
-	Options::node(OPV_XHTML_FORMATAURORESET).setValue(AStatus);
+	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
 }
 
 void EditHtml::onInsertImage()

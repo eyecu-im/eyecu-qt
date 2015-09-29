@@ -259,7 +259,7 @@ bool XhtmlIm::initSettings()
 	Options::setDefaultValue(OPV_XHTML_TABINDENT, true);
 	Options::setDefaultValue(OPV_XHTML_NORICHTEXT, true);
 	Options::setDefaultValue(OPV_XHTML_EDITORTOOLBAR, true);
-	Options::setDefaultValue(OPV_XHTML_FORMATAURORESET, true);
+	Options::setDefaultValue(OPV_XHTML_FORMATAUTORESET, true);
 	Options::setDefaultValue(OPV_XHTML_IMAGESAVEDIRECTORY, pictures);
 	Options::setDefaultValue(OPV_XHTML_IMAGEOPENDIRECTORY, pictures);
 
@@ -398,6 +398,10 @@ void XhtmlIm::onEditWidgetCreated(IMessageEditWidget *AWidget)
 void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu)
 {
 	FCurrentMessageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
+	qDebug() << "IMessageWindow=" << FCurrentMessageEditWidget->messageWindow();
+	qDebug() << "MessageWindow Widget=" << FCurrentMessageEditWidget->messageWindow()->instance();
+	qDebug() << "IMessageChatWindow=" << qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance());
+	bool chatWindow(qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance()));
 	if (FCurrentMessageEditWidget)
 	{
 		if (true)
@@ -557,10 +561,27 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			removeFormat->setCheckable(false);
 			menu->addAction(removeFormat, AG_XHTMLIM_SPECIAL);
 
+			if (chatWindow)
+			{
+				Action *formatAutoReset = new Action(this);
+				formatAutoReset->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
+				formatAutoReset->setText(tr("Reset formatting on message send"));
+				formatAutoReset->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
+				formatAutoReset->setPriority(QAction::LowPriority);
+				connect(formatAutoReset, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
+				formatAutoReset->setCheckable(true);
+				formatAutoReset->setChecked(Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
+				menu->addAction(formatAutoReset, AG_XHTMLIM_SPECIAL);
+			}
 
 //			menu->setEnabled(!menu->isEmpty());
 		}
 	}
+}
+
+void XhtmlIm::onResetFormat(bool AStatus)
+{
+	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
 }
 
 void XhtmlIm::onRemoveFormat()
@@ -1278,7 +1299,6 @@ bool XhtmlIm::messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget
 
 void XhtmlIm::onOptionsChanged(const OptionsNode &ANode)
 {
-	Q_UNUSED(ANode)
 	if (ANode.path() == OPV_XHTML_EDITORTOOLBAR)
 		updateMessageWindows(ANode.value().toBool());
 }

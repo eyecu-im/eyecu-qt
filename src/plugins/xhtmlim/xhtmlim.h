@@ -104,6 +104,7 @@ protected slots:
 	void onEditWidgetCreated(IMessageEditWidget *AWidget);
 	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
 
+	void onResetFormat(bool AStatus);
 	void onRemoveFormat();
 	void onSelectFont();
 	void onSelectDecoration(bool ASelected);
