@@ -52,6 +52,7 @@
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
 #define ADR_COLOR_TYPE		Action::DR_Parametr1
+#define ADR_INDENT			Action::DR_Parametr1
 
 #define DT_UNDERLINE 1
 #define DT_OVERLINE	 2
@@ -59,6 +60,9 @@
 
 #define CT_FOREGROUND 0
 #define CT_BACKGROUND 1
+
+#define INDENT_LESS	0
+#define INDENT_MORE	1
 
 XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
@@ -552,6 +556,27 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			special->addAction(action);
 			menu->addAction(special->menuAction(), AG_XHTMLIM_INSERT);
 
+
+			Action *indentLess= new Action(this);
+			indentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(XHI_OUTDENT)));
+			indentLess->setText(tr("Decrease indent"));
+			indentLess->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE);
+			indentLess->setPriority(QAction::LowPriority);
+			indentLess->setCheckable(false);
+			indentLess->setData(ADR_INDENT, INDENT_LESS);
+			connect(indentLess, SIGNAL(triggered()), this, SLOT(onIndentChange()));
+			menu->addAction(indentLess, AG_XHTMLIM_INDENT);
+
+			Action *indentMore=new Action(this);
+			indentMore->setIcon(QIcon::fromTheme("format-indent-more",FIconStorage->getIcon(XHI_INDENT)));
+			indentMore->setText(tr("Increase indent"));
+			indentMore->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE);
+			indentMore->setPriority(QAction::LowPriority);
+			indentMore->setCheckable(false);
+			indentMore->setData(ADR_INDENT, INDENT_MORE);
+			connect(indentMore, SIGNAL(triggered()), this, SLOT(onIndentChange()));
+			menu->addAction(indentMore, AG_XHTMLIM_INDENT);
+
 			Action *removeFormat=new Action(menu);
 			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
 			removeFormat->setText(tr("Remove format"));
@@ -888,6 +913,32 @@ void XhtmlIm::onColor()
 	else
 		newCharFormat.setBackground(color);
 	mergeFormatOnWordOrSelection(cursor, newCharFormat);
+}
+
+void XhtmlIm::onIndentChange()
+{
+	Action *action=qobject_cast<Action *>(sender());
+	QTextCursor cursor = getCursor(false, false);
+	qDebug() << "action->data(ADR_INDENT)=" << action->data(ADR_INDENT);
+	bool increase=(action->data(ADR_INDENT)==INDENT_MORE);
+	qDebug() << "increase=" << increase;
+	QTextBlockFormat blockFmt = cursor.blockFormat();
+	if (cursor.currentList())
+	{
+		if (cursor.currentList()->format().style()==QTextListFormat::ListStyleUndefined)
+			blockFmt.setIndent(increase);
+	}
+	else
+	{
+		qreal indentWidth=FCurrentMessageEditWidget->textEdit()->document()->indentWidth();
+		qreal indent=blockFmt.textIndent();
+		if (increase)
+			blockFmt.setTextIndent(indent+indentWidth);
+		else
+			if (indent>0)
+				blockFmt.setTextIndent(indent-indentWidth);
+	}
+	cursor.setBlockFormat(blockFmt);
 }
 
 QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)

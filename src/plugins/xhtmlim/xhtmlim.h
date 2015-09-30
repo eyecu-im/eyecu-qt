@@ -114,6 +114,7 @@ protected slots:
 	void onInsertSpecial();
 	void onTextCode(bool AChecked);
 	void onColor();
+	void onIndentChange();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
