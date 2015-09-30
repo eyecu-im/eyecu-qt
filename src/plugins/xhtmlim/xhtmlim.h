@@ -115,6 +115,7 @@ protected slots:
 	void onTextCode(bool AChecked);
 	void onColor();
 	void onIndentChange();
+	void onTextAlign();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);

@@ -53,6 +53,9 @@
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
 #define ADR_COLOR_TYPE		Action::DR_Parametr1
 #define ADR_INDENT			Action::DR_Parametr1
+#define ADR_ALIGN_TYPE      Action::DR_Parametr1
+#define ADR_LIST_TYPE       Action::DR_Parametr1
+#define ADR_FORMATTING_TYPE Action::DR_Parametr1
 
 #define DT_UNDERLINE 1
 #define DT_OVERLINE	 2
@@ -402,14 +405,11 @@ void XhtmlIm::onEditWidgetCreated(IMessageEditWidget *AWidget)
 void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu)
 {
 	FCurrentMessageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
-	qDebug() << "IMessageWindow=" << FCurrentMessageEditWidget->messageWindow();
-	qDebug() << "MessageWindow Widget=" << FCurrentMessageEditWidget->messageWindow()->instance();
-	qDebug() << "IMessageChatWindow=" << qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance());
-	bool chatWindow(qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance()));
 	if (FCurrentMessageEditWidget)
 	{
-		if (true)
+		if (FCurrentMessageEditWidget->isRichTextEnabled())
 		{
+			bool chatWindow(qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance()));
 			QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->cursorForPosition(APosition);
 			FCurrentCursorPosition = cursor.atEnd()?-1:cursor.position();
 			if (FCurrentCursorPosition != -1)
@@ -474,15 +474,16 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			// Color
 			Menu *color = new Menu(menu);
 			color->setTitle(tr("Color"));
-//			special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
-//			special->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+			color->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_TEXT_COLOR);
 
+			// Foreground
 			Action *foregroundColor = new Action(menu);
 			foregroundColor->setText(tr("Foreground"));
 			foregroundColor->setData(ADR_COLOR_TYPE, CT_FOREGROUND);
 			connect(foregroundColor, SIGNAL(triggered()), SLOT(onColor()));
 			color->addAction(foregroundColor);
 
+			// Background
 			Action *backgroundColor = new Action(menu);
 			backgroundColor->setText(tr("Background"));
 			backgroundColor->setData(ADR_COLOR_TYPE, CT_BACKGROUND);
@@ -490,7 +491,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			color->addAction(backgroundColor);
 
 			menu->addAction(color->menuAction(), AG_XHTMLIM_FONT);
-			//  *** Special options ***
+
+			//  *** Insert ***
 			//  Insert link
 			Action *insertLink=new Action(menu);
 			insertLink->setIcon(QIcon::fromTheme("insert-link",IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK)));
@@ -523,8 +525,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
 			menu->addAction(setToolTip, AG_XHTMLIM_INSERT);
 
-
-			// Special formatting
+			// *** Special characters ***
 			Menu *special = new Menu(menu);
 			special->setTitle(tr("Insert special symbol"));
 			special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
@@ -532,7 +533,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(special->menuAction(), SIGNAL(triggered()), SLOT(onInsertSpecial()));
 
 			QActionGroup *group=new QActionGroup(special);
-
+			// NBSP
 			Action *action = new Action(group);
 			action->setText(tr("Non-breaking space"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
@@ -544,6 +545,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(action, SIGNAL(triggered()), SLOT(onInsertSpecial()));
 			special->addAction(action);
 
+			// New line
 			action = new Action(group);
 			action->setText(tr("New line"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NEWLINE);
@@ -556,7 +558,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			special->addAction(action);
 			menu->addAction(special->menuAction(), AG_XHTMLIM_INSERT);
 
-
+			//  *** Indentation ***
+			// Indent
 			Action *indentLess= new Action(this);
 			indentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(XHI_OUTDENT)));
 			indentLess->setText(tr("Decrease indent"));
@@ -567,6 +570,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(indentLess, SIGNAL(triggered()), this, SLOT(onIndentChange()));
 			menu->addAction(indentLess, AG_XHTMLIM_INDENT);
 
+			// Outndent
 			Action *indentMore=new Action(this);
 			indentMore->setIcon(QIcon::fromTheme("format-indent-more",FIconStorage->getIcon(XHI_INDENT)));
 			indentMore->setText(tr("Increase indent"));
@@ -577,6 +581,84 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(indentMore, SIGNAL(triggered()), this, SLOT(onIndentChange()));
 			menu->addAction(indentMore, AG_XHTMLIM_INDENT);
 
+			//  *** Block formatting ***
+			//  Alignment
+			QTextBlockFormat blockFormat = cursor.blockFormat();
+			Qt::Alignment alignment = blockFormat.alignment();
+			Menu *align = new Menu(menu);
+			align->setTitle(tr("Text align"));
+			align->menuAction()->setCheckable(true);
+			connect(align->menuAction(), SIGNAL(triggered()), SLOT(onTextAlign()));
+
+			group=new QActionGroup(align);
+			action = new Action(group);
+			action->setText(tr("Left"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_LEFT);
+			action->setData(ADR_ALIGN_TYPE, int(Qt::AlignLeft|Qt::AlignAbsolute));
+			action->setCheckable(true);
+			if (alignment&Qt::AlignLeft)
+			{
+				action->setChecked(true);
+				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_LEFT);
+			}
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onTextAlign()));
+			align->addAction(action, AG_XHTMLIM_ALIGN);
+
+			action = new Action(group);
+			action->setText(tr("Center"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_CENTER);
+			action->setData(ADR_ALIGN_TYPE, Qt::AlignHCenter);
+			action->setCheckable(true);
+			if (alignment&Qt::AlignHCenter)
+			{
+				action->setChecked(true);
+				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_CENTER);
+			}
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onTextAlign()));
+			align->addAction(action, AG_XHTMLIM_ALIGN);
+
+			action = new Action(group);
+			action->setText(tr("Right"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_RIGHT);
+			action->setData(ADR_ALIGN_TYPE, int(Qt::AlignRight|Qt::AlignAbsolute));
+			action->setCheckable(true);
+			if (alignment&Qt::AlignRight)
+			{
+				action->setChecked(true);
+				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_RIGHT);
+			}
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onTextAlign()));
+			align->addAction(action, AG_XHTMLIM_ALIGN);
+
+			action = new Action(group);
+			action->setText(tr("Justify"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_JUSTIFY);
+			action->setData(ADR_ALIGN_TYPE, Qt::AlignJustify);
+			action->setCheckable(true);
+			if (alignment&Qt::AlignJustify)
+			{
+				action->setChecked(true);
+				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_JUSTIFY);
+			}
+			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onTextAlign()));
+			align->addAction(action, AG_XHTMLIM_ALIGN);
+
+			menu->addAction(align->menuAction(), AG_XHTMLIM_PARAGRAPH);
+
+			// *** Special commands **
+			// Clear formatting
 			Action *removeFormat=new Action(menu);
 			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
 			removeFormat->setText(tr("Remove format"));
@@ -586,6 +668,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			removeFormat->setCheckable(false);
 			menu->addAction(removeFormat, AG_XHTMLIM_SPECIAL);
 
+			// Auto-reset formatting
 			if (chatWindow)
 			{
 				Action *formatAutoReset = new Action(this);
@@ -939,6 +1022,22 @@ void XhtmlIm::onIndentChange()
 				blockFmt.setTextIndent(indent-indentWidth);
 	}
 	cursor.setBlockFormat(blockFmt);
+}
+
+void XhtmlIm::onTextAlign()
+{
+	Action *action = qobject_cast<Action *>(sender());
+	if (action)
+	{
+		Qt::AlignmentFlag align = Qt::AlignmentFlag(action->data(ADR_ALIGN_TYPE).toInt());
+		QTextCursor cursor = getCursor(false, false);
+		QTextBlockFormat format=cursor.blockFormat();
+		if (format.hasProperty(QTextFormat::BlockAlignment) && format.alignment()==align)
+			format.clearProperty(QTextFormat::BlockAlignment);
+		else
+			format.setAlignment(align);
+		cursor.setBlockFormat(format);
+	}
 }
 
 QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)

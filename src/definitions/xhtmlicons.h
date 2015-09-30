@@ -6,6 +6,7 @@
 #define XHI_TEXT_UNDERLINE        "textUnder"
 #define XHI_TEXT_OVERLINE         "textOver"
 #define XHI_TEXT_STRIKEOUT        "textStrike"
+#define XHI_TEXT_COLOR            "textColor"
 #define XHI_ALIGN_LEFT            "alignLeft"
 #define XHI_ALIGN_CENTER          "alignCenter"
 #define XHI_ALIGN_RIGHT           "alignRight"
