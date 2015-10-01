@@ -20,6 +20,7 @@
 #define XHI_FORMAT_CLEAR          "removeFormat"
 #define XHI_FORMAT_PLAIN          "formatBlack"
 #define XHI_FORMAT_RICH           "formatRich"
+#define XHI_LIST                  "list"
 #define XHI_LIST_BULLET_CIRCLE    "bulletCircle"
 #define XHI_LIST_BULLET_DISC      "bulletDisc"
 #define XHI_LIST_BULLET_SQUARE    "bulletSquare"

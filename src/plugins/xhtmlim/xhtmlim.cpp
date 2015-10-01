@@ -582,8 +582,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			menu->addAction(indentMore, AG_XHTMLIM_INDENT);
 
 			//  *** Block formatting ***
-			//  Alignment
 			QTextBlockFormat blockFormat = cursor.blockFormat();
+			//  Alignment			
 			Qt::Alignment alignment = blockFormat.alignment();
 			Menu *align = new Menu(menu);
 			align->setTitle(tr("Text align"));
@@ -656,6 +656,170 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			align->addAction(action, AG_XHTMLIM_ALIGN);
 
 			menu->addAction(align->menuAction(), AG_XHTMLIM_PARAGRAPH);
+
+
+
+			// Text list
+			QTextListFormat::Style listStyle;
+			if (blockFormat.isListFormat())
+			{
+				QTextListFormat listFormat = blockFormat.toListFormat();
+				listStyle = listFormat.style();
+			}
+			else
+				listStyle = QTextListFormat::ListStyleUndefined;
+
+			Menu *list = new Menu(menu);
+			list->setTitle(tr("List"));
+			list->setIcon(RSR_STORAGE_HTML, XHI_LIST);
+			list->menuAction()->setEnabled(true);
+			list->menuAction()->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
+//			switch (listStyle)
+//			{
+//				case QTextListFormat::ListDisc:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
+//					break;
+//				case QTextListFormat::ListCircle:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_CIRCLE);
+//					break;
+//				case QTextListFormat::ListSquare:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_SQUARE);
+//					break;
+//				case QTextListFormat::ListDecimal:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_DECIMAL);
+//					break;
+//				case QTextListFormat::ListLowerAlpha:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ALPHA_LOW);
+//					break;
+//				case QTextListFormat::ListUpperAlpha:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ALPHA_UP);
+//					break;
+//				case QTextListFormat::ListLowerRoman:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ROMAN_LOW);
+//					break;
+//				case QTextListFormat::ListUpperRoman:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ROMAN_UP);
+//					break;
+//				case QTextListFormat::ListStyleUndefined:
+//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_DEFINITION);
+//					break;
+//			}
+
+//			connect(list->menuAction(), SIGNAL(triggered()), SLOT(onInsertList()));
+
+			group=new QActionGroup(list);
+			action = new Action(group);
+			action->setText(tr("Disc"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListDisc)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+//			FActionLastList = action;
+
+			action = new Action(group);
+			action->setText(tr("Circle"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_CIRCLE);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListCircle);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListCircle)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Square"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_SQUARE);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListSquare);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListSquare)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Decimal"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_DECIMAL);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListDecimal);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListDecimal)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Alpha lower"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_LOW);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerAlpha);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListLowerAlpha)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Alpha upper"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_UP);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperAlpha);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListUpperAlpha)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Roman lower"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_LOW);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerRoman);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListLowerRoman)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Roman upper"));
+			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_UP);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperRoman);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListUpperRoman)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_LIST);
+
+			action = new Action(group);
+			action->setText(tr("Definition list"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_LIST_DEFINITION);
+			action->setData(ADR_LIST_TYPE, QTextListFormat::ListStyleUndefined);
+			action->setCheckable(true);
+			if (listStyle==QTextListFormat::ListStyleUndefined)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
+			list->addAction(action, AG_XHTMLIM_DEFLIST);
+			menu->addAction(list->menuAction(), AG_XHTMLIM_PARAGRAPH);
+
+
+
 
 			// *** Special commands **
 			// Clear formatting
@@ -1037,6 +1201,59 @@ void XhtmlIm::onTextAlign()
 		else
 			format.setAlignment(align);
 		cursor.setBlockFormat(format);
+	}
+}
+
+void XhtmlIm::onInsertList()
+{
+	Action *ac = qobject_cast<Action *>(sender());
+	if (ac)
+	{
+		QTextListFormat::Style style = (QTextListFormat::Style)ac->data(ADR_LIST_TYPE).toInt();// = QTextListFormat::ListStyleUndefined;
+//		FMenuList->setIcon(ac->icon());
+//		FMenuList->menuAction()->setData(ADR_LIST_TYPE, style);
+		QTextCursor cursor = getCursor();
+		if (style >=QTextListFormat::ListUpperRoman && style <=QTextListFormat::ListStyleUndefined)
+		{
+			cursor.beginEditBlock();
+			QTextListFormat listFormat;
+			QTextList       *list=cursor.currentList();
+			if (list)   //  Have list at current position
+			{
+				listFormat = list->format();
+				int indent=listFormat.indent();
+				if (listFormat.style()==QTextListFormat::ListStyleUndefined)
+					indent++;
+				listFormat.setStyle(style);
+				if (style==QTextListFormat::ListStyleUndefined)
+					indent--;
+				listFormat.setIndent(indent);
+				if (list->itemNumber(cursor.block())==0 && cursor.atBlockStart())    // First block in the list
+					list->setFormat(listFormat);               //  Just update list format
+				else                                        // Not first block
+				{
+					indent++;
+					listFormat.setIndent(indent);  //  Create a sublist
+					if (!cursor.atBlockStart() || cursor.block().previous().textList()!=list)
+						cursor.insertBlock();
+					cursor.createList(listFormat);
+				}
+			}
+			else        // No list at current position
+			{
+				int indent=style==QTextListFormat::ListStyleUndefined?0:1;
+				listFormat.setIndent(indent);
+				listFormat.setStyle(style);    // Just set its style
+				cursor.createList(listFormat); // and create a root list
+			}
+			cursor.endEditBlock();
+		}
+		else
+		{
+			QTextBlockFormat blockFormat;
+			blockFormat.setObjectIndex(-1);
+			cursor.mergeBlockFormat(blockFormat);
+		}
 	}
 }
 

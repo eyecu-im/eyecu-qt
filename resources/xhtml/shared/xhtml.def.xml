@@ -36,6 +36,7 @@
   <icon><key>formatBlack</key><object mime="image/png">formatblack.png</object></icon>
   <icon><key>formatRich</key><object mime="image/png">formatrich.png</object></icon>
 
+  <icon><key>list</key><object mime="image/png">list.png</object></icon>
   <icon><key>definitionList</key><object mime="image/png">definitionlist.png</object></icon>
   <icon><key>orderDecimal</key><object mime="image/png">orderdecimal.png</object></icon>
   <icon><key>bulletCircle</key><object mime="image/png">bulletcirle.png</object></icon>

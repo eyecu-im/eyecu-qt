@@ -116,6 +116,7 @@ protected slots:
 	void onColor();
 	void onIndentChange();
 	void onTextAlign();
+	void onInsertList();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
