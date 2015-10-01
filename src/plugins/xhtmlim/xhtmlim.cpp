@@ -598,7 +598,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setCheckable(true);
 			if (alignment&Qt::AlignLeft)
 			{
-				action->setChecked(true);
+				if (blockFormat.hasProperty(QTextFormat::BlockAlignment))
+					action->setChecked(true);
 				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_LEFT);
 			}
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT);
@@ -614,7 +615,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setCheckable(true);
 			if (alignment&Qt::AlignHCenter)
 			{
-				action->setChecked(true);
+				if (blockFormat.hasProperty(QTextFormat::BlockAlignment))
+					action->setChecked(true);
 				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_CENTER);
 			}
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER);
@@ -630,7 +632,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setCheckable(true);
 			if (alignment&Qt::AlignRight)
 			{
-				action->setChecked(true);
+				if (blockFormat.hasProperty(QTextFormat::BlockAlignment))
+					action->setChecked(true);
 				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_RIGHT);
 			}
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT);
@@ -646,7 +649,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setCheckable(true);
 			if (alignment&Qt::AlignJustify)
 			{
-				action->setChecked(true);
+				if (blockFormat.hasProperty(QTextFormat::BlockAlignment))
+					action->setChecked(true);
 				align->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_JUSTIFY);
 			}
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY);
@@ -657,55 +661,21 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 
 			menu->addAction(align->menuAction(), AG_XHTMLIM_PARAGRAPH);
 
-
-
 			// Text list
-			QTextListFormat::Style listStyle;
+			int listStyle;
 			if (blockFormat.isListFormat())
 			{
 				QTextListFormat listFormat = blockFormat.toListFormat();
 				listStyle = listFormat.style();
 			}
 			else
-				listStyle = QTextListFormat::ListStyleUndefined;
+				listStyle = 1;
 
 			Menu *list = new Menu(menu);
 			list->setTitle(tr("List"));
 			list->setIcon(RSR_STORAGE_HTML, XHI_LIST);
 			list->menuAction()->setEnabled(true);
 			list->menuAction()->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
-//			switch (listStyle)
-//			{
-//				case QTextListFormat::ListDisc:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
-//					break;
-//				case QTextListFormat::ListCircle:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_CIRCLE);
-//					break;
-//				case QTextListFormat::ListSquare:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_SQUARE);
-//					break;
-//				case QTextListFormat::ListDecimal:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_DECIMAL);
-//					break;
-//				case QTextListFormat::ListLowerAlpha:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ALPHA_LOW);
-//					break;
-//				case QTextListFormat::ListUpperAlpha:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ALPHA_UP);
-//					break;
-//				case QTextListFormat::ListLowerRoman:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ROMAN_LOW);
-//					break;
-//				case QTextListFormat::ListUpperRoman:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_ORDER_ROMAN_UP);
-//					break;
-//				case QTextListFormat::ListStyleUndefined:
-//					list->setIcon(RSR_STORAGE_HTML, XHI_LIST_DEFINITION);
-//					break;
-//			}
-
-//			connect(list->menuAction(), SIGNAL(triggered()), SLOT(onInsertList()));
 
 			group=new QActionGroup(list);
 			action = new Action(group);
@@ -719,7 +689,6 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setActionGroup(group);
 			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
 			list->addAction(action, AG_XHTMLIM_LIST);
-//			FActionLastList = action;
 
 			action = new Action(group);
 			action->setText(tr("Circle"));
@@ -817,9 +786,6 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(action, SIGNAL(triggered()), SLOT(onInsertList()));
 			list->addAction(action, AG_XHTMLIM_DEFLIST);
 			menu->addAction(list->menuAction(), AG_XHTMLIM_PARAGRAPH);
-
-
-
 
 			// *** Special commands **
 			// Clear formatting
