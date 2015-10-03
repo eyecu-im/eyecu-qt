@@ -85,8 +85,8 @@ protected:
     void updateCurrentList(const QTextCursor &ACursor);
     void updateCurrentBlock(const QTextCursor &ACursor);
 
-    static int  checkBlockFormat(const QTextCursor &ACursor);
-    static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
+//    static int  checkBlockFormat(const QTextCursor &ACursor);
+//    static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
     static QTextFragment getTextFragment(const QTextCursor &ACursor);
     static void selectTextFragment(QTextCursor &ACursor);
 

@@ -7,6 +7,7 @@
 #define XHI_TEXT_OVERLINE         "textOver"
 #define XHI_TEXT_STRIKEOUT        "textStrike"
 #define XHI_TEXT_COLOR            "textColor"
+#define XHI_TEXT_FONT             "textFont"
 #define XHI_ALIGN_LEFT            "alignLeft"
 #define XHI_ALIGN_CENTER          "alignCenter"
 #define XHI_ALIGN_RIGHT           "alignRight"
@@ -17,9 +18,7 @@
 #define XHI_SET_TOOLTIP           "toolTip"
 #define XHI_INDENT                "indent"
 #define XHI_OUTDENT               "outdent"
-#define XHI_FORMAT_CLEAR          "removeFormat"
-#define XHI_FORMAT_PLAIN          "formatBlack"
-#define XHI_FORMAT_RICH           "formatRich"
+#define XHI_REMOVEFORMAT          "removeFormat"
 #define XHI_LIST                  "list"
 #define XHI_LIST_BULLET_CIRCLE    "bulletCircle"
 #define XHI_LIST_BULLET_DISC      "bulletDisc"
@@ -41,5 +40,7 @@
 #define XHI_CODE                  "code"
 #define XHI_PREFORMAT             "preformat"
 
-#define XHI_RICHTEXT              "richText"
+#define XHI_FORMAT                "format"
+#define XHI_FORMATTYPE            "formatType"
+#define XHI_NORICHTEXT            "noRichText"
 #endif

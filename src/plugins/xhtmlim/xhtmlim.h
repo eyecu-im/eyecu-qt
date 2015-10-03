@@ -51,7 +51,9 @@ public:
     XhtmlIm();
     ~XhtmlIm();
 
-	void updateUnitsComboBox(QComboBox *AComboBox, int AValue);
+	static void updateUnitsComboBox(QComboBox *AComboBox, int AValue);
+	static int checkBlockFormat(const QTextCursor &ACursor);
+	static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
 
     //IPlugin
     QObject *instance() { return this; }
@@ -89,7 +91,6 @@ protected:
 	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true);
 	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);
 	void clearFormatOnWordOrSelection();
-
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
 	void onImageCopy();
@@ -117,6 +118,7 @@ protected slots:
 	void onIndentChange();
 	void onTextAlign();
 	void onInsertList();
+	void onSetFormat();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);

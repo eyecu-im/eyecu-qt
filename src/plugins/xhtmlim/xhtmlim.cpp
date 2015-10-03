@@ -67,6 +67,15 @@
 #define INDENT_LESS	0
 #define INDENT_MORE	1
 
+#define FMT_NORMAL          0
+#define FMT_HEADING1        1
+#define FMT_HEADING2        2
+#define FMT_HEADING3        3
+#define FMT_HEADING4        4
+#define FMT_HEADING5        5
+#define FMT_HEADING6        6
+#define FMT_PREFORMAT       7
+
 XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
 	FMessageProcessor(NULL),
@@ -216,7 +225,7 @@ void XhtmlIm::updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToo
 		{
 			Action *action = new Action();
 			action->setText(tr("Show rich text editor toolbar"));
-			action->setIcon(FIconStorage->getIcon(XHI_RICHTEXT));
+			action->setIcon(FIconStorage->getIcon(XHI_FORMAT));
 			action->setCheckable(true);
 			action->setChecked(AEnabled);
 			AToolBarChanger->insertAction(action, TBG_MWTBW_RICHTEXT_EDITOR);
@@ -417,12 +426,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			QTextCharFormat charFormat = cursor.charFormat();
 
 			Menu *menu = new Menu(AMenu);
-			menu->setTitle(tr("Format"));
+			menu->setTitle(tr("Text format"));
+			menu->setIcon(QIcon::fromTheme("format-text", FIconStorage->getIcon(XHI_FORMAT)));
 			AMenu->addAction(menu->menuAction(),AG_XHTMLIM_FORMATTING);
-//			QActionGroup *group = new QActionGroup(menu);
 
 			Action *font=new Action(menu);
-			font->setIcon(QIcon::fromTheme("format-text-font", FIconStorage->getIcon(XHI_FORMAT_RICH)));
+			font->setIcon(QIcon::fromTheme("format-text-font", FIconStorage->getIcon(XHI_TEXT_FONT)));
 			font->setText(tr("Font"));
 			font->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			font->setPriority(QAction::LowPriority);
@@ -787,10 +796,105 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			list->addAction(action, AG_XHTMLIM_DEFLIST);
 			menu->addAction(list->menuAction(), AG_XHTMLIM_PARAGRAPH);
 
+
+			// Special formatting
+			Menu *format = new Menu(menu);
+			format->setTitle(tr("Formatting type"));
+			format->setIcon(RSR_STORAGE_HTML,XHI_FORMATTYPE);
+			format->menuAction()->setCheckable(true);
+			int type = checkBlockFormat(getCursor());
+			connect(format->menuAction(), SIGNAL(triggered()), SLOT(onSetFormat()));
+
+			group=new QActionGroup(format);
+			action = new Action(group);
+			action->setText(tr("Preformatted text"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_PREFORMAT);
+			action->setData(ADR_FORMATTING_TYPE, FMT_PREFORMAT);
+			action->setCheckable(true);
+			if (type == FMT_PREFORMAT)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMAT);
+
+			action = new Action(group);
+			action->setText(tr("Heading 1"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING1);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING1);
+			action->setCheckable(true);
+			if (type == FMT_HEADING1)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+
+			action = new Action(group);
+			action->setText(tr("Heading 2"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING2);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING2);
+			action->setCheckable(true);
+			if (type == FMT_HEADING2)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+
+			action = new Action(group);
+			action->setText(tr("Heading 3"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING3);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING3);
+			action->setCheckable(true);
+			if (type == FMT_HEADING3)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+
+			action = new Action(group);
+			action->setText(tr("Heading 4"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING4);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING4);
+			action->setCheckable(true);
+			if (type == FMT_HEADING4)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+
+			action = new Action(group);
+			action->setText(tr("Heading 5"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING5);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING5);
+			action->setCheckable(true);
+			if (type == FMT_HEADING5)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+
+			action = new Action(group);
+			action->setText(tr("Heading 6"));
+			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING6);
+			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING6);
+			action->setCheckable(true);
+			if (type == FMT_HEADING6)
+				action->setChecked(true);
+			action->setPriority(QAction::LowPriority);
+			action->setActionGroup(group);
+			connect(action, SIGNAL(triggered()), SLOT(onSetFormat()));
+			format->addAction(action, AG_XHTMLIM_FORMATHEADING);
+			menu->addAction(format->menuAction(), AG_XHTMLIM_PARAGRAPH);
+
 			// *** Special commands **
 			// Clear formatting
 			Action *removeFormat=new Action(menu);
-			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
+			removeFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_REMOVEFORMAT)));
 			removeFormat->setText(tr("Remove format"));
 			removeFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
 			removeFormat->setPriority(QAction::LowPriority);
@@ -802,7 +906,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			if (chatWindow)
 			{
 				Action *formatAutoReset = new Action(this);
-				formatAutoReset->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
+				formatAutoReset->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_NORICHTEXT)));
 				formatAutoReset->setText(tr("Reset formatting on message send"));
 				formatAutoReset->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
 				formatAutoReset->setPriority(QAction::LowPriority);
@@ -1223,6 +1327,65 @@ void XhtmlIm::onInsertList()
 	}
 }
 
+void XhtmlIm::onSetFormat()
+{
+	Action *action = qobject_cast<Action *>(sender());
+//	if (ac!=FMenuFormat->menuAction())
+//		FActionLastFormat=ac;
+	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
+	QTextCursor cursor = getCursor();
+	int currentFormatType=checkBlockFormat(cursor);
+
+	cursor.beginEditBlock();
+	QTextCharFormat blockCharFormat;
+	QTextBlockFormat blockFormat;
+
+	if (currentFormatType!=formatType)
+	{
+		if (formatType==FMT_PREFORMAT)
+		{
+			blockCharFormat.setFontFixedPitch(true);
+			blockFormat.setProperty(QTextFormat::BlockNonBreakableLines, true);
+		}
+		else
+		{
+			blockCharFormat.setProperty(QTextFormat::FontSizeAdjustment, 4-formatType);
+			blockCharFormat.setFontWeight(QFont::Bold);
+		}
+
+		int first, last;
+		if (cursor.position()<cursor.anchor())
+		{
+			first=cursor.position();
+			last=cursor.anchor();
+		}
+		else
+		{
+			first=cursor.anchor();
+			last=cursor.position();
+		}
+		cursor.setPosition(first);
+		cursor.movePosition(QTextCursor::StartOfBlock);
+		QTextBlock block;
+		for (block=cursor.block(); !block.contains(last); block=block.next());
+
+		cursor.setPosition(block.position(), QTextCursor::KeepAnchor);
+		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		cursor.mergeCharFormat(blockCharFormat);
+	}
+	else
+	{
+		QSet<QTextFormat::Property> properties;
+		properties.insert(QTextFormat::FontSizeAdjustment);
+		properties.insert(QTextFormat::FontWeight);
+		clearBlockProperties(cursor.block(), properties);
+	}
+	cursor.setBlockCharFormat(blockCharFormat);
+	cursor.setBlockFormat(blockFormat);
+	cursor.endEditBlock();
+//	updateCurrentBlock(cursor);
+}
+
 QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)
 {
 	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
@@ -1261,6 +1424,34 @@ void XhtmlIm::clearFormatOnWordOrSelection()
 	cursor.setCharFormat(emptyCharFormat);
 	cursor.endEditBlock();
 	FCurrentMessageEditWidget->textEdit()->setCurrentCharFormat(emptyCharFormat);
+}
+
+int XhtmlIm::checkBlockFormat(const QTextCursor &ACursor)
+{
+	QTextCharFormat  charFormat = ACursor.blockCharFormat();
+	QTextBlockFormat format = ACursor.blockFormat();
+	int header=XmlTextDocumentParser::header(charFormat);
+	if (header)
+		return header;
+	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines) && charFormat.boolProperty(QTextFormat::FontFixedPitch))
+		return FMT_PREFORMAT;
+	return FMT_NORMAL;
+}
+
+void XhtmlIm::clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties)
+{
+	QTextCursor cursor(ATextBlock);
+	for (QTextBlock::iterator it=ATextBlock.begin(); it!=ATextBlock.end(); it++)
+	{
+		QTextFragment fragment=it.fragment();
+		// Select fragment
+		cursor.setPosition(fragment.position());
+		cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
+		QTextCharFormat charFormat=fragment.charFormat();
+		for (QSet<QTextFormat::Property>::const_iterator it=AProperties.begin(); it!=AProperties.end(); it++)
+			charFormat.clearProperty(*it);
+		cursor.setCharFormat(charFormat);
+	}
 }
 
 void XhtmlIm::onChatWindowCreated(IMessageChatWindow *AWindow)

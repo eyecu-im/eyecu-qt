@@ -6,6 +6,7 @@
   <icon><key>textStrike</key><object mime="image/png">textstrike.png</object></icon>
   <icon><key>textItalic</key><object mime="image/png">textitalic.png</object></icon>  
   <icon><key>textColor</key><object mime="image/png">textcolor.png</object></icon>
+  <icon><key>textFont</key><object mime="image/png">textfont.png</object></icon>
 
   <icon><key>alignLeft</key><object mime="image/png">alignleft.png</object></icon>
   <icon><key>alignRight</key><object mime="image/png">alignright.png</object></icon>
@@ -31,10 +32,7 @@
   <icon><key>indent</key><object mime="image/png">indent.png</object></icon>
   <icon><key>outdent</key><object mime="image/png">outdent.png</object></icon>
 
-  <icon><key>clearFormat</key><object mime="image/png">clearformat.png</object></icon>
   <icon><key>removeFormat</key><object mime="image/png">removeformat.png</object></icon>
-  <icon><key>formatBlack</key><object mime="image/png">formatblack.png</object></icon>
-  <icon><key>formatRich</key><object mime="image/png">formatrich.png</object></icon>
 
   <icon><key>list</key><object mime="image/png">list.png</object></icon>
   <icon><key>definitionList</key><object mime="image/png">definitionlist.png</object></icon>
@@ -47,5 +45,7 @@
   <icon><key>orderRomanLow</key><object mime="image/png">orderromanlow.png</object></icon>
   <icon><key>orderRomanUp</key><object mime="image/png">orderromanup.png</object></icon>
 
-  <icon><key>richText</key><object mime="image/png">richtext.png</object></icon>
+  <icon><key>format</key><object mime="image/png">format.png</object></icon>
+  <icon><key>formatType</key><object mime="image/png">formatType.png</object></icon>
+  <icon><key>noRichText</key><object mime="image/png">norichtext.png</object></icon>
 </icondef>

@@ -238,7 +238,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 	//-----
 	FActionRemoveFormat=new Action(this);
-	FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_FORMAT_CLEAR)));
+	FActionRemoveFormat->setIcon(QIcon::fromTheme("format-text-clear", FIconStorage->getIcon(XHI_REMOVEFORMAT)));
 	FActionRemoveFormat->setText(tr("Remove format"));
 	FActionRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
 	FActionRemoveFormat->setPriority(QAction::LowPriority);
@@ -250,7 +250,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	if (AEnableReset)
 	{
 		FActionAutoRemoveFormat = new Action(this);
-		FActionAutoRemoveFormat->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_FORMAT_PLAIN)));
+		FActionAutoRemoveFormat->setIcon(QIcon::fromTheme("format-rich-text", FIconStorage->getIcon(XHI_NORICHTEXT)));
 		FActionAutoRemoveFormat->setText(tr("Reset formatting on message send"));
 		FActionAutoRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
 		FActionAutoRemoveFormat->setPriority(QAction::LowPriority);
@@ -967,33 +967,33 @@ void EditHtml::onInsertList()
 	}
 }
 
-int EditHtml::checkBlockFormat(const QTextCursor &ACursor)
-{
-	QTextCharFormat  charFormat = ACursor.blockCharFormat();
-	QTextBlockFormat format = ACursor.blockFormat();
-	int header=XmlTextDocumentParser::header(charFormat);
-	if (header)
-		return header;
-	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines) && charFormat.boolProperty(QTextFormat::FontFixedPitch))
-		return FMT_PREFORMAT;
-	return FMT_NORMAL;
-}
+//int EditHtml::checkBlockFormat(const QTextCursor &ACursor)
+//{
+//	QTextCharFormat  charFormat = ACursor.blockCharFormat();
+//	QTextBlockFormat format = ACursor.blockFormat();
+//	int header=XmlTextDocumentParser::header(charFormat);
+//	if (header)
+//		return header;
+//	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines) && charFormat.boolProperty(QTextFormat::FontFixedPitch))
+//		return FMT_PREFORMAT;
+//	return FMT_NORMAL;
+//}
 
-void EditHtml::clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties)
-{
-	QTextCursor cursor(ATextBlock);
-	for (QTextBlock::iterator it=ATextBlock.begin(); it!=ATextBlock.end(); it++)
-	{
-		QTextFragment fragment=it.fragment();
-		// Select fragment
-		cursor.setPosition(fragment.position());
-		cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
-		QTextCharFormat charFormat=fragment.charFormat();
-		for (QSet<QTextFormat::Property>::const_iterator it=AProperties.begin(); it!=AProperties.end(); it++)
-			charFormat.clearProperty(*it);
-		cursor.setCharFormat(charFormat);
-	}
-}
+//void EditHtml::clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties)
+//{
+//	QTextCursor cursor(ATextBlock);
+//	for (QTextBlock::iterator it=ATextBlock.begin(); it!=ATextBlock.end(); it++)
+//	{
+//		QTextFragment fragment=it.fragment();
+//		// Select fragment
+//		cursor.setPosition(fragment.position());
+//		cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
+//		QTextCharFormat charFormat=fragment.charFormat();
+//		for (QSet<QTextFormat::Property>::const_iterator it=AProperties.begin(); it!=AProperties.end(); it++)
+//			charFormat.clearProperty(*it);
+//		cursor.setCharFormat(charFormat);
+//	}
+//}
 
 QTextFragment EditHtml::getTextFragment(const QTextCursor &ACursor)
 {
@@ -1021,7 +1021,7 @@ void EditHtml::onSetFormat()
 		FActionLastFormat=ac;
 	int formatType = ac->data(ADR_FORMATTING_TYPE).toInt();
 	QTextCursor cursor = FTextEdit->textCursor();
-	int currentFormatType=checkBlockFormat(cursor);
+	int currentFormatType=XhtmlIm::checkBlockFormat(cursor);
 
 	cursor.beginEditBlock();
 	QTextCharFormat blockCharFormat;
@@ -1065,7 +1065,7 @@ void EditHtml::onSetFormat()
 		QSet<QTextFormat::Property> properties;
 		properties.insert(QTextFormat::FontSizeAdjustment);
 		properties.insert(QTextFormat::FontWeight);
-		clearBlockProperties(cursor.block(), properties);
+		XhtmlIm::clearBlockProperties(cursor.block(), properties);
 	}
 	cursor.setBlockCharFormat(blockCharFormat);
 	cursor.setBlockFormat(blockFormat);
@@ -1379,7 +1379,7 @@ void EditHtml::updateCurrentBlock(const QTextCursor &ACursor)
 		FMenuFormat->setEnabled(true);
 		QTextBlockFormat blockFormat=ACursor.blockFormat();
 
-		int format=checkBlockFormat(ACursor);
+		int format=XhtmlIm::checkBlockFormat(ACursor);
 		if (format)
 		{
 			FMenuList->setEnabled(false);
