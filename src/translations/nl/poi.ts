@@ -550,7 +550,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="81"/>
    <source>Fiji</source>
-   <translation type="unfinished"/>
+   <translation>Fiji</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="82"/>
@@ -641,7 +641,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="99"/>
    <source>Guatemala</source>
-   <translation type="unfinished"/>
+   <translation>Guatemala</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="101"/>
@@ -816,7 +816,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="135"/>
    <source>Liechtenstein</source>
-   <translation type="unfinished"/>
+   <translation>Liechtenstein</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="136"/>
@@ -931,7 +931,7 @@
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="158"/>
    <source>Mozambique</source>
-   <translation type="unfinished"/>
+   <translation>Mozambique</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="159"/>

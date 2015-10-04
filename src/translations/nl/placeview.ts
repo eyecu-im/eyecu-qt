@@ -454,7 +454,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="702"/>
    <source>General contractor</source>
-   <translation type="unfinished"/>
+   <translation>Hoofdaannemer</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="703"/>
@@ -529,7 +529,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="717"/>
    <source>Localgovernment office</source>
-   <translation type="unfinished"/>
+   <translation>Lokaal bestuur bureau</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="718"/>
@@ -569,7 +569,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="725"/>
    <source>Moving company</source>
-   <translation type="unfinished"/>
+   <translation>Verhuisbedrijf</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="726"/>
