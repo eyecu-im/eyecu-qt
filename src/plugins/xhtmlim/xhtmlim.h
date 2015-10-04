@@ -85,8 +85,6 @@ protected:
 	void updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow);
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
-	void updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger);
-
 
 	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true);
 	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);

@@ -215,33 +215,6 @@ void XhtmlIm::registerDiscoFeatures()
 	FDiscovery->insertDiscoFeature(dfeature);
 }
 
-void XhtmlIm::updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger)
-{
-	QList<QAction *> actions = AToolBarChanger->groupItems(TBG_MWTBW_RICHTEXT_EDITOR);
-	QAction *action = actions.isEmpty()?NULL:actions.first();
-	if (ASupported)
-	{
-		if (!action)
-		{
-			Action *action = new Action();
-			action->setText(tr("Show rich text editor toolbar"));
-			action->setIcon(FIconStorage->getIcon(XHI_FORMAT));
-			action->setCheckable(true);
-			action->setChecked(AEnabled);
-			AToolBarChanger->insertAction(action, TBG_MWTBW_RICHTEXT_EDITOR);
-			connect(action, SIGNAL(toggled(bool)), SLOT(onRichTextEditorToggled(bool)));
-		}
-	}
-	else
-	{
-		if (action)
-		{
-			AToolBarChanger->removeItem(action);
-			action->deleteLater();
-		}
-	}
-}
-
 bool XhtmlIm::initSettings()
 {
 	QString pictures;
@@ -275,6 +248,7 @@ bool XhtmlIm::initSettings()
 	Options::setDefaultValue(OPV_XHTML_TABINDENT, true);
 	Options::setDefaultValue(OPV_XHTML_NORICHTEXT, true);
 	Options::setDefaultValue(OPV_XHTML_EDITORTOOLBAR, true);
+	Options::setDefaultValue(OPV_XHTML_EDITORMENU, true);
 	Options::setDefaultValue(OPV_XHTML_FORMATAUTORESET, true);
 	Options::setDefaultValue(OPV_XHTML_IMAGESAVEDIRECTORY, pictures);
 	Options::setDefaultValue(OPV_XHTML_IMAGEOPENDIRECTORY, pictures);
@@ -297,6 +271,8 @@ QMultiMap<int, IOptionsDialogWidget *> XhtmlIm::optionsDialogWidgets(const QStri
 		widgets.insertMulti(OWO_XHTML_TABINDENT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_TABINDENT), tr("Use indentation instead of tabulation at the beginning of the paragraph"), AParent));
 		widgets.insertMulti(OWO_XHTML_NORICHTEXT, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_NORICHTEXT), tr("Do not send rich text without formatting"), AParent));
 		widgets.insertMulti(OWO_XHTML_EDITORTOOLBAR, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_EDITORTOOLBAR), tr("Show rich text editor toolbar"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_XHTML_EDITORMENU, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_XHTML_EDITORMENU), tr("Allow rich text edit pop-up menu"), AParent));
 		if (FBitsOfBinary)
 		{
 			widgets.insertMulti(OHO_XHTML_BOB, FOptionsManager->newOptionsDialogHeader(tr("Bits of binary"), AParent));
@@ -325,7 +301,6 @@ void XhtmlIm::addRichTextEditToolbar(SplitterWidget *ASplitterWidget, int AOrder
 void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *AChatWindow)
 {
 	bool supported = isSupported(AChatWindow->address());
-	updateToolbar(supported, ARichTextEditor, AChatWindow->toolBarWidget()->toolBarChanger());
 	QWidget *xhtmlEdit = AChatWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
 	if(ARichTextEditor && supported)
 	{
@@ -343,7 +318,6 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow)
 {
 	bool supported = isSupported(ANormalWindow->address());
-	updateToolbar(supported, ARichTextEditor, ANormalWindow->toolBarWidget()->toolBarChanger());
 	QWidget *xhtmlEdit = ANormalWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
 	if(ARichTextEditor && supported)
 	{
@@ -416,7 +390,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 	FCurrentMessageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
 	if (FCurrentMessageEditWidget)
 	{
-		if (FCurrentMessageEditWidget->isRichTextEnabled())
+		if (Options::node(OPV_XHTML_EDITORMENU).value().toBool())
 		{
 			bool chatWindow(qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance()));
 			QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->cursorForPosition(APosition);
@@ -916,7 +890,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 				menu->addAction(formatAutoReset, AG_XHTMLIM_SPECIAL);
 			}
 
-//			menu->setEnabled(!menu->isEmpty());
+			menu->setEnabled(FCurrentMessageEditWidget->isRichTextEnabled());
 		}
 	}
 }

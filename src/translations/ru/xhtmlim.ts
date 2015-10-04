@@ -4,10 +4,6 @@
   <context>
     <name>AddLink</name>
     <message>
-      <source>New link</source>
-      <translation>Новая ссылка</translation>
-    </message>
-    <message>
       <source>Description</source>
       <translation>Описание</translation>
     </message>
@@ -43,6 +39,10 @@
       <source>Native</source>
       <translation>Родной</translation>
     </message>
+    <message>
+      <source>Insert link</source>
+      <translation>Вставить ссылку</translation>
+    </message>
   </context>
   <context>
     <name>EditHtml</name>
@@ -53,10 +53,6 @@
     <message>
       <source>List</source>
       <translation>Список</translation>
-    </message>
-    <message>
-      <source>Keep formatting within chat session</source>
-      <translation>Сохранять форматирование в течение сеанса чата</translation>
     </message>
     <message>
       <source>Insert link</source>
@@ -145,10 +141,6 @@
     <message>
       <source>Roman upper</source>
       <translation>Заглавные римские</translation>
-    </message>
-    <message>
-      <source>Add link</source>
-      <translation>Добавить ссылку</translation>
     </message>
     <message>
       <source>Remove format</source>
@@ -686,17 +678,141 @@
       <translation>Бинарные данные</translation>
     </message>
     <message>
-      <source>Toggle remove formatting on message send</source>
-      <translation>Включить/выключить убирание форматирования при отправке сообщения</translation>
+      <source>Show rich text editor toolbar</source>
+      <translation>Показывать тулбар форматирования текста</translation>
+    </message>
+    <message>
+      <source>Toggle reset formatting on message send</source>
+      <translation>Включить/выключить сброс форматирования при отправке сообщения</translation>
     </message>
     <message>
       <source>Alt+A</source>
-      <comment>Toggle remove formatting on message send</comment>
+      <comment>Toggle reset formatting on message send</comment>
       <translation>Alt+A</translation>
     </message>
     <message>
-      <source>Show rich text editor toolbar</source>
-      <translation>Показывать тулбар форматирования текста</translation>
+      <source>Allow rich text edit pop-up menu</source>
+      <translation>Разрешить всплывающее меню форматированного текста в редакторе</translation>
+    </message>
+    <message>
+      <source>Text format</source>
+      <translation>Формат текста</translation>
+    </message>
+    <message>
+      <source>Overline</source>
+      <translation>Надчёркивание</translation>
+    </message>
+    <message>
+      <source>Strikethrough</source>
+      <translation>Вычёркивание</translation>
+    </message>
+    <message>
+      <source>Color</source>
+      <translation>Цвет</translation>
+    </message>
+    <message>
+      <source>Foreground</source>
+      <translation>Изображение</translation>
+    </message>
+    <message>
+      <source>Background</source>
+      <translation>Фон</translation>
+    </message>
+    <message>
+      <source>Insert special symbol</source>
+      <translation>Вставить специальный символ</translation>
+    </message>
+    <message>
+      <source>Non-breaking space</source>
+      <translation>Неразрывный пробел</translation>
+    </message>
+    <message>
+      <source>New line</source>
+      <translation>Новая строка</translation>
+    </message>
+    <message>
+      <source>Text align</source>
+      <translation>Центровка текста</translation>
+    </message>
+    <message>
+      <source>List</source>
+      <translation>Список</translation>
+    </message>
+    <message>
+      <source>Disc</source>
+      <translation>Диск</translation>
+    </message>
+    <message>
+      <source>Circle</source>
+      <translation>Окружность</translation>
+    </message>
+    <message>
+      <source>Square</source>
+      <translation>Квадрат</translation>
+    </message>
+    <message>
+      <source>Decimal</source>
+      <translation>Десятичное число</translation>
+    </message>
+    <message>
+      <source>Alpha lower</source>
+      <translation>Строчные буквы</translation>
+    </message>
+    <message>
+      <source>Alpha upper</source>
+      <translation>Заглавные буквы</translation>
+    </message>
+    <message>
+      <source>Roman lower</source>
+      <translation>Строчные рисмкие</translation>
+    </message>
+    <message>
+      <source>Roman upper</source>
+      <translation>Заглавные римские</translation>
+    </message>
+    <message>
+      <source>Definition list</source>
+      <translation>Список определений</translation>
+    </message>
+    <message>
+      <source>Formatting type</source>
+      <translation>Тип форматирования</translation>
+    </message>
+    <message>
+      <source>Preformatted text</source>
+      <translation>Предварительно отформатированный текст</translation>
+    </message>
+    <message>
+      <source>Heading 1</source>
+      <translation>Заголовок 1</translation>
+    </message>
+    <message>
+      <source>Heading 2</source>
+      <translation>Заголовок 2</translation>
+    </message>
+    <message>
+      <source>Heading 3</source>
+      <translation>Заголовок 3</translation>
+    </message>
+    <message>
+      <source>Heading 4</source>
+      <translation>Заголовок 4</translation>
+    </message>
+    <message>
+      <source>Heading 5</source>
+      <translation>Заголовок 5</translation>
+    </message>
+    <message>
+      <source>Heading 6</source>
+      <translation>Заголовок 6</translation>
+    </message>
+    <message>
+      <source>Remove format</source>
+      <translation>Убрать форматирование</translation>
+    </message>
+    <message>
+      <source>Reset formatting on message send</source>
+      <translation>Сбрасывать форматирование при отправке сообщения</translation>
     </message>
   </context>
   <context>
