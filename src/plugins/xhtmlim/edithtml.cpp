@@ -150,8 +150,8 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 	//  Striketrough
 	FActionTextStrikeout=new Action(this);
-	FActionTextStrikeout->setIcon(QIcon::fromTheme("format-text-strikethrough",FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
-	FActionTextStrikeout->setText(tr("Strikethrough"));
+	FActionTextStrikeout->setIcon(QIcon::fromTheme("format-text-strikeout",FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
+	FActionTextStrikeout->setText(tr("Strikeout"));
 	FActionTextStrikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
 	FActionTextStrikeout->setPriority(QAction::LowPriority);
 	connect(FActionTextStrikeout, SIGNAL(triggered()), SLOT(onTextStrikeout()));

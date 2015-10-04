@@ -72,11 +72,7 @@
     </message>
     <message>
       <source>Underline</source>
-      <translation>Подчёркивание</translation>
-    </message>
-    <message>
-      <source>Strikethrough</source>
-      <translation>Вычёркивание</translation>
+      <translation>Подчёркнутый</translation>
     </message>
     <message>
       <source>Color</source>
@@ -188,7 +184,7 @@
     </message>
     <message>
       <source>Overline</source>
-      <translation>Надчёркивание</translation>
+      <translation>Надчёркнутый</translation>
     </message>
     <message>
       <source>Insert special symbol</source>
@@ -205,6 +201,10 @@
     <message>
       <source>Code</source>
       <translation>Код</translation>
+    </message>
+    <message>
+      <source>Strikeout</source>
+      <translation>Перечёркнутый</translation>
     </message>
   </context>
   <context>
@@ -431,7 +431,7 @@
     </message>
     <message>
       <source>Underline</source>
-      <translation>Подчёркнутый</translation>
+      <translation>Подчёркивание</translation>
     </message>
     <message>
       <source>Ctrl+U</source>
@@ -440,7 +440,7 @@
     </message>
     <message>
       <source>Strikeout</source>
-      <translation>Перечёркнутый</translation>
+      <translation>Перечёркивание</translation>
     </message>
     <message>
       <source>Ctrl+S</source>
@@ -703,10 +703,6 @@
       <translation>Надчёркивание</translation>
     </message>
     <message>
-      <source>Strikethrough</source>
-      <translation>Вычёркивание</translation>
-    </message>
-    <message>
       <source>Color</source>
       <translation>Цвет</translation>
     </message>
@@ -813,6 +809,15 @@
     <message>
       <source>Reset formatting on message send</source>
       <translation>Сбрасывать форматирование при отправке сообщения</translation>
+    </message>
+    <message>
+      <source>Ctrl+Y</source>
+      <comment>Overline</comment>
+      <translation>Ctrl+Y</translation>
+    </message>
+    <message>
+      <source>Style</source>
+      <translation>Стиль</translation>
     </message>
   </context>
   <context>

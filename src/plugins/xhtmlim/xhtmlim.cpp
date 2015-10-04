@@ -57,9 +57,11 @@
 #define ADR_LIST_TYPE       Action::DR_Parametr1
 #define ADR_FORMATTING_TYPE Action::DR_Parametr1
 
-#define DT_UNDERLINE 1
-#define DT_OVERLINE	 2
-#define DT_STRIKEOUT 3
+#define DT_BOLD      1
+#define DT_ITALIC    2
+#define DT_UNDERLINE 3
+#define DT_OVERLINE	 4
+#define DT_STRIKEOUT 5
 
 #define CT_FOREGROUND 0
 #define CT_BACKGROUND 1
@@ -160,6 +162,7 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, tr("Bold"), tr("Ctrl+B", "Bold"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, tr("Italic"), tr("Ctrl+I", "Italic"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, tr("Underline"), tr("Ctrl+U", "Underline"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, tr("Overline"), tr("Ctrl+Y", "Overline"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, tr("Strikeout"), tr("Ctrl+S", "Strikeout"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, tr("Code"), tr("Alt+C", "Code"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, tr("Font"), tr("Ctrl+F", "Font"), Shortcuts::WindowShortcut);
@@ -409,11 +412,39 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			font->setText(tr("Font"));
 			font->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			font->setPriority(QAction::LowPriority);
-			connect(font, SIGNAL(triggered()), this, SLOT(onSelectFont()));
+			connect(font, SIGNAL(triggered(bool)), this, SLOT(onSelectFont()));
 			font->setCheckable(false);
 			menu->addAction(font, AG_XHTMLIM_FONT);
 
-			Action *underline=new Action(menu);
+
+			// *** Style submenu ***
+			Menu *style = new Menu(menu);
+			style->setTitle(tr("Style"));
+			style->setIcon(QIcon::fromTheme("format-text-style",FIconStorage->getIcon(XHI_TEXT_STYLE)));
+
+			//  Bold
+			Action *bold = new Action(style);
+			bold->setIcon(QIcon::fromTheme("format-text-bold",FIconStorage->getIcon(XHI_TEXT_BOLD)));
+			bold->setText(tr("Bold"));
+			bold->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD);
+			bold->setData(ADR_DECORATION_TYPE, DT_BOLD);
+			bold->setCheckable(true);
+			bold->setChecked(charFormat.fontWeight()>QFont::DemiBold);
+			connect(bold, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
+			style->addAction(bold, AG_XHTMLIM_FONT);
+
+			//  Italic
+			Action *italic = new Action(style);
+			italic->setIcon(QIcon::fromTheme("format-text-italic",FIconStorage->getIcon(XHI_TEXT_ITALIC)));
+			italic->setText(tr("Italic"));
+			italic->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC);
+			italic->setData(ADR_DECORATION_TYPE, DT_ITALIC);
+			connect(italic, SIGNAL(triggered()), SLOT(onSelectDecoration(bool)));
+			italic->setCheckable(true);
+			italic->setChecked(charFormat.fontItalic());
+			style->addAction(italic, AG_XHTMLIM_FONT);
+
+			Action *underline=new Action(style);
 			underline->setIcon(QIcon::fromTheme("format-text-underline", FIconStorage->getIcon(XHI_TEXT_UNDERLINE)));
 			underline->setText(tr("Underline"));
 			underline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE);
@@ -421,9 +452,9 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(underline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			underline->setCheckable(true);
 			underline->setChecked(charFormat.fontUnderline());
-			menu->addAction(underline, AG_XHTMLIM_FONT);
+			style->addAction(underline, AG_XHTMLIM_FONT);
 
-			Action *overline=new Action(menu);
+			Action *overline=new Action(style);
 			overline->setIcon(QIcon::fromTheme("format-text-overline", FIconStorage->getIcon(XHI_TEXT_OVERLINE)));
 			overline->setText(tr("Overline"));
 			overline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE);
@@ -431,17 +462,19 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(overline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			overline->setCheckable(true);
 			overline->setChecked(charFormat.fontOverline());
-			menu->addAction(overline, AG_XHTMLIM_FONT);
+			style->addAction(overline, AG_XHTMLIM_FONT);
 
-			Action *strikeout=new Action(menu);
-			strikeout->setIcon(QIcon::fromTheme("format-text-strikethrough", FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
-			strikeout->setText(tr("Strikethrough"));
+			Action *strikeout=new Action(style);
+			strikeout->setIcon(QIcon::fromTheme("format-text-strikeout", FIconStorage->getIcon(XHI_TEXT_STRIKEOUT)));
+			strikeout->setText(tr("Strikeout"));
 			strikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
 			strikeout->setData(ADR_DECORATION_TYPE, DT_STRIKEOUT);
 			connect(strikeout, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			strikeout->setCheckable(true);
 			strikeout->setChecked(charFormat.fontStrikeOut());
-			menu->addAction(strikeout, AG_XHTMLIM_FONT);
+			style->addAction(strikeout, AG_XHTMLIM_FONT);
+
+			menu->addAction(style->menuAction(), AG_XHTMLIM_FONT);
 
 			//  Code
 			Action *code=new Action(menu);
@@ -925,6 +958,12 @@ void XhtmlIm::onSelectDecoration(bool ASelected)
 	QTextCharFormat charFormat = cursor.charFormat();
 	switch (action->data(ADR_DECORATION_TYPE).toInt())
 	{
+		case DT_BOLD:
+			charFormat.setFontWeight(ASelected?QFont::Bold:QFont::Normal);
+			break;
+		case DT_ITALIC:
+			charFormat.setFontItalic(ASelected);
+			break;
 		case DT_OVERLINE:
 			charFormat.setFontOverline(ASelected);
 			break;
