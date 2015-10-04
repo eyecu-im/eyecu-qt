@@ -4,6 +4,7 @@
 #include <QFontComboBox>
 #include <QTextFragment>
 #include <ColorToolButton>
+#include <QNetworkAccessManager>
 
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/ibitsofbinary.h>
@@ -12,19 +13,17 @@
 
 #include <utils/options.h>
 
-#include "insertimage.h"
-#include "addlink.h"
-
 class XhtmlIm;
 
-class EditHtml :
-    public QToolBar
+class EditHtml: public QToolBar
 {
     Q_OBJECT
 public:
 	EditHtml(IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset, IBitsOfBinary *BOB, QNetworkAccessManager *ANetworkAccessManager, XhtmlIm *AXhtmlIm, QWidget *parent=NULL);
+	ToolBarChanger *changer() const {return FToolBarChanger;}
 
 private:
+	ToolBarChanger		*FToolBarChanger;
 	IMessageEditWidget	*FEditWidget;
 	QTextEdit			*FTextEdit;
 	IconStorage			*FIconStorage;
@@ -32,11 +31,11 @@ private:
 	XhtmlIm				*FXhtmlIm;
 
 private:
-    QFontComboBox *FCmbFont;
-    QComboBox     *FCmbSize;
+	QFontComboBox		*FCmbFont;
+	QComboBox			*FCmbFontSize;
 
 	Action  *FActionAutoRemoveFormat,
-            *FActionRemoveFormat,
+			*FActionRemoveFormat,
             *FActionInsertImage,
             *FActionInsertLink,
             *FActionInsertNewline,
@@ -50,8 +49,6 @@ private:
             *FActionTextCode,
             *FActionIndentMore,
             *FActionIndentLess;
-
-    Menu    *FMenuSpecial;
 
     Menu    *FMenuAlign;
     Action  *FActionLastAlign;
@@ -88,8 +85,8 @@ protected:
     void updateCurrentList(const QTextCursor &ACursor);
     void updateCurrentBlock(const QTextCursor &ACursor);
 
-    static int  checkBlockFormat(const QTextCursor &ACursor);
-    static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
+//    static int  checkBlockFormat(const QTextCursor &ACursor);
+//    static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
     static QTextFragment getTextFragment(const QTextCursor &ACursor);
     static void selectTextFragment(QTextCursor &ACursor);
 
@@ -121,6 +118,9 @@ protected slots:
 
     void onShortcutActivated(const QString &AId, QWidget *AWidget);
     void onMessageSent();
+
+protected slots:
+	void onOptionsChanged(const OptionsNode &ANode);
 };
 
 #endif // EDITHTML_H

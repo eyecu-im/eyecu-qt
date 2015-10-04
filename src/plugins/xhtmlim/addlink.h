@@ -21,7 +21,7 @@ public:
         Remove
     };
 
-    explicit AddLink(const QString &ATitle, const QIcon &AIcon, const QUrl &AHref, const QString &ADescription, QWidget *parent = 0);
+	AddLink(const QIcon &AIcon, const QUrl &AHref, const QString &ADescription, QWidget *parent = 0);
     ~AddLink();
 
     const QString &description() const {return FDescription;}

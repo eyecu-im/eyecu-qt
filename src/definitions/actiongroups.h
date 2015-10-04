@@ -144,10 +144,16 @@
 #define AG_CLIENTICONS                                          1050
 
 //XHTML-IM
+#define AG_XHTMLIM_FONT                                         500
+#define AG_XHTMLIM_INSERT                                       600
+#define AG_XHTMLIM_INDENT                                       700
+#define AG_XHTMLIM_PARAGRAPH                                    800
+#define AG_XHTMLIM_SPECIAL                                      900
 #define AG_XHTMLIM_LIST                                         500
 #define AG_XHTMLIM_DEFLIST                                      600
 #define AG_XHTMLIM_ALIGN                                        500
 #define AG_XHTMLIM_FORMAT                                       500
 #define AG_XHTMLIM_FORMATHEADING                                600
+#define AG_XHTMLIM_FORMATTING                                   1000
 // >>> eyeCU >>>
 #endif //DEF_ACTIONGROUPS_H

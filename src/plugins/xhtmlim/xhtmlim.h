@@ -1,6 +1,8 @@
 #ifndef XHTMLIM_H
 #define XHTMLIM_H
 
+#include <QNetworkAccessManager>
+
 #include <interfaces/ixhtmlim.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
@@ -49,7 +51,9 @@ public:
     XhtmlIm();
     ~XhtmlIm();
 
-	void updateUnitsComboBox(QComboBox *AComboBox, int AValue);
+	static void updateUnitsComboBox(QComboBox *AComboBox, int AValue);
+	static int checkBlockFormat(const QTextCursor &ACursor);
+	static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
 
     //IPlugin
     QObject *instance() { return this; }
@@ -81,8 +85,10 @@ protected:
 	void updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow);
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
-	void updateToolbar(bool ASupported, bool AEnabled, ToolBarChanger *AToolBarChanger);
 
+	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true);
+	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);
+	void clearFormatOnWordOrSelection();
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
 	void onImageCopy();
@@ -94,6 +100,23 @@ protected slots:
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onRichTextEditorToggled(bool AChecked);
+	void onEditWidgetCreated(IMessageEditWidget *AWidget);
+	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
+
+	void onResetFormat(bool AStatus);
+	void onRemoveFormat();
+	void onSelectFont();
+	void onSelectDecoration(bool ASelected);
+	void onInsertLink();
+	void onInsertImage();
+	void onSetToolTip();
+	void onInsertSpecial();
+	void onTextCode(bool AChecked);
+	void onColor();
+	void onIndentChange();
+	void onTextAlign();
+	void onInsertList();
+	void onSetFormat();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -107,6 +130,8 @@ private:
     QNetworkAccessManager*  FNetworkAccessManager;
     IconStorage*            FIconStorage;
     QStringList             FValidSchemes;
+	IMessageEditWidget		*FCurrentMessageEditWidget;
+	int						FCurrentCursorPosition;
 };
 
 #endif // XHTMLIM_H

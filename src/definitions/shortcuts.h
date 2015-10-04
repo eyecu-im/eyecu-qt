@@ -116,7 +116,7 @@
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT                     "message-windows.xhtml-im.align-left"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY                  "message-windows.xhtml-im.align-justify"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE                  "message-windows.xhtml-im.format-remove"
-#define   SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTOREMOVE              "message-windows.xhtml-im.format-auto-remove"
+#define   SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET               "message-windows.xhtml-im.format-auto-reset"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE                "message-windows.xhtml-im.indent-increase"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE                "message-windows.xhtml-im.indent-decrease"
 

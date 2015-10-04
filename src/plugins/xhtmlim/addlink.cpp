@@ -3,14 +3,14 @@
 #include <definitions/shortcuts.h>
 #include "addlink.h"
 
-AddLink::AddLink(const QString &ATitle, const QIcon &AIcon, const QUrl &AHref, const QString &ADescription, QWidget *parent) :
+AddLink::AddLink(const QIcon &AIcon, const QUrl &AHref, const QString &ADescription, QWidget *parent) :
     QDialog(parent),
     FSchemeMasks(QStringList() << "http" << "https" << "ftp" << "xmpp" << "mail" << "tel" << "native"),
     FOriginalHref(AHref),
     FOriginalDescription(ADescription),
     ui(new Ui::AddLink)
 {
-    setWindowTitle(ATitle);
+//    setWindowTitle(ATitle);
     setWindowIcon(AIcon);
     ui->setupUi(this);
 
