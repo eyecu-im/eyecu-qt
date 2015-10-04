@@ -1308,8 +1308,11 @@ void RecentContacts::onPrivateStorageDataChanged(const Jid &AStreamJid, const QS
 
 void RecentContacts::onPrivateStorageNotifyAboutToClose(const Jid &AStreamJid)
 {
-	saveItemsToStorage(AStreamJid);
-	FSaveStreams -= AStreamJid;
+	if (isReady(AStreamJid))
+	{
+		saveItemsToStorage(AStreamJid);
+		FSaveStreams -= AStreamJid;
+	}
 }
 
 void RecentContacts::onPrivateStorageClosed(const Jid &AStreamJid)
