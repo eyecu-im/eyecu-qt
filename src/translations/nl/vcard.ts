@@ -314,7 +314,7 @@
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="76"/>
    <source>Allows to obtain personal contact information</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om persoonlijk contact informatie te verkrijgen</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcardmanager.cpp" line="187"/>

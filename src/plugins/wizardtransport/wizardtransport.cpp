@@ -97,7 +97,7 @@ void WizardTransport::onRosterIndexContextMenu(const QList<IRosterIndex *> &AInd
 		{
 			Action *action = new Action(AMenu);
 			action->setData(ADR_STREAM_JID, streams.first());
-			action->setText(tr("Trasport Wizard"));
+			action->setText(tr("Transport Wizard"));
 			action->setIcon(RSR_STORAGE_SERVICEICONS, SRI_GATEWAY);
 			connect(action, SIGNAL(triggered()), SLOT(onTransportWizard()));
 			AMenu->addAction(action, AG_RVCM_GATEWAYS_CHANGE_TRANSPORT, true);

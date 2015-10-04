@@ -581,7 +581,7 @@ If you receive such message, please rerun the Wizard to register at transport wi
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="100"/>
-   <source>Trasport Wizard</source>
+   <source>Transport Wizard</source>
    <translation type="unfinished"/>
   </message>
   <message>

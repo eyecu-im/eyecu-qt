@@ -287,7 +287,8 @@ Wil je dat %1 wordt geherstart?</translation>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="863"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
-   <translation type="unfinished"/>
+   <translation>Je kan altijd de optie veranderen op
+&lt;b&gt;Algemene&lt;/b&gt; pagina. </translation>
   </message>
  </context>
 </TS>

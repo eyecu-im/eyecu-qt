@@ -441,7 +441,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/settooltip.ui" line="56"/>
    <source>Abbreviation</source>
-   <translation type="unfinished"/>
+   <translation>Afkortingen</translation>
   </message>
  </context>
  <context>
@@ -665,7 +665,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="138"/>
    <source>Alt+A</source>
    <comment>Toggle remove formatting on message send</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+A</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="139"/>
@@ -724,7 +724,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="192"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="263"/>
    <source>Show rich text editor toolbar</source>
-   <translation type="unfinished"/>
+   <translation>Toon tekstveld met opmaak (Rich Text) werkbalk</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="248"/>
@@ -739,7 +739,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="261"/>
    <source>Use indentation instead of tabulation at the beginning of the paragraph</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik inspringen in plaats van de tab aan het begin van de paragraaf</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="262"/>
@@ -827,7 +827,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="137"/>
    <source>Maximum embedded data size </source>
-   <translation type="unfinished"/>
+   <translation>Maximale ingesloten grootte van gegevens</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmloptions.ui" line="217"/>

@@ -62,7 +62,8 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie parameters zijn niet geaccepteerd
+Check de waarden en probeer opnieuw </translation>
   </message>
  </context>
  <context>
@@ -347,7 +348,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="448"/>
    <source>Allow Occupants to Change Subject?</source>
-   <translation type="unfinished"/>
+   <translation>Inzittenden toestaan om onderwerp te veranderen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="449"/>
@@ -372,7 +373,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="453"/>
    <source>Maximum Number of Room Occupants</source>
-   <translation type="unfinished"/>
+   <translation>Maximale aantal inzittenden van een kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="454"/>
@@ -473,7 +474,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="476"/>
    <source>Allow Occupants to Change Nicknames?</source>
-   <translation type="unfinished"/>
+   <translation>Bewoners toestaan om bijnamen te veranderen?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="477"/>
@@ -864,7 +865,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="858"/>
    <source>&lt;b&gt;Status:&lt;/b&gt; %1</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;Status:&lt;/b&gt; %1</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="965"/>
