@@ -7,6 +7,10 @@
   <home>www.eyecu.ru</home>
   <author>Yagiza</author>
   <icon>
+    <text>&#x0023;&#x20E3;</text>
+    <object mime="image/png">002320E3_2x.png</object>
+  </icon>
+  <icon>
     <text>&#x0030;&#x20E3;</text>
     <object mime="image/png">003020E3_2x.png</object>
   </icon>
@@ -545,6 +549,14 @@
   <icon>
     <text>&#xD83C;&#xDDFF;&#xD83C;&#xDDE6;</text>
     <object mime="image/png">D83CDDFFD83CDDE6_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDDEE;&#xD83C;&#xDDF1;</text>
+    <object mime="image/png">D83CDDEED83CDDF1_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDDF9;&#xD83C;&#xDDF7;</text>
+    <object mime="image/png">D83CDDF9D83CDDF7_2x.png</object>
   </icon>
   <icon>
     <text>&#xD83C;&#xDE01;</text>
