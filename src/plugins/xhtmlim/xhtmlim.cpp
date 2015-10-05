@@ -439,7 +439,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			italic->setText(tr("Italic"));
 			italic->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC);
 			italic->setData(ADR_DECORATION_TYPE, DT_ITALIC);
-			connect(italic, SIGNAL(triggered()), SLOT(onSelectDecoration(bool)));
+			connect(italic, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 			italic->setCheckable(true);
 			italic->setChecked(charFormat.fontItalic());
 			style->addAction(italic, AG_XHTMLIM_FONT);
