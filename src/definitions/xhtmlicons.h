@@ -9,6 +9,13 @@
 #define XHI_TEXT_COLOR            "textColor"
 #define XHI_TEXT_FONT             "textFont"
 #define XHI_TEXT_STYLE            "textStyle"
+
+#define XHI_CAPS_MIXED            "capsMixed"
+#define XHI_CAPS_SMALLCAPS        "capsSmallCaps"
+#define XHI_CAPS_CAPITALIZE       "capsCapitalize"
+#define XHI_CAPS_ALLUPPER         "capsAllUpper"
+#define XHI_CAPS_ALLLOWER         "capsAllLower"
+
 #define XHI_ALIGN_LEFT            "alignLeft"
 #define XHI_ALIGN_CENTER          "alignCenter"
 #define XHI_ALIGN_RIGHT           "alignRight"

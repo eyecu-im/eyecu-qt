@@ -8,6 +8,12 @@
   <icon><key>textColor</key><object mime="image/png">textcolor.png</object></icon>
   <icon><key>textFont</key><object mime="image/png">textfont.png</object></icon>
   <icon><key>textStyle</key><object mime="image/png">textstyle.png</object></icon>
+  
+<icon><key>capsAllLower</key><object mime="image/png">capsalllower.png</object></icon>  
+<icon><key>capsAllUpper</key><object mime="image/png">capsallupper.png</object></icon>  
+<icon><key>capsCapitalize</key><object mime="image/png">capscapitalize.png</object></icon>  
+<icon><key>capsMixed</key><object mime="image/png">capsmixed.png</object></icon>  
+<icon><key>capsSmallCaps</key><object mime="image/png">capssmallcaps.png</object></icon>  
 
   <icon><key>alignLeft</key><object mime="image/png">alignleft.png</object></icon>
   <icon><key>alignRight</key><object mime="image/png">alignright.png</object></icon>

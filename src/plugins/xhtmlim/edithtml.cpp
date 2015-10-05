@@ -26,10 +26,17 @@
 #include "addlink.h"
 #include "settooltip.h"
 
+#define ADR_DECORATION_TYPE Action::DR_Parametr1
 #define ADR_ALIGN_TYPE      Action::DR_Parametr1
 #define ADR_LIST_TYPE       Action::DR_Parametr1
 #define ADR_FORMATTING_TYPE Action::DR_Parametr1
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
+
+#define DT_BOLD      1
+#define DT_ITALIC    2
+#define DT_UNDERLINE 3
+#define DT_OVERLINE	 4
+#define DT_STRIKEOUT 5
 
 #define FMT_NORMAL          0
 #define FMT_HEADING1        1
@@ -102,11 +109,9 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextBold->setText(tr("Bold"));
 	FActionTextBold->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD);
 	FActionTextBold->setPriority(QAction::LowPriority);
-	QFont bold;
-	bold.setBold(true);
-	FActionTextBold->setFont(bold);
+	FActionTextBold->setData(ADR_DECORATION_TYPE, DT_BOLD);
 	FActionTextBold->setCheckable(true);
-	connect(FActionTextBold, SIGNAL(triggered()), SLOT(onTextBold()));
+	connect(FActionTextBold, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FToolBarChanger->insertAction(FActionTextBold, AG_XHTMLIM_FONT);
 
 	//  Italic
@@ -115,10 +120,8 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextItalic->setText(tr("Italic"));
 	FActionTextItalic->setPriority(QAction::LowPriority);
 	FActionTextItalic->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC);
-	QFont italic;
-	italic.setItalic(true);
-	FActionTextItalic->setFont(italic);
-	connect(FActionTextItalic, SIGNAL(triggered()), SLOT(onTextItalic()));
+	FActionTextItalic->setData(ADR_DECORATION_TYPE, DT_ITALIC);
+	connect(FActionTextItalic, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FActionTextItalic->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextItalic, AG_XHTMLIM_FONT);
 
@@ -128,10 +131,8 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextUnderline->setText(tr("Underline"));
 	FActionTextUnderline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE);
 	FActionTextUnderline->setPriority(QAction::LowPriority);
-	QFont underline;
-	underline.setUnderline(true);
-	FActionTextUnderline->setFont(underline);
-	connect(FActionTextUnderline, SIGNAL(triggered()), SLOT(onTextUnderline()));
+	FActionTextUnderline->setData(ADR_DECORATION_TYPE, DT_UNDERLINE);
+	connect(FActionTextUnderline, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FActionTextUnderline->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextUnderline, AG_XHTMLIM_FONT);
 
@@ -141,10 +142,8 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextOverline->setText(tr("Overline"));
 	FActionTextOverline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE);
 	FActionTextOverline->setPriority(QAction::LowPriority);
-	QFont overline;
-	overline.setOverline(true);
-	FActionTextOverline->setFont(overline);
-	connect(FActionTextOverline, SIGNAL(triggered()), SLOT(onTextOverline()));
+	FActionTextOverline->setData(ADR_DECORATION_TYPE, DT_OVERLINE);
+	connect(FActionTextOverline, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FActionTextOverline->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextOverline, AG_XHTMLIM_FONT);
 
@@ -154,7 +153,8 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextStrikeout->setText(tr("Strikeout"));
 	FActionTextStrikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
 	FActionTextStrikeout->setPriority(QAction::LowPriority);
-	connect(FActionTextStrikeout, SIGNAL(triggered()), SLOT(onTextStrikeout()));
+	FActionTextStrikeout->setData(ADR_DECORATION_TYPE, DT_STRIKEOUT);
+	connect(FActionTextStrikeout, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FActionTextStrikeout->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextStrikeout, AG_XHTMLIM_FONT);
 
@@ -794,41 +794,68 @@ void EditHtml::onInsertLink()
 	addLink->deleteLater();
 }
 
-void EditHtml::onTextBold()
+void EditHtml::onSelectDecoration(bool ASelected)
 {
-	QTextCharFormat fmt;
-	fmt.setFontWeight(FActionTextBold->isChecked() ? QFont::Bold : QFont::Normal);
-	mergeFormatOnWordOrSelection(fmt);
+	Action *action = qobject_cast<Action *>(sender());
+	QTextCharFormat charFormat;
+	switch (action->data(ADR_DECORATION_TYPE).toInt())
+	{
+		case DT_BOLD:
+			charFormat.setFontWeight(ASelected?QFont::Bold:QFont::Normal);
+			break;
+		case DT_ITALIC:
+			charFormat.setFontItalic(ASelected);
+			break;
+		case DT_OVERLINE:
+			charFormat.setFontOverline(ASelected);
+			break;
+		case DT_UNDERLINE:
+			qDebug() << "Set underline!";
+			charFormat.setFontUnderline(ASelected);
+			break;
+		case DT_STRIKEOUT:
+			qDebug() << "Set strikeout!";
+			charFormat.setFontStrikeOut(ASelected);
+			break;
+	}
+	mergeFormatOnWordOrSelection(charFormat);
 }
 
-void EditHtml::onTextItalic()
-{
-	QTextCharFormat fmt;
-	fmt.setFontItalic(FActionTextItalic->isChecked());
-	mergeFormatOnWordOrSelection(fmt);
-}
+//void EditHtml::onTextBold()
+//{
+//	QTextCharFormat fmt;
+//	fmt.setFontWeight(FActionTextBold->isChecked() ? QFont::Bold : QFont::Normal);
+//	mergeFormatOnWordOrSelection(fmt);
+//}
 
-void EditHtml::onTextUnderline()
-{
-	QTextCharFormat fmt;
-	fmt.setProperty(QTextFormat::TextUnderlineStyle, FActionTextUnderline->isChecked()?QTextCharFormat::SingleUnderline
-																					  :QTextCharFormat::NoUnderline);
-	mergeFormatOnWordOrSelection(fmt);
-}
+//void EditHtml::onTextItalic()
+//{
+//	QTextCharFormat fmt;
+//	fmt.setFontItalic(FActionTextItalic->isChecked());
+//	mergeFormatOnWordOrSelection(fmt);
+//}
 
-void EditHtml::onTextOverline()
-{
-	QTextCharFormat fmt;
-	fmt.setFontOverline(FActionTextOverline->isChecked());
-	mergeFormatOnWordOrSelection(fmt);
-}
+//void EditHtml::onTextUnderline()
+//{
+//	QTextCharFormat fmt;
+//	fmt.setProperty(QTextFormat::TextUnderlineStyle, FActionTextUnderline->isChecked()?QTextCharFormat::SingleUnderline
+//																					  :QTextCharFormat::NoUnderline);
+//	mergeFormatOnWordOrSelection(fmt);
+//}
 
-void EditHtml::onTextStrikeout()
-{
-	QTextCharFormat fmt;
-	fmt.setFontStrikeOut(FActionTextStrikeout->isChecked());
-	mergeFormatOnWordOrSelection(fmt);
-}
+//void EditHtml::onTextOverline()
+//{
+//	QTextCharFormat fmt;
+//	fmt.setFontOverline(FActionTextOverline->isChecked());
+//	mergeFormatOnWordOrSelection(fmt);
+//}
+
+//void EditHtml::onTextStrikeout()
+//{
+//	QTextCharFormat fmt;
+//	fmt.setFontStrikeOut(FActionTextStrikeout->isChecked());
+//	mergeFormatOnWordOrSelection(fmt);
+//}
 
 void EditHtml::onTextCode()
 {

@@ -96,11 +96,12 @@ protected slots:
     void onInsertImage();
     void onSetToolTip();
     void onInsertLink();
-    void onTextBold();
-    void onTextItalic();
-    void onTextUnderline();
-    void onTextOverline();
-    void onTextStrikeout();
+//    void onTextBold();
+//    void onTextItalic();
+//    void onTextUnderline();
+//    void onTextOverline();
+//    void onTextStrikeout();
+	void onSelectDecoration(bool ASelected);
     void onTextCode();
     void onCurrentFontFamilyChanged(const QFont &AFont);
 //    void onCurrentFontIndexChanged(int AIndex);
