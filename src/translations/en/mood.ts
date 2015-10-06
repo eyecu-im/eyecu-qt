@@ -430,7 +430,7 @@
   </message>
   <message>
    <location line="93" filename="../../plugins/mood/mood.cpp"/>
-   <location line="383" filename="../../plugins/mood/mood.cpp"/>
+   <location line="381" filename="../../plugins/mood/mood.cpp"/>
    <source>User Mood</source>
    <translation>User Mood</translation>
   </message>
@@ -471,54 +471,54 @@
   </message>
   <message>
    <location line="259" filename="../../plugins/mood/mood.cpp"/>
-   <location line="549" filename="../../plugins/mood/mood.cpp"/>
-   <location line="704" filename="../../plugins/mood/mood.cpp"/>
+   <location line="555" filename="../../plugins/mood/mood.cpp"/>
+   <location line="712" filename="../../plugins/mood/mood.cpp"/>
    <source>Mood</source>
    <translation>Mood</translation>
   </message>
   <message>
-   <location line="384" filename="../../plugins/mood/mood.cpp"/>
+   <location line="382" filename="../../plugins/mood/mood.cpp"/>
    <source>Supports User Mood</source>
    <translation>Supports User Mood</translation>
   </message>
   <message>
-   <location line="388" filename="../../plugins/mood/mood.cpp"/>
+   <location line="386" filename="../../plugins/mood/mood.cpp"/>
    <source>User Mood Notification</source>
    <translation>User Mood Notification</translation>
   </message>
   <message>
-   <location line="389" filename="../../plugins/mood/mood.cpp"/>
+   <location line="387" filename="../../plugins/mood/mood.cpp"/>
    <source>Receives User Mood notifications</source>
    <translation>Receives User Mood notifications</translation>
   </message>
   <message>
-   <location line="513" filename="../../plugins/mood/mood.cpp"/>
+   <location line="511" filename="../../plugins/mood/mood.cpp"/>
    <source>Show user mood icons</source>
    <translation>Show user mood icons</translation>
   </message>
   <message>
-   <location line="517" filename="../../plugins/mood/mood.cpp"/>
+   <location line="515" filename="../../plugins/mood/mood.cpp"/>
    <source>Display user mood icon</source>
    <translation>Display user mood icon</translation>
   </message>
   <message>
-   <location line="518" filename="../../plugins/mood/mood.cpp"/>
+   <location line="516" filename="../../plugins/mood/mood.cpp"/>
    <source>Mood events in chat</source>
    <translation>Mood events in chat</translation>
   </message>
   <message>
-   <location line="629" filename="../../plugins/mood/mood.cpp"/>
+   <location line="637" filename="../../plugins/mood/mood.cpp"/>
    <source>%1 changed mood to %2</source>
    <translation>%1 changed mood to %2</translation>
   </message>
   <message>
-   <location line="735" filename="../../plugins/mood/mood.cpp"/>
+   <location line="743" filename="../../plugins/mood/mood.cpp"/>
    <source>Changed mood to: %1</source>
    <translation>Changed mood to: %1</translation>
   </message>
   <message>
-   <location line="763" filename="../../plugins/mood/mood.cpp"/>
-   <location line="913" filename="../../plugins/mood/mood.cpp"/>
+   <location line="771" filename="../../plugins/mood/mood.cpp"/>
+   <location line="921" filename="../../plugins/mood/mood.cpp"/>
    <source>Add mood</source>
    <translation>Add mood</translation>
   </message>

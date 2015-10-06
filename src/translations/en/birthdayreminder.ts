@@ -24,10 +24,9 @@
    <translation>Birthday remind</translation>
   </message>
   <message numerus="yes">
-   <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday in %n day(s),&#xd;
  %1</source>
-   <translation>
+   <translation type="obsolete">
     <numerusform>Birthday in %n day,\n %1</numerusform>
     <numerusform>Birthday in %n days,\n %1</numerusform>
    </translation>
@@ -37,6 +36,15 @@
    <location line="354" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday today!</source>
    <translation>Birthday today!</translation>
+  </message>
+  <message numerus="yes">
+   <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
+   <source>Birthday in %n day(s),
+ %1</source>
+   <translation type="unfinished">
+    <numerusform/>
+    <numerusform/>
+   </translation>
   </message>
   <message numerus="yes">
    <location line="351" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>

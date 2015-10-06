@@ -1,5 +1,7 @@
 #include "adiummessagestyle.h"
 
+#include <QtDebug>
+
 #include <QUrl>
 #include <QDir>
 #include <QFile>
@@ -24,7 +26,7 @@
 #include <utils/qt4qt5compat.h>
 
 #define SCROLL_TIMEOUT                      100
-#define EVALUTE_TIMEOUT                     10
+#define CONTENT_TIMEOUT                     10
 
 #define SHARED_STYLE_PATH                   RESOURCES_DIR"/"RSR_STORAGE_ADIUMMESSAGESTYLES"/"FILE_STORAGE_SHARED_DIR
 #define STYLE_CONTENTS_PATH                 "Contents"
@@ -76,12 +78,10 @@ AdiumMessageStyle::AdiumMessageStyle(const QString &AStylePath, QNetworkAccessMa
 	loadSenderColors();
 
 	FScrollTimer.setSingleShot(true);
-	FScrollTimer.setInterval(SCROLL_TIMEOUT);
-	connect(&FScrollTimer,SIGNAL(timeout()),SLOT(onScrollAfterResize()));
+	connect(&FScrollTimer,SIGNAL(timeout()),SLOT(onScrollTimerTimeout()));
 
-	FPendingTimer.setSingleShot(false);
-	FPendingTimer.setInterval(EVALUTE_TIMEOUT);
-	connect(&FPendingTimer,SIGNAL(timeout()),SLOT(onEvaluateNextPendingScript()));
+	FContentTimer.setSingleShot(true);
+	connect(&FContentTimer,SIGNAL(timeout()),SLOT(onContentTimerTimeout()));
 
 	connect(AParent,SIGNAL(styleWidgetAdded(IMessageStyle *, QWidget *)),SLOT(onStyleWidgetAdded(IMessageStyle *, QWidget *)));
 }
@@ -188,37 +188,40 @@ bool AdiumMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptio
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view && AOptions.styleId==styleId())
 	{
-		if (!FWidgetStatus.contains(view))
+		bool isNewView = !FWidgetStatus.contains(view);
+		if (AClear || isNewView)
 		{
-			AClear = true;
-			FWidgetStatus[view].wait = 0;
-			FWidgetStatus[view].scrollStarted = false;
-			view->installEventFilter(this);
-			connect(view,SIGNAL(linkClicked(const QUrl &)),SLOT(onLinkClicked(const QUrl &)));
-			connect(view,SIGNAL(loadFinished(bool)),SLOT(onStyleWidgetLoadFinished(bool)));
-			connect(view,SIGNAL(destroyed(QObject *)),SLOT(onStyleWidgetDestroyed(QObject *)));
-			emit widgetAdded(AWidget);
+			WidgetStatus &wstatus = FWidgetStatus[view];
+			wstatus.ready = false;
+			wstatus.failed = false;
+			wstatus.start = false;
+			wstatus.lastKind = -1;
+			wstatus.lastId = QString::null;
+			wstatus.lastTime = QDateTime();
+			wstatus.scrollStarted = false;
+			wstatus.pending.clear();
+
+			if (isNewView)
+			{
+				view->installEventFilter(this);
+				connect(view,SIGNAL(linkClicked(const QUrl &)),SLOT(onLinkClicked(const QUrl &)));
+				connect(view,SIGNAL(loadFinished(bool)),SLOT(onStyleWidgetLoadFinished(bool)));
+				connect(view,SIGNAL(destroyed(QObject *)),SLOT(onStyleWidgetDestroyed(QObject *)));
+				emit widgetAdded(view);
+			}
+
+			QString html = makeStyleTemplate(AOptions);
+			fillStyleKeywords(html,AOptions);
+			view->setHtml(html);
+
+			// If previous template load is not finished then
+			// onStyleWidgetLoadFinished will be called with ok=false
+			wstatus.start = true;
 		}
 		else
 		{
 			FWidgetStatus[view].lastKind = -1;
-		}
-
-		if (AClear)
-		{
-			WidgetStatus &wstatus = FWidgetStatus[view];
-			wstatus.wait++;
-			wstatus.pending.clear();
-			wstatus.lastKind = -1;
-			wstatus.lastId = QString::null;
-			wstatus.lastTime = QDateTime();
-			QString html = makeStyleTemplate(AOptions);
-			fillStyleKeywords(html,AOptions);
-			view->setHtml(html);
-		}
-		else
-		{
-			setVariant(AWidget,AOptions.extended.value(MSO_VARIANT).toString());
+			setVariant(view,AOptions.extended.value(MSO_VARIANT).toString());
 		}
 
 		int fontSize = AOptions.extended.value(MSO_FONT_SIZE).toInt();
@@ -226,7 +229,7 @@ bool AdiumMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptio
 		view->page()->settings()->setFontSize(QWebSettings::DefaultFontSize, fontSize!=0 ? fontSize : QWebSettings::globalSettings()->fontSize(QWebSettings::DefaultFontSize));
 		view->page()->settings()->setFontFamily(QWebSettings::StandardFont, !fontFamily.isEmpty() ? fontFamily : QWebSettings::globalSettings()->fontFamily(QWebSettings::StandardFont));
 
-		emit optionsChanged(AWidget,AOptions,AClear);
+		emit optionsChanged(view,AOptions,AClear);
 		return true;
 	}
 	else if (view == NULL)
@@ -238,27 +241,32 @@ bool AdiumMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptio
 
 bool AdiumMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions)
 {
-	StyleViewer *view = FWidgetStatus.contains(AWidget) ? qobject_cast<StyleViewer *>(AWidget) : NULL;
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view)
 	{
-		bool sameSender = isSameSender(AWidget,AOptions);
-		QString html = makeContentTemplate(AOptions,sameSender);
-		fillContentKeywords(html,AOptions,sameSender);
-		html.replace("%message%",prepareMessage(AHtml,AOptions));
-		if (AOptions.kind == IMessageStyleContentOptions::KindTopic)
-			html.replace("%topic%",QString(TOPIC_INDIVIDUAL_WRAPPER).arg(AHtml));
+		WidgetStatus &wstatus = FWidgetStatus[view];
+		if (!wstatus.failed)
+		{
+			bool sameSender = isSameSender(view,AOptions);
+			QString html = makeContentTemplate(AOptions,sameSender);
+			fillContentKeywords(html,AOptions,sameSender);
+			html.replace("%message%",prepareMessage(AHtml,AOptions));
+			if (AOptions.kind == IMessageStyleContentOptions::KindTopic)
+				html.replace("%topic%",QString(TOPIC_INDIVIDUAL_WRAPPER).arg(AHtml));
 
-		WidgetStatus &wstatus = FWidgetStatus[AWidget];
-		wstatus.lastKind = AOptions.kind;
-		wstatus.lastId = AOptions.senderId;
-		wstatus.lastTime = AOptions.time;
+			wstatus.lastKind = AOptions.kind;
+			wstatus.lastId = AOptions.senderId;
+			wstatus.lastTime = AOptions.time;
 
-		escapeStringForScript(html);
-		QString script = scriptForAppendContent(sameSender,AOptions.noScroll).arg(html);
-		wstatus.pending.append(script);
+			escapeStringForScript(html);
+			QString script = scriptForAppendContent(sameSender,AOptions.noScroll).arg(html);
 
-		emit contentAppended(AWidget,AHtml,AOptions);
-		return true;
+			wstatus.pending.append(script);
+			FContentTimer.start(CONTENT_TIMEOUT);
+
+			emit contentAppended(view,AHtml,AOptions);
+			return true;
+		}
 	}
 	else
 	{
@@ -371,20 +379,12 @@ bool AdiumMessageStyle::isSameSender(QWidget *AWidget, const IMessageStyleConten
 	return true;
 }
 
-void AdiumMessageStyle::setVariant(QWidget *AWidget, const QString &AVariant)
+void AdiumMessageStyle::setVariant(StyleViewer *AView, const QString &AVariant)
 {
-	StyleViewer *view = FWidgetStatus.contains(AWidget) ? qobject_cast<StyleViewer *>(AWidget) : NULL;
-	if (view)
-	{
-		QString variant = QDir::cleanPath(QString("Variants/%1.css").arg(!FVariants.contains(AVariant) ? FInfo.value(MSIV_DEFAULT_VARIANT,"../main").toString() : AVariant));
-		escapeStringForScript(variant);
-		QString script = QString("setStylesheet(\"%1\",\"%2\");").arg("mainStyle").arg(variant);
-		view->page()->mainFrame()->evaluateJavaScript(script);
-	}
-	else
-	{
-		REPORT_ERROR("Failed to change adium style variant: Invalid style view");
-	}
+	QString variant = QDir::cleanPath(QString("Variants/%1.css").arg(!FVariants.contains(AVariant) ? FInfo.value(MSIV_DEFAULT_VARIANT,"../main").toString() : AVariant));
+	escapeStringForScript(variant);
+	QString script = QString("setStylesheet(\"%1\",\"%2\");").arg("mainStyle").arg(variant);
+	AView->page()->mainFrame()->evaluateJavaScript(script);
 }
 
 QString AdiumMessageStyle::makeStyleTemplate(const IMessageStyleOptions &AOptions)
@@ -761,20 +761,15 @@ bool AdiumMessageStyle::eventFilter(QObject *AWatched, QEvent *AEvent)
 			if (!wstatus.scrollStarted && frame->scrollBarValue(Qt::Vertical)==frame->scrollBarMaximum(Qt::Vertical))
 			{
 				wstatus.scrollStarted = true;
-				FScrollTimer.start();
+				FScrollTimer.start(SCROLL_TIMEOUT);
 			}
 		}
 	}
 	return QObject::eventFilter(AWatched,AEvent);
 }
 
-void AdiumMessageStyle::onLinkClicked(const QUrl &AUrl)
-{
-	StyleViewer *view = qobject_cast<StyleViewer *>(sender());
-	emit urlClicked(view,AUrl);
-}
 
-void AdiumMessageStyle::onScrollAfterResize()
+void AdiumMessageStyle::onScrollTimerTimeout()
 {
 	for (QMap<QWidget*,WidgetStatus>::iterator it = FWidgetStatus.begin(); it!= FWidgetStatus.end(); ++it)
 	{
@@ -789,19 +784,23 @@ void AdiumMessageStyle::onScrollAfterResize()
 	}
 }
 
-void AdiumMessageStyle::onEvaluateNextPendingScript()
+void AdiumMessageStyle::onContentTimerTimeout()
 {
 	for(QMap<QWidget *, WidgetStatus>::iterator it=FWidgetStatus.begin(); it!=FWidgetStatus.end(); ++it)
 	{
-		if (it->wait==0 && !it->pending.isEmpty())
+		if (it->ready && !it->pending.isEmpty())
 		{
 			StyleViewer *view = qobject_cast<StyleViewer *>(it.key());
-			if (view)
-				view->page()->mainFrame()->evaluateJavaScript(it->pending.takeFirst());
-			else
-				REPORT_ERROR("Failed to append pending adium style content: Invalid view");
+			view->page()->mainFrame()->evaluateJavaScript(it->pending.takeFirst());
+			FContentTimer.start(CONTENT_TIMEOUT);
 		}
 	}
+}
+
+void AdiumMessageStyle::onLinkClicked(const QUrl &AUrl)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(sender());
+	emit urlClicked(view,AUrl);
 }
 
 void AdiumMessageStyle::onStyleWidgetAdded(IMessageStyle *AStyle, QWidget *AWidget)
@@ -826,17 +825,18 @@ void AdiumMessageStyle::onStyleWidgetLoadFinished(bool AOk)
 	if (view)
 	{
 		WidgetStatus &wstatus = FWidgetStatus[view];
-		if (--wstatus.wait == 0)
+		if (wstatus.start && !wstatus.ready && !wstatus.failed)
 		{
 			if (AOk)
 			{
-				FPendingTimer.start();
+				wstatus.ready = true;
+				FContentTimer.start(CONTENT_TIMEOUT);
 				view->page()->mainFrame()->evaluateJavaScript("alignChat(false);");
 			}
 			else
 			{
-				wstatus.wait++;
-				view->setHtml("Style Template Load Error!");
+				wstatus.failed = true;
+				view->setHtml(QString("<html><body>%1</body></html>").arg(tr("Failed to load message style. Press clear window button to retry.")));
 				REPORT_ERROR(QString("Failed to load adium style template, styleId=%1").arg(styleId()));
 			}
 		}

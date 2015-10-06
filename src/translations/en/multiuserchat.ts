@@ -62,9 +62,15 @@
   </message>
   <message>
    <location line="147" filename="../../plugins/multiuserchat/joinmultichatdialog.cpp"/>
+   <source>Conference parameters is not acceptable.
+Check values and try again</source>
+   <translation>Conference parameters is not acceptable.
+Check values and try again</translation>
+  </message>
+  <message>
    <source>Conference parameters is not acceptable.&#xd;
 Check values and try again</source>
-   <translation>Conference parameters is not acceptable.&#xd;
+   <translation type="obsolete">Conference parameters is not acceptable.&#xd;
 Check values and try again</translation>
   </message>
  </context>
@@ -189,7 +195,7 @@ Check values and try again</translation>
   </message>
   <message>
    <location line="213" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1016" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1017" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Join conference</source>
    <translation>Join conference</translation>
   </message>
@@ -222,7 +228,7 @@ Check values and try again</translation>
   <message>
    <location line="279" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <location line="319" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1029" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1030" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Conferences</source>
    <translation>Conferences</translation>
   </message>
@@ -676,55 +682,55 @@ Check values and try again</translation>
    <translation>A room that anyone is allowed to enter without first providing the correct password</translation>
   </message>
   <message>
-   <location line="992" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="993" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Invite to</source>
    <translation>Invite to</translation>
   </message>
   <message>
-   <location line="1001" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1002" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>%1 from %2</source>
    <translation>%1 from %2</translation>
   </message>
   <message>
-   <location line="1352" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1382" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1353" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1383" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Enter</source>
    <translation>Enter</translation>
   </message>
   <message>
-   <location line="1361" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1393" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1362" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1394" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Exit</source>
    <translation>Exit</translation>
   </message>
   <message>
-   <location line="1371" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1372" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Open Conference Dialog</source>
    <translation>Open Conference Dialog</translation>
   </message>
   <message>
-   <location line="1516" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1517" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>I'm too busy right now</source>
    <translation>I'm too busy right now</translation>
   </message>
   <message>
-   <location line="1517" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1518" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Decline invite</source>
    <translation>Decline invite</translation>
   </message>
   <message>
-   <location line="1517" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1543" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1518" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1544" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Enter a reason</source>
    <translation>Enter a reason</translation>
   </message>
   <message>
-   <location line="1542" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1543" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Please, enter this conference!</source>
    <translation>Please, enter this conference!</translation>
   </message>
   <message>
-   <location line="1543" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
+   <location line="1544" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Invite user</source>
    <translation>Invite user</translation>
   </message>
@@ -962,7 +968,6 @@ Check values and try again</translation>
    <translation>%1 is not valid room JID</translation>
   </message>
   <message>
-   <location line="1268" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Supported list of commands: &#xd;
  /ban &lt;roomnick> [comment] &#xd;
  /invite &lt;jid> [comment] &#xd;
@@ -972,7 +977,7 @@ Check values and try again</translation>
  /nick &lt;newnick> &#xd;
  /leave [comment] &#xd;
  /topic &lt;foo></source>
-   <translation>Supported list of commands: &#xd;
+   <translation type="obsolete">Supported list of commands: &#xd;
  /ban &lt;roomnick> [comment] &#xd;
  /invite &lt;jid> [comment] &#xd;
  /join &lt;roomname> [pass] &#xd;
@@ -980,6 +985,27 @@ Check values and try again</translation>
  /msg &lt;roomnick> &lt;foo> &#xd;
  /nick &lt;newnick> &#xd;
  /leave [comment] &#xd;
+ /topic &lt;foo></translation>
+  </message>
+  <message>
+   <location line="1268" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
+   <source>Supported list of commands: 
+ /ban &lt;roomnick> [comment] 
+ /invite &lt;jid> [comment] 
+ /join &lt;roomname> [pass] 
+ /kick &lt;roomnick> [comment] 
+ /msg &lt;roomnick> &lt;foo> 
+ /nick &lt;newnick> 
+ /leave [comment] 
+ /topic &lt;foo></source>
+   <translation>Supported list of commands: 
+ /ban &lt;roomnick> [comment] 
+ /invite &lt;jid> [comment] 
+ /join &lt;roomname> [pass] 
+ /kick &lt;roomnick> [comment] 
+ /msg &lt;roomnick> &lt;foo> 
+ /nick &lt;newnick> 
+ /leave [comment] 
  /topic &lt;foo></translation>
   </message>
   <message>

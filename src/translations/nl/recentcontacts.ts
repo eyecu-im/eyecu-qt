@@ -23,52 +23,52 @@
    <translation>Verwijder contactpersoon uit Favorieten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="334"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
    <source>Recent contacts</source>
    <translation>Recente Contactpersonen</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
    <source>Hide inactive contacts</source>
    <translation>Verberg inactieve contactpersonen</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
    <source>Sort contacts by last activity</source>
    <translation>Sorteer contacten op laatste activiteit</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
    <source>Always show offline contacts</source>
    <translation>Toon altijd offline contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
    <source>Show only favorite contacts</source>
    <translation>Toon alleen de favoriete contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="340"/>
    <source>Simplify recent contacts view</source>
    <translation>Vereenvoudig recent bekeken contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1391"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1410"/>
    <source>Add to Favorites</source>
    <translation>Voeg toe aan favorieten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1402"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1421"/>
    <source>Remove from Favorites</source>
    <translation>Verwijder van Favorieten</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1412"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1431"/>
    <source>Remove from Recent Contacts</source>
    <translation>Verwijder van Recente Contactpersonen</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1450"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1469"/>
    <source>&lt;b&gt;Account:&lt;/b&gt; %1</source>
    <translation>&lt;b&gt;Account:&lt;/b&gt;%1</translation>
   </message>

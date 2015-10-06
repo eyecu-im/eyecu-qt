@@ -2,44 +2,44 @@
  <context>
   <name>ConclusionPage</name>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1216"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1225"/>
    <source>Done!</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1217"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1226"/>
    <source>Transport Wizard completed successfuly</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1221"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1230"/>
    <source>Congratulations!</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1227"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1236"/>
    <source>Attention</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1228"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1237"/>
    <source>Some transports may report about successful registreation, even if wrong credentials were provided. They may inform you about authentication error later, with a message.
 If you receive such message, please rerun the Wizard to register at transport with correct credentials.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1233"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1242"/>
    <source>Press &quot;Finish&quot; button to close Wizard.</source>
    <comment>&quot;Finish&quot; should match the text of an appropriate Qt Wizard button</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1256"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1265"/>
    <source>You successfuly changed %1 transport from %2 to %3.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1254"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1263"/>
    <source>You successfuly connected to %1 via %2.</source>
    <translation type="unfinished"/>
   </message>
@@ -318,186 +318,186 @@ If you receive such message, please rerun the Wizard to register at transport wi
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="635"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1293"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1302"/>
    <source>User Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="652"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1286"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1287"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="651"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1295"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1296"/>
    <source>Password</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="669"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="668"/>
    <source>e-mail</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="684"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="683"/>
    <source>Web registration required</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="685"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="684"/>
    <source>Open registration page</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="736"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="732"/>
    <source>Requested operation failed</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="877"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="873"/>
    <source>Press the button to open vKontakte logon page in the system browser. Proceed logon (if not logged on already). After you see a blank page with a single text message on it, copy contents of browser&apos;s address line and close web browser.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="888"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="884"/>
    <source>Insert copied browser&apos;s address line here</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1264"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1273"/>
    <source>Street</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1265"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1274"/>
    <source>Select Action</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1266"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1275"/>
    <source>Birth Year</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1267"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1276"/>
    <source>Born</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1268"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1277"/>
    <source>City</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1269"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1278"/>
    <source>Connections Parameters</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1270"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1279"/>
    <source>Email Address</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1271"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1280"/>
    <source>Encoding</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1272"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1281"/>
    <source>Given Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1273"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1282"/>
    <source>First Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1274"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1280"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1283"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1289"/>
    <source>Family Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1275"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1284"/>
    <source>Family City</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1276"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1285"/>
    <source>Friends Only</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1277"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1286"/>
    <source>Invisible</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1278"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1287"/>
    <source>Gender</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1279"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1288"/>
    <source>Last Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1281"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1283"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1290"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1292"/>
    <source>Language</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1282"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1291"/>
    <source>Link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1284"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1293"/>
    <source>Nick Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1285"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1294"/>
    <source>Full Name</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1288"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1297"/>
    <source>Phone Number</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1289"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1298"/>
    <source>Region</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1290"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1299"/>
    <source>UIN</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1291"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1300"/>
    <source>Unregister</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1292"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1301"/>
    <source>Your Web Page</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1294"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1303"/>
    <source>Access-token</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1295"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1304"/>
    <source>User List</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1296"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1305"/>
    <source>Zip Code</source>
    <translation type="unfinished"/>
   </message>
@@ -505,23 +505,23 @@ If you receive such message, please rerun the Wizard to register at transport wi
  <context>
   <name>ResultPage</name>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1151"/>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1152"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1160"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1161"/>
    <source>Result Page</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1177"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1186"/>
    <source>Cannot change service</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1190"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1199"/>
    <source>Requested operation failed:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1192"/>
+   <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1201"/>
    <source>Retry</source>
    <translation type="unfinished"/>
   </message>
@@ -571,17 +571,13 @@ If you receive such message, please rerun the Wizard to register at transport wi
   <name>WizardTransport</name>
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="27"/>
+   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="100"/>
    <source>Transport Wizard</source>
    <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="28"/>
    <source>Wizard, which helps to connect to legacy networks via XMPP transports (gateways)</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <location filename="../../plugins/wizardtransport/wizardtransport.cpp" line="100"/>
-   <source>Transport Wizard</source>
    <translation type="unfinished"/>
   </message>
   <message>

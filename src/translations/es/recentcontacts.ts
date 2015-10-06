@@ -23,52 +23,52 @@
    <translation>Borrar contacto de favoritos</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="334"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
    <source>Recent contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
    <source>Hide inactive contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
    <source>Sort contacts by last activity</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
    <source>Always show offline contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
    <source>Show only favorite contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="340"/>
    <source>Simplify recent contacts view</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1391"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1410"/>
    <source>Add to Favorites</source>
    <translation>Añadir a favoritos</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1402"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1421"/>
    <source>Remove from Favorites</source>
    <translation>Borrar de favoritos</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1412"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1431"/>
    <source>Remove from Recent Contacts</source>
    <translation>Borrar de los contactos recientes</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1450"/>
+   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1469"/>
    <source>&lt;b&gt;Account:&lt;/b&gt; %1</source>
    <translation>&lt;b&gt;Cuenta:&lt;/b&gt; %1</translation>
   </message>

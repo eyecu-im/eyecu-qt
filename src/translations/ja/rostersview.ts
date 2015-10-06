@@ -2,12 +2,12 @@
  <context>
   <name>RostersView</name>
   <message>
-   <location filename="../../plugins/rostersview/rostersview.cpp" line="85"/>
+   <location filename="../../plugins/rostersview/rostersview.cpp" line="88"/>
    <source>Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/rostersview/rostersview.cpp" line="418"/>
+   <location filename="../../plugins/rostersview/rostersview.cpp" line="421"/>
    <source>Copy to clipboard</source>
    <translation type="unfinished"/>
   </message>

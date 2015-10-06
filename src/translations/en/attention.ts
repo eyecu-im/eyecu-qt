@@ -8,8 +8,8 @@
    <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <location line="175" filename="../../plugins/attention/attention.cpp"/>
    <location line="188" filename="../../plugins/attention/attention.cpp"/>
-   <location line="333" filename="../../plugins/attention/attention.cpp"/>
-   <location line="473" filename="../../plugins/attention/attention.cpp"/>
+   <location line="351" filename="../../plugins/attention/attention.cpp"/>
+   <location line="488" filename="../../plugins/attention/attention.cpp"/>
    <source>Attention</source>
    <translation>Attention</translation>
   </message>
@@ -45,17 +45,17 @@
    <translation>Implements XEP-0224: Allows to attract user's attention</translation>
   </message>
   <message>
-   <location line="246" filename="../../plugins/attention/attention.cpp"/>
+   <location line="264" filename="../../plugins/attention/attention.cpp"/>
    <source>Attention from %1</source>
    <translation>Attention from %1</translation>
   </message>
   <message>
-   <location line="256" filename="../../plugins/attention/attention.cpp"/>
+   <location line="274" filename="../../plugins/attention/attention.cpp"/>
    <source>ATTENTION!!!</source>
    <translation>ATTENTION!!!</translation>
   </message>
   <message>
-   <location line="371" filename="../../plugins/attention/attention.cpp"/>
+   <location line="389" filename="../../plugins/attention/attention.cpp"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>

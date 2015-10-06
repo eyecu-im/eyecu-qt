@@ -62,8 +62,12 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation>Conferentie parameters zijn niet geaccepteerd
-Check de waarden en probeer opnieuw </translation>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Conference parameters is not acceptable.
+Check values and try again</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -187,7 +191,7 @@ Check de waarden en probeer opnieuw </translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="213"/>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1016"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1017"/>
    <source>Join conference</source>
    <translation>Neem deel aan conferentie</translation>
   </message>
@@ -220,7 +224,7 @@ Check de waarden en probeer opnieuw </translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="279"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="319"/>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1029"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1030"/>
    <source>Conferences</source>
    <translation>Vergaderingen</translation>
   </message>
@@ -674,55 +678,55 @@ Check de waarden en probeer opnieuw </translation>
    <translation>Een kamer waar het iedereen is toegestaan om zonder eerst het juiste wachtwoord in te voeren</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="992"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="993"/>
    <source>Invite to</source>
    <translation>Uitnodigen</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1001"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1002"/>
    <source>%1 from %2</source>
    <translation>%1 van %2</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1352"/>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1382"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1353"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1383"/>
    <source>Enter</source>
    <translation>Invoeren</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1361"/>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1393"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1362"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1394"/>
    <source>Exit</source>
    <translation>Uitgang</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1371"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1372"/>
    <source>Open Conference Dialog</source>
    <translation>Open conferentie dialoog</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1516"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1517"/>
    <source>I&apos;m too busy right now</source>
    <translation>Ben te druk nu</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1517"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1518"/>
    <source>Decline invite</source>
    <translation>Uitnodiging weigeren</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1517"/>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1543"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1518"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1544"/>
    <source>Enter a reason</source>
    <translation>Een reden invoeren</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1542"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1543"/>
    <source>Please, enter this conference!</source>
    <translation>Deelnemen aan conferentie!</translation>
   </message>
   <message>
-   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1543"/>
+   <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1544"/>
    <source>Invite user</source>
    <translation>Gebruiker uitnodigen</translation>
   </message>
@@ -958,6 +962,18 @@ Check de waarden en probeer opnieuw </translation>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1221"/>
    <source>%1 is not valid room JID</source>
    <translation>%1 is een ongeldige kamer JID</translation>
+  </message>
+  <message>
+   <source>Supported list of commands: 
+ /ban &lt;roomnick&gt; [comment] 
+ /invite &lt;jid&gt; [comment] 
+ /join &lt;roomname&gt; [pass] 
+ /kick &lt;roomnick&gt; [comment] 
+ /msg &lt;roomnick&gt; &lt;foo&gt; 
+ /nick &lt;newnick&gt; 
+ /leave [comment] 
+ /topic &lt;foo&gt;</source>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1268"/>

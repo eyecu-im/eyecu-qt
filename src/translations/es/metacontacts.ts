@@ -57,37 +57,37 @@
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="565"/>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1937"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1936"/>
    <source>Combine Contacts...</source>
    <translation>Fundir contactos</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1150"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1149"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
    <source>Rename Metacontact</source>
    <translation>Renombrar metacontacto</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
    <source>Enter name:</source>
    <translation>Inserta el nombre:</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1950"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1949"/>
    <source>Detach from Metacontact</source>
    <translation>Separar del metacontacto</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1962"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1961"/>
    <source>Destroy Metacontact</source>
    <translation>Dividir metacontacto</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1974"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1973"/>
    <source>Rename</source>
    <translation>Renombrar</translation>
   </message>

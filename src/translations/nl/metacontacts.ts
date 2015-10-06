@@ -57,37 +57,37 @@
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="565"/>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1937"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1936"/>
    <source>Combine Contacts...</source>
    <translation>Combineer Contacten...</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1150"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1149"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
    <source>Rename Metacontact</source>
    <translation>Hernoem Metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1462"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
    <source>Enter name:</source>
    <translation>Naam invoeren:</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1950"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1949"/>
    <source>Detach from Metacontact</source>
    <translation>Los maken van metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1962"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1961"/>
    <source>Destroy Metacontact</source>
    <translation>Vernietig metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1974"/>
+   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1973"/>
    <source>Rename</source>
    <translation>Hernoem</translation>
   </message>

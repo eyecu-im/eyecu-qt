@@ -4,44 +4,44 @@
  <context>
   <name>ChatStates</name>
   <message>
-   <location line="65" filename="../../plugins/chatstates/chatstates.cpp"/>
-   <location line="342" filename="../../plugins/chatstates/chatstates.cpp"/>
-   <location line="614" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="67" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="344" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="616" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Chat State Notifications</source>
    <translation>Chat State Notifications</translation>
   </message>
   <message>
-   <location line="66" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="68" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Allows to share information about the user's activity in the chat</source>
    <translation>Allows to share information about the user's activity in the chat</translation>
   </message>
   <message>
-   <location line="184" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="186" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>When contact is typing the message for you</source>
    <translation>When contact is typing the message for you</translation>
   </message>
   <message>
-   <location line="228" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="230" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Send notifications of your chat activity</source>
    <translation>Send notifications of your chat activity</translation>
   </message>
   <message>
-   <location line="347" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="349" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Allow Chat State Notifications</source>
    <translation>Allow Chat State Notifications</translation>
   </message>
   <message>
-   <location line="349" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="351" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Disallow Chat State Notifications</source>
    <translation>Disallow Chat State Notifications</translation>
   </message>
   <message>
-   <location line="593" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="595" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Typing a message...</source>
    <translation>Typing a message...</translation>
   </message>
   <message>
-   <location line="615" filename="../../plugins/chatstates/chatstates.cpp"/>
+   <location line="617" filename="../../plugins/chatstates/chatstates.cpp"/>
    <source>Supports the exchanging of the information about the user's activity in the chat</source>
    <translation>Supports the exchanging of the information about the user's activity in the chat</translation>
   </message>

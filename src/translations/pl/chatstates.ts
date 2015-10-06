@@ -2,44 +2,44 @@
  <context>
   <name>ChatStates</name>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="65"/>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="342"/>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="614"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="67"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="344"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="616"/>
    <source>Chat State Notifications</source>
    <translation>Powiadomienia o aktywności rozmówcy</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="66"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="68"/>
    <source>Allows to share information about the user&apos;s activity in the chat</source>
    <translation>Pozwala na wymianę informacji na temat aktywności użytkownika w oknie rozmowy</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="184"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="186"/>
    <source>When contact is typing the message for you</source>
    <translation>Kiedy kontakt pisze wiadomość do Ciebie</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="228"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="230"/>
    <source>Send notifications of your chat activity</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="347"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="349"/>
    <source>Allow Chat State Notifications</source>
    <translation>Pozwól na wysyłanie powiadomień o twojej aktywności</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="349"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="351"/>
    <source>Disallow Chat State Notifications</source>
    <translation>Nie pozwalaj na wysyłanie powiadomień o twojej aktywności</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="593"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="595"/>
    <source>Typing a message...</source>
    <translation>Pisze wiadomość...</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="615"/>
+   <location filename="../../plugins/chatstates/chatstates.cpp" line="617"/>
    <source>Supports the exchanging of the information about the user&apos;s activity in the chat</source>
    <translation>Obsługa informacji na temat aktywności użytkownika w oknie rozmowy</translation>
   </message>

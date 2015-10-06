@@ -11,6 +11,11 @@
    <source>hh:mm:ss</source>
    <translation type="unfinished"/>
   </message>
+  <message>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="839"/>
+   <source>Failed to load message style. Press clear window button to retry.</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>AdiumMessageStyleEngine</name>

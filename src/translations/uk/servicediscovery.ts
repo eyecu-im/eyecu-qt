@@ -172,75 +172,75 @@
  <context>
   <name>ServiceDiscovery</name>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="79"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="199"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="927"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1225"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="80"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="200"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="928"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1226"/>
    <source>Service Discovery</source>
    <translation>Огляд сервісів</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="80"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="81"/>
    <source>Allows to receive information about Jabber entities</source>
    <translation>Дозволяє отримувати інформацію про джаббер сутності</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="928"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="929"/>
    <source>Supports the exchange of the discovery information and items</source>
    <translation>Підтримує обмін оглядовою інформацією та елементами</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="934"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="935"/>
    <source>Discovery Information</source>
    <translation>Оглядова інформація</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="935"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="936"/>
    <source>Supports the exchange of the discovery information</source>
    <translation>Підтримує обмін оглядовою інформацією</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="941"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="942"/>
    <source>Discovery Items</source>
    <translation>Оглядові елементи</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="942"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="943"/>
    <source>Supports the exchange of the discovery items</source>
    <translation>Підтримує обмін оглядовими елементами</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="948"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="949"/>
    <source>Publish Items</source>
    <translation>Публікація елементів</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="949"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="950"/>
    <source>Supports the publishing of the discovery items</source>
    <translation>Підтримує публікацію оглядових елементів</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="955"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="956"/>
    <source>Entity Capabilities</source>
    <translation>Можливості об&apos;єкту</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="956"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="957"/>
    <source>Supports the caching of the discovery information</source>
    <translation>Підтримує кешування оглядової інформації</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="962"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="963"/>
    <source>JID Escaping</source>
    <translation>Екранування JID</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="963"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="964"/>
    <source>Supports the displaying of the jabber identifiers with disallowed characters</source>
    <translation>Підтримує перегляд джаббер ідентифікаторів з забороненими символами</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1213"/>
+   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1214"/>
    <source>Discovery Info</source>
    <translation>Оглядова інформація</translation>
   </message>

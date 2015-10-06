@@ -62,37 +62,37 @@
   </message>
   <message>
    <location line="565" filename="../../plugins/metacontacts/metacontacts.cpp"/>
-   <location line="1937" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1936" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Combine Contacts...</source>
    <translation>Combine Contacts...</translation>
   </message>
   <message>
-   <location line="1150" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1149" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
   <message>
-   <location line="1462" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1461" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Rename Metacontact</source>
    <translation>Rename Metacontact</translation>
   </message>
   <message>
-   <location line="1462" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1461" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Enter name:</source>
    <translation>Enter name:</translation>
   </message>
   <message>
-   <location line="1950" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1949" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Detach from Metacontact</source>
    <translation>Detach from Metacontact</translation>
   </message>
   <message>
-   <location line="1962" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1961" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Destroy Metacontact</source>
    <translation>Destroy Metacontact</translation>
   </message>
   <message>
-   <location line="1974" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1973" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Rename</source>
    <translation>Rename</translation>
   </message>

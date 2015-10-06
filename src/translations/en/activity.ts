@@ -434,8 +434,8 @@
   </message>
   <message>
    <location line="251" filename="../../plugins/activity/activity.cpp"/>
-   <location line="534" filename="../../plugins/activity/activity.cpp"/>
-   <location line="754" filename="../../plugins/activity/activity.cpp"/>
+   <location line="544" filename="../../plugins/activity/activity.cpp"/>
+   <location line="763" filename="../../plugins/activity/activity.cpp"/>
    <source>Activity</source>
    <translation>Activity</translation>
   </message>
@@ -470,12 +470,12 @@
    <translation>Activity events in chat</translation>
   </message>
   <message>
-   <location line="642" filename="../../plugins/activity/activity.cpp"/>
+   <location line="651" filename="../../plugins/activity/activity.cpp"/>
    <source>%1 changed activity to %2</source>
    <translation>%1 changed activity to %2</translation>
   </message>
   <message>
-   <location line="791" filename="../../plugins/activity/activity.cpp"/>
+   <location line="800" filename="../../plugins/activity/activity.cpp"/>
    <source>Changed activity to: %1</source>
    <translation>Changed activity to: %1</translation>
   </message>

@@ -17,7 +17,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="117"/>
-   <location filename="../../plugins/map/map.cpp" line="298"/>
+   <location filename="../../plugins/map/map.cpp" line="297"/>
    <source>New center</source>
    <translation type="unfinished"/>
   </message>
@@ -29,7 +29,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="118"/>
-   <location filename="../../plugins/map/map.cpp" line="289"/>
+   <location filename="../../plugins/map/map.cpp" line="291"/>
    <source>My location</source>
    <translation type="unfinished"/>
   </message>
@@ -150,12 +150,12 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="302"/>
+   <location filename="../../plugins/map/map.cpp" line="301"/>
    <source>Options</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="309"/>
+   <location filename="../../plugins/map/map.cpp" line="308"/>
    <source>No map</source>
    <translation>なし</translation>
   </message>
@@ -304,32 +304,32 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="179"/>
+   <location filename="../../plugins/map/mapform.cpp" line="178"/>
    <source>Map (%1: %2)</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="181"/>
+   <location filename="../../plugins/map/mapform.cpp" line="180"/>
    <source>Map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="659"/>
+   <location filename="../../plugins/map/mapform.cpp" line="658"/>
    <source>%1S</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="659"/>
+   <location filename="../../plugins/map/mapform.cpp" line="658"/>
    <source>%1N</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="664"/>
+   <location filename="../../plugins/map/mapform.cpp" line="663"/>
    <source>%1W</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="664"/>
+   <location filename="../../plugins/map/mapform.cpp" line="663"/>
    <source>%1E</source>
    <translation type="unfinished"/>
   </message>

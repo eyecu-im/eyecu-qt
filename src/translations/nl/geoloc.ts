@@ -54,33 +54,33 @@
    <translation>Ontvangt melding van huidige Geolocatie gebruiker</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="508"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="511"/>
    <source>S</source>
    <translation>S</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="512"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="515"/>
    <source>N</source>
    <translation>N</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="520"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="523"/>
    <source>W</source>
    <translation>W</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="524"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="527"/>
    <source>E</source>
    <translation>E</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="535"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="538"/>
    <source>m</source>
    <comment>Short for &quot;meters&quot;</comment>
    <translation>m</translation>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="571"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="574"/>
    <source>Location</source>
    <translation>Locatie</translation>
   </message>

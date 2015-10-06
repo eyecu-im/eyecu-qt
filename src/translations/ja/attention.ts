@@ -6,8 +6,8 @@
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <location filename="../../plugins/attention/attention.cpp" line="175"/>
    <location filename="../../plugins/attention/attention.cpp" line="188"/>
-   <location filename="../../plugins/attention/attention.cpp" line="333"/>
-   <location filename="../../plugins/attention/attention.cpp" line="473"/>
+   <location filename="../../plugins/attention/attention.cpp" line="351"/>
+   <location filename="../../plugins/attention/attention.cpp" line="488"/>
    <source>Attention</source>
    <translation type="unfinished"/>
   </message>
@@ -43,17 +43,17 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="246"/>
+   <location filename="../../plugins/attention/attention.cpp" line="264"/>
    <source>Attention from %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="256"/>
+   <location filename="../../plugins/attention/attention.cpp" line="274"/>
    <source>ATTENTION!!!</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="371"/>
+   <location filename="../../plugins/attention/attention.cpp" line="389"/>
    <source>%1 - Chat</source>
    <translation type="unfinished"/>
   </message>

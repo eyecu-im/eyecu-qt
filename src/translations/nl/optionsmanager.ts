@@ -203,89 +203,89 @@
  <context>
   <name>OptionsManager</name>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="61"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="63"/>
    <source>Options Manager</source>
    <translation>Opties manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="62"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="64"/>
    <source>Allows to save, load and manage user preferences</source>
    <translation>Opslaan laden en beheren van gebruikers voorkeuren toestaan</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="101"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="103"/>
    <source>Change Profile</source>
    <translation>Verander profiel</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="106"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="108"/>
    <source>Options</source>
    <translation>Opties</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="134"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="136"/>
    <source>Common</source>
    <translation>Gemeenschappelijk</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="137"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="139"/>
    <source>Appearance</source>
    <translation>Uiterlijk</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="165"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="167"/>
    <source>Common settings</source>
    <translation>Algemene instellingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="166"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
    <source>Show advanced options</source>
    <translation>Toon geavanceerde opties</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="170"/>
    <source>Auto run application on system startup</source>
    <translation>Start EYECU als systeem wordt opgestart</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="173"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="175"/>
    <source>Localization</source>
    <translation>Lokalisatie</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="198"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="200"/>
    <source>&lt;System Language&gt;</source>
    <translation>&lt;Systeem Taal&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="202"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="204"/>
    <source>Language:</source>
    <translation>Taal:</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
    <source>Options mode changed</source>
    <translation>Opties mode is veranderd</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="805"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation>Om opties om teschakelen, %1 moet worden geherstart.
 Wil je dat %1 wordt geherstart?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="855"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="857"/>
    <source>Display advanced options?</source>
    <translation>Toon geavanceerde opties?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="856"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="858"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="863"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="865"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
    <translation>Je kan altijd de optie veranderen op
 &lt;b&gt;Algemene&lt;/b&gt; pagina. </translation>

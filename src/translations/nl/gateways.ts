@@ -45,90 +45,90 @@
  <context>
   <name>Gateways</name>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="59"/>
-   <location filename="../../plugins/gateways/gateways.cpp" line="541"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="60"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="548"/>
    <source>Gateway Interaction</source>
    <translation>Gateway interactie</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="60"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="61"/>
    <source>Allows to simplify the interaction with transports to other IM systems</source>
    <translation>Toestaan om de interactie met transporten naar andere IM-systemen te vereenvoudigen</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="242"/>
-   <location filename="../../plugins/gateways/gateways.cpp" line="762"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="249"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="769"/>
    <source>Add Legacy User</source>
    <translation>Oude gebruiker toevoegen</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="314"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="321"/>
    <source>Log Out</source>
    <translation>Afmelden</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="542"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="549"/>
    <source>Supports the adding of the contact by the username of the legacy system</source>
    <translation>Ondersteunt de toevoeging van een contactpersoon door de gebruikersnaam van een oud systeem</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="727"/>
-   <location filename="../../plugins/gateways/gateways.cpp" line="896"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="734"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="904"/>
    <source>Remove transport and its contacts</source>
    <translation>Verwijder transport en contactpersonen</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/gateways/gateways.cpp" line="728"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
    <source>Are you sure you wish to remove transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
    <translation><numerusform>Bent je er zeker van om een transport te verwijderen &apos;&lt;b&gt;%1&lt;/b&gt;&apos; en zijn &lt;b&gt;%n contactpersoon&lt;/b&gt; van rooster?</numerusform><numerusform>Bent je er zeker van om een transport te verwijderen &apos;&lt;b&gt;%1&lt;/b&gt;&apos; en zijn &lt;b&gt;%n contactpersonen&lt;/b&gt; van rooster?</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="734"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="741"/>
    <source>Remove transports and their contacts</source>
    <translation>Verwijder transporter en zijn contactpersonen</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="742"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n transport(s)&lt;/b&gt; and their contacts from the roster?</source>
    <translation><numerusform>Bent je er zeker van om een transport&lt;/b&gt; te verwijderen &lt;b&gt;%n en zijn contactpersoon van rooster?</numerusform><numerusform>Bent je er zeker van om een transport&lt;/b&gt; te verwijderen &lt;b&gt;%n en zijn contactpersonen van rooster?</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="816"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="823"/>
    <source>Resolve nick names</source>
    <translation>Ontbind bijnamen</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="816"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="823"/>
    <source>Resolve nick name</source>
    <translation>Ontbind bijnaam</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="841"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick names</source>
    <translation>Reset bijnamen</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="841"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick name</source>
    <translation>Reset bijnaam</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="854"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="862"/>
    <source>Login on transport</source>
    <translation>Inloggen bij transport</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="863"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="871"/>
    <source>Logout from transport</source>
    <translation>Afmelden bij transport</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="883"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="891"/>
    <source>Keep connection</source>
    <translation>Verbinding houden</translation>
   </message>
   <message>
-   <location filename="../../plugins/gateways/gateways.cpp" line="1117"/>
+   <location filename="../../plugins/gateways/gateways.cpp" line="1123"/>
    <source>Use instead of</source>
    <translation>Gebruik in plaats van</translation>
   </message>

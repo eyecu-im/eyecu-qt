@@ -1686,7 +1686,7 @@
   </message>
   <message>
    <location line="117" filename="../../plugins/poi/poi.cpp"/>
-   <location line="2043" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2065" filename="../../plugins/poi/poi.cpp"/>
    <source>Building</source>
    <translation>Building</translation>
   </message>
@@ -2542,7 +2542,7 @@
   </message>
   <message>
    <location line="288" filename="../../plugins/poi/poi.cpp"/>
-   <location line="2025" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2047" filename="../../plugins/poi/poi.cpp"/>
    <source>Locality</source>
    <translation>Locality</translation>
   </message>
@@ -2764,7 +2764,7 @@
   <message>
    <location line="332" filename="../../plugins/poi/poi.cpp"/>
    <location line="528" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1678" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1700" filename="../../plugins/poi/poi.cpp"/>
    <source>None</source>
    <translation>None</translation>
   </message>
@@ -3779,7 +3779,7 @@
    <location line="663" filename="../../plugins/poi/poi.cpp"/>
    <location line="755" filename="../../plugins/poi/poi.cpp"/>
    <location line="874" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1611" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1633" filename="../../plugins/poi/poi.cpp"/>
    <source>Points of Interest</source>
    <translation>Points of Interest</translation>
   </message>
@@ -3823,7 +3823,7 @@
   </message>
   <message>
    <location line="657" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1807" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1829" filename="../../plugins/poi/poi.cpp"/>
    <source>Show</source>
    <translation>Show</translation>
   </message>
@@ -3835,7 +3835,7 @@
   </message>
   <message>
    <location line="658" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1817" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1839" filename="../../plugins/poi/poi.cpp"/>
    <source>Save</source>
    <translation>Save</translation>
   </message>
@@ -3847,7 +3847,7 @@
   </message>
   <message>
    <location line="659" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1823" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1845" filename="../../plugins/poi/poi.cpp"/>
    <source>Edit</source>
    <translation>Edit</translation>
   </message>
@@ -3859,7 +3859,7 @@
   </message>
   <message>
    <location line="660" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1850" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1872" filename="../../plugins/poi/poi.cpp"/>
    <source>Delete</source>
    <translation>Delete</translation>
   </message>
@@ -3871,7 +3871,7 @@
   </message>
   <message>
    <location line="661" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1845" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1867" filename="../../plugins/poi/poi.cpp"/>
    <source>Remove</source>
    <translation>Remove</translation>
   </message>
@@ -3883,7 +3883,7 @@
   </message>
   <message>
    <location line="662" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1834" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1856" filename="../../plugins/poi/poi.cpp"/>
    <source>Open URL</source>
    <translation>Open URL</translation>
   </message>
@@ -3896,7 +3896,7 @@
   <message>
    <location line="664" filename="../../plugins/poi/poi.cpp"/>
    <location line="1124" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1616" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1638" filename="../../plugins/poi/poi.cpp"/>
    <source>Insert POI</source>
    <translation>Insert POI</translation>
   </message>
@@ -3910,7 +3910,7 @@
    <location line="665" filename="../../plugins/poi/poi.cpp"/>
    <location line="1134" filename="../../plugins/poi/poi.cpp"/>
    <location line="1173" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1626" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1648" filename="../../plugins/poi/poi.cpp"/>
    <source>Insert location</source>
    <translation>Insert location</translation>
   </message>
@@ -3949,7 +3949,7 @@
   </message>
   <message>
    <location line="711" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1237" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1242" filename="../../plugins/poi/poi.cpp"/>
    <source>POI list</source>
    <translation>POI list</translation>
   </message>
@@ -3985,13 +3985,13 @@
   </message>
   <message>
    <location line="908" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1936" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1958" filename="../../plugins/poi/poi.cpp"/>
    <source>%1S</source>
    <translation>%1S</translation>
   </message>
   <message>
    <location line="908" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1936" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1958" filename="../../plugins/poi/poi.cpp"/>
    <source>%1N</source>
    <translation>%1N</translation>
   </message>
@@ -4002,19 +4002,19 @@
   </message>
   <message>
    <location line="916" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1937" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1959" filename="../../plugins/poi/poi.cpp"/>
    <source>%1W</source>
    <translation>%1W</translation>
   </message>
   <message>
    <location line="916" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1937" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1959" filename="../../plugins/poi/poi.cpp"/>
    <source>%1E</source>
    <translation>%1E</translation>
   </message>
   <message>
    <location line="1048" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1993" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2015" filename="../../plugins/poi/poi.cpp"/>
    <source>Location</source>
    <translation>Location</translation>
   </message>
@@ -4025,13 +4025,13 @@
   </message>
   <message>
    <location line="1077" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1988" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2010" filename="../../plugins/poi/poi.cpp"/>
    <source>Description</source>
    <translation>Description</translation>
   </message>
   <message>
    <location line="1119" filename="../../plugins/poi/poi.cpp"/>
-   <location line="1250" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1255" filename="../../plugins/poi/poi.cpp"/>
    <source>Add POI</source>
    <translation>Add POI</translation>
   </message>
@@ -4041,92 +4041,92 @@
    <translation>Insert point of interest</translation>
   </message>
   <message>
-   <location line="1405" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1416" filename="../../plugins/poi/poi.cpp"/>
    <source>Add new point of interest</source>
    <translation>Add new point of interest</translation>
   </message>
   <message>
-   <location line="1444" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1462" filename="../../plugins/poi/poi.cpp"/>
    <source>Point of interest list</source>
    <translation>Point of interest list</translation>
   </message>
   <message>
-   <location line="1445" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1461" filename="../../plugins/poi/poi.cpp"/>
    <source>Point of interest list for %1</source>
    <translation>Point of interest list for %1</translation>
   </message>
   <message>
-   <location line="1488" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1510" filename="../../plugins/poi/poi.cpp"/>
    <source>Are you sure?</source>
    <translation>Are you sure?</translation>
   </message>
   <message>
-   <location line="1489" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1511" filename="../../plugins/poi/poi.cpp"/>
    <source>Delete POI %1</source>
    <translation>Delete POI %1</translation>
   </message>
   <message>
-   <location line="1502" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1524" filename="../../plugins/poi/poi.cpp"/>
    <source>Edit point of interest</source>
    <translation>Edit point of interest</translation>
   </message>
   <message>
-   <location line="1519" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1541" filename="../../plugins/poi/poi.cpp"/>
    <source>Save point of interest</source>
    <translation>Save point of interest</translation>
   </message>
   <message>
-   <location line="1936" filename="../../plugins/poi/poi.cpp"/>
+   <location line="1958" filename="../../plugins/poi/poi.cpp"/>
    <source>%1, %2</source>
    <translation>%1, %2</translation>
   </message>
   <message>
-   <location line="1999" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2021" filename="../../plugins/poi/poi.cpp"/>
    <source>Type</source>
    <translation>Type</translation>
   </message>
   <message>
-   <location line="2005" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2027" filename="../../plugins/poi/poi.cpp"/>
    <source>Country</source>
    <translation>Country</translation>
   </message>
   <message>
-   <location line="2019" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2041" filename="../../plugins/poi/poi.cpp"/>
    <source>Region</source>
    <translation>Region</translation>
   </message>
   <message>
-   <location line="2031" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2053" filename="../../plugins/poi/poi.cpp"/>
    <source>Area</source>
    <translation>Area</translation>
   </message>
   <message>
-   <location line="2037" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2059" filename="../../plugins/poi/poi.cpp"/>
    <source>Street</source>
    <translation>Street</translation>
   </message>
   <message>
-   <location line="2049" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2071" filename="../../plugins/poi/poi.cpp"/>
    <source>Floor</source>
    <translation>Floor</translation>
   </message>
   <message>
-   <location line="2055" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2077" filename="../../plugins/poi/poi.cpp"/>
    <source>Room</source>
    <translation>Room</translation>
   </message>
   <message>
-   <location line="2061" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2083" filename="../../plugins/poi/poi.cpp"/>
    <source>Postal code</source>
    <translation>Postal code</translation>
   </message>
   <message>
-   <location line="2067" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2089" filename="../../plugins/poi/poi.cpp"/>
    <source>Timestamp</source>
    <translation>Timestamp</translation>
   </message>
   <message>
-   <location line="2073" filename="../../plugins/poi/poi.cpp"/>
+   <location line="2095" filename="../../plugins/poi/poi.cpp"/>
    <source>URI</source>
    <translation>URI</translation>
   </message>

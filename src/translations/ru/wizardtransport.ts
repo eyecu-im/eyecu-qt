@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -465,10 +465,6 @@ If you receive such message, please rerun the Wizard to register at transport wi
     <message>
         <source>Wizard, which helps to connect to legacy networks via XMPP transports (gateways)</source>
         <translation>Мастер, помогающий полключиться к сторонним сетям через XMPP-транспорты (шлюзы)</translation>
-    </message>
-    <message>
-        <source>Transport Wizard</source>
-        <translation>Мастер Транспортов</translation>
     </message>
     <message>
         <source>Change transport</source>
