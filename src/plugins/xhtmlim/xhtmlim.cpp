@@ -482,8 +482,6 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 
 			menu->addAction(style->menuAction(), AG_XHTMLIM_FONT);
 
-
-
 			// *** Capitalization submenu ***
 			Menu *capitalization = new Menu(menu);
 			capitalization->setTitle(tr("Capitalization"));
@@ -496,8 +494,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 //			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			mixed->setData(ADR_CAPITALIZATION_TYPE, CPT_MIXED);
 			mixed->setCheckable(true);
-			if (charFormat.hasProperty(QTextFormat::FontCapitalization) && charFormat.fontCapitalization()==QFont::MixedCase)
-				mixed->setChecked(true);
+			if (charFormat.fontCapitalization()==QFont::MixedCase)
+			{
+				capitalization->setIcon(mixed->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					mixed->setChecked(true);
+			}
 			connect(mixed, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(mixed, AG_XHTMLIM_FONT);
 
@@ -508,8 +510,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 //			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			smallCaps->setData(ADR_CAPITALIZATION_TYPE, CPT_SMALLCAPS);
 			smallCaps->setCheckable(true);
-			if (charFormat.hasProperty(QTextFormat::FontCapitalization) && charFormat.fontCapitalization()==QFont::SmallCaps)
-				smallCaps->setChecked(true);
+			if (charFormat.fontCapitalization()==QFont::MixedCase)
+			{
+				capitalization->setIcon(smallCaps->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					smallCaps->setChecked(true);
+			}
 			connect(smallCaps, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(smallCaps, AG_XHTMLIM_FONT);
 
@@ -520,8 +526,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 //			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			allUppercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLUPPER);
 			allUppercase->setCheckable(true);
-			if (charFormat.hasProperty(QTextFormat::FontCapitalization) && charFormat.fontCapitalization()==QFont::AllUppercase)
-				allUppercase->setChecked(true);
+			if (charFormat.fontCapitalization()==QFont::AllUppercase)
+			{
+				capitalization->setIcon(allUppercase->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					allUppercase->setChecked(true);
+			}
 			connect(allUppercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(allUppercase, AG_XHTMLIM_FONT);
 
@@ -532,8 +542,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 //			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			allLowercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLLOWER);
 			allLowercase->setCheckable(true);
-			if (charFormat.hasProperty(QTextFormat::FontCapitalization) && charFormat.fontCapitalization()==QFont::AllLowercase)
-				allLowercase->setChecked(true);
+			if (charFormat.fontCapitalization()==QFont::AllLowercase)
+			{
+				capitalization->setIcon(allLowercase->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					allLowercase->setChecked(true);
+			}
 			connect(allLowercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(allLowercase, AG_XHTMLIM_FONT);
 
@@ -544,8 +558,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 //			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			capitalize->setData(ADR_CAPITALIZATION_TYPE, CPT_CAPITALIZE);
 			capitalize->setCheckable(true);
-			if (charFormat.hasProperty(QTextFormat::FontCapitalization) && charFormat.fontCapitalization()==QFont::Capitalize)
-				capitalize->setChecked(true);
+			if (charFormat.fontCapitalization()==QFont::Capitalize)
+			{
+				capitalization->setIcon(capitalize->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					capitalize->setChecked(true);
+			}
 			connect(capitalize, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(capitalize, AG_XHTMLIM_FONT);
 

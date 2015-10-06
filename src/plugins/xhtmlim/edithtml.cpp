@@ -27,6 +27,7 @@
 #include "settooltip.h"
 
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
+#define ADR_CAPITALIZATION_TYPE Action::DR_Parametr1
 #define ADR_ALIGN_TYPE      Action::DR_Parametr1
 #define ADR_LIST_TYPE       Action::DR_Parametr1
 #define ADR_FORMATTING_TYPE Action::DR_Parametr1
@@ -37,6 +38,12 @@
 #define DT_UNDERLINE 3
 #define DT_OVERLINE	 4
 #define DT_STRIKEOUT 5
+
+#define CPT_MIXED      0
+#define CPT_SMALLCAPS  1
+#define CPT_ALLUPPER   2
+#define CPT_ALLLOWER   3
+#define CPT_CAPITALIZE 4
 
 #define FMT_NORMAL          0
 #define FMT_HEADING1        1
@@ -158,6 +165,71 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	FActionTextStrikeout->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextStrikeout, AG_XHTMLIM_FONT);
 
+
+
+
+	// *** Capitalization submenu ***
+	FMenuCapitalization = new Menu(this);
+	FMenuCapitalization->setTitle(tr("Capitalization"));
+	FMenuCapitalization->setIcon(QIcon::fromTheme("format-text-capitalization", FIconStorage->getIcon(XHI_CAPS_MIXED)));
+	QActionGroup *group=new QActionGroup(FMenuCapitalization);
+
+	//  Mixed case
+	FActionMixed = new Action(group);
+	FActionMixed->setIcon(QIcon::fromTheme("format-text-capitalization-mixedcase",FIconStorage->getIcon(XHI_CAPS_MIXED)));
+	FActionMixed->setText(tr("Mixed case"));
+//			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+	FActionMixed->setData(ADR_CAPITALIZATION_TYPE, CPT_MIXED);
+	FActionMixed->setCheckable(true);
+	connect(FActionMixed, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+	FMenuCapitalization->addAction(FActionMixed, AG_XHTMLIM_FONT);
+
+	//  Small caps
+	FActionSmallCaps = new Action(group);
+	FActionSmallCaps->setIcon(QIcon::fromTheme("format-text-capitalization-smallcaps",FIconStorage->getIcon(XHI_CAPS_SMALLCAPS)));
+	FActionSmallCaps->setText(tr("Small caps"));
+//			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+	FActionSmallCaps->setData(ADR_CAPITALIZATION_TYPE, CPT_SMALLCAPS);
+	FActionSmallCaps->setCheckable(true);
+	connect(FActionSmallCaps, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+	FMenuCapitalization->addAction(FActionSmallCaps, AG_XHTMLIM_FONT);
+
+	//  All uppercase
+	FActionAllUppercase = new Action(group);
+	FActionAllUppercase->setIcon(QIcon::fromTheme("format-text-capitalization-alluppercase",FIconStorage->getIcon(XHI_CAPS_ALLUPPER)));
+	FActionAllUppercase->setText(tr("All uppercase"));
+//			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+	FActionAllUppercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLUPPER);
+	FActionAllUppercase->setCheckable(true);
+	connect(FActionAllUppercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+	FMenuCapitalization->addAction(FActionAllUppercase, AG_XHTMLIM_FONT);
+
+	//  All lowercase
+	FActionAllLowercase = new Action(group);
+	FActionAllLowercase->setIcon(QIcon::fromTheme("format-text-capitalization-alllowercase",FIconStorage->getIcon(XHI_CAPS_ALLLOWER)));
+	FActionAllLowercase->setText(tr("All lowercase"));
+//			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+	FActionAllLowercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLLOWER);
+	FActionAllLowercase->setCheckable(true);
+	connect(FActionAllLowercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+	FMenuCapitalization->addAction(FActionAllLowercase, AG_XHTMLIM_FONT);
+
+	//  All lowercase
+	FActionCapitalize = new Action(group);
+	FActionCapitalize->setIcon(QIcon::fromTheme("format-text-capitalization-capitalize",FIconStorage->getIcon(XHI_CAPS_CAPITALIZE)));
+	FActionCapitalize->setText(tr("Capitalize"));
+//			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+	FActionCapitalize->setData(ADR_CAPITALIZATION_TYPE, CPT_CAPITALIZE);
+	FActionCapitalize->setCheckable(true);
+	connect(FActionCapitalize, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+	FMenuCapitalization->addAction(FActionCapitalize, AG_XHTMLIM_FONT);
+
+	FToolBarChanger->insertAction(FMenuCapitalization->menuAction(), AG_XHTMLIM_FONT)->setPopupMode(QToolButton::InstantPopup);;
+
+
+
+
+
 	//  Code
 	FActionTextCode=new Action(this);
 	FActionTextCode->setIcon(QIcon::fromTheme("format-text-code", FIconStorage->getIcon(XHI_CODE)));
@@ -211,7 +283,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
 	special->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
 	connect(special->menuAction(), SIGNAL(triggered()), SLOT(onInsertSpecial()));
-	QActionGroup *group=new QActionGroup(special);
+	group=new QActionGroup(special);
 
 	Action *action = new Action(group);
 	action->setText(tr("Non-breaking space"));
@@ -532,13 +604,8 @@ void EditHtml::onMessageSent()
 
 void EditHtml::onOptionsChanged(const OptionsNode &ANode)
 {
-	qDebug() << "EditHtml::onOptionsChanged(" << ANode.path() << ")";
-	qDebug() << "value=" << ANode.value();
 	if (ANode.path() == OPV_XHTML_FORMATAUTORESET)
-	{
-		qDebug() << "checking...";
 		FActionAutoRemoveFormat->setChecked(ANode.value().toBool());
-	}
 }
 
 void EditHtml::onShortcutActivated(const QString &AId, QWidget *AWidget)
@@ -816,6 +883,31 @@ void EditHtml::onSelectDecoration(bool ASelected)
 		case DT_STRIKEOUT:
 			qDebug() << "Set strikeout!";
 			charFormat.setFontStrikeOut(ASelected);
+			break;
+	}
+	mergeFormatOnWordOrSelection(charFormat);
+}
+
+void EditHtml::onSelectCapitalization()
+{
+	Action *action = qobject_cast<Action *>(sender());
+	QTextCharFormat charFormat;
+	switch (action->data(ADR_CAPITALIZATION_TYPE).toInt())
+	{
+		case CPT_ALLLOWER:
+			charFormat.setFontCapitalization(QFont::AllLowercase);
+			break;
+		case CPT_ALLUPPER:
+			charFormat.setFontCapitalization(QFont::AllUppercase);
+			break;
+		case CPT_CAPITALIZE:
+			charFormat.setFontCapitalization(QFont::Capitalize);
+			break;
+		case CPT_SMALLCAPS:
+			charFormat.setFontCapitalization(QFont::SmallCaps);
+			break;
+		case CPT_MIXED:
+			charFormat.setFontCapitalization(QFont::MixedCase);
 			break;
 	}
 	mergeFormatOnWordOrSelection(charFormat);
@@ -1294,6 +1386,35 @@ void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 	else
 		FColorToolButton->setBackgroundColor(FTextEdit->palette().background().color());
 	FActionSetTitle->setChecked(ACharFormat.hasProperty(QTextFormat::TextToolTip));
+
+	switch (ACharFormat.fontCapitalization())
+	{
+		case QFont::MixedCase:
+			FMenuCapitalization->setIcon(FActionMixed->icon());
+			if (ACharFormat.hasProperty(QTextFormat::FontCapitalization))
+				FActionMixed->setChecked(true);
+			break;
+		case QFont::SmallCaps:
+			FMenuCapitalization->setIcon(FActionSmallCaps->icon());
+			if (ACharFormat.hasProperty(QTextFormat::FontCapitalization))
+				FActionSmallCaps->setChecked(true);
+			break;
+		case QFont::AllUppercase:
+			FMenuCapitalization->setIcon(FActionAllUppercase->icon());
+			if (ACharFormat.hasProperty(QTextFormat::FontCapitalization))
+				FActionAllUppercase->setChecked(true);
+			break;
+		case QFont::AllLowercase:
+			FMenuCapitalization->setIcon(FActionAllLowercase->icon());
+			if (ACharFormat.hasProperty(QTextFormat::FontCapitalization))
+				FActionAllLowercase->setChecked(true);
+			break;
+		case QFont::Capitalize:
+			FMenuCapitalization->setIcon(FActionCapitalize->icon());
+			if (ACharFormat.hasProperty(QTextFormat::FontCapitalization))
+				FActionCapitalize->setChecked(true);
+			break;
+	}
 }
 
 void EditHtml::fontChanged(const QTextCharFormat &ACharFormat)

@@ -50,6 +50,13 @@ private:
             *FActionIndentMore,
             *FActionIndentLess;
 
+	Menu	*FMenuCapitalization;
+	Action  *FActionMixed;
+	Action	*FActionSmallCaps;
+	Action	*FActionAllUppercase;
+	Action	*FActionAllLowercase;
+	Action	*FActionCapitalize;
+
     Menu    *FMenuAlign;
     Action  *FActionLastAlign;
 
@@ -85,8 +92,6 @@ protected:
     void updateCurrentList(const QTextCursor &ACursor);
     void updateCurrentBlock(const QTextCursor &ACursor);
 
-//    static int  checkBlockFormat(const QTextCursor &ACursor);
-//    static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
     static QTextFragment getTextFragment(const QTextCursor &ACursor);
     static void selectTextFragment(QTextCursor &ACursor);
 
@@ -96,15 +101,10 @@ protected slots:
     void onInsertImage();
     void onSetToolTip();
     void onInsertLink();
-//    void onTextBold();
-//    void onTextItalic();
-//    void onTextUnderline();
-//    void onTextOverline();
-//    void onTextStrikeout();
 	void onSelectDecoration(bool ASelected);
+	void onSelectCapitalization();
     void onTextCode();
     void onCurrentFontFamilyChanged(const QFont &AFont);
-//    void onCurrentFontIndexChanged(int AIndex);
     void onCurrentFontSizeChanged(const QString &ASize);
     void onInsertList();
     void onSetFormat();
