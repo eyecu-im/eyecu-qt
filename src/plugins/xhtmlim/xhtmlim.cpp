@@ -171,6 +171,11 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, tr("Underline"), tr("Ctrl+U", "Underline"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, tr("Overline"), tr("Ctrl+Y", "Overline"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, tr("Strikeout"), tr("Ctrl+S", "Strikeout"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, tr("Mixed case"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, tr("Small caps"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, tr("Capitalize"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, tr("All uppercase"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, tr("All lowercase"), QString(), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, tr("Code"), tr("Alt+C", "Code"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, tr("Font"), tr("Ctrl+F", "Font"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, tr("Foreground color"), tr("Alt+F", "Foreground color"), Shortcuts::WindowShortcut);
@@ -491,7 +496,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *mixed = new Action(capitalization);
 			mixed->setIcon(QIcon::fromTheme("format-text-capitalization-mixedcase",FIconStorage->getIcon(XHI_CAPS_MIXED)));
 			mixed->setText(tr("Mixed case"));
-//			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED);
 			mixed->setData(ADR_CAPITALIZATION_TYPE, CPT_MIXED);
 			mixed->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::MixedCase)
@@ -507,10 +512,10 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *smallCaps = new Action(capitalization);
 			smallCaps->setIcon(QIcon::fromTheme("format-text-capitalization-smallcaps",FIconStorage->getIcon(XHI_CAPS_SMALLCAPS)));
 			smallCaps->setText(tr("Small caps"));
-//			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL);
 			smallCaps->setData(ADR_CAPITALIZATION_TYPE, CPT_SMALLCAPS);
 			smallCaps->setCheckable(true);
-			if (charFormat.fontCapitalization()==QFont::MixedCase)
+			if (charFormat.fontCapitalization()==QFont::SmallCaps)
 			{
 				capitalization->setIcon(smallCaps->icon());
 				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
@@ -523,7 +528,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *allUppercase = new Action(capitalization);
 			allUppercase->setIcon(QIcon::fromTheme("format-text-capitalization-alluppercase",FIconStorage->getIcon(XHI_CAPS_ALLUPPER)));
 			allUppercase->setText(tr("All uppercase"));
-//			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER);
 			allUppercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLUPPER);
 			allUppercase->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::AllUppercase)
@@ -539,7 +544,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *allLowercase = new Action(capitalization);
 			allLowercase->setIcon(QIcon::fromTheme("format-text-capitalization-alllowercase",FIconStorage->getIcon(XHI_CAPS_ALLLOWER)));
 			allLowercase->setText(tr("All lowercase"));
-//			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER);
 			allLowercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLLOWER);
 			allLowercase->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::AllLowercase)
@@ -555,7 +560,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *capitalize = new Action(capitalization);
 			capitalize->setIcon(QIcon::fromTheme("format-text-capitalization-capitalize",FIconStorage->getIcon(XHI_CAPS_CAPITALIZE)));
 			capitalize->setText(tr("Capitalize"));
-//			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
+			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE);
 			capitalize->setData(ADR_CAPITALIZATION_TYPE, CPT_CAPITALIZE);
 			capitalize->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::Capitalize)

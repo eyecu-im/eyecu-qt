@@ -1374,6 +1374,7 @@ void EditHtml::onRemoveFormat()
 
 void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 {
+	qDebug() << "EditHtml::onCurrentCharFormatChanged()";
 	fontChanged(ACharFormat);
 	QBrush brush=ACharFormat.foreground();
 	if (brush.style())
@@ -1386,6 +1387,8 @@ void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 	else
 		FColorToolButton->setBackgroundColor(FTextEdit->palette().background().color());
 	FActionSetTitle->setChecked(ACharFormat.hasProperty(QTextFormat::TextToolTip));
+
+	qDebug() << "ACharFormat.fontCapitalization()=" << ACharFormat.fontCapitalization();
 
 	switch (ACharFormat.fontCapitalization())
 	{
