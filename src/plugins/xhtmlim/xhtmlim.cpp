@@ -50,6 +50,7 @@
 #include "settooltip.h"
 
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
+#define ADR_CAPITALIZATION_TYPE Action::DR_Parametr1
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
 #define ADR_COLOR_TYPE		Action::DR_Parametr1
 #define ADR_INDENT			Action::DR_Parametr1
@@ -62,6 +63,12 @@
 #define DT_UNDERLINE 3
 #define DT_OVERLINE	 4
 #define DT_STRIKEOUT 5
+
+#define CPT_MIXED      0
+#define CPT_SMALLCAPS  1
+#define CPT_ALLUPPER   2
+#define CPT_ALLLOWER   3
+#define CPT_CAPITALIZE 4
 
 #define CT_FOREGROUND 0
 #define CT_BACKGROUND 1
@@ -164,6 +171,11 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, tr("Underline"), tr("Ctrl+U", "Underline"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, tr("Overline"), tr("Ctrl+Y", "Overline"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, tr("Strikeout"), tr("Ctrl+S", "Strikeout"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, tr("Mixed case"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, tr("Small caps"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, tr("Capitalize"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, tr("All uppercase"), QString(), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, tr("All lowercase"), QString(), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, tr("Code"), tr("Alt+C", "Code"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, tr("Font"), tr("Ctrl+F", "Font"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, tr("Foreground color"), tr("Alt+F", "Foreground color"), Shortcuts::WindowShortcut);
@@ -416,7 +428,6 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			font->setCheckable(false);
 			menu->addAction(font, AG_XHTMLIM_FONT);
 
-
 			// *** Style submenu ***
 			Menu *style = new Menu(menu);
 			style->setTitle(tr("Style"));
@@ -475,6 +486,93 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			style->addAction(strikeout, AG_XHTMLIM_FONT);
 
 			menu->addAction(style->menuAction(), AG_XHTMLIM_FONT);
+
+			// *** Capitalization submenu ***
+			Menu *capitalization = new Menu(menu);
+			capitalization->setTitle(tr("Capitalization"));
+			capitalization->setIcon(QIcon::fromTheme("format-text-capitalization", FIconStorage->getIcon(XHI_CAPS_MIXED)));
+
+			//  Mixed case
+			Action *mixed = new Action(capitalization);
+			mixed->setIcon(QIcon::fromTheme("format-text-capitalization-mixedcase",FIconStorage->getIcon(XHI_CAPS_MIXED)));
+			mixed->setText(tr("Mixed case"));
+			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED);
+			mixed->setData(ADR_CAPITALIZATION_TYPE, CPT_MIXED);
+			mixed->setCheckable(true);
+			if (charFormat.fontCapitalization()==QFont::MixedCase)
+			{
+				capitalization->setIcon(mixed->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					mixed->setChecked(true);
+			}
+			connect(mixed, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+			capitalization->addAction(mixed, AG_XHTMLIM_FONT);
+
+			//  Small caps
+			Action *smallCaps = new Action(capitalization);
+			smallCaps->setIcon(QIcon::fromTheme("format-text-capitalization-smallcaps",FIconStorage->getIcon(XHI_CAPS_SMALLCAPS)));
+			smallCaps->setText(tr("Small caps"));
+			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL);
+			smallCaps->setData(ADR_CAPITALIZATION_TYPE, CPT_SMALLCAPS);
+			smallCaps->setCheckable(true);
+			if (charFormat.fontCapitalization()==QFont::SmallCaps)
+			{
+				capitalization->setIcon(smallCaps->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					smallCaps->setChecked(true);
+			}
+			connect(smallCaps, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+			capitalization->addAction(smallCaps, AG_XHTMLIM_FONT);
+
+			//  All uppercase
+			Action *allUppercase = new Action(capitalization);
+			allUppercase->setIcon(QIcon::fromTheme("format-text-capitalization-alluppercase",FIconStorage->getIcon(XHI_CAPS_ALLUPPER)));
+			allUppercase->setText(tr("All uppercase"));
+			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER);
+			allUppercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLUPPER);
+			allUppercase->setCheckable(true);
+			if (charFormat.fontCapitalization()==QFont::AllUppercase)
+			{
+				capitalization->setIcon(allUppercase->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					allUppercase->setChecked(true);
+			}
+			connect(allUppercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+			capitalization->addAction(allUppercase, AG_XHTMLIM_FONT);
+
+			//  All lowercase
+			Action *allLowercase = new Action(capitalization);
+			allLowercase->setIcon(QIcon::fromTheme("format-text-capitalization-alllowercase",FIconStorage->getIcon(XHI_CAPS_ALLLOWER)));
+			allLowercase->setText(tr("All lowercase"));
+			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER);
+			allLowercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLLOWER);
+			allLowercase->setCheckable(true);
+			if (charFormat.fontCapitalization()==QFont::AllLowercase)
+			{
+				capitalization->setIcon(allLowercase->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					allLowercase->setChecked(true);
+			}
+			connect(allLowercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+			capitalization->addAction(allLowercase, AG_XHTMLIM_FONT);
+
+			//  All lowercase
+			Action *capitalize = new Action(capitalization);
+			capitalize->setIcon(QIcon::fromTheme("format-text-capitalization-capitalize",FIconStorage->getIcon(XHI_CAPS_CAPITALIZE)));
+			capitalize->setText(tr("Capitalize"));
+			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE);
+			capitalize->setData(ADR_CAPITALIZATION_TYPE, CPT_CAPITALIZE);
+			capitalize->setCheckable(true);
+			if (charFormat.fontCapitalization()==QFont::Capitalize)
+			{
+				capitalization->setIcon(capitalize->icon());
+				if (charFormat.hasProperty(QTextFormat::FontCapitalization))
+					capitalize->setChecked(true);
+			}
+			connect(capitalize, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
+			capitalization->addAction(capitalize, AG_XHTMLIM_FONT);
+
+			menu->addAction(capitalization->menuAction(), AG_XHTMLIM_FONT);
 
 			//  Code
 			Action *code=new Action(menu);
@@ -954,8 +1052,7 @@ void XhtmlIm::onSelectFont()
 void XhtmlIm::onSelectDecoration(bool ASelected)
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QTextCursor cursor = getCursor();
-	QTextCharFormat charFormat = cursor.charFormat();
+	QTextCharFormat charFormat;
 	switch (action->data(ADR_DECORATION_TYPE).toInt())
 	{
 		case DT_BOLD:
@@ -974,7 +1071,32 @@ void XhtmlIm::onSelectDecoration(bool ASelected)
 			charFormat.setFontStrikeOut(ASelected);
 			break;
 	}
-	mergeFormatOnWordOrSelection(cursor, charFormat);
+	mergeFormatOnWordOrSelection(getCursor(), charFormat);
+}
+
+void XhtmlIm::onSelectCapitalization()
+{
+	Action *action = qobject_cast<Action *>(sender());
+	QTextCharFormat charFormat;
+	switch (action->data(ADR_CAPITALIZATION_TYPE).toInt())
+	{
+		case CPT_ALLLOWER:
+			charFormat.setFontCapitalization(QFont::AllLowercase);
+			break;
+		case CPT_ALLUPPER:
+			charFormat.setFontCapitalization(QFont::AllUppercase);
+			break;
+		case CPT_CAPITALIZE:
+			charFormat.setFontCapitalization(QFont::Capitalize);
+			break;
+		case CPT_SMALLCAPS:
+			charFormat.setFontCapitalization(QFont::SmallCaps);
+			break;
+		case CPT_MIXED:
+			charFormat.setFontCapitalization(QFont::MixedCase);
+			break;
+	}
+	mergeFormatOnWordOrSelection(getCursor(), charFormat);
 }
 
 void XhtmlIm::onInsertLink()

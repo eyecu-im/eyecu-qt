@@ -206,6 +206,30 @@
       <source>Strikeout</source>
       <translation>Перечёркнутый</translation>
     </message>
+    <message>
+      <source>Capitalization</source>
+      <translation>Капитализация</translation>
+    </message>
+    <message>
+      <source>Mixed case</source>
+      <translation>Смешанная</translation>
+    </message>
+    <message>
+      <source>Small caps</source>
+      <translation>Капитель</translation>
+    </message>
+    <message>
+      <source>All uppercase</source>
+      <translation>Только заглавные</translation>
+    </message>
+    <message>
+      <source>All lowercase</source>
+      <translation>Только строчные</translation>
+    </message>
+    <message>
+      <source>Capitalize</source>
+      <translation>Первая заглавная</translation>
+    </message>
   </context>
   <context>
     <name>InsertImage</name>
@@ -818,6 +842,30 @@
     <message>
       <source>Style</source>
       <translation>Стиль</translation>
+    </message>
+    <message>
+      <source>Small caps</source>
+      <translation>Капитель</translation>
+    </message>
+    <message>
+      <source>Capitalize</source>
+      <translation>Первая заглавная</translation>
+    </message>
+    <message>
+      <source>All uppercase</source>
+      <translation>Только заглавные</translation>
+    </message>
+    <message>
+      <source>All lowercase</source>
+      <translation>Только строчные</translation>
+    </message>
+    <message>
+      <source>Capitalization</source>
+      <translation>Капитализация</translation>
+    </message>
+    <message>
+      <source>Mixed case</source>
+      <translation>Смешанная</translation>
     </message>
   </context>
   <context>
