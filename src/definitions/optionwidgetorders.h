@@ -180,8 +180,9 @@
 #define   OWO_APPEARANCE_STATUSICONS              430
 #define OHO_APPEARANCE_MESSAGES                   700
 #define   OWO_APPEARANCE_EMOTICONS                730
-
 // *** <<< eyeCU <<< ***
+#define   OWO_APPEARANCE_EMOJI                    740
+
 #define OWO_MEDIAFILES_PLAY                       200
 #define OHO_MAP_GENERAL                           500
 #define   OWO_MAP_LOADING                         510

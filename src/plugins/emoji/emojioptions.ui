@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EmojiOptionsClass</class>
+ <widget class="QWidget" name="EmojiOptionsClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>421</width>
+    <height>405</height>
+   </rect>
+  </property>
+  <layout class="QHBoxLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="lblEmoticons">
+     <property name="text">
+      <string>Emoji sets:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QListWidget" name="lwtEmoticons">
+     <property name="whatsThis">
+      <string>Here you can select emoji sets and mark those of them to be used</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wdtButtons" native="true">
+     <layout class="QVBoxLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="tbtUp">
+        <property name="statusTip">
+         <string>Priority Up</string>
+        </property>
+        <property name="whatsThis">
+         <string>Click this button to rise priority of selected emoji set</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="tbtDown">
+        <property name="statusTip">
+         <string>Priority Down</string>
+        </property>
+        <property name="whatsThis">
+         <string>Click this button to lower prioroty of selected emoji set</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

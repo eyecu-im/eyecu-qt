@@ -8,6 +8,8 @@
 #define RSR_STORAGE_SOUNDS                  "sounds"
 #define RSR_STORAGE_ADIUMMESSAGESTYLES      "adiummessagestyles"
 #define RSR_STORAGE_SIMPLEMESSAGESTYLES     "simplemessagestyles"
+// *** <<< eyeCU <<< ***
+#define RSR_STORAGE_EMOJI                   "emoji"
 #define RSR_STORAGE_MAPICONS                "mapicons"
 #define RSR_STORAGE_MAPSEARCH_NAVITEL       "navitel"
 #define RSR_STORAGE_ACTIVITY                "activityicons"
@@ -20,4 +22,5 @@
 #define RSR_STORAGE_CLIENTICONS             "clienticons"
 #define RSR_STORAGE_ABBREVIATIONS           "abbreviations"
 #define RSR_STORAGE_WIZARDS                 "wizards"
+// *** >>> eyeCU >>> ***
 #endif

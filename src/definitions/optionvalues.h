@@ -123,6 +123,9 @@
 // Emoticons
 #define OPV_MESSAGES_EMOTICONS_ICONSET                  "messages.emoticons.iconset"
 #define OPV_MESSAGES_EMOTICONS_MAXINMESSAGE             "messages.emoticons.max-in-message"
+// *** <<< eyeCU <<< ***
+#define OPV_MESSAGES_EMOJI_ICONSETS                     "messages.emoji.iconsets"
+// *** >>> eyeCU >>> ***
 // ChatStates
 #define OPV_MESSAGES_CHATSTATESENABLED                  "messages.chatstates-enabled"
 // NormalMessageHandler

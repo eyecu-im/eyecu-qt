@@ -29,6 +29,10 @@ source_lang = en
 file_filter = <lang>/emoticons.ts
 source_lang = en
 
+[eyecu-qt.emojits]
+file_filter = <lang>/emoji.ts
+source_lang = en
+
 [eyecu-qt.gatewaysts]
 file_filter = <lang>/gateways.ts
 source_lang = en

@@ -131,6 +131,7 @@ SUBDIRS += xhtmlim
 SUBDIRS += mapmagnifier 
 SUBDIRS += boburlhandler 
 SUBDIRS += clienticons
+SUBDIRS += emoji
 SUBDIRS += abbreviations
 contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += mmplayer
 contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): CONFIG(debug, debug|release): SUBDIRS += jingle
