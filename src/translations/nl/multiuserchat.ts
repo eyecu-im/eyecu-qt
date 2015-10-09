@@ -62,7 +62,8 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-Check de waarden en probeer opnieuw </translation>
+   <translation>Conferentie parameters zijn niet geaccepteerd
+Check de waarden en probeer opnieuw</translation>
   </message>
  </context>
  <context>
