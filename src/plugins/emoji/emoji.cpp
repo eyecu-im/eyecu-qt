@@ -254,21 +254,40 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 						{
 							int keyLength = 0;
 							const EmoticonTreeItem *item = &FRootTreeItem;
+							QString key;
 							while (item && keyLength<=searchText.length()-keyPos && fragment.position()+keyPos+keyLength<=stopPos)
 							{
-								const QChar nextChar = keyPos+keyLength<searchText.length() ? searchText.at(keyPos+keyLength) : QChar(' ');
-								if (!item->url.isEmpty() && nextChar.isSpace())
+//								qDebug() << "item=" << item;
+//								qDebug() << "url=" << item->url;
+//								qDebug() << "keyLength=" << keyLength;
+
+								const QChar nextChar = keyPos+keyLength<searchText.length() ? searchText.at(keyPos+keyLength) : QChar();
+//								qDebug() << "nextChar=" << nextChar << " (0x" << QString::number(nextChar.unicode(), 16) << ")";
+								if (!item->url.isEmpty())
 								{
-									emoticons.insert(fragment.position()+keyPos,searchText.mid(keyPos,keyLength));
-									keyPos += keyLength-1;
-									item = NULL;
+									key = searchText.mid(keyPos,keyLength);
+									qDebug() << "key=" << key;
 								}
 								else
 								{
-									keyLength++;
-									item = item->childs.value(nextChar);
+									if (!key.isEmpty())
+										item = NULL;
 								}
+//								if (!nextChar.isNull())
+								if (item)
+									item = item->childs.value(nextChar);
+								keyLength++;
 							}
+
+							if (!key.isEmpty())
+							{
+								qDebug() << "inserting:" << fragment.position() << "," << key;
+								emoticons.insert(fragment.position()+keyPos, key);
+								keyPos += keyLength-1;
+								key.clear();
+							}
+							else
+								keyPos ++;
 							searchStarted = false;
 						}
 					}
