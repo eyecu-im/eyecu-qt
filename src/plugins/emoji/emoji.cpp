@@ -236,10 +236,8 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 	QMap<int,QString> emoticons;
 	if (!FUrlByKey.isEmpty())
 	{
-		QTextBlock block = ADocument->findBlock(AStartPos);
 		int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
-		while (block.isValid() && block.position()<stopPos)
-		{
+		for (QTextBlock block = ADocument->findBlock(AStartPos); block.isValid() && block.position()<stopPos; block = block.next())
 			for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it)
 			{
 				QTextFragment fragment = it.fragment();
@@ -251,9 +249,8 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 						if (!searchText.at(keyPos).isSpace())
 						{
 							int keyLength = 0;
-							const EmoticonTreeItem *item = &FRootTreeItem;
 							QString key;
-							while (item && keyLength<=searchText.length()-keyPos && fragment.position()+keyPos+keyLength<=stopPos)
+							for (const EmoticonTreeItem *item = &FRootTreeItem; item && keyLength<=searchText.length()-keyPos && fragment.position()+keyPos+keyLength<=stopPos; ++keyLength)
 							{
 								if (!item->url.isEmpty())
 									key = searchText.mid(keyPos,keyLength);
@@ -261,21 +258,18 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 									item = NULL;
 								if (item && (keyPos+keyLength<searchText.length()))
 									item = item->childs.value(searchText.at(keyPos+keyLength));
-								keyLength++;
 							}
 
 							if (!key.isEmpty())
 							{
 								emoticons.insert(fragment.position()+keyPos, key);
-								keyPos += keyLength-1;
+								keyPos += keyLength-2;
 								key.clear();
 							}
 						}
 					}
 				}
 			}
-			block = block.next();
-		}
 	}
 	return emoticons;
 }
