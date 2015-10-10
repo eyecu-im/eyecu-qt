@@ -8,18 +8,21 @@
 EmojiOptions::EmojiOptions(IEmoticons *AEmoticons, QWidget *AParent) : QWidget(AParent)
 {
 	ui.setupUi(this);
-//	IconStorage *storage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	QStyle *style = QApplication::style();
 	ui.tbtUp->setIcon(style->standardIcon(QStyle::SP_ArrowUp));
 	ui.tbtDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
+	ui.tbtSelectable->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_PEPMANAGER));
 
 	FEmoticons = AEmoticons;
 	ui.lwtEmoticons->setItemDelegate(new IconsetDelegate(ui.lwtEmoticons));
 	connect(ui.lwtEmoticons,SIGNAL(itemChanged(QListWidgetItem *)),SIGNAL(modified()));
 	connect(ui.tbtUp,SIGNAL(clicked()),SLOT(onUpButtonClicked()));
 	connect(ui.tbtDown,SIGNAL(clicked()),SLOT(onDownButtonClicked()));
-
+	connect(ui.tbtSelectable,SIGNAL(toggled(bool)),SLOT(onMakeSelectableButtonToggled(bool)));
+	connect(ui.lwtEmoticons,SIGNAL(currentItemChanged(QListWidgetItem*,QListWidgetItem*)),SLOT(onCurrentItemChanged(QListWidgetItem*,QListWidgetItem*)));
+	connect(ui.lwtEmoticons,SIGNAL(itemChanged(QListWidgetItem*)),SLOT(onItemChanged(QListWidgetItem*)));
 	reset();
+	onCurrentItemChanged(NULL, NULL);
 }
 
 EmojiOptions::~EmojiOptions()
@@ -30,8 +33,13 @@ void EmojiOptions::apply()
 {
 	QStringList iconsets;
 	for (int i = 0; i<ui.lwtEmoticons->count(); i++)
-		if (ui.lwtEmoticons->item(i)->checkState() == Qt::Checked)
-			iconsets.append(ui.lwtEmoticons->item(i)->data(IconsetDelegate::IDR_SUBSTORAGE).toString());
+		if (ui.lwtEmoticons->item(i)->checkState() == Qt::Checked || ui.lwtEmoticons->item(i)->checkState() == Qt::PartiallyChecked)
+		{
+			QString iconset = ui.lwtEmoticons->item(i)->data(IconsetDelegate::IDR_SUBSTORAGE).toString();
+			if (ui.lwtEmoticons->item(i)->checkState() == Qt::PartiallyChecked)
+				iconset.prepend('@');
+			iconsets.append(iconset);
+		}
 
 	Options::node(OPV_MESSAGES_EMOJI_ICONSETS).setValue(iconsets);
 
@@ -44,15 +52,16 @@ void EmojiOptions::reset()
 	QStringList storages = Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList();
 	for (int i = 0; i < storages.count(); i++)
 	{
-		QString storage = storages.at(i);
+//		QString storage = storages.at(i);
 		bool	active;
-		if (storage.at(0)=='@')
+		if (storages[i].at(0)=='@')
 		{
-			storage.remove(0, 1);
+			storages[i].remove(0, 1);
 			active = false;
 		}
 		else
 			active = true;
+		QString storage = storages.at(i);
 		QListWidgetItem *item = new QListWidgetItem(RSR_STORAGE_EMOJI"/"+storage,ui.lwtEmoticons);
 		item->setData(IconsetDelegate::IDR_STORAGE,RSR_STORAGE_EMOJI);
 		item->setData(IconsetDelegate::IDR_SUBSTORAGE, storage);
@@ -96,4 +105,24 @@ void EmojiOptions::onDownButtonClicked()
 		ui.lwtEmoticons->setCurrentRow(row+1);
 		emit modified();
 	}
+}
+
+void EmojiOptions::onMakeSelectableButtonToggled(bool ASelectable)
+{
+	ui.lwtEmoticons->currentItem()->setCheckState(ASelectable?Qt::Checked:Qt::PartiallyChecked);
+}
+
+void EmojiOptions::onCurrentItemChanged(QListWidgetItem *ACurrent, QListWidgetItem *APrevious)
+{
+	Q_UNUSED(APrevious)
+	ui.tbtSelectable->blockSignals(true);
+	ui.tbtSelectable->setDisabled(!ACurrent || ACurrent->checkState()==Qt::Unchecked);
+	ui.tbtSelectable->setChecked(ACurrent && ACurrent->checkState()==Qt::Checked);
+	ui.tbtSelectable->blockSignals(false);
+}
+
+void EmojiOptions::onItemChanged(QListWidgetItem *AItem)
+{
+	if (AItem == ui.lwtEmoticons->currentItem())
+		onCurrentItemChanged(AItem, NULL);
 }

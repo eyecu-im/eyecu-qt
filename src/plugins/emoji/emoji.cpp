@@ -245,50 +245,31 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 				QTextFragment fragment = it.fragment();
 				if (fragment.length()>0 && fragment.position()<stopPos)
 				{
-					bool searchStarted = true;
 					QString searchText = fragment.text();
 					for (int keyPos=0; keyPos<searchText.length(); keyPos++)
 					{
-						searchStarted = searchStarted || searchText.at(keyPos).isSpace();
-						if (searchStarted && !searchText.at(keyPos).isSpace())
+						if (!searchText.at(keyPos).isSpace())
 						{
 							int keyLength = 0;
 							const EmoticonTreeItem *item = &FRootTreeItem;
 							QString key;
 							while (item && keyLength<=searchText.length()-keyPos && fragment.position()+keyPos+keyLength<=stopPos)
 							{
-//								qDebug() << "item=" << item;
-//								qDebug() << "url=" << item->url;
-//								qDebug() << "keyLength=" << keyLength;
-
-								const QChar nextChar = keyPos+keyLength<searchText.length() ? searchText.at(keyPos+keyLength) : QChar();
-//								qDebug() << "nextChar=" << nextChar << " (0x" << QString::number(nextChar.unicode(), 16) << ")";
 								if (!item->url.isEmpty())
-								{
 									key = searchText.mid(keyPos,keyLength);
-									qDebug() << "key=" << key;
-								}
-								else
-								{
-									if (!key.isEmpty())
-										item = NULL;
-								}
-//								if (!nextChar.isNull())
-								if (item)
-									item = item->childs.value(nextChar);
+								else if (!key.isEmpty())
+									item = NULL;
+								if (item && (keyPos+keyLength<searchText.length()))
+									item = item->childs.value(searchText.at(keyPos+keyLength));
 								keyLength++;
 							}
 
 							if (!key.isEmpty())
 							{
-								qDebug() << "inserting:" << fragment.position() << "," << key;
 								emoticons.insert(fragment.position()+keyPos, key);
 								keyPos += keyLength-1;
 								key.clear();
 							}
-							else
-								keyPos ++;
-							searchStarted = false;
 						}
 					}
 				}
@@ -560,12 +541,7 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &
 				cursor.beginEditBlock();
 
 				if (cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,1))
-				{
-					bool space = !isWordBoundary(cursor.selectedText());
 					cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor,1);
-					if (space)
-						cursor.insertText(" ");
-				}
 				
 				if (widget->isRichTextEnabled())
 				{
@@ -573,22 +549,13 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &
 						editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
                     QTextImageFormat imageFormat;
                     imageFormat.setName(url.toString());
-                    imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, AIconKey);
-                    imageFormat.setProperty(QTextCharFormat::TextToolTip, AIconKey);
                     cursor.insertImage(imageFormat);
 				}
 				else
-				{
 					cursor.insertText(AIconKey);
-				}
 
 				if (cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,1))
-				{
-					bool space = !isWordBoundary(cursor.selectedText());
 					cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::MoveAnchor,1);
-					if (space)
-						cursor.insertText(" ");
-				}
 
 				cursor.endEditBlock();
 				editor->setFocus();
@@ -618,7 +585,6 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 
 		foreach(const QString &substorage, Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList())
 		{
-			qDebug() << "substorage=" << substorage;
 			if (availStorages.contains(substorage))
 			{
 				if (!FStorages.contains(substorage))

@@ -66,6 +66,22 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="tbtSelectable">
+        <property name="toolTip">
+         <string>Selectable</string>
+        </property>
+        <property name="whatsThis">
+         <string>Click this button to add emoji selection menu button to message edit toolbar</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="tbtDown">
         <property name="statusTip">
          <string>Priority Down</string>

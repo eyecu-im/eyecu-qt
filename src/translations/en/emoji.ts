@@ -4,17 +4,17 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location line="45" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="46" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location line="46" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="47" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Allows to use emoji in messages</source>
    <translation>Allows to use emoji in messages</translation>
   </message>
   <message>
-   <location line="124" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="125" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Message windows</source>
    <translation>Message windows</translation>
   </message>
@@ -43,11 +43,21 @@
   </message>
   <message>
    <location line="71" filename="../../plugins/emoji/emojioptions.ui"/>
+   <source>Selectable</source>
+   <translation>Selectable</translation>
+  </message>
+  <message>
+   <location line="74" filename="../../plugins/emoji/emojioptions.ui"/>
+   <source>Click this button to add emoji selection menu button to message edit toolbar</source>
+   <translation>Click this button to add emoji selection menu button to message edit toolbar</translation>
+  </message>
+  <message>
+   <location line="87" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Priority Down</source>
    <translation>Priority Down</translation>
   </message>
   <message>
-   <location line="74" filename="../../plugins/emoji/emojioptions.ui"/>
+   <location line="90" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Click this button to lower prioroty of selected emoji set</source>
    <translation>Click this button to lower prioroty of selected emoji set</translation>
   </message>
