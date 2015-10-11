@@ -31,6 +31,7 @@ void SelectIconMenu::setIconset(const QString &ASubStorage)
 		delete FStorage;
 		FStorage = new IconStorage(RSR_STORAGE_EMOJI,ASubStorage,this);
 		FStorage->insertAutoIcon(this,FStorage->fileKeys().value(0));
+		menuAction()->setToolTip(FStorage->storageProperty(FILE_STORAGE_NAME, ASubStorage));
 	}
 }
 

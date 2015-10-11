@@ -446,7 +446,6 @@ SelectIconMenu *Emoji::createSelectIconMenu(const QString &ASubStorage, QWidget 
 
 void Emoji::insertSelectIconMenu(const QString &ASubStorage)
 {
-	qDebug() << "Emoji::insertSelectIconMenu(" << ASubStorage << ")";
 	foreach(IMessageToolBarWidget *widget, FToolBarsWidgets)
 	{
 		SelectIconMenu *menu = createSelectIconMenu(ASubStorage,widget->instance());
