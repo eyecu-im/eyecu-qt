@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Emoji Polish Translation</DisplayName>
+    <Description>Emoji Polish translation</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.emoji.pl</Name>
+    <AutoDependOn>ru.rwsoftware.eyecu.emoji,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+    <Virtual>true</Virtual>
+</Package>

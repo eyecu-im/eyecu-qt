@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Small</DisplayName>
+    <Description>Small vKontakte emoji</Description>
+    <Version>1.3.0</Version>
+    <ReleaseDate>2015-09-11</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.vkontakte.small</Name>
+    <SortingPriority>2</SortingPriority>
+    <Default>true</Default>
+    <ForcedInstallation>false</ForcedInstallation>
+    <Essential>false</Essential>
+</Package>
