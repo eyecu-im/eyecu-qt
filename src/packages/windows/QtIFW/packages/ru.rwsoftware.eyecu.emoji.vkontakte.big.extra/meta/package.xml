@@ -4,7 +4,7 @@
     <Description>Extra vKontakte emoji set (big)</Description>
     <Version>1.3.0</Version>
     <ReleaseDate>2015-09-21</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.vkontakte.big.extra</Name>
+    <Name>ru.rwsoftware.eyecu.emoji.vkontakte.big.extra</Name>
     <SortingPriority>5</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

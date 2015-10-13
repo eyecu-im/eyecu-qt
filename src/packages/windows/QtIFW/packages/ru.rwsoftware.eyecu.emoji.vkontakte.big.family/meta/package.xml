@@ -4,7 +4,7 @@
     <Description>Family vKontakte emoji set (big)</Description>
     <Version>1.3.0</Version>
     <ReleaseDate>2015-10-12</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.vkontakte.big.family</Name>
+    <Name>ru.rwsoftware.eyecu.emoji.vkontakte.big.family</Name>
     <SortingPriority>2</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

@@ -3,7 +3,7 @@
     <DisplayName>Qt Geo</DisplayName>
     <Description>Qt Purple - Geo Framework</Description>
     <Version>1.1.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <ReleaseDate>2015-09-25</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.geo</Name>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>

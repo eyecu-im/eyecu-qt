@@ -3,7 +3,7 @@
     <DisplayName>Qt Purple</DisplayName>
     <Description>Qt Purple</Description>
     <Version>1.1.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <ReleaseDate>2015-09-25</ReleaseDate>
     <Name>ru.purplesoft.qtpurple</Name>
     <Dependencies>org.digia.qt4</Dependencies>
     <Virtual>true</Virtual>
