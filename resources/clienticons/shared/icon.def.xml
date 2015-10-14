@@ -465,4 +465,9 @@
     <client>Xabber</client>
     <object mime="image/png">xabber.png</object>
   </icon>
+  <icon>
+    <key>http://conversations.im</key>
+    <client>Conversations</client>
+    <object mime="image/png">conversations.png</object>
+  </icon>
 </icondef>
