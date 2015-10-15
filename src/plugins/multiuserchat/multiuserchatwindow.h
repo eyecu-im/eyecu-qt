@@ -40,10 +40,11 @@ class MultiUserChatWindow :
 	public IMultiUserChatWindow,
 	public IStanzaHandler,
 	public IMessageHandler,
-	public IMessageEditSendHandler
+	public IMessageEditSendHandler,
+	public IMessageViewUrlHandler
 {
 	Q_OBJECT;
-	Q_INTERFACES(IMessageWindow IMultiUserChatWindow IMessageTabPage IStanzaHandler IMessageHandler IMessageEditSendHandler);
+	Q_INTERFACES(IMessageWindow IMultiUserChatWindow IMessageTabPage IStanzaHandler IMessageHandler IMessageEditSendHandler IMessageViewUrlHandler); // *** <<< eyeCU >>> ***
 public:
 	MultiUserChatWindow(IMultiUserChatManager *AChatPlugin, IMultiUserChat *AMultiChat);
 	~MultiUserChatWindow();
@@ -83,6 +84,10 @@ public:
 	virtual INotification messageNotify(INotifications *ANotifications, const Message &AMessage, int ADirection);
 	virtual bool messageShowWindow(int AMessageId);
 	virtual bool messageShowWindow(int AOrder, const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode);
+	// *** <<< eyeCU <<< ***
+	//IMessageViewUrlHandler
+	virtual bool messageViewUrlOpen(int AOrder, IMessageViewWidget *AWidget, const QUrl &AUrl);
+	// *** >>> eyeCU >>> ***
 	//IMultiUserChatWindow
 	virtual IMultiUserChat *multiUserChat() const;
 	virtual IMessageChatWindow *openChatWindow(const Jid &AContactJid);
@@ -110,7 +115,7 @@ signals:
 	void multiUserContextMenu(IMultiUser *AUser, Menu *AMenu);
 	void multiUserToolTips(IMultiUser *AUser, QMap<int,QString> &AToolTips);
 	void privateChatWindowCreated(IMessageChatWindow *AWindow);
-	void privateChatWindowDestroyed(IMessageChatWindow *AWindow);
+	void privateChatWindowDestroyed(IMessageChatWindow *AWindow);	
 protected:
 	void connectMultiChatSignals();
 	void createMessageWidgets();
@@ -273,7 +278,7 @@ private:
 	QString FCompleteNickStarts;
 	QString FCompleteNickLast;
 	QList<QString> FCompleteNicks;
-	QList<QString>::const_iterator FCompleteIt;
+	QList<QString>::const_iterator FCompleteIt;	
 };
 
 #endif // MULTIUSERCHATWINDOW_H
