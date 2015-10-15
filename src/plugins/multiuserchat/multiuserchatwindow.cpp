@@ -172,6 +172,9 @@ MultiUserChatWindow::~MultiUserChatWindow()
 		FMessageWidgets->removeEditSendHandler(MESHO_MULTIUSERCHATWINDOW_COMMANDS,this);
 		FMessageWidgets->removeEditSendHandler(MESHO_MULTIUSERCHATWINDOW_GROUPCHAT,this);
 		FMessageWidgets->removeEditSendHandler(MESHO_MULTIUSERCHATWINDOW_PRIVATECHAT,this);
+// *** <<< eyeCU <<< ***
+		FMessageWidgets->removeViewUrlHandler(MVUHO_MUC, this);
+// *** >>> eyeCU >>> ***
 	}
 
 	saveWindowState();
