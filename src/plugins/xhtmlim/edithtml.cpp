@@ -9,8 +9,6 @@
 #include <QBuffer>
 #include <XmlTextDocumentParser>
 
-#include <QDebug>
-
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/xhtmlicons.h>
@@ -877,11 +875,9 @@ void EditHtml::onSelectDecoration(bool ASelected)
 			charFormat.setFontOverline(ASelected);
 			break;
 		case DT_UNDERLINE:
-			qDebug() << "Set underline!";
 			charFormat.setFontUnderline(ASelected);
 			break;
 		case DT_STRIKEOUT:
-			qDebug() << "Set strikeout!";
 			charFormat.setFontStrikeOut(ASelected);
 			break;
 	}
@@ -962,56 +958,6 @@ void EditHtml::onCurrentFontFamilyChanged(const QFont &AFont)
 	fmt.setFontFamily(AFont.family());
 	mergeFormatOnWordOrSelection(fmt);
 }
-/*
-void EditHtml::onCurrentFontIndexChanged(int AIndex)
-{
-	qDebug() << "EditHtml::onCurrentFontIndexChanged(" << AIndex << ")";
-	QTextCharFormat fmt;
-	switch (AIndex)
-	{
-		case FNT_SERIF:
-//            fmt.setFontFamily("serif");
-			fmt.setFontStyleHint(QFont::Serif);
-			break;
-		case FNT_SANSSERIF:
-//            fmt.setFontFamily("sans-serif");
-			fmt.setFontStyleHint(QFont::SansSerif);
-			break;
-// #if QT_VERSION >= 0x040700
-		case FNT_CURSIVE:
-//            fmt.setFontFamily("cursive");
-			fmt.setFontStyleHint(QFont::Cursive);
-			break;
-		case FNT_FANTASY:
-//            fmt.setFontFamily("fantasy");
-			fmt.setFontStyleHint(QFont::Fantasy);
-			break;
-		case FNT_MONOSPACED:
-//            fmt.setFontFamily("monospace");
-			fmt.setFontStyleHint(QFont::Monospace);
-			break;
-		case FNT_SEPARATOR:
-//            fmt.setFontFamily("monospace");
-			fmt.clearProperty(QTextFormat::FontFamily);
-			fmt.clearProperty(QTextFormat::FontStyleHint);
-			break;
-
-// #else
-//        case FNT_MONOSPACED:
-//            fmt.setFontFixedPitch(true);
-//            break;
-//#endif
-		default:
-		{
-			fmt.setFontFamily(FCmbFont->currentFont().family());
-			qDebug() << "fmt.fontFamily()=" << fmt.fontFamily();
-//            return;
-		}
-	}
-	qDebug() << "fmt.fontStyleHint()=" << fmt.fontStyleHint();
-	mergeFormatOnWordOrSelection(fmt);
-}
-*/
 
 void EditHtml::onCurrentFontSizeChanged(const QString &ASize)
 {
@@ -1374,7 +1320,6 @@ void EditHtml::onRemoveFormat()
 
 void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 {
-	qDebug() << "EditHtml::onCurrentCharFormatChanged()";
 	fontChanged(ACharFormat);
 	QBrush brush=ACharFormat.foreground();
 	if (brush.style())
@@ -1387,8 +1332,6 @@ void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 	else
 		FColorToolButton->setBackgroundColor(FTextEdit->palette().background().color());
 	FActionSetTitle->setChecked(ACharFormat.hasProperty(QTextFormat::TextToolTip));
-
-	qDebug() << "ACharFormat.fontCapitalization()=" << ACharFormat.fontCapitalization();
 
 	switch (ACharFormat.fontCapitalization())
 	{

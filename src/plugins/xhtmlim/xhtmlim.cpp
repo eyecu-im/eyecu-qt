@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QColorDialog>
@@ -1371,9 +1370,7 @@ void XhtmlIm::onIndentChange()
 {
 	Action *action=qobject_cast<Action *>(sender());
 	QTextCursor cursor = getCursor(false, false);
-	qDebug() << "action->data(ADR_INDENT)=" << action->data(ADR_INDENT);
 	bool increase=(action->data(ADR_INDENT)==INDENT_MORE);
-	qDebug() << "increase=" << increase;
 	QTextBlockFormat blockFmt = cursor.blockFormat();
 	if (cursor.currentList())
 	{
