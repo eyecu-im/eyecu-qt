@@ -30,6 +30,7 @@
 #include <definitions/messagedataroles.h>
 #include <definitions/messagehandlerorders.h>
 #include <definitions/messageeditsendhandlerorders.h>
+#include <definitions/messageviewurlhandlerorders.h> // *** <<< eyeCU >>> ***
 #include <utils/widgetmanager.h>
 #include <utils/pluginhelper.h>
 #include <utils/textmanager.h>
@@ -113,6 +114,9 @@ MultiUserChatWindow::MultiUserChatWindow(IMultiUserChatManager *AChatPlugin, IMu
 		FMessageWidgets->insertEditSendHandler(MESHO_MULTIUSERCHATWINDOW_COMMANDS,this);
 		FMessageWidgets->insertEditSendHandler(MESHO_MULTIUSERCHATWINDOW_GROUPCHAT,this);
 		FMessageWidgets->insertEditSendHandler(MESHO_MULTIUSERCHATWINDOW_PRIVATECHAT,this);
+// *** <<< eyeCU <<< ***
+		FMessageWidgets->insertViewUrlHandler(MVUHO_MUC, this);
+// *** >>> eyeCU >>> ***
 	}
 
 	FMessageProcessor = PluginHelper::pluginInstance<IMessageProcessor>();
@@ -646,7 +650,23 @@ bool MultiUserChatWindow::messageShowWindow(int AOrder, const Jid &AStreamJid, c
 	}
 	return false;
 }
-
+// *** <<< eyeCU <<< ***
+bool MultiUserChatWindow::messageViewUrlOpen(int AOrder, IMessageViewWidget *AWidget, const QUrl &AUrl)
+{
+	Q_UNUSED(AOrder)
+	if (AUrl.scheme()=="nick" && AWidget == viewWidget())
+	{
+		QTextCursor cursor = FEditWidget->textEdit()->textCursor();
+		cursor.beginEditBlock();
+		QString suffix = cursor.atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
+		cursor.insertText(AUrl.path() + suffix);
+		cursor.endEditBlock();
+		return true;
+	}
+	else
+		return false;
+}
+// *** >>> eyeCU >>> ***
 IMultiUserChat *MultiUserChatWindow::multiUserChat() const
 {
 	return FMultiChat;
@@ -1460,8 +1480,7 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 		options.timeFormat = FMessageStyleManager->timeFormat(options.time,options.time);
 	else
 		options.timeFormat = FMessageStyleManager->timeFormat(options.time);
-
-	options.senderName = HTML_ESCAPE(ANick);
+//	options.senderName = HTML_ESCAPE(ANick); *** <<< eyeCU >>> ***
 	options.senderId = options.senderName;
 
 	IMultiUser *user = FMultiChat->nickName()!=ANick ? FMultiChat->userByNick(ANick) : FMultiChat->mainUser();
@@ -1475,10 +1494,16 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 		if (isMentionMessage(AMessage))
 			options.type |= IMessageStyleContentOptions::TypeMention;
 		options.direction = IMessageStyleContentOptions::DirectionIn;
+// *** <<< eyeCU <<< ***
+		options.senderName = QString("<a href=\"nick:%1\" style=\"color: inherit\">%1</a>").arg(HTML_ESCAPE(ANick));
+// *** >>> eyeCU >>> ***
 	}
 	else
 	{
 		options.direction = IMessageStyleContentOptions::DirectionOut;
+// *** <<< eyeCU <<< ***
+		options.senderName = HTML_ESCAPE(ANick);
+// *** >>> eyeCU >>> ***
 	}
 
 	showDateSeparator(FViewWidget,options.time);
@@ -1844,8 +1869,10 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 				QStandardItem *userItem = FUsersModel->itemFromIndex(FUsersProxy->mapToSource(ui.ltvUsers->indexAt(mouseEvent->pos())));
 				if(mouseEvent->button()==Qt::MidButton && userItem)
 				{
-					QString sufix = FEditWidget->textEdit()->textCursor().atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
-					FEditWidget->textEdit()->textCursor().insertText(userItem->text() + sufix);
+					QString suffix = FEditWidget->textEdit()->textCursor().atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
+					FEditWidget->textEdit()->textCursor().beginEditBlock();
+					FEditWidget->textEdit()->textCursor().insertText(userItem->text() + suffix);
+					FEditWidget->textEdit()->textCursor().endEditBlock();
 					FEditWidget->textEdit()->setFocus();
 					AEvent->accept();
 					return true;
@@ -2237,7 +2264,9 @@ void MultiUserChatWindow::onMultiChatEditWidgetKeyEvent(QKeyEvent *AKeyEvent, bo
 			else
 			{
 				FCompleteNickLast = *FCompleteIt;
+				cursor.beginEditBlock();
 				cursor.insertText(*FCompleteIt + suffix);
+				cursor.endEditBlock();
 
 				if (++FCompleteIt == FCompleteNicks.constEnd())
 					FCompleteIt = FCompleteNicks.constBegin();
@@ -2246,7 +2275,9 @@ void MultiUserChatWindow::onMultiChatEditWidgetKeyEvent(QKeyEvent *AKeyEvent, bo
 		else if (!FCompleteNicks.isEmpty())
 		{
 			FCompleteNickLast = *FCompleteIt;
+			cursor.beginEditBlock();
 			cursor.insertText(FCompleteNicks.first() + suffix);
+			cursor.endEditBlock();
 		}
 
 		AHooked = true;
@@ -2497,11 +2528,12 @@ void MultiUserChatWindow::onNickCompleteMenuActionTriggered(bool)
 	Action *action = qobject_cast<Action *>(sender());
 	if (action)
 	{
-		QString nick = action->data(ADR_USER_NICK).toString();
 		QTextCursor cursor = FEditWidget->textEdit()->textCursor();
+		cursor.beginEditBlock();
 		cursor.movePosition(QTextCursor::StartOfWord, QTextCursor::KeepAnchor);
-		QString sufix = cursor.atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
-		cursor.insertText(nick + sufix);
+		QString suffix = cursor.atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
+		cursor.insertText(action->data(ADR_USER_NICK).toString() + suffix);
+		cursor.endEditBlock();
 	}
 }
 

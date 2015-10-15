@@ -6,6 +6,7 @@
 
 // *** <<< eyeCU <<< ***
 #define MVUHO_POI                              600
+#define MVUHO_MUC                              600
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_MESSAGEVIEWURLHANDLERORDERS_H
