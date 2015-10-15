@@ -539,7 +539,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="719"/>
    <source>Lodging</source>
-   <translation type="unfinished"/>
+   <translation>Logies</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="720"/>
@@ -549,7 +549,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="721"/>
    <source>Meal takeaway</source>
-   <translation type="unfinished"/>
+   <translation>Meeneem maaltijd</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="722"/>
@@ -634,7 +634,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="738"/>
    <source>Real estate agency</source>
-   <translation type="unfinished"/>
+   <translation>Makelaar</translation>
   </message>
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="739"/>

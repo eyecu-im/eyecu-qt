@@ -1680,7 +1680,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="116"/>
    <source>Buffer stop</source>
-   <translation type="unfinished"/>
+   <translation>Buffer stop</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="117"/>

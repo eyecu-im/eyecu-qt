@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/addlink.ui" line="29"/>
    <source>Insert link</source>
-   <translation type="unfinished"/>
+   <translation>Plaats koppeling</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/addlink.ui" line="72"/>
@@ -67,7 +67,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="160"/>
    <source>Strikeout</source>
-   <translation type="unfinished"/>
+   <translation>Doorstrepen</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="263"/>
@@ -117,32 +117,32 @@
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="173"/>
    <source>Capitalization</source>
-   <translation type="unfinished"/>
+   <translation>Hoofdlettergebruik</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="180"/>
    <source>Mixed case</source>
-   <translation type="unfinished"/>
+   <translation>Gemengde zaak</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="190"/>
    <source>Small caps</source>
-   <translation type="unfinished"/>
+   <translation>Klein kapitaal</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="200"/>
    <source>All uppercase</source>
-   <translation type="unfinished"/>
+   <translation>Alle hoofdletter</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="210"/>
    <source>All lowercase</source>
-   <translation type="unfinished"/>
+   <translation>Alle kleine letters</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="220"/>
    <source>Capitalize</source>
-   <translation type="unfinished"/>
+   <translation>Hoofdlettergebruik</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/edithtml.cpp" line="236"/>
@@ -575,7 +575,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="172"/>
    <source>Ctrl+Y</source>
    <comment>Overline</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Y</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="173"/>
@@ -593,25 +593,25 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="175"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="514"/>
    <source>Small caps</source>
-   <translation type="unfinished"/>
+   <translation>Klein kapitaal</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="176"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="562"/>
    <source>Capitalize</source>
-   <translation type="unfinished"/>
+   <translation>Hoofdlettergebruik</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="177"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="530"/>
    <source>All uppercase</source>
-   <translation type="unfinished"/>
+   <translation>Alle hoofdletter</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="178"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="546"/>
    <source>All lowercase</source>
-   <translation type="unfinished"/>
+   <translation>Alle kleine letters</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="179"/>
@@ -792,7 +792,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="188"/>
    <source>Alt+A</source>
    <comment>Toggle reset formatting on message send</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+A</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="285"/>
@@ -822,159 +822,159 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="418"/>
    <source>Text format</source>
-   <translation type="unfinished"/>
+   <translation>Tekst formaat</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="172"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="470"/>
    <source>Overline</source>
-   <translation type="unfinished"/>
+   <translation>Bovenstreep</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="433"/>
    <source>Style</source>
-   <translation type="unfinished"/>
+   <translation>Stijl</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="492"/>
    <source>Capitalization</source>
-   <translation type="unfinished"/>
+   <translation>Hoofdlettergebruik</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="174"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="498"/>
    <source>Mixed case</source>
-   <translation type="unfinished"/>
+   <translation>Gemengde zaak</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="590"/>
    <source>Color</source>
-   <translation type="unfinished"/>
+   <translation>Kleur</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="595"/>
    <source>Foreground</source>
-   <translation type="unfinished"/>
+   <translation>Voorgrond</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="602"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Achtergrond</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="644"/>
    <source>Insert special symbol</source>
-   <translation type="unfinished"/>
+   <translation>Voeg speciaal symbool toe</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="652"/>
    <source>Non-breaking space</source>
-   <translation type="unfinished"/>
+   <translation>Geen brekende spaties</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="664"/>
    <source>New line</source>
-   <translation type="unfinished"/>
+   <translation>Nieuwe regel</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="703"/>
    <source>Text align</source>
-   <translation type="unfinished"/>
+   <translation>Tekst uitlijnen</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="789"/>
    <source>List</source>
-   <translation type="unfinished"/>
+   <translation>Lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="796"/>
    <source>Disc</source>
-   <translation type="unfinished"/>
+   <translation>Schijf</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="808"/>
    <source>Circle</source>
-   <translation type="unfinished"/>
+   <translation>Cirkel</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="820"/>
    <source>Square</source>
-   <translation type="unfinished"/>
+   <translation>Vierkant</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="832"/>
    <source>Decimal</source>
-   <translation type="unfinished"/>
+   <translation>Decimaal</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="844"/>
    <source>Alpha lower</source>
-   <translation type="unfinished"/>
+   <translation>Alpha lager</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="856"/>
    <source>Alpha upper</source>
-   <translation type="unfinished"/>
+   <translation>Alpha hoger</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="868"/>
    <source>Roman lower</source>
-   <translation type="unfinished"/>
+   <translation>Roman lager</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="880"/>
    <source>Roman upper</source>
-   <translation type="unfinished"/>
+   <translation>Roman hoger</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="892"/>
    <source>Definition list</source>
-   <translation type="unfinished"/>
+   <translation>Definitie lijst</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="907"/>
    <source>Formatting type</source>
-   <translation type="unfinished"/>
+   <translation>Soort opmaak</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="915"/>
    <source>Preformatted text</source>
-   <translation type="unfinished"/>
+   <translation>Opgemaakte tekst</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="927"/>
    <source>Heading 1</source>
-   <translation type="unfinished"/>
+   <translation>Titel 1</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="939"/>
    <source>Heading 2</source>
-   <translation type="unfinished"/>
+   <translation>Titel 2</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="951"/>
    <source>Heading 3</source>
-   <translation type="unfinished"/>
+   <translation>Titel 3</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="963"/>
    <source>Heading 4</source>
-   <translation type="unfinished"/>
+   <translation>Titel 4</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="975"/>
    <source>Heading 5</source>
-   <translation type="unfinished"/>
+   <translation>titel 5</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="987"/>
    <source>Heading 6</source>
-   <translation type="unfinished"/>
+   <translation>Titel 6</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="1003"/>
    <source>Remove format</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder formaat</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="1015"/>

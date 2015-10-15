@@ -62,7 +62,8 @@
    <location filename="../../plugins/multiuserchat/joinmultichatdialog.cpp" line="147"/>
    <source>Conference parameters is not acceptable.
 Check values and try again</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie parameters zijn niet geaccepteerd.
+Check waarden en probeer opnieuw</translation>
   </message>
   <message>
    <source>Conference parameters is not acceptable.
@@ -543,7 +544,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="561"/>
    <source>Do you want to join this conference?</source>
-   <translation type="unfinished"/>
+   <translation>Wil je aan deze vergadering deelnemen?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="563"/>
@@ -660,7 +661,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="909"/>
    <source>Unmoderated room</source>
-   <translation type="unfinished"/>
+   <translation>Unmoderated kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="910"/>

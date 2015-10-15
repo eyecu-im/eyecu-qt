@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="839"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bericht stijl te laden. Druk op venster knop om opnieuw te proberen.</translation>
   </message>
  </context>
  <context>
