@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="System"?>
+<icondef>
+  <name>Extra D83CDFFD (Small)</name>
+  <creation>2015-10-17</creation>
+  <version>1.0</version>
+  <description>vKontakte Extra skin colored emoji set D83CDFFD (Small)</description>
+  <home>www.eyecu.ru</home>
+  <author>Yagiza</author>
+  <icon>
+    <text>&#xD83D;&#xDE4D;</text>
+    <object mime="image/png">D83DDE4D.png</object>
+  </icon>
+</icondef>
