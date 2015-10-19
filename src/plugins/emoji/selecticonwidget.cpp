@@ -24,28 +24,61 @@ SelectIconWidget::~SelectIconWidget()
 
 void SelectIconWidget::createLabels()
 {
+	QStringList colorSiffixes;
+	QChar first(0xD83C);
+
+	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
+	{
+		QString suffix;
+		suffix.append(first).append(QChar(i));
+		colorSiffixes.append(suffix);
+	}
+
 	QList<QString> keys = FStorage->fileFirstKeys();
 
-	int columns = keys.count()/2 + 1;
-	while (columns>1 && columns*columns>keys.count())
+	int count(0);
+	for (QList<QString>::ConstIterator kit=keys.constBegin(); kit!=keys.constEnd(); ++kit)
+	{
+		bool colored(false);
+		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
+			if ((*kit).endsWith(*sit))
+			{
+				colored=true;
+				break;
+			}
+		if (!colored)
+			++count;
+	}
+
+	int columns = count/2 + 1;
+	while (columns>1 && columns*columns>count)
 		columns--;
 
 	int row =0;
 	int column = 0;
 	foreach(const QString &key, keys)
 	{
-		QLabel *label = new QLabel(this);
-		label->setMargin(2);
-		label->setAlignment(Qt::AlignCenter);
-		label->setFrameShape(QFrame::Box);
-		label->setFrameShadow(QFrame::Sunken);
-//		label->setToolTip(QString("<span>%1</span>").arg(HTML_ESCAPE(key)));
-		label->installEventFilter(this);
-		FStorage->insertAutoIcon(label,key,0,0,"pixmap");
-		FKeyByLabel.insert(label,key);
-		FLayout->addWidget(label,row,column);
-		column = (column+1) % columns;
-		row += column==0 ? 1 : 0;
+		bool colored(false);
+		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
+			if (key.endsWith(*sit))
+			{
+				colored=true;
+				break;
+			}
+		if (!colored)
+		{
+			QLabel *label = new QLabel(this);
+			label->setMargin(2);
+			label->setAlignment(Qt::AlignCenter);
+			label->setFrameShape(QFrame::Box);
+			label->setFrameShadow(QFrame::Sunken);
+			label->installEventFilter(this);
+			FStorage->insertAutoIcon(label,key,0,0,"pixmap");
+			FKeyByLabel.insert(label,key);
+			FLayout->addWidget(label,row,column);
+			column = (column+1) % columns;
+			row += column==0 ? 1 : 0;
+		}
 	}
 }
 
