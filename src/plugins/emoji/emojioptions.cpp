@@ -52,7 +52,6 @@ void EmojiOptions::reset()
 	QStringList storages = Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList();
 	for (int i = 0; i < storages.count(); i++)
 	{
-//		QString storage = storages.at(i);
 		bool	active;
 		if (storages[i].at(0)=='@')
 		{

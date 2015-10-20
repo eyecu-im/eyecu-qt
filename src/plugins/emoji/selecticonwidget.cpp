@@ -4,7 +4,7 @@
 #include <QTextDocument>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(IconStorage *AStorage, QWidget *AParent) : QWidget(AParent)
+SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, QWidget *AParent) : QWidget(AParent)
 {
 	FPressed = NULL;
 	FStorage = AStorage;
@@ -14,15 +14,52 @@ SelectIconWidget::SelectIconWidget(IconStorage *AStorage, QWidget *AParent) : QW
 	FLayout->setHorizontalSpacing(3);
 	FLayout->setVerticalSpacing(3);
 
-	createLabels();
+	createLabels(AColor);
 }
 
 SelectIconWidget::~SelectIconWidget()
-{
+{}
 
+void SelectIconWidget::updateLabels(const QString &AColor)
+{
+	QStringList colorSiffixes;
+	QChar first(0xD83C);
+
+	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
+	{
+		QString suffix;
+		suffix.append(first).append(QChar(i));
+		colorSiffixes.append(suffix);
+	}
+
+	QList<QString> keys = FStorage->fileFirstKeys();
+
+	int index(0);
+	foreach(QString key, keys)
+	{
+		bool colored(false);
+		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
+			if (key.endsWith(*sit))
+			{
+				colored=true;
+				break;
+			}
+		if (!colored)
+		{
+			QLabel *label = qobject_cast<QLabel *>(FLayout->itemAt(index)->widget());
+			QIcon icon;
+			if (!AColor.isEmpty())
+				icon = FStorage->getIcon(key+AColor);
+			if (!icon.isNull())
+				key.append(AColor);
+			FStorage->insertAutoIcon(label,key,0,0,"pixmap");
+			FKeyByLabel.insert(label,key);
+			index++;
+		}
+	}
 }
 
-void SelectIconWidget::createLabels()
+void SelectIconWidget::createLabels(const QString &AColor)
 {
 	QStringList colorSiffixes;
 	QChar first(0xD83C);
@@ -56,7 +93,7 @@ void SelectIconWidget::createLabels()
 
 	int row =0;
 	int column = 0;
-	foreach(const QString &key, keys)
+	foreach(QString key, keys)
 	{
 		bool colored(false);
 		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
@@ -73,7 +110,14 @@ void SelectIconWidget::createLabels()
 			label->setFrameShape(QFrame::Box);
 			label->setFrameShadow(QFrame::Sunken);
 			label->installEventFilter(this);
+
+			QIcon icon;
+			if (!AColor.isEmpty())
+				icon = FStorage->getIcon(key+AColor);
+			if (!icon.isNull())
+				key.append(AColor);
 			FStorage->insertAutoIcon(label,key,0,0,"pixmap");
+
 			FKeyByLabel.insert(label,key);
 			FLayout->addWidget(label,row,column);
 			column = (column+1) % columns;

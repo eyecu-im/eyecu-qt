@@ -4,12 +4,12 @@
 <context>
     <name>Emoji</name>
     <message>
-        <location filename="../../plugins/emoji/emoji.cpp" line="46"/>
+        <location filename="../../plugins/emoji/emoji.cpp" line="47"/>
         <source>Emoji</source>
         <translation>Эмодзи</translation>
     </message>
     <message>
-        <location filename="../../plugins/emoji/emoji.cpp" line="47"/>
+        <location filename="../../plugins/emoji/emoji.cpp" line="48"/>
         <source>Allows to use emoji in messages</source>
         <translation>Позволяет использовать эмодзи в сообщениях</translation>
     </message>
@@ -60,6 +60,29 @@
         <location filename="../../plugins/emoji/emojioptions.ui" line="90"/>
         <source>Click this button to lower prioroty of selected emoji set</source>
         <translation>Щёлкните по этой кнопке, чтобы опустить приоритет выбранного набора эмодзи</translation>
+    </message>
+</context>
+<context>
+    <name>SelectIconMenu</name>
+    <message>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="93"/>
+        <source>Skin color</source>
+        <translation>Цвет кожи</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="98"/>
+        <source>Default</source>
+        <translation>По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="117"/>
+        <source>Fitzpatrick type %1</source>
+        <translation>Тип %1 по шкале Фицпатрика</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="117"/>
+        <source>1 or 2</source>
+        <translation>1 или 2</translation>
     </message>
 </context>
 </TS>

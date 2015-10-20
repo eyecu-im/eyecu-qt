@@ -14,12 +14,13 @@ class SelectIconWidget :
 {
 	Q_OBJECT;
 public:
-	SelectIconWidget(IconStorage *AStorage, QWidget *AParent = NULL);
+	SelectIconWidget(IconStorage *AStorage, const QString &AColor, QWidget *AParent = NULL);
 	~SelectIconWidget();
+	void updateLabels(const QString &AColor);
 signals:
 	void iconSelected(const QString &ASubStorage, const QString &AIconKey);
 protected:
-	void createLabels();
+	void createLabels(const QString &AColor);
 protected:
 	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);
 private:
