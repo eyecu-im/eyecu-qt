@@ -1,0 +1,23 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<icondef>
+  <icon>
+    <text>&#xD83C;&#xDFFB;</text>
+    <object mime="image/png">D83CDFFB.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83C;&#xDFFC;</text>
+    <object mime="image/png">D83CDFFC.png</object>
+  </icon>
+    <icon>
+    <text>&#xD83C;&#xDFFD;</text>
+    <object mime="image/png">D83CDFFD.png</object>
+  </icon>
+    <icon>
+    <text>&#xD83C;&#xDFFE;</text>
+    <object mime="image/png">D83CDFFE.png</object>
+  </icon>
+    <icon>
+    <text>&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">D83CDFFF.png</object>
+  </icon>
+</icondef>

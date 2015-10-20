@@ -2,13 +2,15 @@
 #define SELECTICONMENU_H
 
 #include <QVBoxLayout>
+#include <QPointer>
 #include "selecticonwidget.h"
 #include <utils/menu.h>
+#include <utils/options.h>
 
 class SelectIconMenu :
 	public Menu
 {
-	Q_OBJECT;
+	Q_OBJECT
 public:
 	SelectIconMenu(const QString &AIconset, QWidget *AParent = NULL);
 	~SelectIconMenu();
@@ -21,9 +23,12 @@ public:
 	virtual QSize sizeHint() const;
 protected slots:
 	void onAboutToShow();
+	void onSkinColorSelected();
+	void onOptionsChanged(const OptionsNode &ANode);
 private:
 	QVBoxLayout *FLayout;
 	IconStorage *FStorage;
+	QPointer<Menu> FMenu;
 };
 
 #endif // SELECTICONMENU_H

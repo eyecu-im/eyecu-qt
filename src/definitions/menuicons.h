@@ -359,7 +359,6 @@
 //JINGLE
 #define MNI_JINGLE                      "jingle"
 #define MNI_JINGLE_RTP                  "jingleRtp"
-
 // >>> eyeCU >>>
 
 #endif

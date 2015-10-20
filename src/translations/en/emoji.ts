@@ -4,12 +4,12 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location line="46" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="47" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location line="47" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="48" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Allows to use emoji in messages</source>
    <translation>Allows to use emoji in messages</translation>
   </message>
@@ -60,6 +60,29 @@
    <location line="90" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Click this button to lower prioroty of selected emoji set</source>
    <translation>Click this button to lower prioroty of selected emoji set</translation>
+  </message>
+ </context>
+ <context>
+  <name>SelectIconMenu</name>
+  <message>
+   <location line="93" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <source>Skin color</source>
+   <translation>Skin color</translation>
+  </message>
+  <message>
+   <location line="98" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <source>Default</source>
+   <translation>Default</translation>
+  </message>
+  <message>
+   <location line="117" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <source>Fitzpatrick type %1</source>
+   <translation>Fitzpatrick type %1</translation>
+  </message>
+  <message>
+   <location line="117" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <source>1 or 2</source>
+   <translation>1 or 2</translation>
   </message>
  </context>
 </TS>

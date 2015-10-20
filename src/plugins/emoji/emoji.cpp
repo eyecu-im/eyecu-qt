@@ -96,6 +96,7 @@ bool Emoji::initObjects()
 bool Emoji::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSETS, QStringList() << EMOJI_SELECTABLE	<< "@"EMOJI_EXTRA << "@"EMOJI_FAMILY);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, QString());
 
 	if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);

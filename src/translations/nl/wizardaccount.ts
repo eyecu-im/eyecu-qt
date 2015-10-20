@@ -361,7 +361,7 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1034"/>
    <source>Trying to logon or register at Jabber server</source>
-   <translation type="unfinished"/>
+   <translation>Proberen om in te loggen of te registreren op Jabber server</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1072"/>
