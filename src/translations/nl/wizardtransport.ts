@@ -358,7 +358,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="884"/>
    <source>Insert copied browser&apos;s address line here</source>
-   <translation type="unfinished"/>
+   <translation>Voeg de gekopieerde adresregel hier</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1273"/>
@@ -540,7 +540,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="153"/>
    <source>Transport selection</source>
-   <translation type="unfinished"/>
+   <translation>Transport selectie</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="154"/>

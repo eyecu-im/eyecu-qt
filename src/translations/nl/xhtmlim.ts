@@ -812,7 +812,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="290"/>
    <source>Allow rich text edit pop-up menu</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om rich text te bewerken in pop-up menu</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="293"/>

@@ -154,6 +154,7 @@
 #define AG_XHTMLIM_ALIGN                                        500
 #define AG_XHTMLIM_FORMAT                                       500
 #define AG_XHTMLIM_FORMATHEADING                                600
+#define AG_XHTMLIM_FORMATTING                                   1000
 
 //Emoji
 #define AG_EMOJI_SKINCOLOR                                      1000

@@ -89,8 +89,7 @@ void SelectIconMenu::onAboutToShow()
 	FLayout->addWidget(toolBar);
 	ToolBarChanger changer(toolBar);
 
-	FMenu = new Menu(toolBar);
-	FMenu->setToolTip(tr("Skin color"));
+	FMenu = new Menu(toolBar);	
 
 	QActionGroup *group = new QActionGroup(FMenu);
 
@@ -105,7 +104,7 @@ void SelectIconMenu::onAboutToShow()
 		FMenu->setIcon(QIcon());
 	}
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-	FMenu->addAction(action);
+	FMenu->addAction(action);	
 
 	const QChar first(0xD83C);
 
@@ -130,6 +129,7 @@ void SelectIconMenu::onAboutToShow()
 
 	QToolButton *button = changer.insertAction(FMenu->menuAction(), AG_EMOJI_SKINCOLOR);
 	button->setPopupMode(QToolButton::InstantPopup);
+	button->setToolTip(tr("Skin color"));
 
 	connect(this,SIGNAL(aboutToHide()),toolBar,SLOT(deleteLater()));
 }

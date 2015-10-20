@@ -574,7 +574,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="860"/>
    <source>A room that a user cannot enter without being on the member list</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die een gebruiker niet kan betreden als hij niet op ledenlijst staat</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="864"/>
@@ -604,7 +604,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="875"/>
    <source>A room that anyone may enter without being on the member list</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die een gebruiker kan betreden ook als hij niet op ledenlijst staat</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="879"/>
@@ -626,7 +626,7 @@ Check values and try again</source>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="890"/>
    <source>A room that is not destroyed if the last occupant exits</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die niet als de laatste bewoner verlaat wordt verwijderd</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="894"/>
