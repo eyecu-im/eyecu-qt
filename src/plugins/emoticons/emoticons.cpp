@@ -21,6 +21,7 @@
 #include <utils/logger.h>
 #include <utils/menu.h>
 // *** <<< eyeCU <<< ***
+#include <utils/qt4qt5compat.h>
 #include <XmlTextDocumentParser>
 #include "emoticonsoptions.h"
 
@@ -389,14 +390,15 @@ int Emoticons::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int A
 			if (!url.isEmpty())
 			{
 				cursor.setPosition(it.key()-posOffset);
+				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,it->length());
 // *** <<< eyeCU <<< ***
-//				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,it->length());
-				cursor.setPosition(cursor.position()+it->length(), QTextCursor::KeepAnchor);
+				QTextImageFormat imageFormat;
+				if (!ADocument->resource(QTextDocument::ImageResource, url).isValid())
+					ADocument->addResource(QTextDocument::ImageResource, url, QImage(url.toLocalFile()));
+				imageFormat.setName(url.toString());
+				imageFormat.setToolTip(HTML_ESCAPE(*it));
+				cursor.insertImage(imageFormat);
 // *** >>> eyeCU >>> ***
-				if (!ADocument->resource(QTextDocument::ImageResource,url).isValid())
-					cursor.insertImage(QImage(url.toLocalFile()),url.toString());
-				else
-					cursor.insertImage(url.toString());
 				posOffset += it->length()-1;
 			}
 		}
