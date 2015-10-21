@@ -42,6 +42,14 @@ Emoji::~Emoji()
 	clearTreeItem(&FRootTreeItem);
 }
 
+bool Emoji::isColored(const QString &AEmojiText) const
+{
+	for (QStringList::ConstIterator it=FColorSuffixes.constBegin(); it!=FColorSuffixes.constEnd(); ++it)
+		if (AEmojiText.endsWith(*it))
+			return true;
+	return false;
+}
+
 void Emoji::pluginInfo(IPluginInfo *APluginInfo)
 {
 	APluginInfo->name = tr("Emoji");
@@ -90,6 +98,14 @@ bool Emoji::initObjects()
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
 
+	QChar first(0xD83C);
+	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
+	{
+		QString suffix(first);
+		suffix.append(QChar(i));
+		FColorSuffixes.append(suffix);
+	}
+
 	return true;
 }
 
@@ -123,31 +139,7 @@ QMultiMap<int, IOptionsDialogWidget *> Emoji::optionsDialogWidgets(const QString
 	if (ANodeId == OPN_APPEARANCE)
 	{
 		widgets.insertMulti(OHO_APPEARANCE_MESSAGES, FOptionsManager->newOptionsDialogHeader(tr("Message windows"), AParent));
-
-//		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
-			widgets.insertMulti(OWO_APPEARANCE_EMOJI, new EmojiOptions(this,AParent));
-//		else
-//		{
-//		QComboBox *cmbEmoticons = new QComboBox(AParent);
-//		cmbEmoticons->setItemDelegate(new IconsetDelegate(cmbEmoticons));
-
-//		int index = 1;
-//		cmbEmoticons->addItem(tr("Do not convert text smileys to images"),QStringList());
-//		foreach(const QString &iconset, IconStorage::availSubStorages(RSR_STORAGE_EMOJI))
-//		{
-//			IconStorage *storage = new IconStorage(RSR_STORAGE_EMOJI,iconset);
-//			cmbEmoticons->addItem(storage->getIcon(storage->fileKeys().value(0)),storage->storageProperty(FILE_STORAGE_NAME,iconset),QStringList()<<iconset);
-
-//			cmbEmoticons->setItemData(index,storage->storage(),IconsetDelegate::IDR_STORAGE);
-//			cmbEmoticons->setItemData(index,storage->subStorage(),IconsetDelegate::IDR_SUBSTORAGE);
-//			cmbEmoticons->setItemData(index,true,IconsetDelegate::IDR_HIDE_STORAGE_NAME);
-
-//			index++;
-
-//			delete storage;
-//		}
-//		widgets.insertMulti(OWO_APPEARANCE_EMOJI, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_EMOJI_ICONSET),tr("Emoji:"),cmbEmoticons,AParent));
-//		}
+		widgets.insertMulti(OWO_APPEARANCE_EMOJI, new EmojiOptions(this,AParent));
 	}
 	return widgets;
 }
@@ -409,7 +401,7 @@ int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALeng
 
 SelectIconMenu *Emoji::createSelectIconMenu(const QString &ASubStorage, QWidget *AParent)
 {
-	SelectIconMenu *menu = new SelectIconMenu(ASubStorage, AParent);
+	SelectIconMenu *menu = new SelectIconMenu(ASubStorage, this, AParent);
 	connect(menu->instance(),SIGNAL(iconSelected(const QString &, const QString &)), SLOT(onSelectIconMenuSelected(const QString &, const QString &)));
 	connect(menu->instance(),SIGNAL(destroyed(QObject *)),SLOT(onSelectIconMenuDestroyed(QObject *)));
 	return menu;

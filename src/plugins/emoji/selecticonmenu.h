@@ -12,7 +12,7 @@ class SelectIconMenu :
 {
 	Q_OBJECT
 public:
-	SelectIconMenu(const QString &AIconset, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconset, Emoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconMenu();
 	QWidget *instance() { return this; }
 	QString iconset() const;
@@ -26,6 +26,7 @@ protected slots:
 	void onSkinColorSelected();
 	void onOptionsChanged(const OptionsNode &ANode);
 private:
+	Emoji *FEmoji;
 	QVBoxLayout *FLayout;
 	IconStorage *FStorage;
 	QPointer<Menu> FMenu;

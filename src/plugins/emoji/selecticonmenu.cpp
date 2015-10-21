@@ -1,4 +1,5 @@
 #include "selecticonmenu.h"
+#include "emoji.h"
 
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
@@ -10,9 +11,11 @@
 
 #define ADR_COLOR Action::DR_Parametr1
 
-SelectIconMenu::SelectIconMenu(const QString &AIconset, QWidget *AParent) : Menu(AParent)
+SelectIconMenu::SelectIconMenu(const QString &AIconset, Emoji *AEmoji, QWidget *AParent):
+	Menu(AParent),
+	FEmoji(AEmoji),
+	FStorage(NULL)
 {
-	FStorage = NULL;
 	setIconset(AIconset);
 
 	FLayout = new QVBoxLayout(this);
@@ -33,39 +36,19 @@ QString SelectIconMenu::iconset() const
 
 void SelectIconMenu::setIconset(const QString &ASubStorage)
 {
-	QStringList colorSuffixes;
-	QChar first(0xD83C);
-
-	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
-	{
-		QString suffix;
-		suffix.append(first).append(QChar(i));
-		colorSuffixes.append(suffix);
-	}
-
 	if (FStorage==NULL || FStorage->subStorage()!=ASubStorage)
 	{
 		delete FStorage;
 		FStorage = new IconStorage(RSR_STORAGE_EMOJI,ASubStorage,this);
 
 		QList<QString> keys = FStorage->fileKeys();
-		for (QList<QString>::ConstIterator kit=keys.constBegin(); kit!=keys.constEnd(); ++kit)
-		{
-			bool colored(false);
-			for (QStringList::ConstIterator sit=colorSuffixes.constBegin(); sit!=colorSuffixes.constEnd(); ++sit)
-				if ((*kit).endsWith(*sit))
-				{
-					colored=true;
-					break;
-				}
-
-			if (!colored)
+		for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
+			if (!FEmoji->isColored(*it))
 			{
-				FStorage->insertAutoIcon(this, *kit);
+				FStorage->insertAutoIcon(this, *it);
 				menuAction()->setToolTip(FStorage->storageProperty(FILE_STORAGE_NAME, ASubStorage));
 				break;
 			}
-		}
 	}
 }
 
@@ -78,7 +61,7 @@ void SelectIconMenu::onAboutToShow()
 {
 	QString color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toString();
 
-	QWidget *widget = new SelectIconWidget(FStorage, color, this);
+	QWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
 	FLayout->addWidget(widget);
 
 	connect(this,SIGNAL(aboutToHide()),widget,SLOT(deleteLater()));

@@ -33,6 +33,7 @@ class Emoji :
 public:
 	Emoji();
 	~Emoji();
+	bool	isColored(const QString &AEmojiText) const;
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid pluginUuid() const { return EMOJI_UUID; }
@@ -86,6 +87,7 @@ private:
 	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
+	QStringList FColorSuffixes;
 };
 
 #endif // EMOTICONS_H
