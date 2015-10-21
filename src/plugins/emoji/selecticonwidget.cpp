@@ -1,14 +1,16 @@
 #include "selecticonwidget.h"
+#include "emoji.h"
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, QWidget *AParent) : QWidget(AParent)
+SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
+	QWidget(AParent),
+	FEmoji(AEmoji),
+	FPressed(NULL),
+	FStorage(AStorage)
 {
-	FPressed = NULL;
-	FStorage = AStorage;
-
 	FLayout = new QGridLayout(this);
 	FLayout->setMargin(2);
 	FLayout->setHorizontalSpacing(3);
@@ -22,29 +24,12 @@ SelectIconWidget::~SelectIconWidget()
 
 void SelectIconWidget::updateLabels(const QString &AColor)
 {
-	QStringList colorSiffixes;
-	QChar first(0xD83C);
-
-	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
-	{
-		QString suffix;
-		suffix.append(first).append(QChar(i));
-		colorSiffixes.append(suffix);
-	}
-
 	QList<QString> keys = FStorage->fileFirstKeys();
 
 	int index(0);
 	foreach(QString key, keys)
 	{
-		bool colored(false);
-		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
-			if (key.endsWith(*sit))
-			{
-				colored=true;
-				break;
-			}
-		if (!colored)
+		if (!FEmoji->isColored(key))
 		{
 			QLabel *label = qobject_cast<QLabel *>(FLayout->itemAt(index)->widget());
 			QIcon icon;
@@ -61,31 +46,12 @@ void SelectIconWidget::updateLabels(const QString &AColor)
 
 void SelectIconWidget::createLabels(const QString &AColor)
 {
-	QStringList colorSiffixes;
-	QChar first(0xD83C);
-
-	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
-	{
-		QString suffix;
-		suffix.append(first).append(QChar(i));
-		colorSiffixes.append(suffix);
-	}
-
 	QList<QString> keys = FStorage->fileFirstKeys();
 
 	int count(0);
-	for (QList<QString>::ConstIterator kit=keys.constBegin(); kit!=keys.constEnd(); ++kit)
-	{
-		bool colored(false);
-		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
-			if ((*kit).endsWith(*sit))
-			{
-				colored=true;
-				break;
-			}
-		if (!colored)
+	for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
+		if (!FEmoji->isColored(*it))
 			++count;
-	}
 
 	int columns = count/2 + 1;
 	while (columns>1 && columns*columns>count)
@@ -94,15 +60,7 @@ void SelectIconWidget::createLabels(const QString &AColor)
 	int row =0;
 	int column = 0;
 	foreach(QString key, keys)
-	{
-		bool colored(false);
-		for (QStringList::ConstIterator sit=colorSiffixes.constBegin(); sit!=colorSiffixes.constEnd(); ++sit)
-			if (key.endsWith(*sit))
-			{
-				colored=true;
-				break;
-			}
-		if (!colored)
+		if (!FEmoji->isColored(key))
 		{
 			QLabel *label = new QLabel(this);
 			label->setMargin(2);
@@ -123,7 +81,6 @@ void SelectIconWidget::createLabels(const QString &AColor)
 			column = (column+1) % columns;
 			row += column==0 ? 1 : 0;
 		}
-	}
 }
 
 bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)

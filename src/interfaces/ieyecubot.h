@@ -11,6 +11,6 @@ public:
 
 };
 
-Q_DECLARE_INTERFACE(IEyecubot,"My.Plugin.IEyecubot/1.0")
+Q_DECLARE_INTERFACE(IEyecubot,"RWS.Plugin.IEyecubot/1.0")
 
 #endif	//IEYECUBOT_H

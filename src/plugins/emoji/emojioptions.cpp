@@ -5,7 +5,9 @@
 #include <utils/iconsetdelegate.h>
 #include <utils/options.h>
 
-EmojiOptions::EmojiOptions(IEmoticons *AEmoticons, QWidget *AParent) : QWidget(AParent)
+EmojiOptions::EmojiOptions(IEmoji *AEmoji, QWidget *AParent):
+	QWidget(AParent),
+	FEmoji(AEmoji)
 {
 	ui.setupUi(this);
 	QStyle *style = QApplication::style();
@@ -13,8 +15,7 @@ EmojiOptions::EmojiOptions(IEmoticons *AEmoticons, QWidget *AParent) : QWidget(A
 	ui.tbtDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
 	ui.tbtSelectable->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_PEPMANAGER));
 
-	FEmoticons = AEmoticons;
-	ui.lwtEmoticons->setItemDelegate(new IconsetDelegate(ui.lwtEmoticons));
+	ui.lwtEmoticons->setItemDelegate(new IconsetDelegate(AEmoji->colorSuffixes(), ui.lwtEmoticons));
 	connect(ui.lwtEmoticons,SIGNAL(itemChanged(QListWidgetItem *)),SIGNAL(modified()));
 	connect(ui.tbtUp,SIGNAL(clicked()),SLOT(onUpButtonClicked()));
 	connect(ui.tbtDown,SIGNAL(clicked()),SLOT(onDownButtonClicked()));

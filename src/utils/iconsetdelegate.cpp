@@ -14,6 +14,10 @@ IconsetDelegate::IconsetDelegate(QObject *AParent) : QStyledItemDelegate(AParent
 
 }
 
+// *** <<< eyeCU <<< ***
+IconsetDelegate::IconsetDelegate(const QStringList &AFilter, QObject *AParent) : QStyledItemDelegate(AParent), FFilter(AFilter)
+{}
+// *** >>> eyeCU >>> ***
 IconsetDelegate::~IconsetDelegate()
 {
 	foreach(const QString &name, FStorages.keys())
@@ -86,6 +90,17 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 		QList<QString> iconKeys = storage->fileFirstKeys();
 		while (drawRect.bottom()>top && drawRect.right()>left && iconIndex<iconKeys.count() && row<maxRows)
 		{
+// *** <<< eyeCU <<< ***
+			bool colored=false;
+			for (QStringList::ConstIterator it=FFilter.constBegin(); it!=FFilter.constEnd(); ++it)
+				if (iconKeys.at(iconIndex).endsWith(*it))
+				{
+					colored=true;
+					break;
+				}
+			if (!colored)
+			{
+// *** >>> eyeCU >>> ***
 			QIcon icon = storage->getIcon(iconKeys.at(iconIndex));
 			if (!icon.isNull())
 			{
@@ -93,7 +108,7 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 				APainter->drawPixmap(left,top,pixmap);
 				left += indexOption.decorationSize.width()+space;
 			}
-			iconIndex++;
+			// *** <<< eyeCU >>> ***
 			column++;
 
 			if (left >= drawRect.right()-indexOption.decorationSize.width())
@@ -102,6 +117,10 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 				left = drawRect.left();
 				top += indexOption.decorationSize.height()+space;
 			}
+// *** <<< eyeCU <<< ***
+			}
+			iconIndex++;
+// *** >>> eyeCU >>> ***
 		}
 
 		drawFocusRect(APainter,indexOption,indexOption.rect);

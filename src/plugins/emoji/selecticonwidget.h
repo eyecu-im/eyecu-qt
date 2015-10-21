@@ -5,16 +5,16 @@
 #include <QLabel>
 #include <QEvent>
 #include <QGridLayout>
-#include <utils/iconstorage.h>
-
 #include <QMainWindow>
+#include <interfaces/iemoji.h>
+#include <utils/iconstorage.h>
 
 class SelectIconWidget :
 	public QWidget
 {
-	Q_OBJECT;
+	Q_OBJECT
 public:
-	SelectIconWidget(IconStorage *AStorage, const QString &AColor, QWidget *AParent = NULL);
+	SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor);
 signals:
@@ -24,6 +24,7 @@ protected:
 protected:
 	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);
 private:
+	IEmoji *FEmoji;
 	QLabel *FPressed;
 	QGridLayout *FLayout;
 	IconStorage *FStorage;

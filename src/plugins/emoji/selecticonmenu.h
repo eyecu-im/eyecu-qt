@@ -3,16 +3,17 @@
 
 #include <QVBoxLayout>
 #include <QPointer>
-#include "selecticonwidget.h"
 #include <utils/menu.h>
 #include <utils/options.h>
+
+#include "selecticonwidget.h"
 
 class SelectIconMenu :
 	public Menu
 {
 	Q_OBJECT
 public:
-	SelectIconMenu(const QString &AIconset, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconMenu();
 	QWidget *instance() { return this; }
 	QString iconset() const;
@@ -26,6 +27,7 @@ protected slots:
 	void onSkinColorSelected();
 	void onOptionsChanged(const OptionsNode &ANode);
 private:
+	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	IconStorage *FStorage;
 	QPointer<Menu> FMenu;
