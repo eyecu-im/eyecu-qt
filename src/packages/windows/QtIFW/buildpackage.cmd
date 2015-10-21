@@ -310,6 +310,7 @@ call copyplugins ru.rwsoftware.eyecu.emoticons emoticons
 call copyresources ru.rwsoftware.eyecu.emoticons.default emoticons\default
 call copyresources ru.rwsoftware.eyecu.emoticons.blobs_purple emoticons\blobs_purple
 call copyplugins ru.rwsoftware.eyecu.emoji emoji
+call copyresources ru.rwsoftware.eyecu.emoji emoji\shared
 call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.big.basic emoji\vk_big
 call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.small.basic emoji\vk_small
 call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.big.extra emoji\vk_extra_big

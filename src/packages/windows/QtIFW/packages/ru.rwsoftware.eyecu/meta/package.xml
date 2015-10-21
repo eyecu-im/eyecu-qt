@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.0.20151015</Version>
-    <ReleaseDate>2015-10-15</ReleaseDate>
+    <Version>1.3.0.20151021</Version>
+    <ReleaseDate>2015-10-21</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>
