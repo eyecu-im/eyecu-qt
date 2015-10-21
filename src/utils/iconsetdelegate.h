@@ -20,6 +20,9 @@ public:
 	};
 public:
 	IconsetDelegate(QObject *AParent = NULL);
+// *** <<< eyeCU <<< ***
+	IconsetDelegate(const QStringList &AFilter, QObject *AParent = NULL);
+// *** >>> eyeCU >>> ***
 	~IconsetDelegate();
 	virtual void paint(QPainter *APainter, const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const;
 	virtual QSize sizeHint(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const;
@@ -33,6 +36,7 @@ protected:
 	QStyleOptionViewItemV4 indexStyleOption(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const;
 private:
 	mutable QHash<QString, QHash<QString, IconStorage *> > FStorages;
+	const QStringList FFilter; // *** <<< eyeCU >>> ***
 };
 
 #endif // ICONSETDELEGATE_H

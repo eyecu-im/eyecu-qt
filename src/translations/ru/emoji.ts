@@ -4,17 +4,17 @@
 <context>
     <name>Emoji</name>
     <message>
-        <location filename="../../plugins/emoji/emoji.cpp" line="47"/>
+        <location filename="../../plugins/emoji/emoji.cpp" line="55"/>
         <source>Emoji</source>
         <translation>Эмодзи</translation>
     </message>
     <message>
-        <location filename="../../plugins/emoji/emoji.cpp" line="48"/>
+        <location filename="../../plugins/emoji/emoji.cpp" line="56"/>
         <source>Allows to use emoji in messages</source>
         <translation>Позволяет использовать эмодзи в сообщениях</translation>
     </message>
     <message>
-        <location filename="../../plugins/emoji/emoji.cpp" line="125"/>
+        <location filename="../../plugins/emoji/emoji.cpp" line="141"/>
         <source>Message windows</source>
         <translation>Окна сообщений</translation>
     </message>
@@ -65,22 +65,23 @@
 <context>
     <name>SelectIconMenu</name>
     <message>
-        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="93"/>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
+        <source>Fitzpatrick type %1</source>
+        <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
+        <translation>Тип %1 по шкале Фицпатрика</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="115"/>
         <source>Skin color</source>
         <translation>Цвет кожи</translation>
     </message>
     <message>
-        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="98"/>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="80"/>
         <source>Default</source>
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="117"/>
-        <source>Fitzpatrick type %1</source>
-        <translation>Тип %1 по шкале Фицпатрика</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="117"/>
+        <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
         <source>1 or 2</source>
         <translation>1 или 2</translation>
     </message>

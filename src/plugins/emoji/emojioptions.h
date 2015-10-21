@@ -1,8 +1,8 @@
-#ifndef EMOTICONSOPTIONS_H
-#define EMOTICONSOPTIONS_H
+#ifndef EMOJIOPTIONS_H
+#define EMOJIOPTIONS_H
 
 #include <QWidget>
-#include <interfaces/iemoticons.h>
+#include <interfaces/iemoji.h>
 #include <interfaces/ioptionsmanager.h>
 #include "ui_emojioptions.h"
 
@@ -10,10 +10,10 @@ class EmojiOptions :
 	public QWidget,
 	public IOptionsDialogWidget
 {
-	Q_OBJECT;
-	Q_INTERFACES(IOptionsDialogWidget);
+	Q_OBJECT
+	Q_INTERFACES(IOptionsDialogWidget)
 public:
-	EmojiOptions(IEmoticons *AEmoticons, QWidget *AParent);
+	EmojiOptions(IEmoji *AEmoji, QWidget *AParent);
 	~EmojiOptions();
 	virtual QWidget* instance() { return this; }
 public slots:
@@ -32,7 +32,7 @@ protected slots:
 private:
 	Ui::EmojiOptionsClass ui;
 private:
-	IEmoticons *FEmoticons;
+	IEmoticons *FEmoji;
 };
 
-#endif // EMOTICONSOPTIONS_H
+#endif // EMOJIOPTIONS_H

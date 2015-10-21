@@ -5,7 +5,7 @@
 #include <QTextDocument>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, Emoji *AEmoji, QWidget *AParent):
+SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),

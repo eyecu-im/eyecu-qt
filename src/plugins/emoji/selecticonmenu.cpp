@@ -11,7 +11,7 @@
 
 #define ADR_COLOR Action::DR_Parametr1
 
-SelectIconMenu::SelectIconMenu(const QString &AIconset, Emoji *AEmoji, QWidget *AParent):
+SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
 	FStorage(NULL)
@@ -96,7 +96,7 @@ void SelectIconMenu::onAboutToShow()
 		QString icon(first);
 		icon.append(QChar(0xDFFB+i));
 		action = new Action(group);
-		action->setText(tr("Fitzpatrick type %1").arg(i?QString::number(i+2):tr("1 or 2")));
+		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
 		action->setIcon(RSR_STORAGE_EMOJI, icon);
 		action->setData(ADR_COLOR, icon);
 		action->setCheckable(true);

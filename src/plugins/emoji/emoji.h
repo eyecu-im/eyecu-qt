@@ -1,16 +1,14 @@
-#ifndef EMOTICONS_H
-#define EMOTICONS_H
+#ifndef EMOJI_H
+#define EMOJI_H
 
 #include <QHash>
 #include <QStringList>
 #include <interfaces/ipluginmanager.h>
-#include <interfaces/iemoticons.h>
+#include <interfaces/iemoji.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/ioptionsmanager.h>
 #include "selecticonmenu.h"
-
-#define EMOJI_UUID "{3FCAB06C-B748-BFAC-839B-24F8B6A75D91}"
 
 struct EmoticonTreeItem {
 	QUrl url;
@@ -20,20 +18,19 @@ struct EmoticonTreeItem {
 class Emoji :
 	public QObject,
 	public IPlugin,
-	public IEmoticons,
+	public IEmoji,
 	public IMessageWriter,
 	public IOptionsDialogHolder,
 	public IMessageEditContentsHandler
 {
-	Q_OBJECT;
-	Q_INTERFACES(IPlugin IEmoticons IMessageWriter IOptionsDialogHolder IMessageEditContentsHandler);
+	Q_OBJECT
+	Q_INTERFACES(IPlugin IEmoji IMessageWriter IOptionsDialogHolder IMessageEditContentsHandler)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IEmoji")
 #endif
 public:
 	Emoji();
 	~Emoji();
-	bool	isColored(const QString &AEmojiText) const;
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid pluginUuid() const { return EMOJI_UUID; }
@@ -58,6 +55,9 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
+	//IEmoji
+	virtual bool isColored(const QString &AEmojiText) const;
+	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
 protected:
 	void createIconsetUrls();
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);
@@ -90,4 +90,4 @@ private:
 	QStringList FColorSuffixes;
 };
 
-#endif // EMOTICONS_H
+#endif // EMOJI_H
