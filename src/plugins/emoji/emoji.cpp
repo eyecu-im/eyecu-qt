@@ -31,24 +31,16 @@
 #define EMOJI_EXTRA_BIG			"vk_extra_big"
 #define EMOJI_FAMILY_BIG		"vk_family_big"
 
-Emoji::Emoji()
-{
-	FMessageWidgets = NULL;
-	FMessageProcessor = NULL;
-	FOptionsManager = NULL;
-}
+Emoji::Emoji():
+	FMessageWidgets(NULL),
+	FMessageProcessor(NULL),
+	FOptionsManager(NULL),
+	FFirst(QChar(0xD83C))
+{}
 
 Emoji::~Emoji()
 {
 	clearTreeItem(&FRootTreeItem);
-}
-
-bool Emoji::isColored(const QString &AEmojiText) const
-{
-	for (QStringList::ConstIterator it=FColorSuffixes.constBegin(); it!=FColorSuffixes.constEnd(); ++it)
-		if (AEmojiText.endsWith(*it))
-			return true;
-	return false;
 }
 
 void Emoji::pluginInfo(IPluginInfo *APluginInfo)
@@ -75,15 +67,11 @@ bool Emoji::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,NULL);
 	if (plugin)
-	{
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
-	}
 
 	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
 	if (plugin)
-	{
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
-	}
 
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
@@ -99,15 +87,21 @@ bool Emoji::initObjects()
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
 
-	QChar first(0xD83C);
 	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
 	{
-		QString suffix(first);
+		QString suffix(FFirst);
 		suffix.append(QChar(i));
 		FColorSuffixes.append(suffix);
 	}
 
 	return true;
+}
+
+bool Emoji::isColored(const QString &AEmojiText) const
+{
+	int size = AEmojiText.size();
+	ushort last = AEmojiText.at(size-1).unicode();
+	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFF9) && (last<0xE000);
 }
 
 bool Emoji::initSettings()
@@ -434,9 +428,7 @@ void Emoji::removeSelectIconMenu(const QString &ASubStorage)
 			delete menu;
 		}
 		else
-		{
 			++it;
-		}
 	}
 }
 
@@ -444,10 +436,8 @@ void Emoji::onToolBarWindowLayoutChanged()
 {
 	IMessageWindow *window = qobject_cast<IMessageWindow *>(sender());
 	if (window && window->toolBarWidget())
-	{
 		foreach(QAction *handle, window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_EMOTICONS))
 			handle->setVisible(window->editWidget()->isVisibleOnWindow());
-	}
 }
 
 void Emoji::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
@@ -456,7 +446,6 @@ void Emoji::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 	{
 		FToolBarsWidgets.append(AWidget);
 		if (AWidget->messageWindow()->editWidget()->isVisibleOnWindow())
-		{
 			foreach(const QString &substorage, activeIconsets())
 			{
 				SelectIconMenu *menu = createSelectIconMenu(substorage,AWidget->instance());
@@ -464,7 +453,6 @@ void Emoji::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 				QToolButton *button = AWidget->toolBarChanger()->insertAction(menu->menuAction(),TBG_MWTBW_EMOTICONS);
 				button->setPopupMode(QToolButton::InstantPopup);
 			}
-		}
 		connect(AWidget->instance(),SIGNAL(destroyed(QObject *)),SLOT(onToolBarWidgetDestroyed(QObject *)));
 		connect(AWidget->messageWindow()->instance(),SIGNAL(widgetLayoutChanged()),SLOT(onToolBarWindowLayoutChanged()));
 	}
@@ -555,7 +543,7 @@ void Emoji::onOptionsOpened()
 			if (!array.isEmpty())
 			{
 				QDataStream stream(&array, QIODevice::ReadOnly);
-				stream >> FRecent[name];
+				stream >> FRecent[*it];
 			}
 		}
 }
@@ -568,7 +556,6 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 		QList<QString> availStorages = IconStorage::availSubStorages(RSR_STORAGE_EMOJI);
 
 		foreach(const QString &substorage, Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList())
-		{
 			if (availStorages.contains(substorage))
 			{
 				if (!FStorages.contains(substorage))
@@ -583,7 +570,6 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 			{
 				LOG_WARNING(QString("Selected emoji storage=%1 not available").arg(substorage));
 			}
-		}
 
 		foreach (const QString &substorage, oldStorages)
 		{

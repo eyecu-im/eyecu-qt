@@ -18,6 +18,7 @@ public:
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor);
 	QLabel *getEmojiLabel(const QString &AKey, const QString &AColor);
+	bool hasColored() const {return FHasColored;}
 signals:
 	void iconSelected(const QString &ASubStorage, const QString &AIconKey);
 protected:
@@ -30,6 +31,7 @@ private:
 	QGridLayout *FLayout;
 	IconStorage *FStorage;
 	QMap<QLabel *, QString> FKeyByLabel;
+	bool FHasColored;
 };
 
 #endif // SELECTICONWIDGET_H

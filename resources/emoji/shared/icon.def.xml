@@ -1,6 +1,10 @@
 ﻿<?xml version='1.0' encoding='UTF-8'?>
 <icondef>
   <icon>
+    <text>&#xD83C;&#xDFFA;</text>
+    <object mime="image/png">D83CDFFA.png</object>
+  </icon>
+  <icon>
     <text>&#xD83C;&#xDFFB;</text>
     <object mime="image/png">D83CDFFB.png</object>
   </icon>

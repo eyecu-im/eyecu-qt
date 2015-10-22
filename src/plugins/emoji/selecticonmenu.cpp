@@ -3,7 +3,7 @@
 
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
-#include <definitions/actiongroups.h>
+#include <definitions/toolbargroups.h>
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 #include <utils/toolbarchanger.h>
@@ -75,53 +75,58 @@ void SelectIconMenu::onAboutToShow()
 	ToolBarChanger changer(toolBar);
 	changer.setSeparatorsVisible(true);
 
-	FMenu = new Menu(toolBar);	
-
-	QActionGroup *group = new QActionGroup(FMenu);
-
-	Action *action = new Action(group);
-	action->setText(tr("Default"));
-	action->setData(ADR_COLOR, QString());
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	if (color.isEmpty())
+	FMenu = new Menu(toolBar);
+	if (widget->hasColored())
 	{
-		action->setChecked(true);
-		FMenu->setIcon(QIcon());
-	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-	FMenu->addAction(action);	
+		const QChar first(0xD83C);
+		QActionGroup *group = new QActionGroup(FMenu);
 
-	const QChar first(0xD83C);
-
-	for (int i=0; i<5; i++)
-	{
-		QString icon(first);
-		icon.append(QChar(0xDFFB+i));
-		action = new Action(group);
-		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
-		action->setIcon(RSR_STORAGE_EMOJI, icon);
-		action->setData(ADR_COLOR, icon);
+		Action *action = new Action(group);
+		action->setText(tr("Default"));
+		action->setData(ADR_COLOR, QString());
 		action->setCheckable(true);
 		action->setActionGroup(group);
-		if (icon == color)
+		action->setIcon(RSR_STORAGE_EMOJI, QString(first).append(QChar(0xDFFA)));
+		if (color.isEmpty())
 		{
 			action->setChecked(true);
 			FMenu->setIcon(action->icon());
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 		FMenu->addAction(action);
-	}
 
-	QToolButton *button = changer.insertAction(FMenu->menuAction(), AG_EMOJI_SKINCOLOR);
+		for (int i=0; i<5; i++)
+		{
+			QString icon(first);
+			icon.append(QChar(0xDFFB+i));
+			action = new Action(group);
+			action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
+			action->setIcon(RSR_STORAGE_EMOJI, icon);
+			action->setData(ADR_COLOR, icon);
+			action->setCheckable(true);
+			action->setActionGroup(group);
+			if (icon == color)
+			{
+				action->setChecked(true);
+				FMenu->setIcon(action->icon());
+			}
+			connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
+			FMenu->addAction(action);
+		}
+	}
+	else
+		FMenu->setEnabled(false);
+
+	QToolButton *button = changer.insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR);
 	button->setPopupMode(QToolButton::InstantPopup);
-	button->setToolTip(tr("Skin color"));
+//	button->setToolTip(tr("Skin color"));
+	FMenu->setTitle(tr("Skin color"));
 
 	QStringList recent = FEmoji->recentEmoji(FStorage->subStorage());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
 		QLabel *label = widget->getEmojiLabel(*it, color);
-		changer.insertWidget(label, AG_EMOJI_RECENT);
+		changer.insertWidget(label, TBG_MWSIM_RECENT);
 	}
 	connect(this,SIGNAL(aboutToHide()),toolBar,SLOT(deleteLater()));
 }
@@ -137,7 +142,7 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR && FMenu)
 	{
 		if (ANode.value().toString().isEmpty())
-			FMenu->setIcon(QIcon());
+			FMenu->setIcon(RSR_STORAGE_EMOJI, QString(QChar(0xD83C)).append(QChar(0xDFFA)));
 		else
 			FMenu->setIcon(RSR_STORAGE_EMOJI, ANode.value().toString());
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(FLayout->itemAt(0)->widget());

@@ -10,7 +10,8 @@ SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor,
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),
-	FStorage(AStorage)
+	FStorage(AStorage),
+	FHasColored(false)
 {
 	FLayout = new QGridLayout(this);
 	FLayout->setMargin(2);
@@ -80,7 +81,12 @@ void SelectIconWidget::createLabels(const QString &AColor)
 	int row =0;
 	int column = 0;
 	foreach(QString key, keys)
-		if (!FEmoji->isColored(key))
+		if (FEmoji->isColored(key))
+		{
+			if (key.size()>2)
+				FHasColored=true;
+		}
+		else
 		{
 			FLayout->addWidget(getEmojiLabel(key, AColor),row,column);
 			column = (column+1) % columns;

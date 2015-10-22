@@ -90,6 +90,7 @@ private:
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 	QStringList FColorSuffixes;
 	QHash<QString, QStringList> FRecent;
+	const QChar FFirst;
 };
 
 #endif // EMOJI_H
