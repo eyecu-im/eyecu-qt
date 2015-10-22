@@ -58,6 +58,7 @@ public:
 	//IEmoji
 	virtual bool isColored(const QString &AEmojiText) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
+	virtual QStringList recentEmoji(const QString &ASetName) const {return FRecent.value(ASetName);}
 protected:
 	void createIconsetUrls();
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);
@@ -88,6 +89,7 @@ private:
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 	QStringList FColorSuffixes;
+	QHash<QString, QStringList> FRecent;
 };
 
 #endif // EMOJI_H

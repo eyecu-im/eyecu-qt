@@ -8,8 +8,10 @@
 #include <utils/iconstorage.h>
 #include <utils/toolbarchanger.h>
 #include <utils/action.h>
+#include <utils/qt4qt5compat.h>
 
 #define ADR_COLOR Action::DR_Parametr1
+#define ADR_EMOJI Action::DR_Parametr1
 
 SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
@@ -61,7 +63,7 @@ void SelectIconMenu::onAboutToShow()
 {
 	QString color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toString();
 
-	QWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
+	SelectIconWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
 	FLayout->addWidget(widget);
 
 	connect(this,SIGNAL(aboutToHide()),widget,SLOT(deleteLater()));
@@ -71,6 +73,7 @@ void SelectIconMenu::onAboutToShow()
 	toolBar->setIconSize(QSize(16,16));
 	FLayout->addWidget(toolBar);
 	ToolBarChanger changer(toolBar);
+	changer.setSeparatorsVisible(true);
 
 	FMenu = new Menu(toolBar);	
 
@@ -114,6 +117,12 @@ void SelectIconMenu::onAboutToShow()
 	button->setPopupMode(QToolButton::InstantPopup);
 	button->setToolTip(tr("Skin color"));
 
+	QStringList recent = FEmoji->recentEmoji(FStorage->subStorage());
+	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
+	{
+		QLabel *label = widget->getEmojiLabel(*it, color);
+		changer.insertWidget(label, AG_EMOJI_RECENT);
+	}
 	connect(this,SIGNAL(aboutToHide()),toolBar,SLOT(deleteLater()));
 }
 
@@ -135,4 +144,11 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		if (widget)
 			widget->updateLabels(ANode.value().toString());
 	}
+}
+
+void SelectIconMenu::onRecentIconTriggered()
+{
+	Action *action = qobject_cast<Action*>(sender());
+	if (action)
+		emit iconSelected(FStorage->subStorage(), action->data(ADR_EMOJI).toString());
 }

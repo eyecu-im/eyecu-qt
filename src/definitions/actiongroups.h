@@ -154,9 +154,10 @@
 #define AG_XHTMLIM_ALIGN                                        500
 #define AG_XHTMLIM_FORMAT                                       500
 #define AG_XHTMLIM_FORMATHEADING                                600
-#define AG_XHTMLIM_FORMATTING                                   1000
+#define AG_XHTMLIM_FORMATTING                                   10000
 
 //Emoji
-#define AG_EMOJI_SKINCOLOR                                      1000
+#define AG_EMOJI_RECENT                                         500
+#define AG_EMOJI_SKINCOLOR                                      10000
 // >>> eyeCU >>>
 #endif //DEF_ACTIONGROUPS_H

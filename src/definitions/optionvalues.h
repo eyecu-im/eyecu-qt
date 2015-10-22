@@ -124,8 +124,10 @@
 #define OPV_MESSAGES_EMOTICONS_ICONSET                  "messages.emoticons.iconset"
 #define OPV_MESSAGES_EMOTICONS_MAXINMESSAGE             "messages.emoticons.max-in-message"
 // *** <<< eyeCU <<< ***
+#define OPV_MESSAGES_EMOJI_RECENT                       "messages.emoji.recent"
 #define OPV_MESSAGES_EMOJI_ICONSETS                     "messages.emoji.iconsets"
 #define OPV_MESSAGES_EMOJI_SKINCOLOR                    "messages.emoji.skin-color"
+#define OPV_MESSAGES_EMOJI_RECENT_SET                   "messages.emoji.recent.set"
 // *** >>> eyeCU >>> ***
 // ChatStates
 #define OPV_MESSAGES_CHATSTATESENABLED                  "messages.chatstates-enabled"

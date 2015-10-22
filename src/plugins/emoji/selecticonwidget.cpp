@@ -3,6 +3,7 @@
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
+#include <QDebug>
 #include <utils/qt4qt5compat.h>
 
 SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
@@ -24,24 +25,43 @@ SelectIconWidget::~SelectIconWidget()
 
 void SelectIconWidget::updateLabels(const QString &AColor)
 {
-	QList<QString> keys = FStorage->fileFirstKeys();
-
-	int index(0);
-	foreach(QString key, keys)
+	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
-		if (!FEmoji->isColored(key))
+		QString key = *it;
+		if (FEmoji->isColored(key))
+			key.chop(2);
+		QIcon icon;
+		if (!AColor.isEmpty())
+			icon = FStorage->getIcon(key+AColor);
+		if (!icon.isNull())
+			key.append(AColor);
+		if (*it!=key)
 		{
-			QLabel *label = qobject_cast<QLabel *>(FLayout->itemAt(index)->widget());
-			QIcon icon;
-			if (!AColor.isEmpty())
-				icon = FStorage->getIcon(key+AColor);
-			if (!icon.isNull())
-				key.append(AColor);
-			FStorage->insertAutoIcon(label,key,0,0,"pixmap");
-			FKeyByLabel.insert(label,key);
-			index++;
+			(*it)=key;
+			FStorage->insertAutoIcon(it.key(),key,0,0,"pixmap");
 		}
 	}
+}
+
+QLabel *SelectIconWidget::getEmojiLabel(const QString &AKey, const QString &AColor)
+{
+	QLabel *label = new QLabel(this);
+	label->setMargin(2);
+	label->setAlignment(Qt::AlignCenter);
+	label->setFrameShape(QFrame::Box);
+	label->setFrameShadow(QFrame::Sunken);
+	label->installEventFilter(this);
+
+	QIcon icon;
+	if (!AColor.isEmpty())
+		icon = FStorage->getIcon(AKey+AColor);
+	QString key(AKey);
+	if (!icon.isNull())
+		key.append(AColor);
+	FStorage->insertAutoIcon(label, key,0,0,"pixmap");
+
+	FKeyByLabel.insert(label, key);
+	return label;
 }
 
 void SelectIconWidget::createLabels(const QString &AColor)
@@ -62,22 +82,7 @@ void SelectIconWidget::createLabels(const QString &AColor)
 	foreach(QString key, keys)
 		if (!FEmoji->isColored(key))
 		{
-			QLabel *label = new QLabel(this);
-			label->setMargin(2);
-			label->setAlignment(Qt::AlignCenter);
-			label->setFrameShape(QFrame::Box);
-			label->setFrameShadow(QFrame::Sunken);
-			label->installEventFilter(this);
-
-			QIcon icon;
-			if (!AColor.isEmpty())
-				icon = FStorage->getIcon(key+AColor);
-			if (!icon.isNull())
-				key.append(AColor);
-			FStorage->insertAutoIcon(label,key,0,0,"pixmap");
-
-			FKeyByLabel.insert(label,key);
-			FLayout->addWidget(label,row,column);
+			FLayout->addWidget(getEmojiLabel(key, AColor),row,column);
 			column = (column+1) % columns;
 			row += column==0 ? 1 : 0;
 		}

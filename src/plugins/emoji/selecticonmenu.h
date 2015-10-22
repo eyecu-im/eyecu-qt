@@ -26,6 +26,7 @@ protected slots:
 	void onAboutToShow();
 	void onSkinColorSelected();
 	void onOptionsChanged(const OptionsNode &ANode);
+	void onRecentIconTriggered();
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;

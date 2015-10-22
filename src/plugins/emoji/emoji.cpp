@@ -5,6 +5,7 @@
 #include <QComboBox>
 #include <QMimeData>
 #include <QTextBlock>
+#include <QDataStream>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/actiongroups.h>
@@ -113,6 +114,7 @@ bool Emoji::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSETS, QStringList() << EMOJI_SELECTABLE	<< "@"EMOJI_EXTRA << "@"EMOJI_FAMILY);
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, QString());
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_RECENT, QByteArray());
 
 	if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
@@ -512,6 +514,22 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &
 
 				cursor.endEditBlock();
 				editor->setFocus();
+
+				QStringList recent = FRecent.value(ASubStorage);
+
+				if (recent.isEmpty() || recent.first()!=AIconKey)
+				{
+					if (recent.contains(AIconKey))
+						recent.removeOne(AIconKey);
+					recent.insert(0, AIconKey);
+					if (recent.size()>10)
+						recent.removeLast();
+					FRecent[ASubStorage]=recent;
+					QByteArray array;
+					QDataStream stream(&array, QIODevice::WriteOnly);
+					stream << recent;
+					Options::node(OPV_MESSAGES_EMOJI_RECENT_SET, ASubStorage).setValue(array);
+				}
 			}
 		}
 	}
@@ -527,6 +545,19 @@ void Emoji::onSelectIconMenuDestroyed(QObject *AObject)
 void Emoji::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_MESSAGES_EMOJI_ICONSETS));
+	// Load recently used emoji lists
+	OptionsNode recentRoot = Options::node(OPV_MESSAGES_EMOJI_RECENT);
+	QList<QString> nameSpaces = recentRoot.childNSpaces("set");
+	for(QList<QString>::ConstIterator it=nameSpaces.constBegin(); it!=nameSpaces.constEnd(); ++it)
+		if (!(*it).isEmpty())
+		{
+			QByteArray array(recentRoot.node("set", *it).value().toByteArray());
+			if (!array.isEmpty())
+			{
+				QDataStream stream(&array, QIODevice::ReadOnly);
+				stream >> FRecent[name];
+			}
+		}
 }
 
 void Emoji::onOptionsChanged(const OptionsNode &ANode)

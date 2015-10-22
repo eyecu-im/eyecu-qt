@@ -10,6 +10,7 @@ class IEmoji: public IEmoticons
 public:
 	virtual bool isColored(const QString &AEmojiText) const = 0;
 	virtual const QStringList &colorSuffixes() const = 0;
+	virtual QStringList recentEmoji(const QString &ASetName) const = 0;
 };
 
 Q_DECLARE_INTERFACE(IEmoji,"RWS.Plugin.IEmoji/1.0")
