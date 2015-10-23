@@ -9,6 +9,7 @@ TextManager::TextManager()
 
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
+	qDebug() << "TextManager::getDocumentBody(" << ADocument.toHtml() << ")";
 	QRegExp regExpBody("<body.*>(.*)</body>");
 	regExpBody.setMinimal(false);
 // *** <<< eyeCU <<< ***
@@ -18,8 +19,10 @@ QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 	html.appendChild(body);
 	doc.appendChild(html);
 	XmlTextDocumentParser::textToXml(body, ADocument, true);
+	qDebug() << "doc(before)=" << doc.toString(-1);
 	if (body.firstChild().isElement() && body.firstChild().toElement().tagName()=="p")
 		body.firstChildElement("p").setTagName("span");
+	qDebug() << "doc(after)=" << doc.toString(-1);
 	QString xhtml=doc.toString(-1);	
 	if (xhtml.indexOf(regExpBody)>=0)
 		xhtml=regExpBody.cap(1).trimmed();
