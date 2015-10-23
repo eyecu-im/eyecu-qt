@@ -107,7 +107,7 @@ bool Emoji::isColored(const QString &AEmojiText) const
 bool Emoji::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSETS, QStringList() << EMOJI_SELECTABLE	<< "@"EMOJI_EXTRA << "@"EMOJI_FAMILY);
-	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, QString());
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, 0);
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_RECENT, QByteArray());
 
 	if (FOptionsManager)

@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include "selecticonwidget.h"
+#include <interfaces/iemoticons.h>
 #include <utils/menu.h>
 
 class SelectIconMenu :
@@ -10,7 +11,7 @@ class SelectIconMenu :
 {
 	Q_OBJECT;
 public:
-	SelectIconMenu(const QString &AIconset, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconset, IEmoticons *AEmoticons, QWidget *AParent = NULL);
 	~SelectIconMenu();
 	QWidget *instance() { return this; }
 	QString iconset() const;
@@ -24,6 +25,7 @@ protected slots:
 private:
 	QVBoxLayout *FLayout;
 	IconStorage *FStorage;
+	IEmoticons	*FEmoji;
 };
 
 #endif // SELECTICONMENU_H

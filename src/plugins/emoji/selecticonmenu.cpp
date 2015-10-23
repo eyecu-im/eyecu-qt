@@ -61,7 +61,8 @@ QSize SelectIconMenu::sizeHint() const
 
 void SelectIconMenu::onAboutToShow()
 {
-	QString color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toString();
+	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
 
 	SelectIconWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
 	FLayout->addWidget(widget);
@@ -87,13 +88,13 @@ void SelectIconMenu::onAboutToShow()
 		action->setCheckable(true);
 		action->setActionGroup(group);
 		action->setIcon(RSR_STORAGE_EMOJI, QString(first).append(QChar(0xDFFA)));
+		FMenu->addAction(action);
 		if (color.isEmpty())
 		{
 			action->setChecked(true);
 			FMenu->setIcon(action->icon());
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-		FMenu->addAction(action);
 
 		for (int i=0; i<5; i++)
 		{
@@ -105,13 +106,13 @@ void SelectIconMenu::onAboutToShow()
 			action->setData(ADR_COLOR, icon);
 			action->setCheckable(true);
 			action->setActionGroup(group);
+			FMenu->addAction(action);
 			if (icon == color)
 			{
 				action->setChecked(true);
 				FMenu->setIcon(action->icon());
 			}
 			connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-			FMenu->addAction(action);
 		}
 	}
 	else
@@ -122,10 +123,10 @@ void SelectIconMenu::onAboutToShow()
 //	button->setToolTip(tr("Skin color"));
 	FMenu->setTitle(tr("Skin color"));
 
-	QStringList recent = FEmoji->recentEmoji(FStorage->subStorage());
+	QStringList recent = FEmoji->recentIcons(FStorage->subStorage());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
-		QLabel *label = widget->getEmojiLabel(*it, color);
+		QLabel *label = widget->getIconLabel(*it, color);
 		changer.insertWidget(label, TBG_MWSIM_RECENT);
 	}
 	connect(this,SIGNAL(aboutToHide()),toolBar,SLOT(deleteLater()));
@@ -133,18 +134,18 @@ void SelectIconMenu::onAboutToShow()
 
 void SelectIconMenu::onSkinColorSelected()
 {
-	Action *action=qobject_cast<Action *>(sender());
-	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).setValue(action->data(ADR_COLOR));
+	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).setValue(FEmoji->colorSuffixes().indexOf(qobject_cast<Action *>(sender())->data(ADR_COLOR).toString())+1);
 }
 
 void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR && FMenu)
 	{
-		if (ANode.value().toString().isEmpty())
-			FMenu->setIcon(RSR_STORAGE_EMOJI, QString(QChar(0xD83C)).append(QChar(0xDFFA)));
+		if (ANode.value().toInt())
+			FMenu->setIcon(RSR_STORAGE_EMOJI, FEmoji->colorSuffixes()[ANode.value().toInt()-1]);
 		else
-			FMenu->setIcon(RSR_STORAGE_EMOJI, ANode.value().toString());
+			FMenu->setIcon(RSR_STORAGE_EMOJI, QString(QChar(0xD83C)).append(QChar(0xDFFA)));
+
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(FLayout->itemAt(0)->widget());
 		if (widget)
 			widget->updateLabels(ANode.value().toString());

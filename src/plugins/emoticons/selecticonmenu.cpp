@@ -1,10 +1,16 @@
 #include "selecticonmenu.h"
 
 #include <definitions/resources.h>
+// *** <<< eyeCU <<< ***
+#include <definitions/toolbargroups.h>
+#include <utils/toolbarchanger.h>
+// *** >>> eyeCU >>> ***
 #include <utils/iconstorage.h>
 
-SelectIconMenu::SelectIconMenu(const QString &AIconset, QWidget *AParent) : Menu(AParent)
+
+SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoticons *AEmoticons, QWidget *AParent) : Menu(AParent)
 {
+	FEmoji = AEmoticons;
 	FStorage = NULL;
 	setIconset(AIconset);
 
@@ -41,8 +47,24 @@ QSize SelectIconMenu::sizeHint() const
 
 void SelectIconMenu::onAboutToShow()
 {
-	QWidget *widget = new SelectIconWidget(FStorage,this);
+	SelectIconWidget *widget = new SelectIconWidget(FStorage,this); // *** <<< eyeCU >>> ***
 	FLayout->addWidget(widget);
 	connect(this,SIGNAL(aboutToHide()),widget,SLOT(deleteLater()));
 	connect(widget,SIGNAL(iconSelected(const QString &, const QString &)),SIGNAL(iconSelected(const QString &, const QString &)));
+// *** <<< eyeCU <<< ***
+	QStringList recent = FEmoji->recentIcons(FStorage->subStorage());
+	if (!recent.isEmpty())
+	{
+		QToolBar *toolBar = new QToolBar(this);
+//		toolBar->setIconSize(QSize(16,16));
+		FLayout->addWidget(toolBar);
+		ToolBarChanger changer(toolBar);
+		for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
+		{
+			QLabel *label = widget->getIconLabel(*it);
+			changer.insertWidget(label, TBG_MWSIM_RECENT);
+		}
+		connect(this,SIGNAL(aboutToHide()),toolBar,SLOT(deleteLater()));
+	}
+// *** >>> eyeCU >>> ***
 }

@@ -55,6 +55,9 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
+// *** <<< eyeCU <<< ***
+	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent.value(ASetName);}
+// *** >>> eyeCU >>> ***
 protected:
 	void createIconsetUrls();
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);
@@ -85,6 +88,7 @@ private:
 	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
+	QHash<QString, QStringList> FRecent; // *** <<< eyeCU >>> **
 };
 
 #endif // EMOTICONS_H

@@ -97,7 +97,8 @@ bool Emoticons::initObjects()
 bool Emoticons::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_MAXINMESSAGE,20);
-	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_ICONSET,QStringList() << DEFAULT_ICONSET);
+	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_ICONSET,QStringList() << DEFAULT_ICONSET);	
+	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_RECENT, QByteArray()); // *** <<< eyeCU >>> ***
 
 	if (FOptionsManager)
 	{
@@ -454,7 +455,7 @@ int Emoticons::replaceImageToText(QTextDocument *ADocument, int AStartPos, int A
 
 SelectIconMenu *Emoticons::createSelectIconMenu(const QString &ASubStorage, QWidget *AParent)
 {
-	SelectIconMenu *menu = new SelectIconMenu(ASubStorage, AParent);
+	SelectIconMenu *menu = new SelectIconMenu(ASubStorage, this, AParent);
 	connect(menu->instance(),SIGNAL(iconSelected(const QString &, const QString &)), SLOT(onSelectIconMenuSelected(const QString &, const QString &)));
 	connect(menu->instance(),SIGNAL(destroyed(QObject *)),SLOT(onSelectIconMenuDestroyed(QObject *)));
 	return menu;
@@ -584,6 +585,23 @@ void Emoticons::onSelectIconMenuSelected(const QString &ASubStorage, const QStri
 
 				cursor.endEditBlock();
 				editor->setFocus();
+// *** <<< eyeCU <<< ***
+				QStringList recent = FRecent.value(ASubStorage);
+
+				if (recent.isEmpty() || recent.first()!=AIconKey)
+				{
+					if (recent.contains(AIconKey))
+						recent.removeOne(AIconKey);
+					recent.insert(0, AIconKey);
+					if (recent.size()>10)
+						recent.removeLast();
+					FRecent[ASubStorage]=recent;
+					QByteArray array;
+					QDataStream stream(&array, QIODevice::WriteOnly);
+					stream << recent;
+					Options::node(OPV_MESSAGES_EMOTICONS_RECENT_SET, ASubStorage).setValue(array);
+				}
+// *** >>> eyeCU >>> ***
 			}
 		}
 	}
@@ -600,6 +618,21 @@ void Emoticons::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_MESSAGES_EMOTICONS_ICONSET));
 	onOptionsChanged(Options::node(OPV_MESSAGES_EMOTICONS_MAXINMESSAGE));
+// *** <<< eyeCU <<< ***
+	// Load recently used emoji lists
+	OptionsNode recentRoot = Options::node(OPV_MESSAGES_EMOTICONS_RECENT);
+	QList<QString> nameSpaces = recentRoot.childNSpaces("set");
+	for(QList<QString>::ConstIterator it=nameSpaces.constBegin(); it!=nameSpaces.constEnd(); ++it)
+		if (!(*it).isEmpty())
+		{
+			QByteArray array(recentRoot.node("set", *it).value().toByteArray());
+			if (!array.isEmpty())
+			{
+				QDataStream stream(&array, QIODevice::ReadOnly);
+				stream >> FRecent[*it];
+			}
+		}
+// *** >>> eyeCU >>> ***
 }
 
 void Emoticons::onOptionsChanged(const OptionsNode &ANode)

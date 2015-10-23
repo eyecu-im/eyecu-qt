@@ -21,7 +21,21 @@ SelectIconWidget::~SelectIconWidget()
 {
 
 }
-
+// *** <<< eyeCU <<< ***
+QLabel *SelectIconWidget::getIconLabel(const QString &AKey)
+{
+	QLabel *label = new QLabel(this);
+	label->setMargin(2);
+	label->setAlignment(Qt::AlignCenter);
+	label->setFrameShape(QFrame::Box);
+	label->setFrameShadow(QFrame::Sunken);
+	label->setToolTip(QString("<span>%1</span>").arg(HTML_ESCAPE(AKey)));
+	label->installEventFilter(this);
+	FStorage->insertAutoIcon(label,AKey,0,0,"pixmap");
+	FKeyByLabel.insert(label,AKey);
+	return label;
+}
+// *** >>> eyeCU >>> ***
 void SelectIconWidget::createLabels()
 {
 	QList<QString> keys = FStorage->fileFirstKeys();
@@ -34,16 +48,9 @@ void SelectIconWidget::createLabels()
 	int column = 0;
 	foreach(const QString &key, keys)
 	{
-		QLabel *label = new QLabel(this);
-		label->setMargin(2);
-		label->setAlignment(Qt::AlignCenter);
-		label->setFrameShape(QFrame::Box);
-		label->setFrameShadow(QFrame::Sunken);
-		label->setToolTip(QString("<span>%1</span>").arg(HTML_ESCAPE(key)));
-		label->installEventFilter(this);
-		FStorage->insertAutoIcon(label,key,0,0,"pixmap");
-		FKeyByLabel.insert(label,key);
-		FLayout->addWidget(label,row,column);
+// *** <<< eyeCU <<< ***
+		FLayout->addWidget(getIconLabel(key),row,column);
+// *** >>> eyeCU >>> ***
 		column = (column+1) % columns;
 		row += column==0 ? 1 : 0;
 	}

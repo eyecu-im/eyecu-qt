@@ -44,7 +44,7 @@ void SelectIconWidget::updateLabels(const QString &AColor)
 	}
 }
 
-QLabel *SelectIconWidget::getEmojiLabel(const QString &AKey, const QString &AColor)
+QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColor)
 {
 	QLabel *label = new QLabel(this);
 	label->setMargin(2);
@@ -88,7 +88,7 @@ void SelectIconWidget::createLabels(const QString &AColor)
 		}
 		else
 		{
-			FLayout->addWidget(getEmojiLabel(key, AColor),row,column);
+			FLayout->addWidget(getIconLabel(key, AColor),row,column);
 			column = (column+1) % columns;
 			row += column==0 ? 1 : 0;
 		}

@@ -16,6 +16,7 @@ class SelectIconWidget :
 public:
 	SelectIconWidget(IconStorage *AStorage, QWidget *AParent = NULL);
 	~SelectIconWidget();
+	QLabel *getIconLabel(const QString &AKey);
 signals:
 	void iconSelected(const QString &ASubStorage, const QString &AIconKey);
 protected:

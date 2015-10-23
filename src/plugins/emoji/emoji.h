@@ -55,10 +55,10 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
+	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent.value(ASetName);}
 	//IEmoji
 	virtual bool isColored(const QString &AEmojiText) const;
-	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
-	virtual QStringList recentEmoji(const QString &ASetName) const {return FRecent.value(ASetName);}
+	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
 protected:
 	void createIconsetUrls();
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);

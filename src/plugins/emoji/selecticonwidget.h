@@ -17,7 +17,7 @@ public:
 	SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor);
-	QLabel *getEmojiLabel(const QString &AKey, const QString &AColor);
+	QLabel *getIconLabel(const QString &AKey, const QString &AColor);
 	bool hasColored() const {return FHasColored;}
 signals:
 	void iconSelected(const QString &ASubStorage, const QString &AIconKey);

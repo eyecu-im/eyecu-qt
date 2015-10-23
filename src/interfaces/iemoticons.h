@@ -19,6 +19,9 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const =0;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const =0;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const =0;
+// *** <<< eyeCU <<< ***
+	virtual QStringList recentIcons(const QString &ASetName) const =0;
+// *** >>> eyeCU >>> ***
 };
 
 Q_DECLARE_INTERFACE(IEmoticons,"Vacuum.Plugin.IEmoticons/1.0")
