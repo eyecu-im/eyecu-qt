@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QTextBlock>
 #include <definitions/namespaces.h>
 #include <xmltextdocumentparser.h>
@@ -17,7 +18,9 @@ QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 	html.appendChild(body);
 	doc.appendChild(html);
 	XmlTextDocumentParser::textToXml(body, ADocument, true);
-	QString xhtml=doc.toString(-1);
+	if (body.firstChild().isElement() && body.firstChild().toElement().tagName()=="p")
+		body.firstChildElement("p").setTagName("span");
+	QString xhtml=doc.toString(-1);	
 	if (xhtml.indexOf(regExpBody)>=0)
 		xhtml=regExpBody.cap(1).trimmed();
 	xhtml.replace(QChar::Nbsp, "&#160;");
