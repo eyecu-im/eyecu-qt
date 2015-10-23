@@ -664,6 +664,7 @@ bool MultiUserChatWindow::messageViewUrlOpen(int AOrder, IMessageViewWidget *AWi
 		QString suffix = cursor.atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
 		cursor.insertText(AUrl.path() + suffix);
 		cursor.endEditBlock();
+		FEditWidget->textEdit()->setFocus();
 		return true;
 	}
 	else
