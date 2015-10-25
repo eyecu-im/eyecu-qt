@@ -14,6 +14,8 @@ public:
 	static void insertQuotedFragment(QTextCursor ACursor, const QTextDocumentFragment &AFragment);
 	static QTextDocumentFragment getTrimmedTextFragment(const QTextDocumentFragment &AFragment, bool APlainText = false);
 	static QString getElidedString(const QString &AString, Qt::TextElideMode AMode, int AMaxChars);
+protected:
+	static bool checkBlockStyle(const QString &AStyle);
 private:
 	TextManager();
 };

@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QTextBlock>
 #include <definitions/namespaces.h>
 #include <xmltextdocumentparser.h>
@@ -9,7 +8,6 @@ TextManager::TextManager()
 
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
-	qDebug() << "TextManager::getDocumentBody(" << ADocument.toHtml() << ")";
 	QRegExp regExpBody("<body.*>(.*)</body>");
 	regExpBody.setMinimal(false);
 // *** <<< eyeCU <<< ***
@@ -19,10 +17,12 @@ QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 	html.appendChild(body);
 	doc.appendChild(html);
 	XmlTextDocumentParser::textToXml(body, ADocument, true);
-	qDebug() << "doc(before)=" << doc.toString(-1);
 	if (body.firstChild().isElement() && body.firstChild().toElement().tagName()=="p")
-		body.firstChildElement("p").setTagName("span");
-	qDebug() << "doc(after)=" << doc.toString(-1);
+	{
+		QDomElement firstP=body.firstChildElement("p");
+		if (checkBlockStyle(firstP.attribute("style")))
+			firstP.setTagName("span");
+	}
 	QString xhtml=doc.toString(-1);	
 	if (xhtml.indexOf(regExpBody)>=0)
 		xhtml=regExpBody.cap(1).trimmed();
@@ -134,4 +134,41 @@ QString TextManager::getElidedString(const QString &AString, Qt::TextElideMode A
 		return string;
 	}
 	return AString;
+}
+
+bool TextManager::checkBlockStyle(const QString &AStyle)
+{
+	bool isDefaultBlock(true);
+	QStringList splitted = AStyle.split(';');
+	for (QStringList::ConstIterator it = splitted.constBegin(); it!=splitted.constEnd(); ++it)
+	{
+		QStringList pair = (*it).split(':');
+		if (pair.size()==2)
+		{
+			QString name=pair.at(0).trimmed();
+			QString value=pair.at(1).trimmed();
+			if (name=="margin-bottom" || name=="margin-top")
+			{
+				if (value!="0px")
+				{
+					isDefaultBlock=false;
+					break;
+				}
+			}
+			else if (name=="white-space")
+			{
+				if (value!="pre-wrap")
+				{
+					isDefaultBlock=false;
+					break;
+				}
+			}
+			else if (name=="text-indent" || name=="text-align")
+			{
+				isDefaultBlock=false;
+				break;
+			}
+		}
+	}
+	return isDefaultBlock;
 }
