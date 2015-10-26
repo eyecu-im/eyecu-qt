@@ -3,7 +3,7 @@
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
-#include <QDebug>
+
 #include <utils/qt4qt5compat.h>
 
 SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):

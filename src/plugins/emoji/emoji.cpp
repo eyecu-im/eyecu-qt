@@ -87,7 +87,7 @@ bool Emoji::initObjects()
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
 
-	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
+	for (ushort i=0xDFFA; i<=0xDFFF; ++i)
 	{
 		QString suffix(FFirst);
 		suffix.append(QChar(i));
@@ -193,10 +193,10 @@ bool Emoji::messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget, 
 
 QList<QString> Emoji::activeIconsets() const
 {
-	QList<QString> iconsets = Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList();
+	QList<QString> iconsets = FStorages.keys();// = Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList();
 	for (QList<QString>::iterator it = iconsets.begin(); it != iconsets.end(); )
 	{
-		if (!FStorages.contains(*it))
+		if ((*it).at(0)=='@')
 			it = iconsets.erase(it);
 		else
 			++it;
@@ -556,13 +556,18 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 		QList<QString> availStorages = IconStorage::availSubStorages(RSR_STORAGE_EMOJI);
 
 		foreach(const QString &substorage, Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList())
-			if (availStorages.contains(substorage))
+		{
+			QString ss = substorage;
+			if (ss.at(0)=='@')
+				ss.remove(0,1);
+			if (availStorages.contains(ss))
 			{
 				if (!FStorages.contains(substorage))
 				{
 					LOG_DEBUG(QString("Creating emoji storage=%1").arg(substorage));
-					FStorages.insert(substorage, new IconStorage(RSR_STORAGE_EMOJI,substorage,this));
-					insertSelectIconMenu(substorage);
+					if (substorage.at(0)!='@')
+						insertSelectIconMenu(substorage);
+					FStorages.insert(substorage, new IconStorage(RSR_STORAGE_EMOJI,ss,this));
 				}
 				oldStorages.removeAll(substorage);
 			}
@@ -570,11 +575,13 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 			{
 				LOG_WARNING(QString("Selected emoji storage=%1 not available").arg(substorage));
 			}
+		}
 
 		foreach (const QString &substorage, oldStorages)
 		{
 			LOG_DEBUG(QString("Removing emoji storage=%1").arg(substorage));
-			removeSelectIconMenu(substorage);
+			if (substorage.at(0)!='@')
+				removeSelectIconMenu(substorage);
 			delete FStorages.take(substorage);
 		}
 
