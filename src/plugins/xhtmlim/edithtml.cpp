@@ -1,5 +1,4 @@
 #include <QPainter>
-
 #include <QImageReader>
 #include <QImageWriter>
 #include <QColorDialog>
@@ -224,17 +223,13 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 	FToolBarChanger->insertAction(FMenuCapitalization->menuAction(), AG_XHTMLIM_FONT)->setPopupMode(QToolButton::InstantPopup);;
 
-
-
-
-
 	//  Code
 	FActionTextCode=new Action(this);
 	FActionTextCode->setIcon(QIcon::fromTheme("format-text-code", FIconStorage->getIcon(XHI_CODE)));
 	FActionTextCode->setText(tr("Code"));
 	FActionTextCode->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CODE);
 	FActionTextCode->setPriority(QAction::LowPriority);
-	connect(FActionTextCode, SIGNAL(triggered()), SLOT(onTextCode()));
+	connect(FActionTextCode, SIGNAL(triggered(bool)), SLOT(onTextCode(bool)));
 	FActionTextCode->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextCode, AG_XHTMLIM_FONT);
 
@@ -945,11 +940,25 @@ void EditHtml::onSelectCapitalization()
 //	mergeFormatOnWordOrSelection(fmt);
 //}
 
-void EditHtml::onTextCode()
+void EditHtml::onTextCode(bool AChecked)
 {
-	QTextCharFormat fmt;
-	fmt.setFontFixedPitch(FActionTextCode->isChecked());
-	mergeFormatOnWordOrSelection(fmt);
+	QTextCursor cursor = FTextEdit->textCursor();
+	cursor.beginEditBlock();
+	if (AChecked)
+	{
+		QTextCharFormat charFormat;
+		charFormat.setFontFamily("Courier New,courier");
+		mergeFormatOnWordOrSelection(charFormat);
+	}
+	else
+	{
+		if (!cursor.hasSelection())
+			cursor.select(QTextCursor::WordUnderCursor);
+		QTextCharFormat charFormat = cursor.charFormat();
+		charFormat.clearProperty(QTextFormat::FontFamily);
+		cursor.setCharFormat(charFormat);
+	}
+	cursor.endEditBlock();
 }
 
 void EditHtml::onCurrentFontFamilyChanged(const QFont &AFont)
@@ -1413,8 +1422,8 @@ void EditHtml::fontChanged(const QTextCharFormat &ACharFormat)
 		FActionTextStrikeout->setChecked(ACharFormat.boolProperty(QTextFormat::FontStrikeOut));
 	else
 		FActionTextStrikeout->setChecked(false);
-	if (ACharFormat.hasProperty(QTextFormat::FontFixedPitch))
-		FActionTextCode->setChecked(ACharFormat.boolProperty(QTextFormat::FontFixedPitch));
+	if (ACharFormat.hasProperty(QTextFormat::FontFamily))
+		FActionTextCode->setChecked(ACharFormat.stringProperty(QTextFormat::FontFamily)=="Courier New,courier");
 	else
 		FActionTextCode->setChecked(false);
 }

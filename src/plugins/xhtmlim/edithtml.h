@@ -103,7 +103,7 @@ protected slots:
     void onInsertLink();
 	void onSelectDecoration(bool ASelected);
 	void onSelectCapitalization();
-    void onTextCode();
+    void onTextCode(bool AChecked);
     void onCurrentFontFamilyChanged(const QFont &AFont);
     void onCurrentFontSizeChanged(const QString &ASize);
     void onInsertList();

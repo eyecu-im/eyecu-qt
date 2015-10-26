@@ -581,7 +581,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			code->setPriority(QAction::LowPriority);
 			connect(code, SIGNAL(toggled(bool)), SLOT(onTextCode(bool)));
 			code->setCheckable(true);
-			code->setChecked(getCursor().charFormat().fontFixedPitch());
+			code->setChecked(getCursor().charFormat().fontFamily()=="Courier New,courier");
 			menu->addAction(code, AG_XHTMLIM_FONT);
 
 			// Color
@@ -1337,13 +1337,13 @@ void XhtmlIm::onTextCode(bool AChecked)
 	if (AChecked)
 	{
 		QTextCharFormat charFormat;
-		charFormat.setFontFixedPitch(true);
+		charFormat.setFontFamily("Courier New,courier");
 		mergeFormatOnWordOrSelection(cursor, charFormat);
 	}
 	else
 	{
 		QTextCharFormat charFormat = cursor.charFormat();
-		charFormat.clearProperty(QTextFormat::FontFixedPitch);
+		charFormat.clearProperty(QTextFormat::FontFamily);
 		cursor.setCharFormat(charFormat);
 	}
 	cursor.endEditBlock();
