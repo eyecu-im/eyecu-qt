@@ -66,22 +66,22 @@
         <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
         <source>Fitzpatrick type %1</source>
         <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
-        <translation type="unfinished"/>
+        <translation>Fitzpatrick type %1</translation>
     </message>
     <message>
         <location filename="../../plugins/emoji/selecticonmenu.cpp" line="115"/>
         <source>Skin color</source>
-        <translation type="unfinished"/>
+        <translation>Skin kleur</translation>
     </message>
     <message>
         <location filename="../../plugins/emoji/selecticonmenu.cpp" line="80"/>
         <source>Default</source>
-        <translation type="unfinished"/>
+        <translation>Standaard</translation>
     </message>
     <message>
         <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
         <source>1 or 2</source>
-        <translation type="unfinished"/>
+        <translation>1 of 2</translation>
     </message>
 </context>
 </TS>
