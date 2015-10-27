@@ -15,24 +15,14 @@
 #include <utils/textmanager.h>
 #include <utils/options.h>
 #include <utils/logger.h>
+#include <utils/pluginhelper.h>
 #include <utils/qt4qt5compat.h>
 #include <XmlTextDocumentParser>
 
 #define SCROLL_TIMEOUT                      100
 #define SHARED_STYLE_PATH                   RESOURCES_DIR"/"RSR_STORAGE_SIMPLEMESSAGESTYLES"/"FILE_STORAGE_SHARED_DIR
 
-static const char *SenderColors[] =  {
-	"blue", "blueviolet", "brown", "cadetblue", "chocolate", "coral", "cornflowerblue", "crimson",
-	"darkblue", "darkcyan", "darkgoldenrod", "darkgreen", "darkmagenta", "darkolivegreen", "darkorange",
-	"darkorchid", "darkred", "darksalmon", "darkslateblue", "darkslategrey", "darkturquoise", "darkviolet",
-	"deeppink", "deepskyblue", "dodgerblue", "firebrick", "forestgreen", "fuchsia", "gold", "green",
-	"hotpink", "indianred", "indigo", "lightcoral", "lightseagreen", "limegreen", "magenta", "maroon",
-	"mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen", "mediumslateblue", "mediumvioletred",
-	"midnightblue", "navy", "olive", "olivedrab", "orange", "orangered", "orchid", "palevioletred", "peru",
-	"purple", "red", "rosybrown", "royalblue", "saddlebrown", "salmon", "seagreen", "sienna", "slateblue",
-	"steelblue", "teal", "tomato", "violet"
-};
-static int SenderColorsCount = sizeof(SenderColors)/sizeof(SenderColors[0]);
+// *** <<< eyeCU >>> ***
 
 QString SimpleMessageStyle::FSharedPath = QString::null;
 
@@ -92,9 +82,9 @@ QWidget *SimpleMessageStyle::createWidget(const IMessageStyleOptions &AOptions, 
 
 QString SimpleMessageStyle::senderColor(const QString &ASenderId) const
 {
-	if (!FSenderColors.isEmpty())
+// *** <<< eyeCU <<< ***
 		return FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
-	return QString(SenderColors[qHash(ASenderId) % SenderColorsCount]);
+// *** >>> eyeCU >>> ***
 }
 
 QTextDocumentFragment SimpleMessageStyle::selection(QWidget *AWidget) const
@@ -560,6 +550,10 @@ void SimpleMessageStyle::loadSenderColors()
 	QFile colors(FStylePath+"/Incoming/SenderColors.txt");
 	if (colors.open(QFile::ReadOnly))
 		FSenderColors = QString::fromUtf8(colors.readAll()).split(':',QString::SkipEmptyParts);
+// *** <<< eyeCU <<< ***
+	if (FSenderColors.isEmpty())
+		FSenderColors = PluginHelper::pluginInstance<IMessageStyleManager>()->senderColors();
+// *** >>> eyeCU >>> ***
 }
 
 void SimpleMessageStyle::initStyleSettings()

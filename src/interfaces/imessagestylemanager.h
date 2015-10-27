@@ -127,7 +127,7 @@ class IMessageStyleManager
 {
 public:
 	virtual QObject *instance() = 0;
-	virtual QList<QString> styleEngines() const =0;
+	virtual QList<QString> styleEngines() const =0;	
 	virtual IMessageStyleEngine *findStyleEngine(const QString &AEngineId) const =0;
 	virtual void registerStyleEngine(IMessageStyleEngine *AEngine) =0;
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) const =0;
@@ -138,6 +138,7 @@ public:
 	virtual QString contactIcon(const Jid &AContactJid, int AShow, const QString &ASubscription, bool AAsk) const =0;
 	virtual QString dateSeparator(const QDate &ADate, const QDate &ACurDate=QDate::currentDate()) const =0;
 	virtual QString timeFormat(const QDateTime &ATime, const QDateTime &ACurTime=QDateTime::currentDateTime()) const =0;
+	virtual QList<QString> senderColors() const =0; // *** <<< eyeCU >>> ***
 protected:
 	virtual void styleEngineRegistered(IMessageStyleEngine *AEngine) =0;
 	virtual void styleOptionsChanged(const IMessageStyleOptions &AOptions, int AMessageType, const QString &AContext) const =0;
