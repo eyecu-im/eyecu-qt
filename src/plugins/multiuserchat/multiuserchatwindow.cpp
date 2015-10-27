@@ -75,6 +75,7 @@ MultiUserChatWindow::MultiUserChatWindow(IMultiUserChatManager *AChatPlugin, IMu
 	FToolBarWidget = NULL;
 	FStatusBarWidget = NULL;
 	FTabPageNotifier = NULL;
+	FTemporaryNick = false; // *** <<< eyeCU >>> ***
 
 	FSHIAnyStanza = -1;
 	FLastAffiliation = MUC_AFFIL_NONE;
@@ -965,6 +966,7 @@ void MultiUserChatWindow::createMessageWidgets()
 		FEditWidget->setSendShortcutId(SCT_MESSAGEWINDOWS_SENDCHATMESSAGE);
 		ui.wdtEdit->layout()->addWidget(FEditWidget->instance());
 		connect(FEditWidget->instance(),SIGNAL(keyEventReceived(QKeyEvent *,bool &)),SLOT(onMultiChatEditWidgetKeyEvent(QKeyEvent *,bool &)));
+		connect(FEditWidget->textEdit(),SIGNAL(textChanged()),SLOT(onEditTextChanged()));
 
 		ui.wdtToolBar->setLayout(new QVBoxLayout);
 		ui.wdtToolBar->layout()->setMargin(0);
@@ -1872,7 +1874,9 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 			if (FEditWidget)
 			{
 				QStandardItem *userItem = FUsersModel->itemFromIndex(FUsersProxy->mapToSource(ui.ltvUsers->indexAt(mouseEvent->pos())));
-				if(mouseEvent->button()==Qt::MidButton && userItem)
+// *** <<< eyeCU <<< ***
+				if(mouseEvent->button()==Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON).value().toInt() && userItem)
+// *** >>> eyeCU >>> ***
 				{
 					QString suffix = FEditWidget->textEdit()->textCursor().atBlockStart() ? Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX).value().toString() : " ";
 					FEditWidget->textEdit()->textCursor().beginEditBlock();
@@ -1880,6 +1884,13 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 					FEditWidget->textEdit()->textCursor().endEditBlock();
 					FEditWidget->textEdit()->setFocus();
 					AEvent->accept();
+// *** <<< eyeCU <<< ***
+					if (Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON).value().toInt()==Qt::LeftButton)
+					{
+						FTemporaryNick = true;
+						return false;
+					}
+// *** >>> eyeCU >>> ***
 					return true;
 				}
 				else if (mouseEvent->button()==Qt::LeftButton && !userItem)
@@ -2301,6 +2312,10 @@ void MultiUserChatWindow::onMultiChatHorizontalSplitterMoved(int APos, int AInde
 
 void MultiUserChatWindow::onMultiChatUserItemDoubleClicked(const QModelIndex &AIndex)
 {
+// *** <<< eyeCU <<< ***
+	if (FTemporaryNick)
+		FEditWidget->textEdit()->undo();
+// *** >>> eyeCU >>> ***
 	IMultiUser *user = FUsers.key(FUsersModel->itemFromIndex(FUsersProxy->mapToSource(AIndex)));
 	if (user)
 		openChatWindow(user->contactJid());
@@ -2330,7 +2345,12 @@ void MultiUserChatWindow::onMultiChatMessageStyleOptionsChanged(const IMessageSt
 		LOG_STRM_DEBUG(streamJid(),QString("Multi chat window style options changed, room=%1, cleared=%2").arg(contactJid().bare()).arg(ACleared));
 	}
 }
-
+// *** <<< eyeCU <<< ***
+void MultiUserChatWindow::onEditTextChanged()
+{
+	FTemporaryNick = false;
+}
+// *** <<< eyeCU <<< ***
 void MultiUserChatWindow::onPrivateChatWindowActivated()
 {
 	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());

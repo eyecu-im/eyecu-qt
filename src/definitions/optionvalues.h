@@ -152,6 +152,7 @@
 #define OPV_MUC_GROUPCHAT_REFERENUMERATION              "muc.groupchat.refer-enumeration"
 // *** <<< eyeCU <<< ***
 #define OPV_MUC_GROUPCHAT_NICKNAMESUFFIX                "muc.groupchat.nickname-suffix"
+#define OPV_MUC_GROUPCHAT_ADDRESSBUTTON                 "muc.groupchat.address-button"
 // *** >>> eyeCU >>> ***
 // Bookmarks
 #define OPV_MUC_GROUPCHAT_SHOWAUTOJOINED                "muc.groupchat.show-auto-joined"

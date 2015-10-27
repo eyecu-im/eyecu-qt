@@ -186,6 +186,7 @@ protected slots:
 	void onMultiChatUserItemDoubleClicked(const QModelIndex &AIndex);
 	void onMultiChatContentAppended(const QString &AHtml, const IMessageStyleContentOptions &AOptions);
 	void onMultiChatMessageStyleOptionsChanged(const IMessageStyleOptions &AOptions, bool ACleared);
+	void onEditTextChanged(); // *** <<< eyeCU >>> ***
 protected slots:
 	void onPrivateChatWindowActivated();
 	void onPrivateChatWindowClosed();
@@ -278,7 +279,8 @@ private:
 	QString FCompleteNickStarts;
 	QString FCompleteNickLast;
 	QList<QString> FCompleteNicks;
-	QList<QString>::const_iterator FCompleteIt;	
+	QList<QString>::const_iterator FCompleteIt;
+	bool FTemporaryNick; // *** <<< eyeCU >>> ***
 };
 
 #endif // MULTIUSERCHATWINDOW_H

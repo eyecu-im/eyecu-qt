@@ -302,6 +302,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REJOINAFTERKICK,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REFERENUMERATION,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX,", ");
+	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::LeftButton);
 
 	if (FOptionsManager)
 	{
