@@ -125,8 +125,10 @@
 #define   OWO_MESSAGES_MUC_REJOINAFTERKICK        550
 #define   OWO_MESSAGES_MUC_REFERENUMERATION       560
 #define   OWO_MESSAGES_MUC_SHOWAUTOJOINED         570
-#define   OWO_MUC_GROUPCHAT_NICKNAMESUFFIX        580 // *** <<< eyeCU >>> ***
-
+// *** <<< eyeCU <<< ***
+#define   OWO_MESSAGES_MUC_ADDRESSBUTTON          580
+#define   OWO_MESSAGES_MUC_NICKNAMESUFFIX         590
+// *** >>> eyeCU >>> ***
 // ON_HISTORY
 #define OHO_HISORY_ENGINES                        300
 #define   OWO_HISORY_ENGINE                       310

@@ -578,6 +578,20 @@ Check values and try again</source>
         <source>Add this suffix when referring to the user</source>
         <translation>Добавлять этот суффикс при обращении к пользователю</translation>
     </message>
+    <message>
+        <source>Address user by clicking nickname in the list with</source>
+        <translation>Обращаться к пользователю, щёлкая по нику в списке</translation>
+    </message>
+    <message>
+        <source>Left mouse button</source>
+        <comment>Instrumental case</comment>
+        <translation>Левой кнопкой мыши</translation>
+    </message>
+    <message>
+        <source>Middle mouse button</source>
+        <comment>Instrumental case</comment>
+        <translation>Средней кнопкой мыши</translation>
+    </message>
 </context>
 <context>
     <name>MultiUserChatWindow</name>

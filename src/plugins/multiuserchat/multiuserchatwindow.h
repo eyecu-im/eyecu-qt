@@ -186,7 +186,6 @@ protected slots:
 	void onMultiChatUserItemDoubleClicked(const QModelIndex &AIndex);
 	void onMultiChatContentAppended(const QString &AHtml, const IMessageStyleContentOptions &AOptions);
 	void onMultiChatMessageStyleOptionsChanged(const IMessageStyleOptions &AOptions, bool ACleared);
-	void onEditTextChanged(); // *** <<< eyeCU >>> ***
 protected slots:
 	void onPrivateChatWindowActivated();
 	void onPrivateChatWindowClosed();

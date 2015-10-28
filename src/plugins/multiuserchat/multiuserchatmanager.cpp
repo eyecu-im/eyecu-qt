@@ -302,7 +302,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REJOINAFTERKICK,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REFERENUMERATION,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX,", ");
-	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::LeftButton);
+	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::MiddleButton);
 
 	if (FOptionsManager)
 	{
@@ -323,10 +323,14 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		widgets.insertMulti(OWO_MESSAGES_MUC_ARCHIVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_ARCHIVESTATUS),tr("Save users status messages in history"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_MUC_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));
 		widgets.insertMulti(OWO_MESSAGES_MUC_REJOINAFTERKICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_REJOINAFTERKICK),tr("Automatically rejoin to conference after kick"),AParent));
-		widgets.insertMulti(OWO_MESSAGES_MUC_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));
+		widgets.insertMulti(OWO_MESSAGES_MUC_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));		
 // *** <<< eyeCU <<< ***
+		QComboBox *comboBox=new QComboBox(AParent);
+		comboBox->addItem(tr("Left mouse button", "Instrumental case"), Qt::LeftButton);
+		comboBox->addItem(tr("Middle mouse button", "Instrumental case"), Qt::MiddleButton);
+		widgets.insertMulti(OWO_MESSAGES_MUC_ADDRESSBUTTON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON),tr("Address user by clicking nickname in the list with"),comboBox,AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
-			widgets.insertMulti(OWO_MUC_GROUPCHAT_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
+			widgets.insertMulti(OWO_MESSAGES_MUC_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
 // *** >>> eyeCU >>> ***
 	}
 	return widgets;
