@@ -3,14 +3,14 @@ set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
 set packagefilename=%packagename%-%version%
+set onlinepackagefilename=%packagename%-online-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
 echo Creating base package
 rem call substver.cmd %packagename% %version%
-del %packagefilename%.exe
 
-rem goto build
+goto build
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -444,6 +444,16 @@ md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 
 :build
+del %packagefilename%.exe
+copy installscript.offline packages\ru.rwsoftware.eyecu\meta\*.js
 binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
+
+:online
+del %onlinepackagefilename%.exe
+copy installscript.online packages\ru.rwsoftware.eyecu\meta\*.js
+binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
+
+:repo
+repogen.exe -p %packages% repository
 
 :end

@@ -7,7 +7,7 @@
     <StartMenuDir>eyeCU</StartMenuDir>
     <InstallerWindowIcon>eyecu</InstallerWindowIcon>
     <InstallerApplicationIcon>eyecu</InstallerApplicationIcon>
-	<MaintenanceToolName>uninstall</MaintenanceToolName>
+	<MaintenanceToolName>maintain</MaintenanceToolName>
 	<RunProgram>@TargetDir@/eyecu.exe</RunProgram>
     <Logo>logo.png</Logo>
     <Watermark>watermark.png</Watermark>
@@ -15,5 +15,11 @@
 	<AdminTargetDir>@ApplicationsDir@/Road Works Software/eyecu</AdminTargetDir>
     <AllowSpaceInPath>true</AllowSpaceInPath>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
-    <CreateLocalRepository>false</CreateLocalRepository>
+    <RemoteRepositories>
+      <Repository>
+        <Url>http://www.eyecu.ru/repository</Url>
+        <Enabled>1</Enabled>
+        <DisplayName>eyeCU online repository</DisplayName>
+      </Repository>
+    </RemoteRepositories>
 </Installer>
