@@ -47,7 +47,7 @@ bool MapSourceGoogle::initObjects()
 
 bool MapSourceGoogle::initSettings()
 {
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 183);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 187);
 	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_MAP, 500);
 	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T, 500);
 	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R, 500);

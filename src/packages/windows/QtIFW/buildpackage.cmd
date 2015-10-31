@@ -3,14 +3,14 @@ set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
 set packagefilename=%packagename%-%version%
-set onlinepackagefilename=%packagename%-online-%version%
+set onlinepackagefilename=%packagename%-online
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-goto build
+rem goto copydict
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -102,6 +102,7 @@ call copyresources2 ru.rwsoftware.eyecu menuicons\shared
 copy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu\data /Y
 copy c:\eyecu\eyecuutils.dll packages\ru.rwsoftware.eyecu\data /Y
 
+:copydict
 call copydict en.us en_US
 call copydict en.gb en_GB
 call copydict en.ca en_CA
@@ -118,6 +119,7 @@ call copydict pl pl_PL
 call copydict es es_ES
 call copydict nl nl_NL
 call copydict uk uk_UA
+pause
 
 call copyplugins ru.rwsoftware.eyecu.spellchecker spellchecker
 call copyplugins ru.rwsoftware.eyecu.statistics statistics
