@@ -302,7 +302,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REJOINAFTERKICK,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_REFERENUMERATION,false);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX,", ");
-	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::MiddleButton);
+	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::MidButton);
 
 	if (FOptionsManager)
 	{
@@ -327,7 +327,7 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 // *** <<< eyeCU <<< ***
 		QComboBox *comboBox=new QComboBox(AParent);
 		comboBox->addItem(tr("Left mouse button", "Instrumental case"), Qt::LeftButton);
-		comboBox->addItem(tr("Middle mouse button", "Instrumental case"), Qt::MiddleButton);
+		comboBox->addItem(tr("Middle mouse button", "Instrumental case"), Qt::MidButton);
 		widgets.insertMulti(OWO_MESSAGES_MUC_ADDRESSBUTTON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON),tr("Address user by clicking nickname in the list with"),comboBox,AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 			widgets.insertMulti(OWO_MESSAGES_MUC_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));

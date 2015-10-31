@@ -6,6 +6,7 @@
 #include <QCoreApplication>
 
 #if QT_VERSION < 0x050000
+#include <stdlib.h>
 void myMessageHandler(QtMsgType type, const char *msg)
 {
 	switch (type) 
