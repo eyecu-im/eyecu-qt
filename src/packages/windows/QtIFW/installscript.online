@@ -53,7 +53,7 @@ Component.prototype.createOperations = function()
 			startMenuDir=installer.value("StartMenuDir");
 			if (installer.value("AllUsers"))
 				startMenuDir = startMenuDir.replace(installer.value("UserStartMenuProgramsPath"), installer.value("AllUsersStartMenuProgramsPath"));
-			
+
             component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
 			component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
         }

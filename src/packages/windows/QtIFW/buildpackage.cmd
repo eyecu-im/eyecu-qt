@@ -10,7 +10,7 @@ set packages=packages
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-rem goto copydict
+goto repo
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -119,7 +119,6 @@ call copydict pl pl_PL
 call copydict es es_ES
 call copydict nl nl_NL
 call copydict uk uk_UA
-pause
 
 call copyplugins ru.rwsoftware.eyecu.spellchecker spellchecker
 call copyplugins ru.rwsoftware.eyecu.statistics statistics
@@ -446,16 +445,16 @@ md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 
 :build
-del %packagefilename%.exe
 copy installscript.offline packages\ru.rwsoftware.eyecu\meta\*.js
+del %packagefilename%.exe
 binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
 
 :online
-del %onlinepackagefilename%.exe
 copy installscript.online packages\ru.rwsoftware.eyecu\meta\*.js
+:online1
+del %onlinepackagefilename%.exe
 binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
 
 :repo
 repogen.exe -p %packages% repository
-
 :end
