@@ -2,15 +2,15 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.8</Version>
-    <ReleaseDate>2015-11-01</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>Added "Plus" variant to "Psi" simple message style with mention highlight</UpdateText>
+    <UpdateText>Fixed icon disappearance on update. An attempt to fix admin previlegies bug.</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Essential>false</Essential>

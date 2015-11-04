@@ -456,5 +456,5 @@ del %onlinepackagefilename%.exe
 binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
 
 :repo
-repogen.exe -p %packages% repository
+repogen.exe -p %packages% c:\eyecurepo
 :end
