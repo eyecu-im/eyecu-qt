@@ -10,7 +10,7 @@ set packages=packages
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-goto repo
+rem goto repo
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -456,5 +456,5 @@ del %onlinepackagefilename%.exe
 binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
 
 :repo
-repogen.exe -p %packages% c:\eyecurepo
+repogen.exe -p %packages% repository
 :end
