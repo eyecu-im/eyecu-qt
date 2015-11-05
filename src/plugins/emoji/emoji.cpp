@@ -470,7 +470,7 @@ void Emoji::onToolBarWidgetDestroyed(QObject *AObject)
 	}
 }
 
-void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &AIconKey)
+void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, QString AIconKey)
 {
 	Q_UNUSED(ASubStorage);
 	SelectIconMenu *menu = qobject_cast<SelectIconMenu *>(sender());
@@ -503,6 +503,8 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &
 				cursor.endEditBlock();
 				editor->setFocus();
 
+				if (isColored(AIconKey))
+					AIconKey.chop(2);
 				QStringList recent = FRecent.value(ASubStorage);
 
 				if (recent.isEmpty() || recent.first()!=AIconKey)
