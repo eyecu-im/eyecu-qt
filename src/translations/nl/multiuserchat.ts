@@ -258,18 +258,18 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="329"/>
    <source>Left mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Linker muisknop</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="330"/>
    <source>Middle mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Middelste muisknop</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="331"/>
    <source>Address user by clicking nickname in the list with</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker adres door te klikken op bijnaam in lijst </translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="333"/>
@@ -566,7 +566,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="852"/>
    <source>Supports the multi-user conferences</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunt de meerdere gebruikers vergaderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="859"/>
@@ -668,7 +668,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="910"/>
    <source>A room that is destroyed if the last occupant exits</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die door een laatste bewoner verlaten is wordt verwijderd</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="914"/>
