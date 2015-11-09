@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Positioning</DisplayName>
     <Description>Allows to determine device position</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-11-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning</Name>
+	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc</Dependencies>
     <SortingPriority>1</SortingPriority>
     <Default>true</Default>

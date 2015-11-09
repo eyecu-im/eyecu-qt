@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>RuMap</DisplayName>
     <Description>Allows to use RuMap as map source</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-11-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map.sources.rumap</Name>
+	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
     <SortingPriority>15</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

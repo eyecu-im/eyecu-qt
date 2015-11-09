@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Package>
+    <DisplayName>Loader</DisplayName>
+    <Description>eyeCU loader</Description>
+    <Version>1.3.0.20151109</Version>
+    <ReleaseDate>2015-11-09</ReleaseDate>
+    <Name>ru.rwsoftware.eyecu.loader</Name>
+    <UpdateText>Moved loader out of base eyeCU package</UpdateText>
+    <Virtual>true</Virtual>
+</Package>

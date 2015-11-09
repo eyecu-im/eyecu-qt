@@ -5,6 +5,7 @@
     <Version>1.0.1</Version>
     <ReleaseDate>2015-09-25</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
+	<UpdateText>Added support for file versioning</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple,org.digia.qt4.multimedia,org.ffmpeg.library</Dependencies>
     <Virtual>true</Virtual>
 </Package>

@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Google</DisplayName>
     <Description>Allows to use Google as Place View provider</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-11-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map.placeview.google</Name>
+	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
     <Essential>false</Essential>
