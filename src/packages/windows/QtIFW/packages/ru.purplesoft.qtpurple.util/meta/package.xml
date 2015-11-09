@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.3</Version>
-    <ReleaseDate>2015-10-15</ReleaseDate>
+    <Version>1.0.6</Version>
+    <ReleaseDate>2015-11-07</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>

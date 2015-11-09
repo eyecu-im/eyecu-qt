@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Qt Purple</DisplayName>
     <Description>Qt Purple</Description>
-    <Version>1.1.1</Version>
-    <ReleaseDate>2015-10-15</ReleaseDate>
+    <Version>1.1.2</Version>
+    <ReleaseDate>2015-11-07</ReleaseDate>
     <Name>ru.purplesoft.qtpurple</Name>
     <Dependencies>org.digia.qt4</Dependencies>
     <Virtual>true</Virtual>
