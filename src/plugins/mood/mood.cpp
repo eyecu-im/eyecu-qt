@@ -33,7 +33,6 @@
 
 #define ADR_STREAM_JIDS		Action::DR_StreamJid
 #define ADR_CONTACT_JID		Action::DR_Parametr4
-#define ADR_GROUP_SHIFT1	Action::DR_Parametr1
 #define ADR_MESSAGE_TYPE	Action::DR_UserDefined
 #define ADR_CLIPBOARD_NAME  Action::DR_Parametr1
 #define ADR_CLIPBOARD_TEXT  Action::DR_Parametr2
@@ -570,7 +569,6 @@ void Mood::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint
 
 void Mood::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {
-	qDebug() << "Mood::onRosterIndexClipboardMenu()";
 	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
 		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
 		{
@@ -580,10 +578,11 @@ void Mood::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, qui
 				Action *action = new Action(AMenu);
 				MoodData data = FMoodHash[jid.bare()];
 				if (!data.text.isEmpty())
+				{
 					action->setText(data.text);
+					action->setData(ADR_CLIPBOARD_TEXT, data.text);
+				}
 				action->setIcon(getIcon(jid));
-				QString text = data.text.isEmpty()?QString(FMoodKeys.value(data.name)):QString("%1 (%2)").arg(FMoodKeys.value(data.name)).arg(data.text);
-				action->setData(ADR_CLIPBOARD_TEXT, text);
 				QString fileName = getIconFileName(jid);
 				if (!fileName.isEmpty())
 					action->setData(ADR_CLIPBOARD_IMAGE, fileName);
@@ -629,27 +628,34 @@ void Mood::onSetMoodByAction(bool)
 
 void Mood::onCopyToClipboard()
 {
-	qDebug() << "Mood::onCopyToClipboard()";
 	QString text=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
-	qDebug() << "text=" << text;
 	QString name=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString();
-	qDebug() << "name=" << name;
 	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
 	QClipboard *clipboard = QApplication::clipboard();
 	QMimeData *mime = new QMimeData();
 
-	QString html = QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(QUrl::fromLocalFile(fileName).toString()).arg(FMoodKeys.value(name)).arg(text);
-	if (!html.isEmpty())
-	{
-		mime->setHtml(html);
-	}
-	mime->setText(text);
+	mime->setText(text.isEmpty()?name:tr("%1 (%2)").arg(name).arg(text));
 
 	if (!fileName.isEmpty())
 	{
-		QImage image(fileName);
-		if (!image.isNull())
-			mime->setImageData(image);
+		QFile file(fileName);
+		if (file.open(QIODevice::ReadOnly))
+		{
+			QByteArray format(QImageReader::imageFormat(&file));
+			QByteArray data(file.readAll());
+			if (!data.isEmpty())
+			{
+				QImage image = QImage::fromData(data);
+				if (!image.isNull())
+				{
+					mime->setImageData(image);
+					QUrl url;
+					url.setScheme("data");
+					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
+					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(FMoodKeys.value(name)).arg(text));
+				}
+			}
+		}
 	}
 
 	clipboard->setMimeData(mime);

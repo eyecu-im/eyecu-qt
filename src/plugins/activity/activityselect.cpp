@@ -12,7 +12,7 @@ ActivitySelect::ActivitySelect(Activity *AActivity, const QHash<QString, QString
     ui->setupUi(this);
     ui->lstActivity->sortItems(0,Qt::AscendingOrder);
 
-	setWindowIcon(FActivity->getIcon(MNI_ACTIVITY));
+	setWindowIcon(FActivity->getIcon(QString(MNI_ACTIVITY)));
     fillActivityTree();    
     fillTextList(AActivityData.iconFileName());
 

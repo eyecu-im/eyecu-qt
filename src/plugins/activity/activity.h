@@ -85,7 +85,9 @@ public:
 
 	//IActivity
 	QIcon	getIcon(const QString &AName) const;
+	QIcon	getIcon(const Jid &AContactJid) const;
 	QString	getIconFileName(const QString &AActivityName) const;
+	QString getIconFileName(const Jid &AContactJid) const;
 	QString	getActivityText(const QString &AActivityName) const {return FTranslatedNames.value(AActivityName);}
 	QString	getIconName(const Jid &AContactJid) const;
 	QString	getText(const Jid &AContactJid) const;
@@ -121,7 +123,9 @@ protected slots:
 	void onStreamClosed(IXmppStream *AXmppStream);
 	void onRosterIndexInserted(IRosterIndex *AIndex);
 	void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips);
+	void onCopyToClipboard();
 	void onSetActivityByAction(bool);
 	void onShortcutActivated(const QString &AString, QWidget *AWidget);
 

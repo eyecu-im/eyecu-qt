@@ -1,6 +1,6 @@
-#include <QDir>
 #include <QDebug>
-
+#include <QDir>
+#include <QClipboard>
 #include <definitions/shortcuts.h>
 #include "definitions/notificationdataroles.h"
 #include "definitions/notificationtypeorders.h"
@@ -28,6 +28,9 @@
 #include "activityselect.h"
 
 #define ADR_STREAM_JIDS		Action::DR_StreamJid
+#define ADR_CLIPBOARD_NAME  Action::DR_Parametr1
+#define ADR_CLIPBOARD_TEXT  Action::DR_Parametr2
+#define ADR_CLIPBOARD_IMAGE Action::DR_Parametr3
 #define NO_ACTIVITY			"no_activity"
 #define ACTIVITIES_DEF		"activities.def.xml"
 #define TAG_NAME			"activity"
@@ -193,6 +196,8 @@ bool Activity::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		{
 			connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexContextMenu(QList<IRosterIndex *>, quint32, Menu *)),
 					SLOT(onRosterIndexContextMenu(QList<IRosterIndex *>, quint32, Menu *)));
+			connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)),
+					SLOT(onRosterIndexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)));
 			connect(FRostersViewPlugin->rostersView()->instance(),
 					SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
 					SLOT(onRosterIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
@@ -549,6 +554,32 @@ void Activity::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, q
 	}
 }
 
+void Activity::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
+{
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
+			Jid jid((*it)->data(RDR_FULL_JID).toString());
+			if (FActivityHash.contains(jid.bare()))
+			{
+				Action *action = new Action(AMenu);
+				ActivityData data = FActivityHash[jid.bare()];
+				if (!data.text.isEmpty())
+				{
+					action->setText(data.text);
+					action->setData(ADR_CLIPBOARD_TEXT, data.text);
+				}
+				action->setIcon(getIcon(jid));
+				QString fileName = getIconFileName(jid);
+				if (!fileName.isEmpty())
+					action->setData(ADR_CLIPBOARD_IMAGE, fileName);
+				action->setData(ADR_CLIPBOARD_NAME, data.nameDetailed.isEmpty()?data.nameBasic:tr("%1: %2").arg(data.nameBasic).arg(data.nameDetailed));
+				connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
+				AMenu->addAction(action, AG_RVCBM_PEP, true);
+			}
+		}
+}
+
 void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
 {
 	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId) && FRosterIndexKinds.contains(AIndex->kind()))
@@ -557,6 +588,41 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 		 if (!label.isEmpty())
 			 AToolTips.insert(RTTO_ACTIVITY, label);
 	}
+}
+
+void Activity::onCopyToClipboard()
+{
+	QString text=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
+	QString name=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString();
+	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
+	QClipboard *clipboard = QApplication::clipboard();
+	QMimeData *mime = new QMimeData();
+
+	mime->setText(text.isEmpty()?name:QString("%1 (%2)").arg(name).arg(text));
+
+	if (!fileName.isEmpty())
+	{
+		QFile file(fileName);
+		if (file.open(QIODevice::ReadOnly))
+		{
+			QByteArray format(QImageReader::imageFormat(&file));
+			QByteArray data(file.readAll());
+			if (!data.isEmpty())
+			{
+				QImage image = QImage::fromData(data);
+				if (!image.isNull())
+				{
+					mime->setImageData(image);
+					QUrl url;
+					url.setScheme("data");
+					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
+					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(FTranslatedNames.value(name)).arg(text));
+				}
+			}
+		}
+	}
+
+	clipboard->setMimeData(mime);
 }
 
 void Activity::onSetActivityByAction(bool)
@@ -725,6 +791,11 @@ QIcon Activity::getIcon(const QString &AName) const
 	return FIconStorage->getIcon(AName);
 }
 
+QIcon Activity::getIcon(const Jid &AContactJid) const
+{
+	return  FActivityHash.contains(AContactJid.bare())?getIcon(FActivityHash.value(AContactJid.bare())):QIcon();
+}
+
 QIcon Activity::getIcon(const ActivityData &AActivity) const
 {
 	return getIcon(AActivity.iconFileName());
@@ -738,6 +809,11 @@ QString Activity::getIconFileName(const ActivityData &AActivity) const
 QString Activity::getIconFileName(const QString &AActivityName) const
 {
 	return FIconStorage->fileFullName(AActivityName);
+}
+
+QString Activity::getIconFileName(const Jid &AContactJid) const
+{
+	return  FActivityHash.contains(AContactJid.bare())?getIconFileName(FActivityHash.value(AContactJid.bare())):QString();
 }
 
 QString Activity::getIconName(const Jid &AContactJid) const
