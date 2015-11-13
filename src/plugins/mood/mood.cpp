@@ -628,8 +628,8 @@ void Mood::onSetMoodByAction(bool)
 
 void Mood::onCopyToClipboard()
 {
-	QString text=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
-	QString name=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString();
+	QString text = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
+	QString name = FMoodKeys.value(qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString());
 	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
 	QClipboard *clipboard = QApplication::clipboard();
 	QMimeData *mime = new QMimeData();
@@ -652,7 +652,7 @@ void Mood::onCopyToClipboard()
 					QUrl url;
 					url.setScheme("data");
 					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
-					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(FMoodKeys.value(name)).arg(text));
+					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(name).arg(text));
 				}
 			}
 		}
