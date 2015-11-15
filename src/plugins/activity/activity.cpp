@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QDir>
 #include <QClipboard>
 #include <definitions/shortcuts.h>
@@ -35,7 +34,6 @@
 #define ACTIVITIES_DEF		"activities.def.xml"
 #define TAG_NAME			"activity"
 #define MDR_ACTIVITY_ICON   1000
-
 
 ActivityData::ActivityData(QString ANameBasic, QString ANameDetailed, QString AText):nameBasic(ANameBasic==NO_ACTIVITY?QString():ANameBasic),nameDetailed(ANameDetailed),text(AText)
 {}
@@ -616,7 +614,7 @@ void Activity::onCopyToClipboard()
 					QUrl url;
 					url.setScheme("data");
 					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
-					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(FTranslatedNames.value(name)).arg(text));
+					mime->setHtml(QString("<body><img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3</body>").arg(url.toString()).arg(FTranslatedNames.value(name)).arg(text));
 				}
 			}
 		}

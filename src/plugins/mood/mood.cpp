@@ -31,6 +31,8 @@
 
 #include "moodselect.h"
 
+#define MDR_MOOD_ICON		1001
+
 #define ADR_STREAM_JIDS		Action::DR_StreamJid
 #define ADR_CONTACT_JID		Action::DR_Parametr4
 #define ADR_MESSAGE_TYPE	Action::DR_UserDefined
@@ -652,7 +654,7 @@ void Mood::onCopyToClipboard()
 					QUrl url;
 					url.setScheme("data");
 					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
-					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(FMoodKeys.value(name)).arg(text));
+					mime->setHtml(QString("<body><img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3</body>").arg(url.toString()).arg(FMoodKeys.value(name)).arg(text));
 				}
 			}
 		}
