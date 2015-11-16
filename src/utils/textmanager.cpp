@@ -5,7 +5,32 @@
 
 TextManager::TextManager()
 {}
+// *** <<< eyeCU <<< ***
+void TextManager::substituteHtmlText(QString &AHtml, const QString &ASourceText, const QString &ATargetTextInside, const QString &ATargetTextOutside)
+{
+	bool inside=false;
+	int  j=0;
+	for (int i=0; i<AHtml.length(); i=j+1)
+	{
+		j=AHtml.indexOf(inside?'>':'<', i);
+		if (j==-1)
+			j=AHtml.length();
+		for (int k=AHtml.indexOf(ASourceText, i); (k<j) && (k!=-1); k=AHtml.indexOf("%sender%", i))
+			if (inside)
+			{
+				AHtml.replace(k, ASourceText.length(), ATargetTextInside);
+				i=k+ATargetTextInside.length();
+			}
+			else
+			{
+				AHtml.replace(k, ASourceText.length(), ATargetTextOutside);
+				i=k+ATargetTextOutside.length();
+			}
+		inside=!inside;
+	}
 
+}
+// *** >>> eyeCU >>> ***
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
 	QRegExp regExpBody("<body.*>(.*)</body>");
