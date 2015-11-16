@@ -75,6 +75,7 @@ struct IMessageStyleContentOptions
 	QString timeFormat;
 	QString senderId;
 	QString senderName;
+	QString senderNameLinked;
 	QString senderAvatar;
 	QString senderColor;
 	QString senderIcon;

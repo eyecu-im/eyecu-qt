@@ -1487,6 +1487,7 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 		options.timeFormat = FMessageStyleManager->timeFormat(options.time);
 // *** <<< eyeCU <<< ***
 	options.senderId = HTML_ESCAPE(ANick);
+	options.senderName = options.senderId;
 // *** >>> eyeCU >>> ***
 	IMultiUser *user = FMultiChat->nickName()!=ANick ? FMultiChat->userByNick(ANick) : FMultiChat->mainUser();
 	if (user)
@@ -1500,15 +1501,12 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 			options.type |= IMessageStyleContentOptions::TypeMention;
 		options.direction = IMessageStyleContentOptions::DirectionIn;
 // *** <<< eyeCU <<< ***
-		options.senderName = QString("<a href=\"nick:%1\" style=\"color: inherit\">%1</a>").arg(options.senderId);
+		options.senderNameLinked = QString("<a href=\"nick:%1\" style=\"color: inherit\">%1</a>").arg(options.senderId);
 // *** >>> eyeCU >>> ***
 	}
 	else
 	{
 		options.direction = IMessageStyleContentOptions::DirectionOut;
-// *** <<< eyeCU <<< ***
-		options.senderName = options.senderId;
-// *** >>> eyeCU >>> ***
 	}
 
 	showDateSeparator(FViewWidget,options.time);

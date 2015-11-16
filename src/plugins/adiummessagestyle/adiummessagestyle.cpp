@@ -616,8 +616,35 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 	}
 	else
 	{
+		QString linkedSenderName = AOptions.senderNameLinked.isEmpty()?AOptions.senderName:AOptions.senderNameLinked;
+		bool inside=false;
+		int  j=0;
+		for (int i=0; i<AHtml.length(); i=j+1)
+		{
+			if (inside)
+				j=AHtml.indexOf('>', i);
+			else
+				j=AHtml.indexOf('<', i);
+
+			if (j==-1)
+				j=AHtml.length();
+			for (int k=AHtml.indexOf("%sender%", i); (k<j) && (k!=-1); AHtml.indexOf("%sender%", i))
+			{
+				if (inside)
+				{
+					AHtml.replace(k, strlen("%sender%"), AOptions.senderName);
+					i=k+AOptions.senderName.length();
+				}
+				else
+				{
+					AHtml.replace(k, strlen("%sender%"), linkedSenderName);
+					i=k+linkedSenderName.length();
+				}
+			}
+		}
+
 		AHtml.replace("%senderScreenName%",AOptions.senderId);
-		AHtml.replace("%sender%",AOptions.senderName);
+//		AHtml.replace("%sender%",AOptions.senderName);
 		AHtml.replace("%senderDisplayName%",AOptions.senderName);
 		AHtml.replace("%senderPrefix%",QString::null);
 
