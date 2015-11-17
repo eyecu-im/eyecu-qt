@@ -508,9 +508,13 @@ void SimpleMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyle
 
 	QString sColor = !AOptions.senderColor.isEmpty() ? AOptions.senderColor : senderColor(AOptions.senderId);
 	AHtml.replace("%senderColor%",sColor);
-
-	AHtml.replace("%sender%",AOptions.senderName);
-	AHtml.replace("%senderScreenName%",AOptions.senderId);
+// *** <<< eyeCU <<< ***
+	QString linkedSenderName = AOptions.senderNameLinked.isEmpty()?AOptions.senderName:AOptions.senderNameLinked;
+	TextManager::substituteHtmlText(AHtml, "%sender%", AOptions.senderName, linkedSenderName);
+	TextManager::substituteHtmlText(AHtml, "%senderScreenName%", AOptions.senderName, linkedSenderName);
+//	AHtml.replace("%sender%",AOptions.senderName);
+//	AHtml.replace("%senderScreenName%",AOptions.senderId);
+// *** >>> eyeCU >>> ***
 	AHtml.replace("%textbackgroundcolor%",!AOptions.textBGColor.isEmpty() ? AOptions.textBGColor : "inherit");
 }
 

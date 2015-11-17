@@ -614,15 +614,13 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 	}
 	else
 	{
-// *** <<< eyeCU <<< ***
+		AHtml.replace("%senderScreenName%",AOptions.senderId);
 		QString linkedSenderName = AOptions.senderNameLinked.isEmpty()?AOptions.senderName:AOptions.senderNameLinked;
+// *** <<< eyeCU <<< ***
 		TextManager::substituteHtmlText(AHtml, "%sender%", AOptions.senderName, linkedSenderName);
 		TextManager::substituteHtmlText(AHtml, "%senderDisplayName%", AOptions.senderName, linkedSenderName);
-		AHtml.replace("%senderScreenName%",AOptions.senderId);
-//		AHtml.replace("%sender%",AOptions.senderName);		
-//		AHtml.replace("%senderDisplayName%",AOptions.senderName);
-		AHtml.replace("%senderPrefix%",QString::null);
 // *** >>> eyeCU >>> ***
+		AHtml.replace("%senderPrefix%",QString::null);
 
 		QString rgbaColor;
 		QColor bgColor(AOptions.textBGColor);

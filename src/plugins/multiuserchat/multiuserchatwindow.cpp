@@ -1485,10 +1485,10 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 		options.timeFormat = FMessageStyleManager->timeFormat(options.time,options.time);
 	else
 		options.timeFormat = FMessageStyleManager->timeFormat(options.time);
-// *** <<< eyeCU <<< ***
-	options.senderId = HTML_ESCAPE(ANick);
-	options.senderName = options.senderId;
-// *** >>> eyeCU >>> ***
+
+	options.senderName = HTML_ESCAPE(ANick);// *** <<< eyeCU >>> ***
+	options.senderId = options.senderName;
+
 	IMultiUser *user = FMultiChat->nickName()!=ANick ? FMultiChat->userByNick(ANick) : FMultiChat->mainUser();
 	if (user)
 		options.senderIcon = FMessageStyleManager->contactIcon(user->contactJid(),user->data(MUDR_SHOW).toInt(),SUBSCRIPTION_BOTH,false);
