@@ -77,7 +77,7 @@ protected:
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
 	void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
-	const QString &translate(const QString &APropertyName) const;
+	QString translate(const QString &APropertyName) const;
 	bool checkRosterIndex(const IRosterIndex *AIndex)	const;
 
 protected slots:

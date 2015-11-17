@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Geoloc</name>
     <message>
@@ -68,6 +68,98 @@
     <message>
         <source>Publish location</source>
         <translation>Публиковать местоположение</translation>
+    </message>
+    <message>
+        <source>Accuracy</source>
+        <translation>Точность</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>Высота</translation>
+    </message>
+    <message>
+        <source>Area</source>
+        <translation>Район</translation>
+    </message>
+    <message>
+        <source>Bearing</source>
+        <translation>Направление</translation>
+    </message>
+    <message>
+        <source>Building</source>
+        <translation>Здание</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation>Страна</translation>
+    </message>
+    <message>
+        <source>Country code</source>
+        <translation>Код страны</translation>
+    </message>
+    <message>
+        <source>Datum</source>
+        <translation>Датум</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Описание</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Погрешность</translation>
+    </message>
+    <message>
+        <source>Floor</source>
+        <translation>Этаж</translation>
+    </message>
+    <message>
+        <source>Latitude</source>
+        <translation>Широта</translation>
+    </message>
+    <message>
+        <source>Locality</source>
+        <translation>Населённый пункт</translation>
+    </message>
+    <message>
+        <source>Longitude</source>
+        <translation>Долгота</translation>
+    </message>
+    <message>
+        <source>Postal code</source>
+        <translation>Почтовый индекс</translation>
+    </message>
+    <message>
+        <source>Region</source>
+        <translation>Область</translation>
+    </message>
+    <message>
+        <source>Room</source>
+        <translation>Комната</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Скорость</translation>
+    </message>
+    <message>
+        <source>Street</source>
+        <translation>Улица</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Текст</translation>
+    </message>
+    <message>
+        <source>Timestamp</source>
+        <translation>Временная метка</translation>
+    </message>
+    <message>
+        <source>TZO</source>
+        <translation>TZO</translation>
+    </message>
+    <message>
+        <source>URI</source>
+        <translation>URI</translation>
     </message>
 </context>
 </TS>

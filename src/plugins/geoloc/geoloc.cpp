@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "geoloc.h"
 
 #include <definitions/optionvalues.h>
@@ -411,14 +410,9 @@ void Geoloc::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 	}
 }
 
-const QString &Geoloc::translate(const QString &APropertyName) const
+QString Geoloc::translate(const QString &APropertyName) const
 {
-	qDebug() << "Geoloc::translate(" << APropertyName << ")";
-	if (FTranslated.contains(APropertyName))
-		qDebug() << "Contains!";
-	QString rc = FTranslated.contains(APropertyName)?FTranslated[APropertyName]:APropertyName;
-	qDebug() << "returning:" << rc;
-	return rc;
+	return FTranslated.contains(APropertyName)?FTranslated[APropertyName]:APropertyName;
 }
 
 void Geoloc::sendGeoloc(GeolocElement APosition)
@@ -596,10 +590,10 @@ QString Geoloc::getLabel(const GeolocElement &AGeoloc) const
 		if (AGeoloc.hasProperty(GeolocElement::Country))
 			textLine.append(QString("<br>%1: %2 (%3)").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
 		else
-			textLine.append(QString("<br>%1: %2").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)));
+			textLine.append(QString("<br>%1: %2").arg(translate(translate("country"))).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)));
 	else
 		if (AGeoloc.hasProperty(GeolocElement::Country))
-			textLine.append(QString("<br>%1: %2").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
+			textLine.append(QString("<br>%1: %2").arg(translate(translate("country"))).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
 
 	const QStringList properties = AGeoloc.propertyNames();
 	for(QStringList::ConstIterator it=properties.constBegin(); it != properties.constEnd(); it++)

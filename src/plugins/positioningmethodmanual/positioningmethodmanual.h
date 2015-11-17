@@ -78,6 +78,7 @@ protected slots:
     void onPoiActionTriggered();
     void onShortcutActivated(const QString &AId, QWidget *AWidget);
 	void onPoiModified(const QString &APoiId, int AType);
+	void onPoisLoaded(const QString &ABareStreamJid, const PoiHash &APoiHash);
 
 signals:
     void stateChanged(int AState);

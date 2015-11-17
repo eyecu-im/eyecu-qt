@@ -3,7 +3,7 @@
   <name>Geoloc</name>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="49"/>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="307"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="331"/>
    <source>User Location</source>
    <translation type="unfinished"/>
   </message>
@@ -24,63 +24,178 @@
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="163"/>
+   <source>Accuracy</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="164"/>
+   <source>Altitude</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="165"/>
+   <source>Area</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="166"/>
+   <source>Bearing</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="167"/>
+   <source>Building</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="168"/>
+   <source>Country</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="169"/>
+   <source>Country code</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="170"/>
+   <source>Datum</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="171"/>
+   <source>Description</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="172"/>
+   <source>Error</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="173"/>
+   <source>Floor</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="174"/>
+   <source>Latitude</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="175"/>
+   <source>Locality</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="176"/>
+   <source>Longitude</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="177"/>
+   <source>Postal code</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="178"/>
+   <source>Region</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="179"/>
+   <source>Room</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="180"/>
+   <source>Speed</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="181"/>
+   <source>Street</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="182"/>
+   <source>Text</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="183"/>
+   <source>Timestamp</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="184"/>
+   <source>TZO</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="185"/>
+   <source>URI</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="209"/>
    <source>Show user location icons</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="188"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="212"/>
    <source>Display user location icon</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="193"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="217"/>
    <source>Publish location</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="308"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="332"/>
    <source>Supports user Geolocation</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="312"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="336"/>
    <source>User Location Notification</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="313"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="337"/>
    <source>Receives notification of current user Geolocation</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="511"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="540"/>
    <source>S</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="515"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="544"/>
    <source>N</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="523"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="552"/>
    <source>W</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="527"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="556"/>
    <source>E</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="538"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="567"/>
    <source>m</source>
    <comment>Short for &quot;meters&quot;</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/geoloc/geoloc.cpp" line="574"/>
+   <location filename="../../plugins/geoloc/geoloc.cpp" line="612"/>
    <source>Location</source>
    <translation type="unfinished"/>
   </message>

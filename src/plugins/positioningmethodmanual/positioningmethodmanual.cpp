@@ -55,6 +55,7 @@ bool PositioningMethodManual::initConnections(IPluginManager *APluginManager, in
 	{
         FPoi = qobject_cast<IPoi *>(plugin->instance());
 		connect(FPoi->instance(), SIGNAL(poiModified(QString,int)), SLOT(onPoiModified(QString,int)));
+		connect(FPoi->instance(), SIGNAL(poisLoaded(QString,PoiHash)), SLOT(onPoisLoaded(QString,PoiHash)));
 	}
 
     connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)));
@@ -201,7 +202,14 @@ void PositioningMethodManual::hereIAmCoords(double ALongitude, double ALatitude)
 
 void PositioningMethodManual::hereIamPoi(const QString &APoiId)
 {
-	Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).setValue(APoiId);
+	QStringList splitted = APoiId.split(':');
+	if (splitted.size()==2)
+		Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).setValue(APoiId);
+	else
+	{
+		GeolocElement poi = FPoi->getPoi(APoiId);
+		hereIAmCoords(poi.lat(), poi.lon());
+	}
 }
 
 void PositioningMethodManual::changeCurrentState(IPositioningMethod::State AState)
@@ -349,6 +357,21 @@ void PositioningMethodManual::onPoiModified(const QString &APoiId, int AType)
 			default:
 				break;
 		}
+	}
+}
+
+void PositioningMethodManual::onPoisLoaded(const QString &ABareStreamJid, const PoiHash &APoiHash)
+{
+	OptionsNode node = Options::node(OPV_POSITIONING_METHOD_MANUAL_POI);
+	if (node.value().isValid())
+	{
+		QString poiId=Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).value().toString();
+		QList<QString> splitted = poiId.split(':');
+		if (splitted.first()==ABareStreamJid)
+			if (APoiHash.contains(splitted[1]))
+				sendPoi(poiId);
+			else
+				node.setValue(QVariant());
 	}
 }
 #if QT_VERSION < 0x050000
