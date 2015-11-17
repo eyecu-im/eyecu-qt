@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "geoloc.h"
 
 #include <definitions/optionvalues.h>
@@ -159,6 +160,30 @@ bool Geoloc::initObjects()
 		FRosterLabelId = FRostersViewPlugin->rostersView()->registerLabel(label);
 		FRostersViewPlugin->rostersView()->insertLabelHolder(RLHO_GEOLOC, this);
 	}
+
+	FTranslated.insert("accuracy", tr("Accuracy"));
+	FTranslated.insert("alt", tr("Altitude"));
+	FTranslated.insert("area", tr("Area"));
+	FTranslated.insert("bearing", tr("Bearing"));
+	FTranslated.insert("building", tr("Building"));
+	FTranslated.insert("country", tr("Country"));
+	FTranslated.insert("countrycode", tr("Country code"));
+	FTranslated.insert("datum", tr("Datum"));
+	FTranslated.insert("description", tr("Description"));
+	FTranslated.insert("error", tr("Error"));
+	FTranslated.insert("floor", tr("Floor"));
+	FTranslated.insert("lat", tr("Latitude"));
+	FTranslated.insert("locality", tr("Locality"));
+	FTranslated.insert("lon", tr("Longitude"));
+	FTranslated.insert("postalcode", tr("Postal code"));
+	FTranslated.insert("region", tr("Region"));
+	FTranslated.insert("room", tr("Room"));
+	FTranslated.insert("Speed", tr("Speed"));
+	FTranslated.insert("street", tr("Street"));
+	FTranslated.insert("text", tr("Text"));
+	FTranslated.insert("timestamp", tr("Timestamp"));
+	FTranslated.insert("tzo", tr("TZO"));
+	FTranslated.insert("uri", tr("URI"));
 
 	return true;
 }
@@ -386,6 +411,16 @@ void Geoloc::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 	}
 }
 
+const QString &Geoloc::translate(const QString &APropertyName) const
+{
+	qDebug() << "Geoloc::translate(" << APropertyName << ")";
+	if (FTranslated.contains(APropertyName))
+		qDebug() << "Contains!";
+	QString rc = FTranslated.contains(APropertyName)?FTranslated[APropertyName]:APropertyName;
+	qDebug() << "returning:" << rc;
+	return rc;
+}
+
 void Geoloc::sendGeoloc(GeolocElement APosition)
 {
 	if (APosition.hasProperty("course"))	// Extra non-standard property from Positioning Provider Serial Port.
@@ -557,19 +592,28 @@ QString Geoloc::getLabel(const GeolocElement &AGeoloc) const
 						.arg(FIconStorage->fileFullName(MNI_LINK))
 						.arg(AGeoloc.uri().toString()));
 
-	if (AGeoloc.hasProperty(GeolocElement::TimeStamp))
-		textLine.append(QString("<br><img src=\"%1\" />%2")
-						.arg(FIconStorage->fileFullName(MNI_CLIENTINFO_TIME))
-						.arg(AGeoloc.timeStamp().toLocalTime().toString(Qt::DefaultLocaleShortDate)));
+	if (AGeoloc.hasProperty(GeolocElement::CountryCode))
+		if (AGeoloc.hasProperty(GeolocElement::Country))
+			textLine.append(QString("<br>%1: %2 (%3)").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
+		else
+			textLine.append(QString("<br>%1: %2").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)));
+	else
+		if (AGeoloc.hasProperty(GeolocElement::Country))
+			textLine.append(QString("<br>%1: %2").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
 
 	const QStringList properties = AGeoloc.propertyNames();
 	for(QStringList::ConstIterator it=properties.constBegin(); it != properties.constEnd(); it++)
 	{
 		if(!((*it=="lat") || (*it=="lon") || (*it=="alt") ||
 			 (*it=="timestamp") || (*it=="uri") || (*it=="description") ||
-			 (*it=="text")))
-			textLine.append(QString("<br>%1: %2").arg(*it).arg(AGeoloc.propertyAsString(*it)));
+			 (*it=="text") || (*it=="country") || (*it=="countrycode")))
+			textLine.append(QString("<br>%1: %2").arg(translate(*it)).arg(AGeoloc.propertyAsString(*it)));
 	}
+
+	if (AGeoloc.hasProperty(GeolocElement::TimeStamp))
+		textLine.append(QString("<br><img src=\"%1\" />%2")
+						.arg(FIconStorage->fileFullName(MNI_CLIENTINFO_TIME))
+						.arg(AGeoloc.timeStamp().toLocalTime().toString(Qt::DefaultLocaleShortDate)));
 
 	return QString("<strong>%1:</strong><br>%2").arg(tr("Location")).arg(textLine);
 }

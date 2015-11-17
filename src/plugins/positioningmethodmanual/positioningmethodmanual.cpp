@@ -52,7 +52,10 @@ bool PositioningMethodManual::initConnections(IPluginManager *APluginManager, in
 
     plugin = APluginManager->pluginInterface("IPoi").value(0,NULL);
     if (plugin)
+	{
         FPoi = qobject_cast<IPoi *>(plugin->instance());
+		connect(FPoi->instance(), SIGNAL(poiModified(QString,int)), SLOT(onPoiModified(QString,int)));
+	}
 
     connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)));
     connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
@@ -178,6 +181,7 @@ void PositioningMethodManual::deleteMenu()
 void PositioningMethodManual::hereIAmCoords(double ALongitude, double ALatitude)
 {
     QPointF data(ALongitude, ALatitude);
+	Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).setValue(QVariant());
     Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).setValue(data);
 
     QDateTime timestamp =
@@ -195,10 +199,9 @@ void PositioningMethodManual::hereIAmCoords(double ALongitude, double ALatitude)
 		FActionSetPosition->setChecked(true);
 }
 
-void PositioningMethodManual::hereIamPoi(QString APoiId)
+void PositioningMethodManual::hereIamPoi(const QString &APoiId)
 {
-    GeolocElement poi=FPoi->getPoi(APoiId);
-	hereIAmCoords(poi.lon(), poi.lat());
+	Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).setValue(APoiId);
 }
 
 void PositioningMethodManual::changeCurrentState(IPositioningMethod::State AState)
@@ -242,29 +245,46 @@ void PositioningMethodManual::retractGeoloc()
 
 void PositioningMethodManual::timerDataSend()
 {
-    newDataSend(Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).value().toPointF(), Options::node(OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP).value().toString());
+	if (Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).value().isNull() || !sendPoi(Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).value().toString()))
+		sendPosition(Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).value().toPointF(), Options::node(OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP).value().toString());
 }
 
-void PositioningMethodManual::newDataSend(const QPointF &ACoordinates, const QString &ATimeStamp)
+void PositioningMethodManual::sendPosition(const QPointF &ACoordinates, const QString &ATimeStamp)
 {
 	GeolocElement position;
 	position.setLat(ACoordinates.y());
 	position.setLon(ACoordinates.x());
 	position.setReliability(GeolocElement::NotReliable);
 	position.setTimeStamp(QDateTime::fromString(ATimeStamp, Qt::ISODate));
-    emit newPositionAvailable(position);
+	emit newPositionAvailable(position);
 }
 
-void PositioningMethodManual::setTimeInterval(long timeout)
+bool PositioningMethodManual::sendPoi(const QString &APoiId)
 {
-    if (timeout==0)
+	if (FPoi)
+	{
+		GeolocElement poi = FPoi->getPoi(APoiId);
+		if (poi.isValid())
+		{
+			poi.removeProperty(GeolocElement::Type);
+			poi.setReliability(GeolocElement::NotReliable);
+			emit newPositionAvailable(poi);
+			return true;
+		}
+	}
+	return false;
+}
+
+void PositioningMethodManual::setTimeInterval(long ATimeout)
+{
+	if (ATimeout==0)
     {
         disconnect(FIntervalTimer,SIGNAL(timeout()),this,SLOT(timerDataSend()));
         FIntervalTimer->stop();
     }
     else
     {
-        FIntervalTimer->setInterval(timeout*1000);// to mls
+		FIntervalTimer->setInterval(ATimeout*1000);// to mls
         if (!FIntervalTimer->isActive())
         {
             connect(FIntervalTimer,SIGNAL(timeout()),SLOT(timerDataSend()));
@@ -280,8 +300,18 @@ void PositioningMethodManual::onOptionsClosed(){}
 
 void PositioningMethodManual::onOptionsChanged(const OptionsNode &ANode)
 {
-    if (ANode.path()==OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP)
-        newDataSend(Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).value().toPointF(), ANode.value().toString());
+	if (ANode.path()==OPV_POSITIONING_METHOD_MANUAL_INTERVAL)
+	{
+		if (FCurrentState==Started)
+			setTimeInterval(ANode.value().toInt());
+	}
+	else if (ANode.path()==OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP)
+		sendPosition(Options::node(OPV_POSITIONING_METHOD_MANUAL_COORDINATES).value().toPointF(), ANode.value().toString());
+	else if (ANode.path()==OPV_POSITIONING_METHOD_MANUAL_POI)
+	{
+		if (ANode.value().isValid())
+			sendPoi(ANode.value().toString());
+	}
 }
 
 void PositioningMethodManual::onPoiActionTriggered()
@@ -301,7 +331,25 @@ void PositioningMethodManual::onShortcutActivated(const QString &AId, QWidget *A
             if (selected.size()==1)
                 hereIamPoi(selected[0]->data(0, IPoi::PDR_ID).toString());
         }
-    }
+	}
+}
+
+void PositioningMethodManual::onPoiModified(const QString &APoiId, int AType)
+{
+	if (Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).value().toString()==APoiId)
+	{
+		switch (AType)
+		{
+			case IPoi::PMT_MODIFIED:
+				sendPoi(APoiId);
+				break;
+			case IPoi::PMT_REMOVED:
+				Options::node(OPV_POSITIONING_METHOD_MANUAL_POI).setValue(QVariant());
+				break;
+			default:
+				break;
+		}
+	}
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_positioningmethodmanual, PositioningMethodManual)
