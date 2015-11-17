@@ -17,8 +17,6 @@
 #include <interfaces/imessagestylemanager.h>
 #include <interfaces/imapcontacts.h>
 
-#define MDR_MOOD_ICON 1001
-
 class MoodData
 {
 public:

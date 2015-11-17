@@ -1192,64 +1192,75 @@ void XhtmlIm::onInsertImage()
 
 	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(FCurrentMessageEditWidget->messageWindow()->streamJid(), FCurrentMessageEditWidget->messageWindow()->contactJid());
 
-	if (!cursor.hasSelection())
-		if (charFmtCurrent.isImageFormat())
+	if (charFmtCurrent.isImageFormat())
+	{
+		QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
+		cursor.select(QTextCursor::WordUnderCursor);
+		imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
+		QVariant imageResource = cursor.document()->resource(QTextDocument::ImageResource, imageUrl);
+		if (imageResource.type()==QVariant::ByteArray)
+			imageData=imageResource.toByteArray();
+		else if (imageUrl.scheme()=="data")
 		{
-			QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
-			cursor.select(QTextCursor::WordUnderCursor);
-			imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
-			imageData=FCurrentMessageEditWidget->document()->resource(QTextDocument::ImageResource, imageUrl).toByteArray();
-			size.setWidth(imageFormat.width());
-			size.setHeight(imageFormat.height());
-			alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+			QList<QString> parts=imageUrl.path().split(';');
+			if (parts.size()==2 && parts[0].startsWith("image/"))
+			{
+				parts = parts[1].split(',');
+				if (parts.size()==2 && parts[0]=="base64")
+					imageData = QByteArray::fromBase64(parts[1].toLatin1());
+			}
 		}
+		size.setWidth(imageFormat.width());
+		size.setHeight(imageFormat.height());
+		alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+	}
 
 	Action *action=qobject_cast<Action *>(sender());
-	InsertImage *inserImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, action->parentWidget()->window());
+	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, action->parentWidget()->window());
 
-	inserImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
+	insertImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
 	if(!supportBoB)
-		inserImage->ui->pbBrowse->hide();
-	if(inserImage->exec() == QDialog::Accepted)
+		insertImage->ui->pbBrowse->hide();
+	if(insertImage->exec() == QDialog::Accepted)
 	{
-		if(!inserImage->getUrl().isEmpty())
+		if(!insertImage->getUrl().isEmpty())
 		{
 			cursor.beginEditBlock();
 			QTextImageFormat imageFormat;
-			QString          alt=inserImage->getAlternativeText();
+			QString          alt=insertImage->getAlternativeText();
 			if (!alt.isEmpty())
 				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
-			if (!inserImage->physResize())
+			if (!insertImage->physResize())
 			{
-				if(inserImage->newHeight()!=inserImage->originalHeight())
-					imageFormat.setHeight(inserImage->newHeight());
-				if(inserImage->newWidth()!=inserImage->originalWidth())
-					imageFormat.setWidth(inserImage->newWidth());
+				if(insertImage->newHeight()!=insertImage->originalHeight())
+					imageFormat.setHeight(insertImage->newHeight());
+				if(insertImage->newWidth()!=insertImage->originalWidth())
+					imageFormat.setWidth(insertImage->newWidth());
 			}
-			if(inserImage->isRemote())
+			if(insertImage->isRemote())
 			{
-				QUrl url=inserImage->getUrl();
+				QUrl url=insertImage->getUrl();
 				imageFormat.setName(url.toEncoded());
-				cursor.document()->addResource(QTextDocument::ImageResource, url, inserImage->getImageData());
+				cursor.document()->addResource(QTextDocument::ImageResource, url, insertImage->getImageData());
 				cursor.insertImage(imageFormat);
 			}
 			else
 				if(supportBoB)
 				{
-					QByteArray imageData=inserImage->getImageData();
+					QByteArray imageData=insertImage->getImageData();
 					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
 					QString uri=QString("cid:").append(contentId);
 					imageFormat.setName(uri);
-					imageFormat.setProperty(XhtmlIm::PMaxAge, inserImage->getMaxAge());
-					imageFormat.setProperty(XhtmlIm::PMimeType, inserImage->getFileType());
-					imageFormat.setProperty(XhtmlIm::PEmbed, inserImage->embed());
+					imageFormat.setProperty(XhtmlIm::PMaxAge, insertImage->getMaxAge());
+					imageFormat.setProperty(XhtmlIm::PMimeType, insertImage->getFileType());
+					imageFormat.setProperty(XhtmlIm::PEmbed, insertImage->embed());
 					cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
 					cursor.insertImage(imageFormat);
 				}
 			cursor.endEditBlock();
 		}
 	}
-	inserImage->deleteLater();
+	insertImage->deleteLater();
 }
 
 void XhtmlIm::onSetToolTip()
@@ -1763,29 +1774,49 @@ void XhtmlIm::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *A
 						if (format.isImageFormat())
 						{
 							QTextImageFormat imageFormat=format.toImageFormat();
-							QUrl url(imageFormat.name());
-							if (url.scheme()=="cid" || url.scheme()=="file")
+							QUrl imageUrl(imageFormat.name());
+							if (imageUrl.scheme()=="cid" || imageUrl.scheme()=="file" || imageUrl.scheme()=="data")
 							{
-								QByteArray data=ADocument->resource(QTextDocument::ImageResource, url).toByteArray();
-								QString type=format.property(PMimeType).toString();
-								quint64 maxAge=format.property(PMaxAge).toLongLong();
-
-								QString cid;
-								if (url.scheme()=="cid")
-									cid=url.path();
-								else    // file
+								QByteArray imageData;
+								QVariant imageResource = ADocument->resource(QTextDocument::ImageResource, imageUrl);
+								if (imageResource.type()==QVariant::ByteArray)
+									imageData=imageResource.toByteArray();
+								else if (imageUrl.scheme()=="data")
 								{
-									cid=FBitsOfBinary->contentIdentifier(data);
-									imageFormat.setName(QString("cid:").append(cid));
-									QTextCursor cursor(ADocument);
-									// Select contents
-									cursor.setPosition(fragment.position(), QTextCursor::MoveAnchor);
-									cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
-									cursor.insertImage(imageFormat);
+									QList<QString> parts=imageUrl.path().split(';');
+									if (parts.size()==2 && parts[0].startsWith("image/"))
+									{
+										format.setProperty(PMaxAge, Options::node(OPV_XHTML_MAXAGE).value().toLongLong());
+										format.setProperty(PMimeType, parts[0]);
+										parts = parts[1].split(',');
+										if (parts.size()==2 && parts[0]=="base64")
+											imageData = QByteArray::fromBase64(parts[1].toLatin1());
+										format.setProperty(PEmbed, imageData.size()<= Options::node(OPV_XHTML_EMBEDSIZE).value().toInt());
+									}
 								}
-								FBitsOfBinary->saveBinary(cid, type, data, maxAge);
-								if(format.property(PEmbed).toBool())
-									FBitsOfBinary->saveBinary(cid, type, data, maxAge, AMessage.stanza());
+
+								if (!imageData.isEmpty())
+								{
+									QString type	= format.property(PMimeType).toString();
+									quint64 maxAge	= format.property(PMaxAge).toLongLong();
+
+									QString cid;
+									if (imageUrl.scheme()=="cid")
+										cid=imageUrl.path();
+									else    // file or data
+									{
+										cid=FBitsOfBinary->contentIdentifier(imageData);
+										imageFormat.setName(QString("cid:").append(cid));
+										QTextCursor cursor(ADocument);
+										// Select contents
+										cursor.setPosition(fragment.position(), QTextCursor::MoveAnchor);
+										cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
+										cursor.insertImage(imageFormat);
+									}
+									FBitsOfBinary->saveBinary(cid, type, imageData, maxAge);
+									if(format.property(PEmbed).toBool())
+										FBitsOfBinary->saveBinary(cid, type, imageData, maxAge, AMessage.stanza());
+								}
 							}
 						}
 					}
@@ -1847,12 +1878,10 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 {
 	Q_UNUSED(AWidget);
 
-	if (AOrder==ECHO_XHTML_COPY_INSERT &&
-		messageEditContentsCanInsert(AOrder,AWidget,AData))
+	if (AOrder==ECHO_XHTML_COPY_INSERT && messageEditContentsCanInsert(AOrder,AWidget,AData))
 	{
 		if (AData->hasImage())
 		{
-			QImage image = AData->imageData().value<QImage>();
 			if (AData->hasHtml())
 			{
 				QDomDocument doc;
@@ -1869,6 +1898,14 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 						imageFormat.setToolTip(root.attribute("title"));
 					AWidget->textEdit()->document()->addResource(QTextDocument::ImageResource, url, AData->imageData().value<QImage>());
 					QTextCursor(ADocument).insertImage(imageFormat);
+					return true;
+				}
+				else
+				{
+					QString html=AData->html();
+		//			fixHtml(html);
+		//			QTextCursor(ADocument).insertHtml(html);
+					XmlTextDocumentParser::htmlToText(ADocument, html);
 					return true;
 				}
 			}
@@ -1935,8 +1972,9 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 		else if (AData->hasHtml())
 		{
 			QString html=AData->html();
-			fixHtml(html);
-			QTextCursor(ADocument).insertHtml(html);
+//			fixHtml(html);
+//			QTextCursor(ADocument).insertHtml(html);
+			XmlTextDocumentParser::htmlToText(ADocument, html);
 			return true;
 		}
 	}

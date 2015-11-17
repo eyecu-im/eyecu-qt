@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QDir>
 #include <QClipboard>
 #include <definitions/shortcuts.h>
@@ -28,15 +27,13 @@
 #include "activityselect.h"
 
 #define ADR_STREAM_JIDS		Action::DR_StreamJid
-#define ADR_CLIPBOARD_NAME_BASIC  Action::DR_Parametr1
-#define ADR_CLIPBOARD_NAME_DETAILED  Action::DR_Parametr2
-#define ADR_CLIPBOARD_TEXT  Action::DR_Parametr3
-#define ADR_CLIPBOARD_IMAGE Action::DR_Parametr4
+#define ADR_CLIPBOARD_NAME  Action::DR_Parametr1
+#define ADR_CLIPBOARD_TEXT  Action::DR_Parametr2
+#define ADR_CLIPBOARD_IMAGE Action::DR_Parametr3
 #define NO_ACTIVITY			"no_activity"
 #define ACTIVITIES_DEF		"activities.def.xml"
 #define TAG_NAME			"activity"
 #define MDR_ACTIVITY_ICON   1000
-
 
 ActivityData::ActivityData(QString ANameBasic, QString ANameDetailed, QString AText):nameBasic(ANameBasic==NO_ACTIVITY?QString():ANameBasic),nameDetailed(ANameDetailed),text(AText)
 {}
@@ -574,8 +571,7 @@ void Activity::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes,
 				QString fileName = getIconFileName(jid);
 				if (!fileName.isEmpty())
 					action->setData(ADR_CLIPBOARD_IMAGE, fileName);
-				action->setData(ADR_CLIPBOARD_NAME_BASIC, data.nameBasic);
-				action->setData(ADR_CLIPBOARD_NAME_DETAILED, data.nameDetailed);
+				action->setData(ADR_CLIPBOARD_NAME, data.nameDetailed.isEmpty()?data.nameBasic:tr("%1: %2").arg(data.nameBasic).arg(data.nameDetailed));
 				connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
 				AMenu->addAction(action, AG_RVCBM_PEP, true);
 			}
@@ -594,12 +590,8 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 
 void Activity::onCopyToClipboard()
 {
-	qDebug() << "Activity::onCopyToClipboard()";
-	Action *action = qobject_cast<Action *>(sender());
-	QString text=action->data(ADR_CLIPBOARD_TEXT).toString();
-	QString name=action->data(ADR_CLIPBOARD_NAME_DETAILED).isNull()?FTranslatedNames.value(action->data(ADR_CLIPBOARD_NAME_BASIC).toString())
-																   :tr("%1: %2").arg(FTranslatedNames.value(action->data(ADR_CLIPBOARD_NAME_BASIC).toString()))
-																				.arg(FTranslatedNames.value(action->data(ADR_CLIPBOARD_NAME_DETAILED).toString()));
+	QString text=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
+	QString name=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString();
 	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
 	QClipboard *clipboard = QApplication::clipboard();
 	QMimeData *mime = new QMimeData();
@@ -622,7 +614,7 @@ void Activity::onCopyToClipboard()
 					QUrl url;
 					url.setScheme("data");
 					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
-					mime->setHtml(QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3").arg(url.toString()).arg(name).arg(text));
+					mime->setHtml(QString("<body><img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3</body>").arg(url.toString()).arg(FTranslatedNames.value(name)).arg(text));
 				}
 			}
 		}
