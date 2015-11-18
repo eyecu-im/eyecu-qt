@@ -17,7 +17,7 @@ MoodSelect::MoodSelect(Mood *AMood, const QStringList &AMoodList, const QHash<QS
     connect(ui->listActiv,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(onCurItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     connect(ui->comboBox,SIGNAL(editTextChanged(QString)),SLOT(onEditTextChanged(QString)));
 
-	setWindowIcon(AMood->getIcon(MNI_MOOD));
+	setWindowIcon(AMood->getIcon(QString(MNI_MOOD)));
     fillMoodList();
     setCurrentItem(AMoodData);
 }

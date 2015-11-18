@@ -260,18 +260,18 @@ Check values and try again</translation>
    <location line="329" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Left mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Left mouse button</translation>
   </message>
   <message>
    <location line="330" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Middle mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Middle mouse button</translation>
   </message>
   <message>
    <location line="331" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Address user by clicking nickname in the list with</source>
-   <translation type="unfinished"/>
+   <translation>Address user by clicking nickname in the list with</translation>
   </message>
   <message>
    <location line="333" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>

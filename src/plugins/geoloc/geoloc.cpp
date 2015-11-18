@@ -1,5 +1,6 @@
 #include "geoloc.h"
-
+#include <QClipboard>
+#include <QApplication>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
@@ -19,6 +20,7 @@
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr1
+#define ADR_CLIPBOARD_DATA      Action::DR_Parametr2
 
 #define SHC_MESSAGE_IN          "/message[@type='chat']/active"
 #define SHC_OUT_MESSAGE         "/message[@type='chat']/"
@@ -112,7 +114,6 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
-
 	plugin = APluginManager->pluginInterface("IRostersModel").value(0,NULL);
 	if (plugin)
 	{
@@ -132,9 +133,14 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		FRostersViewPlugin = qobject_cast<IRostersViewPlugin *>(plugin->instance());
 		if (FRostersViewPlugin)
+		{
 			connect(FRostersViewPlugin->rostersView()->instance(),
 					SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
 					SLOT(onRosterIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
+			connect(FRostersViewPlugin->rostersView()->instance(),
+					SIGNAL(indexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)),
+					SLOT(onRosterIndexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)));
+		}
 	}
 	AInitOrder = 100;
 
@@ -159,6 +165,30 @@ bool Geoloc::initObjects()
 		FRosterLabelId = FRostersViewPlugin->rostersView()->registerLabel(label);
 		FRostersViewPlugin->rostersView()->insertLabelHolder(RLHO_GEOLOC, this);
 	}
+
+	FTranslated.insert("accuracy", tr("Accuracy"));
+	FTranslated.insert("alt", tr("Altitude"));
+	FTranslated.insert("area", tr("Area"));
+	FTranslated.insert("bearing", tr("Bearing"));
+	FTranslated.insert("building", tr("Building"));
+	FTranslated.insert("country", tr("Country"));
+	FTranslated.insert("countrycode", tr("Country code"));
+	FTranslated.insert("datum", tr("Datum"));
+	FTranslated.insert("description", tr("Description"));
+	FTranslated.insert("error", tr("Error"));
+	FTranslated.insert("floor", tr("Floor"));
+	FTranslated.insert("lat", tr("Latitude"));
+	FTranslated.insert("locality", tr("Locality"));
+	FTranslated.insert("lon", tr("Longitude"));
+	FTranslated.insert("postalcode", tr("Postal code"));
+	FTranslated.insert("region", tr("Region"));
+	FTranslated.insert("room", tr("Room"));
+	FTranslated.insert("Speed", tr("Speed"));
+	FTranslated.insert("street", tr("Street"));
+	FTranslated.insert("text", tr("Text"));
+	FTranslated.insert("timestamp", tr("Timestamp"));
+	FTranslated.insert("tzo", tr("TZO"));
+	FTranslated.insert("uri", tr("URI"));
 
 	return true;
 }
@@ -386,6 +416,11 @@ void Geoloc::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 	}
 }
 
+QString Geoloc::translate(const QString &APropertyName) const
+{
+	return FTranslated.contains(APropertyName)?FTranslated[APropertyName]:APropertyName;
+}
+
 void Geoloc::sendGeoloc(GeolocElement APosition)
 {
 	if (APosition.hasProperty("course"))	// Extra non-standard property from Positioning Provider Serial Port.
@@ -557,19 +592,28 @@ QString Geoloc::getLabel(const GeolocElement &AGeoloc) const
 						.arg(FIconStorage->fileFullName(MNI_LINK))
 						.arg(AGeoloc.uri().toString()));
 
-	if (AGeoloc.hasProperty(GeolocElement::TimeStamp))
-		textLine.append(QString("<br><img src=\"%1\" />%2")
-						.arg(FIconStorage->fileFullName(MNI_CLIENTINFO_TIME))
-						.arg(AGeoloc.timeStamp().toLocalTime().toString(Qt::DefaultLocaleShortDate)));
+	if (AGeoloc.hasProperty(GeolocElement::CountryCode))
+		if (AGeoloc.hasProperty(GeolocElement::Country))
+			textLine.append(QString("<br>%1: %2 (%3)").arg(translate("country")).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
+		else
+			textLine.append(QString("<br>%1: %2").arg(translate(translate("country"))).arg(AGeoloc.propertyAsString(GeolocElement::CountryCode)));
+	else
+		if (AGeoloc.hasProperty(GeolocElement::Country))
+			textLine.append(QString("<br>%1: %2").arg(translate(translate("country"))).arg(AGeoloc.propertyAsString(GeolocElement::Country)));
 
 	const QStringList properties = AGeoloc.propertyNames();
 	for(QStringList::ConstIterator it=properties.constBegin(); it != properties.constEnd(); it++)
 	{
 		if(!((*it=="lat") || (*it=="lon") || (*it=="alt") ||
 			 (*it=="timestamp") || (*it=="uri") || (*it=="description") ||
-			 (*it=="text")))
-			textLine.append(QString("<br>%1: %2").arg(*it).arg(AGeoloc.propertyAsString(*it)));
+			 (*it=="text") || (*it=="country") || (*it=="countrycode")))
+			textLine.append(QString("<br>%1: %2").arg(translate(*it)).arg(AGeoloc.propertyAsString(*it)));
 	}
+
+	if (AGeoloc.hasProperty(GeolocElement::TimeStamp))
+		textLine.append(QString("<br><img src=\"%1\" />%2")
+						.arg(FIconStorage->fileFullName(MNI_CLIENTINFO_TIME))
+						.arg(AGeoloc.timeStamp().toLocalTime().toString(Qt::DefaultLocaleShortDate)));
 
 	return QString("<strong>%1:</strong><br>%2").arg(tr("Location")).arg(textLine);
 }
@@ -654,6 +698,282 @@ void Geoloc::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<
 void Geoloc::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_ROSTER_RECENT_SIMPLEITEMSVIEW));
+}
+
+
+
+void Geoloc::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
+{
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
+			Jid jid((*it)->data(RDR_FULL_JID).toString());
+			if (hasGeoloc(jid))
+			{
+				Action *action = new Action(AMenu);
+				GeolocElement position = getGeoloc(jid);
+
+				qreal lat, lon;
+				QString latd, lond;
+				if(position.hasProperty(GeolocElement::Lat))
+				{
+					lat=position.lat();
+					if (lat<0)
+					{
+						latd=tr("S");
+						lat=-lat;
+					}
+					else
+						latd=tr("N");
+				}
+
+				if(position.hasProperty(GeolocElement::Lon))
+				{
+					lon=position.lon();
+					if (lon<0)
+					{
+						lond=tr("W");
+						lon=-lon;
+					}
+					else
+						lond=tr("E");
+				}
+
+				action->setText(QString("%1%2; %3%4").arg(lat,0,'f',6).arg(latd)
+														  .arg(lon,0,'f',6).arg(lond));
+				action->setIcon(getIcon());
+
+				QHash<QString, QVariant> data = position.properties();
+				if (position.reliability()!=GeolocElement::Unknown)
+					data.insert("reliability", position.reliability());
+				action->setData(ADR_CLIPBOARD_DATA, data);
+
+				connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
+				AMenu->addAction(action, AG_RVCBM_PEP, true);
+			}
+		}
+}
+
+void Geoloc::onCopyToClipboard()
+{
+	QHash<QString, QVariant> position = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_DATA).toHash();
+
+	QClipboard *clipboard = QApplication::clipboard();
+	QMimeData *mime;
+	mime = new QMimeData();
+
+	QString text, html;
+	QString color;
+
+	if (position.contains("reliability"))
+		switch (position["reliability"].toInt())
+		{
+			case GeolocElement::Reliable:
+				color="green";
+				break;
+			case GeolocElement::WasReliable:
+				color="red";
+				break;
+			case GeolocElement::NotReliable:
+				color="brown";
+				break;
+			case GeolocElement::Unknown:
+				break;
+		}
+
+	if (position.contains("lat"))
+	{
+		qreal lat=position["lat"].toDouble();
+		QString latd;
+		if (lat<0)
+		{
+			latd=tr("S");
+			lat=-lat;
+		}
+		else
+			latd=tr("N");
+		text.append(tr("%1: %2%3").arg(translate("lat")).arg(lat).arg(latd));
+		html.append(tr("<b>%1:</b><span %4>&nbsp;%2%3</span>").arg(translate("lat")).arg(lat).arg(latd).arg(color.isEmpty()?QString(""):QString("style=\"color:%1;\"").arg(color)));
+	}
+	if (position.contains("lon"))
+	{
+		qreal lon=position["lon"].toDouble();
+		QString lond;
+		if (lon<0)
+		{
+			lond=tr("W");
+			lon=-lon;
+		}
+		else
+			lond=tr("E");
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2%3").arg(translate("lon")).arg(lon).arg(lond));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b><span %4>&nbsp;%2%3</span>").arg(translate("lon")).arg(lon).arg(lond).arg(color.isEmpty()?QString(""):QString("style=\"color:%1;\"").arg(color)));
+	}
+	if (position.contains("alt"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("alt")).arg(position["alt"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b><span %3>&nbsp;%2</span>").arg(translate("alt")).arg(position["alt"].toFloat()).arg(color.isEmpty()?QString(""):QString("style=\"color:%1;\"").arg(color)));
+	}
+	if (position.contains("text"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("text")).arg(position["text"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(translate("text")).arg(position["text"].toString()));
+	}
+	if (position.contains("description"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("description")).arg(position["description"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("description")).arg(position["description"].toString()));
+	}
+	if (position.contains("postalcode"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("postalcode")).arg(position["postalcode"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("postalcode")).arg(position["postalcode"].toString()));
+	}
+	if (position.contains("countrycode"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("countrycode")).arg(position["countrycode"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("countrycode")).arg(position["countrycode"].toString()));
+	}
+	if (position.contains("country"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("country")).arg(position["country"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("country")).arg(position["country"].toString()));
+	}
+	if (position.contains("region"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("region")).arg(position["region"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("region")).arg(position["region"].toString()));
+	}
+	if (position.contains("locality"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("locality")).arg(position["locality"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("locality")).arg(position["locality"].toString()));
+	}
+	if (position.contains("area"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("area")).arg(position["area"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("area")).arg(position["area"].toString()));
+	}
+	if (position.contains("street"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("street")).arg(position["street"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("street")).arg(position["street"].toString()));
+	}
+	if (position.contains("building"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("building")).arg(position["building"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("building")).arg(position["building"].toString()));
+	}
+	if (position.contains("floor"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("floor")).arg(position["floor"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("floor")).arg(position["floor"].toString()));
+	}
+	if (position.contains("room"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("room")).arg(position["room"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("room")).arg(position["room"].toString()));
+	}
+	for(GeolocElement::ConstIterator it=position.constBegin(); it != position.constEnd(); it++)
+	{
+		if(!((it.key()=="lat") || (it.key()=="lon") || (it.key()=="alt") ||
+			 (it.key()=="timestamp") || (it.key()=="uri") || (it.key()=="description") ||
+			 (it.key()=="text") || (it.key()=="countrycode") || (it.key()=="country") ||
+			 (it.key()=="region") || (it.key()=="locality") || (it.key()=="street") ||
+			 (it.key()=="area") || (it.key()=="building") || (it.key()=="floor") ||
+			 (it.key()=="room") || (it.key()=="reliability")))
+		{
+			if (!text.isEmpty())
+				text.append(QChar::LineSeparator);
+			text.append(QString("<br>%1: %2").arg(translate(it.key())).arg((*it).toString()));
+			if (!html.isEmpty())
+				html.append("<br/>");
+			html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate(it.key())).arg((*it).toString()));
+		}
+	}
+	if (position.contains("uri"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(translate("uri")).arg(position["uri"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;<a href=\"%2\">%2</a>").arg(translate("uri")).arg(position["uri"].toString()));
+		mime->setUrls(QList<QUrl>() << position["uri"].toUrl());
+	}
+	if (position.contains("timestamp"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		QString timestamp = position["timestamp"].toDateTime().toLocalTime().toString(Qt::DefaultLocaleShortDate);
+		text.append(tr("%1: %2").arg(translate("timestamp")).arg(timestamp));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b>&nbsp;%2").arg(translate("timestamp")).arg(timestamp));
+	}
+
+	if (!text.isEmpty())
+		mime->setText(text);
+	if (!html.isEmpty())
+		mime->setHtml(QString("<body>%1</body>").arg(html));
+
+	clipboard->setMimeData(mime);
 }
 
 // Options Manager

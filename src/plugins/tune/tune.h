@@ -21,8 +21,6 @@
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/iconnectionmanager.h>
 
-#define MDR_TUNE_ICON 1002
-
 class UrlRequest: public QThread
 {
 public:
@@ -127,7 +125,9 @@ protected slots:
     void onStreamClosed(IXmppStream *AXmppStream);
     void onRosterIndexInserted(IRosterIndex *AIndex);
     void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32, Menu *AMenu);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
     void onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips);
+	void onCopyToClipboard();
     void onOptionsOpened();
     void onOptionsChanged(const OptionsNode &ANode);
     void onChatWindowCreated(IMessageChatWindow *AWindow);
