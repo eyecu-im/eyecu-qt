@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Manual</DisplayName>
     <Description>Positioning method, which allows user to specify its location manually</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2015-11-09</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-17</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual</Name>
-	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
+	<UpdateText>Fixed data send interval setting change. When POI used to specify user location, all the data, stored in POI is published. When POI eidited, position updated as well.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning</Dependencies>
     <SortingPriority>1</SortingPriority>
     <Default>true</Default>

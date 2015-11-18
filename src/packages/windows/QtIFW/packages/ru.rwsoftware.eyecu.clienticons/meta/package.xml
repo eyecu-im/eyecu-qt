@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>Client Icons</DisplayName>
     <Description>Displays icon of a contact client application</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2015-11-01</ReleaseDate>
-    <UpdateText>Support of "Sawim" added.</UpdateText>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-18</ReleaseDate>
+    <UpdateText>Copying to clipboard implemented</UpdateText>
     <Name>ru.rwsoftware.eyecu.clienticons</Name>
     <SortingPriority>60</SortingPriority>
     <Default>true</Default>
