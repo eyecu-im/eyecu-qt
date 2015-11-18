@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QClipboard>
 #include <definitions/rosterlabels.h>
 #include <definitions/messagewriterorders.h>
