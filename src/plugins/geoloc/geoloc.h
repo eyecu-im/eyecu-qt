@@ -89,6 +89,8 @@ protected slots:
 	void onRosterIndexInserted(IRosterIndex *AIndex);
 	void onRosterIndexDataChanged(IRosterIndex *AIndex, int ARole);
 	void onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onCopyToClipboard();
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
