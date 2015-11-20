@@ -6,11 +6,12 @@
     <ReleaseDate>2015-11-16</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
+    <UpdateText>Linked nickname processing fixed</UpdateText>
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>Added HTML text substitute method into utils/TextManager class.</UpdateText>
+    <UpdateText>Added HTML text substitute method into utils/TextManager class. Linked nickname processing in Simple Message Style fixed.</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Script>installscript.js</Script>

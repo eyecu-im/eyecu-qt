@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Loader</DisplayName>
     <Description>eyeCU loader</Description>
-    <Version>1.3.0.20151118</Version>
-    <ReleaseDate>2015-11-18</ReleaseDate>
+    <Version>1.3.0.20151119</Version>
+    <ReleaseDate>2015-11-19</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.loader</Name>
     <UpdateText>Moved loader out of base eyeCU package</UpdateText>
     <Virtual>true</Virtual>
