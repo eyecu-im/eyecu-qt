@@ -1,5 +1,6 @@
 #include <QDir>
 #include <QClipboard>
+#include <QMimeData>
 #include <definitions/shortcuts.h>
 #include "definitions/notificationdataroles.h"
 #include "definitions/notificationtypeorders.h"

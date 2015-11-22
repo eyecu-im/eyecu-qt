@@ -1,8 +1,8 @@
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QMouseEvent>
-#include <QMimeData>
 #include <QClipboard>
+#include <QMimeData>
 #include <QApplication>
 #include <MapObject>
 #include <definitions/rosterindexkinds.h>

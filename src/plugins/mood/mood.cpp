@@ -1,4 +1,5 @@
 #include <QClipboard>
+#include <QMimeData>
 #include <definitions/rosterlabels.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/shortcuts.h>

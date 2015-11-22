@@ -1,6 +1,7 @@
 #include "geoloc.h"
 #include <QClipboard>
 #include <QApplication>
+#include <QMimeData>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>

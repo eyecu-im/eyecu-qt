@@ -1,6 +1,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #include <definitions/rosterlabelholderorders.h>
 #include "clienticons.h"
 
