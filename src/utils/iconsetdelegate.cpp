@@ -91,14 +91,14 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 		while (drawRect.bottom()>top && drawRect.right()>left && iconIndex<iconKeys.count() && row<maxRows)
 		{
 // *** <<< eyeCU <<< ***
-			bool colored=false;
+			bool filtered=false;
 			for (QStringList::ConstIterator it=FFilter.constBegin(); it!=FFilter.constEnd(); ++it)
 				if (iconKeys.at(iconIndex).endsWith(*it))
 				{
-					colored=true;
+					filtered=true;
 					break;
 				}
-			if (!colored)
+			if (!filtered)
 			{
 // *** >>> eyeCU >>> ***
 			QIcon icon = storage->getIcon(iconKeys.at(iconIndex));

@@ -87,7 +87,7 @@ bool Emoji::initObjects()
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
 
-	for (ushort i=0xDFFA; i<=0xDFFF; ++i)
+	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
 	{
 		QString suffix(FFirst);
 		suffix.append(QChar(i));
@@ -101,7 +101,7 @@ bool Emoji::isColored(const QString &AEmojiText) const
 {
 	int size = AEmojiText.size();
 	ushort last = AEmojiText.at(size-1).unicode();
-	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFF9) && (last<0xE000);
+	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
 }
 
 bool Emoji::initSettings()
