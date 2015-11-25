@@ -7,5 +7,13 @@
   <icon>
     <text>&#x270D;&#xD83C;&#xDFFB;</text>
     <object mime="image/png">270DD83CDFFB.png</object>
-  </icon>  
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDD90;&#xD83C;&#xDFFB;</text>
+    <object mime="image/png">D83DDD90D83CDFFB.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDD96;&#xD83C;&#xDFFB;</text>
+    <object mime="image/png">D83DDD96D83CDFFB.png</object>
+  </icon>
 </icondef>
