@@ -1903,9 +1903,9 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 				else
 				{
 					QString html=AData->html();
-		//			fixHtml(html);
-		//			QTextCursor(ADocument).insertHtml(html);
-					XmlTextDocumentParser::htmlToText(ADocument, html);
+					fixHtml(html);
+					QTextCursor(ADocument).insertHtml(html);
+		//			XmlTextDocumentParser::htmlToText(ADocument, html);
 					return true;
 				}
 			}
@@ -1972,9 +1972,9 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 		else if (AData->hasHtml())
 		{
 			QString html=AData->html();
-//			fixHtml(html);
-//			QTextCursor(ADocument).insertHtml(html);
-			XmlTextDocumentParser::htmlToText(ADocument, html);
+			fixHtml(html);
+			QTextCursor(ADocument).insertHtml(html);
+//			XmlTextDocumentParser::htmlToText(ADocument, html);
 			return true;
 		}
 	}
