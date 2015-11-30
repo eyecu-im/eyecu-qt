@@ -159,7 +159,6 @@ void MmPlayer::onStartPlayer(bool AState)
 		if(FPlayerWindow==NULL)
 		{
 			FPlayerWindow = new PlayerWindow(this);
-            FPlayerWindow->setAcceptDrops(true);
 			connect(FPlayerWindow,SIGNAL(destroyed()),SLOT(onPlayerWindowDestroyed()));
 			if (FOptionsManager)
 				connect(FPlayerWindow,SIGNAL(showOptions()),SLOT(onShowOptions()));
@@ -222,9 +221,13 @@ void MmPlayer::onFileStreamStateChanged()
 		case IFileStream::Aborted:
 		{
 			LOG_DEBUG("Finished or Aborted");
-			FifoDataBuffer *buffer=FBuffers.take(stream);
+			FifoDataBuffer *buffer = FBuffers.value(stream);
 			if (buffer)
+			{
+				if (!FStreamerBuffers.key(buffer))
+					FBuffers.remove(stream);
 				buffer->output()->close();
+			}
 			break;
 		}
 	}
@@ -241,10 +244,13 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 		case MediaStreamer::Running:
         {
 			LOG_DEBUG("Running");
-            IFileStream *fileStream=FBuffers.key(FStreamerBuffers[sender()]);
-			PlayerWindow *window = new PlayerWindow(this, streamer, QFileInfo(fileStream->fileName()).fileName(), fileStream->fileSize());
-            if (FOptionsManager)
-				connect(window, SIGNAL(showOptions()), SLOT(onShowOptions()));
+			IFileStream *fileStream = FBuffers.key(FStreamerBuffers[sender()]);
+			if (fileStream)
+			{
+				PlayerWindow *window = new PlayerWindow(this, streamer, QFileInfo(fileStream->fileName()).fileName(), fileStream->fileSize());
+				if (FOptionsManager)
+					connect(window, SIGNAL(showOptions()), SLOT(onShowOptions()));
+			}
             break;
         }
 

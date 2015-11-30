@@ -1,7 +1,6 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QMessageBox>
-#include <QDebug>
 #include <definitions/optionvalues.h>
 #include <definitions/shortcuts.h>
 #include <definitions/menuicons.h>
@@ -60,10 +59,10 @@ PlayerWindow::PlayerWindow(QObject *APlugin, QWidget *AParent):
     ui(new Ui::PlayerWindow)
 {
 	LOG_DEBUG("PlayerWindow(FFMpeg)");
-
+	setAcceptDrops(true);
 	QString tmp=FSupportedAudioFormats;
 	tmp.append(FSupportedVideoFormats);
-	tmp.remove("*.");
+	tmp.remove("*.");		
 	FMidiFormats << tmp.split(" ");
 
     ui->setupUi(this);
@@ -416,8 +415,6 @@ void PlayerWindow::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				if(!FPlayList.isEmpty())
 					newTrackPlay(PLAY_WITH_DELETE);
 			}
-			else
-				close();
 			break;
 	}
 	LOG_DEBUG("onStreamerStatusChanged(): finished");

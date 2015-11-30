@@ -8,7 +8,7 @@ void MapSource2Gis::pluginInfo(IPluginInfo *APluginInfo)
 	APluginInfo->version = "1.0";
 	APluginInfo->author = "Road Works Software";
 	APluginInfo->homePage = "http://www.eyecu.ru";
-//	APluginInfo->dependences.append(MAPSCENE_UUID);
+	APluginInfo->dependences.append(MAP_UUID);
 }
 
 QList<int> MapSource2Gis::getModeIcons() const
