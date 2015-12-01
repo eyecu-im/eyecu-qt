@@ -531,12 +531,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="493"/>
    <source>Current Subject or Discussion Topic in Room</source>
-   <translation type="unfinished"/>
+   <translation>Huidige onderwerp of discussie thema in kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="494"/>
    <source>The Room Subject Can be Modified by Participants?</source>
-   <translation type="unfinished"/>
+   <translation>Kan het kameronderwerp worden gewijzigd door deelnemers?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="532"/>
@@ -1012,12 +1012,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1411"/>
    <source>Room now shows unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Kamer toont nu niet beschikbaar leden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1414"/>
    <source>Room now does not show unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Kamer toont nu geen beschikbare leden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1417"/>
