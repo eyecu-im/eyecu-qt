@@ -511,6 +511,7 @@
 #define OPV_POSITIONING_METHOD_SERIALPORT_DISTANCETRESHOLD "positioning.method.serialport.distance-treshold"
 // Manual
 #define OPV_POSITIONING_METHOD_MANUAL_COORDINATES       "positioning.method.manual.coordinates"
+#define OPV_POSITIONING_METHOD_MANUAL_POI               "positioning.method.manual.poi"
 #define OPV_POSITIONING_METHOD_MANUAL_TIMESTAMP         "positioning.method.manual.timestamp"
 #define OPV_POSITIONING_METHOD_MANUAL_INTERVAL          "positioning.method.manual.interval"
 // Location

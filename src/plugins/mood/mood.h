@@ -17,8 +17,6 @@
 #include <interfaces/imessagestylemanager.h>
 #include <interfaces/imapcontacts.h>
 
-#define MDR_MOOD_ICON 1001
-
 class MoodData
 {
 public:
@@ -92,9 +90,10 @@ public:
     virtual void updateDataHolder(const Jid &AContactJid);
 
     //IMood
-    virtual QIcon   getIcon(const QString &moodName) const;
-    virtual QString getIconFileName(const QString &moodName) const;
-    virtual QString getIconName(const Jid &AContactJid) const;
+	virtual QIcon   getIcon(const QString &AMoodName) const;
+	virtual QIcon   getIcon(const Jid &AContactJid) const;
+	virtual QString getIconFileName(const QString &AMoodName) const;
+	virtual QString getIconFileName(const Jid &AContactJid) const;
     virtual QString getText(const Jid &AContactJid) const;
     virtual QString getLabel(const Jid &AContactJid) const;    
 
@@ -125,8 +124,10 @@ protected slots:
     void onStreamClosed(IXmppStream *AXmppStream);
     void onRosterIndexInserted(IRosterIndex *AIndex);
     void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
     void onRosterIndexToolTips(IRosterIndex * AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips);
     void onSetMoodByAction(bool);
+	void onCopyToClipboard();
     void onOptionsOpened();
     void onOptionsClosed();
     void onOptionsChanged(const OptionsNode &ANode);

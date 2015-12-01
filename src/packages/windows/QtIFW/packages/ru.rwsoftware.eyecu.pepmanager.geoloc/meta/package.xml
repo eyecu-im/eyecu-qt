@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>User Location</DisplayName>
     <Description>Allows users to exchage information about their current location</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-18</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.pepmanager.geoloc</Name>
+	<UpdateText>Copying to clipboard implemented. Location display tooltip improved: all official elements, described in XEP-0080 are translated.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
     <SortingPriority>7</SortingPriority>
     <Default>true</Default>

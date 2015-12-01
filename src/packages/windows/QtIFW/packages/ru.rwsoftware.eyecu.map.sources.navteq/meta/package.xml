@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Navteq</DisplayName>
     <Description>Allows to use Navteq as map source</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-30</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map.sources.navteq</Name>
+	<UpdateText>Do not load this plugin, if Map plugin is not loaded</UpdateText>
     <SortingPriority>13</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

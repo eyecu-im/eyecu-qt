@@ -1,4 +1,7 @@
 #include <QMouseEvent>
+#include <QApplication>
+#include <QClipboard>
+#include <QMimeData>
 #include <definitions/rosterlabelholderorders.h>
 #include "clienticons.h"
 
@@ -7,6 +10,7 @@
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr1
+#define ADR_CLIPBOARD_ICON      Action::DR_Parametr2
 
 ClientIcons::ClientIcons():
 	FMainWindowPlugin(NULL),
@@ -124,8 +128,11 @@ bool ClientIcons::initConnections(IPluginManager *APluginManager, int &AInitOrde
 			if (FServiceDiscovery)
 				connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexContextMenu(QList<IRosterIndex *>, quint32, Menu *)),
 					SLOT(onRosterIndexContextMenu(QList<IRosterIndex *>, quint32, Menu *)));
-			connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
-				SLOT(onRostersViewIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
+				connect(FRostersViewPlugin->rostersView()->instance(),
+					SIGNAL(indexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)),
+					SLOT(onRosterIndexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)));
+				connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
+					SLOT(onRostersViewIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
 		}
 	}
 
@@ -134,11 +141,11 @@ bool ClientIcons::initConnections(IPluginManager *APluginManager, int &AInitOrde
 
 bool ClientIcons::initObjects()
 {
-	IconStorage *storage = IconStorage::staticStorage(RSR_STORAGE_CLIENTICONS);
+	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_CLIENTICONS);
 
-	foreach (QString key, storage->fileFirstKeys())
+	foreach (QString key, FIconStorage->fileFirstKeys())
 	{
-		Client client = {storage->fileProperty(key, PROPERTY_CLIENT), storage->getIcon(key)};
+		Client client = {FIconStorage->fileProperty(key, PROPERTY_CLIENT), FIconStorage->getIcon(key)};
 		FClients.insert(key, client);
 	}
 
@@ -319,6 +326,61 @@ void ClientIcons::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes
 			}
 		}
 	}
+}
+
+void ClientIcons::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
+{
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
+			Jid jid((*it)->data(RDR_FULL_JID).toString());
+			if (FContacts.contains(jid))
+			{
+				QString key = FContacts[jid];
+				if (FClients.contains(key))
+				{
+					Client client = FClients[key];
+					Action *action = new Action(AMenu);
+					action->setText(client.name);
+					action->setIcon(client.icon);
+					action->setData(ADR_CLIPBOARD_ICON, FIconStorage->fileFullName(key));
+					connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
+					AMenu->addAction(action, AG_RVCBM_PEP, true);
+				}
+			}
+		}
+}
+
+void ClientIcons::onCopyToClipboard()
+{
+	Action *action = qobject_cast<Action *>(sender());
+	QString fileName = action->data(ADR_CLIPBOARD_ICON).toString();
+	QString text = action->text();
+	QClipboard *clipboard = QApplication::clipboard();
+	QMimeData *mime = new QMimeData();
+
+	mime->setText(text);
+
+	QFile file(fileName);
+	if (file.open(QIODevice::ReadOnly))
+	{
+		QByteArray format(QImageReader::imageFormat(&file));
+		QByteArray data(file.readAll());
+		if (!data.isEmpty())
+		{
+			QImage image = QImage::fromData(data);
+			if (!image.isNull())
+			{
+				mime->setImageData(image);
+				QUrl url;
+				url.setScheme("data");
+				url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
+				mime->setHtml(QString("<body><img src=\"%1\" alt=\"%2\" title=\"%2\" /> %2</body>").arg(url.toString()).arg(text));
+			}
+		}
+	}
+
+	clipboard->setMimeData(mime);
 }
 
 void ClientIcons::updateDataHolder(const Jid &streamJid, const Jid &clientJid)

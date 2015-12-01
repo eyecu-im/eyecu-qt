@@ -470,4 +470,9 @@
     <client>Conversations</client>
     <object mime="image/png">conversations.png</object>
   </icon>
+  <icon>
+    <key>http://sawim.ru/caps</key>
+    <client>Sawim</client>
+    <object mime="image/png">sawim.png</object>
+  </icon>
 </icondef>

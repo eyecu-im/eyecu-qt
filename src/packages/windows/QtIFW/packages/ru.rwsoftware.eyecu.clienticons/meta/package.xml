@@ -2,8 +2,9 @@
 <Package>
     <DisplayName>Client Icons</DisplayName>
     <Description>Displays icon of a contact client application</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2015-11-18</ReleaseDate>
+    <UpdateText>Copying to clipboard implemented</UpdateText>
     <Name>ru.rwsoftware.eyecu.clienticons</Name>
     <SortingPriority>60</SortingPriority>
     <Default>true</Default>

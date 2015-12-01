@@ -246,7 +246,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="152"/>
    <source>   Status is set to &apos;away&apos; at %(hh:mm:ss), because of idle from $(hh:mm:ss) for #(mm) minutes and #(ss) seconds</source>
-   <translation type="unfinished"/>
+   <translation>Status staat op &apos;weg&apos; om %(hh:mm:ss), wegens inactief $(hh:mm:ss) voor #(mm) minuten en #(ss) seconden</translation>
   </message>
  </context>
  <context>

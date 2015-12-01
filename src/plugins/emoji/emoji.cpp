@@ -87,7 +87,7 @@ bool Emoji::initObjects()
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
 
-	for (ushort i=0xDFFA; i<=0xDFFF; ++i)
+	for (ushort i=0xDFFB; i<=0xDFFF; ++i)
 	{
 		QString suffix(FFirst);
 		suffix.append(QChar(i));
@@ -101,7 +101,7 @@ bool Emoji::isColored(const QString &AEmojiText) const
 {
 	int size = AEmojiText.size();
 	ushort last = AEmojiText.at(size-1).unicode();
-	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFF9) && (last<0xE000);
+	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
 }
 
 bool Emoji::initSettings()
@@ -470,7 +470,7 @@ void Emoji::onToolBarWidgetDestroyed(QObject *AObject)
 	}
 }
 
-void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &AIconKey)
+void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, QString AIconKey)
 {
 	Q_UNUSED(ASubStorage);
 	SelectIconMenu *menu = qobject_cast<SelectIconMenu *>(sender());
@@ -503,6 +503,8 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, const QString &
 				cursor.endEditBlock();
 				editor->setFocus();
 
+				if (isColored(AIconKey))
+					AIconKey.chop(2);
 				QStringList recent = FRecent.value(ASubStorage);
 
 				if (recent.isEmpty() || recent.first()!=AIconKey)

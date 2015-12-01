@@ -848,7 +848,6 @@
 
 </GROUP>
 
-
 <PCK 	INDEX=93
 	PACKAGEID="Road Works Software\eyeCU\Emoji\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Emoji"
@@ -1705,9 +1704,9 @@
 <GROUP TITLE="Qt Purple">
 
 <PCK 	INDEX=400
-	PACKAGEID="Purple Soft\QtPurple\Util\1\0\3"
+	PACKAGEID="Purple Soft\QtPurple\Util\1\0\5"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.1.1.wpi"
+	EXTERNAL="qtpurple-1.1.2.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1718,7 +1717,7 @@
 <PCK 	INDEX=410
 	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\0"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.1.1.wpi"
+	EXTERNAL="qtpurple-1.1.2.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1731,7 +1730,7 @@
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1742,7 +1741,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1753,7 +1752,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1764,7 +1763,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1775,7 +1774,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1786,7 +1785,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1797,7 +1796,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1808,7 +1807,7 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.1.1.wpi"
+		EXTERNAL="qtpurple-1.1.2.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT

@@ -95,6 +95,8 @@ protected slots:
 	void onRosterIndexInserted(IRosterIndex *AIndex);
 	void onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips);
 	void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onCopyToClipboard();
 	//IXmppStreamManager
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
@@ -137,6 +139,7 @@ private:
 	QMap<Jid, int>		FSHIPresence;
 	QHash<QString, Client> FClients;
 	QHash<Jid, QString>	FContacts;
+	IconStorage			*FIconStorage;
 	const QList<int>	FRosterIndexKinds;
 };
 

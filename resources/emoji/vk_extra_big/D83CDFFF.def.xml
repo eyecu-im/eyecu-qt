@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="System"?>
 <icondef>
   <icon>
+    <text>&#xD83D;&#xDC49;&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">D83DDC49D83CDFFF_2x.png</object>
+  </icon>
+  <icon>
     <text>&#xD83D;&#xDE4D;&#xD83C;&#xDFFF;</text>
     <object mime="image/png">D83DDE4DD83CDFFF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#x270D;&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">270DD83CDFFF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDD90;&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">D83DDD90D83CDFFF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83D;&#xDD96;&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">D83DDD96D83CDFFF_2x.png</object>
+  </icon>
+  <icon>
+    <text>&#xD83E;&#xDD18;&#xD83C;&#xDFFF;</text>
+    <object mime="image/png">D83EDD18D83CDFFF_2x.png</object>
   </icon>
 </icondef>

@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Navitel</DisplayName>
     <Description>Allows to use Navitel as a map search provider</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-11-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.mapsearch.navitel</Name>
+	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
     <Dependencies>org.digia.qt4.script</Dependencies>
     <SortingPriority>20</SortingPriority>
     <Default>true</Default>

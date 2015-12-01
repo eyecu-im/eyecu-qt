@@ -77,6 +77,7 @@ protected:
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
 	void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
+	QString translate(const QString &APropertyName) const;
 	bool checkRosterIndex(const IRosterIndex *AIndex)	const;
 
 protected slots:
@@ -88,6 +89,8 @@ protected slots:
 	void onRosterIndexInserted(IRosterIndex *AIndex);
 	void onRosterIndexDataChanged(IRosterIndex *AIndex, int ARole);
 	void onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int,QString> &AToolTips);
+	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
+	void onCopyToClipboard();
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
@@ -119,7 +122,8 @@ private:
 	QList<Jid>			FStreamsOnline;
 	QHash<Jid, GeolocElement>		FGeolocHash;
 	QHash<QString, GeolocElement>	FGeolocBareHash;
-	QHash<Jid, QString>	FIdHash;
+	QHash<Jid, QString>				FIdHash;
+	QHash<QString, QString>			FTranslated;
 	const QList<int>	FRosterIndexKinds;
  };
 

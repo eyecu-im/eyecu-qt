@@ -62,13 +62,14 @@ public slots:
 protected:
 	void addMenu();
 	void deleteMenu();
-    void newDataSend(const QPointF &ACoordinates, const QString &ATimeStamp);
+	void sendPosition(const QPointF &ACoordinates, const QString &ATimeStamp);
+	bool sendPoi(const QString &APoiId);
     void hereIAmCoords(double ALongitude, double ALatitude);
-    void hereIamPoi(QString APoiId);
+	void hereIamPoi(const QString &APoiId);
     void changeCurrentState(State AState);
 
 protected slots:
-    void setTimeInterval(long timeout);
+	void setTimeInterval(long ATimeout);
     void timerDataSend();
 
     void onOptionsOpened();
@@ -76,6 +77,8 @@ protected slots:
     void onOptionsChanged(const OptionsNode &ANode);
     void onPoiActionTriggered();
     void onShortcutActivated(const QString &AId, QWidget *AWidget);
+	void onPoiModified(const QString &APoiId, int AType);
+	void onPoisLoaded(const QString &ABareStreamJid, const PoiHash &APoiHash);
 
 signals:
     void stateChanged(int AState);

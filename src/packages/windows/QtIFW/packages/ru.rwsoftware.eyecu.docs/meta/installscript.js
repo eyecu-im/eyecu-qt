@@ -49,26 +49,32 @@ Component.prototype.createOperations = function()
 {
     // call default implementation to actually install documentation!
     component.createOperations();
-    if (installer.value("os") == "win" && installer.sharedFlag("StartMenu"))
-    {
+    if ((installer.value("os") == "win") && (installer.value("StartMenu") == "true")) {
 		targetDocMenuDir = installer.value("StartMenuDir")+"\\Documentation";
-		if (installer.value("AllUsers"))
-			targetDocMenuDir = targetDocMenuDir.replace(installer.value("UserStartMenuProgramsPath"), installer.value("AllUsersStartMenuProgramsPath"));
-		component.addOperation("Mkdir", targetDocMenuDir);
-		component.addOperation("CreateShortcut", "@TargetDir@/README.TXT", targetDocMenuDir+"\\README.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-		component.addOperation("CreateShortcut", "@TargetDir@/AUTHORS.TXT", targetDocMenuDir+"\\AUTHORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-		component.addOperation("CreateShortcut", "@TargetDir@/TRANSLATORS.TXT", targetDocMenuDir+"\\TRANSLATORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-		component.addOperation("CreateShortcut", "@TargetDir@/CHANGELOG.TXT", targetDocMenuDir+"\\CHANGELOG.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
-		component.addOperation("CreateShortcut", "@TargetDir@/Licenses/LICENSE.TXT", targetDocMenuDir+"\\COPYING.lnk", "workingDirectory=@TargetDir@/Licenses", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+		if (installer.value("AllUsers") == "true") {
+//			targetDocMenuDir = targetDocMenuDir.replace(installer.value("UserStartMenuProgramsPath"), installer.value("AllUsersStartMenuProgramsPath"));
+			component.addElevatedOperation("Mkdir", targetDocMenuDir);
+			component.addElevatedOperation("CreateShortcut", "@TargetDir@/README.TXT", targetDocMenuDir+"\\README.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addElevatedOperation("CreateShortcut", "@TargetDir@/AUTHORS.TXT", targetDocMenuDir+"\\AUTHORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addElevatedOperation("CreateShortcut", "@TargetDir@/TRANSLATORS.TXT", targetDocMenuDir+"\\TRANSLATORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addElevatedOperation("CreateShortcut", "@TargetDir@/CHANGELOG.TXT", targetDocMenuDir+"\\CHANGELOG.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addElevatedOperation("CreateShortcut", "@TargetDir@/Licenses/LICENSE.TXT", targetDocMenuDir+"\\COPYING.lnk", "workingDirectory=@TargetDir@/Licenses", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+		} else {
+			component.addOperation("Mkdir", targetDocMenuDir);
+			component.addOperation("CreateShortcut", "@TargetDir@/README.TXT", targetDocMenuDir+"\\README.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addOperation("CreateShortcut", "@TargetDir@/AUTHORS.TXT", targetDocMenuDir+"\\AUTHORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addOperation("CreateShortcut", "@TargetDir@/TRANSLATORS.TXT", targetDocMenuDir+"\\TRANSLATORS.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addOperation("CreateShortcut", "@TargetDir@/CHANGELOG.TXT", targetDocMenuDir+"\\CHANGELOG.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+			component.addOperation("CreateShortcut", "@TargetDir@/Licenses/LICENSE.TXT", targetDocMenuDir+"\\COPYING.lnk", "workingDirectory=@TargetDir@/Licenses", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=1");
+		}
     }
 }
 
 Component.prototype.installationFinishedPageIsShown = function()
 {
     try {
-        if (installer.isInstaller() && installer.status == QInstaller.Success) {
-            installer.addWizardPageItem( component, "ReadMeCheckBoxForm", QInstaller.InstallationFinished );
-        }
+        if (installer.isInstaller() && installer.status == QInstaller.Success)
+            installer.addWizardPageItem( component, "ReadMeCheckBoxForm", QInstaller.InstallationFinished);
     } catch(e) {
         console.log(e);
     }
@@ -79,9 +85,8 @@ Component.prototype.installationFinished = function()
     try {
         if (installer.isInstaller() && installer.status == QInstaller.Success) {
             var isReadMeCheckBoxChecked = component.userInterface( "ReadMeCheckBoxForm" ).readMeCheckBox.checked;
-            if (isReadMeCheckBoxChecked) {
+            if (isReadMeCheckBoxChecked)
                 QDesktopServices.openUrl("file:///" + installer.value("TargetDir") + "/README.txt");
-            }
         }
     } catch(e) {
         console.log(e);

@@ -71,7 +71,7 @@ void SelectIconWidget::createLabels(const QString &AColor)
 
 	int count(0);
 	for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
-		if (!FEmoji->isColored(*it))
+		if (!FEmoji->isColored(*it) && (*it)!="default")
 			++count;
 
 	int columns = count/2 + 1;
@@ -86,7 +86,7 @@ void SelectIconWidget::createLabels(const QString &AColor)
 			if (key.size()>2)
 				FHasColored=true;
 		}
-		else
+		else if (key!="default")
 		{
 			FLayout->addWidget(getIconLabel(key, AColor),row,column);
 			column = (column+1) % columns;

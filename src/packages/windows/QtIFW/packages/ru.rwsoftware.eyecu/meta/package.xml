@@ -2,18 +2,18 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.0.20151028</Version>
-    <ReleaseDate>2015-10-28</ReleaseDate>
+    <Version>1.3.6</Version>
+    <ReleaseDate>2015-11-16</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
-    <Dependencies>ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
+    <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
+    <UpdateText>Linked nickname processing fixed</UpdateText>
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>This changed compared to the last release</UpdateText>
+    <UpdateText>Added HTML text substitute method into utils/TextManager class. Linked nickname processing in Simple Message Style fixed.</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
-    <Essential>false</Essential>
     <Script>installscript.js</Script>
     <UserInterfaces>
         <UserInterface>additionaloptionspageform.ui</UserInterface>

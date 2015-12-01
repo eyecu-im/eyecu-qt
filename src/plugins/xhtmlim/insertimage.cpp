@@ -118,10 +118,10 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
 
     FImageData = FOriginalImageData;
 
-    if (FUrlCurrent.isValid())
-        ui->ledUrl->setText(FUrlCurrent.toString());
-    else if (!FOriginalImageData.isEmpty() && FBitsOfBinary)
+	if (!FOriginalImageData.isEmpty() && FBitsOfBinary && (!FUrlCurrent.isValid() || FUrlCurrent.scheme()=="data"))
         calculateUrl(FOriginalImageData);
+	else if (FUrlCurrent.isValid())
+		ui->ledUrl->setText(FUrlCurrent.toString());
 
     ui->ledUrl->selectAll();
 

@@ -786,7 +786,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="188"/>
    <source>Toggle reset formatting on message send</source>
-   <translation type="unfinished"/>
+   <translation>Schakel opmaak reset om bericht te zenden</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="188"/>
@@ -979,7 +979,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="1015"/>
    <source>Reset formatting on message send</source>
-   <translation type="unfinished"/>
+   <translation>Opmaak resetten om bericht te zenden</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="1614"/>

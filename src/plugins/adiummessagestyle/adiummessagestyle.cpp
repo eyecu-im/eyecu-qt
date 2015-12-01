@@ -1,7 +1,5 @@
 #include "adiummessagestyle.h"
 
-#include <QtDebug>
-
 #include <QUrl>
 #include <QDir>
 #include <QFile>
@@ -617,8 +615,11 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 	else
 	{
 		AHtml.replace("%senderScreenName%",AOptions.senderId);
-		AHtml.replace("%sender%",AOptions.senderName);
-		AHtml.replace("%senderDisplayName%",AOptions.senderName);
+		QString linkedSenderName = AOptions.senderNameLinked.isEmpty()?AOptions.senderName:AOptions.senderNameLinked;
+// *** <<< eyeCU <<< ***
+		TextManager::substituteHtmlText(AHtml, "%sender%", AOptions.senderName, linkedSenderName);
+		TextManager::substituteHtmlText(AHtml, "%senderDisplayName%", AOptions.senderName, linkedSenderName);
+// *** >>> eyeCU >>> ***
 		AHtml.replace("%senderPrefix%",QString::null);
 
 		QString rgbaColor;

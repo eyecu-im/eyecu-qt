@@ -15,7 +15,9 @@ EmojiOptions::EmojiOptions(IEmoji *AEmoji, QWidget *AParent):
 	ui.tbtDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
 	ui.tbtSelectable->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_PEPMANAGER));
 
-	ui.lwtEmoticons->setItemDelegate(new IconsetDelegate(AEmoji->colorSuffixes(), ui.lwtEmoticons));
+	QStringList filter(AEmoji->colorSuffixes());
+	filter.append("default");
+	ui.lwtEmoticons->setItemDelegate(new IconsetDelegate(filter, ui.lwtEmoticons));
 	connect(ui.lwtEmoticons,SIGNAL(itemChanged(QListWidgetItem *)),SIGNAL(modified()));
 	connect(ui.tbtUp,SIGNAL(clicked()),SLOT(onUpButtonClicked()));
 	connect(ui.tbtDown,SIGNAL(clicked()),SLOT(onDownButtonClicked()));

@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Multi-User Conferences</DisplayName>
     <Description>Allows to use Jabber multi-user conferences</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-11-17</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.multiuserchat</Name>
+    <UpdateText>Linked nickname processing updated</UpdateText>
     <SortingPriority>86</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

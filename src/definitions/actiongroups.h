@@ -103,6 +103,9 @@
 #define AG_RVCBM_NAME                                           100
 #define AG_RVCBM_JABBERID                                       200
 #define AG_RVCBM_STATUS                                         300
+// *** <<< eyeCU <<< ***
+#define AG_RVCBM_PEP                                            350
+// *** >>> eyeCU >>> ***
 #define AG_RVCBM_ANNOTATION                                     400
 #define AG_RVCBM_MUC_SUBJECT                                    500
 #define AG_RVCBM_VCARD_COMMON                                   600

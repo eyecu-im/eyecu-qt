@@ -258,18 +258,18 @@ Check waarden en probeer opnieuw</translation>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="329"/>
    <source>Left mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Linker muisknop</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="330"/>
    <source>Middle mouse button</source>
    <comment>Instrumental case</comment>
-   <translation type="unfinished"/>
+   <translation>Middelste muisknop</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="331"/>
    <source>Address user by clicking nickname in the list with</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker adres door te klikken op bijnaam in lijst </translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="333"/>
@@ -531,12 +531,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="493"/>
    <source>Current Subject or Discussion Topic in Room</source>
-   <translation type="unfinished"/>
+   <translation>Huidige onderwerp of discussie thema in kamer</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="494"/>
    <source>The Room Subject Can be Modified by Participants?</source>
-   <translation type="unfinished"/>
+   <translation>Kan het kameronderwerp worden gewijzigd door deelnemers?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="532"/>
@@ -566,7 +566,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="852"/>
    <source>Supports the multi-user conferences</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunt de meerdere gebruikers vergaderingen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="859"/>
@@ -668,7 +668,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="910"/>
    <source>A room that is destroyed if the last occupant exits</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die door een laatste bewoner verlaten is wordt verwijderd</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="914"/>
@@ -1012,12 +1012,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1411"/>
    <source>Room now shows unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Kamer toont nu niet beschikbaar leden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1414"/>
    <source>Room now does not show unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Kamer toont nu geen beschikbare leden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1417"/>

@@ -47,7 +47,7 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="74"/>
    <source>Click this button to add emoji selection menu button to message edit toolbar</source>
-   <translation type="unfinished"/>
+   <translation>Klik deze knop om emoji selectie menu-knop toe te voegen aan bericht bewerk werkbalk</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="87"/>

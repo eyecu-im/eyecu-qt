@@ -13,8 +13,8 @@ void MapSourceNavteq::pluginInfo(IPluginInfo *APluginInfo)
     APluginInfo->description = tr("Allows Map plugin to use Navteq service as map source");
     APluginInfo->version = "1.0";
     APluginInfo->author = "Road Works Software";
-    APluginInfo->homePage = "http://www.eyecu.ru";
-//    APluginInfo->dependences.append(MAPSCENE_UUID);
+	APluginInfo->homePage = "http://www.eyecu.ru";
+	APluginInfo->dependences.append(MAP_UUID);
 }
 
 #define MODE_MAP        0

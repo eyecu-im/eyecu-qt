@@ -1,8 +1,10 @@
 #include <QCryptographicHash>
 #include <QDesktopServices>
 #include <QMouseEvent>
+#include <QClipboard>
+#include <QMimeData>
+#include <QApplication>
 #include <MapObject>
-
 #include <definitions/rosterindexkinds.h>
 #include <definitions/rosterindexroles.h>
 #include <definitions/optionvalues.h>
@@ -32,10 +34,14 @@
 #include "tuneoptions.h"
 #include "tuneimagehttpquery.h"
 
-#define ADR_URI                 Action::DR_Parametr1
+#define MDR_TUNE_ICON		1002
 
-#define TUNE_CACHE_DIR          "tune"
-#define TUNE_CACHE_FILE         "tuneinfo.xml"
+#define ADR_URI				Action::DR_Parametr1
+#define ADR_CLIPBOARD_INFO	Action::DR_Parametr2
+#define ADR_CLIPBOARD_IMAGE	Action::DR_Parametr3
+
+#define TUNE_CACHE_DIR		"tune"
+#define TUNE_CACHE_FILE		"tuneinfo.xml"
 
 UrlRequest::UrlRequest(const QUrl &AUrl): FUrl(AUrl)
 {
@@ -204,6 +210,9 @@ bool Tune::initConnections(IPluginManager *APluginManager, int &AInitOrder)
             connect(FRostersViewPlugin->rostersView()->instance(),
                     SIGNAL(indexContextMenu(QList<IRosterIndex *>, quint32, Menu *)),
                     SLOT(onRosterIndexContextMenu(QList<IRosterIndex *>, quint32, Menu *)));
+			connect(FRostersViewPlugin->rostersView()->instance(),
+					SIGNAL(indexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)),
+					SLOT(onRosterIndexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)));
             connect(FRostersViewPlugin->rostersView()->instance(),
                     SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
                     SLOT(onRosterIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
@@ -665,6 +674,63 @@ void Tune::onRosterIndexInserted(IRosterIndex *AIndex)
 void Tune::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {Q_UNUSED(AIndexes) Q_UNUSED(ALabelId) Q_UNUSED(AMenu)}
 
+void Tune::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
+{
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
+			Jid jid((*it)->data(RDR_FULL_JID).toString());
+			if (FTuneHash.contains(jid.bare()))
+			{
+				QHash<QString, QVariant> info;
+				Action *action = new Action(AMenu);
+				TuneData data = FTuneHash[jid.bare()];
+				QString longMessage;
+				if (!data.track.isEmpty())
+				{
+					longMessage.append(data.track).append(". ");
+					info.insert("track", data.track);
+				}
+				if (!data.artist.isEmpty())
+				{
+					longMessage.append(HTML_ESCAPE(data.artist)).append(" - ");
+					info.insert("artist", data.artist);
+				}
+				if (!data.source.isEmpty())
+					info.insert("source", data.source);
+				if (!data.title.isEmpty())
+				{
+					longMessage.append(HTML_ESCAPE(data.title));
+					info.insert("title", data.title);
+				}
+				if (data.length)
+				{
+					longMessage.append(" (").append(lengthString(data.length)).append(")");
+					info.insert("length", data.length);
+				}
+				if (data.rating)
+					info.insert("rating", data.rating);
+				if (data.uri.isValid())
+					info.insert("uri", data.uri);
+
+				action->setText(longMessage);
+				action->setIcon(getIcon());
+
+				action->setData(ADR_CLIPBOARD_INFO, info);
+
+				if (Options::node(OPV_TUNE_INFOREQUESTER_DISPLAYIMAGE).value().toBool())
+				{
+					QString imageFileName = tuneInfo("image", data.artist, data.source);
+					if (!imageFileName.isEmpty())
+						action->setData(ADR_CLIPBOARD_IMAGE, imageFileName);
+				}
+
+				connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
+				AMenu->addAction(action, AG_RVCBM_PEP, true);
+			}
+		}
+}
+
 QString Tune::getLabel(const Jid &AContactJid) const
 {
     return FTuneHash.contains(AContactJid.bare())?getLabel(FTuneHash[AContactJid.bare()]):QString();
@@ -975,7 +1041,111 @@ void Tune::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<in
             AToolTips.insert(RTTO_TUNE_SEPARATOR, "<hr>");
             AToolTips.insert(RTTO_TUNE, getLabel(FTuneHash[jid.bare()]));
         }
-    }
+	}
+}
+
+void Tune::onCopyToClipboard()
+{
+	QHash<QString, QVariant> info = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_INFO).toHash();
+	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
+
+	QClipboard *clipboard = QApplication::clipboard();
+	QMimeData *mime;
+	mime = new QMimeData();
+
+	QString text, html;
+
+	if (!fileName.isEmpty())
+	{
+		QFile file(FCachePath.absoluteFilePath(fileName));
+		if (file.open(QIODevice::ReadOnly))
+		{
+			QByteArray format(QImageReader::imageFormat(&file));
+			QByteArray data(file.readAll());
+			if (!data.isEmpty())
+			{
+				QImage image = QImage::fromData(data);
+				if (!image.isNull())
+				{
+					mime->setImageData(image);
+					QUrl url;
+					url.setScheme("data");
+					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
+					html=info.contains("source")?QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" />").arg(url.toString()).arg(info["source"].toString()):QString("<img src=\"%1\" />").arg(url.toString());
+				}
+			}
+		}
+	}
+
+	if (info.contains("title"))
+	{
+		text.append(tr("%1: %2").arg(tr("Title")).arg(info["title"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Title")).arg(info["title"].toString()));
+	}
+	if (info.contains("artist"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("Artist")).arg(info["artist"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Artist")).arg(info["artist"].toString()));
+	}
+	if (info.contains("source"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("Source")).arg(info["source"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Source")).arg(info["source"].toString()));
+	}
+	if (info.contains("track"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("Track")).arg(info["track"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Track")).arg(info["track"].toString()));
+	}
+	if (info.contains("length"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("Length")).arg(lengthString(info["length"].toInt())));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Length")).arg(lengthString(info["length"].toInt())));
+	}
+	if (info.contains("rating"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("Rating")).arg(info["rating"].toInt()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> %2").arg(tr("Rating")).arg(info["rating"].toInt()));
+	}
+	if (info.contains("uri"))
+	{
+		if (!text.isEmpty())
+			text.append(QChar::LineSeparator);
+		text.append(tr("%1: %2").arg(tr("URL")).arg(info["uri"].toString()));
+		if (!html.isEmpty())
+			html.append("<br/>");
+		html.append(tr("<b>%1:</b> <a href=\"%2\">%2</a>").arg(tr("URL")).arg(info["uri"].toString()));
+		mime->setUrls(QList<QUrl>() << info["uri"].toUrl());
+	}
+
+	if (!text.isEmpty())
+		mime->setText(text);
+	if (!html.isEmpty())
+		mime->setHtml(QString("<body>%1</body>").arg(html));
+
+	clipboard->setMimeData(mime);
 }
 
 void Tune::updateChatWindows(bool AInfoBar)

@@ -1,3 +1,5 @@
+#include <QClipboard>
+#include <QMimeData>
 #include <definitions/rosterlabels.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/shortcuts.h>
@@ -29,10 +31,14 @@
 
 #include "moodselect.h"
 
+#define MDR_MOOD_ICON		1001
+
 #define ADR_STREAM_JIDS		Action::DR_StreamJid
 #define ADR_CONTACT_JID		Action::DR_Parametr4
-#define ADR_GROUP_SHIFT1	Action::DR_Parametr1
 #define ADR_MESSAGE_TYPE	Action::DR_UserDefined
+#define ADR_CLIPBOARD_NAME  Action::DR_Parametr1
+#define ADR_CLIPBOARD_TEXT  Action::DR_Parametr2
+#define ADR_CLIPBOARD_IMAGE Action::DR_Parametr3
 #define MT_CHAT     1
 #define MT_NORMAL   2
 
@@ -185,6 +191,9 @@ bool Mood::initConnections(IPluginManager *APluginManager, int &AInitOrder)
             connect(FRostersViewPlugin->rostersView()->instance(),
                     SIGNAL(indexContextMenu(QList<IRosterIndex *>, quint32, Menu *)),
                     SLOT(onRosterIndexContextMenu(QList<IRosterIndex *>, quint32, Menu *)));
+			connect(FRostersViewPlugin->rostersView()->instance(),
+					SIGNAL(indexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)),
+					SLOT(onRosterIndexClipboardMenu(QList<IRosterIndex *>, quint32, Menu *)));
             connect(FRostersViewPlugin->rostersView()->instance(),
                     SIGNAL(indexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)),
                     SLOT(onRosterIndexToolTips(IRosterIndex *, quint32, QMap<int,QString> &)));
@@ -560,6 +569,32 @@ void Mood::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint
 	}
 }
 
+void Mood::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
+{
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
+		{
+			Jid jid((*it)->data(RDR_FULL_JID).toString());
+			if (FMoodHash.contains(jid.bare()))
+			{
+				Action *action = new Action(AMenu);
+				MoodData data = FMoodHash[jid.bare()];
+				if (!data.text.isEmpty())
+				{
+					action->setText(data.text);
+					action->setData(ADR_CLIPBOARD_TEXT, data.text);
+				}
+				action->setIcon(getIcon(jid));
+				QString fileName = getIconFileName(jid);
+				if (!fileName.isEmpty())
+					action->setData(ADR_CLIPBOARD_IMAGE, fileName);
+				action->setData(ADR_CLIPBOARD_NAME, data.name);
+				connect(action, SIGNAL(triggered()), SLOT(onCopyToClipboard()));
+				AMenu->addAction(action, AG_RVCBM_PEP, true);
+			}
+		}
+}
+
 void Mood::onRosterIndexToolTips(IRosterIndex * AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
 {    
 	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId) && FRosterIndexKinds.contains(AIndex->kind()))
@@ -591,6 +626,41 @@ void Mood::onSetMoodByAction(bool)
 	QStringList streamJids = qobject_cast<Action *>(sender())->data(ADR_STREAM_JIDS).toStringList();
 	for (QStringList::ConstIterator it = streamJids.constBegin(); it !=  streamJids.constEnd(); ++it)
 		setMoodForAccount(*it);
+}
+
+void Mood::onCopyToClipboard()
+{
+	QString text=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_TEXT).toString();
+	QString name=qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_NAME).toString();
+	QString fileName = qobject_cast<Action *>(sender())->data(ADR_CLIPBOARD_IMAGE).toString();
+	QClipboard *clipboard = QApplication::clipboard();
+	QMimeData *mime = new QMimeData();
+
+	mime->setText(text.isEmpty()?name:tr("%1 (%2)").arg(name).arg(text));
+
+	if (!fileName.isEmpty())
+	{
+		QFile file(fileName);
+		if (file.open(QIODevice::ReadOnly))
+		{
+			QByteArray format(QImageReader::imageFormat(&file));
+			QByteArray data(file.readAll());
+			if (!data.isEmpty())
+			{
+				QImage image = QImage::fromData(data);
+				if (!image.isNull())
+				{
+					mime->setImageData(image);
+					QUrl url;
+					url.setScheme("data");
+					url.setPath(QString("image/%1;base64,%2").arg(QString::fromLatin1(format)).arg(QString::fromLatin1(data.toBase64())));
+					mime->setHtml(QString("<body><img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3</body>").arg(url.toString()).arg(FMoodKeys.value(name)).arg(text));
+				}
+			}
+		}
+	}
+
+	clipboard->setMimeData(mime);
 }
 
 void Mood::updateChatWindows(bool AInfoBar)
@@ -681,17 +751,22 @@ void Mood::updateChatWindowInfo(IMessageChatWindow *AMessageChatWindow)
 	}
 }
 
-QIcon Mood::getIcon(const QString &moodName) const
+QIcon Mood::getIcon(const QString &AMoodName) const
 {
-    return FIconStorage->getIcon(moodName);
+	return FIconStorage->getIcon(AMoodName);
 }
 
-QString Mood::getIconFileName(const QString &moodName) const
+QIcon Mood::getIcon(const Jid &AContactJid) const
 {
-    return FIconStorage->fileFullName(moodName);
+	return  FMoodHash.contains(AContactJid.bare())?FIconStorage->getIcon(FMoodHash.value(AContactJid.bare()).name):QIcon();
 }
 
-QString Mood::getIconName(const Jid &AContactJid) const
+QString Mood::getIconFileName(const QString &AMoodName) const
+{
+	return FIconStorage->fileFullName(AMoodName);
+}
+
+QString Mood::getIconFileName(const Jid &AContactJid) const
 {
     return  FMoodHash.contains(AContactJid.bare())?getIconFileName(FMoodHash.value(AContactJid.bare()).name):QString();
 }

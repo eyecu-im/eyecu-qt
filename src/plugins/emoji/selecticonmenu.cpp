@@ -62,7 +62,7 @@ QSize SelectIconMenu::sizeHint() const
 void SelectIconMenu::onAboutToShow()
 {
 	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	QString color = index?FEmoji->colorSuffixes()[index]:QString();
+	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
 
 	SelectIconWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
 	FLayout->addWidget(widget);
@@ -78,7 +78,7 @@ void SelectIconMenu::onAboutToShow()
 
 	const QChar first(0xD83C);
 	FMenu = new Menu(toolBar);
-	FMenu->setIcon(RSR_STORAGE_EMOJI, QString(first).append(QChar(0xDFFA)));
+	FMenu->setIcon(RSR_STORAGE_EMOJI, "default");
 	if (widget->hasColored())
 	{		
 		QActionGroup *group = new QActionGroup(FMenu);
@@ -142,7 +142,7 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR && FMenu)
 	{
 		int index = ANode.value().toInt();
-		QString icon = FEmoji->colorSuffixes()[index];
+		QString icon = index?FEmoji->colorSuffixes()[index-1]:QString("default");
 			FMenu->setIcon(RSR_STORAGE_EMOJI, icon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(FLayout->itemAt(0)->widget());
 		if (widget)

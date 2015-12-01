@@ -9,6 +9,7 @@
 class UTILS_EXPORT TextManager
 {
 public:
+	static void    substituteHtmlText(QString &AHtml, const QString &ASourceText, const QString &ATargetTextInside, const QString &ATargetTextOutside);
 	static QString getDocumentBody(const QTextDocument &ADocument);
 	static QString getTextFragmentHref(const QTextDocumentFragment &AFragment);
 	static void insertQuotedFragment(QTextCursor ACursor, const QTextDocumentFragment &AFragment);

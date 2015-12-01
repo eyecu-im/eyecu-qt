@@ -3,14 +3,14 @@ set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
 set packagefilename=%packagename%-%version%
-set onlinepackagefilename=%packagename%-online-%version%
+set onlinepackagefilename=%packagename%-online
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-goto build
+rem goto repo
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -86,9 +86,9 @@ goto end
 :ffmpeg
 for %%f in (avcodec avfilter avformat avutil postproc swresample swscale) do xcopy %ffmpegdir%\bin\%%f-*.dll packages\org.ffmpeg.library\data\ /Y
 
-xcopy %qtdir%\bin\QtFFMpeg.dll packages\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
-xcopy %qtdir%\bin\QtUtil.dll packages\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QtGeo.dll packages\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QtFFMpeg1.dll packages\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QtUtil1.dll packages\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QtGeo1.dll packages\ru.purplesoft.qtpurple.geo\data\ /Y
 for %%f in (de es nl pl ja ru uk) do xcopy %qtdir%\translations\qtgeo_%%f.qm packages\ru.purplesoft.qtpurple.geo.%%f\data\translations\ /Y
 
 copy c:\eyecu\COPYING packages\ru.rwsoftware.eyecu\meta\LICENSE.TXT /Y
@@ -98,10 +98,10 @@ set resources=statusicons simplemessagestyles sounds
 call copyresources ru.rwsoftware.eyecu
 set files=eyecuicon.def.xml eyecu.svg mainwindow.def.xml mainwindowlogo128.png mainwindowlogo16.png mainwindowlogo20.png mainwindowlogo24.png mainwindowlogo32.png mainwindowlogo40.png mainwindowlogo48.png mainwindowlogo64.png mainwindowlogo96.png mainwindowmenu.png mainwindowquit.png mainwindowshowroster.png pluginmanager.def.xml pluginmanagerabout.png pluginmanageraboutqt.png pluginmanagersetup.png account.png accountchange.png accountlist.png accountmanager.def.xml accountmove.png chatmessagehandler.def.xml chatmessagehandlerclearchat.png chatmessagehandlermessage.png connection.def.xml connectionencrypted.png messagewidgets.def.xml messagewidgetsquote.png messagewidgetsselect.png messagewidgetssend.png messagewidgetstabmenu.png normalmessagehandler.def.xml normalmessagehandlerforward.png normalmessagehandlermessage.png normalmessagehandlernext.png normalmessagehandlerreply.png normalmessagehandlersend.png notifications.def.xml notifications.png notificationsactivateall.png notificationspopupwindow.png notificationsremoveall.png notificationsshowminimized.png notificationssoundoff.png notificationssoundon.png notificationssoundplay.png options.def.xml optionsappearance.png optionsdialog.png optionseditprofiles.png optionsprofile.png optionsprofiles.png rchanger.def.xml rchangeraddcontact.png rchangercopygroup.png rchangercreategroup.png rchangergroup.png rchangermovegroup.png rchangerremovecontact.png rchangerremovecontacts.png rchangerremovefromgroup.png rchangerremovegroup.png rchangerrename.png rchangerrootgroup.png rchangersubscribe.png rchangersubscription.png rchangerthisgroup.png rchangerunsubscribe.png rosterview.def.xml rosterviewclipboard.png rosterviewcontacts.png rosterviewhideoffline.png rosterviewoptions.png rosterviewshowoffline.png schanger.def.xml schangerconnecting.png schangereditstatuses.png schangermodifystatus.png
 call copyresources2 ru.rwsoftware.eyecu menuicons\shared
-
-copy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu\data /Y
 copy c:\eyecu\eyecuutils.dll packages\ru.rwsoftware.eyecu\data /Y
+xcopy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu.loader\data\ /Y
 
+:copydict
 call copydict en.us en_US
 call copydict en.gb en_GB
 call copydict en.ca en_CA
@@ -444,16 +444,16 @@ md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 
 :build
-del %packagefilename%.exe
 copy installscript.offline packages\ru.rwsoftware.eyecu\meta\*.js
+del %packagefilename%.exe
 binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
 
 :online
-del %onlinepackagefilename%.exe
 copy installscript.online packages\ru.rwsoftware.eyecu\meta\*.js
+:online1
+del %onlinepackagefilename%.exe
 binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
 
 :repo
 repogen.exe -p %packages% repository
-
 :end
