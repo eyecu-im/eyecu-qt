@@ -1,7 +1,7 @@
 @echo on
 set packagename=eyecu2
 set devpackagename=%packagename%-dev
-set version=1.3.0.20151107
+set version=1.3.0.20151202
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 
@@ -21,7 +21,7 @@ wic -a %packagefilename%.wpi 40 -cc:\eyecu plugins\spellchk.dll 41 -cc:\eyecu hu
 wic -a %packagefilename%.wpi 60 -cc:\eyecu\resources\statusicons\aim * 61 -cc:\eyecu\resources\statusicons\bot * 62 -cc:\eyecu\resources\statusicons\car * 63 -cc:\eyecu\resources\statusicons\conference * 64 -cc:\eyecu\resources\statusicons\facebook * 65 -cc:\eyecu\resources\statusicons\gadu * 66 -cc:\eyecu\resources\statusicons\gtalk * 67 -cc:\eyecu\resources\statusicons\icq * 68 -cc:\eyecu\resources\statusicons\livejournal * 69 -cc:\eyecu\resources\statusicons\mrim * 70 -cc:\eyecu\resources\statusicons\msn * 71 -cc:\eyecu\resources\statusicons\odnoklassniki * 72 -cc:\eyecu\resources\statusicons\rss * 73 -cc:\eyecu\resources\statusicons\skype * 74 -cc:\eyecu\resources\statusicons\sms * 75 -cc:\eyecu\resources\statusicons\smtp * 76 -cc:\eyecu\resources\statusicons\twitter * 77 -cc:\eyecu\resources\statusicons\vkontakte * 78 -cc:\eyecu\resources\statusicons\weather * 79 -cc:\eyecu\resources\statusicons\yahoo * 80 -cc:\eyecu\resources\statusicons\yaonline *
 wic -a %packagefilename%.wpi 85 -cc:\eyecu plugins\xhtmlim.dll resources\xhtml\shared\* 
 wic -a %packagefilename%.wpi 90 -cc:\eyecu plugins\emoticon.dll 91 -cc:\eyecu\resources\emoticons\default * 92 -cc:\eyecu\resources\emoticons\blobs_purple *
-wic -a %packagefilename%.wpi 93 -cc:\eyecu plugins\emoji.dll 94 -cc:\eyecu\resources\emoji\vk_big * 95 -cc:\eyecu\resources\emoji\vk_extra_big * 96 -cc:\eyecu\resources\emoji\vk_family_big * 97 -cc:\eyecu\resources\emoji\vk_small * 98 -cc:\eyecu\resources\emoji\vk_extra_small * 99 -cc:\eyecu\resources\emoji\vk_family_small *
+wic -a %packagefilename%.wpi 93 -cc:\eyecu plugins\emoji.dll resources\emoji\shared\* 94 -cc:\eyecu\resources\emoji\vk_big * 95 -cc:\eyecu\resources\emoji\vk_extra_big * 96 -cc:\eyecu\resources\emoji\vk_family_big * 97 -cc:\eyecu\resources\emoji\vk_small * 98 -cc:\eyecu\resources\emoji\vk_extra_small * 99 -cc:\eyecu\resources\emoji\vk_family_small *
 wic -a %packagefilename%.wpi 103 -cc:\eyecu plugins\map.dll resources\mapicons\shared\* 104 -cc:\eyecu plugins\msosm.dll 105 -cc:\eyecu plugins\mswiki.dll 106 -cc:\eyecu plugins\msgoogle.dll 107 -cc:\eyecu plugins\msyahoo.dll 108 -cc:\eyecu plugins\msbing.dll 109 -cc:\eyecu plugins\msovi.dll 110 -cc:\eyecu plugins\msrumap.dll 111 -cc:\eyecu plugins\msvitel.dll 112 -cc:\eyecu plugins\msesri.dll
 wic -a %packagefilename%.wpi 113 -cc:\eyecu plugins\msnavteq.dll 114 -cc:\eyecu plugins\msyandex.dll 115 -cc:\eyecu plugins\msnavitl.dll 116 -cc:\eyecu plugins\ms2gis.dll 117 -cc:\eyecu plugins\mskosmos.dll 119 -cc:\eyecu plugins\msrosrsr.dll 120 -cc:\eyecu plugins\msmegafn.dll 121 -cc:\eyecu plugins\msprogrd.dll
 wic -a %packagefilename%.wpi 125 -cc:\eyecu plugins\mpcntcts.dll 126 -cc:\eyecu plugins\mapmessg.dll 127 -cc:\eyecu plugins\conproxn.dll 130 -cc:\eyecu plugins\mpsearch.dll 131 -cc:\eyecu plugins\msposm.dll 132 -cc:\eyecu plugins\mspgoogl.dll 133 -cc:\eyecu plugins\msp2gis.dll 134 -cc:\eyecu plugins\mspyandx.dll 135 -cc:\eyecu plugins\mspnavtl.dll resources\navitel\shared\* 136 -cc:\eyecu plugins\msphere.dll 137 -cc:\eyecu plugins\mpmagnif.dll 138 -cc:\eyecu plugins\maplcsel.dll

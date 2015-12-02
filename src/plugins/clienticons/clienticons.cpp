@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
+#include <QFile>
 #include <definitions/rosterlabelholderorders.h>
 #include "clienticons.h"
 

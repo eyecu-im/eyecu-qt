@@ -1,7 +1,7 @@
-#include "geoloc.h"
 #include <QClipboard>
 #include <QApplication>
 #include <QMimeData>
+#include <QFile>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
@@ -18,6 +18,8 @@
 
 #include <utils/options.h>
 #include <utils/logger.h>
+
+#include "geoloc.h"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr1

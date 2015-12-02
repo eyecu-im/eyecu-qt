@@ -4,6 +4,7 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QApplication>
+#include <QFile>
 #include <MapObject>
 #include <definitions/rosterindexkinds.h>
 #include <definitions/rosterindexroles.h>

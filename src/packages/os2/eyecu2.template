@@ -100,7 +100,7 @@
 	REQUIRES="eCo Software\Runtime\Win\2012\07\23" 
 	REQUIRES="netlabs.org\Qt4\SysTray\100\1\1\843" 
 	REQUIRES="netlabs.org\Qt4\SysTrayDLL\100\1\1\843" 
-	REQUIRES="Purple Soft\QtPurple\Util\1\0\0"
+	REQUIRES="Purple Soft\QtPurple\Util\1\0\7"
 	=("FindQtRuntime")
 	KILLPROCESS="eyecu.exe"
 	CREATEOBJECT="WPFolder|eyeCU|<WP_APPSFOLDER>|OBJECTID=<EYECU_FOLDER>;"
@@ -814,6 +814,8 @@
 	(c) Road Works Software
 </PCK>
 
+<GROUP TITLE="Smileys">
+
 <PCK 	INDEX=90
 	PACKAGEID="Road Works Software\eyeCU\Emoticons\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Emoticons"
@@ -887,7 +889,7 @@
 
 <PCK 	INDEX=96
 	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Family (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Extra"
+	TITLE="Family"
 	TARGET="$(1)\resources\emoji\vk_family_big" FIXED
 	SELECT
 	REQUIRES=93
@@ -921,7 +923,7 @@
 
 <PCK 	INDEX=99
 	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Family (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Extra"
+	TITLE="Family"
 	TARGET="$(1)\resources\emoji\vk_family_small" FIXED
 	SELECT
 	REQUIRES=90
@@ -935,12 +937,14 @@
 
 </GROUP>
 
+</GROUP>
+
 <PCK 	INDEX=103
 	PACKAGEID="Road Works Software\eyeCU\Map\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Map"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES="Purple Soft\QtPurple\Geo\1\0\0"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
 	>Allows user to see interactive Map from different sources
 </PCK>
 
@@ -1306,7 +1310,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=30
-	REQUIRES="Purple Soft\QtPurple\Geo\1\0\0"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
 	>eyeCU - Points of interest plugin
 	(c) Road Works Software
 </PCK>
@@ -1396,7 +1400,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=160
-	REQUIRES="Purple Soft\QtPurple\Geo\1\0\0"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
 	>Implements XEP-0080: User Location
 </PCK>
 
@@ -1704,9 +1708,9 @@
 <GROUP TITLE="Qt Purple">
 
 <PCK 	INDEX=400
-	PACKAGEID="Purple Soft\QtPurple\Util\1\0\5"
+	PACKAGEID="Purple Soft\QtPurple\Util\1\0\7"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.1.2.wpi"
+	EXTERNAL="qtpurple-1.1.5.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1715,9 +1719,9 @@
 </PCK>
 
 <PCK 	INDEX=410
-	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\0"
+	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\2"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.1.2.wpi"
+	EXTERNAL="qtpurple-1.1.5.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1730,7 +1734,7 @@
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1741,7 +1745,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1752,7 +1756,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1763,7 +1767,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1774,7 +1778,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1785,7 +1789,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1796,7 +1800,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1807,14 +1811,13 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.1.2.wpi"
+		EXTERNAL="qtpurple-1.1.5.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
 	>Japanese language pack for Qt Geo library
 	(c) Purple Soft
 	</PCK>
-
 </GROUP>
 
 </GROUP>
