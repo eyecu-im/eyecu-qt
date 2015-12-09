@@ -492,7 +492,9 @@ Please, choose another server. If you have an account in such network, please, g
    <source>The Server you selected do not support in-band registration!
 You'll have to register via web!
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
-   <translation type="unfinished"/>
+   <translation>De geselecteerde Server heeft geen ondersteuning voor in-band registratie! 
+Je moet je inschrijven via het web! 
+Druk op &quot;Ok&quot; om verder te gaan of &quot;Annuleren&quot; om een andere server te selecteren.</translation>
   </message>
  </context>
  <context>
@@ -543,7 +545,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="15"/>
    <source>A Wizard, which helps unexperienced user to connect to Jabber network</source>
-   <translation type="unfinished"/>
+   <translation>Een hulpje, die onervaren gebruikers helpt om verbinding te maken met Jabber netwerk</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="53"/>
@@ -553,7 +555,7 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="54"/>
    <source>It seems, you don&apos;t have a Jabber account yet. Do you want to start a Wizard, which will help you to connect to Jabber?</source>
-   <translation type="unfinished"/>
+   <translation>Het lijkt erop, dat je hebt nog geen Jabber account hebt. Wilt u het hulpje starten die zal u helpen om verbinding te maken met Jabber?</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>

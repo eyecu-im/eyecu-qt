@@ -131,7 +131,7 @@
     </message>
     <message>
         <source>Region</source>
-        <translation>Область</translation>
+        <translation>Область/Край</translation>
     </message>
     <message>
         <source>Room</source>

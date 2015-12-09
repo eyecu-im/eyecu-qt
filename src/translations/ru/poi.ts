@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>MessagePoiList</name>
     <message>
@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>Region</source>
-        <translation>Регион</translation>
+        <translation>Область/Край</translation>
     </message>
     <message>
         <source>Country code</source>
@@ -56,7 +56,7 @@
     </message>
     <message>
         <source>Area</source>
-        <translation>Зона</translation>
+        <translation>Район</translation>
     </message>
     <message>
         <source>Description</source>

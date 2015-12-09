@@ -471,7 +471,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="476"/>
    <source>Allow Visitors to Send Status Text in Presence Updates?</source>
-   <translation type="unfinished"/>
+   <translation>Bezoekers de Status Text laten versturen in tegenwoordigheid van updates?</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="477"/>
@@ -481,7 +481,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="478"/>
    <source>Do not Request CAPTCHA for Followed Jabber ID</source>
-   <translation type="unfinished"/>
+   <translation>Verzoek geen CAPTCHA voor aansluitend Jabber ID</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="480"/>
@@ -521,7 +521,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="491"/>
    <source>URL for Archived Discussion Logs</source>
-   <translation type="unfinished"/>
+   <translation>URL voor gearchiveerd discussie logs</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="492"/>
