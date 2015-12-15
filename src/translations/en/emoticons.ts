@@ -4,27 +4,32 @@
  <context>
   <name>Emoticons</name>
   <message>
-   <location line="47" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="48" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Emoticons</source>
    <translation>Emoticons</translation>
   </message>
   <message>
-   <location line="48" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="49" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Allows to use your smiley images in messages</source>
    <translation>Allows to use your smiley images in messages</translation>
   </message>
   <message>
-   <location line="128" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="132" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Message windows</source>
    <translation>Message windows</translation>
   </message>
   <message>
-   <location line="139" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="133" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <source>Insert smiley image into message editor</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location line="144" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Do not convert text smileys to images</source>
    <translation>Do not convert text smileys to images</translation>
   </message>
   <message>
-   <location line="154" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="159" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Smileys:</source>
    <translation>Smileys:</translation>
   </message>

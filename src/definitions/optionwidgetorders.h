@@ -181,6 +181,7 @@
 #define OHO_APPEARANCE_ROSTER                     400
 #define   OWO_APPEARANCE_STATUSICONS              430
 #define OHO_APPEARANCE_MESSAGES                   700
+#define   OWO_APPEARANCE_EMOTICONS_INSERTICON     720
 #define   OWO_APPEARANCE_EMOTICONS                730
 // *** <<< eyeCU <<< ***
 #define   OWO_APPEARANCE_EMOJI                    740

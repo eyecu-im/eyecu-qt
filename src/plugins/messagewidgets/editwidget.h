@@ -76,6 +76,7 @@ private:
 	int FBufferPos;
 	bool FSendEnabled;
 	bool FEditEnabled;
+	bool FRichTextEnabled; // *** <<< eyeCU >>> ***
 	Action *FSendAction;
 	IMessageWindow *FWindow;
 	QList<QString> FBuffer;

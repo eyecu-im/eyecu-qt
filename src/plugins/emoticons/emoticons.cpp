@@ -98,8 +98,10 @@ bool Emoticons::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_MAXINMESSAGE,20);
 	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_ICONSET,QStringList() << DEFAULT_ICONSET);	
-	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_RECENT, QByteArray()); // *** <<< eyeCU >>> ***
-
+// *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_RECENT, QByteArray());
+	Options::setDefaultValue(OPV_MESSAGES_EMOTICONS_INSERTIMAGE, true);
+// *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
 		FOptionsManager->insertOptionsDialogHolder(this);
@@ -128,6 +130,7 @@ QMultiMap<int, IOptionsDialogWidget *> Emoticons::optionsDialogWidgets(const QSt
 	{
 // *** <<< eyeCU <<< ***
 		widgets.insertMulti(OHO_APPEARANCE_MESSAGES,FOptionsManager->newOptionsDialogHeader(tr("Message windows"), AParent));
+		widgets.insertMulti(OWO_APPEARANCE_EMOTICONS_INSERTICON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_EMOTICONS_INSERTIMAGE),tr("Insert smiley image into message editor"), AParent));
 
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 			widgets.insertMulti(OWO_APPEARANCE_EMOTICONS, new EmoticonsOptions(this,AParent));
@@ -176,7 +179,7 @@ bool Emoticons::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidge
 	Q_UNUSED(AOrder); Q_UNUSED(AData);
 	if (AOrder == MECHO_EMOTICONS_CONVERT_IMAGE2TEXT)
 	{
-		if (AWidget->isRichTextEnabled())
+		if (Options::node(OPV_MESSAGES_EMOTICONS_INSERTIMAGE).value().toBool()) // *** <<< eyeCU >>> ***
 		{
 			QList<QUrl> urlList = FUrlByKey.values();
 			QTextBlock block = ADocument->firstBlock();
@@ -557,8 +560,7 @@ void Emoticons::onSelectIconMenuSelected(const QString &ASubStorage, const QStri
 					if (space)
 						cursor.insertText(" ");
 				}
-				
-				if (widget->isRichTextEnabled())
+				if (Options::node(OPV_MESSAGES_EMOTICONS_INSERTIMAGE).value().toBool()) // *** <<< eyeCU >>> ***
 				{
 					if (!editor->document()->resource(QTextDocument::ImageResource,url).isValid())
 						editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));

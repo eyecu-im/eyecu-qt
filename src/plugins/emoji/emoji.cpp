@@ -157,30 +157,25 @@ bool Emoji::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, c
 	Q_UNUSED(AOrder); Q_UNUSED(AData);
 	if (AOrder == MECHO_EMOJI_CONVERT_IMAGE2TEXT)
 	{
-		if (AWidget->isRichTextEnabled())
+		QList<QUrl> urlList = FUrlByKey.values();
+		QTextBlock block = ADocument->firstBlock();
+		while (block.isValid())
 		{
-			QList<QUrl> urlList = FUrlByKey.values();
-			QTextBlock block = ADocument->firstBlock();
-			while (block.isValid())
+			for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it)
 			{
-				for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it)
+				QTextFragment fragment = it.fragment();
+				if (fragment.charFormat().isImageFormat())
 				{
-					QTextFragment fragment = it.fragment();
-					if (fragment.charFormat().isImageFormat())
+					QUrl url = fragment.charFormat().toImageFormat().name();
+					if (AWidget->document()->resource(QTextDocument::ImageResource,url).isNull() && urlList.contains(url))
 					{
-						QUrl url = fragment.charFormat().toImageFormat().name();
-						if (AWidget->document()->resource(QTextDocument::ImageResource,url).isNull() && urlList.contains(url))
-						{
-							AWidget->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
-							AWidget->document()->markContentsDirty(fragment.position(),fragment.length());
-						}
+						AWidget->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
+						AWidget->document()->markContentsDirty(fragment.position(),fragment.length());
 					}
 				}
-				block = block.next();
 			}
+			block = block.next();
 		}
-		else
-			replaceImageToText(ADocument);
 	}
 	return false;
 }
@@ -489,16 +484,11 @@ void Emoji::onSelectIconMenuSelected(const QString &ASubStorage, QString AIconKe
 				if (cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,1))
 					cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor,1);
 				
-				if (widget->isRichTextEnabled())
-				{
-					if (!editor->document()->resource(QTextDocument::ImageResource,url).isValid())
-						editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
-                    QTextImageFormat imageFormat;
-                    imageFormat.setName(url.toString());
-                    cursor.insertImage(imageFormat);
-				}
-				else
-					cursor.insertText(AIconKey);
+				if (!editor->document()->resource(QTextDocument::ImageResource,url).isValid())
+					editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
+				QTextImageFormat imageFormat;
+				imageFormat.setName(url.toString());
+				cursor.insertImage(imageFormat);
 
 				cursor.endEditBlock();
 				editor->setFocus();
