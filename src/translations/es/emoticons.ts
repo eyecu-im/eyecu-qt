@@ -2,27 +2,32 @@
  <context>
   <name>Emoticons</name>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="47"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="48"/>
    <source>Emoticons</source>
    <translation>Caritas</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="48"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="49"/>
    <source>Allows to use your smiley images in messages</source>
    <translation>Permite usar imágenes de caritas en los mensajes</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="128"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="132"/>
    <source>Message windows</source>
    <translation>Ventana de mensajes</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="139"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="133"/>
+   <source>Insert smiley image into message editor</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="144"/>
    <source>Do not convert text smileys to images</source>
    <translation>No convertir las caritas en texto a imágenes</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="154"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="159"/>
    <source>Smileys:</source>
    <translation>Caritas:</translation>
   </message>

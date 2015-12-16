@@ -48,12 +48,8 @@
     <gateway name="mrim">
         <server><jid>mrim.sudouser.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
         <server><jid>mrim.jabbercity.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
-        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
         <server><jid>mrim.jid.su</jid><software>XMPP to Mail.Ru-IM Transport</software></server>
         <server><jid>mrim.shevaldin.ru</jid><software>XMPP to Mail.Ru-IM Transport</software></server> 
-        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
-        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
-        <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
         <server><jid>mrim.almss.net</jid><software>XMPP to Mail.Ru-IM Transport</software></server>        
     </gateway>
     <gateway name="myspaceim"></gateway>

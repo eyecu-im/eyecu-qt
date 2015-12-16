@@ -193,14 +193,14 @@ void EditWidget::setSendShortcutId(const QString &AShortcutId)
 
 bool EditWidget::isRichTextEnabled() const
 {
-	return ui.medEditor->acceptRichText();
+	return FRichTextEnabled;
 }
 
 void EditWidget::setRichTextEnabled(bool AEnabled)
 {
 	if (isRichTextEnabled() != AEnabled)
 	{
-		ui.medEditor->setAcceptRichText(AEnabled);
+		FRichTextEnabled = AEnabled;	// *** <<< eyeCU >>> ***
 		richTextEnableChanged(AEnabled);
 	}
 }

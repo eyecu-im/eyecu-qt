@@ -126,6 +126,7 @@
 // *** <<< eyeCU <<< ***
 #define OPV_MESSAGES_EMOTICONS_RECENT                   "messages.emoticons.recent"
 #define OPV_MESSAGES_EMOTICONS_RECENT_SET               "messages.emoticons.recent.set"
+#define OPV_MESSAGES_EMOTICONS_INSERTIMAGE              "messages.emoticons.insert-image"
 // Emoji
 #define OPV_MESSAGES_EMOJI_ICONSETS                     "messages.emoji.iconsets"
 #define OPV_MESSAGES_EMOJI_SKINCOLOR                    "messages.emoji.skin-color"
