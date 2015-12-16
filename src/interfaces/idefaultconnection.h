@@ -4,6 +4,9 @@
 #define DEFAULTCONNECTION_UUID "{68F9B5F2-5898-43f8-9DD1-19F37E9779AC}"
 
 #include <QSslSocket>
+#if QT_VERSION >= 0x050000
+#include <QSslKey>
+#endif
 #include <interfaces/iconnectionmanager.h>
 
 class IDefaultConnection :

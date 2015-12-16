@@ -14,11 +14,15 @@ DefaultConnection::DefaultConnection(IConnectionEngine *AEngine, QObject *AParen
 {
 	FEngine = AEngine;
 	FDisconnecting = false;
-	
+#if QT_VERSION < 0x050000
 	FSrvQueryId = START_QUERY_ID;
 	connect(&FDns, SIGNAL(resultsReady(int, const QJDns::Response &)),SLOT(onDnsResultsReady(int, const QJDns::Response &)));
 	connect(&FDns, SIGNAL(error(int, QJDns::Error)),SLOT(onDnsError(int, QJDns::Error)));
 	connect(&FDns, SIGNAL(shutdownFinished()),SLOT(onDnsShutdownFinished()));
+#else
+	FDnsLookup.setType(QDnsLookup::SRV);
+	connect(&FDnsLookup,SIGNAL(finished()),SLOT(onDnsLookupFinished()));
+#endif
 
 	FSocket.setSocketOption(QAbstractSocket::KeepAliveOption,1);
 	connect(&FSocket, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *)),
@@ -54,6 +58,7 @@ bool DefaultConnection::isEncryptionSupported() const
 
 bool DefaultConnection::connectToHost()
 {
+#if QT_VERSION < 0x050000
 	if (FSrvQueryId==START_QUERY_ID && FSocket.state()==QAbstractSocket::UnconnectedState)
 	{
 		emit aboutToConnect();
@@ -84,6 +89,32 @@ bool DefaultConnection::connectToHost()
 			FDns.setNameServers(QJDns::systemInfo().nameServers);
 			FSrvQueryId = FDns.queryStart(QString("_xmpp-client._tcp.%1.").arg(domain).toLatin1(),QJDns::Srv);
 		}
+#else
+	if (FDnsLookup.isFinished() && FSocket.state()==QAbstractSocket::UnconnectedState)
+	{
+		emit aboutToConnect();
+
+		FRecords.clear();
+		FSSLError = false;
+
+		QString host = option(IDefaultConnection::Host).toString();
+		quint16 port = option(IDefaultConnection::Port).toInt();
+		QString domain = option(IDefaultConnection::Domain).toString();
+		FUseLegacySSL = option(IDefaultConnection::UseLegacySsl).toBool();
+		FVerifyMode = (CertificateVerifyMode)option(IDefaultConnection::CertVerifyMode).toInt();
+
+		SrvRecord record;
+		record.target = !host.isEmpty() ? host : domain;
+		record.port = port;
+		FRecords.append(record);
+
+		if (host.isEmpty())
+		{
+			LOG_DEBUG(QString("Starting DNS SRV lookup, domain=%1").arg(domain));
+			FDnsLookup.setName(QString("_xmpp-client._tcp.%1.").arg(domain));
+			FDnsLookup.lookup();
+		}
+#endif
 		else
 		{
 			LOG_ERROR("Failed to init DNS SRV lookup");
@@ -127,6 +158,7 @@ void DefaultConnection::disconnectFromHost()
 				emit disconnected();
 			}
 		}
+#if QT_VERSION < 0x050000
 		else if (FSrvQueryId != START_QUERY_ID)
 		{
 			FSrvQueryId = STOP_QUERY_ID;
@@ -138,7 +170,14 @@ void DefaultConnection::disconnectFromHost()
 			FSocket.abort();
 			emit disconnected();
 		}
+#else
+		else if (!FDnsLookup.isFinished())
+		{
+			FDnsLookup.abort();
+		}
 
+		emit disconnected();
+#endif
 		FDisconnecting = false;
 	}
 }
@@ -263,24 +302,30 @@ void DefaultConnection::connectToNextHost()
 {
 	if (!FRecords.isEmpty())
 	{
+#if QT_VERSION < 0x050000
 		QJDns::Record record = FRecords.takeFirst();
-
 		while (record.name.endsWith('.'))
 			record.name.chop(1);
+#define RECORD_NAME QString::fromLatin1(record.name)
+#else
+		SrvRecord record = FRecords.takeFirst();
+#define RECORD_NAME record.target
+#endif
 
 		if (FUseLegacySSL)
 		{
-			LOG_INFO(QString("Connecting to host with encryption, host=%1, port=%2").arg(QString::fromLatin1(record.name)).arg(record.port));
-			FSocket.connectToHostEncrypted(record.name, record.port);
+			LOG_INFO(QString("Connecting to host with encryption, host=%1, port=%2").arg(RECORD_NAME).arg(record.port));
+			FSocket.connectToHostEncrypted(RECORD_NAME, record.port);
 		}
 		else
 		{
-			LOG_INFO(QString("Connecting to host=%1, port=%2").arg(QString::fromLatin1(record.name)).arg(record.port));
-			FSocket.connectToHost(record.name, record.port);
+			LOG_INFO(QString("Connecting to host=%1, port=%2").arg(RECORD_NAME).arg(record.port));
+			FSocket.connectToHost(RECORD_NAME, record.port);
 		}
 	}
 }
 
+#if QT_VERSION < 0x050000
 void DefaultConnection::onDnsResultsReady(int AId, const QJDns::Response &AResults)
 {
 	if (FSrvQueryId == AId)
@@ -318,7 +363,28 @@ void DefaultConnection::onDnsShutdownFinished()
 		emit disconnected();
 	}
 }
-
+#else
+void DefaultConnection::onDnsLookupFinished()
+{
+	if (!FRecords.isEmpty())
+	{
+		QList<QDnsServiceRecord> dnsRecords = FDnsLookup.serviceRecords();
+		LOG_DEBUG(QString("SRV records received, count=%1").arg(dnsRecords.count()));
+		if (!dnsRecords.isEmpty())
+		{
+			FRecords.clear();
+			foreach (const QDnsServiceRecord &dnsRecord, dnsRecords)
+			{
+				SrvRecord srvRecord;
+				srvRecord.target = dnsRecord.target();
+				srvRecord.port = dnsRecord.port();
+				FRecords.append(srvRecord);
+			}
+		}
+		connectToNextHost();
+	}
+}
+#endif
 void DefaultConnection::onSocketProxyAuthenticationRequired(const QNetworkProxy &AProxy, QAuthenticator *AAuth)
 {
 	LOG_INFO(QString("Proxy authentication requested, host=%1, proxy=%2, user=%3").arg(FSocket.peerName(),AProxy.hostName(),AProxy.user()));
