@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Emoticons Russian Translation</DisplayName>
     <Description>Emoticons Russian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-12-15</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoticons.ru</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.emoticons,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
     <Virtual>true</Virtual>

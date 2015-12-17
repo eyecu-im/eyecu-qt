@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-09-11</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-12-15</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
+	<UpdateText>Always insert Emoji image into message editor.</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

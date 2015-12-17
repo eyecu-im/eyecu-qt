@@ -2,15 +2,15 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.7</Version>
-    <ReleaseDate>2015-12-09</ReleaseDate>
+    <Version>1.3.8</Version>
+    <ReleaseDate>2015-12-15</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>    
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>When switching tab with a shortcut without active tabs caused application crash</UpdateText>
+    <UpdateText>Message editor have rich text support always enabled now.</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Script>installscript.js</Script>
