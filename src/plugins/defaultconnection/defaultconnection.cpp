@@ -22,6 +22,10 @@ DefaultConnection::DefaultConnection(IConnectionEngine *AEngine, QObject *AParen
 #else
 	FDnsLookup.setType(QDnsLookup::SRV);
 	connect(&FDnsLookup,SIGNAL(finished()),SLOT(onDnsLookupFinished()));
+
+	// Make FDnsLookup.isFinished to be true
+	FDnsLookup.lookup();
+	FDnsLookup.abort();
 #endif
 
 	FSocket.setSocketOption(QAbstractSocket::KeepAliveOption,1);
@@ -58,8 +62,13 @@ bool DefaultConnection::isEncryptionSupported() const
 
 bool DefaultConnection::connectToHost()
 {
+	if (
 #if QT_VERSION < 0x050000
-	if (FSrvQueryId==START_QUERY_ID && FSocket.state()==QAbstractSocket::UnconnectedState)
+		FSrvQueryId==START_QUERY_ID
+#else
+		FDnsLookup.isFinished()
+#endif
+		&& FSocket.state()==QAbstractSocket::UnconnectedState)
 	{
 		emit aboutToConnect();
 
@@ -71,14 +80,18 @@ bool DefaultConnection::connectToHost()
 		QString domain = option(IDefaultConnection::Domain).toString();
 		FUseLegacySSL = option(IDefaultConnection::UseLegacySsl).toBool();
 		FVerifyMode = (CertificateVerifyMode)option(IDefaultConnection::CertVerifyMode).toInt();
-
+#if QT_VERSION < 0x050000
 		QJDns::Record record;
 		record.name = !host.isEmpty() ? host.toLatin1() : domain.toLatin1();
-		record.port = port;
 		record.priority = 0;
 		record.weight = 0;
+#else
+		SrvRecord record;
+		record.target = !host.isEmpty() ? host : domain;
+#endif
+		record.port = port;
 		FRecords.append(record);
-
+#if QT_VERSION < 0x050000
 		if (!host.isEmpty())
 		{
 			connectToNextHost();
@@ -88,33 +101,14 @@ bool DefaultConnection::connectToHost()
 			LOG_DEBUG(QString("Starting DNS SRV lookup, domain=%1").arg(domain));
 			FDns.setNameServers(QJDns::systemInfo().nameServers);
 			FSrvQueryId = FDns.queryStart(QString("_xmpp-client._tcp.%1.").arg(domain).toLatin1(),QJDns::Srv);
-		}
 #else
-	if (FDnsLookup.isFinished() && FSocket.state()==QAbstractSocket::UnconnectedState)
-	{
-		emit aboutToConnect();
-
-		FRecords.clear();
-		FSSLError = false;
-
-		QString host = option(IDefaultConnection::Host).toString();
-		quint16 port = option(IDefaultConnection::Port).toInt();
-		QString domain = option(IDefaultConnection::Domain).toString();
-		FUseLegacySSL = option(IDefaultConnection::UseLegacySsl).toBool();
-		FVerifyMode = (CertificateVerifyMode)option(IDefaultConnection::CertVerifyMode).toInt();
-
-		SrvRecord record;
-		record.target = !host.isEmpty() ? host : domain;
-		record.port = port;
-		FRecords.append(record);
-
 		if (host.isEmpty())
 		{
 			LOG_DEBUG(QString("Starting DNS SRV lookup, domain=%1").arg(domain));
 			FDnsLookup.setName(QString("_xmpp-client._tcp.%1.").arg(domain));
 			FDnsLookup.lookup();
-		}
 #endif
+		}
 		else
 		{
 			LOG_ERROR("Failed to init DNS SRV lookup");
@@ -311,7 +305,6 @@ void DefaultConnection::connectToNextHost()
 		SrvRecord record = FRecords.takeFirst();
 #define RECORD_NAME record.target
 #endif
-
 		if (FUseLegacySSL)
 		{
 			LOG_INFO(QString("Connecting to host with encryption, host=%1, port=%2").arg(RECORD_NAME).arg(record.port));
