@@ -958,6 +958,10 @@ void MultiUserChatWindow::createMessageWidgets()
 			SLOT(onMultiChatContentAppended(const QString &, const IMessageStyleContentOptions &)));
 		connect(FViewWidget->instance(),SIGNAL(messageStyleOptionsChanged(const IMessageStyleOptions &, bool)),
 			SLOT(onMultiChatMessageStyleOptionsChanged(const IMessageStyleOptions &, bool)));
+// *** <<< eyeCU <<< ***
+		connect(FViewWidget->instance(),SIGNAL(viewContextMenu(QPoint, Menu *)),
+			SLOT(onViewWidgetContextMenu(QPoint, Menu *)));
+// *** >>> eyeCU >>> ***
 		FWindowStatus[FViewWidget].createTime = QDateTime::currentDateTime();
 
 		ui.wdtEdit->setLayout(new QVBoxLayout);
@@ -1916,7 +1920,25 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 	}
 	return QMainWindow::eventFilter(AObject,AEvent);
 }
-
+// *** <<< eyeCU <<< ***
+void MultiUserChatWindow::onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu)
+{
+	IMessageViewWidget *widget = qobject_cast<IMessageViewWidget *>(sender());
+	if (widget)
+	{
+		QTextDocumentFragment textSelection(widget->selection());
+		QTextDocumentFragment textFragment(widget->textFragmentAt(APosition));
+		QUrl link(TextManager::getTextFragmentHref(textFragment.isEmpty() ? textSelection : textFragment));
+		if (link.isValid() && link.scheme()=="nick")
+		{
+			AMenu->clear();
+			IMultiUser *user = FMultiChat->userByNick(link.path());
+			if (user)
+				contextMenuForUser(user, AMenu);
+		}
+	}
+}
+// *** >>> eyeCU >>> ***
 void MultiUserChatWindow::onChatAboutToConnect()
 {
 	IMultiUserChatHistory history;

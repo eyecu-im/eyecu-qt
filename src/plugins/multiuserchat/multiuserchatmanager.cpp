@@ -1,5 +1,5 @@
 #include "multiuserchatmanager.h"
-
+#include <QDebug>
 #include <QClipboard>
 #include <QInputDialog>
 #include <QApplication>
@@ -1097,6 +1097,7 @@ QString MultiUserChatManager::getRoomName(const Jid &AStreamJid, const Jid &ARoo
 
 void MultiUserChatManager::onMultiChatContextMenu(Menu *AMenu)
 {
+	qDebug() << "MultiUserChatManager::onMultiChatContextMenu(" << AMenu << ")";
 	IMultiUserChatWindow *window = qobject_cast<IMultiUserChatWindow *>(sender());
 	if (window)
 		emit multiChatContextMenu(window,AMenu);
@@ -1104,6 +1105,7 @@ void MultiUserChatManager::onMultiChatContextMenu(Menu *AMenu)
 
 void MultiUserChatManager::onMultiUserContextMenu(IMultiUser *AUser, Menu *AMenu)
 {
+	qDebug() << "MultiUserChatManager::onMultiUserContextMenu(" << AMenu << ")";
 	IMultiUserChatWindow *window = qobject_cast<IMultiUserChatWindow *>(sender());
 	if (window)
 		emit multiUserContextMenu(window,AUser,AMenu);

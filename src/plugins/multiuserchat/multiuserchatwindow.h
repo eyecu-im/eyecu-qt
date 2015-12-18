@@ -156,6 +156,9 @@ protected:
 	void closeEvent(QCloseEvent *AEvent);
 	bool eventFilter(QObject *AObject, QEvent *AEvent);
 protected slots:
+// *** <<< eyeCU <<< ***
+	void onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu);
+// *** >>> eyeCU >>> ***
 	void onChatAboutToConnect();
 	void onChatOpened();
 	void onChatNotify(const QString &ANotify);
