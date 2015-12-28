@@ -353,7 +353,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="873"/>
    <source>Press the button to open vKontakte logon page in the system browser. Proceed logon (if not logged on already). After you see a blank page with a single text message on it, copy contents of browser&apos;s address line and close web browser.</source>
-   <translation type="unfinished"/>
+   <translation>Druk op de knop om VKontakte aanmeldingspagina te openen in browser. Ga verder met inloggen (indien niet aangemeld al). Als u een lege pagina met een tekstbericht ziet, kopieer inhoud van de adresregel en sluit webbrowser.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="884"/>

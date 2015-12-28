@@ -9,6 +9,8 @@
 {
   white-space		:pre-wrap;
   padding-left		:10px;
+  padding-top		:2px;
+  padding-bottom	:2px;
 }
 
 .xxxsender
@@ -20,8 +22,12 @@
 .xxxtime 
 {
   white-space		:nowrap;
-  font-size             :small;
-  color			:gray;
+  font-size			:small;
+  color				:gray;
+  padding-top		:2px;
+  padding-bottom	:2px;
+  padding-left		:1px;
+  padding-right		:1px;
 }
 
 .xxxtopic
@@ -63,4 +69,9 @@
 .date_separator .xxxtime
 {
   color                 :transparent;
+}
+
+.history
+{
+	background-color: #D0D0D0;
 }

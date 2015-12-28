@@ -282,7 +282,7 @@ Wil je dat %1 wordt geherstart?</translation>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="858"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
-   <translation type="unfinished"/>
+   <translation>Als je een ervaren Jabber gebruiker bent, druk &lt;i&gt;Ja&lt;/ i&gt; om de geavanceerde opties weer te geven. Ben je nieuw met Jabber, druk &lt;i&gt;Nee&lt;i&gt; om simpele opties weer te geven.</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="865"/>

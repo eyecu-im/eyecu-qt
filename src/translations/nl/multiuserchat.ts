@@ -375,12 +375,12 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="455"/>
    <source>Affiliations that May Retrieve Member List</source>
-   <translation type="unfinished"/>
+   <translation>Voorkeuren die Lid mag ophalen</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="456"/>
    <source>XMPP URI of Associated Publish-Subscribe Node</source>
-   <translation type="unfinished"/>
+   <translation>XMPP URI van bijbehorende Publish-abonnement Node</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="457"/>
@@ -415,7 +415,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="463"/>
    <source>Roles for which Presence is Broadcasted</source>
-   <translation type="unfinished"/>
+   <translation>Akties waarvoor aanwezigheid word uitgezonden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="464"/>
@@ -451,7 +451,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="470"/>
    <source>Affiliations that May Discover Real JIDs of Occupants</source>
-   <translation type="unfinished"/>
+   <translation>Voorkeuren die echte JID van Bewoners kunnen ontdekken</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="472"/>
@@ -576,7 +576,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="860"/>
    <source>A room that cannot be found by any user through normal means such as searching and service discovery</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die niet gevonden kan worden door elke gebruiker via normale middelen, zoals het zoeken en service discovery</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="864"/>
@@ -606,7 +606,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="875"/>
    <source>A room in which an occupant&apos;s full JID is exposed to all other occupants</source>
-   <translation type="unfinished"/>
+   <translation>Een ruimte waar een JID inzittende volledige is blootgesteld aan alle andere inzittenden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="879"/>
@@ -648,7 +648,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="900"/>
    <source>A room that can be found by any user through normal means such as searching and service discovery</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer die gevonden kan worden door elke gebruiker via de normale middelen, zoals het zoeken en service discovery</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="904"/>
@@ -658,7 +658,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="905"/>
    <source>A room in which an occupant&apos;s full JID can be discovered by room admins only</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer waarin een inzittende volledige JID heeft kan alleen worden ontdekt door kamer admins</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="909"/>
@@ -678,7 +678,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="915"/>
    <source>A room in which any occupant is allowed to send messages to all occupants</source>
-   <translation type="unfinished"/>
+   <translation>Een kamer waar elke bewoner berichtenmag versturen naar alle inzittenden</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="919"/>
@@ -987,7 +987,15 @@ Check waarden en probeer opnieuw</translation>
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunde lijst van commando&apos;s: 
+ /ban &lt;kamerbijnaam&gt; [Commentaar] 
+ /invite &lt;jid&gt; [Commentaar] 
+ /join &lt;kamerbijnaam&gt; [paswoord] 
+ /kick &lt;kamerbijnaam&gt; [Commentaar] 
+ /msg &lt;kamerbijnaam&gt; &lt;foo&gt; 
+ /nick &lt;nieuwebijnaam&gt; 
+ /leave [Commentaar] 
+ /topic &lt;foo&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatwindow.cpp" line="1363"/>

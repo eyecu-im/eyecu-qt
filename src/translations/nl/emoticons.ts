@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="133"/>
    <source>Insert smiley image into message editor</source>
-   <translation type="unfinished"/>
+   <translation>Smiley afbeeldingen laden in berichten bewerker</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="144"/>
