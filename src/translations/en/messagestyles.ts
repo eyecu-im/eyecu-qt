@@ -1,304 +1,310 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
- <context>
-  <name>MessageStyleManager</name>
-  <message>
-   <location line="33" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Message Styles Manager</source>
-   <translation>Message Styles Manager</translation>
-  </message>
-  <message>
-   <location line="34" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Allows to use different styles to display messages</source>
-   <translation>Allows to use different styles to display messages</translation>
-  </message>
-  <message>
-   <location line="105" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Messages styles</source>
-   <translation>Messages styles</translation>
-  </message>
-  <message>
-   <location line="114" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Use monospaced font for unformatted text</source>
-   <translation>Use monospaced font for unformatted text</translation>
-  </message>
-  <message>
-   <location line="119" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Show date separators in message window</source>
-   <translation>Show date separators in message window</translation>
-  </message>
-  <message>
-   <location line="260" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>January</source>
-   <translation>January</translation>
-  </message>
-  <message>
-   <location line="260" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>February</source>
-   <translation>February</translation>
-  </message>
-  <message>
-   <location line="260" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>March</source>
-   <translation>March</translation>
-  </message>
-  <message>
-   <location line="260" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>April</source>
-   <translation>April</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>May</source>
-   <translation>May</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>June</source>
-   <translation>June</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>July</source>
-   <translation>July</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>August</source>
-   <translation>August</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>September</source>
-   <translation>September</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>October</source>
-   <translation>October</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>November</source>
-   <translation>November</translation>
-  </message>
-  <message>
-   <location line="261" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>December</source>
-   <translation>December</translation>
-  </message>
-  <message>
-   <location line="262" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Monday</source>
-   <translation>Monday</translation>
-  </message>
-  <message>
-   <location line="262" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Tuesday</source>
-   <translation>Tuesday</translation>
-  </message>
-  <message>
-   <location line="262" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Wednesday</source>
-   <translation>Wednesday</translation>
-  </message>
-  <message>
-   <location line="262" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Thursday</source>
-   <translation>Thursday</translation>
-  </message>
-  <message>
-   <location line="263" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Friday</source>
-   <translation>Friday</translation>
-  </message>
-  <message>
-   <location line="263" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Saturday</source>
-   <translation>Saturday</translation>
-  </message>
-  <message>
-   <location line="263" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Sunday</source>
-   <translation>Sunday</translation>
-  </message>
-  <message>
-   <location line="267" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <location line="269" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>%1, %2 dd</source>
-   <translation>%1, %2 dd</translation>
-  </message>
-  <message>
-   <location line="267" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>Today</source>
-   <translation>Today</translation>
-  </message>
-  <message>
-   <location line="271" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>%1, %2 dd, yyyy</source>
-   <translation>%1, %2 dd, yyyy</translation>
-  </message>
-  <message>
-   <location line="280" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>d MMM yyyy hh:mm</source>
-   <translation>d MMM yyyy hh:mm</translation>
-  </message>
-  <message>
-   <location line="282" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>d MMM hh:mm</source>
-   <translation>d MMM hh:mm</translation>
-  </message>
-  <message>
-   <location line="283" filename="../../plugins/messagestyles/messagestylemanager.cpp"/>
-   <source>hh:mm:ss</source>
-   <translation>hh:mm:ss</translation>
-  </message>
- </context>
- <context>
-  <name>StyleEditOptionsDialog</name>
-  <message>
-   <location line="16" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Preview</source>
-   <translation>Preview</translation>
-  </message>
-  <message>
-   <location line="36" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Message Style - %1 - %2</source>
-   <translation>Message Style - %1 - %2</translation>
-  </message>
-  <message>
-   <location line="87" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Receiver</source>
-   <translation>Receiver</translation>
-  </message>
-  <message>
-   <location line="95" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Sender</source>
-   <translation>Sender</translation>
-  </message>
-  <message>
-   <location line="108" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>The message with a error code %1 is received</source>
-   <translation>The message with a error code %1 is received</translation>
-  </message>
-  <message>
-   <location line="109" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Error description</source>
-   <translation>Error description</translation>
-  </message>
-  <message>
-   <location line="115" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Subject: Message subject</source>
-   <translation>Subject: Message subject</translation>
-  </message>
-  <message>
-   <location line="118" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Message body line 1</source>
-   <translation>Message body line 1</translation>
-  </message>
-  <message>
-   <location line="118" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Message body line 2</source>
-   <translation>Message body line 2</translation>
-  </message>
-  <message>
-   <location line="144" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming history message</source>
-   <translation>Incoming history message</translation>
-  </message>
-  <message>
-   <location line="147" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming history consecutive message</source>
-   <translation>Incoming history consecutive message</translation>
-  </message>
-  <message>
-   <location line="150" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming status message</source>
-   <translation>Incoming status message</translation>
-  </message>
-  <message>
-   <location line="158" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Outgoing history message</source>
-   <translation>Outgoing history message</translation>
-  </message>
-  <message>
-   <location line="161" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Outgoing status message</source>
-   <translation>Outgoing status message</translation>
-  </message>
-  <message>
-   <location line="181" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Conference topic</source>
-   <translation>Conference topic</translation>
-  </message>
-  <message>
-   <location line="185" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming message</source>
-   <translation>Incoming message</translation>
-  </message>
-  <message>
-   <location line="189" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming event</source>
-   <translation>Incoming event</translation>
-  </message>
-  <message>
-   <location line="192" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming notification</source>
-   <translation>Incoming notification</translation>
-  </message>
-  <message>
-   <location line="198" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Incoming mention message</source>
-   <translation>Incoming mention message</translation>
-  </message>
-  <message>
-   <location line="208" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Outgoing message</source>
-   <translation>Outgoing message</translation>
-  </message>
-  <message>
-   <location line="211" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>Outgoing consecutive message</source>
-   <translation>Outgoing consecutive message</translation>
-  </message>
- </context>
- <context>
-  <name>StyleSelectOptionsWidget</name>
-  <message>
-   <location line="20" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Chat:</source>
-   <translation>Chat:</translation>
-  </message>
-  <message>
-   <location line="23" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Conference:</source>
-   <translation>Conference:</translation>
-  </message>
-  <message>
-   <location line="26" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Message:</source>
-   <translation>Message:</translation>
-  </message>
-  <message>
-   <location line="29" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Headline:</source>
-   <translation>Headline:</translation>
-  </message>
-  <message>
-   <location line="32" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Error:</source>
-   <translation>Error:</translation>
-  </message>
-  <message>
-   <location line="35" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Unknown:</source>
-   <translation>Unknown:</translation>
-  </message>
-  <message>
-   <location line="52" filename="../../plugins/messagestyles/styleselectoptionswidget.cpp"/>
-   <source>Settings...</source>
-   <translation>Settings...</translation>
-  </message>
- </context>
+<context>
+    <name>MessageStyleManager</name>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="33"/>
+        <source>Message Styles Manager</source>
+        <translation>Message Styles Manager</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="34"/>
+        <source>Allows to use different styles to display messages</source>
+        <translation>Allows to use different styles to display messages</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="105"/>
+        <source>Messages styles</source>
+        <translation>Messages styles</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="114"/>
+        <source>Use monospaced font for unformatted text</source>
+        <translation>Use monospaced font for unformatted text</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="119"/>
+        <source>Show date separators in message window</source>
+        <translation>Show date separators in message window</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="260"/>
+        <source>January</source>
+        <translation>January</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="260"/>
+        <source>February</source>
+        <translation>February</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="260"/>
+        <source>March</source>
+        <translation>March</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="260"/>
+        <source>April</source>
+        <translation>April</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>May</source>
+        <translation>May</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>June</source>
+        <translation>June</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>July</source>
+        <translation>July</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>August</source>
+        <translation>August</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>September</source>
+        <translation>September</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>October</source>
+        <translation>October</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>November</source>
+        <translation>November</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="261"/>
+        <source>December</source>
+        <translation>December</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="262"/>
+        <source>Monday</source>
+        <translation>Monday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="262"/>
+        <source>Tuesday</source>
+        <translation>Tuesday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="262"/>
+        <source>Wednesday</source>
+        <translation>Wednesday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="262"/>
+        <source>Thursday</source>
+        <translation>Thursday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="263"/>
+        <source>Friday</source>
+        <translation>Friday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="263"/>
+        <source>Saturday</source>
+        <translation>Saturday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="263"/>
+        <source>Sunday</source>
+        <translation>Sunday</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="267"/>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="269"/>
+        <source>%1, %2 dd</source>
+        <translation>%1, %2 dd</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="267"/>
+        <source>Today</source>
+        <translation>Today</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="271"/>
+        <source>%1, %2 dd, yyyy</source>
+        <translation>%1, %2 dd, yyyy</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="280"/>
+        <source>d MMM yyyy hh:mm</source>
+        <translation>d MMM yyyy hh:mm</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="282"/>
+        <source>d MMM hh:mm</source>
+        <translation>d MMM hh:mm</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/messagestylemanager.cpp" line="283"/>
+        <source>hh:mm:ss</source>
+        <translation>hh:mm:ss</translation>
+    </message>
+</context>
+<context>
+    <name>StyleEditOptionsDialog</name>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="16"/>
+        <source>Preview</source>
+        <translation>Preview</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="36"/>
+        <source>Message Style - %1 - %2</source>
+        <translation>Message Style - %1 - %2</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="87"/>
+        <source>Receiver</source>
+        <translation>Receiver</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="95"/>
+        <source>Sender</source>
+        <translation>Sender</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="108"/>
+        <source>The message with a error code %1 is received</source>
+        <translation>The message with a error code %1 is received</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="109"/>
+        <source>Error description</source>
+        <translation>Error description</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="115"/>
+        <source>Subject: Message subject</source>
+        <translation>Subject: Message subject</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="118"/>
+        <source>Message body line 1</source>
+        <translation>Message body line 1</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="118"/>
+        <source>Message body line 2</source>
+        <translation>Message body line 2</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="144"/>
+        <source>Incoming history message</source>
+        <translation>Incoming history message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="147"/>
+        <source>Incoming history consecutive message</source>
+        <translation>Incoming history consecutive message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="150"/>
+        <source>Incoming status message</source>
+        <translation>Incoming status message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="158"/>
+        <source>Outgoing history message</source>
+        <translation>Outgoing history message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="161"/>
+        <source>Outgoing status message</source>
+        <translation>Outgoing status message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="181"/>
+        <source>Conference topic</source>
+        <translation>Conference topic</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="185"/>
+        <source>Incoming message</source>
+        <translation>Incoming message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="188"/>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="216"/>
+        <source>talks about him or herself as third person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="192"/>
+        <source>Incoming event</source>
+        <translation>Incoming event</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="195"/>
+        <source>Incoming notification</source>
+        <translation>Incoming notification</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="201"/>
+        <source>Incoming mention message</source>
+        <translation>Incoming mention message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="211"/>
+        <source>Outgoing message</source>
+        <translation>Outgoing message</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="213"/>
+        <source>Outgoing consecutive message</source>
+        <translation>Outgoing consecutive message</translation>
+    </message>
+</context>
+<context>
+    <name>StyleSelectOptionsWidget</name>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="20"/>
+        <source>Chat:</source>
+        <translation>Chat:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="23"/>
+        <source>Conference:</source>
+        <translation>Conference:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="26"/>
+        <source>Message:</source>
+        <translation>Message:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="29"/>
+        <source>Headline:</source>
+        <translation>Headline:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="32"/>
+        <source>Error:</source>
+        <translation>Error:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="35"/>
+        <source>Unknown:</source>
+        <translation>Unknown:</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="52"/>
+        <source>Settings...</source>
+        <translation>Settings...</translation>
+    </message>
+</context>
 </TS>

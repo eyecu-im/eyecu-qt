@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>MessageStyleManager</name>
     <message>
@@ -209,6 +209,10 @@
     <message>
         <source>Outgoing consecutive message</source>
         <translation>Исходящее последовательное сообщение</translation>
+    </message>
+    <message>
+        <source>talks about him or herself as third person</source>
+        <translation>говорит о себе в третьем лице</translation>
     </message>
 </context>
 <context>
