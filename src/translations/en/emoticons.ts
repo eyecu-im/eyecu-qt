@@ -21,7 +21,7 @@
   <message>
    <location line="133" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Insert smiley image into message editor</source>
-   <translation type="unfinished"/>
+   <translation>Insert smiley image into message editor</translation>
   </message>
   <message>
    <location line="144" filename="../../plugins/emoticons/emoticons.cpp"/>

@@ -2,15 +2,15 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.8</Version>
-    <ReleaseDate>2015-12-15</ReleaseDate>
+    <Version>1.3.9</Version>
+    <ReleaseDate>2015-12-28</ReleaseDate>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>    
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>Message editor have rich text support always enabled now.</UpdateText>
+    <UpdateText>Added "/me" command to message style preview dialog. Added "Fancy" and "Fancy Alternating" simple message styles.</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Script>installscript.js</Script>

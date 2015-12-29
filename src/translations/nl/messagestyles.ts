@@ -236,27 +236,33 @@
    <translation>Inkomend bericht</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="189"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="188"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="216"/>
+   <source>talks about him or herself as third person</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="192"/>
    <source>Incoming event</source>
    <translation>Inkomende gebeurtenis</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="192"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="195"/>
    <source>Incoming notification</source>
    <translation>Inkomende melding</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="198"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="201"/>
    <source>Incoming mention message</source>
    <translation>Inkomend genoemd bericht</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="208"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="211"/>
    <source>Outgoing message</source>
    <translation>Uitgaand bericht</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="211"/>
+   <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="213"/>
    <source>Outgoing consecutive message</source>
    <translation>Opeenvolgend uitgaand bericht</translation>
   </message>
