@@ -184,9 +184,15 @@ void StyleEditOptionsDialog::createViewContent()
 		i_options.kind = IMessageStyleContentOptions::KindMessage;
 		FStyle->appendContent(FStyleView,tr("Incoming message"),i_options);
 
+		i_options.kind = IMessageStyleContentOptions::KindMeCommand;
+		FStyle->appendContent(FStyleView,tr("speaks about himself as third person"),i_options);
+
 		i_options.type = IMessageStyleContentOptions::TypeEvent;
 		i_options.kind = IMessageStyleContentOptions::KindStatus;
 		FStyle->appendContent(FStyleView,tr("Incoming event"),i_options);
+
+		i_options.type = IMessageStyleContentOptions::TypeNotification;
+		FStyle->appendContent(FStyleView,tr("Incoming notification"),i_options);
 
 		i_options.type = IMessageStyleContentOptions::TypeNotification;
 		FStyle->appendContent(FStyleView,tr("Incoming notification"),i_options);
@@ -206,6 +212,9 @@ void StyleEditOptionsDialog::createViewContent()
 			o_options.timeFormat = FMessageStyleManager->timeFormat(o_options.time);
 		o_options.kind = IMessageStyleContentOptions::KindMessage;
 		FStyle->appendContent(FStyleView,tr("Outgoing message"),o_options);
+
+		o_options.kind = IMessageStyleContentOptions::KindMeCommand;
+		FStyle->appendContent(FStyleView,tr("speaks about himself as third person"),o_options);
 
 		o_options.time = QDateTime::currentDateTime().addSecs(5);
 		FStyle->appendContent(FStyleView,tr("Outgoing consecutive message"),o_options);
