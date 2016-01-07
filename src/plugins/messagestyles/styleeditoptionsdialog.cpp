@@ -185,7 +185,7 @@ void StyleEditOptionsDialog::createViewContent()
 		FStyle->appendContent(FStyleView,tr("Incoming message"),i_options);
 // *** <<< eyeCU <<< ***
 		i_options.kind = IMessageStyleContentOptions::KindMeCommand;
-		FStyle->appendContent(FStyleView,tr("talks about him or herself as third person"),i_options);
+		FStyle->appendContent(FStyleView,tr("speaks of himself in the third person"),i_options);
 // *** >>> eyeCU >>> ***
 		i_options.type = IMessageStyleContentOptions::TypeEvent;
 		i_options.kind = IMessageStyleContentOptions::KindStatus;
@@ -213,7 +213,7 @@ void StyleEditOptionsDialog::createViewContent()
 		FStyle->appendContent(FStyleView,tr("Outgoing consecutive message"),o_options);
 // *** <<< eyeCU <<< ***
 		o_options.kind = IMessageStyleContentOptions::KindMeCommand;
-		FStyle->appendContent(FStyleView,tr("talks about him or herself as third person"),o_options);
+		FStyle->appendContent(FStyleView,tr("speaks of himself in the third person"),o_options);
 // *** >>> eyeCU >>> ***
 	}
 }
