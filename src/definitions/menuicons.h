@@ -75,6 +75,7 @@
 #define MNI_GATEWAYS_LOG_OUT            "gatewaysLogout"
 #define MNI_GATEWAYS_KEEP_CONNECTION    "gatewaysKeepConnection"
 #define MNI_GATEWAYS_CHANGE             "gatewaysChange"
+#define MNI_GATEWAYS_REMOVE             "gatewaysRemove"
 #define MNI_GATEWAYS_RESOLVE            "gatewaysResolve"
 #define MNI_GATEWAYS_RESET              "gatewaysReset"
 

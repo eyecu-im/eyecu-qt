@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>Notifications</name>
     <message>
@@ -60,10 +60,6 @@
         <translation>Не отображать текст сообщения во всплывающем окне</translation>
     </message>
     <message>
-        <source> seconds</source>
-        <translation> секунд</translation>
-    </message>
-    <message>
         <source>Time to display a pop-up window (0 - always visible):</source>
         <translation>Время отображения всплывающего окна (0 - не закрывать):</translation>
     </message>
@@ -78,6 +74,18 @@
     <message>
         <source>Highlight the corresponding window in the taskbar</source>
         <translation>Подсвечивать соответствующее окно в панели задач</translation>
+    </message>
+    <message>
+        <source>Enable animation</source>
+        <translation>Разрешить анимацию</translation>
+    </message>
+    <message numerus="yes">
+        <source>second(s)</source>
+        <translation>
+            <numerusform> секунда</numerusform>
+            <numerusform>секунды</numerusform>
+            <numerusform>секунд</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -101,13 +109,6 @@
     <message>
         <source>Display a notification icon in the system tray</source>
         <translation>Показывать иконку уведомления в системном трее</translation>
-    </message>
-</context>
-<context>
-    <name>NotifyWidget</name>
-    <message>
-        <source>Message is empty or hidden</source>
-        <translation>Сообщение пустое или скрыто</translation>
     </message>
 </context>
 </TS>

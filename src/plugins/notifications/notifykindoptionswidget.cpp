@@ -54,7 +54,7 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setToolTip(tr("Show the corresponding window minimized in the taskbar"));
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_SHOWMINIMIZED));
 
-	tbwNotifies->horizontalHeader()->setResizeMode(NTC_TRAY,QHeaderView::ResizeToContents);
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_TRAY,QHeaderView::ResizeToContents);
 	tbwNotifies->horizontalHeaderItem(NTC_TRAY)->setToolTip(tr("Display a notification icon in the system tray"));
 	tbwNotifies->horizontalHeaderItem(NTC_TRAY)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_TRAYICON));
 
@@ -121,7 +121,7 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 		tray->setCheckState(Qt::Unchecked);
 		tbwNotifies->setItem(row,NTC_TRAY,tray);
 
-		tbwNotifies->verticalHeader()->setResizeMode(row,QHeaderView::ResizeToContents);
+		tbwNotifies->verticalHeader()->SETRESIZEMODE(row,QHeaderView::ResizeToContents);
 	}
 
 	reset();
