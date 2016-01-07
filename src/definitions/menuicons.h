@@ -75,7 +75,6 @@
 #define MNI_GATEWAYS_LOG_OUT            "gatewaysLogout"
 #define MNI_GATEWAYS_KEEP_CONNECTION    "gatewaysKeepConnection"
 #define MNI_GATEWAYS_CHANGE             "gatewaysChange"
-#define MNI_GATEWAYS_REMOVE             "gatewaysRemove"
 #define MNI_GATEWAYS_RESOLVE            "gatewaysResolve"
 #define MNI_GATEWAYS_RESET              "gatewaysReset"
 
@@ -153,6 +152,7 @@
 #define MNI_NOTIFICATIONS_SOUNDPLAY     "notificationsSoundPlay"
 #define MNI_NOTIFICATIONS_PUPUPWINDOW   "notificationsPopupWindow"
 #define MNI_NOTIFICATIONS_SHOWMINIMIZED "notificationsShowMinimized"
+#define MNI_NOTIFICATIONS_TRAYICON      "notificationsTrayIcon"
 
 //OptionsManager
 #define MNI_OPTIONS_DIALOG              "optionsDialog"
@@ -239,6 +239,7 @@
 #define MNI_SCHANGER_MODIFY_STATUS      "schangerModifyStatus"
 #define MNI_SCHANGER_EDIT_STATUSES      "schangerEditStatuses"
 #define MNI_SCHANGER_CONNECTING         "schangerConnecting"
+#define MNI_SCHANGER_CONNECTION_ERROR   "schangerConnectionError"
 
 //VCard
 #define MNI_VCARD                       "VCard"
@@ -360,5 +361,4 @@
 #define MNI_JINGLE                      "jingle"
 #define MNI_JINGLE_RTP                  "jingleRtp"
 // >>> eyeCU >>>
-
-#endif
+#endif // DEF_MENUICONS_H

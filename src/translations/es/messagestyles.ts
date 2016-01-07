@@ -163,7 +163,7 @@
     <message>
         <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="36"/>
         <source>Message Style - %1 - %2</source>
-        <translation>Estilo de mensaje - %1 - %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="87"/>
