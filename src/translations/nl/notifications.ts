@@ -129,7 +129,7 @@
   <message>
    <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="58"/>
    <source>Display a notification icon in the system tray</source>
-   <translation type="unfinished"/>
+   <translation>Toon een meldingspictogram in het systeemvak</translation>
   </message>
  </context>
 </TS>
