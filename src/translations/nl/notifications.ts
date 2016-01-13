@@ -107,24 +107,29 @@
  <context>
   <name>NotifyKindOptionsWidget</name>
   <message>
-   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="41"/>
+   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="42"/>
    <source>Event</source>
    <translation>Evenement</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="45"/>
+   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="46"/>
    <source>Play sound at the notification</source>
    <translation>Speel geluid af bij een melding</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="49"/>
+   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="50"/>
    <source>Display a notification in popup window</source>
    <translation>Toon een melding in popup-venster</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="53"/>
+   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="54"/>
    <source>Show the corresponding window minimized in the taskbar</source>
    <translation>Toon de overeenkomstige venster geminimaliseerd in de taakbalk</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/notifications/notifykindoptionswidget.cpp" line="58"/>
+   <source>Display a notification icon in the system tray</source>
+   <translation>Toon een meldingspictogram in het systeemvak</translation>
   </message>
  </context>
 </TS>

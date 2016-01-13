@@ -238,7 +238,7 @@
   <message>
    <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="188"/>
    <location filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp" line="216"/>
-   <source>talks about him or herself as third person</source>
+   <source>speaks of himself in the third person</source>
    <translation type="unfinished"/>
   </message>
   <message>

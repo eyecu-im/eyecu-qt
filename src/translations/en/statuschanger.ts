@@ -48,8 +48,8 @@
   </message>
   <message>
    <location line="238" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="1152" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="1162" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location line="1157" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location line="1167" filename="../../plugins/statuschanger/statuschanger.cpp"/>
    <source>Status</source>
    <translation>Status</translation>
   </message>
@@ -147,12 +147,12 @@
    <translation>%1 - %2</translation>
   </message>
   <message>
-   <location line="987" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location line="992" filename="../../plugins/statuschanger/statuschanger.cpp"/>
    <source>Connection error</source>
    <translation>Connection error</translation>
   </message>
   <message>
-   <location line="1283" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location line="1288" filename="../../plugins/statuschanger/statuschanger.cpp"/>
    <source>Left %1</source>
    <translation>Left %1</translation>
   </message>

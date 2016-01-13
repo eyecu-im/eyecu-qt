@@ -423,7 +423,9 @@ call copyresources1 ru.rwsoftware.eyecu.wizards.transport wizards\shared
 call copyplugins ru.rwsoftware.eyecu.wizards.account wizardaccount
 set resources=servers.xml software.def.xml networks.def.xml ejabberd.png jabberd.png openfire.png prosody.png tigase.png gtalk.png livejournal.png odnoklassniki.png qip.png xmpp.png yaonline.png account.png accountend.png
 call copyresources1 ru.rwsoftware.eyecu.wizards.account wizards\shared
-xcopy c:\eyecu\resources\wizards\shared\*.html %packages%\ru.rwsoftware.eyecu.wizards.account\data\resources\wizards\shared\* /S /Y
+xcopy c:\eyecu\resources\wizards\shared\*.en.html %packages%\ru.rwsoftware.eyecu.wizards.account.en\data\resources\wizards\shared\* /S /Y
+xcopy c:\eyecu\resources\wizards\shared\*.ru.html %packages%\ru.rwsoftware.eyecu.wizards.account.ru\data\resources\wizards\shared\* /S /Y
+xcopy c:\eyecu\resources\wizards\shared\*.nl.html %packages%\ru.rwsoftware.eyecu.wizards.account.nl\data\resources\wizards\shared\* /S /Y
 
 rem *** Resources ***
 rem   Country

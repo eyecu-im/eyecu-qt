@@ -112,24 +112,29 @@
  <context>
   <name>NotifyKindOptionsWidget</name>
   <message>
-   <location line="41" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
+   <location line="42" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
    <source>Event</source>
    <translation>Event</translation>
   </message>
   <message>
-   <location line="45" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
+   <location line="46" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
    <source>Play sound at the notification</source>
    <translation>Play sound at the notification</translation>
   </message>
   <message>
-   <location line="49" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
+   <location line="50" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
    <source>Display a notification in popup window</source>
    <translation>Display a notification in popup window</translation>
   </message>
   <message>
-   <location line="53" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
+   <location line="54" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
    <source>Show the corresponding window minimized in the taskbar</source>
    <translation>Show the corresponding window minimized in the taskbar</translation>
+  </message>
+  <message>
+   <location line="58" filename="../../plugins/notifications/notifykindoptionswidget.cpp"/>
+   <source>Display a notification icon in the system tray</source>
+   <translation>Display a notification icon in the system tray</translation>
   </message>
  </context>
 </TS>

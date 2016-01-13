@@ -95,7 +95,9 @@
 #define AG_RVCM_METACONTACTS                                    700
 #define AG_RVCM_GATEWAYS_LOGIN                                  800
 #define AG_RVCM_GATEWAYS_RESOLVE                                800
+// *** <<< eyeCU <<< ***
 #define AG_RVCM_GATEWAYS_REMOVE                                 800
+// *** >>> eyeCU >>> ***
 #define AG_RVCM_VCARD                                           900
 #define AG_RVCM_MULTIUSERCHAT_EXIT                              1000
 

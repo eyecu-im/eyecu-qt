@@ -247,7 +247,7 @@ Check waarden en probeer opnieuw</translation>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="325"/>
    <source>Automatically rejoin to conference after kick</source>
-   <translation>Automatisch weer aan aan conferentie deelname na de kick</translation>
+   <translation>Automatisch weer aan een conferentie deelnemen na de kick</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="326"/>

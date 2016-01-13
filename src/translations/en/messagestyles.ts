@@ -240,8 +240,8 @@
   <message>
    <location line="188" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
    <location line="216" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>
-   <source>talks about him or herself as third person</source>
-   <translation>talks about him or herself as third person</translation>
+   <source>speaks of himself in the third person</source>
+   <translation>speaks of himself in the third person</translation>
   </message>
   <message>
    <location line="192" filename="../../plugins/messagestyles/styleeditoptionsdialog.cpp"/>

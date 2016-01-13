@@ -12,6 +12,7 @@ enum NotifiesTableColumn {
 	NTC_SOUND,
 	NTC_POPUP,
 	NTC_MINIMIZED,
+	NTC_TRAY,
 	NTC__COUNT
 };
 
@@ -38,7 +39,7 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 	connect(tbwNotifies,SIGNAL(itemChanged(QTableWidgetItem *)),SIGNAL(modified()));
 
 	tbwNotifies->setColumnCount(NTC__COUNT);
-	tbwNotifies->setHorizontalHeaderLabels(QStringList() << tr("Event") << "" << "" << "");
+	tbwNotifies->setHorizontalHeaderLabels(QStringList() << tr("Event") << "" << "" << "" << "" );
 	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_TYPE,QHeaderView::Stretch);
 
 	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_SOUND,QHeaderView::ResizeToContents);
@@ -53,12 +54,16 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setToolTip(tr("Show the corresponding window minimized in the taskbar"));
 	tbwNotifies->horizontalHeaderItem(NTC_MINIMIZED)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_SHOWMINIMIZED));
 
+	tbwNotifies->horizontalHeader()->SETRESIZEMODE(NTC_TRAY,QHeaderView::ResizeToContents);
+	tbwNotifies->horizontalHeaderItem(NTC_TRAY)->setToolTip(tr("Display a notification icon in the system tray"));
+	tbwNotifies->horizontalHeaderItem(NTC_TRAY)->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_NOTIFICATIONS_TRAYICON));
+
 	QVBoxLayout *vblLayout = new QVBoxLayout(this);
 	vblLayout->addWidget(tbwNotifies);
 	vblLayout->setMargin(0);
 
 	QMultiMap<int, NotificationType> orderedTypes;
-	ushort visibleKinds = INotification::PopupWindow|INotification::SoundPlay|INotification::ShowMinimized;
+	ushort visibleKinds = INotification::PopupWindow|INotification::TrayNotify|INotification::SoundPlay|INotification::ShowMinimized;
 	foreach(const QString &typeId, FNotifications->notificationTypes())
 	{
 		NotificationType notifyType = FNotifications->notificationType(typeId);
@@ -105,6 +110,16 @@ NotifyKindOptionsWidget::NotifyKindOptionsWidget(INotifications *ANotifications,
 			minimized->setFlags(Qt::ItemIsUserCheckable);
 		minimized->setCheckState(Qt::Unchecked);
 		tbwNotifies->setItem(row,NTC_MINIMIZED,minimized);
+
+		tbwNotifies->verticalHeader()->SETRESIZEMODE(row,QHeaderView::ResizeToContents);
+		QTableWidgetItem *tray = new QTableWidgetItem();
+		tray->setData(NTR_KIND, INotification::TrayNotify);
+		if (it->kindMask & INotification::TrayNotify)
+			tray->setFlags(Qt::ItemIsEnabled | Qt::ItemIsUserCheckable);
+		else
+			tray->setFlags(Qt::ItemIsUserCheckable);
+		tray->setCheckState(Qt::Unchecked);
+		tbwNotifies->setItem(row,NTC_TRAY,tray);
 
 		tbwNotifies->verticalHeader()->SETRESIZEMODE(row,QHeaderView::ResizeToContents);
 	}
