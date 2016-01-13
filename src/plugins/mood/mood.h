@@ -165,7 +165,8 @@ private:
 	IMessageWidgets		*FMessageWidgets;
 	IMessageStyleManager *FMessageStyleManager;
 	IMap				*FMap;
-	IconStorage			*FIconStorage;
+	IconStorage			*FMoodIconStorage;
+	IconStorage			*FMenuIconStorage;
 	IMapContacts		*FMapContacts;
 	INotifications		*FNotifications;
 	MoodData			FCurrentMood;

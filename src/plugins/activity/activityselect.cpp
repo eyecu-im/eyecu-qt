@@ -1,3 +1,4 @@
+#include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include "activityselect.h"
 
@@ -12,7 +13,7 @@ ActivitySelect::ActivitySelect(Activity *AActivity, const QHash<QString, QString
     ui->setupUi(this);
     ui->lstActivity->sortItems(0,Qt::AscendingOrder);
 
-	setWindowIcon(FActivity->getIcon(QString(MNI_ACTIVITY)));
+	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(QString(MNI_ACTIVITY)));
     fillActivityTree();    
     fillTextList(AActivityData.iconFileName());
 

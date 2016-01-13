@@ -1,4 +1,5 @@
 #include <definitions/menuicons.h>
+#include <definitions/resources.h>
 #include "moodselect.h"
 
 MoodSelect::MoodSelect(Mood *AMood, const QStringList &AMoodList, const QHash<QString, QStringList> &ATextList, const QHash<QString, QString> &AMoodKeys, const MoodData &AMoodData, QWidget *parent):
@@ -17,7 +18,9 @@ MoodSelect::MoodSelect(Mood *AMood, const QStringList &AMoodList, const QHash<QS
     connect(ui->listActiv,SIGNAL(currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)),SLOT(onCurItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)));
     connect(ui->comboBox,SIGNAL(editTextChanged(QString)),SLOT(onEditTextChanged(QString)));
 
-	setWindowIcon(AMood->getIcon(QString(MNI_MOOD)));
+
+
+	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MOOD));
     fillMoodList();
     setCurrentItem(AMoodData);
 }

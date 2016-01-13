@@ -57,7 +57,8 @@ Mood::Mood():
     FMessageWidgets(NULL),
 	FMessageStyleManager(NULL),
     FMap(NULL),    
-    FIconStorage(NULL),
+    FMoodIconStorage(NULL),
+	FMenuIconStorage(NULL),
     FMapContacts(NULL),
     FNotifications(NULL),
 	FSimpleContactsView(false),
@@ -229,10 +230,11 @@ bool Mood::initObjects()
     if (FRostersModel)
         FRostersModel->insertRosterDataHolder(RDHO_MOOD, this);
 
-    FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MOOD);
-    FMoodList=FIconStorage->fileFirstKeys();
+    FMoodIconStorage = IconStorage::staticStorage(RSR_STORAGE_MOOD);
+	FMenuIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
+    FMoodList=FMoodIconStorage->fileFirstKeys();
 
-    QList<QString> keys = FIconStorage->fileKeys();    
+    QList<QString> keys = FMoodIconStorage->fileKeys();    
     for(QStringList::const_iterator it=keys.constBegin(); it!=keys.constEnd(); it++)
     {
         QString mood=*it;
@@ -257,8 +259,8 @@ bool Mood::initObjects()
     {
         INotificationType notifyType;
         notifyType.order = NTO_MOOD_CHANGE;
-        if (FIconStorage)
-            notifyType.icon = FIconStorage->getIcon(MNI_MOOD);
+        if (FMoodIconStorage)
+			notifyType.icon = FMenuIconStorage->getIcon(MNI_MOOD);
         notifyType.title = tr("When user mood changed");
         notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
         notifyType.kindDefs = notifyType.kindMask;
@@ -267,7 +269,7 @@ bool Mood::initObjects()
 
 	Action *action = FPEPManager->addAction(AG_MOOD);
 	action->setText(tr("Mood"));
-	action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+	action->setIcon(RSR_STORAGE_MENUICONS, MNI_MOOD);
 	action->setShortcutId(SCT_APP_SETMOOD);
 	connect(action, SIGNAL(triggered(bool)), SLOT(showMoodSelector(bool)));
 
@@ -387,7 +389,7 @@ void Mood::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.var = NS_PEP_MOOD;
     dfeature.active = true;
-    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MOOD)->getIcon(MNI_MOOD);
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MOOD);
     dfeature.name = tr("User Mood");
     dfeature.description = tr("Supports User Mood");
     FDiscovery->insertDiscoFeature(dfeature);
@@ -563,7 +565,7 @@ void Mood::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint
 	{
 		Action *action = new Action(AMenu);
 		action->setText(tr("Mood"));
-		action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_MOOD);
 		action->setData(ADR_STREAM_JIDS, streamJids);
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSetMoodByAction(bool)));
 		AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
@@ -754,17 +756,17 @@ void Mood::updateChatWindowInfo(IMessageChatWindow *AMessageChatWindow)
 
 QIcon Mood::getIcon(const QString &AMoodName) const
 {
-	return FIconStorage->getIcon(AMoodName);
+	return FMoodIconStorage->getIcon(AMoodName);
 }
 
 QIcon Mood::getIcon(const Jid &AContactJid) const
 {
-	return  FMoodHash.contains(AContactJid.bare())?FIconStorage->getIcon(FMoodHash.value(AContactJid.bare()).name):QIcon();
+	return  FMoodHash.contains(AContactJid.bare())?FMoodIconStorage->getIcon(FMoodHash.value(AContactJid.bare()).name):QIcon();
 }
 
 QString Mood::getIconFileName(const QString &AMoodName) const
 {
-	return FIconStorage->fileFullName(AMoodName);
+	return FMoodIconStorage->fileFullName(AMoodName);
 }
 
 QString Mood::getIconFileName(const Jid &AContactJid) const
@@ -845,7 +847,7 @@ void Mood::updateChatWindowActions(IMessageChatWindow *AChatWindow)
             IMessageAddress *address=AChatWindow->address();
             Action *action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Add mood"));
-            action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+			action->setIcon(RSR_STORAGE_MENUICONS, MNI_MOOD);
             action->setData(ADR_MESSAGE_TYPE, MT_CHAT);
             action->setShortcutId(SCT_MESSAGEWINDOWS_SETMOOD);
             action->setData(ADR_CONTACT_JID, address->contactJid().full());
@@ -995,7 +997,7 @@ void Mood::onNormalWindowCreated(IMessageNormalWindow *AWindow)
     {
         Action *action = new Action();
         action->setText(tr("Add mood"));
-        action->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_MOOD);
         action->setData(ADR_MESSAGE_TYPE, MT_NORMAL);
         action->setShortcutId(SCT_MESSAGEWINDOWS_SETMOOD);
         action->setData(ADR_CONTACT_JID, AWindow->contactJid().full());
@@ -1040,8 +1042,7 @@ void Mood::onAddMood(bool)
                 saveComments(moodData);
             }
 
-            action->setIcon(RSR_STORAGE_MOOD, moodData.isEmpty()?MNI_MOOD:moodData.name);
-
+			action->setIcon(moodData.isEmpty()?FMenuIconStorage->getIcon(MNI_MOOD):FMoodIconStorage->getIcon(moodData.name));
             if(messageType==MT_CHAT)
             {
                 FMoodChat[streamJid].insert(contactJid, moodData);
@@ -1116,7 +1117,7 @@ void Mood::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADoc
         {
             QString icon = mood.firstChild().toElement().tagName();
             QString comment = mood.firstChildElement("text").text();
-			QUrl uri=QUrl::fromLocalFile(FIconStorage->fileFullName(icon));
+			QUrl uri=QUrl::fromLocalFile(FMoodIconStorage->fileFullName(icon));
             QString comText = QString(" (%1)").arg(comment);
 
             QTextImageFormat imageFormat;
@@ -1161,7 +1162,7 @@ bool Mood::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage
 
                 Action *act =FMoodChatActions[AStreamJid].value(contactJid);
                 if(act)
-                    act->setIcon(RSR_STORAGE_MOOD, MNI_MOOD);
+					act->setIcon(RSR_STORAGE_MENUICONS, MNI_MOOD);
             }
         }
         else if(AMessage.type()==Message::Normal)

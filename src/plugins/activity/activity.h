@@ -160,7 +160,8 @@ private:
 	IMap				*FMap;
 	IMapContacts		*FMapContacts;
 	INotifications		*FNotifications;
-	IconStorage			*FIconStorage;
+	IconStorage			*FActivityIconStorage;
+	IconStorage			*FMenuIconStorage;
 	bool				FSimpleContactsView;
 	quint32				FRosterLabelId;
 	QSet<Jid>			FStreamsOnline;

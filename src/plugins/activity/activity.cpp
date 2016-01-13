@@ -71,7 +71,8 @@ Activity::Activity():
 	FMap(NULL),
 	FMapContacts(NULL),
 	FNotifications(NULL),
-	FIconStorage(NULL),
+	FActivityIconStorage(NULL),
+	FMenuIconStorage(NULL),
 	FSimpleContactsView(false),
 	FRosterLabelId(-1),	
 	FRosterIndexKinds(QList<int>() << RIK_CONTACT << RIK_METACONTACT << RIK_METACONTACT_ITEM << RIK_RECENT_ITEM << RIK_MY_RESOURCE << RIK_STREAM_ROOT)
@@ -212,7 +213,8 @@ bool Activity::initObjects()
 	Shortcuts::declareShortcut(SCT_APP_SETACTIVITY, tr("Set activity"), tr("Ctrl+F6", "Set activity (for all accounts)"), Shortcuts::ApplicationShortcut);
 	Shortcuts::declareShortcut(SCT_ROSTERVIEW_SETACTIVITY, tr("Set activity"), tr("F6", "Set activity (for an account)"), Shortcuts::WidgetShortcut);
 
-	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_ACTIVITY);
+	FActivityIconStorage = IconStorage::staticStorage(RSR_STORAGE_ACTIVITY);
+	FMenuIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	loadActivityList();
 
@@ -243,8 +245,8 @@ bool Activity::initObjects()
 	{
 		INotificationType notifyType;
 		notifyType.order = NTO_ACTIVITY_CHANGE;
-		if (FIconStorage)
-			notifyType.icon = FIconStorage->getIcon(MNI_ACTIVITY);
+		if (FActivityIconStorage)
+			notifyType.icon = FMenuIconStorage->getIcon(MNI_ACTIVITY);
 		notifyType.title = tr("When user activity changed");
 		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		notifyType.kindDefs = notifyType.kindMask;
@@ -253,7 +255,7 @@ bool Activity::initObjects()
 
 	Action *action = FPEPManager->addAction(AG_ACTIVITY);
 	action->setText(tr("Activity"));
-	action->setIcon(RSR_STORAGE_ACTIVITY, MNI_ACTIVITY);
+	action->setIcon(RSR_STORAGE_MENUICONS, MNI_ACTIVITY);
 	action->setShortcutId(SCT_APP_SETACTIVITY);
 	connect(action,SIGNAL(triggered(bool)),this,SLOT(menuActivity()));
 
@@ -393,7 +395,7 @@ void Activity::registerDiscoFeatures()
 	IDiscoFeature dfeature;
 	dfeature.var = NS_PEP_ACTIVITY;
 	dfeature.active = true;
-	dfeature.icon = FIconStorage->getIcon(MNI_ACTIVITY);
+	dfeature.icon = FMenuIconStorage->getIcon(MNI_ACTIVITY);
 	dfeature.name = tr("User Activity");
 	dfeature.description = tr("Supports publishing of current user activity");
 	FDiscovery->insertDiscoFeature(dfeature);
@@ -541,12 +543,11 @@ void Activity::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, q
 			}
 		}
 
-//	Jid streamJid = (*it)->data(RDR_STREAM_JID).toString();
 	if (!streamJids.isEmpty())
 	{
 		Action *action = new Action(AMenu);
 		action->setText(tr("Activity"));
-		action->setIcon(RSR_STORAGE_ACTIVITY, MNI_ACTIVITY);
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_ACTIVITY);
 		action->setData(ADR_STREAM_JIDS, streamJids);
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSetActivityByAction(bool)));
 		AMenu->addAction(action, AG_RVCM_ACTIVITY, true);
@@ -753,9 +754,9 @@ void Activity::updateChatWindowInfo(IMessageChatWindow *AMessageChatWindow)
 
 void Activity::loadActivityList()
 {
-	QDir dir(FIconStorage->resourcesDirs().first());
-	dir.cd(FIconStorage->storage());
-	dir.cd(FIconStorage->subStorage());
+	QDir dir(FActivityIconStorage->resourcesDirs().first());
+	dir.cd(FActivityIconStorage->storage());
+	dir.cd(FActivityIconStorage->subStorage());
 
 	QFile file(dir.absoluteFilePath(ACTIVITIES_DEF));
 	if(file.open(QFile::ReadOnly))
@@ -787,7 +788,7 @@ void Activity::loadActivityList()
 
 QIcon Activity::getIcon(const QString &AName) const
 {
-	return FIconStorage->getIcon(AName);
+	return FActivityIconStorage->getIcon(AName);
 }
 
 QIcon Activity::getIcon(const Jid &AContactJid) const
@@ -807,7 +808,7 @@ QString Activity::getIconFileName(const ActivityData &AActivity) const
 
 QString Activity::getIconFileName(const QString &AActivityName) const
 {
-	return FIconStorage->fileFullName(AActivityName);
+	return FActivityIconStorage->fileFullName(AActivityName);
 }
 
 QString Activity::getIconFileName(const Jid &AContactJid) const
