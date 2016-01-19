@@ -124,7 +124,7 @@
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="607"/>
    <source>Account</source>
-   <translation type="unfinished"/>
+   <translation>Обліковий запис</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="659"/>

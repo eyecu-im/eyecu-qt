@@ -302,7 +302,7 @@
   <message>
    <location filename="../../plugins/messagestyles/styleselectoptionswidget.cpp" line="52"/>
    <source>Settings...</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування...</translation>
   </message>
  </context>
 </TS>

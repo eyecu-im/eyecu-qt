@@ -184,7 +184,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/logindialog.ui" line="66"/>
    <source>Settings...</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування...</translation>
   </message>
  </context>
  <context>

@@ -24,7 +24,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="130"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="150"/>

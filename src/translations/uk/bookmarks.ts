@@ -15,17 +15,17 @@
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="207"/>
    <source>Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Конференції</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="208"/>
    <source>Disable auto join to conferences on this computer</source>
-   <translation type="unfinished"/>
+   <translation>Вимкнути автоприєднання до конференцій на цьому комп&apos;ютері</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="212"/>
    <source>Show windows of auto joined conferences at startup</source>
-   <translation type="unfinished"/>
+   <translation>Показувати вікно для автоприєднання до конференцій під час запуску</translation>
   </message>
   <message>
    <location filename="../../plugins/bookmarks/bookmarks.cpp" line="520"/>

@@ -40,7 +40,7 @@
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="344"/>
    <source>Message text hidden</source>
-   <translation type="unfinished"/>
+   <translation>Текст повідомлення приховано</translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="412"/>

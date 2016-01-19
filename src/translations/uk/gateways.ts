@@ -80,7 +80,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
    <source>Are you sure you wish to remove transport &apos;&lt;b&gt;%1&lt;/b&gt;&apos; and its &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Ви впевнені, що хочете видалити транспорт &apos;&lt;b&gt;%1&lt;/b&gt;&apos; і його &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що хочете видалити транспорти &apos;&lt;b&gt;%1&lt;/b&gt;&apos; і їх &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що хочете видалити транспорт &apos;&lt;b&gt;%1&lt;/b&gt;&apos; і його &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="741"/>
@@ -90,7 +90,7 @@
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="742"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n transport(s)&lt;/b&gt; and their contacts from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Ви впевнені, що хочете видалити &lt;b&gt;%n транспорт&lt;/b&gt; і його контакти з ростеру?</numerusform><numerusform>Ви впевнені, що хочете видалити &lt;b&gt;%n транспорти&lt;/b&gt; і їх контакти з ростеру?</numerusform><numerusform>Ви впевнені, що хочете видалити &lt;b&gt;%n транспорт&lt;/b&gt; і його контакти з ростеру?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="823"/>
@@ -105,12 +105,12 @@
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick names</source>
-   <translation type="unfinished"/>
+   <translation>Скинути всі прізвиська</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick name</source>
-   <translation type="unfinished"/>
+   <translation>Скинути прізвисько</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="862"/>

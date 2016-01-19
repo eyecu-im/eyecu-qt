@@ -587,7 +587,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="173"/>
    <source>Ctrl+S</source>
    <comment>Strikeout</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+S</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="175"/>
@@ -859,7 +859,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="602"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Тло</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="644"/>

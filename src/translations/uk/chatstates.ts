@@ -21,7 +21,7 @@
   <message>
    <location filename="../../plugins/chatstates/chatstates.cpp" line="230"/>
    <source>Send notifications of your chat activity</source>
-   <translation type="unfinished"/>
+   <translation>Відправляти нотифікації про вашу активність у чаті</translation>
   </message>
   <message>
    <location filename="../../plugins/chatstates/chatstates.cpp" line="349"/>

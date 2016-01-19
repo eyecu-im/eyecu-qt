@@ -48,7 +48,7 @@
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
    <source>Ctrl+T</source>
    <comment>Show file transfers</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+T</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="91"/>
@@ -78,17 +78,17 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="143"/>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>Передача файлу</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="145"/>
    <source>Create separate folder for each sender</source>
-   <translation type="unfinished"/>
+   <translation>Створити окремі папки для кожного контакту</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="155"/>
    <source>Default transfer method:</source>
-   <translation type="unfinished"/>
+   <translation>Метод передачі за замовчуванням:</translation>
   </message>
  </context>
  <context>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.cpp" line="33"/>
    <source>Select default directory</source>
-   <translation type="unfinished"/>
+   <translation>Виберіть папку за замовчуванням</translation>
   </message>
  </context>
  <context>
@@ -104,7 +104,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.ui" line="20"/>
    <source>Default directory:</source>
-   <translation type="unfinished"/>
+   <translation>Папка за замовчуванням:</translation>
   </message>
  </context>
  <context>

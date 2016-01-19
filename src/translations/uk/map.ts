@@ -162,7 +162,7 @@
   <message>
    <location filename="../../plugins/map/map.cpp" line="792"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання:</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="795"/>
@@ -356,7 +356,7 @@
    <location filename="../../plugins/map/mapoptions.ui" line="81"/>
    <location filename="../../plugins/map/mapoptions.ui" line="615"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Тло</translation>
   </message>
   <message>
    <location filename="../../plugins/map/mapoptions.ui" line="102"/>

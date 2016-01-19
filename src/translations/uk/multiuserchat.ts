@@ -221,7 +221,7 @@ Check values and try again</source>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="320"/>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="1035"/>
    <source>Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Конференції</translation>
   </message>
   <message>
    <location filename="../../plugins/multiuserchat/multiuserchatmanager.cpp" line="321"/>

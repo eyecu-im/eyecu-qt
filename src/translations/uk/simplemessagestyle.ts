@@ -35,12 +35,12 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="11"/>
    <source>Parameters</source>
-   <translation type="unfinished"/>
+   <translation>Параметри</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="12"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Тло</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="20"/>
@@ -74,19 +74,19 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="65"/>
    <source>Font:</source>
-   <translation type="unfinished"/>
+   <translation>Шрифт:</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="85"/>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="158"/>
    <source>Change...</source>
-   <translation type="unfinished"/>
+   <translation>Змінити...</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="95"/>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="165"/>
    <source>Reset</source>
-   <translation type="unfinished"/>
+   <translation>Скинути</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="112"/>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.ui" line="138"/>
    <source>Image:</source>
-   <translation type="unfinished"/>
+   <translation>Зображення:</translation>
   </message>
   <message>
    <location filename="../../plugins/simplemessagestyle/simpleoptionswidget.cpp" line="32"/>

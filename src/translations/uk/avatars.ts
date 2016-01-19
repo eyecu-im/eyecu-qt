@@ -4,32 +4,32 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="41"/>
    <source>Avatar position</source>
-   <translation type="unfinished"/>
+   <translation>Позиція аватару</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="54"/>
    <source>Display avatars for offline contacts grayscaled</source>
-   <translation type="unfinished"/>
+   <translation>Показувати аватари сірим для контактів, що в офлайні</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="67"/>
    <source>Display empty avatars</source>
-   <translation type="unfinished"/>
+   <translation>Показувати пусті аватари</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="81"/>
    <source>At Right</source>
-   <translation type="unfinished"/>
+   <translation>Справа</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="86"/>
    <source>At Left</source>
-   <translation type="unfinished"/>
+   <translation>Зліва</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="94"/>
    <source>Display avatars</source>
-   <translation type="unfinished"/>
+   <translation>Показувати аватари</translation>
   </message>
  </context>
  <context>

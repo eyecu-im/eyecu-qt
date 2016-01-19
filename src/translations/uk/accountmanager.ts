@@ -3,18 +3,18 @@
   <name>Account</name>
   <message>
    <source>Enter password for account &lt;b&gt;%1&lt;/b&gt;</source>
-   <translation type="unfinished"/>
+   <translation>Введіть пароль для: &lt;b&gt;%1&lt;/b&gt;</translation>
   </message>
   <message>
    <source>Account Password</source>
-   <translation type="unfinished"/>
+   <translation>Пароль облікового запису</translation>
   </message>
  </context>
  <context>
   <name>AccountItemWidget</name>
   <message>
    <source>Settings...</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування...</translation>
   </message>
  </context>
  <context>
@@ -37,105 +37,105 @@
   </message>
   <message>
    <source>Common account settings</source>
-   <translation type="unfinished"/>
+   <translation>Загальні налаштування облікового запису</translation>
   </message>
   <message>
    <source>Account</source>
-   <translation type="unfinished"/>
+   <translation>Обліковий запис</translation>
   </message>
   <message>
    <source>Name:</source>
-   <translation type="unfinished"/>
+   <translation>Ім&apos;я:</translation>
   </message>
   <message>
    <source>Password:</source>
-   <translation type="unfinished"/>
+   <translation>Пароль:</translation>
   </message>
   <message>
    <source>Resource:</source>
-   <translation type="unfinished"/>
+   <translation>Ресурс:</translation>
   </message>
   <message>
    <source>Additional settings</source>
-   <translation type="unfinished"/>
+   <translation>Додаткові налаштування</translation>
   </message>
   <message>
    <source>Require secure connection to server</source>
-   <translation type="unfinished"/>
+   <translation>Вимагати безпечне з&apos;єднання з сервером</translation>
   </message>
   <message>
    <source>Parameters</source>
-   <translation type="unfinished"/>
+   <translation>Параметри</translation>
   </message>
   <message>
    <source>Additional</source>
-   <translation type="unfinished"/>
+   <translation>Додатково</translation>
   </message>
   <message>
    <source>Home</source>
-   <translation type="unfinished"/>
+   <translation>Дім</translation>
   </message>
   <message>
    <source>Work</source>
-   <translation type="unfinished"/>
+   <translation>Робота</translation>
   </message>
   <message>
    <source>Notebook</source>
-   <translation type="unfinished"/>
+   <translation>Лаптоп</translation>
   </message>
   <message>
    <source>(default)</source>
-   <translation type="unfinished"/>
+   <translation>(за замовчуванням)</translation>
   </message>
   <message>
    <source>&lt;Empty&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;Пусто&gt;</translation>
   </message>
   <message>
    <source>Default resource:</source>
-   <translation type="unfinished"/>
+   <translation>Ресурс за замовчуванням:</translation>
   </message>
   <message>
    <source>New account</source>
-   <translation type="unfinished"/>
+   <translation>Новий обліковий запис</translation>
   </message>
   <message>
    <source>Jabber ID:</source>
-   <translation type="unfinished"/>
+   <translation>Jabber ID:</translation>
   </message>
  </context>
  <context>
   <name>AccountsOptionsClass</name>
   <message>
    <source>Add or register a new account</source>
-   <translation type="unfinished"/>
+   <translation>Додайте або зареєструйте новий обліковий запис</translation>
   </message>
  </context>
  <context>
   <name>AccountsOptionsWidget</name>
   <message>
    <source>Add Account...</source>
-   <translation type="unfinished"/>
+   <translation>Додати обліковий запис...</translation>
   </message>
   <message>
    <source>Show inactive accounts</source>
-   <translation type="unfinished"/>
+   <translation>Показати неактивні облікові записи</translation>
   </message>
   <message>
    <source>Hide inactive accounts</source>
-   <translation type="unfinished"/>
+   <translation>Сховати неактивні облікові записи</translation>
   </message>
   <message>
    <source>Remove Account</source>
-   <translation type="unfinished"/>
+   <translation>Видалити обліковий запис</translation>
   </message>
   <message>
    <source>You are assured that wish to remove an account &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;All settings will be lost.</source>
-   <translation type="unfinished"/>
+   <translation>Ви впевнені, що хочете видалити обліковий запис &lt;b&gt;%1&lt;/b&gt;? &lt;br&gt;Усі налаштування будуть втрачені.</translation>
   </message>
   <message>
    <source>Use wizard...</source>
-   <translation type="unfinished"/>
+   <translation>Використати автоматичне налаштування...</translation>
   </message>
  </context>
 </TS>

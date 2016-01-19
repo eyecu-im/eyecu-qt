@@ -21,7 +21,7 @@
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="150"/>
    <source>Ctrl+S</source>
    <comment>Send file</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+S</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="152"/>
@@ -41,12 +41,12 @@
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="202"/>
    <source>Automatically receive files from authorized contacts</source>
-   <translation type="unfinished"/>
+   <translation>Автоматично приймати файли від авторизованих контактів</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="203"/>
    <source>Hide file transfer dialog after transfer started</source>
-   <translation type="unfinished"/>
+   <translation>Приховати вікно передачі файлу після початку передачі</translation>
   </message>
   <message>
    <location filename="../../plugins/filetransfer/filetransfer.cpp" line="222"/>
@@ -317,7 +317,7 @@
   <message>
    <location filename="../../plugins/filetransfer/streamdialog.ui" line="172"/>
    <source>Method:</source>
-   <translation type="unfinished"/>
+   <translation>Метод:</translation>
   </message>
  </context>
 </TS>

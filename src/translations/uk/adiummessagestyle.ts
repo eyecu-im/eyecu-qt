@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="839"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалося завантажити стиль чату. Натисніть кнопку &quot;Очистити вікно&quot; щоб спробувати знову.</translation>
   </message>
  </context>
  <context>
@@ -22,17 +22,17 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="27"/>
    <source>Adium Message Style</source>
-   <translation type="unfinished"/>
+   <translation>Стиль повідомлень Adium</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="28"/>
    <source>Allows to use a Adium style in message design</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати стиль Adium в дизайні чату</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="74"/>
    <source>Adium</source>
-   <translation type="unfinished"/>
+   <translation>Adium</translation>
   </message>
  </context>
  <context>
@@ -40,12 +40,12 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="12"/>
    <source>Parameters</source>
-   <translation type="unfinished"/>
+   <translation>Параметри</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="13"/>
    <source>Background</source>
-   <translation type="unfinished"/>
+   <translation>Тло</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="21"/>
@@ -104,20 +104,20 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="65"/>
    <source>Font:</source>
-   <translation type="unfinished"/>
+   <translation>Шрифт:</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="85"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="158"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="33"/>
    <source>Change...</source>
-   <translation type="unfinished"/>
+   <translation>Змінити...</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="95"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="165"/>
    <source>Reset</source>
-   <translation type="unfinished"/>
+   <translation>Скинути</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="112"/>
@@ -127,7 +127,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="138"/>
    <source>Image:</source>
-   <translation type="unfinished"/>
+   <translation>Зображення:</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="172"/>

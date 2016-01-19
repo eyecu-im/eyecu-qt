@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Points of Interest Ukrainian Translation</DisplayName>
     <Description>Points of Interest Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-01-19</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.poi.uk</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>

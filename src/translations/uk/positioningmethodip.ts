@@ -25,7 +25,7 @@
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="110"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання:</translation>
   </message>
  </context>
  <context>

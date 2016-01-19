@@ -257,9 +257,13 @@ call copyresources2 ru.rwsoftware.eyecu.pepmanager menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.mood mood
 call copyresources ru.rwsoftware.eyecu.pepmanager.mood moodicons\shared
+set files=moodicon.def.xml mood.png
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.mood menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.activity activity
 call copyresources ru.rwsoftware.eyecu.pepmanager.activity activityicons\shared
+set files=activity.def.xml activity.png
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.activity menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.tune tune
 set files=tune.def.xml tune.png
