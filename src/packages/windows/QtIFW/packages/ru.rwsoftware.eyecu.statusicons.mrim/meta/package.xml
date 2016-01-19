@@ -2,8 +2,9 @@
 <Package>
     <DisplayName>Mail.ru-Agent</DisplayName>
     <Description>Mail.ru-Agent</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-01-18</ReleaseDate>
+    <UpdateText>Icon association is more tolerant now</UpdateText>
     <Name>ru.rwsoftware.eyecu.statusicons.mrim</Name>
     <SortingPriority>10</SortingPriority>
     <Default>true</Default>

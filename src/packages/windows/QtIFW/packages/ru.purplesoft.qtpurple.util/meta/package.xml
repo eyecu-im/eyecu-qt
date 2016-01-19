@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.10</Version>
-    <ReleaseDate>2016-01-07</ReleaseDate>
+    <Version>1.0.11</Version>
+    <ReleaseDate>2016-01-16</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
 	<UpdateText>Remove extra debug output in XHTML parser</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
