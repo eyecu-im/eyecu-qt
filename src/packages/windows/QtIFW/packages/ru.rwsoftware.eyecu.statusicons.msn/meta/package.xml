@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>MSN</DisplayName>
     <Description>MSN</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-01-18</ReleaseDate>
-    <UpdateText>Icon association is more tolerant now</UpdateText>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2016-01-21</ReleaseDate>
+    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
     <Name>ru.rwsoftware.eyecu.statusicons.msn</Name>
     <SortingPriority>11</SortingPriority>
     <Default>true</Default>

@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>Bot</DisplayName>
     <Description>Bot</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-01-18</ReleaseDate>
-    <UpdateText>Added icon association</UpdateText>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2016-01-21</ReleaseDate>
+    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
     <Name>ru.rwsoftware.eyecu.statusicons.bot</Name>
     <SortingPriority>2</SortingPriority>
     <Default>true</Default>

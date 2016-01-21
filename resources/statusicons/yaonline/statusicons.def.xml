@@ -1,4 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <statusdef>
-	<pattern>@(ya|yandex)\.ru</pattern>
+	<pattern>@((yandex)\.(ru|net|com|by|kz|ua)|(ya(|ndex-co)|narod)\.ru)</pattern>
 </statusdef>

@@ -289,8 +289,7 @@ void Emoji::createIconsetUrls()
 				fileFirstKey.insert(storage->fileFullName(key), key);
 
 			foreach(const QString &key, storage->fileKeys())
-			{
-				if (!FUrlByKey.contains(key)) 
+				if (!FUrlByKey.contains(key) && key!="default" && !FColorSuffixes.contains(key))
 				{
 					QString file = storage->fileFullName(key);
 					QUrl url = QUrl::fromLocalFile(file);
@@ -298,7 +297,6 @@ void Emoji::createIconsetUrls()
 					FKeyByUrl.insert(url.toString(),fileFirstKey.value(file));
 					createTreeItem(key,url);
 				}
-			}
 		}
 	}
 }
