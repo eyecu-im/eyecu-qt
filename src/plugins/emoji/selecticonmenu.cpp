@@ -64,8 +64,11 @@ void SelectIconMenu::onAboutToShow()
 	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
 	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
 
+	FTabWidget = new QTabWidget(this);
+	FLayout->addWidget(FTabWidget);
+
 	SelectIconWidget *widget = new SelectIconWidget(FStorage, color, FEmoji, this);
-	FLayout->addWidget(widget);
+	FTabWidget->addTab(widget, "First tab");
 
 	connect(this,SIGNAL(aboutToHide()),widget,SLOT(deleteLater()));
 	connect(widget,SIGNAL(iconSelected(const QString &, const QString &)),SIGNAL(iconSelected(const QString &, const QString &)));
@@ -144,7 +147,7 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		int index = ANode.value().toInt();
 		QString icon = index?FEmoji->colorSuffixes()[index-1]:QString("default");
 			FMenu->setIcon(RSR_STORAGE_EMOJI, icon);
-		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(FLayout->itemAt(0)->widget());
+		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->widget(0));
 		if (widget)
 			widget->updateLabels(index?icon:QString());
 	}

@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include <QPointer>
+#include <QTabWidget>
 #include <utils/menu.h>
 #include <utils/options.h>
 
@@ -30,6 +31,7 @@ protected slots:
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
+	QTabWidget	*FTabWidget;
 	IconStorage *FStorage;
 	QPointer<Menu> FMenu;
 };
