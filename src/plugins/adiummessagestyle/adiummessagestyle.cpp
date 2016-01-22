@@ -21,6 +21,7 @@
 #include <utils/filestorage.h>
 #include <utils/textmanager.h>
 #include <utils/logger.h>
+#include <utils/pluginhelper.h>
 #include <utils/qt4qt5compat.h>
 
 #define SCROLL_TIMEOUT                      100
@@ -41,18 +42,7 @@
 #define TOPIC_MAIN_DIV	                    "<div id=\"topic\"></div>"
 #define TOPIC_INDIVIDUAL_WRAPPER            "<span id=\"topicEdit\" ondblclick=\"this.setAttribute('contentEditable', true); this.focus();\">%1</span>"
 
-static const char *SenderColors[] =  {
-	"blue", "blueviolet", "brown", "cadetblue", "chocolate", "coral", "cornflowerblue", "crimson",
-	"darkblue", "darkcyan", "darkgoldenrod", "darkgreen", "darkmagenta", "darkolivegreen", "darkorange",
-	"darkorchid", "darkred", "darksalmon", "darkslateblue", "darkslategrey", "darkturquoise", "darkviolet",
-	"deeppink", "deepskyblue", "dodgerblue", "firebrick", "forestgreen", "fuchsia", "gold", "green",
-	"hotpink", "indianred", "indigo", "lightcoral", "lightseagreen", "limegreen", "magenta", "maroon",
-	"mediumblue", "mediumorchid", "mediumpurple", "mediumseagreen", "mediumslateblue", "mediumvioletred",
-	"midnightblue", "navy", "olive", "olivedrab", "orange", "orangered", "orchid", "palevioletred", "peru",
-	"purple", "red", "rosybrown", "royalblue", "saddlebrown", "salmon", "seagreen", "sienna", "slateblue",
-	"steelblue", "teal", "tomato", "violet"
-};
-static int SenderColorsCount = sizeof(SenderColors)/sizeof(SenderColors[0]);
+// *** <<< eyeCU >>> ***
 
 QString AdiumMessageStyle::FSharedPath = QString::null;
 
@@ -115,9 +105,9 @@ QWidget *AdiumMessageStyle::createWidget(const IMessageStyleOptions &AOptions, Q
 
 QString AdiumMessageStyle::senderColor(const QString &ASenderId) const
 {
-	if (!FSenderColors.isEmpty())
+// *** <<< eyeCU <<< ***
 		return FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
-	return QString(SenderColors[qHash(ASenderId) % SenderColorsCount]);
+// *** >>> eyeCU >>> ***
 }
 
 QTextDocumentFragment AdiumMessageStyle::selection(QWidget *AWidget) const
@@ -739,6 +729,10 @@ void AdiumMessageStyle::loadSenderColors()
 	QFile colors(FResourcePath + "/Incoming/SenderColors.txt");
 	if (colors.open(QFile::ReadOnly))
 		FSenderColors = QString::fromUtf8(colors.readAll()).split(':',QString::SkipEmptyParts);
+	// *** <<< eyeCU <<< ***
+		if (FSenderColors.isEmpty())
+			FSenderColors = PluginHelper::pluginInstance<IMessageStyleManager>()->senderColors();
+	// *** >>> eyeCU >>> ***
 }
 
 void AdiumMessageStyle::initStyleSettings()
