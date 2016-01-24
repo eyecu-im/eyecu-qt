@@ -20,7 +20,7 @@ public:
 	QString iconset() const;
 	void setIconset(const QString &ASubStorage);
 signals:
-	void iconSelected(const QString &ASubStorage, const QString &AIconKey);
+	void iconSelected(const QString &AIconKey);
 public:
 	virtual QSize sizeHint() const;
 protected slots:
@@ -32,7 +32,7 @@ private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
-	IconStorage *FStorage;
+//	IconStorage *FStorage;
 	QPointer<Menu> FMenu;
 };
 

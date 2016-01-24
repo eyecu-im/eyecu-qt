@@ -10,9 +10,9 @@
 #include <interfaces/ioptionsmanager.h>
 #include "selecticonmenu.h"
 
-struct EmoticonTreeItem {
+struct EmojiTreeItem {
 	QUrl url;
-	QMap<QChar, EmoticonTreeItem *> childs;
+	QMap<QChar, EmojiTreeItem *> childs;
 };
 
 class Emoji :
@@ -55,25 +55,28 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
-	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent.value(ASetName);}
+	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent;}
 	//IEmoji
+	virtual QList<QString> categories() const;
+	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
+	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const;
 	virtual bool isColored(const QString &AEmojiText) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
 protected:
 	void createIconsetUrls();
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);
-	void clearTreeItem(EmoticonTreeItem *AItem) const;
+	void clearTreeItem(EmojiTreeItem *AItem) const;
 	bool isWordBoundary(const QString &AText) const;
 	int replaceTextToImage(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	int replaceImageToText(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	SelectIconMenu *createSelectIconMenu(const QString &ASubStorage, QWidget *AParent);
-	void insertSelectIconMenu(const QString &ASubStorage);
-	void removeSelectIconMenu(const QString &ASubStorage);
+//	void insertSelectIconMenu(const QString &ASubStorage);
+//	void removeSelectIconMenu(const QString &ASubStorage);
 protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
 	void onToolBarWidgetDestroyed(QObject *AObject);
-	void onSelectIconMenuSelected(const QString &ASubStorage, QString AIconKey);
+	void onSelectIconMenuSelected(QString AIconKey);
 	void onSelectIconMenuDestroyed(QObject *AObject);
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -82,15 +85,16 @@ private:
 	IMessageProcessor *FMessageProcessor;
 	IOptionsManager *FOptionsManager;
 private:
-	EmoticonTreeItem FRootTreeItem;
+	EmojiTreeItem FRootTreeItem;
 	QHash<QString, QUrl> FUrlByKey;
 	QHash<QString, QString> FKeyByUrl;
-	QMap<QString, IconStorage *> FStorages;
+	QHash<QString, QMap<uint, EmojiData> > FCategories;
+//	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 	QStringList FColorSuffixes;
-	QHash<QString, QStringList> FRecent;
-	const QChar FFirst;
+	QStringList FRecent;
+	mutable QHash<QString, QIcon> FIconHash;
 };
 
 #endif // EMOJI_H

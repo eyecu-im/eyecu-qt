@@ -14,13 +14,13 @@ class SelectIconWidget :
 {
 	Q_OBJECT
 public:
-	SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconWidget(const QString &ACategory, const QString &AColor, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor);
 	QLabel *getIconLabel(const QString &AKey, const QString &AColor);
 	bool hasColored() const {return FHasColored;}
 signals:
-	void iconSelected(const QString &ASubStorage, const QString &AIconKey);
+	void iconSelected(const QString &AIconKey);
 protected:
 	void createLabels(const QString &AColor);
 protected:
@@ -29,7 +29,8 @@ private:
 	IEmoji *FEmoji;
 	QLabel *FPressed;
 	QGridLayout *FLayout;
-	IconStorage *FStorage;
+//	IconStorage *FStorage;
+	const QMap<uint, EmojiData> FEmojiMap;
 	QMap<QLabel *, QString> FKeyByLabel;
 	bool FHasColored;
 };

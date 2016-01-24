@@ -6,11 +6,11 @@
 
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(IconStorage *AStorage, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
+SelectIconWidget::SelectIconWidget(const QString &ACategory, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),
-	FStorage(AStorage),
+	FEmojiMap((AEmoji->emojiData(ACategory))),
 	FHasColored(false)
 {
 	FLayout = new QGridLayout(this);
@@ -33,13 +33,16 @@ void SelectIconWidget::updateLabels(const QString &AColor)
 			key.chop(2);
 		QIcon icon;
 		if (!AColor.isEmpty())
-			icon = FStorage->getIcon(key+AColor);
+//			icon = FStorage->getIcon(key+AColor);
+			icon = FEmoji->getIcon(key+AColor, QSize(16, 16));
 		if (!icon.isNull())
 			key.append(AColor);
 		if (*it!=key)
 		{
 			(*it)=key;
-			FStorage->insertAutoIcon(it.key(),key,0,0,"pixmap");
+//			FStorage->insertAutoIcon(it.key(),key,0,0,"pixmap");
+			QLabel *label = it.key();
+			label->setPixmap(icon.pixmap(16, 16));
 		}
 	}
 }
@@ -55,24 +58,27 @@ QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColo
 
 	QIcon icon;
 	if (!AColor.isEmpty())
-		icon = FStorage->getIcon(AKey+AColor);
+		icon = FEmoji->getIcon(AKey+AColor, QSize(16, 16));
+//		icon = FStorage->getIcon(AKey+AColor);
 	QString key(AKey);
 	if (!icon.isNull())
 		key.append(AColor);
-	FStorage->insertAutoIcon(label, key,0,0,"pixmap");
-
+//	FStorage->insertAutoIcon(label, key,0,0,"pixmap");
+	label->setPixmap(icon.pixmap(16, 16));
 	FKeyByLabel.insert(label, key);
 	return label;
 }
 
 void SelectIconWidget::createLabels(const QString &AColor)
 {
-	QList<QString> keys = FStorage->fileFirstKeys();
+//	QList<QString> keys = FStorage->fileFirstKeys();
 
 	int count(0);
-	for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
-		if (!FEmoji->isColored(*it) && (*it)!="default")
-			++count;
+//	for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
+//		if (!FEmoji->isColored(*it) && (*it)!="default")
+//			++count;
+
+	count = FEmojiMap.size();
 
 	int columns = count/2 + 1;
 	while (columns>1 && columns*columns>count)
@@ -80,18 +86,24 @@ void SelectIconWidget::createLabels(const QString &AColor)
 
 	int row =0;
 	int column = 0;
-	foreach(QString key, keys)
-		if (FEmoji->isColored(key))
-		{
-			if (key.size()>2)
-				FHasColored=true;
-		}
-		else if (key!="default")
-		{
-			FLayout->addWidget(getIconLabel(key, AColor),row,column);
-			column = (column+1) % columns;
-			row += column==0 ? 1 : 0;
-		}
+//	foreach(QString key, keys)
+//		if (FEmoji->isColored(key))
+//		{
+//			if (key.size()>2)
+//				FHasColored=true;
+//		}
+//		else if (key!="default")
+//		{
+//			FLayout->addWidget(getIconLabel(key, AColor),row,column);
+//			column = (column+1) % columns;
+//			row += column==0 ? 1 : 0;
+//		}
+	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
+	{
+		FLayout->addWidget(getIconLabel((*it).unicode, AColor), row, column);
+		column = (column+1) % columns;
+		row += column==0 ? 1 : 0;
+	}
 }
 
 bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
@@ -113,7 +125,7 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 	else if (AEvent->type() == QEvent::MouseButtonRelease)
 	{
 		if (FPressed == label)
-			emit iconSelected(FStorage->subStorage(),FKeyByLabel.value(label));
+			emit iconSelected(FKeyByLabel.value(label));
 		FPressed = NULL;
 	}
 	return QWidget::eventFilter(AWatched,AEvent);
