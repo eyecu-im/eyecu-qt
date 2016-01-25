@@ -60,6 +60,7 @@ public:
 	virtual QList<QString> categories() const;
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
 	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const;
+	virtual EmojiData findData(const QString &AEmojiCode) const;
 	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
 protected:
@@ -76,7 +77,7 @@ protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
 	void onToolBarWidgetDestroyed(QObject *AObject);
-	void onSelectIconMenuSelected(QString AIconKey);
+	void onSelectIconMenuSelected(QString AIconKey, const QString &AIconText);
 	void onSelectIconMenuDestroyed(QObject *AObject);
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -89,6 +90,7 @@ private:
 	QHash<QString, QUrl> FUrlByKey;
 	QHash<QString, QString> FKeyByUrl;
 	QHash<QString, QMap<uint, EmojiData> > FCategories;
+	QHash<QString, EmojiData> FEmojiData;
 //	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;

@@ -46,10 +46,9 @@ void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
 	}
 }
 
-QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColor)
+QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AToolTip)
 {
-//	qDebug() << "SelectIconWidget::getIconLabel(" << AKey << "," << AColor << ")";
-	QLabel *label(NULL);
+	QLabel *label; //(NULL);
 	QString key(AKey);
 	label = new QLabel(this);
 	label->setMargin(2);
@@ -58,6 +57,7 @@ QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColo
 	label->setFrameShadow(QFrame::Sunken);
 	label->installEventFilter(this);
 	label->setPixmap(QPixmap(16, 16));
+	label->setToolTip(AToolTip);
 	FKeyByLabel.insert(label, key);
 	return label;
 }
@@ -65,16 +65,20 @@ QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColo
 void SelectIconWidget::createLabels(const QString &AColor)
 {
 	int columns = 16;
+	int rows = 17;
 	int row =0;
 	int column = 0;
 	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
 	{
-		FLayout->addWidget(getIconLabel((*it).unicode, AColor), row, column);
+		FLayout->addWidget(getIconLabel((*it).unicode, (*it).name), row, column);
 		if ((*it).colored)
 			FHasColored=true;
 		column = (column+1) % columns;
 		row += column==0 ? 1 : 0;
+		FLayout->setRowStretch(row, 0);
 	}
+	if (row<rows)
+		FLayout->setRowStretch(row+1, 1);
 }
 
 bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
@@ -96,7 +100,7 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 	else if (AEvent->type() == QEvent::MouseButtonRelease)
 	{
 		if (FPressed == label)
-			emit iconSelected(FKeyByLabel.value(label));
+			emit iconSelected(FKeyByLabel.value(label), label->toolTip());
 		FPressed = NULL;
 	}
 	return QWidget::eventFilter(AWatched,AEvent);

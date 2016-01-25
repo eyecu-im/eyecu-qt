@@ -16,8 +16,8 @@
 SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
-	FTabWidget(NULL)
-//	FStorage(NULL)
+	FTabWidget(NULL),
+	FToolBar(NULL)
 {
 	setIconset(AIconset);
 
@@ -34,18 +34,12 @@ SelectIconMenu::~SelectIconMenu()
 
 QString SelectIconMenu::iconset() const
 {
-//	return FStorage!=NULL ? FStorage->subStorage() : QString::null;
 	return QString::null;
 }
 
 void SelectIconMenu::setIconset(const QString &ASubStorage)
 {
-	qDebug() << "SelectIconMenu::setIconset(" << ASubStorage << ")";
-	QList<QString> categories = FEmoji->categories();
-	QMap<uint, EmojiData> emojiData = FEmoji->emojiData(categories.at(0));
-	EmojiData data = emojiData.constBegin().value();
-	QIcon icon = FEmoji->getIcon(data.unicode, QSize(16, 16));
-	menuAction()->setIcon(icon);
+	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(FEmoji->categories().at(0)).constBegin().value().unicode, QSize(16, 16)));
 	menuAction()->setToolTip(ASubStorage);
 }
 
@@ -65,26 +59,26 @@ void SelectIconMenu::onAboutToShow()
 		FLayout->addWidget(FTabWidget);
 
 		QList<QString> categories = FEmoji->categories();
-		SelectIconWidget *selectedWidget(NULL);
+		SelectIconWidget *selectedWidget = NULL;
 		for (QList<QString>::ConstIterator it = categories.constBegin(); it!=categories.constEnd(); ++it)
 		{
 			SelectIconWidget *widget = new SelectIconWidget(*it, FEmoji, this);
 			if (!selectedWidget)
 				selectedWidget = widget;
 			FTabWidget->addTab(widget, *it);
-			connect(widget,SIGNAL(iconSelected(const QString &)),SIGNAL(iconSelected(const QString &)));
+			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}
 		FTabWidget->setCurrentWidget(selectedWidget);
 
-		QToolBar *toolBar = new QToolBar(this);
-		toolBar->setIconSize(QSize(16,16));
-		FLayout->addWidget(toolBar);
-		ToolBarChanger changer(toolBar);
+		FToolBar = new QToolBar(this);
+		FToolBar->setIconSize(QSize(16,16));
+		FLayout->addWidget(FToolBar);
+		ToolBarChanger changer(FToolBar);
 		changer.setSeparatorsVisible(true);
 
 		const QChar first(0xD83C);
-		FMenu = new Menu(toolBar);
+		FMenu = new Menu(FToolBar);
 		FMenu->setIcon(RSR_STORAGE_EMOJI, "default");
 
 		QActionGroup *group = new QActionGroup(FMenu);
@@ -125,13 +119,17 @@ void SelectIconMenu::onAboutToShow()
 		QToolButton *button = changer.insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR);
 		button->setPopupMode(QToolButton::InstantPopup);
 		FMenu->setTitle(tr("Skin color"));
-
-		QStringList recent = FEmoji->recentIcons("emojione");
-		for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
-		{
-			QLabel *label = selectedWidget->getIconLabel(*it, color);
-			changer.insertWidget(label, TBG_MWSIM_RECENT);
-		}
+	}
+	QStringList recent = FEmoji->recentIcons("emojione");
+	ToolBarChanger changer(FToolBar);
+	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
+	{
+		Action *action = new Action();
+		action->setIcon(FEmoji->getIcon(*it+color, QSize(16, 16)));
+		action->setToolTip(FEmoji->findData(*it).name);
+		action->setData(ADR_EMOJI, *it+color);
+		changer.insertAction(action, TBG_MWSIM_RECENT);
+		connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
 	}
 }
 
@@ -144,11 +142,8 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
 	{
-		qDebug() << "SelectIconMenu::onOptionsChanged(OPV_MESSAGES_EMOJI_SKINCOLOR)";
 		int index = ANode.value().toInt();
-		qDebug() << "index=" << index;
 		QString icon = index?FEmoji->colorSuffixes()[index-1]:QString("default");
-		qDebug() << "icon=" << icon;
 		FMenu->setIcon(RSR_STORAGE_EMOJI, icon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
@@ -160,7 +155,7 @@ void SelectIconMenu::onRecentIconTriggered()
 {
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
-		emit iconSelected(action->data(ADR_EMOJI).toString());
+		emit iconSelected(action->data(ADR_EMOJI).toString(), action->toolTip());
 }
 
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)

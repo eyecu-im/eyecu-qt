@@ -19,6 +19,7 @@ public:
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const = 0;
 	virtual QList<QString> categories() const = 0;
 	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const = 0;
+	virtual EmojiData findData(const QString &AEmojiCode) const = 0;
 	virtual bool isColored(const QString &AEmojiText) const = 0;
 	virtual const QStringList &colorSuffixes() const = 0;
 };
