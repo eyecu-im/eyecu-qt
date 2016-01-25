@@ -99,11 +99,11 @@ bool Emoji::initObjects()
 	return true;
 }
 
-bool Emoji::isColored(const QString &AEmojiText) const
+bool Emoji::isColored(const QString &AEmojiCode) const
 {
-	int size = AEmojiText.size();
-	ushort last = AEmojiText.at(size-1).unicode();
-	return (size>1) && (AEmojiText.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
+	int size = AEmojiCode.size();
+	ushort last = AEmojiCode.at(size-1).unicode();
+	return (size>1) && (AEmojiCode.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
 }
 
 bool Emoji::initSettings()
@@ -291,7 +291,6 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 	if (FIconHash.contains(AEmojiCode))
 		icon = FIconHash[AEmojiCode];
 	if (!icon.availableSizes().contains(ASize))
-	{
 		if (FUrlByKey.contains(AEmojiCode))
 		{
 			QFile file(FUrlByKey[AEmojiCode].toLocalFile());
@@ -305,20 +304,16 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 				FIconHash.insert(AEmojiCode, icon);
 			}
 		}
-	}
 	return icon;
 }
 
 QMap<uint, EmojiData> Emoji::emojiData(const QString &ACategory) const
 {
-	qDebug() << "Emoji::emojiData(" << ACategory << ")";
-	qDebug() << "FCategories keys=" << FCategories.keys();
 	return FCategories.value(ACategory);
 }
 
 void Emoji::createIconsetUrls()
 {
-	qDebug() << "Emoji::createIconsetUrls()";
 	QList<QString> resourceDirs = FileStorage::resourcesDirs();
 
 	FUrlByKey.clear();
@@ -331,6 +326,7 @@ void Emoji::createIconsetUrls()
 		dir.cd(EMOJI_EMOJIONE);
 		QFile file(dir.absoluteFilePath("emoji.json"));
 		if (dir.cd("assets") && dir.cd("svg"))
+		{
 			if (file.open(QIODevice::ReadOnly))
 			{
 				QByteArray json = file.readAll();
@@ -340,7 +336,6 @@ void Emoji::createIconsetUrls()
 					QScriptEngine engine;
 					QString js("("+QString::fromUtf8(json)+")");
 
-					qDebug() << "js size=" << js.size();
 					QScriptValue value = engine.evaluate(js);
 					if (value.isValid())
 					{
@@ -349,26 +344,19 @@ void Emoji::createIconsetUrls()
 						{
 							EmojiData emojiData;
 
-							qDebug() << "emoji=" << it.name();
 							emojiData.id = it.name();
 
 							QScriptValue val = it.value();
 							emojiData.name = val.property("name").toString();
-							qDebug() << "name=" << emojiData.name;
-
-							qDebug() << "short name=" << val.property("shortname").toString();
 
 							QString category = val.property("category").toString();
-							qDebug() << "category=" << category;
 							QString emojiOrder = val.property("emoji_order").toString();
-							qDebug() << "order=" << emojiOrder;
 							if (!val.property("aliases").isNull())
 							{
 								QVariantList list=val.property("aliases").toVariant().toList();
 								QList<QString> aliases;
 								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
 									aliases.append((*it).toString());
-								qDebug() << "aliases=" << aliases;
 
 							}
 
@@ -379,7 +367,6 @@ void Emoji::createIconsetUrls()
 								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
 									aliases.append((*it).toString());
 								emojiData.aliases = aliases;
-								qDebug() << "ASCII aliases=" << aliases;
 							}
 
 							if (!val.property("keywords").isNull())
@@ -392,14 +379,12 @@ void Emoji::createIconsetUrls()
 										out.append(',');
 									out.append((*it).toString());
 								}
-								qDebug() << "keywords=" << out;
 							}
 
 							bool ok;
 							uint ucs4[16];
 							int  i(0);
 							QString unicode = val.property("unicode").toString();
-							qDebug() << "unicode=" << unicode;
 							QList<QString> splitted = unicode.split('-');
 							for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
 							{
@@ -407,20 +392,26 @@ void Emoji::createIconsetUrls()
 								if (!ok)
 									break;
 							}
-							qDebug() << "i=" << i;
 							if (ok)
 							{
 								emojiData.unicode = QString::fromUcs4(ucs4, i);
-								uint order = emojiOrder.toInt();
-								FCategories[category].insert(order, emojiData);
+								if (!isColored(emojiData.unicode))
+								{
+									uint order = emojiOrder.toInt();
+									FCategories[category].insert(order, emojiData);
+									emojiData.colored=false;
+									for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+										if (QFile(dir.absoluteFilePath(QString("%1-%2.svg").arg(unicode).arg(c, 0, 16))).exists())
+										{
+											emojiData.colored=true;
+											break;
+										}
+								}
 								QUrl url(QUrl::fromLocalFile(QDir::cleanPath(dir.absoluteFilePath(unicode+".svg"))));
-								qDebug() << "ucs2=" << emojiData.unicode << "; url=" << url;
 								FUrlByKey.insert(emojiData.unicode, url);
 								FKeyByUrl.insert(url.toString(), emojiData.unicode);
 								createTreeItem(emojiData.unicode,url);
 							}
-
-							qDebug() << "------------------------------";
 						}
 					}
 				}
@@ -429,6 +420,7 @@ void Emoji::createIconsetUrls()
 			}
 			else
 				qWarning() << "failed to open file!";
+		}
 	}
 /*
 	foreach(const QString &substorage, Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList())

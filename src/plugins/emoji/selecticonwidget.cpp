@@ -3,104 +3,75 @@
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
-
+#include <QDebug>
+#include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(const QString &ACategory, const QString &AColor, IEmoji *AEmoji, QWidget *AParent):
+SelectIconWidget::SelectIconWidget(const QString &ACategory, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
-	FHasColored(false)
+	FHasColored(false),
+	FNotReady(true)
 {
 	FLayout = new QGridLayout(this);
 	FLayout->setMargin(2);
 	FLayout->setHorizontalSpacing(3);
 	FLayout->setVerticalSpacing(3);
-
-	createLabels(AColor);
+	createLabels(QString());
 }
 
 SelectIconWidget::~SelectIconWidget()
 {}
 
-void SelectIconWidget::updateLabels(const QString &AColor)
+void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
 {
 	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
-		QString key = *it;
+		QString key(*it);
 		if (FEmoji->isColored(key))
 			key.chop(2);
-		QIcon icon;
-		if (!AColor.isEmpty())
-//			icon = FStorage->getIcon(key+AColor);
-			icon = FEmoji->getIcon(key+AColor, QSize(16, 16));
-		if (!icon.isNull())
+		QIcon icon = FEmoji->getIcon(key+AColor, QSize(16, 16));
+		if (icon.isNull() && !AColor.isEmpty())
+			icon = FEmoji->getIcon(key, QSize(16, 16));
+		else
 			key.append(AColor);
-		if (*it!=key)
+
+		if (*it!=key || AForce)
 		{
 			(*it)=key;
-//			FStorage->insertAutoIcon(it.key(),key,0,0,"pixmap");
-			QLabel *label = it.key();
-			label->setPixmap(icon.pixmap(16, 16));
+			it.key()->setPixmap(icon.pixmap(16, 16));
 		}
 	}
 }
 
 QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AColor)
 {
-	QLabel *label = new QLabel(this);
+//	qDebug() << "SelectIconWidget::getIconLabel(" << AKey << "," << AColor << ")";
+	QLabel *label(NULL);
+	QString key(AKey);
+	label = new QLabel(this);
 	label->setMargin(2);
 	label->setAlignment(Qt::AlignCenter);
 	label->setFrameShape(QFrame::Box);
 	label->setFrameShadow(QFrame::Sunken);
 	label->installEventFilter(this);
-
-	QIcon icon;
-	if (!AColor.isEmpty())
-		icon = FEmoji->getIcon(AKey+AColor, QSize(16, 16));
-//		icon = FStorage->getIcon(AKey+AColor);
-	QString key(AKey);
-	if (!icon.isNull())
-		key.append(AColor);
-//	FStorage->insertAutoIcon(label, key,0,0,"pixmap");
-	label->setPixmap(icon.pixmap(16, 16));
+	label->setPixmap(QPixmap(16, 16));
 	FKeyByLabel.insert(label, key);
 	return label;
 }
 
 void SelectIconWidget::createLabels(const QString &AColor)
 {
-//	QList<QString> keys = FStorage->fileFirstKeys();
-
-	int count(0);
-//	for (QList<QString>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
-//		if (!FEmoji->isColored(*it) && (*it)!="default")
-//			++count;
-
-	count = FEmojiMap.size();
-
-	int columns = count/2 + 1;
-	while (columns>1 && columns*columns>count)
-		columns--;
-
+	int columns = 16;
 	int row =0;
 	int column = 0;
-//	foreach(QString key, keys)
-//		if (FEmoji->isColored(key))
-//		{
-//			if (key.size()>2)
-//				FHasColored=true;
-//		}
-//		else if (key!="default")
-//		{
-//			FLayout->addWidget(getIconLabel(key, AColor),row,column);
-//			column = (column+1) % columns;
-//			row += column==0 ? 1 : 0;
-//		}
 	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
 	{
 		FLayout->addWidget(getIconLabel((*it).unicode, AColor), row, column);
+		if ((*it).colored)
+			FHasColored=true;
 		column = (column+1) % columns;
 		row += column==0 ? 1 : 0;
 	}
@@ -129,4 +100,17 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 		FPressed = NULL;
 	}
 	return QWidget::eventFilter(AWatched,AEvent);
+}
+
+void SelectIconWidget::showEvent(QShowEvent *AShowEvent)
+{
+	Q_UNUSED(AShowEvent)
+	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
+	if ((FHasColored && FColor!=color) || FNotReady)
+	{
+		updateLabels(FColor=color, FNotReady);
+		FNotReady = false;
+	}
+	emit hasColoredChanged(FHasColored);
 }

@@ -14,17 +14,21 @@ class SelectIconWidget :
 {
 	Q_OBJECT
 public:
-	SelectIconWidget(const QString &ACategory, const QString &AColor, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconWidget(const QString &ACategory, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
-	void updateLabels(const QString &AColor);
+	void updateLabels(const QString &AColor, bool AForce=false);
 	QLabel *getIconLabel(const QString &AKey, const QString &AColor);
 	bool hasColored() const {return FHasColored;}
 signals:
 	void iconSelected(const QString &AIconKey);
+	void hasColoredChanged(bool AHasColored);
 protected:
 	void createLabels(const QString &AColor);
 protected:
+// QObject interface
 	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);
+// QWidget interface
+	virtual void showEvent(QShowEvent *AShowEvent);
 private:
 	IEmoji *FEmoji;
 	QLabel *FPressed;
@@ -32,7 +36,9 @@ private:
 //	IconStorage *FStorage;
 	const QMap<uint, EmojiData> FEmojiMap;
 	QMap<QLabel *, QString> FKeyByLabel;
+	QString FColor;
 	bool FHasColored;
+	bool FNotReady;
 };
 
 #endif // SELECTICONWIDGET_H

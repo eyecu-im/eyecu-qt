@@ -60,7 +60,7 @@ public:
 	virtual QList<QString> categories() const;
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
 	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const;
-	virtual bool isColored(const QString &AEmojiText) const;
+	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
 protected:
 	void createIconsetUrls();
