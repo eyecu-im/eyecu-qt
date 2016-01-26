@@ -94,7 +94,7 @@ bool Emoji::initObjects()
 	FCategoryNames.insert(Nature, tr("Nature"));
 	FCategoryNames.insert(Travel, tr("Travel"));
 	FCategoryNames.insert(Objects, tr("Objects"));
-	FCategoryNames.insert(Food, tr("Food"));
+	FCategoryNames.insert(Foods, tr("Foods"));
 
 	FCategoryIDs.insert(People, "people");
 	FCategoryIDs.insert(Symbols, "symbols");
@@ -103,7 +103,7 @@ bool Emoji::initObjects()
 	FCategoryIDs.insert(Nature, "nature");
 	FCategoryIDs.insert(Travel, "travel");
 	FCategoryIDs.insert(Objects, "objects");
-	FCategoryIDs.insert(Food, "food");
+	FCategoryIDs.insert(Foods, "foods");
 
 	if (FMessageProcessor)
 		FMessageProcessor->insertMessageWriter(MWO_EMOTICONS,this);
@@ -352,24 +352,19 @@ void Emoji::createIconsetUrls()
 		{
 			QDir other(dir);
 			if (other.cd("other") && other.cd("category_icons"))
-			{
-				QList<QString> fileNames;
-				fileNames << "people" << "symbols" << "flags" << "activity" << "nature" << "travel" << "objects" << "foods";
-				int c(0);
-				for (QList<QString>::ConstIterator ifn=fileNames.constBegin(); ifn!=fileNames.constEnd(); ++it, ++c)
+				for (QMap<int, QString>::ConstIterator ifc=FCategoryIDs.constBegin(); ifc!=FCategoryIDs.constEnd(); ++ifc)
 				{
-					QFile file(other.absoluteFilePath(*ifn+".svg"));
+					QFile file(other.absoluteFilePath(*ifc+".svg"));
 					if (file.open(QIODevice::ReadOnly))
 					{
 						QImageReader reader(&file);
 						reader.setScaledSize(QSize(16, 16));
 						QPixmap pixmap = QPixmap::fromImageReader(&reader);
 						if (!pixmap.isNull())
-							FCategoryIcons.insert(c, QIcon(pixmap));
+							FCategoryIcons.insert(ifc.key(), QIcon(pixmap));
 						file.close();
 					}
 				}
-			}
 			if (dir.cd("svg"))
 			{
 				if (file.open(QIODevice::ReadOnly))

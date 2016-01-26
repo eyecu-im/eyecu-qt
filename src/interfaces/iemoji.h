@@ -24,7 +24,7 @@ public:
 		Nature,
 		Travel,
 		Objects,
-		Food
+		Foods
 	};
 
 	virtual QString categoryName(Category ACategory) const = 0;

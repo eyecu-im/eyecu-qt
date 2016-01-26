@@ -60,7 +60,7 @@ void SelectIconMenu::onAboutToShow()
 
 //		QList<QString> categories = FEmoji->categories();
 		SelectIconWidget *selectedWidget = NULL;
-		for (int c = IEmoji::People; c<=IEmoji::Food; ++c)
+		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
 		{
 			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, FEmoji, this);
 			if (!selectedWidget)
