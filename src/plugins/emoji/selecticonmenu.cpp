@@ -58,14 +58,13 @@ void SelectIconMenu::onAboutToShow()
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
 
-//		QList<QString> categories = FEmoji->categories();
 		SelectIconWidget *selectedWidget = NULL;
 		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
 		{
 			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, FEmoji, this);
 			if (!selectedWidget)
 				selectedWidget = widget;
-			FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), FEmoji->categoryName((IEmoji::Category)c));
+			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
 			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}

@@ -55,7 +55,7 @@ public:
 	virtual QString keyByUrl(const QUrl &AUrl) const;
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
-	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent;}
+	virtual QStringList recentIcons(const QString &ASetName) const {Q_UNUSED(ASetName) return FRecent;}
 	//IEmoji
 //	virtual QList<QString> categories() const;
 	virtual QString categoryName(Category ACategory) const {return FCategoryNames.value(ACategory);}
@@ -93,7 +93,6 @@ private:
 	QHash<QString, QString> FKeyByUrl;
 	QHash<Category, QMap<uint, EmojiData> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
-//	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 

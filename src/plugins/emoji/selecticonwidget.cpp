@@ -64,6 +64,7 @@ QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &ATool
 
 void SelectIconWidget::createLabels(const QString &AColor)
 {
+	Q_UNUSED(AColor)
 	int columns = 16;
 	int rows = 17;
 	int row =0;
