@@ -7,7 +7,7 @@
 #include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(const QString &ACategory, IEmoji *AEmoji, QWidget *AParent):
+SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),

@@ -39,7 +39,7 @@ QString SelectIconMenu::iconset() const
 
 void SelectIconMenu::setIconset(const QString &ASubStorage)
 {
-	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(FEmoji->categories().at(0)).constBegin().value().unicode, QSize(16, 16)));
+	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().unicode, QSize(16, 16)));
 	menuAction()->setToolTip(ASubStorage);
 }
 
@@ -58,14 +58,14 @@ void SelectIconMenu::onAboutToShow()
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
 
-		QList<QString> categories = FEmoji->categories();
+//		QList<QString> categories = FEmoji->categories();
 		SelectIconWidget *selectedWidget = NULL;
-		for (QList<QString>::ConstIterator it = categories.constBegin(); it!=categories.constEnd(); ++it)
+		for (int c = IEmoji::People; c<=IEmoji::Food; ++c)
 		{
-			SelectIconWidget *widget = new SelectIconWidget(*it, FEmoji, this);
+			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, FEmoji, this);
 			if (!selectedWidget)
 				selectedWidget = widget;
-			FTabWidget->addTab(widget, *it);
+			FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), FEmoji->categoryName((IEmoji::Category)c));
 			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}

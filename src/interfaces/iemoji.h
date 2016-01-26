@@ -16,9 +16,22 @@ struct EmojiData {
 class IEmoji: public IEmoticons
 {
 public:
+	enum Category {
+		People,
+		Symbols,
+		Flags,
+		Activity,
+		Nature,
+		Travel,
+		Objects,
+		Food
+	};
+
+	virtual QString categoryName(Category ACategory) const = 0;
+	virtual QIcon categoryIcon(Category ACategory) const = 0;
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const = 0;
-	virtual QList<QString> categories() const = 0;
-	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const = 0;
+//	virtual QList<QString> categories() const = 0;
+	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const = 0;
 	virtual EmojiData findData(const QString &AEmojiCode) const = 0;
 	virtual bool isColored(const QString &AEmojiText) const = 0;
 	virtual const QStringList &colorSuffixes() const = 0;

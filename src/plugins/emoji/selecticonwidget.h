@@ -14,7 +14,7 @@ class SelectIconWidget :
 {
 	Q_OBJECT
 public:
-	SelectIconWidget(const QString &ACategory, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconWidget(IEmoji::Category ACategory, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor, bool AForce=false);
 	QLabel *getIconLabel(const QString &AKey, const QString &AToolTip);

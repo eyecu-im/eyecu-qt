@@ -57,9 +57,11 @@ public:
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QStringList recentIcons(const QString &ASetName) const {return FRecent;}
 	//IEmoji
-	virtual QList<QString> categories() const;
+//	virtual QList<QString> categories() const;
+	virtual QString categoryName(Category ACategory) const {return FCategoryNames.value(ACategory);}
+	virtual QIcon categoryIcon(Category ACategory) const {return FCategoryIcons.value(ACategory);}
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
-	virtual QMap<uint, EmojiData> emojiData(const QString &ACategory) const;
+	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const;
 	virtual EmojiData findData(const QString &AEmojiCode) const;
 	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
@@ -89,14 +91,18 @@ private:
 	EmojiTreeItem FRootTreeItem;
 	QHash<QString, QUrl> FUrlByKey;
 	QHash<QString, QString> FKeyByUrl;
-	QHash<QString, QMap<uint, EmojiData> > FCategories;
+	QHash<Category, QMap<uint, EmojiData> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
 //	QMap<QString, IconStorage *> FStorages;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
+
 	QStringList FColorSuffixes;
 	QStringList FRecent;
 	mutable QHash<QString, QIcon> FIconHash;
+	QMap<int, QString> FCategoryNames;
+	QMap<int, QString> FCategoryIDs;
+	QMap<int, QIcon> FCategoryIcons;
 };
 
 #endif // EMOJI_H
