@@ -502,10 +502,16 @@ int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALeng
 			{
 				cursor.setPosition(it.key()-posOffset);
 				cursor.setPosition(cursor.position()+it->length(), QTextCursor::KeepAnchor);
+
+				QTextImageFormat format;
+				format.setName(url.toString());
+				format.setToolTip(findData(it.value()).name);
 				if (!ADocument->resource(QTextDocument::ImageResource,url).isValid())
-					cursor.insertImage(QImage(url.toLocalFile()),url.toString());
-				else
-					cursor.insertImage(url.toString());
+					ADocument->addResource(QTextDocument::ImageResource, url, QImage(url.toLocalFile()));
+				cursor.insertImage(format);
+//					cursor.insertImage(QImage(url.toLocalFile()),url.toString());
+//				else
+//					cursor.insertImage(url.toString());
 				posOffset += it->length()-1;
 			}
 		}
