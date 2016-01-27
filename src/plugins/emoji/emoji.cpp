@@ -309,6 +309,7 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 	if (FIconHash.contains(AEmojiCode))
 		icon = FIconHash[AEmojiCode];
 	if (!icon.availableSizes().contains(ASize))
+	{
 		if (FUrlByKey.contains(AEmojiCode))
 		{
 			QFile file(FUrlByKey[AEmojiCode].toLocalFile());
@@ -322,6 +323,7 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 				FIconHash.insert(AEmojiCode, icon);
 			}
 		}
+	}
 	return icon;
 }
 
@@ -380,8 +382,9 @@ void Emoji::createIconsetUrls()
 						if (value.isValid())
 						{
 							QScriptValueIterator it(value);
-							for (it.next(); it.hasNext(); it.next())
+							do
 							{
+								it.next();
 								EmojiData emojiData;
 
 								emojiData.id = it.name();
@@ -457,7 +460,7 @@ void Emoji::createIconsetUrls()
 										createTreeItem(emojiData.unicode,url);
 									}
 								}
-							}
+							} while (it.hasNext());
 						}
 					}
 					else

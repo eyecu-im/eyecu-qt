@@ -7,13 +7,15 @@
 #include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
-SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, IEmoji *AEmoji, QWidget *AParent):
+SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, uint ARows, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
 	FPressed(NULL),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
 	FHasColored(false),
-	FNotReady(true)
+	FNotReady(true),
+	FColumns(AColumns),
+	FRows(ARows)
 {
 	FLayout = new QGridLayout(this);
 	FLayout->setMargin(2);
@@ -65,20 +67,18 @@ QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &ATool
 void SelectIconWidget::createLabels(const QString &AColor)
 {
 	Q_UNUSED(AColor)
-	int columns = 16;
-	int rows = 17;
-	int row =0;
-	int column = 0;
+	uint row =0;
+	uint column = 0;
 	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
 	{
 		FLayout->addWidget(getIconLabel((*it).unicode, (*it).name), row, column);
 		if ((*it).colored)
 			FHasColored=true;
-		column = (column+1) % columns;
+		column = (column+1) % FColumns;
 		row += column==0 ? 1 : 0;
 		FLayout->setRowStretch(row, 0);
 	}
-	if (row<rows)
+	if (row<FRows)
 		FLayout->setRowStretch(row+1, 1);
 }
 

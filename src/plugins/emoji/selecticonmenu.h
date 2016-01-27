@@ -6,6 +6,7 @@
 #include <QTabWidget>
 #include <utils/menu.h>
 #include <utils/options.h>
+#include <utils/toolbarchanger.h>
 
 #include "selecticonwidget.h"
 
@@ -29,12 +30,16 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onRecentIconTriggered();
 	void onHasColoredChanged(bool AHasColored);
+protected:
+	static QString typeUcs4(const QString &AText);
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
 	QPointer<Menu> FMenu;
 	QToolBar	*FToolBar;
+	ToolBarChanger *FToolBarChanger;
+	QIcon		FEmptyIcon;
 };
 
 #endif // SELECTICONMENU_H

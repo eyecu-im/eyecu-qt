@@ -6,7 +6,6 @@
 #include <definitions/toolbargroups.h>
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
-#include <utils/toolbarchanger.h>
 #include <utils/action.h>
 #include <utils/qt4qt5compat.h>
 
@@ -17,9 +16,14 @@ SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget 
 	Menu(AParent),
 	FEmoji(AEmoji),
 	FTabWidget(NULL),
-	FToolBar(NULL)
+	FToolBar(NULL),
+	FToolBarChanger(NULL)
 {
 	setIconset(AIconset);
+
+	QPixmap pixmap(16, 16);
+	pixmap.fill(QColor(0, 0, 0, 0));
+	FEmptyIcon.addPixmap(pixmap);
 
 	FLayout = new QVBoxLayout(this);
 	FLayout->setMargin(0);
@@ -58,10 +62,34 @@ void SelectIconMenu::onAboutToShow()
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
 
+		int columns = 0;
+		int rows = 0;
+		int count = 0;
+		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
+		{
+			int cnt = FEmoji->emojiData((IEmoji::Category)c).size();
+			if (count<cnt)
+			{
+				count = cnt;
+				int c = cnt/2 + 1;
+				while (c>1 && c*c>cnt)
+					c--;
+				int r = cnt/c;
+				if (c*r<cnt)
+					r++;
+				if (r>c)
+				{
+					c++;
+					r--;
+				}
+				columns=c;
+				rows=r;
+			}
+		}
 		SelectIconWidget *selectedWidget = NULL;
 		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
 		{
-			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, FEmoji, this);
+			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, columns, rows, FEmoji, this);
 			if (!selectedWidget)
 				selectedWidget = widget;
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
@@ -69,66 +97,77 @@ void SelectIconMenu::onAboutToShow()
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}
 		FTabWidget->setCurrentWidget(selectedWidget);
+	}
+	if (FToolBar)
+	{
+		FLayout->removeWidget(FToolBar);
+		FToolBar->deleteLater();
+	}
+	FToolBar = new QToolBar(this);
+	FToolBar->setIconSize(QSize(16,16));
+	FLayout->addWidget(FToolBar);
+	FToolBarChanger = new ToolBarChanger(FToolBar);
+	FToolBarChanger->setSeparatorsVisible(true);
 
-		FToolBar = new QToolBar(this);
-		FToolBar->setIconSize(QSize(16,16));
-		FLayout->addWidget(FToolBar);
-		ToolBarChanger changer(FToolBar);
-		changer.setSeparatorsVisible(true);
+	FMenu = new Menu(FToolBar);
+	FMenu->setIcon(FEmptyIcon);
 
-		const QChar first(0xD83C);
-		FMenu = new Menu(FToolBar);
-		FMenu->setIcon(RSR_STORAGE_EMOJI, "default");
+	QActionGroup *group = new QActionGroup(FMenu);
 
-		QActionGroup *group = new QActionGroup(FMenu);
+	Action *action = new Action(group);
+	action->setText(tr("Default"));
+	action->setData(ADR_COLOR, 0);
+	action->setCheckable(true);
+	action->setActionGroup(group);
+	action->setIcon(FMenu->icon());
+	FMenu->addAction(action);
+	if (color.isEmpty())
+	{
+		action->setChecked(true);
+		FMenu->setIcon(action->icon());
+	}
+	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 
-		Action *action = new Action(group);
-		action->setText(tr("Default"));
-		action->setData(ADR_COLOR, 0);
+	QStringList colorSuffixes = FEmoji->colorSuffixes();
+	for (int i=0; i<5; ++i)
+	{
+		QString c = colorSuffixes[i];
+		action = new Action(group);
+		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
+		action->setIcon(FEmoji->getIcon(c, QSize(16,16)));
+		action->setData(ADR_COLOR, i+1);
 		action->setCheckable(true);
 		action->setActionGroup(group);
-		action->setIcon(FMenu->icon());
 		FMenu->addAction(action);
-		if (color.isEmpty())
+		if (c == color)
 		{
 			action->setChecked(true);
 			FMenu->setIcon(action->icon());
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-
-		for (int i=1; i<6; i++)
-		{
-			QString icon(first);
-			icon.append(QChar(0xDFFA+i));
-			action = new Action(group);
-			action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
-			action->setIcon(RSR_STORAGE_EMOJI, icon);
-			action->setData(ADR_COLOR, i);
-			action->setCheckable(true);
-			action->setActionGroup(group);
-			FMenu->addAction(action);
-			if (icon == color)
-			{
-				action->setChecked(true);
-				FMenu->setIcon(action->icon());
-			}
-			connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-		}
-
-		QToolButton *button = changer.insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR);
-		button->setPopupMode(QToolButton::InstantPopup);
-		FMenu->setTitle(tr("Skin color"));
 	}
+
+	FToolBarChanger->insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
+	FMenu->setTitle(tr("Skin color"));
 	QStringList recent = FEmoji->recentIcons("emojione");
-	ToolBarChanger changer(FToolBar);
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
-		Action *action = new Action();
-		action->setIcon(FEmoji->getIcon(*it+color, QSize(16, 16)));
-		action->setToolTip(FEmoji->findData(*it).name);
-		action->setData(ADR_EMOJI, *it+color);
-		changer.insertAction(action, TBG_MWSIM_RECENT);
-		connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
+		QString emoji = *it+color;
+		QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
+		if (icon.isNull() && !color.isEmpty())
+		{
+			icon = FEmoji->getIcon(*it, QSize(16, 16));
+			emoji = *it;
+		}
+		if (!icon.isNull())
+		{
+			Action *action = new Action();
+			action->setIcon(icon);
+			action->setToolTip(FEmoji->findData(*it).name);
+			action->setData(ADR_EMOJI, emoji);
+			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
+			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
+		}
 	}
 }
 
@@ -142,11 +181,13 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
 	{
 		int index = ANode.value().toInt();
-		QString icon = index?FEmoji->colorSuffixes()[index-1]:QString("default");
-		FMenu->setIcon(RSR_STORAGE_EMOJI, icon);
+		QString color;
+		if (index)
+			color = FEmoji->colorSuffixes()[index-1];
+		FMenu->setIcon(index?FEmoji->getIcon(color):FEmptyIcon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
-			widget->updateLabels(index?icon:QString());
+			widget->updateLabels(color);
 	}
 }
 
@@ -160,4 +201,17 @@ void SelectIconMenu::onRecentIconTriggered()
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)
 {
 	FMenu->setEnabled(AHasColored);
+}
+
+QString SelectIconMenu::typeUcs4(const QString &AText)
+{
+	QString output;
+	QVector<uint> ucs4 = AText.toUcs4();
+	for (QVector<uint>::ConstIterator it=ucs4.constBegin(); it!=ucs4.constEnd(); ++it)
+	{
+		if (!output.isEmpty())
+			output.append('-');
+		output.append(QString::number(*it, 16));
+	}
+	return output;
 }
