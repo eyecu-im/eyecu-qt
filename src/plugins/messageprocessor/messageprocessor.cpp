@@ -104,7 +104,7 @@ void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 	}
 	else if (AOrder == MWO_MESSAGEPROCESSOR_ANCHORS)
 	{
-		QRegExp regexp("\\b((https?|ftp)://|www\\.|xmpp:|magnet:|mailto:)[^\\s\\\"\\\']+\\b"); // *** <<< eyeCU >>> ***
+		QRegExp regexp("\\b((https?|ftp)://|www\\.|xmpp:|magnet:|mailto:)\\S+(/|#|~|@|&|=|-|\\+|\\*|\\$|\\b)");
 		regexp.setCaseSensitivity(Qt::CaseInsensitive);
 		for (QTextCursor cursor = ADocument->find(regexp); !cursor.isNull(); cursor = ADocument->find(regexp,cursor))
 		{
@@ -384,6 +384,7 @@ QString MessageProcessor::prepareBodyForSend(const QString &AString) const
 	result.remove(QChar::ObjectReplacementCharacter);
 	return result;
 }
+
 
 QDomDocument MessageProcessor::prepareBodyForReceive(const QString &AString, bool AMonospaced) const
 {
