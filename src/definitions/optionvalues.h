@@ -128,7 +128,7 @@
 #define OPV_MESSAGES_EMOTICONS_RECENT_SET               "messages.emoticons.recent.set"
 #define OPV_MESSAGES_EMOTICONS_INSERTIMAGE              "messages.emoticons.insert-image"
 // Emoji
-#define OPV_MESSAGES_EMOJI_ICONSETS                     "messages.emoji.iconsets"
+#define OPV_MESSAGES_EMOJI_ICONSET                      "messages.emoji.iconset"
 #define OPV_MESSAGES_EMOJI_SKINCOLOR                    "messages.emoji.skin-color"
 #define OPV_MESSAGES_EMOJI_RECENT                       "messages.emoji.recent"
 #define OPV_MESSAGES_EMOJI_RECENT_SET                   "messages.emoji.recent.set"

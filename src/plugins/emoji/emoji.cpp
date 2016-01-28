@@ -28,15 +28,14 @@
 #include <XmlTextDocumentParser>
 #include "emojioptions.h"
 
-#define EMOJI_SELECTABLE		"vk_small"
-#define EMOJI_EXTRA				"vk_extra_small"
-#define EMOJI_FAMILY			"vk_family_small"
-#define EMOJI_SELECTABLE_BIG	"vk_big"
-#define EMOJI_EXTRA_BIG			"vk_extra_big"
-#define EMOJI_FAMILY_BIG		"vk_family_big"
+#define EMOJI_DEFAULT		    "Emoji One"
+//#define EMOJI_EXTRA				"vk_extra_small"
+//#define EMOJI_FAMILY			"vk_family_small"
+//#define EMOJI_SELECTABLE_BIG	"vk_big"
+//#define EMOJI_EXTRA_BIG			"vk_extra_big"
+//#define EMOJI_FAMILY_BIG		"vk_family_big"
 
-
-#define EMOJI_EMOJIONE			"emojione"
+#define EMOJI_DIR			"emojione"
 
 Emoji::Emoji():
 	FMessageWidgets(NULL),
@@ -114,6 +113,8 @@ bool Emoji::initObjects()
 	for (uint i=0x1f3fb; i<=0x1f3ff; ++i)
 		FColorSuffixes.append(QString::fromUcs4(&i, 1));
 
+	findEmojiSets();
+
 	return true;
 }
 
@@ -126,7 +127,7 @@ bool Emoji::isColored(const QString &AEmojiCode) const
 
 bool Emoji::initSettings()
 {
-	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSETS, QStringList() << EMOJI_SELECTABLE	<< "@"EMOJI_EXTRA << "@"EMOJI_FAMILY);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSET, EMOJI_DEFAULT);
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, 0);
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_RECENT, QByteArray());
 
@@ -298,11 +299,6 @@ QMap<int, QString> Emoji::findImageEmoticons(const QTextDocument *ADocument, int
 	return emoticons;
 }
 
-//QList<QString> Emoji::categories() const
-//{
-//	return FCategories.keys();
-//}
-
 QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 {
 	QIcon icon;
@@ -337,138 +333,184 @@ EmojiData Emoji::findData(const QString &AEmojiCode) const
 	return FEmojiData.value(AEmojiCode);
 }
 
-void Emoji::createIconsetUrls()
+void Emoji::findEmojiSets()
 {
 	QList<QString> resourceDirs = FileStorage::resourcesDirs();
+	for (QList<QString>::ConstIterator it=resourceDirs.constBegin(); it!=resourceDirs.constEnd(); ++it)
+	{
+		FCategories.clear();
+		FEmojiData.clear();
+		FEmojiSets.clear();
+		QDir dir(*it);
+		if (dir.cd(EMOJI_DIR))
+		{
+			QFile file(dir.absoluteFilePath("emoji.json"));
+			if (file.open(QIODevice::ReadOnly))
+			{
+				QByteArray json = file.readAll();
+				file.close();
+				if (!json.isEmpty())
+				{
+					QScriptEngine engine;
+					QString js("("+QString::fromUtf8(json)+")");
+
+					QScriptValue value = engine.evaluate(js);
+					if (value.isValid())
+					{
+						QScriptValueIterator it(value);
+						do
+						{
+							it.next();
+							EmojiData emojiData;
+
+							emojiData.id = it.name();
+
+							QScriptValue val = it.value();
+							emojiData.name = val.property("name").toString();
+
+							QString category = val.property("category").toString();
+							QString emojiOrder = val.property("emoji_order").toString();
+							if (!val.property("aliases").isNull())
+							{
+								QVariantList list=val.property("aliases").toVariant().toList();
+								QList<QString> aliases;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+									aliases.append((*it).toString());
+							}
+
+							if (!val.property("aliases_ascii").isNull())
+							{
+								QVariantList list=val.property("aliases_ascii").toVariant().toList();
+								QList<QString> aliases;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+									aliases.append((*it).toString());
+								emojiData.aliases = aliases;
+							}
+
+							if (!val.property("keywords").isNull())
+							{
+								QVariantList list=val.property("keywords").toVariant().toList();
+								QString out;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+								{
+									if (!out.isEmpty())
+										out.append(',');
+									out.append((*it).toString());
+								}
+							}
+
+							bool ok;
+							uint ucs4[16];
+							int  i(0);
+							emojiData.ucs4 = val.property("unicode").toString();
+							QList<QString> splitted = emojiData.ucs4.split('-');
+							for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+							{
+								ucs4[i]=(*it).toInt(&ok, 16);
+								if (!ok)
+									break;
+							}
+							if (ok)
+							{
+								emojiData.unicode = QString::fromUcs4(ucs4, i);
+								if (!isColored(emojiData.unicode))
+								{
+									uint order = emojiOrder.toInt();
+									FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
+									FEmojiData.insert(emojiData.unicode, emojiData);
+									emojiData.colored=false;
+								}
+							}
+						} while (it.hasNext());
+// ------------------- JSON descriptor parsed -------------------
+// ----------------- Looking for category icons -----------------
+						if (dir.cd("category_icons"))
+						{
+							for (QMap<int, QString>::ConstIterator ifc=FCategoryIDs.constBegin(); ifc!=FCategoryIDs.constEnd(); ++ifc)
+							{
+								QFile file(dir.absoluteFilePath(*ifc+".svg"));
+								if (file.open(QIODevice::ReadOnly))
+								{
+									QImageReader reader(&file);
+									reader.setScaledSize(QSize(16, 16));
+									QPixmap pixmap = QPixmap::fromImageReader(&reader);
+									if (!pixmap.isNull())
+										FCategoryIcons.insert(ifc.key(), QIcon(pixmap));
+									file.close();
+								}
+							}
+							dir.cdUp();
+						}
+// ------------------ Getting Emoji set list --------------------
+						if (dir.cd("assets"))
+						{
+							FEmojiSets = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+							if (!FEmojiSets.isEmpty())
+							{
+								FResourceDir = dir;
+								break;
+							}
+							dir.cdUp();
+						}
+// --------------------------------------------------------------
+					}
+				}
+				else
+					qWarning() << "JSON is empty!";
+			}
+			else
+				qWarning() << "failed to open file!";
+			dir.cdUp();
+		}
+	}
+}
+
+void Emoji::loadEmojiSet(const QString &AEmojiSet)
+{
+	QDir dir(FResourceDir);
+	dir.cd(AEmojiSet);
+	dir.cd("svg");
 
 	FUrlByKey.clear();
 	FKeyByUrl.clear();
 	clearTreeItem(&FRootTreeItem);
 
-	for (QList<QString>::ConstIterator it=resourceDirs.constBegin(); it!=resourceDirs.constEnd(); ++it)
-	{
-		QDir dir(*it);
-		dir.cd(EMOJI_EMOJIONE);
-		QFile file(dir.absoluteFilePath("emoji.json"));
-		if (dir.cd("assets"))
-		{
-			QDir other(dir);
-			if (other.cd("other") && other.cd("category_icons"))
-				for (QMap<int, QString>::ConstIterator ifc=FCategoryIDs.constBegin(); ifc!=FCategoryIDs.constEnd(); ++ifc)
-				{
-					QFile file(other.absoluteFilePath(*ifc+".svg"));
-					if (file.open(QIODevice::ReadOnly))
-					{
-						QImageReader reader(&file);
-						reader.setScaledSize(QSize(16, 16));
-						QPixmap pixmap = QPixmap::fromImageReader(&reader);
-						if (!pixmap.isNull())
-							FCategoryIcons.insert(ifc.key(), QIcon(pixmap));
-						file.close();
-					}
-				}
-			if (dir.cd("svg"))
+	for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+		for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+		{			
+			QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".svg")));
+			if (file.exists())
 			{
-				if (file.open(QIODevice::ReadOnly))
+				QUrl url(QUrl::fromLocalFile(file.fileName()));
+				(*it).colored = false;
+				for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 				{
-					QByteArray json = file.readAll();
-					file.close();
-					if (!json.isEmpty())
+					QFile file(dir.absoluteFilePath(QString("%1-%2.svg").arg((*it).ucs4).arg(c, 0, 16)));
+					if (file.exists())
 					{
-						QScriptEngine engine;
-						QString js("("+QString::fromUtf8(json)+")");
-
-						QScriptValue value = engine.evaluate(js);
-						if (value.isValid())
-						{
-							QScriptValueIterator it(value);
-							do
-							{
-								it.next();
-								EmojiData emojiData;
-
-								emojiData.id = it.name();
-
-								QScriptValue val = it.value();
-								emojiData.name = val.property("name").toString();
-
-								QString category = val.property("category").toString();
-								QString emojiOrder = val.property("emoji_order").toString();
-								if (!val.property("aliases").isNull())
-								{
-									QVariantList list=val.property("aliases").toVariant().toList();
-									QList<QString> aliases;
-									for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-										aliases.append((*it).toString());
-
-								}
-
-								if (!val.property("aliases_ascii").isNull())
-								{
-									QVariantList list=val.property("aliases_ascii").toVariant().toList();
-									QList<QString> aliases;
-									for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-										aliases.append((*it).toString());
-									emojiData.aliases = aliases;
-								}
-
-								if (!val.property("keywords").isNull())
-								{
-									QVariantList list=val.property("keywords").toVariant().toList();
-									QString out;
-									for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-									{
-										if (!out.isEmpty())
-											out.append(',');
-										out.append((*it).toString());
-									}
-								}
-
-								bool ok;
-								uint ucs4[16];
-								int  i(0);
-								QString unicode = val.property("unicode").toString();
-								QList<QString> splitted = unicode.split('-');
-								for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
-								{
-									ucs4[i]=(*it).toInt(&ok, 16);
-									if (!ok)
-										break;
-								}
-								if (ok)
-								{
-									emojiData.unicode = QString::fromUcs4(ucs4, i);
-									QFile file(QDir::cleanPath(dir.absoluteFilePath(unicode+".svg")));
-									if (file.exists())
-									{
-										QUrl url(QUrl::fromLocalFile(file.fileName()));
-										if (!isColored(emojiData.unicode))
-										{
-											uint order = emojiOrder.toInt();
-											FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
-											FEmojiData.insert(emojiData.unicode, emojiData);
-											emojiData.colored=false;
-											for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
-												if (QFile(dir.absoluteFilePath(QString("%1-%2.svg").arg(unicode).arg(c, 0, 16))).exists())
-												{
-													emojiData.colored=true;
-													break;
-												}
-										}
-										FUrlByKey.insert(emojiData.unicode, url);
-										FKeyByUrl.insert(url.toString(), emojiData.unicode);
-										createTreeItem(emojiData.unicode,url);
-									}
-								}
-							} while (it.hasNext());
-						}
+						(*it).colored = true;						
+						QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
+						QUrl url(QUrl::fromLocalFile(file.fileName()));
+						FUrlByKey.insert(unicode, url);
+						FKeyByUrl.insert(url.toString(), unicode);
+						createTreeItem(unicode, url);
 					}
-					else
-						qWarning() << "JSON is empty!";
 				}
-				else
-					qWarning() << "failed to open file!";
+				FUrlByKey.insert((*it).unicode, url);
+				FKeyByUrl.insert(url.toString(), (*it).unicode);
+				createTreeItem((*it).unicode, url);
 			}
+		}
+
+	for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+	{
+		QFile file(dir.absoluteFilePath(QString("%1.svg").arg(c, 0, 16)));
+		if (file.exists())
+		{
+			QString unicode = QString::fromUcs4(&c, 1);
+			QUrl url(QUrl::fromLocalFile(file.fileName()));
+			FUrlByKey.insert(unicode, url);
+			FKeyByUrl.insert(url.toString(), unicode);
 		}
 	}
 }
@@ -698,7 +740,7 @@ void Emoji::onSelectIconMenuDestroyed(QObject *AObject)
 
 void Emoji::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_MESSAGES_EMOJI_ICONSETS));
+	onOptionsChanged(Options::node(OPV_MESSAGES_EMOJI_ICONSET));
 	QByteArray array(Options::node(OPV_MESSAGES_EMOJI_RECENT).value().toByteArray());
 	if (!array.isEmpty())
 	{
@@ -709,7 +751,7 @@ void Emoji::onOptionsOpened()
 
 void Emoji::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path() == OPV_MESSAGES_EMOJI_ICONSETS)
+	if (ANode.path() == OPV_MESSAGES_EMOJI_ICONSET)
 	{
 /*
 		QList<QString> oldStorages = FStorages.keys();
@@ -745,7 +787,7 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 			delete FStorages.take(substorage);
 		}
 */
-		createIconsetUrls();
+		loadEmojiSet(ANode.value().toString());
 	}
 }
 #if QT_VERSION < 0x050000

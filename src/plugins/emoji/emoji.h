@@ -3,6 +3,7 @@
 
 #include <QHash>
 #include <QStringList>
+#include <QDir>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iemoji.h>
 #include <interfaces/imessageprocessor.h>
@@ -57,7 +58,6 @@ public:
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QStringList recentIcons(const QString &ASetName) const {Q_UNUSED(ASetName) return FRecent;}
 	//IEmoji
-//	virtual QList<QString> categories() const;
 	virtual QString categoryName(Category ACategory) const {return FCategoryNames.value(ACategory);}
 	virtual QIcon categoryIcon(Category ACategory) const {return FCategoryIcons.value(ACategory);}
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
@@ -66,7 +66,8 @@ public:
 	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
 protected:
-	void createIconsetUrls();
+	void findEmojiSets();
+	void loadEmojiSet(const QString &AEmojiSet);
 	void createTreeItem(const QString &AKey, const QUrl &AUrl);
 	void clearTreeItem(EmojiTreeItem *AItem) const;
 	bool isWordBoundary(const QString &AText) const;
@@ -98,10 +99,12 @@ private:
 
 	QStringList FColorSuffixes;
 	QStringList FRecent;
+	QStringList FEmojiSets;
 	mutable QHash<QString, QIcon> FIconHash;
 	QMap<int, QString> FCategoryNames;
 	QMap<int, QString> FCategoryIDs;
 	QMap<int, QIcon> FCategoryIcons;
+	QDir		FResourceDir;
 };
 
 #endif // EMOJI_H

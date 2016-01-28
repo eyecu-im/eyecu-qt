@@ -9,6 +9,7 @@ struct EmojiData {
 	QString id;
 	QString unicode;
 	QString name;
+	QString ucs4;
 	QList<QString> aliases;
 	bool	colored;
 };
