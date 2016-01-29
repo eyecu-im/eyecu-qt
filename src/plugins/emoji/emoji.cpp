@@ -469,7 +469,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 {
 	QDir dir(FResourceDir);
 	dir.cd(AEmojiSet);
-	dir.cd("svg");
+	dir.cd("png");
+	dir.cd("16");
 
 	FUrlByKey.clear();
 	FKeyByUrl.clear();
@@ -478,14 +479,14 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
 		for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
 		{			
-			QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".svg")));
+			QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".png")));
 			if (file.exists())
 			{
 				QUrl url(QUrl::fromLocalFile(file.fileName()));
 				(*it).colored = false;
 				for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 				{
-					QFile file(dir.absoluteFilePath(QString("%1-%2.svg").arg((*it).ucs4).arg(c, 0, 16)));
+					QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
 					if (file.exists())
 					{
 						(*it).colored = true;						
@@ -504,7 +505,7 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 
 	for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 	{
-		QFile file(dir.absoluteFilePath(QString("%1.svg").arg(c, 0, 16)));
+		QFile file(dir.absoluteFilePath(QString("%1.png").arg(c, 0, 16)));
 		if (file.exists())
 		{
 			QString unicode = QString::fromUcs4(&c, 1);

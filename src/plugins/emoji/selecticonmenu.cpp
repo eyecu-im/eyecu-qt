@@ -16,7 +16,7 @@ SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget 
 	Menu(AParent),
 	FEmoji(AEmoji),
 	FTabWidget(NULL),
-	FToolBar(NULL),
+//	FToolBar(NULL)
 	FToolBarChanger(NULL)
 {
 	setIconset(AIconset);
@@ -98,18 +98,15 @@ void SelectIconMenu::onAboutToShow()
 		}
 		FTabWidget->setCurrentWidget(selectedWidget);
 	}
-	if (FToolBar)
-	{
-		FLayout->removeWidget(FToolBar);
-		FToolBar->deleteLater();
-	}
-	FToolBar = new QToolBar(this);
-	FToolBar->setIconSize(QSize(16,16));
-	FLayout->addWidget(FToolBar);
-	FToolBarChanger = new ToolBarChanger(FToolBar);
+	if (FToolBarChanger)
+		delete FToolBarChanger->toolBar();
+	QToolBar *toolBar = new QToolBar(this);
+	toolBar->setIconSize(QSize(16,16));
+	FLayout->addWidget(toolBar);
+	FToolBarChanger = new ToolBarChanger(toolBar);
 	FToolBarChanger->setSeparatorsVisible(true);
 
-	FMenu = new Menu(FToolBar);
+	FMenu = new Menu(toolBar);
 	FMenu->setIcon(FEmptyIcon);
 
 	QActionGroup *group = new QActionGroup(FMenu);
@@ -188,11 +185,33 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
 			widget->updateLabels(color);
+		QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
+		for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
+		{
+			Action *action = FToolBarChanger->handleAction(*it);
+			QString unicode = action->data(ADR_EMOJI).toString();
+			if (FEmoji->isColored(unicode))
+				unicode.chop(2);
+			QString emoji = unicode+color;
+			QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
+			if (icon.isNull() && !color.isEmpty())
+			{
+				icon = FEmoji->getIcon(unicode, QSize(16, 16));
+				emoji = unicode;
+			}
+			if (!icon.isNull())
+			{
+				action->setIcon(icon);
+				action->setToolTip(FEmoji->findData(unicode).name);
+				action->setData(ADR_EMOJI, emoji);
+			}
+		}
 	}
 }
 
 void SelectIconMenu::onRecentIconTriggered()
 {
+	hide();
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
 		emit iconSelected(action->data(ADR_EMOJI).toString(), action->toolTip());

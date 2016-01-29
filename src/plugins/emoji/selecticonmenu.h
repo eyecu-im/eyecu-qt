@@ -37,7 +37,7 @@ private:
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
 	QPointer<Menu> FMenu;
-	QToolBar	*FToolBar;
+//	QToolBar	*FToolBar;
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
 };
