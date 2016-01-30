@@ -12,6 +12,7 @@ struct EmojiData {
 	QString ucs4;
 	QList<QString> aliases;
 	bool	colored;
+	bool	present;
 };
 
 class IEmoji: public IEmoticons
@@ -36,6 +37,7 @@ public:
 	virtual EmojiData findData(const QString &AEmojiCode) const = 0;
 	virtual bool isColored(const QString &AEmojiText) const = 0;
 	virtual const QStringList &colorSuffixes() const = 0;
+	virtual int categoryCount(Category ACategory) const = 0;
 };
 
 Q_DECLARE_INTERFACE(IEmoji,"RWS.Plugin.IEmoji/1.0")

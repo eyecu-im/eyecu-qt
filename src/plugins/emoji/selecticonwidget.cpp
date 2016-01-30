@@ -70,14 +70,15 @@ void SelectIconWidget::createLabels(const QString &AColor)
 	uint row =0;
 	uint column = 0;
 	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
-	{
-		FLayout->addWidget(getIconLabel((*it).unicode, (*it).name), row, column);
-		if ((*it).colored)
-			FHasColored=true;
-		column = (column+1) % FColumns;
-		row += column==0 ? 1 : 0;
-		FLayout->setRowStretch(row, 0);
-	}
+		if ((*it).present)
+		{
+			FLayout->addWidget(getIconLabel((*it).unicode, (*it).name), row, column);
+			if ((*it).colored)
+				FHasColored=true;
+			column = (column+1) % FColumns;
+			row += column==0 ? 1 : 0;
+			FLayout->setRowStretch(row, 0);
+		}
 	if (row<FRows)
 		FLayout->setRowStretch(row+1, 1);
 }

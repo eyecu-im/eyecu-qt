@@ -221,7 +221,7 @@ QList<QString> Emoji::activeIconsets() const
 	return iconsets;
 */
 	QList<QString> iconsets;
-	iconsets << "emojione";
+	iconsets << "Emoji One" << "vKontakte";
 	return iconsets;
 }
 
@@ -477,6 +477,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	clearTreeItem(&FRootTreeItem);
 
 	for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+	{
+		FCategoryCount[itc.key()]=0;
 		for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
 		{			
 			QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".png")));
@@ -489,19 +491,24 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 					QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
 					if (file.exists())
 					{
-						(*it).colored = true;						
+						(*it).colored = true;
 						QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
 						QUrl url(QUrl::fromLocalFile(file.fileName()));
 						FUrlByKey.insert(unicode, url);
 						FKeyByUrl.insert(url.toString(), unicode);
 						createTreeItem(unicode, url);
+						FCategoryCount[itc.key()]++;
 					}
 				}
 				FUrlByKey.insert((*it).unicode, url);
 				FKeyByUrl.insert(url.toString(), (*it).unicode);
 				createTreeItem((*it).unicode, url);
+				(*it).present = true;
 			}
+			else
+				(*it).present = false;
 		}
+	}
 
 	for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 	{
@@ -606,33 +613,54 @@ int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALeng
 	return posOffset;
 }
 
-SelectIconMenu *Emoji::createSelectIconMenu(const QString &ASubStorage, QWidget *AParent)
+SelectIconMenu *Emoji::createSelectIconMenu(const QString &AIconSet, QWidget *AParent)
 {
-	SelectIconMenu *menu = new SelectIconMenu(ASubStorage, this, AParent);
+	SelectIconMenu *menu = new SelectIconMenu(AIconSet, this, AParent);
 	connect(menu->instance(),SIGNAL(iconSelected(QString, QString)), SLOT(onSelectIconMenuSelected(QString, QString)));
 	connect(menu->instance(),SIGNAL(destroyed(QObject *)),SLOT(onSelectIconMenuDestroyed(QObject *)));
 	return menu;
 }
 
-//void Emoji::insertSelectIconMenu(const QString &ASubStorage)
-//{
-//	foreach(IMessageToolBarWidget *widget, FToolBarsWidgets)
-//	{
-//		SelectIconMenu *menu = createSelectIconMenu(ASubStorage,widget->instance());
-//		FToolBarWidgetByMenu.insert(menu,widget);
-//		QToolButton *button = widget->toolBarChanger()->insertAction(menu->menuAction(),TBG_MWTBW_EMOTICONS);
-//		button->setPopupMode(QToolButton::InstantPopup);
-//	}
-//}
+void Emoji::updateSelectIconMenu(const QString &AIconSet)
+{
+	foreach(IMessageToolBarWidget *widget, FToolBarsWidgets)
+	{
+		Action *action;
+		QList<QAction *> actions = widget->toolBarChanger()->groupItems(TBG_MWTBW_EMOJI);
+		if (!actions.isEmpty())
+			Action *action = widget->toolBarChanger()->handleAction(actions.first());
+		if (action)
+		{
+			SelectIconMenu *menu = qobject_cast<SelectIconMenu *>(action->menu());
+			if (menu)
+			{
+				if (AIconSet.isEmpty())
+				{
+					widget->toolBarChanger()->removeItem(actions.first());
+					FToolBarWidgetByMenu.remove(menu);
+				}
+				else
+					menu->setIconSet(AIconSet);
+			}
+		}
+		else if (!AIconSet.isEmpty())
+		{
+			SelectIconMenu *menu = createSelectIconMenu(AIconSet,widget->instance());
+			FToolBarWidgetByMenu.insert(menu,widget);
+			QToolButton *button = widget->toolBarChanger()->insertAction(menu->menuAction(),TBG_MWTBW_EMOTICONS);
+			button->setPopupMode(QToolButton::InstantPopup);
+		}
+	}
+}
 
-//void Emoji::removeSelectIconMenu(const QString &ASubStorage)
+//void Emoji::removeSelectIconMenu(const QString &AIconSet)
 //{
 //	QMap<SelectIconMenu *,IMessageToolBarWidget *>::iterator it = FToolBarWidgetByMenu.begin();
 //	while (it != FToolBarWidgetByMenu.end())
 //	{
 //		SelectIconMenu *menu = it.key();
 //		IMessageToolBarWidget *widget = it.value();
-//		if (menu->iconset() == ASubStorage)
+//		if (menu->iconSet() == AIconSet)
 //		{
 //			widget->toolBarChanger()->removeItem(widget->toolBarChanger()->actionHandle(menu->menuAction()));
 //			it = FToolBarWidgetByMenu.erase(it);
@@ -647,7 +675,7 @@ void Emoji::onToolBarWindowLayoutChanged()
 {
 	IMessageWindow *window = qobject_cast<IMessageWindow *>(sender());
 	if (window && window->toolBarWidget())
-		foreach(QAction *handle, window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_EMOTICONS))
+		foreach(QAction *handle, window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_EMOJI))
 			handle->setVisible(window->editWidget()->isVisibleOnWindow());
 }
 
@@ -657,13 +685,12 @@ void Emoji::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 	{
 		FToolBarsWidgets.append(AWidget);
 		if (AWidget->messageWindow()->editWidget()->isVisibleOnWindow())
-			foreach(const QString &substorage, activeIconsets())
-			{
-				SelectIconMenu *menu = createSelectIconMenu(substorage,AWidget->instance());
-				FToolBarWidgetByMenu.insert(menu,AWidget);
-				QToolButton *button = AWidget->toolBarChanger()->insertAction(menu->menuAction(),TBG_MWTBW_EMOTICONS);
-				button->setPopupMode(QToolButton::InstantPopup);
-			}
+		{
+			SelectIconMenu *menu = createSelectIconMenu(Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString(), AWidget->instance());
+			FToolBarWidgetByMenu.insert(menu,AWidget);
+			QToolButton *button = AWidget->toolBarChanger()->insertAction(menu->menuAction(), TBG_MWTBW_EMOJI);
+			button->setPopupMode(QToolButton::InstantPopup);
+		}
 		connect(AWidget->instance(),SIGNAL(destroyed(QObject *)),SLOT(onToolBarWidgetDestroyed(QObject *)));
 		connect(AWidget->messageWindow()->instance(),SIGNAL(widgetLayoutChanged()),SLOT(onToolBarWindowLayoutChanged()));
 	}

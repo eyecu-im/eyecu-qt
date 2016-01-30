@@ -12,14 +12,13 @@
 #define ADR_COLOR Action::DR_Parametr1
 #define ADR_EMOJI Action::DR_Parametr1
 
-SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent):
+SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
 	FTabWidget(NULL),
-//	FToolBar(NULL)
 	FToolBarChanger(NULL)
 {
-	setIconset(AIconset);
+	setIconSet(AIconSet);
 
 	QPixmap pixmap(16, 16);
 	pixmap.fill(QColor(0, 0, 0, 0));
@@ -36,15 +35,15 @@ SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget 
 SelectIconMenu::~SelectIconMenu()
 {}
 
-QString SelectIconMenu::iconset() const
+QString SelectIconMenu::iconSet() const
 {
 	return QString::null;
 }
 
-void SelectIconMenu::setIconset(const QString &ASubStorage)
+void SelectIconMenu::setIconSet(const QString &AIconSet)
 {
 	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().unicode, QSize(16, 16)));
-	menuAction()->setToolTip(ASubStorage);
+	menuAction()->setToolTip(AIconSet);
 }
 
 QSize SelectIconMenu::sizeHint() const
@@ -67,7 +66,7 @@ void SelectIconMenu::onAboutToShow()
 		int count = 0;
 		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
 		{
-			int cnt = FEmoji->emojiData((IEmoji::Category)c).size();
+			int cnt = FEmoji->categoryCount((IEmoji::Category)c);
 			if (count<cnt)
 			{
 				count = cnt;

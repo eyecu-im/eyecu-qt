@@ -21,6 +21,7 @@
 #define TBG_MWTBW_ARCHIVE_VIEW                                  700
 #define TBG_MWTBW_VCARD_VIEW                                    900
 // *** <<< eyeCU <<< ***
+#define TBG_MWTBW_EMOJI                                         100
 #define TBG_MWEWTB_ATTENTION_SEND                               1100
 #define TBG_MWTBW_POI_VIEW                                      1200
 #define TBG_MWTBW_OOB_VIEW                                      1250

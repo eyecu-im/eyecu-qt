@@ -64,7 +64,8 @@ public:
 	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const;
 	virtual EmojiData findData(const QString &AEmojiCode) const;
 	virtual bool isColored(const QString &AEmojiCode) const;
-	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}	
+	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
+	virtual int categoryCount(Category ACategory) const {return FCategoryCount[ACategory];}
 protected:
 	void findEmojiSets();
 	void loadEmojiSet(const QString &AEmojiSet);
@@ -73,9 +74,9 @@ protected:
 	bool isWordBoundary(const QString &AText) const;
 	int replaceTextToImage(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	int replaceImageToText(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
-	SelectIconMenu *createSelectIconMenu(const QString &ASubStorage, QWidget *AParent);
-//	void insertSelectIconMenu(const QString &ASubStorage);
-//	void removeSelectIconMenu(const QString &ASubStorage);
+	SelectIconMenu *createSelectIconMenu(const QString &AIconSet, QWidget *AParent);
+	void updateSelectIconMenu(const QString &AIconSet);
+//	void removeSelectIconMenu(const QString &AIconSet);
 protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
@@ -104,6 +105,7 @@ private:
 	QMap<int, QString> FCategoryNames;
 	QMap<int, QString> FCategoryIDs;
 	QMap<int, QIcon> FCategoryIcons;
+	int FCategoryCount[8];
 	QDir		FResourceDir;
 };
 

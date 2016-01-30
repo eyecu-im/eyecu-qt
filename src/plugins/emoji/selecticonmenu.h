@@ -15,11 +15,11 @@ class SelectIconMenu :
 {
 	Q_OBJECT
 public:
-	SelectIconMenu(const QString &AIconset, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconMenu();
 	QWidget *instance() { return this; }
-	QString iconset() const;
-	void setIconset(const QString &ASubStorage);
+	QString iconSet() const;
+	void setIconSet(const QString &AIconSet);
 signals:
 	void iconSelected(const QString &AIconKey, const QString &AIconText);
 public:
