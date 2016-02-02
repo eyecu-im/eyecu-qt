@@ -30,8 +30,8 @@ SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget 
 	FEmptyIcon.addPixmap(pixmap);
 
 	setAttribute(Qt::WA_AlwaysShowToolTips, true);
-	connect(this,SIGNAL(aboutToShow()),SLOT(onAboutToShow()));
-	connect(Options::instance(),SIGNAL(optionsChanged(OptionsNode)),SLOT(onOptionsChanged(OptionsNode)));
+	connect(this, SIGNAL(aboutToShow()), SLOT(onAboutToShow()));
+	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));
 }
 
 SelectIconMenu::~SelectIconMenu()
@@ -97,10 +97,12 @@ void SelectIconMenu::onAboutToShow()
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
 		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
 	}
+	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
+	QSize size(extent, extent);
 	if (FToolBarChanger)
 		delete FToolBarChanger->toolBar();
 	QToolBar *toolBar = new QToolBar(this);
-	toolBar->setIconSize(QSize(16,16));
+	toolBar->setIconSize(size);
 	FLayout->addWidget(toolBar);
 	FToolBarChanger = new ToolBarChanger(toolBar);
 	FToolBarChanger->setSeparatorsVisible(true);
@@ -130,7 +132,7 @@ void SelectIconMenu::onAboutToShow()
 		QString c = colorSuffixes[i];
 		action = new Action(group);
 		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
-		action->setIcon(FEmoji->getIcon(c, QSize(16,16)));
+		action->setIcon(FEmoji->getIcon(c, size));
 		action->setData(ADR_COLOR, i+1);
 		action->setCheckable(true);
 		action->setActionGroup(group);
@@ -145,14 +147,14 @@ void SelectIconMenu::onAboutToShow()
 
 	FToolBarChanger->insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
 	FMenu->setTitle(tr("Skin color"));
-	QStringList recent = FEmoji->recentIcons("emojione");
+	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
 		QString emoji = *it+color;
-		QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
+		QIcon icon = FEmoji->getIcon(emoji, size);
 		if (icon.isNull() && !color.isEmpty())
 		{
-			icon = FEmoji->getIcon(*it, QSize(16, 16));
+			icon = FEmoji->getIcon(*it, size);
 			emoji = *it;
 		}
 		if (!icon.isNull())

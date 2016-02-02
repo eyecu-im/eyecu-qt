@@ -57,16 +57,18 @@ public:
 	virtual QMap<int, QString> findTextEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoticons(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QStringList recentIcons(const QString &ASetName) const {Q_UNUSED(ASetName) return FRecent;}
+	virtual QMap<uint, QString> setEmoji(const QString &AEmojiSet) const;
 	//IEmoji
 	virtual QString categoryName(Category ACategory) const {return FCategoryNames.value(ACategory);}
 	virtual QIcon categoryIcon(Category ACategory) const {return FCategoryIcons.value(ACategory);}
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
+	virtual QIcon getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, const QSize &ASize=QSize()) const;
 	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const;
 	virtual EmojiData findData(const QString &AEmojiCode) const;
 	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
 	virtual int categoryCount(Category ACategory) const {return FCategoryCount[ACategory];}
-	virtual const QStringList &emojiSets() const {return FEmojiSets;}
+	virtual QStringList emojiSets() const {return FEmojiSets.keys();}
 	virtual QList<int> availableSizes(const QString &ASetName) const {return FAvailableSizes.value(ASetName);}
 protected:
 	void findEmojiSets();
@@ -101,12 +103,13 @@ private:
 
 	QStringList FColorSuffixes;
 	QStringList FRecent;
-	QStringList FEmojiSets;
+//	QStringList FEmojiSets;
+	QHash<QString, QMap<uint, QString> > FEmojiSets;
 	QHash<QString, QList<int> >	FAvailableSizes;
 	mutable QHash<QString, QIcon> FIconHash;
 	QMap<int, QString> FCategoryNames;
 	QMap<int, QString> FCategoryIDs;
-	QMap<int, QIcon> FCategoryIcons;
+	QMap<int, QIcon> FCategoryIcons;	
 	int FCategoryCount[8];
 	QDir		FResourceDir;
 };

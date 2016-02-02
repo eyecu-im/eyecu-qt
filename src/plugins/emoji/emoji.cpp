@@ -285,6 +285,11 @@ QMap<int, QString> Emoji::findImageEmoticons(const QTextDocument *ADocument, int
 	return emoticons;
 }
 
+QMap<uint, QString> Emoji::setEmoji(const QString &AEmojiSet) const
+{
+	return FEmojiSets.value(AEmojiSet);
+}
+
 QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 {
 	QIcon icon;
@@ -308,6 +313,27 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 		}
 	}
 	return icon;
+}
+
+QIcon Emoji::getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, const QSize &ASize) const
+{
+	if (FEmojiSets.contains(AEmojiSet) && FEmojiData.contains(AEmojiText))
+	{
+		QDir dir(FResourceDir);
+		if (dir.cd(AEmojiSet) && dir.cd("png") && dir.cd(QString::number(ASize.height())))
+		{
+			QFile file(dir.absoluteFilePath(FEmojiData.value(AEmojiText).ucs4+".png"));
+			if (file.exists() && file.open(QIODevice::ReadOnly))
+			{
+				QImageReader reader(&file);
+				reader.setScaledSize(ASize);
+				QPixmap pixmap = QPixmap::fromImageReader(&reader);
+				if (!pixmap.isNull())
+					return QIcon(pixmap);
+			}
+		}
+	}
+	return QIcon();
 }
 
 QMap<uint, EmojiData> Emoji::emojiData(Category ACategory) const
@@ -439,20 +465,34 @@ void Emoji::findEmojiSets()
 								{
 									QStringList entries = set.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
 									QList<int> sizes;
+									QMap<uint, QString> setEmoji;
 									for (QStringList::ConstIterator it=entries.constBegin(); it!=entries.constEnd(); ++it)
 									{
 										int size = (*it).toInt();
-										if (size)
-											if (set.cd(*it))
+										if (size && set.cd(*it))
+										{
+											QStringList fileNames = set.entryList(QDir::Files);
+											if (!fileNames.isEmpty())
 											{
-												if (!set.entryList(QDir::Files).isEmpty())
-													sizes.append(size);
-												set.cdUp();
+												sizes.append(size);
+												if (setEmoji.isEmpty())
+													for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+													{
+														FCategoryCount[itc.key()]=0;
+														for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+														{
+															QFile file(QDir::cleanPath(set.absoluteFilePath((*it).ucs4+".png")));
+															if (file.exists())
+																setEmoji.insert(it.key(), (*it).unicode);
+														}
+													}
 											}
+											set.cdUp();
+										}
 									}
-									if (!sizes.isEmpty())
+									if (!sizes.isEmpty() && !setEmoji.isEmpty())
 									{
-										FEmojiSets.append(*its);
+										FEmojiSets.insert(*its, setEmoji);
 										FAvailableSizes.insert(*its, sizes);
 									}
 								}
@@ -490,11 +530,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 
 	QStringList dirs = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
 	for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it)
-	{
-		int size = (*it).toInt();
-		if (!size)
+		if (!(*it).toInt())
 			it = dirs.erase(it);
-	}
 
 	if (!dirs.isEmpty())
 	{

@@ -2,7 +2,7 @@
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/optionvalues.h>
-#include <utils/iconsetdelegate.h>
+#include "iconsetdelegate.h"
 #include <utils/options.h>
 
 EmojiOptions::EmojiOptions(IEmoji *AEmoji, QWidget *AParent):
@@ -10,10 +10,14 @@ EmojiOptions::EmojiOptions(IEmoji *AEmoji, QWidget *AParent):
 	FEmoji(AEmoji)
 {
 	ui.setupUi(this);
+	ui.cmbEmojiSet->setItemDelegate(new IconsetDelegate(FEmoji, ui.cmbEmojiSet));
 	ui.cmbEmojiSet->addItem(tr("Do not use emoji"), QString(""));
 	QStringList emojiSets = FEmoji->emojiSets();
 	for (QStringList::ConstIterator it=emojiSets.constBegin(); it!=emojiSets.constEnd(); ++it)
+	{
 		ui.cmbEmojiSet->addItem(*it, *it);
+		ui.cmbEmojiSet->setItemData(ui.cmbEmojiSet->count()-1, 2, IconsetDelegate::IDR_ICON_ROW_COUNT);
+	}
 	connect(ui.cmbEmojiSet, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 	connect(ui.spbChatIconSize, SIGNAL(valueChanged(int)), SIGNAL(modified()));
 	connect(ui.spbMenuIconSize, SIGNAL(valueChanged(int)), SIGNAL(modified()));
