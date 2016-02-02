@@ -17,8 +17,8 @@ public:
 	SelectIconWidget(IEmoji::Category ACategory, uint AColumns, uint ARows, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
 	void updateLabels(const QString &AColor, bool AForce=false);
-	QLabel *getIconLabel(const QString &AKey, const QString &AToolTip);
 	bool hasColored() const {return FHasColored;}
+	void invalidate() {FNotReady = true;}
 signals:
 	void iconSelected(const QString &AIconKey, const QString &AIconText);
 	void hasColoredChanged(bool AHasColored);

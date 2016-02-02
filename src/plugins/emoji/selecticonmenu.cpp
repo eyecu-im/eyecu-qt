@@ -1,6 +1,6 @@
 #include "selecticonmenu.h"
 #include "emoji.h"
-#include <QDebug>
+
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/toolbargroups.h>
@@ -15,19 +15,21 @@
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
+	FLayout(NULL),
 	FTabWidget(NULL),
 	FToolBarChanger(NULL)
 {
+	FLayout = new QVBoxLayout(this);
+	FLayout->setMargin(0);
+	FLayout->setSpacing(1);
+
 	setIconSet(AIconSet);
 
 	QPixmap pixmap(16, 16);
 	pixmap.fill(QColor(0, 0, 0, 0));
 	FEmptyIcon.addPixmap(pixmap);
 
-	FLayout = new QVBoxLayout(this);
-	FLayout->setMargin(0);
-	FLayout->setSpacing(1);
-	setAttribute(Qt::WA_AlwaysShowToolTips,true);
+	setAttribute(Qt::WA_AlwaysShowToolTips, true);
 	connect(this,SIGNAL(aboutToShow()),SLOT(onAboutToShow()));
 	connect(Options::instance(),SIGNAL(optionsChanged(OptionsNode)),SLOT(onOptionsChanged(OptionsNode)));
 }
@@ -85,17 +87,15 @@ void SelectIconMenu::onAboutToShow()
 				rows=r;
 			}
 		}
-		SelectIconWidget *selectedWidget = NULL;
 		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
 		{
 			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, columns, rows, FEmoji, this);
-			if (!selectedWidget)
-				selectedWidget = widget;
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
 			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}
-		FTabWidget->setCurrentWidget(selectedWidget);
+		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
+		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
 	}
 	if (FToolBarChanger)
 		delete FToolBarChanger->toolBar();
@@ -112,7 +112,7 @@ void SelectIconMenu::onAboutToShow()
 
 	Action *action = new Action(group);
 	action->setText(tr("Default"));
-	action->setData(ADR_COLOR, 0);
+	action->setData(ADR_COLOR, Emoji::SkinDefault);
 	action->setCheckable(true);
 	action->setActionGroup(group);
 	action->setIcon(FMenu->icon());
@@ -125,7 +125,7 @@ void SelectIconMenu::onAboutToShow()
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 
 	QStringList colorSuffixes = FEmoji->colorSuffixes();
-	for (int i=0; i<5; ++i)
+	for (int i=Emoji::SkinDefault; i<Emoji::SkinTone5; ++i)
 	{
 		QString c = colorSuffixes[i];
 		action = new Action(group);
@@ -184,27 +184,7 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
 			widget->updateLabels(color);
-		QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
-		for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
-		{
-			Action *action = FToolBarChanger->handleAction(*it);
-			QString unicode = action->data(ADR_EMOJI).toString();
-			if (FEmoji->isColored(unicode))
-				unicode.chop(2);
-			QString emoji = unicode+color;
-			QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
-			if (icon.isNull() && !color.isEmpty())
-			{
-				icon = FEmoji->getIcon(unicode, QSize(16, 16));
-				emoji = unicode;
-			}
-			if (!icon.isNull())
-			{
-				action->setIcon(icon);
-				action->setToolTip(FEmoji->findData(unicode).name);
-				action->setData(ADR_EMOJI, emoji);
-			}
-		}
+		updateRecentActions(color);
 	}
 }
 
@@ -219,6 +199,36 @@ void SelectIconMenu::onRecentIconTriggered()
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)
 {
 	FMenu->setEnabled(AHasColored);
+}
+
+void SelectIconMenu::onCategorySwitched(int ACategory)
+{
+	Options::node(OPV_MESSAGES_EMOJI_CATEGORY).setValue(ACategory);
+}
+
+void SelectIconMenu::updateRecentActions(const QString &AColor)
+{
+	QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
+	for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
+	{
+		Action *action = FToolBarChanger->handleAction(*it);
+		QString unicode = action->data(ADR_EMOJI).toString();
+		if (FEmoji->isColored(unicode))
+			unicode.chop(2);
+		QString emoji = unicode+AColor;
+		QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
+		if (icon.isNull() && !AColor.isEmpty())
+		{
+			icon = FEmoji->getIcon(unicode, QSize(16, 16));
+			emoji = unicode;
+		}
+		if (!icon.isNull())
+		{
+			action->setIcon(icon);
+			action->setToolTip(FEmoji->findData(unicode).name);
+			action->setData(ADR_EMOJI, emoji);
+		}
+	}
 }
 
 QString SelectIconMenu::typeUcs4(const QString &AText)

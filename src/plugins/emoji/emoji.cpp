@@ -1,5 +1,3 @@
-#include "emoji.h"
-#include <QDebug>
 #include <QDir>
 #include <QSet>
 #include <QChar>
@@ -10,6 +8,7 @@
 #include <QScriptEngine>
 #include <QScriptValue>
 #include <QScriptValueIterator>
+
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/actiongroups.h>
@@ -25,17 +24,12 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/menu.h>
-#include <XmlTextDocumentParser>
+
 #include "emojioptions.h"
+#include "emoji.h"
 
-#define EMOJI_DEFAULT		    "Emoji One"
-//#define EMOJI_EXTRA				"vk_extra_small"
-//#define EMOJI_FAMILY			"vk_family_small"
-//#define EMOJI_SELECTABLE_BIG	"vk_big"
-//#define EMOJI_EXTRA_BIG			"vk_extra_big"
-//#define EMOJI_FAMILY_BIG		"vk_family_big"
-
-#define EMOJI_DIR			"emojione"
+#define EMOJI_DEFAULT	"Emoji One"
+#define EMOJI_DIR		"emoji"
 
 Emoji::Emoji():
 	FMessageWidgets(NULL),
@@ -128,7 +122,10 @@ bool Emoji::isColored(const QString &AEmojiCode) const
 bool Emoji::initSettings()
 {
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_ICONSET, EMOJI_DEFAULT);
-	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, 0);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SIZE_CHAT, 32);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SIZE_MENU, 16);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_SKINCOLOR, SkinDefault);
+	Options::setDefaultValue(OPV_MESSAGES_EMOJI_CATEGORY, People);
 	Options::setDefaultValue(OPV_MESSAGES_EMOJI_RECENT, QByteArray());
 
 	if (FOptionsManager)
@@ -178,7 +175,7 @@ bool Emoji::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, c
 	Q_UNUSED(AOrder); Q_UNUSED(AData);
 	if (AOrder == MECHO_EMOJI_CONVERT_IMAGE2TEXT)
 	{
-		QList<QUrl> urlList = FUrlByKey.values();
+		QList<QUrl> urlList = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).values();
 		QTextBlock block = ADocument->firstBlock();
 		while (block.isValid())
 		{
@@ -209,25 +206,14 @@ bool Emoji::messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget, 
 
 QList<QString> Emoji::activeIconsets() const
 {
-/*
-	QList<QString> iconsets = FStorages.keys();// = Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList();
-	for (QList<QString>::iterator it = iconsets.begin(); it != iconsets.end(); )
-	{
-		if ((*it).at(0)=='@')
-			it = iconsets.erase(it);
-		else
-			++it;
-	}
-	return iconsets;
-*/
 	QList<QString> iconsets;
-	iconsets << "Emoji One" << "vKontakte";
+	iconsets << Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString();
 	return iconsets;
 }
 
 QUrl Emoji::urlByKey(const QString &AKey) const
 {
-	return FUrlByKey.value(AKey);
+	return FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AKey);
 }
 
 QString Emoji::keyByUrl(const QUrl &AUrl) const
@@ -306,9 +292,10 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 		icon = FIconHash[AEmojiCode];
 	if (!icon.availableSizes().contains(ASize))
 	{
-		if (FUrlByKey.contains(AEmojiCode))
+		QHash<QString, QUrl> urlByKey = FUrlByKey.value(ASize.height());
+		if (urlByKey.contains(AEmojiCode))
 		{
-			QFile file(FUrlByKey[AEmojiCode].toLocalFile());
+			QFile file(urlByKey[AEmojiCode].toLocalFile());
 			if (file.open(QIODevice::ReadOnly))
 			{
 				QImageReader reader(&file);
@@ -444,7 +431,32 @@ void Emoji::findEmojiSets()
 // ------------------ Getting Emoji set list --------------------
 						if (dir.cd("assets"))
 						{
-							FEmojiSets = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+							QStringList emojiSets = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+							for (QStringList::ConstIterator its = emojiSets.constBegin(); its!=emojiSets.constEnd(); ++its)
+							{
+								QDir set(dir);
+								if (set.cd(*its) && set.cd("png"))
+								{
+									QStringList entries = set.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+									QList<int> sizes;
+									for (QStringList::ConstIterator it=entries.constBegin(); it!=entries.constEnd(); ++it)
+									{
+										int size = (*it).toInt();
+										if (size)
+											if (set.cd(*it))
+											{
+												if (!set.entryList(QDir::Files).isEmpty())
+													sizes.append(size);
+												set.cdUp();
+											}
+									}
+									if (!sizes.isEmpty())
+									{
+										FEmojiSets.append(*its);
+										FAvailableSizes.insert(*its, sizes);
+									}
+								}
+							}
 							if (!FEmojiSets.isEmpty())
 							{
 								FResourceDir = dir;
@@ -456,10 +468,10 @@ void Emoji::findEmojiSets()
 					}
 				}
 				else
-					qWarning() << "JSON is empty!";
+					LOG_WARNING("JSON is empty!");
 			}
 			else
-				qWarning() << "failed to open file!";
+				LOG_WARNING("failed to open file!");
 			dir.cdUp();
 		}
 	}
@@ -470,57 +482,74 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	QDir dir(FResourceDir);
 	dir.cd(AEmojiSet);
 	dir.cd("png");
-	dir.cd("16");
 
+	FIconHash.clear();
 	FUrlByKey.clear();
 	FKeyByUrl.clear();
 	clearTreeItem(&FRootTreeItem);
 
-	for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+	QStringList dirs = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+	for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it)
 	{
-		FCategoryCount[itc.key()]=0;
-		for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
-		{			
-			QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".png")));
-			if (file.exists())
-			{
-				QUrl url(QUrl::fromLocalFile(file.fileName()));
-				(*it).colored = false;
-				for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
-				{
-					QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
-					if (file.exists())
-					{
-						(*it).colored = true;
-						QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
-						QUrl url(QUrl::fromLocalFile(file.fileName()));
-						FUrlByKey.insert(unicode, url);
-						FKeyByUrl.insert(url.toString(), unicode);
-						createTreeItem(unicode, url);
-						FCategoryCount[itc.key()]++;
-					}
-				}
-				FUrlByKey.insert((*it).unicode, url);
-				FKeyByUrl.insert(url.toString(), (*it).unicode);
-				createTreeItem((*it).unicode, url);
-				(*it).present = true;
-			}
-			else
-				(*it).present = false;
-		}
+		int size = (*it).toInt();
+		if (!size)
+			it = dirs.erase(it);
 	}
 
-	for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+	if (!dirs.isEmpty())
 	{
-		QFile file(dir.absoluteFilePath(QString("%1.png").arg(c, 0, 16)));
-		if (file.exists())
-		{
-			QString unicode = QString::fromUcs4(&c, 1);
-			QUrl url(QUrl::fromLocalFile(file.fileName()));
-			FUrlByKey.insert(unicode, url);
-			FKeyByUrl.insert(url.toString(), unicode);
-		}
+		for (QStringList::ConstIterator itd = dirs.constBegin(); itd!=dirs.constEnd(); ++itd)
+			if (dir.cd(*itd))
+			{
+				for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+				{
+					FCategoryCount[itc.key()]=0;
+					for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+					{
+						QFile file(QDir::cleanPath(dir.absoluteFilePath((*it).ucs4+".png")));
+						if (file.exists())
+						{
+							QUrl url(QUrl::fromLocalFile(file.fileName()));
+							(*it).colored = false;
+							for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+							{
+								QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
+								if (file.exists())
+								{
+									(*it).colored = true;
+									QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
+									QUrl url(QUrl::fromLocalFile(file.fileName()));
+									FUrlByKey[(*itd).toInt()].insert(unicode, url);
+									FKeyByUrl.insertMulti(url.toString(), unicode);
+									createTreeItem(unicode, url);
+									FCategoryCount[itc.key()]++;
+								}
+							}
+							FUrlByKey[(*itd).toInt()].insert((*it).unicode, url);
+							FKeyByUrl.insertMulti(url.toString(), (*it).unicode);
+							createTreeItem((*it).unicode, url);
+							(*it).present = true;
+						}
+						else
+							(*it).present = false;
+					}
+
+					for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+					{
+						QFile file(dir.absoluteFilePath(QString("%1.png").arg(c, 0, 16)));
+						if (file.exists())
+						{
+							QString unicode = QString::fromUcs4(&c, 1);
+							QUrl url(QUrl::fromLocalFile(file.fileName()));
+							FUrlByKey[(*itd).toInt()].insert(unicode, url);
+							FKeyByUrl.insertMulti(url.toString(), unicode);
+						}
+					}
+				}
+				dir.cdUp();
+			}
 	}
+	updateSelectIconMenu(AEmojiSet);
 }
 
 void Emoji::createTreeItem(const QString &AKey, const QUrl &AUrl)
@@ -568,7 +597,7 @@ int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALeng
 		cursor.beginEditBlock();
 		for (QMap<int,QString>::const_iterator it=emoticons.constBegin(); it!=emoticons.constEnd(); ++it)
 		{
-			QUrl url = FUrlByKey.value(it.value());
+			QUrl url = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(it.value());
 			if (!url.isEmpty())
 			{
 				cursor.setPosition(it.key()-posOffset);
@@ -623,53 +652,32 @@ SelectIconMenu *Emoji::createSelectIconMenu(const QString &AIconSet, QWidget *AP
 
 void Emoji::updateSelectIconMenu(const QString &AIconSet)
 {
-	foreach(IMessageToolBarWidget *widget, FToolBarsWidgets)
+	for(QList<IMessageToolBarWidget *>::ConstIterator it=FToolBarsWidgets.constBegin(); it!=FToolBarsWidgets.constEnd(); ++it)
 	{
-		Action *action;
-		QList<QAction *> actions = widget->toolBarChanger()->groupItems(TBG_MWTBW_EMOJI);
+		Action *action = NULL;
+		ToolBarChanger *changer  = (*it)->toolBarChanger();
+		QList<QAction *> actions = changer->groupItems(TBG_MWTBW_EMOJI);
 		if (!actions.isEmpty())
-			Action *action = widget->toolBarChanger()->handleAction(actions.first());
+			action = changer->handleAction(actions.first());
 		if (action)
 		{
 			SelectIconMenu *menu = qobject_cast<SelectIconMenu *>(action->menu());
 			if (menu)
 			{
-				if (AIconSet.isEmpty())
-				{
-					widget->toolBarChanger()->removeItem(actions.first());
-					FToolBarWidgetByMenu.remove(menu);
-				}
-				else
-					menu->setIconSet(AIconSet);
+				changer->removeItem(actions.first());
+				FToolBarWidgetByMenu.remove(menu);
 			}
 		}
-		else if (!AIconSet.isEmpty())
-		{
-			SelectIconMenu *menu = createSelectIconMenu(AIconSet,widget->instance());
-			FToolBarWidgetByMenu.insert(menu,widget);
-			QToolButton *button = widget->toolBarChanger()->insertAction(menu->menuAction(),TBG_MWTBW_EMOTICONS);
+
+		if (!AIconSet.isEmpty())
+		{			
+			SelectIconMenu *menu = createSelectIconMenu(AIconSet, (*it)->instance());
+			FToolBarWidgetByMenu.insert(menu, (*it));
+			QToolButton *button = changer->insertAction(menu->menuAction(),TBG_MWTBW_EMOJI);
 			button->setPopupMode(QToolButton::InstantPopup);
 		}
 	}
 }
-
-//void Emoji::removeSelectIconMenu(const QString &AIconSet)
-//{
-//	QMap<SelectIconMenu *,IMessageToolBarWidget *>::iterator it = FToolBarWidgetByMenu.begin();
-//	while (it != FToolBarWidgetByMenu.end())
-//	{
-//		SelectIconMenu *menu = it.key();
-//		IMessageToolBarWidget *widget = it.value();
-//		if (menu->iconSet() == AIconSet)
-//		{
-//			widget->toolBarChanger()->removeItem(widget->toolBarChanger()->actionHandle(menu->menuAction()));
-//			it = FToolBarWidgetByMenu.erase(it);
-//			delete menu;
-//		}
-//		else
-//			++it;
-//	}
-//}
 
 void Emoji::onToolBarWindowLayoutChanged()
 {
@@ -683,16 +691,20 @@ void Emoji::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 {
 	if (AWidget->messageWindow()->editWidget())
 	{
-		FToolBarsWidgets.append(AWidget);
-		if (AWidget->messageWindow()->editWidget()->isVisibleOnWindow())
+		QString iconSet = Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString();
+		if (!iconSet.isEmpty())
 		{
-			SelectIconMenu *menu = createSelectIconMenu(Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString(), AWidget->instance());
-			FToolBarWidgetByMenu.insert(menu,AWidget);
-			QToolButton *button = AWidget->toolBarChanger()->insertAction(menu->menuAction(), TBG_MWTBW_EMOJI);
-			button->setPopupMode(QToolButton::InstantPopup);
+			FToolBarsWidgets.append(AWidget);
+			if (AWidget->messageWindow()->editWidget()->isVisibleOnWindow())
+			{
+				SelectIconMenu *menu = createSelectIconMenu(iconSet, AWidget->instance());
+				FToolBarWidgetByMenu.insert(menu,AWidget);
+				QToolButton *button = AWidget->toolBarChanger()->insertAction(menu->menuAction(), TBG_MWTBW_EMOJI);
+				button->setPopupMode(QToolButton::InstantPopup);
+			}
+			connect(AWidget->instance(),SIGNAL(destroyed(QObject *)),SLOT(onToolBarWidgetDestroyed(QObject *)));
+			connect(AWidget->messageWindow()->instance(),SIGNAL(widgetLayoutChanged()),SLOT(onToolBarWindowLayoutChanged()));
 		}
-		connect(AWidget->instance(),SIGNAL(destroyed(QObject *)),SLOT(onToolBarWidgetDestroyed(QObject *)));
-		connect(AWidget->messageWindow()->instance(),SIGNAL(widgetLayoutChanged()),SLOT(onToolBarWindowLayoutChanged()));
 	}
 }
 
@@ -716,7 +728,7 @@ void Emoji::onSelectIconMenuSelected(QString AIconKey, const QString &AIconText)
 		IMessageEditWidget *widget = FToolBarWidgetByMenu.value(menu)->messageWindow()->editWidget();
 		if (widget)
 		{
-			QUrl url = FUrlByKey.value(AIconKey);
+			QUrl url = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AIconKey);
 			if (!url.isEmpty())
 			{
 				QTextEdit *editor = widget->textEdit();
@@ -780,43 +792,9 @@ void Emoji::onOptionsOpened()
 void Emoji::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MESSAGES_EMOJI_ICONSET)
-	{
-/*
-		QList<QString> oldStorages = FStorages.keys();
-		QList<QString> availStorages = IconStorage::availSubStorages(RSR_STORAGE_EMOJI);
-
-		foreach(const QString &substorage, Options::node(OPV_MESSAGES_EMOJI_ICONSETS).value().toStringList())
-		{
-			QString ss = substorage;
-			if (ss.at(0)=='@')
-				ss.remove(0,1);
-			if (availStorages.contains(ss))
-			{
-				if (!FStorages.contains(substorage))
-				{
-					LOG_DEBUG(QString("Creating emoji storage=%1").arg(substorage));
-					if (substorage.at(0)!='@')
-						insertSelectIconMenu(substorage);
-					FStorages.insert(substorage, new IconStorage(RSR_STORAGE_EMOJI,ss,this));
-				}
-				oldStorages.removeAll(substorage);
-			}
-			else
-			{
-				LOG_WARNING(QString("Selected emoji storage=%1 not available").arg(substorage));
-			}
-		}
-
-		foreach (const QString &substorage, oldStorages)
-		{
-			LOG_DEBUG(QString("Removing emoji storage=%1").arg(substorage));
-			if (substorage.at(0)!='@')
-				removeSelectIconMenu(substorage);
-			delete FStorages.take(substorage);
-		}
-*/
 		loadEmojiSet(ANode.value().toString());
-	}
+	else if (ANode.path() == OPV_MESSAGES_EMOJI_SIZE_MENU)
+		updateSelectIconMenu(Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString());
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_emoji, Emoji)

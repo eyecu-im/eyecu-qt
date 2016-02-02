@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
-    <height>405</height>
+    <width>235</width>
+    <height>72</height>
    </rect>
   </property>
-  <layout class="QHBoxLayout">
+  <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -23,83 +23,92 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QLabel" name="lblEmoticons">
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblEmojiSet">
      <property name="text">
-      <string>Emoji sets:</string>
+      <string>Emoji set</string>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QListWidget" name="lwtEmoticons">
-     <property name="whatsThis">
-      <string>Here you can select emoji sets and mark those of them to be used</string>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblbMenuIconSize">
+     <property name="text">
+      <string>Menu icon size</string>
      </property>
     </widget>
    </item>
-   <item>
-    <widget class="QWidget" name="wdtButtons" native="true">
-     <layout class="QVBoxLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QToolButton" name="tbtUp">
-        <property name="statusTip">
-         <string>Priority Up</string>
-        </property>
-        <property name="whatsThis">
-         <string>Click this button to rise priority of selected emoji set</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tbtSelectable">
-        <property name="toolTip">
-         <string>Selectable</string>
-        </property>
-        <property name="whatsThis">
-         <string>Click this button to add emoji selection menu button to message edit toolbar</string>
-        </property>
-        <property name="text">
-         <string notr="true"/>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tbtDown">
-        <property name="statusTip">
-         <string>Priority Down</string>
-        </property>
-        <property name="whatsThis">
-         <string>Click this button to lower prioroty of selected emoji set</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblbChatIconSize">
+     <property name="text">
+      <string>Chat icon size</string>
+     </property>
     </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="IconSizeSpinBox" name="spbMenuIconSize"/>
+   </item>
+   <item row="3" column="2">
+    <widget class="IconSizeSpinBox" name="spbChatIconSize"/>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QComboBox" name="cmbEmojiSet"/>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>IconSizeSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>iconsizespinbox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cmbEmojiSet</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>EmojiOptionsClass</receiver>
+   <slot>onListBoxCurrentIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>154</x>
+     <y>9</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>117</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onListBoxCurrentIndexChanged(int)</slot>
+ </slots>
 </ui>

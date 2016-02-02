@@ -3,7 +3,7 @@
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
-#include <QDebug>
+
 #include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
@@ -29,39 +29,25 @@ SelectIconWidget::~SelectIconWidget()
 
 void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
 {
+	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
+	QSize size(extent, extent);
 	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
 		QString key(*it);
 		if (FEmoji->isColored(key))
-			key.chop(2);
-		QIcon icon = FEmoji->getIcon(key+AColor, QSize(16, 16));
+			key.chop(2);		
+		QIcon icon = FEmoji->getIcon(key+AColor, size);
 		if (icon.isNull() && !AColor.isEmpty())
-			icon = FEmoji->getIcon(key, QSize(16, 16));
+			icon = FEmoji->getIcon(key, size);
 		else
 			key.append(AColor);
 
 		if (*it!=key || AForce)
 		{
 			(*it)=key;
-			it.key()->setPixmap(icon.pixmap(16, 16));
+			it.key()->setPixmap(icon.pixmap(size));
 		}
 	}
-}
-
-QLabel *SelectIconWidget::getIconLabel(const QString &AKey, const QString &AToolTip)
-{
-	QLabel *label; //(NULL);
-	QString key(AKey);
-	label = new QLabel(this);
-	label->setMargin(2);
-	label->setAlignment(Qt::AlignCenter);
-	label->setFrameShape(QFrame::Box);
-	label->setFrameShadow(QFrame::Sunken);
-	label->installEventFilter(this);
-	label->setPixmap(QPixmap(16, 16));
-	label->setToolTip(AToolTip);
-	FKeyByLabel.insert(label, key);
-	return label;
 }
 
 void SelectIconWidget::createLabels(const QString &AColor)
@@ -69,10 +55,23 @@ void SelectIconWidget::createLabels(const QString &AColor)
 	Q_UNUSED(AColor)
 	uint row =0;
 	uint column = 0;
+	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
+	QSize iconSize(extent, extent);
 	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
 		if ((*it).present)
 		{
-			FLayout->addWidget(getIconLabel((*it).unicode, (*it).name), row, column);
+			QLabel *label; //(NULL);
+			label = new QLabel(this);
+			label->setMargin(2);
+			label->setAlignment(Qt::AlignCenter);
+			label->setFrameShape(QFrame::Box);
+			label->setFrameShadow(QFrame::Sunken);
+			label->installEventFilter(this);
+			label->setPixmap(QPixmap(iconSize));
+			label->setToolTip((*it).name);
+			FKeyByLabel.insert(label, (*it).unicode);
+
+			FLayout->addWidget(label, row, column);
 			if ((*it).colored)
 				FHasColored=true;
 			column = (column+1) % FColumns;

@@ -30,14 +30,15 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onRecentIconTriggered();
 	void onHasColoredChanged(bool AHasColored);
+	void onCategorySwitched(int ACategory);
 protected:
+	void updateRecentActions(const QString &AColor);
 	static QString typeUcs4(const QString &AText);
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
 	QPointer<Menu> FMenu;
-//	QToolBar	*FToolBar;
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
 };

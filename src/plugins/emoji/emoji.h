@@ -66,6 +66,8 @@ public:
 	virtual bool isColored(const QString &AEmojiCode) const;
 	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
 	virtual int categoryCount(Category ACategory) const {return FCategoryCount[ACategory];}
+	virtual const QStringList &emojiSets() const {return FEmojiSets;}
+	virtual QList<int> availableSizes(const QString &ASetName) const {return FAvailableSizes.value(ASetName);}
 protected:
 	void findEmojiSets();
 	void loadEmojiSet(const QString &AEmojiSet);
@@ -76,7 +78,6 @@ protected:
 	int replaceImageToText(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	SelectIconMenu *createSelectIconMenu(const QString &AIconSet, QWidget *AParent);
 	void updateSelectIconMenu(const QString &AIconSet);
-//	void removeSelectIconMenu(const QString &AIconSet);
 protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
@@ -91,7 +92,7 @@ private:
 	IOptionsManager *FOptionsManager;
 private:
 	EmojiTreeItem FRootTreeItem;
-	QHash<QString, QUrl> FUrlByKey;
+	QMap<int, QHash<QString, QUrl> > FUrlByKey;
 	QHash<QString, QString> FKeyByUrl;
 	QHash<Category, QMap<uint, EmojiData> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
@@ -101,6 +102,7 @@ private:
 	QStringList FColorSuffixes;
 	QStringList FRecent;
 	QStringList FEmojiSets;
+	QHash<QString, QList<int> >	FAvailableSizes;
 	mutable QHash<QString, QIcon> FIconHash;
 	QMap<int, QString> FCategoryNames;
 	QMap<int, QString> FCategoryIDs;

@@ -24,15 +24,14 @@ signals:
 	void childApply();
 	void childReset();
 protected slots:
-	void onUpButtonClicked();
-	void onDownButtonClicked();
-	void onMakeSelectableButtonToggled(bool ASelectable);
-	void onCurrentItemChanged(QListWidgetItem *ACurrent, QListWidgetItem *APrevious);
-	void onItemChanged(QListWidgetItem *AItem);
+	void onListBoxCurrentIndexChanged(int AIndex);
+//	void onCurrentItemChanged(QListWidgetItem *ACurrent, QListWidgetItem *APrevious);
+//	void onItemChanged(QListWidgetItem *AItem);
+
 private:
 	Ui::EmojiOptionsClass ui;
 private:
-	IEmoticons *FEmoji;
+	IEmoji *FEmoji;
 };
 
 #endif // EMOJIOPTIONS_H
