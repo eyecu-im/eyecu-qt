@@ -34,7 +34,7 @@
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="97"/>
    <source>Invalid stream initiation response</source>
-   <translation type="unfinished"/>
+   <translation>Некоректна відповідь на розпакування потоку</translation>
   </message>
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="114"/>
@@ -54,12 +54,12 @@
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="128"/>
    <source>Data Transfer</source>
-   <translation type="unfinished"/>
+   <translation>Передача даних</translation>
   </message>
   <message>
    <location filename="../../plugins/datastreamsmanager/datastreamsmanager.cpp" line="143"/>
    <source>Transfer method %1</source>
-   <translation type="unfinished"/>
+   <translation>Метод передачі %1</translation>
   </message>
  </context>
 </TS>

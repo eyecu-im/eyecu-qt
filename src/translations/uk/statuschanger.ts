@@ -160,17 +160,17 @@
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="158"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Додати</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="162"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Status</source>
-   <translation type="unfinished"/>
+   <translation>Статус</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
@@ -187,7 +187,7 @@
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Priority</source>
-   <translation type="unfinished"/>
+   <translation>Пріоритет</translation>
   </message>
   <message>
    <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>

@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1236"/>
    <source>Attention</source>
-   <translation type="unfinished"/>
+   <translation>Увага</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1237"/>

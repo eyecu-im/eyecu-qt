@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="12"/>
    <source>Auto</source>
-   <translation type="unfinished"/>
+   <translation>Автоматично</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="21"/>
@@ -14,17 +14,17 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="23"/>
    <source>TLSv1.0</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.0</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="24"/>
    <source>TLSv1.1</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="25"/>
    <source>TLSv1.2</source>
-   <translation type="unfinished"/>
+   <translation>TLSv1.2</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="28"/>
@@ -77,7 +77,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="97"/>
    <source>Certificate:</source>
-   <translation type="unfinished"/>
+   <translation>Сертифікат:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="116"/>
@@ -91,12 +91,12 @@
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="26"/>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="97"/>
    <source>Default Connection</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання за замовчуванням</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="27"/>
    <source>Allows to set a standard TCP connection to Jabber server</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяти встановлювати стандартне TCP з&apos;єднання з Jabber-сервером</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="61"/>

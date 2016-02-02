@@ -39,7 +39,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/addlink.ui" line="205"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Додати</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/addlink.cpp" line="25"/>
@@ -760,7 +760,7 @@
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="196"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ок</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="196"/>

@@ -9,53 +9,53 @@
    <location filename="../../plugins/attention/attention.cpp" line="351"/>
    <location filename="../../plugins/attention/attention.cpp" line="488"/>
    <source>Attention</source>
-   <translation type="unfinished"/>
+   <translation>Увага</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="52"/>
    <source>Implements XEP-0224: Attention</source>
-   <translation type="unfinished"/>
+   <translation>XEP-0224: Увага</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
    <source>When contact attempts to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>Коли контакт намагається привабити увагу користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation type="unfinished"/>
+   <translation>Shift+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
    <source>Notification pop-up</source>
-   <translation type="unfinished"/>
+   <translation>Спливаюче вікно зі сповіщенням</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
    <source>Always play sound</source>
-   <translation type="unfinished"/>
+   <translation>Завжди відтворювати звук</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="189"/>
    <source>Implements XEP-0224: Allows to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>XEP-0224: Дозволити відправляти запити уваги</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="264"/>
    <source>Attention from %1</source>
-   <translation type="unfinished"/>
+   <translation>Запит уваги від %1</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="274"/>
    <source>ATTENTION!!!</source>
-   <translation type="unfinished"/>
+   <translation>УВАГА!!!</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="389"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Чат</translation>
   </message>
  </context>
  <context>
@@ -63,12 +63,12 @@
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
    <source>ATTENTION</source>
-   <translation type="unfinished"/>
+   <translation>УВАГА</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="293"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ок</translation>
   </message>
  </context>
 </TS>

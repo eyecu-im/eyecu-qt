@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="237"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Додати</translation>
   </message>
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="247"/>
@@ -77,7 +77,7 @@
   <message>
    <location filename="../../plugins/socksstreams/advancedsocksoptionswidget.ui" line="267"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
  </context>
  <context>

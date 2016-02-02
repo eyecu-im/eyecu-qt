@@ -68,7 +68,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="455"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Чат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="499"/>

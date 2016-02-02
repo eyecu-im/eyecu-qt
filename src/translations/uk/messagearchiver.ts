@@ -229,7 +229,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="383"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>Додати</translation>
   </message>
  </context>
  <context>

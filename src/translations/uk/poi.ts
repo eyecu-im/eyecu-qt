@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/poi/messagepoilist.cpp" line="88"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/messagepoilist.cpp" line="106"/>
@@ -1981,7 +1981,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="176"/>
    <source>Cycling</source>
-   <translation type="unfinished"/>
+   <translation>Катаюсь на велосипеді</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="177"/>
@@ -2161,7 +2161,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="212"/>
    <source>Fishing</source>
-   <translation type="unfinished"/>
+   <translation>Рибалю</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="213"/>
@@ -3169,7 +3169,7 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="413"/>
    <source>Skiing</source>
-   <translation type="unfinished"/>
+   <translation>Катаюсь на лижах</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="414"/>
@@ -3859,7 +3859,7 @@
    <location filename="../../plugins/poi/poi.cpp" line="660"/>
    <location filename="../../plugins/poi/poi.cpp" line="1872"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="660"/>
@@ -3889,7 +3889,7 @@
    <location filename="../../plugins/poi/poi.cpp" line="662"/>
    <source>F3</source>
    <comment>Open URL in the POI</comment>
-   <translation type="unfinished"/>
+   <translation>F3</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="664"/>

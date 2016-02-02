@@ -29,7 +29,7 @@
   <message>
    <location filename="../../plugins/oob/newlink.ui" line="124"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ок</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/newlink.ui" line="158"/>
@@ -57,7 +57,7 @@
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="87"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>Ок</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="87"/>
@@ -92,7 +92,7 @@
    <location filename="../../plugins/oob/oob.cpp" line="90"/>
    <source>Delete</source>
    <comment>Delete OOB link</comment>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/oob.cpp" line="91"/>
@@ -136,7 +136,7 @@
   <message>
    <location filename="../../plugins/oob/ooblinklist.cpp" line="77"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/oob/ooblinklist.cpp" line="97"/>

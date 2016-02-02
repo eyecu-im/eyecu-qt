@@ -266,6 +266,10 @@
    <source>Outgoing consecutive message</source>
    <translation>Opeenvolgend uitgaand bericht</translation>
   </message>
+  <message>
+   <source>speaks of himself in the third person</source>
+   <translation>praat over hem of zichzelf als derde persoon</translation>
+  </message>
  </context>
  <context>
   <name>StyleSelectOptionsWidget</name>

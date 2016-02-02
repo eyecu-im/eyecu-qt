@@ -121,7 +121,7 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="182"/>
    <source>Text</source>
-   <translation type="unfinished"/>
+   <translation>Текст</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="183"/>

@@ -33,7 +33,7 @@
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="69"/>
    <source>F6</source>
    <comment>Here I am! (POI)</comment>
-   <translation type="unfinished"/>
+   <translation>F6</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="84"/>

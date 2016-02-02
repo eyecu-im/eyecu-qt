@@ -34,7 +34,7 @@
   <message>
    <location filename="../../plugins/positioningmethodserialport/portinfo.cpp" line="32"/>
    <source>Status</source>
-   <translation type="unfinished"/>
+   <translation>Статус</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/portinfo.cpp" line="32"/>

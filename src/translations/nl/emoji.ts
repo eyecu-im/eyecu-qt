@@ -2,84 +2,147 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="55"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="47"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="56"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="48"/>
    <source>Allows to use emoji in messages</source>
    <translation>Toestaan om emoji in berichten te gebruiken</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="141"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="83"/>
+   <source>People</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="84"/>
+   <source>Symbols</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="85"/>
+   <source>Flags</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
+   <source>Activity</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <source>Nature</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <source>Travel</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <source>Objects</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+   <source>Foods</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="155"/>
    <source>Message windows</source>
    <translation>Berichten venster</translation>
   </message>
  </context>
  <context>
+  <name>EmojiOptions</name>
+  <message>
+   <location filename="../../plugins/emoji/emojioptions.cpp" line="14"/>
+   <source>Do not use emoji</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
+ <context>
   <name>EmojiOptionsClass</name>
   <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="29"/>
    <source>Emoji sets:</source>
-   <translation>Emoji sets:</translation>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Here you can select emoji sets and mark those of them to be used</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Priority Up</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Click this button to rise priority of selected emoji set</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Selectable</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Click this button to add emoji selection menu button to message edit toolbar</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Priority Down</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Click this button to lower prioroty of selected emoji set</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emojioptions.ui" line="29"/>
+   <source>Emoji set:</source>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="36"/>
-   <source>Here you can select emoji sets and mark those of them to be used</source>
-   <translation>Hier kunt je emoji sets selecteren en markeer welke je gebruikt</translation>
+   <source>Menu icon size:</source>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="58"/>
-   <source>Priority Up</source>
-   <translation>Prioriteit omhoog</translation>
+   <location filename="../../plugins/emoji/emojioptions.ui" line="43"/>
+   <source>Chat icon size:</source>
+   <translation type="unfinished"/>
   </message>
-  <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="61"/>
-   <source>Click this button to rise priority of selected emoji set</source>
-   <translation>Klik op deze knop om de prioriteit van de geselecteerde emoji sets in te stellen</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="71"/>
-   <source>Selectable</source>
-   <translation>Selecteerbaar</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="74"/>
-   <source>Click this button to add emoji selection menu button to message edit toolbar</source>
-   <translation>Klik deze knop om emoji selectie menu-knop toe te voegen aan bericht bewerk werkbalk</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="87"/>
-   <source>Priority Down</source>
-   <translation>Prioriteit laag</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="90"/>
-   <source>Click this button to lower prioroty of selected emoji set</source>
-   <translation>Klik op deze knop om de prioriteit te verlagen van de geselecteerde emoji set</translation>
+ </context>
+ <context>
+  <name>IconSizeSpinBox</name>
+  <message numerus="yes">
+   <location filename="../../plugins/emoji/iconsizespinbox.cpp" line="62"/>
+   <source>pixel(s)</source>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>
   <name>SelectIconMenu</name>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
    <translation>Fitzpatrick type %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="115"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="149"/>
    <source>Skin color</source>
    <translation>Skin kleur</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="80"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="116"/>
    <source>Default</source>
    <translation>Standaard</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="99"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
    <source>1 or 2</source>
    <translation>1 of 2</translation>
   </message>
