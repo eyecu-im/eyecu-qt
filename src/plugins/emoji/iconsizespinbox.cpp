@@ -59,5 +59,5 @@ void IconSizeSpinBox::onValueChanged(int AValue)
 	if (FSizes.isEmpty())
 		setSuffix(QString());
 	else
-		setSuffix(QString(" ")+tr("pixels", "", FSizes.value(AValue)));
+		setSuffix(QString(" ")+tr("pixel(s)", "", FSizes.value(AValue)));
 }

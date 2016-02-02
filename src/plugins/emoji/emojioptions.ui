@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>235</width>
-    <height>72</height>
+    <width>287</width>
+    <height>85</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
@@ -26,21 +26,21 @@
    <item row="1" column="0">
     <widget class="QLabel" name="lblEmojiSet">
      <property name="text">
-      <string>Emoji set</string>
+      <string>Emoji set:</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="lblbMenuIconSize">
      <property name="text">
-      <string>Menu icon size</string>
+      <string>Menu icon size:</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="lblbChatIconSize">
      <property name="text">
-      <string>Chat icon size</string>
+      <string>Chat icon size:</string>
      </property>
     </widget>
    </item>
