@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-01-21</ReleaseDate>
+    <Version>1.3.3</Version>
+    <ReleaseDate>2016-02-02</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
-	<UpdateText>&quot;default&quot; text and skin color modificators was translated into colored squares</UpdateText>
+	<UpdateText>Support for multiple emoji sets added. Sort emoji by categories. Tooltips with emoji description (English only) added.</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

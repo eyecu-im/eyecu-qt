@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>BOB URL Handler Ukrainian Translation</DisplayName>
     <Description>BOB URL Handler Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-02-02</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.boburlhandler.uk</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.boburlhandler,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>

@@ -2,16 +2,15 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.11</Version>
-    <ReleaseDate>2016-01-18</ReleaseDate>
-    <UpdateText>Display of disabled notification types eliminated</UpdateText>
+    <Version>1.3.12</Version>
+    <ReleaseDate>2016-01-26</ReleaseDate>
+    <UpdateText>&quot;Plus&quot; variant of &quot;Psi&quot; simple message style fixed. Synchronized with upstream (Vacuum-IM): URL recognition improved.</UpdateText>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>
         <License name="License Agreement" file="LICENSE.TXT" />
     </Licenses>
     <SortingPriority>100</SortingPriority>
-    <UpdateText>Synchronized with upstream (Vacuum-IM)</UpdateText>
     <Default>true</Default>
     <ForcedInstallation>true</ForcedInstallation>
     <Script>installscript.js</Script>

@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <Package>
-    <DisplayName>vKontakte</DisplayName>
-    <Description>vKontakte emoji set</Description>
-    <Version>1.3.1</Version>
+    <DisplayName>16 x 16</DisplayName>
+    <Description>16 x 16 vKontakte emoji subset</Description>
+    <Version>1.3.0</Version>
     <ReleaseDate>2016-02-02</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.emoji.vkontakte</Name>
+    <Name>ru.rwsoftware.eyecu.emoji.vkontakte.16</Name>
     <SortingPriority>1</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

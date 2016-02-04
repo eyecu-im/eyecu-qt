@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.11</Version>
-    <ReleaseDate>2016-01-16</ReleaseDate>
+    <Version>1.0.12</Version>
+    <ReleaseDate>2016-01-27</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
-	<UpdateText>Remove extra debug output in XHTML parser</UpdateText>
+	<UpdateText>Attribute inheritance in XHTML parser fixed.</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>
 </Package>

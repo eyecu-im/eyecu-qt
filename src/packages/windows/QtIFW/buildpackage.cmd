@@ -313,14 +313,15 @@ call copyresources ru.rwsoftware.eyecu.statusicons.yaonline statusicons\yaonline
 call copyplugins ru.rwsoftware.eyecu.emoticons emoticons
 call copyresources ru.rwsoftware.eyecu.emoticons.default emoticons\default
 call copyresources ru.rwsoftware.eyecu.emoticons.blobs_purple emoticons\blobs_purple
+
 call copyplugins ru.rwsoftware.eyecu.emoji emoji
-call copyresources ru.rwsoftware.eyecu.emoji emoji\shared
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.big.basic emoji\vk_big
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.small.basic emoji\vk_small
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.big.extra emoji\vk_extra_big
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.small.extra emoji\vk_extra_small
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.big.family emoji\vk_family_big
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.small.family emoji\vk_family_small
+call copyresources ru.rwsoftware.eyecu.emoji emoji\category_icons
+set files=emoji.json
+call copyresources2 ru.rwsoftware.eyecu.emoji emoji
+call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.16 emoji\assets\vKontakte\png\16
+call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.32 emoji\assets\vKontakte\png\32
+call copyresources ru.rwsoftware.eyecu.emoji.emojione.16 "emoji\assets\Emoji One\png\16"
+call copyresources ru.rwsoftware.eyecu.emoji.emojione.32 "emoji\assets\Emoji One\png\32"
 
 call copyplugins ru.rwsoftware.eyecu.xhtmlim xhtmlim
 call copyresources ru.rwsoftware.eyecu.xhtmlim xhtml\shared
