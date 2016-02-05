@@ -1,6 +1,17 @@
+#include <QLocale>
+#if QT_VERSION < 0x050000
 #include <QScriptEngine>
 #include <QScriptValue>
-#include <QLocale>
+#define JSON_ARRAY 	QVariantList
+#define TO_ARRAY 	toList
+#define TO_LONGLONG	toLongLong
+#else
+#include <QJsonDocument>
+#include <QJsonArray>
+#define JSON_ARRAY 	QJsonArray
+#define TO_ARRAY 	toArray
+#define TO_LONGLONG	toDouble
+#endif
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <utils/iconstorage.h>
@@ -81,44 +92,52 @@ QUrl MapSearchProviderNavitel::infoRequest(int ALocationId) const
 
 void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
 {
+#if QT_VERSION < 0x050000
     QScriptEngine engine;
     QScriptValue value = engine.evaluate("("+QString::fromUtf8(ASearchResult)+")");
     if (value.isValid())
     {
         QVariantList list = value.toVariant().toList();
-        if (!list.isEmpty())
-        {
-            for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-            {
-                GeolocElement poi;
-                QVariantList result = (*it).toList();
-                qulonglong id = result.first().toLongLong();
-                QVariantList info1 = result[1].toList();
-                int type = result.value(2).toInt();
-                QString typeValue = FNavitelTypes.value(type);
+#else
+	QJsonDocument jsonDoc = QJsonDocument::fromJson(ASearchResult);
+	if (jsonDoc.isArray())
+	{
+		QJsonArray list = jsonDoc.array();
+#endif
+		if (!list.isEmpty())
+		{
+			for (JSON_ARRAY::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+			{
+				JSON_ARRAY result = (*it).TO_ARRAY();
+				qulonglong id = result.first().TO_LONGLONG();
+				JSON_ARRAY info1 = result[1].TO_ARRAY();
 
-                if (!typeValue.isEmpty())
+				GeolocElement poi;
+				int type = result[2].toInt();
+				QString typeValue = FNavitelTypes.value(type);
+
+				if (!typeValue.isEmpty())
 					poi.setType(typeValue);
-                if (info1.size()==2)
-                {
+				if (info1.size()==2)
+				{
 					poi.setBuilding(info1[0].toString());
 					poi.setStreet(info1[1].toString());
 					poi.setText(info1[1].toString()+", "+info1[0].toString());
-                }
-                else if (info1.size()==1)
-                {
+				}
+				else if (info1.size()==1)
+				{
 					poi.setText(info1.first().toString());
-                    if (type==33)
+					if (type==33)
 						poi.setLocality(info1.first().toString());
-                }
-    //TODO: Find out what is this id for
-    //            int id2 = result.value(3).toLongLong();
-                QVariantList info2 = result.value(4).toList();
-                QString country;
-                QString region;
-                QString locality;
-                QString street;
-                for (QVariantList::ConstIterator it=info2.constBegin(); it!=info2.constEnd(); it++)
+				}
+//TODO: Find out what is this id for
+//				int id2 = result.value(3).toLongLong();
+				QString country;
+				QString region;
+				QString locality;
+				QString street;
+				JSON_ARRAY info2 = result.at(4).TO_ARRAY();
+				for (JSON_ARRAY::ConstIterator it=info2.constBegin(); it!=info2.constEnd(); it++)
                 {
                     QString value = (*it).toString();
                     FieldType type(Unknown);
@@ -144,6 +163,7 @@ void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
                         }
 
                     }
+
                     switch (type)
                     {
                         case Locality:
@@ -168,6 +188,7 @@ void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
                             break;
                     }
                 }
+
                 if (!country.isEmpty())
 					poi.setCountry(country);
                 if (!region.isEmpty())
@@ -188,24 +209,29 @@ void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
 
 void MapSearchProviderNavitel::parseInfoResult(QByteArray ASearchResult, qulonglong AId)
 {
+#if QT_VERSION < 0x050000
     QScriptEngine engine;
     QScriptValue value = engine.evaluate("("+QString::fromUtf8(ASearchResult)+")");
     if (value.isValid())
     {
-        QVariantList list = value.toVariant().toList();
-        if (list.size()==3)
-        {
-            GeolocElement poi = FRequestedPois.take(AId);
-            if (!poi.isEmpty())
-            {
-				poi.setLon(list[0].toString().toDouble());
-				poi.setLat(list[1].toString().toDouble());
+		QVariantList list = value.toVariant().toList();
+#else
+	QJsonDocument jsonDoc = QJsonDocument::fromJson(ASearchResult);
+	if (jsonDoc.isArray())
+	{
+		QJsonArray list = jsonDoc.array();
+#endif
+		if (list.size()==3)
+		{
+			GeolocElement poi = FRequestedPois.take(AId);
+			if (!poi.isEmpty())
+			{
+				poi.setLon(list[0].toDouble());
+				poi.setLat(list[1].toDouble());
                 emit receivedPoi(poi);  // Send POI
             }
         }
     }
-
-    //    emit receivedPoi(poi);
     emit searchFinished(false);  // Signal search finished
 }
 

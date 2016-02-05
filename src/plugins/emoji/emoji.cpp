@@ -5,10 +5,13 @@
 #include <QMimeData>
 #include <QTextBlock>
 #include <QDataStream>
+#if QT_VERSION < 0x050000
 #include <QScriptEngine>
 #include <QScriptValue>
 #include <QScriptValueIterator>
-
+#else
+#include <QJsonDocument>
+#endif
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/actiongroups.h>
@@ -364,6 +367,7 @@ void Emoji::findEmojiSets()
 				file.close();
 				if (!json.isEmpty())
 				{
+#if QT_VERSION < 0x050000
 					QScriptEngine engine;
 					QString js("("+QString::fromUtf8(json)+")");
 
@@ -435,6 +439,74 @@ void Emoji::findEmojiSets()
 								}
 							}
 						} while (it.hasNext());
+#else
+					QJsonDocument jsonDoc = QJsonDocument::fromJson(json);
+					if (jsonDoc.isObject())
+					{
+						QJsonObject object = jsonDoc.object();
+						for (QJsonObject::ConstIterator it = object.constBegin(); it!=object.constEnd(); ++it)
+						{
+							EmojiData emojiData;
+
+							emojiData.id = it.key();
+							QJsonObject object = (*it).toObject();
+
+							emojiData.name = object.value("name").toString();
+							QString category = object.value("category").toString();
+							QString emojiOrder = object.value("emoji_order").toString();
+							if (!object.value("aliases").isNull())
+							{
+								QVariantList list = object.value("aliases").toVariant().toList();
+								QList<QString> aliases;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+									aliases.append((*it).toString());
+							}
+
+							if (!object.value("aliases_ascii").isNull())
+							{
+								QVariantList list = object.value("aliases_ascii").toVariant().toList();
+								QList<QString> aliases;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+									aliases.append((*it).toString());
+								emojiData.aliases = aliases;
+							}
+
+							if (!object.value("keywords").isNull())
+							{
+								QVariantList list = object.value("keywords").toVariant().toList();
+								QString out;
+								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+								{
+									if (!out.isEmpty())
+										out.append(',');
+									out.append((*it).toString());
+								}
+							}
+
+							bool ok;
+							uint ucs4[16];
+							int  i(0);
+							emojiData.ucs4 = object.value("unicode").toString();
+							QList<QString> splitted = emojiData.ucs4.split('-');
+							for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+							{
+								ucs4[i]=(*it).toInt(&ok, 16);
+								if (!ok)
+									break;
+							}
+							if (ok)
+							{
+								emojiData.unicode = QString::fromUcs4(ucs4, i);
+								if (!isColored(emojiData.unicode))
+								{
+									uint order = emojiOrder.toInt();
+									FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
+									FEmojiData.insert(emojiData.unicode, emojiData);
+									emojiData.colored=false;
+								}
+							}
+						}
+#endif
 // ------------------- JSON descriptor parsed -------------------
 // ----------------- Looking for category icons -----------------
 						if (dir.cd("category_icons"))
