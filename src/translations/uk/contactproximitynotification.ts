@@ -4,27 +4,27 @@
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotification.cpp" line="34"/>
    <source>Contact Proximity Notification</source>
-   <translation type="unfinished"/>
+   <translation>Сповіщення про відстань до контакту</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotification.cpp" line="35"/>
    <source>Notifies user about proximity of contacts in the roster</source>
-   <translation type="unfinished"/>
+   <translation>Показує відстань до контакту у списку</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotification.cpp" line="115"/>
    <source>When contact appears nearby</source>
-   <translation type="unfinished"/>
+   <translation>Коли контакт з&apos;являється поруч</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotification.cpp" line="127"/>
    <source>Contact proximity</source>
-   <translation type="unfinished"/>
+   <translation>Близкість контакту</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotification.cpp" line="162"/>
    <source>Appeared nearby!</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;явився поруч!</translation>
   </message>
  </context>
  <context>
@@ -32,23 +32,23 @@
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotificationoptions.ui" line="65"/>
    <source>Distance</source>
-   <translation type="unfinished"/>
+   <translation>Відстань</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotificationoptions.ui" line="72"/>
    <source>Treshold</source>
-   <translation type="unfinished"/>
+   <translation>Поріг</translation>
   </message>
   <message>
    <location filename="../../plugins/contactproximitynotification/contactproximitynotificationoptions.ui" line="92"/>
    <source>Ignore own resources</source>
-   <translation type="unfinished"/>
+   <translation>Ігнорувати власні ресурси</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/contactproximitynotification/contactproximitynotificationoptions.cpp" line="38"/>
    <source>meter(s)</source>
    <comment>distance units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>метр</numerusform><numerusform>метри</numerusform><numerusform>метрів</numerusform></translation>
   </message>
  </context>
 </TS>

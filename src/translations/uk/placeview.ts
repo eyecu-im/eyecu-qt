@@ -744,7 +744,7 @@
   <message>
    <location filename="../../plugins/placeview/placeviewform.cpp" line="770"/>
    <source>Distance</source>
-   <translation type="unfinished"/>
+   <translation>Відстань</translation>
   </message>
  </context>
 </TS>

@@ -101,92 +101,92 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="61"/>
    <source>Host certificate is not in trusted list</source>
-   <translation type="unfinished"/>
+   <translation>Сертифікат хоста не у списку довірених</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="180"/>
    <source>Name: %1</source>
-   <translation type="unfinished"/>
+   <translation>Ім&apos;я: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="181"/>
    <source>Organization: %1</source>
-   <translation type="unfinished"/>
+   <translation>Організація: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="182"/>
    <source>Subunit: %1</source>
-   <translation type="unfinished"/>
+   <translation>Підрозділ: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="183"/>
    <source>Country: %1</source>
-   <translation type="unfinished"/>
+   <translation>Країна: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="184"/>
    <source>Locality: %1</source>
-   <translation type="unfinished"/>
+   <translation>Положення: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="185"/>
    <source>State/Province: %1</source>
-   <translation type="unfinished"/>
+   <translation>Штат/Провінція: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="201"/>
    <source>Certificate holder:</source>
-   <translation type="unfinished"/>
+   <translation>Власник сертифікату:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="208"/>
    <source>Certificate issuer:</source>
-   <translation type="unfinished"/>
+   <translation>Сертифікат випущено:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="215"/>
    <source>Certificate details:</source>
-   <translation type="unfinished"/>
+   <translation>Відомості про сертифікат:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="216"/>
    <source>Effective from: %1</source>
-   <translation type="unfinished"/>
+   <translation>Дійсний з: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="217"/>
    <source>Expired at: %1</source>
-   <translation type="unfinished"/>
+   <translation>Дійсний до: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="218"/>
    <source>Serial number: %1</source>
-   <translation type="unfinished"/>
+   <translation>Серійний номер: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="222"/>
    <source>SSL Authentication Error</source>
-   <translation type="unfinished"/>
+   <translation>Помилка автентифікації SSL</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="223"/>
    <source>Connection to &lt;b&gt;%1&lt;/b&gt; can not be considered completely safe due to errors in servers certificate check:</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання з &lt;b&gt;%1&lt;/b&gt; не може вважатися безпечним через помилки у перевірці сертифікату:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="226"/>
    <source>Disconnect</source>
-   <translation type="unfinished"/>
+   <translation>Роз&apos;єднатися</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="230"/>
    <source>Connect Once</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднати цього разу</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="234"/>
    <source>Connect Always</source>
-   <translation type="unfinished"/>
+   <translation>Завжди з&apos;єднувати</translation>
   </message>
  </context>
 </TS>

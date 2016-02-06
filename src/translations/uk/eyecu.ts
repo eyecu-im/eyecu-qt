@@ -4,7 +4,7 @@
   <message>
    <location filename="../../loader/aboutbox.cpp" line="17"/>
    <source>Version: %1.%2 %3</source>
-   <translation type="unfinished"/>
+   <translation>Версія: %1.%2 %3</translation>
   </message>
   <message>
    <location filename="../../loader/aboutbox.cpp" line="18"/>
