@@ -108,14 +108,16 @@ void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 		regexp.setCaseSensitivity(Qt::CaseInsensitive);
 		for (QTextCursor cursor = ADocument->find(regexp); !cursor.isNull(); cursor = ADocument->find(regexp,cursor))
 		{
-			QString link = cursor.selectedText();
-			if (QUrl(link).scheme().isEmpty())
-				link.prepend("http://");
-
+// *** <<< eyeCU <<< ***
 			QTextCharFormat linkFormat = cursor.charFormat();
-			linkFormat.setAnchor(true);
-			linkFormat.setAnchorHref(link);
-			cursor.setCharFormat(linkFormat);
+			if (!linkFormat.isAnchor())
+			{
+				QUrl link = QUrl::fromUserInput(cursor.selectedText());
+				linkFormat.setAnchor(true);
+				linkFormat.setAnchorHref(link.toEncoded());
+				cursor.setCharFormat(linkFormat);
+			}
+// *** >>> eyeCU >>> ***
 		}
 	}
 }
