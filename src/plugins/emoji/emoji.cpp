@@ -102,7 +102,7 @@ bool Emoji::initObjects()
 	FCategoryIDs.insert(Foods, "foods");
 
 	if (FMessageProcessor)
-		FMessageProcessor->insertMessageWriter(MWO_EMOTICONS,this);
+		FMessageProcessor->insertMessageWriter(MWO_EMOJI,this);
 
 	if (FMessageWidgets)
 		FMessageWidgets->insertEditContentsHandler(MECHO_EMOJI_CONVERT_IMAGE2TEXT,this);
@@ -139,14 +139,14 @@ bool Emoji::initSettings()
 void Emoji::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
 	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOTICONS)
+	if (AOrder == MWO_EMOJI)
 		replaceImageToText(ADocument);
 }
 
 void Emoji::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
 	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOTICONS)
+	if (AOrder == MWO_EMOJI)
 		replaceTextToImage(ADocument);
 }
 
@@ -226,7 +226,7 @@ QString Emoji::keyByUrl(const QUrl &AUrl) const
 
 QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int AStartPos, int ALength) const
 {
-	QMap<int,QString> emoticons;
+	QMap<int,QString> emoji;
 	if (!FUrlByKey.isEmpty())
 	{
 		int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
@@ -252,7 +252,7 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 
 							if (!key.isEmpty())
 							{
-								emoticons.insert(fragment.position()+keyPos, key);
+								emoji.insert(fragment.position()+keyPos, key);
 								keyPos += keyLength-1;
 								key.clear();
 							}
@@ -260,12 +260,12 @@ QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int 
 				}
 			}
 	}
-	return emoticons;
+	return emoji;
 }
 
 QMap<int, QString> Emoji::findImageEmoticons(const QTextDocument *ADocument, int AStartPos, int ALength) const
 {
-	QMap<int,QString> emoticons;
+	QMap<int,QString> emoji;
 	if (!FKeyByUrl.isEmpty())
 	{
 		QTextBlock block = ADocument->findBlock(AStartPos);
@@ -278,14 +278,20 @@ QMap<int, QString> Emoji::findImageEmoticons(const QTextDocument *ADocument, int
 				if (fragment.charFormat().isImageFormat())
 				{
 					QString key = FKeyByUrl.value(fragment.charFormat().toImageFormat().name());
-					if (!key.isEmpty() && fragment.length()==1)
-						emoticons.insert(fragment.position(),key);
+					if (!key.isEmpty())
+					{
+						int i = 0;
+						QString text = fragment.text();
+						for (QString::ConstIterator itc=text.constBegin(); itc!=text.constEnd(); ++itc, ++i)
+							if (*itc==QChar::ObjectReplacementCharacter)
+								emoji.insert(fragment.position()+i,key);
+					}
 				}
 			}
 			block = block.next();
 		}
 	}
-	return emoticons;
+	return emoji;
 }
 
 QMap<uint, QString> Emoji::setEmoji(const QString &AEmojiSet) const
@@ -699,12 +705,12 @@ bool Emoji::isWordBoundary(const QString &AText) const
 int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	int posOffset = 0;
-	QMap<int,QString> emoticons = findTextEmoticons(ADocument,AStartPos,ALength);
-	if (!emoticons.isEmpty())
+	QMap<int,QString> emoji = findTextEmoticons(ADocument,AStartPos,ALength);
+	if (!emoji.isEmpty())
 	{
 		QTextCursor cursor(ADocument);
 		cursor.beginEditBlock();
-		for (QMap<int,QString>::const_iterator it=emoticons.constBegin(); it!=emoticons.constEnd(); ++it)
+		for (QMap<int,QString>::const_iterator it=emoji.constBegin(); it!=emoji.constEnd(); ++it)
 		{
 			QUrl url = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(it.value());
 			if (!url.isEmpty())
