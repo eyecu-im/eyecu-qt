@@ -35,7 +35,17 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	FTypes[3]=-1;
 
 	ui->setupUi(this);
-	ui->graphicsView->setScene(FMapScene->instance());
+
+	FGraphicsView =  new QGraphicsView(FMapScene->instance(), this);
+	FGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	FGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	ui->frmLocation->raise();
+	ui->frmMapCenter->raise();
+	ui->frmSelection->raise();
+	ui->frmScale->raise();
+	ui->frmMapType->raise();
+	ui->frmJoystick->raise();
+	ui->mapScale->raise();
 
 	QStyle *style = QApplication::style();
 	ui->btnDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
@@ -304,18 +314,10 @@ QRect MapForm::sceneRect() const
 //--------
 void MapForm::graphicsViewResize(QResizeEvent *AResizeEvent)
 {
-	//TODO: Move into MapScene class!!!
-	FMapScene->instance()->setSceneRect(0, 0, AResizeEvent->size().width(), AResizeEvent->size().height());
-
-	QRect gv(QPoint(0, 0), AResizeEvent->size());
-	ui->graphicsView->setGeometry(gv);
-	ui->frmScale->move(gv.x()+4, gv.height()-25);
-	ui->frmJoystick->move(gv.x()+4, gv.height()-82);
-	ui->frmMapType->move(gv.x()+61, gv.height()-82); //x=60 y=81
-	ui->mapScale->move(ui->frmMapType->x()+ui->frmMapType->width()+1, gv.height()-82);
-	ui->frmLocation->move(gv.x()+4,4);
-	ui->frmMapCenter->move(gv.width()-104, 4);
-	ui->frmSelection->move(gv.width()-104, gv.height()-54);
+	Q_UNUSED(AResizeEvent)
+	QRect pv(QPoint(0, 0), geometry().size());
+	FMapScene->instance()->setSceneRect(pv);
+	FGraphicsView->setGeometry(pv);
 }
 
 void MapForm::setOsdFont(const QFont &AFont)
@@ -557,8 +559,8 @@ void MapForm::disableHideEvent()
 
 void MapForm::centerMousePointer() const
 {
-	QPoint center(ui->graphicsView->width()/2,ui->graphicsView->height()/2);
-	QPoint globalCenter=ui->graphicsView->mapToGlobal(center);
+	QPoint center(graphicsView()->width()/2, graphicsView()->height()/2);
+	QPoint globalCenter = graphicsView()->mapToGlobal(center);
 	FMapScene->setIgnoreMouseMovement(true);
 	QCursor::setPos(globalCenter);
 }
@@ -887,9 +889,9 @@ void MapForm::setSelectionCoordinates(const MercatorCoordinates &ACoordinates)
 	ui->lblSelectionLon->setText(getLonString(ACoordinates.longitude()));
 }
 
-QGraphicsView &MapForm::graphicsView() const
+QGraphicsView *MapForm::graphicsView() const
 {
-	return *ui->graphicsView;
+	return FGraphicsView;
 }
 
 /*************************************

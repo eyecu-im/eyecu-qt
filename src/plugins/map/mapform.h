@@ -53,7 +53,7 @@ public:
 	void showSelectionBox(bool AShow);
 	void setSelectionCoordinates(const MercatorCoordinates &ACoordinates);
 	inline qint8 getType(qint8 ATypeIndex) {return ATypeIndex<0?-1:FTypes[ATypeIndex];}
-	QGraphicsView &graphicsView() const;
+	QGraphicsView *graphicsView() const;
 	void graphicsViewResize(QResizeEvent *AResizeEvent);
 	void setOsdFont(const QFont &AFont);
 	void setOsdTextColor(const QColor &ATextColor);
@@ -122,6 +122,7 @@ private:
 	Map			*FMap;
 	MapScene	*FMapScene;
 	IMapSource	*FMapSource;
+	QGraphicsView *FGraphicsView;
 	int			FTypes[4];
 	int			FOldType;
 	bool		FHideEventEnabled;

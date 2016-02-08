@@ -629,17 +629,17 @@ void Map::setSelectionCoordinates(const MercatorCoordinates &ACoordinates)
 
 void Map::setCursor(const QCursor &ACursor)
 {
-	FMapForm->graphicsView().setCursor(ACursor);
+	FMapForm->graphicsView()->setCursor(ACursor);
 }
 
 QCursor Map::cursor() const
 {
-	return FMapForm->graphicsView().cursor();
+	return FMapForm->graphicsView()->cursor();
 }
 
 void Map::unsetCursor()
 {
-	FMapForm->graphicsView().unsetCursor();
+	FMapForm->graphicsView()->unsetCursor();
 }
 
 void Map::insertOptionsDialogNode(const IOptionsDialogNode &ANode)
