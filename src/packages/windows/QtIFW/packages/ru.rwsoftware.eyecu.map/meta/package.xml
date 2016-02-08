@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Map</DisplayName>
     <Description>Retrieves and displays world map from different sources</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2015-11-09</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2016-02-08</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map</Name>
-	<UpdateText>Added support for Qt Purple library file versioning</UpdateText>
+	<UpdateText>Map control placement improved</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple.geo</Dependencies>
     <SortingPriority>40</SortingPriority>
     <Default>true</Default>

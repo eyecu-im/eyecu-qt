@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Contact Proximity Notification Ukrainian Translation</DisplayName>
     <Description>Contact Proximity Notification Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-02-06</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.contactproximitynotification.uk</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.contactproximitynotification,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>
