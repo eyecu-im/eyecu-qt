@@ -176,7 +176,7 @@ void SelectIconMenu::onSkinColorSelected()
 
 void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
+	if (isVisible() && ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
 	{
 		int index = ANode.value().toInt();
 		QString color;
