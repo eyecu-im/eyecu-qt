@@ -45,9 +45,9 @@ Component.prototype.createOperationsForArchive = function(archive)
 		if (temp != "")
 		{
 			tmpdir = temp+"/eyecu-msvcrt-redist/";
-			component.addElevatedOperation("Extract", archive, tmpdir);
-			component.addElevatedOperation("Execute","{0,1612,1618}", tmpdir+"vcredist_x86.exe", "/q");
-			component.addElevatedOperation("Delete", tmpdir+"vcredist_x86.exe");
+			component.addOperation("Extract", archive, tmpdir);
+			component.addOperation("Execute","{0,1612,1618}", tmpdir+"vcredist_x86.exe", "/q");
+			component.addOperation("Delete", tmpdir+"vcredist_x86.exe");
 	//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
 	//		component.addOperation("Rmdir", tmpdir);
 		}

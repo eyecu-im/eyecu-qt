@@ -55,13 +55,8 @@ Component.prototype.createOperations = function() {
 
 		scope=allUsers?"SystemScope":"UserScope";
 		if (startMenu) {
-			if (allUsers) {
-				component.addElevatedOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
-				component.addElevatedOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
-			} else {
-				component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
-				component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
-			}
+			component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", startMenuDir+"\\eyeCU.lnk", "workingDirectory=@TargetDir@");
+			component.addOperation("CreateShortcut", "@TargetDir@/maintain.exe", startMenuDir+"\\Maintain eyeCU.lnk", "workingDirectory=@TargetDir@", "iconPath=%SystemRoot%/system32/SHELL32.dll", "iconId=162");
 		}
 		component.addOperation("GlobalConfig", scope, "Road Works Software", "eyeCU", "StartMenu", startMenu);
 		component.addOperation("GlobalConfig", scope, "Road Works Software", "eyeCU", "AllUsers", allUsers);
@@ -71,10 +66,7 @@ Component.prototype.createOperations = function() {
 		component.addOperation("GlobalConfig", scope, "Road Works Software", "eyeCU", "Desktop", desktop);       	    
 	}
 	if (installer.value("Portable")=="true")
-		if (allUsers)
-			installer.addElevatedOperation("Mkdir", "@TargetDir@/eyecu");
-		else
-			installer.addOperation("Mkdir", "@TargetDir@/eyecu");
+		installer.addOperation("Mkdir", "@TargetDir@/eyecu");
 }
 
 Component.prototype.loaded = function () {
