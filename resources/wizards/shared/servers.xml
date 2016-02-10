@@ -34,20 +34,6 @@
     <transports>ICQ,AIM,IRC</transports>
     <filestore>false</filestore><country>SK</country><time></time>
   </server>  
- 
-  <server>
-    <jid>jabber.tf-network.de</jid>
-    <registration type="web">
-        <url>http://www.tf-network.de/cms/jabber/anmelden/</url>
-        <instructions>tf-network_de</instructions>
-    </registration>
-    <legacy>false</legacy><trusted>false</trusted><compression>false</compression><soft>openfire</soft>
-    <pep>true</pep><muc>true</muc>
-    <archive>true</archive><carbons>true</carbons>
-    <vjud>true</vjud><proxy>false</proxy>
-    <transports>ICQ,IRC,AIM,Gadu-Gadu,Yahoo,Google Talk,Live Jornal,MySpaceIm,QQ,RenRen,SameTime</transports>
-    <filestore>false</filestore><country>DE</country><time></time>
-  </server>
 
   <server>				
     <jid>jabber.alpha-labs.net</jid>

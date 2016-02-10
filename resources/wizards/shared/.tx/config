@@ -24,7 +24,3 @@ source_lang = en
 [eyecu-qt-conneection-wizard-instructions.openfire_html]
 file_filter = openfire.<lang>.html
 source_lang = en
-
-[eyecu-qt-conneection-wizard-instructions.tf-network_de_html]
-file_filter = tf-network_de.<lang>.html
-source_lang = en

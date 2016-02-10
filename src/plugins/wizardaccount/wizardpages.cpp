@@ -246,6 +246,7 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 	FServerList = new QTreeWidget();
 	FServerList->setItemsExpandable(false);
 	FServerList->setRootIsDecorated(false);
+	FServerList->setSortingEnabled(true);
 	lblServerList->setBuddy(FServerList);
 
 	QLabel *serverValue = new QLabel(QString("&<b>%1:</b>").arg(tr("Or enter manually")));
@@ -327,7 +328,7 @@ void ServerPage::loadServerList()
 			FServerList->setColumnWidth(7, 30); //proxy
 			FServerList->setColumnWidth(8, 30); //Store Files
 			FServerList->setColumnWidth(9, 280); //Transports
-			FServerList->setColumnWidth(10, 35); //country
+			FServerList->setColumnWidth(10, 35); //country			
 
             for (QDomElement e = doc.documentElement().firstChildElement("server");
                  !e.isNull();
@@ -379,6 +380,7 @@ void ServerPage::loadServerList()
                 {
                      pItem->setIcon(2, storageService->getIcon(SRI_PUBSUB_PEP));
                      serverInfo.flags |= ServerInfo::Pep;
+					 pItem->setData();
                 }
 				if(archive == "true")
 					pItem->setIcon(3, storageMenu->getIcon(MNI_HISTORY));
