@@ -7,7 +7,7 @@
 #include <QTextBrowser>
 #include <QLabel>
 #include <QListWidget>
-#include <QTreeWidget>
+#include <QTreeView>
 #include <QGroupBox>
 #include <QRadioButton>
 #include <QCheckBox>
@@ -163,7 +163,8 @@ public:
 	int nextId() const;
 
 private slots:
-    void onItemSelectionChanged();
+//	void onItemSelectionChanged();
+	void onClicked(QModelIndex AModelIndex);
 
 protected:
     void accept();
@@ -173,7 +174,7 @@ protected slots:
 	void onButtonClicked(QAbstractButton *AButton);
 
 private:
-	QTreeWidget *FServerList;
+	QTreeView *FServerList;
 	QLineEdit   *FLedSelectedServer;
 	QHash<QString, ServerInfo> FServerInfo;
 	NetworkPage	*FNetworkPage;

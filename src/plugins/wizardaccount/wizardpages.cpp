@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QCloseEvent>
+#include <QStandardItemModel>
 
 #include <utils/pluginhelper.h>
 
@@ -243,10 +244,12 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
     setSubTitle(QString("<span %1>%2</span>").arg(style).arg(tr("Specify a server you want to use.")));
 
 	QLabel *lblServerList = new QLabel(QString("<b>%1:</b>").arg(tr("Please select a server from the list")));
-	FServerList = new QTreeWidget();
+	FServerList = new QTreeView();
+
+	FServerList->setModel(new QStandardItemModel(FServerList));
 	FServerList->setItemsExpandable(false);
 	FServerList->setRootIsDecorated(false);
-	FServerList->setSortingEnabled(true);
+
 	lblServerList->setBuddy(FServerList);
 
 	QLabel *serverValue = new QLabel(QString("&<b>%1:</b>").arg(tr("Or enter manually")));
@@ -265,11 +268,11 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
     loadServerList();
 
     // Tricky code to remove item selection on first widget show
-    QTreeWidgetItem *first = FServerList->topLevelItem(0);
-    if (first)
-        FServerList->setCurrentItem(first);
+	QModelIndex first = FServerList->model()->index(0, 0);
+	if (first.isValid())
+		FServerList->setCurrentIndex(first);
 
-	connect(FServerList,SIGNAL(itemSelectionChanged()),SLOT(onItemSelectionChanged()));
+	connect(FServerList,SIGNAL(clicked(QModelIndex)),SLOT(onClicked(QModelIndex)));
 }
 
 QUrl ServerPage::getRegistrationUrl() const
@@ -312,12 +315,16 @@ void ServerPage::loadServerList()
         if(doc.setContent(file.readAll(), true))
         {
             int columnWidth = 160;
-			FServerList->sortItems(0, Qt::AscendingOrder);
             QStringList headers;
 			headers << tr("Server")<< tr("Registration") << tr("PEP") << tr("Message Archive")
 					<< tr("Message Carbons") << tr("User Search") << tr("MUC") << tr("Proxy")
 					<< tr("File Store") << tr("Transports")  << tr("Country");
-			FServerList->setHeaderLabels(headers);
+
+			QStandardItemModel *model = qobject_cast<QStandardItemModel *>(FServerList->model());
+			model->setHorizontalHeaderLabels(headers);
+			model->setSortRole(Qt::UserRole);
+			FServerList->setSortingEnabled(true);
+
             FServerList->setColumnWidth(0, columnWidth);//icon,jid
 			FServerList->setColumnWidth(1, 80); //Registration type=[??=0,server=1,web=2,both=3]
 			FServerList->setColumnWidth(2, 30); //pep
@@ -352,7 +359,7 @@ void ServerPage::loadServerList()
 				if (e.firstChildElement("legacy").text()=="true")
 					serverInfo.flags |= ServerInfo::LegacySSL;
 				if (e.firstChildElement("compression").text()=="true")
-					serverInfo.flags |= ServerInfo::StreamCompress;                
+					serverInfo.flags |= ServerInfo::StreamCompress;
 
                 QString trusted = e.firstChildElement("trusted").text();
                 QString soft = e.firstChildElement("soft").text();
@@ -366,40 +373,105 @@ void ServerPage::loadServerList()
                 QString filestore = e.firstChildElement("filestore").text();
                 QString country = e.firstChildElement("country").text();
 
-				QTreeWidgetItem* pItem = new QTreeWidgetItem(FServerList);
-                pItem->setText(0, jid);
-                pItem->setIcon(0, storageWizards->getIcon(soft));
-				pItem->setToolTip(0, soft);
+				QList<QStandardItem *> items;
+
+				items.append(new QStandardItem(storageWizards->getIcon(soft), jid));
+				items[0]->setToolTip(soft);
+				items[0]->setData(soft, Qt::UserRole);
+
                 if (serverInfo.flags&ServerInfo::InBandRegistration)
                 {
-					pItem->setIcon(1, storageMenu->getIcon(MNI_REGISTRATION));
-                    pItem->setToolTip(1, tr("In-band registration available"));
+					items.append(new QStandardItem(storageMenu->getIcon(MNI_REGISTRATION), tr("In-band registration available")));
+					items[1]->setData(true, Qt::UserRole);
                 }
+				else
+				{
+					items.append(new QStandardItem());
+					items[1]->setData(false, Qt::UserRole);
+				}
 
                 if(pep == "true")
                 {
-                     pItem->setIcon(2, storageService->getIcon(SRI_PUBSUB_PEP));
-                     serverInfo.flags |= ServerInfo::Pep;
-					 pItem->setData();
+					serverInfo.flags |= ServerInfo::Pep;
+					items.append(new QStandardItem(storageService->getIcon(SRI_PUBSUB_PEP), QString()));
+					items[2]->setData(true, Qt::UserRole);
                 }
+				else
+				{
+					items.append(new QStandardItem());
+					items[2]->setData(false, Qt::UserRole);
+				}
 				if(archive == "true")
-					pItem->setIcon(3, storageMenu->getIcon(MNI_HISTORY));
+				{
+					items.append(new QStandardItem(storageMenu->getIcon(MNI_HISTORY), QString()));
+					items[3]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[3]->setData(false, Qt::UserRole);
+				}
 				if(carbons == "true")
-					pItem->setIcon(4, storageMenu->getIcon(MNI_MESSAGECARBONS));
+				{
+					items.append(new QStandardItem(storageMenu->getIcon(MNI_MESSAGECARBONS), QString()));
+					items[4]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[4]->setData(false, Qt::UserRole);
+				}
 				if(vjud == "true")
-					pItem->setIcon(5, storageService->getIcon(SRI_DIRECTORY_USER));
+				{
+					items.append(new QStandardItem(storageService->getIcon(SRI_DIRECTORY_USER), QString()));
+					items[5]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[5]->setData(false, Qt::UserRole);
+				}
                 if(muc == "true")
-					pItem->setIcon(6, storageService->getIcon(SRI_CONFERENCE_TEXT));
-                if(proxy == "true")
-					pItem->setIcon(7, storageService->getIcon(SRI_PROXY_BYTESTREAMS));
+				{
+					items.append(new QStandardItem(storageService->getIcon(SRI_CONFERENCE_TEXT), QString()));
+					items[6]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[6]->setData(false, Qt::UserRole);
+				}
+				if(proxy == "true")
+				{
+					items.append(new QStandardItem(storageService->getIcon(SRI_PROXY_BYTESTREAMS), QString()));
+					items[7]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[7]->setData(false, Qt::UserRole);
+				}
                 if(filestore == "true")
-					pItem->setIcon(8, storageService->getIcon("store/file"));
-				pItem->setText(9, transports);
-				pItem->setIcon(10, storageCountry->getIcon(country));
-				pItem->setToolTip(10, country);
+				{
+					items.append(new QStandardItem(storageService->getIcon("store/file"), QString()));
+					items[8]->setData(true, Qt::UserRole);
+				}
+				else
+				{
+					items.append(new QStandardItem());
+					items[8]->setData(false, Qt::UserRole);
+				}
+				items.append(new QStandardItem(transports));
+				items[9]->setData(transports.size(), Qt::UserRole);
 
+				items.append(new QStandardItem(storageCountry->getIcon(country), QString()));
+				items[10]->setToolTip(country);
+				items[10]->setData(country, Qt::UserRole);
+
+				model->appendRow(items);
                 FServerInfo.insert(jid, serverInfo);
-             }
+			}
+			FServerList->sortByColumn(0, Qt::AscendingOrder);
         }
 	}
 }
@@ -407,7 +479,7 @@ void ServerPage::loadServerList()
 void ServerPage::initializePage()
 {
     FServerList->clearSelection();
-	connect(FServerList, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), wizard(), SLOT(next()), Qt::UniqueConnection);
+	connect(FServerList, SIGNAL(doubleClicked(QModelIndex)), wizard(), SLOT(next()), Qt::UniqueConnection);
 }
 
 bool ServerPage::validatePage()
@@ -454,7 +526,7 @@ int ServerPage::nextId() const
 	int flags = FServerInfo.value(FLedSelectedServer->text().toLower()).flags;
 	return wizard()->property("registerAccount").toBool()?((flags&ServerInfo::Valid) && !(flags&ServerInfo::InBandRegistration))?ConnectionWizard::Page_InfoWeb:
 																																ConnectionWizard::Page_Connection
-														 :ConnectionWizard::Page_Credentials;
+																															   :ConnectionWizard::Page_Credentials;
 }
 
 void ServerPage::onButtonClicked(QAbstractButton *AButton)
@@ -468,11 +540,12 @@ void ServerPage::onButtonClicked(QAbstractButton *AButton)
 }
 
 
-void ServerPage::onItemSelectionChanged()
+// void ServerPage::onItemSelectionChanged()
+void ServerPage::onClicked(QModelIndex AModelIndex)
 {
-    QList<QTreeWidgetItem *> selection = FServerList->selectedItems();
-    if (!selection.isEmpty())
-        FLedSelectedServer->setText(selection.first()->text(0));
+	QStandardItemModel *itemModel = qobject_cast<QStandardItemModel *>(FServerList->model());
+	QStandardItem *first = itemModel->itemFromIndex(itemModel->index(AModelIndex.row(), 0));
+	FLedSelectedServer->setText(first->text());
 }
 
 //!------------------------------
