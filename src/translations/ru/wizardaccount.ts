@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -474,7 +474,7 @@ Using this server for your primary account is deprecated.
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
         <translation>Выбранный Вами сервер не поддерживает Персональные Уведомления (PEP)!
 Некоторые возмоности %1 (такие, как Местоположение Пользователя, Занятие Пользователя, Настроение Пользователя и Мелодия Пользователя) не будут работать!
-Использование данного серверадля Вашего основного аккаунта не рекомендуется.
+Использование данного сервера для Вашего основного аккаунта не рекомендуется.
 Нажмите &quot;Ok&quot;, чтобы продолжить, или &quot;Отмена&quot;, для выбора другого сервера.</translation>
     </message>
     <message>
