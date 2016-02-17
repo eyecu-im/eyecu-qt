@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>Getting a haircut</source>
-        <translation>В парикмачерской</translation>
+        <translation>В парикмахерской</translation>
     </message>
     <message>
         <source>Shaving</source>
