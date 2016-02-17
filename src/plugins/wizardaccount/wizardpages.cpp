@@ -845,7 +845,13 @@ void ConnectPage::initializePage()
 			FXmppStream->setPassword(field(WF_USER_PASSWORD).toString());
 	}
 
-	if (FXmppStream==NULL || (FRegisterId.isEmpty() && !FXmppStream->open()))
+	if (FXmppStream && !FRegisterId.isEmpty() && FXmppStream->open())
+	{
+		FLblError->setVisible(false);
+		FLblAdvice->setVisible(false);
+		FProgressBar->setVisible(true);
+	}
+	else
 	{
 		FLblStatus->setText(QString("<h2>%1</h2>").arg(tr("Failed to check connection :(")));
 		FLblError->setText(tr("Internal Error"));
@@ -854,12 +860,6 @@ void ConnectPage::initializePage()
 		FLblError->setVisible(true);
 		FLblAdvice->setVisible(true);
 		FProgressBar->setVisible(false);
-	}
-	else
-	{
-		FLblError->setVisible(false);
-		FLblAdvice->setVisible(false);
-		FProgressBar->setVisible(true);
 	}
 
 	emit completeChanged();
@@ -1079,7 +1079,6 @@ IXmppStream *ConnectPage::createXmppStream(bool ARegister) const
 	if (xmppStreamManager!=NULL && connManager!=NULL && FConnectionEngine!=NULL)
 	{
 		IXmppStream *xmppStream;
-//		if (wizard()->property("registerAccount").toBool())
 		if (ARegister)
 			xmppStream = xmppStreamManager->createXmppStream(field(WF_SERVER_NAME_PRE).toString());
 		else
@@ -1092,6 +1091,7 @@ IXmppStream *ConnectPage::createXmppStream(bool ARegister) const
 
 		IConnection *conn = FConnectionEngine->newConnection(ACCOUNT_CONNECTION_OPTIONS,xmppStream->instance());
 		xmppStream->setConnection(conn);
+
 		return xmppStream;
 	}
 	return NULL;
