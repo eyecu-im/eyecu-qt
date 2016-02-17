@@ -667,12 +667,15 @@ void CredentialsPage::initializePage()
 }
 
 bool CredentialsPage::validatePage()
-{
-	if (FAccountManager->findAccountByStream(Jid::fromUserInput(QString("%1@%2/%3").arg(FLedUsername->text()).arg(field(WF_SERVER_NAME).toString()).arg(FLedResource->text()))))
-    {
-        QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server, User Name and Resource exists already! Please choose different Server, User Name or Resource."), QMessageBox::Ok);
-        return false;
-    }
+{	
+	Jid jid(Jid::fromUserInput(QString("%1@%2/%3").arg(FLedUsername->text()).arg(field(WF_SERVER_NAME).toString()).arg(FLedResource->text())));
+	QList<IAccount *> accounts = FAccountManager->accounts();
+	for (QList<IAccount *>::ConstIterator it=accounts.constBegin(); it!=accounts.constEnd(); ++it)
+		if ((*it)->streamJid() == jid)
+		{
+			QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server, User Name and Resource exists already! Please choose different Server, User Name or Resource."), QMessageBox::Ok);
+			return false;
+		}
 	return true;
 }
 
@@ -837,15 +840,16 @@ void ConnectPage::initializePage()
 		FLblError->clear();
 		FLblAdvice->clear();
 
-		if (FRegistration &&
-			wizard()->property("registerAccount").toBool() &&
-			(flags&ServerInfo::InBandRegistration || !(flags&ServerInfo::Valid)))
+		if (FRegistration && registration)
 			FRegisterId = FRegistration->startStreamRegistration(FXmppStream);
 		else
+		{
+			FRegisterId = QString();
 			FXmppStream->setPassword(field(WF_USER_PASSWORD).toString());
+		}
 	}
 
-	if (FXmppStream && !FRegisterId.isEmpty() && FXmppStream->open())
+	if (FXmppStream && (!registration || !FRegisterId.isNull()) && (FXmppStream->isConnected() || FXmppStream->open()))
 	{
 		FLblError->setVisible(false);
 		FLblAdvice->setVisible(false);
