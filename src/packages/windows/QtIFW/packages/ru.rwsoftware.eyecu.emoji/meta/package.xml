@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-02-02</ReleaseDate>
+    <Version>1.3.4</Version>
+    <ReleaseDate>2016-02-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
-	<UpdateText>Processing of sequences of multiple equal emojis fixed. Emoji options dialog updated.</UpdateText>
+	<UpdateText>Application crash on emoji skin color selection fixed.</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
