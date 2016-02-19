@@ -39,6 +39,9 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	FGraphicsView =  new QGraphicsView(FMapScene->instance(), this);
 	FGraphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	FGraphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	FGraphicsView->setFrameStyle(QFrame::Sunken|QFrame::StyledPanel);
+	FGraphicsView->setMouseTracking(true);
+
 	ui->frmLocation->raise();
 	ui->frmMapCenter->raise();
 	ui->frmSelection->raise();
