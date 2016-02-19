@@ -637,7 +637,7 @@
     <country>NL</country><time></time>
   </server>
 
-  <server>
+  <!-- server>
     <jid>jabber.yeahnah.co.nz</jid>
     <registration type="in-band"/>
     <legacy>false</legacy>
@@ -651,7 +651,7 @@
     <transports>AIM,Yahoo,IRC</transports>
     <filestore>false</filestore>
     <country>NZ</country><time></time>
-  </server>
+  </server -->
 
   <server>
     <jid>suchat.org</jid>
@@ -733,7 +733,7 @@
     <country>US</country><time></time>
   </server>
 
-  <server>
+  <!-- server>
     <jid>tigase.org</jid>
     <registration type="in-band" />
     <legacy>false</legacy>
@@ -747,7 +747,7 @@
     <transports/>
     <filestore>false</filestore>
     <country>CA</country><time></time>
-  </server>
+  </server -->
 
   <server>
     <jid>ubuntu-jabber.de</jid>

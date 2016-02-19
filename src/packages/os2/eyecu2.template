@@ -100,7 +100,7 @@
 	REQUIRES="eCo Software\Runtime\Win\2012\07\23" 
 	REQUIRES="netlabs.org\Qt4\SysTray\100\1\1\843" 
 	REQUIRES="netlabs.org\Qt4\SysTrayDLL\100\1\1\843" 
-	REQUIRES="Purple Soft\QtPurple\Util\1\0\7"
+	REQUIRES="Purple Soft\QtPurple\Util\1\0\13"
 	=("FindQtRuntime")
 	KILLPROCESS="eyecu.exe"
 	CREATEOBJECT="WPFolder|eyeCU|<WP_APPSFOLDER>|OBJECTID=<EYECU_FOLDER>;"
@@ -863,75 +863,51 @@
 
 <GROUP TITLE="Emoji sets">
 
-<GROUP TITLE="vKontakte">
-
-<GROUP TITLE="Big">
+<GROUP TITLE="Emoji One">
 
 <PCK 	INDEX=94
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Basic"
-	TARGET="$(1)\resources\emoji\vk_big" FIXED
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (16)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\Emoji One\png\16" FIXED
 	SELECT
 	REQUIRES=93
-	>eyeCU - Emoji - vKontakte Basic emotji set (big)
+	>eyeCU - Emoji: Emoji One icon set (16 x 16)
 	(c) Road Works Software
 </PCK>
 
 <PCK 	INDEX=95
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Extra (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Extra"
-	TARGET="$(1)\resources\emoji\vk_extra_big" FIXED
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (32)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\Emoji One\png\32" FIXED
 	SELECT
 	REQUIRES=93
-	>eyeCU - Emoji - vKontakte Extra emoji set (big)
+	>eyeCU - Emoji: Emoji One icon set (32 x 32)
 	(c) Road Works Software
 </PCK>
+
+</GROUP>
+
+<GROUP TITLE="vKontakte">
 
 <PCK 	INDEX=96
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Family (big)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Family"
-	TARGET="$(1)\resources\emoji\vk_family_big" FIXED
+	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (16)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\vKontakte\png\16" FIXED
 	SELECT
 	REQUIRES=93
-	>eyeCU - Emoji - vKontakte Family emoji set (big)
+	>eyeCU - Emoji: vKontakte icon set (16 x 16)
 	(c) Road Works Software
 </PCK>
-
-</GROUP>
-
-<GROUP TITLE="Small">
 
 <PCK 	INDEX=97
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Basic"
-	TARGET="$(1)\resources\emoji\vk_small" FIXED
+	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (32)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\vKontakte\png\32" FIXED
 	SELECT
 	REQUIRES=93
-	>eyeCU - Emoji - vKontakte Basic emoticon set (small)
-	(c) Road Works Software
-</PCK>6
-
-<PCK 	INDEX=98
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Extra (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Extra"
-	TARGET="$(1)\resources\emoji\vk_extra_small" FIXED
-	SELECT
-	REQUIRES=90
-	>eyeCU - Emoji - vKontakte Extra emoji set (small)
+	>eyeCU - Emoji: vKontakte icon set (32 x 32)
 	(c) Road Works Software
 </PCK>
-
-<PCK 	INDEX=99
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK-Family (small)\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Family"
-	TARGET="$(1)\resources\emoji\vk_family_small" FIXED
-	SELECT
-	REQUIRES=90
-	>eyeCU - Emoji - vKontakte Family emoji set (small)
-	(c) Road Works Software
-</PCK>
-
-</GROUP>
 
 </GROUP>
 
@@ -944,7 +920,7 @@
 	TITLE="Map"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\3"
 	>Allows user to see interactive Map from different sources
 </PCK>
 
@@ -1310,7 +1286,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=30
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\3"
 	>eyeCU - Points of interest plugin
 	(c) Road Works Software
 </PCK>
@@ -1400,7 +1376,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=160
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\2"
+	REQUIRES="Purple Soft\QtPurple\Geo\1\1\3"
 	>Implements XEP-0080: User Location
 </PCK>
 
@@ -1698,7 +1674,6 @@
 	TITLE="QtSerialPort runtime"
 	EXTERNAL="qtserialport-1.1.1.wpi"
 	TARGET='=("QtDLL")'
-	REQUIRES=1
 	FIXED
 	SELECT
 	>QtPurple runtime: optional Qt package, used to access serial port devices from Qt applications
@@ -1708,9 +1683,9 @@
 <GROUP TITLE="Qt Purple">
 
 <PCK 	INDEX=400
-	PACKAGEID="Purple Soft\QtPurple\Util\1\0\7"
+	PACKAGEID="Purple Soft\QtPurple\Util\1\0\13"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.1.5.wpi"
+	EXTERNAL="qtpurple-1.1.11.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1719,9 +1694,9 @@
 </PCK>
 
 <PCK 	INDEX=410
-	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\2"
+	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\3"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.1.5.wpi"
+	EXTERNAL="qtpurple-1.1.11.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -1734,7 +1709,7 @@
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1745,7 +1720,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1756,7 +1731,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1767,7 +1742,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1778,7 +1753,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1789,7 +1764,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1800,7 +1775,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -1811,7 +1786,7 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.1.5.wpi"
+		EXTERNAL="qtpurple-1.1.11.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
