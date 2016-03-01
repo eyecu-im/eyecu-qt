@@ -1,5 +1,5 @@
 #include "accountmanager.h"
-
+#include <QDebug>
 #include <QLineEdit>
 #include <definitions/actiongroups.h>
 #include <definitions/optionnodes.h>
@@ -185,10 +185,9 @@ IAccount *AccountManager::findAccountByStream(const Jid &AStreamJid) const
 
 IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &AName)
 {
-/*** <<< eyeCU <<< ***
-	if (AAccountJid.isValid() && !AAccountJid.node().isEmpty() && findAccountByStream(AAccountJid)==NULL)
+	qDebug() << "AccountManager::createAccount(" << AAccountJid.full() << "," << AName << ")";
+	if (AAccountJid.isValid() && !AAccountJid.node().isEmpty()) // && findAccountByStream(AAccountJid)==NULL)
 	{
- *** >>> eyeCU >>> ***/
 		QUuid accountId = QUuid::createUuid();
 		LOG_DEBUG(QString("Account created,id=%2").arg(accountId.toString()));
 
@@ -196,11 +195,13 @@ IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &A
 // *** <<< eyeCU <<< ***
 		if (!AName.isEmpty())
 			options.setValue(AName,"name");
-		if (AAccountJid.isValid() && !AAccountJid.node().isEmpty() && findAccountByStream(AAccountJid)==NULL)
+		if (AAccountJid.isValid() && !AAccountJid.node().isEmpty()) // && findAccountByStream(AAccountJid)==NULL)
 		{
 			LOG_DEBUG(QString("Setting account options, stream=%1").arg(AAccountJid.pFull()));
 // *** >>> eyeCU >>> ***
+			qDebug() << "AAccountJid.bare()=" << AAccountJid.bare();
 		options.setValue(AAccountJid.bare(),"streamJid");
+			qDebug() << "AAccountJid.resource()=" << AAccountJid.resource();
 		options.setValue(AAccountJid.resource(),"resource");
 // *** <<< eyeCU <<< ***
 		}
@@ -208,8 +209,10 @@ IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &A
 			LOG_DEBUG(QString("Account stream jid is empty"));
 // *** >>> eyeCU >>> ***
 
+		qDebug() << "streamJid=" << options.value("streamJid").toString();
+		qDebug() << "resource=" << options.value("resource").toString();
+
 		return insertAccount(options);
-/*** <<< eyeCU <<< ***
 	}
 	else if (!AAccountJid.isValid() || AAccountJid.node().isEmpty())
 	{
@@ -220,7 +223,6 @@ IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &A
 		LOG_ERROR(QString("Failed to create account, stream=%1: Account JID already exists").arg(AAccountJid.pFull()));
 	}
 	return NULL;
- *** >>> eyeCU >>> ***/
 }
 
 void AccountManager::destroyAccount(const QUuid &AAccountId)
@@ -243,7 +245,9 @@ void AccountManager::destroyAccount(const QUuid &AAccountId)
 
 IAccount *AccountManager::insertAccount(const OptionsNode &AOptions)
 {
+	qDebug() << "AccountManager::insertAccount(" << AOptions.path() << ")";
 	Jid streamJid = AOptions.value("streamJid").toString();
+	qDebug() << "streamJid=" << streamJid.full();
 /*** <<< eyeCU <<< ***
 	if (streamJid.isValid() && !streamJid.node().isEmpty() && findAccountByStream(streamJid)==NULL)
 	{

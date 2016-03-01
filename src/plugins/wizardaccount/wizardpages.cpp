@@ -102,7 +102,7 @@ QString ConnectionWizard::serverName() const
 
 QString ConnectionWizard::streamJid() const
 {
-	return Jid(field(WF_USER_NAME).toString(), serverName(), CLIENT_NAME).full();
+	return Jid(field(WF_USER_NAME).toString(), serverName(), field(WF_USER_RESOURCE).toString()).full();
 }
 
 void ConnectionWizard::onCurrentIdChanged(int AId)
@@ -1376,23 +1376,28 @@ void ConclusionPage::onAccountSettingsLinkActivated(const QString &ALink)
 
 void ConclusionPage::onWizardAccepted()
 {
+	qDebug() << "ConclusionPage::onWizardAccepted()";
+	qDebug() << "FAccount->streamJid()=" << FAccount->streamJid().full();
 	FAccount->setName(FLedAccountName->text());
 	if (field(WF_GO_ONLINE).toBool())
-		PluginHelper::pluginInstance<IStatusChanger>()->setStreamStatus(Jid(field(WF_USER_NAME).toString(), field(WF_SERVER_NAME).toString(), field(WF_USER_RESOURCE).toString()), STATUS_ONLINE);
+		PluginHelper::pluginInstance<IStatusChanger>()->setStreamStatus(Jid(field(WF_USER_NAME).toString(), wizard()->property("serverName").toString(), field(WF_USER_RESOURCE).toString()), STATUS_ONLINE);
 }
 
 bool ConclusionPage::createAccount()
 {
+	qDebug() << "ConclusionPage::createAccount()";
 	QString streamJid = wizard()->property("streamJid").toString();
+	qDebug() << "streamJid=" << streamJid;
 	FAccount = FAccountManager->createAccount(streamJid, streamJid);
 	if (FAccount)
 	{
+		qDebug() << "FAccount->streamJid()=" << FAccount->streamJid().full();
 		FAccount->setPassword(field(WF_USER_PASSWORD).toString());
 		FAccount->setActive(true);
 		FAccount->optionsNode().node(OPV_ACCOUNT_AUTOCONNECT).setValue(true);
 
 		if (FConnectionEngine)
-			FConnectionEngine->saveConnectionSettings(FConnectionSettingsWidget, FAccount->optionsNode().node("connection",FConnectionEngine->engineId()));
+			FConnectionEngine->saveConnectionSettings(FConnectionSettingsWidget, FAccount->optionsNode().node("connection", FConnectionEngine->engineId()));
 		return true;
 	}
 	return false;
