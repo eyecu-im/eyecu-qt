@@ -40,10 +40,6 @@
       <translation>Активировать уведомление</translation>
     </message>
     <message>
-      <source>Use native popup notifications if available</source>
-      <translation>Использовать системные всплывающие уведомления если доступны</translation>
-    </message>
-    <message>
       <source>Disable sounds and popup windows if status is 'Away'</source>
       <translation>Отключить звуки и всплывающие окна, когда установлен статус 'Ушел'</translation>
     </message>
@@ -79,6 +75,12 @@
       <source>Enable animation</source>
       <translation>Разрешить анимацию</translation>
     </message>
+    <message>
+        <source>Use native popup notifications</source>
+        <translation>Использовать системные всплывающие уведомления</translation>
+    </message>
+  </context>
+  <context>
     <message numerus="yes">
       <source>second(s)</source>
       <translation>

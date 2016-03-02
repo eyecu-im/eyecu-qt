@@ -237,10 +237,13 @@ QMultiMap<int, IOptionsDialogWidget *> Notifications::optionsDialogWidgets(const
 		widgets.insertMulti(OHO_NOTIFICATIONS,FOptionsManager->newOptionsDialogHeader(tr("Notifications"),AParent));
 		widgets.insertMulti(OWO_NOTIFICATIONS_DISABLEIFAWAY,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_SILENTIFAWAY),tr("Disable sounds and popup windows if status is 'Away'"),AParent));
 		widgets.insertMulti(OWO_NOTIFICATIONS_DISABLEIFDND,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_SILENTIFDND),tr("Disable sounds and popup windows if status is 'Do not disturb'"),AParent));
-		widgets.insertMulti(OWO_NOTIFICATIONS_NATIVEPOPUPS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_NATIVEPOPUPS),tr("Use native popup notifications if available"),AParent));
+		
 		widgets.insertMulti(OWO_NOTIFICATIONS_FORCESOUND,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_FORCESOUND),tr("Play notification sound when received a message in the active window"),AParent));
-		widgets.insertMulti(OWO_NOTIFICATIONS_HIDEMESSAGE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_HIDEMESSAGE),tr("Do not show the message body in the popup window"),AParent));		
 		widgets.insertMulti(OWO_NOTIFICATIONS_EXPANDGROUPS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_EXPANDGROUPS),tr("Expand contact groups in roster"),AParent));
+
+		if (FTrayManager && FTrayManager->isMessagesSupported())
+			widgets.insertMulti(OWO_NOTIFICATIONS_NATIVEPOPUPS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_NATIVEPOPUPS),tr("Use native popup notifications"),AParent));
+
 // *** <<< eyeCU <<< ***
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 			widgets.insertMulti(OWO_NOTIFICATIONS_ANIMATIONENABLE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_ANIMATIONENABLE),tr("Enable animation"),AParent));
@@ -248,7 +251,6 @@ QMultiMap<int, IOptionsDialogWidget *> Notifications::optionsDialogWidgets(const
 		QSpinBox *spbPopupTimeout = new QSpinBox(AParent);
 		spbPopupTimeout->setRange(0,120);
 // *** <<< eyeCU <<< ***
-//		spbPopupTimeout->setSuffix(tr(" seconds"));
 		connect(spbPopupTimeout, SIGNAL(valueChanged(int)), SLOT(onSpinBoxValueChanged(int)));
 // *** >>> eyeCU >>> ***
 		widgets.insertMulti(OWO_NOTIFICATIONS_POPUPTIMEOUT,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_NOTIFICATIONS_POPUPTIMEOUT),tr("Time to display a pop-up window (0 - always visible):"),spbPopupTimeout,AParent));
@@ -626,6 +628,7 @@ QIcon Notifications::contactIcon(const Jid &AStreamJid, const Jid &AContactJid) 
 QString Notifications::contactName(const Jid &AStreamJid, const Jid &AContactJid) const
 {
 	QString name;
+
 
 	IRosterIndex *index = FRostersModel!=NULL ? FRostersModel->getContactIndexes(AStreamJid, AContactJid).value(0) : NULL; // *** <<< eyeCU >>> ***
 	if (index != NULL)

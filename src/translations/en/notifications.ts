@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
+
 <TS version="2.0" language="en">
  <context>
   <name>Notifications</name>
@@ -56,12 +57,6 @@
    <translation>Disable sounds and popup windows if status is 'Do not disturb'</translation>
   </message>
   <message>
-   <location line="240" filename="../../plugins/notifications/notifications.cpp"/>
-   <source>Use native popup notifications if available</source>
-   <translation>Use native popup notifications if available</translation>
-  </message>
-  <message>
-   <location line="241" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation>Play notification sound when received a message in the active window</translation>
   </message>
@@ -107,6 +102,10 @@
    <location line="261" filename="../../plugins/notifications/notifications.cpp"/>
    <source>Highlight the corresponding window in the taskbar</source>
    <translation>Highlight the corresponding window in the taskbar</translation>
+  </message>
+  <message>
+   <source>Use native popup notifications</source>
+   <translation>Use native popup notifications</translation>
   </message>
  </context>
  <context>

@@ -329,13 +329,20 @@ void VCardDialog::onVCardPublished()
 
 void VCardDialog::onVCardError(const XmppError &AError)
 {
-	QMessageBox::critical(this,tr("Error"),
-		streamJid().pBare() != contactJid().pBare() ? 
-		tr("Failed to load profile: %1").arg(HTML_ESCAPE(AError.errorMessage())) :
-		tr("Failed to publish your profile: %1").arg(HTML_ESCAPE(AError.errorMessage())));
-
-	if (!FSaveClicked)
+	if (FSaveClicked)
+	{
+		QMessageBox::critical(this,tr("Error"), tr("Failed to publish your profile: %1").arg(HTML_ESCAPE(AError.errorMessage())));
+	}
+	else if (streamJid().pBare() != contactJid().pBare())
+	{
+		QMessageBox::critical(this,tr("Error"), tr("Failed to load profile: %1").arg(HTML_ESCAPE(AError.errorMessage())));
 		deleteLater();
+	}
+	else if (AError.toStanzaError().conditionCode() != XmppStanzaError::EC_ITEM_NOT_FOUND)
+	{
+		QMessageBox::critical(this,tr("Error"), tr("Failed to load profile: %1").arg(HTML_ESCAPE(AError.errorMessage())));
+		deleteLater();
+	}
 
 	FSaveClicked = false;
 	ui.twtVCard->setEnabled(true);
