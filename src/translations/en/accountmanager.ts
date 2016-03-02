@@ -103,7 +103,7 @@
   </message>
   <message>
    <source>Jabber ID:</source>
-   <translation type="unfinished">Jabber ID:</translation>
+   <translation>Jabber ID:</translation>
   </message>
  </context>
  <context>

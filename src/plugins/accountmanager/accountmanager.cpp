@@ -1,5 +1,5 @@
 #include "accountmanager.h"
-#include <QDebug>
+
 #include <QLineEdit>
 #include <definitions/actiongroups.h>
 #include <definitions/optionnodes.h>
@@ -185,32 +185,15 @@ IAccount *AccountManager::findAccountByStream(const Jid &AStreamJid) const
 
 IAccount *AccountManager::createAccount(const Jid &AAccountJid, const QString &AName)
 {
-	qDebug() << "AccountManager::createAccount(" << AAccountJid.full() << "," << AName << ")";
-	if (AAccountJid.isValid() && !AAccountJid.node().isEmpty()) // && findAccountByStream(AAccountJid)==NULL)
+	if (AAccountJid.isValid() && !AAccountJid.node().isEmpty() && findAccountByStream(AAccountJid)==NULL)
 	{
 		QUuid accountId = QUuid::createUuid();
-		LOG_DEBUG(QString("Account created,id=%2").arg(accountId.toString()));
+		LOG_DEBUG(QString("Creating account, stream=%1, id=%2").arg(AAccountJid.pFull(), accountId.toString()));
 
 		OptionsNode options = Options::node(OPV_ACCOUNT_ITEM,accountId.toString());
-// *** <<< eyeCU <<< ***
-		if (!AName.isEmpty())
-			options.setValue(AName,"name");
-		if (AAccountJid.isValid() && !AAccountJid.node().isEmpty()) // && findAccountByStream(AAccountJid)==NULL)
-		{
-			LOG_DEBUG(QString("Setting account options, stream=%1").arg(AAccountJid.pFull()));
-// *** >>> eyeCU >>> ***
-			qDebug() << "AAccountJid.bare()=" << AAccountJid.bare();
+		options.setValue(AName,"name");
 		options.setValue(AAccountJid.bare(),"streamJid");
-			qDebug() << "AAccountJid.resource()=" << AAccountJid.resource();
 		options.setValue(AAccountJid.resource(),"resource");
-// *** <<< eyeCU <<< ***
-		}
-		else
-			LOG_DEBUG(QString("Account stream jid is empty"));
-// *** >>> eyeCU >>> ***
-
-		qDebug() << "streamJid=" << options.value("streamJid").toString();
-		qDebug() << "resource=" << options.value("resource").toString();
 
 		return insertAccount(options);
 	}
@@ -245,13 +228,9 @@ void AccountManager::destroyAccount(const QUuid &AAccountId)
 
 IAccount *AccountManager::insertAccount(const OptionsNode &AOptions)
 {
-	qDebug() << "AccountManager::insertAccount(" << AOptions.path() << ")";
 	Jid streamJid = AOptions.value("streamJid").toString();
-	qDebug() << "streamJid=" << streamJid.full();
-/*** <<< eyeCU <<< ***
 	if (streamJid.isValid() && !streamJid.node().isEmpty() && findAccountByStream(streamJid)==NULL)
 	{
-*** >>> eyeCU >>> ***/
 		Account *account = new Account(FXmppStreamManager,AOptions,this);
 		connect(account,SIGNAL(activeChanged(bool)),SLOT(onAccountActiveChanged(bool)));
 		connect(account,SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onAccountOptionsChanged(const OptionsNode &)));
@@ -262,14 +241,12 @@ IAccount *AccountManager::insertAccount(const OptionsNode &AOptions)
 		emit accountInserted(account);
 
 		return account;
-/*** <<< eyeCU <<< ***
 	}
 	else if (!streamJid.isValid() || streamJid.node().isEmpty())
 	{
 		REPORT_ERROR("Failed to insert account: Invalid parameters");
 	}
 	return NULL;
- *** >>> eyeCU >>> ***/
 }
 
 void AccountManager::removeAccount(const QUuid &AAccountId)

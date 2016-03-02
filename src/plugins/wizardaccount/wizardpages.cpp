@@ -272,7 +272,7 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 	if (first.isValid())
 		FServerList->setCurrentIndex(first);
 
-	connect(FServerList,SIGNAL(clicked(QModelIndex)),SLOT(onClicked(QModelIndex)));
+	connect(FServerList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
 }
 
 QUrl ServerPage::getRegistrationUrl() const
@@ -539,12 +539,12 @@ void ServerPage::onButtonClicked(QAbstractButton *AButton)
 	}
 }
 
-
-// void ServerPage::onItemSelectionChanged()
-void ServerPage::onClicked(QModelIndex AModelIndex)
+void ServerPage::onCurrentChanged(const QModelIndex &ACurrent, const QModelIndex &APrevious)
 {
+	Q_UNUSED(APrevious)
+
 	QStandardItemModel *itemModel = qobject_cast<QStandardItemModel *>(FServerList->model());
-	QStandardItem *first = itemModel->itemFromIndex(itemModel->index(AModelIndex.row(), 0));
+	QStandardItem *first = itemModel->itemFromIndex(itemModel->index(ACurrent.row(), 0));
 	FLedSelectedServer->setText(first->text());
 }
 
@@ -669,13 +669,11 @@ void CredentialsPage::initializePage()
 bool CredentialsPage::validatePage()
 {	
 	Jid jid(Jid::fromUserInput(QString("%1@%2/%3").arg(FLedUsername->text()).arg(field(WF_SERVER_NAME).toString()).arg(FLedResource->text())));
-	QList<IAccount *> accounts = FAccountManager->accounts();
-	for (QList<IAccount *>::ConstIterator it=accounts.constBegin(); it!=accounts.constEnd(); ++it)
-		if ((*it)->streamJid() == jid)
-		{
-			QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server, User Name and Resource exists already! Please choose different Server, User Name or Resource."), QMessageBox::Ok);
-			return false;
-		}
+	if (FAccountManager->findAccountByStream(jid))
+	{
+		QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server and User Name exists already! Please choose different Server or User Name."), QMessageBox::Ok);
+		return false;
+	}
 	return true;
 }
 
@@ -1376,8 +1374,6 @@ void ConclusionPage::onAccountSettingsLinkActivated(const QString &ALink)
 
 void ConclusionPage::onWizardAccepted()
 {
-	qDebug() << "ConclusionPage::onWizardAccepted()";
-	qDebug() << "FAccount->streamJid()=" << FAccount->streamJid().full();
 	FAccount->setName(FLedAccountName->text());
 	if (field(WF_GO_ONLINE).toBool())
 		PluginHelper::pluginInstance<IStatusChanger>()->setStreamStatus(Jid(field(WF_USER_NAME).toString(), wizard()->property("serverName").toString(), field(WF_USER_RESOURCE).toString()), STATUS_ONLINE);
@@ -1385,13 +1381,10 @@ void ConclusionPage::onWizardAccepted()
 
 bool ConclusionPage::createAccount()
 {
-	qDebug() << "ConclusionPage::createAccount()";
 	QString streamJid = wizard()->property("streamJid").toString();
-	qDebug() << "streamJid=" << streamJid;
 	FAccount = FAccountManager->createAccount(streamJid, streamJid);
 	if (FAccount)
 	{
-		qDebug() << "FAccount->streamJid()=" << FAccount->streamJid().full();
 		FAccount->setPassword(field(WF_USER_PASSWORD).toString());
 		FAccount->setActive(true);
 		FAccount->optionsNode().node(OPV_ACCOUNT_AUTOCONNECT).setValue(true);

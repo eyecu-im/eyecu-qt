@@ -163,8 +163,7 @@ public:
 	int nextId() const;
 
 private slots:
-//	void onItemSelectionChanged();
-	void onClicked(QModelIndex AModelIndex);
+	void onCurrentChanged(const QModelIndex &ACurrent, const QModelIndex &APrevious);
 
 protected:
     void accept();
