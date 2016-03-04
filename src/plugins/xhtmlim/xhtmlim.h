@@ -86,8 +86,8 @@ protected:
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
 
-	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true);
-	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat);
+	QTextCursor getCursor(bool ASelectWholeDocument=false, bool ASelect=true, QTextEdit *AEditWidget=NULL);
+	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *AEditWidget=NULL);
 	void clearFormatOnWordOrSelection();
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
@@ -102,6 +102,11 @@ protected slots:
 	void onRichTextEditorToggled(bool AChecked);
 	void onEditWidgetCreated(IMessageEditWidget *AWidget);
 	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
+
+	void onShortcutActivated(const QString &AId, QWidget *AWidget);
+	void selectFont(QTextEdit *AEditWidget);
+	void selectColor(int AType, QTextEdit *AEditWidget);
+
 
 	void onResetFormat(bool AStatus);
 	void onRemoveFormat();

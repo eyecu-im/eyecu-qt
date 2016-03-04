@@ -117,7 +117,7 @@ protected slots:
     void onCursorPositionChanged();
     void onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat);
 
-    void onShortcutActivated(const QString &AId, QWidget *AWidget);
+	void onShortcutActivated(const QString &AId, QWidget *AWidget);
     void onMessageSent();
 
 protected slots:

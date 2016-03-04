@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QPainter>
 #include <QImageReader>
 #include <QImageWriter>
@@ -161,9 +162,6 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	connect(FActionTextStrikeout, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 	FActionTextStrikeout->setCheckable(true);
 	FToolBarChanger->insertAction(FActionTextStrikeout, AG_XHTMLIM_FONT);
-
-
-
 
 	// *** Capitalization submenu ***
 	FMenuCapitalization = new Menu(this);
@@ -330,10 +328,11 @@ void EditHtml::setupFontActions(bool AEnableReset)
 
 void EditHtml::setupTextActions()
 {
-	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, FEditWidget->instance()->parentWidget());
-	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, FEditWidget->instance()->parentWidget());
-	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, FEditWidget->instance()->parentWidget());
-	connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)));
+	qDebug() << "EditHtml::setupTextActions(): window=" << FEditWidget->instance()->parentWidget();
+//	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, FEditWidget->instance()->parentWidget());
+//	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, FEditWidget->instance()->parentWidget());
+//	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, FEditWidget->instance()->parentWidget());
+//	connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 
 	FActionIndentLess= new Action(this);
 	FActionIndentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(XHI_OUTDENT)));

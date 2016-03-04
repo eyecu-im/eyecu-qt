@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QColorDialog>
@@ -320,13 +321,23 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 	{
 		if (!xhtmlEdit)
 			addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
+		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
 	else
+	{
 		if (xhtmlEdit)
 		{
 			AChatWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
 			xhtmlEdit->deleteLater();
 		}
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
+		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
+	}
 }
 
 void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow)
@@ -336,14 +347,24 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 	if(ARichTextEditor && supported)
 	{
 		if (!xhtmlEdit)
-			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);
+			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);		
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
+		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
 	else
+	{
 		if (xhtmlEdit)
 		{
 			ANormalWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
 			xhtmlEdit->deleteLater();
 		}
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
+		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
+	}
 }
 
 
@@ -1025,6 +1046,48 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 	}
 }
 
+void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
+{
+	IMessageEditWidget *messageEditWidget = qobject_cast<IMessageEditWidget *>(AWidget);
+	if (messageEditWidget)
+	{
+		if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR)
+			selectColor(CT_FOREGROUND, messageEditWidget->textEdit());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR)
+			selectColor(CT_BACKGROUND, messageEditWidget->textEdit());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FONT)
+			selectFont(messageEditWidget->textEdit());
+	}
+}
+
+void XhtmlIm::selectFont(QTextEdit *AEditWidget)
+{
+	bool ok;
+	QTextCursor cursor = getCursor(false, true, AEditWidget);
+	QFont font = QFontDialog::getFont(&ok, cursor.charFormat().font(), AEditWidget->window());
+	if (ok)
+	{
+		QTextCharFormat charFormat;
+		charFormat.setFont(font);
+		mergeFormatOnWordOrSelection(cursor, charFormat, AEditWidget);
+	}
+}
+
+void XhtmlIm::selectColor(int AType, QTextEdit *AEditWidget)
+{
+	QTextCursor cursor = getCursor(false, true, AEditWidget);
+	QTextCharFormat charFormat = cursor.charFormat();
+	QColor color = QColorDialog::getColor((AType==CT_FOREGROUND?charFormat.foreground():charFormat.background()).color(), AEditWidget->window());
+	if (!color.isValid())
+		return;
+	QTextCharFormat newCharFormat;
+	if (AType==CT_FOREGROUND)
+		newCharFormat.setForeground(color);
+	else
+		newCharFormat.setBackground(color);
+	mergeFormatOnWordOrSelection(cursor, newCharFormat, AEditWidget);
+}
+
 void XhtmlIm::onResetFormat(bool AStatus)
 {
 	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
@@ -1037,6 +1100,15 @@ void XhtmlIm::onRemoveFormat()
 
 void XhtmlIm::onSelectFont()
 {
+	qDebug() << "XhtmlIm::onSelectFont()";
+	qDebug() << "sender=" << sender();
+	Action *action = qobject_cast<Action *>(sender());
+	if (action)
+	{
+		qDebug() << "action parent=" << action->parent();
+		qDebug() << "action parent parent=" << action->parent()->parent();
+		qDebug() << "action parent parent parent=" << action->parent()->parent()->parent();
+	}
 	bool ok;
 	QTextCursor cursor = getCursor();
 	QFont font = QFontDialog::getFont(&ok, cursor.charFormat().font(), FCurrentMessageEditWidget->textEdit()->window());
@@ -1529,9 +1601,18 @@ void XhtmlIm::onSetFormat()
 //	updateCurrentBlock(cursor);
 }
 
-QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)
+QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect, QTextEdit *AEditWidget)
 {
-	QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
+	QTextCursor cursor;
+	if (AEditWidget)
+	{
+		cursor = AEditWidget->textCursor();
+		FCurrentCursorPosition = cursor.atEnd()?-1:cursor.position();
+	}
+	else
+	{
+		cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
+	}
 	if (FCurrentCursorPosition != -1)
 	{
 		if (FCurrentCursorPosition < cursor.selectionStart() || FCurrentCursorPosition > cursor.selectionEnd())
@@ -1546,8 +1627,9 @@ QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect)
 	return cursor;
 }
 
-void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat)
+void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *AEditWidget)
 {
+	qDebug() << "XhtmlIm::mergeFormatOnWordOrSelection(ACursor, AFormat," <<  AEditWidget << ")";
 	if (ACursor.hasSelection())
 	{
 		ACursor.beginEditBlock();
@@ -1555,7 +1637,12 @@ void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharF
 		ACursor.endEditBlock();
 	}
 	else
-		FCurrentMessageEditWidget->textEdit()->mergeCurrentCharFormat(AFormat);
+	{
+		if (!AEditWidget)
+			AEditWidget=FCurrentMessageEditWidget?FCurrentMessageEditWidget->textEdit():NULL;
+		if (AEditWidget)
+			AEditWidget->mergeCurrentCharFormat(AFormat);
+	}
 }
 
 
