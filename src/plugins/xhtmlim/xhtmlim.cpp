@@ -49,41 +49,21 @@
 #include "addlink.h"
 #include "settooltip.h"
 
-#define ADR_DECORATION_TYPE Action::DR_Parametr1
+#define ADR_DECORATION_TYPE		Action::DR_Parametr1
 #define ADR_CAPITALIZATION_TYPE Action::DR_Parametr1
-#define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
-#define ADR_COLOR_TYPE		Action::DR_Parametr1
-#define ADR_INDENT			Action::DR_Parametr1
-#define ADR_ALIGN_TYPE      Action::DR_Parametr1
-#define ADR_LIST_TYPE       Action::DR_Parametr1
-#define ADR_FORMATTING_TYPE Action::DR_Parametr1
-
-#define DT_BOLD      1
-#define DT_ITALIC    2
-#define DT_UNDERLINE 3
-#define DT_OVERLINE	 4
-#define DT_STRIKEOUT 5
-
-#define CPT_MIXED      0
-#define CPT_SMALLCAPS  1
-#define CPT_ALLUPPER   2
-#define CPT_ALLLOWER   3
-#define CPT_CAPITALIZE 4
+#define ADR_SPECIAL_CHARACTER	Action::DR_Parametr1
+#define ADR_COLOR_TYPE			Action::DR_Parametr1
+#define ADR_INDENT				Action::DR_Parametr1
+#define ADR_ALIGN_TYPE			Action::DR_Parametr1
+#define ADR_LIST_TYPE			Action::DR_Parametr1
+#define ADR_FORMATTING_TYPE		Action::DR_Parametr1
+#define ADR_CURSOR_POSITION		Action::DR_Parametr2
 
 #define CT_FOREGROUND 0
 #define CT_BACKGROUND 1
 
 #define INDENT_LESS	0
 #define INDENT_MORE	1
-
-#define FMT_NORMAL          0
-#define FMT_HEADING1        1
-#define FMT_HEADING2        2
-#define FMT_HEADING3        3
-#define FMT_HEADING4        4
-#define FMT_HEADING5        5
-#define FMT_HEADING6        6
-#define FMT_PREFORMAT       7
 
 XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
@@ -92,7 +72,8 @@ XhtmlIm::XhtmlIm():
 	FDiscovery(NULL),
 	FBitsOfBinary(NULL),
 	FNetworkAccessManager(NULL),
-	FIconStorage(NULL)
+	FIconStorage(NULL),
+	FSpecialCharacter(QChar::Nbsp)
 {}
 
 XhtmlIm::~XhtmlIm()
@@ -316,15 +297,77 @@ void XhtmlIm::addRichTextEditToolbar(SplitterWidget *ASplitterWidget, int AOrder
 void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *AChatWindow)
 {
 	bool supported = isSupported(AChatWindow->address());
+	if (supported)
+	{
+		AChatWindow->editWidget()->setRichTextEnabled(true); // When XHTML enabled, it should accept rich text!
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, AChatWindow->editWidget()->instance());
+
+		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
+	}
+	else
+	{
+		AChatWindow->editWidget()->setRichTextEnabled(false); // When XHTML enabled, it should accept rich text!
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, AChatWindow->editWidget()->instance());
+
+		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
+	}
 	QWidget *xhtmlEdit = AChatWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
 	if(ARichTextEditor && supported)
 	{
 		if (!xhtmlEdit)
 			addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
-		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
 	else
 	{
@@ -333,25 +376,86 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 			AChatWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
 			xhtmlEdit->deleteLater();
 		}
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
-		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
 	}
 }
 
 void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow)
 {
 	bool supported = isSupported(ANormalWindow->address());
+	if (supported)
+	{
+		ANormalWindow->editWidget()->setRichTextEnabled(true); // When XHTML enabled, it should accept rich text!
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
+
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, ANormalWindow->editWidget()->instance());
+
+
+		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
+	}
+	else
+	{
+		ANormalWindow->editWidget()->setRichTextEnabled(false); // When XHTML enabled, it should accept rich text!
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
+
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, ANormalWindow->editWidget()->instance());
+
+		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
+	}
 	QWidget *xhtmlEdit = ANormalWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
 	if(ARichTextEditor && supported)
 	{
 		if (!xhtmlEdit)
 			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);		
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
-		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
 	else
 	{
@@ -360,10 +464,6 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 			ANormalWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
 			xhtmlEdit->deleteLater();
 		}
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, ANormalWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, ANormalWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, ANormalWindow->editWidget()->instance());
-		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
 	}
 }
 
@@ -422,30 +522,31 @@ void XhtmlIm::onEditWidgetCreated(IMessageEditWidget *AWidget)
 
 void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu)
 {
-	FCurrentMessageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
-	if (FCurrentMessageEditWidget)
+	IMessageEditWidget *messageEditWidget = qobject_cast<IMessageEditWidget *>(sender());
+	if (messageEditWidget)
 	{
 		if (Options::node(OPV_XHTML_EDITORMENU).value().toBool())
 		{
-			bool chatWindow(qobject_cast<IMessageChatWindow *>(FCurrentMessageEditWidget->messageWindow()->instance()));
-			QTextCursor cursor = FCurrentMessageEditWidget->textEdit()->cursorForPosition(APosition);
-			FCurrentCursorPosition = cursor.atEnd()?-1:cursor.position();
-			if (FCurrentCursorPosition != -1)
-				cursor.setPosition(FCurrentCursorPosition);
+			bool chatWindow(qobject_cast<IMessageChatWindow *>(messageEditWidget->messageWindow()->instance()));
+			QTextCursor cursor = messageEditWidget->textEdit()->cursorForPosition(APosition);
+			int cursorPosition = cursor.atEnd()?-1:cursor.position();
+			if (cursorPosition != -1)
+				cursor.setPosition(cursorPosition);
 			QTextCharFormat charFormat = cursor.charFormat();
 
 			Menu *menu = new Menu(AMenu);
 			menu->setTitle(tr("Text format"));
 			menu->setIcon(QIcon::fromTheme("format-text", FIconStorage->getIcon(XHI_FORMAT)));
-			AMenu->addAction(menu->menuAction(),AG_XHTMLIM_FORMATTING);
+			AMenu->addAction(menu->menuAction(), AG_XHTMLIM_FORMATTING);
 
 			Action *font=new Action(menu);
 			font->setIcon(QIcon::fromTheme("format-text-font", FIconStorage->getIcon(XHI_TEXT_FONT)));
 			font->setText(tr("Font"));
 			font->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FONT);
 			font->setPriority(QAction::LowPriority);
-			connect(font, SIGNAL(triggered(bool)), this, SLOT(onSelectFont()));
 			font->setCheckable(false);
+			font->setData(ADR_CURSOR_POSITION, cursorPosition);
+			connect(font, SIGNAL(triggered(bool)), this, SLOT(onSelectFont()));
 			menu->addAction(font, AG_XHTMLIM_FONT);
 
 			// *** Style submenu ***
@@ -459,6 +560,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			bold->setText(tr("Bold"));
 			bold->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD);
 			bold->setData(ADR_DECORATION_TYPE, DT_BOLD);
+			bold->setData(ADR_CURSOR_POSITION, cursorPosition);
 			bold->setCheckable(true);
 			bold->setChecked(charFormat.fontWeight()>QFont::DemiBold);
 			connect(bold, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
@@ -470,6 +572,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			italic->setText(tr("Italic"));
 			italic->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC);
 			italic->setData(ADR_DECORATION_TYPE, DT_ITALIC);
+			italic->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(italic, SIGNAL(triggered(bool)), SLOT(onSelectDecoration(bool)));
 			italic->setCheckable(true);
 			italic->setChecked(charFormat.fontItalic());
@@ -480,6 +583,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			underline->setText(tr("Underline"));
 			underline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE);
 			underline->setData(ADR_DECORATION_TYPE, DT_UNDERLINE);
+			underline->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(underline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			underline->setCheckable(true);
 			underline->setChecked(charFormat.fontUnderline());
@@ -490,6 +594,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			overline->setText(tr("Overline"));
 			overline->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE);
 			overline->setData(ADR_DECORATION_TYPE, DT_OVERLINE);
+			overline->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(overline, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			overline->setCheckable(true);
 			overline->setChecked(charFormat.fontOverline());
@@ -500,6 +605,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			strikeout->setText(tr("Strikeout"));
 			strikeout->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT);
 			strikeout->setData(ADR_DECORATION_TYPE, DT_STRIKEOUT);
+			strikeout->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(strikeout, SIGNAL(triggered(bool)), this, SLOT(onSelectDecoration(bool)));
 			strikeout->setCheckable(true);
 			strikeout->setChecked(charFormat.fontStrikeOut());
@@ -517,7 +623,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			mixed->setIcon(QIcon::fromTheme("format-text-capitalization-mixedcase",FIconStorage->getIcon(XHI_CAPS_MIXED)));
 			mixed->setText(tr("Mixed case"));
 			mixed->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED);
-			mixed->setData(ADR_CAPITALIZATION_TYPE, CPT_MIXED);
+			mixed->setData(ADR_CAPITALIZATION_TYPE, QFont::MixedCase);
+			mixed->setData(ADR_CURSOR_POSITION, cursorPosition);
 			mixed->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::MixedCase)
 			{
@@ -533,7 +640,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			smallCaps->setIcon(QIcon::fromTheme("format-text-capitalization-smallcaps",FIconStorage->getIcon(XHI_CAPS_SMALLCAPS)));
 			smallCaps->setText(tr("Small caps"));
 			smallCaps->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL);
-			smallCaps->setData(ADR_CAPITALIZATION_TYPE, CPT_SMALLCAPS);
+			smallCaps->setData(ADR_CAPITALIZATION_TYPE, QFont::SmallCaps);
+			smallCaps->setData(ADR_CURSOR_POSITION, cursorPosition);
 			smallCaps->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::SmallCaps)
 			{
@@ -549,7 +657,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			allUppercase->setIcon(QIcon::fromTheme("format-text-capitalization-alluppercase",FIconStorage->getIcon(XHI_CAPS_ALLUPPER)));
 			allUppercase->setText(tr("All uppercase"));
 			allUppercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER);
-			allUppercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLUPPER);
+			allUppercase->setData(ADR_CAPITALIZATION_TYPE, QFont::AllUppercase);
+			allUppercase->setData(ADR_CURSOR_POSITION, cursorPosition);
 			allUppercase->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::AllUppercase)
 			{
@@ -565,7 +674,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			allLowercase->setIcon(QIcon::fromTheme("format-text-capitalization-alllowercase",FIconStorage->getIcon(XHI_CAPS_ALLLOWER)));
 			allLowercase->setText(tr("All lowercase"));
 			allLowercase->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER);
-			allLowercase->setData(ADR_CAPITALIZATION_TYPE, CPT_ALLLOWER);
+			allLowercase->setData(ADR_CAPITALIZATION_TYPE, QFont::AllLowercase);
+			allLowercase->setData(ADR_CURSOR_POSITION, cursorPosition);
 			allLowercase->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::AllLowercase)
 			{
@@ -576,12 +686,13 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			connect(allLowercase, SIGNAL(triggered()), SLOT(onSelectCapitalization()));
 			capitalization->addAction(allLowercase, AG_XHTMLIM_FONT);
 
-			//  All lowercase
+			//  Capitalize
 			Action *capitalize = new Action(capitalization);
 			capitalize->setIcon(QIcon::fromTheme("format-text-capitalization-capitalize",FIconStorage->getIcon(XHI_CAPS_CAPITALIZE)));
 			capitalize->setText(tr("Capitalize"));
 			capitalize->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE);
-			capitalize->setData(ADR_CAPITALIZATION_TYPE, CPT_CAPITALIZE);
+			capitalize->setData(ADR_CAPITALIZATION_TYPE, QFont::Capitalize);
+			capitalize->setData(ADR_CURSOR_POSITION, cursorPosition);
 			capitalize->setCheckable(true);
 			if (charFormat.fontCapitalization()==QFont::Capitalize)
 			{
@@ -600,9 +711,10 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			code->setText(tr("Code"));
 			code->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_CODE);
 			code->setPriority(QAction::LowPriority);
+			code->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(code, SIGNAL(toggled(bool)), SLOT(onTextCode(bool)));
 			code->setCheckable(true);
-			code->setChecked(getCursor().charFormat().fontFamily()=="Courier New,courier");
+			code->setChecked(charFormat.fontFamily()=="Courier New,courier");
 			menu->addAction(code, AG_XHTMLIM_FONT);
 
 			// Color
@@ -614,6 +726,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *foregroundColor = new Action(menu);
 			foregroundColor->setText(tr("Foreground"));
 			foregroundColor->setData(ADR_COLOR_TYPE, CT_FOREGROUND);
+			foregroundColor->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(foregroundColor, SIGNAL(triggered()), SLOT(onColor()));
 			color->addAction(foregroundColor);
 
@@ -621,6 +734,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *backgroundColor = new Action(menu);
 			backgroundColor->setText(tr("Background"));
 			backgroundColor->setData(ADR_COLOR_TYPE, CT_BACKGROUND);
+			backgroundColor->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(backgroundColor, SIGNAL(triggered()), SLOT(onColor()));
 			color->addAction(backgroundColor);
 
@@ -634,6 +748,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			insertLink->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK);
 			insertLink->setCheckable(true);
 			insertLink->setChecked(charFormat.isAnchor());
+			insertLink->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(insertLink, SIGNAL(triggered()), SLOT(onInsertLink()));
 			menu->addAction(insertLink, AG_XHTMLIM_INSERT);
 
@@ -643,6 +758,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			insertImage->setText(tr("Insert image"));
 			insertImage->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE);
 			insertImage->setPriority(QAction::LowPriority);
+			insertImage->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(insertImage, SIGNAL(triggered()), SLOT(onInsertImage()));
 			insertImage->setCheckable(true);
 			insertImage->setChecked(charFormat.isImageFormat());
@@ -654,6 +770,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			setToolTip->setText(tr("Set tool tip"));
 			setToolTip->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP);
 			setToolTip->setPriority(QAction::LowPriority);
+			setToolTip->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(setToolTip, SIGNAL(triggered()), SLOT(onSetToolTip()));
 			setToolTip->setCheckable(true);
 			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
@@ -662,8 +779,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			// *** Special characters ***
 			Menu *special = new Menu(menu);
 			special->setTitle(tr("Insert special symbol"));
-			special->menuAction()->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
-			special->menuAction()->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+			special->menuAction()->setIcon(RSR_STORAGE_HTML, FSpecialCharacter==QChar::Nbsp?XHI_INSERT_NBSP:XHI_INSERT_NEWLINE);
+			special->menuAction()->setData(ADR_SPECIAL_CHARACTER, QChar::Nbsp);
 			connect(special->menuAction(), SIGNAL(triggered()), SLOT(onInsertSpecial()));
 
 			QActionGroup *group=new QActionGroup(special);
@@ -671,7 +788,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			Action *action = new Action(group);
 			action->setText(tr("Non-breaking space"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NBSP);
-			action->setData(ADR_SPECIAL_SYMBOL, QChar::Nbsp);
+			action->setData(ADR_SPECIAL_CHARACTER, QChar::Nbsp);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP);
 			action->setCheckable(true);
 			action->setPriority(QAction::LowPriority);
@@ -683,7 +801,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action = new Action(group);
 			action->setText(tr("New line"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_INSERT_NEWLINE);
-			action->setData(ADR_SPECIAL_SYMBOL, QChar::LineSeparator);
+			action->setData(ADR_SPECIAL_CHARACTER, QChar::LineSeparator);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE);
 			action->setCheckable(true);
 			action->setPriority(QAction::LowPriority);
@@ -694,24 +813,26 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 
 			//  *** Indentation ***
 			// Indent
-			Action *indentLess= new Action(this);
+			Action *indentLess= new Action(menu);
 			indentLess->setIcon(QIcon::fromTheme("format-indent-less", FIconStorage->getIcon(XHI_OUTDENT)));
 			indentLess->setText(tr("Decrease indent"));
 			indentLess->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE);
 			indentLess->setPriority(QAction::LowPriority);
 			indentLess->setCheckable(false);
 			indentLess->setData(ADR_INDENT, INDENT_LESS);
+			indentLess->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(indentLess, SIGNAL(triggered()), this, SLOT(onIndentChange()));
 			menu->addAction(indentLess, AG_XHTMLIM_INDENT);
 
 			// Outndent
-			Action *indentMore=new Action(this);
+			Action *indentMore=new Action(menu);
 			indentMore->setIcon(QIcon::fromTheme("format-indent-more",FIconStorage->getIcon(XHI_INDENT)));
 			indentMore->setText(tr("Increase indent"));
 			indentMore->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE);
 			indentMore->setPriority(QAction::LowPriority);
 			indentMore->setCheckable(false);
 			indentMore->setData(ADR_INDENT, INDENT_MORE);
+			indentMore->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(indentMore, SIGNAL(triggered()), this, SLOT(onIndentChange()));
 			menu->addAction(indentMore, AG_XHTMLIM_INDENT);
 
@@ -729,6 +850,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Left"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_ALIGN_LEFT);
 			action->setData(ADR_ALIGN_TYPE, int(Qt::AlignLeft|Qt::AlignAbsolute));
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (alignment&Qt::AlignLeft)
 			{
@@ -746,6 +868,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Center"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_CENTER);
 			action->setData(ADR_ALIGN_TYPE, Qt::AlignHCenter);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (alignment&Qt::AlignHCenter)
 			{
@@ -763,6 +886,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Right"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_RIGHT);
 			action->setData(ADR_ALIGN_TYPE, int(Qt::AlignRight|Qt::AlignAbsolute));
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (alignment&Qt::AlignRight)
 			{
@@ -780,6 +904,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Justify"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_ALIGN_JUSTIFY);
 			action->setData(ADR_ALIGN_TYPE, Qt::AlignJustify);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (alignment&Qt::AlignJustify)
 			{
@@ -816,6 +941,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Disc"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_LIST_BULLET_DISC);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListDisc);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListDisc)
 				action->setChecked(true);
@@ -828,6 +954,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Circle"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_CIRCLE);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListCircle);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListCircle)
 				action->setChecked(true);
@@ -840,6 +967,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Square"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_BULLET_SQUARE);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListSquare);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListSquare)
 				action->setChecked(true);
@@ -852,6 +980,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Decimal"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_DECIMAL);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListDecimal);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListDecimal)
 				action->setChecked(true);
@@ -864,6 +993,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Alpha lower"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_LOW);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerAlpha);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListLowerAlpha)
 				action->setChecked(true);
@@ -876,6 +1006,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Alpha upper"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ALPHA_UP);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperAlpha);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListUpperAlpha)
 				action->setChecked(true);
@@ -888,6 +1019,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Roman lower"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_LOW);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListLowerRoman);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListLowerRoman)
 				action->setChecked(true);
@@ -900,6 +1032,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Roman upper"));
 			action->setIcon(RSR_STORAGE_HTML,XHI_LIST_ORDER_ROMAN_UP);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListUpperRoman);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListUpperRoman)
 				action->setChecked(true);
@@ -912,6 +1045,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Definition list"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_LIST_DEFINITION);
 			action->setData(ADR_LIST_TYPE, QTextListFormat::ListStyleUndefined);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (listStyle==QTextListFormat::ListStyleUndefined)
 				action->setChecked(true);
@@ -921,13 +1055,12 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			list->addAction(action, AG_XHTMLIM_DEFLIST);
 			menu->addAction(list->menuAction(), AG_XHTMLIM_PARAGRAPH);
 
-
 			// Special formatting
 			Menu *format = new Menu(menu);
 			format->setTitle(tr("Formatting type"));
 			format->setIcon(RSR_STORAGE_HTML,XHI_FORMATTYPE);
 			format->menuAction()->setCheckable(true);
-			int type = checkBlockFormat(getCursor());
+			int type = checkBlockFormat(cursor);
 			connect(format->menuAction(), SIGNAL(triggered()), SLOT(onSetFormat()));
 
 			group=new QActionGroup(format);
@@ -935,6 +1068,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Preformatted text"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_PREFORMAT);
 			action->setData(ADR_FORMATTING_TYPE, FMT_PREFORMAT);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_PREFORMAT)
 				action->setChecked(true);
@@ -947,6 +1081,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 1"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING1);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING1);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING1)
 				action->setChecked(true);
@@ -959,6 +1094,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 2"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING2);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING2);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING2)
 				action->setChecked(true);
@@ -971,6 +1107,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 3"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING3);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING3);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING3)
 				action->setChecked(true);
@@ -983,6 +1120,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 4"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING4);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING4);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING4)
 				action->setChecked(true);
@@ -995,6 +1133,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 5"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING5);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING5);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING5)
 				action->setChecked(true);
@@ -1007,6 +1146,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			action->setText(tr("Heading 6"));
 			action->setIcon(RSR_STORAGE_HTML, XHI_HEADING6);
 			action->setData(ADR_FORMATTING_TYPE, FMT_HEADING6);
+			action->setData(ADR_CURSOR_POSITION, cursorPosition);
 			action->setCheckable(true);
 			if (type == FMT_HEADING6)
 				action->setChecked(true);
@@ -1023,6 +1163,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			removeFormat->setText(tr("Remove format"));
 			removeFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
 			removeFormat->setPriority(QAction::LowPriority);
+			removeFormat->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(removeFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
 			removeFormat->setCheckable(false);
 			menu->addAction(removeFormat, AG_XHTMLIM_SPECIAL);
@@ -1035,13 +1176,14 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 				formatAutoReset->setText(tr("Reset formatting on message send"));
 				formatAutoReset->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
 				formatAutoReset->setPriority(QAction::LowPriority);
+				formatAutoReset->setData(ADR_CURSOR_POSITION, cursorPosition);
 				connect(formatAutoReset, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
 				formatAutoReset->setCheckable(true);
 				formatAutoReset->setChecked(Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
 				menu->addAction(formatAutoReset, AG_XHTMLIM_SPECIAL);
 			}
 
-			menu->setEnabled(FCurrentMessageEditWidget->isRichTextEnabled());
+			menu->setEnabled(messageEditWidget->isRichTextEnabled());
 		}
 	}
 }
@@ -1052,18 +1194,76 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 	if (messageEditWidget)
 	{
 		if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR)
-			selectColor(CT_FOREGROUND, messageEditWidget->textEdit());
+			selectColor(CT_FOREGROUND, messageEditWidget);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR)
-			selectColor(CT_BACKGROUND, messageEditWidget->textEdit());
+			selectColor(CT_BACKGROUND, messageEditWidget);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FONT)
 			selectFont(messageEditWidget->textEdit());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET)
+			onResetFormat(!Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE)
+			clearFormatOnWordOrSelection(getCursor(messageEditWidget->textEdit(), true), messageEditWidget->textEdit());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK)
+			insertLink(getCursor(messageEditWidget->textEdit()), messageEditWidget->instance());
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE)
+			insertImage(getCursor(messageEditWidget->textEdit()), messageEditWidget);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP)
+			setToolTip(getCursor(messageEditWidget->textEdit()), messageEditWidget);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP)
+			insertSpecial(getCursor(messageEditWidget->textEdit()), QChar::Nbsp);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE)
+			insertSpecial(getCursor(messageEditWidget->textEdit()), QChar::LineSeparator);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE)
+			changeIndent(getCursor(messageEditWidget->textEdit()), true);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE)
+			changeIndent(getCursor(messageEditWidget->textEdit()), false);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_BOLD ||
+				 AId==SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC ||
+				 AId==SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE ||
+				 AId==SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT ||
+				 AId==SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE ||
+				 AId==SCT_MESSAGEWINDOWS_XHTMLIM_CODE)
+		{
+			QTextCursor cursor = getCursor(messageEditWidget->textEdit());
+			QTextCharFormat format = cursor.charFormat();
+			if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_BOLD)
+				selectDecoration(messageEditWidget->textEdit(), cursor, DT_BOLD, format.fontWeight()<QFont::DemiBold);
+			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC)
+				selectDecoration(messageEditWidget->textEdit(), cursor, DT_ITALIC, !format.fontItalic());
+			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE)
+				selectDecoration(messageEditWidget->textEdit(), cursor, DT_UNDERLINE, !format.fontUnderline());
+			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE)
+				selectDecoration(messageEditWidget->textEdit(), cursor, DT_OVERLINE, !format.fontOverline());
+			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT)
+				selectDecoration(messageEditWidget->textEdit(), cursor, DT_STRIKEOUT, !format.fontStrikeOut());
+			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CODE)
+				setCode(messageEditWidget->textEdit(), cursor, format.fontFamily()!="Courier New,courier");
+		}
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED)
+			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()), QFont::MixedCase);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER)
+			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()),QFont::AllUppercase);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER)
+			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()),QFont::AllLowercase);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL)
+			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()),QFont::SmallCaps);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE)
+			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()),QFont::Capitalize);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT)
+			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignLeft);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT)
+			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignRight);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER)
+			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignCenter);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY)
+			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignJustify);
 	}
 }
 
-void XhtmlIm::selectFont(QTextEdit *AEditWidget)
+void XhtmlIm::selectFont(QTextEdit *AEditWidget, int APosition)
 {
 	bool ok;
-	QTextCursor cursor = getCursor(false, true, AEditWidget);
+	QTextCursor cursor = getCursor(AEditWidget, APosition);
 	QFont font = QFontDialog::getFont(&ok, cursor.charFormat().font(), AEditWidget->window());
 	if (ok)
 	{
@@ -1073,11 +1273,11 @@ void XhtmlIm::selectFont(QTextEdit *AEditWidget)
 	}
 }
 
-void XhtmlIm::selectColor(int AType, QTextEdit *AEditWidget)
+void XhtmlIm::selectColor(int AType, IMessageEditWidget *AEditWidget, int APosition)
 {
-	QTextCursor cursor = getCursor(false, true, AEditWidget);
+	QTextCursor cursor = getCursor(AEditWidget->textEdit(), APosition);
 	QTextCharFormat charFormat = cursor.charFormat();
-	QColor color = QColorDialog::getColor((AType==CT_FOREGROUND?charFormat.foreground():charFormat.background()).color(), AEditWidget->window());
+	QColor color = QColorDialog::getColor((AType==CT_FOREGROUND?charFormat.foreground():charFormat.background()).color(), AEditWidget->instance()->window());
 	if (!color.isValid())
 		return;
 	QTextCharFormat newCharFormat;
@@ -1085,46 +1285,13 @@ void XhtmlIm::selectColor(int AType, QTextEdit *AEditWidget)
 		newCharFormat.setForeground(color);
 	else
 		newCharFormat.setBackground(color);
-	mergeFormatOnWordOrSelection(cursor, newCharFormat, AEditWidget);
+	mergeFormatOnWordOrSelection(cursor, newCharFormat, AEditWidget->textEdit());
 }
 
-void XhtmlIm::onResetFormat(bool AStatus)
+void XhtmlIm::selectDecoration(QTextEdit *ATextEdit, QTextCursor ACursor, int ADecorationType, bool ASelected)
 {
-	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
-}
-
-void XhtmlIm::onRemoveFormat()
-{
-	clearFormatOnWordOrSelection();
-}
-
-void XhtmlIm::onSelectFont()
-{
-	qDebug() << "XhtmlIm::onSelectFont()";
-	qDebug() << "sender=" << sender();
-	Action *action = qobject_cast<Action *>(sender());
-	if (action)
-	{
-		qDebug() << "action parent=" << action->parent();
-		qDebug() << "action parent parent=" << action->parent()->parent();
-		qDebug() << "action parent parent parent=" << action->parent()->parent()->parent();
-	}
-	bool ok;
-	QTextCursor cursor = getCursor();
-	QFont font = QFontDialog::getFont(&ok, cursor.charFormat().font(), FCurrentMessageEditWidget->textEdit()->window());
-	if (ok)
-	{
-		QTextCharFormat charFormat;
-		charFormat.setFont(font);
-		mergeFormatOnWordOrSelection(cursor, charFormat);
-	}
-}
-
-void XhtmlIm::onSelectDecoration(bool ASelected)
-{
-	Action *action = qobject_cast<Action *>(sender());
 	QTextCharFormat charFormat;
-	switch (action->data(ADR_DECORATION_TYPE).toInt())
+	switch (ADecorationType)
 	{
 		case DT_BOLD:
 			charFormat.setFontWeight(ASelected?QFont::Bold:QFont::Normal);
@@ -1142,69 +1309,39 @@ void XhtmlIm::onSelectDecoration(bool ASelected)
 			charFormat.setFontStrikeOut(ASelected);
 			break;
 	}
-	mergeFormatOnWordOrSelection(getCursor(), charFormat);
+	mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
 }
 
-void XhtmlIm::onSelectCapitalization()
+void XhtmlIm::insertLink(QTextCursor ACursor, QWidget *AParent)
 {
-	Action *action = qobject_cast<Action *>(sender());
-	QTextCharFormat charFormat;
-	switch (action->data(ADR_CAPITALIZATION_TYPE).toInt())
-	{
-		case CPT_ALLLOWER:
-			charFormat.setFontCapitalization(QFont::AllLowercase);
-			break;
-		case CPT_ALLUPPER:
-			charFormat.setFontCapitalization(QFont::AllUppercase);
-			break;
-		case CPT_CAPITALIZE:
-			charFormat.setFontCapitalization(QFont::Capitalize);
-			break;
-		case CPT_SMALLCAPS:
-			charFormat.setFontCapitalization(QFont::SmallCaps);
-			break;
-		case CPT_MIXED:
-			charFormat.setFontCapitalization(QFont::MixedCase);
-			break;
-	}
-	mergeFormatOnWordOrSelection(getCursor(), charFormat);
-}
-
-void XhtmlIm::onInsertLink()
-{
-	QTextCursor cursor = getCursor();
-
-	QTextCharFormat charFmtCurrent=cursor.charFormat();
-
-	if (!cursor.hasSelection())
+	QTextCharFormat charFmtCurrent=ACursor.charFormat();
+	if (!ACursor.hasSelection())
 	{
 		if (charFmtCurrent.isAnchor())
 		{
-			QTextBlock block=cursor.block();
+			QTextBlock block=ACursor.block();
 			for (QTextBlock::iterator it = block.begin(); !(it.atEnd()); ++it)
 			{
 				QTextFragment currentFragment = it.fragment();
 				if (currentFragment.isValid())
 				{
-					if (currentFragment.contains(cursor.position()))
+					if (currentFragment.contains(ACursor.position()))
 					{
-						cursor.setPosition(currentFragment.position());
-						cursor.setPosition(currentFragment.position()+currentFragment.length(), QTextCursor::KeepAnchor);
+						ACursor.setPosition(currentFragment.position());
+						ACursor.setPosition(currentFragment.position()+currentFragment.length(), QTextCursor::KeepAnchor);
 						break;
 					}
 				}
 			}
 		}
 		else
-			cursor.select(QTextCursor::WordUnderCursor);
+			ACursor.select(QTextCursor::WordUnderCursor);
 	}
 
-	bool needsToBeInserted=(cursor.selection().isEmpty());
-
-	Action *action=qobject_cast<Action *>(sender());
+	bool needsToBeInserted=(ACursor.selection().isEmpty());
 
 	AddLink *addLink = new AddLink(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
-								   QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), cursor.selectedText(), action->parentWidget()->window());
+								   QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), ACursor.selectedText(), AParent->window());
 
 	switch (addLink->exec())
 	{
@@ -1215,28 +1352,28 @@ void XhtmlIm::onInsertLink()
 			charFmt.setAnchorHref(addLink->url().toEncoded());
 			charFmt.setFontUnderline(true);
 			charFmt.setForeground(QBrush(Qt::blue));
-			cursor.beginEditBlock();
+			ACursor.beginEditBlock();
 			if (needsToBeInserted)
 			{
-				cursor.insertText(addLink->description(), charFmt);
-				cursor.insertText(" ", charFmtCurrent);
+				ACursor.insertText(addLink->description(), charFmt);
+				ACursor.insertText(" ", charFmtCurrent);
 			}
 			else
-				cursor.mergeCharFormat(charFmt);
-			cursor.endEditBlock();
+				ACursor.mergeCharFormat(charFmt);
+			ACursor.endEditBlock();
 			break;
 		}
 
 		case AddLink::Remove:
 		{
 			QTextCharFormat charFmt;
-			cursor.beginEditBlock();
-			if (cursor.hasSelection())
+			ACursor.beginEditBlock();
+			if (ACursor.hasSelection())
 			{
 				charFmt.setAnchor(false);
 				charFmt.setAnchorHref(QString());
 				charFmt.setAnchorName(QString());
-				cursor.mergeCharFormat(charFmt);
+				ACursor.mergeCharFormat(charFmt);
 			}
 			else
 			{
@@ -1244,116 +1381,32 @@ void XhtmlIm::onInsertLink()
 				charFmt.clearProperty(QTextFormat::AnchorHref);
 				charFmt.clearProperty(QTextFormat::AnchorName);
 				charFmt.clearProperty(QTextFormat::IsAnchor);
-				cursor.setCharFormat(charFmt);
+				ACursor.setCharFormat(charFmt);
 			}
-			cursor.endEditBlock();
+			ACursor.endEditBlock();
 			break;
 		}
 	}
 	addLink->deleteLater();
 }
 
-void XhtmlIm::onInsertImage()
+void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 {
-	QUrl        imageUrl;
-	QByteArray  imageData;
-	QSize       size;
-	QString     alt;
-	QTextCursor cursor = getCursor();
-	QTextCharFormat charFmtCurrent=cursor.charFormat();
-
-	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(FCurrentMessageEditWidget->messageWindow()->streamJid(), FCurrentMessageEditWidget->messageWindow()->contactJid());
-
-	if (charFmtCurrent.isImageFormat())
-	{
-		QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
-		cursor.select(QTextCursor::WordUnderCursor);
-		imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
-		QVariant imageResource = cursor.document()->resource(QTextDocument::ImageResource, imageUrl);
-		if (imageResource.type()==QVariant::ByteArray)
-			imageData=imageResource.toByteArray();
-		else if (imageUrl.scheme()=="data")
-		{
-			QList<QString> parts=imageUrl.path().split(';');
-			if (parts.size()==2 && parts[0].startsWith("image/"))
-			{
-				parts = parts[1].split(',');
-				if (parts.size()==2 && parts[0]=="base64")
-					imageData = QByteArray::fromBase64(parts[1].toLatin1());
-			}
-		}
-		size.setWidth(imageFormat.width());
-		size.setHeight(imageFormat.height());
-		alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
-	}
-
-	Action *action=qobject_cast<Action *>(sender());
-	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, action->parentWidget()->window());
-
-	insertImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
-	if(!supportBoB)
-		insertImage->ui->pbBrowse->hide();
-	if(insertImage->exec() == QDialog::Accepted)
-	{
-		if(!insertImage->getUrl().isEmpty())
-		{
-			cursor.beginEditBlock();
-			QTextImageFormat imageFormat;
-			QString          alt=insertImage->getAlternativeText();
-			if (!alt.isEmpty())
-				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
-			if (!insertImage->physResize())
-			{
-				if(insertImage->newHeight()!=insertImage->originalHeight())
-					imageFormat.setHeight(insertImage->newHeight());
-				if(insertImage->newWidth()!=insertImage->originalWidth())
-					imageFormat.setWidth(insertImage->newWidth());
-			}
-			if(insertImage->isRemote())
-			{
-				QUrl url=insertImage->getUrl();
-				imageFormat.setName(url.toEncoded());
-				cursor.document()->addResource(QTextDocument::ImageResource, url, insertImage->getImageData());
-				cursor.insertImage(imageFormat);
-			}
-			else
-				if(supportBoB)
-				{
-					QByteArray imageData=insertImage->getImageData();
-					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
-					QString uri=QString("cid:").append(contentId);
-					imageFormat.setName(uri);
-					imageFormat.setProperty(XhtmlIm::PMaxAge, insertImage->getMaxAge());
-					imageFormat.setProperty(XhtmlIm::PMimeType, insertImage->getFileType());
-					imageFormat.setProperty(XhtmlIm::PEmbed, insertImage->embed());
-					cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
-					cursor.insertImage(imageFormat);
-				}
-			cursor.endEditBlock();
-		}
-	}
-	insertImage->deleteLater();
-}
-
-void XhtmlIm::onSetToolTip()
-{
-	QTextCursor cursor = getCursor();
-	QTextCharFormat charFormat=cursor.charFormat();
+	QTextCharFormat charFormat=ACursor.charFormat();
 	if (!charFormat.hasProperty(QTextFormat::TextToolTip) &&
-		!cursor.hasSelection())
-		cursor.select(QTextCursor::WordUnderCursor);
+		!ACursor.hasSelection())
+		ACursor.select(QTextCursor::WordUnderCursor);
 
-	Action *action=qobject_cast<Action *>(sender());
 	int toolTipType = charFormat.intProperty(XmlTextDocumentParser::ToolTipType);
 
-	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), action->parentWidget()->window());
+	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), AEditWidget->instance()->window());
 
 	if(setToolTip->exec() == QDialog::Accepted)
 	{
-		cursor.beginEditBlock();
+		ACursor.beginEditBlock();
 		if (setToolTip->toolTipText().isEmpty())	// Remove tooltip
 		{
-			if (cursor.hasSelection())
+			if (ACursor.hasSelection())
 			{
 				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
 				charFormat.setProperty(XmlTextDocumentParser::ToolTipType, XmlTextDocumentParser::None);
@@ -1362,7 +1415,7 @@ void XhtmlIm::onSetToolTip()
 					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
 					charFormat.setUnderlineColor(QColor());
 				}
-				cursor.mergeCharFormat(charFormat);
+				ACursor.mergeCharFormat(charFormat);
 			}
 			else
 			{
@@ -1373,7 +1426,7 @@ void XhtmlIm::onSetToolTip()
 					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
 					charFormat.clearProperty(QTextFormat::TextUnderlineColor);
 				}
-				cursor.setCharFormat(charFormat);
+				ACursor.setCharFormat(charFormat);
 			}
 		}
 		else
@@ -1393,111 +1446,272 @@ void XhtmlIm::onSetToolTip()
 					format.setUnderlineColor(QColor());
 				}
 			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
-			cursor.mergeCharFormat(format);
+
+			mergeFormatOnWordOrSelection(ACursor, format, AEditWidget->textEdit());
 		}
-		cursor.endEditBlock();
+		ACursor.endEditBlock();
 	}
 	setToolTip->deleteLater();
 }
 
-void XhtmlIm::onInsertSpecial()
+void XhtmlIm::insertSpecial(QTextCursor ACursor, QChar ASpecialCharacter)
 {
-	Action *action = qobject_cast<Action *>(sender());
-	QChar specialSybmol = (QChar)(action->data(ADR_SPECIAL_SYMBOL).toInt());
-	Menu *special = qobject_cast<Menu *>(action->parentWidget());
-	special->menuAction()->setData(ADR_SPECIAL_SYMBOL, specialSybmol);
-	special->menuAction()->setIcon(action->icon());
-	QTextCursor cursor = getCursor(false, false);
-	cursor.beginEditBlock();
-	cursor.insertText(specialSybmol);
-	cursor.endEditBlock();
+	ACursor.beginEditBlock();
+	ACursor.insertText(FSpecialCharacter=ASpecialCharacter);
+	ACursor.endEditBlock();
+	emit specialCharacterInserted(FSpecialCharacter);
 }
 
-void XhtmlIm::onTextCode(bool AChecked)
+void XhtmlIm::setCode(QTextEdit *ATextEdit, QTextCursor ACursor, bool ACode)
 {
-	QTextCursor cursor = getCursor();
-	cursor.beginEditBlock();
-	if (AChecked)
+	ACursor.beginEditBlock();
+	if (ACode)
 	{
 		QTextCharFormat charFormat;
 		charFormat.setFontFamily("Courier New,courier");
-		mergeFormatOnWordOrSelection(cursor, charFormat);
+		mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
 	}
 	else
 	{
-		QTextCharFormat charFormat = cursor.charFormat();
+		QTextCharFormat charFormat = ACursor.charFormat();
 		charFormat.clearProperty(QTextFormat::FontFamily);
-		cursor.setCharFormat(charFormat);
+		ACursor.setCharFormat(charFormat);
+		ATextEdit->setCurrentCharFormat(charFormat);
 	}
-	cursor.endEditBlock();
+	ACursor.endEditBlock();
 }
 
-void XhtmlIm::onColor()
+void XhtmlIm::setCapitalization(QTextEdit *ATextEdit, QTextCursor ACursor, QFont::Capitalization ACapitalization)
 {
-	QTextCursor cursor = getCursor();
-	QTextCharFormat charFormat = cursor.charFormat();
-	Action *action = qobject_cast<Action *>(sender());
-	int type = action->data(ADR_COLOR_TYPE).toInt();
-	QColor color = QColorDialog::getColor((type==CT_FOREGROUND?charFormat.foreground():charFormat.background()).color(), action->parentWidget()->window());
-	if (!color.isValid())
-		return;
-	QTextCharFormat newCharFormat;
-	if (type==CT_FOREGROUND)
-		newCharFormat.setForeground(color);
+	QTextCharFormat charFormat;
+	charFormat.setFontCapitalization(ACapitalization);
+	mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
+}
+
+void XhtmlIm::setAlignment(QTextCursor ACursor, Qt::Alignment AAlignment)
+{
+	QTextBlockFormat format=ACursor.blockFormat();
+	if (format.hasProperty(QTextFormat::BlockAlignment) && format.alignment()==AAlignment)
+		format.clearProperty(QTextFormat::BlockAlignment);
 	else
-		newCharFormat.setBackground(color);
-	mergeFormatOnWordOrSelection(cursor, newCharFormat);
+		format.setAlignment(AAlignment);
+	ACursor.setBlockFormat(format);
 }
 
-void XhtmlIm::onIndentChange()
+void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 {
-	Action *action=qobject_cast<Action *>(sender());
-	QTextCursor cursor = getCursor(false, false);
-	bool increase=(action->data(ADR_INDENT)==INDENT_MORE);
-	QTextBlockFormat blockFmt = cursor.blockFormat();
-	if (cursor.currentList())
+	QTextBlockFormat blockFmt = ACursor.blockFormat();
+	if (ACursor.currentList())
 	{
-		if (cursor.currentList()->format().style()==QTextListFormat::ListStyleUndefined)
-			blockFmt.setIndent(increase);
+		if (ACursor.currentList()->format().style()==QTextListFormat::ListStyleUndefined)
+			blockFmt.setIndent(AIncrease);
 	}
 	else
 	{
-		qreal indentWidth=FCurrentMessageEditWidget->textEdit()->document()->indentWidth();
-		qreal indent=blockFmt.textIndent();
-		if (increase)
+		qreal indentWidth = ACursor.document()->indentWidth();
+		qreal indent = blockFmt.textIndent();
+		if (AIncrease)
 			blockFmt.setTextIndent(indent+indentWidth);
 		else
 			if (indent>0)
 				blockFmt.setTextIndent(indent-indentWidth);
 	}
-	cursor.setBlockFormat(blockFmt);
+	ACursor.setBlockFormat(blockFmt);
+}
+
+void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
+{
+	QUrl        imageUrl;
+	QByteArray  imageData;
+	QSize       size;
+	QString     alt;
+	QTextCharFormat charFmtCurrent=ACursor.charFormat();
+
+	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(AEditWidget->messageWindow()->streamJid(), AEditWidget->messageWindow()->contactJid());
+
+	if (charFmtCurrent.isImageFormat())
+	{
+		QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
+		ACursor.select(QTextCursor::WordUnderCursor);
+		imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
+		QVariant imageResource = ACursor.document()->resource(QTextDocument::ImageResource, imageUrl);
+		if (imageResource.type()==QVariant::ByteArray)
+			imageData=imageResource.toByteArray();
+		else if (imageUrl.scheme()=="data")
+		{
+			QList<QString> parts=imageUrl.path().split(';');
+			if (parts.size()==2 && parts[0].startsWith("image/"))
+			{
+				parts = parts[1].split(',');
+				if (parts.size()==2 && parts[0]=="base64")
+					imageData = QByteArray::fromBase64(parts[1].toLatin1());
+			}
+		}
+		size.setWidth(imageFormat.width());
+		size.setHeight(imageFormat.height());
+		alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+	}
+
+	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, AEditWidget->instance()->window());
+
+	insertImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
+	if(!supportBoB)
+		insertImage->ui->pbBrowse->hide();
+	if(insertImage->exec() == QDialog::Accepted)
+	{
+		if(!insertImage->getUrl().isEmpty())
+		{
+			ACursor.beginEditBlock();
+			QTextImageFormat imageFormat;
+			QString          alt=insertImage->getAlternativeText();
+			if (!alt.isEmpty())
+				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
+			if (!insertImage->physResize())
+			{
+				if(insertImage->newHeight()!=insertImage->originalHeight())
+					imageFormat.setHeight(insertImage->newHeight());
+				if(insertImage->newWidth()!=insertImage->originalWidth())
+					imageFormat.setWidth(insertImage->newWidth());
+			}
+			if(insertImage->isRemote())
+			{
+				QUrl url=insertImage->getUrl();
+				imageFormat.setName(url.toEncoded());
+				ACursor.document()->addResource(QTextDocument::ImageResource, url, insertImage->getImageData());
+				ACursor.insertImage(imageFormat);
+			}
+			else
+				if(supportBoB)
+				{
+					QByteArray imageData=insertImage->getImageData();
+					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
+					QString uri=QString("cid:").append(contentId);
+					imageFormat.setName(uri);
+					imageFormat.setProperty(XhtmlIm::PMaxAge, insertImage->getMaxAge());
+					imageFormat.setProperty(XhtmlIm::PMimeType, insertImage->getFileType());
+					imageFormat.setProperty(XhtmlIm::PEmbed, insertImage->embed());
+					ACursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
+					ACursor.insertImage(imageFormat);
+				}
+			ACursor.endEditBlock();
+		}
+	}
+	insertImage->deleteLater();
+}
+
+void XhtmlIm::onResetFormat(bool AStatus)
+{
+	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
+}
+
+void XhtmlIm::onRemoveFormat()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		clearFormatOnWordOrSelection(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt(), true), editWidget->textEdit());
+}
+
+void XhtmlIm::onSelectFont()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		selectFont(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt());
+}
+
+void XhtmlIm::onSelectDecoration(bool ASelected)
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		selectDecoration(editWidget->textEdit(), getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), action->data(ADR_DECORATION_TYPE).toInt(), ASelected);
+}
+
+void XhtmlIm::onSelectCapitalization()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		setCapitalization(editWidget->textEdit(), getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), (QFont::Capitalization)action->data(ADR_CAPITALIZATION_TYPE).toInt());
+}
+
+void XhtmlIm::onInsertLink()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		insertLink(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), editWidget->instance());
+}
+
+void XhtmlIm::onInsertImage()
+{	
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		insertImage(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), editWidget);
+}
+
+void XhtmlIm::onSetToolTip()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		setToolTip(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), editWidget);
+}
+
+void XhtmlIm::onInsertSpecial()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		insertSpecial(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), action->data(ADR_SPECIAL_CHARACTER).toChar());
+}
+
+void XhtmlIm::onTextCode(bool AChecked)
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		setCode(editWidget->textEdit(), getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), AChecked);
+}
+
+void XhtmlIm::onColor()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		selectColor(action->data(ADR_COLOR_TYPE).toInt(), editWidget, action->data(ADR_CURSOR_POSITION).toInt());
+}
+
+void XhtmlIm::onIndentChange()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+	{
+		QTextCursor cursor = getCursor(editWidget->textEdit(), false, false);
+		bool increase = (action->data(ADR_INDENT)==INDENT_MORE);
+		changeIndent(cursor, increase);
+	}
 }
 
 void XhtmlIm::onTextAlign()
 {
-	Action *action = qobject_cast<Action *>(sender());
-	if (action)
-	{
-		Qt::AlignmentFlag align = Qt::AlignmentFlag(action->data(ADR_ALIGN_TYPE).toInt());
-		QTextCursor cursor = getCursor(false, false);
-		QTextBlockFormat format=cursor.blockFormat();
-		if (format.hasProperty(QTextFormat::BlockAlignment) && format.alignment()==align)
-			format.clearProperty(QTextFormat::BlockAlignment);
-		else
-			format.setAlignment(align);
-		cursor.setBlockFormat(format);
-	}
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		setAlignment(getCursor(editWidget->textEdit(), false, false), (Qt::AlignmentFlag)action->data(ADR_ALIGN_TYPE).toInt());
 }
 
 void XhtmlIm::onInsertList()
 {
-	Action *ac = qobject_cast<Action *>(sender());
-	if (ac)
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
 	{
-		QTextListFormat::Style style = (QTextListFormat::Style)ac->data(ADR_LIST_TYPE).toInt();// = QTextListFormat::ListStyleUndefined;
-//		FMenuList->setIcon(ac->icon());
-//		FMenuList->menuAction()->setData(ADR_LIST_TYPE, style);
-		QTextCursor cursor = getCursor();
+		QTextListFormat::Style style = (QTextListFormat::Style)action->data(ADR_LIST_TYPE).toInt();// = QTextListFormat::ListStyleUndefined;
+		QTextCursor cursor = getCursor(editWidget->textEdit());
 		if (style >=QTextListFormat::ListUpperRoman && style <=QTextListFormat::ListStyleUndefined)
 		{
 			cursor.beginEditBlock();
@@ -1601,35 +1815,53 @@ void XhtmlIm::onSetFormat()
 //	updateCurrentBlock(cursor);
 }
 
-QTextCursor XhtmlIm::getCursor(bool ASelectWholeDocument, bool ASelect, QTextEdit *AEditWidget)
+QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument, bool ASelect)
 {
-	QTextCursor cursor;
-	if (AEditWidget)
+	QTextCursor cursor = ATextEdit->textCursor();
+	int cursorPosition = cursor.atEnd()?-1:cursor.position();
+
+	if (cursorPosition != -1)
 	{
-		cursor = AEditWidget->textCursor();
-		FCurrentCursorPosition = cursor.atEnd()?-1:cursor.position();
-	}
-	else
-	{
-		cursor = FCurrentMessageEditWidget->textEdit()->textCursor();
-	}
-	if (FCurrentCursorPosition != -1)
-	{
-		if (FCurrentCursorPosition < cursor.selectionStart() || FCurrentCursorPosition > cursor.selectionEnd())
-			cursor.setPosition(FCurrentCursorPosition);
+		if (cursorPosition < cursor.selectionStart() || cursorPosition > cursor.selectionEnd())
+			cursor.setPosition(cursorPosition);
 		if (!cursor.hasSelection() && ASelect)
 			cursor.select(QTextCursor::WordUnderCursor);
 	}
 	else
 		if (ASelectWholeDocument)
 			cursor.select(QTextCursor::Document);
-
 	return cursor;
 }
 
-void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *AEditWidget)
+QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, int APosition, bool ASelectWholeDocument)
 {
-	qDebug() << "XhtmlIm::mergeFormatOnWordOrSelection(ACursor, AFormat," <<  AEditWidget << ")";
+	QTextCursor cursor = ATextEdit->textCursor();
+	if (APosition!=-1)
+		cursor.setPosition(APosition);
+//	APosition = cursor.atEnd()?-1:cursor.position();
+
+	if (APosition != -1)
+	{
+		if (APosition < cursor.selectionStart() || APosition > cursor.selectionEnd())
+			cursor.setPosition(APosition);
+		if (!cursor.hasSelection())
+			cursor.select(QTextCursor::WordUnderCursor);
+	}
+	else
+		if (ASelectWholeDocument)
+			cursor.select(QTextCursor::Document);
+	return cursor;
+}
+
+QTextCursor XhtmlIm::getCursor()
+{
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	return editWidget?getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()):QTextCursor();
+}
+
+void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit)
+{
 	if (ACursor.hasSelection())
 	{
 		ACursor.beginEditBlock();
@@ -1637,23 +1869,30 @@ void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharF
 		ACursor.endEditBlock();
 	}
 	else
-	{
-		if (!AEditWidget)
-			AEditWidget=FCurrentMessageEditWidget?FCurrentMessageEditWidget->textEdit():NULL;
-		if (AEditWidget)
-			AEditWidget->mergeCurrentCharFormat(AFormat);
-	}
+		if (ATextEdit)
+			ATextEdit->mergeCurrentCharFormat(AFormat);
 }
 
-
-void XhtmlIm::clearFormatOnWordOrSelection()
+void XhtmlIm::clearFormatOnWordOrSelection(QTextCursor ACursor, QTextEdit *ATextEdit)
 {
 	QTextCharFormat emptyCharFormat;
-	QTextCursor cursor = getCursor(true);
-	cursor.beginEditBlock();
-	cursor.setCharFormat(emptyCharFormat);
-	cursor.endEditBlock();
-	FCurrentMessageEditWidget->textEdit()->setCurrentCharFormat(emptyCharFormat);
+	ACursor.beginEditBlock();
+	ACursor.setCharFormat(emptyCharFormat);
+	ACursor.endEditBlock();
+	ATextEdit->setCurrentCharFormat(emptyCharFormat);
+}
+
+IMessageEditWidget *XhtmlIm::messageEditWidget(Action **AAction)
+{
+	*AAction = qobject_cast<Action *>(sender());
+	if (*AAction)
+		for (QObject *p = (*AAction)->parent(); p; p=p->parent())
+		{
+			IMessageEditWidget *messageEditWidget = qobject_cast<IMessageEditWidget *>(p);
+			if (messageEditWidget)
+				return messageEditWidget;
+		}
+	return NULL;
 }
 
 int XhtmlIm::checkBlockFormat(const QTextCursor &ACursor)

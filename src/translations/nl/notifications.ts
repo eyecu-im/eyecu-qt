@@ -54,12 +54,6 @@
    <translation>Geluiden en popups vensters uitzetten als de status &apos;Niet storen&apos; is</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="240"/>
-   <source>Use native popup notifications if available</source>
-   <translation>Gebruik natieve popup meldingen indien beschikbaar</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation>Speel geluid af wanneer je een bericht ontvangt in een actieve venster</translation>
   </message>
@@ -102,6 +96,10 @@
    <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
    <source>Highlight the corresponding window in the taskbar</source>
    <translation>Markeer de bijbehorende venster in de taakbalk</translation>
+  </message>
+  <message>
+   <source>Use native popup notifications</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>

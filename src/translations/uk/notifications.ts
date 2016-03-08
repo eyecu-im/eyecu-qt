@@ -54,12 +54,6 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="240"/>
-   <source>Use native popup notifications if available</source>
-   <translation>Використовувати системні спливаючі сповіщення, якщо доступні </translation>
-  </message>
-  <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation type="unfinished"/>
   </message>
@@ -101,6 +95,10 @@
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
    <source>Highlight the corresponding window in the taskbar</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Use native popup notifications</source>
    <translation type="unfinished"/>
   </message>
  </context>
