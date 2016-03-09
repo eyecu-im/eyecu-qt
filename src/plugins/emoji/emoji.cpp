@@ -315,7 +315,7 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 				QImageReader reader(&file);
 				if (!ASize.isNull())
 					reader.setScaledSize(ASize);
-				icon.addPixmap(QPixmap::fromImageReader(&reader));
+				icon.addPixmap(QPixmap::fromImage(reader.read()));
 				file.close();
 				FIconHash.insert(AEmojiCode, icon);
 			}
@@ -336,7 +336,7 @@ QIcon Emoji::getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, 
 			{
 				QImageReader reader(&file);
 				reader.setScaledSize(ASize);
-				QPixmap pixmap = QPixmap::fromImageReader(&reader);
+				QPixmap pixmap = QPixmap::fromImage(reader.read());
 				if (!pixmap.isNull())
 					return QIcon(pixmap);
 			}
@@ -524,7 +524,7 @@ void Emoji::findEmojiSets()
 								{
 									QImageReader reader(&file);
 									reader.setScaledSize(QSize(16, 16));
-									QPixmap pixmap = QPixmap::fromImageReader(&reader);
+									QPixmap pixmap = QPixmap::fromImage(reader.read());
 									if (!pixmap.isNull())
 										FCategoryIcons.insert(ifc.key(), QIcon(pixmap));
 									file.close();
