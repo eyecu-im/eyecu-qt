@@ -1838,7 +1838,6 @@ QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, int APosition, bool ASelect
 	QTextCursor cursor = ATextEdit->textCursor();
 	if (APosition!=-1)
 		cursor.setPosition(APosition);
-//	APosition = cursor.atEnd()?-1:cursor.position();
 
 	if (APosition != -1)
 	{
@@ -1876,8 +1875,10 @@ void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharF
 void XhtmlIm::clearFormatOnWordOrSelection(QTextCursor ACursor, QTextEdit *ATextEdit)
 {
 	QTextCharFormat emptyCharFormat;
+	QTextBlockFormat emptyBlockFormat;
 	ACursor.beginEditBlock();
 	ACursor.setCharFormat(emptyCharFormat);
+	ACursor.setBlockFormat(emptyBlockFormat);
 	ACursor.endEditBlock();
 	ATextEdit->setCurrentCharFormat(emptyCharFormat);
 }
