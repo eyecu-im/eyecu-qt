@@ -1,7 +1,6 @@
 #include <QMimeData>
 #include <QNetworkReply>
 #include <QImageWriter>
-#include <QBuffer>
 #include <QMovie>
 #include <QFileDialog>
 #include <QClipboard>
@@ -20,7 +19,6 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
     QDialog(parent),    
     ui(new Ui::InsertImage),        
     FUrlCurrent(AImageUrl),
-    FOriginalImageData(AImageData),
     FNetworkAccessManager(ANetworkAccessManager),
 	FXhtmlIm(AXhtmlIm),
     FSchemeMasks(QStringList() << "http" << "https" << "ftp" << "file"),
@@ -61,6 +59,7 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
 
     Shortcuts::bindObjectShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG_BROWSE, ui->pbBrowse);
 
+	FOriginalImageData.setData(AImageData);
     FWriterFormats = QImageWriter::supportedImageFormats();
     FReaderFormats = QImageReader::supportedImageFormats();
     ui->cmbType->blockSignals(true);
@@ -110,16 +109,17 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
                 if (format.isEmpty())
 					format = Options::node(OPV_XHTML_DEFAULTIMAGEFORMAT).value().toByteArray();
                 QImage image = data->imageData().value<QImage>();
-                QBuffer buffer(&FOriginalImageData);
-                image.save(&buffer, format.data());
+				FOriginalImageData.open(QIODevice::WriteOnly);
+				image.save(&FOriginalImageData, format.data());
+				FOriginalImageData.close();
             }
         }
     }
 
-    FImageData = FOriginalImageData;
+	FImageData = FOriginalImageData.data();
 
-	if (!FOriginalImageData.isEmpty() && FBitsOfBinary && (!FUrlCurrent.isValid() || FUrlCurrent.scheme()=="data"))
-        calculateUrl(FOriginalImageData);
+	if (!FOriginalImageData.data().isEmpty() && FBitsOfBinary && (!FUrlCurrent.isValid() || FUrlCurrent.scheme()=="data"))
+		calculateUrl(FOriginalImageData.data());
 	else if (FUrlCurrent.isValid())
 		ui->ledUrl->setText(FUrlCurrent.toString());
 
@@ -128,7 +128,7 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
     if (!AAlternativeText.isEmpty())
         ui->ledAlt->setText(AAlternativeText);    
 
-    if (!FOriginalImageData.isEmpty())
+	if (!FOriginalImageData.data().isEmpty())
         readImageData(FUrlCurrent);
     else
         if (ui->lblImage->pixmap())
@@ -390,7 +390,7 @@ void InsertImage::disableBOB(bool ADisable)
 
 void InsertImage::readImageData(const QUrl &AUrl)
 {
-    if (FOriginalImageData.isEmpty())
+	if (FOriginalImageData.data().isEmpty())
     {
         ui->lblInfo->setText(tr("Error: image data is empty!"));
         disableCommon();
@@ -398,8 +398,8 @@ void InsertImage::readImageData(const QUrl &AUrl)
     }
     else
     {
-		QBuffer buffer(&FOriginalImageData);
-		QImageReader reader(&buffer);
+		FOriginalImageData.open(QIODevice::ReadOnly);
+		QImageReader reader(&FOriginalImageData);
         FOriginalFormat=reader.format();
         QSize size=reader.size();
         FMimeType=(FOriginalFormat.isEmpty())?QString():QString("image/").append(QString(FOriginalFormat));
@@ -437,29 +437,30 @@ void InsertImage::readImageData(const QUrl &AUrl)
 
             if (reader.supportsAnimation())
             {
-				QMovie *movie = new QMovie(&buffer, FOriginalFormat, this);
-                if (movie->isValid())
-                {
-                    movie->setScaledSize(size);
-                    ui->lblImage->setMovie(movie);
-                    movie->start();
-                }
-                else
-                {
-                    ui->lblInfo->setText(tr("Error: cannot create movie!"));
-                    disableCommon();
-                    disableBOB();                    
-                }                
+				QMovie *movie = new QMovie(&FOriginalImageData, FOriginalFormat, this);
+				if (movie->isValid())
+				{
+					movie->setScaledSize(size);
+					ui->lblImage->setMovie(movie);
+					movie->start();
+				}
+				else
+				{
+					ui->lblInfo->setText(tr("Error: cannot create movie!"));
+					disableCommon();
+					disableBOB();
+				}
             }
             else    // No animation supported - let's try without it!
             {
                 reader.setScaledSize(size);
                 ui->lblImage->setPixmap(QPixmap::fromImage(reader.read()));
+				FOriginalImageData.close();
             }
 
             FUrlCurrent=AUrl;
             if (!isRemote())
-                calculateUrl(FOriginalImageData);
+				calculateUrl(FOriginalImageData.data());
             disableBOB(isRemote());
             enableInsert();
         }
@@ -492,7 +493,7 @@ void InsertImage::recalculateImageData()
 	QByteArray format;
     QSize size = ui->chbPhysResize->isChecked()?QSize(ui->spbWidth->value(), ui->spbHeight->value()):FSizeOld;
     if (size == FSizeOld && (ui->cmbType->currentIndex()==0 || FWriterFormats.at(ui->cmbType->currentIndex()-1)==FOriginalFormat))
-        FImageData = FOriginalImageData;
+		FImageData = FOriginalImageData.data();
     else
     {
 		FImageData.clear();
@@ -500,7 +501,7 @@ void InsertImage::recalculateImageData()
 		format = data.isNull()?FOriginalFormat:data.toByteArray();
 		LOG_INFO(QString("Image format: %1").arg(format.data()));
 		QBuffer buffer(&FImageData);
-        QImage image = QImage::fromData(FOriginalImageData);
+		QImage image = QImage::fromData(FOriginalImageData.data());
         if (!image.isNull())
 		{
 			if (image.scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation).save(&buffer, format.data()))
@@ -536,11 +537,19 @@ void InsertImage::onLoadFinished()
     QNetworkReply *reply=qobject_cast<QNetworkReply *>(sender());
     if (reply->error()==QNetworkReply::NoError)
     {
-        FOriginalImageData = reply->readAll();
+		if (ui->lblImage->movie())
+		{
+			ui->lblImage->movie()->stop();
+			ui->lblImage->movie()->deleteLater();
+			ui->lblImage->setMovie(NULL);
+		}
+		if (FOriginalImageData.isOpen())
+			FOriginalImageData.close();
+		FOriginalImageData.setData(reply->readAll());
         readImageData(reply->url());
         ui->pbInsert->setEnabled(true);
         ui->ledAlt->setFocus();
-        FImageData = FOriginalImageData;
+		FImageData = FOriginalImageData.data();
     }
     else
     {

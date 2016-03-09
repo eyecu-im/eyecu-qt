@@ -12,6 +12,8 @@ SetToolTip::SetToolTip(int AType, const QString &ATitleText, QWidget *parent) :
 	setWindowIcon(IconStorage::staticStorage(RSR_STORAGE_HTML)->getIcon(XHI_SET_TOOLTIP));
     ui->setupUi(this);
     ui->ledToolTipText->setText(ATitleText);
+	ui->ledToolTipText->selectAll();
+	ui->ledToolTipText->setFocus();
     ui->cmbType->setCurrentIndex(AType);
 }
 

@@ -3,6 +3,7 @@
 
 #include <QUrl>
 #include <QNetworkAccessManager>
+#include <QBuffer>
 #include <interfaces/ibitsofbinary.h>
 
 #include "ui_insertimage.h"
@@ -79,9 +80,10 @@ private:
     QByteArray FFormatCurrent;
     QUrl       FUrlCurrent;
 
-    QByteArray FOriginalImageData;
-    QByteArray FImageData;
-    QByteArray FOriginalFormat;
+//    QByteArray FOriginalImageData;
+	QBuffer		FOriginalImageData;
+	QByteArray	FImageData;
+	QByteArray	FOriginalFormat;
 
 	QNetworkAccessManager	*FNetworkAccessManager;
 	XhtmlIm					*FXhtmlIm;

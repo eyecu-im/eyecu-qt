@@ -92,6 +92,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>ledToolTipText</tabstop>
+  <tabstop>cmbType</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
