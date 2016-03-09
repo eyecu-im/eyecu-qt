@@ -1,5 +1,5 @@
-#ifndef NEWLINK_H
-#define NEWLINK_H
+#ifndef ADDLINK_H
+#define ADDLINK_H
 
 #include <QUrl>
 
@@ -37,10 +37,9 @@ private:
     Ui::AddLink *ui;
 
 protected slots:
-    void onAdd();
-    void onRemove();
+	void onButtonClicked(QAbstractButton *AButton);
     void onTextChanged();
     void onSchemeChanged(int index);
 };
 
-#endif // NEWLINK_H
+#endif // ADDLINK_H

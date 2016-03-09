@@ -50,6 +50,50 @@
    <property name="verticalSpacing">
     <number>4</number>
    </property>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="ledPath">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QTextEdit" name="tedDesc">
+     <property name="minimumSize">
+      <size>
+       <width>235</width>
+       <height>35</height>
+      </size>
+     </property>
+     <property name="acceptRichText">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Description</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedDesc</cstring>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QComboBox" name="cmbScheme">
      <property name="toolTip">
@@ -109,107 +153,12 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="ledPath">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Description</string>
-     </property>
-     <property name="buddy">
-      <cstring>tedDesc</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QTextEdit" name="tedDesc">
-     <property name="minimumSize">
-      <size>
-       <width>235</width>
-       <height>35</height>
-      </size>
-     </property>
-     <property name="acceptRichText">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbtRemove">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>60</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Remove</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pbtAdd">
-       <property name="maximumSize">
-        <size>
-         <width>60</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="baseSize">
-        <size>
-         <width>60</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Add</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::No|QDialogButtonBox::Yes</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -264,42 +213,25 @@
    </hints>
   </connection>
   <connection>
-   <sender>pbtAdd</sender>
-   <signal>clicked()</signal>
+   <sender>buttonBox</sender>
+   <signal>clicked(QAbstractButton*)</signal>
    <receiver>AddLink</receiver>
-   <slot>onAdd()</slot>
+   <slot>onButtonClicked(QAbstractButton*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>343</x>
-     <y>86</y>
+     <x>189</x>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>189</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbtRemove</sender>
-   <signal>clicked()</signal>
-   <receiver>AddLink</receiver>
-   <slot>onRemove()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>277</x>
-     <y>86</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>189</x>
-     <y>51</y>
+     <y>65</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>onSchemeChanged(int)</slot>
-  <slot>onAdd()</slot>
-  <slot>onRemove()</slot>
   <slot>onTextChanged()</slot>
+  <slot>onButtonClicked(QAbstractButton*)</slot>
  </slots>
 </ui>
