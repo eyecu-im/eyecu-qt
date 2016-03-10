@@ -118,7 +118,7 @@ bool Map::initObjects()
 	Shortcuts::declareShortcut(SCT_MAP_MYLOCATION, tr("My location"), tr("Ctrl+M", "My location"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MAP_SHOW, tr("Toggle map"), tr("Ctrl+F10", "Toggle map"), Shortcuts::ApplicationShortcut);
 	Shortcuts::declareShortcut(SCT_MAP_REFRESH, tr("Refresh"), tr("F5", "Refresh map"), Shortcuts::WindowShortcut);
-	Shortcuts::declareShortcut(SCT_MAP_OPTIONS, tr("Show options dialog"), tr("Ctrl+O", "Show options dialog"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MAP_OPTIONS, tr("Show options dialog"), tr("", "Show options dialog"), Shortcuts::WindowShortcut);
 
 	Shortcuts::declareGroup(SCTG_MAP_MOVE, tr("Movement"), SGO_MAP_MOVE);
 	Shortcuts::declareShortcut(SCT_MAP_MOVE_LEFT, tr("Left"), tr("Ctrl+Left", "Map move Left"), Shortcuts::WindowShortcut);
