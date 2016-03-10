@@ -42,7 +42,8 @@ Map::Map():
 	FMapsWidget(NULL),
 	FMouseGrabber(NULL),
 	FMyLocation(NULL),
-	FFollowMyLocation(false)
+	FFollowMyLocation(false),
+	FOptionsOpened(false)
 {}
 
 Map::~Map()
@@ -234,6 +235,7 @@ bool Map::initSettings()
 //-------
 void Map::onOptionsOpened()
 {
+	FOptionsOpened = true;
 	FMapForm->selectMapSource(Options::node(OPV_MAP_SOURCE).value().toString());
 
 	onOptionsChanged(Options::node(OPV_MAP_PROXY));
@@ -261,7 +263,6 @@ void Map::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_MAP_OSD_SHADOW_COLOR));
 
 	onOptionsChanged(Options::node(OPV_MAP_ATTACH_TO_ROSTER));
-	onOptionsChanged(Options::node(OPV_MAP_SHOWING));
 
 	onOptionsChanged(Options::node(OPV_MAP_SOURCE));
 	onOptionsChanged(Options::node(OPV_MAP_MODE));
@@ -272,10 +273,18 @@ void Map::onOptionsOpened()
 
 	QPointF coords=Options::node(OPV_MAP_COORDS).value().toPointF();
 	FMapForm->mapScene()->setMapCenter(coords.y(), coords.x());
+	if (Options::node(OPV_MAP_SHOWING).value().toBool());
+	{
+		FMenuToolbar->menuAction()->blockSignals(true);
+		FMenuToolbar->menuAction()->setChecked(true);
+		FMenuToolbar->menuAction()->blockSignals(false);
+		showMap(true, false);
+	}
 }
 
 void Map::onOptionsClosed()
 {
+	FOptionsOpened = false;
 	FMapForm->closeOptions();
 }
 
@@ -851,6 +860,8 @@ void Map::showMap(bool AShow, bool AActivate)
 			FMainWindow->mainCentralWidget()->appendCentralPage(FMapForm);
 			if (AActivate)
 				FMapForm->showWindow();
+			else
+				FMainWindow->mainCentralWidget()->setCurrentCentralPage(FMapForm);
 		}
 		else
 			FMapForm->showWindow();
@@ -916,8 +927,9 @@ void Map::onCentralWidgetVisibleChanged(bool AVisible)
 
 void Map::onCurrentCentralPageChanged(IMainCentralPage *APage)
 {
-	if (Options::node(OPV_MAP_ATTACH_TO_ROSTER).value().toBool() && APage != FMapForm)
-		Options::node(OPV_MAP_SHOWING).setValue(false);
+	if (FOptionsOpened)
+		if (Options::node(OPV_MAP_ATTACH_TO_ROSTER).value().toBool() && APage != FMapForm)
+			Options::node(OPV_MAP_SHOWING).setValue(false);
 }
 
 /***************************************************************/
