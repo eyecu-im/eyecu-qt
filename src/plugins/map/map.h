@@ -164,7 +164,6 @@ private:
 	QStackedWidget		*FMapsWidget;
 	IMapMouseGrabber	*FMouseGrabber;
 	Action				*FMyLocation;
-	bool				FFollowMyLocation;
 	bool				FOptionsOpened;
 	QList<IOptionsDialogNode> FOptionsDialogNodes;
 

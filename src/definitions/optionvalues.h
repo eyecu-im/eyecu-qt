@@ -385,6 +385,7 @@
 #define OPV_MAP_SOURCE                                  "map.source"
 #define OPV_MAP_MODE                                    "map.mode"
 #define OPV_MAP_COORDS                                  "map.coords"
+#define OPV_MAP_FOLLOWMYLOCATION                        "map.follow-my-location"
 #define OPV_MAP_PROXY                                   "map.proxy"
 #define OPV_MAP_LOADING                                 "map.loading"
 #define OPV_MAP_GEOMETRY                                "map.geometry"

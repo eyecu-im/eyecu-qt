@@ -42,7 +42,6 @@ Map::Map():
 	FMapsWidget(NULL),
 	FMouseGrabber(NULL),
 	FMyLocation(NULL),
-	FFollowMyLocation(false),
 	FOptionsOpened(false)
 {}
 
@@ -165,8 +164,8 @@ bool Map::initObjects()
 	fillMenu();
 	fillSources();
 
-	if (FPositioning)
-		showMyLocation();
+//	if (FPositioning)
+//		showMyLocation();
 
 	connect(FMainWindow->instance(), SIGNAL(centralWidgetVisibleChanged(bool)), SLOT(onCentralWidgetVisibleChanged(bool)));
 	connect(FMainWindow->mainCentralWidget()->instance(), SIGNAL(currentCentralPageChanged(IMainCentralPage*)), SLOT(onCurrentCentralPageChanged(IMainCentralPage*)));
@@ -186,6 +185,7 @@ bool Map::initSettings()
 	Options::setDefaultValue(OPV_MAP_SOURCE, QString());
 	Options::setDefaultValue(OPV_MAP_MODE, TYPE_MAP);
 	Options::setDefaultValue(OPV_MAP_COORDS, QPointF(0.0, 51.47772));
+	Options::setDefaultValue(OPV_MAP_FOLLOWMYLOCATION, true);
 	Options::setDefaultValue(OPV_MAP_ZOOM_WHEEL, RelativeToMousePointerPosition);
 	Options::setDefaultValue(OPV_MAP_ZOOM_SLIDERTRACK, false);
 	Options::setDefaultValue(OPV_MAP_OSD_BOX_SHAPE, QFrame::Box);
@@ -267,13 +267,14 @@ void Map::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_MAP_SOURCE));
 	onOptionsChanged(Options::node(OPV_MAP_MODE));
 	onOptionsChanged(Options::node(OPV_MAP_ZOOM));
-	onOptionsChanged(Options::node(OPV_MAP_COORDS));
+//	onOptionsChanged(Options::node(OPV_MAP_COORDS));
+	onOptionsChanged(Options::node(OPV_MAP_FOLLOWMYLOCATION));
 	onOptionsChanged(Options::node(OPV_MAP_ZOOM_WHEEL));
 	onOptionsChanged(Options::node(OPV_MAP_ZOOM_SLIDERTRACK));
 
 	QPointF coords=Options::node(OPV_MAP_COORDS).value().toPointF();
 	FMapForm->mapScene()->setMapCenter(coords.y(), coords.x());
-	if (Options::node(OPV_MAP_SHOWING).value().toBool());
+	if (Options::node(OPV_MAP_SHOWING).value().toBool())
 	{
 		FMenuToolbar->menuAction()->blockSignals(true);
 		FMenuToolbar->menuAction()->setChecked(true);
@@ -297,11 +298,15 @@ void Map::onShutdownStarted()
 void Map::fillMenu()
 {
 	Action *action;
-	FMyLocation = addMenuAction(tr("My location"), RSR_STORAGE_MAPICONS, MPI_MYLOCATION, 1);
-	FMyLocation->setShortcutId(SCT_MAP_MYLOCATION);
-	FMyLocation->setDisabled(FFollowMyLocation);
-	FMapForm->showMapCenter(!FFollowMyLocation);
-	connect(FMyLocation, SIGNAL(triggered(bool)), SLOT(showMyLocation()));
+	bool followMyLocation = Options::node(OPV_MAP_FOLLOWMYLOCATION).value().toBool();
+	if (FPositioning)
+	{
+		FMyLocation = addMenuAction(tr("My location"), RSR_STORAGE_MAPICONS, MPI_MYLOCATION, 1);
+		FMyLocation->setShortcutId(SCT_MAP_MYLOCATION);
+		FMyLocation->setDisabled(followMyLocation);
+		FMapForm->showMapCenter(!followMyLocation);
+		connect(FMyLocation, SIGNAL(triggered(bool)), SLOT(showMyLocation()));
+	}
 
 	action = addMenuAction(tr("New center"), RSR_STORAGE_MAPICONS, MPI_NEWCENTER, 1);
 	action->setShortcutId(SCT_MAP_NEWCENTER);
@@ -327,6 +332,31 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path()==OPV_MAP_COORDS) // Coordinates
 		FMapForm->setMapCenter(ANode.value().toPointF());
+	else if (ANode.path()==OPV_MAP_FOLLOWMYLOCATION)
+	{
+		if (FPositioning)
+		{
+			if (ANode.value().toBool())
+			{
+				GeolocElement position = FPositioning->currentPosition();
+				if (position.isValid())
+				{
+					FMapForm->mapScene()->setMapCenter(position.lat(), position.lon());
+					FMapForm->showMapCenter(false);
+				}
+
+				FMyLocation->setDisabled(true);
+				if (FFollowedObject)
+					FFollowedObject = NULL;
+			}
+			else
+			{
+				FMyLocation->setEnabled(true);
+				FMapForm->showMapCenter(true);
+				GeoMap::stopFollowing();
+			}
+		}
+	}
 	else if (ANode.path()==OPV_MAP_SOURCE)
 		FMapForm->setMapSource(getMapSource(findMapSource(ANode.value().toString())));
 	else if (ANode.path()==OPV_MAP_MODE)
@@ -593,11 +623,7 @@ bool Map::showObject(int AType, const QString &AId, bool AFollow, bool AShowMap)
 	if (GeoMap::showObject(AType, AId, AFollow))
 	{
 		if (AFollow)
-		{
-			FMyLocation->setEnabled(true);
-			FFollowMyLocation=false;
-			FMapForm->showMapCenter(true);
-		}
+			Options::node(OPV_MAP_FOLLOWMYLOCATION).setValue(false);
 		if (AShowMap)
 		{
 			showMap();
@@ -610,10 +636,7 @@ bool Map::showObject(int AType, const QString &AId, bool AFollow, bool AShowMap)
 
 void Map::stopFollowing()
 {
-	FFollowMyLocation = false;
-	FMyLocation->setEnabled(true);
-	FMapForm->showMapCenter(true);
-	GeoMap::stopFollowing();
+	Options::node(OPV_MAP_FOLLOWMYLOCATION).setValue(false);
 }
 
 QIcon Map::getIcon(const QString name) const
@@ -884,7 +907,7 @@ void Map::onNewPositionAvailable(const GeolocElement &APosition)
 	if (APosition.isValid())
 	{
 		FMapForm->setOwnLocation(APosition.propertyAsString(GeolocElement::Lat), APosition.propertyAsString(GeolocElement::Lon), APosition.reliability());
-		if (FFollowMyLocation)
+		if (Options::node(OPV_MAP_FOLLOWMYLOCATION).value().toBool())
 		{
 			FMapForm->mapScene()->setMapCenter(APosition.lat(), APosition.lon());
 			FMapForm->showMapCenter(false);
@@ -904,19 +927,8 @@ void Map::showOptions()
 
 void Map::showMyLocation()
 {
-	FFollowMyLocation = true;
-	if (FPositioning)
-	{
-		GeolocElement position = FPositioning->currentPosition();
-		if (position.isValid())
-		{
-			FMapForm->mapScene()->setMapCenter(position.lat(), position.lon());
-			FMapForm->showMapCenter(false);
-		}
-	}
-	FMyLocation->setDisabled(true);
-	if (FFollowedObject)
-		FFollowedObject = NULL;
+
+	Options::node(OPV_MAP_FOLLOWMYLOCATION).setValue(true);
 }
 
 void Map::onCentralWidgetVisibleChanged(bool AVisible)
