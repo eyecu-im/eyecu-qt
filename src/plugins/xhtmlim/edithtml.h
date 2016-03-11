@@ -96,7 +96,6 @@ protected:
     static void selectTextFragment(QTextCursor &ACursor);
 
 protected slots:
-    void onResetFormat(bool AStatus);
     void onRemoveFormat();
     void onInsertImage();
     void onSetToolTip();
@@ -117,8 +116,6 @@ protected slots:
     void onCursorPositionChanged();
     void onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat);
 	void onSpecialCharacterInserted(QChar ASpecialCharacter);
-
-    void onMessageSent();
 
 protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);

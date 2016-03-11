@@ -70,6 +70,12 @@ public:
 	static int checkBlockFormat(const QTextCursor &ACursor);
 	static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
 
+	QTextCursor getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument=false, bool ASelect=true);
+	QTextCursor getCursor(QTextEdit *ATextEdit, int APosition, bool ASelectWholeDocument=false);
+	QTextCursor getCursor();
+	void mergeFormatOnSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit=NULL);
+	void clearFormatOnSelection(QTextCursor ACursor, QTextEdit *ATextEdit);
+
     //IPlugin
     QObject *instance() { return this; }
     QUuid pluginUuid() const { return XHTMLIM_UUID; }
@@ -101,11 +107,6 @@ protected:
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
 
-	QTextCursor getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument=false, bool ASelect=true);
-	QTextCursor getCursor(QTextEdit *ATextEdit, int APosition, bool ASelectWholeDocument=false);
-	QTextCursor getCursor();
-	void mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit=NULL);
-	void clearFormatOnWordOrSelection(QTextCursor ACursor, QTextEdit *ATextEdit);
 	IMessageEditWidget *messageEditWidget(Action **AAction);
 
 	void selectFont(QTextEdit *AEditWidget, int APosition=-1);
@@ -119,6 +120,7 @@ protected:
 	void setCapitalization(QTextEdit *ATextEdit, QTextCursor ACursor, QFont::Capitalization ACapitalization);
 	void setAlignment(QTextCursor ACursor, Qt::Alignment AAlignment);
 	void changeIndent(QTextCursor ACursor, bool AIncrease);
+	void setFormat(QTextCursor ACursor, int AFormatType);
 
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);
@@ -135,6 +137,7 @@ protected slots:
 	void onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AMenu);
 
 	void onShortcutActivated(const QString &AId, QWidget *AWidget);
+	void onMessageSent();
 
 	void onResetFormat(bool AStatus);
 	void onRemoveFormat();

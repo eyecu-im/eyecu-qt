@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QPainter>
 #include <QImageReader>
 #include <QImageWriter>
@@ -60,9 +59,6 @@ EditHtml::EditHtml(IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset,
 	connect(FTextEdit, SIGNAL(textChanged()), SLOT(onTextChanged()));
 	connect(FTextEdit, SIGNAL(cursorPositionChanged()), SLOT(onCursorPositionChanged()));
 	connect(FXhtmlIm, SIGNAL(specialCharacterInserted(QChar)), SLOT(onSpecialCharacterInserted(QChar)));
-
-	if (AEnableFormatAutoReset)
-		connect(AEditWidget->instance(), SIGNAL(messageSent()), SLOT(onMessageSent()));
 
 	onCurrentCharFormatChanged(FTextEdit->currentCharFormat());
 	updateCurrentBlock(FTextEdit->textCursor());
@@ -248,6 +244,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 //	FActionRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE);
 	FActionRemoveFormat->setPriority(QAction::LowPriority);
 	connect(FActionRemoveFormat, SIGNAL(triggered()), this, SLOT(onRemoveFormat()));
+//	connect(FActionRemoveFormat, SIGNAL(triggered()), FXhtmlIm, SLOT(onRemoveFormat()));
 	FActionRemoveFormat->setCheckable(false);
 	FToolBarChanger->insertAction(FActionRemoveFormat, AG_XHTMLIM_SPECIAL);
 	//------------------------
@@ -259,7 +256,7 @@ void EditHtml::setupFontActions(bool AEnableReset)
 		FActionAutoRemoveFormat->setText(tr("Reset formatting on message send"));
 //		FActionAutoRemoveFormat->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET);
 		FActionAutoRemoveFormat->setPriority(QAction::LowPriority);
-		connect(FActionAutoRemoveFormat, SIGNAL(toggled(bool)), SLOT(onResetFormat(bool)));
+		connect(FActionAutoRemoveFormat, SIGNAL(toggled(bool)), FXhtmlIm, SLOT(onResetFormat(bool)));
 		FActionAutoRemoveFormat->setCheckable(true);
 		FActionAutoRemoveFormat->setChecked(Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
 		FToolBarChanger->insertAction(FActionAutoRemoveFormat, AG_XHTMLIM_SPECIAL);
@@ -555,12 +552,7 @@ void EditHtml::setupTextActions()
 	FToolBarChanger->insertAction(FMenuFormat->menuAction(), AG_XHTMLIM_PARAGRAPH);
 }
 
-//----slots-----
-void EditHtml::onMessageSent()
-{
-	if (Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool())
-		clearFormatOnWordOrSelection(true);
-}
+// ---- SLOTS -----
 
 void EditHtml::onOptionsChanged(const OptionsNode &ANode)
 {
@@ -576,10 +568,10 @@ void EditHtml::onColorClicked(bool ABackground)
 		selectForegroundColor();
 }
 
-void EditHtml::onResetFormat(bool AStatus)
-{
-	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
-}
+//void EditHtml::onResetFormat(bool AStatus)
+//{
+//	Options::node(OPV_XHTML_FORMATAUTORESET).setValue(AStatus);
+//}
 
 void EditHtml::onInsertImage()
 {
@@ -1016,11 +1008,11 @@ void EditHtml::selectTextFragment(QTextCursor &ACursor)
 
 void EditHtml::onSetFormat()
 {
-	Action *ac = qobject_cast<Action *>(sender());
-	if (ac!=FMenuFormat->menuAction())
-		FActionLastFormat=ac;
-	int formatType = ac->data(ADR_FORMATTING_TYPE).toInt();
-	QTextCursor cursor = FTextEdit->textCursor();
+	Action *action = qobject_cast<Action *>(sender());
+	if (action!=FMenuFormat->menuAction())
+		FActionLastFormat=action;
+	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
+	QTextCursor cursor = FXhtmlIm->getCursor(FTextEdit, true, false);
 	int currentFormatType=XhtmlIm::checkBlockFormat(cursor);
 
 	cursor.beginEditBlock();
@@ -1247,10 +1239,7 @@ void EditHtml::onTextAlign()
 
 void EditHtml::onRemoveFormat()
 {
-	clearFormatOnWordOrSelection();
-	updateCurrentBlock(FTextEdit->textCursor());
-	QTextCharFormat currFmt=FTextEdit->currentCharFormat();
-	onCurrentCharFormatChanged(currFmt);
+	FXhtmlIm->clearFormatOnSelection(FXhtmlIm->getCursor(FTextEdit, true, true), FTextEdit);
 }
 
 void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)

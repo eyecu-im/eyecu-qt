@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QColorDialog>
@@ -169,6 +168,13 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, tr("Toggle reset formatting on message send"), tr("Alt+A", "Toggle reset formatting on message send"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, tr("Increase indent"), tr("", "Incerease indent"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, tr("Decrease indent"), tr("Shift+Tab", "Decerease indent"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, tr("Heading 1"), tr("Ctrl+1", "Heading 1"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, tr("Heading 2"), tr("Ctrl+2", "Heading 2"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, tr("Heading 3"), tr("Ctrl+3", "Heading 3"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, tr("Heading 4"), tr("Ctrl+4", "Heading 4"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, tr("Heading 5"), tr("Ctrl+5", "Heading 5"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, tr("Heading 6"), tr("Ctrl+6", "Heading 6"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, tr("Preformatted text"), tr("Ctrl+0", "Preformatted text"), Shortcuts::WindowShortcut);
 
 	Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG, tr("\"Insert image\" dialog"), SGO_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGEDIALOG_BROWSE, tr("Browse"), tr("Ctrl+B", "Browse"), Shortcuts::WindowShortcut);
@@ -328,6 +334,14 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, AChatWindow->editWidget()->instance());
 
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, AChatWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, AChatWindow->editWidget()->instance());
+
 		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
 	else
@@ -361,6 +375,14 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, AChatWindow->editWidget()->instance());
 
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, AChatWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, AChatWindow->editWidget()->instance());
+
 		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
 	}
 	QWidget *xhtmlEdit = AChatWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
@@ -368,6 +390,7 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 	{
 		if (!xhtmlEdit)
 			addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
+		connect(AChatWindow->editWidget()->instance(), SIGNAL(messageSent()), SLOT(onMessageSent()));
 	}
 	else
 	{
@@ -414,6 +437,13 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, ANormalWindow->editWidget()->instance());
 
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, ANormalWindow->editWidget()->instance());
+		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, ANormalWindow->editWidget()->instance());
 
 		connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
 	}
@@ -449,13 +479,21 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, ANormalWindow->editWidget()->instance());
 
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, ANormalWindow->editWidget()->instance());
+		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, ANormalWindow->editWidget()->instance());
+
 		disconnect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), this, SLOT(onShortcutActivated(QString,QWidget*)));
 	}
 	QWidget *xhtmlEdit = ANormalWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
 	if(ARichTextEditor && supported)
 	{
 		if (!xhtmlEdit)
-			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);		
+			addRichTextEditToolbar(ANormalWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, ANormalWindow->editWidget(), false);
 	}
 	else
 	{
@@ -1202,7 +1240,7 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET)
 			onResetFormat(!Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool());
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE)
-			clearFormatOnWordOrSelection(getCursor(messageEditWidget->textEdit(), true), messageEditWidget->textEdit());
+			clearFormatOnSelection(getCursor(messageEditWidget->textEdit(), true), messageEditWidget->textEdit());
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK)
 			insertLink(getCursor(messageEditWidget->textEdit()), messageEditWidget->instance());
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE)
@@ -1257,6 +1295,29 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignCenter);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY)
 			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignJustify);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING1);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING2);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING3);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING4);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING5);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_HEADING6);
+		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED)
+			setFormat(getCursor(messageEditWidget->textEdit()), FMT_PREFORMAT);
+	}
+}
+
+void XhtmlIm::onMessageSent()
+{
+	if (Options::node(OPV_XHTML_FORMATAUTORESET).value().toBool())
+	{
+		IMessageEditWidget *editWidget = qobject_cast<IMessageEditWidget *>(sender());
+		clearFormatOnSelection(getCursor(editWidget->textEdit(), true, true), editWidget->textEdit());
 	}
 }
 
@@ -1269,7 +1330,7 @@ void XhtmlIm::selectFont(QTextEdit *AEditWidget, int APosition)
 	{
 		QTextCharFormat charFormat;
 		charFormat.setFont(font);
-		mergeFormatOnWordOrSelection(cursor, charFormat, AEditWidget);
+		mergeFormatOnSelection(cursor, charFormat, AEditWidget);
 	}
 }
 
@@ -1285,7 +1346,7 @@ void XhtmlIm::selectColor(int AType, IMessageEditWidget *AEditWidget, int APosit
 		newCharFormat.setForeground(color);
 	else
 		newCharFormat.setBackground(color);
-	mergeFormatOnWordOrSelection(cursor, newCharFormat, AEditWidget->textEdit());
+	mergeFormatOnSelection(cursor, newCharFormat, AEditWidget->textEdit());
 }
 
 void XhtmlIm::selectDecoration(QTextEdit *ATextEdit, QTextCursor ACursor, int ADecorationType, bool ASelected)
@@ -1309,7 +1370,7 @@ void XhtmlIm::selectDecoration(QTextEdit *ATextEdit, QTextCursor ACursor, int AD
 			charFormat.setFontStrikeOut(ASelected);
 			break;
 	}
-	mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
+	mergeFormatOnSelection(ACursor, charFormat, ATextEdit);
 }
 
 void XhtmlIm::insertLink(QTextCursor ACursor, QWidget *AParent)
@@ -1447,7 +1508,7 @@ void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 				}
 			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
 
-			mergeFormatOnWordOrSelection(ACursor, format, AEditWidget->textEdit());
+			mergeFormatOnSelection(ACursor, format, AEditWidget->textEdit());
 		}
 		ACursor.endEditBlock();
 	}
@@ -1469,7 +1530,7 @@ void XhtmlIm::setCode(QTextEdit *ATextEdit, QTextCursor ACursor, bool ACode)
 	{
 		QTextCharFormat charFormat;
 		charFormat.setFontFamily("Courier New,courier");
-		mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
+		mergeFormatOnSelection(ACursor, charFormat, ATextEdit);
 	}
 	else
 	{
@@ -1485,7 +1546,7 @@ void XhtmlIm::setCapitalization(QTextEdit *ATextEdit, QTextCursor ACursor, QFont
 {
 	QTextCharFormat charFormat;
 	charFormat.setFontCapitalization(ACapitalization);
-	mergeFormatOnWordOrSelection(ACursor, charFormat, ATextEdit);
+	mergeFormatOnSelection(ACursor, charFormat, ATextEdit);
 }
 
 void XhtmlIm::setAlignment(QTextCursor ACursor, Qt::Alignment AAlignment)
@@ -1517,6 +1578,59 @@ void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 				blockFmt.setTextIndent(indent-indentWidth);
 	}
 	ACursor.setBlockFormat(blockFmt);
+}
+
+void XhtmlIm::setFormat(QTextCursor ACursor, int AFormatType)
+{
+	int currentFormatType=checkBlockFormat(ACursor);
+
+	ACursor.beginEditBlock();
+	QTextCharFormat blockCharFormat;
+	QTextBlockFormat blockFormat;
+
+	if (currentFormatType!=AFormatType)
+	{
+		if (AFormatType==FMT_PREFORMAT)
+		{
+			blockCharFormat.setFontFixedPitch(true);
+			blockFormat.setProperty(QTextFormat::BlockNonBreakableLines, true);
+		}
+		else
+		{
+			blockCharFormat.setProperty(QTextFormat::FontSizeAdjustment, 4-AFormatType);
+			blockCharFormat.setFontWeight(QFont::Bold);
+		}
+
+		int first, last;
+		if (ACursor.position()<ACursor.anchor())
+		{
+			first=ACursor.position();
+			last=ACursor.anchor();
+		}
+		else
+		{
+			first=ACursor.anchor();
+			last=ACursor.position();
+		}
+		ACursor.setPosition(first);
+		ACursor.movePosition(QTextCursor::StartOfBlock);
+		QTextBlock block;
+		for (block=ACursor.block(); !block.contains(last); block=block.next());
+
+		ACursor.setPosition(block.position(), QTextCursor::KeepAnchor);
+		ACursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+		ACursor.mergeCharFormat(blockCharFormat);
+	}
+	else
+	{
+		QSet<QTextFormat::Property> properties;
+		properties.insert(QTextFormat::FontSizeAdjustment);
+		properties.insert(QTextFormat::FontWeight);
+		clearBlockProperties(ACursor.block(), properties);
+	}
+	ACursor.setBlockCharFormat(blockCharFormat);
+	ACursor.setBlockFormat(blockFormat);
+	ACursor.endEditBlock();
 }
 
 void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
@@ -1609,7 +1723,7 @@ void XhtmlIm::onRemoveFormat()
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
-		clearFormatOnWordOrSelection(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt(), true), editWidget->textEdit());
+		clearFormatOnSelection(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt(), true), editWidget->textEdit());
 }
 
 void XhtmlIm::onSelectFont()
@@ -1758,61 +1872,10 @@ void XhtmlIm::onInsertList()
 
 void XhtmlIm::onSetFormat()
 {
-	Action *action = qobject_cast<Action *>(sender());
-//	if (ac!=FMenuFormat->menuAction())
-//		FActionLastFormat=ac;
-	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
-	QTextCursor cursor = getCursor();
-	int currentFormatType=checkBlockFormat(cursor);
-
-	cursor.beginEditBlock();
-	QTextCharFormat blockCharFormat;
-	QTextBlockFormat blockFormat;
-
-	if (currentFormatType!=formatType)
-	{
-		if (formatType==FMT_PREFORMAT)
-		{
-			blockCharFormat.setFontFixedPitch(true);
-			blockFormat.setProperty(QTextFormat::BlockNonBreakableLines, true);
-		}
-		else
-		{
-			blockCharFormat.setProperty(QTextFormat::FontSizeAdjustment, 4-formatType);
-			blockCharFormat.setFontWeight(QFont::Bold);
-		}
-
-		int first, last;
-		if (cursor.position()<cursor.anchor())
-		{
-			first=cursor.position();
-			last=cursor.anchor();
-		}
-		else
-		{
-			first=cursor.anchor();
-			last=cursor.position();
-		}
-		cursor.setPosition(first);
-		cursor.movePosition(QTextCursor::StartOfBlock);
-		QTextBlock block;
-		for (block=cursor.block(); !block.contains(last); block=block.next());
-
-		cursor.setPosition(block.position(), QTextCursor::KeepAnchor);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		cursor.mergeCharFormat(blockCharFormat);
-	}
-	else
-	{
-		QSet<QTextFormat::Property> properties;
-		properties.insert(QTextFormat::FontSizeAdjustment);
-		properties.insert(QTextFormat::FontWeight);
-		clearBlockProperties(cursor.block(), properties);
-	}
-	cursor.setBlockCharFormat(blockCharFormat);
-	cursor.setBlockFormat(blockFormat);
-	cursor.endEditBlock();
-//	updateCurrentBlock(cursor);
+	Action *action;
+	IMessageEditWidget *editWidget = messageEditWidget(&action);
+	if (editWidget)
+		setFormat(getCursor(editWidget->textEdit(), false, false), (Qt::AlignmentFlag)action->data(ADR_FORMATTING_TYPE).toInt());
 }
 
 QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument, bool ASelect)
@@ -1859,7 +1922,7 @@ QTextCursor XhtmlIm::getCursor()
 	return editWidget?getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()):QTextCursor();
 }
 
-void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit)
+void XhtmlIm::mergeFormatOnSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit)
 {
 	if (ACursor.hasSelection())
 	{
@@ -1872,7 +1935,7 @@ void XhtmlIm::mergeFormatOnWordOrSelection(QTextCursor ACursor, const QTextCharF
 			ATextEdit->mergeCurrentCharFormat(AFormat);
 }
 
-void XhtmlIm::clearFormatOnWordOrSelection(QTextCursor ACursor, QTextEdit *ATextEdit)
+void XhtmlIm::clearFormatOnSelection(QTextCursor ACursor, QTextEdit *ATextEdit)
 {
 	QTextCharFormat emptyCharFormat;
 	QTextBlockFormat emptyBlockFormat;
