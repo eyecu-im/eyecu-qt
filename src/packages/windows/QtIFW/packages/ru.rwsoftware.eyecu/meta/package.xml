@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.13</Version>
-    <ReleaseDate>2016-02-06</ReleaseDate>
-    <UpdateText>Do not override URL, sent with XHTML-IM with link, detected in message text. Application hang on search in jabber service discovery fixed. </UpdateText>
+    <Version>1.3.14</Version>
+    <ReleaseDate>2016-02-21</ReleaseDate>
+    <UpdateText>Do not display &quot;Use system pop-up notifications&quot; option, if system pop-up notifications not available. Extra check on profile settings save added. Import of settings with ns attribute containing dot fixed.</UpdateText>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>

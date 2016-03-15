@@ -2,11 +2,10 @@
 <Package>
     <DisplayName>Connection</DisplayName>
     <Description>Wizard, which help user to connect to Jabber network</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-02-17</ReleaseDate>    
+    <Version>1.3.3</Version>
+    <ReleaseDate>2016-03-02</ReleaseDate>    
     <Name>ru.rwsoftware.eyecu.wizards.account</Name>
-    <UpdateText>Sometimes connection with server didn't even start. Connection Wizard didn't allow to create a new account, if accont with
-    the same bare JID (and different resource) exists already. Enabled sorting in server list. Removed support of tf-network.de, which do not work anymore.</UpdateText>
+    <UpdateText>Server list updated. Resource, set by user was ignored. Disabled creation of an account, if account with same bare jid exists already. Make servers on server selection page selectable with keyboard, not mouse only.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.country</Dependencies>
     <SortingPriority>2</SortingPriority>
     <Default>true</Default>

@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Map</DisplayName>
     <Description>Retrieves and displays world map from different sources</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-02-19</ReleaseDate>
+    <Version>1.3.4</Version>
+    <ReleaseDate>2016-03-11</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map</Name>
-	<UpdateText>Map mouse interaction fixed.</UpdateText>
+	<UpdateText>Fixed map options restore routines: previous map mode and map showing state didn&apos;t restore on application startup. &quot;. Own position following mechanism updated: follow my position&quot; flag now stored in options, &quot;My location&quot; option removed from "Map" menu if positioning plugin is not available.</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple.geo</Dependencies>
     <SortingPriority>40</SortingPriority>
     <Default>true</Default>
