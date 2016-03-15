@@ -272,7 +272,7 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 	if (first.isValid())
 		FServerList->setCurrentIndex(first);
 
-	connect(FServerList->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(onCurrentChanged(QModelIndex,QModelIndex)));
+    connect(FServerList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 QUrl ServerPage::getRegistrationUrl() const
@@ -539,13 +539,20 @@ void ServerPage::onButtonClicked(QAbstractButton *AButton)
 	}
 }
 
-void ServerPage::onCurrentChanged(const QModelIndex &ACurrent, const QModelIndex &APrevious)
+void ServerPage::onSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected)
 {
-	Q_UNUSED(APrevious)
+    Q_UNUSED(ADeselected)
 
-	QStandardItemModel *itemModel = qobject_cast<QStandardItemModel *>(FServerList->model());
-	QStandardItem *first = itemModel->itemFromIndex(itemModel->index(ACurrent.row(), 0));
-	FLedSelectedServer->setText(first->text());
+    QModelIndexList indexes = ASelected.indexes();
+    if (indexes.isEmpty())
+        FLedSelectedServer->setText(QString());
+    else
+    {
+        QStandardItemModel *itemModel = qobject_cast<QStandardItemModel *>(FServerList->model());
+        QStandardItem *first = itemModel->itemFromIndex(itemModel->index(indexes.first().row(), 0));
+        if (first)
+            FLedSelectedServer->setText(first->text());
+    }
 }
 
 //!------------------------------
@@ -626,6 +633,10 @@ CredentialsPage::CredentialsPage(IAccountManager *AAccountManager, QWidget *APar
 	layout->addWidget(FLedPasswordRetype, 2, 2);
 	setLayout(layout);
 
+    QWidget::setTabOrder(FLedUsername, FLedPassword);
+    QWidget::setTabOrder(FLedPassword, FLedPasswordRetype);
+    QWidget::setTabOrder(FLedPasswordRetype, FLedResource);
+
 	connect(FLedPassword,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
 	connect(FLedPasswordRetype,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
 }
@@ -646,7 +657,7 @@ void CredentialsPage::initializePage()
 		FLblServer->setVisible(false);
 	}
 	else
-	{		
+    {
 		FCmbServer->addItem(field(WF_SERVER_NAME_PRE).toString());
 		FLblServer->setText(field(WF_SERVER_NAME_PRE).toString());
 		FLblServer->updateGeometry();
@@ -663,7 +674,8 @@ void CredentialsPage::initializePage()
 	{
 		FLblPasswordRetype->setVisible(false);
 		FLedPasswordRetype->setVisible(false);
-	}	
+    }
+    FLedUsername->setFocus();
 }
 
 bool CredentialsPage::validatePage()

@@ -163,7 +163,7 @@ public:
 	int nextId() const;
 
 private slots:
-	void onCurrentChanged(const QModelIndex &ACurrent, const QModelIndex &APrevious);
+    void onSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected);
 
 protected:
     void accept();
