@@ -45,7 +45,8 @@ bool TuneInfoRequesterLastFm::initSettings()
 {    
     Options::setDefaultValue(OPV_TUNE_INFOREQUESTER_LASTFM_IMAGESIZE, Medium);
     Options::setDefaultValue(OPV_TUNE_INFOREQUESTER_LASTFM_AUTOCORRECT, true);
-	FOptionsManager->insertOptionsDialogHolder(this);
+    if (FOptionsManager)
+        FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 

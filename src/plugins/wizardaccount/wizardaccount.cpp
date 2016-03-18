@@ -30,10 +30,12 @@ bool WizardAccount::initConnections(IPluginManager *APluginManager, int &AInitOr
 
     plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
     if (plugin)
+    {
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+        connect(FOptionsManager->instance(), SIGNAL(optionsModeInitialized(bool)), SLOT(onOptionsModeInitialized(bool)));
+    }
 
-	connect(Options::instance(), SIGNAL(optionsOpened()), SLOT(onOptionsOpened()));
-	connect(FOptionsManager->instance(), SIGNAL(optionsModeInitialized(bool)), SLOT(onOptionsModeInitialized(bool)));
+	connect(Options::instance(), SIGNAL(optionsOpened()), SLOT(onOptionsOpened()));	
     return true;
 }
 
