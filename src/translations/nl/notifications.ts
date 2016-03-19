@@ -99,7 +99,7 @@
   </message>
   <message>
    <source>Use native popup notifications</source>
-   <translation type="unfinished"/>
+   <translation>Gebruik natieve popup meldingen</translation>
   </message>
  </context>
  <context>

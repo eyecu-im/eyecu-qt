@@ -3,7 +3,7 @@
   <name>Account</name>
   <message>
    <source>Enter password for account &lt;b&gt;%1&lt;/b&gt;</source>
-   <translation>Naam invoeren voor account &lt;b&gt;%1&lt;/b&gt;</translation>
+   <translation>Paswoord invoeren voor account &lt;b&gt;%1&lt;/b&gt;</translation>
   </message>
   <message>
    <source>Account Password</source>

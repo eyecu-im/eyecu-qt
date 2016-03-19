@@ -225,7 +225,7 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="674"/>
    <source>Account with specified Server and User Name exists already! Please choose different Server or User Name.</source>
-   <translation type="unfinished"/>
+   <translation>Account bij opgegeven Server en de Gebruikersnaam bestaat al! Kies andere Server of Gebruikersnaam.</translation>
   </message>
  </context>
  <context>
