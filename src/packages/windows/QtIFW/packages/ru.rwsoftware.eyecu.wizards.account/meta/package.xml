@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Connection</DisplayName>
     <Description>Wizard, which help user to connect to Jabber network</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-03-02</ReleaseDate>    
+    <Version>1.3.4</Version>
+    <ReleaseDate>2016-03-19</ReleaseDate>    
     <Name>ru.rwsoftware.eyecu.wizards.account</Name>
-    <UpdateText>Server list updated. Resource, set by user was ignored. Disabled creation of an account, if account with same bare jid exists already. Make servers on server selection page selectable with keyboard, not mouse only.</UpdateText>
+    <UpdateText>Fixed selection of an active server in server list didn't set currently selected server field. Set focus to "User name" field when initializing Credential Page. Fixed application crash if Options Manager plugin not loaded.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.country</Dependencies>
     <SortingPriority>2</SortingPriority>
     <Default>true</Default>

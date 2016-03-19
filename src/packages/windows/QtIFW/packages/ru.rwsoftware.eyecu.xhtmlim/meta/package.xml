@@ -2,13 +2,10 @@
 <Package>
     <DisplayName>XHTML-IM</DisplayName>
     <Description>Allows to use rich text formatting in messages</Description>
-    <Version>1.3.4</Version>
-    <ReleaseDate>2016-03-11</ReleaseDate>
+    <Version>1.3.5</Version>
+    <ReleaseDate>2016-03-15</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.xhtmlim</Name>
-    <UpdateText>* Clear formatting on message send didn't work when rich text formatting
-    toolbar disabled.
-    * Preformatted text tool button didn't work correctly.
-    * Add shortcuts for text block formatting commands.</UpdateText>
+    <UpdateText>Alignment hotkeys in XHTML-IM plugin.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.menuicons.edit</Dependencies>
     <SortingPriority>30</SortingPriority>
     <Default>true</Default>
