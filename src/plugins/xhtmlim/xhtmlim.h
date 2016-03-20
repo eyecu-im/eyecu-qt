@@ -75,6 +75,7 @@ public:
 	QTextCursor getCursor();
 	void mergeFormatOnSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit=NULL);
 	void clearFormatOnSelection(QTextCursor ACursor, QTextEdit *ATextEdit);
+	void setFormat(QTextCursor ACursor, int AFormatType);
 
     //IPlugin
     QObject *instance() { return this; }
@@ -120,7 +121,6 @@ protected:
 	void setCapitalization(QTextEdit *ATextEdit, QTextCursor ACursor, QFont::Capitalization ACapitalization);
 	void setAlignment(QTextCursor ACursor, Qt::Alignment AAlignment);
 	void changeIndent(QTextCursor ACursor, bool AIncrease);
-	void setFormat(QTextCursor ACursor, int AFormatType);
 
 protected slots:
 	void onViewContextMenu(const QPoint &APosition, Menu *AMenu);

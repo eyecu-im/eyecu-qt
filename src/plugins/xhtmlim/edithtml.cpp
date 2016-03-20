@@ -1011,11 +1011,13 @@ void EditHtml::onSetFormat()
 	Action *action = qobject_cast<Action *>(sender());
 	if (action!=FMenuFormat->menuAction())
 		FActionLastFormat=action;
+	FXhtmlIm->setFormat(FTextEdit->textCursor(), action->data(ADR_FORMATTING_TYPE).toInt());
+/*
 	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
-	QTextCursor cursor = FXhtmlIm->getCursor(FTextEdit, true, false);
+	QTextCursor cursor = FXhtmlIm->getCursor(FTextEdit, true, false);	
 	int currentFormatType=XhtmlIm::checkBlockFormat(cursor);
 
-	cursor.beginEditBlock();
+	cursor.beginEditBlock();	
 	QTextCharFormat blockCharFormat;
 	QTextBlockFormat blockFormat;
 
@@ -1063,6 +1065,7 @@ void EditHtml::onSetFormat()
 	cursor.setBlockFormat(blockFormat);
 	cursor.endEditBlock();
 	updateCurrentBlock(cursor);
+*/
 }
 
 void EditHtml::onInsertSpecial()
