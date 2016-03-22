@@ -1297,19 +1297,19 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY)
 			setAlignment(getCursor(messageEditWidget->textEdit()), Qt::AlignJustify);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING1);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING1);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING2);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING2);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING3);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING3);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING4);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING4);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING5);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING5);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_HEADING6);
+			setFormat(messageEditWidget->textEdit(), FMT_HEADING6);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED)
-			setFormat(messageEditWidget->textEdit()->textCursor(), FMT_PREFORMAT);
+			setFormat(messageEditWidget->textEdit(), FMT_PREFORMAT);
 	}
 }
 
@@ -1581,14 +1581,16 @@ void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 	ACursor.setBlockFormat(blockFmt);
 }
 
-void XhtmlIm::setFormat(QTextCursor ACursor, int AFormatType)
+void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 {
 	qDebug() << "XhtmlIm::setFormat(" << AFormatType << ")";
-	qDebug() << "selection before=" << ACursor.selectedText();
-	ACursor.beginEditBlock();
-	ACursor.select(QTextCursor::BlockUnderCursor);
-	qDebug() << "selection after=" << ACursor.selectedText();
-	int currentFormatType=checkBlockFormat(ACursor);
+	QTextCursor cursor = ATextEdit->textCursor();
+	if (APosition!=-1)
+		cursor.setPosition(APosition);
+	cursor.beginEditBlock();
+	cursor.select(QTextCursor::BlockUnderCursor);
+	qDebug() << "selection after=" << cursor.selectedText();
+	int currentFormatType=checkBlockFormat(cursor);
 	qDebug() << "currentFormatType=" << currentFormatType;
 	QTextCharFormat blockCharFormat;
 	QTextBlockFormat blockFormat;
@@ -1605,38 +1607,23 @@ void XhtmlIm::setFormat(QTextCursor ACursor, int AFormatType)
 			blockCharFormat.setProperty(QTextFormat::FontSizeAdjustment, 4-AFormatType);
 			blockCharFormat.setFontWeight(QFont::Bold);
 		}
-/*
-		int first, last;
-		if (ACursor.position()<ACursor.anchor())
-		{
-			first=ACursor.position();
-			last=ACursor.anchor();
-		}
-		else
-		{
-			first=ACursor.anchor();
-			last=ACursor.position();
-		}
-		ACursor.setPosition(first);
-		ACursor.movePosition(QTextCursor::StartOfBlock);
-		QTextBlock block;
-		for (block=ACursor.block(); !block.contains(last); block=block.next());
 
-		ACursor.setPosition(block.position(), QTextCursor::KeepAnchor);
-		ACursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-*/
-		ACursor.mergeCharFormat(blockCharFormat);
+		qDebug() << "blockCharFormat fontWeight=" << blockCharFormat.fontWeight();
+		cursor.mergeBlockCharFormat(blockCharFormat);
+		mergeFormatOnSelection(cursor, blockCharFormat);
+		ATextEdit->setCurrentCharFormat(blockCharFormat);
+		qDebug() << "text edit fontWeight=" << ATextEdit->textCursor().blockCharFormat().fontWeight();
 	}
 	else
 	{
 		QSet<QTextFormat::Property> properties;
 		properties.insert(QTextFormat::FontSizeAdjustment);
 		properties.insert(QTextFormat::FontWeight);
-		clearBlockProperties(ACursor.block(), properties);
+		clearBlockProperties(cursor.block(), properties);
 	}
-	ACursor.setBlockCharFormat(blockCharFormat);
-	ACursor.setBlockFormat(blockFormat);
-	ACursor.endEditBlock();
+	cursor.setBlockCharFormat(blockCharFormat);
+	cursor.setBlockFormat(blockFormat);
+	cursor.endEditBlock();
 }
 
 void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
@@ -1881,7 +1868,7 @@ void XhtmlIm::onSetFormat()
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
-		setFormat(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), (Qt::AlignmentFlag)action->data(ADR_FORMATTING_TYPE).toInt());
+		setFormat(editWidget->textEdit(), (Qt::AlignmentFlag)action->data(ADR_FORMATTING_TYPE).toInt(), action->data(ADR_CURSOR_POSITION).toInt());
 }
 
 QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument, bool ASelect)

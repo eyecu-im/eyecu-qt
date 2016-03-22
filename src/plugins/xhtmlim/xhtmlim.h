@@ -75,7 +75,7 @@ public:
 	QTextCursor getCursor();
 	void mergeFormatOnSelection(QTextCursor ACursor, const QTextCharFormat &AFormat, QTextEdit *ATextEdit=NULL);
 	void clearFormatOnSelection(QTextCursor ACursor, QTextEdit *ATextEdit);
-	void setFormat(QTextCursor ACursor, int AFormatType);
+	void setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition=-1);
 
     //IPlugin
     QObject *instance() { return this; }

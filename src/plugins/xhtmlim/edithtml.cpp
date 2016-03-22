@@ -1011,7 +1011,7 @@ void EditHtml::onSetFormat()
 	Action *action = qobject_cast<Action *>(sender());
 	if (action!=FMenuFormat->menuAction())
 		FActionLastFormat=action;
-	FXhtmlIm->setFormat(FTextEdit->textCursor(), action->data(ADR_FORMATTING_TYPE).toInt());
+	FXhtmlIm->setFormat(FTextEdit, action->data(ADR_FORMATTING_TYPE).toInt());
 /*
 	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
 	QTextCursor cursor = FXhtmlIm->getCursor(FTextEdit, true, false);	
