@@ -19,16 +19,16 @@ class InsertImage : public QDialog
     Q_OBJECT
 
 public:
-	InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent = 0);
+	InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QPixmap &APixmap, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent = 0);
     ~InsertImage();
     Ui::InsertImage *ui;
 
     const QUrl       &getUrl() const {return FUrlCurrent;}
-    const QString    &getFileType() const {return FMimeType;}
-    const QByteArray &getImageData() const {return FImageData;}
+    const QString    &getFileType() const {return FMimeType;}    
     const QByteArray &getOriginalFormat() const {return FOriginalFormat;}
     const QByteArray getSelectedFormat() const {return ui->cmbType->itemData(ui->cmbType->currentIndex()).toByteArray();}
     const QString    getAlternativeText() const {return ui->ledAlt->text();}
+	QVariant		 getImageData() const {return FImageData.isNull()?QVariant(FPixmap):QVariant(FImageData);}
 
     int originalWidth() const {return FSizeOld.width();}
     int originalHeight() const {return FSizeOld.height();}
@@ -75,15 +75,14 @@ private:
 
     QImage  FImageOriginal;
 
-
     QSize   FSizeCurrent;
     QByteArray FFormatCurrent;
     QUrl       FUrlCurrent;
 
-//    QByteArray FOriginalImageData;
 	QBuffer		FOriginalImageData;
 	QByteArray	FImageData;
 	QByteArray	FOriginalFormat;
+	QPixmap		FPixmap;
 
 	QNetworkAccessManager	*FNetworkAccessManager;
 	XhtmlIm					*FXhtmlIm;

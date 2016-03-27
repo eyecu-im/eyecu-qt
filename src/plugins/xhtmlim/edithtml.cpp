@@ -577,6 +577,7 @@ void EditHtml::onInsertImage()
 {
 	QUrl        imageUrl;
 	QByteArray  imageData;
+	QPixmap		pixmap;
 	QTextCursor cursor = FTextEdit->textCursor();
 	QTextCharFormat charFmtCurrent=cursor.charFormat();
 	QSize       size;
@@ -589,14 +590,20 @@ void EditHtml::onInsertImage()
 		{
 			QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
 			cursor.select(QTextCursor::WordUnderCursor);
-			imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
-			imageData=FTextEdit->document()->resource(QTextDocument::ImageResource, imageUrl).toByteArray();
+			imageUrl = imageFormat.name();
+			QVariant imageResource = FTextEdit->document()->resource(QTextDocument::ImageResource, imageUrl);
+			if (imageResource.type()==QVariant::ByteArray)
+				imageData=imageResource.toByteArray();
+			else if (imageResource.type()==QVariant::Pixmap)
+				pixmap = imageResource.value<QPixmap>();
+			else if (imageResource.type()==QVariant::Image)
+				pixmap = QPixmap::fromImage(imageResource.value<QImage>());
 			size.setWidth(imageFormat.width());
 			size.setHeight(imageFormat.height());
 			alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
 		}
 
-	InsertImage *inserImage = new InsertImage(FXhtmlIm, FNetworkAccessManager, imageData, imageUrl, size, alt);
+	InsertImage *inserImage = new InsertImage(FXhtmlIm, FNetworkAccessManager, imageData, pixmap, imageUrl, size, alt);
 
 	inserImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
 	if(!supportBoB)
@@ -620,22 +627,25 @@ void EditHtml::onInsertImage()
 			if(inserImage->isRemote())
 			{
 				QUrl url=inserImage->getUrl();
-				imageFormat.setName(url.toEncoded());
+				imageFormat.setName(url.toString());
 				cursor.document()->addResource(QTextDocument::ImageResource, url, inserImage->getImageData());
 				cursor.insertImage(imageFormat);
 			}
 			else
 				if(supportBoB)
 				{
-					QByteArray imageData=inserImage->getImageData();
-					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
-					QString uri=QString("cid:").append(contentId);
-					imageFormat.setName(uri);
-					imageFormat.setProperty(XhtmlIm::PMaxAge, inserImage->getMaxAge());
-					imageFormat.setProperty(XhtmlIm::PMimeType, inserImage->getFileType());
-					imageFormat.setProperty(XhtmlIm::PEmbed, inserImage->embed());
-					cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
-					cursor.insertImage(imageFormat);
+					QByteArray imageData=inserImage->getImageData().toByteArray();
+					if (!imageData.isNull())
+					{
+						QString contentId=FBitsOfBinary->contentIdentifier(imageData);
+						QString uri=QString("cid:").append(contentId);
+						imageFormat.setName(uri);
+						imageFormat.setProperty(XhtmlIm::PMaxAge, inserImage->getMaxAge());
+						imageFormat.setProperty(XhtmlIm::PMimeType, inserImage->getFileType());
+						imageFormat.setProperty(XhtmlIm::PEmbed, inserImage->embed());
+						cursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
+						cursor.insertImage(imageFormat);
+					}
 				}
 			cursor.endEditBlock();
 		}
