@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>FFMpeg</DisplayName>
     <Description>FFMpeg library</Description>
-    <Version>57.28.103.0</Version>
+    <Version>57.27.100.0</Version>
     <UpdateText>FFMpeg libraries updated to the latest builds</UpdateText>
-    <ReleaseDate>2016-03-18</ReleaseDate>
+    <ReleaseDate>2016-02-27</ReleaseDate>
     <Name>org.ffmpeg.library</Name>
     <Virtual>true</Virtual>
 </Package>

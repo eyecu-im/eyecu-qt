@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.13</Version>
-    <ReleaseDate>2016-02-07</ReleaseDate>
+    <Version>1.0.14</Version>
+    <ReleaseDate>2016-03-26</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
-	<UpdateText>Image processing in XHTML parsing fixed</UpdateText>
+    <UpdateText>Fixed extra CSS in text to xml processing. Fixed heading processing.</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>
 </Package>
