@@ -15,10 +15,11 @@
 
 IBitsOfBinary * InsertImage::FBitsOfBinary = NULL;
 
-InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent) :
+InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAccessManager, const QByteArray &AImageData, const QPixmap &APixmap, const QUrl &AImageUrl, const QSize &AImageSize, const QString &AAlternativeText, QWidget *parent) :
     QDialog(parent),    
     ui(new Ui::InsertImage),        
     FUrlCurrent(AImageUrl),
+	FPixmap(APixmap),
     FNetworkAccessManager(ANetworkAccessManager),
 	FXhtmlIm(AXhtmlIm),
     FSchemeMasks(QStringList() << "http" << "https" << "ftp" << "file"),
@@ -123,24 +124,24 @@ InsertImage::InsertImage(XhtmlIm *AXhtmlIm, QNetworkAccessManager *ANetworkAcces
 	else if (FUrlCurrent.isValid())
 		ui->ledUrl->setText(FUrlCurrent.toString());
 
-    ui->ledUrl->selectAll();
-
     if (!AAlternativeText.isEmpty())
         ui->ledAlt->setText(AAlternativeText);    
 
 	if (!FOriginalImageData.data().isEmpty())
         readImageData(FUrlCurrent);
-    else
-        if (ui->lblImage->pixmap())
-        {
-            ui->pbInsert->setEnabled(true);
-            ui->ledAlt->setFocus();
-        }
-        else
-        {
-            disableCommon();
-            disableBOB();
-        }
+	else
+	{
+		disableBOB();
+		if (!FPixmap.isNull())
+		{
+			ui->lblImage->setPixmap(FPixmap.scaled(ui->lblImage->size(), Qt::KeepAspectRatio));
+			ui->pbInsert->setEnabled(true);
+			ui->ledAlt->setFocus();
+			FSizeOld = FPixmap.size();
+		}
+		else
+			disableCommon();
+	}
 
     ui->ledUrl->selectAll();
 

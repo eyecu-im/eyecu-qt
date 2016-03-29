@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QColorDialog>
@@ -1583,15 +1582,12 @@ void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 
 void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 {
-	qDebug() << "XhtmlIm::setFormat(" << AFormatType << ")";
 	QTextCursor cursor = ATextEdit->textCursor();
 	if (APosition!=-1)
 		cursor.setPosition(APosition);
 	cursor.beginEditBlock();
 	cursor.select(QTextCursor::BlockUnderCursor);
-	qDebug() << "selection after=" << cursor.selectedText();
 	int currentFormatType=checkBlockFormat(cursor);
-	qDebug() << "currentFormatType=" << currentFormatType;
 	QTextCharFormat blockCharFormat;
 	QTextBlockFormat blockFormat;
 
@@ -1608,11 +1604,9 @@ void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 			blockCharFormat.setFontWeight(QFont::Bold);
 		}
 
-		qDebug() << "blockCharFormat fontWeight=" << blockCharFormat.fontWeight();
 		cursor.mergeBlockCharFormat(blockCharFormat);
 		mergeFormatOnSelection(cursor, blockCharFormat);
 		ATextEdit->setCurrentCharFormat(blockCharFormat);
-		qDebug() << "text edit fontWeight=" << ATextEdit->textCursor().blockCharFormat().fontWeight();
 	}
 	else
 	{
@@ -1633,6 +1627,7 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 	QSize       size;
 	QString     alt;
 	QTextCharFormat charFmtCurrent=ACursor.charFormat();
+	QPixmap pixmap;
 
 	bool supportBoB=FBitsOfBinary && FBitsOfBinary->isSupported(AEditWidget->messageWindow()->streamJid(), AEditWidget->messageWindow()->contactJid());
 
@@ -1640,10 +1635,15 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 	{
 		QTextImageFormat imageFormat=charFmtCurrent.toImageFormat();
 		ACursor.select(QTextCursor::WordUnderCursor);
-		imageUrl = QUrl::fromEncoded(imageFormat.name().toLatin1());
+		imageUrl = imageFormat.name();
 		QVariant imageResource = ACursor.document()->resource(QTextDocument::ImageResource, imageUrl);
 		if (imageResource.type()==QVariant::ByteArray)
 			imageData=imageResource.toByteArray();
+		else if (imageResource.type()==QVariant::Pixmap)
+			pixmap = imageResource.value<QPixmap>();
+		else if (imageResource.type()==QVariant::Image)
+			pixmap = QPixmap::fromImage(imageResource.value<QImage>());
+
 		else if (imageUrl.scheme()=="data")
 		{
 			QList<QString> parts=imageUrl.path().split(';');
@@ -1659,7 +1659,7 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 		alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
 	}
 
-	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, imageUrl, size, alt, AEditWidget->instance()->window());
+	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, pixmap, imageUrl, size, alt, AEditWidget->instance()->window());
 
 	insertImage->setWindowIcon(FIconStorage->getIcon(XHI_INSERT_IMAGE));
 	if(!supportBoB)
@@ -1683,22 +1683,25 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 			if(insertImage->isRemote())
 			{
 				QUrl url=insertImage->getUrl();
-				imageFormat.setName(url.toEncoded());
+				imageFormat.setName(url.toString());
 				ACursor.document()->addResource(QTextDocument::ImageResource, url, insertImage->getImageData());
 				ACursor.insertImage(imageFormat);
 			}
 			else
 				if(supportBoB)
 				{
-					QByteArray imageData=insertImage->getImageData();
-					QString contentId=FBitsOfBinary->contentIdentifier(imageData);
-					QString uri=QString("cid:").append(contentId);
-					imageFormat.setName(uri);
-					imageFormat.setProperty(XhtmlIm::PMaxAge, insertImage->getMaxAge());
-					imageFormat.setProperty(XhtmlIm::PMimeType, insertImage->getFileType());
-					imageFormat.setProperty(XhtmlIm::PEmbed, insertImage->embed());
-					ACursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
-					ACursor.insertImage(imageFormat);
+					QByteArray imageData=insertImage->getImageData().toByteArray();
+					if (!imageData.isNull())
+					{
+						QString contentId=FBitsOfBinary->contentIdentifier(imageData);
+						QString uri=QString("cid:").append(contentId);
+						imageFormat.setName(uri);
+						imageFormat.setProperty(XhtmlIm::PMaxAge, insertImage->getMaxAge());
+						imageFormat.setProperty(XhtmlIm::PMimeType, insertImage->getFileType());
+						imageFormat.setProperty(XhtmlIm::PEmbed, insertImage->embed());
+						ACursor.document()->addResource(QTextDocument::ImageResource, QUrl(uri), imageData);
+						ACursor.insertImage(imageFormat);
+					}
 				}
 			ACursor.endEditBlock();
 		}
@@ -2288,15 +2291,19 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 					QString html=AData->html();
 					fixHtml(html);
 					QTextCursor(ADocument).insertHtml(html);
-		//			XmlTextDocumentParser::htmlToText(ADocument, html);
+//TODO: Fix XmlTextDocumentParser::htmlToText() to make it fully compatible with clipboard contents
+//					XmlTextDocumentParser::htmlToText(ADocument, html);
 					return true;
 				}
 			}
 
+			QString alt;
+			if (AData->hasText())
+				alt = AData->text();
+
 			if (AData->hasUrls() && AData->urls().size()==1)
 			{
-				QUrl url = AData->urls()[0];
-				QString alt;
+				QUrl url = AData->urls()[0];				
 				QTextImageFormat imageFormat;
 				imageFormat.setName(url.toString());
 				if (!alt.isEmpty())
@@ -2357,6 +2364,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 			QString html=AData->html();
 			fixHtml(html);
 			QTextCursor(ADocument).insertHtml(html);
+//TODO: Fix XmlTextDocumentParser::htmlToText() to make it fully compatible with clipboard contents
 //			XmlTextDocumentParser::htmlToText(ADocument, html);
 			return true;
 		}
