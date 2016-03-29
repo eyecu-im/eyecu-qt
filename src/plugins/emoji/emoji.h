@@ -80,6 +80,7 @@ protected:
 	int replaceImageToText(QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	SelectIconMenu *createSelectIconMenu(const QString &AIconSet, QWidget *AParent);
 	void updateSelectIconMenu(const QString &AIconSet);
+	QString getFileName(const EmojiData &AEmojiData, const QDir &ADir) const;
 protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
