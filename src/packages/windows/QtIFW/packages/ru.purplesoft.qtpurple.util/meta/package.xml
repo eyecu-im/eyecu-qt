@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.14</Version>
-    <ReleaseDate>2016-03-26</ReleaseDate>
+    <Version>1.0.15</Version>
+    <ReleaseDate>2016-03-30</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
-    <UpdateText>Fixed extra CSS in text to xml processing. Fixed heading processing.</UpdateText>
+    <UpdateText>Fixed parent character format inheritance by first list element.</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>
 </Package>

@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.4</Version>
+    <Version>1.3.5</Version>
     <ReleaseDate>2016-02-09</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
-	<UpdateText>Application crash on emoji skin color selection fixed.</UpdateText>
+    <UpdateText>Fixed family emoji. Support of EmojiOne 2.1.3 added.</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
