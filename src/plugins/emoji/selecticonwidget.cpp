@@ -35,7 +35,7 @@ void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
 	{
 		QString key(*it);
 		if (FEmoji->isColored(key))
-			key.chop(2);		
+			key.chop(2);
 		QIcon icon = FEmoji->getIcon(key+AColor, size);
 		if (icon.isNull() && !AColor.isEmpty())
 			icon = FEmoji->getIcon(key, size);

@@ -99,7 +99,7 @@ bool Emoji::initObjects()
 	FCategoryIDs.insert(Nature, "nature");
 	FCategoryIDs.insert(Travel, "travel");
 	FCategoryIDs.insert(Objects, "objects");
-	FCategoryIDs.insert(Foods, "foods");
+	FCategoryIDs.insert(Foods, "food");
 
 	if (FMessageProcessor)
 		FMessageProcessor->insertMessageWriter(MWO_EMOJI,this);
