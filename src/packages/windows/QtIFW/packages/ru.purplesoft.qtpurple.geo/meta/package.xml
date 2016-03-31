@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Qt Geo</DisplayName>
     <Description>Qt Purple - Geo Framework</Description>
-    <Version>1.1.3</Version>
-    <ReleaseDate>2016-02-08</ReleaseDate>
+    <Version>1.1.4</Version>
+    <ReleaseDate>2016-03-21</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.geo</Name>
 	<UpdateText>MapScale now reports correct size hint</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
