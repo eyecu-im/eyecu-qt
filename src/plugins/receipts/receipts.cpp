@@ -250,10 +250,18 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
             AMessage.stanza().addElement("request", NS_RECEIPTS);
         }
     }
-    return false;
+	return false;
 }
 
-void Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Receipts::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AOrder) Q_UNUSED(ALang)
+	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
+			Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
+			!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull();
+}
+
+bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {    
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
@@ -268,15 +276,15 @@ void Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
         QTextCursor cursor(ADocument);
         cursor.movePosition(QTextCursor::End);
         cursor.insertImage(url.toString());
+		return true;
     }
+	return false;
 }
 
-void Receipts::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Receipts::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AOrder)
-	Q_UNUSED(AMessage)
-	Q_UNUSED(ADocument)
-	Q_UNUSED(ALang)
+	Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)
+	return false;
 }  // Nothing to do right now
 
 bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn)

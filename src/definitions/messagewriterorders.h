@@ -12,8 +12,10 @@
 #define MWO_MOOD                              460
 #define MWO_RECEIPTS                          1000
 #define MWO_ABBREVIATIONS                     600
+#define MWO_EMOJI							  510
 // *** >>> eyeCU >>> ***
 #define MWO_EMOTICONS                         500
-#define MWO_EMOJI							  510
+
+#define MWO_FILETRANSFER                      500
 
 #endif // DEF_MESSAGEWRITERORDERS_H

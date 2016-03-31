@@ -109,18 +109,22 @@ bool Emoticons::initSettings()
 	return true;
 }
 
-void Emoticons::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Emoticons::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOTICONS)
-		replaceImageToText(ADocument);
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+	return false;
 }
 
-void Emoticons::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Emoticons::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
 	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOTICONS)
-		replaceTextToImage(ADocument);
+	return AOrder==MWO_EMOTICONS ? replaceTextToImage(ADocument) : false;
+}
+
+bool Emoticons::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AMessage); Q_UNUSED(ALang);
+	return AOrder==MWO_EMOTICONS ? replaceImageToText(ADocument) : false;
 }
 
 QMultiMap<int, IOptionsDialogWidget *> Emoticons::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
@@ -380,14 +384,15 @@ bool Emoticons::isWordBoundary(const QString &AText) const
 	return !AText.isEmpty() ? AText.at(0).isSpace() : true;
 }
 
-int Emoticons::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALength) const
+bool Emoticons::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
-	int posOffset = 0;
 	QMap<int,QString> emoticons = findTextEmoticons(ADocument,AStartPos,ALength);
 	if (!emoticons.isEmpty() && emoticons.count()<=FMaxEmoticonsInMessage)
 	{
 		QTextCursor cursor(ADocument);
 		cursor.beginEditBlock();
+
+		int posOffset = 0;
 		for (QMap<int,QString>::const_iterator it=emoticons.constBegin(); it!=emoticons.constEnd(); ++it)
 		{
 			QUrl url = FUrlByKey.value(it.value());
@@ -406,19 +411,22 @@ int Emoticons::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int A
 				posOffset += it->length()-1;
 			}
 		}
+		
 		cursor.endEditBlock();
+		return true;
 	}
-	return posOffset;
+	return false;
 }
 
-int Emoticons::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALength) const
+bool Emoticons::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
-	int posOffset = 0;
 	QMap<int,QString> emoticons = findImageEmoticons(ADocument,AStartPos,ALength);
 	if (!emoticons.isEmpty())
 	{
 		QTextCursor cursor(ADocument);
 		cursor.beginEditBlock();
+
+		int posOffset = 0;
 		for (QMap<int,QString>::const_iterator it=emoticons.constBegin(); it!=emoticons.constEnd(); ++it)
 		{
 			cursor.setPosition(it.key()+posOffset);
@@ -449,11 +457,12 @@ int Emoticons::replaceImageToText(QTextDocument *ADocument, int AStartPos, int A
 					cursor.insertText(" ");
 				}
 			}
-
 		}
+
 		cursor.endEditBlock();
+		return true;
 	}
-	return posOffset;
+	return false;
 }
 
 SelectIconMenu *Emoticons::createSelectIconMenu(const QString &ASubStorage, QWidget *AParent)

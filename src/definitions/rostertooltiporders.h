@@ -5,6 +5,7 @@
 #define RTTO_AVATAR_IMAGE                           100
 #define RTTO_ROSTERSVIEW_INFO_NAME                  210
 #define RTTO_ROSTERSVIEW_INFO_ACCOUNT               220
+#define RTTO_MULTIUSERCHAT_ROOM                     225
 #define RTTO_ROSTERSVIEW_INFO_JABBERID              230
 // *** <<< eyeCU <<< ***
 #define RTTO_NICKNAME                               215
@@ -18,7 +19,9 @@
 // *** >>> eyeCU >>> ***
 #define RTTO_ROSTERSVIEW_INFO_SUBCRIPTION           240
 #define RTTO_ROSTERSVIEW_INFO_STREAMS               290
-#define RTTO_BIRTHDAY_NOTIFY                        300
+#define RTTO_MULTIUSERCHAT_ROLE                     352
+#define RTTO_MULTIUSERCHAT_AFFILIATION              354
+#define RTTO_BIRTHDAY_NOTIFY                        700
 #define RTTO_ROSTERSVIEW_RESOURCE_TOPLINE           1000
 #define RTTO_ROSTERSVIEW_RESOURCE_NAME              1010
 #define RTTO_ROSTERSVIEW_RESOURCE_STATUS_TEXT       1080

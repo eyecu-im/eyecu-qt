@@ -123,8 +123,11 @@ protected:
     void    removeNotification(const Jid &AStreamJid, const QString &ASid);
     void    putSid(const Jid &AStreamJid, const Jid &AContactJid, const QString &ASid);
     void    callChatMessage(const Jid &AStreamJid, const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
-    IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
-    bool    showWindow(int ANotifyId, int AShowMode);
+
+	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
+//	IMessageWindow *messageShowNotified(int AMessageId);
+//	bool    showWindow(int ANotifyId, int AShowMode);
+
     void    registerDiscoFeatures();
     INotification callNotify(const Jid &AStreamJid, const QString &ASid, CallType ACallType);
     void    updateWindow(IMessageChatWindow *AWindow);

@@ -33,7 +33,7 @@ MapContacts::MapContacts(QObject *parent) :
 	FAvatars(NULL),
 	FOptionsManager(NULL),
 	FMessageProcessor(NULL),
-	FAvatarSize(32,32)
+	FAvatarSize(32)
 {}
 
 void MapContacts::pluginInfo(IPluginInfo *APluginInfo)
@@ -157,7 +157,7 @@ bool MapContacts::initObjects()
 	if (FAvatars)
 	{
 		FMap->geoMap()->registerDataType(MDR_CONTACT_AVATAR, MOT_CONTACT, 100, MOP_LEFT);
-		FEmptyAvatar = QImage(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->fileFullName(MNI_AVATAR_EMPTY)).scaled(FAvatarSize,Qt::KeepAspectRatio,Qt::FastTransformation);
+		FEmptyAvatar = QImage(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->fileFullName(MNI_AVATAR_EMPTY)).scaled(FAvatarSize, FAvatarSize, Qt::KeepAspectRatio, Qt::FastTransformation);
 	}
 
 	if (FRostersView)
@@ -275,7 +275,7 @@ bool MapContacts::mouseDoubleClicked(SceneObject *ASceneObject, Qt::MouseButton 
 	{
 		IRosterIndex *index=getRosterIndex(ASceneObject->mapObject()->id());
 		if (index)
-			return FMessageProcessor->createMessageWindow(index->data(RDR_STREAM_JID).toString(), ASceneObject->mapObject()->id(), Message::Chat, IMessageHandler::SM_SHOW);
+			return FMessageProcessor->getMessageWindow(index->data(RDR_STREAM_JID).toString(), ASceneObject->mapObject()->id(), Message::Chat, IMessageProcessor::ActionShowNormal);
 	}
 	return false;
 }
@@ -293,7 +293,7 @@ bool MapContacts::contextMenu(SceneObject *ASceneObject, QMenu *AMenu)
 			FRostersView->contextMenuForIndex(single, NULL, menu);
 
 
-			QList<Action *> actions=menu->actions(AG_RVCM_RCHANGER);
+			QList<Action *> actions=menu->actions(AG_RVCM_RCHANGER_EDIT);
 			for (QList<Action *>::const_iterator it=actions.constBegin(); it!=actions.constEnd(); it++)
 			{
 				IconStorage *iconStorage=IconStorage::staticStorage(RSR_STORAGE_MENUICONS);

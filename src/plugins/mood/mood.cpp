@@ -707,7 +707,7 @@ void Mood::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 			message=QString(" (%1)").arg(HTML_ESCAPE(mood.text));
 
 		QString longMessage = QString("<i>")
-							  .append(tr("%1 changed mood to %2").arg(AMessageChatWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString())
+							  .append(tr("%1 changed mood to %2").arg(AMessageChatWindow->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString())
 																 .arg(pic.append(message)))
 							  .append("</i>");
 
@@ -1096,7 +1096,7 @@ void Mood::onNotificationActivated(int ANotifyId)
                 IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
                 if (!window)
                 {
-                    FMessageProcessor->createMessageWindow(its.key(), contactJid, Message::Chat, IMessageHandler::SM_ASSIGN);
+					FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
                     window = FMessageWidgets->findChatWindow(its.key(), contactJid);
                 }
                 if (window)
@@ -1107,7 +1107,18 @@ void Mood::onNotificationActivated(int ANotifyId)
             }
 }
 
-void Mood::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Mood::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(ALang);
+	if (AOrder == MWO_MOOD)
+	{
+		QDomElement mood=AMessage.stanza().firstElement(TAG_NAME, NS_PEP_MOOD);
+		return !mood.isNull();
+	}
+	return false;
+}
+
+bool Mood::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
     Q_UNUSED(ALang);
     if (AOrder == MWO_MOOD)
@@ -1136,13 +1147,16 @@ void Mood::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADoc
             cursor.insertImage(imageFormat);
             if(!comment.isEmpty())
                 cursor.insertText(comText,format);
+			return true;
         }
-    }
+	}
+	return false;
 }
 
-void Mood::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Mood::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
     Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ADocument); Q_UNUSED(ALang);
+	return false;
 }
 
 bool Mood::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
@@ -1176,9 +1190,8 @@ bool Mood::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage
             }
         }
     }
-    return false;
+	return false;
 }
-
 
 void Mood::setMoodForMessage(const MoodData &AMoodData, Message &AMessage)
 {

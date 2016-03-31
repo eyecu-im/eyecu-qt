@@ -78,23 +78,25 @@ public:
 	void setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition=-1);
 
     //IPlugin
-    QObject *instance() { return this; }
-    QUuid pluginUuid() const { return XHTMLIM_UUID; }
-    void pluginInfo(IPluginInfo *APluginInfo);
-    bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-    bool initObjects();
-    bool initSettings();
-    bool startPlugin(){return true;}
+	virtual QObject *instance() { return this; }
+	virtual QUuid pluginUuid() const { return XHTMLIM_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo);
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
+	virtual bool initObjects();
+	virtual bool initSettings();
+	virtual bool startPlugin(){return true;}
     //IOptionsHolder
-	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
     //IMessageWriter
-    void writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
-    void writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang);
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
     //IEditContentsHandler
-    bool messageEditContentsCreate(int AOrder, IMessageEditWidget *AWidget, QMimeData *AData);
-    bool messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData);
-    bool messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData, QTextDocument *ADocument);
-    bool messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget, int &APosition, int &ARemoved, int &AAdded);
+	virtual bool messageEditContentsCreate(int AOrder, IMessageEditWidget *AWidget, QMimeData *AData);
+	virtual bool messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData);
+	virtual bool messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, const QMimeData *AData, QTextDocument *ADocument);
+	virtual bool messageEditContentsChanged(int AOrder, IMessageEditWidget *AWidget, int &APosition, int &ARemoved, int &AAdded);
+
 public slots:
 	void onBobUrlOpen(QUrl AUrl);
 

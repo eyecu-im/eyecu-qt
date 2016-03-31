@@ -7,6 +7,7 @@
 #include <definitions/resources.h>
 
 #include <definitions/namespaces.h>
+#include <definitions/stanzahandlerorders.h>
 #include <utils/logger.h>
 
 #define SHC_PUBSUB_EVENT               "/message/event[@xmlns='" NS_PUBSUB_EVENT "']/items"
@@ -163,8 +164,8 @@ bool PEPManager::publishItem(const Jid &AStreamJid, const QString &ANode, const 
 {
 	if (FStanzaProcessor && isSupported(AStreamJid))
 	{
-		Stanza iq("iq");
-		iq.setType("set").setId(FStanzaProcessor->newId());
+		Stanza iq(STANZA_KIND_IQ);
+		iq.setType(STANZA_TYPE_SET).setUniqueId();
 		QDomElement publish = iq.addElement("pubsub", NS_PUBSUB).appendChild(iq.createElement("publish")).toElement();
 		publish.setAttribute("node", ANode);
 		publish.appendChild(AItem.cloneNode(true));
@@ -191,7 +192,7 @@ bool PEPManager::deleteItem(const Jid &AStreamJid, const QString &ANode, const Q
     if (FStanzaProcessor && isSupported(AStreamJid))
     {
         Stanza iq("iq");
-        iq.setType("set").setId(FStanzaProcessor->newId());
+		iq.setType("set").setUniqueId();
         QDomElement delItem = iq.addElement("pubsub", NS_PUBSUB)
                               .appendChild(iq.createElement("retract"))
                               .toElement();

@@ -151,6 +151,11 @@ DataFormWidget::DataFormWidget(IDataForms *ADataForms, const IDataForm &AForm, Q
 	}
 }
 
+bool DataFormWidget::isSubmitValid() const
+{
+	return FDataForms->isSubmitValid(dataForm(),userDataForm());
+}
+
 bool DataFormWidget::checkForm(bool AAllowInvalid) const
 {
 	if (FForm.type.isEmpty() || FForm.type==DATAFORM_TYPE_FORM)
@@ -197,6 +202,11 @@ IDataFieldWidget *DataFormWidget::fieldWidget(const QString &AVar) const
 	return fieldWidget(FDataForms->fieldIndex(AVar,FForm.fields));
 }
 
+const IDataForm &DataFormWidget::dataForm() const
+{
+	return FForm;
+}
+
 IDataForm DataFormWidget::userDataForm() const
 {
 	IDataForm form = FForm;
@@ -205,9 +215,9 @@ IDataForm DataFormWidget::userDataForm() const
 	return form;
 }
 
-const IDataForm &DataFormWidget::dataForm() const
+IDataForm DataFormWidget::submitDataForm() const
 {
-	return FForm;
+	return FDataForms->dataSubmit(userDataForm());
 }
 
 bool DataFormWidget::isStretch(IDataFieldWidget *AWidget) const

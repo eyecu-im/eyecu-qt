@@ -4,6 +4,7 @@
 #include <QMimeData>
 #include <QFile>
 #include <definitions/rosterlabelholderorders.h>
+#include <definitions/stanzahandlerorders.h>
 #include "clienticons.h"
 
 #define PROPERTY_CLIENT "client"
@@ -28,7 +29,6 @@ ClientIcons::ClientIcons():
 	FRosterLabelId(0),
 	FRosterIndexKinds(QList<int>() << RIK_CONTACT << RIK_METACONTACT << RIK_METACONTACT_ITEM << RIK_RECENT_ITEM << RIK_MY_RESOURCE << RIK_STREAM_ROOT)
 {
-
 #ifdef DEBUG_RESOURCES_DIR
 	FileStorage::setResourcesDirs(FileStorage::resourcesDirs() << DEBUG_RESOURCES_DIR);
 #endif

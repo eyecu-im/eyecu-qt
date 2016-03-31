@@ -13,8 +13,7 @@
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
 #include <definitions/optionwidgetorders.h>
-#include <definitions/messagechatwindowwidgets.h>
-#include <definitions/messagenormalwindowwidgets.h>
+#include <definitions/messagewindowwidgets.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/messageeditororders.h>
 #include <definitions/messagedataroles.h>
@@ -2145,7 +2144,15 @@ bool Poi::bubbleUrlOpen(int AOrder, const QUrl &AUrl, const Jid &AStreamJid, con
     return false;
 }
 
-void Poi::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Poi::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AOrder)
+	Q_UNUSED(ALang)
+
+	return !parsePOI(AMessage).isEmpty();
+}
+
+bool Poi::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
@@ -2160,15 +2167,15 @@ void Poi::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocu
         cursor.insertBlock(format);
 		cursor.insertBlock(QTextBlockFormat());
         cursor.insertHtml(poiElement);
+		return true;
     }
+	return false;
 }
 
-void Poi::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Poi::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AOrder)
-	Q_UNUSED(AMessage)
-	Q_UNUSED(ADocument)
-	Q_UNUSED(ALang)
+	Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)
+	return false;
 }  // Nothing to do right now
 
 bool Poi::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
@@ -2207,7 +2214,7 @@ bool Poi::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage,
             }
         }
     }
-    return false;
+	return false;
 }
 
 bool Poi::loadPoiList(const Jid &AStreamJid)

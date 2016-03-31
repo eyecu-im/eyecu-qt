@@ -7,7 +7,7 @@ QTLIVE_NAME            = qtlive
 #Library ABI version
 unix {
 QTLIVE_ABI      = 1
-EYECU_UTILS_ABI = 36
+EYECU_UTILS_ABI = 37
 }
 
 #Build config

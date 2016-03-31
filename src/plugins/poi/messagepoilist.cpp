@@ -5,8 +5,7 @@
 #include <definitions/menuicons.h>
 #include <definitions/resources.h>
 #include <definitions/shortcuts.h>
-#include <definitions/messagechatwindowwidgets.h>
-#include <definitions/messagenormalwindowwidgets.h>
+#include <definitions/messagewindowwidgets.h>
 #include "utils/qt4qt5compat.h"
 
 #include "messagepoilist.h"

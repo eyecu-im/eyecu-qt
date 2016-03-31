@@ -275,8 +275,11 @@ source_lang = en
 
 [eyecu-qt.metacontactsts]
 file_filter = <lang>/metacontacts.ts
-source_lang = en
+source_lang = ru
 
+[eyecu-qt.datastreamspublisherts]
+file_filter = <lang>/datastreamspublisher.ts
+source_lang = ru
 [eyecu-qt.abbreviationsts]
 file_filter = <lang>/abbreviations.ts
 source_lang = en

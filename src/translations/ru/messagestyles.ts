@@ -135,14 +135,6 @@
         <translation>Стиль сообщения - %1 - %2</translation>
     </message>
     <message>
-        <source>Receiver</source>
-        <translation>Получатель</translation>
-    </message>
-    <message>
-        <source>Sender</source>
-        <translation>Отправитель</translation>
-    </message>
-    <message>
         <source>The message with a error code %1 is received</source>
         <translation>Получено сообщение с кодом ошибки №%1</translation>
     </message>
@@ -209,6 +201,14 @@
     <message>
         <source>Outgoing consecutive message</source>
         <translation>Исходящее последовательное сообщение</translation>
+    </message>
+    <message>
+        <source>Contact</source>
+        <translation>Контакт</translation>
+    </message>
+    <message>
+        <source>You</source>
+        <translation>Вы</translation>
     </message>
     <message>
         <source>speaks of himself in the third person</source>

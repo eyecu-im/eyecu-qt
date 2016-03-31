@@ -1321,7 +1321,7 @@ void Tune::onNotificationActivated(int ANotifyId)
                 IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
                 if (!window)
                 {
-                    FMessageProcessor->createMessageWindow(its.key(), contactJid, Message::Chat, IMessageHandler::SM_ASSIGN);
+					FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
                     window = FMessageWidgets->findChatWindow(its.key(), contactJid);
                 }
                 if (window)

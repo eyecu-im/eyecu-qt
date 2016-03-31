@@ -24,8 +24,7 @@
 #include <definitions/resources.h>
 #include <definitions/shortcuts.h>
 #include <definitions/shortcutgrouporders.h>
-#include <definitions/messagechatwindowwidgets.h>
-#include <definitions/messagenormalwindowwidgets.h>
+#include <definitions/messagewindowwidgets.h>
 #include <definitions/messageeditcontentshandlerorders.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionvalues.h>
@@ -2105,40 +2104,45 @@ void XhtmlIm::onImageOpen()
 	}
 }
 
-void XhtmlIm::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool XhtmlIm::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(ALang)
-	if (AOrder == MWO_XHTML_M2T)
-	{
-		QDomElement body=AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body");
-		if (!body.isNull())
-		{
-			QDomDocument doc;
-			QDomNode imported=doc.importNode(body, true);
-			doc.appendChild(imported);
-			ADocument->clear();
-			XmlTextDocumentParser::xmlToText(ADocument, doc);
-			if (FBitsOfBinary)
-			{
-				QVector<QTextFormat> formats=ADocument->allFormats();
-				for (QVector<QTextFormat>::const_iterator it=formats.constBegin(); it!=formats.constEnd(); it++)
-					if ((*it).isImageFormat())
-					{
-						QUrl url((*it).toImageFormat().name());
-						if (url.scheme()=="cid")
-						{
-							QString cid=url.path();
-							if (!FBitsOfBinary->hasBinary(cid))
-								FBitsOfBinary->loadBinary(cid, AMessage.to(), AMessage.from());
-						}
-					}
-			}
-
-		}
-	}
+	return !AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body").isNull();
 }
 
-void XhtmlIm::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool XhtmlIm::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+{
+	Q_UNUSED(ALang)
+	Q_UNUSED(AOrder)
+
+	QDomElement body=AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body");
+	if (!body.isNull())
+	{
+		QDomDocument doc;
+		QDomNode imported=doc.importNode(body, true);
+		doc.appendChild(imported);
+		ADocument->clear();
+		XmlTextDocumentParser::xmlToText(ADocument, doc);
+		if (FBitsOfBinary)
+		{
+			QVector<QTextFormat> formats=ADocument->allFormats();
+			for (QVector<QTextFormat>::const_iterator it=formats.constBegin(); it!=formats.constEnd(); it++)
+				if ((*it).isImageFormat())
+				{
+					QUrl url((*it).toImageFormat().name());
+					if (url.scheme()=="cid")
+					{
+						QString cid=url.path();
+						if (!FBitsOfBinary->hasBinary(cid))
+							FBitsOfBinary->loadBinary(cid, AMessage.to(), AMessage.from());
+					}
+				}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
 	Q_UNUSED(ALang)
 	if (AOrder == MWO_XHTML_T2M)
@@ -2149,7 +2153,7 @@ void XhtmlIm::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *A
 				formats.count()==3 && formats[0].type()==QTextFormat::CharFormat  && formats[0].propertyCount()==0 &&
 									  formats[1].type()==QTextFormat::BlockFormat && formats[1].propertyCount()==0 &&
 									  formats[2].type()==QTextFormat::FrameFormat && formats[2].propertyCount()==7)
-				return; // No formatting!
+				return false; // No formatting!
 
 			if (FBitsOfBinary)
 				for (QTextBlock block=ADocument->begin(); block!=ADocument->end(); block=block.next())
@@ -2213,7 +2217,9 @@ void XhtmlIm::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *A
 			XmlTextDocumentParser::textToXml(body, *ADocument);
 			// Set message body
 			AMessage.setBody(XmlTextDocumentParser::textToPlainText(*ADocument));
+			return true;
 		}
+	return false;
 }
 
 bool XhtmlIm::messageEditContentsCreate(int AOrder, IMessageEditWidget *AWidget, QMimeData *AData)

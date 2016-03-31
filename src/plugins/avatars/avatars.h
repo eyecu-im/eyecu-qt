@@ -2,7 +2,9 @@
 #define AVATARS_H
 
 #include <QDir>
-#include <QComboBox>
+#include <QSet>
+#include <QRunnable>
+#include <QThreadPool>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iavatars.h>
 #include <interfaces/ixmppstreammanager.h>
@@ -13,6 +15,25 @@
 #include <interfaces/irostersmodel.h>
 #include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
+
+class LoadAvatarTask :
+	public QRunnable
+{
+public:
+	LoadAvatarTask(QObject *AAvatars, const QString &AFile, quint8 ASize, bool AVCard);
+	QByteArray parseFile(QFile *AFile) const;
+	virtual void run();
+public:
+	bool FVCard;
+	quint8 FSize;
+	QString FFile;
+	QObject *FAvatars;
+public:
+	QString FHash;
+	QByteArray FData;
+	QImage FGrayImage;
+	QImage FColorImage;
+};
 
 class Avatars :
 	public QObject,
@@ -54,15 +75,18 @@ public:
 	//IOptionsDialogHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent); // *** <<< eyeCU >>> ***
 	//IAvatars
-	virtual QString avatarHash(const Jid &AContactJid) const;
+	virtual quint8 avatarSize(int AType) const;
 	virtual bool hasAvatar(const QString &AHash) const;
 	virtual QString avatarFileName(const QString &AHash) const;
+	virtual QString avatarHash(const Jid &AContactJid, bool AExact=false) const;
 	virtual QString saveAvatarData(const QByteArray &AData) const;
 	virtual QByteArray loadAvatarData(const QString &AHash) const;
 	virtual bool setAvatar(const Jid &AStreamJid, const QByteArray &AData);
 	virtual QString setCustomPictire(const Jid &AContactJid, const QByteArray &AData);
-	virtual QImage emptyAvatarImage(const QSize &AMaxSize = QSize(), bool AGray = false) const;
-	virtual QImage loadAvatarImage(const QString &AHash, const QSize &AMaxSize = QSize(), bool AGray = false) const;
+	virtual QImage emptyAvatarImage(quint8 ASize, bool AGray=false) const;
+	virtual QImage cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
+	virtual QImage loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
+	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
 signals:
 	void avatarChanged(const Jid &AContactJid);
 	//IRosterDataHolder
@@ -71,22 +95,31 @@ signals:
 	void rosterLabelChanged(quint32 ALabelId, IRosterIndex *AIndex = NULL);
 protected:
 	QString getImageFormat(const QByteArray &AData) const;
-	QByteArray loadFromFile(const QString &AFileName) const;
-	bool saveToFile(const QString &AFileName, const QByteArray &AData) const;
-	QByteArray loadAvatarFromVCard(const Jid &AContactJid) const;
-	void updatePresence(const Jid &AStreamJid) const;
-	void updateDataHolder(const Jid &AContactJid = Jid::null);
+	QByteArray loadFileData(const QString &AFileName) const;
+	bool saveFileData(const QString &AFileName, const QByteArray &AData) const;
+	void storeAvatarImages(const QString &AHash, quint8 ASize, const QImage &AColor, const QImage &AGray) const;
+protected:
+	bool startLoadVCardAvatar(const Jid &AContactJid);
+	void startLoadAvatarTask(const Jid &AContactJid, LoadAvatarTask *ATask);
+protected:
+	void updatePresence(const Jid &AStreamJid);
+	void updateDataHolder(const Jid &AContactJid);
 	bool updateVCardAvatar(const Jid &AContactJid, const QString &AHash, bool AFromVCard);
 	bool updateIqAvatar(const Jid &AContactJid, const QString &AHash);
 	bool isSelectionAccepted(const QList<IRosterIndex *> &ASelected) const;
 protected slots:
+	void onVCardReceived(const Jid &AContactJid);
+	void onVCardPublished(const Jid &AStreamJid);
+	void onLoadAvatarTaskFinished(LoadAvatarTask *ATask);
+protected slots:
 	void onXmppStreamOpened(IXmppStream *AXmppStream);
 	void onXmppStreamClosed(IXmppStream *AXmppStream);
-	void onVCardChanged(const Jid &AContactJid);
+protected slots:
 	void onRosterIndexInserted(IRosterIndex *AIndex);
 	void onRostersViewIndexMultiSelection(const QList<IRosterIndex *> &ASelected, bool &AAccepted);
 	void onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips);
+protected slots:
 	void onSetAvatarByAction(bool);
 	void onClearAvatarByAction(bool);
 	void onIconStorageChanged();
@@ -94,14 +127,25 @@ protected slots:
 	void onOptionsClosed();
 	void onOptionsChanged(const OptionsNode &ANode);
 private:
-	IPluginManager *FPluginManager;
-	IXmppStreamManager *FXmppStreamManager;
-	IStanzaProcessor *FStanzaProcessor;
 	IVCardManager *FVCardManager;
-	IPresenceManager *FPresenceManager;
 	IRostersModel *FRostersModel;
+	IStanzaProcessor *FStanzaProcessor;
+	IPresenceManager *FPresenceManager;
+	IXmppStreamManager *FXmppStreamManager;
 	IRostersViewPlugin *FRostersViewPlugin;
 	IOptionsManager *FOptionsManager;
+private:
+	quint8 FAvatarSize;
+	bool FAvatarsVisible;
+/*** <<< eyeCU <<< ***/
+	int	FAvatarPosition;
+	quint32 FAvatarRightLabelId;
+	quint32 FAvatarLeftLabelId;
+/*** >>> eyeCU >>> ***/
+private:
+	QDir FAvatarsDir;
+	QImage FEmptyAvatar;
+	QMap<Jid, QString> FStreamAvatars;
 private:
 	QMap<Jid, int> FSHIPresenceIn;
 	QMap<Jid, int> FSHIPresenceOut;
@@ -112,23 +156,15 @@ private:
 	QHash<Jid, QString> FIqAvatars;
 	QMap<QString, Jid> FIqAvatarRequests;
 private:
-	QSize FAvatarSize;
-	int	FAvatarPosition; /*** <<< eyeCU >>> ***/
-	bool FAvatarsVisible;
 	bool FShowEmptyAvatars;
 	bool FShowGrayAvatars;
 	QMap<Jid, QString> FCustomPictures;
 private:
-/*** <<< eyeCU <<< ***/
-	quint32 FAvatarRightLabelId;
-	quint32 FAvatarLeftLabelId;
-/*** >>> eyeCU >>> ***/
-	QDir FAvatarsDir;
-	QImage FEmptyAvatar;
-	QImage FEmptyGrayAvatar;
-	QMap<Jid, QString> FStreamAvatars;
-	mutable QHash<QString, QMap<QSize,QImage> > FAvatarImages;
-	mutable QHash<QString, QMap<QSize,QImage> > FAvatarGrayImages;
+	QThreadPool FThreadPool;
+	QHash<QString, LoadAvatarTask *> FFileTasks;
+	QHash<LoadAvatarTask *, QSet<Jid> > FTaskContacts;
+	mutable QHash<QString, QMap<quint8, QImage> > FAvatarImages;
+	mutable QHash<QString, QMap<quint8, QImage> > FAvatarGrayImages;
 };
 
 #endif // AVATARS_H

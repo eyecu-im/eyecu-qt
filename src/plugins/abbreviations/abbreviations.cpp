@@ -67,16 +67,25 @@ bool Abbreviations::initSettings()
 	return true;
 }
 
-void Abbreviations::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Abbreviations::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
-    Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ADocument); Q_UNUSED(ALang);
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+
+	return false;
 }
 
-void Abbreviations::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Abbreviations::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_ABBREVIATIONS)
-        translateAbbreviations(ADocument);
+    Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ADocument); Q_UNUSED(ALang);
+
+	return false;
+}
+
+bool Abbreviations::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+{
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+
+	return translateAbbreviations(ADocument);
 }
 
 QMap<int, QString> Abbreviations::findTextAbbreviations(const QTextDocument *ADocument, int AStartPos, int ALength) const

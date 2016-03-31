@@ -14,6 +14,7 @@
 #include <definitions/rosternotifyorders.h>
 #include <definitions/tabpagenotifypriorities.h>
 #include <definitions/soundfiles.h>
+#include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 #include <MediaStreamer>
 #include <MediaSender>
@@ -451,7 +452,7 @@ void JingleRtp::updateWindow(IMessageChatWindow *AWindow)
 		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
     else if (FStatusIcons)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
-    QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString();
+	QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString();
     AWindow->updateWindow(icon, contactName, tr("%1 - Chat").arg(contactName), QString::null);
 }
 
@@ -862,7 +863,7 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
             if(!window)
                 if (FMessageProcessor)
                 {
-                    FMessageProcessor->createMessageWindow(AStreamJid,AContactJid,Message::Chat,IMessageHandler::SM_ASSIGN);
+					FMessageProcessor->getMessageWindow(AStreamJid,AContactJid,Message::Chat,IMessageProcessor::ActionAssign);
                     window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
                     FPendingChats.append(window);
                 }            
@@ -870,24 +871,39 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
             if (window)
                 connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onTabPageActivated()));
         }
-    return window;
+	return window;
 }
 
-bool JingleRtp::showWindow(int ANotifyId, int AShowMode)
-{
-    IMessageChatWindow *window=FNotifies.value(ANotifyId);
-    if (window)
-    {
-        if (AShowMode == IMessageHandler::SM_ASSIGN)
-            window->assignTabPage();
-        else if (AShowMode == IMessageHandler::SM_SHOW)
-            window->showTabPage();
-        else if (AShowMode == IMessageHandler::SM_MINIMIZED)
-            window->showMinimizedTabPage();
-        return true;
-    }
-    return false;
-}
+//IMessageWindow *JingleRtp::messageShowNotified(int AMessageId)
+//{
+//	IMessageChatWindow *window = FNotifies.value(AMessageId);
+//	if (window)
+//	{
+//		window->showTabPage();
+//		return window;
+//	}
+//	else
+//	{
+//		REPORT_ERROR("Failed to show notified chat message window: Window not found");
+//	}
+//	return NULL;
+//}
+
+//bool JingleRtp::showWindow(int ANotifyId, int AShowMode)
+//{
+//    IMessageChatWindow *window=FNotifies.value(ANotifyId);
+//    if (window)
+//    {
+//        if (AShowMode == IMessageHandler::SM_ASSIGN)
+//            window->assignTabPage();
+//        else if (AShowMode == IMessageHandler::SM_SHOW)
+//            window->showTabPage();
+//        else if (AShowMode == IMessageHandler::SM_MINIMIZED)
+//            window->showMinimizedTabPage();
+//        return true;
+//    }
+//    return false;
+//}
 
 void JingleRtp::onChatWindowCreated(IMessageChatWindow *AWindow)
 {

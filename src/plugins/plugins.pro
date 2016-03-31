@@ -70,6 +70,7 @@ SUBDIRS += messagecarbons
 SUBDIRS += recentcontacts 
 SUBDIRS += metacontacts 
 SUBDIRS += statistics
+SUBDIRS += datastreamspublisher 
 contains(QT_CONFIG, webkit): SUBDIRS += adiummessagestyle
 SUBDIRS += activity
 SUBDIRS += mood 

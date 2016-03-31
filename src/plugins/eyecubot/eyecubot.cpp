@@ -3,6 +3,7 @@
 #include <QDomNodeList>
 #include <QDomElement>
 #include <definitions/namespaces.h>
+#include <definitions/stanzahandlerorders.h>
 #include "utils/qt4qt5compat.h"
 
 #define EYECU_BOT        "eyecu@rwsoftware.ru"

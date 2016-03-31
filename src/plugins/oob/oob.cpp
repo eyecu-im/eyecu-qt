@@ -7,8 +7,7 @@
 #include <definitions/optionwidgetorders.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/messageeditororders.h>
-#include <definitions/messagechatwindowwidgets.h>
-#include <definitions/messagenormalwindowwidgets.h>
+#include <definitions/messagewindowwidgets.h>
 #include <definitions/shortcutgrouporders.h>
 #include <definitions/shortcuts.h>
 
@@ -291,25 +290,30 @@ bool Oob::parseOOB(Stanza &AStanza, QTextDocument *ADocument)
             QString desc = !e.firstChildElement("desc").text().isEmpty()?e.firstChildElement("desc").text():"";
             cursor.insertText(desc.isEmpty()?url.toString():desc);
         }
-    return noRuler;
+	return !noRuler;
 }
 
-
-void Oob::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Oob::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
 	Q_UNUSED(ALang)
-
-    if (AOrder == MWO_OOB)
-        parseOOB(AMessage.stanza(), ADocument);
-}
-
-void Oob::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
-{
 	Q_UNUSED(AOrder)
-	Q_UNUSED(AMessage)
-	Q_UNUSED(ADocument)
+
+	return !AMessage.stanza().firstElement("x",NS_JABBER_OOB_X).isNull();
+}
+
+bool Oob::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+{
 	Q_UNUSED(ALang)
-}  // Nothing to do right now
+	Q_UNUSED(AOrder)
+
+	return parseOOB(AMessage.stanza(), ADocument);
+}
+
+bool Oob::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)
+	return false;
+}
 
 bool Oob::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
 {
@@ -328,8 +332,9 @@ bool Oob::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage,
             list->clear();
         }
     }
-    return false;
+	return false;
 }
+
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_oob, Oob)
 #endif

@@ -136,7 +136,7 @@ void MessageCarbons::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AS
 {
 	if (FEnableRequests.contains(AStanza.id()))
 	{
-		if (AStanza.type() == "result")
+		if (AStanza.isResult())
 		{
 			LOG_STRM_INFO(AStreamJid,QString("Message carbons enabled, id=%1").arg(AStanza.id()));
 			FEnabled[AStreamJid] = true;
@@ -152,7 +152,7 @@ void MessageCarbons::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AS
 	}
 	else if(FDisableRequests.contains(AStanza.id()))
 	{
-		if (AStanza.type() == "result")
+		if (AStanza.isResult())
 		{
 			LOG_STRM_INFO(AStreamJid,QString("Message carbons disabled, id=%1").arg(AStanza.id()));
 			FEnabled[AStreamJid] = false;
@@ -184,8 +184,8 @@ bool MessageCarbons::setEnabled(const Jid &AStreamJid, bool AEnable)
 	{
 		if (AEnable != isEnabled(AStreamJid))
 		{
-			Stanza request("iq");
-			request.setType("set").setId(FStanzaProcessor->newId());
+			Stanza request(STANZA_KIND_IQ);
+			request.setType(STANZA_TYPE_SET).setUniqueId();
 			request.addElement(AEnable ? "enable" : "disable",NS_MESSAGE_CARBONS);
 			if (FStanzaProcessor->sendStanzaRequest(this,AStreamJid,request,CARBONS_TIMEOUT))
 			{

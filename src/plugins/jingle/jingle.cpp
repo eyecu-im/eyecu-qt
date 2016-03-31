@@ -2,6 +2,7 @@
 #include "definitions/namespaces.h"
 #include "definitions/menuicons.h"
 #include "definitions/resources.h"
+#include "definitions/stanzahandlerorders.h"
 #include "utils/xmpperror.h"
 
 #include <QList>

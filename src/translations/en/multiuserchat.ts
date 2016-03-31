@@ -1,985 +1,975 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en">
+<TS version="2.0" sourcelanguage="en" language="en">
+ <context>
+  <name>ConfigPage</name>
+  <message>
+   <source>Conference settings</source>
+   <translation>Conference settings</translation>
+  </message>
+  <message>
+   <source>Enter the desired parameters of the new conference</source>
+   <translation>Enter the desired parameters of the new conference</translation>
+  </message>
+  <message>
+   <source>Creating conference...</source>
+   <translation>Creating conference...</translation>
+  </message>
+  <message>
+   <source>Failed to create conference</source>
+   <translation>Failed to create conference</translation>
+  </message>
+  <message>
+   <source>Failed to create conference instance</source>
+   <translation>Failed to create conference instance</translation>
+  </message>
+  <message>
+   <source>Error</source>
+   <translation>Error</translation>
+  </message>
+  <message>
+   <source>Conference is not created :(</source>
+   <translation>Conference is not created :(</translation>
+  </message>
+  <message>
+   <source>Conference is not configured :(</source>
+   <translation>Conference is not configured :(</translation>
+  </message>
+  <message>
+   <source>Failed to create conference: %1</source>
+   <translation>Failed to create conference: %1</translation>
+  </message>
+  <message>
+   <source>Saving conference settings...</source>
+   <translation>Saving conference settings...</translation>
+  </message>
+  <message>
+   <source>Failed to send conference settings</source>
+   <translation>Failed to send conference settings</translation>
+  </message>
+  <message>
+   <source>Loading settings...</source>
+   <translation>Loading settings...</translation>
+  </message>
+  <message>
+   <source>Failed to load conference settings</source>
+   <translation>Failed to load conference settings</translation>
+  </message>
+  <message>
+   <source>Failed to change default conference settings</source>
+   <translation>Failed to change default conference settings</translation>
+  </message>
+  <message>
+   <source>Failed to load conference settings: %1</source>
+   <translation>Failed to load conference settings: %1</translation>
+  </message>
+  <message>
+   <source>Failed to update conference settings: %1</source>
+   <translation>Failed to update conference settings: %1</translation>
+  </message>
+ </context>
+ <context>
+  <name>CreateMultiChatWizard</name>
+  <message>
+   <source>Error</source>
+   <translation>Error</translation>
+  </message>
+  <message>
+   <source>Failed to join to the conference: Conference windows is not created</source>
+   <translation>Failed to join to the conference: Conference windows is not created</translation>
+  </message>
+  <message>
+   <source>Create Conference Wizard</source>
+   <translation>Create Conference Wizard</translation>
+  </message>
+  <message>
+   <source>Failed to join to the conference: Not all required parameters is specified</source>
+   <translation>Failed to join to the conference: Not all required parameters is specified</translation>
+  </message>
+ </context>
  <context>
   <name>EditUsersListDialog</name>
   <message>
-   <location line="110" filename="../../plugins/multiuserchat/edituserslistdialog.cpp"/>
-   <source>Add new item</source>
-   <translation>Add new item</translation>
+   <source>Owners</source>
+   <translation>Owners</translation>
   </message>
   <message>
-   <location line="110" filename="../../plugins/multiuserchat/edituserslistdialog.cpp"/>
-   <source>Enter new item JID:</source>
-   <translation>Enter new item JID:</translation>
+   <source>Administrators</source>
+   <translation>Administrators</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/multiuserchat/edituserslistdialog.cpp"/>
-   <source>Wrong item JID</source>
-   <translation>Wrong item JID</translation>
+   <source>Members</source>
+   <translation>Members</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/multiuserchat/edituserslistdialog.cpp"/>
-   <source>Entered item JID is not valid or already exists.</source>
-   <translation>Entered item JID is not valid or already exists.</translation>
+   <source>Outcasts</source>
+   <translation>Outcasts</translation>
+  </message>
+  <message>
+   <source>None</source>
+   <translation>None</translation>
+  </message>
+  <message>
+   <source>Add User</source>
+   <translation>Add User</translation>
+  </message>
+  <message>
+   <source>Enter user Jabber ID:</source>
+   <translation>Enter user Jabber ID:</translation>
+  </message>
+  <message>
+   <source>Enter note:</source>
+   <translation>Enter note:</translation>
+  </message>
+  <message>
+   <source>Warning</source>
+   <translation>Warning</translation>
+  </message>
+  <message>
+   <source>User %1 already present in list of '%2'</source>
+   <translation>User %1 already present in list of '%2'</translation>
+  </message>
+  <message>
+   <source>Failed to load list of '%1'</source>
+   <translation>Failed to load list of '%1'</translation>
+  </message>
+  <message>
+   <source>Failed to update users affiliation lists</source>
+   <translation>Failed to update users affiliation lists</translation>
+  </message>
+  <message>
+   <source>Failed to load list of '%1': %2</source>
+   <translation>Failed to load list of '%1': %2</translation>
+  </message>
+  <message>
+   <source>Failed to update users affiliation lists: %1</source>
+   <translation>Failed to update users affiliation lists: %1</translation>
+  </message>
+  <message numerus="yes">
+   <source>Move %n user(s) to '%1'</source>
+   <translation>
+    <numerusform>Move %n user(s) to '%1'</numerusform>
+    <numerusform>Move %n user(s) to '%1'</numerusform>
+    <numerusform>Move %n user(s) to '%1'</numerusform>
+   </translation>
+  </message>
+  <message numerus="yes">
+   <source>Delete %n user(s)</source>
+   <translation>
+    <numerusform>Delete %n user(s)</numerusform>
+    <numerusform>Delete %n user(s)</numerusform>
+    <numerusform>Delete %n user(s)</numerusform>
+   </translation>
+  </message>
+  <message>
+   <source>Users Lists - %1</source>
+   <translation>Users Lists - %1</translation>
   </message>
  </context>
  <context>
   <name>EditUsersListDialogClass</name>
   <message>
-   <location line="38" filename="../../plugins/multiuserchat/edituserslistdialog.ui"/>
-   <source>Jid</source>
-   <translation>Jid</translation>
-  </message>
-  <message>
-   <location line="43" filename="../../plugins/multiuserchat/edituserslistdialog.ui"/>
-   <source>Reason</source>
-   <translation>Reason</translation>
-  </message>
-  <message>
-   <location line="53" filename="../../plugins/multiuserchat/edituserslistdialog.ui"/>
    <source>Add</source>
    <translation>Add</translation>
   </message>
   <message>
-   <location line="60" filename="../../plugins/multiuserchat/edituserslistdialog.ui"/>
    <source>Delete</source>
    <translation>Delete</translation>
   </message>
+  <message>
+   <source>Search users</source>
+   <translation>Search users</translation>
+  </message>
  </context>
  <context>
-  <name>JoinMultiChatDialog</name>
+  <name>JoinPage</name>
   <message>
-   <location line="32" filename="../../plugins/multiuserchat/joinmultichatdialog.cpp"/>
+   <source>Join</source>
+   <translation>Join</translation>
+  </message>
+  <message>
+   <source>Enter parameters to join to the conference</source>
+   <translation>Enter parameters to join to the conference</translation>
+  </message>
+  <message>
+   <source>Nick</source>
+   <translation>Nick</translation>
+  </message>
+  <message>
+   <source>Join with nick:</source>
+   <translation>Join with nick:</translation>
+  </message>
+  <message>
+   <source>Loading conference description...</source>
+   <translation>Loading conference description...</translation>
+  </message>
+  <message>
+   <source>This conference is password protected</source>
+   <translation>This conference is password protected</translation>
+  </message>
+  <message>
+   <source>This conference is not password protected</source>
+   <translation>This conference is not password protected</translation>
+  </message>
+  <message>
+   <source>This conference is members only</source>
+   <translation>This conference is members only</translation>
+  </message>
+  <message>
+   <source>This conference is public</source>
+   <translation>This conference is public</translation>
+  </message>
+  <message>
+   <source>This conference is semi anonymous</source>
+   <translation>This conference is semi anonymous</translation>
+  </message>
+  <message>
+   <source>This conference is not anonymous</source>
+   <translation>This conference is not anonymous</translation>
+  </message>
+  <message>
+   <source>This conference is moderated</source>
+   <translation>This conference is moderated</translation>
+  </message>
+  <message>
+   <source>This conference is not moderated</source>
+   <translation>This conference is not moderated</translation>
+  </message>
+  <message>
+   <source>This conference is temporary</source>
+   <translation>This conference is temporary</translation>
+  </message>
+  <message>
+   <source>This conference is persistent</source>
+   <translation>This conference is persistent</translation>
+  </message>
+  <message>
+   <source>This conference is hidden</source>
+   <translation>This conference is hidden</translation>
+  </message>
+  <message>
+   <source>This conference is visible for all</source>
+   <translation>This conference is visible for all</translation>
+  </message>
+  <message>
+   <source>Failed to load conference description: %1</source>
+   <translation>Failed to load conference description: %1</translation>
+  </message>
+  <message>
+   <source>Conference description is not available or invalid</source>
+   <translation>Conference description is not available or invalid</translation>
+  </message>
+  <message>
+   <source>Register</source>
+   <translation>Register</translation>
+  </message>
+  <message>
+   <source>Registered</source>
+   <translation>Registered</translation>
+  </message>
+  <message>
+   <source>Loading...</source>
+   <translation>Loading...</translation>
+  </message>
+  <message>
    <source>Join conference</source>
    <translation>Join conference</translation>
   </message>
   <message>
-   <location line="108" filename="../../plugins/multiuserchat/joinmultichatdialog.cpp"/>
-   <source>%1 as %2</source>
-   <comment>room as nick</comment>
-   <translation>%1 as %2</translation>
-  </message>
-  <message>
-   <location line="147" filename="../../plugins/multiuserchat/joinmultichatdialog.cpp"/>
-   <source>Conference parameters is not acceptable.
-Check values and try again</source>
-   <translation>Conference parameters is not acceptable.
-Check values and try again</translation>
+   <source>Password is required</source>
+   <translation>Password is required</translation>
   </message>
  </context>
  <context>
-  <name>JoinMultiChatDialogClass</name>
+  <name>ManualPage</name>
   <message>
-   <location line="22" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Identity:</source>
-   <translation>Identity:</translation>
+   <source>Join</source>
+   <translation>Join</translation>
   </message>
   <message>
-   <location line="59" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>History:</source>
-   <translation>History:</translation>
+   <source>Conference parameters</source>
+   <translation>Conference parameters</translation>
   </message>
   <message>
-   <location line="85" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Delete</source>
-   <translation>Delete</translation>
+   <source>Enter parameters to join or create the conference</source>
+   <translation>Enter parameters to join or create the conference</translation>
   </message>
   <message>
-   <location line="97" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Conference Parameters</source>
-   <translation>Conference Parameters</translation>
+   <source>Conference as 'name@service.server.com'</source>
+   <translation>Conference as 'name@service.server.com'</translation>
   </message>
   <message>
-   <location line="103" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Room:</source>
-   <translation>Room:</translation>
+   <source>Your nickname in conference</source>
+   <translation>Your nickname in conference</translation>
   </message>
   <message>
-   <location line="113" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Service:</source>
-   <translation>Service:</translation>
+   <source>Conference password if required</source>
+   <translation>Conference password if required</translation>
   </message>
   <message>
-   <location line="129" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
+   <source>Account:</source>
+   <translation>Account:</translation>
+  </message>
+  <message>
+   <source>Conference:</source>
+   <translation>Conference:</translation>
+  </message>
+  <message>
    <source>Nick:</source>
    <translation>Nick:</translation>
   </message>
   <message>
-   <location line="151" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
-   <source>Resolve</source>
-   <translation>Resolve</translation>
-  </message>
-  <message>
-   <location line="161" filename="../../plugins/multiuserchat/joinmultichatdialog.ui"/>
    <source>Password:</source>
    <translation>Password:</translation>
   </message>
+  <message>
+   <source>Register</source>
+   <translation>Register</translation>
+  </message>
+  <message>
+   <source>Registered</source>
+   <translation>Registered</translation>
+  </message>
+  <message>
+   <source>Loading conference description...</source>
+   <translation>Loading conference description...</translation>
+  </message>
+  <message>
+   <source>Failed to load conference description</source>
+   <translation>Failed to load conference description</translation>
+  </message>
+  <message>
+   <source>Invalid conference ID</source>
+   <translation>Invalid conference ID</translation>
+  </message>
+  <message>
+   <source>Loading...</source>
+   <translation>Loading...</translation>
+  </message>
+  <message>
+   <source>This conference is password protected</source>
+   <translation>This conference is password protected</translation>
+  </message>
+  <message>
+   <source>Conference description is not available or invalid</source>
+   <translation>Conference description is not available or invalid</translation>
+  </message>
+  <message>
+   <source>This conference does not exists and will be automatically created on join</source>
+   <translation>This conference does not exists and will be automatically created on join</translation>
+  </message>
+  <message>
+   <source>Conference service '%1' is not available or does not exists</source>
+   <translation>Conference service '%1' is not available or does not exists</translation>
+  </message>
+  <message>
+   <source>Failed to check conference existence: %1</source>
+   <translation>Failed to check conference existence: %1</translation>
+  </message>
  </context>
  <context>
-  <name>MultiUserChat</name>
+  <name>ModePage</name>
   <message>
-   <location line="131" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Room configuration is not available.</source>
-   <translation>Room configuration is not available.</translation>
+   <source>Join to the conference or create a new one</source>
+   <translation>Join to the conference or create a new one</translation>
   </message>
   <message>
-   <location line="147" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Room configuration accepted.</source>
-   <translation>Room configuration accepted.</translation>
+   <source>This wizard will help you to join to existing conference or create a new one</source>
+   <translation>This wizard will help you to join to existing conference or create a new one</translation>
   </message>
   <message>
-   <location line="185" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Request for list of %1s is failed: %2</source>
-   <translation>Request for list of %1s is failed: %2</translation>
+   <source>I want to join to the existing conference</source>
+   <translation>I want to join to the existing conference</translation>
   </message>
   <message>
-   <location line="194" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Changes in list of %1s was accepted.</source>
-   <translation>Changes in list of %1s was accepted.</translation>
+   <source>I want to create a new conference</source>
+   <translation>I want to create a new conference</translation>
   </message>
   <message>
-   <location line="200" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Changes in list of %1s was not accepted: %2</source>
-   <translation>Changes in list of %1s was not accepted: %2</translation>
-  </message>
-  <message>
-   <location line="692" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Failed to send request for list of %1s.</source>
-   <translation>Failed to send request for list of %1s.</translation>
-  </message>
-  <message>
-   <location line="724" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Failed to send changes in list of %1s</source>
-   <translation>Failed to send changes in list of %1s</translation>
-  </message>
-  <message>
-   <location line="750" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Room configuration request failed.</source>
-   <translation>Room configuration request failed.</translation>
-  </message>
-  <message>
-   <location line="778" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Room configuration submit failed.</source>
-   <translation>Room configuration submit failed.</translation>
-  </message>
-  <message>
-   <location line="797" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Room destruction request was sent.</source>
-   <translation>Room destruction request was sent.</translation>
-  </message>
-  <message>
-   <location line="951" filename="../../plugins/multiuserchat/multiuserchat.cpp"/>
-   <source>Your nick was changed by server to '%1'</source>
-   <translation>Your nick was changed by server to '%1'</translation>
+   <source>I want manually specify all parameters to join or create the conference</source>
+   <translation>I want manually specify all parameters to join or create the conference</translation>
   </message>
  </context>
  <context>
   <name>MultiUserChatManager</name>
   <message>
-   <location line="79" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="851" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Multi-User Conferences</source>
    <translation>Multi-User Conferences</translation>
   </message>
   <message>
-   <location line="80" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allows to use Jabber multi-user conferences</source>
    <translation>Allows to use Jabber multi-user conferences</translation>
   </message>
   <message>
-   <location line="213" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1022" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Join conference</source>
    <translation>Join conference</translation>
   </message>
   <message>
-   <location line="213" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Ctrl+J</source>
    <comment>Join conference</comment>
    <translation>Ctrl+J</translation>
   </message>
   <message>
-   <location line="242" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>When receiving an invitation to the conference</source>
    <translation>When receiving an invitation to the conference</translation>
   </message>
   <message>
-   <location line="250" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>When receiving a new private message in conference</source>
    <translation>When receiving a new private message in conference</translation>
   </message>
   <message>
-   <location line="258" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>When receiving a new message in conference</source>
    <translation>When receiving a new message in conference</translation>
   </message>
   <message>
-   <location line="266" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>When referring to you at the conference</source>
    <translation>When referring to you at the conference</translation>
   </message>
   <message>
-   <location line="279" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="320" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1035" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Conferences</source>
    <translation>Conferences</translation>
   </message>
   <message>
-   <location line="321" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Show users connections and disconnections</source>
    <translation>Show users connections and disconnections</translation>
   </message>
   <message>
-   <location line="322" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Show users status changes</source>
    <translation>Show users status changes</translation>
   </message>
   <message>
-   <location line="323" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Save users status messages in history</source>
    <translation>Save users status messages in history</translation>
   </message>
   <message>
-   <location line="324" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Leave the conference when window closed</source>
    <translation>Leave the conference when window closed</translation>
   </message>
   <message>
-   <location line="325" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Automatically rejoin to conference after kick</source>
    <translation>Automatically rejoin to conference after kick</translation>
   </message>
   <message>
-   <location line="326" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Select a user to refer by enumeration in the input field</source>
    <translation>Select a user to refer by enumeration in the input field</translation>
   </message>
   <message>
-   <location line="329" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Left mouse button</source>
-   <comment>Instrumental case</comment>
-   <translation>Left mouse button</translation>
-  </message>
-  <message>
-   <location line="330" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Middle mouse button</source>
-   <comment>Instrumental case</comment>
-   <translation>Middle mouse button</translation>
-  </message>
-  <message>
-   <location line="331" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Address user by clicking nickname in the list with</source>
-   <translation>Address user by clicking nickname in the list with</translation>
-  </message>
-  <message>
-   <location line="333" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Add this suffix when referring to the user</source>
-   <translation>Add this suffix when referring to the user</translation>
-  </message>
-  <message>
-   <location line="430" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Register in conference</source>
    <translation>Register in conference</translation>
   </message>
   <message>
-   <location line="431" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow this person to register with the room?</source>
    <translation>Allow this person to register with the room?</translation>
   </message>
   <message>
-   <location line="432" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>EMail Address</source>
    <translation>EMail Address</translation>
   </message>
   <message>
-   <location line="433" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Rules and Notes</source>
    <translation>Rules and Notes</translation>
   </message>
   <message>
-   <location line="434" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Given Name</source>
    <translation>Given Name</translation>
   </message>
   <message>
-   <location line="435" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Family Name</source>
    <translation>Family Name</translation>
   </message>
   <message>
-   <location line="436" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Desired Nickname</source>
    <translation>Desired Nickname</translation>
   </message>
   <message>
-   <location line="437" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Your URL</source>
    <translation>Your URL</translation>
   </message>
   <message>
-   <location line="441" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Request for voice</source>
    <translation>Request for voice</translation>
   </message>
   <message>
-   <location line="442" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Requested Role</source>
    <translation>Requested Role</translation>
   </message>
   <message>
-   <location line="443" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>User ID</source>
    <translation>User ID</translation>
   </message>
   <message>
-   <location line="444" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Room Nickname</source>
    <translation>Room Nickname</translation>
   </message>
   <message>
-   <location line="445" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Grant Voice?</source>
    <translation>Grant Voice?</translation>
   </message>
   <message>
-   <location line="449" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Configure conference</source>
    <translation>Configure conference</translation>
   </message>
   <message>
-   <location line="450" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Maximum Number of History Messages Returned by Room</source>
    <translation>Maximum Number of History Messages Returned by Room</translation>
   </message>
   <message>
-   <location line="451" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="474" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Occupants to Send Private Messages?</source>
    <translation>Allow Occupants to Send Private Messages?</translation>
   </message>
   <message>
-   <location line="452" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Occupants to Invite Others?</source>
    <translation>Allow Occupants to Invite Others?</translation>
   </message>
   <message>
-   <location line="453" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Occupants to Change Subject?</source>
    <translation>Allow Occupants to Change Subject?</translation>
   </message>
   <message>
-   <location line="454" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Enable Logging of Room Conversations?</source>
    <translation>Enable Logging of Room Conversations?</translation>
   </message>
   <message>
-   <location line="455" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Affiliations that May Retrieve Member List</source>
    <translation>Affiliations that May Retrieve Member List</translation>
   </message>
   <message>
-   <location line="456" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>XMPP URI of Associated Publish-Subscribe Node</source>
    <translation>XMPP URI of Associated Publish-Subscribe Node</translation>
   </message>
   <message>
-   <location line="457" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Natural Language for Room Discussions</source>
    <translation>Natural Language for Room Discussions</translation>
   </message>
   <message>
-   <location line="458" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Maximum Number of Room Occupants</source>
    <translation>Maximum Number of Room Occupants</translation>
   </message>
   <message>
-   <location line="459" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make Room Members-Only?</source>
    <translation>Make Room Members-Only?</translation>
   </message>
   <message>
-   <location line="460" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make Room Moderated?</source>
    <translation>Make Room Moderated?</translation>
   </message>
   <message>
-   <location line="461" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Password is Required to Enter?</source>
    <translation>Password is Required to Enter?</translation>
   </message>
   <message>
-   <location line="462" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make Room Persistent?</source>
    <translation>Make Room Persistent?</translation>
   </message>
   <message>
-   <location line="463" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Roles for which Presence is Broadcasted</source>
    <translation>Roles for which Presence is Broadcasted</translation>
   </message>
   <message>
-   <location line="464" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Public Searching for Room?</source>
    <translation>Allow Public Searching for Room?</translation>
   </message>
   <message>
-   <location line="465" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Full List of Room Administrators</source>
    <translation>Full List of Room Administrators</translation>
   </message>
   <message>
-   <location line="466" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="488" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Description of Room</source>
    <translation>Description of Room</translation>
   </message>
   <message>
-   <location line="467" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Natural-Language Room Name</source>
    <translation>Natural-Language Room Name</translation>
   </message>
   <message>
-   <location line="468" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Full List of Room Owners</source>
    <translation>Full List of Room Owners</translation>
   </message>
   <message>
-   <location line="469" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>The Room Password</source>
    <translation>The Room Password</translation>
   </message>
   <message>
-   <location line="470" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Affiliations that May Discover Real JIDs of Occupants</source>
    <translation>Affiliations that May Discover Real JIDs of Occupants</translation>
   </message>
   <message>
-   <location line="472" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make Participants List Public?</source>
    <translation>Make Participants List Public?</translation>
   </message>
   <message>
-   <location line="473" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make all Occupants as Participants?</source>
    <translation>Make all Occupants as Participants?</translation>
   </message>
   <message>
-   <location line="475" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Occupants to Query Other Occupants?</source>
    <translation>Allow Occupants to Query Other Occupants?</translation>
   </message>
   <message>
-   <location line="476" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Visitors to Send Status Text in Presence Updates?</source>
    <translation>Allow Visitors to Send Status Text in Presence Updates?</translation>
   </message>
   <message>
-   <location line="477" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Make this Room CAPTCHA Protected?</source>
    <translation>Make this Room CAPTCHA Protected?</translation>
   </message>
   <message>
-   <location line="478" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Do not Request CAPTCHA for Followed Jabber ID</source>
    <translation>Do not Request CAPTCHA for Followed Jabber ID</translation>
   </message>
   <message>
-   <location line="480" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Login Only With Registered Nickname?</source>
    <translation>Allow Login Only With Registered Nickname?</translation>
   </message>
   <message>
-   <location line="481" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Occupants to Change Nicknames?</source>
    <translation>Allow Occupants to Change Nicknames?</translation>
   </message>
   <message>
-   <location line="482" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Allow Users to Register with the Room?</source>
    <translation>Allow Users to Register with the Room?</translation>
   </message>
   <message>
-   <location line="486" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Conference information</source>
    <translation>Conference information</translation>
   </message>
   <message>
-   <location line="487" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Contact JID</source>
    <translation>Contact JID</translation>
   </message>
   <message>
-   <location line="489" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Natural Language for Room</source>
    <translation>Natural Language for Room</translation>
   </message>
   <message>
-   <location line="490" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>LDAP Group</source>
    <translation>LDAP Group</translation>
   </message>
   <message>
-   <location line="491" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>URL for Archived Discussion Logs</source>
    <translation>URL for Archived Discussion Logs</translation>
   </message>
   <message>
-   <location line="492" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Current Number of Occupants in Room</source>
    <translation>Current Number of Occupants in Room</translation>
   </message>
   <message>
-   <location line="493" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Current Subject or Discussion Topic in Room</source>
    <translation>Current Subject or Discussion Topic in Room</translation>
   </message>
   <message>
-   <location line="494" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>The Room Subject Can be Modified by Participants?</source>
    <translation>The Room Subject Can be Modified by Participants?</translation>
   </message>
   <message>
-   <location line="532" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>You are invited to the conference %1</source>
    <translation>You are invited to the conference %1</translation>
   </message>
   <message>
-   <location line="538" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Invitation received</source>
    <translation>Invitation received</translation>
   </message>
   <message>
-   <location line="564" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>You are invited to the conference %1 by %2.&lt;br>Reason: %3</source>
-   <translation>You are invited to the conference %1 by %2.&lt;br>Reason: %3</translation>
-  </message>
-  <message>
-   <location line="566" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Do you want to join this conference?</source>
-   <translation>Do you want to join this conference?</translation>
-  </message>
-  <message>
-   <location line="568" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Invite</source>
-   <translation>Invite</translation>
-  </message>
-  <message>
-   <location line="852" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Supports the multi-user conferences</source>
    <translation>Supports the multi-user conferences</translation>
   </message>
   <message>
-   <location line="859" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Hidden room</source>
    <translation>Hidden room</translation>
   </message>
   <message>
-   <location line="860" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that cannot be found by any user through normal means such as searching and service discovery</source>
    <translation>A room that cannot be found by any user through normal means such as searching and service discovery</translation>
   </message>
   <message>
-   <location line="864" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Members-only room</source>
    <translation>Members-only room</translation>
   </message>
   <message>
-   <location line="865" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that a user cannot enter without being on the member list</source>
    <translation>A room that a user cannot enter without being on the member list</translation>
   </message>
   <message>
-   <location line="869" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Moderated room</source>
    <translation>Moderated room</translation>
   </message>
   <message>
-   <location line="870" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room in which only those with 'voice' may send messages to all occupants</source>
    <translation>A room in which only those with 'voice' may send messages to all occupants</translation>
   </message>
   <message>
-   <location line="874" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Non-anonymous room</source>
    <translation>Non-anonymous room</translation>
   </message>
   <message>
-   <location line="875" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room in which an occupant's full JID is exposed to all other occupants</source>
    <translation>A room in which an occupant's full JID is exposed to all other occupants</translation>
   </message>
   <message>
-   <location line="879" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Open room</source>
    <translation>Open room</translation>
   </message>
   <message>
-   <location line="880" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that anyone may enter without being on the member list</source>
    <translation>A room that anyone may enter without being on the member list</translation>
   </message>
   <message>
-   <location line="884" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="889" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Password-protected room</source>
    <translation>Password-protected room</translation>
   </message>
   <message>
-   <location line="885" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="890" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that a user cannot enter without first providing the correct password</source>
    <translation>A room that a user cannot enter without first providing the correct password</translation>
   </message>
   <message>
-   <location line="894" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Persistent room</source>
    <translation>Persistent room</translation>
   </message>
   <message>
-   <location line="895" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that is not destroyed if the last occupant exits</source>
    <translation>A room that is not destroyed if the last occupant exits</translation>
   </message>
   <message>
-   <location line="899" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Public room</source>
    <translation>Public room</translation>
   </message>
   <message>
-   <location line="900" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that can be found by any user through normal means such as searching and service discovery</source>
    <translation>A room that can be found by any user through normal means such as searching and service discovery</translation>
   </message>
   <message>
-   <location line="904" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Semi-anonymous room</source>
    <translation>Semi-anonymous room</translation>
   </message>
   <message>
-   <location line="905" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room in which an occupant's full JID can be discovered by room admins only</source>
    <translation>A room in which an occupant's full JID can be discovered by room admins only</translation>
   </message>
   <message>
-   <location line="909" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Temporary room</source>
    <translation>Temporary room</translation>
   </message>
   <message>
-   <location line="910" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that is destroyed if the last occupant exits</source>
    <translation>A room that is destroyed if the last occupant exits</translation>
   </message>
   <message>
-   <location line="914" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Unmoderated room</source>
    <translation>Unmoderated room</translation>
   </message>
   <message>
-   <location line="915" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room in which any occupant is allowed to send messages to all occupants</source>
    <translation>A room in which any occupant is allowed to send messages to all occupants</translation>
   </message>
   <message>
-   <location line="919" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Unsecured room</source>
    <translation>Unsecured room</translation>
   </message>
   <message>
-   <location line="920" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>A room that anyone is allowed to enter without first providing the correct password</source>
    <translation>A room that anyone is allowed to enter without first providing the correct password</translation>
   </message>
   <message>
-   <location line="998" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Invite to</source>
    <translation>Invite to</translation>
   </message>
   <message>
-   <location line="1007" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>%1 from %2</source>
-   <translation>%1 from %2</translation>
-  </message>
-  <message>
-   <location line="1358" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1388" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Enter</source>
-   <translation>Enter</translation>
-  </message>
-  <message>
-   <location line="1367" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1399" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Exit</source>
-   <translation>Exit</translation>
-  </message>
-  <message>
-   <location line="1377" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
    <source>Open Conference Dialog</source>
    <translation>Open Conference Dialog</translation>
   </message>
   <message>
-   <location line="1522" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>I'm too busy right now</source>
-   <translation>I'm too busy right now</translation>
+   <source>&lt;b>Conference:&lt;/b> %1</source>
+   <translation>&lt;b>Conference:&lt;/b> %1</translation>
   </message>
   <message>
-   <location line="1523" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Decline invite</source>
-   <translation>Decline invite</translation>
+   <source>&lt;big>&lt;b>[%1]&lt;/b>&lt;/big> in [%2]</source>
+   <translation>&lt;big>&lt;b>[%1]&lt;/b>&lt;/big> in [%2]</translation>
   </message>
   <message>
-   <location line="1523" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <location line="1549" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Enter a reason</source>
-   <translation>Enter a reason</translation>
+   <source>Messages</source>
+   <translation>Messages</translation>
   </message>
   <message>
-   <location line="1548" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Please, enter this conference!</source>
-   <translation>Please, enter this conference!</translation>
+   <source>Participants List</source>
+   <translation>Participants List</translation>
   </message>
   <message>
-   <location line="1549" filename="../../plugins/multiuserchat/multiuserchatmanager.cpp"/>
-   <source>Invite user</source>
-   <translation>Invite user</translation>
+   <source>Full</source>
+   <translation>Full</translation>
+  </message>
+  <message>
+   <source>Simplified</source>
+   <translation>Simplified</translation>
+  </message>
+  <message>
+   <source>Compact</source>
+   <translation>Compact</translation>
+  </message>
+  <message>
+   <source>Participants list view:</source>
+   <translation>Participants list view:</translation>
+  </message>
+  <message>
+   <source>Anyone</source>
+   <translation>Anyone</translation>
+  </message>
+  <message>
+   <source>Moderators only</source>
+   <translation>Moderators only</translation>
+  </message>
+  <message>
+   <source>Allow visitors to send private messages to</source>
+   <translation>Allow visitors to send private messages to</translation>
+  </message>
+  <message>
+   <source>Nobody</source>
+   <translation>Nobody</translation>
+  </message>
+  <message>
+   <source>Allow visitors to change nickname?</source>
+   <translation>Allow visitors to change nickname?</translation>
+  </message>
+  <message>
+   <source>Allow visitors to send voice requests?</source>
+   <translation>Allow visitors to send voice requests?</translation>
+  </message>
+  <message>
+   <source>Minimum interval between voice requests (in seconds)</source>
+   <translation>Minimum interval between voice requests (in seconds)</translation>
+  </message>
+  <message>
+   <source>Join Conference</source>
+   <translation>Join Conference</translation>
+  </message>
+  <message>
+   <source>List of rooms</source>
+   <translation>List of rooms</translation>
+  </message>
+  <message>
+   <source>Contains the list of multi-user chat rooms</source>
+   <translation>Contains the list of multi-user chat rooms</translation>
+  </message>
+  <message>
+   <source>Join Conference...</source>
+   <translation>Join Conference...</translation>
+  </message>
+  <message>
+   <source>Join to Conference</source>
+   <translation>Join to Conference</translation>
+  </message>
+  <message>
+   <source>Exit from Conference</source>
+   <translation>Exit from Conference</translation>
+  </message>
+  <message>
+   <source>Enter to Conference</source>
+   <translation>Enter to Conference</translation>
+  </message>
+  <message>
+   <source>You are invited to the conference &lt;b>%1&lt;/b> by user &lt;b>%2&lt;/b>.</source>
+   <translation>You are invited to the conference &lt;b>%1&lt;/b> by user &lt;b>%2&lt;/b>.</translation>
+  </message>
+  <message>
+   <source>Do you want to join to the conference?</source>
+   <translation>Do you want to join to the conference?</translation>
+  </message>
+  <message>
+   <source>Invitation to Conference</source>
+   <translation>Invitation to Conference</translation>
+  </message>
+  <message>
+   <source>Direct Invitations to Conferences</source>
+   <translation>Direct Invitations to Conferences</translation>
+  </message>
+  <message>
+   <source>Supports the direct invitations to conferences</source>
+   <translation>Supports the direct invitations to conferences</translation>
+  </message>
+  <message>
+   <source>Show/Hide conference participants list</source>
+   <translation>Show/Hide conference participants list</translation>
+  </message>
+  <message>
+   <source>Ctrl+U</source>
+   <comment>Show/Hide conference participants list</comment>
+   <translation>Ctrl+U</translation>
+  </message>
+  <message>
+   <source>Invite to Conversation</source>
+   <translation>Invite to Conversation</translation>
+  </message>
+  <message numerus="yes">
+   <source>Conference with %1 and %n other contact(s)</source>
+   <translation>
+    <numerusform>Conference with %1 and %n other contact(s)</numerusform>
+    <numerusform>Conference with %1 and %n other contact(s)</numerusform>
+    <numerusform>Conference with %1 and %n other contact(s)</numerusform>
+   </translation>
+  </message>
+  <message>
+   <source>Conference with %1</source>
+   <translation>Conference with %1</translation>
   </message>
  </context>
  <context>
   <name>MultiUserChatWindow</name>
   <message>
-   <location line="396" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Data form received: %1</source>
-   <translation>Data form received: %1</translation>
-  </message>
-  <message>
-   <location line="485" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Mention message in conference: %1</source>
-   <translation>Mention message in conference: %1</translation>
-  </message>
-  <message>
-   <location line="486" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Mention in conference</source>
-   <translation>Mention in conference</translation>
-  </message>
-  <message>
-   <location line="492" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>New message in conference: %1</source>
    <translation>New message in conference: %1</translation>
   </message>
   <message>
-   <location line="493" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Conference message</source>
    <translation>Conference message</translation>
   </message>
   <message>
-   <location line="500" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="524" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>[%1] in conference %2</source>
-   <translation>[%1] in conference %2</translation>
-  </message>
-  <message>
-   <location line="518" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Private message from: [%1]</source>
-   <translation>Private message from: [%1]</translation>
-  </message>
-  <message>
-   <location line="523" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Private message</source>
    <translation>Private message</translation>
   </message>
   <message>
-   <location line="575" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Data form received from: %1</source>
-   <translation>Data form received from: %1</translation>
-  </message>
-  <message>
-   <location line="576" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Data form received</source>
-   <translation>Data form received</translation>
-  </message>
-  <message>
-   <location line="743" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Open Chat Dialog</source>
-   <translation>Open Chat Dialog</translation>
-  </message>
-  <message>
-   <location line="751" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Kick User</source>
-   <translation>Kick User</translation>
-  </message>
-  <message>
-   <location line="758" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Ban User</source>
-   <translation>Ban User</translation>
-  </message>
-  <message>
-   <location line="765" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Change Role</source>
    <translation>Change Role</translation>
   </message>
   <message>
-   <location line="769" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="857" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Visitor</source>
    <translation>Visitor</translation>
   </message>
   <message>
-   <location line="778" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="859" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Participant</source>
    <translation>Participant</translation>
   </message>
   <message>
-   <location line="787" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="861" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Moderator</source>
    <translation>Moderator</translation>
   </message>
   <message>
-   <location line="797" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Change Affiliation</source>
    <translation>Change Affiliation</translation>
   </message>
   <message>
-   <location line="801" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="870" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
+   <source>Subject: %1</source>
+   <translation>Subject: %1</translation>
+  </message>
+  <message>
+   <source>%1 - Conference</source>
+   <translation>%1 - Conference</translation>
+  </message>
+  <message>
    <source>None</source>
    <translation>None</translation>
   </message>
   <message>
-   <location line="810" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="872" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Member</source>
    <translation>Member</translation>
   </message>
   <message>
-   <location line="819" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="874" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Administrator</source>
    <translation>Administrator</translation>
   </message>
   <message>
-   <location line="828" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="876" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Owner</source>
    <translation>Owner</translation>
   </message>
   <message>
-   <location line="850" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>&lt;b>Jabber ID:&lt;/b> %1</source>
-   <translation>&lt;b>Jabber ID:&lt;/b> %1</translation>
-  </message>
-  <message>
-   <location line="862" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>&lt;b>Role:&lt;/b> %1</source>
-   <translation>&lt;b>Role:&lt;/b> %1</translation>
-  </message>
-  <message>
-   <location line="877" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>&lt;b>Affiliation:&lt;/b> %1</source>
-   <translation>&lt;b>Affiliation:&lt;/b> %1</translation>
-  </message>
-  <message>
-   <location line="883" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>&lt;b>Status:&lt;/b> %1</source>
-   <translation>&lt;b>Status:&lt;/b> %1</translation>
-  </message>
-  <message>
-   <location line="990" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Change Nick</source>
-   <translation>Change Nick</translation>
-  </message>
-  <message>
-   <location line="995" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Change Topic</source>
-   <translation>Change Topic</translation>
-  </message>
-  <message>
-   <location line="1000" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Invite to Conference</source>
-   <translation>Invite to Conference</translation>
-  </message>
-  <message>
-   <location line="1005" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Request Voice</source>
-   <translation>Request Voice</translation>
-  </message>
-  <message>
-   <location line="1010" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit Ban List</source>
-   <translation>Edit Ban List</translation>
-  </message>
-  <message>
-   <location line="1015" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit Members List</source>
-   <translation>Edit Members List</translation>
-  </message>
-  <message>
-   <location line="1020" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit Administrators List</source>
-   <translation>Edit Administrators List</translation>
-  </message>
-  <message>
-   <location line="1025" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit Owners List</source>
-   <translation>Edit Owners List</translation>
-  </message>
-  <message>
-   <location line="1030" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Configure Conference</source>
-   <translation>Configure Conference</translation>
-  </message>
-  <message>
-   <location line="1035" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Destroy Conference</source>
-   <translation>Destroy Conference</translation>
-  </message>
-  <message>
-   <location line="1040" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Clear Conference Window</source>
-   <translation>Clear Conference Window</translation>
-  </message>
-  <message>
-   <location line="1046" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter</source>
-   <translation>Enter</translation>
-  </message>
-  <message>
-   <location line="1047" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter conference</source>
-   <translation>Enter conference</translation>
-  </message>
-  <message>
-   <location line="1054" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Exit</source>
-   <translation>Exit</translation>
-  </message>
-  <message>
-   <location line="1055" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Exit conference</source>
-   <translation>Exit conference</translation>
-  </message>
-  <message>
-   <location line="1213" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="1224" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="1262" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>User %1 is not present in the conference</source>
-   <translation>User %1 is not present in the conference</translation>
-  </message>
-  <message>
-   <location line="1235" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 is not valid contact JID</source>
-   <translation>%1 is not valid contact JID</translation>
-  </message>
-  <message>
-   <location line="1246" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 is not valid room JID</source>
-   <translation>%1 is not valid room JID</translation>
-  </message>
-  <message>
-   <location line="1293" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Supported list of commands: 
  /ban &lt;roomnick> [comment] 
  /invite &lt;jid> [comment] 
@@ -1000,284 +990,670 @@ Check values and try again</translation>
  /topic &lt;foo></translation>
   </message>
   <message>
-   <location line="1363" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Subject: %1</source>
-   <translation>Subject: %1</translation>
-  </message>
-  <message>
-   <location line="1363" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has changed the subject to: %2</source>
-   <translation>%1 has changed the subject to: %2</translation>
-  </message>
-  <message>
-   <location line="1405" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>This room is non-anonymous</source>
-   <translation>This room is non-anonymous</translation>
-  </message>
-  <message>
-   <location line="1408" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 affiliation changed while not in the room</source>
-   <translation>%1 affiliation changed while not in the room</translation>
-  </message>
-  <message>
-   <location line="1411" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Room now shows unavailable members</source>
-   <translation>Room now shows unavailable members</translation>
-  </message>
-  <message>
-   <location line="1414" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Room now does not show unavailable members</source>
-   <translation>Room now does not show unavailable members</translation>
-  </message>
-  <message>
-   <location line="1417" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Room configuration change has occurred</source>
-   <translation>Room configuration change has occurred</translation>
-  </message>
-  <message>
-   <location line="1420" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Room logging is now enabled</source>
-   <translation>Room logging is now enabled</translation>
-  </message>
-  <message>
-   <location line="1423" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Room logging is now disabled</source>
-   <translation>Room logging is now disabled</translation>
-  </message>
-  <message>
-   <location line="1426" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>The room is now non-anonymous</source>
-   <translation>The room is now non-anonymous</translation>
-  </message>
-  <message>
-   <location line="1429" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>The room is now semi-anonymous</source>
-   <translation>The room is now semi-anonymous</translation>
-  </message>
-  <message>
-   <location line="1432" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>A new room has been created</source>
-   <translation>A new room has been created</translation>
-  </message>
-  <message>
-   <location line="1435" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has been removed from the room because of an affiliation change</source>
-   <translation>%1 has been removed from the room because of an affiliation change</translation>
-  </message>
-  <message>
-   <location line="1438" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has been removed from the room because the room has been changed to members-only</source>
-   <translation>%1 has been removed from the room because the room has been changed to members-only</translation>
-  </message>
-  <message>
-   <location line="1441" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 is being removed from the room because of a system shutdown</source>
-   <translation>%1 is being removed from the room because of a system shutdown</translation>
-  </message>
-  <message>
-   <location line="1533" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="1716" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Loading history...</source>
-   <translation>Loading history...</translation>
-  </message>
-  <message>
-   <location line="1556" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 (%2)</source>
-   <translation>%1 (%2)</translation>
-  </message>
-  <message>
-   <location line="1557" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 - Conference</source>
-   <translation>%1 - Conference</translation>
-  </message>
-  <message>
-   <location line="1603" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Clear Chat Window</source>
-   <translation>Clear Chat Window</translation>
-  </message>
-  <message>
-   <location line="1742" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 - Private chat</source>
-   <translation>%1 - Private chat</translation>
-  </message>
-  <message>
-   <location line="1954" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>You entered into the room</source>
-   <translation>You entered into the room</translation>
-  </message>
-  <message>
-   <location line="1959" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Notify: %1</source>
-   <translation>Notify: %1</translation>
-  </message>
-  <message>
-   <location line="1964" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Error: %1</source>
-   <translation>Error: %1</translation>
-  </message>
-  <message>
-   <location line="1986" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>You left the room</source>
-   <translation>You left the room</translation>
-  </message>
-  <message>
-   <location line="2024" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 &lt;%2> has joined the room</source>
-   <translation>%1 &lt;%2> has joined the room</translation>
-  </message>
-  <message>
-   <location line="2026" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has joined the room</source>
-   <translation>%1 has joined the room</translation>
-  </message>
-  <message>
-   <location line="2037" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>%1 changed status to [%2] %3</source>
    <translation>%1 changed status to [%2] %3</translation>
   </message>
   <message>
-   <location line="2053" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 &lt;%2> has left the room</source>
-   <translation>%1 &lt;%2> has left the room</translation>
+   <source>Mention message in conference: %1</source>
+   <translation>Mention message in conference: %1</translation>
   </message>
   <message>
-   <location line="2055" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has left the room</source>
-   <translation>%1 has left the room</translation>
+   <source>Mention in conference</source>
+   <translation>Mention in conference</translation>
   </message>
   <message>
-   <location line="2095" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 role changed from %2 to %3</source>
-   <translation>%1 role changed from %2 to %3</translation>
+   <source>Loading history...</source>
+   <translation>Loading history...</translation>
   </message>
   <message>
-   <location line="2101" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 affiliation changed from %2 to %3</source>
-   <translation>%1 affiliation changed from %2 to %3</translation>
-  </message>
-  <message>
-   <location line="2128" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 changed nick to %2</source>
-   <translation>%1 changed nick to %2</translation>
-  </message>
-  <message>
-   <location line="2154" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has declined your invite to this room. %2</source>
-   <translation>%1 has declined your invite to this room. %2</translation>
-  </message>
-  <message>
-   <location line="2162" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has been kicked from the room%2. %3</source>
-   <translation>%1 has been kicked from the room%2. %3</translation>
-  </message>
-  <message>
-   <location line="2164" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="2177" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source> by %1</source>
-   <translation> by %1</translation>
-  </message>
-  <message>
-   <location line="2175" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>%1 has been banned from the room%2. %3</source>
-   <translation>%1 has been banned from the room%2. %3</translation>
-  </message>
-  <message>
-   <location line="2186" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit ban list - %1</source>
-   <translation>Edit ban list - %1</translation>
-  </message>
-  <message>
-   <location line="2188" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit members list - %1</source>
-   <translation>Edit members list - %1</translation>
-  </message>
-  <message>
-   <location line="2190" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit administrators list - %1</source>
-   <translation>Edit administrators list - %1</translation>
-  </message>
-  <message>
-   <location line="2192" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Edit owners list - %1</source>
-   <translation>Edit owners list - %1</translation>
-  </message>
-  <message>
-   <location line="2215" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>This room was destroyed by owner. %1</source>
-   <translation>This room was destroyed by owner. %1</translation>
-  </message>
-  <message>
-   <location line="2472" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Change nick name</source>
-   <translation>Change nick name</translation>
-  </message>
-  <message>
-   <location line="2472" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter your new nick name in conference %1</source>
-   <translation>Enter your new nick name in conference %1</translation>
-  </message>
-  <message>
-   <location line="2482" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Change topic</source>
-   <translation>Change topic</translation>
-  </message>
-  <message>
-   <location line="2482" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter new topic for conference %1</source>
-   <translation>Enter new topic for conference %1</translation>
-  </message>
-  <message>
-   <location line="2503" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="2507" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Invite user</source>
-   <translation>Invite user</translation>
-  </message>
-  <message>
-   <location line="2503" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter user JID:</source>
-   <translation>Enter user JID:</translation>
-  </message>
-  <message>
-   <location line="2506" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Please, enter this conference!</source>
-   <translation>Please, enter this conference!</translation>
-  </message>
-  <message>
-   <location line="2507" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="2541" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter a reason:</source>
-   <translation>Enter a reason:</translation>
-  </message>
-  <message>
-   <location line="2541" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Destroying conference</source>
-   <translation>Destroying conference</translation>
-  </message>
-  <message>
-   <location line="2582" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Kick reason</source>
-   <translation>Kick reason</translation>
-  </message>
-  <message>
-   <location line="2582" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter reason for kick</source>
-   <translation>Enter reason for kick</translation>
-  </message>
-  <message>
-   <location line="2597" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Ban reason</source>
-   <translation>Ban reason</translation>
-  </message>
-  <message>
-   <location line="2597" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <source>Enter reason for ban</source>
-   <translation>Enter reason for ban</translation>
-  </message>
-  <message>
-   <location line="2652" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
-   <location line="2657" filename="../../plugins/multiuserchat/multiuserchatwindow.cpp"/>
    <source>Failed to load history: %1</source>
    <translation>Failed to load history: %1</translation>
+  </message>
+  <message>
+   <source>Change Nick</source>
+   <translation>Change Nick</translation>
+  </message>
+  <message>
+   <source>Change Topic</source>
+   <translation>Change Topic</translation>
+  </message>
+  <message>
+   <source>Invite to Conference</source>
+   <translation>Invite to Conference</translation>
+  </message>
+  <message>
+   <source>Request Voice</source>
+   <translation>Request Voice</translation>
+  </message>
+  <message>
+   <source>Configure Conference</source>
+   <translation>Configure Conference</translation>
+  </message>
+  <message>
+   <source>Destroy Conference</source>
+   <translation>Destroy Conference</translation>
+  </message>
+  <message>
+   <source>&lt;b>Jabber ID:&lt;/b> %1</source>
+   <translation>&lt;b>Jabber ID:&lt;/b> %1</translation>
+  </message>
+  <message>
+   <source>&lt;b>Role:&lt;/b> %1</source>
+   <translation>&lt;b>Role:&lt;/b> %1</translation>
+  </message>
+  <message>
+   <source>&lt;b>Affiliation:&lt;/b> %1</source>
+   <translation>&lt;b>Affiliation:&lt;/b> %1</translation>
+  </message>
+  <message>
+   <source>&lt;b>Status:&lt;/b> %1</source>
+   <translation>&lt;b>Status:&lt;/b> %1</translation>
+  </message>
+  <message>
+   <source>[%1] in [%2]</source>
+   <translation>[%1] in [%2]</translation>
+  </message>
+  <message>
+   <source>User %1 was not found in the conference</source>
+   <translation>User %1 was not found in the conference</translation>
+  </message>
+  <message>
+   <source>User %1 already has a voice in the conference</source>
+   <translation>User %1 already has a voice in the conference</translation>
+  </message>
+  <message>
+   <source>Unable to grant a voice to the user %1</source>
+   <translation>Unable to grant a voice to the user %1</translation>
+  </message>
+  <message>
+   <source>You granted the voice to the user %1</source>
+   <translation>You granted the voice to the user %1</translation>
+  </message>
+  <message>
+   <source>User %1 requests a voice in the conference, %2</source>
+   <translation>User %1 requests a voice in the conference, %2</translation>
+  </message>
+  <message>
+   <source>Grant Voice</source>
+   <translation>Grant Voice</translation>
+  </message>
+  <message>
+   <source>Voice request received</source>
+   <translation>Voice request received</translation>
+  </message>
+  <message>
+   <source>User %1 requests a voice in the conference</source>
+   <translation>User %1 requests a voice in the conference</translation>
+  </message>
+  <message>
+   <source>Clear window</source>
+   <translation>Clear window</translation>
+  </message>
+  <message>
+   <source>Kick user %1 request was sent</source>
+   <translation>Kick user %1 request was sent</translation>
+  </message>
+  <message>
+   <source>Failed to send kick user %1 request</source>
+   <translation>Failed to send kick user %1 request</translation>
+  </message>
+  <message>
+   <source>Ban user %1 request was sent</source>
+   <translation>Ban user %1 request was sent</translation>
+  </message>
+  <message>
+   <source>Failed to send ban user %1 request</source>
+   <translation>Failed to send ban user %1 request</translation>
+  </message>
+  <message>
+   <source>Private message was sent to user %1</source>
+   <translation>Private message was sent to user %1</translation>
+  </message>
+  <message>
+   <source>Failed to send private message to user %1</source>
+   <translation>Failed to send private message to user %1</translation>
+  </message>
+  <message>
+   <source>Failed to change your nickname to %1</source>
+   <translation>Failed to change your nickname to %1</translation>
+  </message>
+  <message>
+   <source>Change subject request was sent</source>
+   <translation>Change subject request was sent</translation>
+  </message>
+  <message>
+   <source>Failed to send change subject request</source>
+   <translation>Failed to send change subject request</translation>
+  </message>
+  <message>
+   <source>This conference is non-anonymous</source>
+   <translation>This conference is non-anonymous</translation>
+  </message>
+  <message>
+   <source>User %1 affiliation changed while not in the conference</source>
+   <translation>User %1 affiliation changed while not in the conference</translation>
+  </message>
+  <message>
+   <source>Conference now shows unavailable members</source>
+   <translation>Conference now shows unavailable members</translation>
+  </message>
+  <message>
+   <source>Conference now does not show unavailable members</source>
+   <translation>Conference now does not show unavailable members</translation>
+  </message>
+  <message>
+   <source>Conference configuration change has occurred</source>
+   <translation>Conference configuration change has occurred</translation>
+  </message>
+  <message>
+   <source>Conference logging is now enabled</source>
+   <translation>Conference logging is now enabled</translation>
+  </message>
+  <message>
+   <source>Conference logging is now disabled</source>
+   <translation>Conference logging is now disabled</translation>
+  </message>
+  <message>
+   <source>The conference is now non-anonymous</source>
+   <translation>The conference is now non-anonymous</translation>
+  </message>
+  <message>
+   <source>The conference is now semi-anonymous</source>
+   <translation>The conference is now semi-anonymous</translation>
+  </message>
+  <message>
+   <source>A new conference has been created</source>
+   <translation>A new conference has been created</translation>
+  </message>
+  <message>
+   <source>User %1 has been removed from the conference because of an affiliation change</source>
+   <translation>User %1 has been removed from the conference because of an affiliation change</translation>
+  </message>
+  <message>
+   <source>User %1 has been removed from the conference because the conference has been changed to members-only</source>
+   <translation>User %1 has been removed from the conference because the conference has been changed to members-only</translation>
+  </message>
+  <message>
+   <source>User %1 is being removed from the conference because of a system shutdown</source>
+   <translation>User %1 is being removed from the conference because of a system shutdown</translation>
+  </message>
+  <message>
+   <source>%1 - Private Chat</source>
+   <translation>%1 - Private Chat</translation>
+  </message>
+  <message>
+   <source>You have joined the conference</source>
+   <translation>You have joined the conference</translation>
+  </message>
+  <message>
+   <source>You have no voice in this conference, %1</source>
+   <translation>You have no voice in this conference, %1</translation>
+  </message>
+  <message>
+   <source>You have left the conference</source>
+   <translation>You have left the conference</translation>
+  </message>
+  <message>
+   <source>Failed to change user role: %1</source>
+   <translation>Failed to change user role: %1</translation>
+  </message>
+  <message>
+   <source>Failed to change user affiliation: %1</source>
+   <translation>Failed to change user affiliation: %1</translation>
+  </message>
+  <message>
+   <source>Failed to load conference configuration: %1</source>
+   <translation>Failed to load conference configuration: %1</translation>
+  </message>
+  <message>
+   <source>Failed to update conference configuration: %1</source>
+   <translation>Failed to update conference configuration: %1</translation>
+  </message>
+  <message>
+   <source>Failed to destroy this conference: %1</source>
+   <translation>Failed to destroy this conference: %1</translation>
+  </message>
+  <message>
+   <source>User %1 has declined your invite to this conference. %2</source>
+   <translation>User %1 has declined your invite to this conference. %2</translation>
+  </message>
+  <message>
+   <source>%1 &lt;%2> has joined</source>
+   <translation>%1 &lt;%2> has joined</translation>
+  </message>
+  <message>
+   <source>%1 has joined</source>
+   <translation>%1 has joined</translation>
+  </message>
+  <message>
+   <source>%1 &lt;%2> has left</source>
+   <translation>%1 &lt;%2> has left</translation>
+  </message>
+  <message>
+   <source>%1 has left</source>
+   <translation>%1 has left</translation>
+  </message>
+  <message>
+   <source>%1 changed role from %2 to %3</source>
+   <translation>%1 changed role from %2 to %3</translation>
+  </message>
+  <message>
+   <source>%1 changed affiliation from %2 to %3</source>
+   <translation>%1 changed affiliation from %2 to %3</translation>
+  </message>
+  <message>
+   <source>User %1 has been kicked from the conference%2 %3</source>
+   <translation>User %1 has been kicked from the conference%2 %3</translation>
+  </message>
+  <message>
+   <source>User %1 has been banned in the conference%2 %3</source>
+   <translation>User %1 has been banned in the conference%2 %3</translation>
+  </message>
+  <message>
+   <source>Conference configuration accepted</source>
+   <translation>Conference configuration accepted</translation>
+  </message>
+  <message>
+   <source>Enter new topic:</source>
+   <translation>Enter new topic:</translation>
+  </message>
+  <message>
+   <source>Enter a message:</source>
+   <translation>Enter a message:</translation>
+  </message>
+  <message>
+   <source>You already have a voice in the conference</source>
+   <translation>You already have a voice in the conference</translation>
+  </message>
+  <message>
+   <source>Failed to send a request for voice in the conference</source>
+   <translation>Failed to send a request for voice in the conference</translation>
+  </message>
+  <message>
+   <source>Request for voice in the conference was sent</source>
+   <translation>Request for voice in the conference was sent</translation>
+  </message>
+  <message>
+   <source>Kick User - %1</source>
+   <translation>Kick User - %1</translation>
+  </message>
+  <message>
+   <source>Ban User - %1</source>
+   <translation>Ban User - %1</translation>
+  </message>
+  <message>
+   <source>Voice request from [%1]</source>
+   <translation>Voice request from [%1]</translation>
+  </message>
+  <message>
+   <source>Private message from [%1]</source>
+   <translation>Private message from [%1]</translation>
+  </message>
+  <message>
+   <source>Invitation was sent to user %1</source>
+   <translation>Invitation was sent to user %1</translation>
+  </message>
+  <message>
+   <source>Failed to send invitation to user %1</source>
+   <translation>Failed to send invitation to user %1</translation>
+  </message>
+  <message>
+   <source>Kick</source>
+   <translation>Kick</translation>
+  </message>
+  <message>
+   <source>Ban</source>
+   <translation>Ban</translation>
+  </message>
+  <message>
+   <source>Leaving conference...</source>
+   <translation>Leaving conference...</translation>
+  </message>
+  <message>
+   <source>You have left the conference due to error: %1</source>
+   <translation>You have left the conference due to error: %1</translation>
+  </message>
+  <message>
+   <source>Required parameter &lt;room nick> is not specified</source>
+   <translation>Required parameter &lt;room nick> is not specified</translation>
+  </message>
+  <message>
+   <source>Required parameter &lt;user nick> is not specified</source>
+   <translation>Required parameter &lt;user nick> is not specified</translation>
+  </message>
+  <message>
+   <source>Required parameter &lt;user jid> is not specified</source>
+   <translation>Required parameter &lt;user jid> is not specified</translation>
+  </message>
+  <message>
+   <source>Required parameter &lt;room name> is not specified</source>
+   <translation>Required parameter &lt;room name> is not specified</translation>
+  </message>
+  <message>
+   <source>Required parameter &lt;new nick> is not specified</source>
+   <translation>Required parameter &lt;new nick> is not specified</translation>
+  </message>
+  <message>
+   <source>Change Nickname</source>
+   <translation>Change Nickname</translation>
+  </message>
+  <message>
+   <source>Enter new nickname:</source>
+   <translation>Enter new nickname:</translation>
+  </message>
+  <message>
+   <source>Error</source>
+   <translation>Error</translation>
+  </message>
+  <message>
+   <source>Failed to change nickname to %1</source>
+   <translation>Failed to change nickname to %1</translation>
+  </message>
+  <message>
+   <source>Enter password:</source>
+   <translation>Enter password:</translation>
+  </message>
+  <message>
+   <source>You have been kicked from this conference, you may %1 or %2</source>
+   <translation>You have been kicked from this conference, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>return</source>
+   <translation>return</translation>
+  </message>
+  <message>
+   <source>exit</source>
+   <translation>exit</translation>
+  </message>
+  <message>
+   <source>You have been banned in this conference, you can not return only %1</source>
+   <translation>You have been banned in this conference, you can not return only %1</translation>
+  </message>
+  <message>
+   <source>You have left the conference: %1</source>
+   <translation>You have left the conference: %1</translation>
+  </message>
+  <message>
+   <source>Nickname '%1' is in use or registered by another user, you may %2 or %3</source>
+   <translation>Nickname '%1' is in use or registered by another user, you may %2 or %3</translation>
+  </message>
+  <message>
+   <source>change nick</source>
+   <translation>change nick</translation>
+  </message>
+  <message>
+   <source>This conference is members only but you are not one of them, you may %1 or %2</source>
+   <translation>This conference is members only but you are not one of them, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>retry</source>
+   <translation>retry</translation>
+  </message>
+  <message>
+   <source>This conference does not exists or does not configured yet by owner, you may %1 or %2</source>
+   <translation>This conference does not exists or does not configured yet by owner, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>This conference does not exists and creation is restricted, you may %1 or %2</source>
+   <translation>This conference does not exists and creation is restricted, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>The maximum number of users has been reached, you may %1 or %2</source>
+   <translation>The maximum number of users has been reached, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>Failed to change your nickname to %1: %2</source>
+   <translation>Failed to change your nickname to %1: %2</translation>
+  </message>
+  <message>
+   <source>%1 changed nickname to %2</source>
+   <translation>%1 changed nickname to %2</translation>
+  </message>
+  <message>
+   <source> by moderator %1</source>
+   <translation> by moderator %1</translation>
+  </message>
+  <message>
+   <source>Your nickname changed to %1</source>
+   <translation>Your nickname changed to %1</translation>
+  </message>
+  <message>
+   <source>Change Password</source>
+   <translation>Change Password</translation>
+  </message>
+  <message>
+   <source>This conference is password protected and you provided incorrect password, you may %1 or %2</source>
+   <translation>This conference is password protected and you provided incorrect password, you may %1 or %2</translation>
+  </message>
+  <message>
+   <source>change password</source>
+   <translation>change password</translation>
+  </message>
+  <message>
+   <source>Open Private Chat</source>
+   <translation>Open Private Chat</translation>
+  </message>
+  <message>
+   <source>Moderate</source>
+   <translation>Moderate</translation>
+  </message>
+  <message>
+   <source>Edit Users Lists</source>
+   <translation>Edit Users Lists</translation>
+  </message>
+  <message>
+   <source>Show participants list</source>
+   <translation>Show participants list</translation>
+  </message>
+  <message numerus="yes">
+   <source>You invited %1 and %n other contact(s) to this conference. %2</source>
+   <translation>
+    <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
+    <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
+    <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
+   </translation>
+  </message>
+  <message>
+   <source>You invited %1 to this conference. %2</source>
+   <translation>You invited %1 to this conference. %2</translation>
+  </message>
+  <message>
+   <source>Clear Window</source>
+   <translation>Clear Window</translation>
+  </message>
+  <message>
+   <source>Conference Tools</source>
+   <translation>Conference Tools</translation>
+  </message>
+  <message>
+   <source>Disable Notifications</source>
+   <translation>Disable Notifications</translation>
+  </message>
+  <message>
+   <source>Enter to Conference</source>
+   <translation>Enter to Conference</translation>
+  </message>
+  <message>
+   <source>Exit from Conference</source>
+   <translation>Exit from Conference</translation>
+  </message>
+  <message numerus="yes">
+   <source>Failed to invite %1 and %n other contact(s) to this conference: %2</source>
+   <translation>
+    <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
+    <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
+    <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
+   </translation>
+  </message>
+  <message>
+   <source>Failed to invite %1 to this conference: %2</source>
+   <translation>Failed to invite %1 to this conference: %2</translation>
+  </message>
+  <message>
+   <source>This conference was destroyed by owner %1 %2</source>
+   <translation>This conference was destroyed by owner %1 %2</translation>
+  </message>
+ </context>
+ <context>
+  <name>RoomPage</name>
+  <message>
+   <source>Conference name</source>
+   <translation>Conference name</translation>
+  </message>
+  <message>
+   <source>Search conferences</source>
+   <translation>Search conferences</translation>
+  </message>
+  <message>
+   <source>Title</source>
+   <translation>Title</translation>
+  </message>
+  <message>
+   <source>Join to the conference:</source>
+   <translation>Join to the conference:</translation>
+  </message>
+  <message>
+   <source>Select a conference from the list or explicitly specify the name of the hidden one</source>
+   <translation>Select a conference from the list or explicitly specify the name of the hidden one</translation>
+  </message>
+  <message>
+   <source>Loading list of conferences...</source>
+   <translation>Loading list of conferences...</translation>
+  </message>
+  <message>
+   <source>Failed to load list of conferences</source>
+   <translation>Failed to load list of conferences</translation>
+  </message>
+  <message>
+   <source>Create the conference:</source>
+   <translation>Create the conference:</translation>
+  </message>
+  <message>
+   <source>Enter unique name for the new conference</source>
+   <translation>Enter unique name for the new conference</translation>
+  </message>
+  <message>
+   <source>Loading conference description...</source>
+   <translation>Loading conference description...</translation>
+  </message>
+  <message>
+   <source>Checking conference existence...</source>
+   <translation>Checking conference existence...</translation>
+  </message>
+  <message>
+   <source>Failed to load conference description</source>
+   <translation>Failed to load conference description</translation>
+  </message>
+  <message>
+   <source>Failed to check conference existence</source>
+   <translation>Failed to check conference existence</translation>
+  </message>
+  <message>
+   <source>Invalid conference name</source>
+   <translation>Invalid conference name</translation>
+  </message>
+  <message>
+   <source>Failed to load conference description: %1</source>
+   <translation>Failed to load conference description: %1</translation>
+  </message>
+  <message>
+   <source>Failed to check conference existence: %1</source>
+   <translation>Failed to check conference existence: %1</translation>
+  </message>
+  <message>
+   <source>Conference '%1@%2' already exists, choose another name</source>
+   <translation>Conference '%1@%2' already exists, choose another name</translation>
+  </message>
+  <message>
+   <source>Failed to load list of conferences: %1</source>
+   <translation>Failed to load list of conferences: %1</translation>
+  </message>
+  <message>
+   <source>Conference description is not available or invalid</source>
+   <translation>Conference description is not available or invalid</translation>
+  </message>
+ </context>
+ <context>
+  <name>ServicePage</name>
+  <message>
+   <source>Conference location</source>
+   <translation>Conference location</translation>
+  </message>
+  <message>
+   <source>Add...</source>
+   <translation>Add...</translation>
+  </message>
+  <message>
+   <source>Account:</source>
+   <translation>Account:</translation>
+  </message>
+  <message>
+   <source>Server:</source>
+   <translation>Server:</translation>
+  </message>
+  <message>
+   <source>Service:</source>
+   <translation>Service:</translation>
+  </message>
+  <message>
+   <source>Select account, server and service to join to the conference</source>
+   <translation>Select account, server and service to join to the conference</translation>
+  </message>
+  <message>
+   <source>Select the account to join to the conference</source>
+   <translation>Select the account to join to the conference</translation>
+  </message>
+  <message>
+   <source>You can join to the conference located at almost any Jabber-server, select one from the list or add your own</source>
+   <translation>You can join to the conference located at almost any Jabber-server, select one from the list or add your own</translation>
+  </message>
+  <message>
+   <source>Each Jabber-server can have multiple conference services, select one of the available</source>
+   <translation>Each Jabber-server can have multiple conference services, select one of the available</translation>
+  </message>
+  <message>
+   <source>Select account, server, and service to create the conference</source>
+   <translation>Select account, server, and service to create the conference</translation>
+  </message>
+  <message>
+   <source>Select the account to create a conference</source>
+   <translation>Select the account to create a conference</translation>
+  </message>
+  <message>
+   <source>You can create a conference at almost any Jabber-server, select one from the list or add your own</source>
+   <translation>You can create a conference at almost any Jabber-server, select one from the list or add your own</translation>
+  </message>
+  <message>
+   <source>Searching for conference services (%1)...</source>
+   <translation>Searching for conference services (%1)...</translation>
+  </message>
+  <message>
+   <source>Conference services are not found on this server</source>
+   <translation>Conference services are not found on this server</translation>
+  </message>
+  <message>
+   <source>Loading list of available services...</source>
+   <translation>Loading list of available services...</translation>
+  </message>
+  <message>
+   <source>Failed to load list of services</source>
+   <translation>Failed to load list of services</translation>
+  </message>
+  <message>
+   <source>Account or server is not selected</source>
+   <translation>Account or server is not selected</translation>
+  </message>
+  <message>
+   <source>Append Server</source>
+   <translation>Append Server</translation>
+  </message>
+  <message>
+   <source>Enter server domain:</source>
+   <translation>Enter server domain:</translation>
+  </message>
+  <message>
+   <source>Failed to load a list of services: %1</source>
+   <translation>Failed to load a list of services: %1</translation>
   </message>
  </context>
 </TS>

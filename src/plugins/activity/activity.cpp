@@ -308,7 +308,7 @@ void Activity::onNotificationActivated(int ANotifyId)
 				IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
 				if (!window)
 				{
-					FMessageProcessor->createMessageWindow(its.key(), contactJid, Message::Chat, IMessageHandler::SM_ASSIGN);
+					FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
 					window = FMessageWidgets->findChatWindow(its.key(), contactJid);
 				}
 				if (window)
@@ -715,7 +715,7 @@ void Activity::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 			pic.append(" (").append(HTML_ESCAPE(activity.text)).append(")");
 		QString longMessage = QString("<i>")
 						   .append(tr("%1 changed activity to %2")
-						   .arg(AMessageChatWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString())
+						   .arg(AMessageChatWindow->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString())
 						   .arg(pic))
 						   .append("</i>");
 

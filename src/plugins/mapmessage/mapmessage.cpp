@@ -283,7 +283,7 @@ QGraphicsItem * MapMessage::mapData(SceneObject *ASceneObject, int ARole, QGraph
         connect(textWidget, SIGNAL(destroyed(QObject*)), SLOT(onBubbleDestroyed(QObject*)));
 
         QTextDocument doc;
-        FMessageProcessor->messageToText(&doc, message);
+		FMessageProcessor->messageToText(message, &doc);
         QTextDocument *d=textWidget->document();
         d->setHtml(doc.toHtml());
 

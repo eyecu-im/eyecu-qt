@@ -117,18 +117,22 @@
 #define   OWO_MESSAGES_PEP_ACTIVITY               474
 #define   OWO_MESSAGES_PEP_TUNE                   476
 // *** >>> eyeCU >>> ***
-#define OHO_MESSAGES_CONFERENCES                  500
-#define   OWO_MESSAGES_MUC_SHOWENTERS             510
-#define   OWO_MESSAGES_MUC_SHOWSTATUS             520
-#define   OWO_MESSAGES_MUC_ARCHIVESTATUS          530
-#define   OWO_MESSAGES_MUC_QUITONWINDOWCLOSE      540
-#define   OWO_MESSAGES_MUC_REJOINAFTERKICK        550
-#define   OWO_MESSAGES_MUC_REFERENUMERATION       560
-#define   OWO_MESSAGES_MUC_SHOWAUTOJOINED         570
 // *** <<< eyeCU <<< ***
 #define   OWO_MESSAGES_MUC_ADDRESSBUTTON          580
 #define   OWO_MESSAGES_MUC_NICKNAMESUFFIX         590
 // *** >>> eyeCU >>> ***
+//Node = ON_CONFERENCES
+#define OHO_CONFERENCES_MESSAGES                  100
+#define   OWO_CONFERENCES_SHOWENTERS              110
+#define   OWO_CONFERENCES_SHOWSTATUS              120
+#define   OWO_CONFERENCES_ARCHIVESTATUS           130
+#define   OWO_CONFERENCES_QUITONWINDOWCLOSE       140
+#define   OWO_CONFERENCES_REJOINAFTERKICK         150
+#define   OWO_CONFERENCES_REFERENUMERATION        160
+#define   OWO_CONFERENCES_SHOWAUTOJOINED          170
+#define OHO_CONFERENCES_USERVIEW                  300
+#define   OWO_CONFERENCES_USERVIEWMODE            390
+
 // ON_HISTORY
 #define OHO_HISORY_ENGINES                        300
 #define   OWO_HISORY_ENGINE                       310

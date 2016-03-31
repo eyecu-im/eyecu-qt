@@ -20,6 +20,7 @@
 #define TBG_MWTBW_FILETRANSFER                                  500
 #define TBG_MWTBW_ARCHIVE_VIEW                                  700
 #define TBG_MWTBW_VCARD_VIEW                                    900
+#define TBG_MWTBW_MULTIUSERCHAT_INVITE                          1000
 // *** <<< eyeCU <<< ***
 #define TBG_MWTBW_EMOJI                                         100
 #define TBG_MWEWTB_ATTENTION_SEND                               1100
@@ -32,10 +33,11 @@
 #define TBG_MWSIM_SKINCOLOR                                     10100
 // *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
-#define TBG_MWTBW_CHATSTATES                                    10100
+#define TBG_MWTBW_CHATSTATES                                    10050
 
 //MessageWidgets - InfowWidgetToolBar
 #define TBG_MWIWTB_ADDRESSMENU                                  500
+#define TBG_MWIWTB_BOOKMARKS                                    900
 
 //MessageWidgets - EditWidgetToolBar
 #define TBG_MWEWTB_SENDMESSAGE                                  500
@@ -44,9 +46,8 @@
 #define TBG_MWNWTB_WINDOWMENU                                   15000
 
 //MultiChatWindow - ToolBarWidget
-#define TBG_MCWTBW_BOOKMARKS                                    10200
-#define TBG_MCWTBW_ROOM_ENTER                                   10990
-#define TBG_MCWTBW_ROOM_EXIT                                    11000
+#define TBG_MCWTBW_USERS_HIDE                                   10190
+#define TBG_MCWTBW_ROOM_TOOLS                                   11000
 
 //SeriveDiscovery - DiscoItemsWindow
 #define TBG_DIWT_DISCOVERY_NAVIGATE                             100

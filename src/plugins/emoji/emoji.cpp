@@ -136,18 +136,25 @@ bool Emoji::initSettings()
 	return true;
 }
 
-void Emoji::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Emoji::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOJI)
-		replaceImageToText(ADocument);
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+
+	return false;
 }
 
-void Emoji::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Emoji::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
 {
-	Q_UNUSED(AMessage); Q_UNUSED(ALang);
-	if (AOrder == MWO_EMOJI)
-		replaceTextToImage(ADocument);
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+
+	return replaceImageToText(ADocument);
+}
+
+bool Emoji::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+{
+	Q_UNUSED(AOrder); Q_UNUSED(AMessage); Q_UNUSED(ALang);
+
+	return replaceTextToImage(ADocument);
 }
 
 QMultiMap<int, IOptionsDialogWidget *> Emoji::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)

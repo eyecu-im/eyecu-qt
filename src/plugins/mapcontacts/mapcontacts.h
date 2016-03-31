@@ -123,7 +123,7 @@ private:
 //FIXME: Avatar plugin should be used instead
 	bool                FShowEmptyAvatars;
 	QImage              FEmptyAvatar;
-	QSize               FAvatarSize;
+	quint8              FAvatarSize;
 	QMultiHash<QString, QString> FResourceHash;
 	QMultiHash<IRosterIndex *, QString> FIndexResourceHash;
 	QList<IRoster *>    FRosterList;

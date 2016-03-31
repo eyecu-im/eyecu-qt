@@ -41,8 +41,9 @@ public:
 	virtual bool initSettings();
 	virtual bool startPlugin() { return true; }
 	//IMessageWriter
-	virtual void writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
-	virtual void writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang);
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
 	//IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
 	//IMessageEditContentsHandler

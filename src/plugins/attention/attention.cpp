@@ -293,39 +293,43 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
             }
         }
     }
-    return notify;
+	return notify;
 }
 
-bool Attention::messageShowWindow(int AMessageId)
+IMessageWindow *Attention::messageShowNotified(int AMessageId)
 {
-    IMessageChatWindow *window = FNotifiedMessages.key(AMessageId);
-    if (window)
-    {        
-        window->showTabPage();
-        return true;
-    }
-    return false;
+	IMessageChatWindow *window = FNotifiedMessages.key(AMessageId);
+	if (window)
+		window->showTabPage();
+	return window;
 }
 
-bool Attention::messageShowWindow(int AOrder, const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode)
+IMessageWindow *Attention::messageGetWindow(const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType)
 {
-    Q_UNUSED(AOrder);
-    if (AType == Message::Headline)
-    {
-        IMessageChatWindow *window = getWindow(AStreamJid, AContactJid);
-        if (window)
-        {
-            if (AShowMode == IMessageHandler::SM_ASSIGN)
-                window->assignTabPage();
-            else if (AShowMode == IMessageHandler::SM_SHOW)
-                window->showTabPage();
-            else if (AShowMode == IMessageHandler::SM_MINIMIZED)
-                window->showMinimizedTabPage();
-            return true;
-        }
-    }
-    return false;
+	if (AType == Message::Headline)
+		return getWindow(AStreamJid, AContactJid);
+	return NULL;
 }
+
+//bool Attention::messageShowWindow(int AOrder, const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode)
+//{
+//    Q_UNUSED(AOrder);
+//    if (AType == Message::Headline)
+//    {
+//        IMessageChatWindow *window = getWindow(AStreamJid, AContactJid);
+//        if (window)
+//        {
+//			if (AShowMode == IMessageProcessor::ActionAssign)
+//                window->assignTabPage();
+//			else if (AShowMode == IMessageProcessor::ActionShowNormal)
+//                window->showTabPage();
+//			else if (AShowMode == IMessageProcessor::ActionShowMinimized)
+//                window->showMinimizedTabPage();
+//            return true;
+//        }
+//    }
+//	return false;
+//}
 
 //IArchiveHandler
 bool Attention::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn)
@@ -337,7 +341,17 @@ bool Attention::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &A
         return false;
 }
 
-void Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool Attention::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AOrder)
+	Q_UNUSED(ALang)
+
+	if (AMessage.type()==Message::Headline)
+		return !AMessage.stanza().firstElement("attention", NS_ATTENTION).isNull();
+	return false;
+}
+
+bool Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
@@ -357,7 +371,15 @@ void Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument 
             QTextCharFormat charFormat;
             charFormat.setFontWeight(QFont::Bold);
             cursor.mergeCharFormat(charFormat);
-        }
+			return true;
+		}
+	return false;
+}
+
+bool Attention::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
+{
+	Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)
+	return false;
 }
 
 IMessageChatWindow *Attention::getWindow(const Jid &AStreamJid, const Jid &AContactJid)
@@ -369,7 +391,7 @@ IMessageChatWindow *Attention::getWindow(const Jid &AStreamJid, const Jid &ACont
             window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
             if(!window)
             {
-                FMessageProcessor->createMessageWindow(AStreamJid, AContactJid, Message::Chat, IMessageHandler::SM_ASSIGN);
+				FMessageProcessor->getMessageWindow(AStreamJid, AContactJid, Message::Chat, IMessageProcessor::ActionAssign);
                 window = FMessageWidgets->findChatWindow(AStreamJid,AContactJid);
             }
             if (window)
@@ -385,7 +407,7 @@ void Attention::updateWindow(IMessageChatWindow *AWindow)
 		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_ATTENTION);
     else if (FStatusIcons)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
-    QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Name).toString();
+	QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString();
     AWindow->updateWindow(icon, contactName, tr("%1 - Chat").arg(contactName), QString::null);
 }
 
@@ -425,7 +447,7 @@ void Attention::fillContentOptions(IMessageChatWindow *AWindow, IMessageStyleCon
     else
     {
         AOptions.senderId = AWindow->streamJid().full();
-        if (AWindow->streamJid() && AWindow->contactJid())
+		if (AWindow->streamJid().isValid() && AWindow->contactJid().isValid())
 			AOptions.senderName = HTML_ESCAPE(!AWindow->streamJid().resource().isEmpty() ? AWindow->streamJid().resource() : AWindow->streamJid().node());
 		else
 			AOptions.senderName = HTML_ESCAPE(FMessageStyleManager->contactName(AWindow->streamJid()));
@@ -470,7 +492,7 @@ void Attention::showStyledMessage(IMessageChatWindow *AWindow, const Message &AM
     else
         options.timeFormat = FMessageStyleManager->timeFormat(options.time);
 
-    if (AWindow->streamJid() && AWindow->contactJid() ? AWindow->contactJid()!=AMessage.to() : !(AWindow->contactJid() && AMessage.to()))
+	if (AWindow->streamJid().isValid() && AWindow->contactJid().isValid() ? AWindow->contactJid()!=AMessage.to() : !(AWindow->contactJid().isValid() && !AMessage.to().isEmpty()))
 		options.direction = IMessageStyleContentOptions::DirectionIn;
     else
 		options.direction = IMessageStyleContentOptions::DirectionOut;
@@ -531,9 +553,8 @@ void  Attention::onSetAttentionByAction(bool)
 			options.senderName   = HTML_ESCAPE(FMessageStyleManager->contactName(window->streamJid(), window->contactJid()));
 			options.senderAvatar = FMessageStyleManager->contactAvatar(window->streamJid());
 
-            Message message;
-            message.setStanza(stanza);
-            FMessageProcessor->textToMessage(message,window->editWidget()->document());
+			Message message(stanza);
+			FMessageProcessor->textToMessage(window->editWidget()->document(), message);
             QString textsms = window->editWidget()->textEdit()->toPlainText();
             if (FMessageProcessor->sendMessage(window->streamJid(),message,IMessageProcessor::DirectionOut))
                 if (!message.body().isEmpty())

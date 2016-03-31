@@ -62,12 +62,14 @@ public:
     virtual bool messageCheck(int AOrder, const Message &AMessage, int ADirection);
     virtual bool messageDisplay(const Message &AMessage, int ADirection);
     virtual INotification messageNotify(INotifications *ANotifications, const Message &AMessage, int ADirection);
-    virtual bool messageShowWindow(int AMessageId);
-    virtual bool messageShowWindow(int AOrder, const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode);
+	virtual IMessageWindow *messageShowNotified(int AMessageId);
+	virtual IMessageWindow *messageGetWindow(const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType);
+//	virtual bool messageShowWindow(int AOrder, const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode);
 
     //IMessageWriter
-    virtual void writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
-	virtual void writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang){Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)}
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang);
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
 
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);

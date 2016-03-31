@@ -80,7 +80,7 @@ void AccountsOptionsWidget::reset()
 		updateAccountItemWidget(item,account);
 
 		curAccounts.append(account->accountId());
-		sortedItems.insert(account->optionsNode().value("order").toInt(), item);
+		sortedItems.insert(account->accountOrder(), item);
 	}
 
 	foreach(const QUuid &accountId, FAccountItems.keys())

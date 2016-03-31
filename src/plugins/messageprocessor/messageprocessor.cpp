@@ -5,6 +5,7 @@
 #include <definitions/messagedataroles.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/notificationdataroles.h>
+#include <definitions/stanzahandlerorders.h>
 #include <utils/logger.h>
 // *** <<< eyeCU <<< ***
 #include <utils/options.h>
@@ -87,20 +88,29 @@ bool MessageProcessor::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, St
 	return false;
 }
 
-void MessageProcessor::writeTextToMessage(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool MessageProcessor::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
 	if (AOrder == MWO_MESSAGEPROCESSOR)
 	{
-		AMessage.setBody(prepareBodyForSend(ADocument->toPlainText()),ALang);
+		if (!AMessage.body(ALang).isEmpty())
+			return true;
 	}
+	return false;
 }
 
-void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
+bool MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
 {
+	bool changed = false;
 	if (AOrder == MWO_MESSAGEPROCESSOR)
 	{
-		QTextCursor cursor(ADocument);
-		XmlTextDocumentParser::xmlToText(cursor, prepareBodyForReceive(AMessage.body(ALang), Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED).value().toBool())); // *** <<< eyeCU >>> ***
+// *** <<< eyeCU <<< ***
+		if (!AMessage.body().isEmpty())
+		{
+			QTextCursor cursor(ADocument);
+			XmlTextDocumentParser::xmlToText(cursor, convertBodyToHtml(AMessage.body(ALang), Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED).value().toBool())); // *** <<< eyeCU >>> ***
+			changed = true;
+		}
+// *** >>> eyeCU >>> ***
 	}
 	else if (AOrder == MWO_MESSAGEPROCESSOR_ANCHORS)
 	{
@@ -119,10 +129,27 @@ void MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 				linkFormat.setAnchor(true);
 				linkFormat.setAnchorHref(link.toEncoded());
 				cursor.setCharFormat(linkFormat);
+				changed = true;
 			}
 // *** >>> eyeCU >>> ***
 		}
 	}
+	return changed;
+}
+
+bool MessageProcessor::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
+{
+	bool changed = false;
+	if (AOrder == MWO_MESSAGEPROCESSOR)
+	{
+		QString body = convertTextToBody(ADocument->toPlainText());
+		if (!body.isEmpty())
+		{
+			AMessage.setBody(body,ALang);
+			changed = true;
+		}
+	}
+	return changed;
 }
 
 QList<Jid> MessageProcessor::activeStreams() const
@@ -216,13 +243,10 @@ bool MessageProcessor::displayMessage(const Jid &AStreamJid, Message &AMessage, 
 {
 	Q_UNUSED(AStreamJid);
 	IMessageHandler *handler = findMessageHandler(AMessage,ADirection);
-	if (handler)
+	if (handler && handler->messageDisplay(AMessage,ADirection))
 	{
-		if (handler->messageDisplay(AMessage,ADirection))
-		{
-			notifyMessage(handler,AMessage,ADirection);
-			return true;
-		}
+		notifyMessage(handler,AMessage,ADirection);
+		return true;
 	}
 	return false;
 }
@@ -249,9 +273,9 @@ int MessageProcessor::messageByNotify(int ANotifyId) const
 
 void MessageProcessor::showNotifiedMessage(int AMessageId)
 {
-	IMessageHandler *handler = FHandlerForMessage.value(AMessageId,NULL);
+	IMessageHandler *handler = FHandlerForMessage.value(AMessageId);
 	if (handler)
-		handler->messageShowWindow(AMessageId);
+		handler->messageShowNotified(AMessageId);
 }
 
 void MessageProcessor::removeMessageNotify(int AMessageId)
@@ -267,37 +291,61 @@ void MessageProcessor::removeMessageNotify(int AMessageId)
 	}
 }
 
-void MessageProcessor::textToMessage(Message &AMessage, const QTextDocument *ADocument, const QString &ALang) const
-{
-	QTextDocument *documentCopy = ADocument->clone();
-	QMapIterator<int,IMessageWriter *> it(FMessageWriters);
-	it.toBack();
-	while (it.hasPrevious())
-	{
-		it.previous();
-		it.value()->writeTextToMessage(it.key(),AMessage,documentCopy,ALang);
-	}
-	delete documentCopy;
-}
 
-void MessageProcessor::messageToText(QTextDocument *ADocument, const Message &AMessage, const QString &ALang) const
+bool MessageProcessor::messageHasText(const Message &AMessage, const QString &ALang) const
 {
 	Message messageCopy = AMessage;
-	QMapIterator<int,IMessageWriter *> it(FMessageWriters);
-	it.toFront();
+	QMapIterator<int,IMessageWriter *> it(FMessageWriters); it.toFront();
 	while (it.hasNext())
 	{
-		it.next();
-		it.value()->writeMessageToText(it.key(),messageCopy,ADocument,ALang);
+		if (it.next().value()->writeMessageHasText(it.key(),messageCopy,ALang))
+			return true;
 	}
+	return false;
 }
 
-bool MessageProcessor::createMessageWindow(const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AShowMode) const
+bool MessageProcessor::messageToText(const Message &AMessage, QTextDocument *ADocument, const QString &ALang) const
+{
+	bool changed = false;
+
+	Message messageCopy = AMessage;
+	QMapIterator<int,IMessageWriter *> it(FMessageWriters); it.toFront();
+	while (it.hasNext())
+		changed = it.next().value()->writeMessageToText(it.key(),messageCopy,ADocument,ALang) || changed;
+
+	return changed;
+}
+
+bool MessageProcessor::textToMessage(const QTextDocument *ADocument, Message &AMessage, const QString &ALang) const
+{
+	bool changed = false;
+	
+	QTextDocument *documentCopy = ADocument->clone();
+	QMapIterator<int,IMessageWriter *> it(FMessageWriters); it.toBack();
+	while (it.hasPrevious())
+		changed = it.previous().value()->writeTextToMessage(it.key(),documentCopy,AMessage,ALang) || changed;
+	delete documentCopy;
+
+	return changed;
+}
+
+IMessageWindow *MessageProcessor::getMessageWindow(const Jid &AStreamJid, const Jid &AContactJid, Message::MessageType AType, int AAction) const
 {
 	for (QMultiMap<int, IMessageHandler *>::const_iterator it = FMessageHandlers.constBegin(); it!=FMessageHandlers.constEnd(); ++it)
-		if (it.value()->messageShowWindow(it.key(),AStreamJid,AContactJid,AType,AShowMode))
-			return true;
-	return false;
+	{
+		IMessageWindow *window = it.value()->messageGetWindow(AStreamJid,AContactJid,AType);
+		if (window)
+		{
+			if (AAction == ActionAssign)
+				window->assignTabPage();
+			else if (AAction == ActionShowNormal)
+				window->showTabPage();
+			else if (AAction == ActionShowMinimized)
+				window->showMinimizedTabPage();
+			return window;
+		}
+	}
+	return NULL;
 }
 
 QMultiMap<int, IMessageHandler *> MessageProcessor::messageHandlers() const
@@ -382,7 +430,7 @@ void MessageProcessor::notifyMessage(IMessageHandler *AHandler, const Message &A
 	}
 }
 
-QString MessageProcessor::prepareBodyForSend(const QString &AString) const
+QString MessageProcessor::convertTextToBody(const QString &AString) const
 {
 	QString result = AString;
 	result.remove(QChar::Null);
@@ -390,8 +438,7 @@ QString MessageProcessor::prepareBodyForSend(const QString &AString) const
 	return result;
 }
 
-
-QDomDocument MessageProcessor::prepareBodyForReceive(const QString &AString, bool AMonospaced) const
+QDomDocument MessageProcessor::convertBodyToHtml(const QString &AString, bool AMonospaced) const
 {
 	// *** <<< eyeCU <<< ***
     QDomDocument doc;	
