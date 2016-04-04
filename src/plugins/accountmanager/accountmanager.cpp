@@ -414,11 +414,17 @@ void AccountManager::onShowAccountOptions(bool)
 //		wizard->show();
 //	}
 //}
-
 void AccountManager::onAddAccountLinkActivated(const QString &ALink)
 {
 	if (ALink == "add_account")
-		emit showAccountSettings(createAccount(Jid(), QString())->accountId());
+	{
+		Jid streamJid("username@server");
+		IAccount *account = createAccount(streamJid, tr("New account"));
+		if (!account)
+			account = findAccountByStream(streamJid);
+		if (account)
+			emit showAccountSettings(account->accountId());
+	}
 	else if (ALink == "use_wizard")
 		FWizardAccount->startWizard(qobject_cast<AccountsOptionsWidget*>(sender())->window());
 }
