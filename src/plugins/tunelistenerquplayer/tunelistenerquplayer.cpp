@@ -137,7 +137,7 @@ void TuneListenerQuPlayer::check()
     else
     {
         ULONG ulAction;
-		DosOpen((unsigned char *)FPipeName.TOASCII().data(),
+		DosOpen((unsigned char *)FPipeName.toLatin1().data(),
                 &FPipeHandle,
                 &ulAction,
                 0,

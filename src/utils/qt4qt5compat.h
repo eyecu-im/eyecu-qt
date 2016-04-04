@@ -12,7 +12,6 @@
 #define URL_SET_QUERY_ITEMS(URL,ITEMS) URL.setQueryItems(ITEMS)
 #define URL_QUERY_ITEMS(URL) URL.queryItems()
 #define URL_SET_QUERY_DELIMITERS(URL,VALUE,PAIR) URL.setQueryDelimiters(VALUE,PAIR)
-#define TOASCII() toAscii()
 #define MAYBE_JOIN
 #else
 #define HTML_ESCAPE(value) (value).toHtmlEscaped()
@@ -25,7 +24,6 @@
 #define URL_SET_QUERY_ITEMS(URL,ITEMS) QUrlQuery(URL).setQueryItems(ITEMS)
 #define URL_QUERY_ITEMS(URL) QUrlQuery(URL).queryItems()
 #define URL_SET_QUERY_DELIMITERS(URL,VALUE,PAIR) QUrlQuery(URL).setQueryDelimiters(VALUE,PAIR)
-#define TOASCII() toLatin1()
 #define MAYBE_JOIN .join("; ")
 #endif
 
