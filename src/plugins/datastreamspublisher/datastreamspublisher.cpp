@@ -277,5 +277,6 @@ void DataStreamsPublisher::removeStreamHandler(int AOrder, IPublicDataStreamHand
 		emit streamHandlerRemoved(AOrder,AHandler);
 	}
 }
-
+#if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_datastreamspublisher, DataStreamsPublisher);
+#endif

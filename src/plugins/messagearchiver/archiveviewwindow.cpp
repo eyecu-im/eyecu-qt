@@ -836,7 +836,7 @@ void ArchiveViewWindow::showCollection(const ArchiveCollection &ACollection)
 	}
 
 	if (FViewOptions.isPrivateChat)
-		FViewOptions.senderName = Qt::escape(ACollection.header.with.resource());
+		FViewOptions.senderName = HTML_ESCAPE(ACollection.header.with.resource());
 	else if (!FViewOptions.isGroupChat)
 		FViewOptions.senderName = HTML_ESCAPE(FMessageStyleManager!=NULL ? FMessageStyleManager->contactName(ACollection.header.stream,ACollection.header.with) : contactName(ACollection.header.stream,ACollection.header.with));
 	FViewOptions.selfName = HTML_ESCAPE(FMessageStyleManager!=NULL ? FMessageStyleManager->contactName(ACollection.header.stream) : ACollection.header.stream.uNode());

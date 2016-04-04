@@ -207,7 +207,7 @@ void ConsoleWidget::showStanza(IXmppStream *AXmppStream, const Stanza &AStanza, 
 			int delta = FTimePoint.isValid() ? FTimePoint.msecsTo(QTime::currentTime()) : 0;
 			FTimePoint = QTime::currentTime();
 
-			QString header = (ASent ? sentHeader : recvHeader).arg(Qt::escape(AXmppStream->streamJid().uFull())).arg(FTimePoint.toString()).arg(delta);
+			QString header = (ASent ? sentHeader : recvHeader).arg(HTML_ESCAPE(AXmppStream->streamJid().uFull())).arg(FTimePoint.toString()).arg(delta);
 			ui.tbrConsole->append(header);
 
 			QString xml = AStanza.toString(2);

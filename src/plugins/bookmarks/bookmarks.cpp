@@ -25,6 +25,7 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/menu.h>
+#include <utils/qt4qt5compat.h>
 
 #define PST_BOOKMARKS                    "storage"
 
@@ -1051,14 +1052,14 @@ void Bookmarks::onDiscoWindowAddBookmarkActionTriggered(bool)
 		{
 			QUrl url;
 			url.setScheme("xmpp");
-			url.setQueryDelimiters('=',';');
+			URL_SET_QUERY_DELIMITERS(url,'=',';');
 			url.setPath(discoJid);
 
 			QList< QPair<QString, QString> > queryItems;
 			queryItems << qMakePair(QString("disco"),QString()) << qMakePair(QString("type"),QString("get")) << qMakePair(QString("request"),QString("items"));
 			if (!discoNode.isEmpty())
 				queryItems << qMakePair(QString("node"),discoNode);
-			url.setQueryItems(queryItems);
+			URL_SET_QUERY_ITEMS(url,queryItems);
 
 			QList<IBookmark> bookmarkList = FBookmarks.value(streamJid);
 

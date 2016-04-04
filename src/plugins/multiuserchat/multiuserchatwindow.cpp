@@ -6,6 +6,9 @@
 #include <QInputDialog>
 #include <QCoreApplication>
 #include <QContextMenuEvent>
+#if QT_VERSION >= 0x050000
+#include <QUrlQuery>
+#endif
 #include <definitions/namespaces.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
@@ -378,9 +381,9 @@ bool MultiUserChatWindow::messageViewUrlOpen(int AOrder, IMessageViewWidget *AWi
 			const struct { QString var; QString value; } fileds[] =
 			{
 				{ "FORM_TYPE",         QString(DFT_MUC_REQUEST)  },
-				{ "muc#role",          AUrl.queryItemValue("role")     },
-				{ "muc#jid",           AUrl.queryItemValue("jid")      },
-				{ "muc#roomnick",      AUrl.queryItemValue("roomnick") },
+				{ "muc#role",          URL_QUERY_ITEM_VALUE(AUrl,"role")     },
+				{ "muc#jid",           URL_QUERY_ITEM_VALUE(AUrl,"jid")      },
+				{ "muc#roomnick",      URL_QUERY_ITEM_VALUE(AUrl,"roomnick") },
 				{ "muc#request_allow", QString("true")                 },
 				{ QString::null,       QString::null                   }
 			};
@@ -396,12 +399,12 @@ bool MultiUserChatWindow::messageViewUrlOpen(int AOrder, IMessageViewWidget *AWi
 			}
 
 			Message message;
-			message.setTo(FMultiChat->roomJid().bare()).setId(AUrl.queryItemValue("id"));
+			message.setTo(FMultiChat->roomJid().bare()).setId(URL_QUERY_ITEM_VALUE(AUrl,"id"));
 			
 			QDomElement formElem = message.stanza().element();
 			FDataForms->xmlForm(form,formElem);
 			
-			QString nick = AUrl.queryItemValue("roomnick");
+			QString nick = URL_QUERY_ITEM_VALUE(AUrl,"roomnick");
 			IMultiUser *user = FMultiChat->findUser(nick);
 
 			if (user == NULL)
@@ -517,10 +520,10 @@ bool MultiUserChatWindow::messageDisplay(const Message &AMessage, int ADirection
 				grantUrl.setScheme(MUC_URL_SCHEME);
 				grantUrl.setPath(user->userJid().full());
 				grantUrl.setFragment(MUC_URL_GRANT_VOICE);
-				grantUrl.addQueryItem("id",AMessage.id());
-				grantUrl.addQueryItem("jid",reqJid.full());
-				grantUrl.addQueryItem("role",reqRole);
-				grantUrl.addQueryItem("roomnick",reqNick);
+				URL_ADD_QUERY_ITEM(grantUrl,"id",AMessage.id());
+				URL_ADD_QUERY_ITEM(grantUrl,"jid",reqJid.full());
+				URL_ADD_QUERY_ITEM(grantUrl,"role",reqRole);
+				URL_ADD_QUERY_ITEM(grantUrl,"roomnick",reqNick);
 
 				QString html = tr("User %1 requests a voice in the conference, %2").arg(HTML_ESCAPE(reqNick),QString("<a href='%1'>%2</a>").arg(grantUrl.toString(),tr("Grant Voice")));
 				showHTMLStatusMessage(FViewWidget,html,IMessageStyleContentOptions::TypeNotification);
