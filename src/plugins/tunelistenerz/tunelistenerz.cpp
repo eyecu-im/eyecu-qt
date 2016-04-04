@@ -89,7 +89,7 @@ void TuneListenerZ::check()
     ULONG   ulAction;
     ULONG   ulWritten;
 
-	if (!DosOpen((unsigned char *)FPipeName.TOASCII().data(),
+	if (!DosOpen((unsigned char *)FPipeName.toLatin1().data(),
             &pipeHandle, &ulAction, 0, FILE_NORMAL, FILE_OPEN,
 			OPEN_ACCESS_READWRITE | OPEN_SHARE_DENYREADWRITE, (PEAOP2) NULL))
     {

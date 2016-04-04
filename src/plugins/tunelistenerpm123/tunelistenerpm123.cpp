@@ -273,7 +273,7 @@ void TuneListenerPm123::check()
     if (!FPipeHandle)
     {
         ULONG ulAction;
-		DosOpen((unsigned char *)FPipeName.TOASCII().data(),
+		DosOpen((unsigned char *)FPipeName.toLatin1().data(),
             &FPipeHandle,
             &ulAction,
             0,

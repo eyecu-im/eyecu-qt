@@ -103,7 +103,7 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 	{
 		if (AStanza.tagName() == "challenge")
 		{
-			QByteArray challengeData = QByteArray::fromBase64(AStanza.element().text().TOASCII());
+			QByteArray challengeData = QByteArray::fromBase64(AStanza.element().text().toLatin1());
 			LOG_STRM_DEBUG(FXmppStream->streamJid(),QString("SASL auth challenge received: %1").arg(QString::fromUtf8(challengeData)));
 			
 			QMap<QByteArray, QByteArray> responseMap;

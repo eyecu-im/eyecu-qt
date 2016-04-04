@@ -329,7 +329,7 @@ void Avatars::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 		{
 			LOG_STRM_INFO(AStreamJid,QString("Received iq avatar from contact, jid=%1").arg(AStanza.from()));
 			QDomElement dataElem = AStanza.firstElement("query",NS_JABBER_IQ_AVATAR).firstChildElement("data");
-			QByteArray avatarData = QByteArray::fromBase64(dataElem.text().TOASCII());
+			QByteArray avatarData = QByteArray::fromBase64(dataElem.text().toLatin1());
 
 			if (!avatarData.isEmpty())
 			{

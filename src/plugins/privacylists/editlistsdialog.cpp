@@ -215,9 +215,9 @@ QString EditListsDialog::ruleName(const IPrivacyRule &ARule)
 	}
 
 	if (ARule.type != PRIVACY_TYPE_ALWAYS)
-		return tr("%1: if %2 = '%3' then %4 [%5 ]").arg(ARule.order).arg(tr(ARule.type.TOASCII())).arg(ARule.value).arg(!ARule.action.isEmpty() ? tr(ARule.action.TOASCII()) : tr("<action>")).arg(stanzas);
+		return tr("%1: if %2 = '%3' then %4 [%5 ]").arg(ARule.order).arg(tr(ARule.type.toLatin1())).arg(ARule.value).arg(!ARule.action.isEmpty() ? tr(ARule.action.toLatin1()) : tr("<action>")).arg(stanzas);
 	else
-		return tr("%1: always %2 [%3 ]").arg(ARule.order).arg(!ARule.action.isEmpty() ? tr(ARule.action.TOASCII()) : tr("<action>")).arg(stanzas);
+		return tr("%1: always %2 [%3 ]").arg(ARule.order).arg(!ARule.action.isEmpty() ? tr(ARule.action.toLatin1()) : tr("<action>")).arg(stanzas);
 
 	return QString::null;
 }
