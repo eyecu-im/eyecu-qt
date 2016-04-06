@@ -265,29 +265,29 @@
    <translation>Language:</translation>
   </message>
   <message>
-   <location line="807" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
+   <location line="824" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
    <source>Options mode changed</source>
    <translation>Options mode changed</translation>
   </message>
   <message>
-   <location line="807" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
+   <location line="824" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</translation>
   </message>
   <message>
-   <location line="857" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
+   <location line="874" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
    <source>Display advanced options?</source>
    <translation>Display advanced options?</translation>
   </message>
   <message>
-   <location line="858" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
+   <location line="875" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
    <source>If you're experienced Jabber user, press &lt;i>Yes&lt;/i> to display advanced options. If you're new in Jabber, press &lt;i>No&lt;/i>. Simplified options will be displayed. </source>
    <translation>If you're experienced Jabber user, press &lt;i>Yes&lt;/i> to display advanced options. If you're new in Jabber, press &lt;i>No&lt;/i>. Simplified options will be displayed. </translation>
   </message>
   <message>
-   <location line="865" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
+   <location line="882" filename="../../plugins/optionsmanager/optionsmanager.cpp"/>
    <source>You can always change options mode on &lt;b>Common&lt;/b> page.</source>
    <translation>You can always change options mode on &lt;b>Common&lt;/b> page.</translation>
   </message>

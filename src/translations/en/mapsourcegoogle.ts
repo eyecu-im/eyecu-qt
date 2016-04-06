@@ -14,7 +14,7 @@
    <translation>Allows Map plugin to use Google as map source</translation>
   </message>
   <message>
-   <location line="56" filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp"/>
+   <location line="57" filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp"/>
    <source>Google</source>
    <translation>Google</translation>
   </message>

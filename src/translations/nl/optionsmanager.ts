@@ -263,29 +263,29 @@
    <translation>Taal:</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
    <source>Options mode changed</source>
    <translation>Opties mode is veranderd</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation>Om opties om teschakelen, %1 moet worden geherstart.
 Wil je dat %1 wordt geherstart?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="857"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="874"/>
    <source>Display advanced options?</source>
    <translation>Toon geavanceerde opties?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="858"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="875"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
    <translation>Als je een ervaren Jabber gebruiker bent, druk &lt;i&gt;Ja&lt;/ i&gt; om de geavanceerde opties weer te geven. Ben je nieuw met Jabber, druk &lt;i&gt;Nee&lt;i&gt; om simpele opties weer te geven.</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="865"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="882"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
    <translation>Je kan altijd de optie veranderen op
 &lt;b&gt;Algemene&lt;/b&gt; pagina. </translation>

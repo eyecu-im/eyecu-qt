@@ -54,50 +54,47 @@
    <translation>Geluiden en popups vensters uitzetten als de status &apos;Niet storen&apos; is</translation>
   </message>
   <message>
+   <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation>Speel geluid af wanneer je een bericht ontvangt in een actieve venster</translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="242"/>
-   <source>Do not show the message body in the popup window</source>
-   <translation>Toon geen hoofdtekst bericht in popup venster</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="243"/>
    <source>Expand contact groups in roster</source>
    <translation>Open de contactpersoongroepen in rooster</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="246"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="249"/>
    <source>Enable animation</source>
    <translation>Schakel animatie in</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/notifications/notifications.cpp" line="855"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="858"/>
    <source>second(s)</source>
    <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="254"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="256"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
    <translation>Tijd om een popup venster weer tegeven(0 - altijd zichtbaar):</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="257"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="259"/>
    <source>System command to play sound:</source>
    <translation>Systeem opdracht om geluid af te spelen:</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="260"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="262"/>
    <source>Notification kinds</source>
    <translation>Notificatie soorten</translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="263"/>
    <source>Highlight the corresponding window in the taskbar</source>
    <translation>Markeer de bijbehorende venster in de taakbalk</translation>
   </message>
   <message>
+   <location filename="../../plugins/notifications/notifications.cpp" line="245"/>
    <source>Use native popup notifications</source>
    <translation>Gebruik natieve popup meldingen</translation>
   </message>

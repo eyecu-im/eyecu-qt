@@ -113,11 +113,6 @@
         <translation>Показать диалог настроек</translation>
     </message>
     <message>
-        <source>Ctrl+O</source>
-        <comment>Show options dialog</comment>
-        <translation>Ctrl+O</translation>
-    </message>
-    <message>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>

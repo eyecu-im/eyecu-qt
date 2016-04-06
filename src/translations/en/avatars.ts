@@ -37,53 +37,53 @@
  <context>
   <name>Avatars</name>
   <message>
-   <location line="73" filename="../../plugins/avatars/avatars.cpp"/>
-   <location line="418" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="149" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="482" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Avatars</source>
    <translation>Avatars</translation>
   </message>
   <message>
-   <location line="74" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="150" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Allows to set and display avatars</source>
    <translation>Allows to set and display avatars</translation>
   </message>
   <message>
-   <location line="833" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="975" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Avatar</source>
    <translation>Avatar</translation>
   </message>
   <message>
-   <location line="837" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="979" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Set avatar</source>
    <translation>Set avatar</translation>
   </message>
   <message>
-   <location line="844" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="986" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Clear avatar</source>
    <translation>Clear avatar</translation>
   </message>
   <message>
-   <location line="855" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="997" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Custom picture</source>
    <translation>Custom picture</translation>
   </message>
   <message>
-   <location line="859" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="1001" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Set custom picture</source>
    <translation>Set custom picture</translation>
   </message>
   <message>
-   <location line="866" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="1008" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Clear custom picture</source>
    <translation>Clear custom picture</translation>
   </message>
   <message>
-   <location line="899" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="1041" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Select avatar image</source>
    <translation>Select avatar image</translation>
   </message>
   <message>
-   <location line="899" filename="../../plugins/avatars/avatars.cpp"/>
+   <location line="1041" filename="../../plugins/avatars/avatars.cpp"/>
    <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
    <translation>Image Files (*.png *.jpg *.bmp *.gif)</translation>
   </message>

@@ -54,50 +54,47 @@
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/notifications/notifications.cpp" line="241"/>
    <source>Play notification sound when received a message in the active window</source>
    <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="242"/>
-   <source>Do not show the message body in the popup window</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="243"/>
    <source>Expand contact groups in roster</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="246"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="249"/>
    <source>Enable animation</source>
    <translation type="unfinished"/>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/notifications/notifications.cpp" line="855"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="858"/>
    <source>second(s)</source>
    <translation type="unfinished"><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="254"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="256"/>
    <source>Time to display a pop-up window (0 - always visible):</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="257"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="259"/>
    <source>System command to play sound:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="260"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="262"/>
    <source>Notification kinds</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/notifications/notifications.cpp" line="261"/>
+   <location filename="../../plugins/notifications/notifications.cpp" line="263"/>
    <source>Highlight the corresponding window in the taskbar</source>
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/notifications/notifications.cpp" line="245"/>
    <source>Use native popup notifications</source>
    <translation type="unfinished"/>
   </message>

@@ -414,6 +414,10 @@
         <source>Mood events in chat</source>
         <translation>События настроения в чате</translation>
     </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MoodSelect</name>

@@ -2,91 +2,91 @@
  <context>
   <name>ClientInfo</name>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="73"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="74"/>
    <source>Client Information</source>
    <translation>Інформація про клієнт</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="74"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="75"/>
    <source>Allows to send and receive information about the version of the application, the local time and the last activity of contact</source>
    <translation>Дозволяє отримувати та надсилати інформацію про версію програмного забезпечення, локальний час та останню активність</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="218"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="219"/>
    <source>Share information about your OS version</source>
    <translation>Поширювати інформацію про версію вашої ОС</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="360"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
    <source>Software information</source>
    <translation>Інформація про програмне забезпечення</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
    <source>Software</source>
    <translation>Програмне забезпечення</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="599"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="653"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="600"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="654"/>
    <source>Software Version</source>
    <translation>Версія програмного забезпечення</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
    <source>OS</source>
    <translation>ОС</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="365"/>
    <source>OS Version</source>
    <translation>Версія ОС</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="612"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="613"/>
    <source>Service Uptime</source>
    <translation>Час роботи</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="614"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="660"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="615"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="661"/>
    <source>Last Activity</source>
    <translation>Остання активність</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="616"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="617"/>
    <source>Idle Time</source>
    <translation>Час простою</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="628"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="667"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="629"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="668"/>
    <source>Entity Time</source>
    <translation>Локальний час</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="654"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="655"/>
    <source>Supports the exchanging of the information about the application version</source>
    <translation>Підтримує обмін інформацією про версію програмного забезпечення</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="661"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="662"/>
    <source>Supports the exchanging of the information about the user last activity</source>
    <translation>Підтримує обмін інформацією про останню активність користувача</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="668"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="669"/>
    <source>Supports the exchanging of the information about the user local time</source>
    <translation>Підтримує обмін інформацією про локальний час користувача</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="674"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>
    <source>XMPP Ping</source>
    <translation>Пінг</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="676"/>
    <source>Supports the exchanging of the application-level pings over XML streams</source>
    <translation>Підтримує обмін ping-ами на рівні програми через XMPP-з&apos;єднання</translation>
   </message>

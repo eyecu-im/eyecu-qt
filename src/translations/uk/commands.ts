@@ -37,12 +37,12 @@
    <translation>Виконується команда &apos;%1&apos; на %2</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commanddialog.cpp" line="191"/>
+   <location filename="../../plugins/commands/commanddialog.cpp" line="190"/>
    <source>Waiting for host response ...</source>
    <translation>Очікування відповіді хосту...</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commanddialog.cpp" line="196"/>
+   <location filename="../../plugins/commands/commanddialog.cpp" line="195"/>
    <source>Error: Can&apos;t send request to host.</source>
    <translation>Помилка: неможливо відправити запит до хосту.</translation>
   </message>
@@ -50,63 +50,63 @@
  <context>
   <name>Commands</name>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="43"/>
-   <location filename="../../plugins/commands/commands.cpp" line="542"/>
+   <location filename="../../plugins/commands/commands.cpp" line="44"/>
+   <location filename="../../plugins/commands/commands.cpp" line="543"/>
    <source>Ad-Hoc Commands</source>
    <translation>Ad-Hoc-команди</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="44"/>
+   <location filename="../../plugins/commands/commands.cpp" line="45"/>
    <source>Allows to perform special commands provided by various services</source>
    <translation>Дозволяє виконувати спеціальні команди, що надаються різними сервісами</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="113"/>
+   <location filename="../../plugins/commands/commands.cpp" line="114"/>
    <source>Can not understand the specified action</source>
    <translation>Команда не підтримується</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="114"/>
+   <location filename="../../plugins/commands/commands.cpp" line="115"/>
    <source>Can not accept the specified action</source>
    <translation>Неприпустима команда</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="115"/>
+   <location filename="../../plugins/commands/commands.cpp" line="116"/>
    <source>Can not accept the specified language/locale</source>
    <translation>Неприпустима мова або локаль</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="116"/>
+   <location filename="../../plugins/commands/commands.cpp" line="117"/>
    <source>The data form did not provide one or more required fields</source>
    <translation>У формі не заповнено одне або кілька обов&apos;язкових полів</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="117"/>
+   <location filename="../../plugins/commands/commands.cpp" line="118"/>
    <source>Specified session not present</source>
    <translation>Вказана сесія не існує</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="118"/>
+   <location filename="../../plugins/commands/commands.cpp" line="119"/>
    <source>Specified session is no longer active</source>
    <translation>Вказана сесія неактивна</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="344"/>
+   <location filename="../../plugins/commands/commands.cpp" line="345"/>
    <source>Execute</source>
    <translation>Виконати</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="359"/>
+   <location filename="../../plugins/commands/commands.cpp" line="360"/>
    <source>Commands</source>
    <translation>Команди</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="377"/>
+   <location filename="../../plugins/commands/commands.cpp" line="378"/>
    <source>Request commands</source>
    <translation>Запитати команди</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="543"/>
+   <location filename="../../plugins/commands/commands.cpp" line="544"/>
    <source>Supports the running or performing of the special services commands</source>
    <translation>Підтримує запуск або виконання спеціальних сервісних команд</translation>
   </message>

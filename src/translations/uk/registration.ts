@@ -8,13 +8,13 @@
   </message>
   <message>
    <location filename="../../plugins/registration/registerdialog.cpp" line="94"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="213"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="214"/>
    <source>Waiting for host response ...</source>
    <translation>Очікування відповіді від хоста...</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registerdialog.cpp" line="96"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="215"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="216"/>
    <source>Error: Can&apos;t send request to host.</source>
    <translation>Помилка: неможливо відіслати запит на хост.</translation>
   </message>
@@ -29,22 +29,22 @@
    <translation>Ведіть ваше ім&apos;я користувача і новий пароль.</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="166"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="167"/>
    <source>You are successfully registered at %1</source>
    <translation>Ви успішно зареєструвались на %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="168"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="169"/>
    <source>You are successfully unregistered from %1</source>
    <translation>Ви успішно видалили реєстрацію на %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="170"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="171"/>
    <source>Password was successfully changed at %1</source>
    <translation>Пароль на %1 був успішно змінений</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="181"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="182"/>
    <source>Requested operation failed: %1</source>
    <translation>Запитувана операція виконана з помилкою: %1</translation>
   </message>

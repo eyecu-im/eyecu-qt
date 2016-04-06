@@ -12,22 +12,22 @@
    <translation>Toestaan om Smiley afbeeldingen te gebruiken in berichten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="132"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="136"/>
    <source>Message windows</source>
    <translation>Berichtenvenster</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="133"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="137"/>
    <source>Insert smiley image into message editor</source>
    <translation>Smiley afbeeldingen laden in berichten bewerker</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="144"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="148"/>
    <source>Do not convert text smileys to images</source>
    <translation>Tekst smileys niet omzetten naar afbeeldingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="159"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="163"/>
    <source>Smileys:</source>
    <translation>Smileys:</translation>
   </message>

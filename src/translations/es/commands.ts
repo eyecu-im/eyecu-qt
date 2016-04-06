@@ -37,12 +37,12 @@
    <translation>Ejecutando el comando &apos;%1&apos; en %2</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commanddialog.cpp" line="191"/>
+   <location filename="../../plugins/commands/commanddialog.cpp" line="190"/>
    <source>Waiting for host response ...</source>
    <translation>Esperando por la respuesta del host...</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commanddialog.cpp" line="196"/>
+   <location filename="../../plugins/commands/commanddialog.cpp" line="195"/>
    <source>Error: Can&apos;t send request to host.</source>
    <translation>Error: No se puede enviar la solicitud al host.</translation>
   </message>
@@ -50,63 +50,63 @@
  <context>
   <name>Commands</name>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="43"/>
-   <location filename="../../plugins/commands/commands.cpp" line="542"/>
+   <location filename="../../plugins/commands/commands.cpp" line="44"/>
+   <location filename="../../plugins/commands/commands.cpp" line="543"/>
    <source>Ad-Hoc Commands</source>
    <translation>Comandos Ad-Hoc</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="44"/>
+   <location filename="../../plugins/commands/commands.cpp" line="45"/>
    <source>Allows to perform special commands provided by various services</source>
    <translation>Permite ejecutar comandos especiales provistos por varios servicios</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="113"/>
+   <location filename="../../plugins/commands/commands.cpp" line="114"/>
    <source>Can not understand the specified action</source>
    <translation>No se entiende la acción especificada</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="114"/>
+   <location filename="../../plugins/commands/commands.cpp" line="115"/>
    <source>Can not accept the specified action</source>
    <translation>No se acepta la acción especificada</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="115"/>
+   <location filename="../../plugins/commands/commands.cpp" line="116"/>
    <source>Can not accept the specified language/locale</source>
    <translation>No se acepta el idioma o la localidad</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="116"/>
+   <location filename="../../plugins/commands/commands.cpp" line="117"/>
    <source>The data form did not provide one or more required fields</source>
    <translation>El formulario tiene vacíos uno o más campos requeridos</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="117"/>
+   <location filename="../../plugins/commands/commands.cpp" line="118"/>
    <source>Specified session not present</source>
    <translation>La sesión especificada no está presente</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="118"/>
+   <location filename="../../plugins/commands/commands.cpp" line="119"/>
    <source>Specified session is no longer active</source>
    <translation>La sesión especificada no está activa</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="344"/>
+   <location filename="../../plugins/commands/commands.cpp" line="345"/>
    <source>Execute</source>
    <translation>Ejecutar</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="359"/>
+   <location filename="../../plugins/commands/commands.cpp" line="360"/>
    <source>Commands</source>
    <translation>Comandos</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="377"/>
+   <location filename="../../plugins/commands/commands.cpp" line="378"/>
    <source>Request commands</source>
    <translation>Solicitar comandos</translation>
   </message>
   <message>
-   <location filename="../../plugins/commands/commands.cpp" line="543"/>
+   <location filename="../../plugins/commands/commands.cpp" line="544"/>
    <source>Supports the running or performing of the special services commands</source>
    <translation>Soporta la ejecución de comandos especiales de los servicios</translation>
   </message>

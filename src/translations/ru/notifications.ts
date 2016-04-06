@@ -52,10 +52,6 @@
       <translation>Проигрывать звук уведомления при получении сообщения в активное окно</translation>
     </message>
     <message>
-      <source>Do not show the message body in the popup window</source>
-      <translation>Не отображать текст сообщения во всплывающем окне</translation>
-    </message>
-    <message>
       <source>Time to display a pop-up window (0 - always visible):</source>
       <translation>Время отображения всплывающего окна (0 - не закрывать):</translation>
     </message>
@@ -76,11 +72,9 @@
       <translation>Разрешить анимацию</translation>
     </message>
     <message>
-        <source>Use native popup notifications</source>
-        <translation>Использовать системные всплывающие уведомления</translation>
+      <source>Use native popup notifications</source>
+      <translation>Использовать системные всплывающие уведомления</translation>
     </message>
-  </context>
-  <context>
     <message numerus="yes">
       <source>second(s)</source>
       <translation>

@@ -7,12 +7,12 @@
    <translation>Strona %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="171"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
    <source>The are %1 field(s) with invalid values:&lt;br&gt;</source>
    <translation>Znaleziono %1 miejsc z błędami:&lt;br&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="181"/>
    <source>Do you want to continue with invalid values?</source>
    <translation>Kontynuować z błędami?</translation>
   </message>
@@ -50,42 +50,42 @@
    <translation>Wczytywanie URL zakończone błędem</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>Yes</source>
    <translation>Tak</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>No</source>
    <translation>Nie</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1047"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1055"/>
    <source>Data Forms</source>
    <translation>Formularze z danymi</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1048"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1056"/>
    <source>Supports the processing and displaying of the forms with the data</source>
    <translation>Obsługa przetwarzania i wyświetlania formularzy z danymi</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1053"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1061"/>
    <source>Data Forms Validation</source>
    <translation>Sprawdzanie integralności danych w formularzach</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1054"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1062"/>
    <source>Supports the validating of the data entered in the form</source>
    <translation>Obsługa weryfikacji danych wprowadzonych w formularzu</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1059"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1067"/>
    <source>Data Forms Layout</source>
    <translation>Wygląd formularza z danymi</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1060"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1068"/>
    <source>Supports the layouting of the form, including the layout of form fields, pages and sections</source>
    <translation>Obsługa formatowania formularzy, w tym formatowania pól, stron i sekcji z form</translation>
   </message>

@@ -187,7 +187,7 @@ set files=rosterexchange.def.xml rosterexchangerequest.png
 call copyresources2 ru.rwsoftware.eyecu.rosteritemexchange menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.multiuserchat multiuserchat
-set files=muc.def.xml mucchangenick.png mucchangetopic.png mucclearchat.png mucconference.png mucconference1.png mucconfigureroom.png mucdatamessage.png mucdestroyroom.png muceditadminslist.png muceditbanlist.png muceditmemberslist.png muceditownerslist.png mucenterroom.png mucexitroom.png mucinvite.png mucjoin.png mucmessage.png mucprivatemessage.png mucrequestvoice.png mucusermenu.png
+set files=muc.def.xml mucchangenick.png mucchangetopic.png mucclearchat.png mucconference.png mucconference1.png mucconfigureroom.png mucdestroyroom.png muceditadminslist.png muceditmemberslist.png muceditownerslist.png mucenterroom.png mucexitroom.png mucinvite.png mucjoin.png mucmessage.png mucprivatemessage.png mucrequestvoice.png mucchangepassword.png mucediaffiliations.png mucmoderate.png mucnotifysilence.png muctools.png mucusershide.png
 call copyresources2 ru.rwsoftware.eyecu.multiuserchat menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.chatstates chatstates
@@ -201,7 +201,7 @@ set files=metacontacts.def.xml metacontactscombine.png metacontactsdestroy.png m
 call copyresources2 ru.rwsoftware.eyecu.metacontacts menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.bookmarks bookmarks
-set files=bookmarks.def.xml bookmarks.png bookmarksadd.png bookmarksedit.png bookmarksremove.png bookmarksroom.png bookmarksurl.png
+set files=bookmarks.def.xml bookmarks.png bookmarksadd.png bookmarksedit.png bookmarksremove.png bookmarksautojoin.png bookmarksempty.png 
 call copyresources2 ru.rwsoftware.eyecu.bookmarks menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.annotations annotations
@@ -245,6 +245,8 @@ set pluginlist=filetransfer filestreamsmanager datastreamsmanager
 call copyplugins ru.rwsoftware.eyecu.filetransfer
 set files=datastreamsmanager.def.xml datastreamsmanager.png filestreamsmanager.def.xml filestreamsmanager.png filetransfer.def.xml filetransferreceive.png filetransfersend.png
 call copyresources2 ru.rwsoftware.eyecu.filetransfer menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.datastreamspublisher datastreamspublisher
 
 call copyplugins ru.rwsoftware.eyecu.filetransfer.socks5 socksstreams
 call copyplugins ru.rwsoftware.eyecu.filetransfer.ibb inbandstreams

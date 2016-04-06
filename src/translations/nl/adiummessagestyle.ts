@@ -2,17 +2,17 @@
  <context>
   <name>AdiumMessageStyle</name>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="583"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="632"/>
    <source>hh:mm</source>
    <translation>hh:mm</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="598"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="647"/>
    <source>hh:mm:ss</source>
    <translation>hh:mm:ss</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="839"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="844"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
    <translation>Mislukt om bericht stijl te laden. Druk op venster knop om opnieuw te proberen.</translation>
   </message>

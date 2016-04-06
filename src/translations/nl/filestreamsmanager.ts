@@ -76,17 +76,17 @@
    <translation>Bestandsoverdrachten</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="143"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="144"/>
    <source>File transfer</source>
    <translation>Bestandsoverdracht</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="145"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="146"/>
    <source>Create separate folder for each sender</source>
    <translation>Maak een aparte map voor elke afzender</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="155"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="156"/>
    <source>Default transfer method:</source>
    <translation>Standaard overdrachts methode:</translation>
   </message>

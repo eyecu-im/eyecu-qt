@@ -176,8 +176,8 @@
   <message>
    <location line="80" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <location line="200" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
-   <location line="928" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
-   <location line="1226" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="932" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="1230" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Service Discovery</source>
    <translation>Service Discovery</translation>
   </message>
@@ -187,62 +187,62 @@
    <translation>Allows to receive information about Jabber entities</translation>
   </message>
   <message>
-   <location line="929" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="933" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery information and items</source>
    <translation>Supports the exchange of the discovery information and items</translation>
   </message>
   <message>
-   <location line="935" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="939" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Information</source>
    <translation>Discovery Information</translation>
   </message>
   <message>
-   <location line="936" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="940" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery information</source>
    <translation>Supports the exchange of the discovery information</translation>
   </message>
   <message>
-   <location line="942" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="946" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Items</source>
    <translation>Discovery Items</translation>
   </message>
   <message>
-   <location line="943" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="947" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery items</source>
    <translation>Supports the exchange of the discovery items</translation>
   </message>
   <message>
-   <location line="949" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="953" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Publish Items</source>
    <translation>Publish Items</translation>
   </message>
   <message>
-   <location line="950" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="954" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the publishing of the discovery items</source>
    <translation>Supports the publishing of the discovery items</translation>
   </message>
   <message>
-   <location line="956" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="960" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Entity Capabilities</source>
    <translation>Entity Capabilities</translation>
   </message>
   <message>
-   <location line="957" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="961" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the caching of the discovery information</source>
    <translation>Supports the caching of the discovery information</translation>
   </message>
   <message>
-   <location line="963" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="967" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>JID Escaping</source>
    <translation>JID Escaping</translation>
   </message>
   <message>
-   <location line="964" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="968" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the displaying of the jabber identifiers with disallowed characters</source>
    <translation>Supports the displaying of the jabber identifiers with disallowed characters</translation>
   </message>
   <message>
-   <location line="1214" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="1218" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Info</source>
    <translation>Discovery Info</translation>
   </message>

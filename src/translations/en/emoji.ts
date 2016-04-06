@@ -1,60 +1,60 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS version="2.0" language="en">
  <context>
   <name>Emoji</name>
   <message>
-   <location line="47" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="50" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location line="48" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="51" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Allows to use emoji in messages</source>
    <translation>Allows to use emoji in messages</translation>
   </message>
   <message>
-   <location line="83" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="86" filename="../../plugins/emoji/emoji.cpp"/>
    <source>People</source>
    <translation>People</translation>
   </message>
   <message>
-   <location line="84" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="87" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Symbols</source>
    <translation>Symbols</translation>
   </message>
   <message>
-   <location line="85" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Flags</source>
    <translation>Flags</translation>
   </message>
   <message>
-   <location line="86" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Activity</source>
    <translation>Activity</translation>
   </message>
   <message>
-   <location line="87" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Nature</source>
    <translation>Nature</translation>
   </message>
   <message>
-   <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="91" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Travel</source>
    <translation>Travel</translation>
   </message>
   <message>
-   <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="92" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Objects</source>
    <translation>Objects</translation>
   </message>
   <message>
-   <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="93" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Foods</source>
    <translation>Foods</translation>
   </message>
   <message>
-   <location line="155" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="165" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Message windows</source>
    <translation>Message windows</translation>
   </message>
@@ -70,49 +70,17 @@
  <context>
   <name>EmojiOptionsClass</name>
   <message>
-   <source>Emoji sets:</source>
-   <translation type="obsolete">Emoji sets:</translation>
-  </message>
-  <message>
-   <source>Here you can select emoji sets and mark those of them to be used</source>
-   <translation type="obsolete">Here you can select emoji sets and mark those of them to be used</translation>
-  </message>
-  <message>
-   <source>Priority Up</source>
-   <translation type="obsolete">Priority Up</translation>
-  </message>
-  <message>
-   <source>Click this button to rise priority of selected emoji set</source>
-   <translation type="obsolete">Click this button to rise priority of selected emoji set</translation>
-  </message>
-  <message>
-   <source>Selectable</source>
-   <translation type="obsolete">Selectable</translation>
-  </message>
-  <message>
-   <source>Click this button to add emoji selection menu button to message edit toolbar</source>
-   <translation type="obsolete">Click this button to add emoji selection menu button to message edit toolbar</translation>
-  </message>
-  <message>
-   <source>Priority Down</source>
-   <translation type="obsolete">Priority Down</translation>
-  </message>
-  <message>
-   <source>Click this button to lower prioroty of selected emoji set</source>
-   <translation type="obsolete">Click this button to lower prioroty of selected emoji set</translation>
-  </message>
-  <message>
    <location line="29" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Emoji set:</source>
    <translation>Emoji set:</translation>
   </message>
   <message>
-   <location line="36" filename="../../plugins/emoji/emojioptions.ui"/>
+   <location line="39" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Menu icon size:</source>
    <translation>Menu icon size:</translation>
   </message>
   <message>
-   <location line="43" filename="../../plugins/emoji/emojioptions.ui"/>
+   <location line="49" filename="../../plugins/emoji/emojioptions.ui"/>
    <source>Chat icon size:</source>
    <translation>Chat icon size:</translation>
   </message>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" sourcelanguage="en" language="ru">
+<TS version="2.1" sourcelanguage="en" language="ru">
   <context>
     <name>ConfigPage</name>
     <message>
@@ -912,6 +912,24 @@
     <message>
       <source>Conference with %1</source>
       <translation>Конференция с %1</translation>
+    </message>
+    <message>
+      <source>Left mouse button</source>
+      <comment>Instrumental case</comment>
+      <translation>Левой кнопкой мыши</translation>
+    </message>
+    <message>
+      <source>Middle mouse button</source>
+      <comment>Instrumental case</comment>
+      <translation>Средней кнопкой мыши</translation>
+    </message>
+    <message>
+      <source>Address user by clicking nickname in the list with</source>
+      <translation>Обращаться к пользователю, щёлкая по его нику в списке</translation>
+    </message>
+    <message>
+      <source>Add this suffix when referring to the user</source>
+      <translation>Добавлять этот суффикс, обращаясь к пользователю</translation>
     </message>
   </context>
   <context>

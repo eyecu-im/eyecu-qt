@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Birthday Reminder</DisplayName>
     <Description>Reminds about birthdays of your friends</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2014-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.birthdayreminder</Name>
     <Dependencies>ru.rwsoftware.eyecu.vcard</Dependencies>
     <SortingPriority>73</SortingPriority>

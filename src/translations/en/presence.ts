@@ -4,7 +4,7 @@
  <context>
   <name>Presence</name>
   <message>
-   <location line="422" filename="../../plugins/presence/presence.cpp"/>
+   <location line="425" filename="../../plugins/presence/presence.cpp"/>
    <source>XMPP stream closed unexpectedly</source>
    <translation>XMPP stream closed unexpectedly</translation>
   </message>

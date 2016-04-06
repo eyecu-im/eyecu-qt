@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>History</DisplayName>
     <Description>Allows to store and display the history of communications</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2015-12-31</ReleaseDate>
+    <Version>1.3.2</Version>
+    <ReleaseDate>2016-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.messagearchiver</Name>
-    <UpdateText>Synchronized with upstream (Vacuum-IM)</UpdateText>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <Dependencies>org.digia.qt4.sql</Dependencies>
     <SortingPriority>70</SortingPriority>
     <Default>true</Default>

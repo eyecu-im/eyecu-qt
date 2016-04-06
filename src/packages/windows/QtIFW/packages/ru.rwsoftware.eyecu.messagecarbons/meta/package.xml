@@ -2,8 +2,9 @@
 <Package>
     <DisplayName>Message Carbons</DisplayName>
     <Description>Allows to keep all user IM clients engaged in a conversation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-25</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-04</ReleaseDate>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <Name>ru.rwsoftware.eyecu.messagecarbons</Name>
     <SortingPriority>91</SortingPriority>
     <Default>true</Default>

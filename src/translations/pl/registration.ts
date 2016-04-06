@@ -8,13 +8,13 @@
   </message>
   <message>
    <location filename="../../plugins/registration/registerdialog.cpp" line="94"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="213"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="214"/>
    <source>Waiting for host response ...</source>
    <translation>Oczekiwanie na odpowiedź hosta...</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registerdialog.cpp" line="96"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="215"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="216"/>
    <source>Error: Can&apos;t send request to host.</source>
    <translation>Błąd: Nie można wysłać żądania do serwera.</translation>
   </message>
@@ -29,22 +29,22 @@
    <translation>Wprowadź twoją nazwę użytkownika i nowe hasło.</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="166"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="167"/>
    <source>You are successfully registered at %1</source>
    <translation>Zostałeś pomyślnie zarejestrowany na %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="168"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="169"/>
    <source>You are successfully unregistered from %1</source>
    <translation>Zostałeś pomyślnie wyrejestrowany z %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="170"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="171"/>
    <source>Password was successfully changed at %1</source>
    <translation>Hasło na %1 zostało pomyślnie zmienione</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="181"/>
+   <location filename="../../plugins/registration/registerdialog.cpp" line="182"/>
    <source>Requested operation failed: %1</source>
    <translation>Żądana operacja zakończyła się błędem: %1</translation>
   </message>

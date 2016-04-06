@@ -4,7 +4,7 @@
  <context>
   <name>CompressFeature</name>
   <message>
-   <location line="204" filename="../../plugins/compress/compressfeature.cpp"/>
+   <location line="203" filename="../../plugins/compress/compressfeature.cpp"/>
    <source>Error code: %1</source>
    <translation>Error code: %1</translation>
   </message>

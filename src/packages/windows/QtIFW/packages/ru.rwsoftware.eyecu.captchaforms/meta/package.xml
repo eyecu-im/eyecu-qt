@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>CAPTCHA Forms</DisplayName>
     <Description>Allows to undergo tests on humanity without the use of browser</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.captchaforms</Name>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.dataforms</Dependencies>
     <SortingPriority>96</SortingPriority>
     <Default>true</Default>

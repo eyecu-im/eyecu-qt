@@ -1,58 +1,58 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
  <context>
   <name>Emoji</name>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="47"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="50"/>
    <source>Emoji</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="48"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
    <source>Allows to use emoji in messages</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="83"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
    <source>People</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="84"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Symbols</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="85"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Flags</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Activity</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Nature</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Travel</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Objects</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Foods</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="155"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
    <source>Message windows</source>
    <translation type="unfinished"/>
   </message>
@@ -68,49 +68,17 @@
  <context>
   <name>EmojiOptionsClass</name>
   <message>
-   <source>Emoji sets:</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Here you can select emoji sets and mark those of them to be used</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Priority Up</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Click this button to rise priority of selected emoji set</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Selectable</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Click this button to add emoji selection menu button to message edit toolbar</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Priority Down</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Click this button to lower prioroty of selected emoji set</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="29"/>
    <source>Emoji set:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="36"/>
+   <location filename="../../plugins/emoji/emojioptions.ui" line="39"/>
    <source>Menu icon size:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emojioptions.ui" line="43"/>
+   <location filename="../../plugins/emoji/emojioptions.ui" line="49"/>
    <source>Chat icon size:</source>
    <translation type="unfinished"/>
   </message>

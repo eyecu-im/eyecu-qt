@@ -35,7 +35,7 @@
    <translation>Sends/receives Message Delivery Receipts</translation>
   </message>
   <message>
-   <location line="318" filename="../../plugins/receipts/receipts.cpp"/>
+   <location line="326" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message delivered</source>
    <translation>Message delivered</translation>
   </message>

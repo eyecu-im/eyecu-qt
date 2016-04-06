@@ -476,36 +476,16 @@
       <translation>По центру</translation>
     </message>
     <message>
-      <source>Ctrl+E</source>
-      <comment>Align center</comment>
-      <translation>Ctrl+E</translation>
-    </message>
-    <message>
       <source>Left</source>
       <translation>По левому краю</translation>
-    </message>
-    <message>
-      <source>Ctrl+L</source>
-      <comment>Align left</comment>
-      <translation>Ctrl+L</translation>
     </message>
     <message>
       <source>Right</source>
       <translation>По правому краю</translation>
     </message>
     <message>
-      <source>Ctrl+R</source>
-      <comment>Align right</comment>
-      <translation>Ctrl+R</translation>
-    </message>
-    <message>
       <source>Justify</source>
       <translation>По всей ширине</translation>
-    </message>
-    <message>
-      <source>Ctrl+J</source>
-      <comment>Align justify</comment>
-      <translation>Ctrl+J</translation>
     </message>
     <message>
       <source>Remove formatting</source>
@@ -835,11 +815,6 @@
       <translation>Сбрасывать форматирование при отправке сообщения</translation>
     </message>
     <message>
-      <source>Ctrl+Y</source>
-      <comment>Overline</comment>
-      <translation>Ctrl+Y</translation>
-    </message>
-    <message>
       <source>Style</source>
       <translation>Стиль</translation>
     </message>
@@ -866,6 +841,66 @@
     <message>
       <source>Mixed case</source>
       <translation>Смешанная</translation>
+    </message>
+    <message>
+      <source>Ctrl+O</source>
+      <comment>Overline</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Alt+Up</source>
+      <comment>Align center</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Alt+Left</source>
+      <comment>Align left</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Alt+Right</source>
+      <comment>Align right</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Alt+Down</source>
+      <comment>Align justify</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+1</source>
+      <comment>Heading 1</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+2</source>
+      <comment>Heading 2</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+3</source>
+      <comment>Heading 3</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+4</source>
+      <comment>Heading 4</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+5</source>
+      <comment>Heading 5</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+6</source>
+      <comment>Heading 6</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+0</source>
+      <comment>Preformatted text</comment>
+      <translation type="unfinished"/>
     </message>
   </context>
   <context>

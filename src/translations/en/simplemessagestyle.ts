@@ -4,12 +4,12 @@
  <context>
   <name>SimpleMessageStyle</name>
   <message>
-   <location line="492" filename="../../plugins/simplemessagestyle/simplemessagestyle.cpp"/>
+   <location line="528" filename="../../plugins/simplemessagestyle/simplemessagestyle.cpp"/>
    <source>hh:mm</source>
    <translation>hh:mm</translation>
   </message>
   <message>
-   <location line="505" filename="../../plugins/simplemessagestyle/simplemessagestyle.cpp"/>
+   <location line="541" filename="../../plugins/simplemessagestyle/simplemessagestyle.cpp"/>
    <source>hh:mm:ss</source>
    <translation>hh:mm:ss</translation>
   </message>

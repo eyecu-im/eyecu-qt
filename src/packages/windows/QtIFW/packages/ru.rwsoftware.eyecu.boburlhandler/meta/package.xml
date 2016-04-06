@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>BOB URL Handler</DisplayName>
     <Description>Allows URL processor plugin to handle Bits of Binary links (cid: scheme)</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.boburlhandler</Name>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.bob</Dependencies>
     <AutoDependOn>ru.rwsoftware.eyecu.bob,ru.rwsoftware.eyecu.urlprocessor</AutoDependOn>
     <Virtual>true</Virtual>

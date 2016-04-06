@@ -14,22 +14,22 @@
    <translation>Allows to use your smiley images in messages</translation>
   </message>
   <message>
-   <location line="132" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="136" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Message windows</source>
    <translation>Message windows</translation>
   </message>
   <message>
-   <location line="133" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="137" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Insert smiley image into message editor</source>
    <translation>Insert smiley image into message editor</translation>
   </message>
   <message>
-   <location line="144" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="148" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Do not convert text smileys to images</source>
    <translation>Do not convert text smileys to images</translation>
   </message>
   <message>
-   <location line="159" filename="../../plugins/emoticons/emoticons.cpp"/>
+   <location line="163" filename="../../plugins/emoticons/emoticons.cpp"/>
    <source>Smileys:</source>
    <translation>Smileys:</translation>
   </message>

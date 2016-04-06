@@ -4,12 +4,12 @@
  <context>
   <name>StanzaProcessor</name>
   <message>
-   <location line="19" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
+   <location line="22" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
    <source>Stanza Manager</source>
    <translation>Stanza Manager</translation>
   </message>
   <message>
-   <location line="20" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
+   <location line="23" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
    <source>Allows other modules to send and receive XMPP stanzas</source>
    <translation>Allows other modules to send and receive XMPP stanzas</translation>
   </message>

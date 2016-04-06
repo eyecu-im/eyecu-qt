@@ -150,13 +150,11 @@
    <translation>
     <numerusform>Move %n user(s) to '%1'</numerusform>
     <numerusform>Move %n user(s) to '%1'</numerusform>
-    <numerusform>Move %n user(s) to '%1'</numerusform>
    </translation>
   </message>
   <message numerus="yes">
    <source>Delete %n user(s)</source>
    <translation>
-    <numerusform>Delete %n user(s)</numerusform>
     <numerusform>Delete %n user(s)</numerusform>
     <numerusform>Delete %n user(s)</numerusform>
    </translation>
@@ -903,12 +901,29 @@
    <translation>
     <numerusform>Conference with %1 and %n other contact(s)</numerusform>
     <numerusform>Conference with %1 and %n other contact(s)</numerusform>
-    <numerusform>Conference with %1 and %n other contact(s)</numerusform>
    </translation>
   </message>
   <message>
    <source>Conference with %1</source>
    <translation>Conference with %1</translation>
+  </message>
+  <message>
+   <source>Left mouse button</source>
+   <comment>Instrumental case</comment>
+   <translation>Left mouse button</translation>
+  </message>
+  <message>
+   <source>Middle mouse button</source>
+   <comment>Instrumental case</comment>
+   <translation>Middle mouse button</translation>
+  </message>
+  <message>
+   <source>Address user by clicking nickname in the list with</source>
+   <translation>Address user by clicking nickname in the list with</translation>
+  </message>
+  <message>
+   <source>Add this suffix when referring to the user</source>
+   <translation>Add this suffix when referring to the user</translation>
   </message>
  </context>
  <context>
@@ -1450,7 +1465,6 @@
    <translation>
     <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
     <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
-    <numerusform>You invited %1 and %n other contact(s) to this conference. %2</numerusform>
    </translation>
   </message>
   <message>
@@ -1480,7 +1494,6 @@
   <message numerus="yes">
    <source>Failed to invite %1 and %n other contact(s) to this conference: %2</source>
    <translation>
-    <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
     <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
     <numerusform>Failed to invite %1 and %n other contact(s) to this conference: %2</numerusform>
    </translation>

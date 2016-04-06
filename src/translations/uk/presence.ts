@@ -2,7 +2,7 @@
  <context>
   <name>Presence</name>
   <message>
-   <location filename="../../plugins/presence/presence.cpp" line="422"/>
+   <location filename="../../plugins/presence/presence.cpp" line="425"/>
    <source>XMPP stream closed unexpectedly</source>
    <translation>XMPP потік несподіванно завершився</translation>
   </message>

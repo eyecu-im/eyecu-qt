@@ -14,12 +14,12 @@
    <translation>Allows to save the history of communications on the server</translation>
   </message>
   <message>
-   <location line="241" filename="../../plugins/servermessagearchive/servermessagearchive.cpp"/>
+   <location line="253" filename="../../plugins/servermessagearchive/servermessagearchive.cpp"/>
    <source>Standard Server Side Archive</source>
    <translation>Standard Server Side Archive</translation>
   </message>
   <message>
-   <location line="246" filename="../../plugins/servermessagearchive/servermessagearchive.cpp"/>
+   <location line="258" filename="../../plugins/servermessagearchive/servermessagearchive.cpp"/>
    <source>History of conversations is stored on your jabber server</source>
    <translation>History of conversations is stored on your jabber server</translation>
   </message>

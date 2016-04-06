@@ -7,12 +7,12 @@
    <translation>Сторінка %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="171"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
    <source>The are %1 field(s) with invalid values:&lt;br&gt;</source>
    <translation>Знайдено %1 полів із некоректними значеннями:&lt;br&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="181"/>
    <source>Do you want to continue with invalid values?</source>
    <translation>Відправити із некоректними значеннями?</translation>
   </message>
@@ -50,42 +50,42 @@
    <translation>Не вдалося завантажити URL</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>Yes</source>
    <translation>Так</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>No</source>
    <translation>Ні</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1047"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1055"/>
    <source>Data Forms</source>
    <translation>Форми з даними</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1048"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1056"/>
    <source>Supports the processing and displaying of the forms with the data</source>
    <translation>Підтримує обробку та перегляд форм із даними</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1053"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1061"/>
    <source>Data Forms Validation</source>
    <translation>Перевірка цілісності форми</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1054"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1062"/>
    <source>Supports the validating of the data entered in the form</source>
    <translation>Підтримує перевірку введених даних</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1059"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1067"/>
    <source>Data Forms Layout</source>
    <translation>Керування розташуванням даних на формі</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1060"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1068"/>
    <source>Supports the layouting of the form, including the layout of form fields, pages and sections</source>
    <translation>Підтримує форматування форм, включаючи форматування полів, сторінок та секцій форм</translation>
   </message>

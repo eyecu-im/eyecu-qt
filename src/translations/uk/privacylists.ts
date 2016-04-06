@@ -246,135 +246,135 @@
  <context>
   <name>PrivacyLists</name>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="54"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="55"/>
    <source>Privacy Lists</source>
    <translation>Списки приватності</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="55"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="56"/>
    <source>Allows to block unwanted contacts</source>
    <translation>Дозволяє блокувати небажані контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="929"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="930"/>
    <source>Privacy</source>
    <translation>Приватність</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="950"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="951"/>
    <source>Visible Mode</source>
    <translation>Видимий режим</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="959"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="960"/>
    <source>Invisible Mode</source>
    <translation>Невидимий режим</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="968"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="969"/>
    <source>Disable Privacy Lists</source>
    <translation>Вимкнути списки приватності</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="982"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="983"/>
    <source>Block Contacts Without Subscription</source>
    <translation>Блокувати контакти без підписки</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1010"/>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1074"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1011"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1075"/>
    <source>Default Rule</source>
    <translation>Правило за замовчуванням</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1019"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1020"/>
    <source>Visible to Contact</source>
    <translation>Видимий для контакту</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1029"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1030"/>
    <source>Invisible to Contact</source>
    <translation>Невидимий для контакту</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1039"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1040"/>
    <source>Ignore Contact</source>
    <translation>Ігнорувати контакт</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1083"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1084"/>
    <source>Visible to Group</source>
    <translation>Видимий для групи</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1093"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1094"/>
    <source>Invisible to Group</source>
    <translation>Невидимий для групи</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1103"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1104"/>
    <source>Ignore Group</source>
    <translation>Ігнорувати групу</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1125"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1126"/>
    <source>Set Active List</source>
    <translation>Встановити активний список</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1134"/>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1170"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1135"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1171"/>
    <source>&lt;None&gt;</source>
    <translation>&lt;Ні&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1161"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1162"/>
    <source>Set Default List</source>
    <translation>Встановити список за замовчуванням</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1497"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1498"/>
    <source>Advanced...</source>
    <translation>Додатково...</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1543"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <source>&lt;b&gt;Privacy settings:&lt;/b&gt;</source>
    <translation>&lt;b&gt;Налаштування приватності:&lt;/b&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <source>- queries: %1</source>
    <translation>- запити: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>&lt;b&gt;denied&lt;/b&gt;</source>
    <translation>&lt;b&gt;заборонено&lt;/b&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>allowed</source>
    <translation>дозволено</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <source>- messages: %1</source>
    <translation>- повідомлення: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
    <source>- presences in: %1</source>
    <translation>- вх. статус: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>- presences out: %1</source>
    <translation>- вих. статус: %1</translation>
   </message>

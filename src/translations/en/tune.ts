@@ -4,133 +4,173 @@
  <context>
   <name>Tune</name>
   <message>
-   <location line="81" filename="../../plugins/tune/tune.cpp"/>
-   <location line="323" filename="../../plugins/tune/tune.cpp"/>
-   <location line="523" filename="../../plugins/tune/tune.cpp"/>
+   <location line="88" filename="../../plugins/tune/tune.cpp"/>
+   <location line="333" filename="../../plugins/tune/tune.cpp"/>
+   <location line="533" filename="../../plugins/tune/tune.cpp"/>
    <source>User Tune</source>
    <translation>User Tune</translation>
   </message>
   <message>
-   <location line="82" filename="../../plugins/tune/tune.cpp"/>
+   <location line="89" filename="../../plugins/tune/tune.cpp"/>
    <source>Implements XEP-0118: User Tune</source>
    <translation>Implements XEP-0118: User Tune</translation>
   </message>
   <message>
-   <location line="219" filename="../../plugins/tune/tune.cpp"/>
+   <location line="229" filename="../../plugins/tune/tune.cpp"/>
    <source>Publish tune</source>
    <translation>Publish tune</translation>
   </message>
   <message>
-   <location line="219" filename="../../plugins/tune/tune.cpp"/>
+   <location line="229" filename="../../plugins/tune/tune.cpp"/>
    <source>Ctrl+F5</source>
    <comment>Switch Publish Tune</comment>
    <translation>Ctrl+F5</translation>
   </message>
   <message>
-   <location line="273" filename="../../plugins/tune/tune.cpp"/>
+   <location line="283" filename="../../plugins/tune/tune.cpp"/>
    <source>When user starts listening a new tune</source>
    <translation>When user starts listening a new tune</translation>
   </message>
   <message>
-   <location line="280" filename="../../plugins/tune/tune.cpp"/>
+   <location line="290" filename="../../plugins/tune/tune.cpp"/>
    <source>Publish Tune</source>
    <translation>Publish Tune</translation>
   </message>
   <message>
-   <location line="314" filename="../../plugins/tune/tune.cpp"/>
+   <location line="324" filename="../../plugins/tune/tune.cpp"/>
    <source>Show user tune icons</source>
    <translation>Show user tune icons</translation>
   </message>
   <message>
-   <location line="318" filename="../../plugins/tune/tune.cpp"/>
+   <location line="328" filename="../../plugins/tune/tune.cpp"/>
    <source>Display user tune icon</source>
    <translation>Display user tune icon</translation>
   </message>
   <message>
-   <location line="319" filename="../../plugins/tune/tune.cpp"/>
+   <location line="329" filename="../../plugins/tune/tune.cpp"/>
    <source>Tune events in chat</source>
    <translation>Tune events in chat</translation>
   </message>
   <message>
-   <location line="333" filename="../../plugins/tune/tune.cpp"/>
+   <location line="343" filename="../../plugins/tune/tune.cpp"/>
    <source>Polling interval</source>
    <translation>Polling interval</translation>
   </message>
   <message>
-   <location line="334" filename="../../plugins/tune/tune.cpp"/>
+   <location line="344" filename="../../plugins/tune/tune.cpp"/>
    <source>User Tune listeners</source>
    <translation>User Tune listeners</translation>
   </message>
   <message>
-   <location line="335" filename="../../plugins/tune/tune.cpp"/>
+   <location line="345" filename="../../plugins/tune/tune.cpp"/>
    <source>User Tune requesters</source>
    <translation>User Tune requesters</translation>
   </message>
   <message>
-   <location line="341" filename="../../plugins/tune/tune.cpp"/>
+   <location line="351" filename="../../plugins/tune/tune.cpp"/>
    <source>Publish User Tune</source>
    <translation>Publish User Tune</translation>
   </message>
   <message>
-   <location line="524" filename="../../plugins/tune/tune.cpp"/>
+   <location line="534" filename="../../plugins/tune/tune.cpp"/>
    <source>Supports User Tune</source>
    <translation>Supports User Tune</translation>
   </message>
   <message>
-   <location line="530" filename="../../plugins/tune/tune.cpp"/>
+   <location line="540" filename="../../plugins/tune/tune.cpp"/>
    <source>User Tune Notification</source>
    <translation>User Tune Notification</translation>
   </message>
   <message>
-   <location line="531" filename="../../plugins/tune/tune.cpp"/>
+   <location line="541" filename="../../plugins/tune/tune.cpp"/>
    <source>Receives User Tune notifications</source>
    <translation>Receives User Tune notifications</translation>
   </message>
   <message>
-   <location line="675" filename="../../plugins/tune/tune.cpp"/>
-   <location line="1037" filename="../../plugins/tune/tune.cpp"/>
+   <location line="742" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1208" filename="../../plugins/tune/tune.cpp"/>
    <source>Now playing</source>
    <translation>Now playing</translation>
   </message>
   <message>
-   <location line="683" filename="../../plugins/tune/tune.cpp"/>
+   <location line="750" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1083" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1086" filename="../../plugins/tune/tune.cpp"/>
    <source>Title</source>
    <translation>Title</translation>
   </message>
   <message>
-   <location line="685" filename="../../plugins/tune/tune.cpp"/>
+   <location line="752" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1092" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1095" filename="../../plugins/tune/tune.cpp"/>
    <source>Artist</source>
    <translation>Artist</translation>
   </message>
   <message>
-   <location line="687" filename="../../plugins/tune/tune.cpp"/>
+   <location line="754" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1101" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1104" filename="../../plugins/tune/tune.cpp"/>
    <source>Source</source>
    <translation>Source</translation>
   </message>
   <message>
-   <location line="689" filename="../../plugins/tune/tune.cpp"/>
+   <location line="756" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1110" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1113" filename="../../plugins/tune/tune.cpp"/>
    <source>Track</source>
    <translation>Track</translation>
   </message>
   <message>
-   <location line="691" filename="../../plugins/tune/tune.cpp"/>
+   <location line="758" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1119" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1122" filename="../../plugins/tune/tune.cpp"/>
    <source>Length</source>
    <translation>Length</translation>
   </message>
   <message>
-   <location line="693" filename="../../plugins/tune/tune.cpp"/>
+   <location line="760" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1128" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1131" filename="../../plugins/tune/tune.cpp"/>
    <source>Rating</source>
    <translation>Rating</translation>
   </message>
   <message>
-   <location line="695" filename="../../plugins/tune/tune.cpp"/>
+   <location line="762" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1137" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1140" filename="../../plugins/tune/tune.cpp"/>
    <source>URL</source>
    <translation>URL</translation>
   </message>
   <message>
-   <location line="736" filename="../../plugins/tune/tune.cpp"/>
+   <location line="803" filename="../../plugins/tune/tune.cpp"/>
    <source>Now listening: %1</source>
    <translation>Now listening: %1</translation>
+  </message>
+  <message>
+   <location line="1083" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1092" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1101" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1110" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1119" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1128" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1137" filename="../../plugins/tune/tune.cpp"/>
+   <source>%1: %2</source>
+   <translation>%1: %2</translation>
+  </message>
+  <message>
+   <location line="1086" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1095" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1104" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1113" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1122" filename="../../plugins/tune/tune.cpp"/>
+   <location line="1131" filename="../../plugins/tune/tune.cpp"/>
+   <source>&lt;b>%1:&lt;/b> %2</source>
+   <translation>&lt;b>%1:&lt;/b> %2</translation>
+  </message>
+  <message>
+   <location line="1140" filename="../../plugins/tune/tune.cpp"/>
+   <source>&lt;b>%1:&lt;/b> &lt;a href="%2">%2&lt;/a></source>
+   <translation>&lt;b>%1:&lt;/b> &lt;a href="%2">%2&lt;/a></translation>
   </message>
  </context>
  <context>

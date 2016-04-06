@@ -271,115 +271,115 @@
  <context>
   <name>ReceiversWidget</name>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="88"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="99"/>
    <source>Receivers</source>
    <translation>Ontvangers</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="215"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="306"/>
    <source>Select All Contacts</source>
    <translation>Selecteer alle contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="221"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="312"/>
    <source>Select Online Contact</source>
    <translation>Selecteer online contact</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="227"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="318"/>
    <source>Select Available Contacts</source>
    <translation>Selecteer beschikbare contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="233"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="324"/>
    <source>Clear Selection</source>
    <translation>Wis selectie</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="239"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="330"/>
    <source>Expand All Groups</source>
    <translation>Alle groepen uitklappen</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="245"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="336"/>
    <source>Collapse All Groups</source>
    <translation>Alle groepen inklappen</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="253"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="344"/>
    <source>Load Last Selection</source>
    <translation>Laad de laatste selectie</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="259"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="350"/>
    <source>Load Selection</source>
    <translation>Laad selectie</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="264"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="355"/>
    <source>Save Selection</source>
    <translation>Sla selectie op</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="269"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="360"/>
    <source>Hide Offline Contacts</source>
    <translation>Verberg offline contacten</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="299"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="928"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="404"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1050"/>
    <source>Without Groups</source>
    <translation>Zonder groepen</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="310"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="415"/>
    <source>Not in Roster</source>
    <translation>Niet in rooster</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
    <source>Failed to Load Contacts</source>
    <translation>Mislukt om contacten te laden</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
    <source>Incorrect file format</source>
    <translation>Verkeerde bestandsformaat</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
    <source>Failed to read file: %1</source>
    <translation>Mislukt om bestand: %1 te lezen</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
    <source>Failed to open file: %1</source>
    <translation>Mislukt om bestand: %1 te openen</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
    <source>Failed to Save Contacts</source>
    <translation>Opslaan van contacten mislukt</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
    <source>Failed to create file: %1</source>
    <translation>Mislukt om bestand: %1 te maken</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="923"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1045"/>
    <source>Agents</source>
    <translation>Agents</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="972"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1096"/>
    <source>Load Contacts from File</source>
    <translation>Laad contacten van bestand</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="977"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1101"/>
    <source>Save Contacts to File</source>
    <translation>Contacten opslaan naar bestand</translation>
   </message>
@@ -423,7 +423,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="331"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="685"/>
    <source>Rename Tab Window</source>
    <translation>Hernoem tabblad venster</translation>
   </message>
@@ -435,7 +435,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="342"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="695"/>
    <source>Delete Tab Window</source>
    <translation>Verwijder tabblad venster</translation>
   </message>
@@ -466,18 +466,18 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="534"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="728"/>
    <source>New Tab Window</source>
    <translation>Nieuw tabblad venster</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="685"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="728"/>
    <source>Tab window name:</source>
    <translation>Tabblad venster naam:</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="695"/>
    <source>Are you sure you want to delete this tab window?</source>
    <translation>Ben je zeker dat je deze tabblad venster wilt sluiten?</translation>
   </message>

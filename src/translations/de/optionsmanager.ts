@@ -263,28 +263,28 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
    <source>Options mode changed</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="807"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="857"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="874"/>
    <source>Display advanced options?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="858"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="875"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="865"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="882"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
    <translation type="unfinished"/>
   </message>

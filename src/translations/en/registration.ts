@@ -10,13 +10,13 @@
   </message>
   <message>
    <location line="94" filename="../../plugins/registration/registerdialog.cpp"/>
-   <location line="213" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="214" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Waiting for host response ...</source>
    <translation>Waiting for host response ...</translation>
   </message>
   <message>
    <location line="96" filename="../../plugins/registration/registerdialog.cpp"/>
-   <location line="215" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="216" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Error: Can't send request to host.</source>
    <translation>Error: Can't send request to host.</translation>
   </message>
@@ -31,22 +31,22 @@
    <translation>Enter your username and new password.</translation>
   </message>
   <message>
-   <location line="166" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="167" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>You are successfully registered at %1</source>
    <translation>You are successfully registered at %1</translation>
   </message>
   <message>
-   <location line="168" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="169" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>You are successfully unregistered from %1</source>
    <translation>You are successfully unregistered from %1</translation>
   </message>
   <message>
-   <location line="170" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="171" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Password was successfully changed at %1</source>
    <translation>Password was successfully changed at %1</translation>
   </message>
   <message>
-   <location line="181" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="182" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Requested operation failed: %1</source>
    <translation>Requested operation failed: %1</translation>
   </message>

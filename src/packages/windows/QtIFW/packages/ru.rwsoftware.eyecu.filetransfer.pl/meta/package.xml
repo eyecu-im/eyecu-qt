@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>File Transfer Polish Translation</DisplayName>
     <Description>File Transfer Polish translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.filetransfer.pl</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.filetransfer,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
     <Virtual>true</Virtual>

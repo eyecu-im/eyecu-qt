@@ -2,9 +2,10 @@
 <Package>
     <DisplayName>Abbreviations</DisplayName>
     <Description>Translates abbreviations frequently used in network communities</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.abbreviations</Name>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <SortingPriority>50</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>

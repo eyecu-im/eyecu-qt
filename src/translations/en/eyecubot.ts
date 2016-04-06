@@ -4,8 +4,8 @@
  <context>
   <name>Eyecubot</name>
   <message>
-   <location line="35" filename="../../plugins/eyecubot/eyecubot.cpp"/>
    <location line="36" filename="../../plugins/eyecubot/eyecubot.cpp"/>
+   <location line="37" filename="../../plugins/eyecubot/eyecubot.cpp"/>
    <source>eyeCU bot</source>
    <translation>eyeCU bot</translation>
   </message>

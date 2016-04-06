@@ -12,22 +12,22 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="132"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="136"/>
    <source>Message windows</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="133"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="137"/>
    <source>Insert smiley image into message editor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="144"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="148"/>
    <source>Do not convert text smileys to images</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoticons/emoticons.cpp" line="159"/>
+   <location filename="../../plugins/emoticons/emoticons.cpp" line="163"/>
    <source>Smileys:</source>
    <translation type="unfinished"/>
   </message>

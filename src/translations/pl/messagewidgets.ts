@@ -271,115 +271,115 @@
  <context>
   <name>ReceiversWidget</name>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="88"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="99"/>
    <source>Receivers</source>
    <translation>Odbiorcy</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="215"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="306"/>
    <source>Select All Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="221"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="312"/>
    <source>Select Online Contact</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="227"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="318"/>
    <source>Select Available Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="233"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="324"/>
    <source>Clear Selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="239"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="330"/>
    <source>Expand All Groups</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="245"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="336"/>
    <source>Collapse All Groups</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="253"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="344"/>
    <source>Load Last Selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="259"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="350"/>
    <source>Load Selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="264"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="355"/>
    <source>Save Selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="269"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="360"/>
    <source>Hide Offline Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="299"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="928"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="404"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1050"/>
    <source>Without Groups</source>
    <translation>Bez grup</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="310"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="415"/>
    <source>Not in Roster</source>
    <translation>Poza listą kontaktów</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
    <source>Failed to Load Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="537"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
    <source>Incorrect file format</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="542"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
    <source>Failed to read file: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="547"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
    <source>Failed to open file: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
    <source>Failed to Save Contacts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="585"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
    <source>Failed to create file: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="923"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1045"/>
    <source>Agents</source>
    <translation>Transporty</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="972"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1096"/>
    <source>Load Contacts from File</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="977"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1101"/>
    <source>Save Contacts to File</source>
    <translation type="unfinished"/>
   </message>
@@ -423,7 +423,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="331"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="685"/>
    <source>Rename Tab Window</source>
    <translation>Zmień nazwę okna</translation>
   </message>
@@ -435,7 +435,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="342"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="695"/>
    <source>Delete Tab Window</source>
    <translation>Usuń okno</translation>
   </message>
@@ -466,18 +466,18 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="534"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="728"/>
    <source>New Tab Window</source>
    <translation>Nowe okno z zakładkami</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="683"/>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="726"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="685"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="728"/>
    <source>Tab window name:</source>
    <translation>Nazwa okna:</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="693"/>
+   <location filename="../../plugins/messagewidgets/tabwindow.cpp" line="695"/>
    <source>Are you sure you want to delete this tab window?</source>
    <translation>Na pewno chcesz skasować to okno z zakładkam?</translation>
   </message>

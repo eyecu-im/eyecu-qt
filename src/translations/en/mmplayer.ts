@@ -151,14 +151,14 @@
   </message>
   <message>
    <location line="136" filename="../../plugins/mmplayer/playerwindow.ui"/>
-   <location line="248" filename="../../plugins/mmplayer/playerwindow.cpp"/>
-   <location line="435" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="247" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="432" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Pause</source>
    <translation>Pause</translation>
   </message>
   <message>
    <location line="164" filename="../../plugins/mmplayer/playerwindow.ui"/>
-   <location line="621" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="618" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Mute</source>
    <translation>Mute</translation>
   </message>
@@ -179,92 +179,92 @@
    <translation>Options</translation>
   </message>
   <message>
-   <location line="70" filename="../../plugins/mmplayer/playerwindow.cpp"/>
-   <location line="191" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="69" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="190" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Multimedia player - %1</source>
    <translation>Multimedia player - %1</translation>
   </message>
   <message>
-   <location line="73" filename="../../plugins/mmplayer/playerwindow.cpp"/>
-   <location line="446" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="72" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="443" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Open...</source>
    <translation>Open...</translation>
   </message>
   <message>
-   <location line="78" filename="../../plugins/mmplayer/playerwindow.cpp"/>
-   <location line="440" filename="../../plugins/mmplayer/playerwindow.cpp"/>
-   <location line="449" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="77" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="437" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="446" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Play</source>
    <translation>Play</translation>
   </message>
   <message>
-   <location line="160" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="159" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>%1 (%3)</source>
    <translation>%1 (%3)</translation>
   </message>
   <message>
-   <location line="162" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="161" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>%1 - %2 (%3)</source>
    <translation>%1 - %2 (%3)</translation>
   </message>
   <message>
-   <location line="165" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="164" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>%1</source>
    <translation>%1</translation>
   </message>
   <message>
-   <location line="167" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="166" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>%1 - %2</source>
    <translation>%1 - %2</translation>
   </message>
   <message>
-   <location line="188" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="187" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>%1 - Multimedia player - %2</source>
    <comment>%1: Track name; %2: Application name</comment>
    <translation>%1 - Multimedia player - %2</translation>
   </message>
   <message>
-   <location line="392" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="391" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>File open error!</source>
    <translation>File open error!</translation>
   </message>
   <message>
-   <location line="392" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="391" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>An error occured while opening "%1"</source>
    <translation>An error occured while opening "%1"</translation>
   </message>
   <message>
-   <location line="432" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="429" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Stop</source>
    <translation>Stop</translation>
   </message>
   <message>
-   <location line="471" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="468" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Select file</source>
    <translation>Select file</translation>
   </message>
   <message>
-   <location line="472" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="469" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>All Supported Formats</source>
    <translation>All Supported Formats</translation>
   </message>
   <message>
-   <location line="473" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="470" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Audio</source>
    <translation>Audio</translation>
   </message>
   <message>
-   <location line="474" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="471" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Video</source>
    <translation>Video</translation>
   </message>
   <message>
-   <location line="475" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="472" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>All Files</source>
    <translation>All Files</translation>
   </message>
   <message>
-   <location line="608" filename="../../plugins/mmplayer/playerwindow.cpp"/>
+   <location line="605" filename="../../plugins/mmplayer/playerwindow.cpp"/>
    <source>Unmute</source>
    <translation>Unmute</translation>
   </message>

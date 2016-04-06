@@ -7,7 +7,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/rostersview/rostersview.cpp" line="421"/>
+   <location filename="../../plugins/rostersview/rostersview.cpp" line="424"/>
    <source>Copy to clipboard</source>
    <translation>Kopiuj do schowka</translation>
   </message>

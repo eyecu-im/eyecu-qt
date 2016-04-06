@@ -7,12 +7,12 @@
    <translation>Pagina %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="171"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
    <source>The are %1 field(s) with invalid values:&lt;br&gt;</source>
    <translation>Er zijn %1 veld(en) met ongeldige waarden:&lt;br&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
+   <location filename="../../plugins/dataforms/dataformwidget.cpp" line="181"/>
    <source>Do you want to continue with invalid values?</source>
    <translation>Wil je verder gaan met ongeldige waarden?</translation>
   </message>
@@ -50,42 +50,42 @@
    <translation>Laden van url mislukt</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>Yes</source>
    <translation>Ja</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="855"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
    <source>No</source>
    <translation>Nee</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1047"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1055"/>
    <source>Data Forms</source>
    <translation>Gegevens formulieren</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1048"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1056"/>
    <source>Supports the processing and displaying of the forms with the data</source>
    <translation>Ondersteunt de verwerking en weergave van de formulieren met de gegevens</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1053"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1061"/>
    <source>Data Forms Validation</source>
    <translation>Validatie gegevens formulieren</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1054"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1062"/>
    <source>Supports the validating of the data entered in the form</source>
    <translation>Ondersteunt het valideren van de in het formulier ingevoerde gegevens</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1059"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1067"/>
    <source>Data Forms Layout</source>
    <translation>Opmaak gegevens formulieren</translation>
   </message>
   <message>
-   <location filename="../../plugins/dataforms/dataforms.cpp" line="1060"/>
+   <location filename="../../plugins/dataforms/dataforms.cpp" line="1068"/>
    <source>Supports the layouting of the form, including the layout of form fields, pages and sections</source>
    <translation>Ondersteunt de schermopmaak van het formulier, met inbegrip van de indeling van formuliervelden, pagina&apos;s en secties</translation>
   </message>

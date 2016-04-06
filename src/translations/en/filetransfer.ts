@@ -57,7 +57,6 @@
    <translation>
     <numerusform>/me share %n file(s): %1</numerusform>
     <numerusform>/me share %n file(s): %1</numerusform>
-    <numerusform>/me share %n file(s): %1</numerusform>
    </translation>
   </message>
   <message>

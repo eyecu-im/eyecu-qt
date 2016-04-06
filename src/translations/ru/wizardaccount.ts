@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1330"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1342"/>
         <source>Done!</source>
         <translation>Готово!</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1331"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1343"/>
         <source>Connection Wizard cempleted successfuly.</source>
         <translation>Мастер Подключения успешно завершил работу.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1333"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1345"/>
         <source>Congratulations</source>
         <translation>Поздравляем</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1300"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1312"/>
         <source>Welcome to Jabber network!</source>
         <translation>Добро пожаловать в сеть Jabber!</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1304"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1316"/>
         <source>Account name</source>
         <translation>Имя аккаунта</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1309"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1321"/>
         <source>Press &quot;Finish&quot; button to close Wizard.</source>
         <comment>&quot;Finish&quot; should match the text of an appropriate Qt Wizard button</comment>
         <translation>Нажмите кнопку &quot;Завершить&quot;, чтобы закрыть окно Мастера.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1336"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1348"/>
         <source>You successfully connected to Jabber as %1.</source>
         <translation>Вы успешно подключились к Jabber, как %1.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1337"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1349"/>
         <source>You successfully registered at Jabber as %1.</source>
         <translation>Вы успешно зарегистрировались в Jabber, как %1.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1313"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1325"/>
         <source>Additional account settings...</source>
         <translation>Дополнительные настройки аккаунта...</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1353"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1365"/>
         <source>Failure!</source>
         <translation>Неудача!</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1354"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1366"/>
         <source>Connection Wizard failed to create an account for you</source>
         <translation>Помощнику соединения не удалось создать для Вас аккаунт</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1355"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1367"/>
         <source>Sorry</source>
         <translation>Извините</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1356"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1368"/>
         <source>Internal error occured!</source>
         <translation>Произошла внутренняя ошибка!</translation>
     </message>
@@ -73,95 +73,95 @@
 <context>
     <name>ConnectPage</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="764"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="776"/>
         <source>Connect to Jabber server</source>
         <translation>Подключение к серверу Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="765"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="777"/>
         <source>Trying to logon or register at Jabber server</source>
         <translation>Пытаюсь авторизоваться или зарегистрироваться на сервере Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="834"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="846"/>
         <source>Connecting...</source>
         <translation>Подключение...</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="834"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="846"/>
         <source>Requesting registration form...</source>
         <translation>Запрашиваю регистрационную форму...</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="858"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="870"/>
         <source>Failed to check connection :(</source>
         <translation>Не удалось проверить соединение :(</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="859"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="871"/>
         <source>Internal Error</source>
         <translation>Внутренняя ошибка</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="860"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="872"/>
         <source>Click &apos;Back&apos; button to change the account credentials or the &apos;Finish&apos; button to add the account as is.</source>
         <translation>Нажмите кнопку &quot;Назад&quot;, чтобы изменить учётные данные аккаунта, либо &quot;Завершить&quot;, чтобы добавить аккаунт как есть.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="927"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="939"/>
         <source>Connection failed!</source>
         <translation>Подключение не удалось!</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="928"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="940"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="930"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="942"/>
         <source>Please go back and check your credentials.</source>
         <translation>Пожалуйста, вернитесь назад и проверьте Ваши учётные данные.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="932"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="944"/>
         <source>Please go back and check your connection and server name.</source>
         <translation>Пожалуйста, вернитесь назад и проверьте настройки соединения и имя сервера.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="934"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="946"/>
         <source>Please make sure the server supports in-band registration.</source>
         <translation>Пожалуйста, убедитесь, что сервер поддерживает внутриполосную регистрацию.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="984"/>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1025"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="996"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1037"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="987"/>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1028"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="999"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1040"/>
         <source>Retype password</source>
         <translation>Введите пароль ещё раз</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="995"/>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1018"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1007"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1030"/>
         <source>e-mail</source>
         <translation>e-mail</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1014"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1026"/>
         <source>User name</source>
         <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1016"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1028"/>
         <source>Enter the text you see</source>
         <translation>Введите увиденный текст</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1055"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1067"/>
         <source>Failed to register :(</source>
         <translation>Не удалось зарегистрироваться :(</translation>
     </message>
@@ -169,17 +169,17 @@
 <context>
     <name>ConnectionPage</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="736"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="748"/>
         <source>Connection settings</source>
         <translation>Настройки соединения</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="738"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="750"/>
         <source>Check your connection settings.</source>
         <translation>Проверьте свои настройки соединения.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="739"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="751"/>
         <source>If you&apos;re not certain about it, please, contact your system administartor.</source>
         <translation>Если не знаете точно, пожалуйста, свяжитесь со своим системным администратором.</translation>
     </message>
@@ -195,37 +195,37 @@
 <context>
     <name>CredentialsPage</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="579"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="586"/>
         <source>Credentials</source>
         <translation>Учётные данные</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="580"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="587"/>
         <source>Please, enter your user name, password and resource</source>
         <translation>Пожалуйста, введите Ваше имя пользователя, пароль и ресурс</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="582"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="589"/>
         <source>User name and resource</source>
         <translation>Имя пользователя и ресурс</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="595"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="602"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="600"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="607"/>
         <source>Re-type password</source>
         <translation>Введите паоль ещё раз</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="674"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="686"/>
         <source>Account exists</source>
         <translation>Аккаунт существует</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="674"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="686"/>
         <source>Account with specified Server and User Name exists already! Please choose different Server or User Name.</source>
         <translation>Аккаунт с указанными Сервером и Именем Пользователя уже существует! Пожалуйста, выберите другой Сервер или Имя Пользователя.</translation>
     </message>
@@ -359,22 +359,22 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
 <context>
     <name>RegisterSubmitPage</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1110"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1122"/>
         <source>Connect to Jabber server</source>
         <translation>Подключение к серверу Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1111"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1123"/>
         <source>Trying to logon or register at Jabber server</source>
         <translation>Пытаюсь авторизоваться или зарегистрироваться на сервере Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1149"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1161"/>
         <source>Registering...</source>
         <translation>Регистрация...</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1161"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1173"/>
         <source>Failed to register :(</source>
         <translation>Не удалось зарегистрироваться :(</translation>
     </message>
@@ -510,37 +510,37 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
 <context>
     <name>WebRegistrationInfo</name>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1191"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1203"/>
         <source>Web registration</source>
         <translation>Регистрация через веб</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1194"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1206"/>
         <source>The server you selected doesn&apos;t support in-band registration.</source>
         <translation>Выбранный Вами серевер не поддерживает внутриполосную регистрацию.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1195"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1207"/>
         <source>Follow instructions below to register via web.</source>
         <translation>Следуйте инструкциями ниже, чтобы зарегистрироваться через веб.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1219"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1231"/>
         <source>Open registration website</source>
         <translation>Открыть вебсайт регистрации</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1231"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1243"/>
         <source>How to register at %1</source>
         <translation>Как зарегистрироваться на %1</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1267"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1279"/>
         <source>Warning!</source>
         <translation>Предупреждение!</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1268"/>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1280"/>
         <source>Cannot open instructions.</source>
         <translation>Не могу открыть инструкции.</translation>
     </message>
@@ -558,22 +558,22 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
         <translation>Мастер, помогающий неопытному пользователю подключиться к сети Jabber</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="53"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="55"/>
         <source>Create an account?</source>
         <translation>Создать аккаунт?</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="54"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="56"/>
         <source>It seems, you don&apos;t have a Jabber account yet. Do you want to start a Wizard, which will help you to connect to Jabber?</source>
         <translation>Похоже, у Вас пока нет аккаунта. Вы хотите запустить Мастер, который поможет Вам подключиться к Jabber?</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
         <source>You may start Connection Wizard anytime, by pressing &quot;%1&quot; link on &quot;Accounts&quot; page in the Options dialog.</source>
         <translation>Вы можете запустить Мастер Подключения в любой момент, нажав кнопку &quot;%1&quot; на странице &quot;Аккаунты&quot; в диалоге Настроек.</translation>
     </message>
     <message>
-        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="58"/>
+        <location filename="../../plugins/wizardaccount/wizardaccount.cpp" line="60"/>
         <source>Add account</source>
         <translation>Добавить аккаунт</translation>
     </message>

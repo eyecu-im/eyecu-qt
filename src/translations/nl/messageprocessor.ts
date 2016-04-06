@@ -2,12 +2,12 @@
  <context>
   <name>MessageProcessor</name>
   <message>
-   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="30"/>
+   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="31"/>
    <source>Message Manager</source>
    <translation>Berichten Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="31"/>
+   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="32"/>
    <source>Allows other modules to send and receive messages</source>
    <translation>Toestaan van andere modules om berichten te ontvangen en te verzenden</translation>
   </message>

@@ -2,91 +2,91 @@
  <context>
   <name>ClientInfo</name>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="73"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="74"/>
    <source>Client Information</source>
    <translation>Client informatie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="74"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="75"/>
    <source>Allows to send and receive information about the version of the application, the local time and the last activity of contact</source>
    <translation>Toestaan om informatie over de versie van Eyecu te verzenden en ontvangen, de lokale tijd en de laatste activiteit van contact</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="218"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="219"/>
    <source>Share information about your OS version</source>
    <translation>Deel info over je OS2 versie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="360"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
    <source>Software information</source>
    <translation>Software informatie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
    <source>Software</source>
    <translation>Software</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="599"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="653"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="600"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="654"/>
    <source>Software Version</source>
    <translation>Software versie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
    <source>OS</source>
    <translation>OS</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="365"/>
    <source>OS Version</source>
    <translation>OS versie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="612"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="613"/>
    <source>Service Uptime</source>
    <translation>Service uptime</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="614"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="660"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="615"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="661"/>
    <source>Last Activity</source>
    <translation>Laatste activiteit</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="616"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="617"/>
    <source>Idle Time</source>
    <translation>Inactieve tijd</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="628"/>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="667"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="629"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="668"/>
    <source>Entity Time</source>
    <translation>Dienst tijd</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="654"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="655"/>
    <source>Supports the exchanging of the information about the application version</source>
    <translation>Ondersteunt de uitwisseling van informatie over de EyeCU versie</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="661"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="662"/>
    <source>Supports the exchanging of the information about the user last activity</source>
    <translation>Ondersteunt de uitwisseling van informatie over de gebruiker laatste activiteit</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="668"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="669"/>
    <source>Supports the exchanging of the information about the user local time</source>
    <translation>Ondersteunt de uitwisseling van informatie over de gebruiker lokale tijd</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="674"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>
    <source>XMPP Ping</source>
    <translation>XMPP ping</translation>
   </message>
   <message>
-   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>
+   <location filename="../../plugins/clientinfo/clientinfo.cpp" line="676"/>
    <source>Supports the exchanging of the application-level pings over XML streams</source>
    <translation>Ondersteunt de uitwisseling van EyeCU level over XML sporen</translation>
   </message>

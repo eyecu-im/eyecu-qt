@@ -47,65 +47,68 @@
    <translation>Größe: %1 KB</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="332"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="483"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="495"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="334"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="338"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="343"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="490"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="502"/>
    <source>Error</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="334"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="338"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="343"/>
    <source>Failed to load profile: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="335"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="334"/>
    <source>Failed to publish your profile: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="356"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="380"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="363"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="387"/>
    <source>Save image</source>
    <translation>Speichere Bild</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="356"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="380"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="363"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="387"/>
    <source>Image Files (*.%1)</source>
    <translation>Bild Dateien (*.%1)</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="364"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="388"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="371"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="395"/>
    <source>Open image</source>
    <translation>Bild öffnen</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="364"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="388"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="371"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="395"/>
    <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
    <translation>Bild Dateien (*.png *.jpg *.bmp *.gif)</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="402"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="423"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="409"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="430"/>
    <source>EMail:</source>
    <translation>E-Mail:</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="436"/>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="457"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="443"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="464"/>
    <source>Phone:</source>
    <translation>Telefon:</translation>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="483"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="490"/>
    <source>Failed to publish your profile.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcarddialog.cpp" line="495"/>
+   <location filename="../../plugins/vcard/vcarddialog.cpp" line="502"/>
    <source>Failed to load profile.</source>
    <translation type="unfinished"/>
   </message>
@@ -335,29 +338,29 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="347"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="343"/>
    <source>Restrict maximum vCard images size</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="467"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="462"/>
    <source>Contact Profile</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="468"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="463"/>
    <source>Supports the requesting of the personal contact information</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="580"/>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="697"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="576"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="638"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="693"/>
    <source>Show Profile</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/vcard/vcardmanager.cpp" line="642"/>
+   <location filename="../../plugins/vcard/vcardmanager.cpp" line="638"/>
    <source>Edit Profile</source>
    <translation type="unfinished"/>
   </message>

@@ -13,7 +13,7 @@
   </message>
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="218"/>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1146"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1124"/>
    <source>Open chat dialog</source>
    <translation>Otwórz okno rozmowy</translation>
   </message>
@@ -29,52 +29,52 @@
    <translation>Podczas pobierania nowej wiadomości</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="344"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="346"/>
    <source>Message from %1</source>
    <translation>Wiadomość od %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="351"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="353"/>
    <source>Message received</source>
    <translation>Otrzymano wiadomość</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="373"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="372"/>
    <source>Message text hidden</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="481"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="465"/>
    <source>Contact resource</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="502"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="486"/>
    <source>Clear Chat Window</source>
    <translation>Wyczyść okno rozmowy</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="561"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="545"/>
    <source>&lt;Absent&gt;</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="568"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="552"/>
    <source>%1 - Chat</source>
    <translation>%1 - rozmowa</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="658"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="642"/>
    <source>Loading history...</source>
    <translation>Ładowanie historii...</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1055"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1037"/>
    <source>%1 changed status to [%2] %3</source>
    <translation>%1 zmienił(a) status na [%2] %3</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1124"/>
+   <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1102"/>
    <source>Failed to load history: %1</source>
    <translation>Nie udało się załadować historii: %1</translation>
   </message>

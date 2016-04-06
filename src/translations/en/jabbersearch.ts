@@ -5,8 +5,8 @@
   <name>JabberSearch</name>
   <message>
    <location line="32" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
-   <location line="212" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
-   <location line="297" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="214" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="299" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Jabber Search</source>
    <translation>Jabber Search</translation>
   </message>
@@ -16,32 +16,32 @@
    <translation>Allows to search in the Jabber network</translation>
   </message>
   <message>
-   <location line="197" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="199" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Search</source>
    <translation>Search</translation>
   </message>
   <message>
-   <location line="213" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="215" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>First Name</source>
    <translation>First Name</translation>
   </message>
   <message>
-   <location line="214" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="216" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Last Name</source>
    <translation>Last Name</translation>
   </message>
   <message>
-   <location line="215" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="217" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Nickname</source>
    <translation>Nickname</translation>
   </message>
   <message>
-   <location line="216" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="218" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Email Address</source>
    <translation>Email Address</translation>
   </message>
   <message>
-   <location line="298" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="300" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Supports the searching of the information</source>
    <translation>Supports the searching of the information</translation>
   </message>
@@ -81,7 +81,7 @@
    <translation>vCard</translation>
   </message>
   <message>
-   <location line="293" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
+   <location line="299" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Requested operation failed: %1</source>
    <translation>Requested operation failed: %1</translation>
   </message>

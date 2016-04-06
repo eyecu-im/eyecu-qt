@@ -76,17 +76,17 @@
    <translation>Dateiübertragungen</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="143"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="144"/>
    <source>File transfer</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="145"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="146"/>
    <source>Create separate folder for each sender</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="155"/>
+   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="156"/>
    <source>Default transfer method:</source>
    <translation type="unfinished"/>
   </message>

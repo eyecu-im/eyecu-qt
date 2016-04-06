@@ -23,14 +23,6 @@
    <source>Birthday remind</source>
    <translation>Birthday remind</translation>
   </message>
-  <message numerus="yes">
-   <source>Birthday in %n day(s),&#xd;
- %1</source>
-   <translation type="obsolete">
-    <numerusform>Birthday in %n day,\n %1</numerusform>
-    <numerusform>Birthday in %n days,\n %1</numerusform>
-   </translation>
-  </message>
   <message>
    <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <location line="354" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>

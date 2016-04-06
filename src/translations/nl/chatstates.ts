@@ -1,100 +1,84 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" sourcelanguage="en" version="2.0">
  <context>
   <name>ChatStates</name>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="67"/>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="344"/>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="616"/>
    <source>Chat State Notifications</source>
    <translation>Meldingen van de chat</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="68"/>
-   <source>Allows to share information about the user&apos;s activity in the chat</source>
-   <translation>Toestaan om informatie te delen over gebruikers activiteit in de chat</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="186"/>
-   <source>When contact is typing the message for you</source>
-   <translation>Wanneer de contactpersoon een bericht voor je tikt</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="230"/>
-   <source>Send notifications of your chat activity</source>
-   <translation>Stuur aanmelding van je chat-activiteit</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="349"/>
    <source>Allow Chat State Notifications</source>
    <translation>Toestaan chat meldingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="351"/>
    <source>Disallow Chat State Notifications</source>
    <translation>Niet toestaan van chat meldingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="595"/>
+   <source>Allows to share information about the user&apos;s activity in the chat</source>
+   <translation>Toestaan om informatie te delen over gebruikers activiteit in de chat</translation>
+  </message>
+  <message>
+   <source>Supports the exchanging of the information about the user&apos;s activity in the chat</source>
+   <translation>Ondersteunt de uitwisseling van informatie over gebruikers activiteit in de chat</translation>
+  </message>
+  <message>
+   <source>When contact is typing the message for you</source>
+   <translation>Wanneer de contactpersoon een bericht voor je tikt</translation>
+  </message>
+  <message>
    <source>Typing a message...</source>
    <translation>Tikt een bericht....</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/chatstates.cpp" line="617"/>
-   <source>Supports the exchanging of the information about the user&apos;s activity in the chat</source>
-   <translation>Ondersteunt de uitwisseling van informatie over gebruikers activiteit in de chat</translation>
+   <source>Send notifications of your chat activity</source>
+   <translation>Stuur aanmelding van je chat-activiteit</translation>
   </message>
  </context>
  <context>
   <name>StateWidget</name>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="20"/>
    <source>Default</source>
    <translation>Standaard</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="27"/>
-   <source>Always send</source>
-   <translation>Altijd versturen</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="34"/>
-   <source>Never send</source>
-   <translation>Nooit versturen</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="40"/>
-   <source>User chat status</source>
-   <translation>Gebruiker chat status</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="86"/>
    <source>Active</source>
    <translation>Actief</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="91"/>
    <source>Composing</source>
    <translation>Aan het typen</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="96"/>
    <source>Paused</source>
    <translation>Pauze</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="101"/>
    <source>Inactive %1</source>
    <translation>Inactief %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="106"/>
    <source>Gone %1</source>
    <translation>Weg %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/chatstates/statewidget.cpp" line="111"/>
-   <source>Unknown</source>
-   <translation>Onbekend</translation>
+   <source>User activity in chat</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>and %1 other</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Always send my chat activity</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Never send my chat activity</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Participants activity in conference</source>
+   <translation type="unfinished"/>
   </message>
  </context>
 </TS>

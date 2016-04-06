@@ -246,135 +246,135 @@
  <context>
   <name>PrivacyLists</name>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="54"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="55"/>
    <source>Privacy Lists</source>
    <translation>Privatsphärenlisten</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="55"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="56"/>
    <source>Allows to block unwanted contacts</source>
    <translation>Erlaubt das Blockieren unerwünschter Kontakte</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="929"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="930"/>
    <source>Privacy</source>
    <translation>Privatsphäre</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="950"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="951"/>
    <source>Visible Mode</source>
    <translation>Sichtbar Modus</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="959"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="960"/>
    <source>Invisible Mode</source>
    <translation>Unsichtbar Modus</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="968"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="969"/>
    <source>Disable Privacy Lists</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="982"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="983"/>
    <source>Block Contacts Without Subscription</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1010"/>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1074"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1011"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1075"/>
    <source>Default Rule</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1019"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1020"/>
    <source>Visible to Contact</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1029"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1030"/>
    <source>Invisible to Contact</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1039"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1040"/>
    <source>Ignore Contact</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1083"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1084"/>
    <source>Visible to Group</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1093"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1094"/>
    <source>Invisible to Group</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1103"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1104"/>
    <source>Ignore Group</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1125"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1126"/>
    <source>Set Active List</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1134"/>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1170"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1135"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1171"/>
    <source>&lt;None&gt;</source>
    <translation>&lt;Keine&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1161"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1162"/>
    <source>Set Default List</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1497"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1498"/>
    <source>Advanced...</source>
    <translation>Erweitert...</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1543"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <source>&lt;b&gt;Privacy settings:&lt;/b&gt;</source>
    <translation>&lt;b&gt;Privatsphären Einstellungen:&lt;/b&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <source>- queries: %1</source>
    <translation>- Abfragen: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>&lt;b&gt;denied&lt;/b&gt;</source>
    <translation>&lt;b&gt;verboten&lt;/b&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1544"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>allowed</source>
    <translation>erlaubt</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1545"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
    <source>- messages: %1</source>
    <translation>- Nachrichten: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1546"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
    <source>- presences in: %1</source>
    <translation>- Status eingehend: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/privacylists/privacylists.cpp" line="1547"/>
+   <location filename="../../plugins/privacylists/privacylists.cpp" line="1548"/>
    <source>- presences out: %1</source>
    <translation>- Status ausgehend: %1</translation>
   </message>

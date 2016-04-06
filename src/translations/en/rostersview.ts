@@ -9,7 +9,7 @@
    <translation>Contacts</translation>
   </message>
   <message>
-   <location line="421" filename="../../plugins/rostersview/rostersview.cpp"/>
+   <location line="424" filename="../../plugins/rostersview/rostersview.cpp"/>
    <source>Copy to clipboard</source>
    <translation>Copy to clipboard</translation>
   </message>

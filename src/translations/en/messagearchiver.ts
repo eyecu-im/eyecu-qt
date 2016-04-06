@@ -339,52 +339,52 @@
  <context>
   <name>ArchiveViewWindow</name>
   <message>
-   <location line="128" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="132" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Conversations are not found</source>
    <translation>Conversations are not found</translation>
   </message>
   <message>
-   <location line="140" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="144" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Conversation is not selected</source>
    <translation>Conversation is not selected</translation>
   </message>
   <message>
-   <location line="177" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="181" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Export</source>
    <translation>Export</translation>
   </message>
   <message>
-   <location line="199" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="203" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Search in text</source>
    <translation>Search in text</translation>
   </message>
   <message>
-   <location line="251" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="255" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Conversation History</source>
    <translation>Conversation History</translation>
   </message>
   <message>
-   <location line="268" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="272" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Search is not supported</source>
    <translation>Search is not supported</translation>
   </message>
   <message>
-   <location line="272" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="276" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Search in history</source>
    <translation>Search in history</translation>
   </message>
   <message>
-   <location line="600" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="610" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Load more conversations</source>
    <translation>Load more conversations</translation>
   </message>
   <message>
-   <location line="602" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="612" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>All conversations loaded</source>
    <translation>All conversations loaded</translation>
   </message>
   <message numerus="yes">
-   <location line="606" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="616" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>%n conversation header(s) found</source>
    <translation>
     <numerusform>%n conversation headers found</numerusform>
@@ -392,32 +392,32 @@
    </translation>
   </message>
   <message>
-   <location line="608" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="618" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Conversation headers are not found</source>
    <translation>Conversation headers are not found</translation>
   </message>
   <message>
-   <location line="615" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="625" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Loading conversation headers...</source>
    <translation>Loading conversation headers...</translation>
   </message>
   <message>
-   <location line="622" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="632" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Retry</source>
    <translation>Retry</translation>
   </message>
   <message>
-   <location line="625" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="635" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Failed to load conversation headers: %1</source>
    <translation>Failed to load conversation headers: %1</translation>
   </message>
   <message>
-   <location line="638" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="648" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Select conversation to show</source>
    <translation>Select conversation to show</translation>
   </message>
   <message numerus="yes">
-   <location line="640" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="650" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>%n conversation(s) shown</source>
    <translation>
     <numerusform>%n conversation shown</numerusform>
@@ -425,44 +425,44 @@
    </translation>
   </message>
   <message>
-   <location line="646" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="656" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Loading conversations...</source>
    <translation>Loading conversations...</translation>
   </message>
   <message>
-   <location line="648" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="658" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Shown %1 of %2 conversations...</source>
    <translation>Shown %1 of %2 conversations...</translation>
   </message>
   <message>
-   <location line="652" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="662" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Failed to load conversations: %1</source>
    <translation>Failed to load conversations: %1</translation>
   </message>
   <message>
-   <location line="783" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
-   <location line="1235" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
-   <location line="1444" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="793" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1268" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1477" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Archive is not accessible</source>
    <translation>Archive is not accessible</translation>
   </message>
   <message>
-   <location line="920" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="940" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>&lt;b>%1&lt;/b> with %2 in %3</source>
    <translation>&lt;b>%1&lt;/b> with %2 in %3</translation>
   </message>
   <message>
-   <location line="926" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="946" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>&lt;b>%1&lt;/b> in %2</source>
    <translation>&lt;b>%1&lt;/b> in %2</translation>
   </message>
   <message>
-   <location line="932" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="952" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>&lt;b>%1&lt;/b> with %2</source>
    <translation>&lt;b>%1&lt;/b> with %2</translation>
   </message>
   <message numerus="yes">
-   <location line="1113" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1146" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Found %n occurrence(s)</source>
    <translation>
     <numerusform>Found %n occurrence</numerusform>
@@ -470,27 +470,27 @@
    </translation>
   </message>
   <message>
-   <location line="1123" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1156" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Phrase not found</source>
    <translation>Phrase not found</translation>
   </message>
   <message>
-   <location line="1194" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1227" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>with &lt;b>%1&lt;/b> for &lt;b>%2 %3&lt;/b>?</source>
    <translation>with &lt;b>%1&lt;/b> for &lt;b>%2 %3&lt;/b>?</translation>
   </message>
   <message>
-   <location line="1200" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1233" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>with &lt;b>%1&lt;/b> started at &lt;b>%2&lt;/b>?</source>
    <translation>with &lt;b>%1&lt;/b> started at &lt;b>%2&lt;/b>?</translation>
   </message>
   <message>
-   <location line="1204" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1237" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>with &lt;b>%1&lt;/b> for all time?</source>
    <translation>with &lt;b>%1&lt;/b> for all time?</translation>
   </message>
   <message numerus="yes">
-   <location line="1212" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1245" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>And %n other conversation(s)</source>
    <translation>
     <numerusform>And %n other conversation</numerusform>
@@ -498,88 +498,88 @@
    </translation>
   </message>
   <message>
-   <location line="1216" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1249" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Remove conversation history</source>
    <translation>Remove conversation history</translation>
   </message>
   <message>
-   <location line="1217" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1250" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Do you want to remove the following conversations?</source>
    <translation>Do you want to remove the following conversations?</translation>
   </message>
   <message>
-   <location line="1233" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1266" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Removing conversations...</source>
    <translation>Removing conversations...</translation>
   </message>
   <message>
-   <location line="1235" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
-   <location line="1521" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1268" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1554" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Failed to remove conversations: %1</source>
    <translation>Failed to remove conversations: %1</translation>
   </message>
   <message>
-   <location line="1286" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1319" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Remove Selected Conversations</source>
    <translation>Remove Selected Conversations</translation>
   </message>
   <message>
-   <location line="1297" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1330" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Show Contact History</source>
    <translation>Show Contact History</translation>
   </message>
   <message>
-   <location line="1304" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1337" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Remove all History with %1</source>
    <translation>Remove all History with %1</translation>
   </message>
   <message>
-   <location line="1315" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1348" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Remove History for %1</source>
    <translation>Remove History for %1</translation>
   </message>
   <message>
-   <location line="1326" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1359" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Remove this Conversation</source>
    <translation>Remove this Conversation</translation>
   </message>
   <message>
-   <location line="1347" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1380" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Print Conversation History</source>
    <translation>Print Conversation History</translation>
   </message>
   <message>
-   <location line="1362" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1395" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>HTML file (*.html)</source>
    <translation>HTML file (*.html)</translation>
   </message>
   <message>
-   <location line="1362" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1395" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Text file (*.txt)</source>
    <translation>Text file (*.txt)</translation>
   </message>
   <message>
-   <location line="1363" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1396" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Save Conversations to File</source>
    <translation>Save Conversations to File</translation>
   </message>
   <message>
-   <location line="1392" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1425" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Print...</source>
    <translation>Print...</translation>
   </message>
   <message>
-   <location line="1398" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1431" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Save as HTML</source>
    <translation>Save as HTML</translation>
   </message>
   <message>
-   <location line="1404" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1437" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Save as Text</source>
    <translation>Save as Text</translation>
   </message>
   <message>
-   <location line="1574" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
+   <location line="1607" filename="../../plugins/messagearchiver/archiveviewwindow.cpp"/>
    <source>Conversation history removed successfully</source>
    <translation>Conversation history removed successfully</translation>
   </message>
@@ -617,8 +617,8 @@
   <message>
    <location line="86" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <location line="257" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2182" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2256" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2189" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2263" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>History</source>
    <translation>History</translation>
   </message>
@@ -717,128 +717,128 @@
    <translation>Disallow all message logging</translation>
   </message>
   <message>
-   <location line="2138" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2145" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Messages Archiving</source>
    <translation>Messages Archiving</translation>
   </message>
   <message>
-   <location line="2139" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2146" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the archiving of the messages</source>
    <translation>Supports the archiving of the messages</translation>
   </message>
   <message>
-   <location line="2146" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2153" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Automatic Messages Archiving</source>
    <translation>Automatic Messages Archiving</translation>
   </message>
   <message>
-   <location line="2147" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2154" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the automatic archiving of the messages</source>
    <translation>Supports the automatic archiving of the messages</translation>
   </message>
   <message>
-   <location line="2154" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2161" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Managing Archived Messages</source>
    <translation>Managing Archived Messages</translation>
   </message>
   <message>
-   <location line="2155" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2162" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the managing of the archived messages</source>
    <translation>Supports the managing of the archived messages</translation>
   </message>
   <message>
-   <location line="2162" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2169" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Manual Messages Archiving</source>
    <translation>Manual Messages Archiving</translation>
   </message>
   <message>
-   <location line="2163" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2170" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the manual archiving of the messages</source>
    <translation>Supports the manual archiving of the messages</translation>
   </message>
   <message>
-   <location line="2170" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2177" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Messages Archive Preferences</source>
    <translation>Messages Archive Preferences</translation>
   </message>
   <message>
-   <location line="2171" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2178" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Supports the storing of the archive preferences</source>
    <translation>Supports the storing of the archive preferences</translation>
   </message>
   <message>
-   <location line="2262" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
-   <location line="2887" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2269" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2894" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>View History</source>
    <translation>View History</translation>
   </message>
   <message>
-   <location line="2275" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2282" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Automatic Archiving</source>
    <translation>Automatic Archiving</translation>
   </message>
   <message>
-   <location line="2286" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2293" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Save Messages with Formatting</source>
    <translation>Save Messages with Formatting</translation>
   </message>
   <message>
-   <location line="2296" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2303" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Save Only Messages Text</source>
    <translation>Save Only Messages Text</translation>
   </message>
   <message>
-   <location line="2306" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2313" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Do not Save Messages</source>
    <translation>Do not Save Messages</translation>
   </message>
   <message>
-   <location line="2321" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2328" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Allow Off-The-Record Sessions</source>
    <translation>Allow Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2331" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2338" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Forbid Off-The-Record Sessions</source>
    <translation>Forbid Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2341" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2348" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Manually Approve Off-The-Record Sessions</source>
    <translation>Manually Approve Off-The-Record Sessions</translation>
   </message>
   <message>
-   <location line="2358" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2365" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Use Default Options</source>
    <translation>Use Default Options</translation>
   </message>
   <message>
-   <location line="2370" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2377" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Options...</source>
    <translation>Options...</translation>
   </message>
   <message>
-   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2875" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session negotiated: message logging %1</source>
    <translation>Session negotiated: message logging %1</translation>
   </message>
   <message>
-   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2875" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>disallowed</source>
    <translation>disallowed</translation>
   </message>
   <message>
-   <location line="2868" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2875" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>allowed</source>
    <translation>allowed</translation>
   </message>
   <message>
-   <location line="2879" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2886" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session terminated</source>
    <translation>Session terminated</translation>
   </message>
   <message>
-   <location line="2881" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
+   <location line="2888" filename="../../plugins/messagearchiver/messagearchiver.cpp"/>
    <source>Session failed: %1</source>
    <translation>Session failed: %1</translation>
   </message>

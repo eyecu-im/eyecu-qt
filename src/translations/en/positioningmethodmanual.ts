@@ -14,42 +14,42 @@
    <translation>Positioning method, which allows user to specify its location manually</translation>
   </message>
   <message>
-   <location line="68" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="72" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>Stop location publication</source>
    <translation>Stop location publication</translation>
   </message>
   <message>
-   <location line="68" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="72" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>Ctrl+R</source>
    <comment>Stop publication</comment>
    <translation>Ctrl+R</translation>
   </message>
   <message>
-   <location line="69" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
-   <location line="132" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
-   <location line="155" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="73" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="136" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="159" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>Here I am!</source>
    <translation>Here I am!</translation>
   </message>
   <message>
-   <location line="69" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="73" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>F6</source>
    <comment>Here I am! (POI)</comment>
    <translation>F6</translation>
   </message>
   <message>
-   <location line="84" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="88" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <location line="49" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.h"/>
    <source>Manual</source>
    <translation>Manual</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="138" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>Stop publication</source>
    <translation>Stop publication</translation>
   </message>
   <message>
-   <location line="144" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
+   <location line="148" filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp"/>
    <source>Set my position</source>
    <translation>Set my position</translation>
   </message>

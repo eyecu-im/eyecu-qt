@@ -8,8 +8,8 @@
    <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <location line="175" filename="../../plugins/attention/attention.cpp"/>
    <location line="188" filename="../../plugins/attention/attention.cpp"/>
-   <location line="351" filename="../../plugins/attention/attention.cpp"/>
-   <location line="488" filename="../../plugins/attention/attention.cpp"/>
+   <location line="365" filename="../../plugins/attention/attention.cpp"/>
+   <location line="510" filename="../../plugins/attention/attention.cpp"/>
    <source>Attention</source>
    <translation>Attention</translation>
   </message>
@@ -55,7 +55,7 @@
    <translation>ATTENTION!!!</translation>
   </message>
   <message>
-   <location line="389" filename="../../plugins/attention/attention.cpp"/>
+   <location line="411" filename="../../plugins/attention/attention.cpp"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
