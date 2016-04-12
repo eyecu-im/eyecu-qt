@@ -112,7 +112,7 @@ protected slots:
     void onSoftwareVersionActionTriggered();
 	void onViewModeChanged(int AMode);
 	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
-	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
+//	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
 protected:
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);

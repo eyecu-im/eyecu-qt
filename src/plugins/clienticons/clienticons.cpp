@@ -278,12 +278,9 @@ bool ClientIcons::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, con
 
 QList<int> ClientIcons::advancedItemDataRoles(int AOrder) const
 {
-	if (AOrder == MUDHO_MULTIUSERCHAT)
+	if (AOrder == MUDHO_CLIENTICONS)
 	{
-		static const QList<int> roles = QList<int>()
-			<< MUDR_STREAM_JID << MUDR_USER_JID << MUDR_REAL_JID
-			<< MUDR_NICK << MUDR_ROLE << MUDR_AFFILIATION
-			<< MUDR_AVATAR_IMAGE;
+		static const QList<int> roles = QList<int>() << MUDR_CLIENT_ICON;
 		return roles;
 	}
 	return QList<int>();
@@ -291,28 +288,22 @@ QList<int> ClientIcons::advancedItemDataRoles(int AOrder) const
 
 QVariant ClientIcons::advancedItemData(int AOrder, const QStandardItem *AItem, int ARole) const
 {
-	if (AOrder == MUDHO_MULTIUSERCHAT)
+	if (AOrder == MUDHO_CLIENTICONS)
 	{
-		IMultiUser *user = FItemUser.value(AItem);
-		if (user != NULL)
+		if (ARole == MUDR_CLIENT_ICON)
 		{
-			switch (ARole)
-			{
-			case MUDR_STREAM_JID:
-				return user->streamJid().full();
-			case MUDR_USER_JID:
-				return user->userJid().full();
-			case MUDR_REAL_JID:
-				return user->realJid().full();
-			case MUDR_NICK:
-				return user->nick();
-			case MUDR_ROLE:
-				return user->role();
-			case MUDR_AFFILIATION:
-				return user->affiliation();
-			case MUDR_AVATAR_IMAGE:
-				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize) : QVariant();
-			}
+//			Jid streamJid(AItem->data(MUDR_STREAM_JID).toString());
+			Jid userJid(AItem->data(MUDR_USER_JID).toString());
+
+//			IMultiUserChatWindow *mucWindow = FMultiUserChatManager->findMultiChatWindow(streamJid, userJid);
+//			if (mucWindow)
+//			{
+//				IMultiUser *user = mucWindow->multiUserView()->findItemUser(AItem);
+//				if (user)
+//					return contactIcon(user->userJid());
+//			}
+
+			return contactIcon(userJid);
 		}
 	}
 	return QVariant();
@@ -534,29 +525,31 @@ void ClientIcons::onSoftwareVersionActionTriggered()
 
 void ClientIcons::onViewModeChanged(int AMode)
 {
+	IMultiUserView *view = qobject_cast<IMultiUserView *>(sender());
 	if (AMode == IMultiUserView::ViewFull)
 	{
 		AdvancedDelegateItem label;
 		label.d->id = MUIL_MULTIUSERCHAT_CLIENTICON;
 		label.d->kind = AdvancedDelegateItem::CustomData;
 		label.d->data = MUDR_CLIENT_ICON;
-		insertGeneralLabel(label);
+		view->insertGeneralLabel(label);
 	}
 	else
 	{
-		removeGeneralLabel(MUIL_MULTIUSERCHAT_CLIENTICON);
+		view->removeGeneralLabel(MUIL_MULTIUSERCHAT_CLIENTICON);
 	}
 }
 
 void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
 {
-
+	AWindow->multiUserView()->model()->insertItemDataHolder(MUDHO_CLIENTICONS, this);
+	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)), SLOT(onViewModeChanged(int)));
 }
 
-void ClientIcons::onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow)
-{
+//void ClientIcons::onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow)
+//{
 
-}
+//}
 
 void ClientIcons::updateChatWindows()
 {
