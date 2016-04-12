@@ -5,6 +5,9 @@
 #include <QFile>
 #include <definitions/rosterlabelholderorders.h>
 #include <definitions/stanzahandlerorders.h>
+#include <definitions/multiuserdataholderorders.h>
+#include <definitions/multiuserdataroles.h>
+#include <definitions/multiuseritemlabels.h>
 #include "clienticons.h"
 
 #define PROPERTY_CLIENT "client"
@@ -25,6 +28,7 @@ ClientIcons::ClientIcons():
 	FRostersViewPlugin(NULL),
 	FMessageWidgets(NULL),
 	FServiceDiscovery(NULL),
+	FMultiUserChatManager(NULL),
 	FSimpleContactsView(false),
 	FRosterLabelId(0),
 	FRosterIndexKinds(QList<int>() << RIK_CONTACT << RIK_METACONTACT << RIK_METACONTACT_ITEM << RIK_RECENT_ITEM << RIK_MY_RESOURCE << RIK_STREAM_ROOT)
@@ -119,6 +123,13 @@ bool ClientIcons::initConnections(IPluginManager *APluginManager, int &AInitOrde
 	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0, NULL);
 	if(plugin)
 		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0, NULL);
+	if(plugin)
+	{
+		FMultiUserChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
+		connect(FMultiUserChatManager->instance(), SIGNAL(multiChatWindowCreated(IMultiUserChatWindow*)), SLOT(onMultiChatWindowCreated(IMultiUserChatWindow*)));
+	}
 
 	plugin = APluginManager->pluginInterface("IRostersViewPlugin").value(0,NULL);
 	if (plugin)
@@ -263,6 +274,48 @@ bool ClientIcons::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, con
 		return true;
 	}
 	return false;
+}
+
+QList<int> ClientIcons::advancedItemDataRoles(int AOrder) const
+{
+	if (AOrder == MUDHO_MULTIUSERCHAT)
+	{
+		static const QList<int> roles = QList<int>()
+			<< MUDR_STREAM_JID << MUDR_USER_JID << MUDR_REAL_JID
+			<< MUDR_NICK << MUDR_ROLE << MUDR_AFFILIATION
+			<< MUDR_AVATAR_IMAGE;
+		return roles;
+	}
+	return QList<int>();
+}
+
+QVariant ClientIcons::advancedItemData(int AOrder, const QStandardItem *AItem, int ARole) const
+{
+	if (AOrder == MUDHO_MULTIUSERCHAT)
+	{
+		IMultiUser *user = FItemUser.value(AItem);
+		if (user != NULL)
+		{
+			switch (ARole)
+			{
+			case MUDR_STREAM_JID:
+				return user->streamJid().full();
+			case MUDR_USER_JID:
+				return user->userJid().full();
+			case MUDR_REAL_JID:
+				return user->realJid().full();
+			case MUDR_NICK:
+				return user->nick();
+			case MUDR_ROLE:
+				return user->role();
+			case MUDR_AFFILIATION:
+				return user->affiliation();
+			case MUDR_AVATAR_IMAGE:
+				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize) : QVariant();
+			}
+		}
+	}
+	return QVariant();
 }
 
 void ClientIcons::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
@@ -477,6 +530,32 @@ void ClientIcons::onSoftwareVersionActionTriggered()
 {
 	Action *action=qobject_cast<Action *>(sender());
 	FClientInfo->showClientInfo(action->data(ADR_STREAM_JID).toString(), action->data(ADR_CONTACT_JID).toString(), IClientInfo::SoftwareVersion);
+}
+
+void ClientIcons::onViewModeChanged(int AMode)
+{
+	if (AMode == IMultiUserView::ViewFull)
+	{
+		AdvancedDelegateItem label;
+		label.d->id = MUIL_MULTIUSERCHAT_CLIENTICON;
+		label.d->kind = AdvancedDelegateItem::CustomData;
+		label.d->data = MUDR_CLIENT_ICON;
+		insertGeneralLabel(label);
+	}
+	else
+	{
+		removeGeneralLabel(MUIL_MULTIUSERCHAT_CLIENTICON);
+	}
+}
+
+void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+{
+
+}
+
+void ClientIcons::onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow)
+{
+
 }
 
 void ClientIcons::updateChatWindows()

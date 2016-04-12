@@ -1,7 +1,6 @@
 #ifndef CLIENTICONS_H
 #define CLIENTICONS_H
 
-#include <QDebug>
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
 #include <definitions/notificationdataroles.h>
@@ -34,6 +33,7 @@
 #include <interfaces/iclientinfo.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/iservicediscovery.h>
+#include <interfaces/imultiuserchat.h>
 
 #include <utils/action.h>
 #include <utils/advanceditemdelegate.h>
@@ -49,7 +49,8 @@ class ClientIcons :
 	public IRosterDataHolder,
 	public IRostersLabelHolder,
     public IRostersClickHooker,
-	public IOptionsDialogHolder
+	public IOptionsDialogHolder,
+	public AdvancedItemDataHolder
 {
 	Q_OBJECT
 	Q_INTERFACES(IPlugin IClientIcons IStanzaHandler IRosterDataHolder IRostersLabelHolder IRostersClickHooker IOptionsDialogHolder IRosterDataHolder)
@@ -81,6 +82,9 @@ public:
     //IRostersClickHooker
     virtual bool rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
 	virtual bool rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent){Q_UNUSED(AOrder) Q_UNUSED(AIndex) Q_UNUSED(AEvent) return false;}
+	// AdvancedItemDataHolder
+	virtual QList<int> advancedItemDataRoles(int AOrder) const;
+	virtual QVariant advancedItemData(int AOrder, const QStandardItem *AItem, int ARole) const;
 	//IClientIcons
 	virtual quint32 rosterLabelId() const {return FRosterLabelId;}
 	virtual QIcon iconByKey(const QString &key) const;
@@ -106,6 +110,9 @@ protected slots:
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
     void onSoftwareVersionActionTriggered();
+	void onViewModeChanged(int AMode);
+	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
+	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
 protected:
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
@@ -132,6 +139,7 @@ private:
 	IMessageWidgets		*FMessageWidgets;
 	IClientInfo			*FClientInfo;
 	IServiceDiscovery	*FServiceDiscovery;
+	IMultiUserChatManager *FMultiUserChatManager;
 
 private:
 	bool				FSimpleContactsView;

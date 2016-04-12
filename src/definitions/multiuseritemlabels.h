@@ -11,4 +11,7 @@
 //Position=MiddleRight; Floor=128
 #define MUIL_MULTIUSERCHAT_AVATAR                    AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleRight,200,500)
 
+//Position=MiddleRight; Floor=128
+#define MUIL_MULTIUSERCHAT_CLIENTICON                AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleRight,200,400)
+
 #endif // DEF_MULTIUSERITEMLABELS_H
