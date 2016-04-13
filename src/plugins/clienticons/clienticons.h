@@ -94,6 +94,8 @@ public:
 
 protected slots:
     void onChatWindowCreated(IMessageChatWindow *AWindow);
+	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
+	void onViewModeChanged(int AMode);
     void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	//IRostersView
 	void onRosterIndexInserted(IRosterIndex *AIndex);
@@ -101,6 +103,9 @@ protected slots:
 	void onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onCopyToClipboard();
+	//IMultiUserView
+	void onMucItemContextMenu(QStandardItem *AItem, Menu *AMenu);
+	void onMucItemToolTips(QStandardItem *AItem, QMap<int,QString> &AToolTips);
 	//IXmppStreamManager
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
@@ -110,15 +115,15 @@ protected slots:
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
     void onSoftwareVersionActionTriggered();
-	void onViewModeChanged(int AMode);
-	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
 //	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
 protected:
+	void updateMucViewMode(IMultiUserView *AView, int AMode);
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
     void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
 	//IRosterDataHolder
 	void updateDataHolder(const Jid &streamJid, const Jid &clientJid);
+
 
 signals:
 	//IRosterDataHolder

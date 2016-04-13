@@ -1039,8 +1039,8 @@ void Tune::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<in
         Jid jid(AIndex->data(RDR_FULL_JID).toString());
         if (FTuneHash.contains(jid.bare())) //.bare()-----------------
         {
-            AToolTips.insert(RTTO_TUNE_SEPARATOR, "<hr>");
-            AToolTips.insert(RTTO_TUNE, getLabel(FTuneHash[jid.bare()]));
+			AToolTips.insert(RTTO_ROSTERSVIEW_TUNE_SEPARATOR, "<hr>");
+			AToolTips.insert(RTTO_ROSTERSVIEW_TUNE, getLabel(FTuneHash[jid.bare()]));
         }
 	}
 }

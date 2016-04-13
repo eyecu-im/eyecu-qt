@@ -3,11 +3,13 @@
 #include <QClipboard>
 #include <QMimeData>
 #include <QFile>
+
 #include <definitions/rosterlabelholderorders.h>
 #include <definitions/stanzahandlerorders.h>
 #include <definitions/multiuserdataholderorders.h>
 #include <definitions/multiuserdataroles.h>
 #include <definitions/multiuseritemlabels.h>
+#include <definitions/multiusertooltiporders.h>
 #include "clienticons.h"
 
 #define PROPERTY_CLIENT "client"
@@ -207,7 +209,7 @@ QMultiMap<int, IOptionsDialogWidget *> ClientIcons::optionsDialogWidgets(const Q
 }
 
 bool ClientIcons::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
-{
+{	
 	Q_UNUSED(AAccept);
 	if (FSHIPresence.value(AStreamJid) == AHandlerId)
 	{
@@ -289,23 +291,8 @@ QList<int> ClientIcons::advancedItemDataRoles(int AOrder) const
 QVariant ClientIcons::advancedItemData(int AOrder, const QStandardItem *AItem, int ARole) const
 {
 	if (AOrder == MUDHO_CLIENTICONS)
-	{
 		if (ARole == MUDR_CLIENT_ICON)
-		{
-//			Jid streamJid(AItem->data(MUDR_STREAM_JID).toString());
-			Jid userJid(AItem->data(MUDR_USER_JID).toString());
-
-//			IMultiUserChatWindow *mucWindow = FMultiUserChatManager->findMultiChatWindow(streamJid, userJid);
-//			if (mucWindow)
-//			{
-//				IMultiUser *user = mucWindow->multiUserView()->findItemUser(AItem);
-//				if (user)
-//					return contactIcon(user->userJid());
-//			}
-
-			return contactIcon(userJid);
-		}
-	}
+			return contactIcon(Jid(AItem->data(MUDR_USER_JID).toString()));
 	return QVariant();
 }
 
@@ -316,7 +303,7 @@ void ClientIcons::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32 ALabe
 		QStringList resources=AIndex->data(RDR_RESOURCES).toStringList();
 		if (resources.isEmpty())
 			resources.append(AIndex->data(RDR_FULL_JID).toString());
-		int order=RTTO_CLIENTICONS;
+		int order=RTTO_ROSTERSVIEW_CLIENTICONS;
 		for (QStringList::const_iterator it=resources.constBegin(); it!=resources.constEnd(); it++, order+=100)
 			if (!contactClient(*it).isEmpty())
 				AToolTips.insert(order, QString("<b>%1</b> %2").arg(tr("Client:")).arg(contactClient(*it)));
@@ -428,6 +415,19 @@ void ClientIcons::onCopyToClipboard()
 	clipboard->setMimeData(mime);
 }
 
+void ClientIcons::onMucItemContextMenu(QStandardItem *AItem, Menu *AMenu)
+{
+
+}
+
+void ClientIcons::onMucItemToolTips(QStandardItem *AItem, QMap<int, QString> &AToolTips)
+{
+	Jid userJid(AItem->data(MUDR_USER_JID).toString());
+	QString client = contactClient(userJid);
+	if (!client.isEmpty())
+		AToolTips.insert(MUTTO_MULTIUSERCHAT_CLIENT, QString("<b>%1</b> %2").arg(tr("Client:")).arg(client));
+}
+
 void ClientIcons::updateDataHolder(const Jid &streamJid, const Jid &clientJid)
 {
 	if(FRostersModel)
@@ -453,7 +453,7 @@ void ClientIcons::onStreamOpened(IXmppStream *AXmppStream)
 		IStanzaHandle shandle;
 		shandle.handler = this;
 		shandle.streamJid = AXmppStream->streamJid();
-		shandle.order = SHO_DEFAULT;
+		shandle.order = SHO_PI_CLIENTICONS;
 		shandle.direction = IStanzaHandle::DirectionIn;
 		shandle.conditions.append(SHC_PRESENCE);
 		FSHIPresence.insert(shandle.streamJid,FStanzaProcessor->insertStanzaHandle(shandle));
@@ -523,33 +523,24 @@ void ClientIcons::onSoftwareVersionActionTriggered()
 	FClientInfo->showClientInfo(action->data(ADR_STREAM_JID).toString(), action->data(ADR_CONTACT_JID).toString(), IClientInfo::SoftwareVersion);
 }
 
-void ClientIcons::onViewModeChanged(int AMode)
+void ClientIcons::updateMucViewMode(IMultiUserView *AView, int AMode)
 {
-	IMultiUserView *view = qobject_cast<IMultiUserView *>(sender());
 	if (AMode == IMultiUserView::ViewFull)
 	{
 		AdvancedDelegateItem label;
 		label.d->id = MUIL_MULTIUSERCHAT_CLIENTICON;
 		label.d->kind = AdvancedDelegateItem::CustomData;
 		label.d->data = MUDR_CLIENT_ICON;
-		view->insertGeneralLabel(label);
+		AView->insertGeneralLabel(label);
 	}
 	else
-	{
-		view->removeGeneralLabel(MUIL_MULTIUSERCHAT_CLIENTICON);
-	}
+		AView->removeGeneralLabel(MUIL_MULTIUSERCHAT_CLIENTICON);
 }
 
-void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+void ClientIcons::onViewModeChanged(int AMode)
 {
-	AWindow->multiUserView()->model()->insertItemDataHolder(MUDHO_CLIENTICONS, this);
-	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)), SLOT(onViewModeChanged(int)));
+	updateMucViewMode(qobject_cast<IMultiUserView *>(sender()), AMode);
 }
-
-//void ClientIcons::onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow)
-//{
-
-//}
 
 void ClientIcons::updateChatWindows()
 {
@@ -631,6 +622,15 @@ void ClientIcons::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindow(AWindow);
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+}
+
+void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+{
+	AWindow->multiUserView()->model()->insertItemDataHolder(MUDHO_CLIENTICONS, this);
+	updateMucViewMode(AWindow->multiUserView(), AWindow->multiUserView()->viewMode());
+	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)), SLOT(onViewModeChanged(int)));
+	connect(AWindow->multiUserView()->instance(), SIGNAL(itemContextMenu(QStandardItem*,Menu*)), SLOT(onMucItemContextMenu(QStandardItem*,Menu*)));
+	connect(AWindow->multiUserView()->instance(), SIGNAL(itemToolTips(QStandardItem*,QMap<int,QString>&)), SLOT(onMucItemToolTips(QStandardItem*,QMap<int,QString>&)));
 }
 
 void ClientIcons::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)

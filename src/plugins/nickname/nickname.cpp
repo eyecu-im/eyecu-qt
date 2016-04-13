@@ -418,7 +418,7 @@ void Nickname::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
     {
         QString bareJid = Jid(AIndex->data(RDR_FULL_JID).toString()).bare();
         if (FNicknameHash.contains(bareJid))
-            AToolTips.insert(RTTO_NICKNAME, QString("<b>%1: %2</b>").arg(tr("Nickname")).arg(FNicknameHash[bareJid]));
+			AToolTips.insert(RTTO_ROSTERSVIEW_NICKNAME, QString("<b>%1: %2</b>").arg(tr("Nickname")).arg(FNicknameHash[bareJid]));
     }
 }
 

@@ -692,8 +692,8 @@ void Geoloc::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<
 
 		if (!jid.isEmpty())
 		{
-			AToolTips.insert(RTTO_GEOLOC_SEPARATOR, "<hr>");
-			AToolTips.insert(RTTO_GEOLOC, getLabel(jid));
+			AToolTips.insert(RTTO_ROSTERSVIEW_GEOLOC_SEPARATOR, "<hr>");
+			AToolTips.insert(RTTO_ROSTERSVIEW_GEOLOC, getLabel(jid));
 		}
 	}
 }

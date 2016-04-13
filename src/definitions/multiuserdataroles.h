@@ -19,7 +19,9 @@ enum MultiUserDataRoles {
 	MUDR_PRESENCE_STATUS,
 	// View Delegate Roles
 	MUDR_LABEL_ITEMS,
+// *** <<< eyeCU <<< ***
 	MUDR_CLIENT_ICON,
+// *** >>> eyeCU >>> ***
 };
 
 #endif // DEF_MULTIUSERDATAROLES_H

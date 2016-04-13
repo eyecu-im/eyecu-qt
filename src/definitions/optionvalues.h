@@ -213,7 +213,9 @@
 // OptionsManager
 #define OPV_COMMON_ROOT                                 "common"
 #define OPV_COMMON_LANGUAGE                             "common.language"
+// *** <<< eyeCU <<< ***
 #define OPV_COMMON_ADVANCED                             "common.advanced"
+// *** >>> eyeCU >>> ***
 #define OPV_COMMON_AUTOSTART                            "common.autostart"
 // ClintInfo
 #define OPV_COMMON_SHAREOSVERSION                       "common.share-os-version"

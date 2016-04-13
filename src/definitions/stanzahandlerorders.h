@@ -15,6 +15,9 @@
 
 //Presence In
 #define SHO_PI_AVATARS                400
+// *** <<< eyeCU <<< ***
+#define SHO_PI_CLIENTICONS            500
+// *** >>> eyeCU >>> ***
 #define SHO_PI_SERVICEDISCOVERY       800
 #define SHO_PI_MULTIUSERCHAT          900
 

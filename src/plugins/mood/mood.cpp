@@ -605,7 +605,7 @@ void Mood::onRosterIndexToolTips(IRosterIndex * AIndex, quint32 ALabelId, QMap<i
         Jid jid(AIndex->data(RDR_FULL_JID).toString());
         QString label=getLabel(jid);
         if (!label.isEmpty())
-            AToolTips.insert(RTTO_MOOD, label);
+			AToolTips.insert(RTTO_ROSTERSVIEW_MOOD, label);
     }
 }
 

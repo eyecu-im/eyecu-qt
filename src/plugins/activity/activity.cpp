@@ -586,7 +586,7 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 	{
 		 QString label=getLabel(AIndex->data(RDR_FULL_JID).toString());
 		 if (!label.isEmpty())
-			 AToolTips.insert(RTTO_ACTIVITY, label);
+			 AToolTips.insert(RTTO_ROSTERSVIEW_ACTIVITY, label);
 	}
 }
 
