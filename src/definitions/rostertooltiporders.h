@@ -13,7 +13,7 @@
 #define RTTO_ROSTERSVIEW_ACTIVITY                   950
 #define RTTO_ROSTERSVIEW_GEOLOC_SEPARATOR           5200
 #define RTTO_ROSTERSVIEW_GEOLOC                     5201
-#define RTTO_TUNE_ROSTERSVIEW_SEPARATOR             5100
+#define RTTO_ROSTERSVIEW_TUNE_SEPARATOR             5100
 #define RTTO_ROSTERSVIEW_TUNE                       5101
 #define RTTO_ROSTERSVIEW_CLIENTICONS                1020
 // *** >>> eyeCU >>> ***

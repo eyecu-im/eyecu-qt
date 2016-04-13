@@ -47,7 +47,7 @@
   </message>
   <message>
    <source>Unsupported stream initiation request</source>
-   <translation type="unfinished"/>
+   <translation>Непідтримуваний запит на початок потоку</translation>
   </message>
  </context>
 </TS>

@@ -202,11 +202,11 @@
   </message>
   <message>
    <source>Contact</source>
-   <translation type="unfinished"/>
+   <translation>Contact</translation>
   </message>
   <message>
    <source>You</source>
-   <translation type="unfinished"/>
+   <translation>Jij</translation>
   </message>
   <message>
    <source>speaks of himself in the third person</source>

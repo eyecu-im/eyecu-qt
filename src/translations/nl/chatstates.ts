@@ -62,23 +62,23 @@
   </message>
   <message>
    <source>User activity in chat</source>
-   <translation type="unfinished"/>
+   <translation>Gebruikers activiteit in chat</translation>
   </message>
   <message>
    <source>and %1 other</source>
-   <translation type="unfinished"/>
+   <translation>en %1 andere</translation>
   </message>
   <message>
    <source>Always send my chat activity</source>
-   <translation type="unfinished"/>
+   <translation>Verstuur altijd mijn chat activiteit</translation>
   </message>
   <message>
    <source>Never send my chat activity</source>
-   <translation type="unfinished"/>
+   <translation>Verstuur nooit mijn chat activiteit</translation>
   </message>
   <message>
    <source>Participants activity in conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemers activiteit aan conferentie</translation>
   </message>
  </context>
 </TS>

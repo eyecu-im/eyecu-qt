@@ -3,109 +3,109 @@
   <name>ConfigPage</name>
   <message>
    <source>Conference settings</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen vergadering</translation>
   </message>
   <message>
    <source>Enter the desired parameters of the new conference</source>
-   <translation type="unfinished"/>
+   <translation>Enter de gewenste parameters voor nieuwe conferentie</translation>
   </message>
   <message>
    <source>Creating conference...</source>
-   <translation type="unfinished"/>
+   <translation>Creëer conferentie...</translation>
   </message>
   <message>
    <source>Failed to create conference</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om een conferentie te creëren</translation>
   </message>
   <message>
    <source>Failed to create conference instance</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om een conferentie instantie te creëren</translation>
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Fout</translation>
   </message>
   <message>
    <source>Conference is not created :(</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie in niet aangemaakt :(</translation>
   </message>
   <message>
    <source>Conference is not configured :(</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie is niet geconfigureerd :(</translation>
   </message>
   <message>
    <source>Failed to create conference: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om een conferentie te creëren: %1</translation>
   </message>
   <message>
    <source>Saving conference settings...</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie instellingen opslaan...</translation>
   </message>
   <message>
    <source>Failed to send conference settings</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen te versturen</translation>
   </message>
   <message>
    <source>Loading settings...</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen laden...</translation>
   </message>
   <message>
    <source>Failed to load conference settings</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen te laden</translation>
   </message>
   <message>
    <source>Failed to change default conference settings</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om standaard conferentie instellingen te wijzigen</translation>
   </message>
   <message>
    <source>Failed to load conference settings: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen te laden: %1</translation>
   </message>
   <message>
    <source>Failed to update conference settings: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen te laden: %1</translation>
   </message>
  </context>
  <context>
   <name>CreateMultiChatWizard</name>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Fout</translation>
   </message>
   <message>
    <source>Failed to join to the conference: Conference windows is not created</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om deel te nemen aan de conferentie: Conferentie venster is niet gecrëerd</translation>
   </message>
   <message>
    <source>Create Conference Wizard</source>
-   <translation type="unfinished"/>
+   <translation>Maak een conferentie assistent</translation>
   </message>
   <message>
    <source>Failed to join to the conference: Not all required parameters is specified</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om deel te nemen aan de conferentie: Niet alle vereiste parameters zijn opgegeven</translation>
   </message>
  </context>
  <context>
   <name>EditUsersListDialog</name>
   <message>
    <source>Owners</source>
-   <translation type="unfinished"/>
+   <translation>Eigenaars</translation>
   </message>
   <message>
    <source>Administrators</source>
-   <translation type="unfinished"/>
+   <translation>Beheerders</translation>
   </message>
   <message>
    <source>Members</source>
-   <translation type="unfinished"/>
+   <translation>Leden</translation>
   </message>
   <message>
    <source>Outcasts</source>
-   <translation type="unfinished"/>
+   <translation>Verbannen</translation>
   </message>
   <message>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>Geen</translation>
   </message>
   <message>
    <source>Add User</source>

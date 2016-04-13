@@ -47,7 +47,7 @@
   </message>
   <message>
    <source>Unsupported stream initiation request</source>
-   <translation type="unfinished"/>
+   <translation>Niet-ondersteunde stream initiatie verzoek</translation>
   </message>
  </context>
 </TS>

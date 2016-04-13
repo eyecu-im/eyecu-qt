@@ -4,57 +4,57 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="50"/>
    <source>Emoji</source>
-   <translation type="unfinished"/>
+   <translation>Емодзі</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
    <source>Allows to use emoji in messages</source>
-   <translation type="unfinished"/>
+   <translation>Дозволити використовувати емодзі в повідомленнях</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
    <source>People</source>
-   <translation type="unfinished"/>
+   <translation>Люди</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Symbols</source>
-   <translation type="unfinished"/>
+   <translation>Символи</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Flags</source>
-   <translation type="unfinished"/>
+   <translation>Прапори</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Activity</source>
-   <translation type="unfinished"/>
+   <translation>Активність</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Nature</source>
-   <translation type="unfinished"/>
+   <translation>Природа</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Travel</source>
-   <translation type="unfinished"/>
+   <translation>Подорож</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Objects</source>
-   <translation type="unfinished"/>
+   <translation>Об&apos;єкти</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Foods</source>
-   <translation type="unfinished"/>
+   <translation>Їжа</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
    <source>Message windows</source>
-   <translation type="unfinished"/>
+   <translation>Вікна повідомлення</translation>
   </message>
  </context>
  <context>
@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.cpp" line="14"/>
    <source>Do not use emoji</source>
-   <translation type="unfinished"/>
+   <translation>Не використовувати емодзі</translation>
   </message>
  </context>
  <context>
@@ -70,17 +70,17 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="29"/>
    <source>Emoji set:</source>
-   <translation type="unfinished"/>
+   <translation>Набір емодзі:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="39"/>
    <source>Menu icon size:</source>
-   <translation type="unfinished"/>
+   <translation>Розмір іконки меню:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="49"/>
    <source>Chat icon size:</source>
-   <translation type="unfinished"/>
+   <translation>Розмір іконки чату:</translation>
   </message>
  </context>
  <context>
@@ -88,7 +88,7 @@
   <message numerus="yes">
    <location filename="../../plugins/emoji/iconsizespinbox.cpp" line="62"/>
    <source>pixel(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>піксель</numerusform><numerusform>пікселі</numerusform><numerusform>пікселів</numerusform></translation>
   </message>
  </context>
  <context>
@@ -97,7 +97,7 @@
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
-   <translation type="unfinished"/>
+   <translation>Fitzpatrick тип %1</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="149"/>
@@ -107,12 +107,12 @@
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="116"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>За замовчанням</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
    <source>1 or 2</source>
-   <translation type="unfinished"/>
+   <translation>1 або 2</translation>
   </message>
  </context>
 </TS>

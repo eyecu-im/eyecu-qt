@@ -52,47 +52,47 @@
   </message>
   <message numerus="yes">
    <source>/me share %n file(s): %1</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>/Ik deel %n bestand: %1</numerusform><numerusform>/Ik deel %n bestanden: %1</numerusform></translation>
   </message>
   <message>
    <source>Select Files</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer bestanden</translation>
   </message>
   <message>
    <source>Failed to send request for file &apos;%1&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om aanvraag van bestand te verzenden &apos;%1&apos;</translation>
   </message>
   <message>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>Bestandsoverdracht</translation>
   </message>
   <message>
    <source>File transfer request from %1</source>
-   <translation type="unfinished"/>
+   <translation>Bestandsoverdracht verzoek van %1</translation>
   </message>
   <message>
    <source>%1 wants to send you a file &apos;%2&apos;</source>
-   <translation type="unfinished"/>
+   <translation>%1 wil je bestand &apos;%2&apos; sturen </translation>
   </message>
   <message>
    <source>Sending file &apos;%1&apos; to %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>Verstuur automatisch bestand &apos;%1&apos; naar &apos;%2&apos; </translation>
   </message>
   <message>
    <source>Receiving file &apos;%1&apos; from %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>Ontvang bestand &apos;%1&apos; van &apos;%2&quot; automatisch</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully sent to %2</source>
-   <translation type="unfinished"/>
+   <translation>Bestand &apos;%1&apos; succesvol verzonden naar %2</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully received from %2</source>
-   <translation type="unfinished"/>
+   <translation>Bestand &apos;%1&apos; succesvol ontvangen van %2</translation>
   </message>
   <message>
    <source>File transfer failed</source>
-   <translation type="unfinished"/>
+   <translation>Bestandsoverdracht mislukt</translation>
   </message>
   <message>
    <source>Failed to send file &apos;%1&apos; to %2: %3</source>

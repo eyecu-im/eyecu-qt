@@ -66,7 +66,7 @@
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Fout</translation>
   </message>
  </context>
  <context>
@@ -85,23 +85,23 @@
   </message>
   <message>
    <source>Conference:</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie:</translation>
   </message>
   <message>
    <source>Conference as &apos;name@service.server.com&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie als </translation>
   </message>
   <message>
    <source>Nickname:</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam:</translation>
   </message>
   <message>
    <source>Your nickname in conference</source>
-   <translation type="unfinished"/>
+   <translation>Je bijnaam in conferentie</translation>
   </message>
   <message>
    <source>Conference password if required</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie paswoord is vereist</translation>
   </message>
   <message>
    <source>Name:</source>

@@ -62,23 +62,23 @@
   </message>
   <message>
    <source>User activity in chat</source>
-   <translation type="unfinished"/>
+   <translation>Активність користувача в чаті</translation>
   </message>
   <message>
    <source>and %1 other</source>
-   <translation type="unfinished"/>
+   <translation>І %1 додатково</translation>
   </message>
   <message>
    <source>Always send my chat activity</source>
-   <translation type="unfinished"/>
+   <translation>Завжди показувати мою активність у чаті</translation>
   </message>
   <message>
    <source>Never send my chat activity</source>
-   <translation type="unfinished"/>
+   <translation>Ніколи не показувати мою активність в чаті</translation>
   </message>
   <message>
    <source>Participants activity in conference</source>
-   <translation type="unfinished"/>
+   <translation>Активність учасників в конференції</translation>
   </message>
  </context>
 </TS>
