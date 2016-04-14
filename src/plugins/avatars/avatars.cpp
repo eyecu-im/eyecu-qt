@@ -1095,7 +1095,13 @@ void Avatars::onOptionsOpened()
 			++it;
 	}
 /*** <<< eyeCU <<< ***/
-	onOptionsChanged(Options::node(Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_AVATARS_DISPLAY:OPV_ROSTER_VIEWMODE));
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAY));
+		onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_SIZE));
+	}
+	else
+		onOptionsChanged(Options::node(OPV_ROSTER_VIEWMODE));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_POSITION));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY));
@@ -1143,12 +1149,6 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 /*** >>> eyeCU >>> ***/
 	}
 /*** <<< eyeCU <<< ***/
-	else if ((ANode.path() == OPV_ROSTER_AVATARS_DISPLAY) && Options::node(OPV_COMMON_ADVANCED).value().toBool())
-	{
-		FAvatarsVisible = ANode.value().toBool();
-		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
-		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
-	}
 	else if (ANode.path() == OPV_ROSTER_AVATARS_POSITION)
 	{
 		FAvatarPosition = ANode.value().toInt();
@@ -1166,6 +1166,21 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 		FShowGrayAvatars = ANode.value().toBool();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+	}
+	else if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		if ((ANode.path() == OPV_ROSTER_AVATARS_DISPLAY))
+		{
+			FAvatarsVisible = ANode.value().toBool();
+			emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+			emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+		}
+		else if (ANode.path() == OPV_ROSTER_AVATARS_SIZE)
+		{
+			FAvatarSize  = avatarSize(ANode.value().toInt());
+			emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+			emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+		}
 	}
 /*** >>> eyeCU >>> ***/
 }

@@ -325,6 +325,7 @@
 
 // *** <<< eyeCU <<< ***
 // Avatars
+#define OPV_ROSTER_AVATARS_SIZE                         "roster.avatars.size"
 #define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
 #define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
 #define OPV_ROSTER_AVATARS_DISPLAYEMPTY                 "roster.avatars.display-empty"

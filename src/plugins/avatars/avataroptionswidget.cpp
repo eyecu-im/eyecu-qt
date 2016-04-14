@@ -13,6 +13,7 @@ AvatarOptionsWidget::AvatarOptionsWidget(QWidget *parent) :
 	connect(ui->cbGrayscaledOffline, SIGNAL(stateChanged(int)), SIGNAL(modified()));
 	connect(ui->cbShowEmpty, SIGNAL(stateChanged(int)), SIGNAL(modified()));
 	connect(ui->cmbAvatarPosition, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
+	connect(ui->cmbAvatarSize, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 }
 
 AvatarOptionsWidget::~AvatarOptionsWidget()
@@ -26,6 +27,7 @@ void AvatarOptionsWidget::apply()
 	Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY).setValue(ui->cbShowEmpty->isChecked());
 	Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY).setValue(ui->cbGrayscaledOffline->isChecked());
 	Options::node(OPV_ROSTER_AVATARS_POSITION).setValue(ui->cmbAvatarPosition->currentIndex());
+	Options::node(OPV_ROSTER_AVATARS_SIZE).setValue(ui->cmbAvatarSize->currentIndex());
     emit childApply();
 }
 
@@ -35,7 +37,7 @@ void AvatarOptionsWidget::reset()
 	ui->cbShowEmpty->setChecked(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY).value().toBool());
 	ui->cbGrayscaledOffline->setChecked(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY).value().toBool());
 	ui->cmbAvatarPosition->setCurrentIndex(Options::node(OPV_ROSTER_AVATARS_POSITION).value().toInt());
-
+	ui->cmbAvatarSize->setCurrentIndex(Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt());
     emit childReset();
 }
 

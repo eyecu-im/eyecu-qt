@@ -183,6 +183,7 @@ bool RostersViewPlugin::initSettings()
 	Options::setDefaultValue(OPV_ROSTER_VIEWMODE,IRostersView::ViewFull);
 	Options::setDefaultValue(OPV_ROSTER_SORTMODE,IRostersView::SortByStatus);
     // *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_SIZE, IRostersView::SizeNormal);
 	Options::setDefaultValue(OPV_ROSTER_STATUSDISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLITE, false);
 	Options::setDefaultValue(OPV_ROSTER_SHOWSELF, false);
