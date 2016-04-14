@@ -9,6 +9,7 @@
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
+#include <interfaces/imultiuserchat.h>
 #include <interfaces/ibitsofbinary.h>
 
 #include "edithtml.h"
@@ -106,6 +107,7 @@ protected:
 	bool isSupported(const IMessageAddress *AMessageAddress) const;
     void addRichTextEditToolbar(SplitterWidget *AplitterWidget, int AOrderId, IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset);
 	void updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *AChatWindow);
+	void updateMultiChatWindowActions(bool ARichTextEditor, IMultiUserChatWindow *AChatWindow);
 	void updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow);
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
@@ -133,6 +135,7 @@ protected slots:
 
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
+	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onRichTextEditorToggled(bool AChecked);
 	void onEditWidgetCreated(IMessageEditWidget *AWidget);
@@ -167,6 +170,7 @@ private:
     IOptionsManager*        FOptionsManager;
     IMessageProcessor*      FMessageProcessor;
     IMessageWidgets*        FMessageWidgets;
+	IMultiUserChatManager*	FMultiUserChatManager;
     IServiceDiscovery*      FDiscovery;
     IBitsOfBinary*          FBitsOfBinary;
     QNetworkAccessManager*  FNetworkAccessManager;

@@ -67,6 +67,7 @@ XhtmlIm::XhtmlIm():
 	FOptionsManager(NULL),
 	FMessageProcessor(NULL),
 	FMessageWidgets(NULL),
+	FMultiUserChatManager(NULL),
 	FDiscovery(NULL),
 	FBitsOfBinary(NULL),
 	FNetworkAccessManager(NULL),
@@ -119,6 +120,16 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		}
 	}
 
+	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,NULL);
+	if (plugin)
+	{
+		FMultiUserChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
+		if (FMultiUserChatManager)
+		{
+//			connect(FMultiUserChatManager->instance(),SIGNAL(editWidgetCreated(IMessageEditWidget *)),SLOT(onEditWidgetCreated(IMessageEditWidget *)));
+			connect(FMultiUserChatManager->instance(),SIGNAL(multiChatWindowCreated(IMultiUserChatWindow *)),SLOT(onMultiChatWindowCreated(IMultiUserChatWindow *)));
+		}
+	}
 
 	plugin = APluginManager->pluginInterface("IUrlProcessor").value(0);
 	if (plugin)
@@ -401,6 +412,64 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 	}
 }
 
+void XhtmlIm::updateMultiChatWindowActions(bool ARichTextEditor, IMultiUserChatWindow *AChatWindow)
+{
+	AChatWindow->editWidget()->setRichTextEnabled(true); // When XHTML enabled, it should accept rich text!
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_OVERLINE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CODE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSCAPITALIZE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLLOWER, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSALLUPPER, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTDECREASE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, AChatWindow->editWidget()->instance());
+
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING1, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING2, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING3, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING4, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING5, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_HEADING6, AChatWindow->editWidget()->instance());
+	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_PREFORMATTED, AChatWindow->editWidget()->instance());
+
+	connect(Shortcuts::instance(), SIGNAL(shortcutActivated(QString,QWidget*)), SLOT(onShortcutActivated(QString,QWidget*)), Qt::UniqueConnection);
+
+	QWidget *xhtmlEdit = AChatWindow->messageWidgetsBox()->widgetByOrder(MCWW_RICHTEXTTOOLBARWIDGET);
+	if(ARichTextEditor)
+	{
+		if (!xhtmlEdit)
+			addRichTextEditToolbar(AChatWindow->messageWidgetsBox(), MCWW_RICHTEXTTOOLBARWIDGET, AChatWindow->editWidget(), true);
+		connect(AChatWindow->editWidget()->instance(), SIGNAL(messageSent()), SLOT(onMessageSent()));
+	}
+	else
+	{
+		if (xhtmlEdit)
+		{
+			AChatWindow->messageWidgetsBox()->removeWidget(xhtmlEdit);
+			xhtmlEdit->deleteLater();
+		}
+	}
+}
+
 void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow)
 {
 	bool supported = isSupported(ANormalWindow->address());
@@ -532,6 +601,14 @@ void XhtmlIm::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 			connect(AWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
 													   SLOT(onViewContextMenu(QPoint, Menu*)));
 	}
+}
+
+void XhtmlIm::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+{
+	updateMultiChatWindowActions(Options::node(OPV_XHTML_EDITORTOOLBAR).value().toBool(), AWindow);
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+	connect(AWindow->viewWidget()->instance(), SIGNAL(viewContextMenu(QPoint, Menu *)),
+											   SLOT(onViewContextMenu(QPoint, Menu*)));
 }
 
 void XhtmlIm::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
