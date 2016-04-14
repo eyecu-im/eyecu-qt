@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/jinglertp/audio.ui" line="20"/>
    <source>Audio/Video chat</source>
-   <translation type="unfinished"/>
+   <translation>Аудіо/Відео чат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/audio.ui" line="41"/>
    <source>Audio</source>
-   <translation type="unfinished"/>
+   <translation>Аудіо</translation>
   </message>
  </context>
  <context>
@@ -28,42 +28,42 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="161"/>
    <source>When incoming voice or video call received</source>
-   <translation type="unfinished"/>
+   <translation>Коли отримано вхидний голосовий або відео виклик</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="169"/>
    <source>When incoming voice or video call missed</source>
-   <translation type="unfinished"/>
+   <translation>Коли пропущено вхідний голосовий або відео виклик</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="406"/>
    <source>Incoming %1 call from %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 вхідний(их) виклик(ів) від %2</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="407"/>
    <source>Missed %1 call from %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 пропущений(их) виклик(ів) від %2</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="408"/>
    <source>video</source>
-   <translation type="unfinished"/>
+   <translation>відео</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="408"/>
    <source>voice</source>
-   <translation type="unfinished"/>
+   <translation>голосовий</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="419"/>
    <source>Missed call!</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений виклик!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="419"/>
    <source>Incoming call!</source>
-   <translation type="unfinished"/>
+   <translation>Вхідний виклик!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="455"/>
@@ -84,54 +84,54 @@
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="666"/>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="774"/>
    <source>Video call</source>
-   <translation type="unfinished"/>
+   <translation>Відео виклик</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="670"/>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="763"/>
    <source>Voice call</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий виклик</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="673"/>
    <source>Call cancelled</source>
-   <translation type="unfinished"/>
+   <translation>Виклик скасовано</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="676"/>
    <source>Call rejected</source>
-   <translation type="unfinished"/>
+   <translation>Виклик відхилено</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="679"/>
    <source>Call finished</source>
-   <translation type="unfinished"/>
+   <translation>Виклик завершено</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="683"/>
    <source>Call error</source>
-   <translation type="unfinished"/>
+   <translation>Помилка виклика</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="684"/>
    <source>Call error (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Помилка виклику (%1)</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="785"/>
    <source>Hangup</source>
-   <translation type="unfinished"/>
+   <translation>Завершити виклик</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="797"/>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="1018"/>
    <source>Microphone OFF</source>
-   <translation type="unfinished"/>
+   <translation>Вимкнути мікрофон</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="997"/>
    <source>Microphone ON</source>
-   <translation type="unfinished"/>
+   <translation>Увімкнути мікрофон</translation>
   </message>
  </context>
  <context>
@@ -144,28 +144,28 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="46"/>
    <source>Audio</source>
-   <translation type="unfinished"/>
+   <translation>Аудіо</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="147"/>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="221"/>
    <source>Codec</source>
-   <translation type="unfinished"/>
+   <translation>Кодек</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="160"/>
    <source>Notify Interval, ms</source>
-   <translation type="unfinished"/>
+   <translation>Інтервал сповіщень, мс</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="170"/>
    <source>Sample rate, Hz</source>
-   <translation type="unfinished"/>
+   <translation>Частота, Гц</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="191"/>
    <source>Video</source>
-   <translation type="unfinished"/>
+   <translation>Відео</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="241"/>

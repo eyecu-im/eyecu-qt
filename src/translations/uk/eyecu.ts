@@ -9,7 +9,7 @@
   <message>
    <location filename="../../loader/aboutbox.cpp" line="18"/>
    <source>Revision: %1</source>
-   <translation type="unfinished"/>
+   <translation>Ревізія: %1</translation>
   </message>
  </context>
  <context>
@@ -22,7 +22,7 @@
   <message utf8="true">
    <location filename="../../loader/aboutbox.ui" line="188"/>
    <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
-   <translation type="unfinished"/>
+   <translation>© 2010-2020 Константин Козлов, В&apos;ячеслав Целих, Сергій Потапов. Це програмне забезпечення випущено під GNU General Public License версія 3.</translation>
   </message>
  </context>
  <context>
@@ -40,7 +40,7 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="468"/>
    <source>Dependencies not found</source>
-   <translation type="unfinished"/>
+   <translation>Залежності не знайдені</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="475"/>
@@ -70,12 +70,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="929"/>
    <source>Global shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Глобальні гарячі клавіші</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="930"/>
    <source>Application shortcuts</source>
-   <translation type="unfinished"/>
+   <translation>Гарячі клавіші застосунку</translation>
   </message>
  </context>
  <context>
@@ -83,42 +83,42 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="204"/>
    <source>Disabled (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Вмикнено (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="207"/>
    <source>With errors (%1)</source>
-   <translation type="unfinished"/>
+   <translation>З помилками (%1)</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>
    <source>This plugin does not depend on other plugins.</source>
-   <translation type="unfinished"/>
+   <translation>Цей плагін не залежить від інших.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
    <source>This plugin depends on %n other plugin(s).</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Цей плагін залежить від %n іншого плагіну.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n інший плагін залежить від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Another plugin depends on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>Інший плагін залежить від цього плагіну.</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>
    <source>Other plugins don&apos;t depend on this plugin.</source>
-   <translation type="unfinished"/>
+   <translation>Інші плагіни не залежать від цього плагіну.</translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
    <source>%n dependency(ies) not found.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n залежність не знайдена.</numerusform><numerusform>%n залежностей не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
@@ -141,12 +141,12 @@
   <message>
    <location filename="../../loader/setuppluginsdialog.ui" line="76"/>
    <source>Plugin Information</source>
-   <translation type="unfinished"/>
+   <translation>Інформація про плагін</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>
    <source>Search plugin</source>
-   <translation type="unfinished"/>
+   <translation>Шукати плагін</translation>
   </message>
  </context>
 </TS>

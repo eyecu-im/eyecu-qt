@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/inbandstreams/inbandoptionswidget.ui" line="22"/>
    <source>Size of data in packet:</source>
-   <translation type="unfinished"/>
+   <translation>Розмір даних в передачі:</translation>
   </message>
   <message>
    <location filename="../../plugins/inbandstreams/inbandoptionswidget.ui" line="41"/>
    <source> Bytes</source>
-   <translation type="unfinished"/>
+   <translation>Байт</translation>
   </message>
   <message>
    <location filename="../../plugins/inbandstreams/inbandoptionswidget.ui" line="59"/>
    <source>Send data without waiting for acknowledgment of receipt</source>
-   <translation type="unfinished"/>
+   <translation>Відправити дані без очікування підтвердження прийому</translation>
   </message>
  </context>
  <context>

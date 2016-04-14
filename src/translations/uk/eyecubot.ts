@@ -5,7 +5,7 @@
    <location filename="../../plugins/eyecubot/eyecubot.cpp" line="35"/>
    <location filename="../../plugins/eyecubot/eyecubot.cpp" line="36"/>
    <source>eyeCU bot</source>
-   <translation type="unfinished"/>
+   <translation>eyeCU бот</translation>
   </message>
  </context>
 </TS>

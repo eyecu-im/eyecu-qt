@@ -61,7 +61,7 @@
    <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="136"/>
    <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="169"/>
    <source>Error: Can&apos;t send request to host.</source>
-   <translation type="unfinished"/>
+   <translation>Помилка: Неможливо відіслати запит на хост.</translation>
   </message>
   <message>
    <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="196"/>

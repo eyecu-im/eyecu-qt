@@ -14,22 +14,22 @@
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="136"/>
    <source>Message windows</source>
-   <translation type="unfinished"/>
+   <translation>Вікна повідомленнь</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="137"/>
    <source>Insert smiley image into message editor</source>
-   <translation type="unfinished"/>
+   <translation>Додати зображення емоційки у вікно набору</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="148"/>
    <source>Do not convert text smileys to images</source>
-   <translation type="unfinished"/>
+   <translation>Не замінювати текстові емоційки зображеннями</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticons.cpp" line="163"/>
    <source>Smileys:</source>
-   <translation type="unfinished"/>
+   <translation>Емоційки:</translation>
   </message>
  </context>
  <context>
@@ -37,32 +37,32 @@
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="29"/>
    <source>Emoticon sets:</source>
-   <translation type="unfinished"/>
+   <translation>Набір емоційок:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="36"/>
    <source>Here you can select emoticon sets and mark those of them to be used</source>
-   <translation type="unfinished"/>
+   <translation>Тут ви можете вибрати набір емоційок і відмітити ті з них, які ви хочете використовувати</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="58"/>
    <source>Priority Up</source>
-   <translation type="unfinished"/>
+   <translation>Підняти пріоритет</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="61"/>
    <source>Click this button to rise priority of selected emoticon set</source>
-   <translation type="unfinished"/>
+   <translation>Натисніть цю кнопку, щоб підняти пріоритет обраного набору емоційок</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="71"/>
    <source>Priority Down</source>
-   <translation type="unfinished"/>
+   <translation>Понизити пріоритет</translation>
   </message>
   <message>
    <location filename="../../plugins/emoticons/emoticonsoptions.ui" line="74"/>
    <source>Click this button to lower prioroty of selected emoticon set</source>
-   <translation type="unfinished"/>
+   <translation>Натисніть цю кнопку, щоб понизити пріоритет обраного набору емоційок</translation>
   </message>
  </context>
 </TS>

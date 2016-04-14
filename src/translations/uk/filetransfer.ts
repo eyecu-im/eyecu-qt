@@ -52,63 +52,63 @@
   </message>
   <message numerus="yes">
    <source>/me share %n file(s): %1</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform></translation>
   </message>
   <message>
    <source>Select Files</source>
-   <translation type="unfinished"/>
+   <translation>Оберіть файли</translation>
   </message>
   <message>
    <source>Failed to send request for file &apos;%1&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалось відправити запит на файл &apos;%1&apos;</translation>
   </message>
   <message>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>Передача файлу</translation>
   </message>
   <message>
    <source>File transfer request from %1</source>
-   <translation type="unfinished"/>
+   <translation>Запит передачі файлу від %1</translation>
   </message>
   <message>
    <source>%1 wants to send you a file &apos;%2&apos;</source>
-   <translation type="unfinished"/>
+   <translation>%1 хоче передати вам файл &apos;%2&apos;</translation>
   </message>
   <message>
    <source>Sending file &apos;%1&apos; to %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>Відправлення файлу &apos;%1&apos; до %2 розпочато автоматично</translation>
   </message>
   <message>
    <source>Receiving file &apos;%1&apos; from %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>Прийом файлу &apos;%1&apos; до %2 розпочато автоматично</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully sent to %2</source>
-   <translation type="unfinished"/>
+   <translation>Файл &apos;%1&apos; успішно надісланий до %2</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully received from %2</source>
-   <translation type="unfinished"/>
+   <translation>Файл &apos;%1&apos; успішно отриманий від %2</translation>
   </message>
   <message>
    <source>File transfer failed</source>
-   <translation type="unfinished"/>
+   <translation>Передача файлу не вдалась</translation>
   </message>
   <message>
    <source>Failed to send file &apos;%1&apos; to %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалось відправити файл &apos;%1&apos; до %2: %3</translation>
   </message>
   <message>
    <source>Failed to receive file &apos;%1&apos; from %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалось отримати файл &apos;%1&apos; від %2: %3</translation>
   </message>
   <message>
    <source>Select File</source>
-   <translation type="unfinished"/>
+   <translation>Оберіть файл</translation>
   </message>
   <message>
    <source>File request rejected: %1</source>
-   <translation type="unfinished"/>
+   <translation>У запити до файлу відмовлено: %1</translation>
   </message>
  </context>
  <context>

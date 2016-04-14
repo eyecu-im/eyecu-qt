@@ -5,118 +5,118 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="49"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="331"/>
    <source>User Location</source>
-   <translation type="unfinished"/>
+   <translation>Розташування користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="50"/>
    <source>Implements XEP-0080: User Location</source>
-   <translation type="unfinished"/>
+   <translation>XEP-0080: Розташування користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="149"/>
    <source>Show contact on the map</source>
-   <translation type="unfinished"/>
+   <translation>Показувати контакт на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="149"/>
    <source>F10</source>
    <comment>Show contact on the map (chat)</comment>
-   <translation type="unfinished"/>
+   <translation>F10</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="163"/>
    <source>Accuracy</source>
-   <translation type="unfinished"/>
+   <translation>Точність</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="164"/>
    <source>Altitude</source>
-   <translation type="unfinished"/>
+   <translation>Висота</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="165"/>
    <source>Area</source>
-   <translation type="unfinished"/>
+   <translation>Зона</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="166"/>
    <source>Bearing</source>
-   <translation type="unfinished"/>
+   <translation>Поправка</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="167"/>
    <source>Building</source>
-   <translation type="unfinished"/>
+   <translation>Будівля</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="168"/>
    <source>Country</source>
-   <translation type="unfinished"/>
+   <translation>Країна</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="169"/>
    <source>Country code</source>
-   <translation type="unfinished"/>
+   <translation>Код країни</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="170"/>
    <source>Datum</source>
-   <translation type="unfinished"/>
+   <translation>Задана величина</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="171"/>
    <source>Description</source>
-   <translation type="unfinished"/>
+   <translation>Опис</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="172"/>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Помилка</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="173"/>
    <source>Floor</source>
-   <translation type="unfinished"/>
+   <translation>Підлога</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="174"/>
    <source>Latitude</source>
-   <translation type="unfinished"/>
+   <translation>Широта</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="175"/>
    <source>Locality</source>
-   <translation type="unfinished"/>
+   <translation>Положення</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="176"/>
    <source>Longitude</source>
-   <translation type="unfinished"/>
+   <translation>Довгота</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="177"/>
    <source>Postal code</source>
-   <translation type="unfinished"/>
+   <translation>Поштовий код</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="178"/>
    <source>Region</source>
-   <translation type="unfinished"/>
+   <translation>Регіон</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="179"/>
    <source>Room</source>
-   <translation type="unfinished"/>
+   <translation>Кімната</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="180"/>
    <source>Speed</source>
-   <translation type="unfinished"/>
+   <translation>Швидкість</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="181"/>
    <source>Street</source>
-   <translation type="unfinished"/>
+   <translation>Вулиця</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="182"/>
@@ -126,78 +126,78 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="183"/>
    <source>Timestamp</source>
-   <translation type="unfinished"/>
+   <translation>Відмітка часу</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="184"/>
    <source>TZO</source>
-   <translation type="unfinished"/>
+   <translation>TZO</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="185"/>
    <source>URI</source>
-   <translation type="unfinished"/>
+   <translation>URI</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="209"/>
    <source>Show user location icons</source>
-   <translation type="unfinished"/>
+   <translation>Показувати іконки розташування користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="212"/>
    <source>Display user location icon</source>
-   <translation type="unfinished"/>
+   <translation>Показати іконки розташування користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="217"/>
    <source>Publish location</source>
-   <translation type="unfinished"/>
+   <translation>Опублікувати розташування</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="332"/>
    <source>Supports user Geolocation</source>
-   <translation type="unfinished"/>
+   <translation>Підтримує Геолокацію користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="336"/>
    <source>User Location Notification</source>
-   <translation type="unfinished"/>
+   <translation>Сповіщення про розташування користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="337"/>
    <source>Receives notification of current user Geolocation</source>
-   <translation type="unfinished"/>
+   <translation>Отримує сповіщення про поточну Геолокацію користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="540"/>
    <source>S</source>
-   <translation type="unfinished"/>
+   <translation>Пд</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="544"/>
    <source>N</source>
-   <translation type="unfinished"/>
+   <translation>Пн</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="552"/>
    <source>W</source>
-   <translation type="unfinished"/>
+   <translation>Зх</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="556"/>
    <source>E</source>
-   <translation type="unfinished"/>
+   <translation>Сх</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="567"/>
    <source>m</source>
    <comment>Short for &quot;meters&quot;</comment>
-   <translation type="unfinished"/>
+   <translation>м</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="612"/>
    <source>Location</source>
-   <translation type="unfinished"/>
+   <translation>Розташування</translation>
   </message>
  </context>
 </TS>

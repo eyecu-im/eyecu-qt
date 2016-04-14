@@ -4,12 +4,12 @@
   <message>
    <location filename="../../utils/passworddialog.cpp" line="12"/>
    <source>Enter password:</source>
-   <translation type="unfinished"/>
+   <translation>Введіть пароль:</translation>
   </message>
   <message>
    <location filename="../../utils/passworddialog.cpp" line="18"/>
    <source>Save password</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти пароль</translation>
   </message>
  </context>
  <context>
@@ -30,57 +30,57 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="419"/>
    <source>Authorization aborted</source>
-   <translation type="unfinished"/>
+   <translation>Авторізацію перервано</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="420"/>
    <source>Account disabled</source>
-   <translation type="unfinished"/>
+   <translation>Акаунт вимкнено</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="421"/>
    <source>Credentials expired</source>
-   <translation type="unfinished"/>
+   <translation>Дані застаріли</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="422"/>
    <source>Encryption required</source>
-   <translation type="unfinished"/>
+   <translation>Потребує шифрування</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="423"/>
    <source>Incorrect encoding</source>
-   <translation type="unfinished"/>
+   <translation>Невірне шифрування</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="424"/>
    <source>Invalid authorization id</source>
-   <translation type="unfinished"/>
+   <translation>Невірний id авторизації</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="425"/>
    <source>Invalid mechanism</source>
-   <translation type="unfinished"/>
+   <translation>Некоректний механізм</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="426"/>
    <source>Malformed request</source>
-   <translation type="unfinished"/>
+   <translation>Неправильний захист</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="427"/>
    <source>Mechanism is too weak</source>
-   <translation type="unfinished"/>
+   <translation>Механізм заслабкий</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="428"/>
    <source>Not authorized</source>
-   <translation type="unfinished"/>
+   <translation>Не пройдена авторизація</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="429"/>
    <source>Temporary authentication failure</source>
-   <translation type="unfinished"/>
+   <translation>Тимчасова помилка авторизації</translation>
   </message>
  </context>
  <context>
