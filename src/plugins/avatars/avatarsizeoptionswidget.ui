@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AvatarSizeOptionsWidget</class>
+ <widget class="QWidget" name="AvatarSizeOptionsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>185</width>
+    <height>64</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">Avatar size optios</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="gpbAvatarSize">
+     <property name="title">
+      <string>Avatar size</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,1,1">
+      <property name="leftMargin">
+       <number>3</number>
+      </property>
+      <property name="topMargin">
+       <number>3</number>
+      </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
+      <property name="bottomMargin">
+       <number>3</number>
+      </property>
+      <property name="spacing">
+       <number>2</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QSpinBox" name="spbSmall">
+        <property name="suffix">
+         <string>px</string>
+        </property>
+        <property name="minimum">
+         <number>8</number>
+        </property>
+        <property name="maximum">
+         <number>128</number>
+        </property>
+        <property name="value">
+         <number>16</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QSpinBox" name="spbLarge">
+        <property name="suffix">
+         <string>px</string>
+        </property>
+        <property name="minimum">
+         <number>8</number>
+        </property>
+        <property name="maximum">
+         <number>128</number>
+        </property>
+        <property name="value">
+         <number>64</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="spbNormal">
+        <property name="suffix">
+         <string>px</string>
+        </property>
+        <property name="minimum">
+         <number>8</number>
+        </property>
+        <property name="maximum">
+         <number>128</number>
+        </property>
+        <property name="value">
+         <number>32</number>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblSmall">
+        <property name="text">
+         <string>Small</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="lblNormal">
+        <property name="text">
+         <string>Normal</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lblLarge">
+        <property name="text">
+         <string>Large</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>spbLarge</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>AvatarSizeOptionsWidget</receiver>
+   <slot>onValueChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>147</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>92</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbSmall</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>AvatarSizeOptionsWidget</receiver>
+   <slot>onValueChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>92</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spbNormal</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>AvatarSizeOptionsWidget</receiver>
+   <slot>onValueChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>92</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onValueChanged(int)</slot>
+ </slots>
+</ui>

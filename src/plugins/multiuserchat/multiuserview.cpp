@@ -9,6 +9,9 @@
 #include <definitions/multiuseritemlabels.h>
 #include <definitions/multiuserdataholderorders.h>
 #include <definitions/multiusersorthandlerorders.h>
+// *** <<< eyeCU <<< ***
+#include <definitions/optionvalues.h>
+// *** >>> eyeCU >>> ***
 #include <utils/logger.h>
 
 MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTreeView(AParent)
@@ -52,6 +55,9 @@ MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTr
 
 	if (FAvatars)
 		connect(FAvatars->instance(),SIGNAL(avatarChanged(const Jid &)),SLOT(onAvatarChanged(const Jid &)));
+// *** <<< eyeCU <<< ***
+	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));
+// *** >>> eyeCU >>> ***
 }
 
 MultiUserView::~MultiUserView()
@@ -510,7 +516,32 @@ QStyleOptionViewItemV4 MultiUserView::indexOption(const QModelIndex &AIndex) con
 
 	return option;
 }
+// *** <<< eyeCU <<< ***
+void MultiUserView::updateLabels(int ARole)
+{
+	for (QHash<const IMultiUser *, QStandardItem *>::ConstIterator it=FUserItem.constBegin(); it!=FUserItem.constEnd(); ++it)
+		if (!(*it)->data(ARole).isNull())
+			emitItemDataChanged(*it, ARole);
+}
 
+int MultiUserView::avatarSize() const
+{
+	switch (FViewMode)
+	{
+		case ViewSimple:
+			return IAvatars::AvatarSmall;
+		case ViewFull:
+			return IAvatars::AvatarNormal;
+		default:
+			return IAvatars::AvatarSmall;
+	}
+}
+
+bool MultiUserView::showAvatars() const
+{
+	return FViewMode!=ViewCompact;
+}
+// *** >>> eyeCU >>> ***
 bool MultiUserView::event(QEvent *AEvent)
 {
 	if (AEvent->type() == QEvent::ContextMenu)
@@ -664,3 +695,16 @@ void MultiUserView::onAvatarChanged(const Jid &AContactJid)
 			emitItemDataChanged(userItem, MUDR_AVATAR_IMAGE);
 	}
 }
+// *** <<< eyeCU <<< ***
+void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
+{
+	if (showAvatars() &&
+		(ANode.path() == OPV_AVATARS_SMALLSIZE && avatarSize()==IAvatars::AvatarSmall ||
+		 ANode.path() == OPV_AVATARS_NORMALSIZE && avatarSize()==IAvatars::AvatarNormal ||
+		 ANode.path() == OPV_AVATARS_LARGESIZE && avatarSize()==IAvatars::AvatarLarge))
+	{
+		FAvatarSize = ANode.value().toInt();
+		updateLabels(MUDR_AVATAR_IMAGE);
+	}
+}
+// *** >>> eyeCU >>> ***

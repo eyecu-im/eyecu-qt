@@ -1,6 +1,8 @@
 #include "avatars.h"
-#include "avataroptionswidget.h" /*** <<< eyeCU >>> ***/
-
+// *** <<< eyeCU <<< ***
+#include "avataroptionswidget.h"
+#include "avatarsizeoptionswidget.h"
+// *** >>> eyeCU >>> ***
 #include <QFile>
 #include <QBuffer>
 #include <QDataStream>
@@ -477,11 +479,17 @@ AdvancedDelegateItem Avatars::rosterLabel(int AOrder, quint32 ALabelId, const IR
 QMultiMap<int, IOptionsDialogWidget *> Avatars::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (FOptionsManager && ANodeId == OPN_ROSTERVIEW)
+	if (ANodeId == OPN_ROSTERVIEW)
 	{
 		widgets.insertMulti(OHO_ROSTER_AVATARS, FOptionsManager->newOptionsDialogHeader(tr("Avatars"), AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 			widgets.insertMulti(OWO_ROSTER_AVATARS, new AvatarOptionsWidget(AParent));
+	}
+	else if (ANodeId == OPN_APPEARANCE)
+	{
+		widgets.insertMulti(OHO_APPEARANCE_AVATARS, FOptionsManager->newOptionsDialogHeader(tr("Avatars"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_APPEARANCE_AVATARS, new AvatarSizeOptionsWidget(AParent));
 	}
 	return widgets;
 }
@@ -1164,6 +1172,14 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYGRAY)
 	{
 		FShowGrayAvatars = ANode.value().toBool();
+		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+	}
+	else if (ANode.path() == OPV_AVATARS_SMALLSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarSmall ||
+			 ANode.path() == OPV_AVATARS_NORMALSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarNormal ||
+			 ANode.path() == OPV_AVATARS_LARGESIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarLarge)
+	{
+		FAvatarSize  = ANode.value().toInt();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}

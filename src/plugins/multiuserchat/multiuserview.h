@@ -25,7 +25,7 @@ public:
 	virtual SortResult advancedItemSort(int AOrder, const QStandardItem *ALeft, const QStandardItem *ARight) const;
 	// IMultiUserView
 	virtual int viewMode() const;
-	virtual void setViewMode(int AMode);
+	virtual void setViewMode(int AMode);	
 	// Items
 	virtual AdvancedItemModel *model() const;
 	virtual AdvancedItemDelegate *itemDelegate() const;
@@ -66,6 +66,11 @@ protected:
 	void updateItemNotify(QStandardItem *AItem);
 	void repaintUserItem(const QStandardItem *AItem);
 	QStyleOptionViewItemV4 indexOption(const QModelIndex &AIndex) const;
+// *** <<< eyeCU <<< ***
+	void updateLabels(int ARole);
+	int  avatarSize() const;
+	bool showAvatars() const;
+// *** >>> eyeCU >>> ***
 protected:
 	bool event(QEvent *AEvent);
 protected slots:
@@ -74,6 +79,9 @@ protected slots:
 	void onBlinkTimerTimeout();
 	void onStatusIconsChanged();
 	void onAvatarChanged(const Jid &AContactJid);
+// *** <<< eyeCU <<< ***
+	void onOptionsChanged(const OptionsNode &ANode);
+// *** >>> eyeCU >>> ***
 private:
 	PluginPointer<IAvatars> FAvatars;
 	PluginPointer<IStatusIcons> FStatusIcons;
