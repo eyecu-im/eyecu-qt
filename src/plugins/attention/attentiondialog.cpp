@@ -3,8 +3,10 @@
 #include <definitions/menuicons.h>
 #include <definitions/notificationdataroles.h>
 #include <definitions/messagedataroles.h>
+#include <definitions/optionvalues.h>
 
 #include <utils/iconstorage.h>
+#include <utils/options.h>
 
 #include "attentiondialog.h"
 
@@ -40,15 +42,22 @@ AttentionDialog::AttentionDialog(int ANotifyId, const INotification &ANotificati
 	ui->lblExclamation2->setMovie(movie);
 	movie->start();
 
-    QVariant avatarFileName=ANotification.data.value(NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME);
-    if (avatarFileName.isValid())   // Has avatar data
+	QString avatarFileName=ANotification.data.value(NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME).toString();
+	if (!avatarFileName.isEmpty())   // Has avatar data
     {
-        QMovie *movie=new QMovie(avatarFileName.toString(), QByteArray(), this); // Set "this" as parent, to delete it automatically when not needed		
+		QMovie *movie=new QMovie(avatarFileName, QByteArray(), this); // Set "this" as parent, to delete it automatically when not needed
         if (movie->isValid())
         {
-            ui->lblAvatar->setMovie(movie);
-            movie->start();
+			int extent = Options::node(OPV_AVATARS_LARGESIZE).value().toInt();
+			ui->lblAvatar->setFixedSize(extent, extent);
+			QSize size = QImageReader(avatarFileName).size();
+			size.scale(ui->lblAvatar->maximumSize(),Qt::KeepAspectRatio);
+			movie->setScaledSize(size);
+			ui->lblAvatar->setMovie(movie);
+			movie->start();
         }
+		else
+			ui->lblAvatar->hide();
     }
 
     QString text=ANotification.data.value(NDR_POPUP_HTML).toString();

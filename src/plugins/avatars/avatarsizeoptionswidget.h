@@ -22,7 +22,7 @@ public slots:
 	virtual void apply();
 	virtual void reset();
 protected slots:
-	void onValueChanged(int AValue);
+	void onEditingFinished();
 protected:
 	void changeEvent(QEvent *e);
 signals:

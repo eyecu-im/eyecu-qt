@@ -32,17 +32,17 @@ void AvatarSizeOptionsWidget::reset()
 	ui->spbLarge->setValue(Options::node(OPV_AVATARS_LARGESIZE).value().toInt());
 }
 
-void AvatarSizeOptionsWidget::onValueChanged(int AValue)
+void AvatarSizeOptionsWidget::onEditingFinished()
 {
 	if (sender() == ui->spbSmall)
-		ui->spbNormal->setMinimum(AValue);
+		ui->spbNormal->setMinimum(ui->spbSmall->value());
 	else if (sender() == ui->spbNormal)
 	{
-		ui->spbSmall->setMaximum(AValue);
-		ui->spbLarge->setMinimum(AValue);
+		ui->spbSmall->setMaximum(ui->spbNormal->value());
+		ui->spbLarge->setMinimum(ui->spbNormal->value());
 	}
 	else if (sender() == ui->spbLarge)
-		ui->spbNormal->setMaximum(AValue);
+		ui->spbNormal->setMaximum(ui->spbLarge->value());
 
 	emit modified();
 }
