@@ -23,6 +23,8 @@ public slots:
 	virtual void reset();
 protected slots:
 	void onValueChanged(int AValue);
+protected:
+	void changeEvent(QEvent *e);
 signals:
 	void modified();
 	void childApply();

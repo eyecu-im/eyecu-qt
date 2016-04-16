@@ -198,6 +198,7 @@ protected slots:
 	void onMessageArchiverRequestFailed(const QString &AId, const XmppError &AError);
 	void onMessageArchiverHeadersLoaded(const QString &AId, const QList<IArchiveHeader> &AHeaders);
 	void onMessageArchiverCollectionLoaded(const QString &AId, const IArchiveCollection &ACollection);
+
 private:
 	PluginPointer<IDataForms> FDataForms;
 	PluginPointer<IStatusIcons> FStatusIcons;

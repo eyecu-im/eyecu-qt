@@ -86,7 +86,7 @@ public:
 	virtual QImage emptyAvatarImage(quint8 ASize, bool AGray=false) const;
 	virtual QImage cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
 	virtual QImage loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
-	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
+	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false, bool ADummy=false) const;
 signals:
 	void avatarChanged(const Jid &AContactJid);
 	//IRosterDataHolder

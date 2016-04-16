@@ -1,5 +1,5 @@
 #include "multiuserchatmanager.h"
-#include <QDebug>
+
 #include <QComboBox>
 #include <QClipboard>
 #include <QInputDialog>
@@ -239,8 +239,15 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_NICKNAMESUFFIX,",");
 	Options::setDefaultValue(OPV_MUC_USERVIEWMODE,IMultiUserView::ViewSimple);
 	Options::setDefaultValue(OPV_MUC_GROUPCHAT_NOTIFYSILENCE,false);
-	Options::setDefaultValue(OPV_MUC_GROUPCHAT_ADDRESSBUTTON, Qt::MidButton);
-
+// *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_MUC_ADDRESSBUTTON, Qt::MidButton);
+	Options::setDefaultValue(OPV_MUC_STATUSDISPLAY, false);
+	Options::setDefaultValue(OPV_MUC_ALTERNATIONHIGHLIGHT, false);
+	Options::setDefaultValue(OPV_MUC_AVATARS_SIZE, IRostersView::SizeSmall);
+	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
+	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
+	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
+// *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode conferencesNode = { ONO_CONFERENCES, OPN_CONFERENCES, MNI_MUC_CONFERENCE, tr("Conferences") };
@@ -266,19 +273,26 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 
 		widgets.insertMulti(OHO_CONFERENCES_USERVIEW,FOptionsManager->newOptionsDialogHeader(tr("Participants List"),AParent));
 
+// *** <<< eyeCU <<< ***
+		QComboBox *comboBox=new QComboBox(AParent);
+		comboBox->addItem(tr("Left mouse button", "Instrumental case"), Qt::LeftButton);
+		comboBox->addItem(tr("Middle mouse button", "Instrumental case"), Qt::MidButton);
+		widgets.insertMulti(OWO_CONFERENCES_ADDRESSBUTTON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_ADDRESSBUTTON),tr("Address user by clicking nickname in the list with"),comboBox,AParent));
+		widgets.insertMulti(OWO_CONFERENCES_ALTERNATIONHIGHLIGHT,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_ALTERNATIONHIGHLIGHT),tr("Highlight alternation"),AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+		{
+			widgets.insertMulti(OWO_CONFERENCES_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
+			widgets.insertMulti(OWO_CONFERENCES_STATUSDISPLAY,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_STATUSDISPLAY),tr("Display user status message"),AParent));
+		}
+		else
+		{
+// *** >>> eyeCU >>> ***
 		QComboBox *cmbViewMode = new QComboBox(AParent);
 		cmbViewMode->addItem(tr("Full"), IMultiUserView::ViewFull);
 		cmbViewMode->addItem(tr("Simplified"), IMultiUserView::ViewSimple);
 		cmbViewMode->addItem(tr("Compact"), IMultiUserView::ViewCompact);
 		widgets.insertMulti(OWO_CONFERENCES_USERVIEWMODE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_USERVIEWMODE),tr("Participants list view:"),cmbViewMode,AParent));
-// *** <<< eyeCU <<< ***
-		QComboBox *comboBox=new QComboBox(AParent);
-		comboBox->addItem(tr("Left mouse button", "Instrumental case"), Qt::LeftButton);
-		comboBox->addItem(tr("Middle mouse button", "Instrumental case"), Qt::MidButton);
-		widgets.insertMulti(OWO_MESSAGES_MUC_ADDRESSBUTTON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON),tr("Address user by clicking nickname in the list with"),comboBox,AParent));
-		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
-			widgets.insertMulti(OWO_MESSAGES_MUC_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
-// *** >>> eyeCU >>> ***
+		} // *** <<< eyeCU >>> ***
 	}
 	return widgets;
 }
@@ -1939,6 +1953,7 @@ void MultiUserChatManager::onMessageArchiverCollectionLoaded(const QString &AId,
 		onConvertMessageChatWindowFinish(convert);
 	}
 }
+
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_multiuserchat, MultiUserChatManager)
 #endif

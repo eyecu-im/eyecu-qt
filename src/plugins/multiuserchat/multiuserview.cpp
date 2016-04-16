@@ -21,7 +21,12 @@ MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTr
 	setEditTriggers(NoEditTriggers);
 	setContextMenuPolicy(Qt::DefaultContextMenu);
 	setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+// *** <<< eyeCU <<< ***
+	setAlternatingRowColors(Options::node(OPV_MUC_ALTERNATIONHIGHLIGHT).value().toBool());
 
+	FAvatarLabel = Options::node(OPV_MUC_AVATARS_POSITION).value().toInt()==IAvatars::Right?MUIL_MULTIUSERCHAT_AVATAR_RIGHT:MUIL_MULTIUSERCHAT_AVATAR_LEFT;
+	FShowAvatars = Options::node(OPV_MUC_AVATARS_DISPLAY).value().toBool();
+// *** >>> eyeCU >>> ***
 	FViewMode = -1;
 	FAvatarSize = 24;
 
@@ -56,7 +61,7 @@ MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTr
 	if (FAvatars)
 		connect(FAvatars->instance(),SIGNAL(avatarChanged(const Jid &)),SLOT(onAvatarChanged(const Jid &)));
 // *** <<< eyeCU <<< ***
-	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));
+	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));	
 // *** >>> eyeCU >>> ***
 }
 
@@ -100,7 +105,7 @@ QVariant MultiUserView::advancedItemData(int AOrder, const QStandardItem *AItem,
 			case MUDR_AFFILIATION:
 				return user->affiliation();
 			case MUDR_AVATAR_IMAGE:
-				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize) : QVariant();
+				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize,false,Options::node(OPV_MUC_AVATARS_POSITION).value().toInt()==IAvatars::Left) : QVariant();
 			}
 		}
 	}
@@ -142,6 +147,21 @@ int MultiUserView::viewMode() const
 
 void MultiUserView::setViewMode(int AMode)
 {
+// *** <<< eyeCU <<<
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		LOG_STRM_DEBUG(FMultiChat->streamJid(),QString("Setup view for room=%1").arg(FMultiChat->roomJid().full()));
+
+		foreach(QStandardItem *item, FUserItem)
+			updateItemNotify(item);
+
+		updateAvatars();
+
+		if (FAvatars)
+			FAvatarSize = FAvatars->avatarSize(Options::node(OPV_MUC_AVATARS_SIZE).value().toInt());
+	}
+	else
+// *** >>> eyeCU >>>
 	if (FViewMode != AMode)
 	{
 		LOG_STRM_DEBUG(FMultiChat->streamJid(),QString("Changing view mode from %1 to %2, room=%3").arg(FViewMode).arg(AMode).arg(FMultiChat->roomJid().full()));
@@ -150,20 +170,9 @@ void MultiUserView::setViewMode(int AMode)
 
 		foreach(QStandardItem *item, FUserItem)
 			updateItemNotify(item);
-
-		if (FViewMode != IMultiUserView::ViewCompact)
-		{
-			AdvancedDelegateItem avatarLabel;
-			avatarLabel.d->id = MUIL_MULTIUSERCHAT_AVATAR;
-			avatarLabel.d->kind = AdvancedDelegateItem::CustomData;
-			avatarLabel.d->data = MUDR_AVATAR_IMAGE;
-			insertGeneralLabel(avatarLabel);
-		}
-		else
-		{
-			removeGeneralLabel(MUIL_MULTIUSERCHAT_AVATAR);
-		}
-
+// *** <<< eyeCU <<<
+		updateAvatars();
+// *** >>> eyeCU >>>
 		if (FAvatars)
 		{
 			if (FViewMode == IMultiUserView::ViewFull)
@@ -471,7 +480,9 @@ void MultiUserView::updateItemNotify(QStandardItem *AItem)
 	AdvancedDelegateItem statusLabel = labels.value(MUIL_MULTIUSERCHAT_STATUS);
 	if (!newNotify.footer.isNull())
 		statusLabel.d->data = newNotify.footer;
-	else if (FViewMode == IMultiUserView::ViewFull)
+// *** <<< eyeCU <<< ***
+	else if (Options::node(OPV_COMMON_ADVANCED).value().toBool()?Options::node(OPV_MUC_STATUSDISPLAY).value().toBool():FViewMode == IMultiUserView::ViewFull)
+// *** >>> eyeCU >>> ***
 		statusLabel.d->data = MUDR_PRESENCE_STATUS;
 	else
 		statusLabel.d->data = QVariant();
@@ -524,22 +535,39 @@ void MultiUserView::updateLabels(int ARole)
 			emitItemDataChanged(*it, ARole);
 }
 
+void MultiUserView::updateAvatars()
+{
+	if (showAvatars())
+	{
+		AdvancedDelegateItem avatarLabel;
+		avatarLabel.d->id = FAvatarLabel;
+		avatarLabel.d->kind = AdvancedDelegateItem::CustomData;
+		avatarLabel.d->data = MUDR_AVATAR_IMAGE;
+		insertGeneralLabel(avatarLabel);
+	}
+	else
+		removeGeneralLabel(FAvatarLabel);
+}
+
 int MultiUserView::avatarSize() const
 {
-	switch (FViewMode)
-	{
-		case ViewSimple:
-			return IAvatars::AvatarSmall;
-		case ViewFull:
-			return IAvatars::AvatarNormal;
-		default:
-			return IAvatars::AvatarSmall;
-	}
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+		return Options::node(OPV_MUC_AVATARS_SIZE).value().toInt();
+	else
+		switch (FViewMode)
+		{
+			case ViewSimple:
+				return IAvatars::AvatarSmall;
+			case ViewFull:
+				return IAvatars::AvatarNormal;
+			default:
+				return IAvatars::AvatarSmall;
+		}
 }
 
 bool MultiUserView::showAvatars() const
 {
-	return FViewMode!=ViewCompact;
+	return Options::node(OPV_COMMON_ADVANCED).value().toBool()?FShowAvatars:FViewMode!=ViewCompact;
 }
 // *** >>> eyeCU >>> ***
 bool MultiUserView::event(QEvent *AEvent)
@@ -617,7 +645,9 @@ void MultiUserView::onMultiUserChanged(IMultiUser *AUser, int AData, const QVari
 				AdvancedDelegateItem statusLabel;
 				statusLabel.d->id = MUIL_MULTIUSERCHAT_STATUS;
 				statusLabel.d->kind = AdvancedDelegateItem::CustomData;
-				statusLabel.d->data = FViewMode==IMultiUserView::ViewFull ? QVariant(MUDR_PRESENCE_STATUS) : QVariant();
+// *** <<< eyeCU <<< ***
+				statusLabel.d->data = Options::node(OPV_COMMON_ADVANCED).value().toBool() && Options::node(OPV_MUC_STATUSDISPLAY).value().toBool() || FViewMode==IMultiUserView::ViewFull ? QVariant(MUDR_PRESENCE_STATUS) : QVariant();
+// *** >>> eyeCU >>> ***
 				statusLabel.d->hints.insert(AdvancedDelegateItem::FontSizeDelta,-1);
 				statusLabel.d->hints.insert(AdvancedDelegateItem::FontItalic,true);
 				insertItemLabel(statusLabel,userItem);
@@ -695,10 +725,47 @@ void MultiUserView::onAvatarChanged(const Jid &AContactJid)
 			emitItemDataChanged(userItem, MUDR_AVATAR_IMAGE);
 	}
 }
+
 // *** <<< eyeCU <<< ***
 void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (showAvatars() &&
+	if (ANode.path() == OPV_MUC_ALTERNATIONHIGHLIGHT)
+		setAlternatingRowColors(ANode.value().toBool());
+	else if (ANode.path() == OPV_MUC_AVATARS_DISPLAY)
+	{
+		FShowAvatars = ANode.value().toBool();
+		updateAvatars();
+		updateLabels(MUDR_AVATAR_IMAGE);
+	}
+	else if (ANode.path() == OPV_MUC_AVATARS_POSITION)
+	{
+		if (FShowAvatars)
+		{
+			removeGeneralLabel(FAvatarLabel);
+			FAvatarLabel = ANode.value().toInt()==IAvatars::Right?MUIL_MULTIUSERCHAT_AVATAR_RIGHT:MUIL_MULTIUSERCHAT_AVATAR_LEFT;
+			AdvancedDelegateItem avatarLabel;
+			avatarLabel.d->id = FAvatarLabel;
+			avatarLabel.d->kind = AdvancedDelegateItem::CustomData;
+			avatarLabel.d->data = MUDR_AVATAR_IMAGE;
+			insertGeneralLabel(avatarLabel);
+			updateLabels(MUDR_AVATAR_IMAGE);
+		}
+	}
+	else if (ANode.path() == OPV_MUC_AVATARS_SIZE)
+	{
+		FAvatarSize = FAvatars->avatarSize(ANode.value().toInt());
+		updateLabels(MUDR_AVATAR_IMAGE);
+	}
+	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
+	{
+		updateLabels(MUDR_AVATAR_IMAGE);
+	}
+	else if (ANode.path() == OPV_MUC_STATUSDISPLAY)
+	{
+		foreach(QStandardItem *item, FUserItem)
+			updateItemNotify(item);
+	}
+	else if (showAvatars() &&
 		(ANode.path() == OPV_AVATARS_SMALLSIZE && avatarSize()==IAvatars::AvatarSmall ||
 		 ANode.path() == OPV_AVATARS_NORMALSIZE && avatarSize()==IAvatars::AvatarNormal ||
 		 ANode.path() == OPV_AVATARS_LARGESIZE && avatarSize()==IAvatars::AvatarLarge))

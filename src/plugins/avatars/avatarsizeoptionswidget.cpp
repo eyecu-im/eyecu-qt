@@ -8,6 +8,7 @@ AvatarSizeOptionsWidget::AvatarSizeOptionsWidget(QWidget *parent) :
 {
 	ui->setupUi(this);
 	reset();
+	connect(ui->cbDisplayEmpty, SIGNAL(stateChanged(int)), SIGNAL(modified()));
 }
 
 AvatarSizeOptionsWidget::~AvatarSizeOptionsWidget()
@@ -17,6 +18,7 @@ AvatarSizeOptionsWidget::~AvatarSizeOptionsWidget()
 
 void AvatarSizeOptionsWidget::apply()
 {
+	Options::node(OPV_AVATARS_DISPLAYEMPTY).setValue(ui->cbDisplayEmpty->isChecked());
 	Options::node(OPV_AVATARS_SMALLSIZE).setValue(ui->spbSmall->value());
 	Options::node(OPV_AVATARS_NORMALSIZE).setValue(ui->spbNormal->value());
 	Options::node(OPV_AVATARS_LARGESIZE).setValue(ui->spbLarge->value());
@@ -24,6 +26,7 @@ void AvatarSizeOptionsWidget::apply()
 
 void AvatarSizeOptionsWidget::reset()
 {
+	ui->cbDisplayEmpty->setChecked(Options::node(OPV_AVATARS_DISPLAYEMPTY).value().toBool());
 	ui->spbSmall->setValue(Options::node(OPV_AVATARS_SMALLSIZE).value().toInt());
 	ui->spbNormal->setValue(Options::node(OPV_AVATARS_NORMALSIZE).value().toInt());
 	ui->spbLarge->setValue(Options::node(OPV_AVATARS_LARGESIZE).value().toInt());
@@ -42,4 +45,17 @@ void AvatarSizeOptionsWidget::onValueChanged(int AValue)
 		ui->spbNormal->setMaximum(AValue);
 
 	emit modified();
+}
+
+void AvatarSizeOptionsWidget::changeEvent(QEvent *e)
+{
+	QWidget::changeEvent(e);
+	switch (e->type())
+	{
+		case QEvent::LanguageChange:
+			ui->retranslateUi(this);
+			break;
+		default:
+			break;
+	}
 }

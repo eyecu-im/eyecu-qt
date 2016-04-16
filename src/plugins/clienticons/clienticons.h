@@ -104,7 +104,6 @@ protected slots:
 	void onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu);
 	void onCopyToClipboard();
 	//IMultiUserView
-	void onMucItemContextMenu(QStandardItem *AItem, Menu *AMenu);
 	void onMucItemToolTips(QStandardItem *AItem, QMap<int,QString> &AToolTips);
 	//IXmppStreamManager
 	void onStreamOpened(IXmppStream *AXmppStream);
@@ -115,9 +114,9 @@ protected slots:
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
     void onSoftwareVersionActionTriggered();
-//	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
+
 protected:
-	void updateMucViewMode(IMultiUserView *AView, int AMode);
+	void displayMucLabels(IMultiUserView *AView, bool ADisplay);
 	void updateChatWindows();
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
     void updateChatWindow(IMessageChatWindow *AMessageChatWindow);

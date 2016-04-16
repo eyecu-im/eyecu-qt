@@ -19,7 +19,7 @@ public:
         Left
     };
 
-    explicit AvatarOptionsWidget(QWidget *parent = 0);
+	AvatarOptionsWidget(const OptionsNode &ANode, bool AOfflineAvailable, QWidget *parent = 0);
     ~AvatarOptionsWidget();
 // IOptionsWidget
     QWidget* instance() {return this; }
@@ -38,6 +38,7 @@ protected:
 
 private:
     Ui::AvatarOptionsWidget *ui;
+	OptionsNode FNode;
 };
 
 #endif // AVATAROPTIONSWIDGET_H

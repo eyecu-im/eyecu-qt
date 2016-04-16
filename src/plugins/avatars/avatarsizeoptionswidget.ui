@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>185</width>
-    <height>64</height>
+    <width>264</width>
+    <height>78</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,17 +18,24 @@
     <number>2</number>
    </property>
    <property name="leftMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
+   <item>
+    <widget class="QCheckBox" name="cbDisplayEmpty">
+     <property name="text">
+      <string>Display empty avatars</string>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QGroupBox" name="gpbAvatarSize">
      <property name="title">

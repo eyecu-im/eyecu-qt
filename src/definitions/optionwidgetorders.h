@@ -70,7 +70,7 @@
 #define   OWO_ROSTER_SHOWOFFLIEAGENTS             115
 #define   OWO_ROSTER_SHOWSELF                     125
 #define   OWO_ROSTER_STATUSDISPLAY                135
-#define   OWO_ROSTER_ALTERNATIONHIGHLITE          145
+#define   OWO_ROSTER_ALTERNATIONHIGHLIGHT         145
 #define OHO_ROSTER_EXTRA_ICONS                    200
 #define   OWO_ROSTER_CLIENTICONS                  210
 #define   OWO_ROSTER_PEP_MOOD                     220
@@ -78,7 +78,8 @@
 #define   OWO_ROSTER_PEP_TUNE                     240
 #define   OWO_ROSTER_PEP_LOCATION                 250
 #define   OHO_ROSTER_AVATARS                      170
-#define   OWO_ROSTER_AVATARS                      175
+#define   OWO_ROSTER_AVATARS_DISPLAYGRAY          180
+#define   OWO_ROSTER_AVATARS                      190
 // *** >>> eyeCU >>> ***
 #define OHO_ROSTER_MANAGEMENT                     300
 #define   OWO_ROSTER_AUTOSUBSCRIBE                310
@@ -117,10 +118,6 @@
 #define   OWO_MESSAGES_PEP_ACTIVITY               474
 #define   OWO_MESSAGES_PEP_TUNE                   476
 // *** >>> eyeCU >>> ***
-// *** <<< eyeCU <<< ***
-#define   OWO_MESSAGES_MUC_ADDRESSBUTTON          580
-#define   OWO_MESSAGES_MUC_NICKNAMESUFFIX         590
-// *** >>> eyeCU >>> ***
 //Node = ON_CONFERENCES
 #define OHO_CONFERENCES_MESSAGES                  100
 #define   OWO_CONFERENCES_SHOWENTERS              110
@@ -132,7 +129,15 @@
 #define   OWO_CONFERENCES_SHOWAUTOJOINED          170
 #define OHO_CONFERENCES_USERVIEW                  300
 #define   OWO_CONFERENCES_USERVIEWMODE            390
-
+#define   OWO_MUC_CLIENTICONS				      390
+// *** <<< eyeCU <<< ***
+#define   OWO_CONFERENCES_STATUSDISPLAY           460
+#define   OWO_CONFERENCES_ALTERNATIONHIGHLIGHT    470
+#define   OWO_CONFERENCES_ADDRESSBUTTON           480
+#define   OWO_CONFERENCES_NICKNAMESUFFIX          490
+#define OHO_CONFERENCES_AVATARS                   580
+#define   OWO_CONFERENCES_AVATARS                 590
+// *** >>> eyeCU >>> ***
 // ON_HISTORY
 #define OHO_HISORY_ENGINES                        300
 #define   OWO_HISORY_ENGINE                       310

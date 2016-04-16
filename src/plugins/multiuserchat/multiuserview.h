@@ -25,7 +25,7 @@ public:
 	virtual SortResult advancedItemSort(int AOrder, const QStandardItem *ALeft, const QStandardItem *ARight) const;
 	// IMultiUserView
 	virtual int viewMode() const;
-	virtual void setViewMode(int AMode);	
+	virtual void setViewMode(int AMode);
 	// Items
 	virtual AdvancedItemModel *model() const;
 	virtual AdvancedItemDelegate *itemDelegate() const;
@@ -68,6 +68,7 @@ protected:
 	QStyleOptionViewItemV4 indexOption(const QModelIndex &AIndex) const;
 // *** <<< eyeCU <<< ***
 	void updateLabels(int ARole);
+	void updateAvatars();
 	int  avatarSize() const;
 	bool showAvatars() const;
 // *** >>> eyeCU >>> ***
@@ -95,6 +96,8 @@ private:
 	QMap<int, IMultiUserViewNotify> FNotifies;
 	QMultiMap<QStandardItem *, int> FItemNotifies;
 private:
+	quint32 FAvatarLabel; // *** <<< eyeCU >>> ***
+	bool	FShowAvatars;
 	int FViewMode;
 	int FAvatarSize;
 	AdvancedItemModel *FModel;

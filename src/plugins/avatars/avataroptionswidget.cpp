@@ -3,15 +3,26 @@
 #include "avataroptionswidget.h"
 #include "ui_avataroptionswidget.h"
 
-AvatarOptionsWidget::AvatarOptionsWidget(QWidget *parent) :
+AvatarOptionsWidget::AvatarOptionsWidget(const OptionsNode &ANode, bool AOfflineAvailable, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AvatarOptionsWidget)
+	ui(new Ui::AvatarOptionsWidget),
+	FNode(ANode)
 {
     ui->setupUi(this);
+
+	if (!ANode.value("display").toBool())
+	{
+		ui->cbDisplayGray->setDisabled(true);
+		ui->cmbAvatarPosition->setDisabled(true);
+		ui->cmbAvatarSize->setDisabled(true);
+	}
     reset();
-	connect(ui->cbShow, SIGNAL(stateChanged(int)), SIGNAL(modified()));
-	connect(ui->cbGrayscaledOffline, SIGNAL(stateChanged(int)), SIGNAL(modified()));
-	connect(ui->cbShowEmpty, SIGNAL(stateChanged(int)), SIGNAL(modified()));
+
+	if (AOfflineAvailable)
+		connect(ui->cbDisplayGray, SIGNAL(stateChanged(int)), SIGNAL(modified()));
+	else
+		ui->cbDisplayGray->hide();
+	connect(ui->cbShow, SIGNAL(stateChanged(int)), SIGNAL(modified()));	
 	connect(ui->cmbAvatarPosition, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 	connect(ui->cmbAvatarSize, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 }
@@ -23,21 +34,21 @@ AvatarOptionsWidget::~AvatarOptionsWidget()
 
 void AvatarOptionsWidget::apply()
 {	
-	Options::node(OPV_ROSTER_AVATARS_DISPLAY).setValue(ui->cbShow->isChecked());
-	Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY).setValue(ui->cbShowEmpty->isChecked());
-	Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY).setValue(ui->cbGrayscaledOffline->isChecked());
-	Options::node(OPV_ROSTER_AVATARS_POSITION).setValue(ui->cmbAvatarPosition->currentIndex());
-	Options::node(OPV_ROSTER_AVATARS_SIZE).setValue(ui->cmbAvatarSize->currentIndex());
+	FNode.setValue(ui->cbShow->isChecked(), "display");
+	if (!ui->cbDisplayGray->isHidden())
+		FNode.setValue(ui->cbDisplayGray->isChecked(), "display-gray");
+	FNode.setValue(ui->cmbAvatarPosition->currentIndex(), "position");
+	FNode.setValue(ui->cmbAvatarSize->currentIndex(), "size");
     emit childApply();
 }
 
 void AvatarOptionsWidget::reset()
 {
-	ui->cbShow->setChecked(Options::node(OPV_ROSTER_AVATARS_DISPLAY).value().toBool());
-	ui->cbShowEmpty->setChecked(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY).value().toBool());
-	ui->cbGrayscaledOffline->setChecked(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY).value().toBool());
-	ui->cmbAvatarPosition->setCurrentIndex(Options::node(OPV_ROSTER_AVATARS_POSITION).value().toInt());
-	ui->cmbAvatarSize->setCurrentIndex(Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt());
+	ui->cbShow->setChecked(FNode.value("display").toBool());
+	if (!ui->cbDisplayGray->isHidden())
+		ui->cbDisplayGray->setChecked(FNode.value("display-gray").toBool());
+	ui->cmbAvatarPosition->setCurrentIndex(FNode.value("position").toInt());
+	ui->cmbAvatarSize->setCurrentIndex(FNode.value("size").toInt());
     emit childReset();
 }
 

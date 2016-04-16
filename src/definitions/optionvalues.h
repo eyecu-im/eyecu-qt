@@ -56,6 +56,7 @@
 // *** >>> eyeCU >>> ***
 
 // Avatars
+#define OPV_AVATARS_DISPLAYEMPTY						"avatars.display-empty"
 #define OPV_AVATARS_SMALLSIZE                           "avatars.small-size"
 #define OPV_AVATARS_LARGESIZE                           "avatars.large-size"
 #define OPV_AVATARS_NORMALSIZE                          "avatars.normal-size"
@@ -162,14 +163,17 @@
 #define OPV_MUC_USERVIEWMODE                            "muc.user-view-mode"
 #define OPV_MUC_GROUPCHAT_ITEM                          "muc.groupchat"
 #define OPV_MUC_GROUPCHAT_NOTIFYSILENCE                 "muc.groupchat.notify-silence"
-#define OPV_MUC_GROUPCHAT_SHOWENTERS                    "muc.groupchat.show-enters"
-#define OPV_MUC_GROUPCHAT_SHOWSTATUS                    "muc.groupchat.show-status"
-#define OPV_MUC_GROUPCHAT_ARCHIVESTATUS                 "muc.groupchat.archive-status"
-#define OPV_MUC_GROUPCHAT_REJOINAFTERKICK               "muc.groupchat.rejoin-after-kick"
-#define OPV_MUC_GROUPCHAT_QUITONWINDOWCLOSE             "muc.groupchat.quit-on-window-close"
-#define OPV_MUC_GROUPCHAT_REFERENUMERATION              "muc.groupchat.refer-enumeration"
 // *** <<< eyeCU <<< ***
-#define OPV_MUC_GROUPCHAT_ADDRESSBUTTON                 "muc.groupchat.address-button"
+#define OPV_MUC_ADDRESSBUTTON							"muc.address-button"
+#define OPV_MUC_STATUSDISPLAY							"muc.status-display"
+#define OPV_MUC_ALTERNATIONHIGHLIGHT					"muc.alternation-highlight"
+
+// Avatars
+#define OPV_MUC_AVATARS									"muc.avatars"
+#define OPV_MUC_AVATARS_SIZE							"muc.avatars.size"
+#define OPV_MUC_AVATARS_POSITION						"muc.avatars.position"
+#define OPV_MUC_AVATARS_DISPLAY							"muc.avatars.display"
+#define OPV_MUC_AVATARS_DISPLAYEMPTY					"muc.avatars.display-empty"
 // *** >>> eyeCU >>> ***
 // Bookmarks
 #define OPV_MUC_SHOWAUTOJOINED                          "muc.show-auto-joined"
@@ -260,9 +264,15 @@
 #define OPV_ROSTER_MERGESTREAMS                         "roster.merge-streams"
 // >>> eyeCU >>>
 #define OPV_ROSTER_SHOWSELF                             "roster.show-self"
-#define OPV_ROSTER_ALTERNATIONHIGHLITE                  "roster.alternation-highlite"
+#define OPV_ROSTER_ALTERNATIONHIGHLIGHT                  "roster.alternation-highlight"
 #define OPV_ROSTER_SHOWOFFLINEAGENTS                    "roster.show-offline-transports"
 #define OPV_ROSTER_STATUSDISPLAY                        "roster.status-display"
+// Avatars
+#define OPV_ROSTER_AVATARS		                        "roster.avatars"
+#define OPV_ROSTER_AVATARS_SIZE                         "roster.avatars.size"
+#define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
+#define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
+#define OPV_ROSTER_AVATARS_DISPLAYGRAY                  "roster.avatars.display-gray"
 // <<< eyeCU <<<
 // RosterChanger
 #define OPV_ROSTER_AUTOSUBSCRIBE                        "roster.auto-subscribe"
@@ -322,15 +332,7 @@
 #define OPV_XMPPSTREAMS_TIMEOUT_DISCONNECT              "xmppstreams.timeout.disconnect"
 // RosterPlugin
 #define OPV_XMPPSTREAMS_TIMEOUT_ROSTERREQUEST           "xmppstreams.timeout.roster-request"
-
 // *** <<< eyeCU <<< ***
-// Avatars
-#define OPV_ROSTER_AVATARS_SIZE                         "roster.avatars.size"
-#define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
-#define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
-#define OPV_ROSTER_AVATARS_DISPLAYEMPTY                 "roster.avatars.display-empty"
-#define OPV_ROSTER_AVATARS_DISPLAYGRAY                  "roster.avatars.display-gray"
-
 // PEP
 #define OPV_PEP_DELETE_RETRACT                          "pep.delete.retract"
 #define OPV_PEP_DELETE_PUBLISHEMPTY                     "pep.delete.publish_empty"
@@ -577,6 +579,7 @@
 #define OPV_JINGLERTP_USERTCP                           "jinglertp.use-rtcp"
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                     "roster.clienticon.show"
+#define OPV_MUC_CLIENTICON_SHOW                        "muc.clienticon.show"
 #define OPV_MESSAGES_CLIENTICON_DISPLAY                "messages.clienticon.display"
 // *** >>> eyeCU >>> ***
 

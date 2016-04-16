@@ -269,9 +269,9 @@ bool Avatars::initSettings()
 	Options::setDefaultValue(OPV_AVATARS_NORMALSIZE, 32);
 	Options::setDefaultValue(OPV_AVATARS_LARGESIZE, 64);
 // *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_POSITION, Left);
-	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAYGRAY, true);
 	if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
@@ -443,7 +443,7 @@ QVariant Avatars::rosterData(int AOrder, const IRosterIndex *AIndex, int ARole) 
 			case RDR_AVATAR_IMAGE:
 			{
 				bool gray = FShowGrayAvatars && (AIndex->data(RDR_SHOW).toInt()==IPresence::Offline || AIndex->data(RDR_SHOW).toInt()==IPresence::Error);
-				return visibleAvatarImage(avatarHash(AIndex->data(RDR_FULL_JID).toString()),FAvatarSize,gray);
+				return visibleAvatarImage(avatarHash(AIndex->data(RDR_FULL_JID).toString()),FAvatarSize,gray,FAvatarPosition==Left);
 			}
 		}
 	}
@@ -483,7 +483,13 @@ QMultiMap<int, IOptionsDialogWidget *> Avatars::optionsDialogWidgets(const QStri
 	{
 		widgets.insertMulti(OHO_ROSTER_AVATARS, FOptionsManager->newOptionsDialogHeader(tr("Avatars"), AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
-			widgets.insertMulti(OWO_ROSTER_AVATARS, new AvatarOptionsWidget(AParent));
+			widgets.insertMulti(OWO_ROSTER_AVATARS, new AvatarOptionsWidget(Options::node(OPV_ROSTER_AVATARS), true, AParent));
+	}
+	if (ANodeId == OPN_CONFERENCES)
+	{
+		widgets.insertMulti(OHO_CONFERENCES_AVATARS, FOptionsManager->newOptionsDialogHeader(tr("Avatars"), AParent));
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_CONFERENCES_AVATARS, new AvatarOptionsWidget(Options::node(OPV_MUC_AVATARS), false, AParent));
 	}
 	else if (ANodeId == OPN_APPEARANCE)
 	{
@@ -635,16 +641,7 @@ QImage Avatars::emptyAvatarImage(quint8 ASize, bool AGray) const
 // *** <<< eyeCU <<< ***
 	}
 	else
-	{
-		if (FAvatarPosition==Left)	// Dummy avatar for left
-		{
-			QImage avatar = QImage(FAvatarSize, 1, QImage::Format_ARGB32);
-			avatar.fill(0x00000000);
-			return avatar;
-		}
-		else
-			return QImage();
-	}
+		return QImage();
 // *** >>> eyeCU >>> ***
 }
 
@@ -681,10 +678,20 @@ QImage Avatars::loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray) 
 	return image;
 }
 
-QImage Avatars::visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray) const
+QImage Avatars::visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray, bool ADummy) const
 {
 	QImage image = loadAvatarImage(AHash,ASize,AGray);
-	return image.isNull() ? emptyAvatarImage(ASize,AGray) : image;
+
+	if(image.isNull())
+	{
+		image = emptyAvatarImage(ASize,AGray);
+		if (image.isNull() && ADummy)
+		{
+			image = QImage(ASize, 1, QImage::Format_ARGB32);
+			image.fill(0x00000000);
+		}
+	}
+	return image;
 }
 
 QString Avatars::getImageFormat(const QByteArray &AData) const
@@ -1112,7 +1119,7 @@ void Avatars::onOptionsOpened()
 		onOptionsChanged(Options::node(OPV_ROSTER_VIEWMODE));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_POSITION));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY));
-	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY));
+	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
 /*** >>> eyeCU >>> ***/
 }
 
@@ -1163,7 +1170,7 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
-	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYEMPTY)
+	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
 	{
 		FShowEmptyAvatars = ANode.value().toBool();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);

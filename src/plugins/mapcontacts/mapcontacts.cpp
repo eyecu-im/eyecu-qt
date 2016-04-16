@@ -182,7 +182,7 @@ bool MapContacts::initSettings()
 
 void MapContacts::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYEMPTY));
+	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
 }
 
 void MapContacts::onOptionsClosed()
@@ -192,7 +192,7 @@ void MapContacts::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MAP_CONTACTS_VIEW)
 		FMap->geoMap()->updateObjects(MOT_CONTACT, MDR_NONE);
-	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYEMPTY)
+	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
 		FShowEmptyAvatars = ANode.value().toBool();
 	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINE)
 	{

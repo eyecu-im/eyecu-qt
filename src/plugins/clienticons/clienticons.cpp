@@ -190,6 +190,7 @@ bool ClientIcons::initObjects()
 bool ClientIcons::initSettings()
 {
 	Options::setDefaultValue(OPV_ROSTER_CLIENTICON_SHOW, true);	
+	Options::setDefaultValue(OPV_MUC_CLIENTICON_SHOW, true);
 	Options::setDefaultValue(OPV_MESSAGES_CLIENTICON_DISPLAY, true);
 
 	return true;
@@ -202,6 +203,11 @@ QMultiMap<int, IOptionsDialogWidget *> ClientIcons::optionsDialogWidgets(const Q
 	{
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 			widgets.insertMulti(OWO_ROSTER_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_CLIENTICON_SHOW), tr("Show client icons"), NULL));
+	}
+	if (ANodeId == OPN_CONFERENCES)
+	{
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_MUC_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CLIENTICON_SHOW), tr("Show client icons"), NULL));
 	}
 	else if (ANodeId == OPN_MESSAGES)
 		widgets.insertMulti(OWO_MESSAGES_INFOBAR_CLIENTICONS, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_CLIENTICON_DISPLAY), tr("Display client icon"), AParent));
@@ -415,11 +421,6 @@ void ClientIcons::onCopyToClipboard()
 	clipboard->setMimeData(mime);
 }
 
-void ClientIcons::onMucItemContextMenu(QStandardItem *AItem, Menu *AMenu)
-{
-
-}
-
 void ClientIcons::onMucItemToolTips(QStandardItem *AItem, QMap<int, QString> &AToolTips)
 {
 	Jid userJid(AItem->data(MUDR_USER_JID).toString());
@@ -515,6 +516,12 @@ void ClientIcons::onOptionsChanged(const OptionsNode &ANode)
 				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelId);
 		}
 	}
+	else if (ANode.path() == OPV_MUC_CLIENTICON_SHOW)
+	{
+		QList<IMultiUserChatWindow *> windows = FMultiUserChatManager->multiChatWindows();
+		for (QList<IMultiUserChatWindow *>::ConstIterator it = windows.constBegin(); it != windows.constEnd(); ++it)
+			displayMucLabels((*it)->multiUserView(), ANode.value().toBool());
+	}
 }
 
 void ClientIcons::onSoftwareVersionActionTriggered()
@@ -523,9 +530,9 @@ void ClientIcons::onSoftwareVersionActionTriggered()
 	FClientInfo->showClientInfo(action->data(ADR_STREAM_JID).toString(), action->data(ADR_CONTACT_JID).toString(), IClientInfo::SoftwareVersion);
 }
 
-void ClientIcons::updateMucViewMode(IMultiUserView *AView, int AMode)
+void ClientIcons::displayMucLabels(IMultiUserView *AView, bool ADisplay)
 {
-	if (AMode == IMultiUserView::ViewFull)
+	if (ADisplay)
 	{
 		AdvancedDelegateItem label;
 		label.d->id = MUIL_MULTIUSERCHAT_CLIENTICON;
@@ -539,7 +546,7 @@ void ClientIcons::updateMucViewMode(IMultiUserView *AView, int AMode)
 
 void ClientIcons::onViewModeChanged(int AMode)
 {
-	updateMucViewMode(qobject_cast<IMultiUserView *>(sender()), AMode);
+	displayMucLabels(qobject_cast<IMultiUserView *>(sender()), AMode == IMultiUserView::ViewFull);
 }
 
 void ClientIcons::updateChatWindows()
@@ -627,9 +634,8 @@ void ClientIcons::onChatWindowCreated(IMessageChatWindow *AWindow)
 void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
 {
 	AWindow->multiUserView()->model()->insertItemDataHolder(MUDHO_CLIENTICONS, this);
-	updateMucViewMode(AWindow->multiUserView(), AWindow->multiUserView()->viewMode());
+	displayMucLabels(AWindow->multiUserView(), Options::node(OPV_COMMON_ADVANCED).value().toBool()?Options::node(OPV_MUC_CLIENTICON_SHOW).value().toBool():AWindow->multiUserView()->viewMode()== IMultiUserView::ViewFull);
 	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)), SLOT(onViewModeChanged(int)));
-	connect(AWindow->multiUserView()->instance(), SIGNAL(itemContextMenu(QStandardItem*,Menu*)), SLOT(onMucItemContextMenu(QStandardItem*,Menu*)));
 	connect(AWindow->multiUserView()->instance(), SIGNAL(itemToolTips(QStandardItem*,QMap<int,QString>&)), SLOT(onMucItemToolTips(QStandardItem*,QMap<int,QString>&)));
 }
 

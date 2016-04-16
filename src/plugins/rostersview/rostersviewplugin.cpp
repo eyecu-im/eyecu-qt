@@ -185,7 +185,7 @@ bool RostersViewPlugin::initSettings()
     // *** <<< eyeCU <<< ***
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_SIZE, IRostersView::SizeNormal);
 	Options::setDefaultValue(OPV_ROSTER_STATUSDISPLAY, true);
-	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLITE, false);
+	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLIGHT, false);
 	Options::setDefaultValue(OPV_ROSTER_SHOWSELF, false);
     Options::setDefaultValue(OPV_ROSTER_SHOWOFFLINEAGENTS, true);
     // *** >>> eyeCU >>> ***
@@ -210,7 +210,7 @@ QMultiMap<int, IOptionsDialogWidget *> RostersViewPlugin::optionsDialogWidgets(c
 		widgets.insertMulti(OWO_ROSTER_SHOWRESOURCE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_SHOWRESOURCE),tr("Show contact resource with highest priority"),AParent));
 		widgets.insertMulti(OWO_ROSTER_HIDESCROLLBAR,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_HIDESCROLLBAR),tr("Hide scroll bars in contact list window"),AParent));
 // *** <<< eyeCU <<< ***
-		widgets.insertMulti(OWO_ROSTER_ALTERNATIONHIGHLITE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_ALTERNATIONHIGHLITE),tr("Highlite alternation"),AParent));		
+		widgets.insertMulti(OWO_ROSTER_ALTERNATIONHIGHLIGHT,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_ALTERNATIONHIGHLIGHT),tr("Highlight alternation"),AParent));
 		widgets.insertMulti(OHO_ROSTER_EXTRA_ICONS, FOptionsManager->newOptionsDialogHeader(tr("Extra icons"), AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 		{
@@ -828,7 +828,7 @@ void RostersViewPlugin::onRestoreExpandState()
 void RostersViewPlugin::onOptionsOpened()
 {
 	// *** <<< eyeCU <<< ***
-	onOptionsChanged(Options::node(OPV_ROSTER_ALTERNATIONHIGHLITE));
+	onOptionsChanged(Options::node(OPV_ROSTER_ALTERNATIONHIGHLIGHT));
 	onOptionsChanged(Options::node(OPV_ROSTER_SHOWSELF));
 	onOptionsChanged(Options::node(OPV_ROSTER_SHOWOFFLINEAGENTS));
 	onOptionsChanged(Options::node(Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_STATUSDISPLAY:OPV_ROSTER_VIEWMODE));
@@ -864,7 +864,7 @@ void RostersViewPlugin::onOptionsChanged(const OptionsNode &ANode)
 		FRostersView->setHorizontalScrollBarPolicy(ANode.value().toBool() ? Qt::ScrollBarAlwaysOff : Qt::ScrollBarAsNeeded);
 	}
 // *** <<< eyeCU <<< ***
-	else if (ANode.path() == OPV_ROSTER_ALTERNATIONHIGHLITE)
+	else if (ANode.path() == OPV_ROSTER_ALTERNATIONHIGHLIGHT)
 	{
 		FRostersView->setAlternatingRowColors(ANode.value().toBool());
 	}

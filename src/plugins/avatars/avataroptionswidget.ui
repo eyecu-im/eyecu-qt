@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
-    <height>110</height>
+    <width>323</width>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,21 +15,28 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="spacing">
-    <number>2</number>
+    <number>6</number>
    </property>
-   <item row="4" column="1">
+   <item row="0" column="0" colspan="2">
+    <widget class="QCheckBox" name="cbShow">
+     <property name="text">
+      <string>Display avatars</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
     <widget class="QComboBox" name="cmbAvatarPosition">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -49,60 +56,7 @@
      </item>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QCheckBox" name="cbShowEmpty">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Display empty avatars</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QCheckBox" name="cbShow">
-     <property name="text">
-      <string>Display avatars</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="lblAvatarPosition">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Avatar position</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QCheckBox" name="cbGrayscaledOffline">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Display avatars for offline contacts grayscaled</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="lblAvatarSizel">
-     <property name="text">
-      <string>Avatar size</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
+   <item row="3" column="1">
     <widget class="QComboBox" name="cmbAvatarSize">
      <item>
       <property name="text">
@@ -121,42 +75,49 @@
      </item>
     </widget>
    </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblAvatarPosition">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Avatar position</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbAvatarPosition</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblAvatarSizel">
+     <property name="text">
+      <string>Avatar size</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbAvatarSize</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="cbDisplayGray">
+     <property name="text">
+      <string>Display avatars for offline contacts grayscaled</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cbShow</tabstop>
+  <tabstop>cbDisplayGray</tabstop>
+  <tabstop>cmbAvatarPosition</tabstop>
+  <tabstop>cmbAvatarSize</tabstop>
+ </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>cbShow</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>cbGrayscaledOffline</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>123</x>
-     <y>11</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>123</x>
-     <y>49</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbShow</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>cbShowEmpty</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>123</x>
-     <y>11</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>123</x>
-     <y>30</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>cbShow</sender>
    <signal>toggled(bool)</signal>
@@ -186,6 +147,22 @@
     <hint type="destinationlabel">
      <x>213</x>
      <y>95</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbShow</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>cbDisplayGray</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>161</x>
+     <y>8</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>123</x>
+     <y>32</y>
     </hint>
    </hints>
   </connection>

@@ -2149,7 +2149,7 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 		{
 			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(AEvent);
 // *** <<< eyeCU <<< ***
-			if (mouseEvent!=NULL && mouseEvent->button()==Options::node(OPV_MUC_GROUPCHAT_ADDRESSBUTTON).value().toInt())
+			if (mouseEvent!=NULL && mouseEvent->button()==Options::node(OPV_MUC_ADDRESSBUTTON).value().toInt())
 // *** >>> eyeCU >>> ***
 			{
 				if (AEvent->type() == QEvent::MouseButtonPress)
