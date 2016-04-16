@@ -925,6 +925,14 @@
    <source>Add this suffix when referring to the user</source>
    <translation>Add this suffix when referring to the user</translation>
   </message>
+  <message>
+   <source>Highlight alternation</source>
+   <translation>Highlight alternation</translation>
+  </message>
+  <message>
+   <source>Display user status message</source>
+   <translation>Display user status message</translation>
+  </message>
  </context>
  <context>
   <name>MultiUserChatWindow</name>

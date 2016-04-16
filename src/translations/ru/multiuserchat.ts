@@ -931,6 +931,14 @@
       <source>Add this suffix when referring to the user</source>
       <translation>Добавлять этот суффикс, обращаясь к пользователю</translation>
     </message>
+    <message>
+      <source>Highlight alternation</source>
+      <translation>Подсвечивать чередование</translation>
+    </message>
+    <message>
+      <source>Display user status message</source>
+      <translation>Отображать статусное сообщение пользователя</translation>
+    </message>
   </context>
   <context>
     <name>MultiUserChatWindow</name>

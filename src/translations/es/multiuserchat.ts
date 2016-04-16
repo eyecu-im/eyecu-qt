@@ -914,6 +914,14 @@
    <source>Add this suffix when referring to the user</source>
    <translation type="unfinished"/>
   </message>
+  <message>
+   <source>Highlight alternation</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Display user status message</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>MultiUserChatWindow</name>

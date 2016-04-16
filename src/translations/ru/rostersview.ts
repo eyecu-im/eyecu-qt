@@ -59,7 +59,7 @@
         <translation>&lt;b&gt;Аккаунт:&lt;/b&gt; %1</translation>
     </message>
     <message>
-        <source>Highlite alternation</source>
+        <source>Highlight alternation</source>
         <translation>Подсвечивать чередование</translation>
     </message>
     <message>

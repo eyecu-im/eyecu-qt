@@ -96,19 +96,19 @@
   </message>
   <message>
    <source>Failed to send file &apos;%1&apos; to %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bestand &apos;%1&apos; naar %2: %3 te verzenden</translation>
   </message>
   <message>
    <source>Failed to receive file &apos;%1&apos; from %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bestand &apos;%1&apos; van %2: %3 te ontvangen</translation>
   </message>
   <message>
    <source>Select File</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer bestand</translation>
   </message>
   <message>
    <source>File request rejected: %1</source>
-   <translation type="unfinished"/>
+   <translation>Bestandsoverdracht verzoek van:  %1 afgewezen</translation>
   </message>
  </context>
  <context>

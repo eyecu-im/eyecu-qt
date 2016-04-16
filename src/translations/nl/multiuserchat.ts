@@ -109,51 +109,51 @@
   </message>
   <message>
    <source>Add User</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker toevoegen</translation>
   </message>
   <message>
    <source>Enter user Jabber ID:</source>
-   <translation type="unfinished"/>
+   <translation>Voer gebruikers Jabber ID in:</translation>
   </message>
   <message>
    <source>Enter note:</source>
-   <translation type="unfinished"/>
+   <translation>Notitie invoeren:</translation>
   </message>
   <message>
    <source>Warning</source>
-   <translation type="unfinished"/>
+   <translation>Waarschuwing</translation>
   </message>
   <message>
    <source>User %1 already present in list of &apos;%2&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 staat al in lijst van &apos;%2&apos;</translation>
   </message>
   <message>
    <source>Failed to load list of &apos;%1&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om lijst te laden van &apos;%1&apos;</translation>
   </message>
   <message>
    <source>Failed to update users affiliation lists</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om gebruikers aansluiting lijst bij te werken</translation>
   </message>
   <message>
    <source>Failed to load list of &apos;%1&apos;: %2</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om lijst van &apos;%1&apos;: %2 te laden</translation>
   </message>
   <message>
    <source>Failed to update users affiliation lists: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om gebruikers aansluiting lijst: %1 bij te werken</translation>
   </message>
   <message numerus="yes">
    <source>Move %n user(s) to &apos;%1&apos;</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Zet %n gebruiker naar &apos;%1&apos;</numerusform><numerusform>Zet %n gebruikers naar &apos;%1&apos;</numerusform></translation>
   </message>
   <message numerus="yes">
    <source>Delete %n user(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verwijder %n gebruiker</numerusform><numerusform>Verwijder %n gebruikers</numerusform></translation>
   </message>
   <message>
    <source>Users Lists - %1</source>
-   <translation type="unfinished"/>
+   <translation>Gebruikerslijst - %1</translation>
   </message>
  </context>
  <context>
@@ -168,200 +168,200 @@
   </message>
   <message>
    <source>Search users</source>
-   <translation type="unfinished"/>
+   <translation>Zoek gebruikers</translation>
   </message>
  </context>
  <context>
   <name>JoinPage</name>
   <message>
    <source>Join</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen</translation>
   </message>
   <message>
    <source>Enter parameters to join to the conference</source>
-   <translation type="unfinished"/>
+   <translation>Voer parameters in om deel te nemen aan de conferentie</translation>
   </message>
   <message>
    <source>Nick</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam</translation>
   </message>
   <message>
    <source>Join with nick:</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen met bijnaam:</translation>
   </message>
   <message>
    <source>Loading conference description...</source>
-   <translation type="unfinished"/>
+   <translation>Laad conferentie omschrijving...</translation>
   </message>
   <message>
    <source>This conference is password protected</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is met een paswoord beschermd</translation>
   </message>
   <message>
    <source>This conference is not password protected</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie in niet beveiligd met een paswoord</translation>
   </message>
   <message>
    <source>This conference is members only</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is alleen voor leden</translation>
   </message>
   <message>
    <source>This conference is public</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is voor iedereen</translation>
   </message>
   <message>
    <source>This conference is semi anonymous</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is deels anoniem</translation>
   </message>
   <message>
    <source>This conference is not anonymous</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is niet anoniem</translation>
   </message>
   <message>
    <source>This conference is moderated</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie wordt beheerd</translation>
   </message>
   <message>
    <source>This conference is not moderated</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is niet beheerd</translation>
   </message>
   <message>
    <source>This conference is temporary</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is tijdelijk</translation>
   </message>
   <message>
    <source>This conference is persistent</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is blijvend</translation>
   </message>
   <message>
    <source>This conference is hidden</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is verborgen</translation>
   </message>
   <message>
    <source>This conference is visible for all</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is zichtbaar voor iedereen</translation>
   </message>
   <message>
    <source>Failed to load conference description: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie omschrijving te laden: %1</translation>
   </message>
   <message>
    <source>Conference description is not available or invalid</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie omschrijving is niet beschikbaar of ongeldig</translation>
   </message>
   <message>
    <source>Register</source>
-   <translation type="unfinished"/>
+   <translation>Registreren</translation>
   </message>
   <message>
    <source>Registered</source>
-   <translation type="unfinished"/>
+   <translation>Geregistreerd</translation>
   </message>
   <message>
    <source>Loading...</source>
-   <translation type="unfinished"/>
+   <translation>Laden...</translation>
   </message>
   <message>
    <source>Join conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie</translation>
   </message>
   <message>
    <source>Password is required</source>
-   <translation type="unfinished"/>
+   <translation>Paswoord is vereist</translation>
   </message>
  </context>
  <context>
   <name>ManualPage</name>
   <message>
    <source>Join</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen</translation>
   </message>
   <message>
    <source>Conference parameters</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie parameters</translation>
   </message>
   <message>
    <source>Enter parameters to join or create the conference</source>
-   <translation type="unfinished"/>
+   <translation>Voer parameters in om deel te nemen of een conferentie te creëren</translation>
   </message>
   <message>
    <source>Conference as &apos;name@service.server.com&apos;</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie als &apos;name@service.server.com&apos;</translation>
   </message>
   <message>
    <source>Your nickname in conference</source>
-   <translation type="unfinished"/>
+   <translation>Je bijnaam in conferentie</translation>
   </message>
   <message>
    <source>Conference password if required</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie paswoord is vereist</translation>
   </message>
   <message>
    <source>Account:</source>
-   <translation type="unfinished"/>
+   <translation>Account:</translation>
   </message>
   <message>
    <source>Conference:</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie:</translation>
   </message>
   <message>
    <source>Nick:</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam:</translation>
   </message>
   <message>
    <source>Password:</source>
-   <translation type="unfinished"/>
+   <translation>Paswoord:</translation>
   </message>
   <message>
    <source>Register</source>
-   <translation type="unfinished"/>
+   <translation>Registreren</translation>
   </message>
   <message>
    <source>Registered</source>
-   <translation type="unfinished"/>
+   <translation>Geregistreerd</translation>
   </message>
   <message>
    <source>Loading conference description...</source>
-   <translation type="unfinished"/>
+   <translation>Laad conferentie omschrijving...</translation>
   </message>
   <message>
    <source>Failed to load conference description</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie omschrijving te laden</translation>
   </message>
   <message>
    <source>Invalid conference ID</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldig conferentie ID</translation>
   </message>
   <message>
    <source>Loading...</source>
-   <translation type="unfinished"/>
+   <translation>Laden...</translation>
   </message>
   <message>
    <source>This conference is password protected</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is met een paswoord beschermd</translation>
   </message>
   <message>
    <source>Conference description is not available or invalid</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie omschrijving is niet beschikbaar of ongeldig</translation>
   </message>
   <message>
    <source>This conference does not exists and will be automatically created on join</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie bestaat niet maar wordt automatisch gecreërd om deeltenemen</translation>
   </message>
   <message>
    <source>Conference service &apos;%1&apos; is not available or does not exists</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie service &apos;%1&apos; is niet beschikbaar of bestaat niet</translation>
   </message>
   <message>
    <source>Failed to check conference existence: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie bestaan te controleren: %1</translation>
   </message>
  </context>
  <context>
   <name>ModePage</name>
   <message>
    <source>Join to the conference or create a new one</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie of maak een nieuwe aan</translation>
   </message>
   <message>
    <source>This wizard will help you to join to existing conference or create a new one</source>
@@ -477,7 +477,7 @@
   </message>
   <message>
    <source>Request for voice</source>
-   <translation>Aanvraag voor stem</translation>
+   <translation>Aanvraag voor stemrecht</translation>
   </message>
   <message>
    <source>Requested Role</source>
@@ -493,7 +493,7 @@
   </message>
   <message>
    <source>Grant Voice?</source>
-   <translation>Stem toekennen?</translation>
+   <translation>Stemrecht toekennen?</translation>
   </message>
   <message>
    <source>Configure conference</source>
@@ -685,7 +685,7 @@
   </message>
   <message>
    <source>A room in which only those with &apos;voice&apos; may send messages to all occupants</source>
-   <translation>Een kamer waar alleen mensen zitten die  &apos;voice&apos; hebben  kunnen berichten zenden naar alle inzittenden</translation>
+   <translation>Een kamer waar alleen mensen zitten die  &apos;stemrecht&apos; hebben  kunnen berichten zenden naar alle inzittenden</translation>
   </message>
   <message>
    <source>Non-anonymous room</source>
@@ -777,83 +777,83 @@
   </message>
   <message>
    <source>Messages</source>
-   <translation type="unfinished"/>
+   <translation>Berichten</translation>
   </message>
   <message>
    <source>Participants List</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemers lijst</translation>
   </message>
   <message>
    <source>Full</source>
-   <translation type="unfinished"/>
+   <translation>Vol</translation>
   </message>
   <message>
    <source>Simplified</source>
-   <translation type="unfinished"/>
+   <translation>Vereenvoudigd</translation>
   </message>
   <message>
    <source>Compact</source>
-   <translation type="unfinished"/>
+   <translation>Compact</translation>
   </message>
   <message>
    <source>Participants list view:</source>
-   <translation type="unfinished"/>
+   <translation>Toon deelnemers lijst:</translation>
   </message>
   <message>
    <source>Anyone</source>
-   <translation type="unfinished"/>
+   <translation>Iemand</translation>
   </message>
   <message>
    <source>Moderators only</source>
-   <translation type="unfinished"/>
+   <translation>Alleen beheerders</translation>
   </message>
   <message>
    <source>Allow visitors to send private messages to</source>
-   <translation type="unfinished"/>
+   <translation>Bezoekers toestaan om prive bericht te verzenden naar</translation>
   </message>
   <message>
    <source>Nobody</source>
-   <translation type="unfinished"/>
+   <translation>Niemand</translation>
   </message>
   <message>
    <source>Allow visitors to change nickname?</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om bezoeker van bijnaam te veranderen?</translation>
   </message>
   <message>
    <source>Allow visitors to send voice requests?</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om bezoekers een stemrecht verzoek te sturen?</translation>
   </message>
   <message>
    <source>Minimum interval between voice requests (in seconds)</source>
-   <translation type="unfinished"/>
+   <translation>Minimum interval tussen stemrecht verzoeken (in seconden)</translation>
   </message>
   <message>
    <source>Join Conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie</translation>
   </message>
   <message>
    <source>List of rooms</source>
-   <translation type="unfinished"/>
+   <translation>Lijst van kamers</translation>
   </message>
   <message>
    <source>Contains the list of multi-user chat rooms</source>
-   <translation type="unfinished"/>
+   <translation>Bevat de lijst van multi-gebruikers chat kamers</translation>
   </message>
   <message>
    <source>Join Conference...</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen conferentie...</translation>
   </message>
   <message>
    <source>Join to Conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie</translation>
   </message>
   <message>
    <source>Exit from Conference</source>
-   <translation type="unfinished"/>
+   <translation>Einde van conferentie</translation>
   </message>
   <message>
    <source>Enter to Conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie</translation>
   </message>
   <message>
    <source>You are invited to the conference &lt;b&gt;%1&lt;/b&gt; by user &lt;b&gt;%2&lt;/b&gt;.</source>
@@ -861,11 +861,11 @@
   </message>
   <message>
    <source>Do you want to join to the conference?</source>
-   <translation type="unfinished"/>
+   <translation>Wil je aan de conferentie deelnemen?</translation>
   </message>
   <message>
    <source>Invitation to Conference</source>
-   <translation type="unfinished"/>
+   <translation>Uitnodiging aan conferentie</translation>
   </message>
   <message>
    <source>Direct Invitations to Conferences</source>
@@ -882,7 +882,7 @@
   <message>
    <source>Ctrl+U</source>
    <comment>Show/Hide conference participants list</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+U</translation>
   </message>
   <message>
    <source>Invite to Conversation</source>
@@ -913,6 +913,14 @@
   <message>
    <source>Add this suffix when referring to the user</source>
    <translation>Voeg deze achtervoegsel toe bij het verwijzen naar de gebruiker</translation>
+  </message>
+  <message>
+   <source>Highlight alternation</source>
+   <translation>Markeer afwisseling</translation>
+  </message>
+  <message>
+   <source>Display user status message</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
@@ -1027,7 +1035,7 @@
   </message>
   <message>
    <source>Request Voice</source>
-   <translation>Vraag voor voice</translation>
+   <translation>Vraag voor stemrecht</translation>
   </message>
   <message>
    <source>Configure Conference</source>
@@ -1063,35 +1071,35 @@
   </message>
   <message>
    <source>User %1 already has a voice in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1  had al een stemrecht in de conferentie</translation>
   </message>
   <message>
    <source>Unable to grant a voice to the user %1</source>
-   <translation type="unfinished"/>
+   <translation>Kan geen stemrecht verlenen aan gebruiker %1</translation>
   </message>
   <message>
    <source>You granted the voice to the user %1</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt stemrecht verleend aan gebruiker %1</translation>
   </message>
   <message>
    <source>User %1 requests a voice in the conference, %2</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 vraagt stemrecht voor de conferentie, %2</translation>
   </message>
   <message>
    <source>Grant Voice</source>
-   <translation type="unfinished"/>
+   <translation>Stemrecht toekennen</translation>
   </message>
   <message>
    <source>Voice request received</source>
-   <translation type="unfinished"/>
+   <translation>Stemrecht verzoek ontvangen</translation>
   </message>
   <message>
    <source>User %1 requests a voice in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 verzoekt om een stemrecht in de conferentie</translation>
   </message>
   <message>
    <source>Clear window</source>
-   <translation type="unfinished"/>
+   <translation>Wis venster</translation>
   </message>
   <message>
    <source>Kick user %1 request was sent</source>
@@ -1151,23 +1159,23 @@
   </message>
   <message>
    <source>Conference logging is now enabled</source>
-   <translation type="unfinished"/>
+   <translation>Logging conferentie is aangezet</translation>
   </message>
   <message>
    <source>Conference logging is now disabled</source>
-   <translation type="unfinished"/>
+   <translation>Logging conferentie is uitgezet</translation>
   </message>
   <message>
    <source>The conference is now non-anonymous</source>
-   <translation type="unfinished"/>
+   <translation>De conferentie is nu niet anoniem</translation>
   </message>
   <message>
    <source>The conference is now semi-anonymous</source>
-   <translation type="unfinished"/>
+   <translation>De conferentie is nu deels anoniem</translation>
   </message>
   <message>
    <source>A new conference has been created</source>
-   <translation type="unfinished"/>
+   <translation>Een nieuwe conferentie in aangemaakt </translation>
   </message>
   <message>
    <source>User %1 has been removed from the conference because of an affiliation change</source>
@@ -1183,99 +1191,99 @@
   </message>
   <message>
    <source>%1 - Private Chat</source>
-   <translation type="unfinished"/>
+   <translation>%1 - Prive chat</translation>
   </message>
   <message>
    <source>You have joined the conference</source>
-   <translation type="unfinished"/>
+   <translation>Je neemt deel aan de conferentie</translation>
   </message>
   <message>
    <source>You have no voice in this conference, %1</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt geen stemrecht in deze conferentie, %1</translation>
   </message>
   <message>
    <source>You have left the conference</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt de conferentie verlaten</translation>
   </message>
   <message>
    <source>Failed to change user role: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om gebruikers functie te veranderen: %1</translation>
   </message>
   <message>
    <source>Failed to change user affiliation: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om gebruikers aansluiting te veranderen: %1 </translation>
   </message>
   <message>
    <source>Failed to load conference configuration: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen te laden: %1</translation>
   </message>
   <message>
    <source>Failed to update conference configuration: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie instellingen bij tewerken: %1</translation>
   </message>
   <message>
    <source>Failed to destroy this conference: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om deze conferentie te vernielen: %1</translation>
   </message>
   <message>
    <source>User %1 has declined your invite to this conference. %2</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 heeft jou uitnodiging voor deze conferentie geweigerd. %2</translation>
   </message>
   <message>
    <source>%1 &lt;%2&gt; has joined</source>
-   <translation type="unfinished"/>
+   <translation>%1 &lt;%2&gt; heeft deelgenomen</translation>
   </message>
   <message>
    <source>%1 has joined</source>
-   <translation type="unfinished"/>
+   <translation>%1 heeft deelgenomen</translation>
   </message>
   <message>
    <source>%1 &lt;%2&gt; has left</source>
-   <translation type="unfinished"/>
+   <translation>%1 &lt;%2&gt; heeft verlaten</translation>
   </message>
   <message>
    <source>%1 has left</source>
-   <translation type="unfinished"/>
+   <translation>%1 heeft verlaten</translation>
   </message>
   <message>
    <source>%1 changed role from %2 to %3</source>
-   <translation type="unfinished"/>
+   <translation>%1 veranderd functie van %2 naar %3</translation>
   </message>
   <message>
    <source>%1 changed affiliation from %2 to %3</source>
-   <translation type="unfinished"/>
+   <translation>%1 veranderd de aansluiting van %2 naar %3</translation>
   </message>
   <message>
    <source>User %1 has been kicked from the conference%2 %3</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 is de kamer uitgeschopt%2  %3</translation>
   </message>
   <message>
    <source>User %1 has been banned in the conference%2 %3</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 is verbannen uit de conferentie%2  %3</translation>
   </message>
   <message>
    <source>Conference configuration accepted</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie instellingen geaccepteerd</translation>
   </message>
   <message>
    <source>Enter new topic:</source>
-   <translation type="unfinished"/>
+   <translation>Voer nieuw onderwerp in:</translation>
   </message>
   <message>
    <source>Enter a message:</source>
-   <translation type="unfinished"/>
+   <translation>Zend een bericht:</translation>
   </message>
   <message>
    <source>You already have a voice in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt al een stemrecht in de conferentie</translation>
   </message>
   <message>
    <source>Failed to send a request for voice in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om een verzoek van stemrecht in de conferentie</translation>
   </message>
   <message>
    <source>Request for voice in the conference was sent</source>
-   <translation type="unfinished"/>
+   <translation>Verzoek voor stemrecht in conferentie verstuurd</translation>
   </message>
   <message>
    <source>Kick User - %1</source>
@@ -1287,7 +1295,7 @@
   </message>
   <message>
    <source>Voice request from [%1]</source>
-   <translation type="unfinished"/>
+   <translation>Stemrecht verzoek van [%1]</translation>
   </message>
   <message>
    <source>Private message from [%1]</source>
@@ -1339,23 +1347,23 @@
   </message>
   <message>
    <source>Change Nickname</source>
-   <translation type="unfinished"/>
+   <translation>Verander bijnaam</translation>
   </message>
   <message>
    <source>Enter new nickname:</source>
-   <translation type="unfinished"/>
+   <translation>Voer nieuwe bijnaam in:</translation>
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Fout</translation>
   </message>
   <message>
    <source>Failed to change nickname to %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bijnaam naar %1 te veranderen</translation>
   </message>
   <message>
    <source>Enter password:</source>
-   <translation type="unfinished"/>
+   <translation>Paswoord invoeren:</translation>
   </message>
   <message>
    <source>You have been kicked from this conference, you may %1 or %2</source>
@@ -1459,23 +1467,23 @@
   </message>
   <message>
    <source>Clear Window</source>
-   <translation type="unfinished"/>
+   <translation>Wis venster</translation>
   </message>
   <message>
    <source>Conference Tools</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie gereedschap</translation>
   </message>
   <message>
    <source>Disable Notifications</source>
-   <translation type="unfinished"/>
+   <translation>Zet notificaties uit</translation>
   </message>
   <message>
    <source>Enter to Conference</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie</translation>
   </message>
   <message>
    <source>Exit from Conference</source>
-   <translation type="unfinished"/>
+   <translation>Einde van conferentie</translation>
   </message>
   <message numerus="yes">
    <source>Failed to invite %1 and %n other contact(s) to this conference: %2</source>
@@ -1502,11 +1510,11 @@
   </message>
   <message>
    <source>Title</source>
-   <translation type="unfinished"/>
+   <translation>Titel</translation>
   </message>
   <message>
    <source>Join to the conference:</source>
-   <translation type="unfinished"/>
+   <translation>Deelnemen aan conferentie:</translation>
   </message>
   <message>
    <source>Select a conference from the list or explicitly specify the name of the hidden one</source>
@@ -1538,31 +1546,31 @@
   </message>
   <message>
    <source>Failed to load conference description</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie omschrijving te laden</translation>
   </message>
   <message>
    <source>Failed to check conference existence</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie bestaan te controleren</translation>
   </message>
   <message>
    <source>Invalid conference name</source>
-   <translation type="unfinished"/>
+   <translation>Ongeldig conferentie naam</translation>
   </message>
   <message>
    <source>Failed to load conference description: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie omschrijving te laden: %1</translation>
   </message>
   <message>
    <source>Failed to check conference existence: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentie bestaan te controleren: %1</translation>
   </message>
   <message>
    <source>Conference &apos;%1@%2&apos; already exists, choose another name</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie &apos;%1&apos;@%2 bestaat al, kies een andere naam</translation>
   </message>
   <message>
    <source>Failed to load list of conferences: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om conferentieslijst te laden: %1</translation>
   </message>
   <message>
    <source>Conference description is not available or invalid</source>
@@ -1573,23 +1581,23 @@
   <name>ServicePage</name>
   <message>
    <source>Conference location</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie plaats</translation>
   </message>
   <message>
    <source>Add...</source>
-   <translation type="unfinished"/>
+   <translation>Toevoegen...</translation>
   </message>
   <message>
    <source>Account:</source>
-   <translation type="unfinished"/>
+   <translation>Account:</translation>
   </message>
   <message>
    <source>Server:</source>
-   <translation type="unfinished"/>
+   <translation>Server:</translation>
   </message>
   <message>
    <source>Service:</source>
-   <translation type="unfinished"/>
+   <translation>Service:</translation>
   </message>
   <message>
    <source>Select account, server and service to join to the conference</source>
@@ -1645,11 +1653,11 @@
   </message>
   <message>
    <source>Enter server domain:</source>
-   <translation type="unfinished"/>
+   <translation>Voer server domein in:</translation>
   </message>
   <message>
    <source>Failed to load a list of services: %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om serviceslijst te laden: %1</translation>
   </message>
  </context>
 </TS>

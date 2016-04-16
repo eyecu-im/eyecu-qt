@@ -109,23 +109,23 @@
   </message>
   <message>
    <source>Bookmark to Conference</source>
-   <translation type="unfinished"/>
+   <translation>Bladwijzer naar Conferentie</translation>
   </message>
   <message>
    <source>Bookmark to Link</source>
-   <translation type="unfinished"/>
+   <translation>Bladwijzer naar link</translation>
   </message>
   <message>
    <source>Link:</source>
-   <translation type="unfinished"/>
+   <translation>Koppeling:</translation>
   </message>
   <message>
    <source>Any valid link</source>
-   <translation type="unfinished"/>
+   <translation>Elke geldige koppeling</translation>
   </message>
   <message>
    <source>Bookmark name</source>
-   <translation type="unfinished"/>
+   <translation>Bladwijzer naam</translation>
   </message>
  </context>
  <context>
@@ -140,7 +140,7 @@
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>Fout</translation>
   </message>
  </context>
  <context>

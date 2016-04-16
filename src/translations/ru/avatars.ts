@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>AvatarOptionsWidget</name>
     <message>
@@ -20,12 +20,51 @@
         <translation>Отображать аватары отключённых контактов монохромными</translation>
     </message>
     <message>
+        <source>Display avatars</source>
+        <translation>Отображать аватары</translation>
+    </message>
+    <message>
+        <source>Small</source>
+        <translation>Маленький</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Нормальный</translation>
+    </message>
+    <message>
+        <source>Large</source>
+        <translation>Большой</translation>
+    </message>
+    <message>
+        <source>Avatar size</source>
+        <translation>Размер аватара</translation>
+    </message>
+</context>
+<context>
+    <name>AvatarSizeOptionsWidget</name>
+    <message>
         <source>Display empty avatars</source>
         <translation>Отображать пустые аватары</translation>
     </message>
     <message>
-        <source>Display avatars</source>
-        <translation>Отображать аватары</translation>
+        <source>Avatar size</source>
+        <translation>Размер аватара</translation>
+    </message>
+    <message>
+        <source>px</source>
+        <translation>пикс</translation>
+    </message>
+    <message>
+        <source>Small</source>
+        <translation>Маленький</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Нормальный</translation>
+    </message>
+    <message>
+        <source>Large</source>
+        <translation>Большой</translation>
     </message>
 </context>
 <context>
