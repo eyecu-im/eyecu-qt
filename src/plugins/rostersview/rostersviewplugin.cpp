@@ -24,6 +24,7 @@
 #include <definitions/menuicons.h>
 #include <definitions/shortcuts.h>
 #include <definitions/shortcutgrouporders.h>
+#include <interfaces/iavatars.h>
 #include <utils/textmanager.h>
 #include <utils/shortcuts.h>
 #include <utils/options.h>
@@ -183,7 +184,7 @@ bool RostersViewPlugin::initSettings()
 	Options::setDefaultValue(OPV_ROSTER_VIEWMODE,IRostersView::ViewFull);
 	Options::setDefaultValue(OPV_ROSTER_SORTMODE,IRostersView::SortByStatus);
     // *** <<< eyeCU <<< ***
-	Options::setDefaultValue(OPV_ROSTER_AVATARS_SIZE, IRostersView::SizeNormal);
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_SIZE, IAvatars::AvatarNormal);
 	Options::setDefaultValue(OPV_ROSTER_STATUSDISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLIGHT, false);
 	Options::setDefaultValue(OPV_ROSTER_SHOWSELF, false);

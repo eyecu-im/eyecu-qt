@@ -86,11 +86,6 @@ public:
 		SortByStatus,
 		SortAlphabetically,
 	};
-	enum AvatarSize {
-		SizeSmall,
-		SizeNormal,
-		SizeLarge,
-	};
 public:
 	virtual QTreeView *instance() = 0;
 	//IndexManagment
