@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Privacy Lists Ukrainian Translation</DisplayName>
     <Description>Privacy Lists Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-07</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.privacylists.uk</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.privacylists,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>

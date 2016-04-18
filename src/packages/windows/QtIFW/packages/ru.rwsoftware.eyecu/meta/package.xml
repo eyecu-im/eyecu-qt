@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.16</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+    <Version>1.3.17</Version>
+    <ReleaseDate>2016-04-14</ReleaseDate>
+    <UpdateText>Add support of roster avatar size in advanced mode</UpdateText>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>
