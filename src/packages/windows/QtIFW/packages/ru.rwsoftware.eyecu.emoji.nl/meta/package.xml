@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Emoji Dutch Translation</DisplayName>
     <Description>Emoji Dutch translation</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-02-03</ReleaseDate>
+    <Version>1.3.3</Version>
+    <ReleaseDate>2016-04-07</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji.nl</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.emoji,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
     <Virtual>true</Virtual>

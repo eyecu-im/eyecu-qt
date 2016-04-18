@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>XMPP URI Queries Ukrainian Translation</DisplayName>
     <Description>XMPP URI Queries Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2015-04-04</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.xmppuriqueries.uk</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.xmppuriqueries,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>
