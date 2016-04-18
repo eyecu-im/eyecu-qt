@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/maplocationselector/maplocationselector.cpp" line="16"/>
    <source>Map location selector</source>
-   <translation type="unfinished"/>
+   <translation>Вибір розташування на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/maplocationselector/maplocationselector.cpp" line="17"/>
    <source>Allows other plugins to select a location on the Map</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяти іншим плагінам вибирати розташування на мапі</translation>
   </message>
  </context>
 </TS>

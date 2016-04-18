@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>Map Magnifier Ukrainian Translation</DisplayName>
     <Description>Map Magnifier Ukrainian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
+    <Version>1.3.1</Version>
+    <ReleaseDate>2016-04-18</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.map.magnifier.uk</Name>
-	<AutoDependOn>ru.rwsoftware.eyecu.map.magnifier,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+    <AutoDependOn>ru.rwsoftware.eyecu.map.magnifier,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
     <Virtual>true</Virtual>
 </Package>

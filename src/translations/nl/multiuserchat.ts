@@ -365,19 +365,19 @@
   </message>
   <message>
    <source>This wizard will help you to join to existing conference or create a new one</source>
-   <translation type="unfinished"/>
+   <translation>Deze Wizard helpt je om aan een bestaande conferentie deel te nemen of maakt een nieuwe aan</translation>
   </message>
   <message>
    <source>I want to join to the existing conference</source>
-   <translation type="unfinished"/>
+   <translation>Ik wil deelnemen aan een bestaande conferentie</translation>
   </message>
   <message>
    <source>I want to create a new conference</source>
-   <translation type="unfinished"/>
+   <translation>Ik wil een nieuwe conferentie aanmaken</translation>
   </message>
   <message>
    <source>I want manually specify all parameters to join or create the conference</source>
-   <translation type="unfinished"/>
+   <translation>Ik wil handmatig alle parameters aangeven om deel te nemen aan een conferentie of aan te maken</translation>
   </message>
  </context>
  <context>
@@ -769,11 +769,12 @@
   </message>
   <message>
    <source>&lt;b&gt;Conference:&lt;/b&gt; %1</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;Conferentie:&lt;b&gt; %1</translation>
   </message>
   <message>
    <source>&lt;big&gt;&lt;b&gt;[%1]&lt;/b&gt;&lt;/big&gt; in [%2]</source>
-   <translation type="unfinished"/>
+   <translation>&lt;big&gt;&lt;b&gt;[%1]&lt;/b&gt;&lt;/big&gt; in [%2]
+</translation>
   </message>
   <message>
    <source>Messages</source>
@@ -857,7 +858,7 @@
   </message>
   <message>
    <source>You are invited to the conference &lt;b&gt;%1&lt;/b&gt; by user &lt;b&gt;%2&lt;/b&gt;.</source>
-   <translation type="unfinished"/>
+   <translation>Je bent uitgenodigd voor de vergadering &lt;b&gt;%1&lt;b&gt; bij gebruiker &lt;b&gt;%2&lt;b&gt;.</translation>
   </message>
   <message>
    <source>Do you want to join to the conference?</source>
@@ -869,15 +870,15 @@
   </message>
   <message>
    <source>Direct Invitations to Conferences</source>
-   <translation type="unfinished"/>
+   <translation>Directe uitnodigen voor conferentie</translation>
   </message>
   <message>
    <source>Supports the direct invitations to conferences</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunt de directe uitnodigingen voor de conferenties</translation>
   </message>
   <message>
    <source>Show/Hide conference participants list</source>
-   <translation type="unfinished"/>
+   <translation>Toon/Verberg conferentie deelnemerslijst</translation>
   </message>
   <message>
    <source>Ctrl+U</source>
@@ -886,15 +887,15 @@
   </message>
   <message>
    <source>Invite to Conversation</source>
-   <translation type="unfinished"/>
+   <translation>Uitnodigen voor gesprekslijst</translation>
   </message>
   <message numerus="yes">
    <source>Conference with %1 and %n other contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Conferentie met %1 en %n andere contact(en)</numerusform><numerusform>Conferentie met %1 en %n andere contact(en)</numerusform></translation>
   </message>
   <message>
    <source>Conference with %1</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie met %1</translation>
   </message>
   <message>
    <source>Left mouse button</source>
@@ -920,7 +921,7 @@
   </message>
   <message>
    <source>Display user status message</source>
-   <translation type="unfinished"/>
+   <translation>Toon gebruiker statusbericht</translation>
   </message>
  </context>
  <context>
@@ -1063,11 +1064,11 @@
   </message>
   <message>
    <source>[%1] in [%2]</source>
-   <translation type="unfinished"/>
+   <translation>[%1] in [%2]</translation>
   </message>
   <message>
    <source>User %1 was not found in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 is niet gevonden in de conferentie</translation>
   </message>
   <message>
    <source>User %1 already has a voice in the conference</source>
@@ -1111,27 +1112,27 @@
   </message>
   <message>
    <source>Ban user %1 request was sent</source>
-   <translation type="unfinished"/>
+   <translation>Aanvraag voor ban gebruiker %1 was verstuurd</translation>
   </message>
   <message>
    <source>Failed to send ban user %1 request</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om Ban aanvraag voor gebruiker %1 te versturen</translation>
   </message>
   <message>
    <source>Private message was sent to user %1</source>
-   <translation type="unfinished"/>
+   <translation>Prive bericht is verstuurd naar gebruiker %1</translation>
   </message>
   <message>
    <source>Failed to send private message to user %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt on prive bericht naar gebruiker %1 te versturen</translation>
   </message>
   <message>
    <source>Failed to change your nickname to %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bijnaam te veranderen naar %1</translation>
   </message>
   <message>
    <source>Change subject request was sent</source>
-   <translation type="unfinished"/>
+   <translation>Aanvraag om onderwerp te veranderen is verstuurd</translation>
   </message>
   <message>
    <source>Failed to send change subject request</source>
@@ -1391,7 +1392,7 @@
   </message>
   <message>
    <source>change nick</source>
-   <translation type="unfinished"/>
+   <translation>Verander bijnaam</translation>
   </message>
   <message>
    <source>This conference is members only but you are not one of them, you may %1 or %2</source>
@@ -1399,7 +1400,7 @@
   </message>
   <message>
    <source>retry</source>
-   <translation type="unfinished"/>
+   <translation>Herhaal</translation>
   </message>
   <message>
    <source>This conference does not exists or does not configured yet by owner, you may %1 or %2</source>
@@ -1431,7 +1432,7 @@
   </message>
   <message>
    <source>Change Password</source>
-   <translation type="unfinished"/>
+   <translation>Verander paswoord</translation>
   </message>
   <message>
    <source>This conference is password protected and you provided incorrect password, you may %1 or %2</source>
@@ -1439,15 +1440,15 @@
   </message>
   <message>
    <source>change password</source>
-   <translation type="unfinished"/>
+   <translation>Verander paswoord</translation>
   </message>
   <message>
    <source>Open Private Chat</source>
-   <translation type="unfinished"/>
+   <translation>Open Prive Chat</translation>
   </message>
   <message>
    <source>Moderate</source>
-   <translation type="unfinished"/>
+   <translation>Beheer</translation>
   </message>
   <message>
    <source>Edit Users Lists</source>

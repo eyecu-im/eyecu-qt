@@ -4,37 +4,37 @@
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="48"/>
    <source>Map Message</source>
-   <translation type="unfinished"/>
+   <translation>Повідомлення на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="49"/>
    <source>Displays messages on the map</source>
-   <translation type="unfinished"/>
+   <translation>Показує повідомлення на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="162"/>
    <source>Messages</source>
-   <translation type="unfinished"/>
+   <translation>Повідомлення</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="163"/>
    <source>Autofocus on the map</source>
-   <translation type="unfinished"/>
+   <translation>Автофокусування на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="164"/>
    <source>Show messages on the map</source>
-   <translation type="unfinished"/>
+   <translation>Показати повідомлення на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="165"/>
    <source>Enable animation in the messages on the map</source>
-   <translation type="unfinished"/>
+   <translation>Ввімкнути анімацію у повідомленнях на мапі</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmessage/mapmessage.cpp" line="294"/>
    <source>Subject</source>
-   <translation type="unfinished"/>
+   <translation>Тема</translation>
   </message>
  </context>
 </TS>

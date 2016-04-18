@@ -143,7 +143,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="161"/>
    <source>Del</source>
    <comment>Remove contact/group from roster</comment>
-   <translation type="unfinished"/>
+   <translation>Del</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="168"/>
@@ -153,17 +153,17 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="206"/>
    <source>Contacts list management</source>
-   <translation type="unfinished"/>
+   <translation>Управління списком контактів</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="207"/>
    <source>Automatically accept all subscription requests</source>
-   <translation type="unfinished"/>
+   <translation>Автоматично дозволяти запити на підписку</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="208"/>
    <source>Remove subscription when you was deleted from contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Видаляти підписку якщо вас видалено зі списку контактів</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="338"/>
@@ -218,7 +218,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="643"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1185"/>
    <source>Are you sure you wish to remove a contact &lt;b&gt;%1&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"/>
+   <translation>Ви впевнені, що бажаєте видалити контакт &lt;b&gt;%1&lt;/b&gt; з ростеру?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="657"/>
@@ -228,7 +228,7 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="658"/>
    <source>Are you sure you wish to subscribe for a contact &lt;b&gt;%1&lt;/b&gt; presence?</source>
-   <translation type="unfinished"/>
+   <translation>Ви впевнені, що хочете підписатись на отримання статусу присутності контакту &lt;b&gt;%1&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="672"/>
@@ -238,7 +238,7 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="673"/>
    <source>Are you sure you wish to unsubscribe from a contact &lt;b&gt;%1&lt;/b&gt; presence?</source>
-   <translation type="unfinished"/>
+   <translation>Ви впевнені, що хочете відписатися від отримання статусу присутності контакту &lt;b&gt;%1&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="776"/>
@@ -263,7 +263,7 @@
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="983"/>
    <source>Into this Group</source>
-   <translation type="unfinished"/>
+   <translation>У цю групу</translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="994"/>
@@ -324,7 +324,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1196"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1323"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакт&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакти&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1235"/>

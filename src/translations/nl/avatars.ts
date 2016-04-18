@@ -24,7 +24,7 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="97"/>
    <source>Avatar size</source>
-   <translation type="unfinished"/>
+   <translation>Avatar grootte</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="107"/>
@@ -57,14 +57,14 @@
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="42"/>
    <source>Avatar size</source>
-   <translation type="unfinished"/>
+   <translation>Avatar grootte</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="63"/>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="79"/>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="95"/>
    <source>px</source>
-   <translation type="unfinished"/>
+   <translation>px</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="111"/>
