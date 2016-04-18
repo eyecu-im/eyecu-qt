@@ -10,7 +10,7 @@ set packages=packages
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-rem goto build
+goto build
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
