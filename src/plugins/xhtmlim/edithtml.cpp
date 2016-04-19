@@ -1371,9 +1371,10 @@ void EditHtml::fontChanged(const QTextCharFormat &ACharFormat)
 	else
 		FActionTextStrikeout->setChecked(false);
 	if (ACharFormat.hasProperty(QTextFormat::FontFamily))
-		FActionTextCode->setChecked(ACharFormat.stringProperty(QTextFormat::FontFamily)=="Courier New,courier");
-	else
-		FActionTextCode->setChecked(false);
+	{
+		FActionTextCode->setChecked(XhtmlIm::isCode(FTextEdit->textCursor()));
+		FActionTextCode->setDisabled(XhtmlIm::isPreformatted(FTextEdit->textCursor()));
+	}
 }
 
 void EditHtml::selectForegroundColor()

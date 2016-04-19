@@ -828,7 +828,8 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			code->setData(ADR_CURSOR_POSITION, cursorPosition);
 			connect(code, SIGNAL(toggled(bool)), SLOT(onTextCode(bool)));
 			code->setCheckable(true);
-			code->setChecked(charFormat.fontFamily()=="Courier New,courier");
+			code->setChecked(isCode(cursor));
+			code->setDisabled(isPreformatted(cursor));
 			menu->addAction(code, AG_XHTMLIM_FONT);
 
 			// Color
@@ -1351,7 +1352,10 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_STRIKEOUT)
 				selectDecoration(messageEditWidget->textEdit(), cursor, DT_STRIKEOUT, !format.fontStrikeOut());
 			else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CODE)
-				setCode(messageEditWidget->textEdit(), cursor, format.fontFamily()!="Courier New,courier");
+			{
+				if (!isPreformatted(cursor))
+					setCode(messageEditWidget->textEdit(), cursor, format.fontFamily()!="Courier New,courier");
+			}
 		}
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_CAPSMIXED)
 			setCapitalization(messageEditWidget->textEdit(), getCursor(messageEditWidget->textEdit()), QFont::MixedCase);
@@ -1656,6 +1660,16 @@ void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 	ACursor.setBlockFormat(blockFmt);
 }
 
+bool XhtmlIm::isPreformatted(const QTextCursor &ACursor)
+{
+	return ACursor.block().blockFormat().nonBreakableLines() && QTextCursor(ACursor.block()).charFormat().fontFamily()=="Courier New,Courier";
+}
+
+bool XhtmlIm::isCode(const QTextCursor &ACursor)
+{
+	return !ACursor.block().blockFormat().nonBreakableLines() && QTextCursor(ACursor.block()).charFormat().fontFamily()=="Courier New,Courier";
+}
+
 void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 {
 	QTextCursor cursor = ATextEdit->textCursor();
@@ -1672,6 +1686,7 @@ void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 		if (AFormatType==FMT_PREFORMAT)
 		{
 			blockCharFormat.setFontFixedPitch(true);
+			blockCharFormat.setFontFamily("Courier New,courier");
 			blockFormat.setProperty(QTextFormat::BlockNonBreakableLines, true);
 		}
 		else
@@ -1680,7 +1695,7 @@ void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 			blockCharFormat.setFontWeight(QFont::Bold);
 		}
 
-		cursor.mergeBlockCharFormat(blockCharFormat);
+//		cursor.mergeBlockCharFormat(blockCharFormat);
 		mergeFormatOnSelection(cursor, blockCharFormat);
 		ATextEdit->setCurrentCharFormat(blockCharFormat);
 	}
@@ -1691,7 +1706,7 @@ void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 		properties.insert(QTextFormat::FontWeight);
 		clearBlockProperties(cursor.block(), properties);
 	}
-	cursor.setBlockCharFormat(blockCharFormat);
+//	cursor.setBlockCharFormat(blockCharFormat);
 	cursor.setBlockFormat(blockFormat);
 	cursor.endEditBlock();
 }
@@ -2033,7 +2048,8 @@ IMessageEditWidget *XhtmlIm::messageEditWidget(Action **AAction)
 
 int XhtmlIm::checkBlockFormat(const QTextCursor &ACursor)
 {
-	QTextCharFormat  charFormat = ACursor.blockCharFormat();
+//	QTextCharFormat  charFormat = ACursor.blockCharFormat();
+	QTextCharFormat  charFormat = QTextCursor(ACursor.block()).charFormat();
 	QTextBlockFormat format = ACursor.blockFormat();
 	int header=XmlTextDocumentParser::header(charFormat);
 	if (header)

@@ -70,6 +70,8 @@ public:
 	static void updateUnitsComboBox(QComboBox *AComboBox, int AValue);
 	static int checkBlockFormat(const QTextCursor &ACursor);
 	static void clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties);
+	static bool isPreformatted(const QTextCursor &ACursor);
+	static bool isCode(const QTextCursor &ACursor);
 
 	QTextCursor getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument=false, bool ASelect=true);
 	QTextCursor getCursor(QTextEdit *ATextEdit, int APosition, bool ASelectWholeDocument=false);
