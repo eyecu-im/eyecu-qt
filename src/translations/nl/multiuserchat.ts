@@ -1104,11 +1104,11 @@
   </message>
   <message>
    <source>Kick user %1 request was sent</source>
-   <translation type="unfinished"/>
+   <translation>Aanvraag om gebruiker %1 uit kanaal te schoppen</translation>
   </message>
   <message>
    <source>Failed to send kick user %1 request</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om aanvraag gebruiker %1 uit kanaal te schoppen</translation>
   </message>
   <message>
    <source>Ban user %1 request was sent</source>
@@ -1136,27 +1136,27 @@
   </message>
   <message>
    <source>Failed to send change subject request</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om aanvraag voor het veranderen van onderwerp te versturen</translation>
   </message>
   <message>
    <source>This conference is non-anonymous</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is nu niet anoniem</translation>
   </message>
   <message>
    <source>User %1 affiliation changed while not in the conference</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 z&apos;n aansluiting is veranderd terwijl hij niet aan conferentie deelnam</translation>
   </message>
   <message>
    <source>Conference now shows unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie toont nu niet beschikbare leden</translation>
   </message>
   <message>
    <source>Conference now does not show unavailable members</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie toont nu geen beschikbare leden</translation>
   </message>
   <message>
    <source>Conference configuration change has occurred</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie configuratie wijziging heeft plaatsgevonden</translation>
   </message>
   <message>
    <source>Conference logging is now enabled</source>
@@ -1180,7 +1180,7 @@
   </message>
   <message>
    <source>User %1 has been removed from the conference because of an affiliation change</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 wordt verwijderd van de conferentie vanwege een aansluitings verandering</translation>
   </message>
   <message>
    <source>User %1 has been removed from the conference because the conference has been changed to members-only</source>
@@ -1288,11 +1288,11 @@
   </message>
   <message>
    <source>Kick User - %1</source>
-   <translation type="unfinished"/>
+   <translation>Schop gebruiker - %1</translation>
   </message>
   <message>
    <source>Ban User - %1</source>
-   <translation type="unfinished"/>
+   <translation>Ban gebruiker - %1</translation>
   </message>
   <message>
    <source>Voice request from [%1]</source>
@@ -1300,51 +1300,51 @@
   </message>
   <message>
    <source>Private message from [%1]</source>
-   <translation type="unfinished"/>
+   <translation>Prive bericht van [%1]</translation>
   </message>
   <message>
    <source>Invitation was sent to user %1</source>
-   <translation type="unfinished"/>
+   <translation>Uitnodiging is verstuurd naar gebruiker %1</translation>
   </message>
   <message>
    <source>Failed to send invitation to user %1</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om uitnodiging te versturen naar gebruiker %1</translation>
   </message>
   <message>
    <source>Kick</source>
-   <translation type="unfinished"/>
+   <translation>Schop</translation>
   </message>
   <message>
    <source>Ban</source>
-   <translation type="unfinished"/>
+   <translation>Ban</translation>
   </message>
   <message>
    <source>Leaving conference...</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie verlaten</translation>
   </message>
   <message>
    <source>You have left the conference due to error: %1</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt conferentie verlaten door fout: %1</translation>
   </message>
   <message>
    <source>Required parameter &lt;room nick&gt; is not specified</source>
-   <translation type="unfinished"/>
+   <translation>Vereiste parameter &lt;kamer bijnaam&gt; is niet opgegeven</translation>
   </message>
   <message>
    <source>Required parameter &lt;user nick&gt; is not specified</source>
-   <translation type="unfinished"/>
+   <translation>Vereiste parameter &lt;gebruiker bijnaam&gt; is niet opgegeven</translation>
   </message>
   <message>
    <source>Required parameter &lt;user jid&gt; is not specified</source>
-   <translation type="unfinished"/>
+   <translation>Vereiste parameter &lt;gebruiker jid&gt; is niet opgegeven</translation>
   </message>
   <message>
    <source>Required parameter &lt;room name&gt; is not specified</source>
-   <translation type="unfinished"/>
+   <translation>Vereiste parameter &lt;kamer naam&gt; is niet opgegeven</translation>
   </message>
   <message>
    <source>Required parameter &lt;new nick&gt; is not specified</source>
-   <translation type="unfinished"/>
+   <translation>Vereiste parameter &lt;nieuwe bijnaam&gt; is niet opgegeven</translation>
   </message>
   <message>
    <source>Change Nickname</source>
@@ -1368,27 +1368,27 @@
   </message>
   <message>
    <source>You have been kicked from this conference, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Je bent uit deze conferentie geschopt, je mag %1 of %2</translation>
   </message>
   <message>
    <source>return</source>
-   <translation type="unfinished"/>
+   <translation>Terug</translation>
   </message>
   <message>
    <source>exit</source>
-   <translation type="unfinished"/>
+   <translation>Uit</translation>
   </message>
   <message>
    <source>You have been banned in this conference, you can not return only %1</source>
-   <translation type="unfinished"/>
+   <translation>Je bent verbannen voor deze conferentie, je kan alleen niet terugkeren %1</translation>
   </message>
   <message>
    <source>You have left the conference: %1</source>
-   <translation type="unfinished"/>
+   <translation>Je hebt de conferentie verlaten: %1</translation>
   </message>
   <message>
    <source>Nickname &apos;%1&apos; is in use or registered by another user, you may %2 or %3</source>
-   <translation type="unfinished"/>
+   <translation>Bijnaam &apos;%1&apos; is in gebruik of geregistreerd door een andere gebruiker, je mag %2 of %3</translation>
   </message>
   <message>
    <source>change nick</source>
@@ -1396,7 +1396,7 @@
   </message>
   <message>
    <source>This conference is members only but you are not one of them, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is alleen voor leden en jij bent dat niet, je mag %1 of %2</translation>
   </message>
   <message>
    <source>retry</source>
@@ -1416,19 +1416,19 @@
   </message>
   <message>
    <source>Failed to change your nickname to %1: %2</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om bijnaam te veranderen naar %1: %2</translation>
   </message>
   <message>
    <source>%1 changed nickname to %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 verander bijnaam naar %2</translation>
   </message>
   <message>
    <source> by moderator %1</source>
-   <translation type="unfinished"/>
+   <translation>bij moderator %1</translation>
   </message>
   <message>
    <source>Your nickname changed to %1</source>
-   <translation type="unfinished"/>
+   <translation>Je bijnaam is veranderd naar %1</translation>
   </message>
   <message>
    <source>Change Password</source>
@@ -1436,7 +1436,7 @@
   </message>
   <message>
    <source>This conference is password protected and you provided incorrect password, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is met paswoord beveiligd en jij geeft een verkeerd paswoord op, je mag %1 of %2</translation>
   </message>
   <message>
    <source>change password</source>
@@ -1452,11 +1452,11 @@
   </message>
   <message>
    <source>Edit Users Lists</source>
-   <translation type="unfinished"/>
+   <translation>Bewerk gebruikers lijsten</translation>
   </message>
   <message>
    <source>Show participants list</source>
-   <translation type="unfinished"/>
+   <translation>Toon deelnemers lijst</translation>
   </message>
   <message numerus="yes">
    <source>You invited %1 and %n other contact(s) to this conference. %2</source>
@@ -1503,11 +1503,11 @@
   <name>RoomPage</name>
   <message>
    <source>Conference name</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie naam</translation>
   </message>
   <message>
    <source>Search conferences</source>
-   <translation type="unfinished"/>
+   <translation>Zoek conferenties</translation>
   </message>
   <message>
    <source>Title</source>
@@ -1523,7 +1523,7 @@
   </message>
   <message>
    <source>Loading list of conferences...</source>
-   <translation type="unfinished"/>
+   <translation>Laad de lijst van conferenties...</translation>
   </message>
   <message>
    <source>Failed to load list of conferences</source>
@@ -1531,19 +1531,19 @@
   </message>
   <message>
    <source>Create the conference:</source>
-   <translation type="unfinished"/>
+   <translation>Maak een conferentie:</translation>
   </message>
   <message>
    <source>Enter unique name for the new conference</source>
-   <translation type="unfinished"/>
+   <translation>Voer een unieke naam in voor de conferentie</translation>
   </message>
   <message>
    <source>Loading conference description...</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie omschrijving laden...</translation>
   </message>
   <message>
    <source>Checking conference existence...</source>
-   <translation type="unfinished"/>
+   <translation>Controleer bestaan van conferentie...</translation>
   </message>
   <message>
    <source>Failed to load conference description</source>
@@ -1575,7 +1575,7 @@
   </message>
   <message>
    <source>Conference description is not available or invalid</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie omschrijving is niet beschikbaar of ongeldig</translation>
   </message>
  </context>
  <context>
@@ -1602,11 +1602,11 @@
   </message>
   <message>
    <source>Select account, server and service to join to the conference</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een account, server en service om aan conferentie deel te nemen</translation>
   </message>
   <message>
    <source>Select the account to join to the conference</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een account om aan conferentie deel te nemen</translation>
   </message>
   <message>
    <source>You can join to the conference located at almost any Jabber-server, select one from the list or add your own</source>
@@ -1622,7 +1622,7 @@
   </message>
   <message>
    <source>Select the account to create a conference</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een account om een conferentie  aan te maken</translation>
   </message>
   <message>
    <source>You can create a conference at almost any Jabber-server, select one from the list or add your own</source>
@@ -1642,15 +1642,15 @@
   </message>
   <message>
    <source>Failed to load list of services</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om serviceslijst te laden</translation>
   </message>
   <message>
    <source>Account or server is not selected</source>
-   <translation type="unfinished"/>
+   <translation>Account of server is niet geselecteerd</translation>
   </message>
   <message>
    <source>Append Server</source>
-   <translation type="unfinished"/>
+   <translation>Server toevoegen</translation>
   </message>
   <message>
    <source>Enter server domain:</source>
