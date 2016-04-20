@@ -7,7 +7,6 @@
 #include <QFontDialog>
 #include <QBuffer>
 #include <XmlTextDocumentParser>
-
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/xhtmlicons.h>
@@ -758,7 +757,7 @@ void EditHtml::onInsertLink()
 		{
 			QTextCharFormat charFormat=charFmtCurrent;
 			charFormat.setAnchor(true);
-			charFormat.setAnchorHref(addLink->url().toEncoded());
+			charFormat.setAnchorHref(addLink->url().toString());
 			charFormat.setFontUnderline(true);
 			charFormat.setForeground(QBrush(Qt::blue));
 			cursor.beginEditBlock();
@@ -1022,60 +1021,6 @@ void EditHtml::onSetFormat()
 	if (action!=FMenuFormat->menuAction())
 		FActionLastFormat=action;
 	FXhtmlIm->setFormat(FTextEdit, action->data(ADR_FORMATTING_TYPE).toInt());
-/*
-	int formatType = action->data(ADR_FORMATTING_TYPE).toInt();
-	QTextCursor cursor = FXhtmlIm->getCursor(FTextEdit, true, false);	
-	int currentFormatType=XhtmlIm::checkBlockFormat(cursor);
-
-	cursor.beginEditBlock();	
-	QTextCharFormat blockCharFormat;
-	QTextBlockFormat blockFormat;
-
-	if (currentFormatType!=formatType)
-	{
-		if (formatType==FMT_PREFORMAT)
-		{
-			blockCharFormat.setFontFixedPitch(true);
-			blockFormat.setProperty(QTextFormat::BlockNonBreakableLines, true);
-		}
-		else
-		{
-			blockCharFormat.setProperty(QTextFormat::FontSizeAdjustment, 4-formatType);
-			blockCharFormat.setFontWeight(QFont::Bold);
-		}
-
-		int first, last;
-		if (cursor.position()<cursor.anchor())
-		{
-			first=cursor.position();
-			last=cursor.anchor();
-		}
-		else
-		{
-			first=cursor.anchor();
-			last=cursor.position();
-		}
-		cursor.setPosition(first);
-		cursor.movePosition(QTextCursor::StartOfBlock);
-		QTextBlock block;
-		for (block=cursor.block(); !block.contains(last); block=block.next());
-
-		cursor.setPosition(block.position(), QTextCursor::KeepAnchor);
-		cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-		cursor.mergeCharFormat(blockCharFormat);
-	}
-	else
-	{
-		QSet<QTextFormat::Property> properties;
-		properties.insert(QTextFormat::FontSizeAdjustment);
-		properties.insert(QTextFormat::FontWeight);
-		XhtmlIm::clearBlockProperties(cursor.block(), properties);
-	}
-	cursor.setBlockCharFormat(blockCharFormat);
-	cursor.setBlockFormat(blockFormat);
-	cursor.endEditBlock();
-	updateCurrentBlock(cursor);
-*/
 }
 
 void EditHtml::onInsertSpecial()
@@ -1370,11 +1315,11 @@ void EditHtml::fontChanged(const QTextCharFormat &ACharFormat)
 		FActionTextStrikeout->setChecked(ACharFormat.boolProperty(QTextFormat::FontStrikeOut));
 	else
 		FActionTextStrikeout->setChecked(false);
-	if (ACharFormat.hasProperty(QTextFormat::FontFamily))
-	{
+//	if (ACharFormat.hasProperty(QTextFormat::FontFamily))
+//	{
 		FActionTextCode->setChecked(XhtmlIm::isCode(FTextEdit->textCursor()));
 		FActionTextCode->setDisabled(XhtmlIm::isPreformatted(FTextEdit->textCursor()));
-	}
+//	}
 }
 
 void EditHtml::selectForegroundColor()
@@ -1478,6 +1423,7 @@ void EditHtml::updateCurrentBlock(const QTextCursor &ACursor)
 			FMenuAlign->setIcon(FActionLastAlign->icon());
 			FMenuAlign->menuAction()->setChecked(false);
 		}
+		FActionTextCode->setDisabled(XhtmlIm::isPreformatted(ACursor));
 	}
 }
 

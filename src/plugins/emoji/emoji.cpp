@@ -879,7 +879,6 @@ void Emoji::onSelectIconMenuSelected(QString AIconKey, const QString &AIconText)
 					editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
 				QTextImageFormat imageFormat;
 				imageFormat.setName(url.toString());
-				imageFormat.setToolTip(AIconText);
 				cursor.insertImage(imageFormat);
 
 				cursor.endEditBlock();

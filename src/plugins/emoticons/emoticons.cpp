@@ -576,8 +576,6 @@ void Emoticons::onSelectIconMenuSelected(const QString &ASubStorage, const QStri
 // *** <<< eyeCU <<< ***
                     QTextImageFormat imageFormat;
                     imageFormat.setName(url.toString());
-                    imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, AIconKey);
-                    imageFormat.setProperty(QTextCharFormat::TextToolTip, AIconKey);
                     cursor.insertImage(imageFormat);
 // *** >>> eyeCU >>> ***
 				}

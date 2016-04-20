@@ -55,7 +55,7 @@ void AddLink::onButtonClicked(QAbstractButton *AButton)
 	{
 		case QDialogButtonBox::YesRole:
 			FDescription = !ui->tedDesc->toPlainText().isEmpty() ? ui->tedDesc->toPlainText() : "";
-			FHref = ui->ledPath->text();
+			FHref = QUrl::fromUserInput(ui->ledPath->text());
 			done(Add);
 			break;
 		case QDialogButtonBox::NoRole:

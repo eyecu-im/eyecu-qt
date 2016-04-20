@@ -146,18 +146,19 @@
     <object mime="image/gif">aggressive.gif</object>
   </icon>
   <icon>
-    <text>*dntknw*</text> 
-    <text>*DONT_KNOW*</text> 
-    <text>*UNKNOWN*</text> 
+    <text>:dont_know:</text>
+    <text>*DONT_KNOW*</text>
+    <text>:dntknw:</text>
+    <text>*DNTKNW*</text>
+    <text>:unknown:</text>
+    <text>*UNKNOWN*</text>
     <text>:-$</text> 
     <object mime="image/gif">unknw.gif</object>
   </icon>
   <icon>
     <text>8-|</text> 
     <text>8|</text> 
-    <text>*ermm*</text> 
-    <text>ermm</text> 
-    <text>ERMM</text> 
+    <text>:ermm:</text> 
     <text>*ERRM*</text> 
     <object mime="image/gif">fool.gif</object>
   </icon>
@@ -181,7 +182,7 @@
   </icon>
   <icon>
     <text>*NIRVANA*</text>
-    <text>*nirvana*</text>
+    <text>:nirvana:</text>
     <text>X-(</text>
     <text>x-(</text>
     <text>X(</text>
@@ -301,7 +302,6 @@
   <icon>
     <text>*STOP*</text>
     <text>*stop*</text>
-    <text>STOP</text>
     <object mime="image/gif">stop.gif</object>
   </icon>
     <icon>
@@ -712,7 +712,6 @@
   </icon>
   <icon>
     <text>*HAT*</text>
-    <text>&#xD83C;&#xDFA9;</text>
     <object mime="image/gif">hat.gif</object>
   </icon>
   <icon>
@@ -961,11 +960,8 @@
     <object mime="image/gif">smoking.gif</object>
   </icon>
   <icon>
-    <text>:lol:</text>
-    <text>:LOL:</text>
-    <text>LOL</text>
-    <text>lol</text>
     <text>*LOL*</text>
+    <text>:lol:</text>    
     <object mime="image/gif">lol.gif</object>
   </icon>
   <icon>
@@ -981,9 +977,8 @@
   </icon>
   <icon>
     <text>:bat:</text>
+    <text>:vampire:</text>    
     <text>*VAMPIRE*</text>
-    <text>*vampire*</text>
-    <text>:VAMPIRE:</text>
     <text>&gt;:-[~~</text>
     <text>&gt;:[~~</text>
     <text>&gt;:-[~</text>

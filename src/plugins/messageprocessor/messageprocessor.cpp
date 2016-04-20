@@ -125,9 +125,8 @@ bool MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 			QTextCharFormat linkFormat = cursor.charFormat();
 			if (!linkFormat.isAnchor())
 			{
-				QUrl link = QUrl::fromUserInput(cursor.selectedText());
 				linkFormat.setAnchor(true);
-				linkFormat.setAnchorHref(link.toEncoded());
+				linkFormat.setAnchorHref(QUrl::fromUserInput(cursor.selectedText()).toString());
 				cursor.setCharFormat(linkFormat);
 				changed = true;
 			}

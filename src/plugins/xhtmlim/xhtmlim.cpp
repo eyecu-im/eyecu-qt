@@ -12,7 +12,6 @@
 #include <QMimeData>
 #include <QStandardPaths>
 #endif
-
 #include <interfaces/iurlprocessor.h>
 
 #include <definitions/menuicons.h>
@@ -125,10 +124,7 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		FMultiUserChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
 		if (FMultiUserChatManager)
-		{
-//			connect(FMultiUserChatManager->instance(),SIGNAL(editWidgetCreated(IMessageEditWidget *)),SLOT(onEditWidgetCreated(IMessageEditWidget *)));
 			connect(FMultiUserChatManager->instance(),SIGNAL(multiChatWindowCreated(IMultiUserChatWindow *)),SLOT(onMultiChatWindowCreated(IMultiUserChatWindow *)));
-		}
 	}
 
 	plugin = APluginManager->pluginInterface("IUrlProcessor").value(0);
@@ -1662,7 +1658,7 @@ void XhtmlIm::changeIndent(QTextCursor ACursor, bool AIncrease)
 
 bool XhtmlIm::isPreformatted(const QTextCursor &ACursor)
 {
-	return ACursor.block().blockFormat().nonBreakableLines() && QTextCursor(ACursor.block()).charFormat().fontFamily()=="Courier New,Courier";
+	return ACursor.blockFormat().nonBreakableLines();
 }
 
 bool XhtmlIm::isCode(const QTextCursor &ACursor)
@@ -1695,18 +1691,21 @@ void XhtmlIm::setFormat(QTextEdit *ATextEdit, int AFormatType, int APosition)
 			blockCharFormat.setFontWeight(QFont::Bold);
 		}
 
-//		cursor.mergeBlockCharFormat(blockCharFormat);
 		mergeFormatOnSelection(cursor, blockCharFormat);
 		ATextEdit->setCurrentCharFormat(blockCharFormat);
 	}
 	else
 	{
 		QSet<QTextFormat::Property> properties;
-		properties.insert(QTextFormat::FontSizeAdjustment);
-		properties.insert(QTextFormat::FontWeight);
-		clearBlockProperties(cursor.block(), properties);
+		if (AFormatType==FMT_PREFORMAT)
+			properties.insert(QTextFormat::FontFamily);
+		else
+		{
+			properties.insert(QTextFormat::FontSizeAdjustment);
+			properties.insert(QTextFormat::FontWeight);
+		}
+		clearBlockProperties(ATextEdit, cursor.blockNumber(), properties);
 	}
-//	cursor.setBlockCharFormat(blockCharFormat);
 	cursor.setBlockFormat(blockFormat);
 	cursor.endEditBlock();
 }
@@ -2048,27 +2047,34 @@ IMessageEditWidget *XhtmlIm::messageEditWidget(Action **AAction)
 
 int XhtmlIm::checkBlockFormat(const QTextCursor &ACursor)
 {
-//	QTextCharFormat  charFormat = ACursor.blockCharFormat();
 	QTextCharFormat  charFormat = QTextCursor(ACursor.block()).charFormat();
 	QTextBlockFormat format = ACursor.blockFormat();
 	int header=XmlTextDocumentParser::header(charFormat);
 	if (header)
 		return header;
-	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines) && charFormat.boolProperty(QTextFormat::FontFixedPitch))
+	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines))
 		return FMT_PREFORMAT;
 	return FMT_NORMAL;
 }
 
-void XhtmlIm::clearBlockProperties(const QTextBlock &ATextBlock, const QSet<QTextFormat::Property> &AProperties)
+void XhtmlIm::clearBlockProperties(QTextEdit *ATextEdit, int ABlockNumber, const QSet<QTextFormat::Property> &AProperties)
 {
-	QTextCursor cursor(ATextBlock);
-	for (QTextBlock::iterator it=ATextBlock.begin(); it!=ATextBlock.end(); it++)
+	QTextBlock block = ATextEdit->document()->findBlockByNumber(ABlockNumber);
+	QTextCursor cursor(block);
+	if (block.begin()==block.end())
+	{
+		QTextCharFormat charFormat = ATextEdit->currentCharFormat();
+		for (QSet<QTextFormat::Property>::const_iterator it=AProperties.begin(); it!=AProperties.end(); it++)
+			charFormat.clearProperty(*it);
+		ATextEdit->setCurrentCharFormat(charFormat);
+	}
+	else for (QTextBlock::iterator it=block.begin(); it!=block.end(); it++)
 	{
 		QTextFragment fragment=it.fragment();
 		// Select fragment
 		cursor.setPosition(fragment.position());
 		cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
-		QTextCharFormat charFormat=fragment.charFormat();
+		QTextCharFormat charFormat = fragment.charFormat();
 		for (QSet<QTextFormat::Property>::const_iterator it=AProperties.begin(); it!=AProperties.end(); it++)
 			charFormat.clearProperty(*it);
 		cursor.setCharFormat(charFormat);
