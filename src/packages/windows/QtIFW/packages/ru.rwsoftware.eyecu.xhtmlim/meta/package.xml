@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>XHTML-IM</DisplayName>
     <Description>Allows to use rich text formatting in messages</Description>
-    <Version>1.3.8</Version>
-    <ReleaseDate>2016-04-14</ReleaseDate>
+    <Version>1.3.9</Version>
+    <ReleaseDate>2016-04-20</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.xhtmlim</Name>
-    <UpdateText>Allow using Rich Text Formatting in Multiuser Chat</UpdateText>
+    <UpdateText>Processing of block formatting fixed. Image and URL processing fixed.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.menuicons.edit</Dependencies>
     <SortingPriority>30</SortingPriority>
     <Default>true</Default>

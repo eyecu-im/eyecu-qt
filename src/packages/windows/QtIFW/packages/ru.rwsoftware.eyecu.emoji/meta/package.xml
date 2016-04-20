@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.6</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
+    <Version>1.3.7</Version>
+    <ReleaseDate>2016-04-20</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+    <UpdateText>Do not add title to images inserted into chat</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
