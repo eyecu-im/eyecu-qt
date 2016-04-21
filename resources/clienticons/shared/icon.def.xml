@@ -366,6 +366,21 @@
     <object mime="image/png">poezio.png</object>
   </icon>
   <icon>
+    <key>http://sleekxmpp.com/ver/1.3.1</key>
+    <client>Poezio</client>
+    <object mime="image/png">poezio.png</object>
+  </icon>
+  <icon>
+    <key>http://slixmpp.com/ver/1.0</key>
+    <client>Poezio</client>
+    <object mime="image/png">poezio.png</object>
+  </icon>
+  <icon>
+    <key>http://slixmpp.com/ver/1.1</key>
+    <client>Poezio</client>
+    <object mime="image/png">poezio.png</object>
+  </icon>      
+  <icon>
     <key>-Z-r</key>
     <client>SieJC</client>
     <object mime="image/png">siejc.png</object>
