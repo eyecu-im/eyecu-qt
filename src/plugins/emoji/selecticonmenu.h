@@ -33,7 +33,7 @@ protected slots:
 	void onCategorySwitched(int ACategory);
 protected:
 	void updateRecentActions(const QString &AColor);
-	static QString typeUcs4(const QString &AText);
+//	static QString typeUcs4(const QString &AText);
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;

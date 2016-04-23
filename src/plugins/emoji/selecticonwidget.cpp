@@ -3,7 +3,6 @@
 #include <QCursor>
 #include <QToolTip>
 #include <QTextDocument>
-
 #include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
@@ -21,7 +20,7 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 	FLayout->setMargin(2);
 	FLayout->setHorizontalSpacing(3);
 	FLayout->setVerticalSpacing(3);
-	createLabels(QString());
+	createLabels();
 }
 
 SelectIconWidget::~SelectIconWidget()
@@ -50,9 +49,8 @@ void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
 	}
 }
 
-void SelectIconWidget::createLabels(const QString &AColor)
+void SelectIconWidget::createLabels()
 {
-	Q_UNUSED(AColor)
 	uint row =0;
 	uint column = 0;
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
@@ -70,7 +68,6 @@ void SelectIconWidget::createLabels(const QString &AColor)
 			label->setPixmap(QPixmap(iconSize));
 			label->setToolTip((*it).name);
 			FKeyByLabel.insert(label, (*it).unicode);
-
 			FLayout->addWidget(label, row, column);
 			if ((*it).colored)
 				FHasColored=true;

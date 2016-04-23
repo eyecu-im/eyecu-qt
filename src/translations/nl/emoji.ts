@@ -13,33 +13,54 @@
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
-   <source>People</source>
-   <translation>Mensen</translation>
+   <source>Smileys &amp; People</source>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <source>Animals &amp; Nature</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <source>Food &amp; Drink</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <source>Travel &amp; Places</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>People</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Symbols</source>
    <translation>Symbolen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+   <source>Activities</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Flags</source>
    <translation>Vlaggen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Activity</source>
-   <translation>Activiteit</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Nature</source>
-   <translation>Natuur</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Travel</source>
-   <translation>Reis</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
@@ -47,9 +68,8 @@
    <translation>Objecten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Foods</source>
-   <translation>Voedsel</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
@@ -94,23 +114,23 @@
  <context>
   <name>SelectIconMenu</name>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
    <translation>Fitzpatrick type %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="149"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
    <source>Skin color</source>
    <translation>Skin kleur</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="116"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>
    <source>Default</source>
    <translation>Standaard</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
    <source>1 or 2</source>
    <translation>1 of 2</translation>
   </message>

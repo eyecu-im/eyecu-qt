@@ -38,7 +38,7 @@
   <message>
    <location filename="../../plugins/vcard/vcarddialog.cpp" line="66"/>
    <source>Service unavailable</source>
-   <translation>Service niet beschikbaar</translation>
+   <translation>Dienst niet beschikbaar</translation>
   </message>
   <message>
    <location filename="../../plugins/vcard/vcarddialog.cpp" line="264"/>

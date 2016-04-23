@@ -21,13 +21,14 @@ class IEmoji: public IEmoticons
 public:
 	enum Category {
 		People,
-		Symbols,
-		Flags,
-		Activity,
 		Nature,
+		Foods,
 		Travel,
+		Symbols,
+		Activity,
 		Objects,
-		Foods
+		Flags,
+		Last
 	};
 
 	enum SkinColor {

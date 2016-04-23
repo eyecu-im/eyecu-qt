@@ -280,7 +280,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="600"/>
    <source>Service unavailable</source>
-   <translation>Service onbereikbaar</translation>
+   <translation>dienst onbereikbaar</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="601"/>

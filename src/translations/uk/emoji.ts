@@ -13,33 +13,54 @@
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
-   <source>People</source>
-   <translation>Люди</translation>
+   <source>Smileys &amp; People</source>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <source>Animals &amp; Nature</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <source>Food &amp; Drink</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <source>Travel &amp; Places</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>People</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Symbols</source>
    <translation>Символи</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+   <source>Activities</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Flags</source>
    <translation>Прапори</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Activity</source>
-   <translation>Активність</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Nature</source>
-   <translation>Природа</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Travel</source>
-   <translation>Подорож</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
@@ -47,9 +68,8 @@
    <translation>Об&apos;єкти</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Foods</source>
-   <translation>Їжа</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
@@ -94,23 +114,23 @@
  <context>
   <name>SelectIconMenu</name>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
    <translation>Fitzpatrick тип %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="149"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
    <source>Skin color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="116"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>
    <source>Default</source>
    <translation>За замовчанням</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="134"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
    <source>1 or 2</source>
    <translation>1 або 2</translation>
   </message>

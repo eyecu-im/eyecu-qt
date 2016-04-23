@@ -23,7 +23,7 @@ signals:
 	void iconSelected(const QString &AIconKey, const QString &AIconText);
 	void hasColoredChanged(bool AHasColored);
 protected:
-	void createLabels(const QString &AColor);
+	void createLabels();
 protected:
 // QObject interface
 	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);

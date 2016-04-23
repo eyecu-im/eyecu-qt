@@ -58,7 +58,7 @@
   <message>
    <location filename="../../plugins/commands/commands.cpp" line="45"/>
    <source>Allows to perform special commands provided by various services</source>
-   <translation>Maakt het mogelijk om speciale opdrachten door verschillende services te laten uitvoeren</translation>
+   <translation>Maakt het mogelijk om speciale opdrachten door verschillende diensten te laten uitvoeren</translation>
   </message>
   <message>
    <location filename="../../plugins/commands/commands.cpp" line="114"/>
@@ -108,7 +108,7 @@
   <message>
    <location filename="../../plugins/commands/commands.cpp" line="544"/>
    <source>Supports the running or performing of the special services commands</source>
-   <translation>Ondersteunt het functioneren of het uitvoeren van de speciale services opdrachten</translation>
+   <translation>Ondersteunt het functioneren of het uitvoeren van de speciale dienst opdrachten</translation>
   </message>
  </context>
 </TS>

@@ -80,7 +80,7 @@
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="48"/>
    <source>Allows to register on the Jabber servers and services</source>
-   <translation>Toestaan om te registreren op de Jabber servers en services</translation>
+   <translation>Toestaan om te registreren op de Jabber servers en diensten</translation>
   </message>
   <message>
    <location filename="../../plugins/registration/registration.cpp" line="113"/>

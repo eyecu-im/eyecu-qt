@@ -83,23 +83,23 @@ bool Emoji::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Emoji::initObjects()
 {
-	FCategoryNames.insert(People, tr("People"));
+	FCategoryNames.insert(People, tr("Smileys & People"));
+	FCategoryNames.insert(Nature, tr("Animals & Nature"));
+	FCategoryNames.insert(Foods, tr("Food & Drink"));
+	FCategoryNames.insert(Travel, tr("Travel & Places"));
 	FCategoryNames.insert(Symbols, tr("Symbols"));
-	FCategoryNames.insert(Flags, tr("Flags"));
-	FCategoryNames.insert(Activity, tr("Activity"));
-	FCategoryNames.insert(Nature, tr("Nature"));
-	FCategoryNames.insert(Travel, tr("Travel"));
+	FCategoryNames.insert(Activity, tr("Activities"));
 	FCategoryNames.insert(Objects, tr("Objects"));
-	FCategoryNames.insert(Foods, tr("Foods"));
+	FCategoryNames.insert(Flags, tr("Flags"));
 
 	FCategoryIDs.insert(People, "people");
-	FCategoryIDs.insert(Symbols, "symbols");
-	FCategoryIDs.insert(Flags, "flags");
-	FCategoryIDs.insert(Activity, "activity");
 	FCategoryIDs.insert(Nature, "nature");
-	FCategoryIDs.insert(Travel, "travel");
-	FCategoryIDs.insert(Objects, "objects");
 	FCategoryIDs.insert(Foods, "food");
+	FCategoryIDs.insert(Travel, "travel");
+	FCategoryIDs.insert(Symbols, "symbols");
+	FCategoryIDs.insert(Activity, "activity");
+	FCategoryIDs.insert(Objects, "objects");
+	FCategoryIDs.insert(Flags, "flags");
 
 	if (FMessageProcessor)
 		FMessageProcessor->insertMessageWriter(MWO_EMOJI,this);
@@ -645,13 +645,14 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 									FUrlByKey[(*itd).toInt()].insert(unicode, url);
 									FKeyByUrl.insertMulti(url.toString(), unicode);
 									createTreeItem(unicode, url);
-									FCategoryCount[itc.key()]++;
+
 								}
 							}
+							FCategoryCount[itc.key()]++;
 							FUrlByKey[(*itd).toInt()].insert((*it).unicode, url);
 							FKeyByUrl.insertMulti(url.toString(), (*it).unicode);
 							createTreeItem((*it).unicode, url);
-							(*it).present = true;
+							(*it).present = true;							
 						}
 						else
 							(*it).present = false;

@@ -177,7 +177,7 @@
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="932"/>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1230"/>
    <source>Service Discovery</source>
-   <translation>Servicedetectie</translation>
+   <translation>Dienstdetectie</translation>
   </message>
   <message>
    <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="81"/>

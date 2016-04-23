@@ -15,43 +15,43 @@
   </message>
   <message>
    <location line="86" filename="../../plugins/emoji/emoji.cpp"/>
-   <source>People</source>
-   <translation>People</translation>
+   <source>Smileys &amp; People</source>
+   <translation>Smileys &amp; People</translation>
   </message>
   <message>
    <location line="87" filename="../../plugins/emoji/emoji.cpp"/>
+   <source>Animals &amp; Nature</source>
+   <translation>Animals &amp; Nature</translation>
+  </message>
+  <message>
+   <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
+   <source>Food &amp; Drink</source>
+   <translation>Food &amp; Drink</translation>
+  </message>
+  <message>
+   <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
+   <source>Travel &amp; Places</source>
+   <translation>Travel &amp; Places</translation>
+  </message>
+  <message>
+   <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Symbols</source>
    <translation>Symbols</translation>
   </message>
   <message>
-   <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
+   <location line="91" filename="../../plugins/emoji/emoji.cpp"/>
+   <source>Activities</source>
+   <translation>Activities</translation>
+  </message>
+  <message>
+   <location line="93" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Flags</source>
    <translation>Flags</translation>
-  </message>
-  <message>
-   <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
-   <source>Activity</source>
-   <translation>Activity</translation>
-  </message>
-  <message>
-   <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
-   <source>Nature</source>
-   <translation>Nature</translation>
-  </message>
-  <message>
-   <location line="91" filename="../../plugins/emoji/emoji.cpp"/>
-   <source>Travel</source>
-   <translation>Travel</translation>
   </message>
   <message>
    <location line="92" filename="../../plugins/emoji/emoji.cpp"/>
    <source>Objects</source>
    <translation>Objects</translation>
-  </message>
-  <message>
-   <location line="93" filename="../../plugins/emoji/emoji.cpp"/>
-   <source>Foods</source>
-   <translation>Foods</translation>
   </message>
   <message>
    <location line="165" filename="../../plugins/emoji/emoji.cpp"/>
@@ -99,23 +99,23 @@
  <context>
   <name>SelectIconMenu</name>
   <message>
-   <location line="134" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <location line="129" filename="../../plugins/emoji/selecticonmenu.cpp"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
    <translation>Fitzpatrick type %1</translation>
   </message>
   <message>
-   <location line="149" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <location line="143" filename="../../plugins/emoji/selecticonmenu.cpp"/>
    <source>Skin color</source>
    <translation>Skin color</translation>
   </message>
   <message>
-   <location line="116" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <location line="112" filename="../../plugins/emoji/selecticonmenu.cpp"/>
    <source>Default</source>
    <translation>Default</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/emoji/selecticonmenu.cpp"/>
+   <location line="129" filename="../../plugins/emoji/selecticonmenu.cpp"/>
    <source>1 or 2</source>
    <translation>1 or 2</translation>
   </message>

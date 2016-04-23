@@ -350,7 +350,7 @@
   </message>
   <message>
    <source>Conference service &apos;%1&apos; is not available or does not exists</source>
-   <translation>Conferentie service &apos;%1&apos; is niet beschikbaar of bestaat niet</translation>
+   <translation>Conferentie dienst &apos;%1&apos; is niet beschikbaar of bestaat niet</translation>
   </message>
   <message>
    <source>Failed to check conference existence: %1</source>
@@ -669,7 +669,7 @@
   </message>
   <message>
    <source>A room that cannot be found by any user through normal means such as searching and service discovery</source>
-   <translation>Een kamer die niet gevonden kan worden door elke gebruiker via normale middelen, zoals het zoeken en service discovery</translation>
+   <translation>Een kamer die niet gevonden kan worden door elke gebruiker via normale middelen, zoals het zoeken en dienst discovery</translation>
   </message>
   <message>
    <source>Members-only room</source>
@@ -725,7 +725,7 @@
   </message>
   <message>
    <source>A room that can be found by any user through normal means such as searching and service discovery</source>
-   <translation>Een kamer die gevonden kan worden door elke gebruiker via de normale middelen, zoals het zoeken en service discovery</translation>
+   <translation>Een kamer die gevonden kan worden door elke gebruiker via de normale middelen, zoals het zoeken en dienst discovery</translation>
   </message>
   <message>
    <source>Semi-anonymous room</source>
@@ -1184,11 +1184,11 @@
   </message>
   <message>
    <source>User %1 has been removed from the conference because the conference has been changed to members-only</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 is verwijderd van de conferentie omdat de conferentie is veranderd naar status alleen leden</translation>
   </message>
   <message>
    <source>User %1 is being removed from the conference because of a system shutdown</source>
-   <translation type="unfinished"/>
+   <translation>Gebruiker %1 is verwijderd van conferentie door afsluiten systeem</translation>
   </message>
   <message>
    <source>%1 - Private Chat</source>
@@ -1404,15 +1404,15 @@
   </message>
   <message>
    <source>This conference does not exists or does not configured yet by owner, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie bestaat niet of is niet geconfigureerd door eigenaar, je mag %1 of %2</translation>
   </message>
   <message>
    <source>This conference does not exists and creation is restricted, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie bestaat niet en het creëren is beperkt, je mag %1 of %2</translation>
   </message>
   <message>
    <source>The maximum number of users has been reached, you may %1 or %2</source>
-   <translation type="unfinished"/>
+   <translation>Het maximale aantal gebruikers is bereikt, je mag %1 of %2</translation>
   </message>
   <message>
    <source>Failed to change your nickname to %1: %2</source>
@@ -1460,11 +1460,11 @@
   </message>
   <message numerus="yes">
    <source>You invited %1 and %n other contact(s) to this conference. %2</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Je nodigd %1 en %n andere contacten uit voor deze conferentie. %2</numerusform><numerusform>Je nodigde %1 en %n andere contacten uit voor deze conferentie. %2</numerusform></translation>
   </message>
   <message>
    <source>You invited %1 to this conference. %2</source>
-   <translation type="unfinished"/>
+   <translation>Je nodigd %1 uit voor deze conferentie. %2</translation>
   </message>
   <message>
    <source>Clear Window</source>
@@ -1488,15 +1488,15 @@
   </message>
   <message numerus="yes">
    <source>Failed to invite %1 and %n other contact(s) to this conference: %2</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Mislukt om %1 en %n andere contact(en) uit te nodigen voor deze conferentie: %2</numerusform><numerusform>Mislukt om %1 en %n andere contact(en) uit te nodigen voor deze conferentie: %2</numerusform></translation>
   </message>
   <message>
    <source>Failed to invite %1 to this conference: %2</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om %1 uit te nodigen voor deze conferentie: %2</translation>
   </message>
   <message>
    <source>This conference was destroyed by owner %1 %2</source>
-   <translation type="unfinished"/>
+   <translation>Deze conferentie is vernietigd door eigenaar. %1 %2</translation>
   </message>
  </context>
  <context>
@@ -1519,7 +1519,7 @@
   </message>
   <message>
    <source>Select a conference from the list or explicitly specify the name of the hidden one</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een conferentie van de lijst of geef de juiste naam op van de verborgen conferentie</translation>
   </message>
   <message>
    <source>Loading list of conferences...</source>
@@ -1527,7 +1527,7 @@
   </message>
   <message>
    <source>Failed to load list of conferences</source>
-   <translation type="unfinished"/>
+   <translation>Mislukt om de lijst van conferenties te laden</translation>
   </message>
   <message>
    <source>Create the conference:</source>
@@ -1598,11 +1598,11 @@
   </message>
   <message>
    <source>Service:</source>
-   <translation>Service:</translation>
+   <translation>Dienst:</translation>
   </message>
   <message>
    <source>Select account, server and service to join to the conference</source>
-   <translation>Selecteer een account, server en service om aan conferentie deel te nemen</translation>
+   <translation>Selecteer een account, server en dienst om aan conferentie deel te nemen</translation>
   </message>
   <message>
    <source>Select the account to join to the conference</source>
@@ -1610,15 +1610,16 @@
   </message>
   <message>
    <source>You can join to the conference located at almost any Jabber-server, select one from the list or add your own</source>
-   <translation type="unfinished"/>
+   <translation>Je kan alle conferenties bijwonen op zowat elke jabber-server, selecteer er een van de lijst of voeg er een toe</translation>
   </message>
   <message>
    <source>Each Jabber-server can have multiple conference services, select one of the available</source>
-   <translation type="unfinished"/>
+   <translation>Elke Jabber-server heeft meervoudige conferentie diensten,
+selecteer een die beschikbaar is</translation>
   </message>
   <message>
    <source>Select account, server, and service to create the conference</source>
-   <translation type="unfinished"/>
+   <translation>Selecteer een account, server en diensten om een conferentie te creëren</translation>
   </message>
   <message>
    <source>Select the account to create a conference</source>
@@ -1626,23 +1627,23 @@
   </message>
   <message>
    <source>You can create a conference at almost any Jabber-server, select one from the list or add your own</source>
-   <translation type="unfinished"/>
+   <translation>Je kan eigen conferentie maken op zowat elke Jabber-server, selecteer een van de lijst of voeg er een toe</translation>
   </message>
   <message>
    <source>Searching for conference services (%1)...</source>
-   <translation type="unfinished"/>
+   <translation>Zoeken voor conferentie diensten (%1)...</translation>
   </message>
   <message>
    <source>Conference services are not found on this server</source>
-   <translation type="unfinished"/>
+   <translation>Conferentie diensten zijn niet gevonden op deze server</translation>
   </message>
   <message>
    <source>Loading list of available services...</source>
-   <translation type="unfinished"/>
+   <translation>Laad de lijst van beschikbare diensten...</translation>
   </message>
   <message>
    <source>Failed to load list of services</source>
-   <translation>Mislukt om serviceslijst te laden</translation>
+   <translation>Mislukt om dienstenlijst te laden</translation>
   </message>
   <message>
    <source>Account or server is not selected</source>
@@ -1658,7 +1659,7 @@
   </message>
   <message>
    <source>Failed to load a list of services: %1</source>
-   <translation>Mislukt om serviceslijst te laden: %1</translation>
+   <translation>Mislukt om dienstenlijst te laden: %1</translation>
   </message>
  </context>
 </TS>

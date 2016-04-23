@@ -262,7 +262,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="270"/>
    <source>Real-time communication services from IBM (formerly IBM Lotus Sametime)</source>
-   <translation>Real-time communicatie service van IBM(voormalig IBM Lotus Sametime)</translation>
+   <translation>Real-time communicatie dienst van IBM(voormalig IBM Lotus Sametime)</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="271"/>
@@ -277,7 +277,7 @@ Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer r
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="273"/>
    <source>An adware licensed Polish instant messaging service, fully compatible with Gadu-Gadu</source>
-   <translation>Een Poolse adware licentie instant messenger service, volledig compatibel met Gadu-Gadu</translation>
+   <translation>Een Poolse adware licentie instant messenger dienst, volledig compatibel met Gadu-Gadu</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="274"/>

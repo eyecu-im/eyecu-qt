@@ -1,6 +1,5 @@
 #include "selecticonmenu.h"
 #include "emoji.h"
-
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/toolbargroups.h>
@@ -57,40 +56,39 @@ void SelectIconMenu::onAboutToShow()
 {
 	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
 	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
-
 	if (!FTabWidget)
 	{
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
-
 		int columns = 0;
 		int rows = 0;
 		int count = 0;
-		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
+		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
 			int cnt = FEmoji->categoryCount((IEmoji::Category)c);
 			if (count<cnt)
 			{
 				count = cnt;
-				int c = cnt/2 + 1;
-				while (c>1 && c*c>cnt)
-					c--;
-				int r = cnt/c;
-				if (c*r<cnt)
+				int cols = cnt/2 + 1;
+				while (cols>1 && cols*cols>cnt)
+					cols--;
+				int r = cnt/cols;
+				if (cols*r<cnt)
 					r++;
-				if (r>c)
+				if (r>cols)
 				{
-					c++;
+					cols++;
 					r--;
 				}
-				columns=c;
+				columns=cols;
 				rows=r;
 			}
 		}
-		for (int c = IEmoji::People; c<=IEmoji::Foods; ++c)
+		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
 			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, columns, rows, FEmoji, this);
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
+			FTabWidget->setTabEnabled(c, FEmoji->categoryCount((IEmoji::Category)c));
 			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}
@@ -106,10 +104,8 @@ void SelectIconMenu::onAboutToShow()
 	FLayout->addWidget(toolBar);
 	FToolBarChanger = new ToolBarChanger(toolBar);
 	FToolBarChanger->setSeparatorsVisible(true);
-
 	FMenu = new Menu(toolBar);
 	FMenu->setIcon(FEmptyIcon);
-
 	QActionGroup *group = new QActionGroup(FMenu);
 
 	Action *action = new Action(group);
@@ -125,7 +121,6 @@ void SelectIconMenu::onAboutToShow()
 		FMenu->setIcon(action->icon());
 	}
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-
 	QStringList colorSuffixes = FEmoji->colorSuffixes();
 	for (int i=Emoji::SkinDefault; i<Emoji::SkinTone5; ++i)
 	{
@@ -144,7 +139,6 @@ void SelectIconMenu::onAboutToShow()
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 	}
-
 	FToolBarChanger->insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
 	FMenu->setTitle(tr("Skin color"));
 	QStringList recent = FEmoji->recentIcons(QString());
@@ -233,15 +227,15 @@ void SelectIconMenu::updateRecentActions(const QString &AColor)
 	}
 }
 
-QString SelectIconMenu::typeUcs4(const QString &AText)
-{
-	QString output;
-	QVector<uint> ucs4 = AText.toUcs4();
-	for (QVector<uint>::ConstIterator it=ucs4.constBegin(); it!=ucs4.constEnd(); ++it)
-	{
-		if (!output.isEmpty())
-			output.append('-');
-		output.append(QString::number(*it, 16));
-	}
-	return output;
-}
+//QString SelectIconMenu::typeUcs4(const QString &AText)
+//{
+//	QString output;
+//	QVector<uint> ucs4 = AText.toUcs4();
+//	for (QVector<uint>::ConstIterator it=ucs4.constBegin(); it!=ucs4.constEnd(); ++it)
+//	{
+//		if (!output.isEmpty())
+//			output.append('-');
+//		output.append(QString::number(*it, 16));
+//	}
+//	return output;
+//}
