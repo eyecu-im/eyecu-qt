@@ -2,8 +2,8 @@
 <Package>
     <DisplayName>Multi-User Cenferences Dutch Translation</DisplayName>
     <Description>Multi-User Cenferences Dutch translation</Description>
-    <Version>1.3.7</Version>
-    <ReleaseDate>2016-04-20</ReleaseDate>
+    <Version>1.3.8</Version>
+    <ReleaseDate>2016-04-22</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.multiuserchat.nl</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.multiuserchat,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
     <Virtual>true</Virtual>

@@ -14,22 +14,22 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
    <source>Smileys &amp; People</source>
-   <translation type="unfinished"/>
+   <translation>Smileys &amp; Mensen</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Animals &amp; Nature</source>
-   <translation type="unfinished"/>
+   <translation>Dieren &amp; Natuur</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Food &amp; Drink</source>
-   <translation type="unfinished"/>
+   <translation>Eten &amp; Drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Travel &amp; Places</source>
-   <translation type="unfinished"/>
+   <translation>Reizen &amp; Plaatsen</translation>
   </message>
   <message>
    <source>People</source>
@@ -43,7 +43,7 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Activities</source>
-   <translation type="unfinished"/>
+   <translation>Activiteiten</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="93"/>

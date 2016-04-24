@@ -10,7 +10,7 @@ set packages=packages
 echo Creating base package
 rem call substver.cmd %packagename% %version%
 
-rem goto build
+goto build
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
@@ -320,10 +320,9 @@ call copyplugins ru.rwsoftware.eyecu.emoji emoji
 call copyresources ru.rwsoftware.eyecu.emoji emoji\category_icons
 set files=emoji.json
 call copyresources2 ru.rwsoftware.eyecu.emoji emoji
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.16 emoji\assets\vKontakte\png\16
-call copyresources ru.rwsoftware.eyecu.emoji.vkontakte.32 emoji\assets\vKontakte\png\32
 call copyresources ru.rwsoftware.eyecu.emoji.emojione.16 "emoji\assets\Emoji One\png\16"
 call copyresources ru.rwsoftware.eyecu.emoji.emojione.32 "emoji\assets\Emoji One\png\32"
+call copyresources ru.rwsoftware.eyecu.emoji.emojione.48 "emoji\assets\Emoji One\png\48"
 
 call copyplugins ru.rwsoftware.eyecu.xhtmlim xhtmlim
 call copyresources ru.rwsoftware.eyecu.xhtmlim xhtml\shared
