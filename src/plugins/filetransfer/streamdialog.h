@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QCheckBox>
+#include <QComboBox>
 #include <interfaces/ifiletransfer.h>
 #include <interfaces/ifilestreamsmanager.h>
 #include <interfaces/idatastreamsmanager.h>
@@ -29,7 +30,7 @@ protected:
 	bool acceptFileName(const QString &AFile);
 	QString sizeName(qint64 ABytes) const;
 // *** <<< eyeCU <<< ***
-	void enableStreamSelection(bool AEnable);
+	void enableMethodSelection(bool AEnable);
 // *** >>> eyeCU >>> ***
 protected slots:
 	void onStreamStateChanged();
@@ -46,7 +47,8 @@ private:
 	IFileStreamsManager *FFileManager;
 	IDataStreamsManager *FDataManager;
 // *** <<< eyeCU <<< ***
-	bool				FAdvanced;
+	QComboBox			*FMethodSelection;
+	bool				FMultipleSelection;
 	QHash<QCheckBox *, QString> FMethods;
 // *** >>> eyeCU >>> ***
 };

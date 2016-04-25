@@ -14,26 +14,22 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
    <source>Smileys &amp; People</source>
-   <translation type="unfinished"/>
+   <translation>Смайлики і Люди</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Animals &amp; Nature</source>
-   <translation type="unfinished"/>
+   <translation>Тварини і Природа</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Food &amp; Drink</source>
-   <translation type="unfinished"/>
+   <translation>Їжа і Напої</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Travel &amp; Places</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>People</source>
-   <translation type="unfinished"/>
+   <translation>Подорожі і Місця</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
@@ -43,7 +39,7 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Activities</source>
-   <translation type="unfinished"/>
+   <translation>Заняття</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
@@ -51,25 +47,9 @@
    <translation>Прапори</translation>
   </message>
   <message>
-   <source>Activity</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Nature</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Travel</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Objects</source>
    <translation>Об&apos;єкти</translation>
-  </message>
-  <message>
-   <source>Foods</source>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
@@ -122,7 +102,7 @@
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
    <source>Skin color</source>
-   <translation type="unfinished"/>
+   <translation>Колір скіну</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>

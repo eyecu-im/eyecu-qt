@@ -18,12 +18,12 @@
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="81"/>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="183"/>
    <source>Jingle RTP</source>
-   <translation type="unfinished"/>
+   <translation>Jingle RTP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="82"/>
    <source>Implements XEP-0167: Jingle RTP Sessions</source>
-   <translation type="unfinished"/>
+   <translation>XEP-0167: Сесії Jingle RTP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="161"/>
@@ -73,12 +73,12 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="499"/>
    <source>Jingle RTP Sessions</source>
-   <translation type="unfinished"/>
+   <translation>Сесії Jingle RTP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="500"/>
    <source>Audio/Video chat via Jingle RTP</source>
-   <translation type="unfinished"/>
+   <translation>Аудіо/Відео чат за допомогою Jingle RTP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="666"/>
@@ -139,7 +139,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="14"/>
    <source>Jingle RTP options</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування Jingle RTP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="46"/>
@@ -170,7 +170,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertpoptions.ui" line="241"/>
    <source>Use RTCP</source>
-   <translation type="unfinished"/>
+   <translation>Використовувати RTCP</translation>
   </message>
  </context>
 </TS>

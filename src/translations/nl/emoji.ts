@@ -32,10 +32,6 @@
    <translation>Reizen &amp; Plaatsen</translation>
   </message>
   <message>
-   <source>People</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Symbols</source>
    <translation>Symbolen</translation>
@@ -51,25 +47,9 @@
    <translation>Vlaggen</translation>
   </message>
   <message>
-   <source>Activity</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Nature</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>Travel</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Objects</source>
    <translation>Objecten</translation>
-  </message>
-  <message>
-   <source>Foods</source>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="165"/>

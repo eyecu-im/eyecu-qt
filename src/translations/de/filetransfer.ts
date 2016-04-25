@@ -233,6 +233,10 @@
    <source>Transferred %1 of %2.</source>
    <translation>%1 von %2 übertragen.</translation>
   </message>
+  <message>
+   <source>Methods:</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>StreamDialogClass</name>

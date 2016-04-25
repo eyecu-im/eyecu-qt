@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhere.cpp" line="15"/>
    <source>Map Search Provider Here</source>
-   <translation type="unfinished"/>
+   <translation>Провайдер пошуку на мапі Here</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhere.cpp" line="16"/>
    <source>Allows to use Nokia&apos;s Here service as a map search provider</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати Here від Nokia у ролі провайдеру пошуку</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhere.cpp" line="55"/>
    <source>Here</source>
-   <translation type="unfinished"/>
+   <translation>Here</translation>
   </message>
  </context>
 </TS>

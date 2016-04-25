@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" sourcelanguage="en" language="ru">
+<TS version="2.1" sourcelanguage="en" language="ru">
   <context>
     <name>FileTransfer</name>
     <message>
@@ -239,6 +239,10 @@
     <message>
       <source>Transferred %1 of %2.</source>
       <translation>Передано %1 из %2.</translation>
+    </message>
+    <message>
+      <source>Methods:</source>
+      <translation>Методы:</translation>
     </message>
   </context>
   <context>

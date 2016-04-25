@@ -5,17 +5,17 @@
    <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="16"/>
    <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="286"/>
    <source>Jingle RAW-UDP Transport</source>
-   <translation type="unfinished"/>
+   <translation>Транспорт Jingle RAW-UDP</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="17"/>
    <source>Implements XEP-0177: Jingle RAW-UDP transport method</source>
-   <translation type="unfinished"/>
+   <translation>XEP-0177: Метод передачі Jingle RAW-UDP</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="287"/>
    <source>Allows using RAW-UDP transport in Jingle sesions</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати транспорт RAW-UDP у сесіях Jingle</translation>
   </message>
  </context>
 </TS>

@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/mapsearchproviderosm/mapsearchproviderosm.cpp" line="14"/>
    <source>Map Search Provider OSM</source>
-   <translation type="unfinished"/>
+   <translation>Провайдер пошуку на мапі OSM</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderosm/mapsearchproviderosm.cpp" line="15"/>
    <source>Allows to use OSM as a map search provider</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати OSM у ролі провайдеру пошуку</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderosm/mapsearchproviderosm.cpp" line="55"/>
    <source>OSM</source>
-   <translation type="unfinished"/>
+   <translation>OSM</translation>
   </message>
  </context>
 </TS>

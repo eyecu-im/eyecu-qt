@@ -45,7 +45,7 @@
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="402"/>
    <source>Consider all single contacts messages as read when read the first</source>
-   <translation type="unfinished"/>
+   <translation>Позначати всі одиночні повідомлення від контакту прочитаними коли прочитане перше з них</translation>
   </message>
   <message>
    <location filename="../../plugins/normalmessagehandler/normalmessagehandler.cpp" line="534"/>

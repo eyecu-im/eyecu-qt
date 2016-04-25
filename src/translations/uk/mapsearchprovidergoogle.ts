@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/mapsearchprovidergoogle/mapsearchprovidergoogle.cpp" line="11"/>
    <source>Map Search Provider Google</source>
-   <translation type="unfinished"/>
+   <translation>Провайдер пошуку на мапі Google</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchprovidergoogle/mapsearchprovidergoogle.cpp" line="12"/>
    <source>Allows to use Google as a map search provider</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати Google у ролі провайдеру пошуку</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchprovidergoogle/mapsearchprovidergoogle.cpp" line="50"/>
    <source>Google</source>
-   <translation type="unfinished"/>
+   <translation>Google</translation>
   </message>
  </context>
 </TS>

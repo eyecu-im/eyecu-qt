@@ -1,5 +1,5 @@
 #include "streamdialog.h"
-#include <QDebug>
+
 #include <QUrl>
 #include <QFile>
 #include <QFileInfo>
@@ -29,7 +29,7 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 	FFileManager = AFileManager;
 	FDataManager = ADataManager;
 // *** <<< eyeCU <<< ***
-	FAdvanced    = Options::node(OPV_COMMON_ADVANCED).value().toBool();
+	FMultipleSelection    = Options::node(OPV_COMMON_ADVANCED).value().toBool() && FFileStream->streamKind()==IFileStream::SendFile;
 // *** >>> eyeCU >>> ***
 	ui.pgbPrgress->setMinimum(0);
 	ui.pgbPrgress->setMaximum(100);
@@ -44,28 +44,29 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 		setWindowTitle(tr("Receive File - %1").arg(FFileStream->streamJid().uFull()));
 		ui.lblContactLabel->setText(tr("From:"));
 	}
-
 // *** <<< eyeCU <<< ***
-	if (FAdvanced && FFileStream->streamKind()==IFileStream::SendFile)
+	if (FMultipleSelection)
 	{
-//		ui.cmbMethod->hide();
-		qDebug() << "count=" << ui.formLayout->count();
-		QLayoutItem *item = ui.formLayout->takeAt(11);
-		qDebug() << "item=" << item;
-		if (item->widget())
-			item->widget()->deleteLater();
-		delete item;
-		ui.cmbMethod = NULL;
+		QVBoxLayout			*layout = new QVBoxLayout();
+		layout->setSpacing(0);
+		ui.formLayout->setLayout(5, QFormLayout::FieldRole, layout);
+		ui.lblMethod->setText(tr("Methods:"));
 	}
 	else
-// *** >>> eyeCU >>> ***
-	if (!AFileStream->methodNS().isEmpty())
 	{
-		IDataStreamMethod *method = FDataManager->method(AFileStream->methodNS());
-		if (method)
-			ui.cmbMethod->addItem(method->methodName(),method->methodNS());
+		FMethodSelection = new QComboBox(this);
+		ui.formLayout->setWidget(5, QFormLayout::FieldRole, FMethodSelection);
+		if (!AFileStream->methodNS().isEmpty())
+		{
+			IDataStreamMethod *method = FDataManager->method(AFileStream->methodNS());
+			if (method)
+			{
+				FMethodSelection->addItem(method->methodName(),method->methodNS());
+				FMethodSelection->setCurrentIndex(0);
+			}
+		}
 	}
-
+// *** >>> eyeCU >>> ***
 	ui.lblContact->setText(HTML_ESCAPE(FFileStream->contactJid().uFull()));
 
 	connect(FFileStream->instance(),SIGNAL(stateChanged()),SLOT(onStreamStateChanged()));
@@ -107,33 +108,35 @@ QList<QString> StreamDialog::selectedMethods() const
 {
 	QList<QString> methods;
 // *** <<< eyeCU <<< ***
-	if (FAdvanced && FFileStream->streamKind()==IFileStream::SendFile)
+	if (FMultipleSelection)
 	{
 		for (QHash<QCheckBox*, QString>::ConstIterator it=FMethods.constBegin(); it!=FMethods.constEnd(); ++it)
 			if (it.key()->isChecked())
 				methods.append(*it);
 	}
 	else
+	{
+		QComboBox *cmbMethod = qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget());
+		if (cmbMethod->currentIndex() >= 0)
+			methods.append(cmbMethod->itemData(cmbMethod->currentIndex()).toString());
+	}
 // *** >>> eyeCU >>> ***
-	if (ui.cmbMethod->currentIndex() >= 0)
-		methods.append(ui.cmbMethod->itemData(ui.cmbMethod->currentIndex()).toString());
 	return methods;
 }
 
 void StreamDialog::setSelectableMethods(const QList<QString> &AMethods)
 {
 // *** <<< eyeCU <<< ***
-	if (FAdvanced && FFileStream->streamKind()==IFileStream::SendFile)
+	if (FMultipleSelection)
 	{
-		QVBoxLayout *layout = new QVBoxLayout();
-		ui.formLayout->addRow(tr("Methods:"), layout);
-		ui.formLayout->setLayout(5, QFormLayout::FieldRole, layout);
+		QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->layout());
 		foreach(const QString &methodNS, AMethods)
 		{
 			IDataStreamMethod *method = FDataManager->method(methodNS);
 			if (method)
 			{
 				QCheckBox *checkBox = new QCheckBox(method->methodName());
+				checkBox->setChecked(true);
 				layout->addWidget(checkBox);
 				FMethods.insert(checkBox, methodNS);
 			}
@@ -141,16 +144,21 @@ void StreamDialog::setSelectableMethods(const QList<QString> &AMethods)
 	}
 	else
 	{
-// *** >>> eyeCU >>> ***
-	ui.cmbMethod->clear();
-	foreach(const QString &methodNS, AMethods)
-	{
-		IDataStreamMethod *method = FDataManager->method(methodNS);
-		if (method)
-			ui.cmbMethod->addItem(method->methodName(),method->methodNS());
+		QComboBox *cmbMethod = qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget());
+		cmbMethod->clear();
+		foreach(const QString &methodNS, AMethods)
+		{
+			IDataStreamMethod *method = FDataManager->method(methodNS);
+			if (method)
+				cmbMethod->addItem(method->methodName(),method->methodNS());
+		}
+		if (cmbMethod->count())
+		{
+			int index = cmbMethod->findData(Options::node(OPV_FILESTREAMS_DEFAULTMETHOD).value().toString());
+			cmbMethod->setCurrentIndex(index==-1?0:index);
+		}
 	}
-	ui.cmbMethod->setCurrentIndex(ui.cmbMethod->findData(Options::node(OPV_FILESTREAMS_DEFAULTMETHOD).value().toString()));
-	} // *** <<< eyeCU >>> ***
+// *** >>> eyeCU >>> ***
 }
 
 qint64 StreamDialog::minPosition() const
@@ -266,23 +274,23 @@ QString StreamDialog::sizeName(qint64 ABytes) const
 
 	return QString::number(value,'f',prec)+units;
 }
-
-void StreamDialog::enableStreamSelection(bool AEnable)
+// *** <<< eyeCU <<< ***
+void StreamDialog::enableMethodSelection(bool AEnable)
 {
-	if (FAdvanced && FFileStream->streamKind()==IFileStream::SendFile)
+	if (FMultipleSelection)
 		for (QHash<QCheckBox*, QString>::ConstIterator it=FMethods.constBegin(); it!=FMethods.constEnd(); ++it)
 			it.key()->setEnabled(AEnable);
 	else
-		ui.cmbMethod->setEnabled(AEnable);
+		qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget())->setEnabled(AEnable);
 }
-
+// *** >>> eyeCU >>> ***
 void StreamDialog::onStreamStateChanged()
 {
 	switch (FFileStream->streamState())
 	{
 	case IFileStream::Creating:
 		ui.tlbFile->setEnabled(true);
-		enableStreamSelection(true);
+		enableMethodSelection(true); // *** <<< eyeCU >>> ***
 		ui.lneFile->setReadOnly(FFileStream->streamKind()==IFileStream::SendFile);
 		ui.pteDescription->setReadOnly(FFileStream->streamKind()!=IFileStream::SendFile);
 		if (FFileStream->streamKind()==IFileStream::SendFile)
@@ -296,7 +304,7 @@ void StreamDialog::onStreamStateChanged()
 		ui.tlbFile->setEnabled(false);
 		ui.lneFile->setReadOnly(true);
 		ui.pteDescription->setReadOnly(true);
-		enableStreamSelection(false);
+		enableMethodSelection(false); // *** <<< eyeCU >>> ***
 		ui.bbxButtons->setStandardButtons(QDialogButtonBox::Abort|QDialogButtonBox::Close);
 		break;
 	case IFileStream::Disconnecting:
@@ -305,7 +313,7 @@ void StreamDialog::onStreamStateChanged()
 		ui.tlbFile->setEnabled(false);
 		ui.lneFile->setReadOnly(true);
 		ui.pteDescription->setReadOnly(true);
-		enableStreamSelection(false);
+		enableMethodSelection(false); // *** <<< eyeCU >>> ***
 		if (FFileStream->streamKind()==IFileStream::SendFile && FFileStream->streamState()==IFileStream::Aborted)
 			ui.bbxButtons->setStandardButtons(QDialogButtonBox::Retry|QDialogButtonBox::Close);
 		else if (FFileStream->streamKind()==IFileStream::ReceiveFile && FFileStream->streamState()==IFileStream::Finished)
