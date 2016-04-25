@@ -28,6 +28,9 @@ protected:
 	int curPercentPosition() const;
 	bool acceptFileName(const QString &AFile);
 	QString sizeName(qint64 ABytes) const;
+// *** <<< eyeCU <<< ***
+	void enableStreamSelection(bool AEnable);
+// *** >>> eyeCU >>> ***
 protected slots:
 	void onStreamStateChanged();
 	void onStreamSpeedChanged();
@@ -42,6 +45,10 @@ private:
 	IFileTransfer *FFileTransfer;
 	IFileStreamsManager *FFileManager;
 	IDataStreamsManager *FDataManager;
+// *** <<< eyeCU <<< ***
+	bool				FAdvanced;
+	QHash<QCheckBox *, QString> FMethods;
+// *** >>> eyeCU >>> ***
 };
 
 #endif // STREAMDIALOG_H
