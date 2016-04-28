@@ -614,64 +614,67 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	FKeyByUrl.clear();
 	clearTreeItem(&FRootTreeItem);
 
-	QStringList dirs = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
-	for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it)
-		if (!(*it).toInt())
-			it = dirs.erase(it);
-
-	if (!dirs.isEmpty())
+	if (!AEmojiSet.isEmpty())
 	{
-		for (QStringList::ConstIterator itd = dirs.constBegin(); itd!=dirs.constEnd(); ++itd)
-			if (dir.cd(*itd))
-			{
-				for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+		QStringList dirs = dir.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+		for (QStringList::Iterator it=dirs.begin(); it!=dirs.end(); ++it)
+			if (!(*it).toInt())
+				it = dirs.erase(it);
+
+		if (!dirs.isEmpty())
+		{
+			for (QStringList::ConstIterator itd = dirs.constBegin(); itd!=dirs.constEnd(); ++itd)
+				if (dir.cd(*itd))
 				{
-					FCategoryCount[itc.key()]=0;
-					for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+					for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
 					{
-						QFile file(getFileName(*it, dir));
-						if (file.exists())
+						FCategoryCount[itc.key()]=0;
+						for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
 						{
-							QUrl url(QUrl::fromLocalFile(file.fileName()));
-							(*it).colored = false;
-							for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+							QFile file(getFileName(*it, dir));
+							if (file.exists())
 							{
-								QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
-								if (file.exists())
+								QUrl url(QUrl::fromLocalFile(file.fileName()));
+								(*it).colored = false;
+								for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 								{
-									(*it).colored = true;
-									QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
-									QUrl url(QUrl::fromLocalFile(file.fileName()));
-									FUrlByKey[(*itd).toInt()].insert(unicode, url);
-									FKeyByUrl.insertMulti(url.toString(), unicode);
-									createTreeItem(unicode, url);
+									QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
+									if (file.exists())
+									{
+										(*it).colored = true;
+										QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
+										QUrl url(QUrl::fromLocalFile(file.fileName()));
+										FUrlByKey[(*itd).toInt()].insert(unicode, url);
+										FKeyByUrl.insertMulti(url.toString(), unicode);
+										createTreeItem(unicode, url);
 
+									}
 								}
+								FCategoryCount[itc.key()]++;
+								FUrlByKey[(*itd).toInt()].insert((*it).unicode, url);
+								FKeyByUrl.insertMulti(url.toString(), (*it).unicode);
+								createTreeItem((*it).unicode, url);
+								(*it).present = true;
 							}
-							FCategoryCount[itc.key()]++;
-							FUrlByKey[(*itd).toInt()].insert((*it).unicode, url);
-							FKeyByUrl.insertMulti(url.toString(), (*it).unicode);
-							createTreeItem((*it).unicode, url);
-							(*it).present = true;							
+							else
+								(*it).present = false;
 						}
-						else
-							(*it).present = false;
-					}
 
-					for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
-					{
-						QFile file(dir.absoluteFilePath(QString("%1.png").arg(c, 0, 16)));
-						if (file.exists())
+						for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 						{
-							QString unicode = QString::fromUcs4(&c, 1);
-							QUrl url(QUrl::fromLocalFile(file.fileName()));
-							FUrlByKey[(*itd).toInt()].insert(unicode, url);
-							FKeyByUrl.insertMulti(url.toString(), unicode);
+							QFile file(dir.absoluteFilePath(QString("%1.png").arg(c, 0, 16)));
+							if (file.exists())
+							{
+								QString unicode = QString::fromUcs4(&c, 1);
+								QUrl url(QUrl::fromLocalFile(file.fileName()));
+								FUrlByKey[(*itd).toInt()].insert(unicode, url);
+								FKeyByUrl.insertMulti(url.toString(), unicode);
+							}
 						}
 					}
+					dir.cdUp();
 				}
-				dir.cdUp();
-			}
+		}
 	}
 	updateSelectIconMenu(AEmojiSet);
 }
@@ -917,7 +920,14 @@ void Emoji::onSelectIconMenuDestroyed(QObject *AObject)
 
 void Emoji::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_MESSAGES_EMOJI_ICONSET));
+	OptionsNode iconset = Options::node(OPV_MESSAGES_EMOJI_ICONSET);
+	if (FEmojiSets.contains(iconset.value().toString()))
+		onOptionsChanged(iconset);
+	else if (FEmojiSets.isEmpty())
+		iconset.setValue(QString(""));
+	else
+		iconset.setValue(emojiSets().first());
+
 	QByteArray array(Options::node(OPV_MESSAGES_EMOJI_RECENT).value().toByteArray());
 	if (!array.isEmpty())
 	{
@@ -929,7 +939,15 @@ void Emoji::onOptionsOpened()
 void Emoji::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MESSAGES_EMOJI_ICONSET)
-		loadEmojiSet(ANode.value().toString());
+	{
+		QString emojiSet(ANode.value().toString());
+		if (FEmojiSets.contains(emojiSet))
+			loadEmojiSet(emojiSet);
+//		else if (FEmojiSets.isEmpty())
+//			ANode.setValue(QString(""));
+//		else
+//			ANode.setValue(emojiSets().first());
+	}
 	else if (ANode.path() == OPV_MESSAGES_EMOJI_SIZE_MENU)
 		updateSelectIconMenu(Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString());
 }
