@@ -1486,7 +1486,7 @@ void XhtmlIm::insertLink(QTextCursor ACursor, QWidget *AParent)
 		{
 			QTextCharFormat charFmt=charFmtCurrent;
 			charFmt.setAnchor(true);
-			charFmt.setAnchorHref(addLink->url().toEncoded());
+			charFmt.setAnchorHref(addLink->url().toString());
 			charFmt.setFontUnderline(true);
 			charFmt.setForeground(QBrush(Qt::blue));
 			ACursor.beginEditBlock();
