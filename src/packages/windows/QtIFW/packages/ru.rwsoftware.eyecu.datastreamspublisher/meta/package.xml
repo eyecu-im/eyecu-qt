@@ -6,7 +6,7 @@
     <ReleaseDate>2016-03-07</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.datastreamspublisher</Name>
     <SortingPriority>69</SortingPriority>
-    <Virtual>false</Virtual>
+    <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
     <Essential>false</Essential>
 </Package>

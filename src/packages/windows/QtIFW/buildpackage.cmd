@@ -3,7 +3,6 @@ set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
 set packagefilename=%packagename%-%version%
-set onlinepackagefilename=%packagename%-online
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
@@ -452,15 +451,8 @@ md packages\ru.rwsoftware.eyecu.docs\data
 for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 
 :build
-copy installscript.offline packages\ru.rwsoftware.eyecu\meta\*.js
 del %packagefilename%.exe
-binarycreator.exe -c config\config.xml -p %packages% %packagefilename%.exe
-
-:online
-copy installscript.online packages\ru.rwsoftware.eyecu\meta\*.js
-:online1
-del %onlinepackagefilename%.exe
-binarycreator.exe -n -c config\config-repo.xml -p %packages% %onlinepackagefilename%.exe
+binarycreator.exe --offline-only -c config\config.xml -p %packages% %packagefilename%.exe
 
 :repo
 repogen.exe -p %packages% repository
