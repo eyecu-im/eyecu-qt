@@ -5,6 +5,7 @@
 #include <QMimeData>
 #include <QTextBlock>
 #include <QDataStream>
+#include <qmath.h>
 #if QT_VERSION < 0x050000
 #include <QScriptEngine>
 #include <QScriptValue>
@@ -675,6 +676,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 					dir.cdUp();
 				}
 		}
+		updateSize(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT));
+		updateSize(Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU));
 	}
 	updateSelectIconMenu(AEmojiSet);
 }
@@ -820,6 +823,30 @@ QString Emoji::getFileName(const EmojiData &AEmojiData, const QDir &ADir) const
 	return QDir::cleanPath(file.fileName());
 }
 
+void Emoji::updateSize(OptionsNode ANode)
+{
+	bool ok;
+	int value = ANode.value().toInt(&ok);
+	if (ok)
+	{
+		if (!FUrlByKey.contains(value))
+		{
+			QList<int> keys = FUrlByKey.keys();
+			int shift = abs(keys.first()-value);
+			int val;
+			for (QList<int>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
+			{
+				if (abs(*it-value)<shift)
+				{
+					shift = abs(*it-value);
+					val = *it;
+				}
+			}
+			ANode.setValue(val);
+		}
+	}
+}
+
 void Emoji::onToolBarWindowLayoutChanged()
 {
 	IMessageWindow *window = qobject_cast<IMessageWindow *>(sender());
@@ -943,10 +970,6 @@ void Emoji::onOptionsChanged(const OptionsNode &ANode)
 		QString emojiSet(ANode.value().toString());
 		if (FEmojiSets.contains(emojiSet))
 			loadEmojiSet(emojiSet);
-//		else if (FEmojiSets.isEmpty())
-//			ANode.setValue(QString(""));
-//		else
-//			ANode.setValue(emojiSets().first());
 	}
 	else if (ANode.path() == OPV_MESSAGES_EMOJI_SIZE_MENU)
 		updateSelectIconMenu(Options::node(OPV_MESSAGES_EMOJI_ICONSET).value().toString());

@@ -82,6 +82,9 @@ protected:
 	SelectIconMenu *createSelectIconMenu(const QString &AIconSet, QWidget *AParent);
 	void updateSelectIconMenu(const QString &AIconSet);
 	QString getFileName(const EmojiData &AEmojiData, const QDir &ADir) const;
+	void updateSize(OptionsNode ANode);
+	static int abs(int x) {return x<0?-x:x;}
+
 protected slots:
 	void onToolBarWindowLayoutChanged();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
