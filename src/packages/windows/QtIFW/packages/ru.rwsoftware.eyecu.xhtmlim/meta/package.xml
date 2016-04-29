@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>XHTML-IM</DisplayName>
     <Description>Allows to use rich text formatting in messages</Description>
-    <Version>1.3.9</Version>
-    <ReleaseDate>2016-04-20</ReleaseDate>
+    <Version>1.3.10</Version>
+    <ReleaseDate>2016-04-28</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.xhtmlim</Name>
-    <UpdateText>Processing of block formatting fixed. Image and URL processing fixed.</UpdateText>
+    <UpdateText>When Add Link dialog invoked by a shortcut, encoded URL was inserted into plain text variant of the message.</UpdateText>
     <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.menuicons.edit</Dependencies>
     <SortingPriority>30</SortingPriority>
     <Default>true</Default>
