@@ -640,6 +640,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 								for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
 								{
 									QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
+									if (!file.exists())
+										file.setFileName(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4alt).arg(c, 0, 16)));
 									if (file.exists())
 									{
 										(*it).colored = true;
