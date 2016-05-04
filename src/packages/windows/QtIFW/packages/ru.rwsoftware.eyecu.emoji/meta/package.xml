@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Emoji</DisplayName>
     <Description>Emoji</Description>
-    <Version>1.3.9</Version>
-    <ReleaseDate>2016-04-28</ReleaseDate>
+    <Version>1.3.10</Version>
+    <ReleaseDate>2016-05-01</ReleaseDate>
     <Name>ru.rwsoftware.eyecu.emoji</Name>
-    <UpdateText>Fixed application crash when either &quot;No Emoji&quot; selected, or currently selected Emoji set or size not found during startup.</UpdateText>
+    <UpdateText>Skin color for non-EmojiOne-compatible emoji fixed</UpdateText>
     <SortingPriority>14</SortingPriority>
     <Default>true</Default>
     <ForcedInstallation>false</ForcedInstallation>
