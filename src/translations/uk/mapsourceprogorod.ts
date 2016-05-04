@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourceprogorod/mapsourceprogorod.cpp" line="12"/>
    <source>Pro-gorod map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Pro-gorod</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceprogorod/mapsourceprogorod.cpp" line="13"/>
    <source>Allows Map plugin to use Pro-gorod as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Pro-gorod як джерело мапи</translation>
   </message>
  </context>
 </TS>

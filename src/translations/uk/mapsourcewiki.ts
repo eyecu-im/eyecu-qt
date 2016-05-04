@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="13"/>
    <source>Wikimapia map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Wikimapia</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="14"/>
    <source>Allows Map plugin to use Wikimapia as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Wikimapia як джерело мапи</translation>
   </message>
  </context>
 </TS>

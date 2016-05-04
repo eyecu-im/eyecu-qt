@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourceyahoo/mapsourceyahoo.cpp" line="13"/>
    <source>Yahoo! map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Yahoo!</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceyahoo/mapsourceyahoo.cpp" line="14"/>
    <source>Allows Map plugin to use Yahoo! as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Yahoo! як джерело мапи</translation>
   </message>
  </context>
 </TS>

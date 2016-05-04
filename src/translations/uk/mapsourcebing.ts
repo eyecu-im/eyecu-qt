@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcebing/mapsourcebing.cpp" line="6"/>
    <source>Bing map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Bing</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcebing/mapsourcebing.cpp" line="7"/>
    <source>Allows Map plugin to use Microsoft&apos;s Bing service as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Bing як джерело мапи</translation>
   </message>
  </context>
 </TS>

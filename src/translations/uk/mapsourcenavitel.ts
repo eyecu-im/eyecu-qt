@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="13"/>
    <source>Navitel map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Navitel</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="14"/>
    <source>Allows Map plugin to use Navitel as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати Navitel у ролі провайдеру пошуку</translation>
   </message>
  </context>
 </TS>

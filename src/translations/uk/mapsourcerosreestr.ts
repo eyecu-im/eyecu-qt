@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcerosreestr/mapsourcerosreestr.cpp" line="12"/>
    <source>Rosreestr map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Rosreestr</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcerosreestr/mapsourcerosreestr.cpp" line="13"/>
    <source>Allows Map plugin to use Rosreestr service as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Rosreestr як джерело мапи</translation>
   </message>
  </context>
 </TS>

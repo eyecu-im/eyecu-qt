@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp" line="12"/>
    <source>Vi-Tel map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Vi-Tel</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp" line="13"/>
    <source>Allows Map plugin to use Vi-Tel service as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Vi-Tel як джерело мапи</translation>
   </message>
  </context>
 </TS>

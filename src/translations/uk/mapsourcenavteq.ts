@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapsourcenavteq/mapsourcenavteq.cpp" line="12"/>
    <source>Navteq map source</source>
-   <translation type="unfinished"/>
+   <translation>Джерело мапи Navteq</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourcenavteq/mapsourcenavteq.cpp" line="13"/>
    <source>Allows Map plugin to use Navteq service as map source</source>
-   <translation type="unfinished"/>
+   <translation>Дозвляє плагіну мапи використовувати сервіс Navteq як джерело мапи</translation>
   </message>
  </context>
 </TS>
