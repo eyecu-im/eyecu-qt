@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QTextBlock>
 #include <definitions/namespaces.h>
 #include <xmltextdocumentparser.h>
@@ -92,10 +93,51 @@ void TextManager::insertQuotedFragment(QTextCursor ACursor, const QTextDocumentF
 	{
 		ACursor.beginEditBlock();
 		if (!ACursor.atBlockStart())
-			ACursor.insertText("\n");
-		ACursor.insertText("> ");
+// *** <<< eyeCU <<< ***
+			ACursor.insertBlock();
+		int start = ACursor.position();
 		ACursor.insertFragment(AFragment);
-		ACursor.insertText("\n");
+		ACursor.setPosition(start);
+		do
+		{
+			ACursor.insertText("> ");
+			QTextBlock block = ACursor.block();
+			qDebug() << "block:" << block.text();
+			qDebug() << "Start block iterations...";
+			for (QTextBlock::Iterator it = block.begin(); it!=block.end(); ++it)
+			{
+				qDebug() << "it.atEnd()=" << it.atEnd();
+				qDebug() << "it.fragment().isValid()=" << it.fragment().isValid();
+				qDebug() << "it.fragment().text()=" << it.fragment().text();
+				QTextCharFormat format = it.fragment().charFormat();
+				qDebug() << "A!";
+				if (format.isAnchor())
+				{
+					qDebug() << "B!";
+					if (format.anchorHref().startsWith("muc"))
+					{
+						qDebug() << "C!";
+						format.clearProperty(QTextFormat::AnchorHref);
+						format.clearProperty(QTextFormat::AnchorName);
+						format.clearProperty(QTextFormat::IsAnchor);
+						if (format.underlineStyle()==QTextCharFormat::SingleUnderline)
+							format.clearProperty(QTextFormat::TextUnderlineStyle);
+						if (format.fontUnderline())
+							format.clearProperty(QTextFormat::FontUnderline);
+						qDebug() << "D!";
+						ACursor.setPosition(it.fragment().position());
+						ACursor.setPosition(it.fragment().position()+it.fragment().length(), QTextCursor::KeepAnchor);
+						qDebug() << "E!";
+						ACursor.setCharFormat(format);
+						qDebug() << "F!";
+					}
+				}
+			}
+			qDebug() << "Block iterations finished!";
+		} while (ACursor.movePosition(QTextCursor::NextBlock));
+		ACursor.movePosition(QTextCursor::EndOfBlock);
+		ACursor.insertBlock(QTextBlockFormat(),QTextCharFormat());
+// *** >>> eyeCU >>> ***
 		ACursor.endEditBlock();
 	}
 }
