@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QTextBlock>
 #include <definitions/namespaces.h>
 #include <xmltextdocumentparser.h>
@@ -98,42 +97,33 @@ void TextManager::insertQuotedFragment(QTextCursor ACursor, const QTextDocumentF
 		int start = ACursor.position();
 		ACursor.insertFragment(AFragment);
 		ACursor.setPosition(start);
+		ACursor.setCharFormat(QTextCharFormat());
+		ACursor.insertText("> ");
 		do
 		{
-			ACursor.insertText("> ");
 			QTextBlock block = ACursor.block();
-			qDebug() << "block:" << block.text();
-			qDebug() << "Start block iterations...";
+			QList<QPair<int,int> > badUrls;
 			for (QTextBlock::Iterator it = block.begin(); it!=block.end(); ++it)
 			{
-				qDebug() << "it.atEnd()=" << it.atEnd();
-				qDebug() << "it.fragment().isValid()=" << it.fragment().isValid();
-				qDebug() << "it.fragment().text()=" << it.fragment().text();
 				QTextCharFormat format = it.fragment().charFormat();
-				qDebug() << "A!";
-				if (format.isAnchor())
-				{
-					qDebug() << "B!";
-					if (format.anchorHref().startsWith("muc"))
-					{
-						qDebug() << "C!";
-						format.clearProperty(QTextFormat::AnchorHref);
-						format.clearProperty(QTextFormat::AnchorName);
-						format.clearProperty(QTextFormat::IsAnchor);
-						if (format.underlineStyle()==QTextCharFormat::SingleUnderline)
-							format.clearProperty(QTextFormat::TextUnderlineStyle);
-						if (format.fontUnderline())
-							format.clearProperty(QTextFormat::FontUnderline);
-						qDebug() << "D!";
-						ACursor.setPosition(it.fragment().position());
-						ACursor.setPosition(it.fragment().position()+it.fragment().length(), QTextCursor::KeepAnchor);
-						qDebug() << "E!";
-						ACursor.setCharFormat(format);
-						qDebug() << "F!";
-					}
-				}
+				if (format.isAnchor() && format.anchorHref().startsWith("muc:"))
+					badUrls.append(qMakePair(it.fragment().position(), it.fragment().length()));
 			}
-			qDebug() << "Block iterations finished!";
+
+			for (QList<QPair<int,int> >::ConstIterator it = badUrls.constBegin(); it != badUrls.constEnd(); ++it)
+			{
+				ACursor.setPosition((*it).first);
+				ACursor.setPosition((*it).first+(*it).second, QTextCursor::KeepAnchor);
+				QTextCharFormat format = ACursor.charFormat();
+				format.clearProperty(QTextFormat::AnchorHref);
+				format.clearProperty(QTextFormat::AnchorName);
+				format.clearProperty(QTextFormat::IsAnchor);
+				if (format.underlineStyle()==QTextCharFormat::SingleUnderline)
+					format.clearProperty(QTextFormat::TextUnderlineStyle);
+				if (format.fontUnderline())
+					format.clearProperty(QTextFormat::FontUnderline);
+				ACursor.setCharFormat(format);
+			}
 		} while (ACursor.movePosition(QTextCursor::NextBlock));
 		ACursor.movePosition(QTextCursor::EndOfBlock);
 		ACursor.insertBlock(QTextBlockFormat(),QTextCharFormat());
