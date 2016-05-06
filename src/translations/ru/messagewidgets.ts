@@ -201,6 +201,15 @@
       <source>Information bar icons</source>
       <translation>Иконки на информационной полосе</translation>
     </message>
+    <message>
+      <source>Toggle /me command</source>
+      <translation>Добавить/убрать команду /me</translation>
+    </message>
+    <message>
+      <source>Alt+M</source>
+      <comment>Toggle /me command</comment>
+      <translation>Alt+M</translation>
+    </message>
   </context>
   <context>
     <name>NormalWindow</name>

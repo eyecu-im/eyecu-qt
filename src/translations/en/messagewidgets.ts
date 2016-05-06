@@ -12,239 +12,251 @@
  <context>
   <name>MessageWidgets</name>
   <message>
-   <location line="47" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="48" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Message Widgets Manager</source>
    <translation>Message Widgets Manager</translation>
   </message>
   <message>
-   <location line="48" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="49" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Allows other modules to use standard widgets for messaging</source>
    <translation>Allows other modules to use standard widgets for messaging</translation>
   </message>
   <message>
-   <location line="81" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="82" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Tab window</source>
    <translation>Tab window</translation>
   </message>
   <message>
-   <location line="82" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="83" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Close tab</source>
    <translation>Close tab</translation>
   </message>
   <message>
-   <location line="82" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="83" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+W</source>
    <comment>Close tab</comment>
    <translation>Ctrl+W</translation>
   </message>
   <message>
-   <location line="83" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="84" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Close other tabs</source>
    <translation>Close other tabs</translation>
   </message>
   <message>
-   <location line="83" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="84" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+Shift+W</source>
    <comment>Close other tabs</comment>
    <translation>Ctrl+Shift+W</translation>
   </message>
   <message>
-   <location line="84" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="85" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Detach tab to separate window</source>
    <translation>Detach tab to separate window</translation>
   </message>
   <message>
-   <location line="85" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="86" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Next tab</source>
    <translation>Next tab</translation>
   </message>
   <message>
-   <location line="86" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="87" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Previous tab</source>
    <translation>Previous tab</translation>
   </message>
   <message>
-   <location line="87" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="88" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Esc</source>
    <comment>Close tab window</comment>
    <translation>Esc</translation>
   </message>
   <message>
-   <location line="90" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="91" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Alt+%1</source>
    <comment>Show tab</comment>
    <translation>Alt+%1</translation>
   </message>
   <message>
-   <location line="92" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="93" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Message windows</source>
    <translation>Message windows</translation>
   </message>
   <message>
-   <location line="93" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="94" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Esc</source>
    <comment>Close message window</comment>
    <translation>Esc</translation>
   </message>
   <message>
-   <location line="94" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
-   <location line="563" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="95" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="567" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Quote selected text</source>
    <translation>Quote selected text</translation>
   </message>
   <message>
-   <location line="94" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="95" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+Q</source>
    <comment>Quote selected text</comment>
    <translation>Ctrl+Q</translation>
   </message>
   <message>
-   <location line="95" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="96" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="596" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <source>Toggle /me command</source>
+   <translation>Toggle /me command</translation>
+  </message>
+  <message>
+   <location line="96" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <source>Alt+M</source>
+   <comment>Toggle /me command</comment>
+   <translation>Alt+M</translation>
+  </message>
+  <message>
+   <location line="97" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Edit next message</source>
    <translation>Edit next message</translation>
   </message>
   <message>
-   <location line="95" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="97" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+Down</source>
    <comment>Edit next message</comment>
    <translation>Ctrl+Down</translation>
   </message>
   <message>
-   <location line="96" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="98" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Edit previous message</source>
    <translation>Edit previous message</translation>
   </message>
   <message>
-   <location line="96" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="98" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+Up</source>
    <comment>Edit previous message</comment>
    <translation>Ctrl+Up</translation>
   </message>
   <message>
-   <location line="97" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="99" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Send chat message</source>
    <translation>Send chat message</translation>
   </message>
   <message>
-   <location line="97" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="99" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Return</source>
    <comment>Send chat message</comment>
    <translation>Return</translation>
   </message>
   <message>
-   <location line="98" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="100" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Send single message</source>
    <translation>Send single message</translation>
   </message>
   <message>
-   <location line="98" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="100" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Ctrl+Return</source>
    <comment>Send single message</comment>
    <translation>Ctrl+Return</translation>
   </message>
   <message>
-   <location line="117" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="119" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Tab Window</source>
    <translation>Tab Window</translation>
   </message>
   <message>
-   <location line="123" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="125" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Messages</source>
    <translation>Messages</translation>
   </message>
   <message>
-   <location line="136" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="138" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Message window view</source>
    <translation>Message window view</translation>
   </message>
   <message>
-   <location line="137" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="139" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Load last messages from history</source>
    <translation>Load last messages from history</translation>
   </message>
   <message>
-   <location line="138" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="140" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Show message windows together with contacts list</source>
    <translation>Show message windows together with contacts list</translation>
   </message>
   <message>
-   <location line="139" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="141" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Show message windows in tab window</source>
    <translation>Show message windows in tab window</translation>
   </message>
   <message>
-   <location line="140" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="142" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Automatically resize messages input field</source>
    <translation>Automatically resize messages input field</translation>
   </message>
   <message>
-   <location line="141" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="143" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Minimum number of lines in messages input field:</source>
    <translation>Minimum number of lines in messages input field:</translation>
   </message>
   <message>
-   <location line="143" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="145" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Message window behavior</source>
    <translation>Message window behavior</translation>
   </message>
   <message>
-   <location line="144" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="146" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Show contacts status changes</source>
    <translation>Show contacts status changes</translation>
   </message>
   <message>
-   <location line="145" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="147" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Save contacts status messages in history</source>
    <translation>Save contacts status messages in history</translation>
   </message>
   <message>
-   <location line="147" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="149" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Information bar icons</source>
    <translation>Information bar icons</translation>
   </message>
   <message>
-   <location line="378" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="382" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Tab Window %1</source>
    <translation>Tab Window %1</translation>
   </message>
   <message>
-   <location line="562" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="566" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Quote Selected Text</source>
    <translation>Quote Selected Text</translation>
   </message>
   <message>
-   <location line="587" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="622" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Send mail</source>
    <translation>Send mail</translation>
   </message>
   <message>
-   <location line="587" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="622" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Open link</source>
    <translation>Open link</translation>
   </message>
   <message>
-   <location line="594" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="629" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Copy address</source>
    <translation>Copy address</translation>
   </message>
   <message>
-   <location line="603" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="638" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Copy</source>
    <translation>Copy</translation>
   </message>
   <message>
-   <location line="615" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="650" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Search on Google '%1'</source>
    <translation>Search on Google '%1'</translation>
   </message>
   <message>
-   <location line="647" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="682" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>google.com</source>
    <comment>Your google domain</comment>
    <translation>google.com</translation>
   </message>
   <message>
-   <location line="757" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="830" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Main Tab Window</source>
    <translation>Main Tab Window</translation>
   </message>

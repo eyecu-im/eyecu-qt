@@ -113,6 +113,10 @@ protected:
 	void deleteTabWindows();
 	void insertToolBarQuoteAction(IMessageToolBarWidget *AWidget);
 	Action *createQuouteAction(IMessageWindow *AWindow, QObject *AParent);
+// *** <<< eyeCU <<< ***
+	void insertToolBarMeAction(IMessageToolBarWidget *AWidget);
+	Action *createMeAction(IMessageWindow *AWindow, QObject *AParent);
+// *** >>> eyeCU >>> ***
 protected slots:
 	void onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu);
 	void onViewContextCopyActionTriggered(bool);
@@ -120,6 +124,11 @@ protected slots:
 	void onViewContextSearchActionTriggered(bool);
 	void onMessageWindowWidgetLayoutChanged();
 	void onQuoteActionTriggered(bool);
+// *** <<< eyeCU <<< ***
+	void onMeActionTriggered(bool);
+	void onTextChanged();
+	void onTextEditDestroyed(QObject *AObject);
+// *** >>> eyeCU >>> ***
 	void onAssignedTabPageDestroyed();
 	void onNormalWindowDestroyed();
 	void onChatWindowDestroyed();
@@ -144,6 +153,7 @@ private:
 	QMultiMap<int,IMessageViewUrlHandler *> FViewUrlHandlers;
 	QMultiMap<int,IMessageEditSendHandler *> FEditSendHandlers;
 	QMultiMap<int,IMessageEditContentsHandler *> FEditContentsHandlers;
+	QHash<QTextEdit*,Action*>	FMeActions; // *** <<< eyeCU >>> ***
 };
 
 #endif // MESSAGEWIDGETS_H

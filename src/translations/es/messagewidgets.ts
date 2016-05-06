@@ -10,239 +10,251 @@
  <context>
   <name>MessageWidgets</name>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="47"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="48"/>
    <source>Message Widgets Manager</source>
    <translation>Administrador de componentes visuales de mensajes</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="48"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="49"/>
    <source>Allows other modules to use standard widgets for messaging</source>
    <translation>Permite a otros módulos el uso de componentes visuales estándares para la mensajería</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="81"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
    <source>Tab window</source>
    <translation>Ventana con pestaña</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
    <source>Close tab</source>
    <translation>Cerrar pestaña</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="82"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
    <source>Ctrl+W</source>
    <comment>Close tab</comment>
    <translation>Ctrl+W</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="84"/>
    <source>Close other tabs</source>
    <translation>Cerrar las otras pestañas</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="83"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="84"/>
    <source>Ctrl+Shift+W</source>
    <comment>Close other tabs</comment>
    <translation>Ctrl+Shift+W</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="84"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="85"/>
    <source>Detach tab to separate window</source>
    <translation>Despegar la pestaña a una ventana separada</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="85"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="86"/>
    <source>Next tab</source>
    <translation>Siguiente pestaña</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="86"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="87"/>
    <source>Previous tab</source>
    <translation>Pestaña anterior</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="87"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="88"/>
    <source>Esc</source>
    <comment>Close tab window</comment>
    <translation>Esc</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="90"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="91"/>
    <source>Alt+%1</source>
    <comment>Show tab</comment>
    <translation>Alt+%1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="92"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="93"/>
    <source>Message windows</source>
    <translation>Ventana de mensajes</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="93"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
    <source>Esc</source>
    <comment>Close message window</comment>
    <translation>Esc</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="563"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="567"/>
    <source>Quote selected text</source>
    <translation>Citar el texto seleccionado</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="94"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
    <source>Ctrl+Q</source>
    <comment>Quote selected text</comment>
    <translation>Ctrl+Q</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="596"/>
+   <source>Toggle /me command</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <source>Alt+M</source>
+   <comment>Toggle /me command</comment>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
    <source>Edit next message</source>
    <translation>Editar el siguiente mensaje</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
    <source>Ctrl+Down</source>
    <comment>Edit next message</comment>
    <translation>Ctrl+Down</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
    <source>Edit previous message</source>
    <translation>Editar el mensaje anterior</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
    <source>Ctrl+Up</source>
    <comment>Edit previous message</comment>
    <translation>Ctrl+Up</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="99"/>
    <source>Send chat message</source>
    <translation>Enviar mensaje de chat</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="99"/>
    <source>Return</source>
    <comment>Send chat message</comment>
    <translation>Return</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="100"/>
    <source>Send single message</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="98"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="100"/>
    <source>Ctrl+Return</source>
    <comment>Send single message</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="117"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="119"/>
    <source>Tab Window</source>
    <translation>Ventana con pestaña</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="123"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="125"/>
    <source>Messages</source>
    <translation>Mensajes</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="136"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>
    <source>Message window view</source>
    <translation>Vista de la ventana de mensaje</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="137"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
    <source>Load last messages from history</source>
    <translation>Cargar los últimos mensajes del historial</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>
    <source>Show message windows together with contacts list</source>
    <translation>Mostrar la ventana de mensaje junto a la lista de contactos</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>
    <source>Show message windows in tab window</source>
    <translation>Mostrar las ventanas de mensaje en una ventana de pestañas</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="142"/>
    <source>Automatically resize messages input field</source>
    <translation>Cambiar automáticamente el tamaño del campo de entrada</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="143"/>
    <source>Minimum number of lines in messages input field:</source>
    <translation>Cantidad mínima de líneas en los campos de entrada:</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="143"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
    <source>Message window behavior</source>
    <translation>Comportamiento de la ventana de mensaje</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="144"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="146"/>
    <source>Show contacts status changes</source>
    <translation>Mostrar los cambios de estado de los contactos</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>
    <source>Save contacts status messages in history</source>
    <translation>Guardar los mensajes de estado de los contactos en el historial</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="149"/>
    <source>Information bar icons</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="378"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="382"/>
    <source>Tab Window %1</source>
    <translation>Ventana con pestañas %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="562"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="566"/>
    <source>Quote Selected Text</source>
    <translation>Citar el texto seleccionado</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="587"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="622"/>
    <source>Send mail</source>
    <translation>Enviar correo</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="587"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="622"/>
    <source>Open link</source>
    <translation>Abrir enlace</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="594"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="629"/>
    <source>Copy address</source>
    <translation>Copiar dirección</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="603"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="638"/>
    <source>Copy</source>
    <translation>Copiar</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="615"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="650"/>
    <source>Search on Google &apos;%1&apos;</source>
    <translation>Buscar en Google &apos;%1&apos;</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="647"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="682"/>
    <source>google.com</source>
    <comment>Your google domain</comment>
    <translation>google.com</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="757"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="830"/>
    <source>Main Tab Window</source>
    <translation>Ventana principal</translation>
   </message>

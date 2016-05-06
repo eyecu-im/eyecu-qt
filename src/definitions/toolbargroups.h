@@ -22,6 +22,7 @@
 #define TBG_MWTBW_VCARD_VIEW                                    900
 #define TBG_MWTBW_MULTIUSERCHAT_INVITE                          1000
 // *** <<< eyeCU <<< ***
+#define TBG_MWTBW_MESSAGEWIDGETS_ME                             400
 #define TBG_MWTBW_EMOJI                                         100
 #define TBG_MWEWTB_ATTENTION_SEND                               1100
 #define TBG_MWTBW_POI_VIEW                                      1200

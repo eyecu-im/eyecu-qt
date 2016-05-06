@@ -16,4 +16,8 @@
     <key>messagewidgetsSelect</key>
     <object mime="image/png">messagewidgetsselect.png</object>
   </icon>
+  <icon>
+    <key>messagewidgetsMe</key>
+    <object mime="image/png">messagewidgetsme.png</object>
+  </icon>
 </icondef>

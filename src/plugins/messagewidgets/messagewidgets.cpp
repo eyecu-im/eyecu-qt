@@ -28,6 +28,7 @@
 #include <utils/shortcuts.h>
 #include <utils/options.h>
 
+#define ADR_ME_WINDOW			Action::DR_Parametr1 // *** <<< eyeCU >>> ***
 #define ADR_QUOTE_WINDOW        Action::DR_Parametr1
 #define ADR_CONTEXT_DATA        Action::DR_Parametr1
 
@@ -92,6 +93,7 @@ bool MessageWidgets::initObjects()
 	Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS, tr("Message windows"), SGO_MESSAGEWINDOWS);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CLOSEWINDOW, QString::null, tr("Esc","Close message window"));
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_QUOTE, tr("Quote selected text"), tr("Ctrl+Q","Quote selected text"));
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_ME, tr("Toggle /me command"), tr("Alt+M","Toggle /me command"));
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_EDITNEXTMESSAGE, tr("Edit next message"), tr("Ctrl+Down","Edit next message"), Shortcuts::WidgetShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_EDITPREVMESSAGE, tr("Edit previous message"), tr("Ctrl+Up","Edit previous message"), Shortcuts::WidgetShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_SENDCHATMESSAGE, tr("Send chat message"), tr("Return","Send chat message"), Shortcuts::WidgetShortcut);
@@ -242,6 +244,9 @@ IMessageEditWidget *MessageWidgets::newEditWidget(IMessageWindow *AWindow, QWidg
 {
 	IMessageEditWidget *widget = new EditWidget(this,AWindow,AParent);
 	FCleanupHandler.add(widget->instance());
+// *** <<< eyeCU <<< ***
+	connect(widget->textEdit(), SIGNAL(destroyed(QObject*)), SLOT(onTextEditDestroyed(QObject*)));
+// *** >>> eyeCU >>> ***
 	emit editWidgetCreated(widget);
 	return widget;
 }
@@ -267,6 +272,7 @@ IMessageToolBarWidget *MessageWidgets::newToolBarWidget(IMessageWindow *AWindow,
 	IMessageToolBarWidget *widget = new ToolBarWidget(AWindow,AParent);
 	FCleanupHandler.add(widget->instance());
 	insertToolBarQuoteAction(widget);
+	insertToolBarMeAction(widget);
 	emit toolBarWidgetCreated(widget);
 	return widget;
 }
@@ -569,7 +575,38 @@ Action *MessageWidgets::createQuouteAction(IMessageWindow *AWindow, QObject *APa
 	}
 	return NULL;
 }
+// *** <<< eyeCU <<< ***
+void MessageWidgets::insertToolBarMeAction(IMessageToolBarWidget *AWidget)
+{
+	Action *meAction = createMeAction(AWidget->messageWindow(),AWidget->instance());
+	if (meAction)
+	{
+		AWidget->toolBarChanger()->insertAction(meAction,TBG_MWTBW_MESSAGEWIDGETS_ME);
+		AWidget->toolBarChanger()->actionHandle(meAction)->setVisible(meAction->isVisible());
+		connect(AWidget->messageWindow()->instance(),SIGNAL(widgetLayoutChanged()),SLOT(onMessageWindowWidgetLayoutChanged()));
+	}
+}
 
+Action *MessageWidgets::createMeAction(IMessageWindow *AWindow, QObject *AParent)
+{
+	if (AWindow->viewWidget() && AWindow->editWidget())
+	{
+		Action *meAction = new Action(AParent);
+		meAction->setCheckable(true);
+		meAction->setData(ADR_ME_WINDOW,(qint64)AWindow->instance());
+		meAction->setText("/me");
+		meAction->setToolTip(tr("Toggle /me command"));
+		meAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGEWIDGETS_ME);
+		meAction->setShortcutId(SCT_MESSAGEWINDOWS_ME);
+		meAction->setVisible(AWindow->viewWidget()->isVisibleOnWindow() && AWindow->editWidget()->isVisibleOnWindow());
+		FMeActions.insert(AWindow->editWidget()->textEdit(), meAction);
+		connect(AWindow->editWidget()->textEdit(), SIGNAL(textChanged()), SLOT(onTextChanged()));
+		connect(meAction,SIGNAL(triggered(bool)),SLOT(onMeActionTriggered(bool)));
+		return meAction;
+	}
+	return NULL;
+}
+// *** >>> eyeCU >>> ***
 void MessageWidgets::onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu)
 {
 	IMessageViewWidget *widget = qobject_cast<IMessageViewWidget *>(sender());
@@ -665,6 +702,10 @@ void MessageWidgets::onMessageWindowWidgetLayoutChanged()
 		QAction *quoteActionHandle = window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_MESSAGEWIDGETS_QUOTE).value(0);
 		if (quoteActionHandle)
 			quoteActionHandle->setVisible(window->viewWidget()->isVisibleOnWindow() && window->editWidget()->isVisibleOnWindow());
+
+		QAction *meActionHandle = window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_MESSAGEWIDGETS_ME).value(0);
+		if (meActionHandle)
+			meActionHandle->setVisible(window->viewWidget()->isVisibleOnWindow() && window->editWidget()->isVisibleOnWindow());
 	}
 }
 
@@ -680,7 +721,41 @@ void MessageWidgets::onQuoteActionTriggered(bool)
 		window->editWidget()->textEdit()->setFocus();
 	}
 }
+// *** <<< eyeCU <<< ***
+void MessageWidgets::onMeActionTriggered(bool)
+{
+	Action *action = qobject_cast<Action *>(sender());
+	IMessageWindow *window = action!=NULL ? qobject_cast<IMessageWindow *>((QWidget *)action->data(ADR_QUOTE_WINDOW).toLongLong()) : NULL;
+	if (window && window->viewWidget() && window->viewWidget()->messageStyle() && window->editWidget())
+	{
+		QTextCursor cursor = window->editWidget()->textEdit()->textCursor();
+		cursor.movePosition(QTextCursor::Start);
+		if (window->editWidget()->textEdit()->toPlainText().startsWith("/me "))
+		{
+			cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, 4);
+			cursor.deleteChar();
+		}
+		else
+		{
+			cursor.setCharFormat(QTextCharFormat());
+			cursor.insertText("/me ");
+		}
+		window->editWidget()->textEdit()->setFocus();
+	}
+}
 
+void MessageWidgets::onTextChanged()
+{
+	QTextEdit *textEdit = qobject_cast<QTextEdit *>(sender());
+	if (textEdit)
+		FMeActions.value(textEdit)->setChecked(textEdit->toPlainText().startsWith("/me "));
+}
+
+void MessageWidgets::onTextEditDestroyed(QObject *AObject)
+{
+	FMeActions.remove(qobject_cast<QTextEdit *>(AObject));
+}
+// *** >>> eyeCU >>> ***
 void MessageWidgets::onAssignedTabPageDestroyed()
 {
 	FAssignedPages.removeAll(qobject_cast<IMessageTabPage *>(sender()));

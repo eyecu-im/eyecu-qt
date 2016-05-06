@@ -52,6 +52,9 @@
 #define   SCT_MESSAGEWINDOWS_EDITNEXTMESSAGE                       "message-windows.edit-next-message"
 #define   SCT_MESSAGEWINDOWS_SENDCHATMESSAGE                       "message-windows.send-chat-message"
 #define   SCT_MESSAGEWINDOWS_SENDNORMALMESSAGE                     "message-windows.send-normal-message"
+// *** <<< eyeCU <<< ***
+#define   SCT_MESSAGEWINDOWS_ME									   "message-windows.me"
+// *** >>> eyeCU >>> ***
 //FileTransfer
 #define   SCT_MESSAGEWINDOWS_SENDFILE                              "message-windows.sendfile"
 //MessageArchiver

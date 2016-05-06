@@ -108,7 +108,9 @@
 #define MNI_MESSAGEWIDGETS_TAB_MENU     "messagewidgetsTabMenu"
 #define MNI_MESSAGEWIDGETS_QUOTE        "messagewidgetsQuote"
 #define MNI_MESSAGEWIDGETS_SELECT       "messagewidgetsSelect"
-
+// *** <<< eyeCU <<< ***
+#define MNI_MESSAGEWIDGETS_ME			"messagewidgetsMe"
+// *** >>> eyeCU >>> ***
 //MetaContacts
 #define MNI_METACONTACTS_COMBINE        "metacontactsCombine"
 #define MNI_METACONTACTS_DETACH         "metacontactsDetach"
