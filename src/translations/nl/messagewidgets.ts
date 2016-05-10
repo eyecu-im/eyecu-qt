@@ -100,13 +100,13 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="596"/>
    <source>Toggle /me command</source>
-   <translation type="unfinished"/>
+   <translation>Wissel /mij commando</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
    <source>Alt+M</source>
    <comment>Toggle /me command</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+M</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
