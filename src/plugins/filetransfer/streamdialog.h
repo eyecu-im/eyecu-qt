@@ -48,8 +48,10 @@ private:
 	IDataStreamsManager *FDataManager;
 // *** <<< eyeCU <<< ***
 	QComboBox			*FMethodSelection;
-	bool				FMultipleSelection;
+	bool				FMultipleStreamSelection;
+	bool				FStreamSelection;
 	QHash<QCheckBox *, QString> FMethods;
+	QList<QString>		FAvailableMethods;
 // *** >>> eyeCU >>> ***
 };
 

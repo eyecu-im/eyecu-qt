@@ -29,7 +29,8 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 	FFileManager = AFileManager;
 	FDataManager = ADataManager;
 // *** <<< eyeCU <<< ***
-	FMultipleSelection    = Options::node(OPV_COMMON_ADVANCED).value().toBool() && FFileStream->streamKind()==IFileStream::SendFile;
+	FStreamSelection			= Options::node(OPV_COMMON_ADVANCED).value().toBool() || FFileStream->streamKind()==IFileStream::ReceiveFile;
+	FMultipleStreamSelection	= Options::node(OPV_COMMON_ADVANCED).value().toBool() && FFileStream->streamKind()==IFileStream::SendFile;
 // *** >>> eyeCU >>> ***
 	ui.pgbPrgress->setMinimum(0);
 	ui.pgbPrgress->setMaximum(100);
@@ -45,14 +46,14 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 		ui.lblContactLabel->setText(tr("From:"));
 	}
 // *** <<< eyeCU <<< ***
-	if (FMultipleSelection)
+	if (FMultipleStreamSelection)
 	{
 		QVBoxLayout			*layout = new QVBoxLayout();
 		layout->setSpacing(0);
 		ui.formLayout->setLayout(5, QFormLayout::FieldRole, layout);
 		ui.lblMethod->setText(tr("Methods:"));
 	}
-	else
+	else if (FStreamSelection)
 	{
 		FMethodSelection = new QComboBox(this);
 		ui.formLayout->setWidget(5, QFormLayout::FieldRole, FMethodSelection);
@@ -66,6 +67,8 @@ StreamDialog::StreamDialog(IDataStreamsManager *ADataManager, IFileStreamsManage
 			}
 		}
 	}
+	else
+		ui.lblMethod->hide();
 // *** >>> eyeCU >>> ***
 	ui.lblContact->setText(HTML_ESCAPE(FFileStream->contactJid().uFull()));
 
@@ -108,18 +111,20 @@ QList<QString> StreamDialog::selectedMethods() const
 {
 	QList<QString> methods;
 // *** <<< eyeCU <<< ***
-	if (FMultipleSelection)
+	if (FMultipleStreamSelection)
 	{
 		for (QHash<QCheckBox*, QString>::ConstIterator it=FMethods.constBegin(); it!=FMethods.constEnd(); ++it)
 			if (it.key()->isChecked())
 				methods.append(*it);
 	}
-	else
+	else if (FStreamSelection)
 	{
 		QComboBox *cmbMethod = qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget());
 		if (cmbMethod->currentIndex() >= 0)
 			methods.append(cmbMethod->itemData(cmbMethod->currentIndex()).toString());
 	}
+	else
+		methods = FAvailableMethods;
 // *** >>> eyeCU >>> ***
 	return methods;
 }
@@ -127,7 +132,7 @@ QList<QString> StreamDialog::selectedMethods() const
 void StreamDialog::setSelectableMethods(const QList<QString> &AMethods)
 {
 // *** <<< eyeCU <<< ***
-	if (FMultipleSelection)
+	if (FMultipleStreamSelection)
 	{
 		QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->layout());
 		foreach(const QString &methodNS, AMethods)
@@ -142,7 +147,7 @@ void StreamDialog::setSelectableMethods(const QList<QString> &AMethods)
 			}
 		}
 	}
-	else
+	else if (FStreamSelection)
 	{
 		QComboBox *cmbMethod = qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget());
 		cmbMethod->clear();
@@ -158,6 +163,8 @@ void StreamDialog::setSelectableMethods(const QList<QString> &AMethods)
 			cmbMethod->setCurrentIndex(index==-1?0:index);
 		}
 	}
+	else
+		FAvailableMethods = AMethods;
 // *** >>> eyeCU >>> ***
 }
 
@@ -277,10 +284,10 @@ QString StreamDialog::sizeName(qint64 ABytes) const
 // *** <<< eyeCU <<< ***
 void StreamDialog::enableMethodSelection(bool AEnable)
 {
-	if (FMultipleSelection)
+	if (FMultipleStreamSelection)
 		for (QHash<QCheckBox*, QString>::ConstIterator it=FMethods.constBegin(); it!=FMethods.constEnd(); ++it)
 			it.key()->setEnabled(AEnable);
-	else
+	else if (FStreamSelection)
 		qobject_cast<QComboBox *>(ui.formLayout->itemAt(5, QFormLayout::FieldRole)->widget())->setEnabled(AEnable);
 }
 // *** >>> eyeCU >>> ***
