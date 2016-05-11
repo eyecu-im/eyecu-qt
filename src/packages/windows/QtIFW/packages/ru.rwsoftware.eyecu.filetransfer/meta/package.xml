@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>File Transfer</DisplayName>
     <Description>Allows to exchange files with another contact</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-25</ReleaseDate>
-    <UpdateText>It is possible now to select multiple File Transfer methods in File Send dialog in advancved options mode. If default File Transfer method is not available, first available method selected.</UpdateText>
+    <Version>1.3.4</Version>
+    <ReleaseDate>2016-05-11</ReleaseDate>
+    <UpdateText>Do not show File Transfer method selection controls when sending files in newbie options mode. Always allow all the available methods.</UpdateText>
     <Name>ru.rwsoftware.eyecu.filetransfer</Name>
     <SortingPriority>83</SortingPriority>
     <Default>true</Default>

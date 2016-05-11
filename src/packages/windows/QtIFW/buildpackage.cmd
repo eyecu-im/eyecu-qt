@@ -7,9 +7,8 @@ set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
 echo Creating base package
-rem call substver.cmd %packagename% %version%
 
-rem goto repo
+goto build
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
