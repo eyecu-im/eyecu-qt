@@ -4,113 +4,113 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="262"/>
    <source>Yes, if supported by server</source>
-   <translation type="unfinished"/>
+   <translation>Так, у випадки якщо підтримується сервером</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="263"/>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="267"/>
    <source>Yes, if other archive is not available</source>
-   <translation type="unfinished"/>
+   <translation>Так, якщо інший архів недоступний</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="264"/>
    <source>No, do not save history on server</source>
-   <translation type="unfinished"/>
+   <translation>Ні, не зберігати історію на сервері</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="266"/>
    <source>Yes, if local archive is available</source>
-   <translation type="unfinished"/>
+   <translation>Так, якщо доступний локальний архів</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="268"/>
    <source>No, do not save history in local archive</source>
-   <translation type="unfinished"/>
+   <translation>Ні, не зберігати історію в локальному архіві</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="270"/>
    <source>Yes, if available</source>
-   <translation type="unfinished"/>
+   <translation>Так, якщо доступно</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="271"/>
    <source>Yes, if other replication method is not used</source>
-   <translation type="unfinished"/>
+   <translation>Так, якщо не використовуються інші методи реплікації</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="272"/>
    <source>No, do not copy local archive to the server</source>
-   <translation type="unfinished"/>
+   <translation>Ні, не копіювати локальні архіви на сервер</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="274"/>
    <source>Save messages with formatting</source>
-   <translation type="unfinished"/>
+   <translation>Зберігати повідомлення з форматуванням</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="275"/>
    <source>Save only messages text</source>
-   <translation type="unfinished"/>
+   <translation>Зберігати лише тексти повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="276"/>
    <source>Do not save messages</source>
-   <translation type="unfinished"/>
+   <translation>Не зберігати повідомлення</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="278"/>
    <source>Allow Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяти сесії ЗЗІ</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="279"/>
    <source>Forbid Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Забороняти сесії ЗЗІ</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="280"/>
    <source>Manually approve Off-The-Record sessions</source>
-   <translation type="unfinished"/>
+   <translation>Підтверджувати сесії ЗЗІ вручну</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="402"/>
    <source>Waiting for host response...</source>
-   <translation type="unfinished"/>
+   <translation>Очікування відповіді хоста...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="404"/>
    <source>History preferences is not available</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування історії не доступне</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="406"/>
    <source>Failed to save archive preferences: %1</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалося зберегти налаштування історії: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
    <source>New item preferences</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування нових пунктів</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="505"/>
    <source>Enter item JID:</source>
-   <translation type="unfinished"/>
+   <translation>Введіть JID:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="515"/>
    <source>Unacceptable item JID</source>
-   <translation type="unfinished"/>
+   <translation>Недопустимий JID</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="515"/>
    <source>&apos;%1&apos; is not valid JID or already exists</source>
-   <translation type="unfinished"/>
+   <translation>&apos;%1&apos; - невірний чи вже існуючий JID.   </translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="408"/>
    <source>Preferences accepted</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування збережено</translation>
   </message>
  </context>
  <context>
@@ -118,113 +118,113 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="26"/>
    <source>Auto archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування авто архівування</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="41"/>
    <source>Enable automatic archiving of messages on the server</source>
-   <translation type="unfinished"/>
+   <translation>Ввімкнути автоматичне архівування повідомлень на сервері</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="59"/>
    <source>Archiving policy</source>
-   <translation type="unfinished"/>
+   <translation>Політика архівування</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="94"/>
    <source>Save history in a local archive?</source>
-   <translation type="unfinished"/>
+   <translation>Зберігати історію в локальному архіві?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="107"/>
    <source>Save history on server?</source>
-   <translation type="unfinished"/>
+   <translation>Зберігати історію на сервері?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="120"/>
    <source>Copy local archive to the server?</source>
-   <translation type="unfinished"/>
+   <translation>Копіювати локальний архів на сервер?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="154"/>
    <source>Default archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування архівування за замовчуванням</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="179"/>
    <source>Message archiving:</source>
-   <translation type="unfinished"/>
+   <translation>Архівування повідомлень:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="202"/>
    <source>Off-The-Record sessions:</source>
-   <translation type="unfinished"/>
+   <translation>Сесії ЗЗІ:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="215"/>
    <source>Remove messages after, days:</source>
-   <translation type="unfinished"/>
+   <translation>Видаляти повідомлення після кількості днів:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="240"/>
    <source>(0 - do not remove)</source>
-   <translation type="unfinished"/>
+   <translation>(0 - не видаляти)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="276"/>
    <source>Individual archiving preferences</source>
-   <translation type="unfinished"/>
+   <translation>Індивідуальні налаштування архівування повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="310"/>
    <source>JID</source>
-   <translation type="unfinished"/>
+   <translation>JID</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="313"/>
    <source>Contact identifier</source>
-   <translation type="unfinished"/>
+   <translation>Ідентифікатор контакта</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="318"/>
    <source>Save</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="321"/>
    <source>Message archiving</source>
-   <translation type="unfinished"/>
+   <translation>Архівування повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="329"/>
    <source>OTR</source>
-   <translation type="unfinished"/>
+   <translation>ЗЗІ</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="332"/>
    <source>Off-The-Record sessions </source>
-   <translation type="unfinished"/>
+   <translation>Сесії ЗЗІ</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="340"/>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="390"/>
    <source>Remove</source>
-   <translation type="unfinished"/>
+   <translation>Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="343"/>
    <source>Remove messages after, days</source>
-   <translation type="unfinished"/>
+   <translation>Видаляти повідомлення після певної кількості днів</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="351"/>
    <source>Exact</source>
-   <translation type="unfinished"/>
+   <translation>Точно</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="354"/>
    <source>Settings are applied to contact which JID is exactly matches</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування стосуються тих контактів, JID котрих точно співпадає</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.ui" line="383"/>
@@ -237,17 +237,17 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="42"/>
    <source>%n year(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n рік</numerusform><numerusform>%n роки</numerusform><numerusform>%n років</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="48"/>
    <source>%n month(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n місяць</numerusform><numerusform>%n місяці</numerusform><numerusform>%n місяців</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="54"/>
    <source>%n day(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>%n день</numerusform><numerusform>%n дні</numerusform><numerusform>%n днів</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="59"/>
@@ -330,17 +330,17 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="132"/>
    <source>Conversations are not found</source>
-   <translation type="unfinished"/>
+   <translation>Розмови не знайдені</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="144"/>
    <source>Conversation is not selected</source>
-   <translation type="unfinished"/>
+   <translation>Розмови не вибрані</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="181"/>
    <source>Export</source>
-   <translation type="unfinished"/>
+   <translation>Експортувати</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="203"/>
@@ -350,12 +350,12 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="255"/>
    <source>Conversation History</source>
-   <translation type="unfinished"/>
+   <translation>Історія розмов</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="272"/>
    <source>Search is not supported</source>
-   <translation type="unfinished"/>
+   <translation>Пошук не підтримується</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="276"/>
@@ -365,22 +365,22 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="610"/>
    <source>Load more conversations</source>
-   <translation type="unfinished"/>
+   <translation>Завантажити більше розмов</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="612"/>
    <source>All conversations loaded</source>
-   <translation type="unfinished"/>
+   <translation>Всі розмови завантажено</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="616"/>
    <source>%n conversation header(s) found</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Знайдено %n заголовок розмов</numerusform><numerusform>Знайдено %n заголовки розмов</numerusform><numerusform>Знайдено %n заголовків розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="618"/>
    <source>Conversation headers are not found</source>
-   <translation type="unfinished"/>
+   <translation>Заголовки розмов не знайдені</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="625"/>
@@ -390,7 +390,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="632"/>
    <source>Retry</source>
-   <translation type="unfinished"/>
+   <translation>Повторити</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="635"/>
@@ -400,12 +400,12 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="648"/>
    <source>Select conversation to show</source>
-   <translation type="unfinished"/>
+   <translation>Обрати розмови для відображення</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="650"/>
    <source>%n conversation(s) shown</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Показано %n розмову</numerusform><numerusform>Показано %n розмови</numerusform><numerusform>Показано %n розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="656"/>
@@ -415,7 +415,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
    <source>Shown %1 of %2 conversations...</source>
-   <translation type="unfinished"/>
+   <translation>Показані %1 з %2 розмов...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="662"/>
@@ -432,47 +432,47 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="940"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2 in %3</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; з %2 в %3</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="946"/>
    <source>&lt;b&gt;%1&lt;/b&gt; in %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; в %2</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="952"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1&lt;/b&gt; в %2</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1146"/>
    <source>Found %n occurrence(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадінь</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1156"/>
    <source>Phrase not found</source>
-   <translation type="unfinished"/>
+   <translation>Фраза не знайдена</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1227"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for &lt;b&gt;%2 %3&lt;/b&gt;?</source>
-   <translation type="unfinished"/>
+   <translation>з &lt;b&gt;%1&lt;/b&gt; для &lt;b&gt;%2 %3&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1233"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; started at &lt;b&gt;%2&lt;/b&gt;?</source>
-   <translation type="unfinished"/>
+   <translation>з &lt;b&gt;%1&lt;/b&gt; починаючи з &lt;b&gt;%2&lt;/b&gt;?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1237"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for all time?</source>
-   <translation type="unfinished"/>
+   <translation>з &lt;b&gt;%1&lt;/b&gt; за весь час?</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1245"/>
    <source>And %n other conversation(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>І %n інша розмова</numerusform><numerusform>І %n інші розмови</numerusform><numerusform>І %n інших розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1249"/>
@@ -482,7 +482,7 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1250"/>
    <source>Do you want to remove the following conversations?</source>
-   <translation type="unfinished"/>
+   <translation>Ви хочете видалити ці розмови?</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1266"/>
@@ -498,22 +498,22 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1319"/>
    <source>Remove Selected Conversations</source>
-   <translation type="unfinished"/>
+   <translation>Видалити обрані розмови</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1330"/>
    <source>Show Contact History</source>
-   <translation type="unfinished"/>
+   <translation>Показати історію контакту</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1337"/>
    <source>Remove all History with %1</source>
-   <translation type="unfinished"/>
+   <translation>Видалити всю історію з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1348"/>
    <source>Remove History for %1</source>
-   <translation type="unfinished"/>
+   <translation>Видалити історію з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1359"/>
@@ -523,37 +523,37 @@
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1380"/>
    <source>Print Conversation History</source>
-   <translation type="unfinished"/>
+   <translation>Роздрукувати історію розмови</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
    <source>HTML file (*.html)</source>
-   <translation type="unfinished"/>
+   <translation>Файл HTML (*.html)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
    <source>Text file (*.txt)</source>
-   <translation type="unfinished"/>
+   <translation>Текстовий файл (*.txt)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1396"/>
    <source>Save Conversations to File</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти розмову у файл</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1425"/>
    <source>Print...</source>
-   <translation type="unfinished"/>
+   <translation>Друкувати...</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1431"/>
    <source>Save as HTML</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти як HTML</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1437"/>
    <source>Save as Text</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти у вигляді тексту</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1607"/>
@@ -655,28 +655,28 @@
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="433"/>
    <source>Archive preferences</source>
-   <translation type="unfinished"/>
+   <translation>Налаштування архіву</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="448"/>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="454"/>
    <source>Archive synchronization</source>
-   <translation type="unfinished"/>
+   <translation>Синхронізація архіву</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="449"/>
    <source>Synchronize history between archives</source>
-   <translation type="unfinished"/>
+   <translation>Синхронізація історії поміж архівами</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="455"/>
    <source>Duplicate messages in local archive (not recommended)</source>
-   <translation type="unfinished"/>
+   <translation>Дублювати повідомлення в локальному архіві (не рекомендовано)</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="462"/>
    <source>Used history archives</source>
-   <translation type="unfinished"/>
+   <translation>Використано архіви історій</translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/messagearchiver.cpp" line="672"/>
