@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.18</Version>
-    <ReleaseDate>2016-05-11</ReleaseDate>
+    <Version>1.0.20</Version>
+    <ReleaseDate>2016-05-31</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
-    <UpdateText>Fixed block character format inheritance mechanism.</UpdateText>
+    <UpdateText>Fixed rich to plain text conversion</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>
 </Package>

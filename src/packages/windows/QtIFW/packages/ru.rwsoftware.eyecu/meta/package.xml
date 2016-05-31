@@ -2,9 +2,9 @@
 <Package>
     <DisplayName>eyeCU</DisplayName>
     <Description>XMPP-based IM client with positioning</Description>
-    <Version>1.3.20</Version>
-    <ReleaseDate>2016-05-11</ReleaseDate>
-    <UpdateText>Added /me command button to message edit toolbar.</UpdateText>
+    <Version>1.3.21</Version>
+    <ReleaseDate>2016-05-12</ReleaseDate>
+    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
     <Name>ru.rwsoftware.eyecu</Name>
     <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
     <Licenses>
