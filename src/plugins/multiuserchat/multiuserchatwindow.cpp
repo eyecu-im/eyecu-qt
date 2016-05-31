@@ -71,7 +71,7 @@
 #define MUC_URL_GRANT_VOICE         "GrantVoice"
 #define MUC_URL_REQUEST_VOICE       "RequestVoice"
 // *** <<< eyeCU <<< ***
-#define MUC_URL_MENTION_NICK        "MentionNick"
+#define MUC_URL_NICKNAME			"Nickname"
 // *** >>> eyeCU >>> ***
 MultiUserChatWindow::MultiUserChatWindow(IMultiUserChatManager *AMultiChatManager, IMultiUserChat *AMultiChat) : QMainWindow(NULL)
 {
@@ -453,7 +453,7 @@ bool MultiUserChatWindow::messageViewUrlOpen(int AOrder, IMessageViewWidget *AWi
 			FExitRoom->trigger();
 		}
 // *** <<< eyeCU <<< ***
-		else if (action==MUC_URL_MENTION_NICK)
+		else if (action==MUC_URL_NICKNAME)
 		{
 			QTextCursor cursor = FEditWidget->textEdit()->textCursor();
 			cursor.beginEditBlock();
@@ -1122,10 +1122,6 @@ void MultiUserChatWindow::createMessageWidgets()
 			SLOT(onMultiChatContentAppended(const QString &, const IMessageStyleContentOptions &)));
 		connect(FViewWidget->instance(),SIGNAL(messageStyleOptionsChanged(const IMessageStyleOptions &, bool)),
 			SLOT(onMultiChatMessageStyleOptionsChanged(const IMessageStyleOptions &, bool)));
-// *** <<< eyeCU <<< ***
-		connect(FViewWidget->instance(),SIGNAL(viewContextMenu(QPoint, Menu *)),
-			SLOT(onViewWidgetContextMenu(QPoint, Menu *)));
-// *** >>> eyeCU >>> ***
 		connect(FViewWidget->instance(),SIGNAL(messageStyleChanged(IMessageStyle *, const IMessageStyleOptions &)),
 			SLOT(onMultiChatMessageStyleChanged(IMessageStyle *, const IMessageStyleOptions &)));
 		FViewSplitter->insertWidget(MUCWW_VIEWWIDGET,FViewWidget->instance(),100);
@@ -1506,12 +1502,6 @@ void MultiUserChatWindow::updateRecentItemActiveTime(IMessageChatWindow *AWindow
 	}
 }
 
-IMultiUser *MultiUserChatWindow::userAtViewPosition(const QPoint &APosition) const
-{
-	QTextDocumentFragment fragmet = FViewWidget->textFragmentAt(APosition);
-	return FMultiChat!=NULL ? FMultiChat->findUser(fragmet.toPlainText()) : NULL;
-}
-
 void MultiUserChatWindow::insertUserMention(IMultiUser *AUser, bool ASetFocus) const
 {
 	if (AUser && FEditWidget && AUser!=FMultiChat->mainUser())
@@ -1796,9 +1786,9 @@ void MultiUserChatWindow::showMultiChatUserMessage(const Message &AMessage, cons
 // *** <<< eyeCU <<< ***
 			QUrl url;
 			url.setScheme(MUC_URL_SCHEME);
-			url.setFragment(MUC_URL_MENTION_NICK);
-			url.setPath(options.senderName);
-			options.senderNameLinked = QString("<a href=\"%1\" style=\"color: inherit\">%2</a>").arg(QString::fromUtf8(url.toEncoded())).arg(options.senderName);
+			url.setFragment(MUC_URL_NICKNAME);
+			url.setPath(ANick);
+			options.senderNameLinked = QString("<a href=\"%1\" style=\"color: inherit\">%2</a>").arg(url.toString()).arg(options.senderName);
 // *** >>> eyeCU >>> ***
 		}
 		else
@@ -2179,28 +2169,6 @@ bool MultiUserChatWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 // *** >>> eyeCU >>> ***
 		}
 	}
-/*** <<< eyeCU <<< ***
-	else if (FViewWidget && AObject==FViewWidgetViewport)
-	{
-		if (AEvent->type()==QEvent::MouseButtonPress || AEvent->type()==QEvent::MouseButtonRelease)
-		{
-			QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(AEvent);
-			if (mouseEvent!=NULL && mouseEvent->button()==Qt::MidButton)
-			{
-				if (AEvent->type() == QEvent::MouseButtonPress)
-				{
-					FMousePressedPos = mouseEvent->pos();
-				}
-				else if ((FMousePressedPos - mouseEvent->pos()).manhattanLength() < QApplication::startDragDistance())
-				{
-					IMultiUser *user = userAtViewPosition(FMousePressedPos);
-					if (user != NULL)
-						insertUserMention(user,true);
-				}
-			}
-		}
-	}
- *** >>> eyeCU >>> ***/
 	return QMainWindow::eventFilter(AObject,AEvent);
 }
 
@@ -2362,25 +2330,7 @@ void MultiUserChatWindow::onMultiChatStateChanged(int AState)
 
 	updateStaticRoomActions();
 }
-// *** <<< eyeCU <<< ***
-void MultiUserChatWindow::onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu)
-{
-	IMessageViewWidget *widget = qobject_cast<IMessageViewWidget *>(sender());
-	if (widget)
-	{
-		QTextDocumentFragment textSelection(widget->selection());
-		QTextDocumentFragment textFragment(widget->textFragmentAt(APosition));
-		QUrl link(TextManager::getTextFragmentHref(textFragment.isEmpty() ? textSelection : textFragment));
-		if (link.isValid() && link.scheme()=="nick")
-		{
-			AMenu->clear();
-			IMultiUser *user = FMultiChat->findUser(link.path());
-			if (user)
-				contextMenuForUser(user, AMenu);
-		}
-	}
-}
-// *** >>> eyeCU >>> ***
+
 void MultiUserChatWindow::onMultiChatRoomTitleChanged(const QString &ATitle)
 {
 	Q_UNUSED(ATitle);
@@ -2760,12 +2710,21 @@ void MultiUserChatWindow::onMultiChatEditWidgetKeyEvent(QKeyEvent *AKeyEvent, bo
 
 void MultiUserChatWindow::onMultiChatViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu)
 {
-	IMultiUser *user = userAtViewPosition(APosition);
-	if (user)
-	{
-		contextMenuForUser(user,AMenu);
-		if (!AMenu->isEmpty())
+// *** <<< eyeCU <<< ***
+	IMessageViewWidget *widget = qobject_cast<IMessageViewWidget *>(sender());
+	if (widget)
+	{		
+		QTextDocumentFragment textSelection(widget->selection());
+		QTextDocumentFragment textFragment(widget->textFragmentAt(APosition));
+		QUrl link(TextManager::getTextFragmentHref(textFragment.isEmpty() ? textSelection : textFragment));
+		if (link.isValid() && link.scheme()==MUC_URL_SCHEME && link.fragment()==MUC_URL_NICKNAME)
 		{
+			AMenu->clear();
+			IMultiUser *user = FMultiChat->findUser(link.path());
+			if (user)
+			{
+				contextMenuForUser(user, AMenu);
+// *** >>> eyeCU <<< ***
 			Action *userNick = new Action(AMenu);
 			userNick->setText(QString("<%1>").arg(user->nick()));
 			userNick->setEnabled(false);
@@ -2773,6 +2732,7 @@ void MultiUserChatWindow::onMultiChatViewWidgetContextMenu(const QPoint &APositi
 			userFont.setBold(true);
 			userNick->setFont(userFont);
 			AMenu->addAction(userNick,0);
+			} // *** <<< eyeCU >>> ***
 		}
 	}
 }

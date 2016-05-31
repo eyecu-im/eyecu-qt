@@ -137,7 +137,6 @@ protected:
 	void updateStaticRoomActions();
 	bool execShortcutCommand(const QString &AText);
 	void updateRecentItemActiveTime(IMessageChatWindow *AWindow);
-	IMultiUser *userAtViewPosition(const QPoint &APosition) const;
 	void insertUserMention(IMultiUser *AUser, bool ASetFocus = false) const;
 	QStringList findContactsName(const QList<Jid> &AContacts) const;
 protected:
@@ -172,9 +171,6 @@ protected slots:
 	//Common
 	void onMultiChatRoomTitleChanged(const QString &ATitle);
 	void onMultiChatRequestFailed(const QString &AId, const XmppError &AError);
-// *** <<< eyeCU <<< ***
-	void onViewWidgetContextMenu(const QPoint &APosition, Menu *AMenu);
-// *** >>> eyeCU >>> ***
 	//Occupant
 	void onMultiChatPresenceChanged(const IPresenceItem &APresence);
 	void onMultiChatNicknameChanged(const QString &ANick, const XmppError &AError);
