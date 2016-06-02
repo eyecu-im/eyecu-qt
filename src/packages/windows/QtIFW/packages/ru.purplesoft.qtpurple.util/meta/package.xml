@@ -2,10 +2,10 @@
 <Package>
     <DisplayName>Qt Util</DisplayName>
     <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.20</Version>
-    <ReleaseDate>2016-05-31</ReleaseDate>
+    <Version>1.0.21</Version>
+    <ReleaseDate>2016-06-02</ReleaseDate>
     <Name>ru.purplesoft.qtpurple.util</Name>
-    <UpdateText>Fixed rich to plain text conversion</UpdateText>
+    <UpdateText>No link URL were added to plain text, if link is at the end of the text. Display image alternative text enclosed by straight slashes, not parentheses. Automatically encode URLs in &quot;href&quot; and &quot;src&quot; attributes.</UpdateText>
     <Dependencies>ru.purplesoft.qtpurple</Dependencies>
     <Virtual>true</Virtual>
 </Package>
