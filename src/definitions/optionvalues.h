@@ -574,13 +574,19 @@
 #define OPV_ATTENTION_AYWAYSPLAYSOUND                   "attention.always-play-sound"
 
 // Jingle RTP
-#define OPV_JINGLERTP                                   "jinglertp"
-#define OPV_JINGLERTP_NOTIFYINTERVAL                    "jinglertp.notify-interval"
-#define OPV_JINGLERTP_USERTCP                           "jinglertp.use-rtcp"
+#define OPV_JINGLE                                      "jingle"
+#define OPV_JINGLE_RTP                                  "jingle.rtp"
+#define OPV_JINGLE_RTP_AUDIO_INPUT                      "jingle.rtp.audio.input"
+#define OPV_JINGLE_RTP_AUDIO_OUTPUT                     "jingle.rtp.audio.output"
+#define OPV_JINGLE_RTP_AUDIO_BIRATE                     "jingle.rtp.audio.bitrate"
+#define OPV_JINGLE_RTP_PT_DYNAMIC                       "jingle.rtp.pt.dynamic"
+#define OPV_JINGLE_RTP_PT_USED                          "jingle.rtp.pt.used"
+#define OPV_JINGLE_RTP_PT_USED                          "jingle.rtp.pt.used"
+
 // Client Icons
-#define OPV_ROSTER_CLIENTICON_SHOW                     "roster.clienticon.show"
-#define OPV_MUC_CLIENTICON_SHOW                        "muc.clienticon.show"
-#define OPV_MESSAGES_CLIENTICON_DISPLAY                "messages.clienticon.display"
+#define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"
+#define OPV_MUC_CLIENTICON_SHOW                         "muc.clienticon.show"
+#define OPV_MESSAGES_CLIENTICON_DISPLAY                 "messages.clienticon.display"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONVALUES_H

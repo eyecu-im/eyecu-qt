@@ -38,7 +38,7 @@ PlayerWindow::PlayerWindow(QObject *APlugin, MediaStreamer *AMediaStreamer, QStr
 
 	calculate(AFileName, AFileLenth);
 
-	connect(FMediaStreamer->instance(),SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
+	connect(FMediaStreamer,SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
 
     show();
 	LOG_DEBUG("PlayerWindow created");
@@ -247,7 +247,7 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 	ui->btnPlay->setToolTip(tr("Pause"));
 	ui->btnPlay->setEnabled(true);
 
-	connect(FMediaStreamer->instance(),SIGNAL(playTimeChanged(qint64)),SLOT(onPlayTimeChanged(qint64)));
+	connect(FMediaStreamer,SIGNAL(playTimeChanged(qint64)),SLOT(onPlayTimeChanged(qint64)));
 
 	LOG_DEBUG("PlayerWindow::calculate(): finished");
 }
@@ -258,9 +258,9 @@ void PlayerWindow::start()
 	LOG_INFO(QString("File name: %1").arg(FFile->fileName()));
 	if(FFile->open(QFile::ReadOnly))
 	{
-		FMediaStreamer = new MediaStreamer(FFile, this);
+		FMediaStreamer = new MediaStreamer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
 		LOG_DEBUG("Media Streamer created!");
-		connect(FMediaStreamer->instance(),SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
+		connect(FMediaStreamer, SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
 		FMediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
 		FMediaStreamer->setStatus(MediaStreamer::Running);
 	}
@@ -401,7 +401,7 @@ void PlayerWindow::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			}
 			if(FMediaStreamer)
 			{
-				FMediaStreamer->instance()->deleteLater();
+				FMediaStreamer->deleteLater();
 				FMediaStreamer=NULL;
 				LOG_DEBUG("Media Streamer destroyed!");
 			}

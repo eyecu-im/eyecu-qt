@@ -38,16 +38,9 @@ signals:
 
 protected slots:
     void modify(int);
-    void deviceChanged(int index);
-    void videoDeviceChanged(int index);
 
 protected:
     void changeEvent(QEvent *e);
-
-    void getSuppSampleRates();
-
-private:
-    QAudioDeviceInfo m_device;
 };
 
 #endif // JINGLERTPOPTIONS_H

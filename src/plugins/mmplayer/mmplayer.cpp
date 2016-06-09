@@ -196,15 +196,15 @@ void MmPlayer::onFileStreamStateChanged()
             FifoDataBuffer *buffer=new FifoDataBuffer(0, this);
             if (buffer->input()->open(QIODevice::ReadOnly))
             {
-				MediaStreamer *mediaStreamer=new MediaStreamer(buffer->input(), this);
+				MediaStreamer *mediaStreamer=new MediaStreamer(QAudioDeviceInfo::defaultOutputDevice(), buffer->input(), this);
                 if(mediaStreamer)
                     if(buffer->output()->open(QIODevice::WriteOnly))
                     {
                         stream->addOutputDevice(buffer->output());
                         FBuffers.insert(stream, buffer);
-                        FStreamerBuffers.insert(mediaStreamer->instance(), buffer);
-						connect(mediaStreamer->instance(),SIGNAL(statusChanged(int,int)),SLOT(onMediaStreamStatusChanged(int,int)));
-                        connect(mediaStreamer->instance(),SIGNAL(destroyed()),SLOT(onMediaStreamerDestroyed()));
+						FStreamerBuffers.insert(mediaStreamer, buffer);
+						connect(mediaStreamer,SIGNAL(statusChanged(int,int)),SLOT(onMediaStreamStatusChanged(int,int)));
+						connect(mediaStreamer,SIGNAL(destroyed()),SLOT(onMediaStreamerDestroyed()));
 						mediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
 						mediaStreamer->setStatus(MediaStreamer::Running);
                     }

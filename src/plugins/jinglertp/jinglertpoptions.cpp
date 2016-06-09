@@ -2,18 +2,22 @@
 #include <definitions/optionvalues.h>
 
 JingleRtpOptions::JingleRtpOptions(QWidget *parent):
-    QWidget(parent),ui(new Ui::JingleRtpOptions),m_device(QAudioDeviceInfo::defaultInputDevice())
+	QWidget(parent),ui(new Ui::JingleRtpOptions)
 {
     ui->setupUi(this);
     QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-    for(int i = 0; i < devices.size(); ++i)
-        ui->cbCodec->addItem(devices.at(i).deviceName(), qVariantFromValue(devices.at(i)));
+	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
+		ui->cmbAudioDeviceInput->addItem((*it).deviceName(), qVariantFromValue(*it));
 
-    getSuppSampleRates();
+	devices = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
+	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
+		ui->cmbAudioDeviceOutput->addItem((*it).deviceName(), qVariantFromValue(*it));
 
-    connect(ui->cbCodec, SIGNAL(activated(int)),SLOT(deviceChanged(int)));
-    connect(ui->cbVideoCodec,SIGNAL(activated(int)),this,SLOT(videoDeviceChanged(int)));
-    connect(ui->cbInterval,SIGNAL(activated(int)),this,SLOT(modify(int)));
+	// getSuppSampleRates();
+
+//    connect(ui->cbCodec, SIGNAL(activated(int)),SLOT(deviceChanged(int)));
+//    connect(ui->cbVideoCodec,SIGNAL(activated(int)),this,SLOT(videoDeviceChanged(int)));
+//    connect(ui->cbInterval,SIGNAL(activated(int)),this,SLOT(modify(int)));
 
     reset();
 }
@@ -30,47 +34,34 @@ void JingleRtpOptions::modify(int s)
     emit modified();
 }
 
-void JingleRtpOptions::deviceChanged(int index)
-{
-    m_device = ui->cbCodec->itemData(index).value<QAudioDeviceInfo>();
-    getSuppSampleRates();
-    emit modified();
-}
-
-void JingleRtpOptions::videoDeviceChanged(int index)
-{
-	Q_UNUSED(index)
-    emit modified();
-}
-
-void JingleRtpOptions::getSuppSampleRates()
-{
-    ui->cbSmRate->clear();
-    //!-0--setSampleRate,Hz --
-	#if QT_VERSION >= 0x040700
-        QList<int> suppSampleRates = m_device.supportedSampleRates();
-    #else
-        QList<int> suppSampleRates = m_device.supportedFrequencies();
-    #endif
-        qSort(suppSampleRates.begin(),suppSampleRates.end());
-    QStringList sampleRate;
-    for(int i = 0; i <suppSampleRates.size(); i++ ){
-        sampleRate << QString().setNum(suppSampleRates.at(i));
-    }
-    ui->cbSmRate->addItems(sampleRate);
-    //int prefSmRate=m_device.preferredFormat().sampleRate();
-    //! save to STORAGE ---
-}
-
 void JingleRtpOptions::apply()
 {
-    Options::node(OPV_JINGLERTP_USERTCP).setValue(ui->cbUseRtcp->isChecked());
+//	Options::node(OPV_JINGLERTP_USERTCP).setValue(ui->cbUseRtcp->isChecked());
+	Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).setValue(QVariant::fromValue(ui->cmbAudioDeviceInput->itemData(ui->cmbAudioDeviceInput->currentIndex())));
+	Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT).setValue(QVariant::fromValue(ui->cmbAudioDeviceOutput->itemData(ui->cmbAudioDeviceOutput->currentIndex())));
     emit childApply();
 }
 
 void JingleRtpOptions::reset()
 {
-    ui->cbUseRtcp->setChecked(Options::node(OPV_JINGLERTP_USERTCP).value().toBool());
+	if (ui->cmbAudioDeviceInput->count())
+	{
+		QVariant name = Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).value();
+		int index = ui->cmbAudioDeviceInput->findData(info);
+		if (index==-1)
+			index = ui->cmbAudioDeviceInput->findData(QVariant::fromValue(QAudioDeviceInfo::defaultInputDevice()));
+		ui->cmbAudioDeviceInput->setCurrentIndex(index);
+	}
+
+	if (ui->cmbAudioDeviceInput->count())
+	{
+		QVariant info = Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT).value();
+		int index = ui->cmbAudioDeviceOutput->findData(info);
+		if (index==-1)
+			index = ui->cmbAudioDeviceOutput->findData(QVariant::fromValue(QAudioDeviceInfo::defaultOutputDevice()));
+		ui->cmbAudioDeviceOutput->setCurrentIndex(index);
+	}
+
     emit childReset();
 }
 

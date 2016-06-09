@@ -150,7 +150,6 @@ protected slots:
     void onTabPageActivated();    
     void onCall();
     void onHangup();
-    void onTestMicr(bool state); //! --- MICROPHONE TEST ----
     void onChatWindowCreated(IMessageChatWindow *AWindow);
     void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 

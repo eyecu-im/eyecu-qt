@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>278</width>
-    <height>172</height>
+    <width>587</width>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Jingle RTP options</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+   <property name="spacing">
+    <number>4</number>
+   </property>
    <property name="leftMargin">
     <number>5</number>
    </property>
@@ -26,17 +29,8 @@
    <property name="bottomMargin">
     <number>5</number>
    </property>
-   <property name="spacing">
-    <number>4</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="audioBox">
-     <property name="minimumSize">
-      <size>
-       <width>265</width>
-       <height>70</height>
-      </size>
-     </property>
+   <item>
+    <widget class="QGroupBox" name="gpbAudio">
      <property name="font">
       <font>
        <pointsize>8</pointsize>
@@ -45,7 +39,13 @@
      <property name="title">
       <string>Audio</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
+     <layout class="QFormLayout" name="formLayout">
+      <property name="horizontalSpacing">
+       <number>5</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>3</number>
+      </property>
       <property name="leftMargin">
        <number>5</number>
       </property>
@@ -58,192 +58,411 @@
       <property name="bottomMargin">
        <number>2</number>
       </property>
-      <property name="horizontalSpacing">
-       <number>5</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>3</number>
-      </property>
-      <item row="1" column="2">
-       <widget class="QComboBox" name="cbInterval">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>70</width>
-          <height>20</height>
-         </size>
-        </property>
-        <item>
-         <property name="text">
-          <string notr="true">10</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">20</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">30</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">50</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">80</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">100</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">150</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">200</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">250</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="0" column="1" colspan="2">
-       <widget class="QComboBox" name="cbCodec">
-        <property name="minimumSize">
-         <size>
-          <width>210</width>
-          <height>20</height>
-         </size>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
+       <widget class="QLabel" name="lblAudioDeviceInput">
         <property name="text">
-         <string>Codec</string>
+         <string>Input device</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="maximumSize">
-         <size>
-          <width>160</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Notify Interval, ms</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QComboBox" name="cbSmRate"/>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>Sample rate, Hz</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="videoBox">
-     <property name="minimumSize">
-      <size>
-       <width>265</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="title">
-      <string>Video</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="topMargin">
-       <number>2</number>
-      </property>
-      <property name="rightMargin">
-       <number>6</number>
-      </property>
-      <property name="bottomMargin">
-       <number>7</number>
-      </property>
-      <property name="horizontalSpacing">
-       <number>5</number>
-      </property>
-      <property name="verticalSpacing">
-       <number>3</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="maximumSize">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Codec</string>
+        <property name="buddy">
+         <cstring>cmbAudioDeviceInput</cstring>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="cbVideoCodec">
-        <property name="minimumSize">
+       <widget class="QComboBox" name="cmbAudioDeviceInput"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblAudioDeviceOutput">
+        <property name="text">
+         <string>Output device</string>
+        </property>
+        <property name="buddy">
+         <cstring>cmbAudioDeviceOutput</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cmbAudioDeviceOutput"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="lblAudioBitrate">
+        <property name="text">
+         <string>Bitrate</string>
+        </property>
+        <property name="buddy">
+         <cstring>spbBitrate</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="spbBitrate"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gpbNetwork">
+     <property name="title">
+      <string>Network</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblInterfaces">
+        <property name="text">
+         <string>Interfaces to be used</string>
+        </property>
+        <property name="buddy">
+         <cstring>lwInterfaces</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QListWidget" name="lwInterfaces">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblPortRange">
+        <property name="text">
+         <string>Port range</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="hlytPortRange">
+        <item>
+         <widget class="QLabel" name="lbPortRangelFrom">
+          <property name="text">
+           <string>from</string>
+          </property>
+          <property name="buddy">
+           <cstring>spbPortRangeFrom</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spbPortRangeFrom">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>65534</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="lbllPortRangeTo">
+          <property name="text">
+           <string>to</string>
+          </property>
+          <property name="buddy">
+           <cstring>spbPortRangeTo</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spbPortRangeTo">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>65534</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="gpbPayloadTypes">
+     <property name="title">
+      <string>Payload types</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,1">
+      <item row="1" column="2" rowspan="6">
+       <widget class="QTreeWidget" name="twPayloadTypesUsed">
+        <property name="columnCount">
+         <number>5</number>
+        </property>
+        <attribute name="headerDefaultSectionSize">
+         <number>35</number>
+        </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>20</number>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Codec</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Clock rate</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Channels</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Media type</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUsedUp">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUsedDown">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lblPayloadTypesUsed">
+        <property name="text">
+         <string>In use</string>
+        </property>
+        <property name="buddy">
+         <cstring>twPayloadTypesUsed</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
          <size>
-          <width>210</width>
-          <height>20</height>
+          <width>20</width>
+          <height>40</height>
          </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUnuse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <layout class="QHBoxLayout" name="hlPayloadTypesAvailableActions">
+        <item>
+         <widget class="QPushButton" name="pbPayloadTypeAdd">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Add</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbPayloadTypeEdit">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Edit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pbPayloadTypeRemove">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Remove</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" rowspan="6">
+       <widget class="QTreeWidget" name="twPayloadTypesAvailable">
+        <property name="rootIsDecorated">
+         <bool>false</bool>
+        </property>
+        <property name="itemsExpandable">
+         <bool>false</bool>
+        </property>
+        <property name="allColumnsShowFocus">
+         <bool>false</bool>
+        </property>
+        <property name="expandsOnDoubleClick">
+         <bool>false</bool>
+        </property>
+        <property name="columnCount">
+         <number>5</number>
+        </property>
+        <attribute name="headerDefaultSectionSize">
+         <number>35</number>
+        </attribute>
+        <attribute name="headerMinimumSectionSize">
+         <number>20</number>
+        </attribute>
+        <attribute name="headerStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Id</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Codec</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Sample rate</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Channels</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Media type</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblPayloadTypesAvailable">
+        <property name="text">
+         <string>Available</string>
+        </property>
+        <property name="buddy">
+         <cstring>twPayloadTypesAvailable</cstring>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QCheckBox" name="cbUseRtcp">
-     <property name="text">
-      <string>Use RTCP</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>cmbAudioDeviceInput</tabstop>
+  <tabstop>cmbAudioDeviceOutput</tabstop>
+  <tabstop>spbBitrate</tabstop>
+  <tabstop>lwInterfaces</tabstop>
+  <tabstop>spbPortRangeFrom</tabstop>
+  <tabstop>spbPortRangeTo</tabstop>
+  <tabstop>twPayloadTypesAvailable</tabstop>
+  <tabstop>pbPayloadTypeUsedUp</tabstop>
+  <tabstop>pbPayloadTypeUse</tabstop>
+  <tabstop>pbPayloadTypeUnuse</tabstop>
+  <tabstop>pbPayloadTypeUsedDown</tabstop>
+  <tabstop>twPayloadTypesUsed</tabstop>
+  <tabstop>pbPayloadTypeAdd</tabstop>
+  <tabstop>pbPayloadTypeEdit</tabstop>
+  <tabstop>pbPayloadTypeRemove</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -177,8 +177,11 @@ bool JingleRtp::initObjects()
 
 bool JingleRtp::initSettings()
 {
-    Options::setDefaultValue(OPV_JINGLERTP_NOTIFYINTERVAL, 100);    //NotifyInterval
-    Options::setDefaultValue(OPV_JINGLERTP_USERTCP, true);          //Use RTCP (whatever it is)
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BIRATE, 32000);    //Audio encoding bitrate
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant()); //Audio input device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant()); //Audio output device
+	Options::setDefaultValue(OPV_JINGLE_RTP_PT_DYNAMIC, QStringList());	//Dynamic payload types
+	Options::setDefaultValue(OPV_JINGLE_RTP_PT_USED, QStringList());	//Used payload types
     if (FOptionsManager)
     {
 		IOptionsDialogNode dnode = {ONO_JINGLERTP, OPN_JINGLERTP, MNI_JINGLE_RTP, tr("Jingle RTP")};
@@ -461,13 +464,7 @@ QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QSt
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_JINGLERTP)
     {
-        FJingleRtpOptions = new JingleRtpOptions(AParent);
-        OptionsNode node = Options::node(OPV_JINGLERTP_NOTIFYINTERVAL);
-        QString inerval=node.value().toString();
-        int index =FJingleRtpOptions->ui->cbInterval->findText(inerval);
-        if(index>=0)
-            FJingleRtpOptions->ui->cbInterval->setCurrentIndex(index);
-        widgets.insertMulti(OWO_JINGLERTP, FJingleRtpOptions);
+		widgets.insertMulti(OWO_JINGLERTP, new JingleRtpOptions(AParent));
     }
     return widgets;
 }
@@ -793,16 +790,6 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
             action->setDisabled(true);
             connect(action,SIGNAL(triggered()),SLOT(onHangup()));
             AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
-//----------------
-            action = new Action(AChatWindow->toolBarWidget()->instance());
-            action->setText(tr("Microphone OFF"));
-			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
-            action->setData(ADR_CONTACT_JID, contactJid.full());
-            action->setData(ADR_STREAM_JID, streamJid.full());
-            action->setCheckable(true);
-            connect(action,SIGNAL(triggered(bool)),SLOT(onTestMicr(bool)));
-            AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
-//----------------
             AChatWindow->toolBarWidget()->toolBarChanger()->setSeparatorsVisible(true);
         }
     }
@@ -1000,49 +987,6 @@ void JingleRtp::onHangup()
             }
     }
 }
-/* ------------ */
-void JingleRtp::onTestMicr(bool state)//! -----TEST MICROPHONE -----
-{
-    Action *action = qobject_cast<Action *>(sender());
-    if (action)
-    {
-        Jid streamJid  = action->data(ADR_STREAM_JID).toString();
-        Jid contactJid = action->data(ADR_CONTACT_JID).toString();
-        if(state)
-        {
-            action->setText(tr("Microphone ON"));
-			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_ON));
-
-            QString formatName ="rtp";     //! ogg,rtp,mp3
-            QString codecName ="libspeex";  //! libspeex,libmp3lame,libopus,g729
-
-            QString fileName=contactJid.bare(); // TEST contactJid.full();//
-            fileName.append(".").append(formatName);
-            if(!fileName.isNull())
-            {
-                QFile *fileDvOut=new QFile(fileName);
-                if (!fileDvOut->open(QIODevice::WriteOnly))
-                    return;
-				MediaSender *mediaSender=new MediaSender(fileDvOut, formatName, codecName);
-                action->setData(STREAM_STREAM,(qulonglong)mediaSender);
-                action->setData(STREAM_CONTACT,(qulonglong)fileDvOut);
-                mediaSender->start();
-             }
-        }
-        else
-        {
-            action->setText(tr("Microphone OFF"));
-			action->setIcon(FIconStorage->getIcon(JNI_RTP_MIC_OFF));
-			MediaSender *mediaSender = (MediaSender *)(action->data(STREAM_STREAM).toULongLong());
-            mediaSender->stop();
-            QFile *fileDvOut =(QFile *)(action->data(STREAM_CONTACT).toULongLong());
-            if(fileDvOut->isOpen())
-                fileDvOut->close();
-            //! The stream should be closed on chat window close
-        }
-    }
-}
-/* ------------ */
 
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
