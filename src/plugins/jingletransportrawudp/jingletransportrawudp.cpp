@@ -187,30 +187,30 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
                 localAddress = *it;
     }
 
-    if (!localAddress.isNull())
-    {
-        QUdpSocket *socket1 = Options::node(OPV_JINGLERTP_USERTCP).value().toBool()?new QUdpSocket(this):NULL;
-        while (true)
-        {
-            if (socket->bind(localAddress, FCurrentPort, QUdpSocket::DontShareAddress))
-            {
-                if (socket1)
-                {
-                    if (socket1->bind(localAddress, FCurrentPort+1, QUdpSocket::DontShareAddress))
-                        break;
-                    else
-                        socket->disconnectFromHost();
-                }
-                else
-                    break;
-            }
-            FCurrentPort+=2;
-            if (FCurrentPort>PORT_FINISH)
-                FCurrentPort=PORT_START;
-        }
+	if (!localAddress.isNull())
+	{
+//        QUdpSocket *socket1 = Options::node(OPV_JINGLERTP_USERTCP).value().toBool()?new QUdpSocket(this):NULL;
+//        while (true)
+//        {
+//            if (socket->bind(localAddress, FCurrentPort, QUdpSocket::DontShareAddress))
+//            {
+//                if (socket1)
+//                {
+//                    if (socket1->bind(localAddress, FCurrentPort+1, QUdpSocket::DontShareAddress))
+//                        break;
+//                    else
+//                        socket->disconnectFromHost();
+//                }
+//                else
+//                    break;
+//            }
+//            FCurrentPort+=2;
+//            if (FCurrentPort>PORT_FINISH)
+//                FCurrentPort=PORT_START;
+//        }
 
         qDebug() << "socket=" << socket;
-        qDebug() << "socket1=" << socket1;
+//		qDebug() << "socket1=" << socket1;
 
         if (socket->state()==QAbstractSocket::BoundState)
         {
@@ -240,34 +240,34 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
             }
         }
 
-        if (socket1)
-            if (socket1->state()==QAbstractSocket::BoundState)
-            {
-                qDebug() << "socket1 is bound!";
-                int component=2;
-                int id=101;
-                QString candidateId=QString("id%1").arg(id);
-                QDomElement incomingTransport = AContent->transportIncoming();
-                if (!incomingTransport.isNull())
-                {
-                    QDomElement candidate=incomingTransport.ownerDocument().createElement("candidate");
-                    QString ip = socket1->localAddress().toString();
-                    QString port = QString::number(socket1->localPort());
-                    incomingTransport.appendChild(candidate);
-                    candidate.setAttribute("component", QString().setNum(component));
-                    candidate.setAttribute("generation", 0);
-                    candidate.setAttribute("id", candidateId);
-                    candidate.setAttribute("ip", ip);
-                    candidate.setAttribute("port", port);
-                    AContent->setInputDevice(candidateId, socket1);
-                }
-                else
-                {
-                    qWarning() << "Candidate 2 is is wrong state!";
-                    socket1->deleteLater();
-                    return false;
-                }
-            }
+//        if (socket1)
+//            if (socket1->state()==QAbstractSocket::BoundState)
+//            {
+//                qDebug() << "socket1 is bound!";
+//                int component=2;
+//                int id=101;
+//                QString candidateId=QString("id%1").arg(id);
+//                QDomElement incomingTransport = AContent->transportIncoming();
+//                if (!incomingTransport.isNull())
+//                {
+//                    QDomElement candidate=incomingTransport.ownerDocument().createElement("candidate");
+//                    QString ip = socket1->localAddress().toString();
+//                    QString port = QString::number(socket1->localPort());
+//                    incomingTransport.appendChild(candidate);
+//                    candidate.setAttribute("component", QString().setNum(component));
+//                    candidate.setAttribute("generation", 0);
+//                    candidate.setAttribute("id", candidateId);
+//                    candidate.setAttribute("ip", ip);
+//                    candidate.setAttribute("port", port);
+//                    AContent->setInputDevice(candidateId, socket1);
+//                }
+//                else
+//                {
+//                    qWarning() << "Candidate 2 is is wrong state!";
+//                    socket1->deleteLater();
+//                    return false;
+//                }
+//            }
 
         emit incomingTransportFilled(AContent);
         return true;

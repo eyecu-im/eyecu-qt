@@ -578,7 +578,7 @@
 #define OPV_JINGLE_RTP                                  "jingle.rtp"
 #define OPV_JINGLE_RTP_AUDIO_INPUT                      "jingle.rtp.audio.input"
 #define OPV_JINGLE_RTP_AUDIO_OUTPUT                     "jingle.rtp.audio.output"
-#define OPV_JINGLE_RTP_AUDIO_BIRATE                     "jingle.rtp.audio.bitrate"
+#define OPV_JINGLE_RTP_AUDIO_BITRATE                    "jingle.rtp.audio.bitrate"
 #define OPV_JINGLE_RTP_PT_DYNAMIC                       "jingle.rtp.pt.dynamic"
 #define OPV_JINGLE_RTP_PT_USED                          "jingle.rtp.pt.used"
 #define OPV_JINGLE_RTP_PT_USED                          "jingle.rtp.pt.used"

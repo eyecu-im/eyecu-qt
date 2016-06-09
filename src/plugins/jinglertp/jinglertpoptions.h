@@ -2,6 +2,7 @@
 #define JINGLERTPOPTIONS_H
 
 #include <QWidget>
+#include <QAVCodec>
 #include <QDebug>
 #include <QAudioDeviceInfo>
 
@@ -39,8 +40,15 @@ signals:
 protected slots:
     void modify(int);
 
+	void onAvailablePayloadTypeSelectionChanged();
+	void onUsedPayloadTypeSelectionChanged();
+
 protected:
+	static QTreeWidgetItem *itemFromAvp(const QAVP &AAvp);
     void changeEvent(QEvent *e);
+
+private:
+	QList<QAVP> FAvailableStaticPayloadTypes;
 };
 
 #endif // JINGLERTPOPTIONS_H

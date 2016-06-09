@@ -95,7 +95,14 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QSpinBox" name="spbBitrate"/>
+       <widget class="QSpinBox" name="spbBitrate">
+        <property name="minimum">
+         <number>1000</number>
+        </property>
+        <property name="maximum">
+         <number>360000</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -210,6 +217,21 @@
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,1">
       <item row="1" column="2" rowspan="6">
        <widget class="QTreeWidget" name="twPayloadTypesUsed">
+        <property name="toolTip">
+         <string>Used payloads types</string>
+        </property>
+        <property name="whatsThis">
+         <string>Payload types, which used in Jingle RTP sessiuons.</string>
+        </property>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
+        </property>
+        <property name="itemsExpandable">
+         <bool>false</bool>
+        </property>
+        <property name="expandsOnDoubleClick">
+         <bool>false</bool>
+        </property>
         <property name="columnCount">
          <number>5</number>
         </property>
@@ -248,6 +270,12 @@
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="pbPayloadTypeUsedUp">
+        <property name="toolTip">
+         <string>Move Up</string>
+        </property>
+        <property name="whatsThis">
+         <string>Shifts payload type priority up</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -255,6 +283,12 @@
       </item>
       <item row="5" column="1">
        <widget class="QPushButton" name="pbPayloadTypeUsedDown">
+        <property name="toolTip">
+         <string>Move down</string>
+        </property>
+        <property name="whatsThis">
+         <string>Shifts payload type priority down</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -291,6 +325,12 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Unuse</string>
+        </property>
+        <property name="whatsThis">
+         <string>Add payload type to in-use list</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -306,6 +346,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Add dynamic payload type</string>
+          </property>
           <property name="text">
            <string>Add</string>
           </property>
@@ -319,6 +362,9 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="toolTip">
+           <string>Edit dynamic payload type</string>
+          </property>
           <property name="text">
            <string>Edit</string>
           </property>
@@ -331,6 +377,9 @@
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Remove dynamic payload type</string>
           </property>
           <property name="text">
            <string>Remove</string>
@@ -360,6 +409,12 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Use</string>
+        </property>
+        <property name="whatsThis">
+         <string>Remove payload type from in-use list</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -380,6 +435,12 @@
       </item>
       <item row="1" column="0" rowspan="6">
        <widget class="QTreeWidget" name="twPayloadTypesAvailable">
+        <property name="toolTip">
+         <string>Available payload types</string>
+        </property>
+        <property name="whatsThis">
+         <string>Payload types which are available to use them, but not used</string>
+        </property>
         <property name="rootIsDecorated">
          <bool>false</bool>
         </property>
@@ -416,7 +477,7 @@
         </column>
         <column>
          <property name="text">
-          <string>Sample rate</string>
+          <string>Clock rate</string>
          </property>
         </column>
         <column>
@@ -464,5 +525,42 @@
   <tabstop>pbPayloadTypeRemove</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>twPayloadTypesAvailable</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onAvailablePayloadTypeSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>143</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>twPayloadTypesUsed</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onUsedPayloadTypeSelectionChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>443</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAvailablePayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypeSelectionChanged()</slot>
+ </slots>
 </ui>

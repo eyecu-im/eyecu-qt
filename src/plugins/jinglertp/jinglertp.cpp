@@ -172,16 +172,37 @@ bool JingleRtp::initObjects()
 
         FNotifications->insertNotificationHandler(NHO_DEFAULT, this);
     }
+
+	QAVCodec::initialize();
+	QAVCodec::registerAll();
+	QAVFormat::registerAll();
+
     return true;
 }
 
 bool JingleRtp::initSettings()
 {
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BIRATE, 32000);    //Audio encoding bitrate
+	QList<QAVP> payloadTypes;
+	payloadTypes.append(QAVP(-1, "G726-40", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "G726-32", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "G726-24", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "G726-16", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "L8", QAVP::Audio, 0, 0));
+	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 16000, 1));
+	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 1));
+	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 2));
+	Options::setDefaultValue(OPV_JINGLE_RTP_PT_DYNAMIC, stringsFromAvps(payloadTypes));	//Dynamic payload types
+	payloadTypes.clear();
+	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 1));
+	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 8000, 1));
+	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 16000, 1));
+	payloadTypes.append(QAVP(9, "G722", QAVP::Audio, 8000, 1));
+	Options::setDefaultValue(OPV_JINGLE_RTP_PT_USED, stringsFromAvps(payloadTypes));	//Used payload types
+
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);    //Audio encoding bitrate
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant()); //Audio input device
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant()); //Audio output device
-	Options::setDefaultValue(OPV_JINGLE_RTP_PT_DYNAMIC, QStringList());	//Dynamic payload types
-	Options::setDefaultValue(OPV_JINGLE_RTP_PT_USED, QStringList());	//Used payload types
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant()); //Audio output device	
     if (FOptionsManager)
     {
 		IOptionsDialogNode dnode = {ONO_JINGLERTP, OPN_JINGLERTP, MNI_JINGLE_RTP, tr("Jingle RTP")};
@@ -837,7 +858,23 @@ void JingleRtp::connectionEstablished(const Jid &AStreamJid, const QString &ASid
 
 void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 {
-    qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
+	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
+}
+
+QStringList JingleRtp::stringsFromAvps(const QList<QAVP> &AAvps)
+{
+	QStringList strings;
+	for (QList<QAVP>::ConstIterator it=AAvps.constBegin(); it!=AAvps.constEnd(); ++it)
+		strings.append((*it));
+	return strings;
+}
+
+QList<QAVP> JingleRtp::avpsFromStrings(const QStringList &AStrings)
+{
+	QList<QAVP> avps;
+	for (QStringList::ConstIterator it=AStrings.constBegin(); it!=AStrings.constEnd(); ++it)
+		avps.append((*it));
+	return avps;
 }
 
 IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &AContactJid)

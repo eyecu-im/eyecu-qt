@@ -99,6 +99,10 @@ public:
     QString ns() const {return NS_JINGLE_APPS_RTP;}
     bool checkSupported(QDomElement &ADescription);
 
+public:
+	static QStringList stringsFromAvps(const QList<QAVP> &AAvps);
+	static QList<QAVP> avpsFromStrings(const QStringList &AStrings);
+
 public slots:
     void onSessionInitiated(const Jid &AStreamJid, const QString &ASid);
     void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
