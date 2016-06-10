@@ -558,9 +558,77 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pbPayloadTypeUse</sender>
+   <signal>clicked()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onPayloadTypeUse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPayloadTypeUnuse</sender>
+   <signal>clicked()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onPayloadTypeUnuse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPayloadTypeUsedUp</sender>
+   <signal>clicked()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onUsedPayloadTypePriorityUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPayloadTypeUsedDown</sender>
+   <signal>clicked()</signal>
+   <receiver>JingleRtpOptions</receiver>
+   <slot>onUsedPayloadTypePriorityDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAvailablePayloadTypeSelectionChanged()</slot>
   <slot>onUsedPayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypePriorityUp()</slot>
+  <slot>onUsedPayloadTypePriorityDown()</slot>
+  <slot>onPayloadTypeUse()</slot>
+  <slot>onPayloadTypeUnuse()</slot>
  </slots>
 </ui>

@@ -65,28 +65,93 @@ void JingleRtpOptions::modify(int s)
 
 void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 {
-	QList<QTreeWidgetItem*> selectedItems = ui->twPayloadTypesAvailable->selectedItems();
-	bool disable = selectedItems.isEmpty();
-	ui->pbPayloadTypeUse->setDisabled(disable);
-	if (disable || !selectedItems.first()->text(0).isEmpty())
+	QTreeWidgetItem *item = ui->twPayloadTypesAvailable->currentItem();
+	if (item)
 	{
-		ui->pbPayloadTypeEdit->setDisabled(true);
-		ui->pbPayloadTypeRemove->setDisabled(true);
+		if (item->text(0).isEmpty())
+		{
+			ui->pbPayloadTypeEdit->setDisabled(true);
+			ui->pbPayloadTypeRemove->setDisabled(true);
+		}
+		else
+		{
+			ui->pbPayloadTypeEdit->setEnabled(true);
+			ui->pbPayloadTypeRemove->setEnabled(true);
+		}
+		ui->pbPayloadTypeUse->setEnabled(true);
 	}
 	else
 	{
-		ui->pbPayloadTypeEdit->setDisabled(false);
-		ui->pbPayloadTypeRemove->setDisabled(false);
+		ui->pbPayloadTypeUse->setDisabled(true);
+		ui->pbPayloadTypeEdit->setDisabled(true);
+		ui->pbPayloadTypeRemove->setDisabled(true);
 	}
 }
 
 void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 {
-	QList<QTreeWidgetItem*> selectedItems = ui->twPayloadTypesUsed->selectedItems();
-	bool disable = selectedItems.isEmpty();
-	ui->pbPayloadTypeUnuse->setDisabled(disable);
-	ui->pbPayloadTypeUsedUp->setDisabled(disable);
-	ui->pbPayloadTypeUsedDown->setDisabled(disable);
+	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
+	if (item)
+	{
+		int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
+		ui->pbPayloadTypeUsedUp->setEnabled(index>0);
+		ui->pbPayloadTypeUsedDown->setEnabled(index < ui->twPayloadTypesUsed->topLevelItemCount()-1);
+		ui->pbPayloadTypeUnuse->setEnabled(true);
+	}
+	else
+	{
+		ui->pbPayloadTypeUnuse->setDisabled(true);
+		ui->pbPayloadTypeUsedUp->setDisabled(true);
+		ui->pbPayloadTypeUsedDown->setDisabled(true);
+	}
+}
+
+void JingleRtpOptions::onUsedPayloadTypePriorityUp()
+{
+	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityUp()";
+	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
+	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
+	if (index > 0)
+	{
+		ui->twPayloadTypesUsed->takeTopLevelItem(index);
+		index--;
+		ui->twPayloadTypesUsed->insertTopLevelItem(index, item);
+		ui->twPayloadTypesUsed->setCurrentItem(item);
+	}
+}
+
+void JingleRtpOptions::onUsedPayloadTypePriorityDown()
+{
+	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityDown()";
+	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
+	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
+	if (index < ui->twPayloadTypesUsed->topLevelItemCount()-1)
+	{
+		ui->twPayloadTypesUsed->takeTopLevelItem(index);
+		index++;
+		ui->twPayloadTypesUsed->insertTopLevelItem(index, item);
+		ui->twPayloadTypesUsed->setCurrentItem(item);
+	}
+}
+
+void JingleRtpOptions::onPayloadTypeUse()
+{
+	qDebug() << "JingleRtpOptions::onPayloadTypeUse()";
+	QTreeWidgetItem *item = ui->twPayloadTypesAvailable->currentItem();
+	int index = ui->twPayloadTypesAvailable->indexOfTopLevelItem(item);
+	ui->twPayloadTypesAvailable->takeTopLevelItem(index);
+	ui->twPayloadTypesUsed->addTopLevelItem(item);
+	ui->twPayloadTypesUsed->setCurrentItem(item);
+}
+
+void JingleRtpOptions::onPayloadTypeUnuse()
+{
+	qDebug() << "JingleRtpOptions::onPayloadTypeUnuse()";
+	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
+	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
+	ui->twPayloadTypesUsed->takeTopLevelItem(index);
+	ui->twPayloadTypesAvailable->addTopLevelItem(item);
+	ui->twPayloadTypesAvailable->setCurrentItem(item);
 }
 
 void JingleRtpOptions::apply()
