@@ -42,13 +42,13 @@ protected slots:
 
 	void onAvailablePayloadTypeSelectionChanged();
 	void onUsedPayloadTypeSelectionChanged();
+
 	void onUsedPayloadTypePriorityUp();
 	void onUsedPayloadTypePriorityDown();
 	void onPayloadTypeUse();
 	void onPayloadTypeUnuse();
 
 protected:
-	static QTreeWidgetItem *itemFromAvp(const QAVP &AAvp);
     void changeEvent(QEvent *e);
 
 private:

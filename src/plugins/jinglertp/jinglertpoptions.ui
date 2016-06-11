@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>587</width>
+    <width>398</width>
     <height>436</height>
    </rect>
   </property>
@@ -131,6 +131,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::MultiSelection</enum>
+        </property>
        </widget>
       </item>
       <item row="1" column="0">
@@ -215,128 +218,20 @@
       <string>Payload types</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,1">
-      <item row="1" column="2" rowspan="6">
-       <widget class="QTreeWidget" name="twPayloadTypesUsed">
-        <property name="toolTip">
-         <string>Used payloads types</string>
-        </property>
-        <property name="whatsThis">
-         <string>Payload types, which used in Jingle RTP sessiuons.</string>
-        </property>
-        <property name="rootIsDecorated">
-         <bool>false</bool>
-        </property>
-        <property name="itemsExpandable">
-         <bool>false</bool>
-        </property>
-        <property name="expandsOnDoubleClick">
-         <bool>false</bool>
-        </property>
-        <property name="columnCount">
-         <number>5</number>
-        </property>
-        <attribute name="headerDefaultSectionSize">
-         <number>35</number>
-        </attribute>
-        <attribute name="headerMinimumSectionSize">
-         <number>20</number>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Codec</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Clock rate</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Channels</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Media type</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QPushButton" name="pbPayloadTypeUsedUp">
-        <property name="toolTip">
-         <string>Move Up</string>
-        </property>
-        <property name="whatsThis">
-         <string>Shifts payload type priority up</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QPushButton" name="pbPayloadTypeUsedDown">
-        <property name="toolTip">
-         <string>Move down</string>
-        </property>
-        <property name="whatsThis">
-         <string>Shifts payload type priority down</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="lblPayloadTypesUsed">
-        <property name="text">
-         <string>In use</string>
-        </property>
-        <property name="buddy">
-         <cstring>twPayloadTypesUsed</cstring>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="4" column="1">
-       <widget class="QPushButton" name="pbPayloadTypeUnuse">
+      <item row="1" column="0" rowspan="6">
+       <widget class="RtpPayloadTypeSelector" name="twPayloadTypesAvailable">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="toolTip">
-         <string>Unuse</string>
-        </property>
-        <property name="whatsThis">
-         <string>Add payload type to in-use list</string>
-        </property>
-        <property name="text">
-         <string/>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
+      <item row="7" column="0" colspan="3">
        <layout class="QHBoxLayout" name="hlPayloadTypesAvailableActions">
         <item>
          <widget class="QPushButton" name="pbPayloadTypeAdd">
@@ -401,6 +296,39 @@
         </item>
        </layout>
       </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="lblPayloadTypesUsed">
+        <property name="text">
+         <string>In use</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="5" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUsedDown">
+        <property name="toolTip">
+         <string>Move down</string>
+        </property>
+        <property name="whatsThis">
+         <string>Shifts payload type priority down</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="1">
        <widget class="QPushButton" name="pbPayloadTypeUse">
         <property name="sizePolicy">
@@ -433,63 +361,36 @@
         </property>
        </spacer>
       </item>
-      <item row="1" column="0" rowspan="6">
-       <widget class="QTreeWidget" name="twPayloadTypesAvailable">
+      <item row="2" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUsedUp">
         <property name="toolTip">
-         <string>Available payload types</string>
+         <string>Move Up</string>
         </property>
         <property name="whatsThis">
-         <string>Payload types which are available to use them, but not used</string>
+         <string>Shifts payload type priority up</string>
         </property>
-        <property name="rootIsDecorated">
-         <bool>false</bool>
+        <property name="text">
+         <string/>
         </property>
-        <property name="itemsExpandable">
-         <bool>false</bool>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="pbPayloadTypeUnuse">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-        <property name="allColumnsShowFocus">
-         <bool>false</bool>
+        <property name="toolTip">
+         <string>Unuse</string>
         </property>
-        <property name="expandsOnDoubleClick">
-         <bool>false</bool>
+        <property name="whatsThis">
+         <string>Add payload type to in-use list</string>
         </property>
-        <property name="columnCount">
-         <number>5</number>
+        <property name="text">
+         <string/>
         </property>
-        <attribute name="headerDefaultSectionSize">
-         <number>35</number>
-        </attribute>
-        <attribute name="headerMinimumSectionSize">
-         <number>20</number>
-        </attribute>
-        <attribute name="headerStretchLastSection">
-         <bool>true</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string>Id</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Codec</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Clock rate</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Channels</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Media type</string>
-         </property>
-        </column>
        </widget>
       </item>
       <item row="0" column="0">
@@ -497,8 +398,18 @@
         <property name="text">
          <string>Available</string>
         </property>
-        <property name="buddy">
-         <cstring>twPayloadTypesAvailable</cstring>
+       </widget>
+      </item>
+      <item row="1" column="2" rowspan="6">
+       <widget class="RtpPayloadTypeSelector" name="twPayloadTypesUsed">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="rootIsDecorated">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -507,6 +418,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RtpPayloadTypeSelector</class>
+   <extends>QTreeView</extends>
+   <header>rtppayloadtypeselector.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>cmbAudioDeviceInput</tabstop>
   <tabstop>cmbAudioDeviceOutput</tabstop>
@@ -514,50 +432,16 @@
   <tabstop>lwInterfaces</tabstop>
   <tabstop>spbPortRangeFrom</tabstop>
   <tabstop>spbPortRangeTo</tabstop>
-  <tabstop>twPayloadTypesAvailable</tabstop>
   <tabstop>pbPayloadTypeUsedUp</tabstop>
   <tabstop>pbPayloadTypeUse</tabstop>
   <tabstop>pbPayloadTypeUnuse</tabstop>
   <tabstop>pbPayloadTypeUsedDown</tabstop>
-  <tabstop>twPayloadTypesUsed</tabstop>
   <tabstop>pbPayloadTypeAdd</tabstop>
   <tabstop>pbPayloadTypeEdit</tabstop>
   <tabstop>pbPayloadTypeRemove</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>twPayloadTypesAvailable</sender>
-   <signal>itemSelectionChanged()</signal>
-   <receiver>JingleRtpOptions</receiver>
-   <slot>onAvailablePayloadTypeSelectionChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>143</x>
-     <y>327</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>293</x>
-     <y>217</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>twPayloadTypesUsed</sender>
-   <signal>itemSelectionChanged()</signal>
-   <receiver>JingleRtpOptions</receiver>
-   <slot>onUsedPayloadTypeSelectionChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>443</x>
-     <y>327</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>293</x>
-     <y>217</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>pbPayloadTypeUse</sender>
    <signal>clicked()</signal>

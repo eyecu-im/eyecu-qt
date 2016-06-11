@@ -2,29 +2,18 @@
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 
-QTreeWidgetItem *JingleRtpOptions::itemFromAvp(const QAVP &AAvp)
-{
-	QTreeWidgetItem *item = new QTreeWidgetItem();
-	if (AAvp.payloadType>=0)
-		item->setText(0, QString::number(AAvp.payloadType));
-	item->setText(1, AAvp.codecName);
-	item->setText(2, QString::number(AAvp.clockRate));
-	item->setText(3, QString::number(AAvp.channels));
-	item->setText(4, tr(AAvp.mediaType==QAVP::Audio?"Audio":
-						AAvp.mediaType==QAVP::Video?"Video":
-						AAvp.mediaType==QAVP::Both?"Both":"Unknown"));
-	return item;
-}
-
 JingleRtpOptions::JingleRtpOptions(QWidget *parent):
 	QWidget(parent),ui(new Ui::JingleRtpOptions)
 {
     ui->setupUi(this);
 
+	connect(ui->twPayloadTypesAvailable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onAvailablePayloadTypeSelectionChanged()));
+	connect(ui->twPayloadTypesUsed->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onUsedPayloadTypeSelectionChanged()));
+
 	ui->pbPayloadTypeUsedUp->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowUp));
 	ui->pbPayloadTypeUsedDown->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowDown));
 	ui->pbPayloadTypeUse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
-	ui->pbPayloadTypeUnuse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));
+	ui->pbPayloadTypeUnuse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));	
 
     QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
 	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
@@ -41,13 +30,6 @@ JingleRtpOptions::JingleRtpOptions(QWidget *parent):
 		if (QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
 			FAvailableStaticPayloadTypes.append(*it);
 	}
-
-	// getSuppSampleRates();
-
-//    connect(ui->cbCodec, SIGNAL(activated(int)),SLOT(deviceChanged(int)));
-//    connect(ui->cbVideoCodec,SIGNAL(activated(int)),this,SLOT(videoDeviceChanged(int)));
-//    connect(ui->cbInterval,SIGNAL(activated(int)),this,SLOT(modify(int)));
-
     reset();
 }
 
@@ -65,18 +47,21 @@ void JingleRtpOptions::modify(int s)
 
 void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 {
-	QTreeWidgetItem *item = ui->twPayloadTypesAvailable->currentItem();
-	if (item)
+	qDebug() << "void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()";
+	QModelIndex index = ui->twPayloadTypesAvailable->currentIndex();
+	if (index.isValid())
 	{
-		if (item->text(0).isEmpty())
-		{
-			ui->pbPayloadTypeEdit->setDisabled(true);
-			ui->pbPayloadTypeRemove->setDisabled(true);
-		}
-		else
+		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesAvailable->model());
+		QStandardItem *item = model->itemFromIndex(index);
+		if (model->item(item->row(), 0)->text().isEmpty())
 		{
 			ui->pbPayloadTypeEdit->setEnabled(true);
 			ui->pbPayloadTypeRemove->setEnabled(true);
+		}
+		else
+		{
+			ui->pbPayloadTypeEdit->setDisabled(true);
+			ui->pbPayloadTypeRemove->setDisabled(true);
 		}
 		ui->pbPayloadTypeUse->setEnabled(true);
 	}
@@ -90,12 +75,14 @@ void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 
 void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 {
-	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
-	if (item)
+	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
+	if (index.isValid())
 	{
-		int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
-		ui->pbPayloadTypeUsedUp->setEnabled(index>0);
-		ui->pbPayloadTypeUsedDown->setEnabled(index < ui->twPayloadTypesUsed->topLevelItemCount()-1);
+		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+		QStandardItem *item = model->itemFromIndex(index);
+		int row = item->row();
+		ui->pbPayloadTypeUsedUp->setEnabled(row>0);
+		ui->pbPayloadTypeUsedDown->setEnabled(row < ui->twPayloadTypesUsed->model()->rowCount()-1);
 		ui->pbPayloadTypeUnuse->setEnabled(true);
 	}
 	else
@@ -109,49 +96,43 @@ void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 void JingleRtpOptions::onUsedPayloadTypePriorityUp()
 {
 	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityUp()";
-	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
-	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
-	if (index > 0)
+	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
+	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+	QStandardItem *item = model->itemFromIndex(index);
+	int row = item->row();
+	if (row > 0)
 	{
-		ui->twPayloadTypesUsed->takeTopLevelItem(index);
-		index--;
-		ui->twPayloadTypesUsed->insertTopLevelItem(index, item);
-		ui->twPayloadTypesUsed->setCurrentItem(item);
+		QList<QStandardItem *> r = model->takeRow(row);
+		row--;
+		model->insertRow(row, r);
+		ui->twPayloadTypesUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 	}
 }
 
 void JingleRtpOptions::onUsedPayloadTypePriorityDown()
 {
 	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityDown()";
-	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
-	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
-	if (index < ui->twPayloadTypesUsed->topLevelItemCount()-1)
+	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
+	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+	QStandardItem *item = model->itemFromIndex(index);
+	int row = item->row();
+	if (row < model->rowCount()-1)
 	{
-		ui->twPayloadTypesUsed->takeTopLevelItem(index);
-		index++;
-		ui->twPayloadTypesUsed->insertTopLevelItem(index, item);
-		ui->twPayloadTypesUsed->setCurrentItem(item);
+		QList<QStandardItem *> r = model->takeRow(row);
+		row++;
+		model->insertRow(row, r);
+		ui->twPayloadTypesUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 	}
-}
-
-void JingleRtpOptions::onPayloadTypeUse()
-{
-	qDebug() << "JingleRtpOptions::onPayloadTypeUse()";
-	QTreeWidgetItem *item = ui->twPayloadTypesAvailable->currentItem();
-	int index = ui->twPayloadTypesAvailable->indexOfTopLevelItem(item);
-	ui->twPayloadTypesAvailable->takeTopLevelItem(index);
-	ui->twPayloadTypesUsed->addTopLevelItem(item);
-	ui->twPayloadTypesUsed->setCurrentItem(item);
 }
 
 void JingleRtpOptions::onPayloadTypeUnuse()
 {
-	qDebug() << "JingleRtpOptions::onPayloadTypeUnuse()";
-	QTreeWidgetItem *item = ui->twPayloadTypesUsed->currentItem();
-	int index = ui->twPayloadTypesUsed->indexOfTopLevelItem(item);
-	ui->twPayloadTypesUsed->takeTopLevelItem(index);
-	ui->twPayloadTypesAvailable->addTopLevelItem(item);
-	ui->twPayloadTypesAvailable->setCurrentItem(item);
+	ui->twPayloadTypesAvailable->setCurrentRow(ui->twPayloadTypesAvailable->appendAvp(ui->twPayloadTypesUsed->takeAvp(ui->twPayloadTypesUsed->currentRow())));
+}
+
+void JingleRtpOptions::onPayloadTypeUse()
+{
+	ui->twPayloadTypesUsed->setCurrentRow(ui->twPayloadTypesUsed->appendAvp(ui->twPayloadTypesAvailable->takeAvp(ui->twPayloadTypesAvailable->currentRow())));
 }
 
 void JingleRtpOptions::apply()
@@ -183,19 +164,21 @@ void JingleRtpOptions::reset()
 	QList<QAVP> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
 
 	ui->twPayloadTypesAvailable->clear();
+
 	for (QList<QAVP>::ConstIterator it=FAvailableStaticPayloadTypes.constBegin(); it!=FAvailableStaticPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
-			ui->twPayloadTypesAvailable->addTopLevelItem(itemFromAvp(*it));
+			ui->twPayloadTypesAvailable->appendAvp(*it);
 
 	for (QList<QAVP>::ConstIterator it=dynamicPayloadTypes.constBegin(); it!=dynamicPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
-			ui->twPayloadTypesAvailable->addTopLevelItem(itemFromAvp(*it));
+			ui->twPayloadTypesAvailable->appendAvp(*it);
 
 	onAvailablePayloadTypeSelectionChanged();
 
 	ui->twPayloadTypesUsed->clear();
+
 	for (QList<QAVP>::ConstIterator it=usedPayloadTypes.constBegin(); it!=usedPayloadTypes.constEnd(); ++it)
-		ui->twPayloadTypesUsed->addTopLevelItem(itemFromAvp(*it));
+		ui->twPayloadTypesUsed->appendAvp(*it);
 
 	onUsedPayloadTypeSelectionChanged();
 
@@ -235,3 +218,4 @@ void JingleRtpOptions::changeEvent(QEvent *e)
         break;
     }
 }
+
