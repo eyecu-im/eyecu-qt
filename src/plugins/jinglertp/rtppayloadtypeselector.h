@@ -16,6 +16,9 @@ public:
 	QAVP takeAvp(int ARow);
 	int currentRow() const;
 	void setCurrentRow(int ARow);
+	void setSortRole(int ARole);
+	int  sortRole() const;
+	bool setItemData(int ARow, const QVariant &AData, int AColumn = 0, int ARole = Qt::UserRole);
 private:
 	QStandardItemModel *FModel;
 };

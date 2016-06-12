@@ -7,8 +7,8 @@ JingleRtpOptions::JingleRtpOptions(QWidget *parent):
 {
     ui->setupUi(this);
 
-	connect(ui->twPayloadTypesAvailable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onAvailablePayloadTypeSelectionChanged()));
-	connect(ui->twPayloadTypesUsed->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onUsedPayloadTypeSelectionChanged()));
+	connect(ui->rptAvailable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onAvailablePayloadTypeSelectionChanged()));
+	connect(ui->rptUsed->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onUsedPayloadTypeSelectionChanged()));
 
 	ui->pbPayloadTypeUsedUp->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowUp));
 	ui->pbPayloadTypeUsedDown->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowDown));
@@ -47,11 +47,10 @@ void JingleRtpOptions::modify(int s)
 
 void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 {
-	qDebug() << "void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()";
-	QModelIndex index = ui->twPayloadTypesAvailable->currentIndex();
+	QModelIndex index = ui->rptAvailable->currentIndex();
 	if (index.isValid())
 	{
-		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesAvailable->model());
+		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptAvailable->model());
 		QStandardItem *item = model->itemFromIndex(index);
 		if (model->item(item->row(), 0)->text().isEmpty())
 		{
@@ -75,14 +74,14 @@ void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 
 void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 {
-	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
+	QModelIndex index = ui->rptUsed->currentIndex();
 	if (index.isValid())
 	{
-		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
 		QStandardItem *item = model->itemFromIndex(index);
 		int row = item->row();
 		ui->pbPayloadTypeUsedUp->setEnabled(row>0);
-		ui->pbPayloadTypeUsedDown->setEnabled(row < ui->twPayloadTypesUsed->model()->rowCount()-1);
+		ui->pbPayloadTypeUsedDown->setEnabled(row < ui->rptUsed->model()->rowCount()-1);
 		ui->pbPayloadTypeUnuse->setEnabled(true);
 	}
 	else
@@ -95,9 +94,8 @@ void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 
 void JingleRtpOptions::onUsedPayloadTypePriorityUp()
 {
-	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityUp()";
-	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
-	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+	QModelIndex index = ui->rptUsed->currentIndex();
+	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
 	QStandardItem *item = model->itemFromIndex(index);
 	int row = item->row();
 	if (row > 0)
@@ -105,15 +103,14 @@ void JingleRtpOptions::onUsedPayloadTypePriorityUp()
 		QList<QStandardItem *> r = model->takeRow(row);
 		row--;
 		model->insertRow(row, r);
-		ui->twPayloadTypesUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
+		ui->rptUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 	}
 }
 
 void JingleRtpOptions::onUsedPayloadTypePriorityDown()
 {
-	qDebug() << "JingleRtpOptions::onUsedPayloadTypePriorityDown()";
-	QModelIndex index = ui->twPayloadTypesUsed->currentIndex();
-	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->twPayloadTypesUsed->model());
+	QModelIndex index = ui->rptUsed->currentIndex();
+	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
 	QStandardItem *item = model->itemFromIndex(index);
 	int row = item->row();
 	if (row < model->rowCount()-1)
@@ -121,18 +118,19 @@ void JingleRtpOptions::onUsedPayloadTypePriorityDown()
 		QList<QStandardItem *> r = model->takeRow(row);
 		row++;
 		model->insertRow(row, r);
-		ui->twPayloadTypesUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
+		ui->rptUsed->selectionModel()->setCurrentIndex(model->index(row, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
 	}
 }
 
 void JingleRtpOptions::onPayloadTypeUnuse()
 {
-	ui->twPayloadTypesAvailable->setCurrentRow(ui->twPayloadTypesAvailable->appendAvp(ui->twPayloadTypesUsed->takeAvp(ui->twPayloadTypesUsed->currentRow())));
+	ui->rptAvailable->setCurrentRow(ui->rptAvailable->appendAvp(ui->rptUsed->takeAvp(ui->rptUsed->currentRow())));
+	ui->rptAvailable->setSortingEnabled(true);
 }
 
 void JingleRtpOptions::onPayloadTypeUse()
 {
-	ui->twPayloadTypesUsed->setCurrentRow(ui->twPayloadTypesUsed->appendAvp(ui->twPayloadTypesAvailable->takeAvp(ui->twPayloadTypesAvailable->currentRow())));
+	ui->rptUsed->setCurrentRow(ui->rptUsed->appendAvp(ui->rptAvailable->takeAvp(ui->rptAvailable->currentRow())));
 }
 
 void JingleRtpOptions::apply()
@@ -163,22 +161,24 @@ void JingleRtpOptions::reset()
 	QList<QAVP> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
 	QList<QAVP> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
 
-	ui->twPayloadTypesAvailable->clear();
-
+	ui->rptAvailable->clear();
+	ui->rptAvailable->setSortingEnabled(false);
 	for (QList<QAVP>::ConstIterator it=FAvailableStaticPayloadTypes.constBegin(); it!=FAvailableStaticPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
-			ui->twPayloadTypesAvailable->appendAvp(*it);
+			ui->rptAvailable->appendAvp(*it);
 
 	for (QList<QAVP>::ConstIterator it=dynamicPayloadTypes.constBegin(); it!=dynamicPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
-			ui->twPayloadTypesAvailable->appendAvp(*it);
+			ui->rptAvailable->appendAvp(*it);
+
+	ui->rptAvailable->sortByColumn(0, Qt::AscendingOrder);
+	ui->rptAvailable->setSortingEnabled(true);
 
 	onAvailablePayloadTypeSelectionChanged();
 
-	ui->twPayloadTypesUsed->clear();
-
+	ui->rptUsed->clear();
 	for (QList<QAVP>::ConstIterator it=usedPayloadTypes.constBegin(); it!=usedPayloadTypes.constEnd(); ++it)
-		ui->twPayloadTypesUsed->appendAvp(*it);
+		ui->rptUsed->appendAvp(*it);
 
 	onUsedPayloadTypeSelectionChanged();
 

@@ -219,7 +219,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,1">
       <item row="1" column="0" rowspan="6">
-       <widget class="RtpPayloadTypeSelector" name="twPayloadTypesAvailable">
+       <widget class="RtpPayloadTypeSelector" name="rptAvailable">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -227,6 +227,15 @@
          </sizepolicy>
         </property>
         <property name="rootIsDecorated">
+         <bool>false</bool>
+        </property>
+        <property name="itemsExpandable">
+         <bool>false</bool>
+        </property>
+        <property name="sortingEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="expandsOnDoubleClick">
          <bool>false</bool>
         </property>
        </widget>
@@ -401,7 +410,7 @@
        </widget>
       </item>
       <item row="1" column="2" rowspan="6">
-       <widget class="RtpPayloadTypeSelector" name="twPayloadTypesUsed">
+       <widget class="RtpPayloadTypeSelector" name="rptUsed">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>

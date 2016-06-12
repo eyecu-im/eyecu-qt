@@ -334,7 +334,7 @@ void ServerPage::loadServerList()
 			FServerList->setColumnWidth(7, 30); //proxy
 			FServerList->setColumnWidth(8, 30); //Store Files
 			FServerList->setColumnWidth(9, 280); //Transports
-			FServerList->setColumnWidth(10, 35); //country			
+			FServerList->setColumnWidth(10, 35); //country
 
             for (QDomElement e = doc.documentElement().firstChildElement("server");
                  !e.isNull();

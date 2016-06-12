@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "rtppayloadtypeselector.h"
 
 RtpPayloadTypeSelector::RtpPayloadTypeSelector(QWidget *AParent):
@@ -5,6 +6,18 @@ RtpPayloadTypeSelector::RtpPayloadTypeSelector(QWidget *AParent):
 	FModel(new QStandardItemModel(this))
 {
 	setModel(FModel);
+	setSortRole(Qt::UserRole+1);
+	QStringList headers;
+	headers << tr("Id")<< tr("Name") << tr("Clockrate") << tr("Channels")
+			<< tr("Media type");
+
+	FModel->setHorizontalHeaderLabels(headers);
+
+	setColumnWidth(0, 20); // Id
+	setColumnWidth(1, 48); // Codec name
+	setColumnWidth(2, 56); // Clock rate
+	setColumnWidth(3, 56); // Number of channels
+//	FServerList->setColumnWidth(4, 30); // Media type
 }
 
 void RtpPayloadTypeSelector::clear()
@@ -16,13 +29,23 @@ int RtpPayloadTypeSelector::appendAvp(const QAVP &AAvp)
 {
 	QList<QStandardItem *> items;
 
-	items.append(new QStandardItem(AAvp.payloadType>=0?QString::number(AAvp.payloadType):QString()));
-	items.append(new QStandardItem(AAvp.codecName));
-	items.append(new QStandardItem(QString::number(AAvp.clockRate)));
-	items.append(new QStandardItem(QString::number(AAvp.channels)));
-	items.append(new QStandardItem(tr(AAvp.mediaType==QAVP::Audio?"Audio":
-									  AAvp.mediaType==QAVP::Video?"Video":
-									  AAvp.mediaType==QAVP::Both?"Both":"Unknown")));
+	QStandardItem *item = new QStandardItem(AAvp.payloadType<0?QString():QString::number(AAvp.payloadType));
+	item->setData(AAvp.payloadType<0?1000:AAvp.payloadType);
+	items.append(item);
+	item = new QStandardItem(AAvp.codecName);
+	item->setData(AAvp.codecName);
+	items.append(item);
+	item = new QStandardItem(QString::number(AAvp.clockRate));
+	item->setData(AAvp.clockRate);
+	items.append(item);
+	item = new QStandardItem(QString::number(AAvp.channels));
+	item->setData(AAvp.channels);
+	items.append(item);
+	item = new QStandardItem(tr(AAvp.mediaType==QAVP::Audio?"Audio":
+								AAvp.mediaType==QAVP::Video?"Video":
+								AAvp.mediaType==QAVP::Both?"Both":"Unknown"));
+	item->setData(AAvp.mediaType);
+	items.append(item);
 
 	FModel->appendRow(items);
 	return FModel->rowCount()-1;
@@ -67,4 +90,19 @@ int RtpPayloadTypeSelector::currentRow() const
 void RtpPayloadTypeSelector::setCurrentRow(int ARow)
 {
 	selectionModel()->setCurrentIndex(FModel->index(ARow, 0), QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows);
+}
+
+void RtpPayloadTypeSelector::setSortRole(int ARole)
+{
+	FModel->setSortRole(ARole);
+}
+
+int RtpPayloadTypeSelector::sortRole() const
+{
+	return FModel->sortRole();
+}
+
+bool RtpPayloadTypeSelector::setItemData(int ARow, const QVariant &AData, int AColumn, int ARole)
+{
+	return FModel->setData(FModel->index(ARow, AColumn), AData, ARole);
 }
