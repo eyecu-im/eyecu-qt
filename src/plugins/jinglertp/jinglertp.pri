@@ -4,17 +4,21 @@ HEADERS = \
     audio.h \
     renderarea.h \
     mediathread.h \
-    $$PWD/audioinfo.h \
-    $$PWD/rtppayloadtypeselector.h
+    audioinfo.h \
+    rtppayloadtypeselector.h \
+    payloadtypeeditdialog.h
+
 SOURCES = \   
     jinglertp.cpp \
     jinglertpoptions.cpp \
     renderarea.cpp \
     audio.cpp \
     mediathread.cpp \
-    $$PWD/audioinfo.cpp \
-    $$PWD/rtppayloadtypeselector.cpp
+    audioinfo.cpp \
+    rtppayloadtypeselector.cpp \
+    payloadtypeeditdialog.cpp
 
 FORMS += \
     jinglertpoptions.ui \
-    audio.ui
+    audio.ui \
+    payloadtypeeditdialog.ui

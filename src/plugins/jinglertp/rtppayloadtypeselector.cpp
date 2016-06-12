@@ -82,6 +82,11 @@ QAVP RtpPayloadTypeSelector::takeAvp(int ARow)
 	return avp;
 }
 
+int RtpPayloadTypeSelector::rowCount() const
+{
+	return FModel->rowCount();
+}
+
 int RtpPayloadTypeSelector::currentRow() const
 {
 	return currentIndex().row();

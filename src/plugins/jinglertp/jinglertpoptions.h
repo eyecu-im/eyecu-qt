@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QAVCodec>
-#include <QDebug>
 #include <QAudioDeviceInfo>
 
 #include <interfaces/ioptionsmanager.h>
@@ -47,6 +46,10 @@ protected slots:
 	void onUsedPayloadTypePriorityDown();
 	void onPayloadTypeUse();
 	void onPayloadTypeUnuse();
+
+	void onPayloadTypeAdd();
+	void onPayloadTypeEdit();
+	void onPayloadTypeRemove();
 
 protected:
     void changeEvent(QEvent *e);

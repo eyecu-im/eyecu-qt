@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PayloadTypeEditDialog</class>
+ <widget class="QDialog" name="PayloadTypeEditDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>193</width>
+    <height>147</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Payload type</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblCodecName">
+     <property name="text">
+      <string>Codec name</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbCodecName</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblClockRate">
+     <property name="text">
+      <string>Clock rate</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbClockRate</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblChannels">
+     <property name="text">
+      <string>Channels</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbChannels</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblMediaType">
+     <property name="text">
+      <string>Media type</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbMediaType</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="cmbChannels"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QComboBox" name="cmbMediaType"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QComboBox" name="cmbClockRate">
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="cmbCodecName"/>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cmbCodecName</tabstop>
+  <tabstop>cmbClockRate</tabstop>
+  <tabstop>cmbChannels</tabstop>
+  <tabstop>cmbMediaType</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>183</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>192</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

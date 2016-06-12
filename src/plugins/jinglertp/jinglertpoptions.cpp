@@ -1,4 +1,7 @@
+#include <QDebug>
+#include <QAVOutputFormat>
 #include "jinglertp.h"
+#include "payloadtypeeditdialog.h"
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 
@@ -23,12 +26,24 @@ JingleRtpOptions::JingleRtpOptions(QWidget *parent):
 	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
 		ui->cmbAudioDeviceOutput->addItem((*it).deviceName(), qVariantFromValue(*it));
 
-	QHash<int, QAVP> payloadTypes = QAVCodec::payloadTypes(true);
-	for (QHash<int, QAVP>::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+	// Build list of supported payload types
+	QAVOutputFormat rtp(NULL);
+	for (QAVOutputFormat format = QAVOutputFormat::first(); format; ++format)
+		if (format.name()=="rtp")
+		{
+			rtp = format;
+			break;
+		}
+
+	if (rtp)
 	{
-		int codecId = QAVCodec::idByName((*it).codecName);
-		if (QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
-			FAvailableStaticPayloadTypes.append(*it);
+		QHash<int, QAVP> payloadTypes = QAVCodec::payloadTypes(true);
+		for (QHash<int, QAVP>::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+		{
+			int codecId = QAVCodec::idByName((*it).codecName);
+			if (rtp.queryCodec(codecId) && QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
+				FAvailableStaticPayloadTypes.append(*it);
+		}
 	}
     reset();
 }
@@ -128,6 +143,33 @@ void JingleRtpOptions::onPayloadTypeUnuse()
 	ui->rptAvailable->setSortingEnabled(true);
 }
 
+void JingleRtpOptions::onPayloadTypeAdd()
+{
+	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(QAVP(), this);
+	if (dialog->exec()==QDialog::Accepted)
+	{
+		qDebug() << "Accepted";
+	}
+}
+
+void JingleRtpOptions::onPayloadTypeEdit()
+{
+	QAVP avp = ui->rptAvailable->getAvp(ui->rptAvailable->currentRow());
+	if (avp.isValid())
+	{
+		PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(avp, this);
+		if (dialog->exec()==QDialog::Accepted)
+		{
+			qDebug() << "Accepted";
+		}
+	}
+}
+
+void JingleRtpOptions::onPayloadTypeRemove()
+{
+	ui->rptAvailable->takeAvp(ui->rptAvailable->currentRow());
+}
+
 void JingleRtpOptions::onPayloadTypeUse()
 {
 	ui->rptUsed->setCurrentRow(ui->rptUsed->appendAvp(ui->rptAvailable->takeAvp(ui->rptAvailable->currentRow())));
@@ -135,6 +177,25 @@ void JingleRtpOptions::onPayloadTypeUse()
 
 void JingleRtpOptions::apply()
 {
+	QList<QAVP> dynamicPayloadTypes, usedPayloadTypes;
+	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
+	{
+		QAVP avp = ui->rptAvailable->getAvp(i);
+		if (avp.payloadType<0)	// Dynamic
+			dynamicPayloadTypes.append(avp);
+	}
+
+	for (int i=0; i<ui->rptUsed->rowCount(); ++i)
+	{
+		QAVP avp = ui->rptUsed->getAvp(i);
+		if (avp.payloadType<0)	// Dynamic
+			dynamicPayloadTypes.append(avp);
+		usedPayloadTypes.append(avp);
+	}
+
+	Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).setValue(JingleRtp::stringsFromAvps(dynamicPayloadTypes));
+	Options::node(OPV_JINGLE_RTP_PT_USED).setValue(JingleRtp::stringsFromAvps(usedPayloadTypes));
+
 	if (ui->cmbAudioDeviceInput->count())
 	{
 		QString deviceName = ui->cmbAudioDeviceInput->currentText();

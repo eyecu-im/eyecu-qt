@@ -14,6 +14,7 @@ public:
 	int appendAvp(const QAVP &AAvp);
 	QAVP getAvp(int ARow) const;
 	QAVP takeAvp(int ARow);
+	int	 rowCount() const;
 	int currentRow() const;
 	void setCurrentRow(int ARow);
 	void setSortRole(int ARole);
