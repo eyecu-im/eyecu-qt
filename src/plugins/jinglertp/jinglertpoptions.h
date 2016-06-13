@@ -36,6 +36,10 @@ signals:
     void childApply();
     void childReset();
 
+protected:
+	void changeEvent(QEvent *e);
+	QList<QAVP> availablePayloadTypes() const;
+
 protected slots:
     void modify(int);
 
@@ -50,9 +54,6 @@ protected slots:
 	void onPayloadTypeAdd();
 	void onPayloadTypeEdit();
 	void onPayloadTypeRemove();
-
-protected:
-    void changeEvent(QEvent *e);
 
 private:
 	QList<QAVP> FAvailableStaticPayloadTypes;

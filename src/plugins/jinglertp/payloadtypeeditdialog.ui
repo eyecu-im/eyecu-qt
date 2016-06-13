@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>193</width>
-    <height>147</height>
+    <height>153</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,7 +20,7 @@
    <string>Payload type</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
-   <item row="0" column="0">
+   <item row="1" column="0">
     <widget class="QLabel" name="lblCodecName">
      <property name="text">
       <string>Codec name</string>
@@ -30,17 +30,17 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lblClockRate">
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblSampleRate">
      <property name="text">
-      <string>Clock rate</string>
+      <string>Sample rate</string>
      </property>
      <property name="buddy">
-      <cstring>cmbClockRate</cstring>
+      <cstring>cmbSampleRate</cstring>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QLabel" name="lblChannels">
      <property name="text">
       <string>Channels</string>
@@ -50,23 +50,10 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="lblMediaType">
-     <property name="text">
-      <string>Media type</string>
-     </property>
-     <property name="buddy">
-      <cstring>cmbMediaType</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QComboBox" name="cmbChannels"/>
    </item>
-   <item row="3" column="1">
-    <widget class="QComboBox" name="cmbMediaType"/>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -76,35 +63,44 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="cmbSampleRate"/>
+   </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="cmbClockRate">
-     <property name="editable">
-      <bool>true</bool>
+    <widget class="QComboBox" name="cmbCodecName"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblMediaType">
+     <property name="text">
+      <string>Media type</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbMediaType</cstring>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QComboBox" name="cmbCodecName"/>
+    <widget class="QComboBox" name="cmbMediaType"/>
    </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>cmbCodecName</tabstop>
-  <tabstop>cmbClockRate</tabstop>
-  <tabstop>cmbChannels</tabstop>
   <tabstop>cmbMediaType</tabstop>
+  <tabstop>cmbCodecName</tabstop>
+  <tabstop>cmbSampleRate</tabstop>
+  <tabstop>cmbChannels</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
+   <sender>cmbMediaType</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>PayloadTypeEditDialog</receiver>
-   <slot>accept()</slot>
+   <slot>onSettingsChanged()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>183</x>
-     <y>127</y>
+     <x>128</x>
+     <y>18</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -128,5 +124,122 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cmbMediaType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onMediaTypeSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>18</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbCodecName</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onCodecSelected(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbChannels</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>96</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbCodecName</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbSampleRate</sender>
+   <signal>editTextChanged(QString)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbSampleRate</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>onSettingsChanged()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>70</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>PayloadTypeEditDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>96</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>onMediaTypeSelected(int)</slot>
+  <slot>onCodecSelected(int)</slot>
+  <slot>onSettingsChanged()</slot>
+ </slots>
 </ui>

@@ -51,6 +51,27 @@ int RtpPayloadTypeSelector::appendAvp(const QAVP &AAvp)
 	return FModel->rowCount()-1;
 }
 
+void RtpPayloadTypeSelector::updateRow(int ARow, const QAVP &AAvp)
+{
+	QStandardItem *item = new QStandardItem(AAvp.payloadType<0?QString():QString::number(AAvp.payloadType));
+	item->setData(AAvp.payloadType<0?1000:AAvp.payloadType);
+	FModel->setItem(ARow, 0, item);
+	item = new QStandardItem(AAvp.codecName);
+	item->setData(AAvp.codecName);
+	FModel->setItem(ARow, 1, item);
+	item = new QStandardItem(QString::number(AAvp.clockRate));
+	item->setData(AAvp.clockRate);
+	FModel->setItem(ARow, 2, item);
+	item = new QStandardItem(QString::number(AAvp.channels));
+	item->setData(AAvp.channels);
+	FModel->setItem(ARow, 3, item);
+	item = new QStandardItem(tr(AAvp.mediaType==QAVP::Audio?"Audio":
+								AAvp.mediaType==QAVP::Video?"Video":
+								AAvp.mediaType==QAVP::Both?"Both":"Unknown"));
+	item->setData(AAvp.mediaType);
+	FModel->setItem(ARow, 4, item);
+}
+
 QAVP RtpPayloadTypeSelector::getAvp(int ARow) const
 {
 	QAVP avp;
@@ -111,3 +132,4 @@ bool RtpPayloadTypeSelector::setItemData(int ARow, const QVariant &AData, int AC
 {
 	return FModel->setData(FModel->index(ARow, AColumn), AData, ARole);
 }
+

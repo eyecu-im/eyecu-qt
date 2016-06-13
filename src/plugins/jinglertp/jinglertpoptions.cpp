@@ -39,11 +39,12 @@ JingleRtpOptions::JingleRtpOptions(QWidget *parent):
 	{
 		QHash<int, QAVP> payloadTypes = QAVCodec::payloadTypes(true);
 		for (QHash<int, QAVP>::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
-		{
-			int codecId = QAVCodec::idByName((*it).codecName);
-			if (rtp.queryCodec(codecId) && QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
-				FAvailableStaticPayloadTypes.append(*it);
-		}
+			if ((*it).mediaType==QAVP::Audio) // Only Audio implemented so far
+			{
+				int codecId = QAVCodec::idByName((*it).codecName);
+				if (rtp.queryCodec(codecId) && QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
+					FAvailableStaticPayloadTypes.append(*it);
+			}
 	}
     reset();
 }
@@ -145,23 +146,27 @@ void JingleRtpOptions::onPayloadTypeUnuse()
 
 void JingleRtpOptions::onPayloadTypeAdd()
 {
-	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(QAVP(), this);
+	QList<QAVP> payloadTypes = availablePayloadTypes();
+	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(QAVP(), payloadTypes, this);
 	if (dialog->exec()==QDialog::Accepted)
-	{
-		qDebug() << "Accepted";
-	}
+		ui->rptAvailable->setCurrentRow(ui->rptAvailable->appendAvp(dialog->payloadType()));
+	dialog->deleteLater();
 }
 
 void JingleRtpOptions::onPayloadTypeEdit()
 {
-	QAVP avp = ui->rptAvailable->getAvp(ui->rptAvailable->currentRow());
+	int row = ui->rptAvailable->currentRow();
+	QAVP avp = ui->rptAvailable->getAvp(row);
 	if (avp.isValid())
 	{
-		PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(avp, this);
+		QList<QAVP> payloadTypes = availablePayloadTypes();
+		PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(avp, payloadTypes, this);
 		if (dialog->exec()==QDialog::Accepted)
 		{
-			qDebug() << "Accepted";
+			ui->rptAvailable->updateRow(row, dialog->payloadType());
+			ui->rptAvailable->setCurrentRow(row);
 		}
+		dialog->deleteLater();
 	}
 }
 
@@ -277,6 +282,17 @@ void JingleRtpOptions::changeEvent(QEvent *e)
         break;
     default:
         break;
-    }
+	}
+}
+
+QList<QAVP> JingleRtpOptions::availablePayloadTypes() const
+{
+	QList<QAVP> payloadTypes;
+	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
+		payloadTypes.append(ui->rptAvailable->getAvp(i));
+
+	for (int i=0; i<ui->rptUsed->rowCount(); ++i)
+		payloadTypes.append(ui->rptUsed->getAvp(i));
+	return payloadTypes;
 }
 
