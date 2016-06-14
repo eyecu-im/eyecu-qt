@@ -3,6 +3,8 @@
 #include "definitions/menuicons.h"
 #include "definitions/resources.h"
 #include "definitions/stanzahandlerorders.h"
+#include "definitions/optionnodes.h"
+#include "definitions/optionnodeorders.h"
 #include "utils/xmpperror.h"
 
 #include <QList>
@@ -16,7 +18,8 @@
 Jingle::Jingle(QObject *parent):
 	QObject(parent),
 	FStanzaProcessor(NULL),
-	FServiceDiscovery(NULL)
+	FServiceDiscovery(NULL),
+	FOptionsManager(NULL)
 {
 	JingleSession::setJingle(this);
 }
@@ -47,9 +50,14 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	IPlugin *plugin= APluginManager->pluginInterface("IStanzaProcessor").value(0,NULL);
 	if (plugin)
 		FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
+
 	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
 	if (plugin)
 		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	if (plugin)
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
 	// Find application and transport plugins
 	QList<IPlugin *>plugins = APluginManager->pluginInterface("IJingleApplication");
@@ -72,9 +80,11 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
 		FTransports.insert(transort->ns(), transort);
-		connect((*it)->instance(),SIGNAL(connectionsOpened(IJingleContent*)),
+		connect((*it)->instance(),SIGNAL(startSend(IJingleContent*)),
 								  SLOT(onStartSend(IJingleContent*)),Qt::QueuedConnection);
-		connect((*it)->instance(),SIGNAL(connectionsOpenFailed(IJingleContent*)),
+		connect((*it)->instance(),SIGNAL(startReceive(IJingleContent*)),
+								  SLOT(onStartReceive(IJingleContent*)),Qt::QueuedConnection);
+		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
 								  SLOT(onConnectionFailed(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
 								  SLOT(onIncomingTransportFilled(IJingleContent*)),Qt::QueuedConnection);
@@ -96,6 +106,12 @@ bool Jingle::initObjects()
 		registerDiscoFeatures();    // Register discovery features
 	else
 		return false;
+
+	if (FOptionsManager)
+	{
+		IOptionsDialogNode dnode = {ONO_JINGLETRANSPORTS, OPN_JINGLETRANSPORTS, MNI_JINGLE, tr("Jingle transports")};
+		FOptionsManager->insertOptionsDialogNode(dnode);
+	}
 
 	if (FStanzaProcessor)
 	{   // Register Stanza handlers

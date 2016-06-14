@@ -1,10 +1,11 @@
 #ifndef JINGLE_H
 #define JINGLE_H
 
-#include "interfaces/ijingle.h"
-#include "interfaces/ipluginmanager.h"
-#include "interfaces/istanzaprocessor.h"
+#include <interfaces/ijingle.h>
+#include <interfaces/ipluginmanager.h>
+#include <interfaces/istanzaprocessor.h>
 #include <interfaces/iservicediscovery.h>
+#include <interfaces/ioptionsmanager.h>
 #include "jinglesession.h"
 
 class Jingle: public QObject,
@@ -82,6 +83,7 @@ signals:
 private:
     IStanzaProcessor    *FStanzaProcessor;
     IServiceDiscovery   *FServiceDiscovery;
+	IOptionsManager		*FOptionsManager;
     QMap<QString, IJingleApplication*>  FApplications;
     QMap<QString, IJingleTransport*>    FTransports;
     QHash<QIODevice *, IJingleContent *> FCandidateTries;

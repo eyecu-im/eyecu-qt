@@ -267,11 +267,10 @@
 #define   OWO_ATTENTION_NOTIFICATIONPOPUP         620
 #define   OWO_ATTENTION_MAINWINDOWACTIVATE        630
 #define OHO_JINGLERTP_AUDIO                       600
-#define OWO_JINGLERTP_AUDIO                       610
+#define   OWO_JINGLERTP_AUDIO                       610
 #define OHO_JINGLERTP_PAYLOADTYPES                650
-#define OWO_JINGLERTP_PAYLOADTYPES                660
-//Node = ON_WIZARDS
-#define OWO_WIZARDACCOUNT                         500
-#define OWO_WIZARDTRANSPORT                       500
+#define   OWO_JINGLERTP_PAYLOADTYPES                660
+#define OHO_JINGLETRANSPORTS_RAWUDP               600
+#define   OWO_JINGLETRANSPORTS_RAWUDP               610
 // *** >>> eyeCU >>> ***
 #endif // DEF_OPTIONWIDGETORDERS_H

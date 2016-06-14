@@ -4,6 +4,7 @@
 #include <QUdpSocket>
 
 #include <definitions/menuicons.h>
+#include <definitions/namespaces.h>
 #include <definitions/jingleicons.h>
 #include <definitions/resources.h>
 #include <definitions/toolbargroups.h>
@@ -14,6 +15,11 @@
 #include <definitions/rosternotifyorders.h>
 #include <definitions/tabpagenotifypriorities.h>
 #include <definitions/soundfiles.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionnodeorders.h>
+#include <definitions/optionwidgetorders.h>
+#include <definitions/optionvalues.h>
+
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 #include <MediaStreamer>
@@ -509,7 +515,12 @@ bool JingleRtp::showNotification(int AOrder, ushort AKind, int ANotifyId, const 
             FPendingCalls.append(ANotifyId);
             return true;
         }
-    return false;
+	return false;
+}
+
+QString JingleRtp::ns() const
+{
+	return NS_JINGLE_APPS_RTP;
 }
 
 void JingleRtp::registerDiscoFeatures()

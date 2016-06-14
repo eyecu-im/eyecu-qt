@@ -16,6 +16,12 @@ PayloadTypeOptions::PayloadTypeOptions(QWidget *parent):
 	connect(ui->rptAvailable->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SIGNAL(modified()));
 	connect(ui->rptUsed->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SIGNAL(modified()));
 
+	connect(ui->rptAvailable->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), SIGNAL(modified()));
+	connect(ui->rptUsed->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), SIGNAL(modified()));
+
+	connect(ui->rptAvailable->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SIGNAL(modified()));
+	connect(ui->rptUsed->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SIGNAL(modified()));
+
 	ui->pbUsedUp->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowUp));
 	ui->pbUsedDown->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowDown));
 	ui->pbUse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));

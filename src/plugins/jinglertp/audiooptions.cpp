@@ -18,6 +18,9 @@ AudioOptions::AudioOptions(QWidget *parent):
 	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
 		ui->cmbAudioDeviceOutput->addItem((*it).deviceName(), qVariantFromValue(*it));
 
+	connect(ui->cmbAudioDeviceInput, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
+	connect(ui->cmbAudioDeviceOutput, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
+	connect(ui->spbBitrate, SIGNAL(valueChanged(int)), SIGNAL(modified()));
     reset();
 }
 
@@ -25,7 +28,6 @@ AudioOptions::~AudioOptions()
 {
     delete ui;
 }
-
 
 void AudioOptions::modify(int s)
 {

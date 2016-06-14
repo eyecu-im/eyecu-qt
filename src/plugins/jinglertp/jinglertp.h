@@ -13,13 +13,6 @@
 #include <interfaces/irostersview.h>
 #include <interfaces/istatusicons.h>
 
-#include <definitions/optionnodes.h>
-#include <definitions/optionnodeorders.h>
-#include <definitions/optionwidgetorders.h>
-#include <definitions/optionvalues.h>
-#include <definitions/menuicons.h>
-#include <definitions/namespaces.h>
-
 #include "audio.h"
 #include "audiooptions.h"
 #include "payloadtypeoptions.h"
@@ -97,7 +90,7 @@ public:
     //INotificationHandler
     bool showNotification(int AOrder, ushort AKind, int ANotifyId, const INotification &ANotification);
     //IJingleApplication
-    QString ns() const {return NS_JINGLE_APPS_RTP;}
+	QString ns() const;
     bool checkSupported(QDomElement &ADescription);
 
 public:

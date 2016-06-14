@@ -1,14 +1,23 @@
 #include <QNetworkInterface>
 #include <utils/options.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionnodeorders.h>
+#include <definitions/optionwidgetorders.h>
 #include <definitions/optionvalues.h>
+#include <definitions/menuicons.h>
 
 #include "jingletransportrawudp.h"
+#include "rawudpoptions.h"
 
 #define PORT_START  1024
 #define PORT_FINISH 49151
 
 JingleTransportRawUdp::JingleTransportRawUdp(QObject *AParent) :
-    QObject(AParent),FJingle(NULL),FServiceDiscovery(NULL),FCurrentPort(PORT_START)
+	QObject(AParent),
+	FJingle(NULL),
+	FServiceDiscovery(NULL),
+	FOptionsManager(NULL),
+	FCurrentPort(PORT_START)
 {}
 
 void JingleTransportRawUdp::pluginInfo(IPluginInfo *APluginInfo)
@@ -35,6 +44,10 @@ bool JingleTransportRawUdp::initConnections(IPluginManager *APluginManager, int 
     if (plugin)
         FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	if (plugin)
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+
     //AInitOrder = 200;   // This one should be initialized AFTER ...
     return true;
 }
@@ -43,6 +56,10 @@ bool JingleTransportRawUdp::initObjects()
 {
     if (FServiceDiscovery)
         registerDiscoFeatures();
+
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
+
     return true;
 }
 
@@ -275,7 +292,18 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
     }
     else
         qWarning() << "Failed to determine local address!";
-    return false;
+	return false;
+}
+
+QMultiMap<int, IOptionsDialogWidget *> JingleTransportRawUdp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (ANodeId == OPN_JINGLETRANSPORTS)
+	{
+		widgets.insertMulti(OHO_JINGLETRANSPORTS_RAWUDP, FOptionsManager->newOptionsDialogHeader(tr("Raw UDP"), AParent));
+		widgets.insertMulti(OWO_JINGLETRANSPORTS_RAWUDP, new RawUdpOptions(AParent));
+	}
+	return widgets;
 }
 
 void JingleTransportRawUdp::registerDiscoFeatures()

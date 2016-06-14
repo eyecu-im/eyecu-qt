@@ -3,21 +3,23 @@
 
 #include <QUdpSocket>
 
-#include "interfaces/ipluginmanager.h"
-#include "interfaces/ijingle.h"
-#include "interfaces/iservicediscovery.h"
-#include "definitions/namespaces.h"
-#include "utils/iconstorage.h"
+#include <interfaces/ipluginmanager.h>
+#include <interfaces/ijingle.h>
+#include <interfaces/iservicediscovery.h>
+#include <interfaces/ioptionsmanager.h>
+#include <definitions/namespaces.h>
+#include <utils/iconstorage.h>
 
 #define JINGLETRANSPORTRAWUDP_UUID "{f5bcad05-cd36-b2fc-2e47-59ad8fb49c21}"
 
 class JingleTransportRawUdp:
         public QObject,
         public IPlugin,
-        public IJingleTransport
+		public IJingleTransport,
+		public IOptionsDialogHolder
 {
     Q_OBJECT
-	Q_INTERFACES(IPlugin IJingleTransport)
+	Q_INTERFACES(IPlugin IJingleTransport IOptionsDialogHolder)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingleTransportRawUdp")
 #endif
@@ -40,6 +42,9 @@ public:
     bool    openConnection(IJingleContent *AContent);
     bool    fillIncomingTransport(IJingleContent *AContent);
 
+	// IOptionsDialogHolder
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+
 protected:
     void registerDiscoFeatures();
 
@@ -56,7 +61,8 @@ signals:
 private:
     IJingle             *FJingle;
     IServiceDiscovery   *FServiceDiscovery;
-    quint16             FCurrentPort;
+	IOptionsManager		*FOptionsManager;
+    quint16             FCurrentPort;	
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H
