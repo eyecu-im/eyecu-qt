@@ -1,20 +1,19 @@
-#ifndef JINGLERTPOPTIONS_H
-#define JINGLERTPOPTIONS_H
+#ifndef PAYLOADTYPEOPTIONS_H
+#define PAYLOADTYPEOPTIONS_H
 
 #include <QWidget>
 #include <QAVCodec>
-#include <QAudioDeviceInfo>
 
 #include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
 
-#include "ui_jinglertpoptions.h"
+#include "ui_payloadtypeoptions.h"
 
 namespace Ui {
-class JingleRtpOptions;
+class PayloadTypeOptions;
 }
 
-class JingleRtpOptions :
+class PayloadTypeOptions :
     public QWidget,
 	public IOptionsDialogWidget
 {
@@ -22,10 +21,10 @@ class JingleRtpOptions :
 	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-    explicit JingleRtpOptions(QWidget *parent = 0);
-    ~JingleRtpOptions();
+	explicit PayloadTypeOptions(QWidget *parent = 0);
+	~PayloadTypeOptions();
     virtual QWidget* instance() { return this; }
-    Ui::JingleRtpOptions *ui;
+	Ui::PayloadTypeOptions *ui;
 
 public slots:
     virtual void apply();
@@ -41,8 +40,6 @@ protected:
 	QList<QAVP> availablePayloadTypes() const;
 
 protected slots:
-    void modify(int);
-
 	void onAvailablePayloadTypeSelectionChanged();
 	void onUsedPayloadTypeSelectionChanged();
 
@@ -59,4 +56,4 @@ private:
 	QList<QAVP> FAvailableStaticPayloadTypes;
 };
 
-#endif // JINGLERTPOPTIONS_H
+#endif // PAYLOADTYPEOPTIONS_H

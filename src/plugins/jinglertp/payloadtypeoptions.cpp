@@ -5,26 +5,21 @@
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 
-JingleRtpOptions::JingleRtpOptions(QWidget *parent):
-	QWidget(parent),ui(new Ui::JingleRtpOptions)
+PayloadTypeOptions::PayloadTypeOptions(QWidget *parent):
+	QWidget(parent),ui(new Ui::PayloadTypeOptions)
 {
     ui->setupUi(this);
 
 	connect(ui->rptAvailable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onAvailablePayloadTypeSelectionChanged()));
 	connect(ui->rptUsed->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onUsedPayloadTypeSelectionChanged()));
 
-	ui->pbPayloadTypeUsedUp->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowUp));
-	ui->pbPayloadTypeUsedDown->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowDown));
-	ui->pbPayloadTypeUse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
-	ui->pbPayloadTypeUnuse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));	
+	connect(ui->rptAvailable->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SIGNAL(modified()));
+	connect(ui->rptUsed->model(), SIGNAL(dataChanged(QModelIndex,QModelIndex)), SIGNAL(modified()));
 
-    QList<QAudioDeviceInfo> devices = QAudioDeviceInfo::availableDevices(QAudio::AudioInput);
-	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
-		ui->cmbAudioDeviceInput->addItem((*it).deviceName(), qVariantFromValue(*it));
-
-	devices = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
-	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
-		ui->cmbAudioDeviceOutput->addItem((*it).deviceName(), qVariantFromValue(*it));
+	ui->pbUsedUp->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowUp));
+	ui->pbUsedDown->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowDown));
+	ui->pbUse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowRight));
+	ui->pbUnuse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));
 
 	// Build list of supported payload types
 	QAVOutputFormat rtp(NULL);
@@ -49,19 +44,12 @@ JingleRtpOptions::JingleRtpOptions(QWidget *parent):
     reset();
 }
 
-JingleRtpOptions::~JingleRtpOptions()
+PayloadTypeOptions::~PayloadTypeOptions()
 {
     delete ui;
 }
 
-
-void JingleRtpOptions::modify(int s)
-{
-	Q_UNUSED(s)
-	emit modified();
-}
-
-void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
+void PayloadTypeOptions::onAvailablePayloadTypeSelectionChanged()
 {
 	QModelIndex index = ui->rptAvailable->currentIndex();
 	if (index.isValid())
@@ -70,25 +58,25 @@ void JingleRtpOptions::onAvailablePayloadTypeSelectionChanged()
 		QStandardItem *item = model->itemFromIndex(index);
 		if (model->item(item->row(), 0)->text().isEmpty())
 		{
-			ui->pbPayloadTypeEdit->setEnabled(true);
-			ui->pbPayloadTypeRemove->setEnabled(true);
+			ui->pbEdit->setEnabled(true);
+			ui->pbRemove->setEnabled(true);
 		}
 		else
 		{
-			ui->pbPayloadTypeEdit->setDisabled(true);
-			ui->pbPayloadTypeRemove->setDisabled(true);
+			ui->pbEdit->setDisabled(true);
+			ui->pbRemove->setDisabled(true);
 		}
-		ui->pbPayloadTypeUse->setEnabled(true);
+		ui->pbUse->setEnabled(true);
 	}
 	else
 	{
-		ui->pbPayloadTypeUse->setDisabled(true);
-		ui->pbPayloadTypeEdit->setDisabled(true);
-		ui->pbPayloadTypeRemove->setDisabled(true);
+		ui->pbUse->setDisabled(true);
+		ui->pbEdit->setDisabled(true);
+		ui->pbRemove->setDisabled(true);
 	}
 }
 
-void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
+void PayloadTypeOptions::onUsedPayloadTypeSelectionChanged()
 {
 	QModelIndex index = ui->rptUsed->currentIndex();
 	if (index.isValid())
@@ -96,19 +84,19 @@ void JingleRtpOptions::onUsedPayloadTypeSelectionChanged()
 		QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
 		QStandardItem *item = model->itemFromIndex(index);
 		int row = item->row();
-		ui->pbPayloadTypeUsedUp->setEnabled(row>0);
-		ui->pbPayloadTypeUsedDown->setEnabled(row < ui->rptUsed->model()->rowCount()-1);
-		ui->pbPayloadTypeUnuse->setEnabled(true);
+		ui->pbUsedUp->setEnabled(row>0);
+		ui->pbUsedDown->setEnabled(row < ui->rptUsed->model()->rowCount()-1);
+		ui->pbUnuse->setEnabled(true);
 	}
 	else
 	{
-		ui->pbPayloadTypeUnuse->setDisabled(true);
-		ui->pbPayloadTypeUsedUp->setDisabled(true);
-		ui->pbPayloadTypeUsedDown->setDisabled(true);
+		ui->pbUnuse->setDisabled(true);
+		ui->pbUsedUp->setDisabled(true);
+		ui->pbUsedDown->setDisabled(true);
 	}
 }
 
-void JingleRtpOptions::onUsedPayloadTypePriorityUp()
+void PayloadTypeOptions::onUsedPayloadTypePriorityUp()
 {
 	QModelIndex index = ui->rptUsed->currentIndex();
 	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
@@ -123,7 +111,7 @@ void JingleRtpOptions::onUsedPayloadTypePriorityUp()
 	}
 }
 
-void JingleRtpOptions::onUsedPayloadTypePriorityDown()
+void PayloadTypeOptions::onUsedPayloadTypePriorityDown()
 {
 	QModelIndex index = ui->rptUsed->currentIndex();
 	QStandardItemModel *model = qobject_cast<QStandardItemModel *>(ui->rptUsed->model());
@@ -138,13 +126,13 @@ void JingleRtpOptions::onUsedPayloadTypePriorityDown()
 	}
 }
 
-void JingleRtpOptions::onPayloadTypeUnuse()
+void PayloadTypeOptions::onPayloadTypeUnuse()
 {
 	ui->rptAvailable->setCurrentRow(ui->rptAvailable->appendAvp(ui->rptUsed->takeAvp(ui->rptUsed->currentRow())));
 	ui->rptAvailable->setSortingEnabled(true);
 }
 
-void JingleRtpOptions::onPayloadTypeAdd()
+void PayloadTypeOptions::onPayloadTypeAdd()
 {
 	QList<QAVP> payloadTypes = availablePayloadTypes();
 	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(QAVP(), payloadTypes, this);
@@ -153,7 +141,7 @@ void JingleRtpOptions::onPayloadTypeAdd()
 	dialog->deleteLater();
 }
 
-void JingleRtpOptions::onPayloadTypeEdit()
+void PayloadTypeOptions::onPayloadTypeEdit()
 {
 	int row = ui->rptAvailable->currentRow();
 	QAVP avp = ui->rptAvailable->getAvp(row);
@@ -170,17 +158,17 @@ void JingleRtpOptions::onPayloadTypeEdit()
 	}
 }
 
-void JingleRtpOptions::onPayloadTypeRemove()
+void PayloadTypeOptions::onPayloadTypeRemove()
 {
 	ui->rptAvailable->takeAvp(ui->rptAvailable->currentRow());
 }
 
-void JingleRtpOptions::onPayloadTypeUse()
+void PayloadTypeOptions::onPayloadTypeUse()
 {
 	ui->rptUsed->setCurrentRow(ui->rptUsed->appendAvp(ui->rptAvailable->takeAvp(ui->rptAvailable->currentRow())));
 }
 
-void JingleRtpOptions::apply()
+void PayloadTypeOptions::apply()
 {
 	QList<QAVP> dynamicPayloadTypes, usedPayloadTypes;
 	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
@@ -201,28 +189,10 @@ void JingleRtpOptions::apply()
 	Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).setValue(JingleRtp::stringsFromAvps(dynamicPayloadTypes));
 	Options::node(OPV_JINGLE_RTP_PT_USED).setValue(JingleRtp::stringsFromAvps(usedPayloadTypes));
 
-	if (ui->cmbAudioDeviceInput->count())
-	{
-		QString deviceName = ui->cmbAudioDeviceInput->currentText();
-		if (deviceName == QAudioDeviceInfo::defaultInputDevice().deviceName())
-			deviceName.clear();
-		Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).setValue(deviceName.isEmpty()?QVariant():QVariant(deviceName));
-	}
-
-	if (ui->cmbAudioDeviceOutput->count())
-	{
-		QString deviceName = ui->cmbAudioDeviceOutput->currentText();
-		if (deviceName == QAudioDeviceInfo::defaultOutputDevice().deviceName())
-			deviceName.clear();
-		Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT).setValue(deviceName.isEmpty()?QVariant():QVariant(deviceName));
-	}
-
-	Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).setValue(ui->spbBitrate->value());
-
     emit childApply();
 }
 
-void JingleRtpOptions::reset()
+void PayloadTypeOptions::reset()
 {
 	QList<QAVP> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
 	QList<QAVP> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
@@ -248,32 +218,10 @@ void JingleRtpOptions::reset()
 
 	onUsedPayloadTypeSelectionChanged();
 
-	if (ui->cmbAudioDeviceInput->count())
-	{
-		QVariant value = Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).value();
-		QString name = value.isNull()?QAudioDeviceInfo::defaultInputDevice().deviceName():value.toString();
-		int index = ui->cmbAudioDeviceInput->findText(name);
-		if (index==-1)
-			index = ui->cmbAudioDeviceInput->findText(QAudioDeviceInfo::defaultInputDevice().deviceName());
-		ui->cmbAudioDeviceInput->setCurrentIndex(index);
-	}
-
-	if (ui->cmbAudioDeviceOutput->count())
-	{
-		QVariant value = Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT).value();
-		QString name = value.isNull()?QAudioDeviceInfo::defaultOutputDevice().deviceName():value.toString();
-		int index = ui->cmbAudioDeviceOutput->findText(name);
-		if (index==-1)
-			index = ui->cmbAudioDeviceOutput->findText(QAudioDeviceInfo::defaultOutputDevice().deviceName());
-		ui->cmbAudioDeviceOutput->setCurrentIndex(index);
-	}
-
-	ui->spbBitrate->setValue(Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt());
-
     emit childReset();
 }
 
-void JingleRtpOptions::changeEvent(QEvent *e)
+void PayloadTypeOptions::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -285,7 +233,7 @@ void JingleRtpOptions::changeEvent(QEvent *e)
 	}
 }
 
-QList<QAVP> JingleRtpOptions::availablePayloadTypes() const
+QList<QAVP> PayloadTypeOptions::availablePayloadTypes() const
 {
 	QList<QAVP> payloadTypes;
 	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
@@ -295,4 +243,3 @@ QList<QAVP> JingleRtpOptions::availablePayloadTypes() const
 		payloadTypes.append(ui->rptUsed->getAvp(i));
 	return payloadTypes;
 }
-

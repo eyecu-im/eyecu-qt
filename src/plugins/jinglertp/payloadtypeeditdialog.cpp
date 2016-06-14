@@ -77,8 +77,9 @@ void PayloadTypeEditDialog::onMediaTypeSelected(int AIndex)
 	for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 	{
 		int id = QAVCodec::idByName(*it);
-		if (QAVCodec::findDecoder(id).type()==mediaType)
-		ui->cmbCodecName->addItem(*it, id);
+		QAVCodec decoder(QAVCodec::findDecoder(id));
+		if (decoder.type()==mediaType)
+			ui->cmbCodecName->addItem(QString("%1: %2").arg(*it).arg(decoder.longName()), id);
 	}
 }
 

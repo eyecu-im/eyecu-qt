@@ -60,7 +60,7 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
-		connect(this,SIGNAL(connectionEstablished(IJingleContent *)),(*it)->instance(), SLOT(onConnectionEstablished(IJingleContent *)),Qt::QueuedConnection);
+		connect(this,SIGNAL(startSendData(IJingleContent *)),(*it)->instance(), SLOT(onConnectionEstablished(IJingleContent *)),Qt::QueuedConnection);
 		connect(this,SIGNAL(connectionFailed(IJingleContent *)),(*it)->instance(), SLOT(onConnectionFailed(IJingleContent *)),Qt::QueuedConnection);
 	}
 
@@ -73,9 +73,9 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
 		FTransports.insert(transort->ns(), transort);
 		connect((*it)->instance(),SIGNAL(connectionsOpened(IJingleContent*)),
-								  SLOT(onConnectionsOpened(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onStartSend(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(connectionsOpenFailed(IJingleContent*)),
-								  SLOT(onConnectionsOpenFailed(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onConnectionFailed(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
 								  SLOT(onIncomingTransportFilled(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent*)),
@@ -136,12 +136,17 @@ void Jingle::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-void Jingle::onConnectionsOpened(IJingleContent *AContent)
+void Jingle::onStartSend(IJingleContent *AContent)
 {
-	emit connectionEstablished(AContent);
+	emit startSendData(AContent);
 }
 
-void Jingle::onConnectionsOpenFailed(IJingleContent *AContent)
+void Jingle::onStartReceive(IJingleContent *AContent)
+{
+	emit startReceiveData(AContent);
+}
+
+void Jingle::onConnectionFailed(IJingleContent *AContent)
 {
 	emit connectionFailed(AContent);
 }

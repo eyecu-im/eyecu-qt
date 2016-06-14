@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PayloadTypeOptions</class>
+ <widget class="QWidget" name="PayloadTypeOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>402</width>
+    <height>407</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Jingle RTP options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,0,1">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="pbUnuse">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Unuse</string>
+     </property>
+     <property name="whatsThis">
+      <string>Add payload type to in-use list</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QPushButton" name="pbUsedDown">
+     <property name="toolTip">
+      <string>Move down</string>
+     </property>
+     <property name="whatsThis">
+      <string>Shifts payload type priority down</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="pbUse">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Use</string>
+     </property>
+     <property name="whatsThis">
+      <string>Remove payload type from in-use list</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblAvailable">
+     <property name="text">
+      <string>Available</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="hlActions">
+     <item>
+      <widget class="QPushButton" name="pbAdd">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Add dynamic payload type</string>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Edit dynamic payload type</string>
+       </property>
+       <property name="text">
+        <string>Edit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbRemove">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Remove dynamic payload type</string>
+       </property>
+       <property name="text">
+        <string>Remove</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <spacer name="verticalSpacer1">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <spacer name="verticalSpacer3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblUsed">
+     <property name="text">
+      <string>In use</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <spacer name="verticalSpacer4">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="1">
+    <widget class="QPushButton" name="pbUsedUp">
+     <property name="toolTip">
+      <string>Move Up</string>
+     </property>
+     <property name="whatsThis">
+      <string>Shifts payload type priority up</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <spacer name="verticalSpacer2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0" rowspan="8">
+    <widget class="RtpPayloadTypeSelector" name="rptAvailable">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" rowspan="8">
+    <widget class="RtpPayloadTypeSelector" name="rptUsed">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RtpPayloadTypeSelector</class>
+   <extends>QTreeView</extends>
+   <header>rtppayloadtypeselector.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>pbAdd</tabstop>
+  <tabstop>pbEdit</tabstop>
+  <tabstop>pbRemove</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbUse</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onPayloadTypeUse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>313</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbUnuse</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onPayloadTypeUnuse()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbUsedUp</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onUsedPayloadTypePriorityUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbUsedDown</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onUsedPayloadTypePriorityDown()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>371</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>293</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbEdit</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onPayloadTypeEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>135</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onPayloadTypeAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbRemove</sender>
+   <signal>clicked()</signal>
+   <receiver>PayloadTypeOptions</receiver>
+   <slot>onPayloadTypeRemove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>216</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>198</x>
+     <y>217</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAvailablePayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypePriorityUp()</slot>
+  <slot>onUsedPayloadTypePriorityDown()</slot>
+  <slot>onPayloadTypeUse()</slot>
+  <slot>onPayloadTypeUnuse()</slot>
+  <slot>onPayloadTypeAdd()</slot>
+  <slot>onPayloadTypeEdit()</slot>
+  <slot>onPayloadTypeRemove()</slot>
+ </slots>
+</ui>

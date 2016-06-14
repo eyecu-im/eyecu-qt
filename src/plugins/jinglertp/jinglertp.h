@@ -21,7 +21,8 @@
 #include <definitions/namespaces.h>
 
 #include "audio.h"
-#include "jinglertpoptions.h"
+#include "audiooptions.h"
+#include "payloadtypeoptions.h"
 
 #define JINGLERTP_UUID "{3d5702bc-29b9-40f2-88fe-85887cd6d8dc}"
 
@@ -174,7 +175,7 @@ private:
     IAvatars            *FAvatars;
     IStatusIcons        *FStatusIcons;    
     IconStorage         *FIconStorage;
-    JingleRtpOptions    *FJingleRtpOptions;    
+	AudioOptions    *FJingleRtpOptions;
 	QHash<Jid, QHash<Jid, QString> >	FSidHash;
     QHash<QString, IMessageChatWindow *>   FChatWindows;
     QMap<int, IMessageChatWindow *> FNotifies;

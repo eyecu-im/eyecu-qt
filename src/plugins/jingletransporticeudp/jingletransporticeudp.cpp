@@ -53,7 +53,7 @@ bool JingleTransportIceUdp::initSettings()
 
 bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
 {
-    emit connectionsOpenFailed(AContent);
+    emit connectionError(AContent);
     return false;
 }
 

@@ -109,7 +109,7 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
     if (plugin)
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IMessageManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0,NULL);
     if (plugin)
 		FMessageStyleManager = qobject_cast<IMessageStyleManager *>(plugin->instance());
 
@@ -210,6 +210,19 @@ bool JingleRtp::initSettings()
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
     return true;
+}
+
+QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (ANodeId == OPN_JINGLERTP)
+	{
+		widgets.insertMulti(OHO_JINGLERTP_AUDIO, FOptionsManager->newOptionsDialogHeader(tr("Audio"), AParent));
+		widgets.insertMulti(OWO_JINGLERTP_AUDIO, new AudioOptions(AParent));
+		widgets.insertMulti(OHO_JINGLERTP_PAYLOADTYPES, FOptionsManager->newOptionsDialogHeader(tr("Payload types"), AParent));
+		widgets.insertMulti(OWO_JINGLERTP_PAYLOADTYPES, new PayloadTypeOptions(AParent));
+	}
+	return widgets;
 }
 
 bool JingleRtp::checkSupported(QDomElement &ADescription)
@@ -478,16 +491,6 @@ void JingleRtp::updateWindow(IMessageChatWindow *AWindow)
         icon = FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid());
 	QString contactName = AWindow->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString();
     AWindow->updateWindow(icon, contactName, tr("%1 - Chat").arg(contactName), QString::null);
-}
-
-QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
-{
-	QMultiMap<int, IOptionsDialogWidget *> widgets;
-    if (ANodeId == OPN_JINGLERTP)
-    {
-		widgets.insertMulti(OWO_JINGLERTP, new JingleRtpOptions(AParent));
-    }
-    return widgets;
 }
 
 bool JingleRtp::showNotification(int AOrder, ushort AKind, int ANotifyId, const INotification &ANotification)

@@ -152,7 +152,8 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
         return false;
     }
 
-    emit connectionsOpened(AContent);
+	QTimer::singleShot(1000, this, SLOT(onTimeout()));
+	emit startSend(AContent);
     return true;
 }
 
@@ -285,7 +286,12 @@ void JingleTransportRawUdp::registerDiscoFeatures()
 //    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
     dfeature.name = tr("Jingle RAW-UDP Transport");
     dfeature.description = tr("Allows using RAW-UDP transport in Jingle sesions");
-    FServiceDiscovery->insertDiscoFeature(dfeature);
+	FServiceDiscovery->insertDiscoFeature(dfeature);
+}
+
+void JingleTransportRawUdp::onTimeout()
+{
+	qDebug() << "JingleTransportRawUdp::onTimeout()";
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_JingleTransportRawUdp,JingleTransportRawUdp)
