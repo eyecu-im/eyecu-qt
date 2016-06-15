@@ -140,6 +140,7 @@ protected:
     void    establishConnection(const Jid &AStreamJid, const QString &ASid);
     void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
     void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
+	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
 
 protected slots:
     // Notofications

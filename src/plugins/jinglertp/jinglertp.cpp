@@ -875,6 +875,24 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
+void JingleRtp::addPayloadType(IJingleContent *AContent, const QAVP &APayloadType)
+{
+	if (AContent)
+	{
+		QDomDocument document = AContent->document();
+		QDomElement payloadType = document.createElement("payload-type");
+		payloadType.setAttribute("id", QString::number(APayloadType.payloadType));
+		if (!APayloadType.codecName.isEmpty())
+			payloadType.setAttribute("name", APayloadType.codecName);
+		if (APayloadType.clockRate)
+			payloadType.setAttribute("clockrate", QString::number(APayloadType.clockRate));
+		if (APayloadType.channels)
+			payloadType.setAttribute("channels", QString::number(APayloadType.channels));
+		QDomElement description = AContent->description();
+		description.appendChild(payloadType);
+	}
+}
+
 QStringList JingleRtp::stringsFromAvps(const QList<QAVP> &AAvps)
 {
 	QStringList strings;

@@ -214,20 +214,8 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 		while (true)
 		{
 			quint16 port = getPort();
-			qDebug() << "socket=" << socket;
-			qDebug() << "port=" << port;
-			qDebug() << "localAddress=" << localAddress;
-			qDebug() << "socket state=" << socket->state();
-			if (socket->bind(localAddress, port))
+			if (socket->bind(localAddress, port, QUdpSocket::DontShareAddress))
 				break;
-			qDebug() << "port bind unsuccessful! reason:" << socket->errorString() << "(" << socket->error() << ")";
-			if (socket->error()==QAbstractSocket::UnsupportedSocketOperationError)
-			{
-				if (socket->bind(port, QUdpSocket::DontShareAddress))
-					break;
-				qDebug() << "port bind unsuccessful again! reason:" << socket->errorString() << "(" << socket->error() << ")";
-			}
-			qDebug() << "socket->localAddress()=" << socket->localAddress();
 //			{
 //                if (socket1)
 //                {
@@ -244,7 +232,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 //                FCurrentPort=PORT_START;
 		}
 
-        qDebug() << "socket=" << socket;
+//		qDebug() << "socket=" << socket;
 //		qDebug() << "socket1=" << socket1;
 
         if (socket->state()==QAbstractSocket::BoundState)
