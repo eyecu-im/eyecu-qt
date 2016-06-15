@@ -1015,6 +1015,15 @@ void JingleRtp::onCall()
                 if (command==VideoCall)
                 {   // Add video content
                     content = FJingle->contentAdd(streamJid, sid, "video", "video", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
+
+					QStringList payloadTypes = Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList();
+					for (QStringList::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+					{
+						QAVP payloadType(*it);
+						MediaSender::
+					}
+
+
                     addPendingContent(content, AddContent);
                 }
                 putSid(streamJid, contactJid, sid);
