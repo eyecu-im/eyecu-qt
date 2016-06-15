@@ -41,8 +41,7 @@ protected:
     void    registerDiscoFeatures();
 
 signals:
-    void startSend(IJingleContent *AContent);
-	void startReceive(IJingleContent *AContent);
+    void connectionOpened(IJingleContent *AContent);
     void connectionError(IJingleContent *AContent);
     void incomingTransportFilled(IJingleContent *AContent);
     void incomingTransportFillFailed(IJingleContent *AContent);

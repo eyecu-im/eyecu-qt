@@ -65,15 +65,13 @@ protected:
     bool processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
 
 protected slots:
-	void onStartSend(IJingleContent *AContent);
-	void onStartReceive(IJingleContent *AContent);
+	void onConnectionOpened(IJingleContent *AContent);
 	void onConnectionFailed(IJingleContent *AContent);
     void onIncomingTransportFilled(IJingleContent *AContent);
     void onIncomingTransportFillFailed(IJingleContent *AContent);
 
 signals:
 	void startSendData(IJingleContent *AContent);
-	void startReceiveData(IJingleContent *AContent);
     void connectionFailed(IJingleContent *AContent);
     void contentAdded(IJingleContent *AContent);
     void contentAddFailed(IJingleContent *AContent);

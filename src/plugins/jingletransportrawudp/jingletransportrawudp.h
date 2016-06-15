@@ -13,56 +13,55 @@
 #define JINGLETRANSPORTRAWUDP_UUID "{f5bcad05-cd36-b2fc-2e47-59ad8fb49c21}"
 
 class JingleTransportRawUdp:
-        public QObject,
-        public IPlugin,
+		public QObject,
+		public IPlugin,
 		public IJingleTransport,
 		public IOptionsDialogHolder
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_INTERFACES(IPlugin IJingleTransport IOptionsDialogHolder)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingleTransportRawUdp")
 #endif
 public:
-    explicit JingleTransportRawUdp(QObject *AParent = 0);
+	explicit JingleTransportRawUdp(QObject *AParent = 0);
 
-    //IPlugin
-    QObject *instance() { return this; }
-    QUuid pluginUuid() const { return JINGLETRANSPORTRAWUDP_UUID; }
-    void pluginInfo(IPluginInfo *APluginInfo);
-    bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-    bool initObjects();
-    bool initSettings();
-    bool startPlugin(){return true;}
+	//IPlugin
+	QObject *instance() { return this; }
+	QUuid pluginUuid() const { return JINGLETRANSPORTRAWUDP_UUID; }
+	void pluginInfo(IPluginInfo *APluginInfo);
+	bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
+	bool initObjects();
+	bool initSettings();
+	bool startPlugin(){return true;}
 
-    //IJingleTransport
-    bool    isStreaming() const {return false;}
-    QString ns() const {return NS_JINGLE_TRANSPORTS_RAW_UDP;}
-    int     priority() const {return 90;}
-    bool    openConnection(IJingleContent *AContent);
-    bool    fillIncomingTransport(IJingleContent *AContent);
+	//IJingleTransport
+	bool    isStreaming() const {return false;}
+	QString ns() const {return NS_JINGLE_TRANSPORTS_RAW_UDP;}
+	int     priority() const {return 90;}
+	bool    openConnection(IJingleContent *AContent);
+	bool    fillIncomingTransport(IJingleContent *AContent);
 
 	// IOptionsDialogHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
 
 protected:
-    void registerDiscoFeatures();
-
-protected slots:
-	void onTimeout();
+	void registerDiscoFeatures();
+	quint16 getPort();
+	void	freePort(quint16 APort);
 
 signals:
-	void startSend(IJingleContent *AContent);
+	void connectionOpened(IJingleContent *AContent);
 	void startReceive(IJingleContent *AContent);
 	void connectionError(IJingleContent *AContent);
-    void incomingTransportFilled(IJingleContent *AContent);
-    void incomingTransportFillFailed(IJingleContent *AContent);
+	void incomingTransportFilled(IJingleContent *AContent);
+	void incomingTransportFillFailed(IJingleContent *AContent);
 
 private:
-    IJingle             *FJingle;
-    IServiceDiscovery   *FServiceDiscovery;
+	IJingle             *FJingle;
+	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager		*FOptionsManager;
-    quint16             FCurrentPort;	
+	QSet<quint16>		FPorts;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

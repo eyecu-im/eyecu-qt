@@ -106,7 +106,6 @@ public:
 
 protected:
 	virtual void startSendData(IJingleContent *AContent) =0;
-	virtual void startReceiveData(IJingleContent *AContent) =0;
 	virtual void connectionFailed(IJingleContent *AContent) =0;
 	virtual void contentAdded(IJingleContent *AContent) =0;
 	virtual void contentAddFailed(IJingleContent *AContent) =0;
@@ -151,8 +150,7 @@ public:
 	virtual bool fillIncomingTransport(IJingleContent *AContent) =0;
 
 protected:
-	virtual void startSend(IJingleContent *AContent) =0;
-	virtual void startReceive(IJingleContent *AContent) =0;
+	virtual void connectionOpened(IJingleContent *AContent) =0;
 	virtual void connectionError(IJingleContent *AContent) =0;
 	virtual void incomingTransportFilled(IJingleContent *AContent) =0;
 	virtual void incomingTransportFillFailed(IJingleContent *AContent) =0;

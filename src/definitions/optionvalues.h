@@ -573,8 +573,17 @@
 #define OPV_ATTENTION_NOTIFICATIONPOPUP                 "attention.notification-popup"
 #define OPV_ATTENTION_AYWAYSPLAYSOUND                   "attention.always-play-sound"
 
-// Jingle RTP
+// Jingle
 #define OPV_JINGLE                                      "jingle"
+//  Transports
+#define OPV_JINGLE_TRANSPORT                            "jingle.transport"
+//   Raw UDP
+#define OPV_JINGLE_TRANSPORT_RAWUDP                     "jingle.transport.raw-udp"
+#define OPV_JINGLE_TRANSPORT_RAWUDP_IP                  "jingle.transport.raw-udp.ip"
+#define OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST          "jingle.transport.raw-udp.port.first"
+#define OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST          "jingle.transport.raw-udp.port.last"
+//  Applications
+//   RTP
 #define OPV_JINGLE_RTP                                  "jingle.rtp"
 #define OPV_JINGLE_RTP_AUDIO_INPUT                      "jingle.rtp.audio.input"
 #define OPV_JINGLE_RTP_AUDIO_OUTPUT                     "jingle.rtp.audio.output"

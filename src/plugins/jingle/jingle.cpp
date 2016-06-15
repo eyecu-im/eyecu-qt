@@ -80,10 +80,8 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
 		FTransports.insert(transort->ns(), transort);
-		connect((*it)->instance(),SIGNAL(startSend(IJingleContent*)),
-								  SLOT(onStartSend(IJingleContent*)),Qt::QueuedConnection);
-		connect((*it)->instance(),SIGNAL(startReceive(IJingleContent*)),
-								  SLOT(onStartReceive(IJingleContent*)),Qt::QueuedConnection);
+		connect((*it)->instance(),SIGNAL(connectionOpened(IJingleContent*)),
+								  SLOT(onConnectionOpened(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
 								  SLOT(onConnectionFailed(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
@@ -152,14 +150,9 @@ void Jingle::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-void Jingle::onStartSend(IJingleContent *AContent)
+void Jingle::onConnectionOpened(IJingleContent *AContent)
 {
 	emit startSendData(AContent);
-}
-
-void Jingle::onStartReceive(IJingleContent *AContent)
-{
-	emit startReceiveData(AContent);
 }
 
 void Jingle::onConnectionFailed(IJingleContent *AContent)

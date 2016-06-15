@@ -9,15 +9,11 @@
 #include "jingletransportrawudp.h"
 #include "rawudpoptions.h"
 
-#define PORT_START  1024
-#define PORT_FINISH 49151
-
 JingleTransportRawUdp::JingleTransportRawUdp(QObject *AParent) :
 	QObject(AParent),
 	FJingle(NULL),
 	FServiceDiscovery(NULL),
-	FOptionsManager(NULL),
-	FCurrentPort(PORT_START)
+	FOptionsManager(NULL)
 {}
 
 void JingleTransportRawUdp::pluginInfo(IPluginInfo *APluginInfo)
@@ -65,11 +61,15 @@ bool JingleTransportRawUdp::initObjects()
 
 bool JingleTransportRawUdp::initSettings()
 {
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_IP, QNetworkInterface::allAddresses().first().toString());
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST, 6666);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST, 8888);
     return true;
 }
 
 bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 {
+	qDebug() << "JingleTransportRawUdp::openConnection(" << AContent << ")";
     int candidates = 0; // Total candidates
     int successful = 0; // Successfuly connected candidates
 
@@ -99,10 +99,16 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             if (socket->state() == QUdpSocket::BoundState)
             {
                 if (socket->openMode() == (QIODevice::ReadOnly|QIODevice::Unbuffered))
+				{
+					connect(socket, SIGNAL(readyRead()), SLOT());
                     continue;
+				}
                 else
                     if (socket->open(QIODevice::ReadOnly|QIODevice::Unbuffered))
+					{
+						connect(socket, SIGNAL(readyRead()), SLOT());
                         continue;
+					}
                 qWarning() << "Failed to open socket for writing!";
             }
             else
@@ -156,7 +162,6 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
         else
             qWarning() << "Incoming candidate is broken!";
 
-
     if (!candidates)
     {
         qWarning() << "No output candidates found!";
@@ -169,13 +174,14 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
         return false;
     }
 
-	QTimer::singleShot(1000, this, SLOT(onTimeout()));
-	emit startSend(AContent);
+	emit connectionOpened(AContent);
+	qDebug() << "JingleTransportRawUdp::openConnection(): return true";
     return true;
 }
 
 bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 {
+	qDebug() << "JingleTransportRawUdp::fillIncomingTransport(" << AContent << ")";
     QUdpSocket *socket = new QUdpSocket(this);
     QHostAddress localAddress;
 
@@ -184,12 +190,14 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
          !candidate.isNull();
          candidate = candidate.nextSiblingElement("candidate"))
     {
+		qDebug() << "candidate found!";
         if (candidate.hasAttribute("ip") && candidate.hasAttribute("port") && candidate.hasAttribute("component") && candidate.hasAttribute("generation") && candidate.hasAttribute("id"))
         {
             socket->connectToHost(QHostAddress(candidate.attribute("ip")),
                                   candidate.attribute("port").toUInt(),
                                   QIODevice::ReadOnly|QIODevice::Unbuffered);
             localAddress =  socket->localAddress();
+			qDebug() << "localAddress=" << localAddress;
             socket->disconnectFromHost();            
         }
         else
@@ -198,20 +206,29 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
     }
 
     if (localAddress.isNull())
-    {
-        QList<QHostAddress> addresses=QNetworkInterface::allAddresses();
-        for (QList<QHostAddress>::const_iterator it=addresses.constBegin(); it!=addresses.constEnd(); it++)
-            if ((*it).toIPv4Address()!=0x7f000001)
-                localAddress = *it;
-    }
+		localAddress = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value().toString();
 
 	if (!localAddress.isNull())
 	{
 //        QUdpSocket *socket1 = Options::node(OPV_JINGLERTP_USERTCP).value().toBool()?new QUdpSocket(this):NULL;
-//        while (true)
-//        {
-//            if (socket->bind(localAddress, FCurrentPort, QUdpSocket::DontShareAddress))
-//            {
+		while (true)
+		{
+			quint16 port = getPort();
+			qDebug() << "socket=" << socket;
+			qDebug() << "port=" << port;
+			qDebug() << "localAddress=" << localAddress;
+			qDebug() << "socket state=" << socket->state();
+			if (socket->bind(localAddress, port))
+				break;
+			qDebug() << "port bind unsuccessful! reason:" << socket->errorString() << "(" << socket->error() << ")";
+			if (socket->error()==QAbstractSocket::UnsupportedSocketOperationError)
+			{
+				if (socket->bind(port, QUdpSocket::DontShareAddress))
+					break;
+				qDebug() << "port bind unsuccessful again! reason:" << socket->errorString() << "(" << socket->error() << ")";
+			}
+			qDebug() << "socket->localAddress()=" << socket->localAddress();
+//			{
 //                if (socket1)
 //                {
 //                    if (socket1->bind(localAddress, FCurrentPort+1, QUdpSocket::DontShareAddress))
@@ -225,7 +242,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 //            FCurrentPort+=2;
 //            if (FCurrentPort>PORT_FINISH)
 //                FCurrentPort=PORT_START;
-//        }
+		}
 
         qDebug() << "socket=" << socket;
 //		qDebug() << "socket1=" << socket1;
@@ -254,6 +271,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
             {
                 qWarning() << "Candidate 1 is is wrong state!";
                 socket->deleteLater();
+				qDebug() << "JingleTransportRawUdp::fillIncomingTransport(): return false(A)";
                 return false;
             }
         }
@@ -288,10 +306,12 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 //            }
 
         emit incomingTransportFilled(AContent);
+		qDebug() << "JingleTransportRawUdp::fillIncomingTransport(): return true(B)";
         return true;
     }
     else
         qWarning() << "Failed to determine local address!";
+	qDebug() << "JingleTransportRawUdp::fillIncomingTransport(): return false(C)";
 	return false;
 }
 
@@ -317,10 +337,26 @@ void JingleTransportRawUdp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-void JingleTransportRawUdp::onTimeout()
+quint16 JingleTransportRawUdp::getPort()
 {
-	qDebug() << "JingleTransportRawUdp::onTimeout()";
+	for (quint16 port = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt(); port<=Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).value().toInt(); port+=2)
+	{
+		if (!FPorts.contains(port) && !FPorts.contains(port+1))
+		{
+			FPorts.insert(port);
+			FPorts.insert(port+1);
+			return port;
+		}
+	}
+	return 0;
 }
+
+void JingleTransportRawUdp::freePort(quint16 APort)
+{
+	FPorts.remove(APort);
+	FPorts.remove(APort+1);
+}
+
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_JingleTransportRawUdp,JingleTransportRawUdp)
 #endif
