@@ -1,4 +1,5 @@
 #include <QNetworkInterface>
+#include <QNetworkProxy>
 #include <utils/options.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
@@ -183,6 +184,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 {
 	qDebug() << "JingleTransportRawUdp::fillIncomingTransport(" << AContent << ")";
     QUdpSocket *socket = new QUdpSocket(this);
+	socket->setProxy(QNetworkProxy::NoProxy);
     QHostAddress localAddress;
 
     QDomElement outgoingTransport = AContent->transportOutgoing();
