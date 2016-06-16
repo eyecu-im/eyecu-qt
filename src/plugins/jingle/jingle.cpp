@@ -188,6 +188,7 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 		qDebug() << "incomingTransportFilled(" << AContent->name() << ")";
 		emit incomingTransportFilled(AContent);
 	}
+	qDebug() << "Jingle::onIncomingTransportFilled(): Finished!";
 }
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)

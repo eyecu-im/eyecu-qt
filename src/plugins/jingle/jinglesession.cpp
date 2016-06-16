@@ -202,6 +202,7 @@ bool JingleSession::deleteContent(const QString &AName)
 
 bool JingleSession::initiate()
 {
+	qDebug() << "JingleSession::initiate()";
     JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionInitiate);
     if (!FValid || FContents.isEmpty())    // Invalid session
         return false;
@@ -210,6 +211,7 @@ bool JingleSession::initiate()
         (*it)->addElementToStanza(stanza);
     FActionId=stanza.id();
     FAction=IJingle::SessionInitiate;
+	qDebug() << "stanza=" << stanza.toString();
     return FJingle->sendStanzaOut(stanza);
 }
 

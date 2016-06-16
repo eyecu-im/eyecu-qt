@@ -1011,12 +1011,10 @@ void JingleRtp::onCall()
         QString sid=FJingle->sessionCreate(streamJid, contactJid, NS_JINGLE_APPS_RTP);
         if (!sid.isNull())
         {
-			qDebug() << "A!";
 			QSet<int> ids;
             IJingleContent *content = FJingle->contentAdd(streamJid, sid, "voice", "audio", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
             if (content)
             {
-				qDebug() << "B!";
 				QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(QAudio::AudioInput));
 				QString deviceName = Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).value().toString();
 				int bitRate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
@@ -1032,24 +1030,15 @@ void JingleRtp::onCall()
 				QStringList payloadTypes = Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList();
 				for (QStringList::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
 				{
-					qDebug() << "*it=" << *it;
 					QAVP avp(*it);
-					qDebug() << "C! avp=" << avp;
-					qDebug() << "codec name=" << avp.codecName;
-					int id = QAVCodec::idByName(avp.codecName);
-					qDebug() << "id=" << id;
-					QAVCodec encoder = QAVCodec::findEncoder(id);
-					qDebug() << "encoder=" << encoder;
-					qDebug() << "encoder name=" << encoder.name();
-					MediaSender *sender = new MediaSender(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 6667, avp.clockRate, bitRate, this);
-					qDebug() << "C!!";
+					MediaSender *sender = new MediaSender(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, avp.clockRate, bitRate, this);
 					if (sender->status()==MediaSender::Stopped)
 					{
-						qDebug() << "C!!!";
 						QAVP payloadType(sender->getAvp());
-						qDebug() << "D! payloadType=" << payloadType;
-						if (payloadType.isValid())
+//TODO: Make adequate validation
+//						if (payloadType.isValid())
 						{
+//							qDebug() << "Valid!";
 							QDomDocument document(content->document());
 							QDomElement pt = document.createElement("payload-type");
 							if (payloadType.payloadType>96)
@@ -1058,7 +1047,6 @@ void JingleRtp::onCall()
 									++payloadType.payloadType;
 								ids.insert(payloadType.payloadType);
 							}
-							qDebug() << "payloadType.payloadType=" << payloadType.payloadType;
 							pt.setAttribute("id", QString::number(payloadType.payloadType));
 							if (!payloadType.codecName.isEmpty())
 								pt.setAttribute("name", payloadType.codecName);
@@ -1067,23 +1055,19 @@ void JingleRtp::onCall()
 							if (payloadType.channels)
 								pt.setAttribute("channels", QString::number(payloadType.channels));
 							description.appendChild(pt);
-							qDebug() << "<payload-type/> element added!";
 						}
 					}
-					sender->deleteLater();
+//					sender->deleteLater();
+					delete sender;
 				}
-				qDebug() << "E!";
                 addPendingContent(content, AddContent);
                 if (command==VideoCall)
                 {   // Add video content
                     content = FJingle->contentAdd(streamJid, sid, "video", "video", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
                     addPendingContent(content, AddContent);
                 }
-				qDebug() << "F!";
                 putSid(streamJid, contactJid, sid);
-				qDebug() << "G!";
                 FJingle->sessionInitiate(streamJid, sid);
-				qDebug() << "H!";
             }
         }
     }
