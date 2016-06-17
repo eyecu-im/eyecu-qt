@@ -206,6 +206,7 @@ void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 
 bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
+	qDebug() << "Jingle::processSessionInitiate(" << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
 	JingleSession *session = new JingleSession(AStanza);
 
 	if (!session->isOk())
@@ -367,7 +368,7 @@ bool Jingle::processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStan
 
 bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-//    qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
+	qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
 	if (AHandleId==FSHIRequest)
 	{
 		JingleStanza stanza(AStanza);

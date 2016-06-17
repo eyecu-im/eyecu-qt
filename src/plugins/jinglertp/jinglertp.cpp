@@ -1041,7 +1041,7 @@ void JingleRtp::onCall()
 //							qDebug() << "Valid!";
 							QDomDocument document(content->document());
 							QDomElement pt = document.createElement("payload-type");
-							if (payloadType.payloadType>96)
+							if (payloadType.payloadType>95)
 							{
 								while(ids.contains(payloadType.payloadType))
 									++payloadType.payloadType;
