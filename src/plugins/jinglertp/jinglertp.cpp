@@ -184,6 +184,8 @@ bool JingleRtp::initObjects()
 	QAVFormat::registerAll();
 	QAVFormat::networkInit();
 
+	FSupportdCodecNames = QAVCodec::codecNames(true);
+
     return true;
 }
 
@@ -235,10 +237,57 @@ QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QSt
 
 bool JingleRtp::checkSupported(QDomElement &ADescription)
 {
-	Q_UNUSED(ADescription)
+	LOG_DEBUG("JingleRtp::checkSupported()");
 
-//TODO: Implement real check
-    return true;
+	QList<QDomElement> unsupportedPayloadTypes;
+
+	for (QDomElement pt = ADescription.firstChildElement("payload-type"); !pt.isNull(); pt=pt.nextSiblingElement("payload-type"))
+	{
+		bool supported(false);
+		if (pt.hasAttribute("id"))
+		{
+			QString name;
+			if (pt.hasAttribute("name"))
+				name = pt.attribute("name");
+			else
+			{
+				bool ok;
+				int id = pt.attribute("it").toInt(&ok);
+				if (ok)
+				{
+					if (id<96)
+					{
+						QAVP avp = QAVCodec::findAvp(id);
+						if (avp.isValid())
+							name = avp.codecName;
+					}
+					else
+						LOG_WARNING("Dynamic payload types must have \"name\" attribute!");
+				}
+				else
+					LOG_WARNING("Invalid id attribute of <payload-type/> element!");
+
+			}
+			if (!name.isEmpty())
+				supported = FSupportdCodecNames.contains(name);
+		}
+		else
+			LOG_WARNING("Invalid <payload-type/> element!");
+
+		if (!supported)
+			unsupportedPayloadTypes.append(pt);
+	}
+
+	LOG_INFO(QString("Unsupported payload types found: %1").arg(unsupportedPayloadTypes.size()));
+
+	for (QList<QDomElement>::ConstIterator it = unsupportedPayloadTypes.constBegin(); it!=unsupportedPayloadTypes.constEnd(); ++it)
+		ADescription.removeChild(*it);
+
+	bool rc = !ADescription.firstChildElement("payload-type").isNull();
+
+	LOG_DEBUG(QString("JingleRtp::checkSupported() returns: %1").arg(rc));
+
+	return rc;
 }
 
 void JingleRtp::onSessionInitiated(const Jid &AStreamJid, const QString &ASid)
@@ -785,15 +834,17 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
 
 void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 {
+	qDebug() << "JingleRtp::updateChatWindowActions(" << AChatWindow << ")";
     QList<QAction *> actions = AChatWindow->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_JINGLE_RTP);
-    //! +++++ fix it ++++++
-    //if (isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
+	if (isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
     {
+		qDebug() << "Supported!";
+		Jid contactJid = AChatWindow->contactJid();
+		Jid streamJid  = AChatWindow->streamJid();
+		qDebug() << "contactJid =" << contactJid.full();
         if (actions.isEmpty())
         {
-            Jid contactJid = AChatWindow->contactJid();
-            Jid streamJid  = AChatWindow->streamJid();
-
+			qDebug() << "Adding actions...";
             Action *action = new Action(AChatWindow->toolBarWidget()->instance());
             action->setText(tr("Voice call"));
 			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL));
@@ -829,13 +880,28 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
             AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
             AChatWindow->toolBarWidget()->toolBarChanger()->setSeparatorsVisible(true);
         }
+		else
+		{
+			qDebug() << "Changing action target addressed...";
+			for (QList<QAction *>::const_iterator it=actions.constBegin(); it!=actions.constEnd(); it++)
+			{
+				Action *action = AChatWindow->toolBarWidget()->toolBarChanger()->handleAction(*it);
+				if (action)
+					action->setData(ADR_CONTACT_JID, contactJid.full());
+				else
+					LOG_ERROR("Invalid action handle!");
+			}
+		}
     }
-    //else
-    //    for (QList<QAction *>::const_iterator it=actions.constBegin(); it!=actions.constEnd(); it++)
-    //    {
-    //        AChatWindow->toolBarWidget()->toolBarChanger()->removeItem(*it);
-    //        (*it)->deleteLater();
-    //    }
+	else
+	{
+		qDebug() << "Not supported! Removing actions...";
+		for (QList<QAction *>::const_iterator it=actions.constBegin(); it!=actions.constEnd(); it++)
+		{
+			AChatWindow->toolBarWidget()->toolBarChanger()->removeItem(*it);
+			(*it)->deleteLater();
+		}
+	}
 }
 
 void JingleRtp::addPendingContent(IJingleContent *AContent, PendingType AType)
@@ -1038,6 +1104,7 @@ void JingleRtp::onCall()
 //TODO: Make adequate validation
 //						if (payloadType.isValid())
 						{
+							qDebug() << "A";
 //							qDebug() << "Valid!";
 							QDomDocument document(content->document());
 							QDomElement pt = document.createElement("payload-type");
@@ -1047,6 +1114,7 @@ void JingleRtp::onCall()
 									++payloadType.payloadType;
 								ids.insert(payloadType.payloadType);
 							}
+							qDebug() << "B";
 							pt.setAttribute("id", QString::number(payloadType.payloadType));
 							if (!payloadType.codecName.isEmpty())
 								pt.setAttribute("name", payloadType.codecName);
@@ -1055,11 +1123,15 @@ void JingleRtp::onCall()
 							if (payloadType.channels)
 								pt.setAttribute("channels", QString::number(payloadType.channels));
 							description.appendChild(pt);
+							qDebug() << "C";
 						}
 					}
+					qDebug() << "D";
 //					sender->deleteLater();
+					qDebug() << "E";
 					delete sender;
 				}
+				qDebug() << "F";
                 addPendingContent(content, AddContent);
                 if (command==VideoCall)
                 {   // Add video content
@@ -1067,7 +1139,9 @@ void JingleRtp::onCall()
                     addPendingContent(content, AddContent);
                 }
                 putSid(streamJid, contactJid, sid);
+				qDebug() << "G";
                 FJingle->sessionInitiate(streamJid, sid);
+				qDebug() << "H";
             }
         }
     }

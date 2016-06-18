@@ -97,23 +97,6 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             if (socket->state() == QUdpSocket::UnconnectedState)
                 socket->bind(address, port, QUdpSocket::DontShareAddress);
 
-            if (socket->state() == QUdpSocket::BoundState)
-            {
-                if (socket->openMode() == (QIODevice::ReadOnly|QIODevice::Unbuffered))
-				{
-					connect(socket, SIGNAL(readyRead()), SLOT());
-                    continue;
-				}
-                else
-                    if (socket->open(QIODevice::ReadOnly|QIODevice::Unbuffered))
-					{
-						connect(socket, SIGNAL(readyRead()), SLOT());
-                        continue;
-					}
-                qWarning() << "Failed to open socket for writing!";
-            }
-            else
-                qWarning() << "Failed to bind input socket!";
             AContent->setInputDevice(id, NULL); // Remove broken socket
             successful--;
         }

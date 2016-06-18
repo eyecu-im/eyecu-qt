@@ -177,6 +177,7 @@ private:
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
 	QMultiHash<int, IJingleContent *> FPendingContents;
+	QStringList			FSupportdCodecNames;
 
 	QTimer              FDataSendTimer; //! --------- TEST ---------
 
