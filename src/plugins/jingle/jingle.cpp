@@ -191,7 +191,7 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(AContent);
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(AContent->name()));
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
