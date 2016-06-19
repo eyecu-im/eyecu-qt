@@ -6,6 +6,7 @@
 #include "definitions/optionnodes.h"
 #include "definitions/optionnodeorders.h"
 #include "utils/xmpperror.h"
+#include "utils/logger.h"
 
 #include <QList>
 
@@ -165,35 +166,32 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 	qDebug() << "Jingle::onIncomingTransportFilled(" << AContent << ")";
 	QDomElement incoming = AContent->transportIncoming();
 	if (incoming.isNull())
-		qWarning() << "incoming is NULL!";
+		LOG_WARNING("incoming is NULL!");
 	else
 	{
 		QDomElement candidate = incoming.firstChildElement("candidate");
 		if (candidate.isNull())
-			qWarning() << "candidate is NULL!";
+			LOG_WARNING("candidate is NULL!");
 		else
-		{
-			qDebug() << "ip=" << candidate.attribute("ip");
-			qDebug() << "port=" << candidate.attribute("port");
-		}
+			LOG_DEBUG(QString("ip=%1; port=%2").arg(candidate.attribute("ip")).arg(candidate.attribute("port")));
 	}
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
-		qDebug() << "emitting contentAdded(" << AContent->name() << ")";
+		LOG_DEBUG(QString("emitting contentAdded(\"%1\")").arg(AContent->name()));
 		emit contentAdded(AContent);
 	}
 	else
 	{
-		qDebug() << "incomingTransportFilled(" << AContent->name() << ")";
+		LOG_DEBUG(QString("incomingTransportFilled(\"%1\")").arg(AContent->name()));
 		emit incomingTransportFilled(AContent);
 	}
-	qDebug() << "Jingle::onIncomingTransportFilled(): Finished!";
+	LOG_DEBUG("Jingle::onIncomingTransportFilled(): Finished!");
 }
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	qDebug() << "Jingle::onIncomingTransportFillFailed(" << AContent << ")";
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(AContent);
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
@@ -206,12 +204,12 @@ void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 
 bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::processSessionInitiate(" << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
+	LOG_DEBUG(QString("Jingle::processSessionInitiate(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept));
 	JingleSession *session = new JingleSession(AStanza);
 
 	if (!session->isOk())
 	{
-		qWarning() << "Session exists! Replying with error!";
+		LOG_WARNING("Session exists! Replying with error!");
 		Stanza ack = AStanza.ack(IJingle::ResourceConstraint);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		session->deleteLater();
@@ -219,7 +217,7 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 	}
 	else if (!session->isValid())
 	{
-		qWarning() << "Invalid session! Replying with error!";
+		LOG_WARNING("Invalid session! Replying with error!");
 		Stanza ack = AStanza.ack(IJingle::BadRequest);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		session->deleteLater();
@@ -231,10 +229,10 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 	IJingleApplication *app=NULL;
 	QString appns;
 	QHash<QString, JingleContent *> contents=session->contents();
-	bool    wrong=false;
+	bool wrong(false);
 	for (QHash<QString, JingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
-		bool    supported=false;
+		bool supported(false);
 
 		QDomElement descr = (*it)->description();
 		if (descr.isNull())
@@ -245,31 +243,31 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 		QString appns_=descr.namespaceURI();
 		if (appns_.isNull())
 		{
-			wrong=true;
+			wrong = true;
 			break;
 		}
 		if (appns.isNull())
 		{
-			appns=appns_;
-			app=FApplications.value(appns);
+			appns = appns_;
+			app = FApplications.value(appns);
 			if (app && app->checkSupported(descr))
-				supported=true;
+				supported = true;
 			else
 				break;
 		}
 		else
-			if (appns!=appns_)
+			if (appns != appns_)
 			{
-				wrong=true;
+				wrong = true;
 				break;
 			}
 
 		if (supported)  // Ok, let's check, if transport is supported
 		{
-			supported=false;
+			supported = false;
 			if (FTransports.contains((*it)->transportNS()))
 			{
-				supported=true;
+				supported = true;
 				break;
 			}
 		}
@@ -279,7 +277,7 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 	if (wrong || session->contents().isEmpty())
 	{
-		qWarning() << "No contents! Replying with error!";
+		LOG_WARNING("No contents! Replying with error!");
 		Stanza ack = AStanza.ack(BadRequest);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		delete session;
@@ -292,13 +290,13 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 		session->setInitiated(app);
 		return true;
 	}
-	qWarning() << "Something gone wrong! Returning false.";
+	LOG_FATAL("Something gone wrong! Returning false.");
 	return false;
 }
 
 bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::processSessionAccept(" << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
+	LOG_DEBUG(QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept));
 	AAccept=true;
 	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
 	if (session)
@@ -312,25 +310,27 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 				QDomElement transport = contentElement.firstChildElement("transport");
 				if (!transport.isNull())
 					if (content->setOutgoingTransport(transport))
-						qDebug() << "Outgoing transport set successfuly!";
+						LOG_DEBUG("Outgoing transport set successfuly!");
 					else
-						qWarning() << "Outgoing transport set error!";
+						LOG_WARNING("Outgoing transport set error!");
 				else
-					qWarning() << "Outgoing transport is NULL!";
+					LOG_WARNING("Outgoing transport is NULL!");
 			}
 			else
-				qWarning() << "Content with name=\"" << contentElement.attribute("name") << "\" found!";
+				LOG_WARNING(QString("Content with name=\"%1\" found!").arg(contentElement.attribute("name")));
 		}
 
 		Stanza ack=AStanza.ack(Acknowledge);
 		if (FStanzaProcessor->sendStanzaOut(AStreamJid, ack))
 		{
 			session->setAccepted();
+			LOG_DEBUG("returning true");
 			return true;
 		}
 	}
 	else
-		qWarning() << "session not found: sid=" << AStanza.sid();
+		LOG_WARNING(QString("session not found: sid=%1").arg(AStanza.sid()));
+	LOG_DEBUG("returning false");
 	return false;
 }
 
@@ -562,10 +562,10 @@ bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QS
 		if (content)
 			return FTransports[content->transportNS()]->openConnection(content);
 		else
-			qWarning() << "No content!";
+			LOG_WARNING("No content!");
 	}
 	else
-		qWarning() << "No session!";
+		LOG_WARNING("No session!");
 	return false;
 }
 

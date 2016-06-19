@@ -2,6 +2,9 @@
 #define JINGLERTP_H
 
 #include <QSound>
+#include <MediaSender>
+#include <MediaStreamer>
+
 #include <interfaces/ijingle.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iservicediscovery.h>
@@ -110,6 +113,7 @@ public slots:
 
 protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	bool	checkContent(IJingleContent *AContent);
 	bool    hasVideo(const Jid &AStreamJid, const QString &ASid) const;
 	QString getSid(const Jid &AStreamJid, const Jid &AContactJid) const;
 	bool    removeSid(const Jid &AStreamJid, const QString &ASid);
@@ -140,6 +144,7 @@ protected:
 	void    establishConnection(const Jid &AStreamJid, const QString &ASid);
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
+	static QAudioDeviceInfo selectedAudioDevice();
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
 
 protected slots:
@@ -151,6 +156,7 @@ protected slots:
 	void onHangup();
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+	void onSenderStatusChanged(int AStatus);
 
 protected slots:
 	void onContentAdded(IJingleContent *AContent);
@@ -180,6 +186,9 @@ private:
 	QStringList			FSupportdCodecNames;
 
 	QTimer              FDataSendTimer; //! --------- TEST ---------
+
+	QHash<IJingleContent *, MediaSender *> FSenders;
+	QHash<IJingleContent *, MediaStreamer *> FStreamers;
 
 	static const QString    types[4];
 };

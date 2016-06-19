@@ -1,6 +1,7 @@
 #include <QNetworkInterface>
 #include <QNetworkProxy>
 #include <utils/options.h>
+#include <utils/logger.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
 #include <definitions/optionwidgetorders.h>
@@ -97,21 +98,24 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             if (socket->state() == QUdpSocket::UnconnectedState)
                 socket->bind(address, port, QUdpSocket::DontShareAddress);
 
-            AContent->setInputDevice(id, NULL); // Remove broken socket
-            successful--;
+			if (socket->state() != QUdpSocket::BoundState)
+			{
+				AContent->setInputDevice(id, NULL); // Remove broken socket
+				successful--;
+			}
         }
         else
-            qWarning() << "Incoming candidate is broken!";
+			LOG_WARNING("Incoming candidate is broken!");
 
     if (!candidates)
     {
-        qWarning() << "No input candidates found!";
+		LOG_FATAL("No input candidates found!");
         return false;
     }
 
     if (candidates > successful)
     {
-        qWarning() << "Some input candidates are failed!";
+		LOG_WARNING("Some input candidates are failed!");
         return false;
     }
 
@@ -304,7 +308,7 @@ void JingleTransportRawUdp::registerDiscoFeatures()
     IDiscoFeature dfeature;
     dfeature.active = true;
     dfeature.var = NS_JINGLE_TRANSPORTS_RAW_UDP;
-//    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
+//	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_JINGLE_RTP);
     dfeature.name = tr("Jingle RAW-UDP Transport");
     dfeature.description = tr("Allows using RAW-UDP transport in Jingle sesions");
 	FServiceDiscovery->insertDiscoFeature(dfeature);
