@@ -555,6 +555,7 @@ bool Jingle::selectTransportCandidate(const Jid &AStreamJid, const QString &ASid
 
 bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName)
 {
+	LOG_DEBUG(QString("Jingle::connectContent(%1, %2, %3)").arg(AStreamJid.full()).arg(ASid).arg(AName));
 	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
 	if (session)
 	{
@@ -562,21 +563,24 @@ bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QS
 		if (content)
 			return FTransports[content->transportNS()]->openConnection(content);
 		else
-			LOG_WARNING("No content!");
+			LOG_ERROR("No content!");
 	}
 	else
-		LOG_WARNING("No session!");
+		LOG_ERROR("No session!");
 	return false;
 }
 
 bool Jingle::setConnected(const Jid &AStreamJid, const QString &ASid)
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	LOG_DEBUG(QString("Jingle::setConnected(%1,%2)").arg(AStreamJid.full()).arg(ASid));
+	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);	
 	if (session)
 	{
 		session->setConnected();
 		return true;
 	}
+	else
+		LOG_ERROR("Session not found!");
 	return false;
 }
 

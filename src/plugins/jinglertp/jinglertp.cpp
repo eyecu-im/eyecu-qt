@@ -358,6 +358,7 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 //												   .arg(inputSocket->localPort());
 //			}
 
+
 			QUdpSocket *outputSocket = qobject_cast<QUdpSocket *>((*it)->outputDevice(id));
 			if (outputSocket)
 			{
@@ -398,11 +399,16 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				QAVCodec encoder = QAVCodec::findEncoder(codecId);
 				if (encoder)
 				{
+					qDebug() << "encoder=" << encoder;
+					qDebug() << "output host:" << outputHostAddress.toString();
+					qDebug() << "output port:" << outputPort;
 					MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, outputHostAddress, outputPort, 0, avp.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
 					if (sender->status() == MediaSender::Stopped)
 					{
 						FSenders.insert(*it, sender);
 						LOG_DEBUG("Starting sender...");
+						if (!connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
+							LOG_ERROR("connect failed!");
 						sender->start();
 						success = true;
 					}
@@ -1001,10 +1007,14 @@ bool JingleRtp::hasPendingContents(const QString &AStreamJid, const QString &ASi
 
 void JingleRtp::establishConnection(const Jid &AStreamJid, const QString &ASid)
 {
+	LOG_DEBUG(QString("JingleRtp::establishConnection(%1, %2)").arg(AStreamJid.full()).arg(ASid));
 	QHash<QString, IJingleContent *> contents = FJingle->contents(AStreamJid, ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
+	{
+		LOG_DEBUG(QString("content=%1").arg((*it)->name()));
 		if (FJingle->connectContent(AStreamJid, ASid, it.key()))
 			addPendingContent(*it, Connect);
+	}
 	if (!hasPendingContents(AStreamJid.full(), ASid, Connect))
 		FJingle->sessionTerminate(AStreamJid, ASid, IJingle::ConnectivityError);
 }
@@ -1307,6 +1317,7 @@ void JingleRtp::onHangup()
 
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
+	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
 	removePendingContent(AContent, Connect);
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), Connect))
 		FJingle->setConnected(AContent->streamJid(), AContent->sid());

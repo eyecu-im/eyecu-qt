@@ -7,6 +7,7 @@
 #include "jingle.h"
 #include <definitions/namespaces.h>
 #include <utils/stanza.h>
+#include <utils/logger.h>
 
 QHash<Jid, QHash<QString, JingleSession*> > JingleSession::FSessions;
 Jingle* JingleSession::FJingle;
@@ -105,12 +106,19 @@ void JingleSession::setAccepted()
 
 void JingleSession::setConnected()
 {
+	LOG_DEBUG("JingleSession::setConnected()");
     FStatus=IJingle::Connected;
     for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin(); it!=FContents.constEnd(); it++)
     {
         QStringList candidateIds = (*it)->candidateIds();
         for (QStringList::ConstIterator it1=candidateIds.constBegin(); it1!=candidateIds.constEnd(); it1++)
-            connect((*it)->inputDevice(*it1),SIGNAL(readyRead()),SLOT(onDeviceReadyRead()));
+		{
+			LOG_DEBUG(QString("transport candidate=%1").arg(*it1));
+			QIODevice *device = (*it)->inputDevice(*it1);
+			LOG_DEBUG(QString("input device=%1").arg(device->objectName()));
+			if (!connect(device,SIGNAL(readyRead()),SLOT(onDeviceReadyRead())))
+				LOG_ERROR("Failed to connect input device!");
+		}
     }
     emit sessionConnected(FThisParty, FSid);
     QTimer::singleShot(5000, this, SLOT(onTimeout()));
@@ -306,6 +314,7 @@ void JingleSession::onTimeout()
 
 void JingleSession::onDeviceReadyRead()
 {
+	LOG_DEBUG(QString("JingleSession::onDeviceReadyRead(): sid=%1").arg(FSid));
     sender()->disconnect(SIGNAL(readyRead()),this);
     if (FStatus == Jingle::Connected)
     {
@@ -469,6 +478,7 @@ bool JingleContent::setOutgoingTransport(const QDomElement &ATransport)
 
 void JingleContent::setInputDevice(const QString &AId, QIODevice *ADevice)
 {
+	qDebug() << "JingleContent::setInputDevice(%1" << AId << "," << ADevice << ")";
     if (FInputDevices.value(AId) != ADevice)
     {
         if (FInputDevices.contains(AId))

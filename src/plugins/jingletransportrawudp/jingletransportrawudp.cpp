@@ -88,7 +88,10 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             int port = candidate.attribute("port").toInt();
             QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(id));
             if (!socket)
+			{
                 AContent->setInputDevice(id, socket = new QUdpSocket(this));
+				socket->setProxy(QNetworkProxy::NoProxy);
+			}
             if (socket->state() != QUdpSocket::UnconnectedState &&
                (socket->state() != QUdpSocket::BoundState ||
                 socket->localAddress() != address ||
@@ -96,7 +99,8 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
                 socket->disconnectFromHost();
 
             if (socket->state() == QUdpSocket::UnconnectedState)
-                socket->bind(address, port, QUdpSocket::DontShareAddress);
+				if (!socket->bind(address, port, QUdpSocket::DontShareAddress))
+					LOG_WARNING(QString("Failed to bind input socket on %1:%2").arg(address.toString()).arg(port));
 
 			if (socket->state() != QUdpSocket::BoundState)
 			{
@@ -129,20 +133,40 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             QHostAddress address(candidate.attribute("ip"));
             int port = candidate.attribute("port").toInt();
             QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->outputDevice(id));
+			qDebug() << "socket==" << socket;
             if (!socket)
+			{
                 AContent->setOutputDevice(id, socket = new QUdpSocket(this));
+				socket->setProxy(QNetworkProxy::NoProxy);
+			}
+
+			qDebug() << "socket->state()=" << socket->state();
+			qDebug() << "address=" << address;
+			qDebug() << "port=" << port;
+
             if (socket->state() != QUdpSocket::UnconnectedState &&
                (socket->state() != QUdpSocket::ConnectedState ||
                 socket->peerAddress() != address ||
                 socket->peerPort() != port))
+			{
+				qDebug() << "A";
                 socket->disconnectFromHost();
+			}
+
+			qDebug() << "socket->state()=" << socket->state();
 
             if (socket->state() == QUdpSocket::UnconnectedState)
+			{
+				qDebug() << "B";
                 socket->connectToHost(address, port, QIODevice::WriteOnly|QIODevice::Unbuffered);
+			}
 
             if (socket->state() == QUdpSocket::ConnectedState &&
                 socket->openMode() == (QIODevice::WriteOnly|QIODevice::Unbuffered))
+			{
+				qDebug() << "C";
                 continue;
+			}
 
             qWarning() << "Failed to connect output socket!";
             AContent->setOutputDevice(id, NULL); // Remove broken socket
@@ -242,6 +266,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
                 candidate.setAttribute("id", candidateId);
                 candidate.setAttribute("ip", ip);
                 candidate.setAttribute("port", port);
+				LOG_INFO(QString("About to set input device: QUdpSocket(%1:%2)").arg(socket->localAddress().toString()).arg(socket->localPort()));
                 AContent->setInputDevice(candidateId, socket);
             }
             else
