@@ -2,6 +2,7 @@
 #define JINGLERTP_H
 
 #include <QSound>
+#include <QUdpSocket>
 #include <MediaSender>
 #include <MediaStreamer>
 
@@ -127,8 +128,6 @@ protected:
 	void    callChatMessage(const Jid &AStreamJid, const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
-//	IMessageWindow *messageShowNotified(int AMessageId);
-//	bool    showWindow(int ANotifyId, int AShowMode);
 
 	void    registerDiscoFeatures();
 	INotification callNotify(const Jid &AStreamJid, const QString &ASid, CallType ACallType);
@@ -145,8 +144,8 @@ protected:
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
 
-	bool	startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
-	bool	startPlayMedia(const QAVP &APayloadType);
+	MediaSender *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
+	MediaStreamer *startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket);
 
 	static QAudioDeviceInfo selectedAudioDevice();
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
@@ -162,6 +161,7 @@ protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onSenderStatusChanged(int AStatus);
+	void onStreamerStatusChanged(int AStatusNew, int AStatusOld);
 
 protected slots:
 	void onContentAdded(IJingleContent *AContent);

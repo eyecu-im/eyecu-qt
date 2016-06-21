@@ -296,7 +296,7 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	LOG_DEBUG(QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept));
+	qDebug() << QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept);
 	AAccept=true;
 	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
 	if (session)

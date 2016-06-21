@@ -1,7 +1,6 @@
 #include <QDebug>
 #include <QList>
 #include <QProcess>
-#include <QUdpSocket>
 
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
@@ -368,8 +367,6 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				QDomElement description = (*it)->description();
 				QDomElement payloadType = description.firstChildElement("payload-type");
 
-				outputSocket->close();	// Don't need it anymore
-
 				int ptid = payloadType.attribute("id").toInt();
 				QAVP avp;
 				if (ptid < 96)
@@ -386,8 +383,18 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				else if (!avp.channels)
 					avp.channels = 1;
 
-				startSendMedia(avp, outputSocket);
+				avp.payloadType = ptid;
 
+				MediaSender *sender = startSendMedia(avp, outputSocket);
+				if (sender)
+				{
+					FSenders.insert(*it, sender);
+					success = true;
+				}
+				else
+					LOG_FATAL("Failed to start send media");
+
+				outputSocket->close();	// Don't need it anymore
 			}
 			else
 				LOG_FATAL("Output device is NOT a UDP socket!");
@@ -486,15 +493,13 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 						{
 							qDebug() << "RTP Payload type found!";
 							QAVP pt = buildPayloadType(payloadType, mediaType);
-
-
 							qDebug() << "pt=" << pt;
 
-							Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
-							IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, contactJid);
-							if (window)
-								updateWindowActions(window);
-							connectionEstablished(AStreamJid, ASid);
+							MediaStreamer *streamer = startPlayMedia(pt, socket);
+							if (streamer)
+								FStreamers.insert(content, streamer);
+							else
+								LOG_ERROR("Failed to start media play!");
 						}
 					}
 				}
@@ -1040,46 +1045,64 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
-bool JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
+MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
 {
-	QHostAddress outputHostAddress = AOutputSocket->peerAddress();
-	int          outputPort = AOutputSocket->peerPort();
-
-	LOG_DEBUG(QString("remote: %1:%2").arg(outputHostAddress.toString())
-									  .arg(outputPort));
-
+	qDebug() << "JingleRtp::startSendMedia(" << APayloadType << "," << AOutputSocket << ")";
 	int codecId = QAVCodec::idByName(APayloadType.codecName);
-	LOG_DEBUG(QString("Codec ID: %1").arg(codecId));
 
 	// Now, let's start sending content
-	QAVCodec encoder = QAVCodec::findEncoder(codecId);
-	if (encoder)
+	if (codecId)
 	{
-		qDebug() << "encoder=" << encoder;
-		qDebug() << "output host:" << outputHostAddress.toString();
-		qDebug() << "output port:" << outputPort;
-		MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, outputHostAddress, outputPort, 0, ptid, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
-		if (sender->status() == MediaSender::Stopped)
+		QAVCodec encoder = QAVCodec::findEncoder(codecId);
+		if (encoder)
 		{
-			FSenders.insert(*it, sender);
-			LOG_DEBUG("Starting sender...");
-			if (!connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
-				LOG_ERROR("connect failed!");
-			sender->start();
-			success = true;
+			MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+			if (sender->status() == MediaSender::Stopped)
+			{
+				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
+				{
+					LOG_DEBUG("Starting sender...");
+					sender->start();
+					return sender;
+				}
+				else
+					LOG_ERROR("connect failed!");
+			}
+			else
+			{
+				LOG_ERROR(QString("MediaSender is not in Stopped state: %1").arg(sender->status()));
+				delete sender;
+			}
 		}
 		else
-		{
-			LOG_ERROR(QString("MediaSender is not in Stopped state: %1").arg(sender->status()));
-			delete sender;
-		}
+			LOG_ERROR(QString("Encoder not found! codec ID: %1").arg(codecId));
 	}
 	else
-		LOG_FATAL(QString("Encoder not found! codec ID: %1").arg(codecId));
+		LOG_ERROR(QString("codec name not found: %1").arg(APayloadType.codecName));
+	return NULL;
 }
 
-bool JingleRtp::startPlayMedia()
+MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket)
 {
+	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AInputSocket << ")";
+	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(), AInputSocket->localAddress(), AInputSocket->localPort(), APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
+	if (streamer->status() == MediaStreamer::Closed)
+	{
+		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
+		{
+			LOG_DEBUG("Starting sender...");
+			if (streamer->setStatus(MediaStreamer::Running))
+				return streamer;
+			else
+				LOG_ERROR("Failed to start streamer!");
+		}
+		else
+			LOG_ERROR("connect failed!");
+	}
+	else
+		LOG_ERROR(QString("MediaStreamer is not in Closeed state: %1").arg(streamer->status()));
+	delete streamer;
+	return NULL;
 
 }
 
@@ -1186,37 +1209,6 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
 	return window;
 }
 
-//IMessageWindow *JingleRtp::messageShowNotified(int AMessageId)
-//{
-//	IMessageChatWindow *window = FNotifies.value(AMessageId);
-//	if (window)
-//	{
-//		window->showTabPage();
-//		return window;
-//	}
-//	else
-//	{
-//		REPORT_ERROR("Failed to show notified chat message window: Window not found");
-//	}
-//	return NULL;
-//}
-
-//bool JingleRtp::showWindow(int ANotifyId, int AShowMode)
-//{
-//    IMessageChatWindow *window=FNotifies.value(ANotifyId);
-//    if (window)
-//    {
-//        if (AShowMode == IMessageHandler::SM_ASSIGN)
-//            window->assignTabPage();
-//        else if (AShowMode == IMessageHandler::SM_SHOW)
-//            window->showTabPage();
-//        else if (AShowMode == IMessageHandler::SM_MINIMIZED)
-//            window->showMinimizedTabPage();
-//        return true;
-//    }
-//    return false;
-//}
-
 void JingleRtp::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindowActions(AWindow);
@@ -1238,6 +1230,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 {
 	LOG_DEBUG(QString("JingleRtp::onSenderStatusChanged(%1)").arg(AStatus));
 	MediaSender *s = qobject_cast<MediaSender *>(sender());
+	IJingleContent *content = FSenders.key(s);
 	switch (AStatus)
 	{
 		case MediaSender::Started:
@@ -1249,25 +1242,77 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 			break;
 
 		case MediaSender::Error:
-			LOG_DEBUG("Error! Terminating session...");
+		{
+			LOG_DEBUG("Error!");
 			if (s)
 			{
-				IJingleContent *content = FSenders.key(s);
+				LOG_DEBUG("Terminating session...");
 				FJingle->sessionTerminate(content->streamJid(), content->sid(), IJingle::FailedApplication);
-			}
-			break;
-
-		case MediaSender::Stopped:
-			LOG_DEBUG("Stopped! Deleteing sender...");
-			if (s)
-			{
-				IJingleContent *content = FSenders.key(s);
+				LOG_DEBUG("Removing sender...");
 				FSenders.remove(content);
 				delete s;
 			}
+			break;
+		}
+		case MediaSender::Stopped:
+		{
+			LOG_DEBUG("Stopped!");
+			if (s)
+			{
+				LOG_DEBUG("Removing sender...");
+				FSenders.remove(content);
+				delete s;
+			}
+			break;
+		}
 
 		default:
 			break;
+	}
+}
+
+void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
+{
+	qDebug() << "JingleRtp::onStreamerStatusChanged(" << AStatusNew << "," << AStatusOld << ")";
+
+	MediaStreamer *streamer = qobject_cast<MediaStreamer*>(sender());
+	IJingleContent *content = FStreamers.key(streamer);
+	qDebug() << "content=" << content;
+	switch (AStatusNew)
+	{
+		case MediaStreamer::Running:
+		{
+			LOG_DEBUG("Running!");
+			Jid contactJid=FJingle->contactJid(content->streamJid(), content->sid());
+			IMessageChatWindow *window=FMessageWidgets->findChatWindow(content->streamJid(), contactJid);
+			if (window)
+				updateWindowActions(window);
+			connectionEstablished(content->streamJid(), content->sid());
+		}
+
+		case MediaStreamer::Finished:
+		{
+			LOG_DEBUG("Finished!");
+			if (streamer)
+			{
+				LOG_DEBUG("Removing sender...");
+				FSenders.remove(content);
+				delete streamer;
+			}
+		}
+
+		case MediaStreamer::Error:
+		{
+			LOG_DEBUG("Error!");
+			if (streamer)
+			{
+				LOG_DEBUG("Terminating session...");
+				FJingle->sessionTerminate(content->streamJid(), content->sid(), IJingle::FailedApplication);
+				LOG_DEBUG("Removing sender...");
+				FSenders.remove(content);
+				delete streamer;
+			}
+		}
 	}
 }
 
