@@ -211,7 +211,8 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
                                   QIODevice::ReadOnly|QIODevice::Unbuffered);
             localAddress =  socket->localAddress();
 			qDebug() << "localAddress=" << localAddress;
-            socket->disconnectFromHost();            
+			socket->disconnectFromHost();
+			socket->close();
         }
         else
             qWarning() << "Candidate is broken!";
@@ -250,7 +251,10 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 
         if (socket->state()==QAbstractSocket::BoundState)
         {
-            qDebug() << "socket is bound!";
+			qDebug() << "socket is bound:" << socket;
+			qDebug() << "Host:" << socket->localAddress();
+			qDebug() << "Port:" << socket->localPort();
+
             int component=1;
             int id=100;
             QString candidateId=QString("id%1").arg(id);

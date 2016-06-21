@@ -107,7 +107,7 @@ public slots:
 	void onSessionConnected(const Jid &AStreamJid, const QString &ASid);
 	void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	void onSessionInformed(const QDomElement &AInfoElement);
-	void onDataReceived(const Jid &AStreamJid, const QString &ASid);
+	void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
 	void onConnectionEstablished(IJingleContent *AContent);
 	void onConnectionFailed(IJingleContent *AContent);
 
@@ -144,8 +144,13 @@ protected:
 	void    establishConnection(const Jid &AStreamJid, const QString &ASid);
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
+
+	bool	startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
+	bool	startPlayMedia(const QAVP &APayloadType);
+
 	static QAudioDeviceInfo selectedAudioDevice();
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
+	static QAVP buildPayloadType(const QDomElement &APayloadType, QAVP::MediaType AMediaType);	
 
 protected slots:
 	// Notofications

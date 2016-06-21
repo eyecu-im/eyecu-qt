@@ -62,7 +62,9 @@ private:
 class JingleSession: public QObject
 {
     Q_OBJECT
-
+	friend void JingleContent::setInputDevice(const QString &, QIODevice *);
+	friend void JingleContent::setOutputDevice(const QString &, QIODevice *);
+	friend JingleContent::~JingleContent();
 public:
     enum Direction
     {
@@ -118,7 +120,8 @@ public:
     JingleContent *addContent(const QString &AName, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
     JingleContent *addContent(const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
     JingleContent *getContent(const QString &AName) const {return FContents.value(AName);}
-    bool deleteContent(const QString &AName);    
+	JingleContent *getContent(QIODevice *AIODevice);
+	bool deleteContent(const QString &AName);
 
     const QHash<QString, JingleContent *> contents() const;
 
@@ -135,7 +138,7 @@ signals:
     void sessionConnected(const Jid &AStreamJid, const QString &ASid);    
     void sessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
     void sessionInformed(const QDomElement &AInfoElement);
-    void receivingData(const Jid &AStreamJid, const QString &ASid);
+	void dataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
     void actionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 
 private:
@@ -152,6 +155,7 @@ private:
     IJingle::Action FAction;
     IJingle::Reason FReason;
     QHash<QString, JingleContent *> FContents;
+	QHash<QIODevice*, JingleContent*> FContentByDevice;
 
     static QHash<Jid, QHash<QString, JingleSession*> >  FSessions;
     static Jingle   *FJingle;

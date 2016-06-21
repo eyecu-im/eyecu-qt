@@ -540,14 +540,19 @@ QHash<QString, IJingleContent *> Jingle::contents(const Jid &AStreamJid, const Q
 
 IJingleContent *Jingle::content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
-	IJingleContent *content = session?session->getContent(AName):NULL;
-	return content;
+	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	return session?session->getContent(AName):NULL;
+}
+
+IJingleContent *Jingle::content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const
+{
+	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	return session?session->getContent(ADevice):NULL;
 }
 
 bool Jingle::selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
 	if (session)
 		return session->selectTransportCandidate(AContentName, ACandidateId);
 	return false;

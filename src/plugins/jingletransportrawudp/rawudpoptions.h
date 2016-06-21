@@ -13,7 +13,7 @@ class RawUdpOptions:
 	public QWidget, public IOptionsDialogWidget
 {
 	Q_OBJECT
-
+	Q_INTERFACES(IOptionsDialogWidget)
 public:
 	explicit RawUdpOptions(QWidget *parent = 0);
 	~RawUdpOptions();

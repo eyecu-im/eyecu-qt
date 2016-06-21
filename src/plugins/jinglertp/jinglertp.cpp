@@ -368,9 +368,6 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				QDomElement description = (*it)->description();
 				QDomElement payloadType = description.firstChildElement("payload-type");
 
-				QHostAddress outputHostAddress = outputSocket->peerAddress();
-				int          outputPort = outputSocket->peerPort();
-
 				outputSocket->close();	// Don't need it anymore
 
 				int ptid = payloadType.attribute("id").toInt();
@@ -389,37 +386,8 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				else if (!avp.channels)
 					avp.channels = 1;
 
-				LOG_DEBUG(QString("remote: %1:%2").arg(outputHostAddress.toString())
-												  .arg(outputPort));
+				startSendMedia(avp, outputSocket);
 
-				int codecId = QAVCodec::idByName(avp.codecName);
-				LOG_DEBUG(QString("Codec ID: %1").arg(codecId));
-
-				// Now, let's start sending content
-				QAVCodec encoder = QAVCodec::findEncoder(codecId);
-				if (encoder)
-				{
-					qDebug() << "encoder=" << encoder;
-					qDebug() << "output host:" << outputHostAddress.toString();
-					qDebug() << "output port:" << outputPort;
-					MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, outputHostAddress, outputPort, 0, avp.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
-					if (sender->status() == MediaSender::Stopped)
-					{
-						FSenders.insert(*it, sender);
-						LOG_DEBUG("Starting sender...");
-						if (!connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
-							LOG_ERROR("connect failed!");
-						sender->start();
-						success = true;
-					}
-					else
-					{
-						LOG_ERROR(QString("MediaSender is not in Stopped state: %1").arg(sender->status()));
-						delete sender;
-					}
-				}
-				else
-					LOG_FATAL(QString("Encoder not found! codec ID: %1").arg(codecId));
 			}
 			else
 				LOG_FATAL("Output device is NOT a UDP socket!");
@@ -487,14 +455,57 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
 }
 
-void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice)
 {
-	LOG_DEBUG(QString("JingleRtp::onDataReceived(%1, %2)").arg(AStreamJid.full()).arg(ASid));
-	Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, contactJid);
-	if (window)
-		updateWindowActions(window);
-	connectionEstablished(AStreamJid, ASid);
+	qDebug() << "JingleRtp::onDataReceived(" << AStreamJid.full() << "," << ASid << "," << ADevice << ")";
+
+	qDebug() << "ADevice->openMode()=" << ADevice->openMode();
+	IJingleContent *content = FJingle->content(AStreamJid, ASid, ADevice);
+	if (content)
+	{
+		QUdpSocket *socket = qobject_cast<QUdpSocket*>(ADevice);
+		if (socket)
+		{
+			char data[64];
+			quint64 size = socket->readDatagram(data, 64);
+			if (size>1)
+			{
+				int payloadTypeId = data[1]&0x7F;
+				qDebug() << "payloadTypeId=" << payloadTypeId;
+
+				QDomElement description(content->description());
+				if (description.hasAttribute("media"))
+				{
+					QString media = description.attribute("media");
+					QAVP::MediaType mediaType = media=="audio"?QAVP::Audio:
+												media=="video"?QAVP::Video:
+															   QAVP::Unknown;
+					for (QDomElement payloadType = description.firstChildElement("payload-type"); !payloadType.isNull(); payloadType=payloadType.nextSiblingElement("payload-type"))
+					{
+						if (payloadType.attribute("id").toInt()==payloadTypeId)
+						{
+							qDebug() << "RTP Payload type found!";
+							QAVP pt = buildPayloadType(payloadType, mediaType);
+
+
+							qDebug() << "pt=" << pt;
+
+							Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
+							IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, contactJid);
+							if (window)
+								updateWindowActions(window);
+							connectionEstablished(AStreamJid, ASid);
+						}
+					}
+				}
+			}
+			socket->disconnectFromHost();
+		}
+		else
+			LOG_FATAL("Not a UDP socket!");
+	}
+	else
+		LOG_FATAL("Content not found");
 }
 
 
@@ -1029,6 +1040,49 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
+bool JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
+{
+	QHostAddress outputHostAddress = AOutputSocket->peerAddress();
+	int          outputPort = AOutputSocket->peerPort();
+
+	LOG_DEBUG(QString("remote: %1:%2").arg(outputHostAddress.toString())
+									  .arg(outputPort));
+
+	int codecId = QAVCodec::idByName(APayloadType.codecName);
+	LOG_DEBUG(QString("Codec ID: %1").arg(codecId));
+
+	// Now, let's start sending content
+	QAVCodec encoder = QAVCodec::findEncoder(codecId);
+	if (encoder)
+	{
+		qDebug() << "encoder=" << encoder;
+		qDebug() << "output host:" << outputHostAddress.toString();
+		qDebug() << "output port:" << outputPort;
+		MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, outputHostAddress, outputPort, 0, ptid, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+		if (sender->status() == MediaSender::Stopped)
+		{
+			FSenders.insert(*it, sender);
+			LOG_DEBUG("Starting sender...");
+			if (!connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
+				LOG_ERROR("connect failed!");
+			sender->start();
+			success = true;
+		}
+		else
+		{
+			LOG_ERROR(QString("MediaSender is not in Stopped state: %1").arg(sender->status()));
+			delete sender;
+		}
+	}
+	else
+		LOG_FATAL(QString("Encoder not found! codec ID: %1").arg(codecId));
+}
+
+bool JingleRtp::startPlayMedia()
+{
+
+}
+
 QAudioDeviceInfo JingleRtp::selectedAudioDevice()
 {
 	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(QAudio::AudioInput));
@@ -1057,6 +1111,42 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const QAVP &APayloadTyp
 		QDomElement description = AContent->description();
 		description.appendChild(payloadType);
 	}
+}
+
+QAVP JingleRtp::buildPayloadType(const QDomElement &APayloadType, QAVP::MediaType AMediaType)
+{
+	QAVP payloadType;
+
+	payloadType.mediaType = AMediaType;
+
+	if (APayloadType.hasAttribute("id"))
+	{
+		bool ok;
+		int id = APayloadType.attribute("id").toInt(&ok);
+		if (ok)
+			payloadType.payloadType=id;
+	}
+
+	if (APayloadType.hasAttribute("clockrate"))
+	{
+		bool ok;
+		int clockRate = APayloadType.attribute("clockrate").toInt(&ok);
+		if (ok)
+			payloadType.clockRate=clockRate;
+	}
+
+	if (APayloadType.hasAttribute("channels"))
+	{
+		bool ok;
+		int channels = APayloadType.attribute("channels").toInt(&ok);
+		if (ok)
+			payloadType.channels=channels;
+	}
+
+	if (APayloadType.hasAttribute("name"))
+		payloadType.codecName=APayloadType.attribute("name");
+
+	return payloadType;
 }
 
 QStringList JingleRtp::stringsFromAvps(const QList<QAVP> &AAvps)
@@ -1233,15 +1323,13 @@ void JingleRtp::onCall()
 				for (QStringList::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
 				{
 					QAVP avp(*it);
-					MediaSender *sender = new MediaSender(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, avp.clockRate, bitRate, this);
+					MediaSender *sender = new MediaSender(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, -1, avp.clockRate, bitRate, this);
 					if (sender->status()==MediaSender::Stopped)
 					{
 						QAVP payloadType(sender->getAvp());
 //TODO: Make adequate validation
 //						if (payloadType.isValid())
 						{
-							qDebug() << "A";
-//							qDebug() << "Valid!";
 							QDomDocument document(content->document());
 							QDomElement pt = document.createElement("payload-type");
 							if (payloadType.payloadType>95)
@@ -1250,7 +1338,7 @@ void JingleRtp::onCall()
 									++payloadType.payloadType;
 								ids.insert(payloadType.payloadType);
 							}
-							qDebug() << "B";
+
 							pt.setAttribute("id", QString::number(payloadType.payloadType));
 							if (!payloadType.codecName.isEmpty())
 								pt.setAttribute("name", payloadType.codecName);
@@ -1259,13 +1347,11 @@ void JingleRtp::onCall()
 							if (payloadType.channels)
 								pt.setAttribute("channels", QString::number(payloadType.channels));
 							description.appendChild(pt);
-							qDebug() << "C";
 						}
 					}
-					qDebug() << "D";
 					delete sender;
 				}
-				qDebug() << "F";
+
 				addPendingContent(content, AddContent);
 				if (command==VideoCall)
 				{   // Add video content
@@ -1273,9 +1359,7 @@ void JingleRtp::onCall()
 					addPendingContent(content, AddContent);
 				}
 				putSid(streamJid, contactJid, sid);
-				qDebug() << "G";
 				FJingle->sessionInitiate(streamJid, sid);
-				qDebug() << "H";
 			}
 		}
 	}

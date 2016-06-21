@@ -94,6 +94,7 @@ public:
 	virtual IJingleContent *contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder) =0;
 	virtual QHash<QString, IJingleContent *> contents(const Jid &AStreamJid, const QString &ASid) const =0;
 	virtual IJingleContent *content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const =0;
+	virtual IJingleContent *content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const =0;
 	virtual bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &ANAme) =0;
 	virtual bool    setConnected(const Jid &AStreamJid, const QString &ASid) =0;
 	virtual bool    fillIncomingTransport(IJingleContent *AContent) =0;
@@ -123,7 +124,7 @@ public:
 	virtual void onSessionConnected(const Jid &AJid, const QString&ASid) =0;
 	virtual void onSessionTerminated(const Jid &AJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
 	virtual void onActionAcknowledged(const Jid &AJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
-	virtual void onDataReceived(const Jid &AJid, const QString&ASid) =0;
+	virtual void onDataReceived(const Jid &AJid, const QString&ASid, QIODevice *ADevice) =0;
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;

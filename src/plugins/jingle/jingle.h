@@ -47,6 +47,7 @@ public:
     IJingleContent *contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
     QHash<QString, IJingleContent *> contents(const Jid &AStreamJid, const QString &ASid) const;
     IJingleContent *content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const;
+	IJingleContent *content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const;
     bool    selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId);
     bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName);
     bool    setConnected(const Jid &AStreamJid, const QString &ASid);
