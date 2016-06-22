@@ -98,6 +98,7 @@ public:
 	virtual bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &ANAme) =0;
 	virtual bool    setConnected(const Jid &AStreamJid, const QString &ASid) =0;
 	virtual bool    fillIncomingTransport(IJingleContent *AContent) =0;
+	virtual void    freeIncomingTransport(IJingleContent *AContent) =0;
 	virtual Jid     contactJid(const Jid &AStreamJid, const QString &ASid) const =0;
 	virtual bool    selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId) =0;
 
@@ -149,6 +150,7 @@ public:
 	//! \return success indicator
 	//!
 	virtual bool fillIncomingTransport(IJingleContent *AContent) =0;
+	virtual void freeIncomingTransport(IJingleContent *AContent) =0;
 
 protected:
 	virtual void connectionOpened(IJingleContent *AContent) =0;

@@ -41,6 +41,7 @@ public:
 	int     priority() const {return 90;}
 	bool    openConnection(IJingleContent *AContent);
 	bool    fillIncomingTransport(IJingleContent *AContent);
+	void	freeIncomingTransport(IJingleContent *AContent);
 
 	// IOptionsDialogHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);

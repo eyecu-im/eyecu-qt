@@ -596,6 +596,11 @@ bool Jingle::fillIncomingTransport(IJingleContent *AContent)
 {
 	return FTransports[AContent->transportNS()]->fillIncomingTransport(AContent);
 }
+
+void Jingle::freeIncomingTransport(IJingleContent *AContent)
+{
+	return FTransports[AContent->transportNS()]->freeIncomingTransport(AContent);
+}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_Jingle,Jingle)
 #endif

@@ -60,8 +60,11 @@ bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
 bool JingleTransportIceUdp::fillIncomingTransport(IJingleContent *AContent)
 {
     emit incomingTransportFillFailed(AContent);
-    return false;
+	return false;
 }
+
+void JingleTransportIceUdp::freeIncomingTransport(IJingleContent *AContent)
+{}
 
 /*
 QIODevice *JingleTransportIceUdp::tryCandidate(const QDomElement &ACandidate)

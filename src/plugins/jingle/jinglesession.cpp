@@ -263,6 +263,8 @@ bool JingleSession::terminate(IJingle::Reason AReason)
     if (FJingle->sendStanzaOut(stanza))
     {
         setTerminated(AReason);
+		for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin(); it!=FContents.constEnd(); ++it)
+			FJingle->freeIncomingTransport(*it);
         return true;
     }
     return false;

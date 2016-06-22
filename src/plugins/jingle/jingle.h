@@ -52,6 +52,7 @@ public:
     bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName);
     bool    setConnected(const Jid &AStreamJid, const QString &ASid);
     bool    fillIncomingTransport(IJingleContent *AContent);
+	void    freeIncomingTransport(IJingleContent *AContent);
 
     SessionStatus sessionStatus(const Jid &AStreamJid, const QString &ASid) const;
     bool    isOutgoing(const Jid &AStreamJid, const QString &ASid) const;

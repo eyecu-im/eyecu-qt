@@ -36,6 +36,7 @@ public:
     virtual int priority() const {return 100;}
     bool openConnection(IJingleContent *AContent);
     bool fillIncomingTransport(IJingleContent *AContent);
+	void freeIncomingTransport(IJingleContent *AContent);
 
 protected:
     void    registerDiscoFeatures();

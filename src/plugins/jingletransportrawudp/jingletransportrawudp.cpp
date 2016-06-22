@@ -321,6 +321,22 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 	return false;
 }
 
+void JingleTransportRawUdp::freeIncomingTransport(IJingleContent *AContent)
+{
+	QStringList candidateIds = AContent->candidateIds();
+	for (QStringList::ConstIterator it=candidateIds.constBegin(); it!=candidateIds.constEnd(); ++it)
+	{
+		QUdpSocket *socket = qobject_cast<QUdpSocket*>(AContent->inputDevice(*it));
+		if (socket)
+		{
+			freePort(socket->localPort());
+			AContent->setInputDevice(*it, NULL);
+		}
+		else
+			LOG_ERROR("Input device is NOT a UDP socket!");
+	}
+}
+
 QMultiMap<int, IOptionsDialogWidget *> JingleTransportRawUdp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;

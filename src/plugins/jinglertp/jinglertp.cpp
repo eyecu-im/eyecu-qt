@@ -1075,7 +1075,7 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			MediaSender *sender = new MediaSender(selectedAudioDevice(), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+			MediaSender *sender = new MediaSender(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
 			if (sender->status() == MediaSender::Stopped)
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
@@ -1105,7 +1105,7 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket)
 {
 	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AInputSocket << ")";
-	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(), AInputSocket->localAddress(), AInputSocket->localPort(), APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
+	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(QAudio::AudioOutput), AInputSocket->localAddress(), AInputSocket->localPort(), APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
 	if (streamer->status() == MediaStreamer::Closed)
 	{
 		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
@@ -1129,16 +1129,21 @@ MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, QUdpSocket *A
 
 }
 
-QAudioDeviceInfo JingleRtp::selectedAudioDevice()
+QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 {
-	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(QAudio::AudioInput));
-	QString deviceName = Options::node(OPV_JINGLE_RTP_AUDIO_INPUT).value().toString();
+	qDebug() << "JingleRtp::selectedAudioDevice()";
+	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(AMode));
+	QString deviceName = Options::node(AMode==QAudio::AudioInput?OPV_JINGLE_RTP_AUDIO_INPUT:OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
+	qDebug() << "deviceName=" << deviceName;
 
 	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
 		if ((*it).deviceName()==deviceName)
+		{
+			qDebug() << "returning:" << (*it).deviceName();
 			return *it;
+		}
 
-	return QAudioDeviceInfo::defaultInputDevice();
+	return AMode==QAudio::AudioInput?QAudioDeviceInfo::defaultInputDevice():QAudioDeviceInfo::defaultOutputDevice();
 }
 
 void JingleRtp::addPayloadType(IJingleContent *AContent, const QAVP &APayloadType)
@@ -1387,7 +1392,7 @@ void JingleRtp::onCall()
 			IJingleContent *content = FJingle->contentAdd(streamJid, sid, "voice", "audio", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
 			if (content)
 			{
-				QAudioDeviceInfo inputDevice = selectedAudioDevice();
+				QAudioDeviceInfo inputDevice = selectedAudioDevice(QAudio::AudioInput);
 				int bitRate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
 				QDomElement description(content->description());
 				QStringList payloadTypes = Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList();

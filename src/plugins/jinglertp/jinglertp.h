@@ -147,7 +147,7 @@ protected:
 	MediaSender *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
 	MediaStreamer *startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket);
 
-	static QAudioDeviceInfo selectedAudioDevice();
+	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
 	static QAVP buildPayloadType(const QDomElement &APayloadType, QAVP::MediaType AMediaType);	
 
