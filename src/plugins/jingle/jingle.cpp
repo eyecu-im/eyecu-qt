@@ -566,7 +566,10 @@ bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QS
 	{
 		IJingleContent *content =  session->getContent(AName);
 		if (content)
+		{
+			qDebug() << "content=" << content;
 			return FTransports[content->transportNS()]->openConnection(content);
+		}
 		else
 			LOG_ERROR("No content!");
 	}

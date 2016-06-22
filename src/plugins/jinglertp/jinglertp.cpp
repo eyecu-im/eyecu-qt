@@ -409,6 +409,7 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 
 void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason)
 {
+	qDebug() << "JingleRtp::onSessionTerminated(" << AStreamJid.full() << "," << ASid << "," << APreviousStatus << "," << AReason << "," << ")";
 	CallType type;
 	switch (AReason)
 	{
@@ -433,17 +434,33 @@ void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, 
 			type=Error;
 	}
 
+	qDebug() << "Terminating contents...";
 	QHash<QString, IJingleContent *> contents = FJingle->contents(AStreamJid, ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
 	{
+		qDebug() << "content:" << *it;
 		MediaSender *sender = FSenders.value(*it);
 		if (sender)
 		{
+			qDebug() << "sender found:" << sender << "; status=" << sender->status();
 			if (sender->status()==MediaSender::Running ||
-				sender->status()==MediaSender::Started)
+				sender->status()==MediaSender::Started ||
+				sender->status()==MediaSender::Paused)
 				sender->stop();
 			else
 				delete sender;
+		}
+
+		MediaStreamer *streamer = FStreamers.value(*it);
+		if (streamer)
+		{
+			qDebug() << "streamer found:" << sender << "; status=" << streamer->status();
+			if (streamer->status()==MediaStreamer::Running ||
+				streamer->status()==MediaStreamer::Opened ||
+				streamer->status()==MediaStreamer::Paused)
+				streamer->setStatus(MediaStreamer::Finished);
+			else
+				delete streamer;
 		}
 	}
 
@@ -629,6 +646,7 @@ void JingleRtp::registerDiscoFeatures()
 
 bool JingleRtp::hasVideo(const Jid &AStreamJid, const QString &ASid) const
 {
+	return false; // Video is not supported yet
 	QHash<QString, IJingleContent *> contents=FJingle->contents(AStreamJid, ASid);
 	for (QHash<QString, IJingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 		if ((*it)->description().attribute("media")=="video")
@@ -954,16 +972,17 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 			connect(action,SIGNAL(triggered()),SLOT(onCall()));
 			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
 
-			action = new Action(AChatWindow->toolBarWidget()->instance());
-			action->setText(tr("Video call"));
-			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL_VIDEO));
-			//action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
-			//action->setData(ADR_ACTION, ACT_CONST);
-			action->setData(ADR_CONTACT_JID, contactJid.full());
-			action->setData(ADR_STREAM_JID, streamJid.full());
-			action->setData(ADR_COMMAND, VideoCall);
-			connect(action,SIGNAL(triggered()),SLOT(onCall()));
-			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
+//			Video is not supported yet
+//			action = new Action(AChatWindow->toolBarWidget()->instance());
+//			action->setText(tr("Video call"));
+//			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL_VIDEO));
+//			//action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
+//			//action->setData(ADR_ACTION, ACT_CONST);
+//			action->setData(ADR_CONTACT_JID, contactJid.full());
+//			action->setData(ADR_STREAM_JID, streamJid.full());
+//			action->setData(ADR_COMMAND, VideoCall);
+//			connect(action,SIGNAL(triggered()),SLOT(onCall()));
+//			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
 
 			action = new Action(AChatWindow->toolBarWidget()->instance());
 			action->setText(tr("Hangup"));
@@ -1061,8 +1080,9 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
 				{
-					LOG_DEBUG("Starting sender...");
+					qDebug() << "Starting sender...";
 					sender->start();
+					qDebug() << "Sender started!";
 					return sender;
 				}
 				else
@@ -1090,17 +1110,20 @@ MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, QUdpSocket *A
 	{
 		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
 		{
-			LOG_DEBUG("Starting sender...");
+			qDebug() << "Starting streamer...";
 			if (streamer->setStatus(MediaStreamer::Running))
+			{
+				qDebug() << "Streamer started successfuly!";
 				return streamer;
-			else
-				LOG_ERROR("Failed to start streamer!");
+			}
+			else				
+				qDebug() << "Failed to start streamer!";
 		}
 		else
-			LOG_ERROR("connect failed!");
+			qDebug() << "connect failed!";
 	}
 	else
-		LOG_ERROR(QString("MediaStreamer is not in Closeed state: %1").arg(streamer->status()));
+		qDebug() << "MediaStreamer is not in Closeed state:" << streamer->status();
 	delete streamer;
 	return NULL;
 
@@ -1228,22 +1251,22 @@ void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBe
 
 void JingleRtp::onSenderStatusChanged(int AStatus)
 {
-	LOG_DEBUG(QString("JingleRtp::onSenderStatusChanged(%1)").arg(AStatus));
+	qDebug() << "JingleRtp::onSenderStatusChanged(" << AStatus << ")";
 	MediaSender *s = qobject_cast<MediaSender *>(sender());
 	IJingleContent *content = FSenders.key(s);
 	switch (AStatus)
 	{
 		case MediaSender::Started:
-			LOG_DEBUG("Started!");
+			qDebug() << "Started!";
 			break;
 
 		case MediaSender::Running:
-			LOG_DEBUG("Running!");
+			qDebug() << "Running!";
 			break;
 
 		case MediaSender::Error:
 		{
-			LOG_DEBUG("Error!");
+			qDebug() << "Error!";
 			if (s)
 			{
 				LOG_DEBUG("Terminating session...");
@@ -1256,7 +1279,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 		}
 		case MediaSender::Stopped:
 		{
-			LOG_DEBUG("Stopped!");
+			qDebug() << "Stopped!";
 			if (s)
 			{
 				LOG_DEBUG("Removing sender...");
@@ -1288,6 +1311,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			if (window)
 				updateWindowActions(window);
 			connectionEstablished(content->streamJid(), content->sid());
+			break;
 		}
 
 		case MediaStreamer::Finished:
@@ -1299,6 +1323,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				FSenders.remove(content);
 				delete streamer;
 			}
+			break;
 		}
 
 		case MediaStreamer::Error:
@@ -1312,6 +1337,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				FSenders.remove(content);
 				delete streamer;
 			}
+			break;
 		}
 	}
 }
