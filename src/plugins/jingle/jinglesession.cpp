@@ -73,15 +73,16 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 
 JingleSession::~JingleSession()
 {
+	for (QHash<QString, JingleContent *>::const_iterator it=FContents.constBegin(); it!=FContents.constEnd(); it++)
+		delete (*it);
+	FContents.clear();
+
     if (FSessions.contains(FThisParty) && FSessions[FThisParty].value(FSid)==this)   // Session list contains this sessin
     {
         FSessions[FThisParty].remove(FSid);        // remove it from the list!
         if (FSessions[FThisParty].isEmpty())
             FSessions.remove(FThisParty);
     }
-    for (QHash<QString, JingleContent *>::const_iterator it=FContents.constBegin(); it!=FContents.constEnd(); it++)
-        delete (*it);
-    FContents.clear();
 }
 
 void JingleSession::setInitiated(IJingleApplication *AApplication)
@@ -135,12 +136,18 @@ void JingleSession::setConnected()
 }
 
 void JingleSession::setTerminated(IJingle::Reason AReason)
-{
+{	
+	qDebug() << "JingleSession::setTerminated(" << AReason << ")";
+	qDebug() << "sid=" << FSid;
+	for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin(); it!=FContents.constEnd(); ++it)
+		FJingle->freeIncomingTransport(*it);
     IJingle::SessionStatus currentStatus=FStatus;
     FStatus=IJingle::Terminated;
     FReason=AReason;
     deleteLater();
+	qDebug() << "emit sessionTerminated(" << FThisParty.full() << "," << FSid << "," << currentStatus << "," << AReason << ")";
     emit sessionTerminated(FThisParty, FSid, currentStatus, AReason);
+	qDebug() << "JingleSession::setTerminated(): done!";
 }
 
 void JingleSession::inform(const JingleStanza &AStanza)
@@ -262,9 +269,7 @@ bool JingleSession::terminate(IJingle::Reason AReason)
     stanza.setReason(AReason);
     if (FJingle->sendStanzaOut(stanza))
     {
-        setTerminated(AReason);
-		for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin(); it!=FContents.constEnd(); ++it)
-			FJingle->freeIncomingTransport(*it);
+		setTerminated(AReason);
         return true;
     }
     return false;
@@ -335,6 +340,7 @@ void JingleSession::onTimeout()
 
 void JingleSession::onDeviceReadyRead()
 {
+	qDebug() << "JingleSession::onDeviceReadyRead()";
 	QIODevice *device = qobject_cast<QIODevice*>(sender());
 	sender()->disconnect(SIGNAL(readyRead()),this);
 	if (FStatus == Jingle::Connected)
@@ -384,6 +390,7 @@ JingleContent::JingleContent(const QString &AName, const QString &ASid, const QS
 
 JingleContent::~JingleContent() // Cleanup device list
 {
+	qDebug() << "~JingleContent(); name=" << FName;
 	JingleSession *session = JingleSession::sessionBySessionId(FStreamJid, FSid);
 	if (session)
 	{
@@ -399,7 +406,8 @@ JingleContent::~JingleContent() // Cleanup device list
 		}
 	}
 	else
-		qWarning(QString("Session not foind: %1").arg(FSid).toLatin1().data());
+		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
+	qDebug() << "~JingleContent(): done!";
 }
 
 QDomElement JingleContent::addElementToStanza(JingleStanza &AStanza)
@@ -511,7 +519,7 @@ bool JingleContent::setOutgoingTransport(const QDomElement &ATransport)
 
 void JingleContent::setInputDevice(const QString &AId, QIODevice *ADevice)
 {
-	qDebug() << "JingleContent::setInputDevice(%1" << AId << "," << ADevice << ")";
+	qDebug() << "JingleContent::setInputDevice(" << AId << "," << ADevice << ")";
     if (FInputDevices.value(AId) != ADevice)
     {
 		JingleSession *session = JingleSession::sessionBySessionId(FStreamJid, FSid);

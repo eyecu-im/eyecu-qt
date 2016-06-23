@@ -48,8 +48,10 @@ public:
 
 protected:
 	void registerDiscoFeatures();
-	quint16 getPort();
-	void	freePort(quint16 APort);
+	quint16 getPort(QUdpSocket *ASocket, const QHostAddress &ALocalAddress);
+
+protected slots:
+	void onSocketStateChanged(QAbstractSocket::SocketState ASocketState);
 
 signals:
 	void connectionOpened(IJingleContent *AContent);
@@ -62,7 +64,7 @@ private:
 	IJingle             *FJingle;
 	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager		*FOptionsManager;
-	QSet<quint16>		FPorts;
+	QHash<quint16, QUdpSocket *> FPorts;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

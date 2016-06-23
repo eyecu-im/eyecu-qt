@@ -133,7 +133,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             QHostAddress address(candidate.attribute("ip"));
             int port = candidate.attribute("port").toInt();
             QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->outputDevice(id));
-			qDebug() << "socket==" << socket;
+			qDebug() << "socket=" << socket;
             if (!socket)
 			{
                 AContent->setOutputDevice(id, socket = new QUdpSocket(this));
@@ -142,6 +142,9 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 
 			qDebug() << "socket->state()=" << socket->state();
 			qDebug() << "address=" << address;
+			qDebug() << "port=" << port;
+
+			qDebug() << "local address=" << address;
 			qDebug() << "port=" << port;
 
             if (socket->state() != QUdpSocket::UnconnectedState &&
@@ -165,6 +168,8 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
                 socket->openMode() == (QIODevice::WriteOnly|QIODevice::Unbuffered))
 			{
 				qDebug() << "C";
+				qDebug() << "Peer: " << socket->peerAddress() << ":" << socket->peerPort();
+				qDebug() << "Local: " << socket->localAddress() << ":" << socket->localPort();
                 continue;
 			}
 
@@ -224,30 +229,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 
 	if (!localAddress.isNull())
 	{
-//        QUdpSocket *socket1 = Options::node(OPV_JINGLERTP_USERTCP).value().toBool()?new QUdpSocket(this):NULL;
-		while (true)
-		{
-			quint16 port = getPort();
-			if (socket->bind(localAddress, port, QUdpSocket::DontShareAddress))
-				break;
-//			{
-//                if (socket1)
-//                {
-//                    if (socket1->bind(localAddress, FCurrentPort+1, QUdpSocket::DontShareAddress))
-//                        break;
-//                    else
-//                        socket->disconnectFromHost();
-//                }
-//                else
-//                    break;
-//            }
-//            FCurrentPort+=2;
-//            if (FCurrentPort>PORT_FINISH)
-//                FCurrentPort=PORT_START;
-		}
-
-//		qDebug() << "socket=" << socket;
-//		qDebug() << "socket1=" << socket1;
+		quint16 port = getPort(socket, localAddress);
 
         if (socket->state()==QAbstractSocket::BoundState)
         {
@@ -321,20 +303,15 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 	return false;
 }
 
+//TODO: Get rid of it
 void JingleTransportRawUdp::freeIncomingTransport(IJingleContent *AContent)
 {
+	qDebug() << "JingleTransportRawUdp::freeIncomingTransport(" << AContent << ")";
 	QStringList candidateIds = AContent->candidateIds();
+	qDebug() << "candidateIds=" << candidateIds;
 	for (QStringList::ConstIterator it=candidateIds.constBegin(); it!=candidateIds.constEnd(); ++it)
-	{
-		QUdpSocket *socket = qobject_cast<QUdpSocket*>(AContent->inputDevice(*it));
-		if (socket)
-		{
-			freePort(socket->localPort());
-			AContent->setInputDevice(*it, NULL);
-		}
-		else
-			LOG_ERROR("Input device is NOT a UDP socket!");
-	}
+		AContent->setInputDevice(*it, NULL);
+	qDebug() << "JingleTransportRawUdp::freeIncomingTransport(): done!";
 }
 
 QMultiMap<int, IOptionsDialogWidget *> JingleTransportRawUdp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
@@ -359,24 +336,38 @@ void JingleTransportRawUdp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-quint16 JingleTransportRawUdp::getPort()
+quint16 JingleTransportRawUdp::getPort(QUdpSocket *ASocket, const QHostAddress &ALocalAddress)
 {
+	qDebug() << "JingleTransportRawUdp::getPort()";
 	for (quint16 port = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt(); port<=Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).value().toInt(); port+=2)
-	{
 		if (!FPorts.contains(port) && !FPorts.contains(port+1))
-		{
-			FPorts.insert(port);
-			FPorts.insert(port+1);
-			return port;
-		}
-	}
+			if (ASocket->bind(ALocalAddress, port, QUdpSocket::DontShareAddress))
+			{
+				FPorts.insert(port, ASocket);
+				FPorts.insert(port+1, ASocket);
+				connect(ASocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
+				qDebug() << "return:" << port;
+				return port;
+			}
+	qDebug() << "return 0";
 	return 0;
 }
 
-void JingleTransportRawUdp::freePort(quint16 APort)
+void JingleTransportRawUdp::onSocketStateChanged(QAbstractSocket::SocketState ASocketState)
 {
-	FPorts.remove(APort);
-	FPorts.remove(APort+1);
+	if (ASocketState != QAbstractSocket::BoundState)
+	{
+		QUdpSocket *socket = qobject_cast<QUdpSocket *>(sender());
+		if (socket)
+		{
+			QList<quint16> ports = FPorts.keys(socket);
+			for (QList<quint16>::ConstIterator it = ports.constBegin(); it != ports.constEnd(); ++it)
+			{
+				qDebug() << "freeing port:" << *it;
+				FPorts.remove(*it);
+			}
+		}
+	}
 }
 
 #if QT_VERSION < 0x050000

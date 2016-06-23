@@ -383,6 +383,12 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				else if (!avp.channels)
 					avp.channels = 1;
 
+				QString media = description.attribute("media");
+
+				avp.mediaType = media=="audio"?QAVP::Audio:
+								media=="video"?QAVP::Video:
+											   QAVP::Unknown;
+
 				avp.payloadType = ptid;
 
 				MediaSender *sender = startSendMedia(avp, outputSocket);
@@ -490,6 +496,7 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 		QUdpSocket *socket = qobject_cast<QUdpSocket*>(ADevice);
 		if (socket)
 		{
+			qDebug() << "socket state:" << socket->state();
 			char data[64];
 			quint64 size = socket->readDatagram(data, 64);
 			if (size>1)
@@ -521,7 +528,9 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 					}
 				}
 			}
+			qDebug() << "About to disconnect from host...";
 			socket->disconnectFromHost();
+			qDebug() << "Done! state=" << socket->state();
 		}
 		else
 			LOG_FATAL("Not a UDP socket!");
