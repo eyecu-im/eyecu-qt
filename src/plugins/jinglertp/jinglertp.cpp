@@ -515,11 +515,17 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 					{
 						if (payloadType.attribute("id").toInt()==payloadTypeId)
 						{
+							QHostAddress address = socket->localAddress();
+							quint16	port = socket->localPort();
+							qDebug() << "About to disconnect from host...";
+							socket->disconnectFromHost();
+							qDebug() << "Done! state=" << socket->state();
 							qDebug() << "RTP Payload type found!";
+
 							QAVP pt = buildPayloadType(payloadType, mediaType);
 							qDebug() << "pt=" << pt;
 
-							MediaStreamer *streamer = startPlayMedia(pt, socket);
+							MediaStreamer *streamer = startPlayMedia(pt, address, port);
 							if (streamer)
 								FStreamers.insert(content, streamer);
 							else
@@ -528,9 +534,6 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 					}
 				}
 			}
-			qDebug() << "About to disconnect from host...";
-			socket->disconnectFromHost();
-			qDebug() << "Done! state=" << socket->state();
 		}
 		else
 			LOG_FATAL("Not a UDP socket!");
@@ -1111,10 +1114,10 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 	return NULL;
 }
 
-MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket)
+MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
 {
-	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AInputSocket << ")";
-	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(QAudio::AudioOutput), AInputSocket->localAddress(), AInputSocket->localPort(), APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
+	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AHostAddress << "," << APort << ")";
+	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
 	if (streamer->status() == MediaStreamer::Closed)
 	{
 		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
@@ -1506,6 +1509,7 @@ void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 
 void JingleRtp::onContentAdded(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onContentAdded(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), AddContent))
 		FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
@@ -1513,6 +1517,7 @@ void JingleRtp::onContentAdded(IJingleContent *AContent)
 
 void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onContentAddFailed(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), AddContent))
 	{
@@ -1525,6 +1530,15 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 
 void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onIncomingTransportFilled(" << AContent << ")";
+	QStringList candidateIds = AContent->candidateIds();
+	qDebug() << "candidateIds=" << candidateIds;
+	for (QStringList::ConstIterator it = candidateIds.constBegin(); it != candidateIds.constEnd(); ++it)
+	{
+		QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(*it));
+		qDebug() << "socket=" << socket << ";" << socket->localAddress() << ":" << socket->localPort() << "/ state:" << socket->state();
+	}
+
 	removePendingContent(AContent, FillTransport);
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), FillTransport))
 		FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
@@ -1532,7 +1546,8 @@ void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 
 void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	removePendingContent(AContent, FillTransport);
+	qDebug() << "JingleRtp::onIncomingTransportFillFailed(" << AContent << ")";
+	removePendingContent(AContent, FillTransport);	
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), FillTransport))
 	{
 		if (FJingle->contents(AContent->streamJid(), AContent->sid()).isEmpty())

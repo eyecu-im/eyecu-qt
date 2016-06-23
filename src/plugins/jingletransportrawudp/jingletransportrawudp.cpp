@@ -224,13 +224,15 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
         break;
     }
 
+	delete socket;
+
     if (localAddress.isNull())
 		localAddress = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value().toString();
 
 	if (!localAddress.isNull())
 	{
-		quint16 port = getPort(socket, localAddress);
-
+		socket = getPort(localAddress);
+		qDebug() << "Got socket:" << socket;
         if (socket->state()==QAbstractSocket::BoundState)
         {
 			qDebug() << "socket is bound:" << socket;
@@ -336,25 +338,30 @@ void JingleTransportRawUdp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-quint16 JingleTransportRawUdp::getPort(QUdpSocket *ASocket, const QHostAddress &ALocalAddress)
+QUdpSocket *JingleTransportRawUdp::getPort(const QHostAddress &ALocalAddress)
 {
 	qDebug() << "JingleTransportRawUdp::getPort()";
 	for (quint16 port = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt(); port<=Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).value().toInt(); port+=2)
 		if (!FPorts.contains(port) && !FPorts.contains(port+1))
-			if (ASocket->bind(ALocalAddress, port, QUdpSocket::DontShareAddress))
+		{
+			QUdpSocket *socket = new QUdpSocket(this);
+			if (socket->bind(ALocalAddress, port, QUdpSocket::DontShareAddress))
 			{
-				FPorts.insert(port, ASocket);
-				FPorts.insert(port+1, ASocket);
-				connect(ASocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
+				FPorts.insert(port, socket);
+				FPorts.insert(port+1, socket);
+				connect(socket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
 				qDebug() << "return:" << port;
-				return port;
+				return socket;
 			}
-	qDebug() << "return 0";
-	return 0;
+			delete socket;
+		}
+	qDebug() << "return NULL";
+	return NULL;
 }
 
 void JingleTransportRawUdp::onSocketStateChanged(QAbstractSocket::SocketState ASocketState)
 {
+	qDebug() << "JingleTransportRawUdp::onSocketStateChanged(" << ASocketState << ")";
 	if (ASocketState != QAbstractSocket::BoundState)
 	{
 		QUdpSocket *socket = qobject_cast<QUdpSocket *>(sender());

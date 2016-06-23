@@ -145,7 +145,7 @@ protected:
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
 
 	MediaSender *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
-	MediaStreamer *startPlayMedia(const QAVP &APayloadType, QUdpSocket *AInputSocket);
+	MediaStreamer *startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
