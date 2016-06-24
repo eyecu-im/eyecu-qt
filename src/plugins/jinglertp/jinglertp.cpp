@@ -485,6 +485,38 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
 }
 
+void JingleRtp::onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent)
+{
+	Q_UNUSED(AStreamJid)
+	qDebug() << "JingleRtp::onContentCleanup(" << AStreamJid.full() << "," << AContent << ")";
+	QStringList candidateIds = AContent->candidateIds();
+	for (QStringList::ConstIterator it = candidateIds.constBegin(); it!=candidateIds.constEnd(); ++it)
+	{
+		QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(*it));
+		qint64 size(0);
+		char *data(NULL);
+		int count(0);
+		qDebug() << "Reading extra datagrams...";
+		while (socket->waitForReadyRead(500))
+		{
+			qint64 newSize = socket->pendingDatagramSize();
+			if (newSize > size)
+			{
+				size = newSize;
+				if (data)
+					free(data);
+				data = (char*)malloc(size);
+			}
+			if (data)
+				socket->readDatagram(data, size);
+			else
+				LOG_ERROR("Memory allocation error");
+			count++;
+		}
+		qDebug() << count << "datagrams removed!";
+	}
+}
+
 void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice)
 {
 	qDebug() << "JingleRtp::onDataReceived(" << AStreamJid.full() << "," << ASid << "," << ADevice << ")";

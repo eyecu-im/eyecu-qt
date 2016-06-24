@@ -81,6 +81,11 @@ public:
 
 	JingleRtp();
 	~JingleRtp();
+
+public:
+	static QStringList stringsFromAvps(const QList<QAVP> &AAvps);
+	static QList<QAVP> avpsFromStrings(const QStringList &AStrings);
+
 	//IPlugin
 	QObject *instance() { return this; }
 	QUuid pluginUuid() const { return JINGLERTP_UUID; }
@@ -97,20 +102,17 @@ public:
 	QString ns() const;
 	bool checkSupported(QDomElement &ADescription);
 
-public:
-	static QStringList stringsFromAvps(const QList<QAVP> &AAvps);
-	static QList<QAVP> avpsFromStrings(const QStringList &AStrings);
-
 public slots:
-	void onSessionInitiated(const Jid &AStreamJid, const QString &ASid);
-	void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
-	void onSessionAccepted(const Jid &AStreamJid, const QString &ASid);
-	void onSessionConnected(const Jid &AStreamJid, const QString &ASid);
-	void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
-	void onSessionInformed(const QDomElement &AInfoElement);
-	void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
-	void onConnectionEstablished(IJingleContent *AContent);
-	void onConnectionFailed(IJingleContent *AContent);
+	virtual void onSessionInitiated(const Jid &AStreamJid, const QString &ASid);
+	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
+	virtual void onSessionAccepted(const Jid &AStreamJid, const QString &ASid);
+	virtual void onSessionConnected(const Jid &AStreamJid, const QString &ASid);
+	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
+	virtual void onSessionInformed(const QDomElement &AInfoElement);
+	virtual void onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent);
+	virtual void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
+	virtual void onConnectionEstablished(IJingleContent *AContent);
+	virtual void onConnectionFailed(IJingleContent *AContent);
 
 protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
@@ -195,7 +197,7 @@ private:
 	QHash<IJingleContent *, MediaSender *> FSenders;
 	QHash<IJingleContent *, MediaStreamer *> FStreamers;
 
-	static const QString    types[4];
+	static const QString    types[4];	
 };
 
 #endif // JINGLERTP_H

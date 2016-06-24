@@ -48,7 +48,7 @@ public:
 
 protected:
 	void registerDiscoFeatures();
-	QUdpSocket *getPort(const QHostAddress &ALocalAddress);
+	QUdpSocket *getSocket(const QHostAddress &ALocalAddress);
 
 protected slots:
 	void onSocketStateChanged(QAbstractSocket::SocketState ASocketState);

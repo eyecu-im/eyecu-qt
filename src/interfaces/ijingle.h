@@ -120,12 +120,13 @@ public:
 	virtual QString ns() const =0;
 	virtual bool checkSupported(QDomElement &ADescription) =0;  // To check if Jingle request is supported
 
-	virtual void onSessionInitiated(const Jid &Ajid, const QString &ASid) =0;       // To notify, about new initiate request
-	virtual void onSessionAccepted(const Jid &AJid, const QString&ASid) =0;
-	virtual void onSessionConnected(const Jid &AJid, const QString&ASid) =0;
-	virtual void onSessionTerminated(const Jid &AJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
-	virtual void onActionAcknowledged(const Jid &AJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
-	virtual void onDataReceived(const Jid &AJid, const QString&ASid, QIODevice *ADevice) =0;
+	virtual void onSessionInitiated(const Jid &AStreamJid, const QString &ASid) =0;       // To notify, about new initiate request
+	virtual void onSessionAccepted(const Jid &AStreamJid, const QString&ASid) =0;
+	virtual void onSessionConnected(const Jid &AStreamJid, const QString&ASid) =0;
+	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
+	virtual void onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent) =0;
+	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
+	virtual void onDataReceived(const Jid &AStreamJid, const QString&ASid, QIODevice *ADevice) =0;
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;
