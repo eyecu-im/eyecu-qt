@@ -139,7 +139,6 @@ signals:
     void sessionConnected(const Jid &AStreamJid, const QString &ASid);    
     void sessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	void sessionInformed(const QDomElement &AInfoElement);
-	void contentCleanup(const Jid &AStreamJid, IJingleContent *AContent);
 	void dataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
     void actionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 

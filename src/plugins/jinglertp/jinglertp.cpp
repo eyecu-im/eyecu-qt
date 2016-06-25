@@ -346,17 +346,6 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 		for (QList<QDomElement>::ConstIterator it1 = candidates.constBegin(); it1!=candidates.constEnd(); it1++)
 		{
 			QString id = (*it1).attribute("id");
-//			qDebug() << "candidate id:" << id;
-//			QUdpSocket *inputSocket = qobject_cast<QUdpSocket *>((*it)->inputDevice(id));
-//			qDebug() << "input socket=" << inputSocket;
-//			if (inputSocket)
-//			{
-//				qDebug() << "state:" << inputSocket->state();
-//				qDebug() << "open mode:" << inputSocket->openMode();
-//				qDebug() << QString("local: %1:%2").arg(inputSocket->localAddress().toString())
-//												   .arg(inputSocket->localPort());
-//			}
-
 
 			QUdpSocket *outputSocket = qobject_cast<QUdpSocket *>((*it)->outputDevice(id));
 			if (outputSocket)
@@ -485,38 +474,6 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
 }
 
-void JingleRtp::onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent)
-{
-	Q_UNUSED(AStreamJid)
-	qDebug() << "JingleRtp::onContentCleanup(" << AStreamJid.full() << "," << AContent << ")";
-	QStringList candidateIds = AContent->candidateIds();
-	for (QStringList::ConstIterator it = candidateIds.constBegin(); it!=candidateIds.constEnd(); ++it)
-	{
-		QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(*it));
-		qint64 size(0);
-		char *data(NULL);
-		int count(0);
-		qDebug() << "Reading extra datagrams...";
-		while (socket->waitForReadyRead(500))
-		{
-			qint64 newSize = socket->pendingDatagramSize();
-			if (newSize > size)
-			{
-				size = newSize;
-				if (data)
-					free(data);
-				data = (char*)malloc(size);
-			}
-			if (data)
-				socket->readDatagram(data, size);
-			else
-				LOG_ERROR("Memory allocation error");
-			count++;
-		}
-		qDebug() << count << "datagrams removed!";
-	}
-}
-
 void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice)
 {
 	qDebug() << "JingleRtp::onDataReceived(" << AStreamJid.full() << "," << ASid << "," << ADevice << ")";
@@ -549,14 +506,8 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 						{
 							QHostAddress address = socket->localAddress();
 							quint16	port = socket->localPort();
-							qDebug() << "About to disconnect from host...";
 							socket->disconnectFromHost();
-							qDebug() << "Done! state=" << socket->state();
-							qDebug() << "RTP Payload type found!";
-
 							QAVP pt = buildPayloadType(payloadType, mediaType);
-							qDebug() << "pt=" << pt;
-
 							MediaStreamer *streamer = startPlayMedia(pt, address, port);
 							if (streamer)
 								FStreamers.insert(content, streamer);
@@ -830,6 +781,7 @@ QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
 
 bool JingleRtp::removeSid(const Jid &AStreamJid, const QString &ASid)
 {
+	qDebug() << "JingleRtp::removeSid(" << AStreamJid.full() << "," << ASid << ")";
 	if (FSidHash.contains(AStreamJid))
 	{
 		Jid jid=FSidHash[AStreamJid].key(ASid, Jid());
@@ -838,9 +790,12 @@ bool JingleRtp::removeSid(const Jid &AStreamJid, const QString &ASid)
 			{
 				if (FSidHash[AStreamJid].isEmpty())
 					FSidHash.remove(AStreamJid);
+				qDebug() << "FSidHash.size()=" << FSidHash.size();
+				qDebug() << "return true";
 				return true;
 			}
 	}
+	qDebug() << "return false";
 	return false;
 }
 
@@ -1369,7 +1324,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			if (streamer)
 			{
 				LOG_DEBUG("Removing sender...");
-				FSenders.remove(content);
+				FStreamers.remove(content);
 				delete streamer;
 			}
 			break;
@@ -1383,7 +1338,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				LOG_DEBUG("Terminating session...");
 				FJingle->sessionTerminate(content->streamJid(), content->sid(), IJingle::FailedApplication);
 				LOG_DEBUG("Removing sender...");
-				FSenders.remove(content);
+				FStreamers.remove(content);
 				delete streamer;
 			}
 			break;

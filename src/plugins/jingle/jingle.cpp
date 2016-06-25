@@ -560,7 +560,7 @@ bool Jingle::selectTransportCandidate(const Jid &AStreamJid, const QString &ASid
 
 bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName)
 {
-	LOG_DEBUG(QString("Jingle::connectContent(%1, %2, %3)").arg(AStreamJid.full()).arg(ASid).arg(AName));
+	qDebug() << "Jingle::connectContent(" << AStreamJid.full() << "," << ASid << "," << AName << ")";
 	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
 	if (session)
 	{

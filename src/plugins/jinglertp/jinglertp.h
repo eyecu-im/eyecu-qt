@@ -3,6 +3,7 @@
 
 #include <QSound>
 #include <QUdpSocket>
+#include <QPair>
 #include <MediaSender>
 #include <MediaStreamer>
 
@@ -109,7 +110,6 @@ public slots:
 	virtual void onSessionConnected(const Jid &AStreamJid, const QString &ASid);
 	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	virtual void onSessionInformed(const QDomElement &AInfoElement);
-	virtual void onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent);
 	virtual void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
 	virtual void onConnectionEstablished(IJingleContent *AContent);
 	virtual void onConnectionFailed(IJingleContent *AContent);

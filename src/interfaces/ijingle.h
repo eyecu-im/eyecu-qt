@@ -124,7 +124,6 @@ public:
 	virtual void onSessionAccepted(const Jid &AStreamJid, const QString&ASid) =0;
 	virtual void onSessionConnected(const Jid &AStreamJid, const QString&ASid) =0;
 	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
-	virtual void onContentCleanup(const Jid &AStreamJid, IJingleContent *AContent) =0;
 	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
 	virtual void onDataReceived(const Jid &AStreamJid, const QString&ASid, QIODevice *ADevice) =0;
 
