@@ -196,7 +196,7 @@ void MmPlayer::onFileStreamStateChanged()
             FifoDataBuffer *buffer=new FifoDataBuffer(0, this);
             if (buffer->input()->open(QIODevice::ReadOnly))
             {
-				MediaStreamer *mediaStreamer=new MediaStreamer(QAudioDeviceInfo::defaultOutputDevice(), buffer->input(), this);
+				MediaPlayer *mediaStreamer=new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), buffer->input(), this);
                 if(mediaStreamer)
                     if(buffer->output()->open(QIODevice::WriteOnly))
                     {
@@ -206,7 +206,7 @@ void MmPlayer::onFileStreamStateChanged()
 						connect(mediaStreamer,SIGNAL(statusChanged(int,int)),SLOT(onMediaStreamStatusChanged(int,int)));
 						connect(mediaStreamer,SIGNAL(destroyed()),SLOT(onMediaStreamerDestroyed()));
 						mediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
-						mediaStreamer->setStatus(MediaStreamer::Running);
+						mediaStreamer->setStatus(MediaPlayer::Running);
                     }
             }
             else
@@ -238,10 +238,10 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 	Q_UNUSED(AstatusOld)
 	LOG_DEBUG(QString("MmPlayer::onMediaStreamStatusChanged(%1, %2").arg(AStatusNew).arg(AstatusOld));
 
-	MediaStreamer *streamer = qobject_cast<MediaStreamer *>(sender());
+	MediaPlayer *streamer = qobject_cast<MediaPlayer *>(sender());
 	switch (AStatusNew)
     {
-		case MediaStreamer::Running:
+		case MediaPlayer::Running:
         {
 			LOG_DEBUG("Running");
 			IFileStream *fileStream = FBuffers.key(FStreamerBuffers[sender()]);
@@ -254,8 +254,8 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
             break;
         }
 
-		case MediaStreamer::Error:
-		case MediaStreamer::Finished:
+		case MediaPlayer::Error:
+		case MediaPlayer::Finished:
         {
 			LOG_DEBUG("Error or Finished");
             FifoDataBuffer *buffer=FStreamerBuffers.take(sender());

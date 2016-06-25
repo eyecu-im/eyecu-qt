@@ -4,7 +4,7 @@
 #include <QSound>
 #include <QUdpSocket>
 #include <QPair>
-#include <MediaSender>
+#include <MediaPlayer>
 #include <MediaStreamer>
 
 #include <interfaces/ijingle.h>
@@ -18,7 +18,6 @@
 #include <interfaces/irostersview.h>
 #include <interfaces/istatusicons.h>
 
-#include "audio.h"
 #include "audiooptions.h"
 #include "payloadtypeoptions.h"
 
@@ -146,8 +145,8 @@ protected:
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
 
-	MediaSender *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
-	MediaStreamer *startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
+	MediaStreamer *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
+	MediaPlayer *startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
 	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
@@ -194,8 +193,8 @@ private:
 
 	QTimer              FDataSendTimer; //! --------- TEST ---------
 
-	QHash<IJingleContent *, MediaSender *> FSenders;
-	QHash<IJingleContent *, MediaStreamer *> FStreamers;
+	QHash<IJingleContent *, MediaStreamer *> FSenders;
+	QHash<IJingleContent *, MediaPlayer *> FStreamers;
 
 	static const QString    types[4];	
 };

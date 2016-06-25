@@ -22,10 +22,9 @@
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 #include <MediaStreamer>
-#include <MediaSender>
+#include <MediaPlayer>
 
 #include "jinglertp.h"
-#include "mediathread.h"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr4
@@ -380,7 +379,7 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 
 				avp.payloadType = ptid;
 
-				MediaSender *sender = startSendMedia(avp, outputSocket);
+				MediaStreamer *sender = startSendMedia(avp, outputSocket);
 				if (sender)
 				{
 					FSenders.insert(*it, sender);
@@ -434,26 +433,26 @@ void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, 
 	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
 	{
 		qDebug() << "content:" << *it;
-		MediaSender *sender = FSenders.value(*it);
+		MediaStreamer *sender = FSenders.value(*it);
 		if (sender)
 		{
 			qDebug() << "sender found:" << sender << "; status=" << sender->status();
-			if (sender->status()==MediaSender::Running ||
-				sender->status()==MediaSender::Started ||
-				sender->status()==MediaSender::Paused)
+			if (sender->status()==MediaStreamer::Running ||
+				sender->status()==MediaStreamer::Started ||
+				sender->status()==MediaStreamer::Paused)
 				sender->stop();
 			else
 				delete sender;
 		}
 
-		MediaStreamer *streamer = FStreamers.value(*it);
+		MediaPlayer *streamer = FStreamers.value(*it);
 		if (streamer)
 		{
 			qDebug() << "streamer found:" << sender << "; status=" << streamer->status();
-			if (streamer->status()==MediaStreamer::Running ||
-				streamer->status()==MediaStreamer::Opened ||
-				streamer->status()==MediaStreamer::Paused)
-				streamer->setStatus(MediaStreamer::Finished);
+			if (streamer->status()==MediaPlayer::Running ||
+				streamer->status()==MediaPlayer::Opened ||
+				streamer->status()==MediaPlayer::Paused)
+				streamer->setStatus(MediaPlayer::Finished);
 			else
 				delete streamer;
 		}
@@ -508,7 +507,7 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 							quint16	port = socket->localPort();
 							socket->disconnectFromHost();
 							QAVP pt = buildPayloadType(payloadType, mediaType);
-							MediaStreamer *streamer = startPlayMedia(pt, address, port);
+							MediaPlayer *streamer = startPlayMedia(pt, address, port);
 							if (streamer)
 								FStreamers.insert(content, streamer);
 							else
@@ -1063,7 +1062,7 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
-MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
+MediaStreamer *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
 {
 	qDebug() << "JingleRtp::startSendMedia(" << APayloadType << "," << AOutputSocket << ")";
 	int codecId = QAVCodec::idByName(APayloadType.codecName);
@@ -1074,8 +1073,8 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			MediaSender *sender = new MediaSender(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
-			if (sender->status() == MediaSender::Stopped)
+			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+			if (sender->status() == MediaStreamer::Stopped)
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
 				{
@@ -1101,16 +1100,16 @@ MediaSender *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOu
 	return NULL;
 }
 
-MediaStreamer *JingleRtp::startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
+MediaPlayer *JingleRtp::startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
 {
 	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AHostAddress << "," << APort << ")";
-	MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
-	if (streamer->status() == MediaStreamer::Closed)
+	MediaPlayer *streamer = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
+	if (streamer->status() == MediaPlayer::Closed)
 	{
 		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
 		{
 			qDebug() << "Starting streamer...";
-			if (streamer->setStatus(MediaStreamer::Running))
+			if (streamer->setStatus(MediaPlayer::Running))
 			{
 				qDebug() << "Streamer started successfuly!";
 				return streamer;
@@ -1256,19 +1255,19 @@ void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBe
 void JingleRtp::onSenderStatusChanged(int AStatus)
 {
 	qDebug() << "JingleRtp::onSenderStatusChanged(" << AStatus << ")";
-	MediaSender *s = qobject_cast<MediaSender *>(sender());
+	MediaStreamer *s = qobject_cast<MediaStreamer *>(sender());
 	IJingleContent *content = FSenders.key(s);
 	switch (AStatus)
 	{
-		case MediaSender::Started:
+		case MediaStreamer::Started:
 			qDebug() << "Started!";
 			break;
 
-		case MediaSender::Running:
+		case MediaStreamer::Running:
 			qDebug() << "Running!";
 			break;
 
-		case MediaSender::Error:
+		case MediaStreamer::Error:
 		{
 			qDebug() << "Error!";
 			if (s)
@@ -1281,7 +1280,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 			}
 			break;
 		}
-		case MediaSender::Stopped:
+		case MediaStreamer::Stopped:
 		{
 			qDebug() << "Stopped!";
 			if (s)
@@ -1302,12 +1301,12 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 {
 	qDebug() << "JingleRtp::onStreamerStatusChanged(" << AStatusNew << "," << AStatusOld << ")";
 
-	MediaStreamer *streamer = qobject_cast<MediaStreamer*>(sender());
+	MediaPlayer *streamer = qobject_cast<MediaPlayer*>(sender());
 	IJingleContent *content = FStreamers.key(streamer);
 	qDebug() << "content=" << content;
 	switch (AStatusNew)
 	{
-		case MediaStreamer::Running:
+		case MediaPlayer::Running:
 		{
 			LOG_DEBUG("Running!");
 			Jid contactJid=FJingle->contactJid(content->streamJid(), content->sid());
@@ -1318,7 +1317,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			break;
 		}
 
-		case MediaStreamer::Finished:
+		case MediaPlayer::Finished:
 		{
 			LOG_DEBUG("Finished!");
 			if (streamer)
@@ -1330,7 +1329,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			break;
 		}
 
-		case MediaStreamer::Error:
+		case MediaPlayer::Error:
 		{
 			LOG_DEBUG("Error!");
 			if (streamer)
@@ -1398,8 +1397,8 @@ void JingleRtp::onCall()
 				for (QStringList::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
 				{
 					QAVP avp(*it);
-					MediaSender *sender = new MediaSender(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, -1, avp.clockRate, bitRate, this);
-					if (sender->status()==MediaSender::Stopped)
+					MediaStreamer *sender = new MediaStreamer(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, -1, avp.clockRate, bitRate, this);
+					if (sender->status()==MediaStreamer::Stopped)
 					{
 						QAVP payloadType(sender->getAvp());
 //TODO: Make adequate validation

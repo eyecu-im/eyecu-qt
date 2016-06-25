@@ -24,7 +24,7 @@
  * @param parent parent widget
  */
 
-PlayerWindow::PlayerWindow(QObject *APlugin, MediaStreamer *AMediaStreamer, QString AFileName, qint64 AFileLenth, QWidget *AParent) :
+PlayerWindow::PlayerWindow(QObject *APlugin, MediaPlayer *AMediaStreamer, QString AFileName, qint64 AFileLenth, QWidget *AParent) :
 	QWidget(AParent),
     FMediaStreamer(AMediaStreamer),
 	FFile(NULL),
@@ -258,11 +258,11 @@ void PlayerWindow::start()
 	LOG_INFO(QString("File name: %1").arg(FFile->fileName()));
 	if(FFile->open(QFile::ReadOnly))
 	{
-		FMediaStreamer = new MediaStreamer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
+		FMediaStreamer = new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
 		LOG_DEBUG("Media Streamer created!");
 		connect(FMediaStreamer, SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
 		FMediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
-		FMediaStreamer->setStatus(MediaStreamer::Running);
+		FMediaStreamer->setStatus(MediaPlayer::Running);
 	}
 	LOG_DEBUG("start(): finished");
 }
@@ -274,7 +274,7 @@ void PlayerWindow::closeEvent(QCloseEvent *AEvent)
 	if (FFile)
 		FFile->close();
     if(FMediaStreamer)
-		FMediaStreamer->setStatus(MediaStreamer::Finished);
+		FMediaStreamer->setStatus(MediaPlayer::Finished);
     AEvent->accept();
 	LOG_DEBUG("closeEvent(): finished");
 }
@@ -368,9 +368,9 @@ void PlayerWindow::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 	LOG_DEBUG(QString("onStreamerStatusChanged(%1, %2)").arg(AStatusNew).arg(AStatusOld));
 	switch (AStatusNew)
 	{
-		case MediaStreamer::Running:
+		case MediaPlayer::Running:
 			LOG_DEBUG("Running");
-			if (AStatusOld == MediaStreamer::Opened)	// Stream just started
+			if (AStatusOld == MediaPlayer::Opened)	// Stream just started
 			{
 				calculate(QFileInfo(FFile->fileName()).fileName(), FFile->size());
 				resize(sizeHint());
@@ -378,25 +378,25 @@ void PlayerWindow::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			else
 				emit playing(FCurrentTune);
 			// Enable "Open/Stop" button
-			setupControls(MediaStreamer::Running);
+			setupControls(MediaPlayer::Running);
 			break;
 
-		case MediaStreamer::Paused:
+		case MediaPlayer::Paused:
 			LOG_DEBUG("Paused");
-			setupControls(MediaStreamer::Paused);
+			setupControls(MediaPlayer::Paused);
 			emit stopped();
 			break;
 
-		case MediaStreamer::Error:
+		case MediaPlayer::Error:
 			QMessageBox::critical(this, tr("File open error!"), tr("An error occured while opening \"%1\"").arg(QFileInfo(*FFile).fileName()), QMessageBox::Ok);
 
-		case MediaStreamer::Finished:
+		case MediaPlayer::Finished:
 			LOG_DEBUG("Error or Finished");
 			emit stopped();
 			if (FFile)
 			{
 				FFile->close();
-				if (AStatusNew == MediaStreamer::Error)
+				if (AStatusNew == MediaPlayer::Error)
 					FFile=NULL;
 			}
 			if(FMediaStreamer)
@@ -424,7 +424,7 @@ void PlayerWindow::setupControls(int AState)
 {
 	switch (AState)
 	{
-		case MediaStreamer::Running:
+		case MediaPlayer::Running:
 			ui->btnOpen->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
 			ui->btnOpen->setToolTip(tr("Stop"));
 			ui->btnOpen->setEnabled(true);
@@ -432,19 +432,19 @@ void PlayerWindow::setupControls(int AState)
 			ui->btnPlay->setToolTip(tr("Pause"));
 			ui->btnPlay->setEnabled(true);
 			break;
-		case MediaStreamer::Paused:
+		case MediaPlayer::Paused:
 			ui->btnPlay->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
 			ui->btnPlay->setToolTip(tr("Play"));
 			ui->btnPlay->setEnabled(true);
 			break;
-		case MediaStreamer::Error:
-		case MediaStreamer::Finished:
+		case MediaPlayer::Error:
+		case MediaPlayer::Finished:
 			ui->btnOpen->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_MMPLAYER_EJECT));
 			ui->btnOpen->setToolTip(tr("Open..."));
 			ui->btnOpen->setEnabled(true);
 			ui->btnPlay->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
 			ui->btnPlay->setToolTip(tr("Play"));
-			ui->btnPlay->setEnabled(AState == MediaStreamer::Finished);
+			ui->btnPlay->setEnabled(AState == MediaPlayer::Finished);
 			ui->sldVolume->setDisabled(true);
 			ui->lcdVolume->setDisabled(true);
 			break;
@@ -460,7 +460,7 @@ void PlayerWindow::onOpenClicked()
 		ui->btnOpen->setDisabled(true);
 		ui->btnPlay->setDisabled(true);
 		FPlayList.clear();
-		FMediaStreamer->setStatus(MediaStreamer::Finished);
+		FMediaStreamer->setStatus(MediaPlayer::Finished);
 	}
 	else
 	{
@@ -537,14 +537,14 @@ void PlayerWindow::onPlayClicked()
 	if (FMediaStreamer)
 		switch (FMediaStreamer->status())
 		{
-			case MediaStreamer::Running:
+			case MediaPlayer::Running:
 				LOG_DEBUG("Runing");
-				FMediaStreamer->setStatus(MediaStreamer::Paused);
+				FMediaStreamer->setStatus(MediaPlayer::Paused);
 				break;
 	
-			case MediaStreamer::Paused:
+			case MediaPlayer::Paused:
 				LOG_DEBUG("Paused");
-				FMediaStreamer->setStatus(MediaStreamer::Running);
+				FMediaStreamer->setStatus(MediaPlayer::Running);
 				break;
 	
 			default:
