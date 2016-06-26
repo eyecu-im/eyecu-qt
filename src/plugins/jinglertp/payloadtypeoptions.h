@@ -37,7 +37,7 @@ signals:
 
 protected:
 	void changeEvent(QEvent *e);
-	QList<QAVP> availablePayloadTypes() const;
+	QList<PayloadType> availablePayloadTypes() const;
 
 protected slots:
 	void onAvailablePayloadTypeSelectionChanged();
@@ -53,7 +53,7 @@ protected slots:
 	void onPayloadTypeRemove();
 
 private:
-	QList<QAVP> FAvailableStaticPayloadTypes;
+	QList<PayloadType> FAvailableStaticPayloadTypes;
 };
 
 #endif // PAYLOADTYPEOPTIONS_H

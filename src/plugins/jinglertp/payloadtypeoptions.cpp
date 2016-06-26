@@ -38,11 +38,11 @@ PayloadTypeOptions::PayloadTypeOptions(QWidget *parent):
 
 	if (rtp)
 	{
-		QHash<int, QAVP> payloadTypes = QAVCodec::payloadTypes(true);
-		for (QHash<int, QAVP>::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
-			if ((*it).mediaType==QAVP::Audio) // Only Audio implemented so far
+		QHash<int, PayloadType> payloadTypes = QAVCodec::payloadTypes(true);
+		for (QHash<int, PayloadType>::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+			if ((*it).media==PayloadType::Audio) // Only Audio implemented so far
 			{
-				int codecId = QAVCodec::idByName((*it).codecName);
+				int codecId = QAVCodec::idByName((*it).name);
 				if (rtp.queryCodec(codecId) && QAVCodec::findDecoder(codecId) && QAVCodec::findEncoder(codecId))
 					FAvailableStaticPayloadTypes.append(*it);
 			}
@@ -140,8 +140,8 @@ void PayloadTypeOptions::onPayloadTypeUnuse()
 
 void PayloadTypeOptions::onPayloadTypeAdd()
 {
-	QList<QAVP> payloadTypes = availablePayloadTypes();
-	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(QAVP(), payloadTypes, this);
+	QList<PayloadType> payloadTypes = availablePayloadTypes();
+	PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(PayloadType(), payloadTypes, this);
 	if (dialog->exec()==QDialog::Accepted)
 		ui->rptAvailable->setCurrentRow(ui->rptAvailable->appendAvp(dialog->payloadType()));
 	dialog->deleteLater();
@@ -150,10 +150,10 @@ void PayloadTypeOptions::onPayloadTypeAdd()
 void PayloadTypeOptions::onPayloadTypeEdit()
 {
 	int row = ui->rptAvailable->currentRow();
-	QAVP avp = ui->rptAvailable->getAvp(row);
+	PayloadType avp = ui->rptAvailable->getAvp(row);
 	if (avp.isValid())
 	{
-		QList<QAVP> payloadTypes = availablePayloadTypes();
+		QList<PayloadType> payloadTypes = availablePayloadTypes();
 		PayloadTypeEditDialog *dialog = new PayloadTypeEditDialog(avp, payloadTypes, this);
 		if (dialog->exec()==QDialog::Accepted)
 		{
@@ -176,20 +176,20 @@ void PayloadTypeOptions::onPayloadTypeUse()
 
 void PayloadTypeOptions::apply()
 {
-	QList<QAVP> dynamicPayloadTypes, usedPayloadTypes;
+	QList<PayloadType> dynamicPayloadTypes, usedPayloadTypes;
 	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
 	{
-		QAVP avp = ui->rptAvailable->getAvp(i);
-		if (avp.payloadType<0)	// Dynamic
-			dynamicPayloadTypes.append(avp);
+		PayloadType payloadType = ui->rptAvailable->getAvp(i);
+		if (payloadType.id<0)	// Dynamic
+			dynamicPayloadTypes.append(payloadType);
 	}
 
 	for (int i=0; i<ui->rptUsed->rowCount(); ++i)
 	{
-		QAVP avp = ui->rptUsed->getAvp(i);
-		if (avp.payloadType<0)	// Dynamic
-			dynamicPayloadTypes.append(avp);
-		usedPayloadTypes.append(avp);
+		PayloadType payloadType = ui->rptUsed->getAvp(i);
+		if (payloadType.id<0)	// Dynamic
+			dynamicPayloadTypes.append(payloadType);
+		usedPayloadTypes.append(payloadType);
 	}
 
 	Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).setValue(JingleRtp::stringsFromAvps(dynamicPayloadTypes));
@@ -200,16 +200,16 @@ void PayloadTypeOptions::apply()
 
 void PayloadTypeOptions::reset()
 {
-	QList<QAVP> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
-	QList<QAVP> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
+	QList<PayloadType> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
+	QList<PayloadType> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
 
 	ui->rptAvailable->clear();
 	ui->rptAvailable->setSortingEnabled(false);
-	for (QList<QAVP>::ConstIterator it=FAvailableStaticPayloadTypes.constBegin(); it!=FAvailableStaticPayloadTypes.constEnd(); ++it)
+	for (QList<PayloadType>::ConstIterator it=FAvailableStaticPayloadTypes.constBegin(); it!=FAvailableStaticPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
 			ui->rptAvailable->appendAvp(*it);
 
-	for (QList<QAVP>::ConstIterator it=dynamicPayloadTypes.constBegin(); it!=dynamicPayloadTypes.constEnd(); ++it)
+	for (QList<PayloadType>::ConstIterator it=dynamicPayloadTypes.constBegin(); it!=dynamicPayloadTypes.constEnd(); ++it)
 		if (!usedPayloadTypes.contains(*it))
 			ui->rptAvailable->appendAvp(*it);
 
@@ -219,7 +219,7 @@ void PayloadTypeOptions::reset()
 	onAvailablePayloadTypeSelectionChanged();
 
 	ui->rptUsed->clear();
-	for (QList<QAVP>::ConstIterator it=usedPayloadTypes.constBegin(); it!=usedPayloadTypes.constEnd(); ++it)
+	for (QList<PayloadType>::ConstIterator it=usedPayloadTypes.constBegin(); it!=usedPayloadTypes.constEnd(); ++it)
 		ui->rptUsed->appendAvp(*it);
 
 	onUsedPayloadTypeSelectionChanged();
@@ -239,9 +239,9 @@ void PayloadTypeOptions::changeEvent(QEvent *e)
 	}
 }
 
-QList<QAVP> PayloadTypeOptions::availablePayloadTypes() const
+QList<PayloadType> PayloadTypeOptions::availablePayloadTypes() const
 {
-	QList<QAVP> payloadTypes;
+	QList<PayloadType> payloadTypes;
 	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
 		payloadTypes.append(ui->rptAvailable->getAvp(i));
 

@@ -83,8 +83,8 @@ public:
 	~JingleRtp();
 
 public:
-	static QStringList stringsFromAvps(const QList<QAVP> &AAvps);
-	static QList<QAVP> avpsFromStrings(const QStringList &AStrings);
+	static QStringList stringsFromAvps(const QList<PayloadType> &AAvps);
+	static QList<PayloadType> avpsFromStrings(const QStringList &AStrings);
 
 	//IPlugin
 	QObject *instance() { return this; }
@@ -145,12 +145,12 @@ protected:
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
 
-	MediaStreamer *startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket);
-	MediaPlayer *startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
+	MediaStreamer *startSendMedia(const PayloadType &APayloadType, QUdpSocket *AOutputSocket);
+	MediaPlayer *startPlayMedia(const PayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
-	static void addPayloadType(IJingleContent *AContent, const QAVP &APayloadType);
-	static QAVP buildPayloadType(const QDomElement &APayloadType, QAVP::MediaType AMediaType);	
+	static void addPayloadType(IJingleContent *AContent, const PayloadType &APayloadType);
+	static PayloadType buildPayloadType(const QDomElement &APayloadType, PayloadType::MediaType AMedia);
 
 protected slots:
 	// Notofications

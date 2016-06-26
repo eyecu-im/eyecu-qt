@@ -13,9 +13,9 @@ class PayloadTypeEditDialog : public QDialog
 	Q_OBJECT
 
 public:
-	PayloadTypeEditDialog(const QAVP &APayloadType, const QList<QAVP> &APayloadTypes, QWidget *AParent = 0);
+	PayloadTypeEditDialog(const PayloadType &APayloadType, const QList<PayloadType> &APayloadTypes, QWidget *AParent = 0);
 	~PayloadTypeEditDialog();
-	QAVP payloadType() const;
+	PayloadType payloadType() const;
 	// QDialog interface
 public slots:
 	void accept();
@@ -25,8 +25,8 @@ protected slots:
 	void onSettingsChanged();
 private:
 	Ui::PayloadTypeEditDialog *ui;
-	QAVP FPayloadType;
-	QList<QAVP> FPayloadTypes;
+	PayloadType FPayloadType;
+	QList<PayloadType> FPayloadTypes;
 };
 
 #endif // PAYLOADTYPEEDITDIALOG_H

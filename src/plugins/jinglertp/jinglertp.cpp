@@ -189,22 +189,22 @@ bool JingleRtp::initObjects()
 
 bool JingleRtp::initSettings()
 {
-	QList<QAVP> payloadTypes;
-	payloadTypes.append(QAVP(-1, "G726-40", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "G726-32", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "G726-24", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "G726-16", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "L8", QAVP::Audio, 0, 0));
-	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 16000, 1));
-	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 1));
-	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 2));
+	QList<PayloadType> payloadTypes;
+	payloadTypes.append(PayloadType(-1, "G726-40", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "G726-32", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "G726-24", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "G726-16", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "L8", PayloadType::Audio, 0, 0));
+	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 16000, 1));
+	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 1));
+	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 2));
 	Options::setDefaultValue(OPV_JINGLE_RTP_PT_DYNAMIC, stringsFromAvps(payloadTypes));	//Dynamic payload types
 	payloadTypes.clear();
-	payloadTypes.append(QAVP(-1, "opus", QAVP::Audio, 48000, 1));
-	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 8000, 1));
-	payloadTypes.append(QAVP(-1, "speex", QAVP::Audio, 16000, 1));
-	payloadTypes.append(QAVP(9, "G722", QAVP::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 1));
+	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 8000, 1));
+	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 16000, 1));
+	payloadTypes.append(PayloadType(9, "G722", PayloadType::Audio, 8000, 1));
 	Options::setDefaultValue(OPV_JINGLE_RTP_PT_USED, stringsFromAvps(payloadTypes));	//Used payload types
 
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);    //Audio encoding bitrate
@@ -356,15 +356,15 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				QDomElement payloadType = description.firstChildElement("payload-type");
 
 				int ptid = payloadType.attribute("id").toInt();
-				QAVP avp;
+				PayloadType avp;
 				if (ptid < 96)
 					avp = QAVCodec::findAvp(ptid);
 
 				if (payloadType.hasAttribute("name"))
-					avp.codecName = payloadType.attribute("name");
+					avp.name = payloadType.attribute("name");
 
 				if (payloadType.hasAttribute("clockrate"))
-					avp.clockRate = payloadType.attribute("clockrate").toInt();
+					avp.clockrate = payloadType.attribute("clockrate").toInt();
 
 				if (payloadType.hasAttribute("channels"))
 					avp.channels = payloadType.attribute("channels").toInt();
@@ -373,11 +373,11 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 
 				QString media = description.attribute("media");
 
-				avp.mediaType = media=="audio"?QAVP::Audio:
-								media=="video"?QAVP::Video:
-											   QAVP::Unknown;
+				avp.media = media=="audio"?PayloadType::Audio:
+							media=="video"?PayloadType::Video:
+										   PayloadType::Unknown;
 
-				avp.payloadType = ptid;
+				avp.id = ptid;
 
 				MediaStreamer *sender = startSendMedia(avp, outputSocket);
 				if (sender)
@@ -496,9 +496,9 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 				if (description.hasAttribute("media"))
 				{
 					QString media = description.attribute("media");
-					QAVP::MediaType mediaType = media=="audio"?QAVP::Audio:
-												media=="video"?QAVP::Video:
-															   QAVP::Unknown;
+					PayloadType::MediaType mediaType = media=="audio"?PayloadType::Audio:
+												media=="video"?PayloadType::Video:
+															   PayloadType::Unknown;
 					for (QDomElement payloadType = description.firstChildElement("payload-type"); !payloadType.isNull(); payloadType=payloadType.nextSiblingElement("payload-type"))
 					{
 						if (payloadType.attribute("id").toInt()==payloadTypeId)
@@ -506,7 +506,7 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 							QHostAddress address = socket->localAddress();
 							quint16	port = socket->localPort();
 							socket->disconnectFromHost();
-							QAVP pt = buildPayloadType(payloadType, mediaType);
+							PayloadType pt = buildPayloadType(payloadType, mediaType);
 							MediaPlayer *streamer = startPlayMedia(pt, address, port);
 							if (streamer)
 								FStreamers.insert(content, streamer);
@@ -734,9 +734,9 @@ bool JingleRtp::checkContent(IJingleContent *AContent)
 				{
 					if (id<96)
 					{
-						QAVP avp = QAVCodec::findAvp(id);
+						PayloadType avp = QAVCodec::findAvp(id);
 						if (avp.isValid())
-							name = avp.codecName;
+							name = avp.name;
 					}
 					else
 						LOG_WARNING("Dynamic payload types must have \"name\" attribute!");
@@ -1062,10 +1062,10 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
-MediaStreamer *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *AOutputSocket)
+MediaStreamer *JingleRtp::startSendMedia(const PayloadType &APayloadType, QUdpSocket *AOutputSocket)
 {
 	qDebug() << "JingleRtp::startSendMedia(" << APayloadType << "," << AOutputSocket << ")";
-	int codecId = QAVCodec::idByName(APayloadType.codecName);
+	int codecId = QAVCodec::idByName(APayloadType.name);
 
 	// Now, let's start sending content
 	if (codecId)
@@ -1073,7 +1073,7 @@ MediaStreamer *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *A
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.payloadType, APayloadType.clockRate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.id, APayloadType.clockrate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
 			if (sender->status() == MediaStreamer::Stopped)
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
@@ -1096,14 +1096,14 @@ MediaStreamer *JingleRtp::startSendMedia(const QAVP &APayloadType, QUdpSocket *A
 			LOG_ERROR(QString("Encoder not found! codec ID: %1").arg(codecId));
 	}
 	else
-		LOG_ERROR(QString("codec name not found: %1").arg(APayloadType.codecName));
+		LOG_ERROR(QString("codec name not found: %1").arg(APayloadType.name));
 	return NULL;
 }
 
-MediaPlayer *JingleRtp::startPlayMedia(const QAVP &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
+MediaPlayer *JingleRtp::startPlayMedia(const PayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
 {
 	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AHostAddress << "," << APort << ")";
-	MediaPlayer *streamer = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.payloadType, APayloadType.codecName, APayloadType.clockRate, APayloadType.channels, this);
+	MediaPlayer *streamer = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.id, APayloadType.name, APayloadType.clockrate, APayloadType.channels, this);
 	if (streamer->status() == MediaPlayer::Closed)
 	{
 		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
@@ -1144,17 +1144,17 @@ QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 	return AMode==QAudio::AudioInput?QAudioDeviceInfo::defaultInputDevice():QAudioDeviceInfo::defaultOutputDevice();
 }
 
-void JingleRtp::addPayloadType(IJingleContent *AContent, const QAVP &APayloadType)
+void JingleRtp::addPayloadType(IJingleContent *AContent, const PayloadType &APayloadType)
 {
 	if (AContent)
 	{
 		QDomDocument document = AContent->document();
 		QDomElement payloadType = document.createElement("payload-type");
-		payloadType.setAttribute("id", QString::number(APayloadType.payloadType));
-		if (!APayloadType.codecName.isEmpty())
-			payloadType.setAttribute("name", APayloadType.codecName);
-		if (APayloadType.clockRate)
-			payloadType.setAttribute("clockrate", QString::number(APayloadType.clockRate));
+		payloadType.setAttribute("id", QString::number(APayloadType.id));
+		if (!APayloadType.name.isEmpty())
+			payloadType.setAttribute("name", APayloadType.name);
+		if (APayloadType.clockrate)
+			payloadType.setAttribute("clockrate", QString::number(APayloadType.clockrate));
 		if (APayloadType.channels)
 			payloadType.setAttribute("channels", QString::number(APayloadType.channels));
 		QDomElement description = AContent->description();
@@ -1162,26 +1162,26 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const QAVP &APayloadTyp
 	}
 }
 
-QAVP JingleRtp::buildPayloadType(const QDomElement &APayloadType, QAVP::MediaType AMediaType)
+PayloadType JingleRtp::buildPayloadType(const QDomElement &APayloadType, PayloadType::MediaType AMedia)
 {
-	QAVP payloadType;
+	PayloadType payloadType;
 
-	payloadType.mediaType = AMediaType;
+	payloadType.media = AMedia;
 
 	if (APayloadType.hasAttribute("id"))
 	{
 		bool ok;
 		int id = APayloadType.attribute("id").toInt(&ok);
 		if (ok)
-			payloadType.payloadType=id;
+			payloadType.id=id;
 	}
 
 	if (APayloadType.hasAttribute("clockrate"))
 	{
 		bool ok;
-		int clockRate = APayloadType.attribute("clockrate").toInt(&ok);
+		int clockrate = APayloadType.attribute("clockrate").toInt(&ok);
 		if (ok)
-			payloadType.clockRate=clockRate;
+			payloadType.clockrate=clockrate;
 	}
 
 	if (APayloadType.hasAttribute("channels"))
@@ -1193,22 +1193,22 @@ QAVP JingleRtp::buildPayloadType(const QDomElement &APayloadType, QAVP::MediaTyp
 	}
 
 	if (APayloadType.hasAttribute("name"))
-		payloadType.codecName=APayloadType.attribute("name");
+		payloadType.name=APayloadType.attribute("name");
 
 	return payloadType;
 }
 
-QStringList JingleRtp::stringsFromAvps(const QList<QAVP> &AAvps)
+QStringList JingleRtp::stringsFromAvps(const QList<PayloadType> &AAvps)
 {
 	QStringList strings;
-	for (QList<QAVP>::ConstIterator it=AAvps.constBegin(); it!=AAvps.constEnd(); ++it)
+	for (QList<PayloadType>::ConstIterator it=AAvps.constBegin(); it!=AAvps.constEnd(); ++it)
 		strings.append((*it));
 	return strings;
 }
 
-QList<QAVP> JingleRtp::avpsFromStrings(const QStringList &AStrings)
+QList<PayloadType> JingleRtp::avpsFromStrings(const QStringList &AStrings)
 {
-	QList<QAVP> avps;
+	QList<PayloadType> avps;
 	for (QStringList::ConstIterator it=AStrings.constBegin(); it!=AStrings.constEnd(); ++it)
 		avps.append((*it));
 	return avps;
@@ -1391,39 +1391,39 @@ void JingleRtp::onCall()
 			if (content)
 			{
 				QAudioDeviceInfo inputDevice = selectedAudioDevice(QAudio::AudioInput);
-				int bitRate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
+				int bitrate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
 				QDomElement description(content->description());
 				QStringList payloadTypes = Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList();
 				for (QStringList::ConstIterator it=payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
 				{
-					QAVP avp(*it);
-					MediaStreamer *sender = new MediaStreamer(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.codecName)), QHostAddress("127.0.0.1"), 6666, 6667, -1, avp.clockRate, bitRate, this);
-					if (sender->status()==MediaStreamer::Stopped)
+					PayloadType avp(*it);
+					MediaStreamer *streamer = new MediaStreamer(inputDevice, QAVCodec::findEncoder(QAVCodec::idByName(avp.name)), QHostAddress("127.0.0.1"), 6666, 6667, -1, avp.clockrate, bitrate, this);
+					if (streamer->status()==MediaStreamer::Stopped)
 					{
-						QAVP payloadType(sender->getAvp());
+						PayloadType payloadType(streamer->getPayloadType());
 //TODO: Make adequate validation
 //						if (payloadType.isValid())
 						{
 							QDomDocument document(content->document());
 							QDomElement pt = document.createElement("payload-type");
-							if (payloadType.payloadType>95)
+							if (payloadType.id>95)
 							{
-								while(ids.contains(payloadType.payloadType))
-									++payloadType.payloadType;
-								ids.insert(payloadType.payloadType);
+								while(ids.contains(payloadType.id))
+									++payloadType.id;
+								ids.insert(payloadType.id);
 							}
 
-							pt.setAttribute("id", QString::number(payloadType.payloadType));
-							if (!payloadType.codecName.isEmpty())
-								pt.setAttribute("name", payloadType.codecName);
-							if (payloadType.clockRate)
-								pt.setAttribute("clockrate", QString::number(payloadType.clockRate));
+							pt.setAttribute("id", QString::number(payloadType.id));
+							if (!payloadType.name.isEmpty())
+								pt.setAttribute("name", payloadType.name);
+							if (payloadType.clockrate)
+								pt.setAttribute("clockrate", QString::number(payloadType.clockrate));
 							if (payloadType.channels)
 								pt.setAttribute("channels", QString::number(payloadType.channels));
 							description.appendChild(pt);
 						}
 					}
-					delete sender;
+					delete streamer;
 				}
 
 				addPendingContent(content, AddContent);

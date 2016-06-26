@@ -4,7 +4,7 @@
 #include "payloadtypeeditdialog.h"
 #include "ui_payloadtypeeditdialog.h"
 
-PayloadTypeEditDialog::PayloadTypeEditDialog(const QAVP &APayloadType, const QList<QAVP> &APayloadTypes, QWidget *AParent) :
+PayloadTypeEditDialog::PayloadTypeEditDialog(const PayloadType &APayloadType, const QList<PayloadType> &APayloadTypes, QWidget *AParent) :
 	QDialog(AParent),
 	ui(new Ui::PayloadTypeEditDialog),
 	FPayloadType(APayloadType),
@@ -15,19 +15,19 @@ PayloadTypeEditDialog::PayloadTypeEditDialog(const QAVP &APayloadType, const QLi
 	ui->cmbChannels->addItem(tr("Stereo"), 2);
 	ui->cmbChannels->addItem(tr("Undefined"), 0);
 
-	ui->cmbMediaType->addItem(tr("Audio"), QAVP::Audio);
+	ui->cmbMedia->addItem(tr("Audio"), PayloadType::Audio);
 //	Video is not implemented yet
 //	ui->cmbMediaType->addItem(tr("Video"), QAVP::Video);
 	if (APayloadType.isValid())
 	{
-		ui->cmbMediaType->setCurrentIndex(ui->cmbMediaType->findData(APayloadType.mediaType));
-		ui->cmbCodecName->setCurrentIndex(ui->cmbCodecName->findData(QAVCodec::idByName(APayloadType.codecName)));
-		if (APayloadType.clockRate)
+		ui->cmbMedia->setCurrentIndex(ui->cmbMedia->findData(APayloadType.media));
+		ui->cmbName->setCurrentIndex(ui->cmbName->findData(QAVCodec::idByName(APayloadType.name)));
+		if (APayloadType.clockrate)
 		{
 			if (ui->cmbSampleRate->isEditable())
-				ui->cmbSampleRate->setEditText(QString::number(APayloadType.clockRate));
+				ui->cmbSampleRate->setEditText(QString::number(APayloadType.clockrate));
 			else
-				ui->cmbSampleRate->setCurrentIndex(ui->cmbSampleRate->findData(APayloadType.clockRate));
+				ui->cmbSampleRate->setCurrentIndex(ui->cmbSampleRate->findData(APayloadType.clockrate));
 		}
 		ui->cmbChannels->setCurrentIndex(ui->cmbChannels->findData(APayloadType.channels));
 	}
@@ -39,11 +39,11 @@ PayloadTypeEditDialog::~PayloadTypeEditDialog()
 	delete ui;
 }
 
-QAVP PayloadTypeEditDialog::payloadType() const
+PayloadType PayloadTypeEditDialog::payloadType() const
 {
-	return QAVP(-1,
-				QAVCodec::nameById(ui->cmbCodecName->itemData(ui->cmbCodecName->currentIndex()).toInt()),
-				(QAVP::MediaType)ui->cmbMediaType->itemData(ui->cmbMediaType->currentIndex()).toInt(),
+	return PayloadType(-1,
+				QAVCodec::nameById(ui->cmbName->itemData(ui->cmbName->currentIndex()).toInt()),
+				(PayloadType::MediaType)ui->cmbMedia->itemData(ui->cmbMedia->currentIndex()).toInt(),
 				ui->cmbSampleRate->currentText().toInt(),
 				ui->cmbChannels->itemData(ui->cmbChannels->currentIndex()).toInt());
 }
@@ -60,33 +60,33 @@ void PayloadTypeEditDialog::onMediaTypeSelected(int AIndex)
 {
 	qDebug() << "PayloadTypeEditDialog::onMediaTypeSelected(" << AIndex << ")";
 	QAVCodec::MediaType mediaType;
-	switch ((QAVP::MediaType)ui->cmbMediaType->itemData(AIndex).toInt())
+	switch ((PayloadType::MediaType)ui->cmbMedia->itemData(AIndex).toInt())
 	{
-		case QAVP::Audio:
+		case PayloadType::Audio:
 			mediaType = QAVCodec::MT_Audio;
 			break;
-		case QAVP::Video:
+		case PayloadType::Video:
 			mediaType = QAVCodec::MT_Video;
 			break;
 		default:
 			mediaType = QAVCodec::MT_Unknown;
 	}
 
-	ui->cmbCodecName->clear();
+	ui->cmbName->clear();
 	const QStringList codecNames = QAVCodec::codecNames(true);
 	for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 	{
 		int id = QAVCodec::idByName(*it);
 		QAVCodec decoder(QAVCodec::findDecoder(id));
 		if (decoder.type()==mediaType)
-			ui->cmbCodecName->addItem(QString("%1: %2").arg(*it).arg(decoder.longName()), id);
+			ui->cmbName->addItem(QString("%1: %2").arg(*it).arg(decoder.longName()), id);
 	}
 }
 
 void PayloadTypeEditDialog::onCodecSelected(int AIndex)
 {
 	qDebug() << "PayloadTypeEditDialog::onCodecSelected(" << AIndex << ")";
-	QAVCodec codec = QAVCodec::findEncoder(ui->cmbCodecName->itemData(AIndex).toInt());
+	QAVCodec codec = QAVCodec::findEncoder(ui->cmbName->itemData(AIndex).toInt());
 	QList<int> sampleRates = codec.supportedSampleRates();
 	ui->cmbSampleRate->clear();
 	for (QList<int>::ConstIterator it = sampleRates.constBegin(); it!=sampleRates.constEnd(); ++it)

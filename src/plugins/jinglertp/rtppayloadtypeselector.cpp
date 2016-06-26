@@ -25,81 +25,81 @@ void RtpPayloadTypeSelector::clear()
 	FModel->removeRows(0, FModel->rowCount());
 }
 
-int RtpPayloadTypeSelector::appendAvp(const QAVP &AAvp)
+int RtpPayloadTypeSelector::appendAvp(const PayloadType &AAvp)
 {
 	QList<QStandardItem *> items;
 
-	QStandardItem *item = new QStandardItem(AAvp.payloadType<0?QString():QString::number(AAvp.payloadType));
-	item->setData(AAvp.payloadType<0?1000:AAvp.payloadType);
+	QStandardItem *item = new QStandardItem(AAvp.id<0?QString():QString::number(AAvp.id));
+	item->setData(AAvp.id<0?1000:AAvp.id);
 	items.append(item);
-	item = new QStandardItem(AAvp.codecName);
-	item->setData(AAvp.codecName);
+	item = new QStandardItem(AAvp.name);
+	item->setData(AAvp.name);
 	items.append(item);
-	item = new QStandardItem(QString::number(AAvp.clockRate));
-	item->setData(AAvp.clockRate);
+	item = new QStandardItem(QString::number(AAvp.clockrate));
+	item->setData(AAvp.clockrate);
 	items.append(item);
 	item = new QStandardItem(QString::number(AAvp.channels));
 	item->setData(AAvp.channels);
 	items.append(item);
-	item = new QStandardItem(tr(AAvp.mediaType==QAVP::Audio?"Audio":
-								AAvp.mediaType==QAVP::Video?"Video":
-								AAvp.mediaType==QAVP::Both?"Both":"Unknown"));
-	item->setData(AAvp.mediaType);
+	item = new QStandardItem(tr(AAvp.media == PayloadType::Audio ? "Audio":
+								AAvp.media == PayloadType::Video ? "Video":
+								AAvp.media == PayloadType::Both ? "Both" : "Unknown"));
+	item->setData(AAvp.media);
 	items.append(item);
 
 	FModel->appendRow(items);
 	return FModel->rowCount()-1;
 }
 
-void RtpPayloadTypeSelector::updateRow(int ARow, const QAVP &AAvp)
+void RtpPayloadTypeSelector::updateRow(int ARow, const PayloadType &AAvp)
 {
-	QStandardItem *item = new QStandardItem(AAvp.payloadType<0?QString():QString::number(AAvp.payloadType));
-	item->setData(AAvp.payloadType<0?1000:AAvp.payloadType);
+	QStandardItem *item = new QStandardItem(AAvp.id<0?QString():QString::number(AAvp.id));
+	item->setData(AAvp.id<0?1000:AAvp.id);
 	FModel->setItem(ARow, 0, item);
-	item = new QStandardItem(AAvp.codecName);
-	item->setData(AAvp.codecName);
+	item = new QStandardItem(AAvp.name);
+	item->setData(AAvp.name);
 	FModel->setItem(ARow, 1, item);
-	item = new QStandardItem(QString::number(AAvp.clockRate));
-	item->setData(AAvp.clockRate);
+	item = new QStandardItem(QString::number(AAvp.clockrate));
+	item->setData(AAvp.clockrate);
 	FModel->setItem(ARow, 2, item);
 	item = new QStandardItem(QString::number(AAvp.channels));
 	item->setData(AAvp.channels);
 	FModel->setItem(ARow, 3, item);
-	item = new QStandardItem(tr(AAvp.mediaType==QAVP::Audio?"Audio":
-								AAvp.mediaType==QAVP::Video?"Video":
-								AAvp.mediaType==QAVP::Both?"Both":"Unknown"));
-	item->setData(AAvp.mediaType);
+	item = new QStandardItem(tr(AAvp.media == PayloadType::Audio? "Audio":
+								AAvp.media == PayloadType::Video? "Video":
+								AAvp.media == PayloadType::Both? "Both" : "Unknown"));
+	item->setData(AAvp.media);
 	FModel->setItem(ARow, 4, item);
 }
 
-QAVP RtpPayloadTypeSelector::getAvp(int ARow) const
+PayloadType RtpPayloadTypeSelector::getAvp(int ARow) const
 {
-	QAVP avp;
-	QString payloadType = FModel->item(ARow, 0)->text();
-	avp.payloadType = payloadType.isEmpty()?-1:payloadType.toInt();
-	avp.codecName = FModel->item(ARow, 1)->text();
-	avp.clockRate = FModel->item(ARow, 2)->text().toInt();
+	PayloadType avp;
+	QString id = FModel->item(ARow, 0)->text();
+	avp.id = id.isEmpty()?-1:id.toInt();
+	avp.name = FModel->item(ARow, 1)->text();
+	avp.clockrate = FModel->item(ARow, 2)->text().toInt();
 	avp.channels = FModel->item(ARow, 3)->text().toInt();
-	QString mediaType = FModel->item(ARow, 4)->text();
-	avp.mediaType = mediaType=="Audio"?QAVP::Audio:
-					mediaType=="Video"?QAVP::Video:
-					mediaType=="Both"?QAVP::Both:QAVP::Unknown;
+	QString media = FModel->item(ARow, 4)->text();
+	avp.media = media=="Audio" ? PayloadType::Audio:
+				media=="Video" ? PayloadType::Video:
+				media=="Both" ? PayloadType::Both: PayloadType::Unknown;
 	return avp;
 }
 
-QAVP RtpPayloadTypeSelector::takeAvp(int ARow)
+PayloadType RtpPayloadTypeSelector::takeAvp(int ARow)
 {
 	QList<QStandardItem*> row = FModel->takeRow(ARow);
-	QAVP avp;
-	QString payloadType = row.at(0)->text();
-	avp.payloadType = payloadType.isEmpty()?-1:payloadType.toInt();
-	avp.codecName = row.at(1)->text();
-	avp.clockRate = row.at(2)->text().toInt();
+	PayloadType avp;
+	QString id = row.at(0)->text();
+	avp.id = id.isEmpty()?-1:id.toInt();
+	avp.name = row.at(1)->text();
+	avp.clockrate = row.at(2)->text().toInt();
 	avp.channels = row.at(3)->text().toInt();
-	QString mediaType = row.at(4)->text();
-	avp.mediaType = mediaType=="Audio"?QAVP::Audio:
-					mediaType=="Video"?QAVP::Video:
-					mediaType=="Both"?QAVP::Both:QAVP::Unknown;
+	QString media = row.at(4)->text();
+	avp.media = media == "Audio" ? PayloadType::Audio:
+				media == "Video" ? PayloadType::Video:
+				media == "Both" ? PayloadType::Both : PayloadType::Unknown;
 	return avp;
 }
 
