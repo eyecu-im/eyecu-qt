@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QAVCodec>
+#include <QAVOutputFormat>
 
 #include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
@@ -10,10 +11,10 @@
 #include "ui_payloadtypeoptions.h"
 
 namespace Ui {
-class PayloadTypeOptions;
+class CodecOptions;
 }
 
-class PayloadTypeOptions :
+class CodecOptions :
     public QWidget,
 	public IOptionsDialogWidget
 {
@@ -21,10 +22,10 @@ class PayloadTypeOptions :
 	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-	explicit PayloadTypeOptions(QWidget *parent = 0);
-	~PayloadTypeOptions();
+	explicit CodecOptions(QWidget *parent = 0);
+	~CodecOptions();
     virtual QWidget* instance() { return this; }
-	Ui::PayloadTypeOptions *ui;
+	Ui::CodecOptions *ui;
 
 public slots:
     virtual void apply();
@@ -37,23 +38,17 @@ signals:
 
 protected:
 	void changeEvent(QEvent *e);
-	QList<PayloadType> availablePayloadTypes() const;
 
 protected slots:
-	void onAvailablePayloadTypeSelectionChanged();
-	void onUsedPayloadTypeSelectionChanged();
+	void onAvailableCodecCurrentRowChanged(int ARow);
+	void onUsedCodecCurrentRowChanged(int ARow);
 
-	void onUsedPayloadTypePriorityUp();
-	void onUsedPayloadTypePriorityDown();
-	void onPayloadTypeUse();
-	void onPayloadTypeUnuse();
-
-	void onPayloadTypeAdd();
-	void onPayloadTypeEdit();
-	void onPayloadTypeRemove();
+	void onUsedCodecPriorityChange();
+	void onCodecUse();
+	void onCodecUnuse();
 
 private:
-	QList<PayloadType> FAvailableStaticPayloadTypes;
+	QAVOutputFormat FRtp;
 };
 
 #endif // PAYLOADTYPEOPTIONS_H

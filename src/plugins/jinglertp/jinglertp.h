@@ -19,7 +19,7 @@
 #include <interfaces/istatusicons.h>
 
 #include "audiooptions.h"
-#include "payloadtypeoptions.h"
+#include "codecoptions.h"
 
 #define JINGLERTP_UUID "{3d5702bc-29b9-40f2-88fe-85887cd6d8dc}"
 

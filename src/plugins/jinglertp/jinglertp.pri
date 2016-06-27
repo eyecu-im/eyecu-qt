@@ -2,19 +2,16 @@ HEADERS = \
     jinglertp.h \
     renderarea.h \
     rtppayloadtypeselector.h \
-    payloadtypeeditdialog.h \
     audiooptions.h \
-    payloadtypeoptions.h
+    $$PWD/codecoptions.h
 
 SOURCES = \   
     jinglertp.cpp \
     renderarea.cpp \
     rtppayloadtypeselector.cpp \
-    payloadtypeeditdialog.cpp \
     audiooptions.cpp \
-    payloadtypeoptions.cpp
+    $$PWD/codecoptions.cpp
 
 FORMS += \
-    payloadtypeeditdialog.ui \
     audiooptions.ui \
-    payloadtypeoptions.ui
+    $$PWD/codecoptions.ui
