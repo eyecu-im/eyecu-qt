@@ -88,6 +88,13 @@ void CodecOptions::onCodecUnuse()
 
 void CodecOptions::apply()
 {
+	QList<int> usedCodecIds;
+
+	for (int i=0; i<ui->lwUsed->count(); ++i)
+		usedCodecIds.append(ui->lwUsed->item(i)->data(Qt::UserRole).toInt());
+
+	Options::node(OPV_JINGLE_RTP_CODECS_USED).setValue(JingleRtp::stringsFromInts(usedCodecIds));
+
 //	QList<PayloadType> dynamicPayloadTypes, usedPayloadTypes;
 //	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
 //	{
@@ -117,7 +124,8 @@ void CodecOptions::reset()
 		ui->lwAvailable->clear();
 		ui->lwUsed->clear();
 		const QStringList codecNames = QAVCodec::codecNames(true);
-		QSet<int> codecIds;
+		QList<int> usedCodecIds = JingleRtp::intsFromStrings(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toStringList());
+		QSet<int> codecIds;		
 		for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 		{
 			int id = QAVCodec::idByName(*it);
@@ -130,9 +138,10 @@ void CodecOptions::reset()
 					QAVCodec encoder(QAVCodec::findEncoder(id));
 					if (decoder && encoder && decoder.type()==QAVCodec::MT_Audio)	// Video is not available yet
 					{
-						QListWidgetItem *item = new QListWidgetItem(decoder.longName(), ui->lwAvailable);
+
+						QListWidgetItem *item = new QListWidgetItem(decoder.longName(), usedCodecIds.contains(id)?ui->lwUsed:ui->lwAvailable);
 						item->setData(Qt::UserRole, id);
-						ui->lwAvailable->addItem(item);
+//						ui->lwAvailable->addItem(item);
 					}
 				}
 			}
@@ -147,7 +156,8 @@ void CodecOptions::reset()
 	if (ui->lwUsed->currentRow()<0)
 		onUsedCodecCurrentRowChanged(-1);
 	else
-		ui->lwUsed->setCurrentRow(-1);
+		ui->lwUsed->setCurrentRow(-1);	
+
 //	QList<PayloadType> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
 //	QList<PayloadType> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
 

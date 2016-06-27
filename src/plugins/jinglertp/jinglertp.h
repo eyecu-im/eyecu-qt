@@ -83,8 +83,11 @@ public:
 	~JingleRtp();
 
 public:
-	static QStringList stringsFromAvps(const QList<PayloadType> &AAvps);
-	static QList<PayloadType> avpsFromStrings(const QStringList &AStrings);
+//	static QStringList stringsFromAvps(const QList<PayloadType> &AAvps);
+//	static QList<PayloadType> avpsFromStrings(const QStringList &AStrings);
+
+	static QStringList stringsFromInts(const QList<int> &FInts);
+	static QList<int> intsFromStrings(const QStringList &FStrings);
 
 	//IPlugin
 	QObject *instance() { return this; }

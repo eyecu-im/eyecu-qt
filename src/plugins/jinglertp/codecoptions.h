@@ -8,7 +8,7 @@
 #include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
 
-#include "ui_payloadtypeoptions.h"
+#include "ui_codecoptions.h"
 
 namespace Ui {
 class CodecOptions;
