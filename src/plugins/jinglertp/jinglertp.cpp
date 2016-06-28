@@ -95,6 +95,7 @@ QString JingleRtp::stringFromInts(const QList<int> &FInts)
 
 QList<int> JingleRtp::intsFromString(const QString &FString)
 {
+	qDebug() << "JingleRtp::intsFromString(" << FString << ")";
 	QList<int> result;
 	QStringList strings = FString.split(';');
 	for (QStringList::ConstIterator it=strings.constBegin(); it!=strings.constEnd(); ++it)
@@ -1093,14 +1094,14 @@ MediaStreamer *JingleRtp::startSendMedia(const PayloadType &APayloadType, QUdpSo
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.id, APayloadType.clockrate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), this);
+			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.id, APayloadType.clockrate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), QHash<QString, QString>(), this);
 			if (sender->status() == MediaStreamer::Stopped)
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
 				{
-					qDebug() << "Starting sender...";
+					qDebug() << "Starting streamer...";
 					sender->start();
-					qDebug() << "Sender started!";
+					qDebug() << "Streamer started!";
 					return sender;
 				}
 				else
@@ -1424,9 +1425,10 @@ void JingleRtp::onCall()
 						sampleRates=inputDevice.supportedSampleRates();
 					for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
 					{
-						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, -1, *itr, bitrate, this);
+						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, -1, *itr, bitrate, QHash<QString, QString>(), this);
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
+							qDebug() << "Streamer status is stoppped!";
 							PayloadType payloadType(streamer->getPayloadType());
 							if (!payloadTypes.contains(payloadType))
 //TODO: Make adequate validation
@@ -1456,7 +1458,10 @@ void JingleRtp::onCall()
 								description.appendChild(pt);
 							}
 						}
+						else
+							qWarning() << "Streamer status is:" << streamer->status();
 						delete streamer;
+						qDebug() << "Streamer deleted!";
 					}
 				}
 
