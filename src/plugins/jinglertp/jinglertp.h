@@ -86,8 +86,8 @@ public:
 //	static QStringList stringsFromAvps(const QList<PayloadType> &AAvps);
 //	static QList<PayloadType> avpsFromStrings(const QStringList &AStrings);
 
-	static QStringList stringsFromInts(const QList<int> &FInts);
-	static QList<int> intsFromStrings(const QStringList &FStrings);
+	static QString stringFromInts(const QList<int> &FInts);
+	static QList<int> intsFromString(const QString &FString);
 
 	//IPlugin
 	QObject *instance() { return this; }

@@ -93,7 +93,7 @@ void CodecOptions::apply()
 	for (int i=0; i<ui->lwUsed->count(); ++i)
 		usedCodecIds.append(ui->lwUsed->item(i)->data(Qt::UserRole).toInt());
 
-	Options::node(OPV_JINGLE_RTP_CODECS_USED).setValue(JingleRtp::stringsFromInts(usedCodecIds));
+	Options::node(OPV_JINGLE_RTP_CODECS_USED).setValue(JingleRtp::stringFromInts(usedCodecIds));
 
 //	QList<PayloadType> dynamicPayloadTypes, usedPayloadTypes;
 //	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
@@ -119,17 +119,18 @@ void CodecOptions::apply()
 
 void CodecOptions::reset()
 {
+	qDebug() << "CodecOptions::reset()";
 	if (FRtp)
 	{
 		ui->lwAvailable->clear();
 		ui->lwUsed->clear();
 		const QStringList codecNames = QAVCodec::codecNames(true);
-		QList<int> usedCodecIds = JingleRtp::intsFromStrings(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toStringList());
+		QList<int> usedCodecIds = JingleRtp::intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
 		QSet<int> codecIds;		
 		for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 		{
 			int id = QAVCodec::idByName(*it);
-			if (!codecIds.contains(id))
+			if (!codecIds.contains(id) && !usedCodecIds.contains(id))
 			{
 				codecIds.insert(id);
 				if (FRtp.queryCodec(id))
@@ -138,15 +139,28 @@ void CodecOptions::reset()
 					QAVCodec encoder(QAVCodec::findEncoder(id));
 					if (decoder && encoder && decoder.type()==QAVCodec::MT_Audio)	// Video is not available yet
 					{
-
-						QListWidgetItem *item = new QListWidgetItem(decoder.longName(), usedCodecIds.contains(id)?ui->lwUsed:ui->lwAvailable);
+						QListWidgetItem *item = new QListWidgetItem(decoder.longName());
 						item->setData(Qt::UserRole, id);
-//						ui->lwAvailable->addItem(item);
+						ui->lwAvailable->addItem(item);
 					}
 				}
 			}
 		}
 		ui->lwAvailable->sortItems();
+
+		for (QList<int>::ConstIterator it = usedCodecIds.constBegin(); it!=usedCodecIds.constEnd(); ++it)
+			if (FRtp.queryCodec(*it))
+			{
+				QAVCodec decoder(QAVCodec::findDecoder(*it));
+				QAVCodec encoder(QAVCodec::findEncoder(*it));
+				if (decoder && encoder && decoder.type()==QAVCodec::MT_Audio)	// Video is not available yet
+				{
+
+					QListWidgetItem *item = new QListWidgetItem(decoder.longName());
+					item->setData(Qt::UserRole, *it);
+					ui->lwUsed->addItem(item);
+				}
+			}
 	}
 
 	if (ui->lwAvailable->currentRow()<0)

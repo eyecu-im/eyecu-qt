@@ -81,20 +81,25 @@ JingleRtp::JingleRtp():
 JingleRtp::~JingleRtp()
 {}
 
-QStringList JingleRtp::stringsFromInts(const QList<int> &FInts)
+QString JingleRtp::stringFromInts(const QList<int> &FInts)
 {
-	QStringList strings;
+	QString result;
 	for (QList<int>::ConstIterator it=FInts.constBegin(); it!=FInts.constEnd(); ++it)
-		strings.append(QString::number(*it));
-	return strings;
+	{
+		if (!result.isEmpty())
+			result.append(';');
+		result.append(QString::number(*it));
+	}
+	return result;
 }
 
-QList<int> JingleRtp::intsFromStrings(const QStringList &FStrings)
+QList<int> JingleRtp::intsFromString(const QString &FString)
 {
-	QList<int> ints;
-	for (QStringList::ConstIterator it=FStrings.constBegin(); it!=FStrings.constEnd(); ++it)
-		ints.append((*it).toInt());
-	return ints;
+	QList<int> result;
+	QStringList strings = FString.split(';');
+	for (QStringList::ConstIterator it=strings.constBegin(); it!=strings.constEnd(); ++it)
+		result.append((*it).toInt());
+	return result;
 }
 
 void JingleRtp::pluginInfo(IPluginInfo *APluginInfo)
@@ -221,8 +226,7 @@ bool JingleRtp::initSettings()
 //	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 8000, 1));
 //	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 16000, 1));
 //	payloadTypes.append(PayloadType(9, "G722", PayloadType::Audio, 8000, 1));
-	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringsFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used payload types
-
+	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used codecs
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);    //Audio encoding bitrate
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant()); //Audio input device
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant()); //Audio output device
@@ -1407,10 +1411,10 @@ void JingleRtp::onCall()
 			if (content)
 			{
 				QAudioDeviceInfo inputDevice = selectedAudioDevice(QAudio::AudioInput);
-				QList<int> supportedChannels = inputDevice.supportedChannelCounts();
 				int bitrate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
 				QDomElement description(content->description());
-				QList<int> codecIds = intsFromStrings(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toStringList());
+				QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
+				QSet<PayloadType> payloadTypes;
 				for (QList<int>::ConstIterator it=codecIds.constBegin(); it!=codecIds.constEnd(); ++it)
 				{
 					qDebug() << "codec id=" << *it;
@@ -1418,44 +1422,42 @@ void JingleRtp::onCall()
 					QList<int> sampleRates = encoder.supportedSampleRates();
 					if (sampleRates.isEmpty())
 						sampleRates=inputDevice.supportedSampleRates();
-					QList<QAVCodec::SampleFormat> sampleFormats = encoder.sampleFmts();
-//					for (QList<int>::ConstIterator itc = supportedChannels.constBegin(); itc!=supportedChannels.constEnd(); ++itc)
-						for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
-//							for (QList<QAVCodec::SampleFormat>::ConstIterator itf = sampleFormats.constBegin(); itf!=sampleFormats.constEnd(); ++itf)
+					for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
+					{
+						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, -1, *itr, bitrate, this);
+						if (streamer->status()==MediaStreamer::Stopped)
+						{
+							PayloadType payloadType(streamer->getPayloadType());
+							if (!payloadTypes.contains(payloadType))
+//TODO: Make adequate validation
+//							if (payloadType.isValid())
 							{
-								PayloadType avp(*it);
-								MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, -1, *itr, bitrate, this);
-								if (streamer->status()==MediaStreamer::Stopped)
+								payloadTypes.insert(payloadType);
+								QDomDocument document(content->document());
+								QDomElement pt = document.createElement("payload-type");
+								if (payloadType.id>95)
 								{
-									PayloadType payloadType(streamer->getPayloadType());
-			//TODO: Make adequate validation
-			//						if (payloadType.isValid())
-									{
-										QDomDocument document(content->document());
-										QDomElement pt = document.createElement("payload-type");
-										if (payloadType.id>95)
-										{
-											while(ids.contains(payloadType.id))
-												++payloadType.id;
-											ids.insert(payloadType.id);
-										}
-
-										pt.setAttribute("id", QString::number(payloadType.id));
-										if (!payloadType.name.isEmpty())
-											pt.setAttribute("name", payloadType.name);
-										if (payloadType.clockrate)
-											pt.setAttribute("clockrate", QString::number(payloadType.clockrate));
-										if (payloadType.channels)
-											pt.setAttribute("channels", QString::number(payloadType.channels));
-										if (payloadType.ptime)
-											pt.setAttribute("ptime", QString::number(payloadType.ptime));
-										if (payloadType.maxptime)
-											pt.setAttribute("maxptime", QString::number(payloadType.maxptime));
-										description.appendChild(pt);
-									}
+									while(ids.contains(payloadType.id))
+										++payloadType.id;
+									ids.insert(payloadType.id);
 								}
-								delete streamer;
+
+								pt.setAttribute("id", QString::number(payloadType.id));
+								if (!payloadType.name.isEmpty())
+									pt.setAttribute("name", payloadType.name);
+								if (payloadType.clockrate)
+									pt.setAttribute("clockrate", QString::number(payloadType.clockrate));
+								if (payloadType.channels)
+									pt.setAttribute("channels", QString::number(payloadType.channels));
+								if (payloadType.ptime)
+									pt.setAttribute("ptime", QString::number(payloadType.ptime));
+								if (payloadType.maxptime)
+									pt.setAttribute("maxptime", QString::number(payloadType.maxptime));
+								description.appendChild(pt);
 							}
+						}
+						delete streamer;
+					}
 				}
 
 				addPendingContent(content, AddContent);
