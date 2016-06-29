@@ -23,6 +23,7 @@
 #include <utils/qt4qt5compat.h>
 #include <MediaStreamer>
 #include <MediaPlayer>
+#include <QPayloadType>
 
 #include "jinglertp.h"
 
@@ -199,12 +200,12 @@ bool JingleRtp::initObjects()
 		FNotifications->insertNotificationHandler(NHO_DEFAULT, this);
 	}
 
-	QAVCodec::initialize();
+	QPayloadType::initialize();
 	QAVCodec::registerAll();
 	QAVFormat::registerAll();
 	QAVFormat::networkInit();
 
-	FSupportdCodecNames = QAVCodec::codecNames(true);
+	FSupportdCodecNames = QPayloadType::names(true);
 
 	return true;
 }
@@ -377,9 +378,9 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				QDomElement payloadType = description.firstChildElement("payload-type");
 
 				int ptid = payloadType.attribute("id").toInt();
-				PayloadType avp;
+				QPayloadType avp;
 				if (ptid < 96)
-					avp = QAVCodec::findAvp(ptid);
+					avp = QPayloadType::payloadType(ptid);
 
 				if (payloadType.hasAttribute("name"))
 					avp.name = payloadType.attribute("name");
@@ -394,9 +395,9 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 
 				QString media = description.attribute("media");
 
-				avp.media = media=="audio"?PayloadType::Audio:
-							media=="video"?PayloadType::Video:
-										   PayloadType::Unknown;
+				avp.media = media=="audio"?QPayloadType::Audio:
+							media=="video"?QPayloadType::Video:
+										   QPayloadType::Unknown;
 
 				avp.id = ptid;
 
@@ -517,9 +518,9 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 				if (description.hasAttribute("media"))
 				{
 					QString media = description.attribute("media");
-					PayloadType::MediaType mediaType = media=="audio"?PayloadType::Audio:
-												media=="video"?PayloadType::Video:
-															   PayloadType::Unknown;
+					QPayloadType::MediaType mediaType = media=="audio"?QPayloadType::Audio:
+												media=="video"?QPayloadType::Video:
+															   QPayloadType::Unknown;
 					for (QDomElement payloadType = description.firstChildElement("payload-type"); !payloadType.isNull(); payloadType=payloadType.nextSiblingElement("payload-type"))
 					{
 						if (payloadType.attribute("id").toInt()==payloadTypeId)
@@ -527,7 +528,7 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 							QHostAddress address = socket->localAddress();
 							quint16	port = socket->localPort();
 							socket->disconnectFromHost();
-							PayloadType pt = buildPayloadType(payloadType, mediaType);
+							QPayloadType pt = buildPayloadType(payloadType, mediaType);
 							MediaPlayer *streamer = startPlayMedia(pt, address, port);
 							if (streamer)
 								FStreamers.insert(content, streamer);
@@ -755,9 +756,9 @@ bool JingleRtp::checkContent(IJingleContent *AContent)
 				{
 					if (id<96)
 					{
-						PayloadType avp = QAVCodec::findAvp(id);
-						if (avp.isValid())
-							name = avp.name;
+						QPayloadType payloadType = QPayloadType::payloadType(id);
+						if (payloadType.isValid())
+							name = payloadType.name;
 					}
 					else
 						LOG_WARNING("Dynamic payload types must have \"name\" attribute!");
@@ -1083,10 +1084,10 @@ void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
 	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
 }
 
-MediaStreamer *JingleRtp::startSendMedia(const PayloadType &APayloadType, QUdpSocket *AOutputSocket)
+MediaStreamer *JingleRtp::startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket)
 {
 	qDebug() << "JingleRtp::startSendMedia(" << APayloadType << "," << AOutputSocket << ")";
-	int codecId = QAVCodec::idByName(APayloadType.name);
+	int codecId = QPayloadType::idByName(APayloadType.name);
 
 	// Now, let's start sending content
 	if (codecId)
@@ -1121,7 +1122,7 @@ MediaStreamer *JingleRtp::startSendMedia(const PayloadType &APayloadType, QUdpSo
 	return NULL;
 }
 
-MediaPlayer *JingleRtp::startPlayMedia(const PayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
+MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
 {
 	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AHostAddress << "," << APort << ")";
 	MediaPlayer *streamer = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType.id, APayloadType.name, APayloadType.clockrate, APayloadType.channels, this);
@@ -1165,7 +1166,7 @@ QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 	return AMode==QAudio::AudioInput?QAudioDeviceInfo::defaultInputDevice():QAudioDeviceInfo::defaultOutputDevice();
 }
 
-void JingleRtp::addPayloadType(IJingleContent *AContent, const PayloadType &APayloadType)
+void JingleRtp::addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType)
 {
 	if (AContent)
 	{
@@ -1183,9 +1184,9 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const PayloadType &APay
 	}
 }
 
-PayloadType JingleRtp::buildPayloadType(const QDomElement &APayloadType, PayloadType::MediaType AMedia)
+QPayloadType JingleRtp::buildPayloadType(const QDomElement &APayloadType, QPayloadType::MediaType AMedia)
 {
-	PayloadType payloadType;
+	QPayloadType payloadType;
 
 	payloadType.media = AMedia;
 
@@ -1415,7 +1416,7 @@ void JingleRtp::onCall()
 				int bitrate = Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt();
 				QDomElement description(content->description());
 				QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
-				QSet<PayloadType> payloadTypes;
+				QSet<QPayloadType> payloadTypes;
 				for (QList<int>::ConstIterator it=codecIds.constBegin(); it!=codecIds.constEnd(); ++it)
 				{
 					qDebug() << "codec id=" << *it;
@@ -1429,7 +1430,7 @@ void JingleRtp::onCall()
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
 							qDebug() << "Streamer status is stoppped!";
-							PayloadType payloadType(streamer->getPayloadType());
+							QPayloadType payloadType(streamer->getPayloadType());
 							if (!payloadTypes.contains(payloadType))
 //TODO: Make adequate validation
 //							if (payloadType.isValid())

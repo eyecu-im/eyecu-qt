@@ -124,12 +124,12 @@ void CodecOptions::reset()
 	{
 		ui->lwAvailable->clear();
 		ui->lwUsed->clear();
-		const QStringList codecNames = QAVCodec::codecNames(true);
+		const QStringList codecNames = QPayloadType::names(true);
 		QList<int> usedCodecIds = JingleRtp::intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
 		QSet<int> codecIds;		
 		for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 		{
-			int id = QAVCodec::idByName(*it);
+			int id = QPayloadType::idByName(*it);
 			if (!codecIds.contains(id) && !usedCodecIds.contains(id))
 			{
 				codecIds.insert(id);

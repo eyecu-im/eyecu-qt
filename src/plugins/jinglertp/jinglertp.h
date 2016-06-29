@@ -6,6 +6,7 @@
 #include <QPair>
 #include <MediaPlayer>
 #include <MediaStreamer>
+#include <QPayloadType>
 
 #include <interfaces/ijingle.h>
 #include <interfaces/ipluginmanager.h>
@@ -148,12 +149,12 @@ protected:
 	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
 	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
 
-	MediaStreamer *startSendMedia(const PayloadType &APayloadType, QUdpSocket *AOutputSocket);
-	MediaPlayer *startPlayMedia(const PayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
+	MediaStreamer *startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
+	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
-	static void addPayloadType(IJingleContent *AContent, const PayloadType &APayloadType);
-	static PayloadType buildPayloadType(const QDomElement &APayloadType, PayloadType::MediaType AMedia);
+	static void addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType);
+	static QPayloadType buildPayloadType(const QDomElement &APayloadType, QPayloadType::MediaType AMedia);
 
 protected slots:
 	// Notofications
