@@ -1095,7 +1095,9 @@ MediaStreamer *JingleRtp::startSendMedia(const QPayloadType &APayloadType, QUdpS
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.id, APayloadType.clockrate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), QHash<QString, QString>(), this);
+			QVariantHash options;
+			options.insert("payload_type", APayloadType.id);
+			MediaStreamer *sender = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder, AOutputSocket->peerAddress(), AOutputSocket->peerPort(), 0, APayloadType.clockrate, Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt(), options, this);
 			if (sender->status() == MediaStreamer::Stopped)
 			{
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
@@ -1426,7 +1428,7 @@ void JingleRtp::onCall()
 						sampleRates=inputDevice.supportedSampleRates();
 					for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
 					{
-						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, -1, *itr, bitrate, QHash<QString, QString>(), this);
+						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, *itr, bitrate, QVariantHash(), this);
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
 							qDebug() << "Streamer status is stoppped!";
