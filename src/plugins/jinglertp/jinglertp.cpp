@@ -1432,7 +1432,7 @@ void JingleRtp::onCall()
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
 							qDebug() << "Streamer status is stoppped!";
-							QPayloadType payloadType(streamer->getPayloadType());
+							QPayloadType payloadType(QPayloadType::fromSdp(streamer->getSdpString()));
 							if (!payloadTypes.contains(payloadType))
 //TODO: Make adequate validation
 //							if (payloadType.isValid())
