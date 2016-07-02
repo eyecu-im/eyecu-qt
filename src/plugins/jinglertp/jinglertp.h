@@ -152,6 +152,9 @@ protected:
 	MediaStreamer *startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
+	QList<QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription) const;
+	bool fillDescriptionWithPayloadTypes(const QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes) const;
+
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
 	static void addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType);
 	static QPayloadType buildPayloadType(const QDomElement &APayloadType, QPayloadType::MediaType AMedia);
