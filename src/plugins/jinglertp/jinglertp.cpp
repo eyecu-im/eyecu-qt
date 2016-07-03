@@ -251,34 +251,35 @@ bool JingleRtp::checkSupported(QDomElement &ADescription)
 	return true;
 }
 
-void JingleRtp::onSessionInitiated(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::onSessionInitiated(const QString &ASid)
 {
-	qDebug() << "JingleRtp::onSessionInitiated(" << AStreamJid.full() << ", " << ASid << ")";
-	Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
-	putSid(AStreamJid,contactJid, ASid);
-	writeCallMessageIntoChat(getWindow(AStreamJid, contactJid), Called);
-	callNotify(AStreamJid, ASid, Called);
+	qDebug() << "JingleRtp::onSessionInitiated(" << ASid << ")";
+	Jid contactJid = FJingle->contactJid(ASid);
+	Jid streamJid = FJingle->streamJid(ASid);
+	putSid(contactJid, ASid);
+	writeCallMessageIntoChat(getWindow(streamJid, contactJid), Called);
+	callNotify(ASid, Called);
 }
 
-void JingleRtp::onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason)
+void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason)
 {
-	qDebug() << "JingleRtp::onActionAcknowleged(" << AStreamJid.full() << "," << ASid << "," << AAction << "," << ARespond << "," << APreviousStatus << "," << ARedirect.full() << "," << AReason << ")";
+	qDebug() << "JingleRtp::onActionAcknowleged(" << ASid << "," << AAction << "," << ARespond << "," << APreviousStatus << "," << ARedirect.full() << "," << AReason << ")";
+
 	switch (ARespond)
 	{
 		case IJingle::Acknowledge:
 		{
-			Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, contactJid);
+			IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
 			switch (AAction)
 			{
 				case IJingle::SessionInitiate:
-					callChatMessage(AStreamJid, ASid, Called);
+					callChatMessage(ASid, Called);
 					break;
 
 				case IJingle::SessionAccept:
 					removeNotification(window);
 					updateWindowActions(window);
-					establishConnection(AStreamJid, ASid);
+					establishConnection(ASid);
 					break;
 
 				case IJingle::SessionTerminate:
@@ -301,8 +302,8 @@ void JingleRtp::onActionAcknowledged(const Jid &AStreamJid, const QString &ASid,
 							type=Error;
 					}
 
-					callChatMessage(AStreamJid, ASid, type, AReason);
-					removeSid(AStreamJid, ASid);
+					callChatMessage(ASid, type, AReason);
+					removeSid(ASid);
 					break;
 				}
 
@@ -313,42 +314,41 @@ void JingleRtp::onActionAcknowledged(const Jid &AStreamJid, const QString &ASid,
 		}
 		case IJingle::ServiceUnavailable:
 			qWarning() << "Service unavailable";
-			removeSid(AStreamJid, ASid);
-			callChatMessage(AStreamJid, ASid, Error);
+			removeSid(ASid);
+			callChatMessage(ASid, Error);
 			break;
 		case IJingle::Redirect:
 			qWarning() << "Redirected: " << ARedirect.full();
-			removeSid(AStreamJid, ASid);
-			callChatMessage(AStreamJid, ASid, Error);
+			removeSid(ASid);
+			callChatMessage(ASid, Error);
 			break;
 		case IJingle::ResourceConstraint:
 			qWarning() << "Resource constraint";
-			removeSid(AStreamJid, ASid);
-			callChatMessage(AStreamJid, ASid, Error);
+			removeSid(ASid);
+			callChatMessage(ASid, Error);
 			break;
 		case IJingle::BadRequest:
 			qWarning() << "Bad request";
-			removeSid(AStreamJid, ASid);
-			callChatMessage(AStreamJid, ASid, Error);
+			removeSid(ASid);
+			callChatMessage(ASid, Error);
 			break;
 	}
 }
 
-void JingleRtp::onSessionAccepted(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::onSessionAccepted(const QString &ASid)
 {
-	qDebug() << "JingleRtp::onSessionAccepted(" << AStreamJid.full() << "," << ASid << ")";
-	Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, contactJid);
+	qDebug() << "JingleRtp::onSessionAccepted(" << ASid << ")";
+	IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
 	if (window)
 		updateWindowActions(window);
-	establishConnection(AStreamJid, ASid);
+	establishConnection(ASid);
 }
 
-void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::onSessionConnected(const QString &ASid)
 {
-	LOG_DEBUG(QString("JingleRtp::onSessionConnected(%1, %2)").arg(AStreamJid.full()).arg(ASid));
+	LOG_DEBUG(QString("JingleRtp::onSessionConnected(%1)").arg(ASid));
 	bool success(false);
-	QHash<QString, IJingleContent *> contents = FJingle->contents(AStreamJid, ASid);
+	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
 		LOG_DEBUG(QString("content: \"%1\"").arg((*it)->name()));
@@ -399,14 +399,15 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 	if (!success)
 	{
 		LOG_WARNING("No successful contents! Terminating session...");
-		FJingle->sessionTerminate(AStreamJid, ASid, IJingle::FailedApplication);
+		FJingle->sessionTerminate(ASid, IJingle::FailedApplication);
 	}
 }
 
-void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason)
+void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason)
 {
-	qDebug() << "JingleRtp::onSessionTerminated(" << AStreamJid.full() << "," << ASid << "," << APreviousStatus << "," << AReason << "," << ")";
+	qDebug() << "JingleRtp::onSessionTerminated(" << ASid << "," << APreviousStatus << "," << AReason << "," << ")";
 	CallType type;
+	Jid streamJid = FJingle->streamJid(ASid);
 	switch (AReason)
 	{
 		case IJingle::Success:
@@ -415,7 +416,7 @@ void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, 
 		case IJingle::Decline:
 		{
 			type=Rejected;
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, FJingle->contactJid(AStreamJid, ASid));
+			IMessageChatWindow *window=FMessageWidgets->findChatWindow(streamJid, FJingle->contactJid(ASid));
 			if (window)
 			{
 				removeNotification(window);
@@ -431,7 +432,7 @@ void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, 
 	}
 
 	qDebug() << "Terminating contents...";
-	QHash<QString, IJingleContent *> contents = FJingle->contents(AStreamJid, ASid);
+	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
 	{
 		qDebug() << "content:" << *it;
@@ -460,14 +461,14 @@ void JingleRtp::onSessionTerminated(const Jid &AStreamJid, const QString &ASid, 
 		}
 	}
 
-	connectionTerminated(AStreamJid, ASid);
+	connectionTerminated(ASid);
 
-	callChatMessage(AStreamJid, ASid, type, AReason);
+	callChatMessage(ASid, type, AReason);
 
-	if (type == Cancelled && APreviousStatus == IJingle::Initiated && !FJingle->isOutgoing(AStreamJid, ASid))
-		callNotify(AStreamJid, ASid, type);
+	if (type == Cancelled && APreviousStatus == IJingle::Initiated && !FJingle->isOutgoing(ASid))
+		callNotify(ASid, type);
 
-	removeSid(AStreamJid, ASid);
+	removeSid(ASid);
 }
 
 void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
@@ -475,12 +476,12 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
 }
 
-void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice)
+void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 {
-	qDebug() << "JingleRtp::onDataReceived(" << AStreamJid.full() << "," << ASid << "," << ADevice << ")";
+	qDebug() << "JingleRtp::onDataReceived(" << ASid << "," << ADevice << ")";
 
 	qDebug() << "ADevice->openMode()=" << ADevice->openMode();
-	IJingleContent *content = FJingle->content(AStreamJid, ASid, ADevice);
+	IJingleContent *content = FJingle->content(ASid, ADevice);
 	if (content)
 	{
 		QUdpSocket *socket = qobject_cast<QUdpSocket*>(ADevice);
@@ -519,13 +520,14 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 }
 
 
-INotification JingleRtp::callNotify(const Jid &AStreamJid, const QString &ASid, CallType ACallType)
+INotification JingleRtp::callNotify(const QString &ASid, CallType ACallType)
 {
 	INotification notification;
 
-	Jid contactJid=FJingle->contactJid(AStreamJid, ASid);
+	Jid contactJid=FJingle->contactJid(ASid);
+	Jid streamJid=FJingle->streamJid(ASid);
 
-	IMessageChatWindow *window = getWindow(AStreamJid, contactJid);
+	IMessageChatWindow *window = getWindow(streamJid, contactJid);
 
 	// Remove existing notification for the window, if any
 	int notify=FNotifies.key(window);
@@ -534,13 +536,13 @@ INotification JingleRtp::callNotify(const Jid &AStreamJid, const QString &ASid, 
 
 	if (window && (!window->isActiveTabPage() || ACallType==Called))
 	{
-		bool video=hasVideo(AStreamJid, ASid);
+		bool video=hasVideo(ASid);
 		notification.kinds = FNotifications->enabledTypeNotificationKinds(ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED);
 		if (notification.kinds > 0)
 		{
 			QIcon icon = FIconStorage->getIcon(ACallType==Called?(video?JNI_RTP_CALL_VIDEO:JNI_RTP_CALL)
 																	   :JNI_RTP_HANGUP);
-			QString name = FNotifications->contactName(AStreamJid, contactJid);
+			QString name = FNotifications->contactName(streamJid, contactJid);
 
 			notification.typeId = ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED;
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, ACallType);
@@ -548,7 +550,7 @@ INotification JingleRtp::callNotify(const Jid &AStreamJid, const QString &ASid, 
 			QString tooltip=(ACallType==Called)?tr("Incoming %1 call from %2")
 											   :tr("Missed %1 call from %2");
 			notification.data.insert(NDR_TOOLTIP, tooltip.arg(video?tr("video"):tr("voice")).arg(name));
-			notification.data.insert(NDR_STREAM_JID, AStreamJid.full());
+			notification.data.insert(NDR_STREAM_JID, streamJid.full());
 			notification.data.insert(NDR_CONTACT_JID, contactJid.full());
 
 			// Popup data - used by AttentionDialog
@@ -580,7 +582,7 @@ INotification JingleRtp::callNotify(const Jid &AStreamJid, const QString &ASid, 
 			FNotifies.insert(notify, window);
 
 			if (ACallType==Called && notification.kinds&INotification::SoundPlay)
-				sessionInfo(AStreamJid, contactJid, Ringing);
+				sessionInfo(streamJid, contactJid, Ringing);
 		}
 	}
 	return notification;
@@ -632,10 +634,10 @@ void JingleRtp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-bool JingleRtp::hasVideo(const Jid &AStreamJid, const QString &ASid) const
+bool JingleRtp::hasVideo(const QString &ASid) const
 {
 	return false; // Video is not supported yet
-	QHash<QString, IJingleContent *> contents=FJingle->contents(AStreamJid, ASid);
+	QHash<QString, IJingleContent *> contents=FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 		if ((*it)->description().attribute("media")=="video")
 			return true;
@@ -696,7 +698,7 @@ void JingleRtp::removeNotification(IMessageChatWindow *AWindow)
 
 void JingleRtp::removeNotification(const Jid &AStreamJid, const QString &ASid)
 {
-	removeNotification(FMessageWidgets->findChatWindow(AStreamJid, FJingle->contactJid(AStreamJid, ASid)));
+	removeNotification(FMessageWidgets->findChatWindow(AStreamJid, FJingle->contactJid(ASid)));
 }
 //TODO: Check, if entity is online
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -744,29 +746,16 @@ bool JingleRtp::checkContent(IJingleContent *AContent)
 
 QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	if (FSidHash.contains(AStreamJid))
-	{
-		QHash<Jid, QString> sids=FSidHash[AStreamJid];
-		if (sids.contains(AContactJid))
-			return sids[AContactJid];
-	}
-	return QString();
+	QList<QString> sids = FSidHash.keys(AContactJid);
+	for (QList<QString>::ConstIterator it = sids.constBegin(); it!=sids.constEnd(); ++it)
+		if (FJingle->streamJid(*it)==AStreamJid)
+			return *it;
+	return QString::null;
 }
 
-bool JingleRtp::removeSid(const Jid &AStreamJid, const QString &ASid)
+bool JingleRtp::removeSid(const QString &ASid)
 {
-	if (FSidHash.contains(AStreamJid))
-	{
-		Jid jid=FSidHash[AStreamJid].key(ASid, Jid());
-		if (jid.isValid())
-			if (FSidHash[AStreamJid].remove(jid))
-			{
-				if (FSidHash[AStreamJid].isEmpty())
-					FSidHash.remove(AStreamJid);
-				return true;
-			}
-	}
-	return false;
+	return FSidHash.remove(ASid)>0;
 }
 
 bool JingleRtp::windowNotified(const IMessageChatWindow *window) const
@@ -779,41 +768,41 @@ bool JingleRtp::windowNotified(const IMessageChatWindow *window) const
 
 bool JingleRtp::sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, JingleRtp::InfoType AType, const QString &AName)
 {
-	QString sid=getSid(AStreamJid, AContactJid);
+	QString sid = getSid(AStreamJid, AContactJid);
 	if (!sid.isEmpty())
 	{
 		QDomDocument doc;
 		QDomElement info=doc.createElementNS(NS_JINGLE_APPS_RTP_INFO, types[AType]);
 		if (AType==Mute || AType==Unmute)
 		{
-			info.setAttribute("creator", FJingle->isOutgoing(AStreamJid, sid)?"initiator":"responder");
+			info.setAttribute("creator", FJingle->isOutgoing(sid)?"initiator":"responder");
 			if (!AName.isEmpty())
 				info.setAttribute("name", AName);
 		}
-		return FJingle->sendAction(AStreamJid, sid, IJingle::SessionInfo, info);
+		return FJingle->sendAction(sid, IJingle::SessionInfo, info);
 	}
 	return false;
 }
 
-void JingleRtp::putSid(const Jid &AStreamJid, const Jid &AContactJid, const QString &ASid)
+void JingleRtp::putSid(const Jid &AContactJid, const QString &ASid)
 {
-	FSidHash[AStreamJid].insert(AContactJid, ASid);
+	FSidHash.insertMulti(ASid, AContactJid);
 }
 
-void JingleRtp::callChatMessage(const Jid &AStreamJid, const QString &ASid, CallType AType, IJingle::Reason AReason)
+void JingleRtp::callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason)
 {
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(AStreamJid, FJingle->contactJid(AStreamJid, ASid));
+	IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
 	if (window)
 		writeCallMessageIntoChat(window, AType, AReason);
 }
 
 bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason)
 {
-	Jid contactJid=AWindow->contactJid();
-	Jid streamJid=AWindow->streamJid();
-	QString sid=getSid(streamJid, contactJid);
-	bool video=hasVideo(streamJid, sid);
-	bool outgoing=AType==Called?FJingle->isOutgoing(streamJid, sid):false;
+	Jid contactJid = AWindow->contactJid();
+	Jid streamJid = AWindow->streamJid();
+	QString sid = getSid(streamJid, contactJid);
+	bool video = hasVideo(sid);
+	bool outgoing = AType==Called?FJingle->isOutgoing(sid):false;
 
 	IMessageStyleContentOptions options;
 	options.time = QDateTime::currentDateTime();
@@ -866,10 +855,10 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
 	QList<QAction *>actions = toolBarChanger->groupItems(TBG_MWTBW_JINGLE_RTP);
 	Jid streamJid=AWindow->streamJid();
 	Jid contactJid=AWindow->contactJid();
-	QString sid=getSid(streamJid, contactJid);
+	QString sid = getSid(streamJid, contactJid);
 
 	IJingle::SessionStatus status=sid.isEmpty()?IJingle::None
-											   :FJingle->sessionStatus(streamJid, sid);
+											   :FJingle->sessionStatus(sid);
 
 	if (status==IJingle::None || status==IJingle::Terminated)
 	{
@@ -887,8 +876,8 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
 	}
 	else
 	{
-		bool video=hasVideo(streamJid, sid);
-		bool outgoing=FJingle->isOutgoing(streamJid, sid);
+		bool video = hasVideo(sid);
+		bool outgoing = FJingle->isOutgoing(sid);
 		for (QList<QAction *>::iterator it=actions.begin(); it!=actions.end(); it++)
 		{
 			Action *action=toolBarChanger->handleAction(*it);
@@ -1000,37 +989,37 @@ void JingleRtp::removePendingContent(IJingleContent *AContent, PendingType AType
 	FPendingContents.remove(AType, AContent);
 }
 
-bool JingleRtp::hasPendingContents(const QString &AStreamJid, const QString &ASid, PendingType AType)
+bool JingleRtp::hasPendingContents(const QString &ASid, PendingType AType)
 {
 	QList<IJingleContent *> pendingContents = FPendingContents.values(AType);
 	for (QList<IJingleContent *>::ConstIterator it = pendingContents.constBegin(); it!=pendingContents.constEnd(); it++)
-		if ((*it)->streamJid() == AStreamJid && (*it)->sid() == ASid)
+		if ((*it)->sid() == ASid)
 			return true;
 	return false;
 }
 
-void JingleRtp::establishConnection(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::establishConnection(const QString &ASid)
 {
-	LOG_DEBUG(QString("JingleRtp::establishConnection(%1, %2)").arg(AStreamJid.full()).arg(ASid));
-	QHash<QString, IJingleContent *> contents = FJingle->contents(AStreamJid, ASid);
+	LOG_DEBUG(QString("JingleRtp::establishConnection(%1)").arg(ASid));
+	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
 		LOG_DEBUG(QString("content=%1").arg((*it)->name()));
-		if (FJingle->connectContent(AStreamJid, ASid, it.key()))
+		if (FJingle->connectContent(ASid, it.key()))
 			addPendingContent(*it, Connect);
 	}
-	if (!hasPendingContents(AStreamJid.full(), ASid, Connect))
-		FJingle->sessionTerminate(AStreamJid, ASid, IJingle::ConnectivityError);
+	if (!hasPendingContents(ASid, Connect))
+		FJingle->sessionTerminate(ASid, IJingle::ConnectivityError);
 }
 
-void JingleRtp::connectionEstablished(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::connectionEstablished(const QString &ASid)
 {
-	qDebug() << "JingleRtp::connectionEstablished(" << AStreamJid.full() << "," << ASid << ")";
+	qDebug() << "JingleRtp::connectionEstablished(" << ASid << ")";
 }
 
-void JingleRtp::connectionTerminated(const Jid &AStreamJid, const QString &ASid)
+void JingleRtp::connectionTerminated(const QString &ASid)
 {
-	qDebug() << "JingleRtp::connectionTerminated(" << AStreamJid.full() << "," << ASid << ")";
+	qDebug() << "JingleRtp::connectionTerminated(" << ASid << ")";
 }
 
 MediaStreamer *JingleRtp::startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket)
@@ -1290,7 +1279,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 			if (s)
 			{
 				LOG_DEBUG("Terminating session...");
-				FJingle->sessionTerminate(content->streamJid(), content->sid(), IJingle::FailedApplication);
+				FJingle->sessionTerminate(content->sid(), IJingle::FailedApplication);
 				LOG_DEBUG("Removing sender...");
 				FSenders.remove(content);
 				delete s;
@@ -1326,11 +1315,11 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 		case MediaPlayer::Running:
 		{
 			LOG_DEBUG("Running!");
-			Jid contactJid=FJingle->contactJid(content->streamJid(), content->sid());
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(content->streamJid(), contactJid);
+			QString sid(content->sid());
+			IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid), FJingle->contactJid(sid));
 			if (window)
 				updateWindowActions(window);
-			connectionEstablished(content->streamJid(), content->sid());
+			connectionEstablished(content->sid());
 			break;
 		}
 
@@ -1352,7 +1341,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			if (streamer)
 			{
 				LOG_DEBUG("Terminating session...");
-				FJingle->sessionTerminate(content->streamJid(), content->sid(), IJingle::FailedApplication);
+				FJingle->sessionTerminate(content->sid(), IJingle::FailedApplication);
 				LOG_DEBUG("Removing sender...");
 				FStreamers.remove(content);
 				delete streamer;
@@ -1371,40 +1360,48 @@ void JingleRtp::onCall()
 		Jid streamJid  = action->data(ADR_STREAM_JID).toString();
 		Jid contactJid = action->data(ADR_CONTACT_JID).toString();
 		Command command=(Command)action->data(ADR_COMMAND).toInt();
+		QString sid;
 
-		if (FSidHash.contains(streamJid))
-			if (FSidHash[streamJid].contains(contactJid))
+		QList<QString> sids = FSidHash.keys(contactJid);
+		for (QList<QString>::ConstIterator it=sids.constBegin(); it!=sids.constEnd(); ++it)
+			if (FJingle->streamJid(*it)==streamJid)
 			{
-				QString sid=FSidHash[streamJid][contactJid];
-				if (!FJingle->isOutgoing(streamJid, sid))
-				{
-					IJingle::Reason reason;
-					QHash<QString, IJingleContent*> contents = FJingle->contents(streamJid, sid);
-					for (QHash<QString, IJingleContent*>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
-					{
-						if (checkContent(*it))
-						{
-							if (FJingle->fillIncomingTransport(*it))
-								addPendingContent(*it, FillTransport);
-							else
-								reason = IJingle::FailedTransport;
-						}
-						else
-							reason = IJingle::FailedApplication;
-					}
-					if (!hasPendingContents(streamJid.full(), sid, FillTransport))
-						FJingle->sessionTerminate(streamJid, sid, reason);
-				}
-				else
-					qWarning() << "Session exists already! sid=" << sid;
-				return; // Session exists already
+				sid = *it;
+				break;
 			}
 
-		QString sid=FJingle->sessionCreate(streamJid, contactJid, NS_JINGLE_APPS_RTP);
+
+		if (!sid.isEmpty())
+		{
+			if (!FJingle->isOutgoing(sid))
+			{
+				IJingle::Reason reason;
+				QHash<QString, IJingleContent*> contents = FJingle->contents(sid);
+				for (QHash<QString, IJingleContent*>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
+				{
+					if (checkContent(*it))
+					{
+						if (FJingle->fillIncomingTransport(*it))
+							addPendingContent(*it, FillTransport);
+						else
+							reason = IJingle::FailedTransport;
+					}
+					else
+						reason = IJingle::FailedApplication;
+				}
+				if (!hasPendingContents(sid, FillTransport))
+					FJingle->sessionTerminate(sid, reason);
+			}
+			else
+				qWarning() << "Session exists already! sid=" << sid;
+			return; // Session exists already
+		}
+
+		sid=FJingle->sessionCreate(streamJid, contactJid, NS_JINGLE_APPS_RTP);
 		if (!sid.isNull())
 		{
 			QSet<int> ids;
-			IJingleContent *content = FJingle->contentAdd(streamJid, sid, "voice", "audio", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
+			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
 			if (content)
 			{
 				QAudioDeviceInfo inputDevice = selectedAudioDevice(QAudio::AudioInput);
@@ -1463,8 +1460,8 @@ void JingleRtp::onCall()
 //					content = FJingle->contentAdd(streamJid, sid, "video", "video", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
 //					addPendingContent(content, AddContent);
 //				}
-					putSid(streamJid, contactJid, sid);
-					FJingle->sessionInitiate(streamJid, sid);
+					putSid(contactJid, sid);
+					FJingle->sessionInitiate(sid);
 				}
 				else
 					LOG_ERROR("No payload types available!");
@@ -1481,29 +1478,38 @@ void JingleRtp::onHangup()
 	{
 		Jid streamJid  = action->data(ADR_STREAM_JID).toString();
 		Jid contactJid = action->data(ADR_CONTACT_JID).toString();
-		if (FSidHash.contains(streamJid))
-			if (FSidHash[streamJid].contains(contactJid))
+
+		QString sid;
+
+		QList<QString> sids = FSidHash.keys(contactJid);
+		for (QList<QString>::ConstIterator it=sids.constBegin(); it!=sids.constEnd(); ++it)
+			if (FJingle->streamJid(*it)==streamJid)
 			{
-				QString sid=FSidHash[streamJid][contactJid];
-				IJingle::SessionStatus status = FJingle->sessionStatus(streamJid, sid);
-				IJingle::Reason reason;
-				switch (status)
-				{
-					case IJingle::ReceivingData:
-						reason = IJingle::Success;
-						break;
-
-					case IJingle::Initiated:
-						reason = FJingle->isOutgoing(streamJid, sid)?IJingle::Cancel:IJingle::Decline;
-						break;
-
-					default:
-						reason = IJingle::Cancel;
-						break;
-				}
-
-				FJingle->sessionTerminate(streamJid, sid, reason);
+				sid = *it;
+				break;
 			}
+
+		if (!sid.isEmpty())
+		{
+			IJingle::SessionStatus status = FJingle->sessionStatus(sid);
+			IJingle::Reason reason;
+			switch (status)
+			{
+				case IJingle::ReceivingData:
+					reason = IJingle::Success;
+					break;
+
+				case IJingle::Initiated:
+					reason = FJingle->isOutgoing(sid)?IJingle::Cancel:IJingle::Decline;
+					break;
+
+				default:
+					reason = IJingle::Cancel;
+					break;
+			}
+
+			FJingle->sessionTerminate(sid, reason);
+		}
 	}
 }
 
@@ -1511,19 +1517,19 @@ void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
 	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
 	removePendingContent(AContent, Connect);
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), Connect))
-		FJingle->setConnected(AContent->streamJid(), AContent->sid());
+	if (!hasPendingContents(AContent->sid(), Connect))
+		FJingle->setConnected(AContent->sid());
 }
 
 void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
 	removePendingContent(AContent, Connect);
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), Connect))
+	if (!hasPendingContents(AContent->sid(), Connect))
 	{
-		if (FJingle->contents(AContent->streamJid(), AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->streamJid(), AContent->sid(), IJingle::ConnectivityError);
+		if (FJingle->contents(AContent->sid()).isEmpty())
+			FJingle->sessionTerminate(AContent->sid(), IJingle::ConnectivityError);
 		else
-			FJingle->setConnected(AContent->streamJid(), AContent->sid());
+			FJingle->setConnected(AContent->sid());
 	}
 }
 
@@ -1531,20 +1537,20 @@ void JingleRtp::onContentAdded(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onContentAdded(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), AddContent))
-		FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
+	if (!hasPendingContents(AContent->sid(), AddContent))
+		FJingle->sessionAccept(AContent->sid());
 }
 
 void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onContentAddFailed(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), AddContent))
+	if (!hasPendingContents(AContent->sid(), AddContent))
 	{
-		if (FJingle->contents(AContent->streamJid(), AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->streamJid(), AContent->sid(), IJingle::FailedTransport);
+		if (FJingle->contents(AContent->sid()).isEmpty())
+			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
 		else
-			FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
+			FJingle->sessionAccept(AContent->sid());
 	}
 }
 
@@ -1552,20 +1558,20 @@ void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onIncomingTransportFilled(" << AContent << ")";
 	removePendingContent(AContent, FillTransport);
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), FillTransport))
-		FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
+	if (!hasPendingContents(AContent->sid(), FillTransport))
+		FJingle->sessionAccept(AContent->sid());
 }
 
 void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onIncomingTransportFillFailed(" << AContent << ")";
 	removePendingContent(AContent, FillTransport);	
-	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), FillTransport))
+	if (!hasPendingContents(AContent->sid(), FillTransport))
 	{
-		if (FJingle->contents(AContent->streamJid(), AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->streamJid(), AContent->sid(), IJingle::FailedTransport);
+		if (FJingle->contents(AContent->sid()).isEmpty())
+			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
 		else
-			FJingle->sessionAccept(AContent->streamJid(), AContent->sid());
+			FJingle->sessionAccept(AContent->sid());
 	}
 }
 #if QT_VERSION < 0x050000

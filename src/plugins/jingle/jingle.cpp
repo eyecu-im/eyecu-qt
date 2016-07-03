@@ -196,7 +196,7 @@ void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 	{
 		FPendingContents.removeAll(AContent);
 		emit contentAddFailed(AContent);
-		JingleSession::sessionBySessionId(AContent->streamJid(), AContent->sid())->deleteContent(AContent->name());
+		JingleSession::sessionBySessionId(AContent->sid())->deleteContent(AContent->name());
 	}
 	else
 		emit incomingTransportFillFailed(AContent);
@@ -298,7 +298,7 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 {
 	qDebug() << QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept);
 	AAccept=true;
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session = JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		QDomElement jingle = AStanza.jingleElement();
@@ -358,7 +358,7 @@ bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &
 {
 	AAccept=true;
 	bool result;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		Stanza ack=AStanza.ack(Acknowledge);
@@ -374,7 +374,7 @@ bool Jingle::processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStan
 {
 	AAccept=true;
 	bool result;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		Stanza ack=AStanza.ack(Acknowledge);
@@ -412,7 +412,7 @@ bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStan
 	}
 	else if (AHandleId==FSHIResult || AHandleId==FSHIError)
 	{
-		JingleSession *session=JingleSession::sessionByStanzaId(AStreamJid, AStanza.id());
+		JingleSession *session=JingleSession::sessionByStanzaId(AStanza.id());
 		if (session)
 		{
 			if (AHandleId==FSHIResult)
@@ -436,40 +436,40 @@ QString Jingle::sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, con
 	return session->sid();
 }
 
-bool Jingle::sessionInitiate(const Jid &AStreamJid, const QString &ASid)
+bool Jingle::sessionInitiate(const QString &ASid)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->initiate():false;
 }
 
-bool Jingle::sessionAccept(const Jid &AStreamJid, const QString &ASid)
+bool Jingle::sessionAccept(const QString &ASid)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->accept():false;
 }
 
-bool Jingle::sessionTerminate(const Jid &AStreamJid, const QString &ASid, Reason AReason)
+bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->terminate(AReason):false;
 }
 
-bool Jingle::sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement)
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElement):false;
 }
 
-bool Jingle::sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements)
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElements):false;
 }
 
 // Sessions
-IJingleContent *Jingle::contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder)
+IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
 		IJingleContent *content=session->addContent(AName, AMediaType, ATransportNameSpace, AFromResponder);
@@ -487,22 +487,28 @@ IJingleContent *Jingle::contentAdd(const Jid &AStreamJid, const QString &ASid, c
 	return NULL;
 }
 
-IJingle::SessionStatus Jingle::sessionStatus(const Jid &AStreamJid, const QString &ASid) const
+IJingle::SessionStatus Jingle::sessionStatus(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->status():IJingle::None;
 }
 
-bool Jingle::isOutgoing(const Jid &AStreamJid, const QString &ASid) const
+bool Jingle::isOutgoing(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->isOutgoing():false;
 }
 
-Jid Jingle::contactJid(const Jid &AStreamJid, const QString &ASid) const
+Jid Jingle::contactJid(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->otherParty():Jid();
+}
+
+Jid Jingle::streamJid(const QString &ASid) const
+{
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
+	return session?session->thisParty():Jid();
 }
 
 QString Jingle::errorMessage(IJingle::Reason AReason) const
@@ -548,40 +554,40 @@ QString Jingle::errorMessage(IJingle::Reason AReason) const
 	}
 }
 
-QHash<QString, IJingleContent *> Jingle::contents(const Jid &AStreamJid, const QString &ASid) const
+QHash<QString, IJingleContent *> Jingle::contents(const QString &ASid) const
 {
 	QHash<QString, IJingleContent *> rc;
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 		for (QHash<QString, JingleContent *>::ConstIterator it=session->contents().constBegin(); it!=session->contents().constEnd(); it++)
 			rc.insert(it.key(), *it);
 	return rc;
 }
 
-IJingleContent *Jingle::content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const
+IJingleContent *Jingle::content(const QString &ASid, const QString &AName) const
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	return session?session->getContent(AName):NULL;
 }
 
-IJingleContent *Jingle::content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const
+IJingleContent *Jingle::content(const QString &ASid, QIODevice *ADevice) const
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	return session?session->getContent(ADevice):NULL;
 }
 
-bool Jingle::selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId)
+bool Jingle::selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId)
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 		return session->selectTransportCandidate(AContentName, ACandidateId);
 	return false;
 }
 
-bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName)
+bool Jingle::connectContent(const QString &ASid, const QString &AName)
 {
-	qDebug() << "Jingle::connectContent(" << AStreamJid.full() << "," << ASid << "," << AName << ")";
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	qDebug() << "Jingle::connectContent(" << ASid << "," << AName << ")";
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
 		IJingleContent *content =  session->getContent(AName);
@@ -598,10 +604,10 @@ bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QS
 	return false;
 }
 
-bool Jingle::setConnected(const Jid &AStreamJid, const QString &ASid)
+bool Jingle::setConnected(const QString &ASid)
 {
-	LOG_DEBUG(QString("Jingle::setConnected(%1,%2)").arg(AStreamJid.full()).arg(ASid));
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);	
+	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
 		session->setConnected();

@@ -104,35 +104,35 @@ public:
 	bool checkSupported(QDomElement &ADescription);
 
 public slots:
-	virtual void onSessionInitiated(const Jid &AStreamJid, const QString &ASid);
-	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
-	virtual void onSessionAccepted(const Jid &AStreamJid, const QString &ASid);
-	virtual void onSessionConnected(const Jid &AStreamJid, const QString &ASid);
-	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
+	virtual void onSessionInitiated(const QString &ASid);
+	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
+	virtual void onSessionAccepted(const QString &ASid);
+	virtual void onSessionConnected(const QString &ASid);
+	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	virtual void onSessionInformed(const QDomElement &AInfoElement);
-	virtual void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
+	virtual void onDataReceived(const QString &ASid, QIODevice *ADevice);
 	virtual void onConnectionEstablished(IJingleContent *AContent);
 	virtual void onConnectionFailed(IJingleContent *AContent);
 
 protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	bool	checkContent(IJingleContent *AContent);
-	bool    hasVideo(const Jid &AStreamJid, const QString &ASid) const;
+	bool    hasVideo(const QString &ASid) const;
 	QString getSid(const Jid &AStreamJid, const Jid &AContactJid) const;
-	bool    removeSid(const Jid &AStreamJid, const QString &ASid);
+	bool    removeSid(const QString &ASid);
 	bool    windowNotified(const IMessageChatWindow *window) const;
 
 	bool    sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, InfoType AType, const QString &AName=QString::null);
 
 	void    removeNotification(IMessageChatWindow *AWindow);
 	void    removeNotification(const Jid &AStreamJid, const QString &ASid);
-	void    putSid(const Jid &AStreamJid, const Jid &AContactJid, const QString &ASid);
-	void    callChatMessage(const Jid &AStreamJid, const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
+	void    putSid(const Jid &AContactJid, const QString &ASid);
+	void    callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
 	void    registerDiscoFeatures();
-	INotification callNotify(const Jid &AStreamJid, const QString &ASid, CallType ACallType);
+	INotification callNotify(const QString &ASid, CallType ACallType);
 	void    updateWindow(IMessageChatWindow *AWindow);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 	bool    updateWindowActions(IMessageChatWindow *AWindow);
@@ -140,11 +140,11 @@ protected:
 
 	void    addPendingContent(IJingleContent *AContent, PendingType AType);
 	void    removePendingContent(IJingleContent *AContent, PendingType AType);
-	bool    hasPendingContents(const QString &AStreamJid, const QString &ASid, PendingType AType);
+	bool    hasPendingContents(const QString &ASid, PendingType AType);
 
-	void    establishConnection(const Jid &AStreamJid, const QString &ASid);
-	void    connectionEstablished(const Jid &AStreamJid, const QString &ASid);
-	void    connectionTerminated(const Jid &AStreamJid, const QString &ASid);
+	void    establishConnection(const QString &ASid);
+	void    connectionEstablished(const QString &ASid);
+	void    connectionTerminated(const QString &ASid);
 
 	MediaStreamer *startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
@@ -186,7 +186,7 @@ private:
 	IStatusIcons        *FStatusIcons;
 	IconStorage         *FIconStorage;
 	AudioOptions    *FJingleRtpOptions;
-	QHash<Jid, QHash<Jid, QString> >	FSidHash;
+	QHash<QString, Jid>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, IMessageChatWindow *> FNotifies;
 	QList<IMessageChatWindow *> FPendingChats;

@@ -38,33 +38,34 @@ public:
     //IJingle
     IJingleApplication *appByNS(const QString &AApplicationNS) {return FApplications.value(AApplicationNS);}
     QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS);
-    bool    sessionInitiate(const Jid &AStreamJid, const QString &ASid);
-    bool    sessionAccept(const Jid &AStreamJid, const QString &ASid);
-    bool    sessionTerminate(const Jid &AStreamJid, const QString &ASid, Reason AReason);
-    bool    sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement);
-    bool    sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements);  
+    bool    sessionInitiate(const QString &ASid);
+    bool    sessionAccept(const QString &ASid);
+    bool    sessionTerminate(const QString &ASid, Reason AReason);
+	bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement);
+    bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements);  
 
-    IJingleContent *contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
-    QHash<QString, IJingleContent *> contents(const Jid &AStreamJid, const QString &ASid) const;
-    IJingleContent *content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const;
-	IJingleContent *content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const;
-    bool    selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId);
-    bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName);
-    bool    setConnected(const Jid &AStreamJid, const QString &ASid);
+    IJingleContent *contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
+    QHash<QString, IJingleContent *> contents(const QString &ASid) const;
+    IJingleContent *content(const QString &ASid, const QString &AName) const;
+	IJingleContent *content(const QString &ASid, QIODevice *ADevice) const;
+	bool    selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId);
+	bool    connectContent(const QString &ASid, const QString &AName);
+    bool    setConnected(const QString &ASid);
     bool    fillIncomingTransport(IJingleContent *AContent);
 	void    freeIncomingTransport(IJingleContent *AContent);
 
-    SessionStatus sessionStatus(const Jid &AStreamJid, const QString &ASid) const;
-    bool    isOutgoing(const Jid &AStreamJid, const QString &ASid) const;
-    Jid     contactJid(const Jid &AStreamJid, const QString &ASid) const;
+    SessionStatus sessionStatus(const QString &ASid) const;
+    bool    isOutgoing(const QString &ASid) const;
+    Jid     contactJid(const QString &ASid) const;
+	Jid     streamJid(const QString &ASid) const;
     QString errorMessage(Reason AReason) const;
 
 protected:
     void registerDiscoFeatures();
-    bool processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
+	bool processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
     bool processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
-    bool processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
-    bool processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
+	bool processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
+	bool processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
 
 protected slots:
 	void onConnectionOpened(IJingleContent *AContent);

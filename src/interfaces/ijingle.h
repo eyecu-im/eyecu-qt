@@ -86,24 +86,25 @@ public:
 	virtual QObject *instance() =0;
 	virtual IJingleApplication *appByNS(const QString &AApplicationNS) =0;
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS) =0;
-	virtual bool    sessionInitiate(const Jid &AStreamJid, const QString &ASid) =0;
-	virtual bool    sessionAccept(const Jid &AStreamJid, const QString &ASid) =0;
-	virtual bool    sessionTerminate(const Jid &AStreamJid, const QString &ASid, Reason AReason) =0;
-	virtual bool    sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement) =0;
-	virtual bool    sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements) =0;
-	virtual IJingleContent *contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder) =0;
-	virtual QHash<QString, IJingleContent *> contents(const Jid &AStreamJid, const QString &ASid) const =0;
-	virtual IJingleContent *content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const =0;
-	virtual IJingleContent *content(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) const =0;
-	virtual bool    connectContent(const Jid &AStreamJid, const QString &ASid, const QString &ANAme) =0;
-	virtual bool    setConnected(const Jid &AStreamJid, const QString &ASid) =0;
+	virtual bool    sessionInitiate(const QString &ASid) =0;
+	virtual bool    sessionAccept(const QString &ASid) =0;
+	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement) =0;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements) =0;
+	virtual IJingleContent *contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder) =0;
+	virtual QHash<QString, IJingleContent *> contents(const QString &ASid) const =0;
+	virtual IJingleContent *content(const QString &ASid, const QString &AName) const =0;
+	virtual IJingleContent *content(const QString &ASid, QIODevice *ADevice) const =0;
+	virtual bool    connectContent(const QString &ASid, const QString &ANAme) =0;
+	virtual bool    setConnected(const QString &ASid) =0;
 	virtual bool    fillIncomingTransport(IJingleContent *AContent) =0;
 	virtual void    freeIncomingTransport(IJingleContent *AContent) =0;
-	virtual Jid     contactJid(const Jid &AStreamJid, const QString &ASid) const =0;
-	virtual bool    selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId) =0;
+	virtual Jid     contactJid(const QString &ASid) const =0;
+	virtual Jid     streamJid(const QString &ASid) const =0;
+	virtual bool    selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId) =0;
 
-	virtual SessionStatus sessionStatus(const Jid &AStreamJid, const QString &ASid) const =0;
-	virtual bool isOutgoing(const Jid &AStreamJid, const QString &ASid) const =0;
+	virtual SessionStatus sessionStatus(const QString &ASid) const =0;
+	virtual bool isOutgoing(const QString &ASid) const =0;
 	virtual QString errorMessage(Reason AReason) const =0;
 
 protected:
@@ -120,12 +121,12 @@ public:
 	virtual QString ns() const =0;
 	virtual bool checkSupported(QDomElement &ADescription) =0;  // To check if Jingle request is supported
 
-	virtual void onSessionInitiated(const Jid &AStreamJid, const QString &ASid) =0;       // To notify, about new initiate request
-	virtual void onSessionAccepted(const Jid &AStreamJid, const QString &ASid) =0;
-	virtual void onSessionConnected(const Jid &AStreamJid, const QString &ASid) =0;
-	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
-	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
-	virtual void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) =0;
+	virtual void onSessionInitiated(const QString &ASid) =0;       // To notify, about new initiate request
+	virtual void onSessionAccepted(const QString &ASid) =0;
+	virtual void onSessionConnected(const QString &ASid) =0;
+	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
+	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
+	virtual void onDataReceived(const QString &ASid, QIODevice *ADevice) =0;
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;
@@ -164,7 +165,6 @@ class IJingleContent
 public:
 	virtual const   QString     &name() const =0;
 	virtual const   QString     &sid() const =0;
-	virtual const   QString     &streamJid() const =0;
 	virtual         bool        fromResponder() const =0;
 	virtual         QStringList candidateIds() const =0;
 	virtual         QList<QDomElement>  candidates() const =0;
