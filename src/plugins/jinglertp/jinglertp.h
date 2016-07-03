@@ -84,9 +84,6 @@ public:
 	~JingleRtp();
 
 public:
-//	static QStringList stringsFromAvps(const QList<PayloadType> &AAvps);
-//	static QList<PayloadType> avpsFromStrings(const QStringList &AStrings);
-
 	static QString stringFromInts(const QList<int> &FInts);
 	static QList<int> intsFromString(const QString &FString);
 
@@ -152,12 +149,12 @@ protected:
 	MediaStreamer *startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
-	QList<QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription) const;
-	bool fillDescriptionWithPayloadTypes(const QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes) const;
+	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes=NULL);
+	static bool fillDescriptionWithPayloadTypes(QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes);
+	static void clearDescription(QDomElement &ADescription);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
 	static void addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType);
-	static QPayloadType buildPayloadType(const QDomElement &APayloadType, QPayloadType::MediaType AMedia);
 
 protected slots:
 	// Notofications
@@ -195,10 +192,8 @@ private:
 	QList<IMessageChatWindow *> FPendingChats;
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
+	QAVOutputFormat		FRtp;
 	QMultiHash<int, IJingleContent *> FPendingContents;
-	QStringList			FSupportdCodecNames;
-
-	QTimer              FDataSendTimer; //! --------- TEST ---------
 
 	QHash<IJingleContent *, MediaStreamer *> FSenders;
 	QHash<IJingleContent *, MediaPlayer *> FStreamers;

@@ -205,29 +205,18 @@ bool JingleRtp::initObjects()
 	QAVFormat::registerAll();
 	QAVFormat::networkInit();
 
-	FSupportdCodecNames = QPayloadType::names(true);
+	for (QAVOutputFormat format = QAVOutputFormat::first(); format; ++format)
+		if (format.name()=="rtp")
+		{
+			FRtp = format;
+			break;
+		}
 
 	return true;
 }
 
 bool JingleRtp::initSettings()
 {
-//	QList<PayloadType> payloadTypes;
-//	payloadTypes.append(PayloadType(-1, "G726-40", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "G726-32", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "G726-24", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "G726-16", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "L8", PayloadType::Audio, 0, 0));
-//	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 16000, 1));
-//	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 1));
-//	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 2));
-//	Options::setDefaultValue(OPV_JINGLE_RTP_PT_DYNAMIC, stringsFromAvps(payloadTypes));	//Dynamic payload types
-//	payloadTypes.clear();
-//	payloadTypes.append(PayloadType(-1, "opus", PayloadType::Audio, 48000, 1));
-//	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 8000, 1));
-//	payloadTypes.append(PayloadType(-1, "speex", PayloadType::Audio, 16000, 1));
-//	payloadTypes.append(PayloadType(9, "G722", PayloadType::Audio, 8000, 1));
 	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used codecs
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);    //Audio encoding bitrate
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant()); //Audio input device
@@ -374,34 +363,25 @@ void JingleRtp::onSessionConnected(const Jid &AStreamJid, const QString &ASid)
 				LOG_DEBUG(QString("output socket state: %1").arg(outputSocket->state()));
 				LOG_DEBUG(QString("output socket open mode: %1").arg(outputSocket->openMode()));
 
-				QDomElement description = (*it)->description();
-				QDomElement payloadType = description.firstChildElement("payload-type");
+				QList<QPayloadType> payloadTypeList;
+				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription((*it)->description(), &payloadTypeList);
+				QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
 
-				int ptid = payloadType.attribute("id").toInt();
-				QPayloadType avp;
-				if (ptid < 96)
-					avp = QPayloadType::payloadType(ptid);
+				QPayloadType payloadType;
+				for (QList<int>::ConstIterator itc = codecIds.constBegin(); itc!=codecIds.constEnd(); ++itc)
+					if (payloadTypes.contains(*itc))
+					{
+						payloadType = payloadTypes[*itc];
+						break;
+					}
 
-				if (payloadType.hasAttribute("name"))
-					avp.name = payloadType.attribute("name");
+				if (payloadType.isNull())
+					payloadType = payloadTypeList.first();
 
-				if (payloadType.hasAttribute("clockrate"))
-					avp.clockrate = payloadType.attribute("clockrate").toInt();
+				if (!payloadType.isFilled())
+					payloadType.fill();
 
-				if (payloadType.hasAttribute("channels"))
-					avp.channels = payloadType.attribute("channels").toInt();
-				else if (!avp.channels)
-					avp.channels = 1;
-
-				QString media = description.attribute("media");
-
-				avp.media = media=="audio"?QPayloadType::Audio:
-							media=="video"?QPayloadType::Video:
-										   QPayloadType::Unknown;
-
-				avp.id = ptid;
-
-				MediaStreamer *sender = startSendMedia(avp, outputSocket);
+				MediaStreamer *sender = startSendMedia(payloadType, outputSocket);
 				if (sender)
 				{
 					FSenders.insert(*it, sender);
@@ -515,28 +495,20 @@ void JingleRtp::onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODe
 				qDebug() << "payloadTypeId=" << payloadTypeId;
 
 				QDomElement description(content->description());
-				if (description.hasAttribute("media"))
-				{
-					QString media = description.attribute("media");
-					QPayloadType::MediaType mediaType = media=="audio"?QPayloadType::Audio:
-												media=="video"?QPayloadType::Video:
-															   QPayloadType::Unknown;
-					for (QDomElement payloadType = description.firstChildElement("payload-type"); !payloadType.isNull(); payloadType=payloadType.nextSiblingElement("payload-type"))
+				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
+				for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+					if ((*it).id==payloadTypeId)
 					{
-						if (payloadType.attribute("id").toInt()==payloadTypeId)
-						{
-							QHostAddress address = socket->localAddress();
-							quint16	port = socket->localPort();
-							socket->disconnectFromHost();
-							QPayloadType pt = buildPayloadType(payloadType, mediaType);
-							MediaPlayer *streamer = startPlayMedia(pt, address, port);
-							if (streamer)
-								FStreamers.insert(content, streamer);
-							else
-								LOG_ERROR("Failed to start media play!");
-						}
+						qDebug() << "payload type found:" << *it;
+						QHostAddress address = socket->localAddress();
+						quint16	port = socket->localPort();
+						socket->disconnectFromHost();
+						MediaPlayer *streamer = startPlayMedia(*it, address, port);
+						if (streamer)
+							FStreamers.insert(content, streamer);
+						else
+							LOG_ERROR("Failed to start media play!");
 					}
-				}
 			}
 		}
 		else
@@ -736,57 +708,38 @@ bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 bool JingleRtp::checkContent(IJingleContent *AContent)
 {
 	LOG_DEBUG("JingleRtp::checkContent()");
-
-	QList<QDomElement> unsupportedPayloadTypes;
 	QDomElement description(AContent->description());
 
-	for (QDomElement pt = description.firstChildElement("payload-type"); !pt.isNull(); pt=pt.nextSiblingElement("payload-type"))
+	QHash<int, QPayloadType> sourcePayloadTypes = payloadTypesFromDescription(description);
+	clearDescription(description);
+	QList<QPayloadType> targetPayloadTypes;
+	QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
+	for (QList<int>::ConstIterator it = codecIds.constBegin(); it!=codecIds.constEnd(); ++it)
 	{
-		bool supported(false);
-		if (pt.hasAttribute("id"))
-		{
-			QString name;
-			if (pt.hasAttribute("name"))
-				name = pt.attribute("name");
-			else
-			{
-				bool ok;
-				int id = pt.attribute("id").toInt(&ok);
-				if (ok)
-				{
-					if (id<96)
-					{
-						QPayloadType payloadType = QPayloadType::payloadType(id);
-						if (payloadType.isValid())
-							name = payloadType.name;
-					}
-					else
-						LOG_WARNING("Dynamic payload types must have \"name\" attribute!");
-				}
-				else
-					LOG_WARNING("Invalid id attribute of <payload-type/> element!");
-
-			}
-			if (!name.isEmpty())
-				supported = FSupportdCodecNames.contains(name);
-		}
-		else
-			LOG_WARNING("Invalid <payload-type/> element!");
-
-		if (!supported)
-			unsupportedPayloadTypes.append(pt);
+		QList<QPayloadType> payloadTypes = sourcePayloadTypes.values(*it);
+		for (QList<QPayloadType>::ConstIterator itp=payloadTypes.constBegin(); itp!=payloadTypes.constEnd(); ++itp)
+			if ((*itp).isSupported(FRtp, QAVCodec::Both))
+				targetPayloadTypes.append(*itp);
+		sourcePayloadTypes.remove(*it);
 	}
 
-	LOG_INFO(QString("Unsupported payload types found: %1").arg(unsupportedPayloadTypes.size()));
+	for (QHash<int, QPayloadType>::ConstIterator it=sourcePayloadTypes.constBegin(); it!=sourcePayloadTypes.constEnd(); ++it)
+		if ((*it).isSupported(FRtp, QAVCodec::Both))
+			targetPayloadTypes.append(*it);
 
-	for (QList<QDomElement>::ConstIterator it = unsupportedPayloadTypes.constBegin(); it!=unsupportedPayloadTypes.constEnd(); ++it)
-		description.removeChild(*it);
+	if (!targetPayloadTypes.isEmpty())
+		fillDescriptionWithPayloadTypes(description, targetPayloadTypes);
 
-	bool rc = !description.firstChildElement("payload-type").isNull();
-
-	LOG_DEBUG(QString("JingleRtp::checkContent() returns: %1").arg(rc));
-
-	return rc;
+	if (description.firstChildElement("payload-type").isNull())
+	{
+		LOG_ERROR("JingleRtp::checkContent() returns false: no supported payload types found");
+		return false;
+	}
+	else
+	{
+		LOG_INFO("JingleRtp::checkContent() returns true");
+		return true;
+	}
 }
 
 QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -802,7 +755,6 @@ QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
 
 bool JingleRtp::removeSid(const Jid &AStreamJid, const QString &ASid)
 {
-	qDebug() << "JingleRtp::removeSid(" << AStreamJid.full() << "," << ASid << ")";
 	if (FSidHash.contains(AStreamJid))
 	{
 		Jid jid=FSidHash[AStreamJid].key(ASid, Jid());
@@ -811,12 +763,9 @@ bool JingleRtp::removeSid(const Jid &AStreamJid, const QString &ASid)
 			{
 				if (FSidHash[AStreamJid].isEmpty())
 					FSidHash.remove(AStreamJid);
-				qDebug() << "FSidHash.size()=" << FSidHash.size();
-				qDebug() << "return true";
 				return true;
 			}
 	}
-	qDebug() << "return false";
 	return false;
 }
 
@@ -1127,35 +1076,31 @@ MediaStreamer *JingleRtp::startSendMedia(const QPayloadType &APayloadType, QUdpS
 MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
 {
 	qDebug() << "JingleRtp::startPlayMedia(" << APayloadType << "," << AHostAddress << "," << APort << ")";
-	MediaPlayer *streamer = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType, this);
-	if (streamer->status() == MediaPlayer::Closed)
-	{
-		if (connect(streamer, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
+	MediaPlayer *player = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput), AHostAddress, APort, APayloadType, this);
+	if (player->status() == MediaPlayer::Closed)
+		if (connect(player, SIGNAL(statusChanged(int,int)), SLOT(onStreamerStatusChanged(int,int))))
 		{
-			qDebug() << "Starting streamer...";
-			if (streamer->setStatus(MediaPlayer::Running))
+			if (player->setStatus(MediaPlayer::Running))
 			{
-				qDebug() << "Streamer started successfuly!";
-				return streamer;
+				LOG_INFO("Player started successfuly!");
+				return player;
 			}
 			else				
-				qDebug() << "Failed to start streamer!";
+				LOG_ERROR("Failed to start player!");
 		}
 		else
-			qDebug() << "connect failed!";
-	}
+			LOG_ERROR("connect failed!");
 	else
-		qDebug() << "MediaStreamer is not in Closeed state:" << streamer->status();
-	delete streamer;
+		LOG_ERROR(QString("MediaPlayer is not in Closed state: %1").arg(player->status()));
+	delete player;
 	return NULL;
-
 }
 
-QList<QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &ADescription) const
+QHash<int,QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes)
 {
-	QList<QPayloadType> result;
-	if (ADescription.tagName()=="description" ||
-		ADescription.attribute("xmlns")==NS_JINGLE_APPS_RTP)
+	QHash<int,QPayloadType> result;
+	if (ADescription.tagName()=="description" &&
+		ADescription.namespaceURI()==NS_JINGLE_APPS_RTP)
 	{
 		QString mediaAttr = ADescription.attribute("media");
 		QPayloadType::MediaType mediaType = mediaAttr=="audio"?QPayloadType::Audio:
@@ -1172,11 +1117,20 @@ QList<QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &AD
 						QPayloadType payloadType(id, element.attribute("name"), mediaType, element.attribute("clockrate").toInt(), element.attribute("channels").toInt(), element.attribute("ptime").toInt(), element.attribute("maxptime").toInt());
 						if (payloadType.isValid())
 						{
-							// Fill fmtp field with optional parameters
-							for (QDomElement parameter=element.firstChildElement("parameter"); !parameter.isNull(); parameter=parameter.nextSiblingElement("parameter"))
-								if (parameter.hasAttribute("name") && parameter.hasAttribute("value"))
-									payloadType.fmtp.insert(parameter.attribute("name"), parameter.attribute("value"));
-							result.append(payloadType);
+							QPayloadType tmp(payloadType);
+							if (!tmp.isFilled())
+								tmp.fill();
+							int codecId = QPayloadType::idByName(tmp.name);
+							if (codecId)
+							{
+								// Fill fmtp field with optional parameters
+								for (QDomElement parameter=element.firstChildElement("parameter"); !parameter.isNull(); parameter=parameter.nextSiblingElement("parameter"))
+									if (parameter.hasAttribute("name") && parameter.hasAttribute("value"))
+										payloadType.fmtp.insert(parameter.attribute("name"), parameter.attribute("value"));
+								result.insertMulti(codecId, payloadType);
+								if (APayloadTypes)
+									APayloadTypes->append(payloadType);
+							}
 						}
 					}
 				}
@@ -1184,10 +1138,9 @@ QList<QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &AD
 	return result;
 }
 
-bool JingleRtp::fillDescriptionWithPayloadTypes(const QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes) const
+bool JingleRtp::fillDescriptionWithPayloadTypes(QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes)
 {
-	qDebug() << "JingleRtp::fillDescriptionWithPayloadTypes(" << ADescription.tagName() << "," << APayloadTypes << ")";
-	if (ADescription.tagName()=="description" && ADescription.attribute("xmlns")==NS_JINGLE_APPS_RTP)
+	if (ADescription.tagName()=="description" && ADescription.namespaceURI()==NS_JINGLE_APPS_RTP)
 	{
 		QString media = ADescription.attribute("media");
 		QPayloadType::MediaType mediaType = media=="audio"?QPayloadType::Audio:
@@ -1208,7 +1161,6 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(const QDomElement &ADescription,
 				if (tmp.media==mediaType)
 				{
 					QDomElement payloadType = ADescription.ownerDocument().createElement("payload-type");
-					qDebug() << "payload type element created!";
 					payloadType.setAttribute("id", QString::number((*it).id));
 
 					if (!(*it).name.isEmpty())
@@ -1230,8 +1182,7 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(const QDomElement &ADescription,
 						parameter.setAttribute("value", itf.value());
 						payloadType.appendChild(parameter);
 					}
-					qDebug() << "Appending:" << payloadType.tagName();
-					QDomElement(ADescription).appendChild(payloadType);
+					ADescription.appendChild(payloadType);
 				}
 				else
 					LOG_ERROR(QString("Wrong media type: %1").arg((*it).media));
@@ -1243,19 +1194,21 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(const QDomElement &ADescription,
 	return false;
 }
 
+void JingleRtp::clearDescription(QDomElement &ADescription)
+{
+	for (QDomElement payloadType = ADescription.firstChildElement("payload-type"); !payloadType.isNull(); payloadType = ADescription.firstChildElement("payload-type"))
+		ADescription.removeChild(payloadType).clear();
+}
+
 QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 {
-	qDebug() << "JingleRtp::selectedAudioDevice()";
+	qDebug() << "JingleRtp::selectedAudioDevice(" << AMode << ")";
 	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(AMode));
 	QString deviceName = Options::node(AMode==QAudio::AudioInput?OPV_JINGLE_RTP_AUDIO_INPUT:OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
-	qDebug() << "deviceName=" << deviceName;
 
 	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
 		if ((*it).deviceName()==deviceName)
-		{
-			qDebug() << "returning:" << (*it).deviceName();
 			return *it;
-		}
 
 	return AMode==QAudio::AudioInput?QAudioDeviceInfo::defaultInputDevice():QAudioDeviceInfo::defaultOutputDevice();
 }
@@ -1277,58 +1230,6 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const QPayloadType &APa
 		description.appendChild(payloadType);
 	}
 }
-
-QPayloadType JingleRtp::buildPayloadType(const QDomElement &APayloadType, QPayloadType::MediaType AMedia)
-{
-	QPayloadType payloadType;
-
-	payloadType.media = AMedia;
-
-	if (APayloadType.hasAttribute("id"))
-	{
-		bool ok;
-		int id = APayloadType.attribute("id").toInt(&ok);
-		if (ok)
-			payloadType.id=id;
-	}
-
-	if (APayloadType.hasAttribute("clockrate"))
-	{
-		bool ok;
-		int clockrate = APayloadType.attribute("clockrate").toInt(&ok);
-		if (ok)
-			payloadType.clockrate=clockrate;
-	}
-
-	if (APayloadType.hasAttribute("channels"))
-	{
-		bool ok;
-		int channels = APayloadType.attribute("channels").toInt(&ok);
-		if (ok)
-			payloadType.channels=channels;
-	}
-
-	if (APayloadType.hasAttribute("name"))
-		payloadType.name=APayloadType.attribute("name");
-
-	return payloadType;
-}
-
-//QStringList JingleRtp::stringsFromAvps(const QList<PayloadType> &AAvps)
-//{
-//	QStringList strings;
-//	for (QList<PayloadType>::ConstIterator it=AAvps.constBegin(); it!=AAvps.constEnd(); ++it)
-//		strings.append((*it));
-//	return strings;
-//}
-
-//QList<PayloadType> JingleRtp::avpsFromStrings(const QStringList &AStrings)
-//{
-//	QList<PayloadType> avps;
-//	for (QStringList::ConstIterator it=AStrings.constBegin(); it!=AStrings.constEnd(); ++it)
-//		avps.append((*it));
-//	return avps;
-//}
 
 IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &AContactJid)
 {
@@ -1514,7 +1415,6 @@ void JingleRtp::onCall()
 				bool payloadTypeIdsExceeded(false);
 				for (QList<int>::ConstIterator it=codecIds.constBegin(); it!=codecIds.constEnd(); ++it)
 				{
-					qDebug() << "codec id=" << *it;
 					QAVCodec encoder = QAVCodec::findEncoder(*it);
 					QList<int> sampleRates = encoder.supportedSampleRates();
 					if (sampleRates.isEmpty())
@@ -1524,12 +1424,9 @@ void JingleRtp::onCall()
 						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, QHostAddress("127.0.0.1"), 6666, 0, *itr, bitrate, QVariantHash(), this);
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
-							qDebug() << "Streamer status is stoppped!";
 							QPayloadType payloadType(QPayloadType::fromSdp(streamer->getSdpString()));
-							qDebug() << "payloadType=" << (QString)payloadType;
 							if (payloadType.isValid() && !payloadTypes.contains(payloadType))
 							{
-								qDebug() << "HERE!";
 								if (payloadType.id>95)
 								{
 									while (ids.contains(payloadType.id) && payloadType.id>95)
@@ -1537,7 +1434,6 @@ void JingleRtp::onCall()
 									if (payloadType.id>95)
 										ids.insert(payloadType.id);
 								}
-								qDebug() << "payloadType.id=" << payloadType.id;
 								if (payloadType.id>=0)
 									payloadTypes.append(payloadType);
 								else
@@ -1545,9 +1441,8 @@ void JingleRtp::onCall()
 							}
 						}
 						else
-							qWarning() << "Streamer status is:" << streamer->status();
+							LOG_WARNING(QString("Streamer status is: %1").arg(streamer->status()));
 						delete streamer;
-						qDebug() << "Streamer deleted!";
 						if (payloadTypeIdsExceeded)
 							break;
 					}
@@ -1557,8 +1452,7 @@ void JingleRtp::onCall()
 						break;
 					}
 				}
-				qDebug() << "payloadTypes=" << payloadTypes;
-				qDebug() << "payloadTypes.size()=" << payloadTypes.size();
+
 				if (!payloadTypes.isEmpty())
 				{
 					fillDescriptionWithPayloadTypes(description, payloadTypes);
@@ -1657,14 +1551,6 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onIncomingTransportFilled(" << AContent << ")";
-	QStringList candidateIds = AContent->candidateIds();
-	qDebug() << "candidateIds=" << candidateIds;
-	for (QStringList::ConstIterator it = candidateIds.constBegin(); it != candidateIds.constEnd(); ++it)
-	{
-		QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(*it));
-		qDebug() << "socket=" << socket << ";" << socket->localAddress() << ":" << socket->localPort() << "/ state:" << socket->state();
-	}
-
 	removePendingContent(AContent, FillTransport);
 	if (!hasPendingContents(AContent->streamJid(), AContent->sid(), FillTransport))
 		FJingle->sessionAccept(AContent->streamJid(), AContent->sid());

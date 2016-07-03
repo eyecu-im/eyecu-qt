@@ -41,7 +41,7 @@ public:
 protected:
     JingleContent(const QString &AName, const QString &ASid, const QString &AStreamJid, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
     JingleContent(const QString &AName, const QString &ASid, const QString &AStreamJid, const QString &AApplicationNameSpace, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
-    ~JingleContent();
+	virtual ~JingleContent();
     QDomElement     addElementToStanza(JingleStanza &AStanza);
 
 private:    
@@ -74,10 +74,10 @@ public:
 
     JingleSession(const Jid &AThisParty, const Jid &AOtherParty, const QString &AApplicationNS);
     JingleSession(const JingleStanza &AStanza);
-    ~JingleSession();
+	virtual ~JingleSession();
 
     void setInitiated(IJingleApplication *AApplication);
-    void setAccepted();
+	void setAccepted();
     void setConnected();
     void setTerminated(IJingle::Reason AReason);
 
@@ -135,10 +135,11 @@ protected slots:
 
 signals:
     void sessionInitiated(const Jid &AStreamJid, const QString &ASid);
-    void sessionAccepted(const Jid &AStreamJid, const QString &ASid);
+	void sessionAccepted(const Jid &AStreamJid, const QString &ASid);
     void sessionConnected(const Jid &AStreamJid, const QString &ASid);    
     void sessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	void sessionInformed(const QDomElement &AInfoElement);
+	void contentUpdated(const QString &AName);
 	void dataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice);
     void actionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 

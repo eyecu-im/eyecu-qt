@@ -133,45 +133,24 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             QHostAddress address(candidate.attribute("ip"));
             int port = candidate.attribute("port").toInt();
             QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->outputDevice(id));
-			qDebug() << "socket=" << socket;
             if (!socket)
 			{
                 AContent->setOutputDevice(id, socket = new QUdpSocket(this));
 				socket->setProxy(QNetworkProxy::NoProxy);
 			}
 
-			qDebug() << "socket->state()=" << socket->state();
-			qDebug() << "address=" << address;
-			qDebug() << "port=" << port;
-
-			qDebug() << "local address=" << address;
-			qDebug() << "port=" << port;
-
             if (socket->state() != QUdpSocket::UnconnectedState &&
                (socket->state() != QUdpSocket::ConnectedState ||
                 socket->peerAddress() != address ||
                 socket->peerPort() != port))
-			{
-				qDebug() << "A";
                 socket->disconnectFromHost();
-			}
-
-			qDebug() << "socket->state()=" << socket->state();
 
             if (socket->state() == QUdpSocket::UnconnectedState)
-			{
-				qDebug() << "B";
                 socket->connectToHost(address, port, QIODevice::WriteOnly|QIODevice::Unbuffered);
-			}
 
             if (socket->state() == QUdpSocket::ConnectedState &&
                 socket->openMode() == (QIODevice::WriteOnly|QIODevice::Unbuffered))
-			{
-				qDebug() << "C";
-				qDebug() << "Peer: " << socket->peerAddress() << ":" << socket->peerPort();
-				qDebug() << "Local: " << socket->localAddress() << ":" << socket->localPort();
                 continue;
-			}
 
             qWarning() << "Failed to connect output socket!";
             AContent->setOutputDevice(id, NULL); // Remove broken socket
@@ -208,14 +187,12 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
          !candidate.isNull();
          candidate = candidate.nextSiblingElement("candidate"))
     {
-		qDebug() << "candidate found!";
         if (candidate.hasAttribute("ip") && candidate.hasAttribute("port") && candidate.hasAttribute("component") && candidate.hasAttribute("generation") && candidate.hasAttribute("id"))
         {
             socket->connectToHost(QHostAddress(candidate.attribute("ip")),
                                   candidate.attribute("port").toUInt(),
                                   QIODevice::ReadOnly|QIODevice::Unbuffered);
             localAddress =  socket->localAddress();
-			qDebug() << "localAddress=" << localAddress;
 			socket->disconnectFromHost();
 			socket->close();
         }
@@ -232,13 +209,8 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 	if (!localAddress.isNull())
 	{
 		socket = getSocket(localAddress);
-		qDebug() << "Got socket:" << socket;
 		if (socket)
         {
-			qDebug() << "socket is bound:" << socket;
-			qDebug() << "Host:" << socket->localAddress();
-			qDebug() << "Port:" << socket->localPort();
-
             int component=1;
             int id=100;
             QString candidateId=QString("id%1").arg(id);
@@ -259,7 +231,7 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
             }
             else
             {
-                qWarning() << "Candidate 1 is is wrong state!";
+				qWarning() << "Candidate 1 is in wrong state!";
                 socket->deleteLater();
 				qDebug() << "JingleTransportRawUdp::fillIncomingTransport(): return false(A)";
                 return false;
@@ -282,7 +254,6 @@ void JingleTransportRawUdp::freeIncomingTransport(IJingleContent *AContent)
 {
 	qDebug() << "JingleTransportRawUdp::freeIncomingTransport(" << AContent << ")";
 	QStringList candidateIds = AContent->candidateIds();
-	qDebug() << "candidateIds=" << candidateIds;
 	for (QStringList::ConstIterator it=candidateIds.constBegin(); it!=candidateIds.constEnd(); ++it)
 		AContent->setInputDevice(*it, NULL);
 	qDebug() << "JingleTransportRawUdp::freeIncomingTransport(): done!";
@@ -345,10 +316,7 @@ void JingleTransportRawUdp::onSocketStateChanged(QAbstractSocket::SocketState AS
 		{
 			QList<quint16> ports = FPorts.keys(socket);
 			for (QList<quint16>::ConstIterator it = ports.constBegin(); it != ports.constEnd(); ++it)
-			{
-				qDebug() << "freeing port:" << *it;
 				FPorts.remove(*it);
-			}
 		}
 	}
 }

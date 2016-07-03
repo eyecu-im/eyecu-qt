@@ -121,11 +121,11 @@ public:
 	virtual bool checkSupported(QDomElement &ADescription) =0;  // To check if Jingle request is supported
 
 	virtual void onSessionInitiated(const Jid &AStreamJid, const QString &ASid) =0;       // To notify, about new initiate request
-	virtual void onSessionAccepted(const Jid &AStreamJid, const QString&ASid) =0;
-	virtual void onSessionConnected(const Jid &AStreamJid, const QString&ASid) =0;
+	virtual void onSessionAccepted(const Jid &AStreamJid, const QString &ASid) =0;
+	virtual void onSessionConnected(const Jid &AStreamJid, const QString &ASid) =0;
 	virtual void onSessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
 	virtual void onActionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
-	virtual void onDataReceived(const Jid &AStreamJid, const QString&ASid, QIODevice *ADevice) =0;
+	virtual void onDataReceived(const Jid &AStreamJid, const QString &ASid, QIODevice *ADevice) =0;
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;
@@ -179,8 +179,6 @@ public:
 	virtual const   QDomElement &transportOutgoing() const =0;
 	virtual const   QDomElement &transportIncoming() const =0;
 	virtual const   QDomDocument &document() const =0;
-//	virtual			QAbstractSocket *socket();
-//	virtual			setSocket(QAbstractSocket *ASocket);
 	virtual         QIODevice   *inputDevice(const QString &AId) const =0;
 	virtual         void        setInputDevice(const QString &AId, QIODevice *ADevice) =0;
 	virtual         QIODevice   *outputDevice(const QString &AId) const =0;

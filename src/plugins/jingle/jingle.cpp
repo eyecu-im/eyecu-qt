@@ -298,7 +298,7 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 {
 	qDebug() << QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept);
 	AAccept=true;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
 	if (session)
 	{
 		QDomElement jingle = AStanza.jingleElement();
@@ -308,13 +308,33 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 			if (content)
 			{
 				QDomElement transport = contentElement.firstChildElement("transport");
-				if (!transport.isNull())
+				if (transport.isNull())
+					LOG_ERROR("Outgoing transport is NULL!");
+				else
+				{
 					if (content->setOutgoingTransport(transport))
 						LOG_DEBUG("Outgoing transport set successfuly!");
 					else
-						LOG_WARNING("Outgoing transport set error!");
+						LOG_ERROR("Outgoing transport set error!");
+				}
+
+				QDomElement description = contentElement.firstChildElement("description");
+				if (description.isNull())
+					LOG_ERROR("Description is NULL!");
 				else
-					LOG_WARNING("Outgoing transport is NULL!");
+					if (content->description()!=description)
+					{
+						qDebug() << "description updated!";
+						QDomElement contentElement = content->description().parentNode().toElement();
+						if (contentElement.isNull() || contentElement.tagName()!="content")
+							LOG_FATAL("Invalid content element");
+						else
+						{
+							qDebug() << "Updating content...";
+							contentElement.removeChild(content->description()).clear();
+							contentElement.insertBefore(description, QDomNode());
+						}
+					}
 			}
 			else
 				LOG_WARNING(QString("Content with name=\"%1\" found!").arg(contentElement.attribute("name")));

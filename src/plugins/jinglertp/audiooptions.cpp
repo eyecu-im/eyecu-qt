@@ -1,5 +1,3 @@
-#include <QDebug>
-#include <QAVOutputFormat>
 #include "audiooptions.h"
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>

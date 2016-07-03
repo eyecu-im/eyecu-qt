@@ -22,7 +22,7 @@ JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty, cons
     {
         FValid=true;
         connect(this,SIGNAL(sessionInitiated(Jid,QString)),parent(),SLOT(onSessionInitiated(Jid,QString)));
-        connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(),SLOT(onSessionAccepted(Jid,QString)));
+		connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(),SLOT(onSessionAccepted(Jid,QString)));
         connect(this,SIGNAL(sessionConnected(Jid,QString)),parent(),SLOT(onSessionConnected(Jid,QString)));
         connect(this,SIGNAL(sessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)));
         connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
@@ -54,7 +54,7 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
                         if (!addContent(content.attribute("name"), description, transport, content.attribute("initiator")==QString("responder")))
                             qWarning() << "addContent() failed!";
                         FValid=true;
-                        connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(), SLOT(onSessionAccepted(Jid,QString)));
+						connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(), SLOT(onSessionAccepted(Jid,QString)));
 						connect(this,SIGNAL(sessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)));
 						connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
 						connect(this,SIGNAL(dataReceived(Jid,QString,QIODevice*)),parent(),SLOT(onDataReceived(Jid,QString,QIODevice*)));
@@ -92,7 +92,7 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
     disconnect(parent());
     setParent(AApplication->instance());
     connect(this,SIGNAL(sessionInitiated(Jid,QString)),parent(),SLOT(onSessionInitiated(Jid,QString)));
-    connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(),SLOT(onSessionAccepted(Jid,QString)));
+	connect(this,SIGNAL(sessionAccepted(Jid,QString)),parent(),SLOT(onSessionAccepted(Jid,QString)));
     connect(this,SIGNAL(sessionConnected(Jid,QString)),parent(),SLOT(onSessionConnected(Jid,QString)));
     connect(this,SIGNAL(sessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(Jid,QString,IJingle::SessionStatus,IJingle::Reason)));
     connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
@@ -104,7 +104,7 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
 void JingleSession::setAccepted()
 {
     FStatus=IJingle::Accepted;
-    emit sessionAccepted(FThisParty, FSid);
+	emit sessionAccepted(FThisParty, FSid);
 }
 
 void JingleSession::setConnected()
