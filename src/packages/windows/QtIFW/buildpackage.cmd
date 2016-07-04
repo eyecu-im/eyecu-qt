@@ -8,7 +8,7 @@ set packages=packages
 
 echo Creating base package
 
-rem goto build
+goto build
 
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
