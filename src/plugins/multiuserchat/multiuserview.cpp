@@ -330,7 +330,7 @@ IMultiUserViewNotify MultiUserView::itemNotify(int ANotifyId) const
 int MultiUserView::insertItemNotify(const IMultiUserViewNotify &ANotify, QStandardItem *AItem)
 {
 	static int NotifyId = 0;
-	do NotifyId = qMax(++NotifyId, 1); while (FNotifies.contains(NotifyId));
+	do NotifyId = qMax(NotifyId+1, 1); while (FNotifies.contains(NotifyId));
 
 	LOG_STRM_DEBUG(FMultiChat->streamJid(),QString("Inserting item notify, notify=%1, order=%2, flags=%3, room=%4").arg(NotifyId).arg(ANotify.order).arg(ANotify.flags).arg(FMultiChat->roomJid().bare()));
 
@@ -358,9 +358,10 @@ void MultiUserView::removeItemNotify(int ANotifyId)
 	{
 		LOG_STRM_DEBUG(FMultiChat->streamJid(),QString("Removing item notify, notify=%1, room=%2").arg(ANotifyId).arg(FMultiChat->roomJid().bare()));
 
-		QStandardItem *item = FItemNotifies.key(ANotifyId);
 		FNotifies.remove(ANotifyId);
-		FItemNotifies.remove(item);
+
+		QStandardItem *item = FItemNotifies.key(ANotifyId);
+		FItemNotifies.remove(item,ANotifyId);
 		updateItemNotify(item);
 
 		emit itemNotifyRemoved(ANotifyId);
