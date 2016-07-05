@@ -24,7 +24,7 @@
 #define OPN_MAPSTREETVIEW       "MapStreetView"
 #define OPN_CONTACTPROXIMITY    "ContactProximityNotification"
 #define OPN_URLPROCESSOR        "UrlProcessor"
-#define OPN_XHTML               "XhtmlLim"
+#define OPN_XHTML               "XhtmlIm"
 #define OPN_POSITIONING         "Positioning"
 #define OPN_PEP                 "Pep"
 #define OPN_GEOLOC              "Geoloc"
@@ -33,6 +33,7 @@
 #define OPN_TRACKER             "Tracker"
 #define OPN_JINGLERTP           "Jinglertp"
 #define OPN_WIZARD_ACC          "WizardAcc"
+#define OPN_SCHEDULER           "Scheduler"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONNODES_H

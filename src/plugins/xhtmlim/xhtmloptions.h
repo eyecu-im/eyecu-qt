@@ -1,7 +1,6 @@
 #ifndef XHTMLOPTIONS_H
 #define XHTMLOPTIONS_H
 
-#include <QWidget>
 #include <interfaces/ioptionsmanager.h>
 #include <definitions/optionvalues.h>
 #include <utils/options.h>
@@ -20,10 +19,9 @@ class XhtmlOptions : public QWidget, public IOptionsDialogWidget
 	Q_INTERFACES(IOptionsDialogWidget)
     
 public:
-	explicit XhtmlOptions(XhtmlIm *AXhtmlIm, QWidget *AParent = 0);
+	XhtmlOptions(XhtmlIm *AXhtmlIm, QWidget *AParent = 0);
 	~XhtmlOptions();
     virtual QWidget* instance() { return this; }
-	Ui::XhtmlOptions *ui;
 
 public slots:
     virtual void apply();
@@ -39,6 +37,7 @@ signals:
     void childReset();
 
 private:
+	Ui::XhtmlOptions *ui;
 	XhtmlIm*	FXhtmlIm;
 };
 

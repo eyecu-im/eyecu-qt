@@ -270,5 +270,6 @@
 //Node = ON_WIZARDS
 #define OWO_WIZARDACCOUNT                         500
 #define OWO_WIZARDTRANSPORT                       500
+#define OWO_SCHEDULER							  500
 // *** >>> eyeCU >>> ***
 #endif // DEF_OPTIONWIDGETORDERS_H

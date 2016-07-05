@@ -12,24 +12,24 @@
 
 namespace Ui
 {
-    class poiOptions;
+	class poiOptions;
 }
 
 class PoiOptions : public QWidget, public IOptionsDialogWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-    PoiOptions(Poi *APoi, QWidget *parent = 0);
-    ~PoiOptions();
-    virtual QWidget* instance() { return this; }
-    Ui::poiOptions *ui;
-    QFont  FCurrentFont;
-    QColor FCurrentTextColor;
-    QColor FCurrentShadowColor;
-    QColor FCurrentTempTextColor;
-    QStringList getFilter();
+	PoiOptions(Poi *APoi, QWidget *parent = 0);
+	~PoiOptions();
+	virtual QWidget* instance() { return this; }
+	Ui::poiOptions *ui;
+	QFont  FCurrentFont;
+	QColor FCurrentTextColor;
+	QColor FCurrentShadowColor;
+	QColor FCurrentTempTextColor;
+	QStringList getFilter();
 
 // IOptionsWidget
 public slots:
@@ -42,27 +42,27 @@ signals:
 	void childReset();
 
 protected slots:
-    void modifyFont();
-    void modifyColor();
-    void modifyTempColor();
-    void modifyShadowColor();
-    void onBackgroundSelected();
-    void onItemChanged(QTreeWidgetItem*,int);
-    void onCheckAll();
-    void onUncheckAll();
+	void modifyFont();
+	void modifyColor();
+	void modifyTempColor();
+	void modifyShadowColor();
+	void onBackgroundSelected();
+	void onItemChanged(QTreeWidgetItem*,int);
+	void onCheckAll();
+	void onUncheckAll();
 
 private:
-    Poi *FPoi;
-    QStringList FPoiFilter;
-    QStringList FRootTypes;
-    QMap<QString, QString> FSubTypes;
-    QHash<QString, QString> FTranslatedTypes;
+	Poi *FPoi;
+	QStringList FPoiFilter;
+	QStringList FRootTypes;
+	QMap<QString, QString> FSubTypes;
+	QHash<QString, QString> FTranslatedTypes;
 
 protected:
-    void createTypeWidget();
-    void updateTypeWidget();
-    void groupItemChanged(QTreeWidgetItem *item);
-    void changeEvent(QEvent *e);
+	void createTypeWidget();
+	void updateTypeWidget();
+	void groupItemChanged(QTreeWidgetItem *item);
+	void changeEvent(QEvent *e);
 };
 
 #endif // POIOPTIONS_H
