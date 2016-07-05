@@ -384,7 +384,7 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 				MediaStreamer *sender = startSendMedia(payloadType, outputSocket);
 				if (sender)
 				{
-					FSenders.insert(*it, sender);
+					FStreamers.insert(*it, sender);
 					success = true;
 				}
 				else
@@ -436,28 +436,27 @@ void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus 
 	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
 	{
 		qDebug() << "content:" << *it;
-		MediaStreamer *sender = FSenders.value(*it);
-		if (sender)
-		{
-			qDebug() << "sender found:" << sender << "; status=" << sender->status();
-			if (sender->status()==MediaStreamer::Running ||
-				sender->status()==MediaStreamer::Started ||
-				sender->status()==MediaStreamer::Paused)
-				sender->stop();
-			else
-				delete sender;
-		}
-
-		MediaPlayer *streamer = FStreamers.value(*it);
+		MediaStreamer *streamer = FStreamers.value(*it);
 		if (streamer)
 		{
-			qDebug() << "streamer found:" << sender << "; status=" << streamer->status();
-			if (streamer->status()==MediaPlayer::Running ||
-				streamer->status()==MediaPlayer::Opened ||
-				streamer->status()==MediaPlayer::Paused)
-				streamer->setStatus(MediaPlayer::Finished);
+			qDebug() << "sender found:" << streamer << "; status=" << streamer->status();
+			if (streamer->status()==MediaStreamer::Running ||
+				streamer->status()==MediaStreamer::Paused)
+				streamer->setStatus(MediaStreamer::Stopped);
 			else
 				delete streamer;
+		}
+
+		MediaPlayer *player = FPlayers.value(*it);
+		if (player)
+		{
+			qDebug() << "streamer found:" << streamer << "; status=" << player->status();
+			if (player->status()==MediaPlayer::Running ||
+				player->status()==MediaPlayer::Opened ||
+				player->status()==MediaPlayer::Paused)
+				player->setStatus(MediaPlayer::Finished);
+			else
+				delete player;
 		}
 	}
 
@@ -506,7 +505,7 @@ void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 						socket->disconnectFromHost();
 						MediaPlayer *streamer = startPlayMedia(*it, address, port);
 						if (streamer)
-							FStreamers.insert(content, streamer);
+							FPlayers.insert(content, streamer);
 						else
 							LOG_ERROR("Failed to start media play!");
 					}
@@ -1041,7 +1040,7 @@ MediaStreamer *JingleRtp::startSendMedia(const QPayloadType &APayloadType, QUdpS
 				if (connect(sender, SIGNAL(statusChanged(int)), SLOT(onSenderStatusChanged(int))))
 				{
 					qDebug() << "Starting streamer...";
-					sender->start();
+					sender->setStatus(MediaStreamer::Running);
 					qDebug() << "Streamer started!";
 					return sender;
 				}
@@ -1262,13 +1261,9 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 {
 	qDebug() << "JingleRtp::onSenderStatusChanged(" << AStatus << ")";
 	MediaStreamer *s = qobject_cast<MediaStreamer *>(sender());
-	IJingleContent *content = FSenders.key(s);
+	IJingleContent *content = FStreamers.key(s);
 	switch (AStatus)
 	{
-		case MediaStreamer::Started:
-			qDebug() << "Started!";
-			break;
-
 		case MediaStreamer::Running:
 			qDebug() << "Running!";
 			break;
@@ -1281,7 +1276,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 				LOG_DEBUG("Terminating session...");
 				FJingle->sessionTerminate(content->sid(), IJingle::FailedApplication);
 				LOG_DEBUG("Removing sender...");
-				FSenders.remove(content);
+				FStreamers.remove(content);
 				delete s;
 			}
 			break;
@@ -1292,7 +1287,7 @@ void JingleRtp::onSenderStatusChanged(int AStatus)
 			if (s)
 			{
 				LOG_DEBUG("Removing sender...");
-				FSenders.remove(content);
+				FStreamers.remove(content);
 				delete s;
 			}
 			break;
@@ -1308,7 +1303,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 	qDebug() << "JingleRtp::onStreamerStatusChanged(" << AStatusNew << "," << AStatusOld << ")";
 
 	MediaPlayer *streamer = qobject_cast<MediaPlayer*>(sender());
-	IJingleContent *content = FStreamers.key(streamer);
+	IJingleContent *content = FPlayers.key(streamer);
 	qDebug() << "content=" << content;
 	switch (AStatusNew)
 	{
@@ -1329,7 +1324,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 			if (streamer)
 			{
 				LOG_DEBUG("Removing sender...");
-				FStreamers.remove(content);
+				FPlayers.remove(content);
 				delete streamer;
 			}
 			break;
@@ -1343,7 +1338,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				LOG_DEBUG("Terminating session...");
 				FJingle->sessionTerminate(content->sid(), IJingle::FailedApplication);
 				LOG_DEBUG("Removing sender...");
-				FStreamers.remove(content);
+				FPlayers.remove(content);
 				delete streamer;
 			}
 			break;

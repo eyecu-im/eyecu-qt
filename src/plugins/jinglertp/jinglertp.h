@@ -195,8 +195,8 @@ private:
 	QAVOutputFormat		FRtp;
 	QMultiHash<int, IJingleContent *> FPendingContents;
 
-	QHash<IJingleContent *, MediaStreamer *> FSenders;
-	QHash<IJingleContent *, MediaPlayer *> FStreamers;
+	QHash<IJingleContent *, MediaStreamer *> FStreamers;
+	QHash<IJingleContent *, MediaPlayer *> FPlayers;
 
 	static const QString    types[4];	
 };
