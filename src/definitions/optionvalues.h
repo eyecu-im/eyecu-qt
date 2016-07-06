@@ -577,10 +577,14 @@
 #define OPV_JINGLERTP                                   "jinglertp"
 #define OPV_JINGLERTP_NOTIFYINTERVAL                    "jinglertp.notify-interval"
 #define OPV_JINGLERTP_USERTCP                           "jinglertp.use-rtcp"
+
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                     "roster.clienticon.show"
 #define OPV_MUC_CLIENTICON_SHOW                        "muc.clienticon.show"
 #define OPV_MESSAGES_CLIENTICON_DISPLAY                "messages.clienticon.display"
+
+#define OPV_SCHEDULER_ACTIVE                           "scheduler.active"
+#define OPV_SCHEDULER_ITEMS                            "scheduler.items"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONVALUES_H

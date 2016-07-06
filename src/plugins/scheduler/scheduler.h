@@ -1,12 +1,26 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
+#include <QTimer>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
 
 #include <utils/jid.h>
 
 #define SCHEDULER_UUID "{3F202B41-24C9-A8B1-9C8D-B6F3794A5B67}"
+
+struct SchedulerItem
+{
+	SchedulerItem();
+	SchedulerItem(const SchedulerItem &other);
+	SchedulerItem(const QString &string);
+	operator QString() const;
+
+	Jid streamJid;
+	Jid contactJid;
+	quint32 timeout;
+	QString message;
+};
 
 class Scheduler: public QObject,
 				 public IPlugin,
@@ -38,6 +52,7 @@ protected slots:
 
 private:
 	IOptionsManager *FOptionsManager;
+	QHash<QTimer*, SchedulerItem>	FSchedule;
 };
 
 #endif // SCHEDULER_H

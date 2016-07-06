@@ -1,10 +1,13 @@
 HEADERS = \ 
     scheduler.h \
-    scheduleroptions.h
+    scheduleroptions.h \
+    $$PWD/scheduleritemdialog.h
 
 SOURCES = \ 
     scheduler.cpp \
-    scheduleroptions.cpp
+    scheduleroptions.cpp \
+    $$PWD/scheduleritemdialog.cpp
 
 FORMS += \
-    scheduleroptions.ui
+    scheduleroptions.ui \
+    $$PWD/scheduleritemdialog.ui

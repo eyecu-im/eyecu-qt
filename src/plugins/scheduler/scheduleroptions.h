@@ -2,6 +2,8 @@
 #define SCHEDULEROPTIONS_H
 
 #include <interfaces/ioptionsmanager.h>
+#include <interfaces/iaccountmanager.h>
+#include <interfaces/irostermanager.h>
 #include <definitions/optionvalues.h>
 #include <utils/options.h>
 
@@ -24,13 +26,19 @@ public slots:
 	virtual void apply();
 	virtual void reset();
 
+	void onItemAdd();
+	void onItemEdit();
+	void onItemDelete();
+
 signals:
-	virtual void modified();
-	virtual void childApply();
-	virtual void childReset();
+	void modified();
+	void childApply();
+	void childReset();
 
 private:
 	Ui::SchedulerOptions *ui;
+	IAccountManager	*FAccountManager;
+	IRosterManager	*FRosterManager;
 };
 
 #endif // SCHEDULEROPTIONS_H

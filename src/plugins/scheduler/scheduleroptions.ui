@@ -19,6 +19,14 @@
      <attribute name="headerDefaultSectionSize">
       <number>48</number>
      </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Account</string>
+      </property>
+     </column>
      <column>
       <property name="text">
        <string>Contact</string>
@@ -77,5 +85,59 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pbAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbEdit</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onItemAdd()</slot>
+  <slot>onItemEdit()</slot>
+  <slot>onItemDelete()</slot>
+ </slots>
 </ui>
