@@ -1,5 +1,7 @@
+#include <QDebug>
 #include <QTextEdit>
 #include <QPushButton>
+#include <utils/pluginhelper.h>
 #include "scheduleritemdialog.h"
 #include "ui_scheduleritemdialog.h"
 
@@ -8,13 +10,20 @@ SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountMan
 	ui(new Ui::SchedulerItemDialog),
 	FAccountManager(AAccountManager),
 	FRosterManager(ARosterManager),
+	FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
 	FItem(AItem)
 {
 	ui->setupUi(this);
-	QList<IAccount*> accounts = FAccountManager->accounts();
-	for (QList<IAccount*>::ConstIterator it=accounts.constBegin(); it!=accounts.constEnd(); ++it)
-		if ((*it)->isActive() && (*it)->xmppStream()->isConnected())
-			ui->cmbAccount->addItem((*it)->name(), (*it)->accountJid().full());
+	QList<IPresence*> presences = FPresenceManager->presences();
+	for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
+	{
+		IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
+		ui->cmbAccount->addItem(account->name(), account->accountJid().full());
+	}
+//	QList<IAccount*> accounts = FAccountManager->accounts();
+//	for (QList<IAccount*>::ConstIterator it=accounts.constBegin(); it!=accounts.constEnd(); ++it)
+//		if ((*it)->isActive() && (*it)->xmppStream()->isConnected())
+//			ui->cmbAccount->addItem((*it)->name(), (*it)->accountJid().full());
 	if (AItem.streamJid.isValid())
 	{
 		int index = ui->cmbAccount->findData(AItem.streamJid.full());
@@ -24,7 +33,9 @@ SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountMan
 			ui->cmbAccount->setEditText(AItem.streamJid.full());
 		if (AItem.contactJid.isValid())
 		{
+			qDebug() << "contactJid=" << AItem.contactJid.full();
 			int index = ui->cmbContact->findData(AItem.contactJid.full());
+			qDebug() << "index=" << index;
 			if (index>-1)
 				ui->cmbContact->setCurrentIndex(index);
 			else
@@ -32,7 +43,7 @@ SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountMan
 		}
 	}
 	ui->spbTimeout->setValue(AItem.timeout);
-	ui->tedMessage->setText(AItem.message);
+	ui->tedMessage->setPlainText(AItem.message);
 }
 
 SchedulerItemDialog::~SchedulerItemDialog()
@@ -57,21 +68,28 @@ SchedulerItem SchedulerItemDialog::getItem() const
 void SchedulerItemDialog::onAccountSelected(int AIndex)
 {
 	ui->cmbContact->clear();
-	Jid streamJid(ui->cmbAccount->itemData(AIndex).toString());
+	Jid streamJid(ui->cmbAccount->itemData(AIndex).toString());	
 	IRoster *roster = FRosterManager->findRoster(streamJid);
 	if (roster)
 	{
-		QHash<Jid, QString> contacts;
-		QList<IRosterItem> items = roster->items();
-		for (QList<IRosterItem>::ConstIterator it = items.constBegin();  it!=items.constEnd(); ++it)
-			if ((*it).itemJid.isValid())
+		IPresence *presence = FPresenceManager->findPresence(streamJid);
+		if (presence)
+		{
+			QHash<Jid, QString> contacts;
+			QList<Jid> items = presence->itemsJid();
+			for (QList<Jid>::ConstIterator it=items.constBegin(); it!=items.constEnd(); ++it)
 			{
-				QString name = ((*it).name.isEmpty()?(*it).itemJid.full():QString("%1 <%2>").arg((*it).name).arg((*it).itemJid.full()));
-				contacts.insert((*it).itemJid, name);
+				IRosterItem rosterItem = roster->findItem(*it);
+				QString name = (rosterItem.name.isEmpty()?(*it).full():QString("%1 <%2>").arg(rosterItem.name).arg((*it).full()));
+				contacts.insert(*it, name);
 			}
 
-		for (QHash<Jid, QString>::ConstIterator it=contacts.constBegin(); it!=contacts.constEnd(); ++it)
-			ui->cmbContact->addItem(it.value(), it.key().full());
+			for (QHash<Jid, QString>::ConstIterator it=contacts.constBegin(); it!=contacts.constEnd(); ++it)
+			{
+				qDebug() << "add item:" << it.value() << "," << it.key().full();
+				ui->cmbContact->addItem(it.value(), it.key().full());
+			}
+		}
 	}
 }
 
@@ -80,5 +98,9 @@ void SchedulerItemDialog::validate()
 	ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(ui->cmbAccount->currentIndex()>-1 &&
 															ui->cmbContact->currentIndex()>-1 &&
 															ui->spbTimeout->value()>0 &&
-															!ui->tedMessage->toPlainText().isEmpty());
+															!ui->tedMessage->toPlainText().isEmpty() &&
+															(ui->cmbAccount->itemData(ui->cmbAccount->currentIndex()).toString()!=FItem.streamJid.full() ||
+															 ui->cmbContact->itemData(ui->cmbContact->currentIndex()).toString()!=FItem.contactJid.full() ||
+															 ui->spbTimeout->value()!=FItem.timeout ||
+															 ui->tedMessage->toPlainText()!=FItem.message));
 }

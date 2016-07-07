@@ -23,6 +23,9 @@
    </item>
    <item>
     <widget class="QTreeWidget" name="twSchedule">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
      <attribute name="headerDefaultSectionSize">
       <number>48</number>
      </attribute>
@@ -141,10 +144,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>twSchedule</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>308</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>twSchedule</sender>
+   <signal>itemActivated(QTreeWidgetItem*,int)</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onItemAdd()</slot>
   <slot>onItemEdit()</slot>
   <slot>onItemDelete()</slot>
+  <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
  </slots>
 </ui>

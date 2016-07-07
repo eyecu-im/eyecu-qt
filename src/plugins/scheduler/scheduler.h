@@ -4,6 +4,8 @@
 #include <QTimer>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
+#include <interfaces/ipresencemanager.h>
+#include <interfaces/imessageprocessor.h>
 
 #include <utils/jid.h>
 
@@ -15,10 +17,12 @@ struct SchedulerItem
 	SchedulerItem(const SchedulerItem &other);
 	SchedulerItem(const QString &string);
 	operator QString() const;
+	bool operator ==(const SchedulerItem &other) const;
+	bool operator !=(const SchedulerItem &other) const;
 
 	Jid streamJid;
 	Jid contactJid;
-	quint32 timeout;
+	int timeout;
 	QString message;
 };
 
@@ -49,9 +53,12 @@ protected slots:
     void onOptionsOpened();
     void onOptionsClosed();
     void onOptionsChanged(const OptionsNode &ANode);
+	void onTimeout();
 
 private:
-	IOptionsManager *FOptionsManager;
+	IOptionsManager   *FOptionsManager;
+	IPresenceManager  *FPresenceManager;
+	IMessageProcessor *FMessageProcessor;
 	QHash<QTimer*, SchedulerItem>	FSchedule;
 };
 

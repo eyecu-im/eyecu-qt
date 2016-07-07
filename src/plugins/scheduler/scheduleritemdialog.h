@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/irostermanager.h>
+#include <interfaces/ipresencemanager.h>
 #include "scheduler.h"
 
 namespace Ui {
@@ -27,6 +28,7 @@ private:
 	Ui::SchedulerItemDialog *ui;
 	IAccountManager *FAccountManager;
 	IRosterManager	*FRosterManager;
+	IPresenceManager  *FPresenceManager;
 	SchedulerItem	FItem;
 };
 
