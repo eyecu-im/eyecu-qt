@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <utils/pluginhelper.h>
 #include "scheduleroptions.h"
 #include "scheduleritemdialog.h"
@@ -7,8 +6,7 @@
 SchedulerOptions::SchedulerOptions(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::SchedulerOptions),
-	FAccountManager(PluginHelper::pluginInstance<IAccountManager>()),
-	FRosterManager(PluginHelper::pluginInstance<IRosterManager>())
+	FAccountManager(PluginHelper::pluginInstance<IAccountManager>())
 {
 	ui->setupUi(this);
 	connect(ui->cbActive, SIGNAL(toggled(bool)), SIGNAL(modified()));
@@ -23,7 +21,6 @@ SchedulerOptions::~SchedulerOptions()
 
 void SchedulerOptions::apply()
 {
-	qDebug() << "SchedulerOptions::apply()";
 	Options::node(OPV_SCHEDULER_ACTIVE).setValue(ui->cbActive->isChecked());
 	QStringList itemList;
 	int items = ui->twSchedule->topLevelItemCount();
@@ -37,7 +34,6 @@ void SchedulerOptions::apply()
 		schedulerItem.message = item->text(3);
 		itemList.append(schedulerItem);
 	}
-	qDebug() << "itemList=" << itemList;
 	Options::node(OPV_SCHEDULER_ITEMS).setValue(itemList);
 	emit childApply();
 }
@@ -83,7 +79,7 @@ void SchedulerOptions::onCurrentItemChanged(QTreeWidgetItem *ACurrent, QTreeWidg
 
 void SchedulerOptions::onItemAdd()
 {
-	SchedulerItemDialog *itemDialog = new SchedulerItemDialog(SchedulerItem(), FAccountManager, FRosterManager, this);
+	SchedulerItemDialog *itemDialog = new SchedulerItemDialog(SchedulerItem(), FAccountManager, this);
 	if (itemDialog->exec())
 	{
 		SchedulerItem schedulerItem = itemDialog->getItem();
@@ -104,7 +100,7 @@ void SchedulerOptions::onItemEdit()
 		existingItem.contactJid = item->data(1, Qt::UserRole).toString();
 		existingItem.timeout	= item->text(2).toInt();
 		existingItem.message	= item->text(3);
-		SchedulerItemDialog *itemDialog = new SchedulerItemDialog(existingItem, FAccountManager, FRosterManager, this);
+		SchedulerItemDialog *itemDialog = new SchedulerItemDialog(existingItem, FAccountManager, this);
 		if (itemDialog->exec())
 		{
 			SchedulerItem newItem = itemDialog->getItem();

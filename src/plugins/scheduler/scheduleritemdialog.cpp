@@ -1,29 +1,29 @@
-#include <QDebug>
 #include <QTextEdit>
 #include <QPushButton>
 #include <utils/pluginhelper.h>
 #include "scheduleritemdialog.h"
 #include "ui_scheduleritemdialog.h"
 
-SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountManager *AAccountManager, IRosterManager *ARosterManager, QWidget *AParent) :
+SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountManager *AAccountManager, QWidget *AParent):
 	QDialog(AParent),
 	ui(new Ui::SchedulerItemDialog),
 	FAccountManager(AAccountManager),
-	FRosterManager(ARosterManager),
+	FRosterManager(PluginHelper::pluginInstance<IRosterManager>()),
 	FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
 	FItem(AItem)
 {
 	ui->setupUi(this);
+	if (FItem.streamJid.isValid() && FItem.contactJid.isValid() && FItem.timeout && !FItem.message.isNull())
+		setWindowTitle(tr("Edit schedule record"));
+	else
+		setWindowTitle(tr("Add schedule record"));
 	QList<IPresence*> presences = FPresenceManager->presences();
 	for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
 	{
 		IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
 		ui->cmbAccount->addItem(account->name(), account->accountJid().full());
 	}
-//	QList<IAccount*> accounts = FAccountManager->accounts();
-//	for (QList<IAccount*>::ConstIterator it=accounts.constBegin(); it!=accounts.constEnd(); ++it)
-//		if ((*it)->isActive() && (*it)->xmppStream()->isConnected())
-//			ui->cmbAccount->addItem((*it)->name(), (*it)->accountJid().full());
+
 	if (AItem.streamJid.isValid())
 	{
 		int index = ui->cmbAccount->findData(AItem.streamJid.full());
@@ -33,9 +33,7 @@ SchedulerItemDialog::SchedulerItemDialog(const SchedulerItem &AItem, IAccountMan
 			ui->cmbAccount->setEditText(AItem.streamJid.full());
 		if (AItem.contactJid.isValid())
 		{
-			qDebug() << "contactJid=" << AItem.contactJid.full();
 			int index = ui->cmbContact->findData(AItem.contactJid.full());
-			qDebug() << "index=" << index;
 			if (index>-1)
 				ui->cmbContact->setCurrentIndex(index);
 			else
@@ -57,12 +55,21 @@ SchedulerItem SchedulerItemDialog::getItem() const
 	int index = ui->cmbAccount->currentIndex();
 	if (index>-1)
 		item.streamJid = ui->cmbAccount->itemData(index).toString();
+	else
+		item.streamJid = ui->cmbAccount->currentText();
 	index = ui->cmbContact->currentIndex();
 	if (index>-1)
 		item.contactJid = ui->cmbContact->itemData(index).toString();
+	else
+		item.contactJid = ui->cmbContact->currentText();
 	item.timeout = ui->spbTimeout->value();
 	item.message = ui->tedMessage->toPlainText();
 	return item;
+}
+
+void SchedulerItemDialog::onTimeoutSpinboxValueChanged(int AValue)
+{
+	ui->spbTimeout->setSuffix(tr(" second(s)", "Keep space in front of unit if your language uses space to separate units from numbers", AValue));
 }
 
 void SchedulerItemDialog::onAccountSelected(int AIndex)
@@ -85,10 +92,7 @@ void SchedulerItemDialog::onAccountSelected(int AIndex)
 			}
 
 			for (QHash<Jid, QString>::ConstIterator it=contacts.constBegin(); it!=contacts.constEnd(); ++it)
-			{
-				qDebug() << "add item:" << it.value() << "," << it.key().full();
 				ui->cmbContact->addItem(it.value(), it.key().full());
-			}
 		}
 	}
 }

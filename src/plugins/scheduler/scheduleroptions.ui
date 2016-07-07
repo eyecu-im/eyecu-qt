@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Scheduler options</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -59,14 +59,14 @@
      <item>
       <widget class="QPushButton" name="pbAdd">
        <property name="text">
-        <string>Add</string>
+        <string>Add...</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pbEdit">
        <property name="text">
-        <string>Edit</string>
+        <string>Edit...</string>
        </property>
       </widget>
      </item>

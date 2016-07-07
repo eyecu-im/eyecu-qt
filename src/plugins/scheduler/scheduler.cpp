@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "scheduler.h"
 #include "scheduleroptions.h"
 #include "definitions/optionvalues.h"
@@ -11,7 +10,6 @@
 SchedulerItem::operator QString() const
 {
 	return QString("%1;\t%2;\t%3;\t%4").arg(streamJid.full()).arg(contactJid.full()).arg(timeout).arg(message);
-
 }
 
 SchedulerItem::SchedulerItem(): timeout(0)
@@ -32,8 +30,6 @@ SchedulerItem::SchedulerItem(const QString &string)
 	contactJid=parts.value(1);
 	timeout=parts.value(2).toInt();
 	message=parts.value(3);
-	for (int i=4; i<parts.size(); ++i)
-		message.append(";;").append(parts[i]);
 }
 
 bool SchedulerItem::operator ==(const SchedulerItem &other) const
@@ -132,70 +128,46 @@ void Scheduler::onOptionsChanged(const OptionsNode &ANode)
 
 	if (ANode.path()==OPV_SCHEDULER_ITEMS)
 	{
-		qDebug() << "Scheduler::onOptionsChanged(OPV_SCHEDULER_ITEMS)";
 		bool active = Options::node(OPV_SCHEDULER_ACTIVE).value().toBool();
-		qDebug() << "active=" << active;
 		for (QHash<QTimer*,SchedulerItem>::ConstIterator it=FSchedule.constBegin(); it!=FSchedule.constEnd(); ++it)
 		{
-			qDebug() << "stopping timer:" << it.key();
 			it.key()->stop();
-			qDebug() << "deleting timer:" << it.key();
 			it.key()->deleteLater();
 		}
 		FSchedule.clear();
 
 		QStringList strings = ANode.value().toStringList();
-		qDebug() << "strings=" << strings;
 		for (QStringList::ConstIterator it=strings.constBegin(); it!=strings.constEnd(); ++it)
 		{
 			SchedulerItem item(*it);
-			qDebug() << "timeout=" << item.timeout;
 			QTimer *timer = new QTimer(this);
 			connect(timer, SIGNAL(timeout()), SLOT(onTimeout()));
 			timer->setInterval(item.timeout*1000);
 			FSchedule.insert(timer, item);
 			if (active)
-			{
-				qDebug() << "starting timer:" << timer;
 				timer->start();
-			}
 		}
 	}
 	else if (ANode.path()==OPV_SCHEDULER_ACTIVE)
 	{
-		qDebug() << "Scheduler::onOptionsChanged(OPV_SCHEDULER_ACTIVE)";
 		bool active = ANode.value().toBool();
-		qDebug() << "active=" << active;
 		for (QHash<QTimer*,SchedulerItem>::ConstIterator it=FSchedule.constBegin(); it!=FSchedule.constEnd(); ++it)
-		{
 			if (active)
-			{
-				qDebug() << "starting timer:" << it.key();
 				it.key()->start();
-			}
 			else
-			{
-				qDebug() << "stopping timer:" << it.key();
 				it.key()->stop();
-			}
-		}
 	}
 }
 
 void Scheduler::onTimeout()
 {
-	qDebug() << "Scheduler::onTimeout()";
 	QTimer *timer = qobject_cast<QTimer *>(sender());
 	if (timer)
 	{
 		SchedulerItem item(FSchedule.value(timer));
-		qDebug() << "Item:" << item;
-		qDebug() << "FPresenceManager=" << FPresenceManager;
 		IPresence *presence = FPresenceManager->findPresence(item.streamJid);
-		qDebug() << "presence=" << presence;
 		if (presence && !presence->findItem(item.contactJid).isNull())
 		{
-			qDebug() << "Contact is online!";
 			Message message;
 			message.setType(Message::Chat).setTo(item.contactJid.full()).setBody(item.message);
 			FMessageProcessor->sendMessage(item.streamJid, message, IMessageProcessor::DirectionOut);

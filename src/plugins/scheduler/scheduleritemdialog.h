@@ -16,11 +16,12 @@ class SchedulerItemDialog : public QDialog
 	Q_OBJECT
 
 public:
-	SchedulerItemDialog(const SchedulerItem &AItem, IAccountManager *AAccountManager, IRosterManager *ARosterManager, QWidget *AParent = 0);
+	SchedulerItemDialog(const SchedulerItem &AItem, IAccountManager *AAccountManager, QWidget *AParent = 0);
 	~SchedulerItemDialog();
 	SchedulerItem getItem() const;
 
 protected slots:
+	void onTimeoutSpinboxValueChanged(int AValue);
 	void onAccountSelected(int AIndex);
 	void validate();
 

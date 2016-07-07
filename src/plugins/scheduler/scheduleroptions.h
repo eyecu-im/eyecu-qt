@@ -47,7 +47,6 @@ signals:
 private:
 	Ui::SchedulerOptions *ui;
 	IAccountManager	*FAccountManager;
-	IRosterManager	*FRosterManager;
 };
 
 #endif // SCHEDULEROPTIONS_H

@@ -600,3 +600,7 @@ source_lang = en
 [eyecu-qt.filemessagearchivets]
 file_filter = <lang>/filemessagearchive.ts
 source_lang = en
+
+[eyecu-qt.schedulerts]
+file_filter = <lang>/scheduler.ts
+source_lang = en
