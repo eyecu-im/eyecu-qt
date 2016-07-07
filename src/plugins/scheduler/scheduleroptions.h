@@ -13,7 +13,7 @@ namespace Ui {
 class SchedulerOptions;
 }
 
-class SchedulerItem;
+struct SchedulerItem;
 
 class SchedulerOptions : public QWidget, public IOptionsDialogWidget
 {
