@@ -1,3 +1,5 @@
+#include <QDebug>
+#include <QUrl>
 #include <QLayout>
 #include <QBoxLayout>
 #include <QColorDialog>
@@ -54,6 +56,7 @@
 #define ADR_ALIGN_TYPE			Action::DR_Parametr1
 #define ADR_LIST_TYPE			Action::DR_Parametr1
 #define ADR_FORMATTING_TYPE		Action::DR_Parametr1
+#define ADR_IMAGE_URL			Action::DR_Parametr1
 #define ADR_CURSOR_POSITION		Action::DR_Parametr2
 
 #define CT_FOREGROUND 0
@@ -1478,7 +1481,7 @@ void XhtmlIm::insertLink(QTextCursor ACursor, QWidget *AParent)
 	bool needsToBeInserted=(ACursor.selection().isEmpty());
 
 	AddLink *addLink = new AddLink(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
-								   QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), ACursor.selectedText(), AParent->window());
+								   QUrl(charFmtCurrent.anchorHref()), ACursor.selectedText(), AParent->window());
 
 	switch (addLink->exec())
 	{
@@ -2097,21 +2100,21 @@ void XhtmlIm::onViewContextMenu(const QPoint &APosition, Menu *AMenu)
 		QTextCharFormat format=viewWidget->textFormatAt(APosition);
 		if (format.isImageFormat())
 		{
-			QUrl imageUrl=QUrl::fromEncoded(format.toImageFormat().name().toLatin1());
+			QUrl imageUrl(format.toImageFormat().name());
 			if (!FValidSchemes.contains(imageUrl.scheme())) // Invalid scheme - assuming local file!
 				imageUrl=QUrl::fromLocalFile(imageUrl.toString());
 
 			QActionGroup *group = new QActionGroup(AMenu);
 			Action *action=new Action(AMenu);
 			action->setText(tr("Save image..."));
-			action->setData(Action::DR_Parametr1, imageUrl);
+			action->setData(ADR_IMAGE_URL, imageUrl);
 			action->setActionGroup(group);
 			connect(action, SIGNAL(triggered()), SLOT(onImageSave()));
 			AMenu->addAction(action);
 
 			action=new Action(AMenu);
 			action->setText(tr("Open image in the system"));
-			action->setData(Action::DR_Parametr1, imageUrl);
+			action->setData(ADR_IMAGE_URL, imageUrl);
 			action->setActionGroup(group);
 			connect(action, SIGNAL(triggered()), SLOT(onImageOpen()));
 			AMenu->addAction(action);
@@ -2119,7 +2122,7 @@ void XhtmlIm::onViewContextMenu(const QPoint &APosition, Menu *AMenu)
 			action=new Action(AMenu);
 			QString html = viewWidget->textFragmentAt(APosition).toHtml();
 			action->setText(tr("Copy image"));
-			action->setData(Action::DR_Parametr1, imageUrl);
+			action->setData(ADR_IMAGE_URL, imageUrl);
 			action->setData(Action::DR_Parametr2, viewWidget->imageAt(APosition));
 			action->setData(Action::DR_Parametr3, html);
 			action->setActionGroup(group);
@@ -2132,7 +2135,7 @@ void XhtmlIm::onViewContextMenu(const QPoint &APosition, Menu *AMenu)
 			{
 				action=new Action(AMenu);
 				action->setText(tr("Copy image link"));
-				action->setData(Action::DR_Parametr1, imageUrl);
+				action->setData(ADR_IMAGE_URL, imageUrl);
 				action->setActionGroup(group);
 				connect(action, SIGNAL(triggered()), SLOT(onImageCopyLink()));
 				AMenu->addAction(action);
@@ -2148,7 +2151,7 @@ void XhtmlIm::onImageCopy()
 		QMimeData *mimeData = new QMimeData();
 
 		QList<QUrl> urls;
-		urls.append(action->data(Action::DR_Parametr1).toUrl());
+		urls.append(action->data(ADR_IMAGE_URL).toUrl());
 		mimeData->setUrls(urls);
 
 		mimeData->setImageData(action->data(Action::DR_Parametr2).value<QImage>());
@@ -2166,7 +2169,7 @@ void XhtmlIm::onImageCopyLink()
 {
 	if (Action *action=qobject_cast<Action *>(sender()))
 	{
-		QUrl imageUrl=action->data(Action::DR_Parametr1).toUrl();
+		QUrl imageUrl=action->data(ADR_IMAGE_URL).toUrl();
 		QApplication::clipboard()->setText(imageUrl.toString());
 	}
 }
@@ -2175,7 +2178,7 @@ void XhtmlIm::onImageSave()
 {
 	if (Action *action=qobject_cast<Action *>(sender()))
 	{
-		QUrl imageUrl=action->data(Action::DR_Parametr1).toUrl();
+		QUrl imageUrl=action->data(ADR_IMAGE_URL).toUrl();
 		QString path=imageUrl.path();
 
 		int index1=path.lastIndexOf('\\');
@@ -2198,7 +2201,7 @@ void XhtmlIm::onImageOpen()
 {
 	if (Action *action=qobject_cast<Action *>(sender()))
 	{
-		QUrl url=action->data(Action::DR_Parametr1).toUrl();
+		QUrl url=action->data(ADR_IMAGE_URL).toUrl();
 		new ImageOpenThread(url, this);
 	}
 }
@@ -2344,6 +2347,7 @@ bool XhtmlIm::messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidg
 				QList<QUrl> urls=AData->urls();
 				for (QList<QUrl>::const_iterator it=urls.constBegin(); it!=urls.constEnd(); it++)
 				{
+					qDebug() << "url=" << (*it).toString();
 					if (it->scheme() == "ftp" ||
 						it->scheme() == "http" ||
 						it->scheme() == "https" )
