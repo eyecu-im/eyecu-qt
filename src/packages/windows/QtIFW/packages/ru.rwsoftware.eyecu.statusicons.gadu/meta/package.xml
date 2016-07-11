@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Gadu-Gadu</DisplayName>
-    <Description>Gadu-Gadu</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-01-21</ReleaseDate>
-    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
-    <Name>ru.rwsoftware.eyecu.statusicons.gadu</Name>
-    <SortingPriority>6</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Gadu-Gadu</DisplayName>
+ <Description>Gadu-Gadu</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-01-21</ReleaseDate>
+ <UpdateText>Fixed incorrect icon association pattern</UpdateText>
+ <Name>ru.rwsoftware.eyecu.statusicons.gadu</Name>
+ <SortingPriority>6</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

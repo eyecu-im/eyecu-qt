@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Qt Geo Russian Translation</DisplayName>
-    <Description>Qt Geo Russian translation</Description>
-    <Version>1.0.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.purplesoft.qtpurple.geo.ru</Name>
-    <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Qt Geo Russian Translation</DisplayName>
+ <Description>Qt Geo Russian translation</Description>
+ <Version>1.0.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple.geo.ru</Name>
+ <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

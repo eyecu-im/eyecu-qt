@@ -15,6 +15,7 @@
     <AdminTargetDir>@ApplicationsDir@/Road Works Software/eyecu</AdminTargetDir>
     <AllowSpaceInPath>true</AllowSpaceInPath>
     <AllowNonAsciiCharacters>true</AllowNonAsciiCharacters>
+    <ControlScript>controlscript.js</ControlScript>
     <RemoteRepositories>
       <Repository>
         <Url>http://www.eyecu.ru/repository</Url>

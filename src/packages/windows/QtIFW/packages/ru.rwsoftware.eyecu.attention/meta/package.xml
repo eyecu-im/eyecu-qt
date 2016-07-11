@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Attention</DisplayName>
-    <Description>Allows attract user's attention</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-16</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.attention</Name>
-    <UpdateText>Use Large avatar size option to specify avatar size in Attention dialog. Minor updates and fixes.</UpdateText>
-    <SortingPriority>28</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Attention</DisplayName>
+ <Description>Allows attract user's attention</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2016-04-16</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.attention</Name>
+ <UpdateText>Use Large avatar size option to specify avatar size in Attention dialog. Minor updates and fixes.</UpdateText>
+ <SortingPriority>28</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

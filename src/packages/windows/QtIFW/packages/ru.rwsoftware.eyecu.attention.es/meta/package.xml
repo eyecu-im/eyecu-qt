@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Attention Spanish Translation</DisplayName>
-    <Description>Attention Spanish translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.attention.es</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.attention,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Attention Spanish Translation</DisplayName>
+ <Description>Attention Spanish translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.attention.es</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.attention,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>URL Processor Polish Translation</DisplayName>
-    <Description>URL Processor Polish translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.urlprocessor.pl</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.urlprocessor,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>URL Processor Polish Translation</DisplayName>
+ <Description>URL Processor Polish translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.urlprocessor.pl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.urlprocessor,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

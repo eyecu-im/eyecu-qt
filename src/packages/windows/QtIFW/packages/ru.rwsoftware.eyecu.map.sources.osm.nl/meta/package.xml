@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Source OSM Dutch Translation</DisplayName>
-    <Description>Map Source OSM Dutch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.sources.osm.nl</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.map.sources.osm,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Map Source OSM Dutch Translation</DisplayName>
+ <Description>Map Source OSM Dutch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.sources.osm.nl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.map.sources.osm,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

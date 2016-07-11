@@ -1,11 +1,12 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>User Activity Russian Translation</DisplayName>
-    <Description>User Activity Russian translation</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-07</ReleaseDate>
-    <UpdateText>Fixed typo in translation of "Getting a haircut" activity name</UpdateText>
-    <Name>ru.rwsoftware.eyecu.pepmanager.activity.ru</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.activity,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>User Activity Russian Translation</DisplayName>
+ <Description>User Activity Russian translation</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2016-04-07</ReleaseDate>
+ <UpdateText>Fixed typo in translation of "Getting a haircut" activity name</UpdateText>
+ <Name>ru.rwsoftware.eyecu.pepmanager.activity.ru</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.activity,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

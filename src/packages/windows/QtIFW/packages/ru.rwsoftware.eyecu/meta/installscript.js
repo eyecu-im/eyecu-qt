@@ -39,10 +39,12 @@
 **************************************************************************/
 
 function Component() {
-    if (installer.isInstaller() || installer.isUpdater())
+	QMessageBox.information("component.info", "Component()", "A", QMessageBox.Ok);
+    if (installer.isInstaller() || installer.isUpdater()) {
+	    QMessageBox.information("component.info", "Component()", "B", QMessageBox.Ok);
         component.loaded.connect(this, Component.prototype.loaded);
-	if (installer.isInstaller() || installer.isUpdater())
 		installer.installationStarted.connect(this, Component.prototype.installationStarted);
+	}
 }
 
 Component.prototype.createOperations = function() {
@@ -63,10 +65,16 @@ Component.prototype.createOperations = function() {
 
 		if (desktop)
 			component.addOperation("CreateShortcut", "@TargetDir@/eyecu.exe", "@DesktopDir@\\eyeCU.lnk", "workingDirectory=@TargetDir@");
-		component.addOperation("GlobalConfig", scope, "Road Works Software", "eyeCU", "Desktop", desktop);       	    
+		component.addOperation("GlobalConfig", scope, "Road Works Software", "eyeCU", "Desktop", desktop);
 	}
 	if (installer.value("Portable")=="true")
-		installer.addOperation("Mkdir", "@TargetDir@/eyecu");
+		component.addOperation("Mkdir", "@TargetDir@/eyecu");
+}
+
+Component.prototype.beginInstallation = function() {
+	var targetPath = installer.value("TargetDir") + "\\eyecu.exe";
+	component.addStopProcessForUpdateRequest(targetPath);
+	component.beginInstallation();
 }
 
 Component.prototype.loaded = function () {
@@ -78,14 +86,8 @@ Component.prototype.loaded = function () {
 				widget.windowTitle = "Select installation type";
 				widget.installAllUsers.toggled.connect(this, Component.prototype.installAllUsersToggled);
 				widget.installMeOnly.toggled.connect(this, Component.prototype.installMeOnlyToggled);
-				if (installer.gainAdminRights()) {
-					widget.installAllUsers.checked = true;
-					Component.prototype.installAllUsersToggled(true);
-				} else {
-					widget.installMeOnly.checked = true;
-					widget.installAllUsers.enabled = false;
-					Component.prototype.installMeOnlyToggled(true);
-				}
+				widget.installAllUsers.checked = true;
+				Component.prototype.installAllUsersToggled(true);
 			}
 		}
 

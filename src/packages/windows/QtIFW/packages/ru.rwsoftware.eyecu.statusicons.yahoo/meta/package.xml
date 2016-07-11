@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Yahoo!</DisplayName>
-    <Description>Yahoo!</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-01-21</ReleaseDate>
-    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
-    <Name>ru.rwsoftware.eyecu.statusicons.yahoo</Name>
-    <SortingPriority>20</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Yahoo!</DisplayName>
+ <Description>Yahoo!</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-01-21</ReleaseDate>
+ <UpdateText>Fixed incorrect icon association pattern</UpdateText>
+ <Name>ru.rwsoftware.eyecu.statusicons.yahoo</Name>
+ <SortingPriority>20</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

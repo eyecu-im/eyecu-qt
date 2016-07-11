@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Conference</DisplayName>
-    <Description>Conference</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-07</ReleaseDate>
-    <UpdateText>Fixed incorrect icon association pattern (for nicknames with dot)</UpdateText>
-    <Name>ru.rwsoftware.eyecu.statusicons.conference</Name>
-    <SortingPriority>4</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Conference</DisplayName>
+ <Description>Conference</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2016-04-07</ReleaseDate>
+ <UpdateText>Fixed incorrect icon association pattern (for nicknames with dot)</UpdateText>
+ <Name>ru.rwsoftware.eyecu.statusicons.conference</Name>
+ <SortingPriority>4</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

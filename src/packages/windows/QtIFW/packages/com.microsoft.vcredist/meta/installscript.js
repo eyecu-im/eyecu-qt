@@ -38,27 +38,20 @@ function Component()
 
 Component.prototype.createOperationsForArchive = function(archive)
 {
-    if (installer.gainAdminRights())
-    {
-		temp = QDesktopServices.storageLocation(QDesktopServices.TempLocation)
+	temp = QDesktopServices.storageLocation(QDesktopServices.TempLocation)
 
-		if (temp != "")
-		{
-			tmpdir = temp+"/eyecu-msvcrt-redist/";
-			component.addOperation("Extract", archive, tmpdir);
-			component.addOperation("Execute","{0,1612,1618,3010}", tmpdir+"vcredist_x86.exe", "/q");
-			component.addOperation("Delete", tmpdir+"vcredist_x86.exe");
-	//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
-	//		component.addOperation("Rmdir", tmpdir);
-		}
-		else
-		{
-			QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
-			installer.interrupt();
-		}
+	if (temp != "")
+	{
+		tmpdir = temp+"/eyecu-msvcrt-redist/";
+		component.addOperation("Extract", archive, tmpdir);
+		component.addOperation("Execute","{0,1612,1618,3010}", tmpdir+"vcredist_x86.exe", "/q");
+		component.addOperation("Delete", tmpdir+"vcredist_x86.exe");
+//		component.addOperation("Delete", tmpdir+"vcredist_x86.exe.*");
+//		component.addOperation("Rmdir", tmpdir);
 	}
 	else
 	{
-		QMessageBox.error("component.error", "Error!", "Failed to gain admin rights!", QMessageBox.Ok);
+		QMessageBox.error("component.error", "Error!", "Failed to extract Microsoft Visual C Runtime installer.\nNeither TMP nor TEMP environment variable set!", QMessageBox.Ok);
+		installer.interrupt();
 	}
 }

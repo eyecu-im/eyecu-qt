@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>2GIS Dutch Translation</DisplayName>
-    <Description>2GIS Dutch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.mapsearch.2gis.nl</Name>
-	<AutoDependOn>ru.rwsoftware.eyecu.mapsearch.2gis,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>2GIS Dutch Translation</DisplayName>
+ <Description>2GIS Dutch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.mapsearch.2gis.nl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.mapsearch.2gis,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

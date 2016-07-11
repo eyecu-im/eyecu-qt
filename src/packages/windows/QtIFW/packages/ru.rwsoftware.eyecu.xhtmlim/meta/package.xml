@@ -1,14 +1,15 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>XHTML-IM</DisplayName>
-    <Description>Allows to use rich text formatting in messages</Description>
-    <Version>1.3.10</Version>
-    <ReleaseDate>2016-04-28</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.xhtmlim</Name>
-    <UpdateText>When Add Link dialog invoked by a shortcut, encoded URL was inserted into plain text variant of the message.</UpdateText>
-    <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.menuicons.edit</Dependencies>
-    <SortingPriority>30</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>XHTML-IM</DisplayName>
+ <Description>Allows to use rich text formatting in messages</Description>
+ <Version>1.3.10</Version>
+ <ReleaseDate>2016-04-28</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.xhtmlim</Name>
+ <UpdateText>When Add Link dialog invoked by a shortcut, encoded URL was inserted into plain text variant of the message.</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.link,ru.rwsoftware.eyecu.resources.menuicons.edit</Dependencies>
+ <SortingPriority>30</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

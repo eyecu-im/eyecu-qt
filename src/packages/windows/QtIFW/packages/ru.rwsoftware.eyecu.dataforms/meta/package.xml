@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Data Forms Manager</DisplayName>
-    <Description>Allows other modules to process and display the form with the data intended for user</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.dataforms</Name>
-    <SortingPriority>7</SortingPriority>
-    <Virtual>true</Virtual>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Data Forms Manager</DisplayName>
+ <Description>Allows other modules to process and display the form with the data intended for user</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.dataforms</Name>
+ <SortingPriority>7</SortingPriority>
+ <Virtual>true</Virtual>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

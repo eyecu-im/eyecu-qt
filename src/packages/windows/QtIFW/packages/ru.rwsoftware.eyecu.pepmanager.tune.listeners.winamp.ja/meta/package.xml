@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Tune Listener WINAMP Japanese Translation</DisplayName>
-    <Description>Tune Listener WINAMP Japanese translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp.ja</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Tune Listener WINAMP Japanese Translation</DisplayName>
+ <Description>Tune Listener WINAMP Japanese translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp.ja</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

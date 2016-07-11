@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Google</DisplayName>
-    <Description>Allows to use Google as a map search provider</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.mapsearch.google</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <SortingPriority>70</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Google</DisplayName>
+ <Description>Allows to use Google as a map search provider</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.mapsearch.google</Name>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <SortingPriority>70</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

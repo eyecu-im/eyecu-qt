@@ -1,17 +1,18 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Documentation</DisplayName>
-    <Description>eyeCU Documentation</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-05-04</ReleaseDate>
-    <UpdateText>TRANSLATORS file updated</UpdateText>
-    <Name>ru.rwsoftware.eyecu.docs</Name>
-    <SortingPriority>10</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
-    <Script>installscript.js</Script>
-    <UserInterfaces>
-        <UserInterface>readmecheckboxform.ui</UserInterface>
-    </UserInterfaces>
+ <DisplayName>Documentation</DisplayName>
+ <Description>eyeCU Documentation</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-05-04</ReleaseDate>
+ <UpdateText>TRANSLATORS file updated</UpdateText>
+ <Name>ru.rwsoftware.eyecu.docs</Name>
+ <SortingPriority>10</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <UserInterfaces>
+  <UserInterface>readmecheckboxform.ui</UserInterface>
+ </UserInterfaces>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

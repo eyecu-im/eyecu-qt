@@ -1,14 +1,15 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>SOCKS5 Data Stream</DisplayName>
-    <Description>Allows to initiate SOCKS5 stream of data between two XMPP entities</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.filetransfer.socks5</Name>
-    <Dependencies>ru.rwsoftware.eyecu.filetransfer</Dependencies>
-    <SortingPriority>2</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>SOCKS5 Data Stream</DisplayName>
+ <Description>Allows to initiate SOCKS5 stream of data between two XMPP entities</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.filetransfer.socks5</Name>
+ <Dependencies>ru.rwsoftware.eyecu.filetransfer</Dependencies>
+ <SortingPriority>2</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

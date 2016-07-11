@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Qt4 Polish Translation</DisplayName>
-    <Description>Qt4 Polish translation</Description>
-    <Version>4.8.7</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>org.digia.qt4.pl</Name>
-    <AutoDependOn>org.digia.qt4,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Qt4 Polish Translation</DisplayName>
+ <Description>Qt4 Polish translation</Description>
+ <Version>4.8.7</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>org.digia.qt4.pl</Name>
+ <AutoDependOn>org.digia.qt4,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

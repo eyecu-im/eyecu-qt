@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Location Selector Dutch Translation</DisplayName>
-    <Description>Map Location Selector Dutch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.locationselector.nl</Name>
-	<AutoDependOn>ru.rwsoftware.eyecu.map.locationselector,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Map Location Selector Dutch Translation</DisplayName>
+ <Description>Map Location Selector Dutch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.locationselector.nl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.map.locationselector,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

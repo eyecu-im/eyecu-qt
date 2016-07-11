@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Yandex</DisplayName>
-    <Description>Allows to use Yandex as a map search provider</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.mapsearch.yandex</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <SortingPriority>40</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Yandex</DisplayName>
+ <Description>Allows to use Yandex as a map search provider</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.mapsearch.yandex</Name>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <SortingPriority>40</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

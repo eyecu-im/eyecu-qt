@@ -4,7 +4,7 @@
     <Description>Scheduler Dutch translation</Description>
     <Version>1.3.0</Version>
     <ReleaseDate>2016-07-07</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.Scheduler.nl</Name>
+    <Name>ru.rwsoftware.eyecu.scheduler.nl</Name>
     <AutoDependOn>ru.rwsoftware.eyecu.Scheduler,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
     <Virtual>true</Virtual>
 </Package>

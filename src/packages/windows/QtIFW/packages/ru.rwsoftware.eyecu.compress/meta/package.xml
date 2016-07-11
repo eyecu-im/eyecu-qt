@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Stream Compression</DisplayName>
-    <Description>Allows to compress a stream of messages sent and received from the server</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.compress</Name>
-    <SortingPriority>95</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Stream Compression</DisplayName>
+ <Description>Allows to compress a stream of messages sent and received from the server</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.compress</Name>
+ <SortingPriority>95</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>
