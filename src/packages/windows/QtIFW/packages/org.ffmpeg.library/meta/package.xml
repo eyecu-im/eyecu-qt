@@ -7,5 +7,6 @@
  <ReleaseDate>2016-02-27</ReleaseDate>
  <Name>org.ffmpeg.library</Name>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

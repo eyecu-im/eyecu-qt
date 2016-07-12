@@ -8,5 +8,6 @@
  <UpdateText>Rich text to plain text translation algorythm fixed: link address was placed in incorrect place; object replacement character for images wasn't removed.</UpdateText>
  <Dependencies>ru.purplesoft.qtpurple</Dependencies>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -7,5 +7,4 @@
  <Name>ru.rwsoftware.eyecu.map.sources</Name>
  <Dependencies>ru.rwsoftware.eyecu.resources.menuicons.mapsources</Dependencies>
  <SortingPriority>10</SortingPriority>
- <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

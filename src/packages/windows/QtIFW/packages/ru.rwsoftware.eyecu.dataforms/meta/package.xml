@@ -10,5 +10,6 @@
  <Virtual>true</Virtual>
  <ForcedInstallation>false</ForcedInstallation>
  <Essential>false</Essential>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

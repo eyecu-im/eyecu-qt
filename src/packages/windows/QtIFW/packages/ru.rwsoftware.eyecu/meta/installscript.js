@@ -39,9 +39,7 @@
 **************************************************************************/
 
 function Component() {
-	QMessageBox.information("component.info", "Component()", "A", QMessageBox.Ok);
     if (installer.isInstaller() || installer.isUpdater()) {
-	    QMessageBox.information("component.info", "Component()", "B", QMessageBox.Ok);
         component.loaded.connect(this, Component.prototype.loaded);
 		installer.installationStarted.connect(this, Component.prototype.installationStarted);
 	}

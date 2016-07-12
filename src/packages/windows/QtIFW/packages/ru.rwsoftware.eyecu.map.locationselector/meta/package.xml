@@ -8,5 +8,6 @@
  <UpdateText>Synchronized with Vacuum-IM</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.map</Dependencies>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -55,3 +55,9 @@ Component.prototype.createOperationsForArchive = function(archive)
 		installer.interrupt();
 	}
 }
+
+Component.prototype.beginInstallation = function() {
+	var targetPath = installer.value("TargetDir") + "\\eyecu.exe";
+	component.addStopProcessForUpdateRequest(targetPath);
+	component.beginInstallation();
+}

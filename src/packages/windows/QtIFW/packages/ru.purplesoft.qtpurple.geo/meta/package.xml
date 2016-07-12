@@ -8,5 +8,6 @@
  <UpdateText>MapScale now reports correct size hint</UpdateText>
  <Dependencies>ru.purplesoft.qtpurple</Dependencies>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

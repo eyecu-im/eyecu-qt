@@ -7,5 +7,6 @@
  <Name>ru.rwsoftware.eyecu.loader</Name>
  <UpdateText>Application revision updated</UpdateText>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

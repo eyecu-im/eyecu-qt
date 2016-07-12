@@ -6,5 +6,6 @@
  <ReleaseDate>2016-01-28</ReleaseDate>
  <Name>org.openssl.shared</Name>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

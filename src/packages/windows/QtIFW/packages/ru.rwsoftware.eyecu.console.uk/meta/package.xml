@@ -7,5 +7,6 @@
  <Name>ru.rwsoftware.eyecu.console.uk</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.console,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
  <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

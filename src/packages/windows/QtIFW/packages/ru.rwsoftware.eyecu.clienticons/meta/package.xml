@@ -11,4 +11,5 @@
  <ForcedInstallation>false</ForcedInstallation>
  <Essential>false</Essential>
  <RequiresAdminRights>true</RequiresAdminRights>
+ <Script>installscript.js</Script>
 </Package>

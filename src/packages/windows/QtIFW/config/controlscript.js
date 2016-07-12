@@ -39,39 +39,17 @@
 **************************************************************************/
 
 function Controller() {
-	QMessageBox.information("controller.info", "Controller()", "begin!", QMessageBox.Ok);
-	installer.uninstallationStarted.connect(onUninstallationStarted);
-	QMessageBox.information("controller.info", "Controller()", "A!", QMessageBox.Ok);
 	installer.updateFinished.connect(onUpdateFinished);
-	QMessageBox.information("controller.info", "Controller()", "B!", QMessageBox.Ok);
 	installer.installationFinished.connect(onUpdateFinished);
-	QMessageBox.information("controller.info", "Controller()", "end!", QMessageBox.Ok);
-}
-
-onUninstallationStarted = function() {
-	var targetPath = installer.value("TargetDir") + "\\eyecu.exe";
-//	targetPath = targetPath[0].toLowerCase() + targetPath.substr(1);
-	QMessageBox.information("controller.info", targetPath + " is running", installer.isProcessRunning(targetPath), QMessageBox.Ok);
-	if (installer.killProcess("eyecu.exe"))
-		QMessageBox.information("controller.info", targetPath, "Killed", QMessageBox.Ok);
-	else
-		QMessageBox.error("controller.info", targetPath, "NOT Killed", QMessageBox.Ok);
-	
 }
 
 onUpdateFinished = function() {
-	QMessageBox.information("controller.info", "Controller()", "onUpdateFinished", QMessageBox.Ok);
 	var targetPath = installer.value("TargetDir") + "\\eyecu.exe";
-//	targetPath = targetPath[0].toLowerCase() + targetPath.substr(1);
-	QMessageBox.information("controller.info", targetPath + " is running", installer.isProcessRunning(targetPath), QMessageBox.Ok);
 	if (installer.isProcessRunning(targetPath)) {
-		QMessageBox.information("controller.info", "onUpdateFinished", "A", QMessageBox.Ok);
 		var page = gui.pageById(QInstaller.InstallationFinished);
 		if (page != null) {
-			QMessageBox.information("controller.info", "onUpdateFinished", "A", QMessageBox.Ok);
 			page.RunItCheckBox.checked = false;
 			page.RunItCheckBox.enabled = false;
 		}
 	}
-
 }

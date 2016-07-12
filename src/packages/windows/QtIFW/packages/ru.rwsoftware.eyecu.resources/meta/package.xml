@@ -6,5 +6,4 @@
  <ReleaseDate>2015-02-24</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.resources</Name>
  <Virtual>true</Virtual>
- <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

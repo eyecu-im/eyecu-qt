@@ -10,5 +10,4 @@
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
  <Essential>false</Essential>
- <RequiresAdminRights>true</RequiresAdminRights>
 </Package>
