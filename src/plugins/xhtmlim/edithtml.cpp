@@ -750,7 +750,7 @@ void EditHtml::onInsertLink()
 	Action *action=qobject_cast<Action *>(sender());
 
 	AddLink *addLink = new AddLink(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK),
-								   QUrl::fromEncoded(charFmtCurrent.anchorHref().toLatin1()), cursor.selectedText(), action->parentWidget()->parentWidget());
+								   charFmtCurrent.anchorHref(), cursor.selectedText(), action->parentWidget()->parentWidget());
 	switch (addLink->exec())
 	{
 		case AddLink::Add:
