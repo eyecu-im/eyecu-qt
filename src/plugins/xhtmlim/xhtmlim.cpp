@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QUrl>
 #include <QLayout>
 #include <QBoxLayout>
@@ -2347,7 +2346,6 @@ bool XhtmlIm::messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidg
 				QList<QUrl> urls=AData->urls();
 				for (QList<QUrl>::const_iterator it=urls.constBegin(); it!=urls.constEnd(); it++)
 				{
-					qDebug() << "url=" << (*it).toString();
 					if (it->scheme() == "ftp" ||
 						it->scheme() == "http" ||
 						it->scheme() == "https" )
@@ -2472,7 +2470,34 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 		{
 			QString html=AData->html();
 			fixHtml(html);
-			QTextCursor(ADocument).insertHtml(html);
+			QTextCursor cursor(ADocument);
+			int start = cursor.position();
+			cursor.insertHtml(html);
+			int end = cursor.position();
+
+			// Remove URLs with "muc:" scheme
+			cursor.setPosition(start);
+			QList<QPair<int,int> > positions;
+
+			for (QTextBlock block = cursor.block(); block.isValid() && block.position()<end; block=block.next())
+				for (QTextBlock::Iterator it = block.begin(); it!=block.end(); ++it)
+				{
+					QTextFragment fragment = it.fragment();
+					QTextCharFormat format = fragment.charFormat();
+					if (format.isAnchor() & QUrl(format.anchorHref()).scheme()=="muc")
+						positions.append(qMakePair<int,int>(fragment.position(),fragment.length()));
+				}
+
+			for (QList<QPair<int,int> >::ConstIterator it=positions.constBegin(); it!=positions.constEnd(); ++it)
+			{
+				cursor.setPosition((*it).first);
+				cursor.setPosition((*it).first+(*it).second, QTextCursor::KeepAnchor);
+				QTextCharFormat format = cursor.charFormat();
+				format.clearProperty(QTextFormat::IsAnchor);
+				format.clearProperty(QTextFormat::AnchorHref);
+				cursor.setCharFormat(format);
+			}
+
 //TODO: Fix XmlTextDocumentParser::htmlToText() to make it fully compatible with clipboard contents
 //			XmlTextDocumentParser::htmlToText(ADocument, html);
 			return true;
