@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Multi-User Cenferences Japanese Translation</DisplayName>
- <Description>Multi-User Cenferences Japanese translation</Description>
+ <DisplayName>Multi-User Conferences Japanese Translation</DisplayName>
+ <Description>Multi-User Conferences Japanese translation</Description>
  <Version>1.3.0</Version>
  <ReleaseDate>2015-02-24</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.multiuserchat.ja</Name>

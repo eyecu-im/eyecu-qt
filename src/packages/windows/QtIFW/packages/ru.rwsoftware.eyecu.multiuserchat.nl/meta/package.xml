@@ -1,9 +1,9 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Multi-User Cenferences Dutch Translation</DisplayName>
- <Description>Multi-User Cenferences Dutch translation</Description>
- <Version>1.3.8</Version>
- <ReleaseDate>2016-04-22</ReleaseDate>
+ <DisplayName>Multi-User Conferences Dutch Translation</DisplayName>
+ <Description>Multi-User Conferences Dutch translation</Description>
+ <Version>1.3.9</Version>
+ <ReleaseDate>2016-12-16</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.multiuserchat.nl</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.multiuserchat,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
  <Virtual>true</Virtual>
