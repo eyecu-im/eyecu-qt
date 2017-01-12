@@ -158,16 +158,16 @@ QTextDocumentFragment AdiumMessageStyle::textFragmentAt(QWidget *AWidget, const 
 // *** <<< eyeCU <<< ***
 QImage AdiumMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
 {
-    QWebElement element(hitTest(AWidget, APosition).element());
-    if (element.tagName().toUpper()=="IMG")
-    {
-        QImage image(element.geometry().width(), element.geometry().height(), QImage::Format_ARGB32);
-        QPainter painter(&image);
-        element.render(&painter);
-        painter.end();
-        return image;
-    }
-    return QImage();
+	QWebElement element(hitTest(AWidget, APosition).element());
+	if (element.tagName().toUpper()=="IMG")
+	{
+		QImage image(element.geometry().width(), element.geometry().height(), QImage::Format_ARGB32);
+		QPainter painter(&image);
+		element.render(&painter);
+		painter.end();
+		return image;
+	}
+	return QImage();
 }
 // *** >>> eyeCU >>> ***
 
@@ -567,19 +567,19 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 	QStringList messageClasses;
 	if (isConsecutive(AOptions,AStatus))
 		messageClasses << MSMC_CONSECUTIVE;
-	
+
 	if (AOptions.kind==IMessageStyleContentOptions::KindMeCommand)
 		messageClasses << (!FMeCommandHTML.isEmpty() ? MSMC_MECOMMAND : MSMC_STATUS);
 	else if (AOptions.kind == IMessageStyleContentOptions::KindStatus)
 		messageClasses << MSMC_STATUS;
 	else
 		messageClasses << MSMC_MESSAGE;
-	
+
 	if (isDirectionIn)
 		messageClasses << MSMC_INCOMING;
 	else
 		messageClasses << MSMC_OUTGOING;
-	
+
 	if (AOptions.type & IMessageStyleContentOptions::TypeGroupchat)
 		messageClasses << MSMC_GROUPCHAT;
 	if (AOptions.type & IMessageStyleContentOptions::TypeHistory)
@@ -639,11 +639,7 @@ void AdiumMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyleC
 		if (!isDirectionIn && !QFile::exists(FResourcePath+"/"+avatar))
 			avatar = "Incoming/buddy_icon.png";
 	}
-#if QT_VERSION >= 0x050000
-	AHtml.replace("%userIconPath%",QUrl::fromLocalFile(avatar).toString());
-#else
-	AHtml.replace("%userIconPath%",avatar);
-#endif
+	AHtml.replace("%userIconPath%",QUrl::fromLocalFile(avatar).toString()); // *** <<< eyeCU >>> ***
 	QString timeFormat = !AOptions.timeFormat.isEmpty() ? AOptions.timeFormat : tr("hh:mm:ss");
 	QString time = HTML_ESCAPE(AOptions.time.toString(timeFormat));
 	AHtml.replace("%time%", time);

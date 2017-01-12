@@ -2,6 +2,7 @@
 #define MESSAGEEDITOR_H
 
 #include <QTextEdit>
+#include <QUrl> // *** <<< eyeCU >>> ***
 
 class MessageEditor :
 	public QTextEdit
@@ -28,6 +29,7 @@ protected:
 	virtual QMimeData *createMimeDataFromSelection() const;
 	virtual bool canInsertFromMimeData(const QMimeData *ASource) const;
 	virtual void insertFromMimeData(const QMimeData *ASource);
+    virtual QVariant loadResource (int AType, const QUrl &AName); // *** <<< eyeCU >>> ***
 protected slots:
 	void onTextChanged();
 private:

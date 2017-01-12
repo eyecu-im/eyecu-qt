@@ -122,22 +122,22 @@ QTextDocumentFragment SimpleMessageStyle::textFragmentAt(QWidget *AWidget, const
 // *** <<< eyeCU <<< ***
 QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
 {
-    QTextCharFormat format = textFormatAt(AWidget, APosition);
-    if (format.isImageFormat())
-    {
+	QTextCharFormat format = textFormatAt(AWidget, APosition);
+	if (format.isImageFormat())
+	{
 		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
-        switch (resource.type())
-        {
-            case QMetaType::QImage:
-                return resource.value<QImage>();
-            case QMetaType::QPixmap:
-                return resource.value<QPixmap>().toImage();
-            case QMetaType::QByteArray:
-                return  QImage::fromData(resource.toByteArray());
-            default:;
-        }
-    }
-    return QImage();
+		switch (resource.type())
+		{
+			case QMetaType::QImage:
+				return resource.value<QImage>();
+			case QMetaType::QPixmap:
+				return resource.value<QPixmap>().toImage();
+			case QMetaType::QByteArray:
+				return  QImage::fromData(resource.toByteArray());
+			default:;
+		}
+	}
+	return QImage();
 }
 // *** >>> eyeCU >>> ***
 
@@ -471,12 +471,12 @@ void SimpleMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyle
 		messageClasses << MSMC_STATUS;
 	else
 		messageClasses << MSMC_MESSAGE;
-	
+
 	if (isDirectionIn)
 		messageClasses << MSMC_INCOMING;
 	else
 		messageClasses << MSMC_OUTGOING;
-	
+
 	if (AOptions.type & IMessageStyleContentOptions::TypeGroupchat)
 		messageClasses << MSMC_GROUPCHAT;
 	if (AOptions.type & IMessageStyleContentOptions::TypeHistory)
@@ -536,7 +536,7 @@ void SimpleMessageStyle::fillContentKeywords(QString &AHtml, const IMessageStyle
 		if (!QFile::exists(avatar))
 			avatar = FSharedPath+"/buddy_icon.png";
 	}
-	AHtml.replace("%userIconPath%",avatar);
+	AHtml.replace("%userIconPath%", QUrl::fromLocalFile(avatar).toString());  // *** <<< eyeCU >>> ***
 
 	QString timeFormat = !AOptions.timeFormat.isEmpty() ? AOptions.timeFormat : tr("hh:mm:ss");
 	QString time = HTML_ESCAPE(AOptions.time.toString(timeFormat));

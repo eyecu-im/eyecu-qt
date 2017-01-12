@@ -100,8 +100,26 @@ void MessageEditor::insertFromMimeData(const QMimeData *ASource)
 	}
 
 	ensureCursorVisible();
-	setFocus();
+    setFocus();
 }
+// *** <<< eyeCU <<< ***
+QVariant MessageEditor::loadResource(int AType, const QUrl &AName)
+{
+    // Do NOT load URL with "file" scheme via proxy!
+    // Load it manually instead
+    if (AName.scheme()=="file")
+    {
+        QFile file(AName.toLocalFile());
+        if (file.open(QIODevice::ReadOnly))
+        {
+            QByteArray imageData = file.readAll();
+            file.close();
+            return imageData;
+        }
+    }
+    return QTextEdit::loadResource(AType, AName);
+}
+// *** >>> eyeCU >>> ***
 
 void MessageEditor::onTextChanged()
 {

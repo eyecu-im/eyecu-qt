@@ -168,10 +168,10 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FONT, tr("Font"), tr("Ctrl+F", "Font"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FOREGROUNDCOLOR, tr("Foreground color"), tr("Alt+F", "Foreground color"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BACKGROUNDCOLOR, tr("Background color"), tr("Alt+B", "Background color"), Shortcuts::WindowShortcut);
-    Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, tr("Center"), tr("Alt+Up", "Align center"), Shortcuts::WindowShortcut);
-    Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, tr("Left"), tr("Alt+Left", "Align left"), Shortcuts::WindowShortcut);
-    Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, tr("Right"), tr("Alt+Right", "Align right"), Shortcuts::WindowShortcut);
-    Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, tr("Justify"), tr("Alt+Down", "Align justify"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNCENTER, tr("Center"), tr("Alt+Up", "Align center"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNLEFT, tr("Left"), tr("Alt+Left", "Align left"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNRIGHT, tr("Right"), tr("Alt+Right", "Align right"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ALIGNJUSTIFY, tr("Justify"), tr("Alt+Down", "Align justify"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, tr("Remove formatting"), tr("Alt+R", "Remove formatting"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATAUTORESET, tr("Toggle reset formatting on message send"), tr("Alt+A", "Toggle reset formatting on message send"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INDENTINCREASE, tr("Increase indent"), tr("", "Incerease indent"), Shortcuts::WindowShortcut);
@@ -951,7 +951,7 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 
 			//  *** Block formatting ***
 			QTextBlockFormat blockFormat = cursor.blockFormat();
-			//  Alignment			
+			//  Alignment
 			Qt::Alignment alignment = blockFormat.alignment();
 			Menu *align = new Menu(menu);
 			align->setTitle(tr("Text align"));
@@ -1847,7 +1847,7 @@ void XhtmlIm::onInsertLink()
 }
 
 void XhtmlIm::onInsertImage()
-{	
+{
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
@@ -2207,6 +2207,8 @@ void XhtmlIm::onImageOpen()
 
 bool XhtmlIm::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
+	Q_UNUSED(AOrder)
+	Q_UNUSED(ALang)
 	return !AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body").isNull();
 }
 
@@ -2257,6 +2259,7 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 				return false; // No formatting!
 
 			if (FBitsOfBinary)
+			{
 				for (QTextBlock block=ADocument->begin(); block!=ADocument->end(); block=block.next())
 					for (QTextBlock::iterator it=block.begin(); it!=block.end(); it++)
 					{
@@ -2277,19 +2280,40 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 									QList<QString> parts=imageUrl.path().split(';');
 									if (parts.size()==2 && parts[0].startsWith("image/"))
 									{
-										format.setProperty(PMaxAge, Options::node(OPV_XHTML_MAXAGE).value().toLongLong());
 										format.setProperty(PMimeType, parts[0]);
 										parts = parts[1].split(',');
 										if (parts.size()==2 && parts[0]=="base64")
 											imageData = QByteArray::fromBase64(parts[1].toLatin1());
-										format.setProperty(PEmbed, imageData.size()<= Options::node(OPV_XHTML_EMBEDSIZE).value().toInt());
+									}
+								}
+								else if (imageUrl.scheme()=="file")
+								{
+									QFile file(imageUrl.toLocalFile());
+									if (file.open(QIODevice::ReadOnly))
+									{
+										imageData = file.readAll();
+										file.close();
 									}
 								}
 
 								if (!imageData.isEmpty())
 								{
-									QString type	= format.property(PMimeType).toString();
-									quint64 maxAge	= format.property(PMaxAge).toLongLong();
+									QString type;
+									if (format.hasProperty(PMimeType))
+										type = format.property(PMimeType).toString();
+									else
+									{
+										QBuffer buffer(&imageData);
+										QImageReader reader(&buffer);
+										type = QString("image/")+reader.format();
+										buffer.close();
+									}
+
+									quint64 maxAge;
+									if (format.hasProperty(PMimeType))
+										maxAge = format.property(PMaxAge).toLongLong();
+									else
+										maxAge = Options::node(OPV_XHTML_MAXAGE).value().toLongLong();
 
 									QString cid;
 									if (imageUrl.scheme()=="cid")
@@ -2304,13 +2328,21 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 										cursor.setPosition(fragment.position()+fragment.length(), QTextCursor::KeepAnchor);
 										cursor.insertImage(imageFormat);
 									}
-									FBitsOfBinary->saveBinary(cid, type, imageData, maxAge);
-									if(format.property(PEmbed).toBool())
-										FBitsOfBinary->saveBinary(cid, type, imageData, maxAge, AMessage.stanza());
+
+									// Save image binary
+									FBitsOfBinary->saveBinary(cid, type, imageData, maxAge, AMessage.stanza());
+									bool embed;
+									if (format.hasProperty(PEmbed))
+										embed = format.property(PEmbed).toBool();
+									else
+										embed = imageData.size()<= Options::node(OPV_XHTML_EMBEDSIZE).value().toInt();
+									if(embed)
+										FBitsOfBinary->saveBinary(cid, type, imageData, maxAge);
 								}
 							}
 						}
 					}
+			}
 			QDomElement  html=AMessage.stanza().document().createElementNS(NS_XHTML_IM, "html");
 			QDomElement  body=AMessage.stanza().document().createElementNS(NS_XHTML, "body");
 			html.appendChild(body);
@@ -2410,7 +2442,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 
 			if (AData->hasUrls() && AData->urls().size()==1)
 			{
-				QUrl url = AData->urls()[0];				
+				QUrl url = AData->urls()[0];
 				QTextImageFormat imageFormat;
 				imageFormat.setName(url.toString());
 				if (!alt.isEmpty())
@@ -2484,7 +2516,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 				{
 					QTextFragment fragment = it.fragment();
 					QTextCharFormat format = fragment.charFormat();
-					if (format.isAnchor() & QUrl(format.anchorHref()).scheme()=="muc")
+					if (format.isAnchor() && QUrl(format.anchorHref()).scheme()=="muc")
 						positions.append(qMakePair<int,int>(fragment.position(),fragment.length()));
 				}
 
