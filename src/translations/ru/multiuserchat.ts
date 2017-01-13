@@ -910,6 +910,32 @@
         <source>Conference with %1</source>
         <translation>Конференция с %1</translation>
     </message>
+    <message>
+        <source>Left mouse button</source>
+        <comment>Instrumental case</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Middle mouse button</source>
+        <comment>Instrumental case</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Address user by clicking nickname in the list with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Highlight alternation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add this suffix when referring to the user</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display user status message</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MultiUserChatWindow</name>
