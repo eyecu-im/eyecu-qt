@@ -129,12 +129,12 @@ QMultiMap<int, IOptionsDialogWidget *> MapSearch::optionsDialogWidgets(const QSt
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_MAPSEARCH)
     {
-		widgets.insertMulti(OHO_MAPSEARCH_GENERAL, FOptionsManager->newOptionsDialogHeader("General", AParent));
+		widgets.insertMulti(OHO_MAPSEARCH_GENERAL, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
 		widgets.insertMulti(OWO_MAPSEARCH_GENERAL, new MapSearchOptions(AParent));
-		widgets.insertMulti(OHO_MAPSEARCH_CONNECTION, FOptionsManager->newOptionsDialogHeader("Connection", AParent));
+		widgets.insertMulti(OHO_MAPSEARCH_CONNECTION, FOptionsManager->newOptionsDialogHeader(tr("Connection"), AParent));
         if (FConnectionManager)
 			widgets.insertMulti(OWO_MAPSEARCH_CONNECTION, FConnectionManager->proxySettingsWidget(Options::node(OPV_MAP_SEARCH_PROXY), AParent));
-		widgets.insertMulti(OHO_MAPSEARCH_PROVIDERS, FOptionsManager->newOptionsDialogHeader("Providers", AParent));
+		widgets.insertMulti(OHO_MAPSEARCH_PROVIDERS, FOptionsManager->newOptionsDialogHeader(tr("Providers"), AParent));
     }
 	return widgets;
 }

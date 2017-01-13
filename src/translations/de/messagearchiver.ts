@@ -328,235 +328,236 @@
  <context>
   <name>ArchiveViewWindow</name>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="132"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="140"/>
    <source>Conversations are not found</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="144"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="152"/>
    <source>Conversation is not selected</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="181"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="189"/>
    <source>Export</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="203"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="211"/>
    <source>Search in text</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="255"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="263"/>
    <source>Conversation History</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="272"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="280"/>
    <source>Search is not supported</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="276"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="284"/>
    <source>Search in history</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="610"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="618"/>
    <source>Load more conversations</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="612"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="620"/>
    <source>All conversations loaded</source>
    <translation type="unfinished"/>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="616"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="624"/>
    <source>%n conversation header(s) found</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="618"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="626"/>
    <source>Conversation headers are not found</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="625"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="633"/>
    <source>Loading conversation headers...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="632"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="640"/>
    <source>Retry</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="635"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="643"/>
    <source>Failed to load conversation headers: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="648"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="656"/>
    <source>Select conversation to show</source>
    <translation type="unfinished"/>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="650"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
    <source>%n conversation(s) shown</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="656"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="664"/>
    <source>Loading conversations...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="666"/>
    <source>Shown %1 of %2 conversations...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="662"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="670"/>
    <source>Failed to load conversations: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="793"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1268"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1477"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="817"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1292"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1518"/>
    <source>Archive is not accessible</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="940"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="964"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2 in %3</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="946"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="970"/>
    <source>&lt;b&gt;%1&lt;/b&gt; in %2</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="952"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="976"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2</source>
    <translation type="unfinished"/>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1146"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1170"/>
    <source>Found %n occurrence(s)</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1156"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1180"/>
    <source>Phrase not found</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1227"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1251"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for &lt;b&gt;%2 %3&lt;/b&gt;?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1233"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1257"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; started at &lt;b&gt;%2&lt;/b&gt;?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1237"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1261"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for all time?</source>
    <translation type="unfinished"/>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1245"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1269"/>
    <source>And %n other conversation(s)</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1249"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1273"/>
    <source>Remove conversation history</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1250"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1274"/>
    <source>Do you want to remove the following conversations?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1266"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1290"/>
    <source>Removing conversations...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1268"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1554"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1292"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1595"/>
    <source>Failed to remove conversations: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1319"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1349"/>
    <source>Remove Selected Conversations</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1330"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1360"/>
    <source>Show Contact History</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1337"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1367"/>
    <source>Remove all History with %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1348"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1378"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1389"/>
    <source>Remove History for %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1359"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1400"/>
    <source>Remove this Conversation</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1380"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1421"/>
    <source>Print Conversation History</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1436"/>
    <source>HTML file (*.html)</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1436"/>
    <source>Text file (*.txt)</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1396"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1437"/>
    <source>Save Conversations to File</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1425"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1466"/>
    <source>Print...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1431"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1472"/>
    <source>Save as HTML</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1437"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1478"/>
    <source>Save as Text</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1607"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1648"/>
    <source>Conversation history removed successfully</source>
    <translation type="unfinished"/>
   </message>

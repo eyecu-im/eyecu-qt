@@ -2,57 +2,57 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="50"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
    <source>Allows to use emoji in messages</source>
    <translation>Toestaan om emoji in berichten te gebruiken</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Smileys &amp; People</source>
    <translation>Smileys &amp; Mensen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Animals &amp; Nature</source>
    <translation>Dieren &amp; Natuur</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Food &amp; Drink</source>
    <translation>Eten &amp; Drinken</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Travel &amp; Places</source>
    <translation>Reizen &amp; Plaatsen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Symbols</source>
    <translation>Symbolen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Activities</source>
    <translation>Activiteiten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="94"/>
    <source>Flags</source>
    <translation>Vlaggen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Objects</source>
    <translation>Objecten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
    <source>Message windows</source>
    <translation>Berichten venster</translation>
   </message>

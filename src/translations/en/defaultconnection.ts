@@ -1,194 +1,194 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
-<context>
-    <name>ConnectionOptionsWidget</name>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="12"/>
-        <source>Auto</source>
-        <translation>Auto</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="21"/>
-        <source>TLSv1</source>
-        <translation>TLSv1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="23"/>
-        <source>TLSv1.0</source>
-        <translation>TLSv1.0</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="24"/>
-        <source>TLSv1.1</source>
-        <translation>TLSv1.1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="25"/>
-        <source>TLSv1.2</source>
-        <translation>TLSv1.2</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="28"/>
-        <source>SSLv2</source>
-        <translation>SSLv2</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="29"/>
-        <source>SSLv3</source>
-        <translation>SSLv3</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="31"/>
-        <source>Disable check</source>
-        <translation>Disable check</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="32"/>
-        <source>Request on errors</source>
-        <translation>Request on errors</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="33"/>
-        <source>Disconnect on errors</source>
-        <translation>Disconnect on errors</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.cpp" line="34"/>
-        <source>Allow only trusted</source>
-        <translation>Allow only trusted</translation>
-    </message>
-</context>
-<context>
-    <name>ConnectionOptionsWidgetClass</name>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="25"/>
-        <source>Host:</source>
-        <translation>Host:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="41"/>
-        <source>Port:</source>
-        <translation>Port:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="80"/>
-        <source>SSL Protocol:</source>
-        <translation>SSL Protocol:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="97"/>
-        <source>Certificate:</source>
-        <translation>Certificate:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="116"/>
-        <source>Use legacy SSL connection</source>
-        <translation>Use legacy SSL connection</translation>
-    </message>
-</context>
-<context>
-    <name>DefaultConnectionEngine</name>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="26"/>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="97"/>
-        <source>Default Connection</source>
-        <translation>Default Connection</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="27"/>
-        <source>Allows to set a standard TCP connection to Jabber server</source>
-        <translation>Allows to set a standard TCP connection to Jabber server</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="61"/>
-        <source>Host certificate is not in trusted list</source>
-        <translation>Host certificate is not in trusted list</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="180"/>
-        <source>Name: %1</source>
-        <translation>Name: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="181"/>
-        <source>Organization: %1</source>
-        <translation>Organization: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="182"/>
-        <source>Subunit: %1</source>
-        <translation>Subunit: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="183"/>
-        <source>Country: %1</source>
-        <translation>Country: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="184"/>
-        <source>Locality: %1</source>
-        <translation>Locality: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="185"/>
-        <source>State/Province: %1</source>
-        <translation>State/Province: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="201"/>
-        <source>Certificate holder:</source>
-        <translation>Certificate holder:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="208"/>
-        <source>Certificate issuer:</source>
-        <translation>Certificate issuer:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="215"/>
-        <source>Certificate details:</source>
-        <translation>Certificate details:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="216"/>
-        <source>Effective from: %1</source>
-        <translation>Effective from: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="217"/>
-        <source>Expired at: %1</source>
-        <translation>Expired at: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="218"/>
-        <source>Serial number: %1</source>
-        <translation>Serial number: %1</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="222"/>
-        <source>SSL Authentication Error</source>
-        <translation>SSL Authentication Error</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="223"/>
-        <source>Connection to &lt;b&gt;%1&lt;/b&gt; can not be considered completely safe due to errors in servers certificate check:</source>
-        <translation>Connection to &lt;b&gt;%1&lt;/b&gt; can not be considered completely safe due to errors in servers certificate check:</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="226"/>
-        <source>Disconnect</source>
-        <translation>Disconnect</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="230"/>
-        <source>Connect Once</source>
-        <translation>Connect Once</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="234"/>
-        <source>Connect Always</source>
-        <translation>Connect Always</translation>
-    </message>
-</context>
+ <context>
+  <name>ConnectionOptionsWidget</name>
+  <message>
+   <location line="12" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>Auto</source>
+   <translation>Auto</translation>
+  </message>
+  <message>
+   <location line="21" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>TLSv1</source>
+   <translation>TLSv1</translation>
+  </message>
+  <message>
+   <location line="23" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>TLSv1.0</source>
+   <translation>TLSv1.0</translation>
+  </message>
+  <message>
+   <location line="24" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>TLSv1.1</source>
+   <translation>TLSv1.1</translation>
+  </message>
+  <message>
+   <location line="25" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>TLSv1.2</source>
+   <translation>TLSv1.2</translation>
+  </message>
+  <message>
+   <location line="28" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>SSLv2</source>
+   <translation>SSLv2</translation>
+  </message>
+  <message>
+   <location line="29" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>SSLv3</source>
+   <translation>SSLv3</translation>
+  </message>
+  <message>
+   <location line="31" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>Disable check</source>
+   <translation>Disable check</translation>
+  </message>
+  <message>
+   <location line="32" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>Request on errors</source>
+   <translation>Request on errors</translation>
+  </message>
+  <message>
+   <location line="33" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>Disconnect on errors</source>
+   <translation>Disconnect on errors</translation>
+  </message>
+  <message>
+   <location line="34" filename="../../plugins/defaultconnection/connectionoptionswidget.cpp"/>
+   <source>Allow only trusted</source>
+   <translation>Allow only trusted</translation>
+  </message>
+ </context>
+ <context>
+  <name>ConnectionOptionsWidgetClass</name>
+  <message>
+   <location line="25" filename="../../plugins/defaultconnection/connectionoptionswidget.ui"/>
+   <source>Host:</source>
+   <translation>Host:</translation>
+  </message>
+  <message>
+   <location line="41" filename="../../plugins/defaultconnection/connectionoptionswidget.ui"/>
+   <source>Port:</source>
+   <translation>Port:</translation>
+  </message>
+  <message>
+   <location line="80" filename="../../plugins/defaultconnection/connectionoptionswidget.ui"/>
+   <source>SSL Protocol:</source>
+   <translation>SSL Protocol:</translation>
+  </message>
+  <message>
+   <location line="97" filename="../../plugins/defaultconnection/connectionoptionswidget.ui"/>
+   <source>Certificate:</source>
+   <translation>Certificate:</translation>
+  </message>
+  <message>
+   <location line="116" filename="../../plugins/defaultconnection/connectionoptionswidget.ui"/>
+   <source>Use legacy SSL connection</source>
+   <translation>Use legacy SSL connection</translation>
+  </message>
+ </context>
+ <context>
+  <name>DefaultConnectionEngine</name>
+  <message>
+   <location line="26" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <location line="97" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Default Connection</source>
+   <translation>Default Connection</translation>
+  </message>
+  <message>
+   <location line="27" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Allows to set a standard TCP connection to Jabber server</source>
+   <translation>Allows to set a standard TCP connection to Jabber server</translation>
+  </message>
+  <message>
+   <location line="61" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Host certificate is not in trusted list</source>
+   <translation>Host certificate is not in trusted list</translation>
+  </message>
+  <message>
+   <location line="180" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Name: %1</source>
+   <translation>Name: %1</translation>
+  </message>
+  <message>
+   <location line="181" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Organization: %1</source>
+   <translation>Organization: %1</translation>
+  </message>
+  <message>
+   <location line="182" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Subunit: %1</source>
+   <translation>Subunit: %1</translation>
+  </message>
+  <message>
+   <location line="183" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Country: %1</source>
+   <translation>Country: %1</translation>
+  </message>
+  <message>
+   <location line="184" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Locality: %1</source>
+   <translation>Locality: %1</translation>
+  </message>
+  <message>
+   <location line="185" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>State/Province: %1</source>
+   <translation>State/Province: %1</translation>
+  </message>
+  <message>
+   <location line="201" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Certificate holder:</source>
+   <translation>Certificate holder:</translation>
+  </message>
+  <message>
+   <location line="208" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Certificate issuer:</source>
+   <translation>Certificate issuer:</translation>
+  </message>
+  <message>
+   <location line="215" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Certificate details:</source>
+   <translation>Certificate details:</translation>
+  </message>
+  <message>
+   <location line="216" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Effective from: %1</source>
+   <translation>Effective from: %1</translation>
+  </message>
+  <message>
+   <location line="217" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Expired at: %1</source>
+   <translation>Expired at: %1</translation>
+  </message>
+  <message>
+   <location line="218" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Serial number: %1</source>
+   <translation>Serial number: %1</translation>
+  </message>
+  <message>
+   <location line="222" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>SSL Authentication Error</source>
+   <translation>SSL Authentication Error</translation>
+  </message>
+  <message>
+   <location line="223" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Connection to &lt;b>%1&lt;/b> can not be considered completely safe due to errors in servers certificate check:</source>
+   <translation>Connection to &lt;b>%1&lt;/b> can not be considered completely safe due to errors in servers certificate check:</translation>
+  </message>
+  <message>
+   <location line="226" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Disconnect</source>
+   <translation>Disconnect</translation>
+  </message>
+  <message>
+   <location line="230" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Connect Once</source>
+   <translation>Connect Once</translation>
+  </message>
+  <message>
+   <location line="234" filename="../../plugins/defaultconnection/defaultconnectionengine.cpp"/>
+   <source>Connect Always</source>
+   <translation>Connect Always</translation>
+  </message>
+ </context>
 </TS>

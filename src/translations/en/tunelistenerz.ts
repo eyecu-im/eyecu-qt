@@ -1,30 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en">
-<context>
-    <name>TuneListenerZ</name>
-    <message>
-        <location filename="../../plugins/tunelistenerz/tunelistenerz.cpp" line="24"/>
-        <source>Tune Listener Z!</source>
-        <translation>Tune Listener Z!</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/tunelistenerz/tunelistenerz.cpp" line="25"/>
-        <source>Allow User Tune plugin to obtain currently playing tune information from Z! player</source>
-        <translation>Allow User Tune plugin to obtain currently playing tune information from Z! player</translation>
-    </message>
-</context>
-<context>
-    <name>TuneListenerZOptions</name>
-    <message>
-        <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="35"/>
-        <source>Z!</source>
-        <translation>Z!</translation>
-    </message>
-    <message>
-        <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="56"/>
-        <source>Pipe name</source>
-        <translation>Pipe name</translation>
-    </message>
-</context>
+ <context>
+  <name>TuneListenerZ</name>
+  <message>
+   <location line="24" filename="../../plugins/tunelistenerz/tunelistenerz.cpp"/>
+   <source>Tune Listener Z!</source>
+   <translation>Tune Listener Z!</translation>
+  </message>
+  <message>
+   <location line="25" filename="../../plugins/tunelistenerz/tunelistenerz.cpp"/>
+   <source>Allow User Tune plugin to obtain currently playing tune information from Z! player</source>
+   <translation>Allow User Tune plugin to obtain currently playing tune information from Z! player</translation>
+  </message>
+ </context>
+ <context>
+  <name>TuneListenerZOptions</name>
+  <message>
+   <location line="35" filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui"/>
+   <source>Z!</source>
+   <translation>Z!</translation>
+  </message>
+  <message>
+   <location line="56" filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui"/>
+   <source>Pipe name</source>
+   <translation>Pipe name</translation>
+  </message>
+ </context>
 </TS>
