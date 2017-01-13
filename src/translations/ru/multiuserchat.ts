@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru" sourcelanguage="en">
+<TS version="2.0" language="ru" sourcelanguage="en">
 <context>
     <name>ConfigPage</name>
     <message>
@@ -910,32 +910,6 @@
         <source>Conference with %1</source>
         <translation>Конференция с %1</translation>
     </message>
-    <message>
-        <source>Left mouse button</source>
-        <comment>Instrumental case</comment>
-        <translation>Левой кнопкой мыши</translation>
-    </message>
-    <message>
-        <source>Middle mouse button</source>
-        <comment>Instrumental case</comment>
-        <translation>Средней кнопкой мыши</translation>
-    </message>
-    <message>
-        <source>Address user by clicking nickname in the list with</source>
-        <translation>Обращаться к пользователю, щёлкая по его нику в списке</translation>
-    </message>
-    <message>
-        <source>Add this suffix when referring to the user</source>
-        <translation>Добавлять этот суффикс, обращаясь к пользователю</translation>
-    </message>
-    <message>
-        <source>Highlight alternation</source>
-        <translation>Подсвечивать чередование</translation>
-    </message>
-    <message>
-        <source>Display user status message</source>
-        <translation>Отображать статусное сообщение пользователя</translation>
-    </message>
 </context>
 <context>
     <name>MultiUserChatWindow</name>
@@ -1437,7 +1411,7 @@
     </message>
     <message>
         <source> by moderator %1</source>
-        <translation type="unfinished"> модератором %1</translation>
+        <translation> модератором %1</translation>
     </message>
     <message>
         <source>Your nickname changed to %1</source>
