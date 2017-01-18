@@ -1,4 +1,11 @@
 HEADERS = \   
-    geoloc.h
+    geoloc.h \
+    contactproximitynotificationoptions.h
+
 SOURCES = \  
-    geoloc.cpp
+    geoloc.cpp \
+    contactproximitynotificationoptions.cpp
+
+FORMS = \
+    contactproximitynotificationoptions.ui
+

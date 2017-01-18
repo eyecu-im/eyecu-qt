@@ -18,12 +18,12 @@ class MapContacts:  public QObject,
 					public IPlugin,
 					public IMapContacts,
 					public IOptionsDialogHolder,
-					public IRostersClickHooker,
+//					public IRostersClickHooker,
 					public MapSceneObjectHandler,
 					public MapObjectDataHolder
 {
 	Q_OBJECT
-	Q_INTERFACES (IPlugin IMapContacts IOptionsDialogHolder IRostersClickHooker MapSceneObjectHandler MapObjectDataHolder)
+	Q_INTERFACES (IPlugin IMapContacts IOptionsDialogHolder MapSceneObjectHandler MapObjectDataHolder) // IRostersClickHooker
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IMapContacts")
 #endif
@@ -55,8 +55,8 @@ public:
 	virtual bool isSticky(const SceneObject *ASceneObject) const {Q_UNUSED(ASceneObject) return false;}
 
 	//IRostersClickHooker
-	virtual bool rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
-	virtual bool rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent){Q_UNUSED(AOrder) Q_UNUSED(AIndex) Q_UNUSED(AEvent) return false;}
+//	virtual bool rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
+//	virtual bool rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent){Q_UNUSED(AOrder) Q_UNUSED(AIndex) Q_UNUSED(AEvent) return false;}
 
 	//IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
