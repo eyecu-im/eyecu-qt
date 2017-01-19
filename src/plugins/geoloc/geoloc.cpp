@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QClipboard>
 #include <QApplication>
 #include <QMimeData>
@@ -195,10 +194,10 @@ bool Geoloc::initObjects()
 		label.d->kind = AdvancedDelegateItem::CustomData;
 		label.d->data = FIconStorage->getIcon(MNI_GEOLOC);
 		FRosterLabelIdGeoloc = FRostersViewPlugin->rostersView()->registerLabel(label);
-
+		// For roster notification
 		label = AdvancedDelegateItem(RLID_CONTACTPROXIMITY);
 		label.d->kind = AdvancedDelegateItem::CustomData;
-		label.d->data = FIconStorage->getIcon(MNI_PROXIMITY);
+		label.d->data = FIconStorage->getIcon(MNI_GEOLOC);
 		label.d->flags = AdvancedDelegateItem::Blink;
 		FRosterLabelIdProximity = FRostersViewPlugin->rostersView()->registerLabel(label);
 
@@ -256,11 +255,7 @@ bool Geoloc::initSettings()
 	Options::setDefaultValue(OPV_CONTACTPROXIMITYNOTIFICATIONS_IGNOREOWN, true);
 
 	if (FOptionsManager)
-//	{
-//		IOptionsDialogNode dnode = {ONO_CONTACTPROXIMITY, OPN_CONTACTPROXIMITY, MNI_PROXIMITY, tr("Contact proximity")};
-//		FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
-//	}
 
 	return true;
 }
@@ -317,10 +312,14 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 
 	QModelIndex index = FRostersViewPlugin->rostersView()->mapFromModel(FRostersViewPlugin->rostersView()->rostersModel()->modelIndexFromRosterIndex(AIndex));
 	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
-	if (labelId == FRosterLabelIdGeoloc || labelId == FRosterLabelIdProximity)
+	if (labelId == FRosterLabelIdGeoloc)
 	{
-
-		FMapContacts->showContact(AIndex->data(RDR_FULL_JID).toString());
+		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
+		return true;
+	}
+	else  if (labelId == FRosterLabelIdProximity)
+	{
+		FMapContacts->showContact(notificationJidForIndex(AIndex).full());
 		return true;
 	}
 	return false;
@@ -540,7 +539,6 @@ void Geoloc::retractGeoloc()
 
 void Geoloc::updateRosterLabels(const Jid &AContactJid)
 {
-	qDebug() << "Geoloc::updateRosterLabels(" << AContactJid.full() << ")";
 	if (FRostersModel)
 	{
 		QMultiMap<int,QVariant> findData;
@@ -551,7 +549,6 @@ void Geoloc::updateRosterLabels(const Jid &AContactJid)
 		for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
 			insertRosterLabel(*it, checkRosterIndex(*it));
 	}
-	qDebug() << "Geoloc::updateRosterLabels(): Done!";
 }
 
 QIcon Geoloc::getIcon() const
@@ -580,27 +577,64 @@ bool Geoloc::hasGeoloc(const Jid &AJid) const
 
 bool Geoloc::checkRosterIndex(const IRosterIndex *AIndex) const
 {
-	qDebug() << "Geoloc::checkRosterIndex(" << AIndex->data(RDR_FULL_JID).toString() << ")";
+	if (hasGeoloc(AIndex->data(RDR_FULL_JID).toString()))
+		return true;
+
 	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
-	qDebug() << "resources=" << resources;
-	if (resources.isEmpty())
-	{
-		qDebug() << "resources is empty!";
-		bool rc = hasGeoloc(AIndex->data(RDR_FULL_JID).toString());
-		qDebug() << "rteturning:" << rc;
-	}
-	qDebug() << "iterate through resources...";
 	for (QStringList::ConstIterator it=resources.constBegin(); it!=resources.constEnd(); it++)
-	{
-		qDebug() << "*it=" << *it;
 		if (hasGeoloc(*it))
-		{
-			qDebug() << "returning true";
 			return true;
-		}
-	}
-	qDebug() << "returning false";
+
 	return false;
+}
+
+bool Geoloc::checkNotification(const IRosterIndex *AIndex) const
+{
+	if (FNotifies.contains(AIndex->data(RDR_STREAM_JID).toString()))
+	{
+		QHash<Jid, int> notifies = FNotifies.value(AIndex->data(RDR_STREAM_JID).toString());
+		Jid jid(AIndex->data(RDR_FULL_JID).toString());
+		if (notifies.contains(jid))
+			return true;
+		QStringList jids(AIndex->data(RDR_RESOURCES).toStringList());
+		for (QStringList::ConstIterator it=jids.constBegin(); it!=jids.constEnd(); ++it)
+			if (notifies.contains(*it))
+				return true;
+	}
+	return false;
+}
+
+Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
+{
+	if (FNotifies.contains(AIndex->data(RDR_STREAM_JID).toString()))
+	{
+		QHash<Jid, int> notifies = FNotifies.value(AIndex->data(RDR_STREAM_JID).toString());
+		Jid jid(AIndex->data(RDR_FULL_JID).toString());
+		if (notifies.contains(jid))
+			return jid;
+		QStringList jids(AIndex->data(RDR_RESOURCES).toStringList());
+		for (QStringList::ConstIterator it=jids.constBegin(); it!=jids.constEnd(); ++it)
+			if (notifies.contains(*it))
+				return *it;
+	}
+	return Jid::null;
+}
+
+Jid Geoloc::geolocJidForIndex(const IRosterIndex *AIndex) const
+{
+	Jid jid(AIndex->data(RDR_FULL_JID).toString());
+	if (hasGeoloc(jid))
+		return jid;
+
+	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
+	for (QStringList::ConstIterator it = resources.constBegin(); it!=resources.constEnd(); ++it)
+		if (hasGeoloc(*it))
+			return *it;
+
+	if (hasGeoloc(jid.bare()))
+		return jid.bare();
+
+	return Jid::null;
 }
 
 QString Geoloc::getLabel(const Jid &AContactJid) const
@@ -1110,14 +1144,10 @@ void Geoloc::onOptionsChanged(const OptionsNode &ANode)
 				QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
 				for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
 					if (checkRosterIndex(*it))
-					{
-//						FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdGeoloc, *it);
 						insertRosterLabel(*it, true);
-					}
 			}
 			else
 			{
-//				insertRosterLabel(*it, false);
 				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc);
 				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdProximity);
 			}
@@ -1163,12 +1193,14 @@ void Geoloc::displayNotification(const Jid &AStreamJid, const Jid &AContactJid)
 
 	INotification notify;
 	ushort kinds = FNotifications->enabledTypeNotificationKinds(NNT_CONTACTPROXIMITY);
-	notify.kinds = kinds&~INotification::RosterNotify;	// Remove original notification
-
+	notify.kinds = kinds&~INotification::RosterNotify;	// Remove original RosterNotify if any
+														// We have own implementation RosterNotify
+														// With Blackjack and hookers
 	if (notify.kinds)
 	{
 		QString html=tr("Appeared nearby!");
 		notify.typeId = NNT_CONTACTPROXIMITY;
+		notify.flags = 0;
 		notify.data.insert(NDR_STREAM_JID, AStreamJid.full());
 		notify.data.insert(NDR_CONTACT_JID, AContactJid.full());
 		notify.data.insert(NDR_ICON, IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
@@ -1180,8 +1212,9 @@ void Geoloc::displayNotification(const Jid &AStreamJid, const Jid &AContactJid)
 		notify.data.insert(NDR_SOUND_FILE, SDF_PROXIMITY_EVENT);
 		if (FNotifies[AStreamJid].contains(AContactJid))
 			FNotifications->removeNotification(FNotifies[AStreamJid].value(AContactJid));
+
 		int notifyId = FNotifications->appendNotification(notify);
-		qDebug() << "insert notify:" << notifyId;
+
 		FNotifies[AStreamJid].insert(AContactJid, notifyId);
 
 		if (kinds&INotification::RosterNotify)
@@ -1244,20 +1277,15 @@ IPresenceItem Geoloc::presenceItemForBareJid(const Jid &AStreamJid, const Jid &A
 
 void Geoloc::insertRosterLabel(IRosterIndex *AIndex, bool AInsert)
 {
-	qDebug() << "Geoloc::insertRosterLabel(" << AIndex->data(RDR_FULL_JID) << "," << AInsert << ")";
 	if (AInsert)
 	{
-		Jid streamJid(AIndex->data(RDR_STREAM_JID).toString());
-		Jid contactJid(AIndex->data(RDR_FULL_JID).toString());
-		if (FNotifies.contains(streamJid) && FNotifies[streamJid].contains(contactJid))
+		if (checkNotification(AIndex))
 		{
-			qDebug() << "Contains!";
 			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc, AIndex);
 			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdProximity, AIndex);
 		}
 		else
 		{
-			qDebug() << "Do not contain!";
 			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdProximity, AIndex);
 			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdGeoloc, AIndex);
 		}
@@ -1271,7 +1299,6 @@ void Geoloc::insertRosterLabel(IRosterIndex *AIndex, bool AInsert)
 
 void Geoloc::onNotificationActivated(int ANotifyId)
 {
-	qDebug() << "Geoloc::onNotificationActivated(" << ANotifyId << ")";
 	for (QHash<Jid, QHash<Jid, int> >::const_iterator its=FNotifies.constBegin(); its!=FNotifies.constEnd(); its++)
 		for (QHash<Jid, int>::const_iterator itc=(*its).constBegin(); itc!=(*its).constEnd(); itc++)
 			if (itc.value()==ANotifyId) // Notification found! Activate window!
@@ -1298,10 +1325,8 @@ void Geoloc::onNotificationActivated(int ANotifyId)
 					if (window)
 						window->showTabPage();
 				}
-				qDebug() << "Geoloc::onNotificationActivated(): end 1";
 				return;
 			}
-	qDebug() << "Geoloc::onNotificationActivated(): end 2";
 }
 
 void Geoloc::onNotificationRemoved(int ANotifyId)
@@ -1310,14 +1335,12 @@ void Geoloc::onNotificationRemoved(int ANotifyId)
 		for (QHash<Jid, int>::iterator itc=(*its).begin(); itc!=(*its).end(); itc++)
 			if (*itc == ANotifyId)
 			{
-				(*its).remove(itc.key());
+				Jid jid = itc.key();
+				(*its).remove(jid);
 				if ((*its).isEmpty())
-				{
-					Jid jid = its.key();
-					FNotifies.remove(jid);
-					if (FNotifications->enabledTypeNotificationKinds(NNT_CONTACTPROXIMITY)&INotification::RosterNotify)
-						updateRosterLabels(jid);
-				}
+					FNotifies.remove(its.key());
+				if (FNotifications->enabledTypeNotificationKinds(NNT_CONTACTPROXIMITY)&INotification::RosterNotify)
+					updateRosterLabels(jid);
 				return;
 			}
 }

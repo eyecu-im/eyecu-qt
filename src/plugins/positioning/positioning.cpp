@@ -60,7 +60,10 @@ QMultiMap<int, IOptionsDialogWidget *> Positioning::optionsDialogWidgets(const Q
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 
 	if (ANodeId == OPN_POSITIONING)
+	{
+		widgets.insertMulti(OHO_POSITIONING, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
 		widgets.insertMulti(OWO_POSITIONING, new PositioningOptions(this, FMethods, FOptionsManager, AParent));
+	}
 	return widgets;
 }
 

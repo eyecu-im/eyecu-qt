@@ -85,8 +85,11 @@ protected:
 	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
 	void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
 	QString translate(const QString &APropertyName) const;
-	bool checkRosterIndex(const IRosterIndex *AIndex)	const;
+	Jid  geolocJidForIndex(const IRosterIndex *AIndex) const;
 	// Contact proximity notification
+	bool checkRosterIndex(const IRosterIndex *AIndex) const;
+	bool checkNotification(const IRosterIndex *AIndex) const;
+	Jid  notificationJidForIndex(const IRosterIndex *AIndex) const;
 	void displayNotification(const Jid &AStreamJid, const Jid &AContactJid);
 	void checkContactProximity(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, const GeolocElement &ACurrentPosition);
 	void checkContactsProximity(const GeolocElement &ACurrentPosition);
