@@ -1249,7 +1249,10 @@ void Geoloc::checkContactProximity(const Jid &AStreamJid, const Jid &AContactJid
 			// Check, if contact is out of range
 			if (ACoordinates.distance(coordinates)>(distance+treshold))
 				if (FNotifiedContacts.contains(AContactJid))
+				{
 					FNotifiedContacts.removeAll(AContactJid);
+					removeProximityNotification(AStreamJid, AContactJid);
+				}
 		}
 	}
 }
