@@ -6,7 +6,7 @@
    <location filename="../../plugins/map/map.cpp" line="116"/>
    <location filename="../../plugins/map/map.cpp" line="139"/>
    <location filename="../../plugins/map/map.cpp" line="144"/>
-   <location filename="../../plugins/map/map.cpp" line="227"/>
+   <location filename="../../plugins/map/map.cpp" line="228"/>
    <source>Map</source>
    <translation>Мапа</translation>
   </message>
@@ -17,7 +17,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="117"/>
-   <location filename="../../plugins/map/map.cpp" line="297"/>
+   <location filename="../../plugins/map/map.cpp" line="311"/>
    <source>New center</source>
    <translation>Новий центр</translation>
   </message>
@@ -29,7 +29,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="118"/>
-   <location filename="../../plugins/map/map.cpp" line="291"/>
+   <location filename="../../plugins/map/map.cpp" line="304"/>
    <source>My location</source>
    <translation>Моє розташування</translation>
   </message>
@@ -65,12 +65,6 @@
    <location filename="../../plugins/map/map.cpp" line="121"/>
    <source>Show options dialog</source>
    <translation>Показати налаштування діалогу</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/map/map.cpp" line="121"/>
-   <source>Ctrl+O</source>
-   <comment>Show options dialog</comment>
-   <translation>Ctrl+O</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="123"/>
@@ -123,7 +117,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="129"/>
-   <location filename="../../plugins/map/map.cpp" line="798"/>
+   <location filename="../../plugins/map/map.cpp" line="830"/>
    <source>Zoom</source>
    <translation>Наближення</translation>
   </message>
@@ -150,67 +144,67 @@
    <translation>-</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="301"/>
+   <location filename="../../plugins/map/map.cpp" line="315"/>
    <source>Options</source>
    <translation>Налаштування</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="308"/>
+   <location filename="../../plugins/map/map.cpp" line="322"/>
    <source>No map</source>
    <translation>Без мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="792"/>
+   <location filename="../../plugins/map/map.cpp" line="824"/>
    <source>Connection</source>
    <translation>З&apos;єднання:</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="795"/>
+   <location filename="../../plugins/map/map.cpp" line="827"/>
    <source>General</source>
    <translation>Основне</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="796"/>
+   <location filename="../../plugins/map/map.cpp" line="828"/>
    <source>Display &quot;Loading&quot; tiles</source>
    <translation>Показувати незавантажені шматочки мапи як &quot;Loading&quot;</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="797"/>
+   <location filename="../../plugins/map/map.cpp" line="829"/>
    <source>Combine map window with contact list</source>
    <translation>Об&apos;єднати вікно мапи зі списком контактів</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="799"/>
+   <location filename="../../plugins/map/map.cpp" line="831"/>
    <source>Mouse wheel zooming</source>
    <translation>Наближення коліщатком миші</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="800"/>
+   <location filename="../../plugins/map/map.cpp" line="832"/>
    <source>Update zoom during slider movement</source>
    <translation>Міняти наближення коли рухаєш слайдер</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="801"/>
+   <location filename="../../plugins/map/map.cpp" line="833"/>
    <source>On-screen display</source>
    <translation>Показувати поверх дисплею</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="803"/>
+   <location filename="../../plugins/map/map.cpp" line="835"/>
    <source>Setup map sources</source>
    <translation>Налаштування джерел мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="818"/>
+   <location filename="../../plugins/map/map.cpp" line="850"/>
    <source>Relative to map center</source>
    <translation>Відносно центру мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="819"/>
+   <location filename="../../plugins/map/map.cpp" line="851"/>
    <source>Relative to mouse position</source>
    <translation>Відносно розташування миші</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="820"/>
+   <location filename="../../plugins/map/map.cpp" line="852"/>
    <source>Follow mouse pointer</source>
    <translation>Слідувати за вказівником миші</translation>
   </message>
@@ -218,118 +212,118 @@
  <context>
   <name>MapForm</name>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="161"/>
+   <location filename="../../plugins/map/mapform.ui" line="1844"/>
    <source>Joystick</source>
    <translation>Джойстик</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="203"/>
+   <location filename="../../plugins/map/mapform.ui" line="2015"/>
    <source>Right</source>
    <translation>Вправо</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="261"/>
+   <location filename="../../plugins/map/mapform.ui" line="1889"/>
    <source>Up</source>
    <translation>Вгору</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="295"/>
+   <location filename="../../plugins/map/mapform.ui" line="1929"/>
    <source>Left</source>
    <translation>Вліво</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="332"/>
+   <location filename="../../plugins/map/mapform.ui" line="1969"/>
    <source>Refresh map</source>
    <translation>Оновити мапу</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="372"/>
+   <location filename="../../plugins/map/mapform.ui" line="2067"/>
    <source>Down</source>
    <translation>Вниз</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="414"/>
+   <location filename="../../plugins/map/mapform.ui" line="2194"/>
    <source>Map Type</source>
    <translation>Тип мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="737"/>
-   <location filename="../../plugins/map/mapform.ui" line="887"/>
+   <location filename="../../plugins/map/mapform.ui" line="46"/>
+   <location filename="../../plugins/map/mapform.ui" line="80"/>
    <source>My Location</source>
    <translation>Моє Розташування</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="800"/>
-   <location filename="../../plugins/map/mapform.ui" line="1604"/>
-   <location filename="../../plugins/map/mapform.ui" line="2363"/>
+   <location filename="../../plugins/map/mapform.ui" line="115"/>
+   <location filename="../../plugins/map/mapform.ui" line="522"/>
+   <location filename="../../plugins/map/mapform.ui" line="1329"/>
    <source>Lat:</source>
    <translation>Широта:</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="832"/>
-   <location filename="../../plugins/map/mapform.ui" line="1787"/>
-   <location filename="../../plugins/map/mapform.ui" line="2519"/>
+   <location filename="../../plugins/map/mapform.ui" line="184"/>
+   <location filename="../../plugins/map/mapform.ui" line="1062"/>
+   <location filename="../../plugins/map/mapform.ui" line="1638"/>
    <source>Lng:</source>
    <translation>Довгота:</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="921"/>
-   <location filename="../../plugins/map/mapform.ui" line="1412"/>
+   <location filename="../../plugins/map/mapform.ui" line="211"/>
+   <location filename="../../plugins/map/mapform.ui" line="336"/>
    <source>Map Center</source>
    <translation>Центр мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1815"/>
+   <location filename="../../plugins/map/mapform.ui" line="1099"/>
    <source>Mouse selection</source>
    <translation>Виділення мишою</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2198"/>
+   <location filename="../../plugins/map/mapform.ui" line="1170"/>
    <source>Selection</source>
    <translation>Виділення</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2561"/>
+   <location filename="../../plugins/map/mapform.ui" line="2465"/>
    <source>Scale</source>
    <translation>Масштаб</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2607"/>
+   <location filename="../../plugins/map/mapform.ui" line="2511"/>
    <source>Indicator</source>
    <translation>Індикатор</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2706"/>
+   <location filename="../../plugins/map/mapform.ui" line="2171"/>
    <source>Map scale</source>
    <translation>Масштаб мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="178"/>
+   <location filename="../../plugins/map/mapform.cpp" line="191"/>
    <source>Map (%1: %2)</source>
    <translation>Мапа (%1: %2)</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="180"/>
+   <location filename="../../plugins/map/mapform.cpp" line="193"/>
    <source>Map</source>
    <translation>Мапа</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="658"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1S</source>
    <translation>%1Пд</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="658"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1N</source>
    <translation>%1Пн</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="663"/>
+   <location filename="../../plugins/map/mapform.cpp" line="667"/>
    <source>%1W</source>
    <translation>%1З</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="663"/>
+   <location filename="../../plugins/map/mapform.cpp" line="667"/>
    <source>%1E</source>
    <translation>%1С</translation>
   </message>

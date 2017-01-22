@@ -275,11 +275,11 @@ source_lang = en
 
 [eyecu-qt.metacontactsts]
 file_filter = <lang>/metacontacts.ts
-source_lang = ru
+source_lang = en
 
 [eyecu-qt.datastreamspublisherts]
 file_filter = <lang>/datastreamspublisher.ts
-source_lang = ru
+source_lang = en
 
 [eyecu-qt.abbreviationsts]
 file_filter = <lang>/abbreviations.ts
@@ -299,10 +299,6 @@ source_lang = en
 
 [eyecu-qt.clienticonsts]
 file_filter = <lang>/clienticons.ts
-source_lang = en
-
-[eyecu-qt.contactproximitynotificationts]
-file_filter = <lang>/contactproximitynotification.ts
 source_lang = en
 
 [eyecu-qt.geolocts]

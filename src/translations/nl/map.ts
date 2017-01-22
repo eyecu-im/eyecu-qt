@@ -6,7 +6,7 @@
    <location filename="../../plugins/map/map.cpp" line="116"/>
    <location filename="../../plugins/map/map.cpp" line="139"/>
    <location filename="../../plugins/map/map.cpp" line="144"/>
-   <location filename="../../plugins/map/map.cpp" line="227"/>
+   <location filename="../../plugins/map/map.cpp" line="228"/>
    <source>Map</source>
    <translation>Kaart</translation>
   </message>
@@ -17,7 +17,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="117"/>
-   <location filename="../../plugins/map/map.cpp" line="297"/>
+   <location filename="../../plugins/map/map.cpp" line="311"/>
    <source>New center</source>
    <translation>Nieuw centrum</translation>
   </message>
@@ -29,7 +29,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="118"/>
-   <location filename="../../plugins/map/map.cpp" line="291"/>
+   <location filename="../../plugins/map/map.cpp" line="304"/>
    <source>My location</source>
    <translation>Mijn locatie</translation>
   </message>
@@ -65,12 +65,6 @@
    <location filename="../../plugins/map/map.cpp" line="121"/>
    <source>Show options dialog</source>
    <translation>Toon opties dialoog</translation>
-  </message>
-  <message>
-   <location filename="../../plugins/map/map.cpp" line="121"/>
-   <source>Ctrl+O</source>
-   <comment>Show options dialog</comment>
-   <translation>Ctrl+O</translation>
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="123"/>
@@ -123,7 +117,7 @@
   </message>
   <message>
    <location filename="../../plugins/map/map.cpp" line="129"/>
-   <location filename="../../plugins/map/map.cpp" line="798"/>
+   <location filename="../../plugins/map/map.cpp" line="830"/>
    <source>Zoom</source>
    <translation>Inzoomen</translation>
   </message>
@@ -150,67 +144,67 @@
    <translation>-</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="301"/>
+   <location filename="../../plugins/map/map.cpp" line="315"/>
    <source>Options</source>
    <translation>Opties</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="308"/>
+   <location filename="../../plugins/map/map.cpp" line="322"/>
    <source>No map</source>
    <translation>Geen map</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="792"/>
+   <location filename="../../plugins/map/map.cpp" line="824"/>
    <source>Connection</source>
    <translation>Verbinding</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="795"/>
+   <location filename="../../plugins/map/map.cpp" line="827"/>
    <source>General</source>
    <translation>Algemeen</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="796"/>
+   <location filename="../../plugins/map/map.cpp" line="828"/>
    <source>Display &quot;Loading&quot; tiles</source>
    <translation>Toon &quot;laden&quot; tegels</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="797"/>
+   <location filename="../../plugins/map/map.cpp" line="829"/>
    <source>Combine map window with contact list</source>
    <translation>Combineer mapvenster met contact lijst</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="799"/>
+   <location filename="../../plugins/map/map.cpp" line="831"/>
    <source>Mouse wheel zooming</source>
    <translation>Muiswiel inzoomen</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="800"/>
+   <location filename="../../plugins/map/map.cpp" line="832"/>
    <source>Update zoom during slider movement</source>
    <translation>Zoom-update tijdens schuif beweging</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="801"/>
+   <location filename="../../plugins/map/map.cpp" line="833"/>
    <source>On-screen display</source>
    <translation>Toon schermweergave</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="803"/>
+   <location filename="../../plugins/map/map.cpp" line="835"/>
    <source>Setup map sources</source>
    <translation>Instellen kaart sources</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="818"/>
+   <location filename="../../plugins/map/map.cpp" line="850"/>
    <source>Relative to map center</source>
    <translation>In verhouding tot centrum</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="819"/>
+   <location filename="../../plugins/map/map.cpp" line="851"/>
    <source>Relative to mouse position</source>
    <translation>Ten opzichte van de muispositie</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/map.cpp" line="820"/>
+   <location filename="../../plugins/map/map.cpp" line="852"/>
    <source>Follow mouse pointer</source>
    <translation>Volg muisaanwijzer</translation>
   </message>
@@ -218,118 +212,118 @@
  <context>
   <name>MapForm</name>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="161"/>
+   <location filename="../../plugins/map/mapform.ui" line="1844"/>
    <source>Joystick</source>
    <translation>Joystick</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="203"/>
+   <location filename="../../plugins/map/mapform.ui" line="2015"/>
    <source>Right</source>
    <translation>Rechts</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="261"/>
+   <location filename="../../plugins/map/mapform.ui" line="1889"/>
    <source>Up</source>
    <translation>Omhoog</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="295"/>
+   <location filename="../../plugins/map/mapform.ui" line="1929"/>
    <source>Left</source>
    <translation>Links</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="332"/>
+   <location filename="../../plugins/map/mapform.ui" line="1969"/>
    <source>Refresh map</source>
    <translation>Vernieuw kaart</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="372"/>
+   <location filename="../../plugins/map/mapform.ui" line="2067"/>
    <source>Down</source>
    <translation>Omlaag</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="414"/>
+   <location filename="../../plugins/map/mapform.ui" line="2194"/>
    <source>Map Type</source>
    <translation>Kaart type</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="737"/>
-   <location filename="../../plugins/map/mapform.ui" line="887"/>
+   <location filename="../../plugins/map/mapform.ui" line="46"/>
+   <location filename="../../plugins/map/mapform.ui" line="80"/>
    <source>My Location</source>
    <translation>Mijn locatie</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="800"/>
-   <location filename="../../plugins/map/mapform.ui" line="1604"/>
-   <location filename="../../plugins/map/mapform.ui" line="2363"/>
+   <location filename="../../plugins/map/mapform.ui" line="115"/>
+   <location filename="../../plugins/map/mapform.ui" line="522"/>
+   <location filename="../../plugins/map/mapform.ui" line="1329"/>
    <source>Lat:</source>
    <translation>Breedte:</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="832"/>
-   <location filename="../../plugins/map/mapform.ui" line="1787"/>
-   <location filename="../../plugins/map/mapform.ui" line="2519"/>
+   <location filename="../../plugins/map/mapform.ui" line="184"/>
+   <location filename="../../plugins/map/mapform.ui" line="1062"/>
+   <location filename="../../plugins/map/mapform.ui" line="1638"/>
    <source>Lng:</source>
    <translation>Lengte:</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="921"/>
-   <location filename="../../plugins/map/mapform.ui" line="1412"/>
+   <location filename="../../plugins/map/mapform.ui" line="211"/>
+   <location filename="../../plugins/map/mapform.ui" line="336"/>
    <source>Map Center</source>
    <translation>Middelpunt kaart</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1815"/>
+   <location filename="../../plugins/map/mapform.ui" line="1099"/>
    <source>Mouse selection</source>
    <translation>Muis selctie</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2198"/>
+   <location filename="../../plugins/map/mapform.ui" line="1170"/>
    <source>Selection</source>
    <translation>Selectie</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2561"/>
+   <location filename="../../plugins/map/mapform.ui" line="2465"/>
    <source>Scale</source>
    <translation>Schaal</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2607"/>
+   <location filename="../../plugins/map/mapform.ui" line="2511"/>
    <source>Indicator</source>
    <translation>Aanduiding</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2706"/>
+   <location filename="../../plugins/map/mapform.ui" line="2171"/>
    <source>Map scale</source>
    <translation>Kaartschaal</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="178"/>
+   <location filename="../../plugins/map/mapform.cpp" line="191"/>
    <source>Map (%1: %2)</source>
    <translation>Kaart (%1: %2)</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="180"/>
+   <location filename="../../plugins/map/mapform.cpp" line="193"/>
    <source>Map</source>
    <translation>Kaart</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="658"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1S</source>
    <translation>%1S</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="658"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1N</source>
    <translation>%1N</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="663"/>
+   <location filename="../../plugins/map/mapform.cpp" line="667"/>
    <source>%1W</source>
    <translation>%1W</translation>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="663"/>
+   <location filename="../../plugins/map/mapform.cpp" line="667"/>
    <source>%1E</source>
    <translation>%1E</translation>
   </message>

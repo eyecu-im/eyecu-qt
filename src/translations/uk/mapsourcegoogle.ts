@@ -12,7 +12,7 @@
    <translation>Дозвляє плагіну мапи використовувати сервіс Google як джерело мапи</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="56"/>
+   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="57"/>
    <source>Google</source>
    <translation>Google</translation>
   </message>

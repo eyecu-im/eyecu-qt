@@ -2,57 +2,57 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="50"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
    <source>Emoji</source>
    <translation>Емодзі</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
    <source>Allows to use emoji in messages</source>
    <translation>Дозволити використовувати емодзі в повідомленнях</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="86"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Smileys &amp; People</source>
    <translation>Смайлики і Люди</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Animals &amp; Nature</source>
    <translation>Тварини і Природа</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Food &amp; Drink</source>
    <translation>Їжа і Напої</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Travel &amp; Places</source>
    <translation>Подорожі і Місця</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Symbols</source>
    <translation>Символи</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Activities</source>
    <translation>Заняття</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="94"/>
    <source>Flags</source>
    <translation>Прапори</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Objects</source>
    <translation>Об&apos;єкти</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="165"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
    <source>Message windows</source>
    <translation>Вікна повідомлення</translation>
   </message>

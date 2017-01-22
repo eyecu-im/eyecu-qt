@@ -6,8 +6,8 @@
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <location filename="../../plugins/attention/attention.cpp" line="175"/>
    <location filename="../../plugins/attention/attention.cpp" line="188"/>
-   <location filename="../../plugins/attention/attention.cpp" line="351"/>
-   <location filename="../../plugins/attention/attention.cpp" line="488"/>
+   <location filename="../../plugins/attention/attention.cpp" line="365"/>
+   <location filename="../../plugins/attention/attention.cpp" line="510"/>
    <source>Attention</source>
    <translation>Atención</translation>
   </message>
@@ -53,7 +53,7 @@
    <translation>¡¡¡ATENCIÓN!!!</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="389"/>
+   <location filename="../../plugins/attention/attention.cpp" line="411"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
@@ -61,12 +61,12 @@
  <context>
   <name>AttentionDialog</name>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="170"/>
    <source>ATTENTION</source>
    <translation>ATENCIÓN</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="293"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="295"/>
    <source>Ok</source>
    <translation>Vale</translation>
   </message>

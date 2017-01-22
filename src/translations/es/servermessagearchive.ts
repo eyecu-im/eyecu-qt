@@ -12,12 +12,12 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="241"/>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="253"/>
    <source>Standard Server Side Archive</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="246"/>
+   <location filename="../../plugins/servermessagearchive/servermessagearchive.cpp" line="258"/>
    <source>History of conversations is stored on your jabber server</source>
    <translation type="unfinished"/>
   </message>

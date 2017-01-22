@@ -3,81 +3,82 @@
   <name>Scheduler</name>
   <message>
    <source>Scheduler</source>
-   <translation type="unfinished"/>
+   <translation>Planner</translation>
   </message>
   <message>
    <source>Allows periodically send messages to specified nodes</source>
-   <translation type="unfinished"/>
+   <translation>Hiermee regelmatig berichten naar specifieke nodes te sturen</translation>
   </message>
  </context>
  <context>
   <name>SchedulerItemDialog</name>
   <message>
    <source>Message</source>
-   <translation type="unfinished"/>
+   <translation>Bericht</translation>
   </message>
   <message>
    <source>Timeout</source>
-   <translation type="unfinished"/>
+   <translation>Time-out</translation>
   </message>
   <message>
    <source>Account</source>
-   <translation type="unfinished"/>
+   <translation>Account</translation>
   </message>
   <message>
    <source>Contact</source>
-   <translation type="unfinished"/>
-  </message>
-  <message numerus="yes">
-   <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation>Contact</translation>
   </message>
   <message>
    <source>Edit schedule record</source>
-   <translation type="unfinished"/>
+   <translation>Bewerk geplande verslag</translation>
   </message>
   <message>
    <source>Add schedule record</source>
-   <translation type="unfinished"/>
+   <translation>Voeg geplande verslag toe</translation>
+  </message>
+  <message numerus="yes">
+   <source> second(s)</source>
+   <comment>Keep space in front of unit if your language uses space to separate units from numbers</comment>
+   <translation><numerusform>seconde</numerusform><numerusform>seconden</numerusform></translation>
   </message>
  </context>
  <context>
   <name>SchedulerOptions</name>
   <message>
    <source>Active</source>
-   <translation type="unfinished"/>
+   <translation>Actief</translation>
   </message>
   <message>
    <source>Account</source>
-   <translation type="unfinished"/>
+   <translation>Account</translation>
   </message>
   <message>
    <source>Contact</source>
-   <translation type="unfinished"/>
+   <translation>Contact</translation>
   </message>
   <message>
    <source>Timeout</source>
-   <translation type="unfinished"/>
+   <translation>Time-out</translation>
   </message>
   <message>
    <source>Message</source>
-   <translation type="unfinished"/>
+   <translation>Bericht</translation>
   </message>
   <message>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>Verwijder</translation>
   </message>
   <message>
    <source>Scheduler options</source>
-   <translation type="unfinished"/>
+   <translation>Geplande opties</translation>
   </message>
   <message>
    <source>Add...</source>
-   <translation type="unfinished"/>
+   <translation>Toevoegen...</translation>
   </message>
   <message>
    <source>Edit...</source>
-   <translation type="unfinished"/>
+   <translation>Bewerken...</translation>
   </message>
  </context>
 </TS>

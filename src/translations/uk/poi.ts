@@ -2,17 +2,17 @@
  <context>
   <name>MessagePoiList</name>
   <message>
-   <location filename="../../plugins/poi/messagepoilist.cpp" line="85"/>
+   <location filename="../../plugins/poi/messagepoilist.cpp" line="84"/>
    <source>Edit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/messagepoilist.cpp" line="88"/>
+   <location filename="../../plugins/poi/messagepoilist.cpp" line="87"/>
    <source>Delete</source>
    <translation>Видалити</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/messagepoilist.cpp" line="106"/>
+   <location filename="../../plugins/poi/messagepoilist.cpp" line="105"/>
    <source>Edit point of interest</source>
    <translation type="unfinished"/>
   </message>
@@ -1412,2719 +1412,2719 @@
  <context>
   <name>Poi</name>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="63"/>
+   <location filename="../../plugins/poi/poi.cpp" line="62"/>
    <source>10pin</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="64"/>
+   <location filename="../../plugins/poi/poi.cpp" line="63"/>
    <source>Access</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="65"/>
+   <location filename="../../plugins/poi/poi.cpp" line="64"/>
    <source>Adit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="66"/>
+   <location filename="../../plugins/poi/poi.cpp" line="65"/>
    <source>Administrative</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="67"/>
+   <location filename="../../plugins/poi/poi.cpp" line="66"/>
    <source>Advocacy</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="68"/>
+   <location filename="../../plugins/poi/poi.cpp" line="67"/>
    <source>Aerial way</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="69"/>
+   <location filename="../../plugins/poi/poi.cpp" line="68"/>
    <source>Air force base</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="70"/>
+   <location filename="../../plugins/poi/poi.cpp" line="69"/>
    <source>Airfield</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="71"/>
+   <location filename="../../plugins/poi/poi.cpp" line="70"/>
    <source>Airport</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="72"/>
+   <location filename="../../plugins/poi/poi.cpp" line="71"/>
    <source>Allotments</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="73"/>
+   <location filename="../../plugins/poi/poi.cpp" line="72"/>
    <source>Alpine hut</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="74"/>
+   <location filename="../../plugins/poi/poi.cpp" line="73"/>
    <source>Anime</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="75"/>
+   <location filename="../../plugins/poi/poi.cpp" line="74"/>
    <source>Apron</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="76"/>
+   <location filename="../../plugins/poi/poi.cpp" line="75"/>
    <source>Aqueduct</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="77"/>
+   <location filename="../../plugins/poi/poi.cpp" line="76"/>
    <source>Archaeological</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="78"/>
+   <location filename="../../plugins/poi/poi.cpp" line="77"/>
    <source>Archery</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="79"/>
+   <location filename="../../plugins/poi/poi.cpp" line="78"/>
    <source>Arts centre</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="80"/>
+   <location filename="../../plugins/poi/poi.cpp" line="79"/>
    <source>Athletics</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="81"/>
+   <location filename="../../plugins/poi/poi.cpp" line="80"/>
    <source>Atm</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="82"/>
+   <location filename="../../plugins/poi/poi.cpp" line="81"/>
    <source>Attraction</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="83"/>
+   <location filename="../../plugins/poi/poi.cpp" line="82"/>
    <source>Baby hatch</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="84"/>
+   <location filename="../../plugins/poi/poi.cpp" line="83"/>
    <source>Bahai</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="85"/>
+   <location filename="../../plugins/poi/poi.cpp" line="84"/>
    <source>Bakery</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="86"/>
+   <location filename="../../plugins/poi/poi.cpp" line="85"/>
    <source>Bank</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="87"/>
+   <location filename="../../plugins/poi/poi.cpp" line="86"/>
    <source>Bar</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="88"/>
+   <location filename="../../plugins/poi/poi.cpp" line="87"/>
    <source>Barrier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="89"/>
+   <location filename="../../plugins/poi/poi.cpp" line="88"/>
    <source>Baseball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="90"/>
+   <location filename="../../plugins/poi/poi.cpp" line="89"/>
    <source>Basketball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="91"/>
+   <location filename="../../plugins/poi/poi.cpp" line="90"/>
    <source>Battlefield</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="92"/>
+   <location filename="../../plugins/poi/poi.cpp" line="91"/>
    <source>Bay</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="93"/>
+   <location filename="../../plugins/poi/poi.cpp" line="92"/>
    <source>BBQ</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="94"/>
+   <location filename="../../plugins/poi/poi.cpp" line="93"/>
    <source>Beach</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="95"/>
+   <location filename="../../plugins/poi/poi.cpp" line="94"/>
    <source>Beach resort</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="96"/>
+   <location filename="../../plugins/poi/poi.cpp" line="95"/>
    <source>Beach volleyball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="97"/>
+   <location filename="../../plugins/poi/poi.cpp" line="96"/>
    <source>Beacon</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="98"/>
+   <location filename="../../plugins/poi/poi.cpp" line="97"/>
    <source>Beauty</source>
    <comment>Bauty shop</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="99"/>
+   <location filename="../../plugins/poi/poi.cpp" line="98"/>
    <source>Bench</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="100"/>
+   <location filename="../../plugins/poi/poi.cpp" line="99"/>
    <source>Beverages</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="101"/>
+   <location filename="../../plugins/poi/poi.cpp" line="100"/>
    <source>Bicycle</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="102"/>
+   <location filename="../../plugins/poi/poi.cpp" line="101"/>
    <source>Bicycle designated</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="103"/>
+   <location filename="../../plugins/poi/poi.cpp" line="102"/>
    <source>Biergarten</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="104"/>
+   <location filename="../../plugins/poi/poi.cpp" line="103"/>
    <source>Blizzard</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="105"/>
+   <location filename="../../plugins/poi/poi.cpp" line="104"/>
    <source>Block</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="106"/>
+   <location filename="../../plugins/poi/poi.cpp" line="105"/>
    <source>Board</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="107"/>
+   <location filename="../../plugins/poi/poi.cpp" line="106"/>
    <source>Boatyard</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="108"/>
+   <location filename="../../plugins/poi/poi.cpp" line="107"/>
    <source>Bollard</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="109"/>
+   <location filename="../../plugins/poi/poi.cpp" line="108"/>
    <source>Border control</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="110"/>
+   <location filename="../../plugins/poi/poi.cpp" line="109"/>
    <source>Border point</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="111"/>
+   <location filename="../../plugins/poi/poi.cpp" line="110"/>
    <source>Boule</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="112"/>
+   <location filename="../../plugins/poi/poi.cpp" line="111"/>
    <source>Boundary stone</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="113"/>
+   <location filename="../../plugins/poi/poi.cpp" line="112"/>
    <source>Boutique</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="114"/>
+   <location filename="../../plugins/poi/poi.cpp" line="113"/>
    <source>Break</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="115"/>
+   <location filename="../../plugins/poi/poi.cpp" line="114"/>
    <source>Buddhism</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="116"/>
+   <location filename="../../plugins/poi/poi.cpp" line="115"/>
    <source>Buffer stop</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="117"/>
-   <location filename="../../plugins/poi/poi.cpp" line="2065"/>
+   <location filename="../../plugins/poi/poi.cpp" line="116"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2064"/>
    <source>Building</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="118"/>
+   <location filename="../../plugins/poi/poi.cpp" line="117"/>
    <source>Bunker</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="119"/>
+   <location filename="../../plugins/poi/poi.cpp" line="118"/>
    <source>Bus station</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="120"/>
+   <location filename="../../plugins/poi/poi.cpp" line="119"/>
    <source>Bus stop</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="121"/>
+   <location filename="../../plugins/poi/poi.cpp" line="120"/>
    <source>Butcher</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="122"/>
+   <location filename="../../plugins/poi/poi.cpp" line="121"/>
    <source>Cable car</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="123"/>
+   <location filename="../../plugins/poi/poi.cpp" line="122"/>
    <source>Cafe</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="124"/>
+   <location filename="../../plugins/poi/poi.cpp" line="123"/>
    <source>Camping</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="125"/>
+   <location filename="../../plugins/poi/poi.cpp" line="124"/>
    <source>Canoe</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="126"/>
+   <location filename="../../plugins/poi/poi.cpp" line="125"/>
    <source>Canal</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="127"/>
+   <location filename="../../plugins/poi/poi.cpp" line="126"/>
    <source>Cape</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="128"/>
+   <location filename="../../plugins/poi/poi.cpp" line="127"/>
    <source>Car</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="129"/>
+   <location filename="../../plugins/poi/poi.cpp" line="128"/>
    <source>Car parts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="130"/>
+   <location filename="../../plugins/poi/poi.cpp" line="129"/>
    <source>Car repair</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="131"/>
+   <location filename="../../plugins/poi/poi.cpp" line="130"/>
    <source>Car sharing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="132"/>
+   <location filename="../../plugins/poi/poi.cpp" line="131"/>
    <source>Car wash</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="133"/>
+   <location filename="../../plugins/poi/poi.cpp" line="132"/>
    <source>Caravan</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="134"/>
+   <location filename="../../plugins/poi/poi.cpp" line="133"/>
    <source>Castle</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="135"/>
+   <location filename="../../plugins/poi/poi.cpp" line="134"/>
    <source>Cattle grid</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="136"/>
+   <location filename="../../plugins/poi/poi.cpp" line="135"/>
    <source>Cave entrance</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="137"/>
+   <location filename="../../plugins/poi/poi.cpp" line="136"/>
    <source>Cemetery</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="138"/>
+   <location filename="../../plugins/poi/poi.cpp" line="137"/>
    <source>Centre</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="139"/>
+   <location filename="../../plugins/poi/poi.cpp" line="138"/>
    <source>Chair lift</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="140"/>
+   <location filename="../../plugins/poi/poi.cpp" line="139"/>
    <source>Chalet</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="141"/>
+   <location filename="../../plugins/poi/poi.cpp" line="140"/>
    <source>Chemist</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="142"/>
+   <location filename="../../plugins/poi/poi.cpp" line="141"/>
    <source>Chess</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="143"/>
+   <location filename="../../plugins/poi/poi.cpp" line="142"/>
    <source>Chicane</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="144"/>
+   <location filename="../../plugins/poi/poi.cpp" line="143"/>
    <source>Chimney</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="145"/>
+   <location filename="../../plugins/poi/poi.cpp" line="144"/>
    <source>Church</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="146"/>
+   <location filename="../../plugins/poi/poi.cpp" line="145"/>
    <source>Cinema</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="147"/>
+   <location filename="../../plugins/poi/poi.cpp" line="146"/>
    <source>City</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="148"/>
+   <location filename="../../plugins/poi/poi.cpp" line="147"/>
    <source>City hall</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="149"/>
+   <location filename="../../plugins/poi/poi.cpp" line="148"/>
    <source>City limit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="150"/>
+   <location filename="../../plugins/poi/poi.cpp" line="149"/>
    <source>Cliff</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="151"/>
+   <location filename="../../plugins/poi/poi.cpp" line="150"/>
    <source>Climbing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="152"/>
+   <location filename="../../plugins/poi/poi.cpp" line="151"/>
    <source>Clock</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="153"/>
+   <location filename="../../plugins/poi/poi.cpp" line="152"/>
    <source>Clothes</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="154"/>
+   <location filename="../../plugins/poi/poi.cpp" line="153"/>
    <source>Coastline</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="155"/>
+   <location filename="../../plugins/poi/poi.cpp" line="154"/>
    <source>Collapse</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="156"/>
+   <location filename="../../plugins/poi/poi.cpp" line="155"/>
    <source>College</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="157"/>
+   <location filename="../../plugins/poi/poi.cpp" line="156"/>
    <source>Commercial</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="158"/>
+   <location filename="../../plugins/poi/poi.cpp" line="157"/>
    <source>Common</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="159"/>
+   <location filename="../../plugins/poi/poi.cpp" line="158"/>
    <source>Communication center</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="160"/>
+   <location filename="../../plugins/poi/poi.cpp" line="159"/>
    <source>Community centre</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="161"/>
+   <location filename="../../plugins/poi/poi.cpp" line="160"/>
    <source>Computer</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="162"/>
+   <location filename="../../plugins/poi/poi.cpp" line="161"/>
    <source>Confectionery</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="163"/>
+   <location filename="../../plugins/poi/poi.cpp" line="162"/>
    <source>Construction</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="164"/>
+   <location filename="../../plugins/poi/poi.cpp" line="163"/>
    <source>Convenience</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="165"/>
+   <location filename="../../plugins/poi/poi.cpp" line="164"/>
    <source>Copyshop</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="166"/>
+   <location filename="../../plugins/poi/poi.cpp" line="165"/>
    <source>Cosmodrome</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="167"/>
+   <location filename="../../plugins/poi/poi.cpp" line="166"/>
    <source>County</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="168"/>
+   <location filename="../../plugins/poi/poi.cpp" line="167"/>
    <source>Court of law</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="169"/>
+   <location filename="../../plugins/poi/poi.cpp" line="168"/>
    <source>Crane</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="170"/>
+   <location filename="../../plugins/poi/poi.cpp" line="169"/>
    <source>Creek</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="171"/>
+   <location filename="../../plugins/poi/poi.cpp" line="170"/>
    <source>Cricket</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="172"/>
+   <location filename="../../plugins/poi/poi.cpp" line="171"/>
    <source>Croquet</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="173"/>
+   <location filename="../../plugins/poi/poi.cpp" line="172"/>
    <source>Crossing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="174"/>
+   <location filename="../../plugins/poi/poi.cpp" line="173"/>
    <source>Curtain</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="175"/>
+   <location filename="../../plugins/poi/poi.cpp" line="174"/>
    <source>Cycle barrier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="176"/>
+   <location filename="../../plugins/poi/poi.cpp" line="175"/>
    <source>Cycling</source>
    <translation>Катаюсь на велосипеді</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="177"/>
+   <location filename="../../plugins/poi/poi.cpp" line="176"/>
    <source>Dam</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="178"/>
+   <location filename="../../plugins/poi/poi.cpp" line="177"/>
    <source>Danger</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="179"/>
+   <location filename="../../plugins/poi/poi.cpp" line="178"/>
    <source>Dead end</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="180"/>
+   <location filename="../../plugins/poi/poi.cpp" line="179"/>
    <source>Deli</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="181"/>
+   <location filename="../../plugins/poi/poi.cpp" line="180"/>
    <source>Dentist</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="182"/>
+   <location filename="../../plugins/poi/poi.cpp" line="181"/>
    <source>Deprecated</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="183"/>
+   <location filename="../../plugins/poi/poi.cpp" line="182"/>
    <source>Dirt</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="184"/>
+   <location filename="../../plugins/poi/poi.cpp" line="183"/>
    <source>District</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="185"/>
+   <location filename="../../plugins/poi/poi.cpp" line="184"/>
    <source>Ditch</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="186"/>
+   <location filename="../../plugins/poi/poi.cpp" line="185"/>
    <source>Diving</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="187"/>
+   <location filename="../../plugins/poi/poi.cpp" line="186"/>
    <source>Diy store</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="188"/>
+   <location filename="../../plugins/poi/poi.cpp" line="187"/>
    <source>Doctor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="189"/>
+   <location filename="../../plugins/poi/poi.cpp" line="188"/>
    <source>Dog</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="190"/>
+   <location filename="../../plugins/poi/poi.cpp" line="189"/>
    <source>Drag lift</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="191"/>
+   <location filename="../../plugins/poi/poi.cpp" line="190"/>
    <source>Drain</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="192"/>
+   <location filename="../../plugins/poi/poi.cpp" line="191"/>
    <source>Drinking water</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="193"/>
+   <location filename="../../plugins/poi/poi.cpp" line="192"/>
    <source>Driving school</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="194"/>
+   <location filename="../../plugins/poi/poi.cpp" line="193"/>
    <source>Earthquake</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="195"/>
+   <location filename="../../plugins/poi/poi.cpp" line="194"/>
    <source>Electronics</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="196"/>
+   <location filename="../../plugins/poi/poi.cpp" line="195"/>
    <source>Embassy</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="197"/>
+   <location filename="../../plugins/poi/poi.cpp" line="196"/>
    <source>Emergency access point</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="198"/>
+   <location filename="../../plugins/poi/poi.cpp" line="197"/>
    <source>Emergency phone</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="199"/>
+   <location filename="../../plugins/poi/poi.cpp" line="198"/>
    <source>Entrance</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="200"/>
+   <location filename="../../plugins/poi/poi.cpp" line="199"/>
    <source>Erotic</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="201"/>
+   <location filename="../../plugins/poi/poi.cpp" line="200"/>
    <source>Eruption</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="202"/>
+   <location filename="../../plugins/poi/poi.cpp" line="201"/>
    <source>Exchange</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="203"/>
+   <location filename="../../plugins/poi/poi.cpp" line="202"/>
    <source>Excrement bags</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="204"/>
+   <location filename="../../plugins/poi/poi.cpp" line="203"/>
    <source>Exit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="205"/>
+   <location filename="../../plugins/poi/poi.cpp" line="204"/>
    <source>Fabric</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="206"/>
+   <location filename="../../plugins/poi/poi.cpp" line="205"/>
    <source>Farm</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="207"/>
+   <location filename="../../plugins/poi/poi.cpp" line="206"/>
    <source>Fastfood</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="208"/>
+   <location filename="../../plugins/poi/poi.cpp" line="207"/>
    <source>Ferry</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="209"/>
+   <location filename="../../plugins/poi/poi.cpp" line="208"/>
    <source>Fire</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="210"/>
+   <location filename="../../plugins/poi/poi.cpp" line="209"/>
    <source>Fire hydrant</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="211"/>
+   <location filename="../../plugins/poi/poi.cpp" line="210"/>
    <source>Fire brigade</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="212"/>
+   <location filename="../../plugins/poi/poi.cpp" line="211"/>
    <source>Fishing</source>
    <translation>Рибалю</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="213"/>
+   <location filename="../../plugins/poi/poi.cpp" line="212"/>
    <source>Flag</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="214"/>
+   <location filename="../../plugins/poi/poi.cpp" line="213"/>
    <source>Flood</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="215"/>
+   <location filename="../../plugins/poi/poi.cpp" line="214"/>
    <source>Florist</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="216"/>
+   <location filename="../../plugins/poi/poi.cpp" line="215"/>
    <source>Fog</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="217"/>
+   <location filename="../../plugins/poi/poi.cpp" line="216"/>
    <source>Food court</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="218"/>
+   <location filename="../../plugins/poi/poi.cpp" line="217"/>
    <source>Foot</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="219"/>
+   <location filename="../../plugins/poi/poi.cpp" line="218"/>
    <source>Football</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="220"/>
+   <location filename="../../plugins/poi/poi.cpp" line="219"/>
    <source>Foot designated</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="221"/>
+   <location filename="../../plugins/poi/poi.cpp" line="220"/>
    <source>Ford</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="222"/>
+   <location filename="../../plugins/poi/poi.cpp" line="221"/>
    <source>Fossil</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="223"/>
+   <location filename="../../plugins/poi/poi.cpp" line="222"/>
    <source>Frame</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="224"/>
+   <location filename="../../plugins/poi/poi.cpp" line="223"/>
    <source>Fruits</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="225"/>
+   <location filename="../../plugins/poi/poi.cpp" line="224"/>
    <source>Fuel</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="226"/>
+   <location filename="../../plugins/poi/poi.cpp" line="225"/>
    <source>Furniture</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="227"/>
+   <location filename="../../plugins/poi/poi.cpp" line="226"/>
    <source>Garages</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="228"/>
+   <location filename="../../plugins/poi/poi.cpp" line="227"/>
    <source>Garden</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="229"/>
+   <location filename="../../plugins/poi/poi.cpp" line="228"/>
    <source>Garden centre</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="230"/>
+   <location filename="../../plugins/poi/poi.cpp" line="229"/>
    <source>Gasometer</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="231"/>
+   <location filename="../../plugins/poi/poi.cpp" line="230"/>
    <source>Gate</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="232"/>
+   <location filename="../../plugins/poi/poi.cpp" line="231"/>
    <source>Geyser</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="233"/>
+   <location filename="../../plugins/poi/poi.cpp" line="232"/>
    <source>Gift</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="234"/>
+   <location filename="../../plugins/poi/poi.cpp" line="233"/>
    <source>Glacier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="235"/>
+   <location filename="../../plugins/poi/poi.cpp" line="234"/>
    <source>Golf</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="236"/>
+   <location filename="../../plugins/poi/poi.cpp" line="235"/>
    <source>Gondola</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="237"/>
+   <location filename="../../plugins/poi/poi.cpp" line="236"/>
    <source>Goods</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="238"/>
+   <location filename="../../plugins/poi/poi.cpp" line="237"/>
    <source>Government</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="239"/>
+   <location filename="../../plugins/poi/poi.cpp" line="238"/>
    <source>Grad</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="240"/>
+   <location filename="../../plugins/poi/poi.cpp" line="239"/>
    <source>Greengrocer</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="241"/>
+   <location filename="../../plugins/poi/poi.cpp" line="240"/>
    <source>Greenhouse horticulture</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="242"/>
+   <location filename="../../plugins/poi/poi.cpp" line="241"/>
    <source>Grit bin</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="243"/>
+   <location filename="../../plugins/poi/poi.cpp" line="242"/>
    <source>Groyne</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="244"/>
+   <location filename="../../plugins/poi/poi.cpp" line="243"/>
    <source>Guest house</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="245"/>
+   <location filename="../../plugins/poi/poi.cpp" line="244"/>
    <source>Guidepost</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="246"/>
+   <location filename="../../plugins/poi/poi.cpp" line="245"/>
    <source>Gym</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="247"/>
+   <location filename="../../plugins/poi/poi.cpp" line="246"/>
    <source>Hairdresser</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="248"/>
+   <location filename="../../plugins/poi/poi.cpp" line="247"/>
    <source>Hamlet</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="249"/>
+   <location filename="../../plugins/poi/poi.cpp" line="248"/>
    <source>Handball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="250"/>
+   <location filename="../../plugins/poi/poi.cpp" line="249"/>
    <source>Hangar</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="251"/>
+   <location filename="../../plugins/poi/poi.cpp" line="250"/>
    <source>Hardware</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="252"/>
+   <location filename="../../plugins/poi/poi.cpp" line="251"/>
    <source>Hearing aids</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="253"/>
+   <location filename="../../plugins/poi/poi.cpp" line="252"/>
    <source>Helipad</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="254"/>
+   <location filename="../../plugins/poi/poi.cpp" line="253"/>
    <source>Hi-Fi</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="255"/>
+   <location filename="../../plugins/poi/poi.cpp" line="254"/>
    <source>Highway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="256"/>
+   <location filename="../../plugins/poi/poi.cpp" line="255"/>
    <source>Hill</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="257"/>
+   <location filename="../../plugins/poi/poi.cpp" line="256"/>
    <source>Hinduism</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="258"/>
+   <location filename="../../plugins/poi/poi.cpp" line="257"/>
    <source>Hockey</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="259"/>
+   <location filename="../../plugins/poi/poi.cpp" line="258"/>
    <source>Horse</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="260"/>
+   <location filename="../../plugins/poi/poi.cpp" line="259"/>
    <source>Horse designated</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="261"/>
+   <location filename="../../plugins/poi/poi.cpp" line="260"/>
    <source>Hospital</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="262"/>
+   <location filename="../../plugins/poi/poi.cpp" line="261"/>
    <source>Hostel</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="263"/>
+   <location filename="../../plugins/poi/poi.cpp" line="262"/>
    <source>House</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="264"/>
+   <location filename="../../plugins/poi/poi.cpp" line="263"/>
    <source>House number</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="265"/>
+   <location filename="../../plugins/poi/poi.cpp" line="264"/>
    <source>Hotel</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="266"/>
+   <location filename="../../plugins/poi/poi.cpp" line="265"/>
    <source>Hunting stand</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="267"/>
+   <location filename="../../plugins/poi/poi.cpp" line="266"/>
    <source>Hydro</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="268"/>
+   <location filename="../../plugins/poi/poi.cpp" line="267"/>
    <source>Icecream</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="269"/>
+   <location filename="../../plugins/poi/poi.cpp" line="268"/>
    <source>Ice rink</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="270"/>
+   <location filename="../../plugins/poi/poi.cpp" line="269"/>
    <source>Incline</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="271"/>
+   <location filename="../../plugins/poi/poi.cpp" line="270"/>
    <source>Information</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="272"/>
+   <location filename="../../plugins/poi/poi.cpp" line="271"/>
    <source>Information office</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="273"/>
+   <location filename="../../plugins/poi/poi.cpp" line="272"/>
    <source>Island</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="274"/>
+   <location filename="../../plugins/poi/poi.cpp" line="273"/>
    <source>Islet</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="275"/>
+   <location filename="../../plugins/poi/poi.cpp" line="274"/>
    <source>Isolated dwelling</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="276"/>
+   <location filename="../../plugins/poi/poi.cpp" line="275"/>
    <source>Jainism</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="277"/>
+   <location filename="../../plugins/poi/poi.cpp" line="276"/>
    <source>Jewelry</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="278"/>
+   <location filename="../../plugins/poi/poi.cpp" line="277"/>
    <source>Jewish</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="279"/>
+   <location filename="../../plugins/poi/poi.cpp" line="278"/>
    <source>Karting</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="280"/>
+   <location filename="../../plugins/poi/poi.cpp" line="279"/>
    <source>KFC</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="281"/>
+   <location filename="../../plugins/poi/poi.cpp" line="280"/>
    <source>Kindergarten</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="282"/>
+   <location filename="../../plugins/poi/poi.cpp" line="281"/>
    <source>Kiosk</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="283"/>
+   <location filename="../../plugins/poi/poi.cpp" line="282"/>
    <source>Kitchen</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="284"/>
+   <location filename="../../plugins/poi/poi.cpp" line="283"/>
    <source>Laundry</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="285"/>
+   <location filename="../../plugins/poi/poi.cpp" line="284"/>
    <source>Library</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="286"/>
+   <location filename="../../plugins/poi/poi.cpp" line="285"/>
    <source>Lift gate</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="287"/>
+   <location filename="../../plugins/poi/poi.cpp" line="286"/>
    <source>Lighthouse</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="288"/>
-   <location filename="../../plugins/poi/poi.cpp" line="2047"/>
+   <location filename="../../plugins/poi/poi.cpp" line="287"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2046"/>
    <source>Locality</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="289"/>
+   <location filename="../../plugins/poi/poi.cpp" line="288"/>
    <source>Lock gate</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="290"/>
+   <location filename="../../plugins/poi/poi.cpp" line="289"/>
    <source>Locust</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="291"/>
+   <location filename="../../plugins/poi/poi.cpp" line="290"/>
    <source>Mall</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="292"/>
+   <location filename="../../plugins/poi/poi.cpp" line="291"/>
    <source>Map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="293"/>
+   <location filename="../../plugins/poi/poi.cpp" line="292"/>
    <source>Marina</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="294"/>
+   <location filename="../../plugins/poi/poi.cpp" line="293"/>
    <source>Marketplace</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="295"/>
+   <location filename="../../plugins/poi/poi.cpp" line="294"/>
    <source>Maximum height</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="296"/>
+   <location filename="../../plugins/poi/poi.cpp" line="295"/>
    <source>Maximum length</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="297"/>
+   <location filename="../../plugins/poi/poi.cpp" line="296"/>
    <source>Maximum weight</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="298"/>
+   <location filename="../../plugins/poi/poi.cpp" line="297"/>
    <source>Maximum width</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="299"/>
+   <location filename="../../plugins/poi/poi.cpp" line="298"/>
    <source>McDonald&apos;s</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="300"/>
+   <location filename="../../plugins/poi/poi.cpp" line="299"/>
    <source>Measurement station</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="301"/>
+   <location filename="../../plugins/poi/poi.cpp" line="300"/>
    <source>Memorial</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="302"/>
+   <location filename="../../plugins/poi/poi.cpp" line="301"/>
    <source>Military base</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="303"/>
+   <location filename="../../plugins/poi/poi.cpp" line="302"/>
    <source>Military stock</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="304"/>
+   <location filename="../../plugins/poi/poi.cpp" line="303"/>
    <source>Mine</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="305"/>
+   <location filename="../../plugins/poi/poi.cpp" line="304"/>
    <source>Minimum speed</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="306"/>
+   <location filename="../../plugins/poi/poi.cpp" line="305"/>
    <source>Misty howler</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="307"/>
+   <location filename="../../plugins/poi/poi.cpp" line="306"/>
    <source>Mobile phone</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="308"/>
+   <location filename="../../plugins/poi/poi.cpp" line="307"/>
    <source>Monument</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="309"/>
+   <location filename="../../plugins/poi/poi.cpp" line="308"/>
    <source>Motel</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="310"/>
+   <location filename="../../plugins/poi/poi.cpp" line="309"/>
    <source>Motocross</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="311"/>
+   <location filename="../../plugins/poi/poi.cpp" line="310"/>
    <source>Motor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="312"/>
+   <location filename="../../plugins/poi/poi.cpp" line="311"/>
    <source>Motorway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="313"/>
+   <location filename="../../plugins/poi/poi.cpp" line="312"/>
    <source>Motorway link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="314"/>
+   <location filename="../../plugins/poi/poi.cpp" line="313"/>
    <source>Motorbike</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="315"/>
+   <location filename="../../plugins/poi/poi.cpp" line="314"/>
    <source>Motor car</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="316"/>
+   <location filename="../../plugins/poi/poi.cpp" line="315"/>
    <source>Mountain pass</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="317"/>
+   <location filename="../../plugins/poi/poi.cpp" line="316"/>
    <source>Mud</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="318"/>
+   <location filename="../../plugins/poi/poi.cpp" line="317"/>
    <source>Mudflow</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="319"/>
+   <location filename="../../plugins/poi/poi.cpp" line="318"/>
    <source>Multi</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="320"/>
+   <location filename="../../plugins/poi/poi.cpp" line="319"/>
    <source>Multi storey</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="321"/>
+   <location filename="../../plugins/poi/poi.cpp" line="320"/>
    <source>Municipality</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="322"/>
+   <location filename="../../plugins/poi/poi.cpp" line="321"/>
    <source>Museum</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="323"/>
+   <location filename="../../plugins/poi/poi.cpp" line="322"/>
    <source>Musical instrument</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="324"/>
+   <location filename="../../plugins/poi/poi.cpp" line="323"/>
    <source>Muslim</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="325"/>
+   <location filename="../../plugins/poi/poi.cpp" line="324"/>
    <source>Nature reserve</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="326"/>
+   <location filename="../../plugins/poi/poi.cpp" line="325"/>
    <source>Naval base</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="327"/>
+   <location filename="../../plugins/poi/poi.cpp" line="326"/>
    <source>Nightclub</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="328"/>
+   <location filename="../../plugins/poi/poi.cpp" line="327"/>
    <source>No left turn</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="329"/>
+   <location filename="../../plugins/poi/poi.cpp" line="328"/>
    <source>No right turn</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="330"/>
+   <location filename="../../plugins/poi/poi.cpp" line="329"/>
    <source>No straight on</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="331"/>
+   <location filename="../../plugins/poi/poi.cpp" line="330"/>
    <source>No U-turn</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="332"/>
-   <location filename="../../plugins/poi/poi.cpp" line="528"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1700"/>
+   <location filename="../../plugins/poi/poi.cpp" line="331"/>
+   <location filename="../../plugins/poi/poi.cpp" line="527"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1699"/>
    <source>None</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="333"/>
+   <location filename="../../plugins/poi/poi.cpp" line="332"/>
    <source>Note</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="334"/>
+   <location filename="../../plugins/poi/poi.cpp" line="333"/>
    <source>Nuclear</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="335"/>
+   <location filename="../../plugins/poi/poi.cpp" line="334"/>
    <source>Oil</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="336"/>
+   <location filename="../../plugins/poi/poi.cpp" line="335"/>
    <source>Only left turn</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="337"/>
+   <location filename="../../plugins/poi/poi.cpp" line="336"/>
    <source>Only right turn</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="338"/>
+   <location filename="../../plugins/poi/poi.cpp" line="337"/>
    <source>Only straight on</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="339"/>
+   <location filename="../../plugins/poi/poi.cpp" line="338"/>
    <source>Optician</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="340"/>
+   <location filename="../../plugins/poi/poi.cpp" line="339"/>
    <source>Outdoor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="341"/>
+   <location filename="../../plugins/poi/poi.cpp" line="340"/>
    <source>Paint</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="342"/>
+   <location filename="../../plugins/poi/poi.cpp" line="341"/>
    <source>Palaeontological site</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="343"/>
+   <location filename="../../plugins/poi/poi.cpp" line="342"/>
    <source>Park</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="344"/>
+   <location filename="../../plugins/poi/poi.cpp" line="343"/>
    <source>Park and ride</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="345"/>
+   <location filename="../../plugins/poi/poi.cpp" line="344"/>
    <source>Parking</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="346"/>
+   <location filename="../../plugins/poi/poi.cpp" line="345"/>
    <source>Parking entrance</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="347"/>
+   <location filename="../../plugins/poi/poi.cpp" line="346"/>
    <source>Parking exit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="348"/>
+   <location filename="../../plugins/poi/poi.cpp" line="347"/>
    <source>Path</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="349"/>
+   <location filename="../../plugins/poi/poi.cpp" line="348"/>
    <source>Passing place</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="350"/>
+   <location filename="../../plugins/poi/poi.cpp" line="349"/>
    <source>Peak</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="351"/>
+   <location filename="../../plugins/poi/poi.cpp" line="350"/>
    <source>Pedestrian</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="352"/>
+   <location filename="../../plugins/poi/poi.cpp" line="351"/>
    <source>Pelota</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="353"/>
+   <location filename="../../plugins/poi/poi.cpp" line="352"/>
    <source>Pet</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="354"/>
+   <location filename="../../plugins/poi/poi.cpp" line="353"/>
    <source>Pharmacy</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="355"/>
+   <location filename="../../plugins/poi/poi.cpp" line="354"/>
    <source>Picnic</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="356"/>
+   <location filename="../../plugins/poi/poi.cpp" line="355"/>
    <source>Pier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="357"/>
+   <location filename="../../plugins/poi/poi.cpp" line="356"/>
    <source>Pitch</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="358"/>
+   <location filename="../../plugins/poi/poi.cpp" line="357"/>
    <source>Plant</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="359"/>
+   <location filename="../../plugins/poi/poi.cpp" line="358"/>
    <source>Platform</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="360"/>
+   <location filename="../../plugins/poi/poi.cpp" line="359"/>
    <source>Playground</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="361"/>
+   <location filename="../../plugins/poi/poi.cpp" line="360"/>
    <source>Pole</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="362"/>
+   <location filename="../../plugins/poi/poi.cpp" line="361"/>
    <source>Police</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="363"/>
+   <location filename="../../plugins/poi/poi.cpp" line="362"/>
    <source>Polygon</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="364"/>
+   <location filename="../../plugins/poi/poi.cpp" line="363"/>
    <source>Pool</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="365"/>
+   <location filename="../../plugins/poi/poi.cpp" line="364"/>
    <source>Post box</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="366"/>
+   <location filename="../../plugins/poi/poi.cpp" line="365"/>
    <source>Post office</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="367"/>
+   <location filename="../../plugins/poi/poi.cpp" line="366"/>
    <source>Power</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="368"/>
+   <location filename="../../plugins/poi/poi.cpp" line="367"/>
    <source>Prison</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="369"/>
+   <location filename="../../plugins/poi/poi.cpp" line="368"/>
    <source>Primary</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="370"/>
+   <location filename="../../plugins/poi/poi.cpp" line="369"/>
    <source>Primary link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="371"/>
+   <location filename="../../plugins/poi/poi.cpp" line="370"/>
    <source>PSV</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="372"/>
+   <location filename="../../plugins/poi/poi.cpp" line="371"/>
    <source>Pub</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="373"/>
+   <location filename="../../plugins/poi/poi.cpp" line="372"/>
    <source>Racquetball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="374"/>
+   <location filename="../../plugins/poi/poi.cpp" line="373"/>
    <source>Radar</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="375"/>
+   <location filename="../../plugins/poi/poi.cpp" line="374"/>
    <source>Railway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="376"/>
+   <location filename="../../plugins/poi/poi.cpp" line="375"/>
    <source>Railway small</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="377"/>
+   <location filename="../../plugins/poi/poi.cpp" line="376"/>
    <source>Railway station</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="378"/>
+   <location filename="../../plugins/poi/poi.cpp" line="377"/>
    <source>Rain</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="379"/>
+   <location filename="../../plugins/poi/poi.cpp" line="378"/>
    <source>Range</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="380"/>
+   <location filename="../../plugins/poi/poi.cpp" line="379"/>
    <source>Recycling</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="381"/>
+   <location filename="../../plugins/poi/poi.cpp" line="380"/>
    <source>Reef</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="382"/>
+   <location filename="../../plugins/poi/poi.cpp" line="381"/>
    <source>Rental</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="383"/>
+   <location filename="../../plugins/poi/poi.cpp" line="382"/>
    <source>Reservoir covered</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="384"/>
+   <location filename="../../plugins/poi/poi.cpp" line="383"/>
    <source>Residential</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="385"/>
+   <location filename="../../plugins/poi/poi.cpp" line="384"/>
    <source>Restaurant</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="386"/>
+   <location filename="../../plugins/poi/poi.cpp" line="385"/>
    <source>Restricted area</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="387"/>
+   <location filename="../../plugins/poi/poi.cpp" line="386"/>
    <source>Restriction</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="388"/>
+   <location filename="../../plugins/poi/poi.cpp" line="387"/>
    <source>Riding</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="389"/>
+   <location filename="../../plugins/poi/poi.cpp" line="388"/>
    <source>River</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="390"/>
+   <location filename="../../plugins/poi/poi.cpp" line="389"/>
    <source>River bank</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="391"/>
+   <location filename="../../plugins/poi/poi.cpp" line="390"/>
    <source>Road</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="392"/>
+   <location filename="../../plugins/poi/poi.cpp" line="391"/>
    <source>Rock</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="393"/>
+   <location filename="../../plugins/poi/poi.cpp" line="392"/>
    <source>Roundabout left</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="394"/>
+   <location filename="../../plugins/poi/poi.cpp" line="393"/>
    <source>Roundabout right</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="395"/>
+   <location filename="../../plugins/poi/poi.cpp" line="394"/>
    <source>Rowing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="396"/>
+   <location filename="../../plugins/poi/poi.cpp" line="395"/>
    <source>Ruins</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="397"/>
+   <location filename="../../plugins/poi/poi.cpp" line="396"/>
    <source>Runway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="398"/>
+   <location filename="../../plugins/poi/poi.cpp" line="397"/>
    <source>Safety training</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="399"/>
+   <location filename="../../plugins/poi/poi.cpp" line="398"/>
    <source>Sally port</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="400"/>
+   <location filename="../../plugins/poi/poi.cpp" line="399"/>
    <source>Sauna</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="401"/>
+   <location filename="../../plugins/poi/poi.cpp" line="400"/>
    <source>School</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="402"/>
+   <location filename="../../plugins/poi/poi.cpp" line="401"/>
    <source>Seafood</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="403"/>
+   <location filename="../../plugins/poi/poi.cpp" line="402"/>
    <source>Secondary</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="404"/>
+   <location filename="../../plugins/poi/poi.cpp" line="403"/>
    <source>Secondary link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="405"/>
+   <location filename="../../plugins/poi/poi.cpp" line="404"/>
    <source>Senate</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="406"/>
+   <location filename="../../plugins/poi/poi.cpp" line="405"/>
    <source>Services</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="407"/>
+   <location filename="../../plugins/poi/poi.cpp" line="406"/>
    <source>Shelter</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="408"/>
+   <location filename="../../plugins/poi/poi.cpp" line="407"/>
    <source>Shinto</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="409"/>
+   <location filename="../../plugins/poi/poi.cpp" line="408"/>
    <source>Shoes</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="410"/>
+   <location filename="../../plugins/poi/poi.cpp" line="409"/>
    <source>Sikhism</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="411"/>
+   <location filename="../../plugins/poi/poi.cpp" line="410"/>
    <source>Skateboard</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="412"/>
+   <location filename="../../plugins/poi/poi.cpp" line="411"/>
    <source>Skating</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="413"/>
+   <location filename="../../plugins/poi/poi.cpp" line="412"/>
    <source>Skiing</source>
    <translation>Катаюсь на лижах</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="414"/>
+   <location filename="../../plugins/poi/poi.cpp" line="413"/>
    <source>Slipway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="415"/>
+   <location filename="../../plugins/poi/poi.cpp" line="414"/>
    <source>Snow</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="416"/>
+   <location filename="../../plugins/poi/poi.cpp" line="415"/>
    <source>Soccer</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="417"/>
+   <location filename="../../plugins/poi/poi.cpp" line="416"/>
    <source>Speed</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="418"/>
+   <location filename="../../plugins/poi/poi.cpp" line="417"/>
    <source>Speed trap</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="419"/>
+   <location filename="../../plugins/poi/poi.cpp" line="418"/>
    <source>Spring</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="420"/>
+   <location filename="../../plugins/poi/poi.cpp" line="419"/>
    <source>Stadium</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="421"/>
+   <location filename="../../plugins/poi/poi.cpp" line="420"/>
    <source>State</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="422"/>
+   <location filename="../../plugins/poi/poi.cpp" line="421"/>
    <source>Station</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="423"/>
+   <location filename="../../plugins/poi/poi.cpp" line="422"/>
    <source>Stationery</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="424"/>
+   <location filename="../../plugins/poi/poi.cpp" line="423"/>
    <source>Steps</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="425"/>
+   <location filename="../../plugins/poi/poi.cpp" line="424"/>
    <source>Stile</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="426"/>
+   <location filename="../../plugins/poi/poi.cpp" line="425"/>
    <source>Stop</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="427"/>
+   <location filename="../../plugins/poi/poi.cpp" line="426"/>
    <source>Stop position</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="428"/>
+   <location filename="../../plugins/poi/poi.cpp" line="427"/>
    <source>Storm</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="429"/>
+   <location filename="../../plugins/poi/poi.cpp" line="428"/>
    <source>Stream</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="430"/>
+   <location filename="../../plugins/poi/poi.cpp" line="429"/>
    <source>Street lamp</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="431"/>
+   <location filename="../../plugins/poi/poi.cpp" line="430"/>
    <source>Stripclub</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="432"/>
+   <location filename="../../plugins/poi/poi.cpp" line="431"/>
    <source>Studio</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="433"/>
+   <location filename="../../plugins/poi/poi.cpp" line="432"/>
    <source>Suburbs</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="434"/>
+   <location filename="../../plugins/poi/poi.cpp" line="433"/>
    <source>Subway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="435"/>
+   <location filename="../../plugins/poi/poi.cpp" line="434"/>
    <source>Supermarket</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="436"/>
+   <location filename="../../plugins/poi/poi.cpp" line="435"/>
    <source>Surveillance</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="437"/>
+   <location filename="../../plugins/poi/poi.cpp" line="436"/>
    <source>Survey point</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="438"/>
+   <location filename="../../plugins/poi/poi.cpp" line="437"/>
    <source>Table tennis</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="439"/>
+   <location filename="../../plugins/poi/poi.cpp" line="438"/>
    <source>Tailor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="440"/>
+   <location filename="../../plugins/poi/poi.cpp" line="439"/>
    <source>Tank</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="441"/>
+   <location filename="../../plugins/poi/poi.cpp" line="440"/>
    <source>Taoism</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="442"/>
+   <location filename="../../plugins/poi/poi.cpp" line="441"/>
    <source>Taxi</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="443"/>
+   <location filename="../../plugins/poi/poi.cpp" line="442"/>
    <source>Taxiway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="444"/>
+   <location filename="../../plugins/poi/poi.cpp" line="443"/>
    <source>Telephone</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="445"/>
+   <location filename="../../plugins/poi/poi.cpp" line="444"/>
    <source>Tennis</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="446"/>
+   <location filename="../../plugins/poi/poi.cpp" line="445"/>
    <source>Terminal</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="447"/>
+   <location filename="../../plugins/poi/poi.cpp" line="446"/>
    <source>Tertiary</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="448"/>
+   <location filename="../../plugins/poi/poi.cpp" line="447"/>
    <source>Tertiary link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="449"/>
+   <location filename="../../plugins/poi/poi.cpp" line="448"/>
    <source>Theater</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="450"/>
+   <location filename="../../plugins/poi/poi.cpp" line="449"/>
    <source>Theme park</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="451"/>
+   <location filename="../../plugins/poi/poi.cpp" line="450"/>
    <source>Ticket machine</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="452"/>
+   <location filename="../../plugins/poi/poi.cpp" line="451"/>
    <source>Toilets</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="453"/>
+   <location filename="../../plugins/poi/poi.cpp" line="452"/>
    <source>Toll booth</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="454"/>
+   <location filename="../../plugins/poi/poi.cpp" line="453"/>
    <source>Town</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="455"/>
+   <location filename="../../plugins/poi/poi.cpp" line="454"/>
    <source>Town Hall</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="456"/>
+   <location filename="../../plugins/poi/poi.cpp" line="455"/>
    <source>Tower</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="457"/>
+   <location filename="../../plugins/poi/poi.cpp" line="456"/>
    <source>Tower small</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="458"/>
+   <location filename="../../plugins/poi/poi.cpp" line="457"/>
    <source>Toys</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="459"/>
+   <location filename="../../plugins/poi/poi.cpp" line="458"/>
    <source>Track</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="460"/>
+   <location filename="../../plugins/poi/poi.cpp" line="459"/>
    <source>Trade</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="461"/>
+   <location filename="../../plugins/poi/poi.cpp" line="460"/>
    <source>Traffic light</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="462"/>
+   <location filename="../../plugins/poi/poi.cpp" line="461"/>
    <source>Tram</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="463"/>
+   <location filename="../../plugins/poi/poi.cpp" line="462"/>
    <source>Trash bin</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="464"/>
+   <location filename="../../plugins/poi/poi.cpp" line="463"/>
    <source>Travel agency</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="465"/>
+   <location filename="../../plugins/poi/poi.cpp" line="464"/>
    <source>Trees</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="466"/>
+   <location filename="../../plugins/poi/poi.cpp" line="465"/>
    <source>Trunk</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="467"/>
+   <location filename="../../plugins/poi/poi.cpp" line="466"/>
    <source>Trunk link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="468"/>
+   <location filename="../../plugins/poi/poi.cpp" line="467"/>
    <source>Tsunami</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="469"/>
+   <location filename="../../plugins/poi/poi.cpp" line="468"/>
    <source>Turning</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="470"/>
+   <location filename="../../plugins/poi/poi.cpp" line="469"/>
    <source>Turning circle</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="471"/>
+   <location filename="../../plugins/poi/poi.cpp" line="470"/>
    <source>Turnstile</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="472"/>
+   <location filename="../../plugins/poi/poi.cpp" line="471"/>
    <source>Turntable</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="473"/>
+   <location filename="../../plugins/poi/poi.cpp" line="472"/>
    <source>Tyres</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="474"/>
+   <location filename="../../plugins/poi/poi.cpp" line="473"/>
    <source>Unclassified</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="475"/>
+   <location filename="../../plugins/poi/poi.cpp" line="474"/>
    <source>Underground</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="476"/>
+   <location filename="../../plugins/poi/poi.cpp" line="475"/>
    <source>University</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="477"/>
+   <location filename="../../plugins/poi/poi.cpp" line="476"/>
    <source>Vacuum cleaner</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="478"/>
+   <location filename="../../plugins/poi/poi.cpp" line="477"/>
    <source>Variety store</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="479"/>
+   <location filename="../../plugins/poi/poi.cpp" line="478"/>
    <source>Veterinary</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="480"/>
+   <location filename="../../plugins/poi/poi.cpp" line="479"/>
    <source>Viaduct</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="481"/>
+   <location filename="../../plugins/poi/poi.cpp" line="480"/>
    <source>Video</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="482"/>
+   <location filename="../../plugins/poi/poi.cpp" line="481"/>
    <source>Viewpoint</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="483"/>
+   <location filename="../../plugins/poi/poi.cpp" line="482"/>
    <source>Village</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="484"/>
+   <location filename="../../plugins/poi/poi.cpp" line="483"/>
    <source>Volcano</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="485"/>
+   <location filename="../../plugins/poi/poi.cpp" line="484"/>
    <source>Volleyball</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="486"/>
+   <location filename="../../plugins/poi/poi.cpp" line="485"/>
    <source>Waste disposal</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="487"/>
+   <location filename="../../plugins/poi/poi.cpp" line="486"/>
    <source>Wastewater</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="488"/>
+   <location filename="../../plugins/poi/poi.cpp" line="487"/>
    <source>Wastewater plant</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="489"/>
+   <location filename="../../plugins/poi/poi.cpp" line="488"/>
    <source>Water</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="490"/>
+   <location filename="../../plugins/poi/poi.cpp" line="489"/>
    <source>Water park</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="491"/>
+   <location filename="../../plugins/poi/poi.cpp" line="490"/>
    <source>Water tower</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="492"/>
+   <location filename="../../plugins/poi/poi.cpp" line="491"/>
    <source>Water well</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="493"/>
+   <location filename="../../plugins/poi/poi.cpp" line="492"/>
    <source>Water works</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="494"/>
+   <location filename="../../plugins/poi/poi.cpp" line="493"/>
    <source>Waterfall</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="495"/>
+   <location filename="../../plugins/poi/poi.cpp" line="494"/>
    <source>Watermill</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="496"/>
+   <location filename="../../plugins/poi/poi.cpp" line="495"/>
    <source>Waterway</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="497"/>
+   <location filename="../../plugins/poi/poi.cpp" line="496"/>
    <source>Wayside cross</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="498"/>
+   <location filename="../../plugins/poi/poi.cpp" line="497"/>
    <source>Wayside shrine</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="499"/>
+   <location filename="../../plugins/poi/poi.cpp" line="498"/>
    <source>Weapons</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="500"/>
+   <location filename="../../plugins/poi/poi.cpp" line="499"/>
    <source>Weir</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="501"/>
+   <location filename="../../plugins/poi/poi.cpp" line="500"/>
    <source>Well</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="502"/>
+   <location filename="../../plugins/poi/poi.cpp" line="501"/>
    <source>Wifi</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="503"/>
+   <location filename="../../plugins/poi/poi.cpp" line="502"/>
    <source>Wind</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="504"/>
+   <location filename="../../plugins/poi/poi.cpp" line="503"/>
    <source>Windmill</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="505"/>
+   <location filename="../../plugins/poi/poi.cpp" line="504"/>
    <source>Windsock</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="506"/>
+   <location filename="../../plugins/poi/poi.cpp" line="505"/>
    <source>Works</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="507"/>
+   <location filename="../../plugins/poi/poi.cpp" line="506"/>
    <source>Zebra crossing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="508"/>
+   <location filename="../../plugins/poi/poi.cpp" line="507"/>
    <source>Zoo</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="513"/>
+   <location filename="../../plugins/poi/poi.cpp" line="512"/>
    <source>Accommodation</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="514"/>
+   <location filename="../../plugins/poi/poi.cpp" line="513"/>
    <source>Administration</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="515"/>
+   <location filename="../../plugins/poi/poi.cpp" line="514"/>
    <source>Communication points</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="516"/>
+   <location filename="../../plugins/poi/poi.cpp" line="515"/>
    <source>Disaster</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="517"/>
+   <location filename="../../plugins/poi/poi.cpp" line="516"/>
    <source>Education</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="518"/>
+   <location filename="../../plugins/poi/poi.cpp" line="517"/>
    <source>Food</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="519"/>
+   <location filename="../../plugins/poi/poi.cpp" line="518"/>
    <source>Geographic</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="520"/>
+   <location filename="../../plugins/poi/poi.cpp" line="519"/>
    <source>Health</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="521"/>
+   <location filename="../../plugins/poi/poi.cpp" line="520"/>
    <source>Historic</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="522"/>
+   <location filename="../../plugins/poi/poi.cpp" line="521"/>
    <source>Industrial</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="523"/>
+   <location filename="../../plugins/poi/poi.cpp" line="522"/>
    <source>Leisure</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="524"/>
+   <location filename="../../plugins/poi/poi.cpp" line="523"/>
    <source>Miscellaneous</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="525"/>
+   <location filename="../../plugins/poi/poi.cpp" line="524"/>
    <source>Money</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="526"/>
+   <location filename="../../plugins/poi/poi.cpp" line="525"/>
    <source>Nature</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="527"/>
+   <location filename="../../plugins/poi/poi.cpp" line="526"/>
    <source>Nautical</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="529"/>
+   <location filename="../../plugins/poi/poi.cpp" line="528"/>
    <source>Place</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="530"/>
+   <location filename="../../plugins/poi/poi.cpp" line="529"/>
    <source>Religion</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="531"/>
+   <location filename="../../plugins/poi/poi.cpp" line="530"/>
    <source>Service</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="532"/>
+   <location filename="../../plugins/poi/poi.cpp" line="531"/>
    <source>Shop</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="533"/>
+   <location filename="../../plugins/poi/poi.cpp" line="532"/>
    <source>Sightseeing</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="534"/>
+   <location filename="../../plugins/poi/poi.cpp" line="533"/>
    <source>Signs of traffic</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="535"/>
+   <location filename="../../plugins/poi/poi.cpp" line="534"/>
    <source>Special</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="536"/>
+   <location filename="../../plugins/poi/poi.cpp" line="535"/>
    <source>Sport</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="537"/>
+   <location filename="../../plugins/poi/poi.cpp" line="536"/>
    <source>Public transport</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="538"/>
+   <location filename="../../plugins/poi/poi.cpp" line="537"/>
    <source>Vehicle</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="548"/>
-   <location filename="../../plugins/poi/poi.cpp" line="653"/>
-   <location filename="../../plugins/poi/poi.cpp" line="663"/>
-   <location filename="../../plugins/poi/poi.cpp" line="755"/>
-   <location filename="../../plugins/poi/poi.cpp" line="874"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1633"/>
+   <location filename="../../plugins/poi/poi.cpp" line="547"/>
+   <location filename="../../plugins/poi/poi.cpp" line="652"/>
+   <location filename="../../plugins/poi/poi.cpp" line="662"/>
+   <location filename="../../plugins/poi/poi.cpp" line="754"/>
+   <location filename="../../plugins/poi/poi.cpp" line="873"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1632"/>
    <source>Points of Interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="549"/>
+   <location filename="../../plugins/poi/poi.cpp" line="548"/>
    <source>Allows to create, store and handle user&apos;s Points of Interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="654"/>
+   <location filename="../../plugins/poi/poi.cpp" line="653"/>
    <source>Toggle view POIs on the map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="654"/>
+   <location filename="../../plugins/poi/poi.cpp" line="653"/>
    <source>Alt+V</source>
    <comment>Toggle view POIs on the map</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="655"/>
+   <location filename="../../plugins/poi/poi.cpp" line="654"/>
    <source>Display POI list for all accounts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="655"/>
+   <location filename="../../plugins/poi/poi.cpp" line="654"/>
    <source>Ctrl+P</source>
    <comment>POI list (all)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="656"/>
+   <location filename="../../plugins/poi/poi.cpp" line="655"/>
    <source>Display POI list for the account</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="656"/>
+   <location filename="../../plugins/poi/poi.cpp" line="655"/>
    <source>Alt+P</source>
    <comment>POI list (account)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="657"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1829"/>
+   <location filename="../../plugins/poi/poi.cpp" line="656"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1828"/>
    <source>Show</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="657"/>
+   <location filename="../../plugins/poi/poi.cpp" line="656"/>
    <source>Space</source>
    <comment>Show POI</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="658"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1839"/>
+   <location filename="../../plugins/poi/poi.cpp" line="657"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1838"/>
    <source>Save</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="658"/>
+   <location filename="../../plugins/poi/poi.cpp" line="657"/>
    <source>F2</source>
    <comment>Save POI</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="659"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1845"/>
+   <location filename="../../plugins/poi/poi.cpp" line="658"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1844"/>
    <source>Edit</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="659"/>
+   <location filename="../../plugins/poi/poi.cpp" line="658"/>
    <source>F2</source>
    <comment>Edit POI</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="660"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1872"/>
+   <location filename="../../plugins/poi/poi.cpp" line="659"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1871"/>
    <source>Delete</source>
    <translation>Видалити</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="660"/>
+   <location filename="../../plugins/poi/poi.cpp" line="659"/>
    <source>Del</source>
    <comment>Delete POI</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="661"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1867"/>
+   <location filename="../../plugins/poi/poi.cpp" line="660"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1866"/>
    <source>Remove</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="661"/>
+   <location filename="../../plugins/poi/poi.cpp" line="660"/>
    <source>Del</source>
    <comment>Remove POI</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="662"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1856"/>
+   <location filename="../../plugins/poi/poi.cpp" line="661"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1855"/>
    <source>Open URL</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="662"/>
+   <location filename="../../plugins/poi/poi.cpp" line="661"/>
    <source>F3</source>
    <comment>Open URL in the POI</comment>
    <translation>F3</translation>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="664"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1124"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1638"/>
+   <location filename="../../plugins/poi/poi.cpp" line="663"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1123"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1637"/>
    <source>Insert POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="664"/>
+   <location filename="../../plugins/poi/poi.cpp" line="663"/>
    <source>Alt+P</source>
    <comment>Insert POI (into message)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="665"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1134"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1173"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1648"/>
+   <location filename="../../plugins/poi/poi.cpp" line="664"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1133"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1172"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1647"/>
    <source>Insert location</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="665"/>
+   <location filename="../../plugins/poi/poi.cpp" line="664"/>
    <source>Alt+G</source>
    <comment>Insert location</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="666"/>
+   <location filename="../../plugins/poi/poi.cpp" line="665"/>
    <source>Edit POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="666"/>
+   <location filename="../../plugins/poi/poi.cpp" line="665"/>
    <source>Return</source>
    <comment>Edit POI (in message)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="667"/>
+   <location filename="../../plugins/poi/poi.cpp" line="666"/>
    <source>Delete POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="667"/>
+   <location filename="../../plugins/poi/poi.cpp" line="666"/>
    <source>Del</source>
    <comment>Delete POI (from message)</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="701"/>
+   <location filename="../../plugins/poi/poi.cpp" line="700"/>
    <source>POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="711"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1242"/>
+   <location filename="../../plugins/poi/poi.cpp" line="710"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1241"/>
    <source>POI list</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="721"/>
+   <location filename="../../plugins/poi/poi.cpp" line="720"/>
    <source>Show POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="773"/>
+   <location filename="../../plugins/poi/poi.cpp" line="772"/>
    <source>Enable Points of Interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="875"/>
+   <location filename="../../plugins/poi/poi.cpp" line="874"/>
    <source>Allows to store and exchange with Points of Interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="879"/>
+   <location filename="../../plugins/poi/poi.cpp" line="878"/>
    <source>User Location</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="880"/>
+   <location filename="../../plugins/poi/poi.cpp" line="879"/>
    <source>Supports user Geolocation</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="908"/>
+   <location filename="../../plugins/poi/poi.cpp" line="907"/>
    <source>Lat</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="908"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1958"/>
+   <location filename="../../plugins/poi/poi.cpp" line="907"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1957"/>
    <source>%1S</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="908"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1958"/>
+   <location filename="../../plugins/poi/poi.cpp" line="907"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1957"/>
    <source>%1N</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="916"/>
+   <location filename="../../plugins/poi/poi.cpp" line="915"/>
    <source>Lon</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="916"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1959"/>
+   <location filename="../../plugins/poi/poi.cpp" line="915"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1958"/>
    <source>%1W</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="916"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1959"/>
+   <location filename="../../plugins/poi/poi.cpp" line="915"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1958"/>
    <source>%1E</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1048"/>
-   <location filename="../../plugins/poi/poi.cpp" line="2015"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1047"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2014"/>
    <source>Location</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1067"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1066"/>
    <source>Link</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1077"/>
-   <location filename="../../plugins/poi/poi.cpp" line="2010"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1076"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2009"/>
    <source>Description</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1119"/>
-   <location filename="../../plugins/poi/poi.cpp" line="1255"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1118"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1254"/>
    <source>Add POI</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1196"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1195"/>
    <source>Insert point of interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1416"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1415"/>
    <source>Add new point of interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1462"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1461"/>
    <source>Point of interest list</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1461"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1460"/>
    <source>Point of interest list for %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1510"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1509"/>
    <source>Are you sure?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1511"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1510"/>
    <source>Delete POI %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1524"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1523"/>
    <source>Edit point of interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1541"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1540"/>
    <source>Save point of interest</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="1958"/>
+   <location filename="../../plugins/poi/poi.cpp" line="1957"/>
    <source>%1, %2</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2021"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2020"/>
    <source>Type</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2027"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2026"/>
    <source>Country</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2041"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2040"/>
    <source>Region</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2053"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2052"/>
    <source>Area</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2059"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2058"/>
    <source>Street</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2071"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2070"/>
    <source>Floor</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2077"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2076"/>
    <source>Room</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2083"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2082"/>
    <source>Postal code</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2089"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2088"/>
    <source>Timestamp</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/poi/poi.cpp" line="2095"/>
+   <location filename="../../plugins/poi/poi.cpp" line="2094"/>
    <source>URI</source>
    <translation type="unfinished"/>
   </message>

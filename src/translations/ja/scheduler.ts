@@ -28,10 +28,6 @@
    <source>Contact</source>
    <translation type="unfinished"/>
   </message>
-  <message numerus="yes">
-   <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform></translation>
-  </message>
   <message>
    <source>Edit schedule record</source>
    <translation type="unfinished"/>
@@ -39,6 +35,11 @@
   <message>
    <source>Add schedule record</source>
    <translation type="unfinished"/>
+  </message>
+  <message numerus="yes">
+   <source> second(s)</source>
+   <comment>Keep space in front of unit if your language uses space to separate units from numbers</comment>
+   <translation type="unfinished"><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

@@ -125,7 +125,6 @@ CONFIG(debug, debug|release): SUBDIRS += gcompass
 CONFIG(debug, debug|release): SUBDIRS += tracker
 SUBDIRS += oob 
 SUBDIRS += mapcontacts 
-#SUBDIRS += contactproximitynotification
 SUBDIRS += mapmessage 
 SUBDIRS += maplocationselector 
 SUBDIRS += xhtmlim 

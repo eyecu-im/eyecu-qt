@@ -70,7 +70,6 @@ public:
 	virtual QString getIconFileName() const;
 	virtual GeolocElement getGeoloc(const Jid &AJid) const;
 	virtual bool    hasGeoloc(const Jid &AJid) const;
-	virtual quint32 rosterLabelId() const {return FRosterLabelIdGeoloc; }
 	virtual QString getLabel(const Jid &AContactJid) const;
 	virtual QString getLabel(const GeolocElement &AGeoloc) const;
 

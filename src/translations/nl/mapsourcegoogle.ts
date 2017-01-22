@@ -12,7 +12,7 @@
    <translation>Kaart plugin toestaan om Google te gebruiken als kaart source</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="56"/>
+   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="57"/>
    <source>Google</source>
    <translation>Google</translation>
   </message>

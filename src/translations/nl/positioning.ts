@@ -12,6 +12,11 @@
    <source>Allows to determine device position</source>
    <translation>Toelaten om apparaat positie vast te stellen</translation>
   </message>
+  <message>
+   <location filename="../../plugins/positioning/positioning.cpp" line="64"/>
+   <source>General</source>
+   <translation>Algemeen</translation>
+  </message>
  </context>
  <context>
   <name>PositioningOptions</name>

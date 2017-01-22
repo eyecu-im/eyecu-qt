@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>Positioning</name>
     <message>
@@ -10,6 +10,10 @@
     <message>
         <source>Allows to determine device position</source>
         <translation>Позволяет определить местоположение устройства</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Основное</translation>
     </message>
 </context>
 <context>
