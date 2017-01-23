@@ -87,8 +87,6 @@ protected:
 	QString translate(const QString &APropertyName) const;
 	Jid  geolocJidForIndex(const IRosterIndex *AIndex) const;
 	// Contact proximity notification
-//	bool checkRosterIndex(const IRosterIndex *AIndex) const;
-//	bool checkNotification(const IRosterIndex *AIndex) const;
 	Jid  notificationJidForIndex(const IRosterIndex *AIndex) const;
 	void displayNotification(const Jid &AStreamJid, const Jid &AContactJid);
 	void checkContactProximity(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, const GeolocElement &ACurrentPosition);
@@ -115,8 +113,6 @@ protected slots:
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onPresenceActiveChanged(IPresence *APresence, bool AActive);
 	// Contact proximity notification
-//	void onLocationReceived(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool AReliabilityChanged);
-//	void onLocationRemoved(const Jid &AStreamJid, const Jid &AContactJid);
 	void onNotificationActivated(int ANotifyId);
 	void onNotificationRemoved(int ANotifyId);
 	void onWindowActivated();

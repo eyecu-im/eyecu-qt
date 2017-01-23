@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QClipboard>
 #include <QApplication>
 #include <QMimeData>
@@ -296,7 +295,10 @@ QList<quint32> Geoloc::rosterLabels(int AOrder, const IRosterIndex *AIndex) cons
 	QList<quint32> labels;
 	if (AOrder==RLHO_GEOLOC && AIndex->kind()==RIK_RECENT_ITEM)
 		if (FSimpleContactsView)
+		{
 			labels.append(RLID_GEOLOC);
+			labels.append(RLID_CONTACTPROXIMITY);
+		}
 	return labels;
 }
 
@@ -315,10 +317,7 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
 	if (labelId == FRosterLabelIdGeoloc)
 	{
-		qDebug() << "Clicked!";
-		Jid jid=geolocJidForIndex(AIndex);
-		qDebug() << "jid=" << jid.full();
-		FMapContacts->showContact(jid.full());
+		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
 		return true;
 	}
 	else  if (labelId == FRosterLabelIdProximity)
@@ -332,8 +331,6 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 
 bool Geoloc::onNewPositionAvailable(const GeolocElement &APosition)
 {
-	//---timer public data on server xx sec ----
-
 	if (APosition.isValid())
 	{
 		sendGeoloc(APosition);
@@ -341,7 +338,12 @@ bool Geoloc::onNewPositionAvailable(const GeolocElement &APosition)
 		checkContactsProximity(APosition);
 	}
 	else
+	{
+		while (!FNotifies.isEmpty())
+			FNotifications->removeNotification(FNotifies.constBegin().value().constBegin().value());
+		FNotifiedContacts.clear();
 		retractGeoloc();
+	}
 	return true;
 }
 //---------------------
@@ -578,36 +580,6 @@ bool Geoloc::hasGeoloc(const Jid &AJid) const
 									 FGeolocHash.contains(AJid)?true
 															   :FGeolocHash.contains(AJid.bare());
 }
-/*
-bool Geoloc::checkRosterIndex(const IRosterIndex *AIndex) const
-{
-	if (hasGeoloc(AIndex->data(RDR_FULL_JID).toString()))
-		return true;
-
-	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
-	for (QStringList::ConstIterator it=resources.constBegin(); it!=resources.constEnd(); it++)
-		if (hasGeoloc(*it))
-			return true;
-
-	return false;
-}
-
-bool Geoloc::checkNotification(const IRosterIndex *AIndex) const
-{
-	if (FNotifies.contains(AIndex->data(RDR_STREAM_JID).toString()))
-	{
-		QHash<Jid, int> notifies = FNotifies.value(AIndex->data(RDR_STREAM_JID).toString());
-		Jid jid(AIndex->data(RDR_FULL_JID).toString());
-		if (notifies.contains(jid))
-			return true;
-		QStringList jids(AIndex->data(RDR_RESOURCES).toStringList());
-		for (QStringList::ConstIterator it=jids.constBegin(); it!=jids.constEnd(); ++it)
-			if (notifies.contains(*it))
-				return true;
-	}
-	return false;
-}
-*/
 
 Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
 {
@@ -627,22 +599,26 @@ Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
 
 Jid Geoloc::geolocJidForIndex(const IRosterIndex *AIndex) const
 {
-	qDebug() << "Geoloc::geolocJidForIndex(" << AIndex->data(RDR_NAME).toString() << ")";
-	Jid jid(AIndex->data(RDR_FULL_JID).toString());
-	qDebug() << "Full jid=" << jid.full();
+	Jid fullJid(AIndex->data(RDR_FULL_JID).toString());
 
-	if (hasGeoloc(jid))
-		return jid;
+	if (hasGeoloc(fullJid))
+		return fullJid;
 
 	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
-	qDebug() << "resources=" << resources;
 	for (QStringList::ConstIterator it = resources.constBegin(); it!=resources.constEnd(); ++it)
 		if (hasGeoloc(*it))
 			return *it;
 
-//	if (hasGeoloc(jid.bare()))
-//		return jid.bare();
-	qDebug() << "returning NULL JID";
+	if (AIndex->kind()==RIK_METACONTACT) // Iterate thru metacontsct's children
+		for (int i=0; i<AIndex->childCount(); ++i)
+			if (Jid(AIndex->childIndex(i)->data(RDR_FULL_JID).toString()) != fullJid)
+			{
+				Jid jid = geolocJidForIndex(AIndex->childIndex(i));
+				if (jid.isValid())
+					return jid;
+			}
+
+
 	return Jid::null;
 }
 
@@ -1139,7 +1115,10 @@ void Geoloc::onOptionsChanged(const OptionsNode &ANode)
 		findData.insert(RDR_KIND, RIK_RECENT_ITEM);
 		QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData, true);
 		for (QList<IRosterIndex *>::ConstIterator it = indexes.constBegin(); it!=indexes.constEnd(); it++)
+		{
 			emit rosterLabelChanged(RLID_GEOLOC, *it);
+			emit rosterLabelChanged(RLID_CONTACTPROXIMITY, *it);
+		}
 	}
 	else if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_GEOLOC_SHOW:OPV_ROSTER_VIEWMODE))
 	{
