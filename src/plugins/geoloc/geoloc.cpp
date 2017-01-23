@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QClipboard>
 #include <QApplication>
 #include <QMimeData>
@@ -314,7 +315,10 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
 	if (labelId == FRosterLabelIdGeoloc)
 	{
-		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
+		qDebug() << "Clicked!";
+		Jid jid=geolocJidForIndex(AIndex);
+		qDebug() << "jid=" << jid.full();
+		FMapContacts->showContact(jid.full());
 		return true;
 	}
 	else  if (labelId == FRosterLabelIdProximity)
@@ -547,7 +551,7 @@ void Geoloc::updateRosterLabels(const Jid &AContactJid)
 		findData.insert(RDR_PREP_BARE_JID, AContactJid.pBare());
 		QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
 		for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
-			insertRosterLabel(*it, checkRosterIndex(*it));
+			insertRosterLabel(*it, geolocJidForIndex(*it).isValid());
 	}
 }
 
@@ -574,7 +578,7 @@ bool Geoloc::hasGeoloc(const Jid &AJid) const
 									 FGeolocHash.contains(AJid)?true
 															   :FGeolocHash.contains(AJid.bare());
 }
-
+/*
 bool Geoloc::checkRosterIndex(const IRosterIndex *AIndex) const
 {
 	if (hasGeoloc(AIndex->data(RDR_FULL_JID).toString()))
@@ -603,6 +607,7 @@ bool Geoloc::checkNotification(const IRosterIndex *AIndex) const
 	}
 	return false;
 }
+*/
 
 Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
 {
@@ -622,18 +627,22 @@ Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
 
 Jid Geoloc::geolocJidForIndex(const IRosterIndex *AIndex) const
 {
+	qDebug() << "Geoloc::geolocJidForIndex(" << AIndex->data(RDR_NAME).toString() << ")";
 	Jid jid(AIndex->data(RDR_FULL_JID).toString());
+	qDebug() << "Full jid=" << jid.full();
+
 	if (hasGeoloc(jid))
 		return jid;
 
 	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
+	qDebug() << "resources=" << resources;
 	for (QStringList::ConstIterator it = resources.constBegin(); it!=resources.constEnd(); ++it)
 		if (hasGeoloc(*it))
 			return *it;
 
-	if (hasGeoloc(jid.bare()))
-		return jid.bare();
-
+//	if (hasGeoloc(jid.bare()))
+//		return jid.bare();
+	qDebug() << "returning NULL JID";
 	return Jid::null;
 }
 
@@ -804,14 +813,14 @@ void Geoloc::onRosterIndexInserted(IRosterIndex *AIndex)
 {
 	if (FRostersViewPlugin &&  FRosterIndexKinds.contains(AIndex->kind()) &&
 		(Options::node(OPV_COMMON_ADVANCED).value().toBool()?Options::node(OPV_ROSTER_GEOLOC_SHOW).value().toBool():Options::node(OPV_ROSTER_VIEWMODE).value().toInt()==IRostersView::ViewFull) &&
-		checkRosterIndex(AIndex))
-	insertRosterLabel(AIndex, true);
+		geolocJidForIndex(AIndex).isValid())
+		insertRosterLabel(AIndex, true);
 }
 
 void Geoloc::onRosterIndexDataChanged(IRosterIndex *AIndex, int ARole)
 {
 	if (ARole==RDR_FULL_JID && Options::node(OPV_ROSTER_GEOLOC_SHOW).value().toBool() && FRostersViewPlugin &&  FRosterIndexKinds.contains(AIndex->kind()))
-		insertRosterLabel(AIndex, checkRosterIndex(AIndex));
+		insertRosterLabel(AIndex, geolocJidForIndex(AIndex).isValid());
 }
 
 void Geoloc::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
@@ -1143,7 +1152,7 @@ void Geoloc::onOptionsChanged(const OptionsNode &ANode)
 					findData.insertMulti(RDR_KIND, *it);
 				QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
 				for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
-					if (checkRosterIndex(*it))
+					if (geolocJidForIndex(*it).isValid())
 						insertRosterLabel(*it, true);
 			}
 			else
@@ -1282,7 +1291,7 @@ void Geoloc::insertRosterLabel(IRosterIndex *AIndex, bool AInsert)
 {
 	if (AInsert)
 	{
-		if (checkNotification(AIndex))
+		if (notificationJidForIndex(AIndex).isValid())
 		{
 			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc, AIndex);
 			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdProximity, AIndex);

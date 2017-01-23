@@ -70,6 +70,7 @@ public:
 	virtual QString getIconFileName() const;
 	virtual GeolocElement getGeoloc(const Jid &AJid) const;
 	virtual bool    hasGeoloc(const Jid &AJid) const;
+	virtual quint32 rosterLabelId() const {return FRosterLabelIdGeoloc; }
 	virtual QString getLabel(const Jid &AContactJid) const;
 	virtual QString getLabel(const GeolocElement &AGeoloc) const;
 
@@ -86,8 +87,8 @@ protected:
 	QString translate(const QString &APropertyName) const;
 	Jid  geolocJidForIndex(const IRosterIndex *AIndex) const;
 	// Contact proximity notification
-	bool checkRosterIndex(const IRosterIndex *AIndex) const;
-	bool checkNotification(const IRosterIndex *AIndex) const;
+//	bool checkRosterIndex(const IRosterIndex *AIndex) const;
+//	bool checkNotification(const IRosterIndex *AIndex) const;
 	Jid  notificationJidForIndex(const IRosterIndex *AIndex) const;
 	void displayNotification(const Jid &AStreamJid, const Jid &AContactJid);
 	void checkContactProximity(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, const GeolocElement &ACurrentPosition);

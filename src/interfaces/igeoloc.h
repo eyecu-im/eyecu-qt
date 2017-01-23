@@ -17,6 +17,7 @@ public:
 	virtual GeolocElement getGeoloc(const Jid &AJid) const = 0;
 	virtual bool    hasGeoloc(const Jid &AJid) const = 0;
 	virtual QString getLabel(const Jid &AContactJid) const =0;
+	virtual quint32 rosterLabelId() const = 0;
 
 protected:
 	virtual void locationReceived(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, bool) =0;
