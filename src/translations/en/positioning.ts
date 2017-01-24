@@ -14,11 +14,6 @@
    <source>Allows to determine device position</source>
    <translation>Allows to determine device position</translation>
   </message>
-  <message>
-   <location line="64" filename="../../plugins/positioning/positioning.cpp"/>
-   <source>General</source>
-   <translation>General</translation>
-  </message>
  </context>
  <context>
   <name>PositioningOptions</name>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" sourcelanguage="en" language="ru">
+<TS version="2.1" sourcelanguage="en" language="ru">
   <context>
     <name>ConfigPage</name>
     <message>
@@ -916,28 +916,28 @@
     <message>
       <source>Left mouse button</source>
       <comment>Instrumental case</comment>
-      <translation type="unfinished"/>
+      <translation>Левой кнопкой мыши</translation>
     </message>
     <message>
       <source>Middle mouse button</source>
       <comment>Instrumental case</comment>
-      <translation type="unfinished"/>
+      <translation>Средней кнопкой мыши</translation>
     </message>
     <message>
       <source>Address user by clicking nickname in the list with</source>
-      <translation type="unfinished"/>
+      <translation>Обращаться к пользователю, щёлкнув по его нику в списке</translation>
     </message>
     <message>
       <source>Highlight alternation</source>
-      <translation type="unfinished"/>
+      <translation>Подсвечивать чередование</translation>
     </message>
     <message>
       <source>Add this suffix when referring to the user</source>
-      <translation type="unfinished"/>
+      <translation>Добавлять этот суффикс при обращении к пользователю</translation>
     </message>
     <message>
       <source>Display user status message</source>
-      <translation type="unfinished"/>
+      <translation>Отображать статусное сообщение пользователя</translation>
     </message>
   </context>
   <context>

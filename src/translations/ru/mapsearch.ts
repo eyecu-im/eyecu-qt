@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>MapSearch</name>
     <message>
@@ -68,6 +68,18 @@
         <source>Alt+L</source>
         <comment>Toggle &quot;Limit search range&quot; option</comment>
         <translation>Alt+L</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Основные</translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation>Соединение</translation>
+    </message>
+    <message>
+        <source>Providers</source>
+        <translation>Поставщики</translation>
     </message>
 </context>
 <context>
