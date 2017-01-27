@@ -1326,7 +1326,7 @@ ConclusionPage::ConclusionPage(IAccountManager *AAccountManager, IConnectionEngi
 	connect(FLbAccountSettingsLink, SIGNAL(linkActivated(QString)), SLOT(onAccountSettingsLinkActivated(QString)));
 	layout->addWidget(FLbAccountSettingsLink, 7, 0, 1, 2);
 
-	FChbGoOnline = new QCheckBox("Go online now");
+	FChbGoOnline = new QCheckBox(tr("Go online now"));
 	layout->addWidget(FChbGoOnline, 8, 0, 1, 2);
 	registerField(WF_GO_ONLINE, FChbGoOnline);
 

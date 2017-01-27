@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>English</DisplayName>
  <Description>English language pack</Description>
- <Version>1.3.4</Version>
- <ReleaseDate>2016-05-10</ReleaseDate>
+ <Version>1.3.5</Version>
+ <ReleaseDate>2017-01-24</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.translations.en</Name>
  <SortingPriority>6</SortingPriority>
  <Default>true</Default>

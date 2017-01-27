@@ -351,10 +351,6 @@ call copyresources2 ru.rwsoftware.eyecu.mmplayer menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.clienticons clienticons
 call copyresources ru.rwsoftware.eyecu.clienticons clienticons\shared
 
-call copyplugins ru.rwsoftware.eyecu.contactproximitynotification contactproximitynotification
-set files=proximity.def.xml proximity.png
-call copyresources2 ru.rwsoftware.eyecu.contactproximitynotification menuicons\shared
-
 call copyplugins ru.rwsoftware.eyecu.poi poi
 call copyresources ru.rwsoftware.eyecu.poi typepoint\shared
 set files=poi.def.xml poi.png poiadd.png poinone.png poinotype.png poitoolbar.png poiview.png description.png flag24.png globus.png connect.png connectend.png connectlong.png bgrmap.png bgrsat.png folder.png folderopen.png

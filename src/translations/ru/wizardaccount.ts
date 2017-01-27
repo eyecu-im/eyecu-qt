@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>ConclusionPage</name>
     <message>
@@ -33,6 +33,11 @@
         <source>Press &quot;Finish&quot; button to close Wizard.</source>
         <comment>&quot;Finish&quot; should match the text of an appropriate Qt Wizard button</comment>
         <translation>Нажмите кнопку &quot;Завершить&quot;, чтобы закрыть окно Мастера.</translation>
+    </message>
+    <message>
+        <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1329"/>
+        <source>Go online now</source>
+        <translation>Подключиться сейчас</translation>
     </message>
     <message>
         <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1348"/>

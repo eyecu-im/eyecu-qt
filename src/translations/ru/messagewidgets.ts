@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" sourcelanguage="en" language="ru">
+<TS version="2.1" sourcelanguage="en" language="ru">
   <context>
     <name>EditWidget</name>
     <message>
@@ -326,7 +326,7 @@
     </message>
     <message>
       <source>Sort Contacts by Status</source>
-      <translation type="unfinished"/>
+      <translation>Сортировать контакты по статусу</translation>
     </message>
   </context>
   <context>

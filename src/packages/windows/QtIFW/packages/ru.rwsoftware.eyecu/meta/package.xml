@@ -2,9 +2,10 @@
 <Package>
  <DisplayName>eyeCU</DisplayName>
  <Description>XMPP-based IM client with positioning</Description>
- <Version>1.3.22</Version>
- <ReleaseDate>2016-06-18</ReleaseDate>
- <UpdateText>Synchronized with Vacuum-IM: Fixed crytical bug in single message window, when contact moved from one group to another.</UpdateText>
+ <Version>1.3.23</Version>
+ <ReleaseDate>2017-01-24</ReleaseDate>
+ <UpdateText>Insert avatars with &quot;file&quot; URL scheme.<br/>Synchronized with Vacuum-IM: hide &lt;url&gt; element if &lt;body&gt; contains it and only it.
+ Added support for standard storage locations in imported options. Added sorting option in IMessageReceiversWidget. Fixed authentication regression.</UpdateText>
  <Name>ru.rwsoftware.eyecu</Name>
  <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
  <Licenses>

@@ -25,6 +25,11 @@
    <translation>Additional account settings...</translation>
   </message>
   <message>
+   <location line="1329" filename="../../plugins/wizardaccount/wizardpages.cpp"/>
+   <source>Go online now</source>
+   <translation>Go online now</translation>
+  </message>
+  <message>
    <location line="1342" filename="../../plugins/wizardaccount/wizardpages.cpp"/>
    <source>Done!</source>
    <translation>Done!</translation>

@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>User Location</DisplayName>
  <Description>Allows users to exchage information about their current location</Description>
- <Version>1.3.4</Version>
- <ReleaseDate>2016-04-13</ReleaseDate>
+ <Version>1.3.5</Version>
+ <ReleaseDate>2017-01-24</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
+ <UpdateText>Contact proximity notification now moved into User Location plugin. Roster notification about contact proximity now looks like blinking Location (compass) icon.</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo, ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
  <SortingPriority>7</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
