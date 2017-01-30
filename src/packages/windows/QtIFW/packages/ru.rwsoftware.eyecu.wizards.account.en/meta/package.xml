@@ -3,7 +3,7 @@
  <DisplayName>Connection Wizard English Translation</DisplayName>
  <Description>Connection Wizard English translation</Description>
  <Version>1.3.2</Version>
- <ReleaseDate>2017-01-28</ReleaseDate>
+ <ReleaseDate>2017-01-27</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.wizards.account.en</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.wizards.account,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
  <Virtual>true</Virtual>

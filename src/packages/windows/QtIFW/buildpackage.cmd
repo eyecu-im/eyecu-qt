@@ -452,3 +452,5 @@ binarycreator.exe --offline-only -c config\config.xml -p %packages% %packagefile
 :repo
 repogen.exe -p %packages% repository
 :end
+
+pause
