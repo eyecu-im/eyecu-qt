@@ -255,7 +255,11 @@ bool Geoloc::initSettings()
 	Options::setDefaultValue(OPV_CONTACTPROXIMITYNOTIFICATIONS_IGNOREOWN, true);
 
 	if (FOptionsManager)
+	{
+		IOptionsDialogNode dnode = {ONO_GEOLOC, OPN_GEOLOC, MNI_GEOLOC, tr("Location")};
+		FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
+	}
 
 	return true;
 }
@@ -274,7 +278,7 @@ QMultiMap<int, IOptionsDialogWidget *> Geoloc::optionsDialogWidgets(const QStrin
 			widgets.insertMulti(OWO_MESSAGES_INFOBAR_LOCATION, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_GEOLOC_DISPLAY),tr("Display user location icon"),AParent));
 		else if (FPositioning)   // Add "Send User Location" option to account settings page
 		{
-			if (ANodeId == OPN_POSITIONING)
+			if (ANodeId == OPN_GEOLOC)
 			{
 				widgets.insertMulti(OHO_CONTACTPROXIMITYNOTIFICATION, FOptionsManager->newOptionsDialogHeader(tr("Contact proximity notification"), AParent));
 				widgets.insertMulti(OWO_CONTACTPROXIMITYNOTIFICATION, new ContactProximityNotificationOptions(AParent));

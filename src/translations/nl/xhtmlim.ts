@@ -916,31 +916,31 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="160"/>
    <source>Ctrl+O</source>
    <comment>Overline</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+O</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="171"/>
    <source>Alt+Up</source>
    <comment>Align center</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Up</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="172"/>
    <source>Alt+Left</source>
    <comment>Align left</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Left</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="173"/>
    <source>Alt+Right</source>
    <comment>Align right</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Right</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="174"/>
    <source>Alt+Down</source>
    <comment>Align justify</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Down</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="179"/>
@@ -952,7 +952,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="179"/>
    <source>Ctrl+1</source>
    <comment>Heading 1</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+1</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="180"/>
@@ -964,7 +964,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="180"/>
    <source>Ctrl+2</source>
    <comment>Heading 2</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+2</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="181"/>
@@ -976,7 +976,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="181"/>
    <source>Ctrl+3</source>
    <comment>Heading 3</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+3</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="182"/>
@@ -988,7 +988,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="182"/>
    <source>Ctrl+4</source>
    <comment>Heading 4</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+4</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="183"/>
@@ -1000,7 +1000,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="183"/>
    <source>Ctrl+5</source>
    <comment>Heading 5</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+5</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="184"/>
@@ -1012,13 +1012,13 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="184"/>
    <source>Ctrl+6</source>
    <comment>Heading 6</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+6</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="185"/>
    <source>Ctrl+0</source>
    <comment>Preformatted text</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+0</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="1276"/>

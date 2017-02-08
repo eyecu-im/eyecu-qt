@@ -23,6 +23,11 @@
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1329"/>
+   <source>Go online now</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1342"/>
    <source>Done!</source>
    <translation type="unfinished"/>

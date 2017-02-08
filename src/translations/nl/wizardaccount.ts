@@ -23,6 +23,11 @@
    <translation>Extra accountinstellingen...</translation>
   </message>
   <message>
+   <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1329"/>
+   <source>Go online now</source>
+   <translation>Nu online gaan</translation>
+  </message>
+  <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="1342"/>
    <source>Done!</source>
    <translation>Klaar!</translation>

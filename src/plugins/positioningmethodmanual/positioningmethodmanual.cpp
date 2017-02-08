@@ -85,7 +85,7 @@ bool PositioningMethodManual::initSettings()
 
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_MANUAL, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_MANUAL, tr("Manual")};
+		IOptionsDialogNode dnode = {ONO_MANUAL, OPN_GEOLOC"."+pluginUuid().toString(), MNI_POSITIONING_MANUAL, tr("Manual")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
@@ -122,7 +122,7 @@ bool PositioningMethodManual::select(bool ASelect)
 QMultiMap<int, IOptionsDialogWidget *> PositioningMethodManual::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (ANodeId == OPN_POSITIONING"."+pluginUuid().toString())
+	if (ANodeId == OPN_GEOLOC"."+pluginUuid().toString())
         widgets.insertMulti(OWO_MANUAL, new PositioningMethodManualOptions(AParent));
     return widgets;
 }

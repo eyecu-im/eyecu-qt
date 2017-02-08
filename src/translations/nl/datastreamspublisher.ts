@@ -3,19 +3,19 @@
   <name>DataStreamsPublisher</name>
   <message>
    <source>Data Streams Publisher</source>
-   <translation type="unfinished"/>
+   <translation>Gegevensstroom uitgever</translation>
   </message>
   <message>
    <source>Allows to publish available data streams</source>
-   <translation type="unfinished"/>
+   <translation>Toestaan om de beschikbare gegevensstroom te publiceren</translation>
   </message>
   <message>
    <source>Data Streams Publication</source>
-   <translation type="unfinished"/>
+   <translation>Gegevensstroom publicaties</translation>
   </message>
   <message>
    <source>Supports the publication of the data streams</source>
-   <translation type="unfinished"/>
+   <translation>Ondersteunt  publicatie van de gegevensstroom</translation>
   </message>
  </context>
 </TS>

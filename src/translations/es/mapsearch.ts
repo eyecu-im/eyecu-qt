@@ -87,6 +87,21 @@
    <source>Search</source>
    <translation type="unfinished"/>
   </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="132"/>
+   <source>General</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="134"/>
+   <source>Connection</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="137"/>
+   <source>Providers</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>MapSearchDialog</name>

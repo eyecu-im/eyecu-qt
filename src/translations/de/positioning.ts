@@ -3,7 +3,6 @@
   <name>Positioning</name>
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="16"/>
-   <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
    <source>Positioning</source>
    <translation type="unfinished"/>
   </message>
@@ -13,9 +12,14 @@
    <translation type="unfinished"/>
   </message>
   <message>
+   <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
+   <source>Location</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="64"/>
    <source>General</source>
-   <translation type="unfinished"/>
+   <translation>Allgemein</translation>
   </message>
  </context>
  <context>

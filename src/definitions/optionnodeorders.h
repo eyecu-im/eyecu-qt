@@ -27,13 +27,12 @@
 #define ONO_CONTACTPROXIMITY      957
 #define ONO_URLPROCESSOR          958
 #define ONO_XHTML                 960
-#define ONO_POSITIONING           965
+#define ONO_GEOLOC                965
 #define ONO_SERIALPORT            970
 #define ONO_LOCATION              971
 #define ONO_MANUAL                972
 #define ONO_POI                   980
 #define ONO_PEP                   990
-#define ONO_GEOLOC                991
 #define ONO_USERTUNE              992
 
 #define ONO_TRACKER               1000

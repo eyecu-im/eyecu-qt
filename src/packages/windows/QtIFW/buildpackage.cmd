@@ -282,7 +282,7 @@ set files=geoloc.def.xml geoloc.png geolocoff.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning positioning
-set files=positioning.def.xml positioning.png manual.png location.png serialport.png geoip.gif freegeoip.png
+set files=positioning.def.xml manual.png location.png serialport.png geoip.gif freegeoip.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc.positioning menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual positioningmethodmanual
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip positioningmethodip

@@ -507,7 +507,7 @@
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="642"/>
    <source>%1 (%2)</source>
-   <translation type="unfinished"/>
+   <translation>%1 (%2)</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="710"/>

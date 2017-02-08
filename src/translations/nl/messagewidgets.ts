@@ -340,7 +340,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="383"/>
    <source>Sort Contacts by Status</source>
-   <translation type="unfinished"/>
+   <translation>Sorteer contacten op status</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="437"/>

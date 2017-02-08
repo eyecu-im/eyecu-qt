@@ -470,7 +470,7 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="576"/>
    <source>%1: %2</source>
-   <translation type="unfinished"/>
+   <translation>%1: %2</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="717"/>

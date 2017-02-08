@@ -153,7 +153,7 @@
    <location filename="../../plugins/tune/tune.cpp" line="1128"/>
    <location filename="../../plugins/tune/tune.cpp" line="1137"/>
    <source>%1: %2</source>
-   <translation type="unfinished"/>
+   <translation>%1: %2</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="1086"/>
@@ -163,12 +163,12 @@
    <location filename="../../plugins/tune/tune.cpp" line="1122"/>
    <location filename="../../plugins/tune/tune.cpp" line="1131"/>
    <source>&lt;b&gt;%1:&lt;/b&gt; %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt; in %2</translation>
   </message>
   <message>
    <location filename="../../plugins/tune/tune.cpp" line="1140"/>
    <source>&lt;b&gt;%1:&lt;/b&gt; &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt; &lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;</translation>
   </message>
  </context>
  <context>

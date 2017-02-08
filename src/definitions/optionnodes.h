@@ -25,7 +25,7 @@
 #define OPN_CONTACTPROXIMITY    "ContactProximityNotification"
 #define OPN_URLPROCESSOR        "UrlProcessor"
 #define OPN_XHTML               "XhtmlIm"
-#define OPN_POSITIONING         "Positioning"
+#define OPN_GEOLOC				"Geoloc"
 #define OPN_PEP                 "Pep"
 #define OPN_GEOLOC              "Geoloc"
 #define OPN_POI                 "Poi"

@@ -3,7 +3,6 @@
   <name>Positioning</name>
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="16"/>
-   <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
    <source>Positioning</source>
    <translation type="unfinished"/>
   </message>
@@ -11,6 +10,11 @@
    <location filename="../../plugins/positioning/positioning.cpp" line="17"/>
    <source>Allows to determine device position</source>
    <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
+   <source>Location</source>
+   <translation>Розташування</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="64"/>

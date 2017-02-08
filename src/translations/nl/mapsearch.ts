@@ -87,6 +87,21 @@
    <source>Search</source>
    <translation>Zoek</translation>
   </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="132"/>
+   <source>General</source>
+   <translation>Algemeen</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="134"/>
+   <source>Connection</source>
+   <translation>Verbinding</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/mapsearch/mapsearch.cpp" line="137"/>
+   <source>Providers</source>
+   <translation>Aanbieders</translation>
+  </message>
  </context>
  <context>
   <name>MapSearchDialog</name>

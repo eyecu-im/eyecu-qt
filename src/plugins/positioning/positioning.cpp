@@ -48,7 +48,7 @@ bool Positioning::initSettings()
     Options::setDefaultValue(OPV_POSITIONING_METHOD, POSITIONINGMETHODMANUAL_UUID);
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_POSITIONING, OPN_POSITIONING, MNI_POSITIONING, tr("Positioning")};
+		IOptionsDialogNode dnode = {ONO_GEOLOC, OPN_GEOLOC, MNI_GEOLOC, tr("Location")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
@@ -59,7 +59,7 @@ QMultiMap<int, IOptionsDialogWidget *> Positioning::optionsDialogWidgets(const Q
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 
-	if (ANodeId == OPN_POSITIONING)
+	if (ANodeId == OPN_GEOLOC)
 	{
 		widgets.insertMulti(OHO_POSITIONING, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
 		widgets.insertMulti(OWO_POSITIONING, new PositioningOptions(this, FMethods, FOptionsManager, AParent));

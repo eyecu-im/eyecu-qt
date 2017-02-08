@@ -54,7 +54,7 @@ void PositioningOptions::changeEvent(QEvent *e)
 
 void PositioningOptions::onOptionsClicked()
 {
-	FOptionsManager->showOptionsDialog(OPN_POSITIONING"."+ui->cBoxSource->itemData(ui->cBoxSource->currentIndex()).toString(), OPN_POSITIONING, window());
+	FOptionsManager->showOptionsDialog(OPN_GEOLOC"."+ui->cBoxSource->itemData(ui->cBoxSource->currentIndex()).toString(), OPN_GEOLOC, window());
 }
 
 void PositioningOptions::onMethodSelected(int AIndex)

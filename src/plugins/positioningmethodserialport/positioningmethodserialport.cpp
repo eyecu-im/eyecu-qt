@@ -57,7 +57,7 @@ bool PositioningMethodSerialPort::initSettings()
 
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_SERIALPORT, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_SERIALPORT, tr("Serial port")};
+		IOptionsDialogNode dnode = {ONO_SERIALPORT, OPN_GEOLOC"."+pluginUuid().toString(), MNI_POSITIONING_SERIALPORT, tr("Serial port")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
@@ -67,7 +67,7 @@ bool PositioningMethodSerialPort::initSettings()
 QMultiMap<int, IOptionsDialogWidget *> PositioningMethodSerialPort::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (ANodeId == OPN_POSITIONING"."+pluginUuid().toString())
+	if (ANodeId == OPN_GEOLOC"."+pluginUuid().toString())
         widgets.insertMulti(OWO_SERIALPORT, new PositioningMethodSerialPortOptions(this, AParent));
     return widgets;
 }

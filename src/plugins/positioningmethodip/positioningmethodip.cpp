@@ -72,7 +72,7 @@ bool PositioningMethodIp::initSettings()
 	Options::setDefaultValue(OPV_POSITIONING_METHOD_IP_PROXY, APPLICATION_PROXY_REF_UUID);
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_POSITIONING, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_GEOIP, tr("IP-based")};
+		IOptionsDialogNode dnode = {ONO_GEOLOC, OPN_GEOLOC"."+pluginUuid().toString(), MNI_POSITIONING_GEOIP, tr("IP-based")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }
@@ -103,7 +103,7 @@ bool PositioningMethodIp::select(bool ASelect)
 QMultiMap<int, IOptionsDialogWidget *> PositioningMethodIp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (ANodeId == OPN_POSITIONING"."+pluginUuid().toString())
+	if (ANodeId == OPN_GEOLOC"."+pluginUuid().toString())
 	{
 		widgets.insertMulti(OHO_GEOIP_GENERAL, FOptionsManager->newOptionsDialogHeader(tr("General"), AParent));
 		widgets.insertMulti(OWO_GEOIP_GENERAL, new PositioningMethodIpOptions(FProviders, AParent));
