@@ -628,9 +628,11 @@ static jdns_dnsparams_t *dnsparams_get_unixfiles(char *etcpath)
 	jdns_stringlist_t *parts;
 
 	params = jdns_dnsparams_new();
-
+#ifdef JDNS_OS_OS2
+	strcat(etcpath, "RESOLV2");
+#else
 	strcat(etcpath, "resolv.conf");
-
+#endif
 	f = jdns_fopen(etcpath, "r");
 	if(!f)
 		return params;
@@ -719,6 +721,7 @@ static int my_res_init()
 # define USE_EXTEXT
 #endif
 
+#if defined (JDNS_OS_UNIX)
 static jdns_dnsparams_t *dnsparams_get_unixsys()
 {
 	int n;
@@ -818,13 +821,13 @@ static jdns_dnsparams_t *dnsparams_get_unixsys()
 
 	return params;
 }
-
+#endif
 static jdns_dnsparams_t *dnsparams_get_unix()
 {
 	char etcpath[255];
 	jdns_dnsparams_t *params;
 	char *etc = getenv("ETC");
-	int	n
+	int	n;
 	if (!etc)
 		etc = "/etc";
 
