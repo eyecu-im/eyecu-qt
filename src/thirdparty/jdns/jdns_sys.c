@@ -618,17 +618,22 @@ static jdns_dnsparams_t *dnsparams_get_win()
 
 #if defined (JDNS_OS_UNIX) || defined (JDNS_OS_OS2)
 
-static jdns_dnsparams_t *dnsparams_get_unixfiles()
+static jdns_dnsparams_t *dnsparams_get_unixfiles(char *etcpath)
 {
 	FILE *f;
 	int n;
+
 	jdns_dnsparams_t *params;
 	jdns_string_t *line, *simp;
 	jdns_stringlist_t *parts;
 
 	params = jdns_dnsparams_new();
-
-	f = jdns_fopen("/etc/resolv.conf", "r");
+#ifdef JDNS_OS_OS2
+	strcat(etcpath, "RESOLV2");
+#else
+	strcat(etcpath, "resolv.conf");
+#endif
+	f = jdns_fopen(etcpath, "r");
 	if(!f)
 		return params;
 	while(1)
@@ -716,6 +721,7 @@ static int my_res_init()
 # define USE_EXTEXT
 #endif
 
+#if defined (JDNS_OS_UNIX)
 static jdns_dnsparams_t *dnsparams_get_unixsys()
 {
 	int n;
@@ -815,20 +821,37 @@ static jdns_dnsparams_t *dnsparams_get_unixsys()
 
 	return params;
 }
-
+#endif
 static jdns_dnsparams_t *dnsparams_get_unix()
 {
+	char etcpath[255];
 	jdns_dnsparams_t *params;
+	char *etc = getenv("ETC");
+	int	n;
+	if (!etc)
+		etc = "/etc";
 
+	strcpy(etcpath, etc);
+	n = strlen(etcpath);
+	if (etcpath[n-1]!='/' && etcpath[n-1]!='\\')
+	{
+		etcpath[n]='/';
+		etcpath[++n]='\0';
+	}
+#ifdef JDNS_OS_UNIX
 	// prefer system calls over files
 	params = dnsparams_get_unixsys();
 	if(params->nameservers->count == 0)
 	{
 		jdns_dnsparams_delete(params);
-		params = dnsparams_get_unixfiles();
+#endif
+		params = dnsparams_get_unixfiles(etcpath);
+#ifdef JDNS_OS_UNIX
 	}
-
-	apply_hosts_file(params, "/etc/hosts");
+#endif
+	etcpath[n]='\0';
+	strcat(etcpath, "hosts");
+	apply_hosts_file(params, etcpath);
 
 	return params;
 }
