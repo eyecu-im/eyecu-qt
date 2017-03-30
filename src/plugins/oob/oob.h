@@ -46,9 +46,6 @@ public:
 protected:
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void registerDiscoFeatures();
-    bool parseOOB(Stanza &AStanza, QTextDocument *ADocument);   // Parse message stanza,
-                                                                // containing jabber:x:oob element
-                                                                // to generate HTML code
     void appendLinks(Message &AMessage, OobLinkList *ALinkList);
 
 private:

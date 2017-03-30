@@ -43,20 +43,33 @@
 
 
 static const int StandardLocationsCount = 11;
-static const struct { QDesktopServices::StandardLocation location; QString key; } StandardLocations[StandardLocationsCount] = {
-	{ QDesktopServices::DesktopLocation,        "%DesktopLocation%"      },
-	{ QDesktopServices::DocumentsLocation,      "%DocumentsLocation%"    },
-	{ QDesktopServices::FontsLocation,          "%FontsLocation%"        },
-	{ QDesktopServices::ApplicationsLocation,   "%ApplicationsLocation%" },
-	{ QDesktopServices::MusicLocation,          "%MusicLocation%"        },
-	{ QDesktopServices::MoviesLocation,         "%MoviesLocation%"       },
-	{ QDesktopServices::PicturesLocation,       "%PicturesLocation%"     },
-	{ QDesktopServices::TempLocation,           "%TempLocation%"         },
-	{ QDesktopServices::HomeLocation,           "%HomeLocation%"         },
-	{ QDesktopServices::DataLocation,           "%DataLocation%"         },
-	{ QDesktopServices::CacheLocation,          "%CacheLocation%"        },
-};
 
+#if QT_VERSION < 0x050000
+
+#else
+
+#endif
+
+#if QT_VERSION < 0x050000
+# define StandardPaths QDesktopServices
+# define storageLocation(X) QDesktopServices::storageLocation(X)
+#else
+# define StandardPaths QStandardPaths
+# define storageLocation(X) QStandardPaths::standardLocations(X).first()
+#endif
+static const struct { StandardPaths::StandardLocation location; QString key; } StandardLocations[StandardLocationsCount] = {
+	{ StandardPaths::DesktopLocation,        "%DesktopLocation%"      },
+	{ StandardPaths::DocumentsLocation,      "%DocumentsLocation%"    },
+	{ StandardPaths::FontsLocation,          "%FontsLocation%"        },
+	{ StandardPaths::ApplicationsLocation,   "%ApplicationsLocation%" },
+	{ StandardPaths::MusicLocation,          "%MusicLocation%"        },
+	{ StandardPaths::MoviesLocation,         "%MoviesLocation%"       },
+	{ StandardPaths::PicturesLocation,       "%PicturesLocation%"     },
+	{ StandardPaths::TempLocation,           "%TempLocation%"         },
+	{ StandardPaths::HomeLocation,           "%HomeLocation%"         },
+	{ StandardPaths::DataLocation,           "%DataLocation%"         },
+	{ StandardPaths::CacheLocation,          "%CacheLocation%"        },
+};
 
 OptionsManager::OptionsManager()
 {
@@ -769,7 +782,7 @@ QMap<QString, QVariant> OptionsManager::loadOptionValues(const QString &AFilePat
 		// Replace standard storage locations variables
 		for(int i=0; i<StandardLocationsCount; i++)
 		{
-			data.replace(StandardLocations[i].key.toUtf8(), QDesktopServices::storageLocation(StandardLocations[i].location).toUtf8());
+			data.replace(StandardLocations[i].key.toUtf8(), storageLocation(StandardLocations[i].location).toUtf8());
 		}
 
 		QString xmlError;

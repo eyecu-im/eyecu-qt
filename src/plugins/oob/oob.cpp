@@ -247,52 +247,6 @@ void Oob::onStreamClosed(IXmppStream *AXmppStream)
     FStreamOob.remove(AXmppStream->streamJid());
 }
 
-bool Oob::parseOOB(Stanza &AStanza, QTextDocument *ADocument)
-{
-    bool noRuler=true;
-    QTextCursor cursor(ADocument);
-    QString         icon;
-    QTextCharFormat origFormat;
-    QTextCharFormat linkFormat;
-
-    for(QDomElement e=AStanza.firstElement("x",NS_JABBER_OOB_X); !e.isNull(); e=e.nextSiblingElement("x"))
-        if(!e.firstChildElement("url").text().isEmpty())
-        {
-            if (noRuler)    // No ruler inserted so far
-            {
-                QTextBlockFormat origBlockFormat = cursor.blockFormat();    // Original block format
-                icon = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" /> ")
-                               .arg(FIconStorage->fileFullName(MNI_LINK))
-                               .arg(tr("Link"));
-
-                cursor.movePosition(QTextCursor::End);
-                origFormat = cursor.charFormat();
-                linkFormat = origFormat;
-                linkFormat.setAnchor(true);
-
-                cursor.insertHtml("<hr>");
-                cursor.insertBlock();
-                cursor.setBlockFormat(origBlockFormat);                     // Restore original format
-                noRuler=false;  // Flag ruler inserted
-            }
-            else
-            {
-                cursor.setCharFormat(origFormat);
-                cursor.insertHtml("<br>");
-            }
-
-            cursor.insertHtml(icon);
-            QUrl url = QUrl::fromEncoded(e.firstChildElement("url").text().toLatin1());
-            linkFormat.setAnchorHref(url.toEncoded());
-            linkFormat.setToolTip(url.toString());
-            cursor.setCharFormat(linkFormat);
-
-            QString desc = !e.firstChildElement("desc").text().isEmpty()?e.firstChildElement("desc").text():"";
-            cursor.insertText(desc.isEmpty()?url.toString():desc);
-        }
-	return !noRuler;
-}
-
 bool Oob::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
 {
 	Q_UNUSED(ALang)
@@ -306,7 +260,53 @@ bool Oob::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocu
 	Q_UNUSED(ALang)
 	Q_UNUSED(AOrder)
 
-	return parseOOB(AMessage.stanza(), ADocument);
+	bool noRuler=true;
+	QTextCursor cursor(ADocument);
+	QString         icon;
+	QTextCharFormat origFormat;
+	QTextCharFormat linkFormat;
+
+	QUrl bodyUrl(QUrl::fromUserInput(ADocument->toPlainText()));
+
+	for(QDomElement e=AMessage.stanza().firstElement("x",NS_JABBER_OOB_X); !e.isNull(); e=e.nextSiblingElement("x"))
+		if(!e.firstChildElement("url").text().isEmpty())
+		{
+			QUrl url = QUrl::fromEncoded(e.firstChildElement("url").text().toLatin1());
+			if (url.isValid() && url != bodyUrl)
+			{
+				if (noRuler)    // No ruler inserted so far
+				{
+					QTextBlockFormat origBlockFormat = cursor.blockFormat();    // Original block format
+					icon = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" /> ")
+								   .arg(FIconStorage->fileFullName(MNI_LINK))
+								   .arg(tr("Link"));
+
+					cursor.movePosition(QTextCursor::End);
+					origFormat = cursor.charFormat();
+					linkFormat = origFormat;
+					linkFormat.setAnchor(true);
+
+					cursor.insertHtml("<hr>");
+					cursor.insertBlock();
+					cursor.setBlockFormat(origBlockFormat);                     // Restore original format
+					noRuler=false;  // Flag ruler inserted
+				}
+				else
+				{
+					cursor.setCharFormat(origFormat);
+					cursor.insertHtml("<br>");
+				}
+
+				cursor.insertHtml(icon);
+				linkFormat.setAnchorHref(url.toEncoded());
+				linkFormat.setToolTip(url.toString());
+				cursor.setCharFormat(linkFormat);
+
+				QString desc = !e.firstChildElement("desc").text().isEmpty()?e.firstChildElement("desc").text():"";
+				cursor.insertText(desc.isEmpty()?url.toString():desc);
+			}
+		}
+	return !noRuler;
 }
 
 bool Oob::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
