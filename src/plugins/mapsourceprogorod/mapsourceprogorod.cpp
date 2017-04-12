@@ -1,11 +1,9 @@
 #include "mapsourceprogorod.h"
 
+//-----------------------------
+
 MapSourceProGorod::MapSourceProGorod()
 {}
-
-MapSourceProGorod::~MapSourceProGorod()
-{}
-//-----------------------------
 
 void MapSourceProGorod::pluginInfo(IPluginInfo *APluginInfo)
 {
