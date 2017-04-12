@@ -88,6 +88,7 @@ protected:
 	int  chooseMapSource(IMapSource *ASource);
 	void selectMapMode(qint8 AMode);
 	void setImage(QLabel *ALabel, int AType);
+	void setImage(QAbstractButton *AButton, int AType);
 	static void getCoordStrings(const QPointF &ACoords, QString &ALatitude, QString &ALongitude);
 	static QString getLatString(qreal ALatitude);
 	static QString getLonString(qreal ALongitude);

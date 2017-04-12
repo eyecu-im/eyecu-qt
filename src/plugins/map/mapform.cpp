@@ -637,6 +637,31 @@ void MapForm::setImage(QLabel *ALabel, int AType)
 	}
 }
 
+void MapForm::setImage(QAbstractButton *AButton, int AType)
+{
+	switch (AType)
+	{
+		case ICON_MAP:
+			AButton->setIcon(FMap->getIcon(MPI_MAP));
+			break;
+		case ICON_MAP1:
+			AButton->setIcon(FMap->getIcon(MPI_MAP1).pixmap(16));
+			break;
+		case ICON_MAP2:
+			AButton->setIcon(FMap->getIcon(MPI_MAP2).pixmap(16));
+			break;
+		case ICON_SATELLITE:
+			AButton->setIcon(FMap->getIcon(MPI_SATELLITE).pixmap(16));
+			break;
+		case ICON_HYBRID:
+			AButton->setIcon(FMap->getIcon(MPI_HYBRID).pixmap(16));
+			break;
+		case ICON_TERRAIN:
+			AButton->setIcon(FMap->getIcon(MPI_TERRAIN).pixmap(16));
+			break;
+	}
+}
+
 void MapForm::getCoordStrings(const QPointF &ACoords, QString &ALatitude, QString &ALongitude)
 {
 	ALatitude=getLatString(ACoords.y());
@@ -695,6 +720,7 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		ui->rbtMode1->setToolTip(modeNames.at(0));
 		ui->lblType1->setToolTip(modeNames.at(0));
 		setImage(ui->lblType1, modeIcons.at(0));
+//		setImage(ui->rbtMode1, modeIcons.at(0));
 		ui->rbtMode1->show();
 		ui->lblType1->show();
 		if (FTypes[0]==FOldType && index==-1)
@@ -711,6 +737,7 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		ui->rbtMode2->setToolTip(modeNames.at(1));
 		ui->lblType2->setToolTip(modeNames.at(1));
 		setImage(ui->lblType2, modeIcons.at(1));
+//		setImage(ui->rbtMode2, modeIcons.at(1));
 		ui->rbtMode2->show();
 		ui->lblType2->show();
 		if (FTypes[1]==FOldType && index==-1)
@@ -727,6 +754,7 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		ui->rbtMode3->setToolTip(modeNames.at(2));
 		ui->lblType3->setToolTip(modeNames.at(2));
 		setImage(ui->lblType3, modeIcons.at(2));
+//		setImage(ui->rbtMode3, modeIcons.at(2));
 		ui->rbtMode3->show();
 		ui->lblType3->show();
 		if (FTypes[2]==FOldType && index==-1)
@@ -743,6 +771,7 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		ui->rbtMode4->setToolTip(modeNames.at(3));
 		ui->lblType4->setToolTip(modeNames.at(3));
 		setImage(ui->lblType4, modeIcons.at(3));
+//		setImage(ui->rbtMode4, modeIcons.at(3));
 		ui->rbtMode4->show();
 		ui->lblType4->show();
 		if (FTypes[3]==FOldType && index==-1)
