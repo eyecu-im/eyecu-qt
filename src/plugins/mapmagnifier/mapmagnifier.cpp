@@ -203,8 +203,8 @@ QGraphicsItem *MapMagnifier::mapData(SceneObject *ASceneObject, int ARole, QGrap
             _LineY1 = scene->addLine(-2, 0, +2, 0, pen);    _LineY1->setZValue(ZVLine);
             _LineY2 = scene->addLine(-4, 0, +4, 0, pen);    _LineY2->setZValue(ZVLine);
 
-            onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR));
-            onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE));
+			onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_COLOR));
+			onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_VISIBLE));
         }
 
         MapMagnifierView *view=new MapMagnifierView(scene);
@@ -518,19 +518,19 @@ void MapMagnifier::onOptionsChanged(const OptionsNode &ANode)
         if (scene)
             scene->setZoom(ANode.value().toInt()+Options::node(OPV_MAP_MAGNIFIER_ZOOM).value().toInt());
     }    
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_COLOR)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_COLOR)
     {
         QColor color = ANode.value().value<QColor>();
-        color.setAlpha(Options::node(OPV_MAP_OSD_CONTR_CMARKER_ALPHA).value().toInt());
+		color.setAlpha(Options::node(OPV_MAP_OSD_CMARKER_ALPHA).value().toInt());
         setCenterMarkerColor(color);
     }
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_ALPHA)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_ALPHA)
     {
-        QColor color = Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR).value().value<QColor>();
+		QColor color = Options::node(OPV_MAP_OSD_CMARKER_COLOR).value().value<QColor>();
         color.setAlpha(ANode.value().toInt());
         setCenterMarkerColor(color);
     }
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_VISIBLE)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_VISIBLE)
         setCenterMarkerVisible(ANode.value().toBool());
     else if (ANode.path()==OPV_MAP_OSD_CONTR_FOREGROUND ||
              ANode.path()==OPV_MAP_OSD_CONTR_SHADOW ||

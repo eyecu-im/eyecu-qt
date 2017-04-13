@@ -16,7 +16,7 @@ MapOptions::MapOptions(QWidget *parent) :
     connect(ui->cmbBoxShadow,SIGNAL(currentIndexChanged(int)),SIGNAL(modified()));
     connect(ui->cbBoxBgTransparent,SIGNAL(toggled(bool)),SIGNAL(modified()));
     connect(ui->cbCntrlBgTransparent,SIGNAL(toggled(bool)),SIGNAL(modified()));
-    connect(ui->cbCntrlCentralMarkerVisible,SIGNAL(toggled(bool)),SIGNAL(modified()));
+	connect(ui->cbCenterMarkerVisible,SIGNAL(toggled(bool)),SIGNAL(modified()));
 }
 
 MapOptions::~MapOptions()
@@ -59,9 +59,9 @@ void MapOptions::apply()
     Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_ALPHA).setValue(contrBackground.alpha());
     Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT).setValue(ui->cbCntrlBgTransparent->isChecked());
 
-    Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR).setValue(contrCentralMarker);
-    Options::node(OPV_MAP_OSD_CONTR_CMARKER_ALPHA).setValue(contrCentralMarker.alpha());
-    Options::node(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE).setValue(ui->cbCntrlCentralMarkerVisible->isChecked());
+	Options::node(OPV_MAP_OSD_CMARKER_COLOR).setValue(centerMarker);
+	Options::node(OPV_MAP_OSD_CMARKER_ALPHA).setValue(centerMarker.alpha());
+	Options::node(OPV_MAP_OSD_CMARKER_VISIBLE).setValue(ui->cbCenterMarkerVisible->isChecked());
 
     Options::node(OPV_MAP_OSD_BOX_FOREGROUND).setValue(boxForeground);
     Options::node(OPV_MAP_OSD_BOX_LIGHT).setValue(boxLight);
@@ -92,6 +92,7 @@ void MapOptions::reset()
         default: index=0; break;
     }
     ui->cmbBoxShape->setCurrentIndex(index);
+	onBoxFrameShapeChanged(index);
 
     switch (Options::node(OPV_MAP_OSD_BOX_SHADOW).value().toInt())
     {
@@ -132,16 +133,20 @@ void MapOptions::reset()
     contrBackground.setAlpha(controlAplpha);
     ui->lcdCntrlBackgroundAlpha->display(controlAplpha);
     ui->slCntrlBackgroundAlpha->setValue(controlAplpha);
-    ui->cbCntrlBgTransparent->setChecked(Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT).value().toBool());
+	bool checked = Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT).value().toBool();
+	ui->cbCntrlBgTransparent->setChecked(checked);
+	disableCntrlBackgroundAlpha(checked);
 
-    contrCentralMarker = Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR).value().value<QColor>();
-    setWidgetColor(ui->pbCenterMarkerColor, contrCentralMarker);
+	centerMarker = Options::node(OPV_MAP_OSD_CMARKER_COLOR).value().value<QColor>();
+	setWidgetColor(ui->pbCenterMarkerColor, centerMarker);
 
-    controlAplpha = Options::node(OPV_MAP_OSD_CONTR_CMARKER_ALPHA).value().toInt();
-    contrCentralMarker.setAlpha(controlAplpha);
-    ui->lcdCntrlCentralMarkerAlpha->display(controlAplpha);
+	controlAplpha = Options::node(OPV_MAP_OSD_CMARKER_ALPHA).value().toInt();
+	centerMarker.setAlpha(controlAplpha);
+	ui->lcdCenterMarkerAlpha->display(controlAplpha);
     ui->slCenterMarkerAlpha->setValue(controlAplpha);
-    ui->cbCntrlCentralMarkerVisible->setChecked(Options::node(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE).value().toBool());
+	checked = Options::node(OPV_MAP_OSD_CMARKER_VISIBLE).value().toBool();
+	ui->cbCenterMarkerVisible->setChecked(checked);
+	enableCenterMarkerAlpha(checked);
 
     currShadowColor = Options::node(OPV_MAP_OSD_SHADOW_COLOR).value().value<QColor>();
     setWidgetColor(ui->pbShadowColor, currShadowColor);
@@ -165,7 +170,9 @@ void MapOptions::reset()
     alpha = Options::node(OPV_MAP_OSD_BOX_BACKGROUND_ALPHA).value().toInt();
     ui->slBackgroundAlpha->setValue(alpha);
     ui->lcdBgColorTranspar->display(alpha);
-    ui->cbBoxBgTransparent->setChecked(Options::node(OPV_MAP_OSD_BOX_BACKGROUND_TRANSPARENT).value().toBool());
+	checked = Options::node(OPV_MAP_OSD_BOX_BACKGROUND_TRANSPARENT).value().toBool();
+	ui->cbBoxBgTransparent->setChecked(checked);
+	disableBoxBackgroundAlpha(checked);
     boxBackground.setAlpha(alpha);
 
     currFont = Options::node(OPV_MAP_OSD_FONT).value().value<QFont>();
@@ -303,13 +310,13 @@ void MapOptions::modifyControlBackground()
 
 void MapOptions::modifyCenterMarkerColor()
 {
-    QColor color = QColorDialog::getColor(contrCentralMarker, this, tr("Select center marker color"));
+	QColor color = QColorDialog::getColor(centerMarker, this, tr("Select center marker color"));
     if(color.isValid())
     {
         color.setAlpha(ui->slCenterMarkerAlpha->value());
-        if (contrCentralMarker!=color)
+		if (centerMarker!=color)
         {
-            setWidgetColor(ui->pbCenterMarkerColor, contrCentralMarker = color);
+			setWidgetColor(ui->pbCenterMarkerColor, centerMarker = color);
             emit modified();
         }
     }
@@ -420,7 +427,27 @@ void MapOptions::onShadowShiftYChange(int cy)
 {
     currShadowShift.setY(cy/10.0);
     ui->lcdShadShiftY->display(currShadowShift.y());
-    emit modified();
+	emit modified();
+}
+
+void MapOptions::disableBoxBackgroundAlpha(bool ADisable)
+{
+	ui->slBackgroundAlpha->setDisabled(ADisable);
+}
+
+void MapOptions::disableCntrlBackgroundAlpha(bool ADisable)
+{
+	ui->slCntrlBackgroundAlpha->setDisabled(ADisable);
+}
+
+void MapOptions::enableCenterMarkerAlpha(bool AEnable)
+{
+	ui->slCenterMarkerAlpha->setEnabled(AEnable);
+}
+
+void MapOptions::onBoxFrameShapeChanged(int AIndex)
+{
+	ui->cmbBoxShadow->setEnabled(AIndex);
 }
 
 void MapOptions::onCntrBackgroundAlphaChange(int value)
@@ -432,8 +459,8 @@ void MapOptions::onCntrBackgroundAlphaChange(int value)
 
 void MapOptions::onCenterMarkerAlphaChange(int value)
 {
-    contrCentralMarker.setAlpha(value);
-    ui->lcdCntrlCentralMarkerAlpha->display(value);
+	centerMarker.setAlpha(value);
+	ui->lcdCenterMarkerAlpha->display(value);
     emit modified();
 }
 

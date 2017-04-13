@@ -212,9 +212,9 @@ bool Map::initSettings()
 	Options::setDefaultValue(OPV_MAP_OSD_CONTR_BACKGROUND_COLOR, palette.color(QPalette::Window));
 	Options::setDefaultValue(OPV_MAP_OSD_CONTR_BACKGROUND_ALPHA, 127);
 	Options::setDefaultValue(OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT, true);
-	Options::setDefaultValue(OPV_MAP_OSD_CONTR_CMARKER_COLOR, QColor(Qt::darkYellow));
-	Options::setDefaultValue(OPV_MAP_OSD_CONTR_CMARKER_ALPHA, 127);
-	Options::setDefaultValue(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE, true);
+	Options::setDefaultValue(OPV_MAP_OSD_CMARKER_COLOR, QColor(Qt::darkYellow));
+	Options::setDefaultValue(OPV_MAP_OSD_CMARKER_ALPHA, 127);
+	Options::setDefaultValue(OPV_MAP_OSD_CMARKER_VISIBLE, true);
 	Options::setDefaultValue(OPV_MAP_OSD_FONT, QFont("DejaVu Sans Condensed,10,-1,5,50,0,0,0,0,0"));
 
 	Options::setDefaultValue(OPV_MAP_ATTACH_TO_ROSTER, true);
@@ -244,8 +244,8 @@ void Map::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_COLOR));
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT));
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_FOREGROUND));
-	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR));
-	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE));
+	onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_COLOR));
+	onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_VISIBLE));
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_BASE));
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_BUTTON));
 	onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_LIGHT));
@@ -522,19 +522,19 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 		QPointF shift = ANode.value().toPointF();
 		FMapForm->setOsdShadow(color, blur, shift);
 	}
-	else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_COLOR)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_COLOR)
 	{
 		QColor color = ANode.value().value<QColor>();
-		color.setAlpha(Options::node(OPV_MAP_OSD_CONTR_CMARKER_ALPHA).value().toInt());
+		color.setAlpha(Options::node(OPV_MAP_OSD_CMARKER_ALPHA).value().toInt());
 		FMapForm->setOsdCenterMarkerColor(color);
 	}
-	else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_ALPHA)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_ALPHA)
 	{
-		QColor color = Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR).value().value<QColor>();
+		QColor color = Options::node(OPV_MAP_OSD_CMARKER_COLOR).value().value<QColor>();
 		color.setAlpha(ANode.value().toInt());
 		FMapForm->setOsdCenterMarkerColor(color);
 	}
-	else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_VISIBLE)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_VISIBLE)
 		FMapForm->setOsdCenterMarkerVisible(ANode.value().toBool());
 	else if (ANode.path()==OPV_MAP_ATTACH_TO_ROSTER)
 	{

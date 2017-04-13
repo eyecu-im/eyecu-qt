@@ -51,17 +51,17 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	ui->mapScale->raise();
 
 	QStyle *style = QApplication::style();
-	ui->btnDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
-	ui->btnLeft->setIcon(style->standardIcon(QStyle::SP_ArrowLeft));
-	ui->btnUp->setIcon(style->standardIcon(QStyle::SP_ArrowUp));
-	ui->btnReload->setIcon(style->standardIcon(QStyle::SP_BrowserReload));
-	ui->btnRight->setIcon(style->standardIcon(QStyle::SP_ArrowRight));
+	ui->pbDown->setIcon(style->standardIcon(QStyle::SP_ArrowDown));
+	ui->pbLeft->setIcon(style->standardIcon(QStyle::SP_ArrowLeft));
+	ui->pbUp->setIcon(style->standardIcon(QStyle::SP_ArrowUp));
+	ui->pbReload->setIcon(style->standardIcon(QStyle::SP_BrowserReload));
+	ui->pbRight->setIcon(style->standardIcon(QStyle::SP_ArrowRight));
 
-	Shortcuts::bindObjectShortcut(SCT_MAP_REFRESH, ui->btnReload);
-	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_LEFT, ui->btnLeft);
-	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_RIGHT, ui->btnRight);
-	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_UP, ui->btnUp);
-	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_DOWN, ui->btnDown);
+	Shortcuts::bindObjectShortcut(SCT_MAP_REFRESH, ui->pbReload);
+	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_LEFT, ui->pbLeft);
+	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_RIGHT, ui->pbRight);
+	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_UP, ui->pbUp);
+	Shortcuts::bindObjectShortcut(SCT_MAP_MOVE_DOWN, ui->pbDown);
 
 	ui->frmMapCenter->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
@@ -131,16 +131,16 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	connect(ui->sldScale, SIGNAL(sliderMoved(int)), ui->lcdScale, SLOT(display(int)));
 	connect(FMap, SIGNAL(zoomChanged(int)), ui->sldScale, SLOT(setValue(int)));
 
-	connect(ui->btnLeft, SIGNAL(clicked()), SLOT(onStepLeft()));
-	connect(ui->btnRight, SIGNAL(clicked()), SLOT(onStepRight()));
-	connect(ui->btnUp, SIGNAL(clicked()), SLOT(onStepUp()));
-	connect(ui->btnDown, SIGNAL(clicked()), SLOT(onStepDown()));
-	connect(ui->btnReload, SIGNAL(clicked()), FMapScene->instance(), SLOT(reloadMap()));
+	connect(ui->pbLeft, SIGNAL(clicked()), SLOT(onStepLeft()));
+	connect(ui->pbRight, SIGNAL(clicked()), SLOT(onStepRight()));
+	connect(ui->pbUp, SIGNAL(clicked()), SLOT(onStepUp()));
+	connect(ui->pbDown, SIGNAL(clicked()), SLOT(onStepDown()));
+	connect(ui->pbReload, SIGNAL(clicked()), FMapScene->instance(), SLOT(reloadMap()));
 
-	connect(ui->rbtMode1, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->rbtMode2, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->rbtMode3, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->rbtMode4, SIGNAL(clicked()), SLOT(onTypeSelected()));
+	connect(ui->pbMode1, SIGNAL(clicked()), SLOT(onTypeSelected()));
+	connect(ui->pbMode2, SIGNAL(clicked()), SLOT(onTypeSelected()));
+	connect(ui->pbMode3, SIGNAL(clicked()), SLOT(onTypeSelected()));
+	connect(ui->pbMode4, SIGNAL(clicked()), SLOT(onTypeSelected()));
 	connect(ui->cmbMapSource, SIGNAL(currentIndexChanged(int)),SLOT(onSourceSelected(int)));
 
 	connect(FMapScene->instance(), SIGNAL(mppChanged(double)),SLOT(onMppChanged(double)));
@@ -403,11 +403,10 @@ void MapForm::setOsdBoxBgTransparent(bool ATransparent)
 void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor)
 {
 	FControlPalette.setColor(ARole, AColor);
-	ui->rbtMode1->setPalette(FControlPalette);
-	ui->rbtMode2->setPalette(FControlPalette);
-	ui->rbtMode3->setPalette(FControlPalette);
-	ui->rbtMode4->setPalette(FControlPalette);
-	ui->rbtMode4->setPalette(FControlPalette);
+	ui->pbMode1->setPalette(FControlPalette);
+	ui->pbMode2->setPalette(FControlPalette);
+	ui->pbMode3->setPalette(FControlPalette);
+	ui->pbMode4->setPalette(FControlPalette);
 	ui->lcdScale->setPalette(FControlPalette);
 	ui->sldScale->setPalette(FControlPalette);
 	ui->mapScale->setPalette(FControlPalette);
@@ -415,11 +414,10 @@ void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor
 
 void MapForm::setOsdControlBgTransparent(bool ATransparent)
 {
-	ui->rbtMode1->setAutoFillBackground(!ATransparent);
-	ui->rbtMode2->setAutoFillBackground(!ATransparent);
-	ui->rbtMode3->setAutoFillBackground(!ATransparent);
-	ui->rbtMode4->setAutoFillBackground(!ATransparent);
-	ui->rbtMode4->setAutoFillBackground(!ATransparent);
+	ui->pbMode1->setAutoFillBackground(!ATransparent);
+	ui->pbMode2->setAutoFillBackground(!ATransparent);
+	ui->pbMode3->setAutoFillBackground(!ATransparent);
+	ui->pbMode4->setAutoFillBackground(!ATransparent);
 	ui->lcdScale->setAutoFillBackground(!ATransparent);
 	ui->sldScale->setAutoFillBackground(!ATransparent);
 	ui->mapScale->setAutoFillBackground(!ATransparent);
@@ -599,10 +597,10 @@ void MapForm::setMapMode(qint8 AMode)
 	FOldType = FTypes[AMode];
 	switch (AMode)
 	{
-		case 0: ui->rbtMode1->setChecked(true); break;
-		case 1: ui->rbtMode2->setChecked(true); break;
-		case 2: ui->rbtMode3->setChecked(true); break;
-		case 3: ui->rbtMode4->setChecked(true); break;
+		case 0: ui->pbMode1->setChecked(true); break;
+		case 1: ui->pbMode2->setChecked(true); break;
+		case 2: ui->pbMode3->setChecked(true); break;
+		case 3: ui->pbMode4->setChecked(true); break;
 	}
 	FMapScene->selectMode(AMode);
 	FMapScene->updateMercatorType();
@@ -711,69 +709,45 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		FTypes[i]=i<modeTypes.size()?modeTypes.at(i):TYPE_NONE;
 
 	if (FTypes[0]==TYPE_NONE)
-	{
-		ui->rbtMode1->hide();
-		ui->lblType1->hide();
-	}
+		ui->pbMode1->hide();
 	else
 	{
-		ui->rbtMode1->setToolTip(modeNames.at(0));
-		ui->lblType1->setToolTip(modeNames.at(0));
-		setImage(ui->lblType1, modeIcons.at(0));
-//		setImage(ui->rbtMode1, modeIcons.at(0));
-		ui->rbtMode1->show();
-		ui->lblType1->show();
+		ui->pbMode1->setToolTip(modeNames.at(0));
+		setImage(ui->pbMode1, modeIcons.at(0));
+		ui->pbMode1->show();
 		if (FTypes[0]==FOldType && index==-1)
 			index=0;
 	}
 
 	if (FTypes[1]==TYPE_NONE)
-	{
-		ui->rbtMode2->hide();
-		ui->lblType2->hide();
-	}
+		ui->pbMode2->hide();
 	else
 	{
-		ui->rbtMode2->setToolTip(modeNames.at(1));
-		ui->lblType2->setToolTip(modeNames.at(1));
-		setImage(ui->lblType2, modeIcons.at(1));
-//		setImage(ui->rbtMode2, modeIcons.at(1));
-		ui->rbtMode2->show();
-		ui->lblType2->show();
+		ui->pbMode2->setToolTip(modeNames.at(1));
+		setImage(ui->pbMode2, modeIcons.at(1));
+		ui->pbMode2->show();
 		if (FTypes[1]==FOldType && index==-1)
 			index=1;
 	}
 
 	if (FTypes[2]==TYPE_NONE)
-	{
-		ui->rbtMode3->hide();
-		ui->lblType3->hide();
-	}
+		ui->pbMode3->hide();
 	else
 	{
-		ui->rbtMode3->setToolTip(modeNames.at(2));
-		ui->lblType3->setToolTip(modeNames.at(2));
-		setImage(ui->lblType3, modeIcons.at(2));
-//		setImage(ui->rbtMode3, modeIcons.at(2));
-		ui->rbtMode3->show();
-		ui->lblType3->show();
+		ui->pbMode3->setToolTip(modeNames.at(2));
+		setImage(ui->pbMode3, modeIcons.at(2));
+		ui->pbMode3->show();
 		if (FTypes[2]==FOldType && index==-1)
 			index=2;
 	}
 
 	if (FTypes[3]==TYPE_NONE)
-	{
-		ui->rbtMode4->hide();
-		ui->lblType4->hide();
-	}
+		ui->pbMode4->hide();
 	else
 	{
-		ui->rbtMode4->setToolTip(modeNames.at(3));
-		ui->lblType4->setToolTip(modeNames.at(3));
-		setImage(ui->lblType4, modeIcons.at(3));
-//		setImage(ui->rbtMode4, modeIcons.at(3));
-		ui->rbtMode4->show();
-		ui->lblType4->show();
+		ui->pbMode4->setToolTip(modeNames.at(3));
+		setImage(ui->pbMode4, modeIcons.at(3));
+		ui->pbMode4->show();
 		if (FTypes[3]==FOldType && index==-1)
 			index=3;
 	}
@@ -865,13 +839,13 @@ void MapForm::onSourceSelected(int AIndex)
 /*************************************/
 void MapForm::onTypeSelected()
 {
-	if (sender()==ui->rbtMode1)
+	if (sender()==ui->pbMode1)
 		selectMapMode(0);
-	else if (sender()==ui->rbtMode2)
+	else if (sender()==ui->pbMode2)
 		selectMapMode(1);
-	else if (sender()==ui->rbtMode3)
+	else if (sender()==ui->pbMode3)
 		selectMapMode(2);
-	else if (sender()==ui->rbtMode4)
+	else if (sender()==ui->pbMode4)
 		selectMapMode(3);
 }
 
