@@ -595,9 +595,7 @@ void MapForm::setMapSource(IMapSource *AMapSource)
 
 void MapForm::setMapMode(qint8 AMode)
 {
-	qDebug() << "MapForm::setMapMode(" << AMode << ")";
 	FOldType = getType(AMode);
-	qDebug() << "A!";
 
 	QLayoutItem *item = ui->layoutModeButtons->itemAt(AMode);
 	if (item)
@@ -606,14 +604,6 @@ void MapForm::setMapMode(qint8 AMode)
 		if (button)
 			button->setChecked(true);
 	}
-
-//	switch (AMode)
-//	{
-//		case 0: ui->pbMode1->setChecked(true); break;
-//		case 1: ui->pbMode2->setChecked(true); break;
-//		case 2: ui->pbMode3->setChecked(true); break;
-//		case 3: ui->pbMode4->setChecked(true); break;
-//	}
 
 	FMapScene->selectMode(AMode);
 	FMapScene->updateMercatorType();
@@ -739,83 +729,26 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		modeIcons=ASource->getModeIcons();
 	}
 
-//	QGridLayout *layout = qobject_cast<QGridLayout *>(ui->frmMapType->layout());
-//	if (layout)
-//	{
-		// Remove all items, but first
-		while (QLayoutItem *button = ui->layoutModeButtons->takeAt(0))
-			 delete button;
-		// Add buttons
-		FTypes.clear();
+	while (QLayoutItem *button = ui->layoutModeButtons->takeAt(0))
+		 delete button;
+	// Add buttons
+	FTypes.clear();
 //TODO: use ConstItereator instead
-		qDebug() << "Loop started...";
-		for (int i=0; i<modeTypes.size(); ++i)
-		{
-//			Action *action = new Action(this);
-			QIcon icon = getIcon(modeIcons.at(i));
-			QPushButton *button = new QPushButton(icon, QString());
-			button->setToolTip(modeNames.at(i));
-			button->setAutoExclusive(true);
-			button->setCheckable(true);
-			connect(button, SIGNAL(toggled(bool)), SLOT(onTypeSelected()));
-//			QWidgetItem *item = new QWidgetItem(button);
-//			layout->addItem(item);
-			ui->layoutModeButtons->addWidget(button, 0, Qt::AlignCenter|Qt::AlignCenter);
-			FTypes.insert(i, modeTypes.at(i));
-			if (modeTypes.at(i)==FOldType && index==-1)
-				index=i;
-		}
-		qDebug() << "Loop finished!";
-//	}
-
-/*
-	for (int i=0; i<4; i++)
-		FTypes[i]=i<modeTypes.size()?modeTypes.at(i):TYPE_NONE;
-
-	if (FTypes[0]==TYPE_NONE)
-		ui->pbMode1->hide();
-	else
+	for (int i=0; i<modeTypes.size(); ++i)
 	{
-		ui->pbMode1->setToolTip(modeNames.at(0));
-		setImage(ui->pbMode1, modeIcons.at(0));
-		ui->pbMode1->show();
-		if (FTypes[0]==FOldType && index==-1)
-			index=0;
+		QIcon icon = getIcon(modeIcons.at(i));
+		QPushButton *button = new QPushButton(icon, QString());
+		button->setToolTip(modeNames.at(i));
+		button->setAutoExclusive(true);
+		button->setCheckable(true);
+		button->setFlat(true);
+		connect(button, SIGNAL(clicked(bool)), SLOT(onTypeSelected(bool)));
+		ui->layoutModeButtons->addWidget(button, 0, Qt::AlignCenter|Qt::AlignCenter);
+		FTypes.insert(i, modeTypes.at(i));
+		if (modeTypes.at(i)==FOldType && index==-1)
+			index=i;
 	}
 
-	if (FTypes[1]==TYPE_NONE)
-		ui->pbMode2->hide();
-	else
-	{
-		ui->pbMode2->setToolTip(modeNames.at(1));
-		setImage(ui->pbMode2, modeIcons.at(1));
-		ui->pbMode2->show();
-		if (FTypes[1]==FOldType && index==-1)
-			index=1;
-	}
-
-	if (FTypes[2]==TYPE_NONE)
-		ui->pbMode3->hide();
-	else
-	{
-		ui->pbMode3->setToolTip(modeNames.at(2));
-		setImage(ui->pbMode3, modeIcons.at(2));
-		ui->pbMode3->show();
-		if (FTypes[2]==FOldType && index==-1)
-			index=2;
-	}
-
-	if (FTypes[3]==TYPE_NONE)
-		ui->pbMode4->hide();
-	else
-	{
-		ui->pbMode4->setToolTip(modeNames.at(3));
-		setImage(ui->pbMode4, modeIcons.at(3));
-		ui->pbMode4->show();
-		if (FTypes[3]==FOldType && index==-1)
-			index=3;
-	}
-*/
 	if (FOldType==TYPE_NONE)                 // Initialization
 		return -1;
 
@@ -824,7 +757,6 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		if (index==-1)  // Not found - check for neares match
 		{
 			int i=0;
-//			for (int i=0; i<3; i++)
 			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
 				if (FOldType==TYPE_HYBRID)
 				{
@@ -846,7 +778,6 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		if (index==-1)  // Not found - fall back to first available index
 		{
 			int i=0;
-//			for (int i=0; i<3; i++)
 			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
 				if (*it!=-1)
 				{
@@ -908,18 +839,21 @@ void MapForm::onSourceSelected(int AIndex)
 }
 
 /*************************************/
-void MapForm::onTypeSelected()
+void MapForm::onTypeSelected(bool ASelected)
 {
-	QPushButton *button = qobject_cast<QPushButton *>(sender());
-	if (button)
+	qDebug() << "MapForm::onTypeSelected(" << ASelected << ")";
+	if (ASelected)
 	{
-//		QGridLayout *layout = qobject_cast<QGridLayout *>(ui->frmMapType->layout());
-//		if (layout)
-//		{
+		QPushButton *button = qobject_cast<QPushButton *>(sender());
+		if (button)
+		{
+			qDebug() << "item count=" << ui->layoutModeButtons->count();
+			qDebug() << "button=" << button;
 			int index = ui->layoutModeButtons->indexOf(button);
+			qDebug() << "index=" << index;
 			if (index!=-1)
 				selectMapMode(index);
-//		}
+		}
 	}
 /*
 	if (sender()==ui->pbMode1)

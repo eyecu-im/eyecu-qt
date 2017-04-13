@@ -104,7 +104,7 @@ public slots:
 protected slots:
 	void onSetNewCenter();
 	void onSourceSelected(int AIndex);
-	void onTypeSelected();
+	void onTypeSelected(bool ASelected);
 	void onMppChanged(double mpp);
 	void onSceneRectChanged(QRectF rect);
 
