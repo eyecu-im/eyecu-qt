@@ -52,7 +52,7 @@ public:
 	QRect sceneRect() const;
 	void showSelectionBox(bool AShow);
 	void setSelectionCoordinates(const MercatorCoordinates &ACoordinates);
-	inline qint8 getType(qint8 ATypeIndex) {return ATypeIndex<0?-1:FTypes[ATypeIndex];}
+	inline qint8 getType(qint8 ATypeIndex) {return (ATypeIndex)||(ATypeIndex>FTypes.size()-1)?-1:FTypes.at(ATypeIndex);}
 	QGraphicsView *graphicsView() const;
 	void graphicsViewResize(QResizeEvent *AResizeEvent);
 	void setOsdFont(const QFont &AFont);
@@ -89,6 +89,7 @@ protected:
 	void selectMapMode(qint8 AMode);
 	void setImage(QLabel *ALabel, int AType);
 	void setImage(QAbstractButton *AButton, int AType);
+	QIcon getIcon(int AIconIndex) const;
 	static void getCoordStrings(const QPointF &ACoords, QString &ALatitude, QString &ALongitude);
 	static QString getLatString(qreal ALatitude);
 	static QString getLonString(qreal ALongitude);
@@ -124,7 +125,7 @@ private:
 	MapScene	*FMapScene;
 	IMapSource	*FMapSource;
 	QGraphicsView *FGraphicsView;
-	int			FTypes[4];
+	QList<int>	FTypes;
 	int			FOldType;
 	bool		FHideEventEnabled;
 

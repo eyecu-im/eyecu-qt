@@ -1,5 +1,6 @@
 #include <QGraphicsDropShadowEffect>
 #include <QToolTip>
+#include <QLayoutItem>
 #include <MapObject>
 
 #include <utils/menu.h>
@@ -29,10 +30,10 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	FOldType(TYPE_NONE),
 	FHideEventEnabled(false)
 {
-	FTypes[0]=-1;
-	FTypes[1]=-1;
-	FTypes[2]=-1;
-	FTypes[3]=-1;
+//	FTypes[0]=-1;
+//	FTypes[1]=-1;
+//	FTypes[2]=-1;
+//	FTypes[3]=-1;
 
 	ui->setupUi(this);
 
@@ -137,10 +138,10 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	connect(ui->pbDown, SIGNAL(clicked()), SLOT(onStepDown()));
 	connect(ui->pbReload, SIGNAL(clicked()), FMapScene->instance(), SLOT(reloadMap()));
 
-	connect(ui->pbMode1, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->pbMode2, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->pbMode3, SIGNAL(clicked()), SLOT(onTypeSelected()));
-	connect(ui->pbMode4, SIGNAL(clicked()), SLOT(onTypeSelected()));
+//	connect(ui->pbMode1, SIGNAL(clicked()), SLOT(onTypeSelected()));
+//	connect(ui->pbMode2, SIGNAL(clicked()), SLOT(onTypeSelected()));
+//	connect(ui->pbMode3, SIGNAL(clicked()), SLOT(onTypeSelected()));
+//	connect(ui->pbMode4, SIGNAL(clicked()), SLOT(onTypeSelected()));
 	connect(ui->cmbMapSource, SIGNAL(currentIndexChanged(int)),SLOT(onSourceSelected(int)));
 
 	connect(FMapScene->instance(), SIGNAL(mppChanged(double)),SLOT(onMppChanged(double)));
@@ -403,10 +404,10 @@ void MapForm::setOsdBoxBgTransparent(bool ATransparent)
 void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor)
 {
 	FControlPalette.setColor(ARole, AColor);
-	ui->pbMode1->setPalette(FControlPalette);
-	ui->pbMode2->setPalette(FControlPalette);
-	ui->pbMode3->setPalette(FControlPalette);
-	ui->pbMode4->setPalette(FControlPalette);
+//	ui->pbMode1->setPalette(FControlPalette);
+//	ui->pbMode2->setPalette(FControlPalette);
+//	ui->pbMode3->setPalette(FControlPalette);
+//	ui->pbMode4->setPalette(FControlPalette);
 	ui->lcdScale->setPalette(FControlPalette);
 	ui->sldScale->setPalette(FControlPalette);
 	ui->mapScale->setPalette(FControlPalette);
@@ -414,10 +415,10 @@ void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor
 
 void MapForm::setOsdControlBgTransparent(bool ATransparent)
 {
-	ui->pbMode1->setAutoFillBackground(!ATransparent);
-	ui->pbMode2->setAutoFillBackground(!ATransparent);
-	ui->pbMode3->setAutoFillBackground(!ATransparent);
-	ui->pbMode4->setAutoFillBackground(!ATransparent);
+//	ui->pbMode1->setAutoFillBackground(!ATransparent);
+//	ui->pbMode2->setAutoFillBackground(!ATransparent);
+//	ui->pbMode3->setAutoFillBackground(!ATransparent);
+//	ui->pbMode4->setAutoFillBackground(!ATransparent);
 	ui->lcdScale->setAutoFillBackground(!ATransparent);
 	ui->sldScale->setAutoFillBackground(!ATransparent);
 	ui->mapScale->setAutoFillBackground(!ATransparent);
@@ -594,14 +595,26 @@ void MapForm::setMapSource(IMapSource *AMapSource)
 
 void MapForm::setMapMode(qint8 AMode)
 {
-	FOldType = FTypes[AMode];
-	switch (AMode)
+	qDebug() << "MapForm::setMapMode(" << AMode << ")";
+	FOldType = getType(AMode);
+	qDebug() << "A!";
+
+	QLayoutItem *item = ui->layoutModeButtons->itemAt(AMode);
+	if (item)
 	{
-		case 0: ui->pbMode1->setChecked(true); break;
-		case 1: ui->pbMode2->setChecked(true); break;
-		case 2: ui->pbMode3->setChecked(true); break;
-		case 3: ui->pbMode4->setChecked(true); break;
+		QPushButton *button = qobject_cast<QPushButton *>(item->widget());
+		if (button)
+			button->setChecked(true);
 	}
+
+//	switch (AMode)
+//	{
+//		case 0: ui->pbMode1->setChecked(true); break;
+//		case 1: ui->pbMode2->setChecked(true); break;
+//		case 2: ui->pbMode3->setChecked(true); break;
+//		case 3: ui->pbMode4->setChecked(true); break;
+//	}
+
 	FMapScene->selectMode(AMode);
 	FMapScene->updateMercatorType();
 	FMapScene->updateZoom();
@@ -643,20 +656,41 @@ void MapForm::setImage(QAbstractButton *AButton, int AType)
 			AButton->setIcon(FMap->getIcon(MPI_MAP));
 			break;
 		case ICON_MAP1:
-			AButton->setIcon(FMap->getIcon(MPI_MAP1).pixmap(16));
+			AButton->setIcon(FMap->getIcon(MPI_MAP1));
 			break;
 		case ICON_MAP2:
-			AButton->setIcon(FMap->getIcon(MPI_MAP2).pixmap(16));
+			AButton->setIcon(FMap->getIcon(MPI_MAP2));
 			break;
 		case ICON_SATELLITE:
-			AButton->setIcon(FMap->getIcon(MPI_SATELLITE).pixmap(16));
+			AButton->setIcon(FMap->getIcon(MPI_SATELLITE));
 			break;
 		case ICON_HYBRID:
-			AButton->setIcon(FMap->getIcon(MPI_HYBRID).pixmap(16));
+			AButton->setIcon(FMap->getIcon(MPI_HYBRID));
 			break;
 		case ICON_TERRAIN:
-			AButton->setIcon(FMap->getIcon(MPI_TERRAIN).pixmap(16));
+			AButton->setIcon(FMap->getIcon(MPI_TERRAIN));
 			break;
+	}
+}
+
+QIcon MapForm::getIcon(int AIconIndex) const
+{
+	switch (AIconIndex)
+	{
+		case ICON_MAP:
+			return FMap->getIcon(MPI_MAP);
+		case ICON_MAP1:
+			return FMap->getIcon(MPI_MAP1);
+		case ICON_MAP2:
+			return FMap->getIcon(MPI_MAP2);
+		case ICON_SATELLITE:
+			return FMap->getIcon(MPI_SATELLITE);
+		case ICON_HYBRID:
+			return FMap->getIcon(MPI_HYBRID);
+		case ICON_TERRAIN:
+			return FMap->getIcon(MPI_TERRAIN);
+		default:
+			return QIcon();
 	}
 }
 
@@ -705,6 +739,36 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		modeIcons=ASource->getModeIcons();
 	}
 
+//	QGridLayout *layout = qobject_cast<QGridLayout *>(ui->frmMapType->layout());
+//	if (layout)
+//	{
+		// Remove all items, but first
+		while (QLayoutItem *button = ui->layoutModeButtons->takeAt(0))
+			 delete button;
+		// Add buttons
+		FTypes.clear();
+//TODO: use ConstItereator instead
+		qDebug() << "Loop started...";
+		for (int i=0; i<modeTypes.size(); ++i)
+		{
+//			Action *action = new Action(this);
+			QIcon icon = getIcon(modeIcons.at(i));
+			QPushButton *button = new QPushButton(icon, QString());
+			button->setToolTip(modeNames.at(i));
+			button->setAutoExclusive(true);
+			button->setCheckable(true);
+			connect(button, SIGNAL(toggled(bool)), SLOT(onTypeSelected()));
+//			QWidgetItem *item = new QWidgetItem(button);
+//			layout->addItem(item);
+			ui->layoutModeButtons->addWidget(button, 0, Qt::AlignCenter|Qt::AlignCenter);
+			FTypes.insert(i, modeTypes.at(i));
+			if (modeTypes.at(i)==FOldType && index==-1)
+				index=i;
+		}
+		qDebug() << "Loop finished!";
+//	}
+
+/*
 	for (int i=0; i<4; i++)
 		FTypes[i]=i<modeTypes.size()?modeTypes.at(i):TYPE_NONE;
 
@@ -751,17 +815,20 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 		if (FTypes[3]==FOldType && index==-1)
 			index=3;
 	}
-
+*/
 	if (FOldType==TYPE_NONE)                 // Initialization
 		return -1;
 
 	if (ASource)
 	{
 		if (index==-1)  // Not found - check for neares match
-			for (int i=0; i<3; i++)
+		{
+			int i=0;
+//			for (int i=0; i<3; i++)
+			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
 				if (FOldType==TYPE_HYBRID)
 				{
-					if (FTypes[i]==TYPE_SATELLITE)
+					if (*it==TYPE_SATELLITE)
 					{
 						index=i;
 						break;
@@ -769,20 +836,24 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 				}
 				else if (FOldType==TYPE_SATELLITE)
 				{
-					if (FTypes[i]==TYPE_HYBRID)
+					if (*it==TYPE_HYBRID)
 					{
 						index=i;
 						break;
 					}
 				}
-
+		}
 		if (index==-1)  // Not found - fall back to first available index
-			for (int i=0; i<3; i++)
-				if (FTypes[i]!=-1)
+		{
+			int i=0;
+//			for (int i=0; i<3; i++)
+			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
+				if (*it!=-1)
 				{
 					index=i;
 					break;
 				}
+		}
 	}
 	return index;
 }
@@ -839,6 +910,18 @@ void MapForm::onSourceSelected(int AIndex)
 /*************************************/
 void MapForm::onTypeSelected()
 {
+	QPushButton *button = qobject_cast<QPushButton *>(sender());
+	if (button)
+	{
+//		QGridLayout *layout = qobject_cast<QGridLayout *>(ui->frmMapType->layout());
+//		if (layout)
+//		{
+			int index = ui->layoutModeButtons->indexOf(button);
+			if (index!=-1)
+				selectMapMode(index);
+//		}
+	}
+/*
 	if (sender()==ui->pbMode1)
 		selectMapMode(0);
 	else if (sender()==ui->pbMode2)
@@ -847,6 +930,7 @@ void MapForm::onTypeSelected()
 		selectMapMode(2);
 	else if (sender()==ui->pbMode4)
 		selectMapMode(3);
+*/
 }
 
 void MapForm::onMppChanged(double mpp)
