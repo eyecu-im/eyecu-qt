@@ -138,10 +138,6 @@ MapForm::MapForm(Map *AMap, MapScene *AMapScene, QWidget *parent) :
 	connect(ui->pbDown, SIGNAL(clicked()), SLOT(onStepDown()));
 	connect(ui->pbReload, SIGNAL(clicked()), FMapScene->instance(), SLOT(reloadMap()));
 
-//	connect(ui->pbMode1, SIGNAL(clicked()), SLOT(onTypeSelected()));
-//	connect(ui->pbMode2, SIGNAL(clicked()), SLOT(onTypeSelected()));
-//	connect(ui->pbMode3, SIGNAL(clicked()), SLOT(onTypeSelected()));
-//	connect(ui->pbMode4, SIGNAL(clicked()), SLOT(onTypeSelected()));
 	connect(ui->cmbMapSource, SIGNAL(currentIndexChanged(int)),SLOT(onSourceSelected(int)));
 
 	connect(FMapScene->instance(), SIGNAL(mppChanged(double)),SLOT(onMppChanged(double)));
@@ -403,11 +399,10 @@ void MapForm::setOsdBoxBgTransparent(bool ATransparent)
 
 void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor)
 {
+	qDebug() << "MapForm::setOsdControlColor(" << ARole << "," << AColor << ")";
 	FControlPalette.setColor(ARole, AColor);
-//	ui->pbMode1->setPalette(FControlPalette);
-//	ui->pbMode2->setPalette(FControlPalette);
-//	ui->pbMode3->setPalette(FControlPalette);
-//	ui->pbMode4->setPalette(FControlPalette);
+	for (int i=0; i<ui->layoutModeButtons->count(); ++i)
+		ui->layoutModeButtons->itemAt(i)->widget()->setPalette(FControlPalette);
 	ui->lcdScale->setPalette(FControlPalette);
 	ui->sldScale->setPalette(FControlPalette);
 	ui->mapScale->setPalette(FControlPalette);
@@ -415,10 +410,8 @@ void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor
 
 void MapForm::setOsdControlBgTransparent(bool ATransparent)
 {
-//	ui->pbMode1->setAutoFillBackground(!ATransparent);
-//	ui->pbMode2->setAutoFillBackground(!ATransparent);
-//	ui->pbMode3->setAutoFillBackground(!ATransparent);
-//	ui->pbMode4->setAutoFillBackground(!ATransparent);
+	for (int i=0; i<ui->layoutModeButtons->count(); ++i)
+		ui->layoutModeButtons->itemAt(i)->widget()->setAutoFillBackground(!ATransparent);
 	ui->lcdScale->setAutoFillBackground(!ATransparent);
 	ui->sldScale->setAutoFillBackground(!ATransparent);
 	ui->mapScale->setAutoFillBackground(!ATransparent);
@@ -613,56 +606,6 @@ void MapForm::setMapMode(qint8 AMode)
 	updateMapTitle();
 }
 
-void MapForm::setImage(QLabel *ALabel, int AType)
-{
-	switch (AType)
-	{
-		case ICON_MAP:
-			ALabel->setPixmap(FMap->getIcon(MPI_MAP).pixmap(16));
-			break;
-		case ICON_MAP1:
-			ALabel->setPixmap(FMap->getIcon(MPI_MAP1).pixmap(16));
-			break;
-		case ICON_MAP2:
-			ALabel->setPixmap(FMap->getIcon(MPI_MAP2).pixmap(16));
-			break;
-		case ICON_SATELLITE:
-			ALabel->setPixmap(FMap->getIcon(MPI_SATELLITE).pixmap(16));
-			break;
-		case ICON_HYBRID:
-			ALabel->setPixmap(FMap->getIcon(MPI_HYBRID).pixmap(16));
-			break;
-		case ICON_TERRAIN:
-			ALabel->setPixmap(FMap->getIcon(MPI_TERRAIN).pixmap(16));
-			break;
-	}
-}
-
-void MapForm::setImage(QAbstractButton *AButton, int AType)
-{
-	switch (AType)
-	{
-		case ICON_MAP:
-			AButton->setIcon(FMap->getIcon(MPI_MAP));
-			break;
-		case ICON_MAP1:
-			AButton->setIcon(FMap->getIcon(MPI_MAP1));
-			break;
-		case ICON_MAP2:
-			AButton->setIcon(FMap->getIcon(MPI_MAP2));
-			break;
-		case ICON_SATELLITE:
-			AButton->setIcon(FMap->getIcon(MPI_SATELLITE));
-			break;
-		case ICON_HYBRID:
-			AButton->setIcon(FMap->getIcon(MPI_HYBRID));
-			break;
-		case ICON_TERRAIN:
-			AButton->setIcon(FMap->getIcon(MPI_TERRAIN));
-			break;
-	}
-}
-
 QIcon MapForm::getIcon(int AIconIndex) const
 {
 	switch (AIconIndex)
@@ -730,22 +673,27 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 	}
 
 	while (QLayoutItem *button = ui->layoutModeButtons->takeAt(0))
-		 delete button;
-	// Add buttons
-	FTypes.clear();
-//TODO: use ConstItereator instead
-	for (int i=0; i<modeTypes.size(); ++i)
 	{
+		delete button->widget();
+		delete button;
+	}
+
+	FTypes.clear();
+
+	int i=0;
+	for (QList<int>::ConstIterator it = modeTypes.constBegin(); it!=modeTypes.constEnd(); ++it, ++i)
+	{		
 		QIcon icon = getIcon(modeIcons.at(i));
 		QPushButton *button = new QPushButton(icon, QString());
 		button->setToolTip(modeNames.at(i));
 		button->setAutoExclusive(true);
 		button->setCheckable(true);
 		button->setFlat(true);
-		connect(button, SIGNAL(clicked(bool)), SLOT(onTypeSelected(bool)));
+		button->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+		connect(button, SIGNAL(clicked(bool)), SLOT(onTypeSelectClicked(bool)));
 		ui->layoutModeButtons->addWidget(button, 0, Qt::AlignCenter|Qt::AlignCenter);
-		FTypes.insert(i, modeTypes.at(i));
-		if (modeTypes.at(i)==FOldType && index==-1)
+		FTypes.insert(i, *it);
+		if (*it==FOldType && index==-1)
 			index=i;
 	}
 
@@ -839,32 +787,24 @@ void MapForm::onSourceSelected(int AIndex)
 }
 
 /*************************************/
-void MapForm::onTypeSelected(bool ASelected)
+void MapForm::onTypeSelectClicked(bool ASelected)
 {
-	qDebug() << "MapForm::onTypeSelected(" << ASelected << ")";
-	if (ASelected)
+	QPushButton *button = qobject_cast<QPushButton *>(sender());
+	if (button)
 	{
-		QPushButton *button = qobject_cast<QPushButton *>(sender());
-		if (button)
+		if (ASelected)
 		{
-			qDebug() << "item count=" << ui->layoutModeButtons->count();
-			qDebug() << "button=" << button;
 			int index = ui->layoutModeButtons->indexOf(button);
-			qDebug() << "index=" << index;
 			if (index!=-1)
 				selectMapMode(index);
 		}
+		else
+		{
+			button->blockSignals(true);
+			button->setChecked(true);
+			button->blockSignals(false);
+		}
 	}
-/*
-	if (sender()==ui->pbMode1)
-		selectMapMode(0);
-	else if (sender()==ui->pbMode2)
-		selectMapMode(1);
-	else if (sender()==ui->pbMode3)
-		selectMapMode(2);
-	else if (sender()==ui->pbMode4)
-		selectMapMode(3);
-*/
 }
 
 void MapForm::onMppChanged(double mpp)

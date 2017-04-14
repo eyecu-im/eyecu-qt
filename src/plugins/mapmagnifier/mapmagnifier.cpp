@@ -506,7 +506,10 @@ void MapMagnifier::onOptionsChanged(const OptionsNode &ANode)
     if (ANode.path()==OPV_MAP_SOURCE)
     {
         if (scene)
+		{
 			scene->setMapSource(FMap->getMapSource()->mapSource());
+			scene->updateMap();
+		}
     }
     else if (ANode.path()==OPV_MAP_MODE)
     {
