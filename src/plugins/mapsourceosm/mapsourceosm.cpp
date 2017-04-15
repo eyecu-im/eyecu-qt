@@ -20,7 +20,7 @@ void MapSourceOsm::pluginInfo(IPluginInfo *APluginInfo)
 QList<int> MapSourceOsm::getModeIcons() const
 {
 	QList<int> list;
-	list << ICON_MAP << ICON_MAP1 << ICON_MAP2 << ICON_TERRAIN;
+	list << ICON_MAP << ICON_MAP1 << ICON_MAP2 << ICON_MAP3 << ICON_TERRAIN;
 	return list;
 }
 

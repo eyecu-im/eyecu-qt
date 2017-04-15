@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>502</width>
-    <height>432</height>
+    <width>416</width>
+    <height>387</height>
    </rect>
   </property>
   <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,0,0,0,0" columnstretch="0,0,0,0">
@@ -29,10 +29,22 @@
    <item row="0" column="3">
     <widget class="QFrame" name="frmMapCenter">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>96</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>96</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="font">
       <font>
@@ -907,10 +919,22 @@
    <item row="4" column="3">
     <widget class="QFrame" name="frmSelection">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>96</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>96</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="font">
       <font>
@@ -1664,6 +1688,18 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>96</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>96</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <pointsize>8</pointsize>
@@ -2313,7 +2349,6 @@
        <property name="toolTip">
         <string>Map scale</string>
        </property>
-       <zorder>frmMapType</zorder>
       </widget>
      </item>
      <item row="0" column="1">
@@ -2375,13 +2410,13 @@
         <item>
          <layout class="QHBoxLayout" name="layoutModeButtons">
           <property name="spacing">
-           <number>4</number>
+           <number>1</number>
           </property>
           <property name="topMargin">
-           <number>2</number>
+           <number>1</number>
           </property>
           <property name="bottomMargin">
-           <number>3</number>
+           <number>2</number>
           </property>
          </layout>
         </item>

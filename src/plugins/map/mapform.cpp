@@ -399,7 +399,6 @@ void MapForm::setOsdBoxBgTransparent(bool ATransparent)
 
 void MapForm::setOsdControlColor(QPalette::ColorRole ARole, const QColor &AColor)
 {
-	qDebug() << "MapForm::setOsdControlColor(" << ARole << "," << AColor << ")";
 	FControlPalette.setColor(ARole, AColor);
 	for (int i=0; i<ui->layoutModeButtons->count(); ++i)
 		ui->layoutModeButtons->itemAt(i)->widget()->setPalette(FControlPalette);
@@ -616,10 +615,16 @@ QIcon MapForm::getIcon(int AIconIndex) const
 			return FMap->getIcon(MPI_MAP1);
 		case ICON_MAP2:
 			return FMap->getIcon(MPI_MAP2);
+		case ICON_MAP3:
+			return FMap->getIcon(MPI_MAP3);
 		case ICON_SATELLITE:
 			return FMap->getIcon(MPI_SATELLITE);
+		case ICON_SATELLITE1:
+			return FMap->getIcon(MPI_SATELLITE1);
 		case ICON_HYBRID:
 			return FMap->getIcon(MPI_HYBRID);
+		case ICON_HYBRID1:
+			return FMap->getIcon(MPI_HYBRID1);
 		case ICON_TERRAIN:
 			return FMap->getIcon(MPI_TERRAIN);
 		default:

@@ -29,8 +29,16 @@
     <object mime="image/png">map2.png</object>
   </icon>
   <icon>
+    <key>map3</key>
+    <object mime="image/png">map3.png</object>
+  </icon>  
+  <icon>
     <key>satellite</key>
     <object mime="image/png">satellite.png</object>
+  </icon>
+  <icon>
+    <key>satellite1</key>
+    <object mime="image/png">satellite1.png</object>
   </icon>
   <icon>
     <key>terrain</key>
