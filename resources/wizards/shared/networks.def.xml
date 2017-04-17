@@ -5,5 +5,4 @@
  <icon><key>odnoklassniki</key><object mime="image/png">odnoklassniki.png</object></icon>
  <icon><key>livejournal</key><object mime="image/png">livejournal.png</object></icon>
  <icon><key>gtalk</key><object mime="image/png">gtalk.png</object></icon>
- <icon><key>yaonline</key><object mime="image/png">yaonline.png</object></icon>
 </icondef>

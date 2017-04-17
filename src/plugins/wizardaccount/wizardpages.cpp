@@ -97,7 +97,12 @@ ConnectionWizard::~ConnectionWizard()
 
 QString ConnectionWizard::serverName() const
 {
-	return (field(WF_SERVER_NAME).toString().isEmpty()?field(WF_SERVER_NAME_PRE):field(WF_SERVER_NAME)).toString();
+	return FServerName;
+}
+
+void ConnectionWizard::setServerName(const QString &AServerName)
+{
+	FServerName = AServerName;
 }
 
 QString ConnectionWizard::streamJid() const
@@ -157,8 +162,6 @@ NetworkPage::NetworkPage(QWidget *AParent): QWizardPage(AParent)
 	FNetworks.insert(NetworkOther,			NetworkInfo(tr("Other XMPP")   , NWI_XMPP,			tr("An independent XMPP server (Jabber)")));
 	FNetworks.insert(NetworkGoogle,			NetworkInfo(tr("Google Talk")  , NWI_GTALK,			tr("A social network and chat service from Google"), "https://accounts.google.com/SignUp?service=mail",
 														QStringList() << "gmail.com" << "googlemail.com"));
-	FNetworks.insert(NetworkYandex,			NetworkInfo(tr("Yandex Online"), NWI_YAONLINE,		tr("A popular Russian portal (internet serach, e-mail, news, chat and so on)"), "https://passport.yandex.com/registration/mail?from=mail&require_hint=1",
-														QStringList() << "ya.ru" << "yandex.ru" << "yandex.net" << "yandex.com" << "yandex.by" << "yandex.kz" << "yandex.ua" << "yandex-co.ru" << "narod.ru"));
 	FNetworks.insert(NetworkOdnoklassniki,	NetworkInfo(tr("Odnoklassniki"), NWI_ODNOKLASSNIKI,	tr("A popular Russian social network, owned by Mail.Ru Group"), "http://ok.ru/dk?st.cmd=anonymRegistrationEdit",
 														QStringList() << "odnoklassniki.ru"));
 	FNetworks.insert(NetworkLiveJournal,	NetworkInfo(tr("LiveJournal")  , NWI_LIVEJOURNAL,	tr("A popular blogging service"), "https://www.livejournal.com/create",
@@ -287,13 +290,7 @@ QString ServerPage::getInstructions(const QString &AServerName) const
 
 int ServerPage::getFlags() const
 {
-	return FServerInfo.value(getServerName()).flags;
-}
-
-QString ServerPage::getServerName() const
-{
-	QVariant value = field(WF_SERVER_NAME);
-	return (value.isNull()?field(WF_SERVER_NAME_PRE):value).toString();
+	return FServerInfo.value(field(WF_SERVER_NAME_PRE).toString()).flags;
 }
 
 //! listig fields
@@ -518,6 +515,8 @@ bool ServerPage::validatePage()
 				return false;
 	}
 
+	wizard()->setProperty("serverName", field(WF_SERVER_NAME_PRE).toString());
+
 	return true;
 }
 
@@ -686,6 +685,9 @@ bool CredentialsPage::validatePage()
 		QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server and User Name exists already! Please choose different Server or User Name."), QMessageBox::Ok);
 		return false;
 	}
+
+	wizard()->setProperty("serverName", field(WF_SERVER_NAME).toString());
+
 	return true;
 }
 
@@ -698,14 +700,6 @@ QStringList CredentialsPage::getServerList()
 		case NetworkPage::NetworkGoogle:
 		{
 			QStringList domains = QStringList() << "gmail.com" << "googlemail.com";
-			return domains;
-		}
-
-		case NetworkPage::NetworkYandex:
-		{
-			QStringList domains = QStringList()
-				<< "ya.ru" << "yandex.ru" << "yandex.net" << "yandex.com" << "yandex.by"
-				<< "yandex.kz" << "yandex.ua" << "yandex-co.ru" << "narod.ru";
 			return domains;
 		}
 
@@ -1346,7 +1340,7 @@ void ConclusionPage::initializePage()
 
 		FLblText1->setText((wizard()->property("registerAccount").toBool()?
 			tr("You successfully connected to Jabber as %1."):
-			tr("You successfully registered at Jabber as %1.")).arg(QString("<font color=blue><b>%1@%2</b></font>").arg(field(WF_USER_NAME).toString()).arg(field(WF_SERVER_NAME).toString())));
+			tr("You successfully registered at Jabber as %1.")).arg(QString("<font color=blue><b>%1</b></font>").arg(wizard()->property("streamJid").toString())));
 
 		FLblText2->setVisible(true);
 		FLblText3->setVisible(true);
