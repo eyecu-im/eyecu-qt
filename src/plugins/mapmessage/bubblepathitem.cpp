@@ -23,14 +23,13 @@ void BubbleButtonPixmapItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         if (event->pos()==FMousePressPoint)
             FListener->bubbleMouseEvent(FBubbleEvent);
         FMousePressPoint=QPointF();
-    }
+	}
 }
-
 //-------------- >>> *** BubbleButtonPixmapItem *** >>> ---------------
 
 //------------------ <<< *** BubbleTextProxyItem *** <<< -------------------
 BubbleTextProxyItem::BubbleTextProxyItem(MapMessage *AMapMessage, QNetworkAccessManager *ANetworkAccessManager, QGraphicsItem *parent):
-    QGraphicsProxyWidget(parent), FListener(AMapMessage), FTextWidget(new BubbleTextWidget())
+	QGraphicsProxyWidget(parent), FListener(AMapMessage), FTextWidget(new BubbleTextWidget()), FSuppressContextMenu(false)
 {    
     connect(FTextWidget, SIGNAL(highlighted(QString)), SLOT(onHighlighted(QString)));
     connect(FTextWidget, SIGNAL(resourceLoaded(QUrl)), SLOT(onResourceChanged()));
@@ -46,7 +45,7 @@ BubbleTextProxyItem::BubbleTextProxyItem(MapMessage *AMapMessage, QNetworkAccess
     FTextWidget->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     FTextWidget->setAnimated(Options::node(OPV_MAP_MESSAGE_ANIMATE).value().toBool());
 	FTextWidget->setOpenLinks(false);//FALSE
-//    FTextWidget->setTextInteractionFlags(Qt::TextBrowserInteraction);
+	FTextWidget->setTextInteractionFlags(Qt::TextBrowserInteraction);
     setWidget(FTextWidget);
 }
 
@@ -56,9 +55,18 @@ void BubbleTextProxyItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         QPointF shift=event->pos()-event->lastPos();
         parentItem()->parentItem()->parentItem()->moveBy(shift.x(), shift.y());
+		FSuppressContextMenu = true;
     }
     else
-        QGraphicsProxyWidget::mouseMoveEvent(event);
+		QGraphicsProxyWidget::mouseMoveEvent(event);
+}
+
+void BubbleTextProxyItem::contextMenuEvent(QGraphicsSceneContextMenuEvent *event)
+{
+	if (FSuppressContextMenu)
+		FSuppressContextMenu = false;
+	else
+		event->ignore();
 }
 
 void BubbleTextProxyItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -135,7 +143,8 @@ BubblePathItem::BubblePathItem(QIcon &ACloseIcon, QIcon &ALocationIcon, SceneObj
     FLocationButtonItem(NULL),
     FSceneObject(ASceneObject),
     FThisObject(AThisObject),
-    FMap(AMap)
+	FMap(AMap),
+	FInitialized(false)
 {
     if (!AMapMessage)
         setAcceptedMouseButtons(0);
@@ -182,7 +191,17 @@ void BubblePathItem::updatePath(bool full)
     FTextWidget->setPos(FOriginX+FCc, FOriginY+FCc);
     FCloseButtonItem->setPos(-FOriginX-FCloseButtonItem->boundingRect().width()/2, FOriginY-FCloseButtonItem->boundingRect().height()/2);
     FLocationButtonItem->setPos(FOriginX-FLocationButtonItem->boundingRect().width()/2, -FOriginY-FLocationButtonItem->boundingRect().height()/2);
-    FLocationButtonItem->setVisible(end.isNull());
+	FLocationButtonItem->setVisible(end.isNull());
+}
+
+bool BubblePathItem::initialized() const
+{
+	return FInitialized;
+}
+
+void BubblePathItem::setInitialized(bool AInitialized)
+{
+	FInitialized = AInitialized;
 }
 
 void BubblePathItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *AOption, QWidget *AWidget)

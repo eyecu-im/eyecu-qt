@@ -38,7 +38,7 @@ class MapMessage: public QObject,
 				  public MapSceneObjectStateHandler,
 				  public MapObjectDataHolder,
                   public INotificationHandler,                  
-                  public IBubbleEventListener
+				  public IBubbleEventListener
 {
     Q_OBJECT
 	Q_INTERFACES(IPlugin IMapMessage IOptionsDialogHolder MapSceneObjectHandler MapSceneObjectStateHandler INotificationHandler MapObjectDataHolder)
@@ -107,7 +107,7 @@ protected slots:
     void onMessageNotifyInserted(int AMessageId);
     void onMessageNotifyRemoved(int AMessageId);
     void onOptionsChanged(const OptionsNode &ANode);
-    void onBubbleDestroyed(QObject *AObject);
+    void onBubbleDestroyed(QObject *AObject);	
 
 signals:
     //IMapObjectDataHolder
@@ -135,8 +135,7 @@ private:
     QMultiMap<int, IBubbleUrlEventHandler *> FUrlListeners;
     QHash<QObject *, Jid> FMessageStreamJids;
     QHash<QObject *, Jid> FMessageContactJids;
-    int                 FCurrentMessageId;
-
+    int                 FCurrentMessageId;	
 };
 
 #endif // MAPMESSAGEE_H

@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
@@ -239,17 +238,12 @@ bool MapContacts::hasGeoloc(QString &AJid) const
 
 void MapContacts::showContact(QString AJid, bool AShowMap) const
 {
-	qDebug() << "MapContacts::showContact(" << AJid << "," << AShowMap << ")";
 	if (FResourceHash.contains(AJid))
 		AJid=FResourceHash.value(AJid);
 	if (hasGeoloc(AJid))
-	{
-		qDebug() << "X!";
 		FMap->showObject(MOT_CONTACT, AJid, Options::node(OPV_MAP_CONTACTS_FOLLOW).value().toBool(), AShowMap);
-	}
 	else if (FGeoloc->hasGeoloc(AJid))
 	{
-		qDebug() << "Y!";
 		FMap->geoMap()->getScene()->setMapCenter(FGeoloc->getGeoloc(AJid).coordinates(), true);
 		FMap->showMap();
 	}

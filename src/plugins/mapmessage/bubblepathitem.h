@@ -67,9 +67,11 @@ public slots:
     virtual void onResourceChanged();
 
 protected:
+	// QGraphicsItem interface
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+	virtual void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
 protected slots:
     void onHighlighted(const QString &ALink);
@@ -81,6 +83,7 @@ private:
     IBubbleEventListener    *FListener;
     BubbleTextWidget        *FTextWidget;
     QPointF                 FMousePressPoint;
+	bool					FSuppressContextMenu;
 };
 
 class BubblePathItem : public QGraphicsPathItem
@@ -100,14 +103,21 @@ public:
 	BubblePathItem(QIcon &ACloseIcon, QIcon &ALocationIcon, SceneObject *ASceneObject, SceneObject *AThisObject, IMap *AMap, QNetworkAccessManager *ANetworkAccessManager, MapMessage *AMapMessage=NULL, QGraphicsItem *AParent=NULL);
     // Enable the use of qgraphicsitem_cast with this item.
     enum { Type = UserType + 11};
-    virtual int type() const { return Type; }
+
 
     BubbleTextProxyItem *textItem() {return FTextWidget;}
 
     void updatePath(bool full);
 	const MapObject * targetObject() const {return FSceneObject->mapObject(); }
 	const SceneObject * targetSceneObject() const {return FSceneObject; }
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *AOption, QWidget *AWidget);
+
+	bool initialized() const;
+	void setInitialized(bool AInitialized);
+
+	// QGraphicsItem interface
+	virtual int type() const { return Type; }
+	// QGraphicsPathItem interface
+	void paint(QPainter *painter, const QStyleOptionGraphicsItem *AOption, QWidget *AWidget);
 
 protected:
     virtual void drawPointer(QPainterPath &APath, Direction ADirection, const QPointF &AEnd);
@@ -125,6 +135,8 @@ private:
     int                     FTHeight;
     int                     FOriginX;
     int                     FOriginY;
+
+	bool					FInitialized;
 };
 
 #endif // BUBBLEPATHITEM_H
