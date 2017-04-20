@@ -11,6 +11,7 @@
 XmppUriQueries::XmppUriQueries()
 {
 	FMessageWidgets = NULL;
+	FMapMessage = NULL; // *** <<< eyeCU >>> ***
 }
 
 XmppUriQueries::~XmppUriQueries()
@@ -35,6 +36,13 @@ bool XmppUriQueries::initConnections(IPluginManager *APluginManager, int &AInitO
 	{
 		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
 	}
+// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IMapMessage").value(0,NULL);
+	if (plugin)
+	{
+		FMapMessage = qobject_cast<IMapMessage *>(plugin->instance());
+	}
+// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -42,6 +50,10 @@ bool XmppUriQueries::initObjects()
 {
 	if (FMessageWidgets)
 		FMessageWidgets->insertViewUrlHandler(MVUHO_XMPPURIQUERIES, this);
+// *** <<< eyeCU <<< ***
+	if (FMapMessage)
+		FMapMessage->insertUrlHandler(MVUHO_XMPPURIQUERIES, this);
+// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -132,6 +144,16 @@ void XmppUriQueries::removeUriHandler(int AOrder, IXmppUriHandler *AHandler)
 		emit uriHandlerRemoved(AOrder, AHandler);
 	}
 }
+// *** <<< eyeCU <<< ***
+bool XmppUriQueries::bubbleUrlOpen(int AOrder, const QUrl &AUrl, const Jid &AStreamJid, const Jid &AContactJid)
+{
+	Q_UNUSED(AContactJid)
+
+	if (AOrder == MVUHO_XMPPURIQUERIES)
+		return openXmppUri(AStreamJid, AUrl);
+	return false;
+}
+// *** >>> eyeCU >>> ***
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_xmppuriqueries, XmppUriQueries)
 #endif

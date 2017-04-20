@@ -38,10 +38,11 @@ class MapMessage: public QObject,
 				  public MapSceneObjectStateHandler,
 				  public MapObjectDataHolder,
                   public INotificationHandler,                  
-				  public IBubbleEventListener
+				  public IBubbleEventListener,
+				  public IBubbleUrlEventHandler
 {
     Q_OBJECT
-	Q_INTERFACES(IPlugin IMapMessage IOptionsDialogHolder MapSceneObjectHandler MapSceneObjectStateHandler INotificationHandler MapObjectDataHolder)
+	Q_INTERFACES(IPlugin IMapMessage IOptionsDialogHolder MapSceneObjectHandler MapSceneObjectStateHandler MapObjectDataHolder INotificationHandler IBubbleUrlEventHandler)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IMapMessage")
 #endif
@@ -96,6 +97,9 @@ public:
     virtual void insertUrlHandler(int AOrder, IBubbleUrlEventHandler *ABubbleUrlEventHandler);
     virtual void removeUrlHandler(int AOrder, IBubbleUrlEventHandler *ABubbleUrlEventHandler);
 
+	// IBubbleUrlEventHandler interface
+	virtual bool bubbleUrlOpen(int AOrder, const QUrl &AUrl, const Jid &AStreamJid, const Jid &AContactJid);
+
 public slots:
     void onMapObjectInserted(int AType, const QString &AId);        // Map object inserted
     void onMapObjectRemoved(int AType, const QString &AId);         // Map object removed
@@ -135,7 +139,7 @@ private:
     QMultiMap<int, IBubbleUrlEventHandler *> FUrlListeners;
     QHash<QObject *, Jid> FMessageStreamJids;
     QHash<QObject *, Jid> FMessageContactJids;
-    int                 FCurrentMessageId;	
+    int                 FCurrentMessageId;		
 };
 
 #endif // MAPMESSAGEE_H

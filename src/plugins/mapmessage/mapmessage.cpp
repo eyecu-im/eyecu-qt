@@ -10,6 +10,7 @@
 #include <definitions/notificationtypes.h>
 #include <definitions/notificationdataroles.h>
 #include <definitions/namespaces.h>
+#include <definitions/messageviewurlhandlerorders.h>
 #include <utils/iconstorage.h>
 #include <utils/textmanager.h>
 
@@ -135,6 +136,8 @@ bool MapMessage::initObjects()
 
     if (FNotifications)
         FNotifications->insertNotificationHandler(NHO_DEFAULT, this);
+
+	insertUrlHandler(MVUHO_MAPMESSAGE_DEFAULT, this);
 
     return true;
 }
@@ -448,6 +451,15 @@ void MapMessage::removeUrlHandler(int AOrder, IBubbleUrlEventHandler *ABubbleUrl
 {
     if (FUrlListeners.contains(AOrder, ABubbleUrlEventHandler))
 		FUrlListeners.remove(AOrder, ABubbleUrlEventHandler);
+}
+
+bool MapMessage::bubbleUrlOpen(int AOrder, const QUrl &AUrl, const Jid &AStreamJid, const Jid &AContactJid)
+{
+	Q_UNUSED(AOrder)
+	Q_UNUSED(AStreamJid)
+	Q_UNUSED(AContactJid)
+
+	return QDesktopServices::openUrl(AUrl);
 }
 
 #if QT_VERSION < 0x050000
