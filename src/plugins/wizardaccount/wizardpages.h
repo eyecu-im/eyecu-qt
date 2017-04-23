@@ -166,7 +166,6 @@ private slots:
     void onSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected);
 
 protected:
-    void accept();
     void loadServerList();
 
 protected slots:
@@ -241,11 +240,9 @@ private:
 	QLabel		*FLblServer;
 	ServerComboBox	*FCmbServer;
 	QLabel		*FLblPassword;
-	QLabel		*FLblPasswordRetype;
 	QLineEdit   *FLedUsername;
 	QLineEdit   *FLedResource;
 	QLineEdit   *FLedPassword;
-	QLineEdit   *FLedPasswordRetype;
     IAccountManager *FAccountManager;
 };
 

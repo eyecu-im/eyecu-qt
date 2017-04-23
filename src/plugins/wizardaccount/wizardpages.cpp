@@ -30,7 +30,6 @@
 #define WF_SERVER_NAME			"server.name"
 #define WF_USER_NAME			"user.name"
 #define WF_USER_PASSWORD		"user.password"
-#define WF_USER_PASSWORD_CONF	"user.password.conf"
 #define WF_USER_RESOURCE		"user.resource"
 #define WF_ACCOUNT_NAME			"account.name"
 #define WF_GO_ONLINE			"go.online"
@@ -276,6 +275,7 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 		FServerList->setCurrentIndex(first);
 
     connect(FServerList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
+	connect(FServerList, SIGNAL(doubleClicked(QModelIndex)), parent(), SLOT(next()), Qt::UniqueConnection);
 }
 
 QUrl ServerPage::getRegistrationUrl() const
@@ -476,7 +476,6 @@ void ServerPage::loadServerList()
 void ServerPage::initializePage()
 {
     FServerList->clearSelection();
-	connect(FServerList, SIGNAL(doubleClicked(QModelIndex)), wizard(), SLOT(next()), Qt::UniqueConnection);
 }
 
 bool ServerPage::validatePage()
@@ -603,16 +602,10 @@ CredentialsPage::CredentialsPage(IAccountManager *AAccountManager, QWidget *APar
 	FLedPassword->setEchoMode(QLineEdit::Password);//PasswordEchoOnEdit
 	FLblPassword->setBuddy(FLedPassword);
 
-	FLblPasswordRetype = new QLabel(QString("&<b>%1<b/>:").arg(tr("Re-type password")));
-	FLedPasswordRetype = new QLineEdit;
-	FLedPasswordRetype->setEchoMode(QLineEdit::Password);
-	FLblPasswordRetype->setBuddy(FLedPasswordRetype);
-
 	registerField(WF_SERVER_NAME, FCmbServer, "currentItemText", SIGNAL(currentItemTextChanged));
 	registerField(WF_USER_RESOURCE, FLedResource);
 	registerField(WF_USER_NAME, FLedUsername);
 	registerField(WF_USER_PASSWORD, FLedPassword);
-	registerField(WF_USER_PASSWORD_CONF, FLedPasswordRetype);
 
     QGridLayout *layout = new QGridLayout;
 	layout->setHorizontalSpacing(0);
@@ -627,22 +620,17 @@ CredentialsPage::CredentialsPage(IAccountManager *AAccountManager, QWidget *APar
 	layout->addWidget(FLblPassword, 1, 0);
 	layout->addItem(new QSpacerItem(4, 0), 1, 1);
 	layout->addWidget(FLedPassword, 1, 2);
-	layout->addWidget(FLblPasswordRetype, 2, 0);
-	layout->addItem(new QSpacerItem(4, 0), 2, 1);
-	layout->addWidget(FLedPasswordRetype, 2, 2);
 	setLayout(layout);
 
     QWidget::setTabOrder(FLedUsername, FLedPassword);
-    QWidget::setTabOrder(FLedPassword, FLedPasswordRetype);
-    QWidget::setTabOrder(FLedPasswordRetype, FLedResource);
+	QWidget::setTabOrder(FLedPassword, FLedResource);
 
 	connect(FLedPassword,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
-	connect(FLedPasswordRetype,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
 }
 
 bool CredentialsPage::isComplete() const
 {
-	return !FLedUsername->text().isEmpty() && !FLedResource->text().isEmpty() && !FLedPassword->text().isEmpty() && (FLedPassword->text()==FLedPasswordRetype->text() || !wizard()->property("registerAccount").toBool());
+	return !FLedUsername->text().isEmpty() && !FLedResource->text().isEmpty() && !FLedPassword->text().isEmpty();
 }
 
 void CredentialsPage::initializePage()
@@ -663,18 +651,6 @@ void CredentialsPage::initializePage()
 		FCmbServer->setVisible(false);
 		FLblServer->setVisible(true);
 	}
-
-	if (wizard()->property("registerAccount").toBool())
-	{
-		FLblPasswordRetype->setVisible(true);
-		FLedPasswordRetype->setVisible(true);
-	}
-	else
-	{
-		FLblPasswordRetype->setVisible(false);
-		FLedPasswordRetype->setVisible(false);
-    }
-    FLedUsername->setFocus();
 }
 
 bool CredentialsPage::validatePage()
