@@ -411,7 +411,7 @@ bool PluginManager::loadPlugins()
 				{
 					delete translator;
 					translator = NULL;
-					LOG_DEBUG(QString("Failed to load translation for plugin %1").arg(file));
+                    LOG_WARNING(QString("Failed to load translation for plugin %1 (%2)").arg(file).arg(tsFile));
 				}
 
 				if (loader->load())
