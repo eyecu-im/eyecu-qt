@@ -278,7 +278,7 @@ bool Oob::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocu
 				{
 					QTextBlockFormat origBlockFormat = cursor.blockFormat();    // Original block format
 					icon = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" /> ")
-								   .arg(FIconStorage->fileFullName(MNI_LINK))
+                                   .arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_LINK)).toString())
 								   .arg(tr("Link"));
 
 					cursor.movePosition(QTextCursor::End);
