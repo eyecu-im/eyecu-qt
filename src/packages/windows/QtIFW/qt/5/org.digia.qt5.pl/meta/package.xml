@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Polish Translation</DisplayName>
+ <Description>Qt5 Polish translation</Description>
+ <Version>5.2.1</Version>
+ <ReleaseDate>2014-02-02</ReleaseDate>
+ <Name>org.digia.qt5.pl</Name>
+ <AutoDependOn>org.digia.qt5,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

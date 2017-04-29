@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>ICU</DisplayName>
+ <Description>The ICU Project Shared Library</Description>
+ <Version>51.1</Version>
+ <ReleaseDate>2013-04-23</ReleaseDate>
+ <Name>org.icuproject.icu</Name>
+ <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt FFMpeg</DisplayName>
+ <Description>Qt Purple - FFMpeg Framework</Description>
+ <Version>1.0.2</Version>
+ <ReleaseDate>2015-11-10</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
+ <UpdateText>Updated to new FFMgeg library version (avcodec57)</UpdateText>
+ <Dependencies>ru.purplesoft.qtpurple,org.digia.qt4.multimedia,org.ffmpeg.library</Dependencies>
+ <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt Purple</DisplayName>
+ <Description>Qt Purple</Description>
+ <Version>1.1.18</Version>
+ <ReleaseDate>2016-07-04</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple</Name>
+ <Dependencies>org.digia.qt5</Dependencies>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

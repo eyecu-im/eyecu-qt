@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Print Support</DisplayName>
+ <Description>Qt5 Runtime - Support</Description>
+ <Version>5.2.1</Version>
+ <ReleaseDate>2014-02-02</ReleaseDate>
+ <Name>org.digia.qt5.printsupport</Name>
+ <Dependencies>org.digia.qt5</Dependencies>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>MSVCRT Redistributable</DisplayName>
+ <Description>Microsoft Visual C 2008 Runtime Redistributable</Description>
+ <Version>9.0.21022</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>com.microsoft.vcredist</Name>
+ <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>
