@@ -76,7 +76,7 @@ QString SystemManager::osVersion()
 	static QString osver;
 	if (osver.isEmpty())
 	{
-#if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
+#if defined(Q_OS_WIN) || defined(Q_OS_CYGWIN)
 		QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", QSettings::NativeFormat);
 		osver = settings.value("ProductName").toString();
 #elif defined(Q_WS_MAC)
