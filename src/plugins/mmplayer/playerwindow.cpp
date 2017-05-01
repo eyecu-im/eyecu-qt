@@ -595,7 +595,8 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
     {
         int volume = ANode.value().toInt();
         ui->lcdVolume->display(volume);
-        FMediaStreamer->setVolume(volume);
+		if(FMediaStreamer)
+			FMediaStreamer->setVolume(volume);
     }
     else if (ANode.path() == OPV_MMPLAYER_MUTE)
     {
@@ -626,7 +627,13 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
         }
     }
     else if (ANode.path() == OPV_MMPLAYER_SMOOTHRESIZE)
-        FMediaStreamer->setSmoothResize(ANode.value().toBool());
+	{
+		if(FMediaStreamer)
+			FMediaStreamer->setSmoothResize(ANode.value().toBool());
+	}
     else if (ANode.path() == OPV_MMPLAYER_ASPECTRATIOMODE)
-		FMediaStreamer->setAspectRatioMode((Qt::AspectRatioMode)ANode.value().toInt());
+	{
+		if(FMediaStreamer)
+			FMediaStreamer->setAspectRatioMode((Qt::AspectRatioMode)ANode.value().toInt());
+	}
 }
