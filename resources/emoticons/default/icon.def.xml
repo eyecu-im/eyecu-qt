@@ -990,7 +990,9 @@
     <object mime="image/gif">shout.gif</object>
   </icon>
   <icon>
-    <text>*IN LOVE*</text> 
+    <text>%")</text>
+    <text>%-")</text>
+    <text>*CRAZY KISSED*</text>
     <object mime="image/gif">man_in_love.gif</object>
   </icon>
   <icon>
