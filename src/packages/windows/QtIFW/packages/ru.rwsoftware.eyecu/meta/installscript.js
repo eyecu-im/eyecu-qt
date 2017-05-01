@@ -140,8 +140,12 @@ Component.prototype.portableToggled = function (checked) {
 }
 
 Component.prototype.installAllUsersToggled = function (checked) {
-    if (checked) {        
-        installer.setValue("TargetDir", "@ApplicationsDir@/Road Works Software/eyecu");
+    if (checked) {
+        var appDir = installer.value("ApplicationsDir");
+        if (installer.value("x64installer")=="true")
+            appDir = appDir.slice(0, -6);
+
+        installer.setValue("TargetDir", appDir+"/Road Works Software/eyecu");
         if (installer.value("os") === "win")
            installer.setValue("AllUsers", true);
     }

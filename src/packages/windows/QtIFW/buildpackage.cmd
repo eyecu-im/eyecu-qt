@@ -1,8 +1,9 @@
-echo off
+echo on
+set platform=x64
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
-set packagefilename=%packagename%-%version%
+set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
@@ -22,7 +23,7 @@ goto end
 
 :redistexists
 mkdir %packages%\com.microsoft.vcredist\data\
-copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+mkdir %packages%\com.microsoft.vcredist\meta\
 
 if not exist "%OPENSSLDIR%\libeay32.dll"  goto noopenssl
 if not exist "%OPENSSLDIR%\ssleay32.dll"  goto noopenssl
@@ -35,40 +36,99 @@ goto end
 mkdir %packages%\org.openssl.shared\data
 for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll %packages%\org.openssl.shared\data\ /Y
 
+if %platform%==x64 goto x64_qt_files
+copy cfg\32\* config\
 
-for %%f in (phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll) do xcopy %qtdir%\bin\%%f %packages%\org.digia.qt4\data\ /Y
+if not exist %qtdir%\mkspecs\features\util.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\ffmpeg.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\geo.prf goto noqtpurple
 
-xcopy %qtdir%\plugins\imageformats\q*4.dll %packages%\org.digia.qt4\data\imageformats\ /Y
-del %packages%\org.digia.qt4\data\imageformats\q*d4.dll /Q
-xcopy %qtdir%\plugins\iconengines\q*4.dll %packages%\org.digia.qt4\data\iconengines\ /Y
-del %packages%\org.digia.qt4\data\iconengines\q*d4.dll /Q
+for /d %%p in (packages\org.digia.qt5.*) do rmdir %%p /S /Q
 
-for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.qt4.%%f\data\translations\ /Y
-
-for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.qt4.locales\data\translations\ /Y
+xcopy qt\4\* packages\ /E /Y
+xcopy plugins\4\* packages\ /E /Y
+xcopy purple\4\* packages\ /E /Y
 
 if exist %qtdir%\bin\QtMultimedia4.dll (
 xcopy %qtdir%\bin\QtMultimedia4.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 ) else if exist %qtdir%\bin\QtMultimediaKit1.dll (
 xcopy %qtdir%\bin\QtMultimediaKit1.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 ) else goto no_multimedia
-goto multimedia
-:no_multimedia
-echo Error! No multimedia framework found!
-goto end
-
-:multimedia
-xcopy %qtdir%\bin\QtSql4.dll %packages%\org.digia.qt4.sql\data\ /Y
+xcopy vcredist\x86\* packages\com.microsoft.vcredist\meta\ /Y
 xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll %packages%\org.digia.qt4.sql\data\sqldrivers\* /Y
-
+xcopy %qtdir%\bin\QtSql4.dll %packages%\org.digia.qt4.sql\data\ /Y
 xcopy %qtdir%\bin\QtScript4.dll %packages%\org.digia.qt4.script\data\ /Y
 xcopy %qtdir%\bin\QtWebKit4.dll %packages%\org.digia.qt4.webkit\data\ /Y
 xcopy %qtdir%\bin\QtSerialPort.dll %packages%\org.digia.qt4.serialport\data\ /Y
+xcopy %qtdir%\bin\QtFFMpeg1.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QtGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QtUtil1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
 
-if not exist %qtdir%\mkspecs\features\util.prf goto noqtpurple
-if not exist %qtdir%\mkspecs\features\ffmpeg.prf goto noqtpurple
-if not exist %qtdir%\mkspecs\features\geo.prf goto noqtpurple
+set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
+set targetqt=qt4
+goto copy_qt_files
+:x64_qt_files
+copy cfg\64\* config\
+pause
+
+if not exist %qtdir%\mkspecs\modules\qt_lib_util.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_ffmpeg.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_geo.pri goto noqtpurple
+for /d %%p in (packages\org.digia.qt4.*) do rmdir %%p /S /Q
+xcopy qt\5\* packages\ /E /Y
+xcopy plugins\5\* packages\ /E /Y
+xcopy purple\5\* packages\ /E /Y
+if not exist %qtdir%\bin\Qt5Multimedia.dll goto no_multimedia
+
+xcopy vcredist\x64\* packages\com.microsoft.vcredist\meta\ /Y
+
+xcopy %qtdir%\bin\icu*.dll %packages%\org.icuproject.icu\data\ /Y
+
+xcopy %qtdir%\plugins\platforms\qwindows.dll %packages%\org.digia.qt5\data\platforms\ /Y
+xcopy %qtdir%\plugins\sqldrivers\qsqlite.dll %packages%\org.digia.qt5.sql\data\sqldrivers\* /Y
+
+xcopy %qtdir%\bin\Qt5Sql.dll %packages%\org.digia.qt5.sql\data\ /Y
+
+xcopy %qtdir%\bin\Qt5WebKit.dll %packages%\org.digia.qt5.webkit\data\ /Y
+xcopy %qtdir%\bin\Qt5WebKitWidgets.dll %packages%\org.digia.qt5.webkit\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Multimedia.dll %packages%\org.digia.qt5.multimedia\data\ /Y
+xcopy %qtdir%\bin\Qt5MultimediaWidgets.dll %packages%\org.digia.qt5.multimedia\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Positioning.dll %packages%\org.digia.qt5.mobility\data\ /Y
+xcopy %qtdir%\bin\Qt5Sensors.dll %packages%\org.digia.qt5.mobility\data\ /Y
+
+xcopy %qtdir%\bin\Qt5OpenGL.dll %packages%\org.digia.qt5.opengl\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Quick.dll %packages%\org.digia.qt5.quick\data\ /Y
+xcopy %qtdir%\bin\Qt5Qml.dll %packages%\org.digia.qt5.quick\data\ /Y
+
+xcopy %qtdir%\bin\Qt5PrintSupport.dll %packages%\org.digia.qt5.printsupport\data\ /Y
+
+xcopy %qtdir%\bin\Qt5SerialPort.dll %packages%\org.digia.qt5.serialport\data\ /Y
+
+xcopy %qtdir%\bin\Qt5FFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\Qt5Geo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\Qt5Util.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+
+copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x64.exe /Y
+
+set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
+set targetqt=qt5
+:copy_qt_files
+for %%f in (%qt_files%) do xcopy %qtdir%\bin\%%f %packages%\org.digia.%targetqt%\data\ /Y
+
+xcopy %qtdir%\plugins\imageformats\q*.dll %packages%\org.digia.%targetqt%\data\imageformats\ /Y
+del %packages%\org.digia.%targetqt%\data\imageformats\q*d.dll /Q
+xcopy %qtdir%\plugins\iconengines\q*.dll %packages%\org.digia.%targetqt%\data\iconengines\ /Y
+del %packages%\org.digia.%targetqt%\data\iconengines\q*d.dll /Q
+for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.%%f\data\translations\ /Y
+for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.locales\data\translations\ /Y
 goto qtpurple
+:no_multimedia
+echo Error! No multimedia framework found!
+goto end
 
 :noqtpurple
 echo No QtPurple library found!
@@ -448,6 +508,9 @@ for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f %packages
 :build
 del %packagefilename%.exe
 binarycreator.exe --offline-only -c config\config.xml -p %packages% %packagefilename%.exe
+
+set repository=repository
+if %platform%==x64 set repository=%repository%.x64
 
 :repo
 repogen.exe -p %packages% repository
