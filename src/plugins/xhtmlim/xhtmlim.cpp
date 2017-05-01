@@ -2274,7 +2274,7 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 								QByteArray imageData;
 								QVariant imageResource = ADocument->resource(QTextDocument::ImageResource, imageUrl);
 								if (imageResource.type()==QVariant::ByteArray)
-									imageData=imageResource.toByteArray();
+									imageData=imageResource.toByteArray();								
 								else if (imageUrl.scheme()=="data")
 								{
 									QList<QString> parts=imageUrl.path().split(';');
@@ -2330,14 +2330,14 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 									}
 
 									// Save image binary
-									FBitsOfBinary->saveBinary(cid, type, imageData, maxAge, AMessage.stanza());
+									FBitsOfBinary->saveBinary(cid, type, imageData, maxAge);
 									bool embed;
 									if (format.hasProperty(PEmbed))
 										embed = format.property(PEmbed).toBool();
 									else
 										embed = imageData.size()<= Options::node(OPV_XHTML_EMBEDSIZE).value().toInt();
 									if(embed)
-										FBitsOfBinary->saveBinary(cid, type, imageData, maxAge);
+										FBitsOfBinary->saveBinary(cid, type, imageData, maxAge, AMessage.stanza());
 								}
 							}
 						}

@@ -1,6 +1,5 @@
 #include "boburlhandler.h"
 #include "networkreplyprivate.h"
-#include <QDebug>
 
 BobUrlHandler::BobUrlHandler(QObject *parent) :
     QObject(parent), FBitsOfBinary(NULL), FUrlProcessor(NULL)
