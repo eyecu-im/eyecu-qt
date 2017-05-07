@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Auto Status</DisplayName>
  <Description>Allows to change the status in accordance with the time of inactivity</Description>
- <Version>1.3.2</Version>
- <ReleaseDate>2016-04-04</ReleaseDate>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-04-06</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.autostatus</Name>
  <UpdateText>Synchronized with Vacuum-IM</UpdateText>
  <SortingPriority>99</SortingPriority>

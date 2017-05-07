@@ -11,17 +11,21 @@ echo Creating base package
 
 goto build
 
+if exist "c:\eyecu\hunspell\*" goto hunspell
+echo No Hunspell found in eyeCU installation directory!
+goto end
+:hunspell
+
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
 goto end
-
 :exists
 
 if exist "%MSVCREDIST%" goto redistexists
 echo Cannot find MSVC Redistributable
 goto end
-
 :redistexists
+
 mkdir %packages%\com.microsoft.vcredist\data\
 mkdir %packages%\com.microsoft.vcredist\meta\
 
@@ -70,7 +74,6 @@ set targetqt=qt4
 goto copy_qt_files
 :x64_qt_files
 copy cfg\64\* config\
-pause
 
 if not exist %qtdir%\mkspecs\modules\qt_lib_util.pri goto noqtpurple
 if not exist %qtdir%\mkspecs\modules\qt_lib_ffmpeg.pri goto noqtpurple
@@ -449,15 +452,12 @@ call copyplugins ru.rwsoftware.eyecu.map.sources.google  mapsourcegoogle
 call copyplugins ru.rwsoftware.eyecu.map.sources.yandex mapsourceyandex
 call copyplugins ru.rwsoftware.eyecu.map.sources.kosmosnimki mapsourcekosmosnimki
 call copyplugins ru.rwsoftware.eyecu.map.sources.2gis mapsource2gis
-call copyplugins ru.rwsoftware.eyecu.map.sources.yahoo mapsourceyahoo
 call copyplugins ru.rwsoftware.eyecu.map.sources.ovi mapsourceovi
 call copyplugins ru.rwsoftware.eyecu.map.sources.bing mapsourcebing
 call copyplugins ru.rwsoftware.eyecu.map.sources.navitel mapsourcenavitel
 call copyplugins ru.rwsoftware.eyecu.map.sources.progorod mapsourceprogorod
 call copyplugins ru.rwsoftware.eyecu.map.sources.esri mapsourceesri
 call copyplugins ru.rwsoftware.eyecu.map.sources.megafon mapsourcemegafon
-call copyplugins ru.rwsoftware.eyecu.map.sources.navteq mapsourcenavteq
-call copyplugins ru.rwsoftware.eyecu.map.sources.rosreestr mapsourcerosreestr
 call copyplugins ru.rwsoftware.eyecu.map.sources.rumap mapsourcerumap
 call copyplugins ru.rwsoftware.eyecu.map.sources.vitel mapsourcevitel
 
@@ -492,7 +492,7 @@ rem   Country
 call copyresources ru.rwsoftware.eyecu.resources.country country\shared
 
 rem   Menu Icons
-set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
+set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png megafon.png navitel.png osm.png progorod.png vitel.png wiki.png yandex.png
 call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.mapsources menuicons\shared
 
 set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png
@@ -509,11 +509,11 @@ for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f %packages
 del %packagefilename%.exe
 binarycreator.exe --offline-only -c config\config.xml -p %packages% %packagefilename%.exe
 
+:repo
 set repository=repository
 if %platform%==x64 set repository=%repository%.x64
 
-:repo
-repogen.exe -p %packages% repository
+repogen.exe -p %packages% %repository%
 :end
 
 pause

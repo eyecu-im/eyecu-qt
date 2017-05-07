@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Default</DisplayName>
  <Description>Default (Kolobok-based) european emoticon set</Description>
- <Version>1.3.1</Version>
- <ReleaseDate>2016-04-20</ReleaseDate>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2017-05-01</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.emoticons.default</Name>
- <UpdateText>Removed and fixed some aliases</UpdateText>
+ <UpdateText>Fixed &quot;really sad&quot; emoticon</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.emoticons</Dependencies>
  <SortingPriority>5</SortingPriority>
  <Default>true</Default>

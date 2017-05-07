@@ -2,10 +2,11 @@
 <Package>
  <DisplayName>Qt Geo</DisplayName>
  <Description>Qt Purple - Geo Framework</Description>
- <Version>1.1.4</Version>
- <ReleaseDate>2016-03-20</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.geo</Name>
- <UpdateText>MapScale now reports correct size hint</UpdateText>
+ <UpdateText>Dead map sources (Navteq, Mail.Ru, Rosreestr and Yahoo!) removed. Google, Kosmosnimki, OSM, ProGorod and Navitel map sources fixed. Interface improved: more than four map sources are now available! Added new modes to OSM, Kosmosnimki and Bing map sources. Duplication of map tiles on resize fixed. Shifted avatar relative to its parent frame because of position fixed. Some other useful fixes and improvements.
+    rounding </UpdateText>
  <Dependencies>ru.purplesoft.qtpurple</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>

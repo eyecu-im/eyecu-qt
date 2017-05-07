@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Loader</DisplayName>
  <Description>eyeCU loader</Description>
- <Version>1.3.0.20170208</Version>
- <ReleaseDate>2017-02-08</ReleaseDate>
+ <Version>1.3.0.20170501</Version>
+ <ReleaseDate>2017-05-01</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.loader</Name>
  <UpdateText>Application revision updated</UpdateText>
  <Virtual>true</Virtual>
