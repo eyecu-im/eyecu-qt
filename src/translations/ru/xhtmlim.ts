@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
   <context>
     <name>AddLink</name>
     <message>
@@ -919,7 +919,7 @@
     </message>
     <message>
       <source>Default image format</source>
-      <translation>Фрмат изображения по умолчанию</translation>
+      <translation>Формат изображения по умолчанию</translation>
     </message>
     <message numerus="yes">
       <source>byte(s)</source>
