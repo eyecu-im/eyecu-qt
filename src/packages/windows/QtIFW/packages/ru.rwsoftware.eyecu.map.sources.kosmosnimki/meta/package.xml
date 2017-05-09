@@ -5,7 +5,8 @@
  <Version>1.3.4</Version>
  <ReleaseDate>2017-04-12</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.map.sources.kosmosnimki</Name>
- <UpdateText>Icon updated. </UpdateText>
+ <UpdateText>Icon updated. Use QtPurple v2.0</UpdateText>
+ <Dependencies>ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <SortingPriority>12</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

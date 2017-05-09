@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>Map Location Selector</DisplayName>
  <Description>Allows to select location on the map</Description>
- <Version>1.3.2</Version>
- <ReleaseDate>2016-04-04</ReleaseDate>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.map.locationselector</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.map</Dependencies>
+ <UpdateText>Use QtPurple v2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.map,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>

@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>Serial Port</DisplayName>
  <Description>Positioning method, which allows to use a positioning device, connected to a serial port</Description>
- <Version>1.3.2</Version>
- <ReleaseDate>2016-04-04</ReleaseDate>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,org.digia.qt5.serialport</Dependencies>
+ <UpdateText>Use QtPurple v.2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,org.digia.qt5.serialport,ru.purplesoft.qtpurple.geo-2.>=0.>=0</Dependencies>
  <SortingPriority>3</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>User Location</DisplayName>
  <Description>Allows users to exchage information about their current location</Description>
- <Version>1.3.6</Version>
- <ReleaseDate>2017-02-08</ReleaseDate>
+ <Version>1.3.7</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc</Name>
  <UpdateText>Change settings page name from &quot;Positioning&quot; to &quot;Location&quot;. Create this page, if not created by Positioning plugin.</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo, ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=2.0.0, ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
  <SortingPriority>7</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

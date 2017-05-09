@@ -1,5 +1,5 @@
 echo on
-set platform=x64
+set platform=x32
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
@@ -9,7 +9,7 @@ set packages=packages
 
 echo Creating base package
 
-goto build
+goto repo
 
 if exist "c:\eyecu\hunspell\*" goto hunspell
 echo No Hunspell found in eyeCU installation directory!

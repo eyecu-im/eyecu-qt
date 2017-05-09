@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>Map Search</DisplayName>
  <Description>Allows to search objects on the map, using different search providers</Description>
- <Version>1.3.3</Version>
- <ReleaseDate>2017-01-13</ReleaseDate>
+ <Version>1.3.4</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.mapsearch</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.resources.menuicons.edit,ru.rwsoftware.eyecu.resources.menuicons.mapsources</Dependencies>
+ <UpdateText>Use QtPurple v2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.resources.menuicons.edit,ru.rwsoftware.eyecu.resources.menuicons.mapsources,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <SortingPriority>35</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
