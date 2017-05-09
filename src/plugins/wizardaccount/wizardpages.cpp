@@ -378,7 +378,8 @@ void ServerPage::loadServerList()
 
                 if (serverInfo.flags&ServerInfo::InBandRegistration)
                 {
-					items.append(new QStandardItem(storageMenu->getIcon(MNI_REGISTRATION), tr("In-band registration available")));
+					items.append(new QStandardItem(storageMenu->getIcon(MNI_REGISTRATION), QString()));
+					items[1]->setToolTip(tr("In-band registration available"));
 					items[1]->setData(true, Qt::UserRole);
                 }
 				else
