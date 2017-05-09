@@ -5,7 +5,7 @@
  <Version>1.3.4</Version>
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning</Name>
- <UpdateText>Add &quot;General&quot; header to positioning settings section. Change settings page name from &quot;Positioning&quot; to &quot;Location&quot;.</UpdateText>
+ <UpdateText>Add &quot;General&quot; header to positioning settings section. Change settings page name from &quot;Positioning&quot; to &quot;Location&quot;. Use QtPurple v2.0.</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <SortingPriority>1</SortingPriority>
  <Default>true</Default>
