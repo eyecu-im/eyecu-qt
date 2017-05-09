@@ -5,6 +5,7 @@
  <Version>1.3.3</Version>
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.mapsearch.google</Name>
+ <Dependencies>ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <UpdateText>Use QtPurple v2.0</UpdateText>
  <SortingPriority>70</SortingPriority>
  <Default>true</Default>
