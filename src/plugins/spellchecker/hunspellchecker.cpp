@@ -5,7 +5,6 @@
 #else
 #	include <thirdparty/hunspell/hunspell.hxx>
 #endif
-
 #include <QDir>
 #include <QFile>
 #include <QLocale>
@@ -15,7 +14,7 @@
 
 HunspellChecker::HunspellChecker() : FHunSpell(NULL), FDictCodec(NULL)
 {
-#if defined(Q_WS_WIN) || defined(Q_WS_PM) // *** <<< eyeCU >>> ***
+#if defined(Q_OS_WIN) || defined(Q_WS_PM) // *** <<< eyeCU >>> ***
 	FDictsPaths.append(QString("%1/hunspell").arg(QCoreApplication::applicationDirPath()));
 #elif defined (Q_WS_X11)
 	FDictsPaths.append("/usr/share/hunspell");
