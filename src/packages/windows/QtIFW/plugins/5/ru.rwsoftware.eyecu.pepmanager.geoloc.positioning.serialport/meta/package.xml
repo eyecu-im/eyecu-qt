@@ -6,7 +6,7 @@
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport</Name>
  <UpdateText>Use QtPurple v.2.0</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,org.digia.qt5.serialport,ru.purplesoft.qtpurple.geo-2.>=0.>=0</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,org.digia.qt5.serialport,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
  <SortingPriority>3</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

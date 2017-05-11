@@ -9,7 +9,7 @@ set packages=packages
 
 echo Creating base package
 
-goto repo
+rem goto build
 
 if exist "c:\eyecu\hunspell\*" goto hunspell
 echo No Hunspell found in eyeCU installation directory!
