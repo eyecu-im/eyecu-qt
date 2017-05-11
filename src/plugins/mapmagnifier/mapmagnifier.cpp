@@ -20,8 +20,17 @@
 
 #define MDR_MAGNIFIER 100
 
-MapMagnifierView::MapMagnifierView(QGraphicsScene *AScene, QWidget *AParent): QGraphicsView(AScene, AParent)
-{}
+MapMagnifierView::MapMagnifierView(QGraphicsScene *AScene, const QSize &ASize, QWidget *AParent): QGraphicsView(AScene, AParent)
+{
+	QRegion mask(0, 0, ASize.width(), ASize.height(), QRegion::Ellipse);
+	setMask(mask);
+	setFixedSize(ASize);
+	setInteractive(false);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setFrameShape(QFrame::NoFrame);
+	setCursor(Qt::CrossCursor);
+}
 
 bool MapMagnifierView::event(QEvent *AEvent)
 {
@@ -46,7 +55,12 @@ bool MapMagnifierView::event(QEvent *AEvent)
 
 void MapMagnifierView::paintEvent(QPaintEvent *APaintEvent)
 {
-    QGraphicsView::paintEvent(APaintEvent);
+	QGraphicsView::paintEvent(APaintEvent);
+}
+
+void MapMagnifierView::contextMenuEvent(QContextMenuEvent *AEvent)
+{
+	AEvent->ignore();
 }
 
 MapMagnifier::MapMagnifier(QObject *parent) :
@@ -207,18 +221,8 @@ QGraphicsItem *MapMagnifier::mapData(SceneObject *ASceneObject, int ARole, QGrap
 			onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_VISIBLE));
         }
 
-        MapMagnifierView *view=new MapMagnifierView(scene);
-        view->setInteractive(false);
-        view->setFixedSize(size*2, size*2);
-
+		MapMagnifierView *view=new MapMagnifierView(scene, QSize(size*2, size*2));
         scene->setParent(view);
-
-        QRegion mask(0, 0, size*2, size*2, QRegion::Ellipse);
-        view->setMask(mask);
-        view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        view->setFrameShape(QFrame::NoFrame);
-        view->setCursor(Qt::CrossCursor);
 
         QGraphicsProxyWidget *proxyWidget = new QGraphicsProxyWidget();
         proxyWidget->setAcceptedMouseButtons(Qt::NoButton);
