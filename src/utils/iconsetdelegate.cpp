@@ -40,9 +40,9 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 	{
 		QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
 
-#if defined(Q_WS_WIN) && !defined(QT_NO_STYLE_WINDOWSVISTA)
+#if defined(Q_OS_WIN) && !defined(QT_NO_STYLE_WINDOWSVISTA)
 		QStyle *style = indexOption.widget ? indexOption.widget->style() : QApplication::style();
-		if (qobject_cast<QWindowsVistaStyle *>(style))
+		if (style->inherits("QWindowsVistaStyle"))
 		{
 			indexOption.palette.setColor(QPalette::All, QPalette::HighlightedText, indexOption.palette.color(QPalette::Active, QPalette::Text));
 			indexOption.palette.setColor(QPalette::All, QPalette::Highlight, indexOption.palette.base().color().darker(108));

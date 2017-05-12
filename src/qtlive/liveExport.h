@@ -1,6 +1,6 @@
 #ifndef LIVE_EXPORT_H
 #include <qglobal.h>
-#if defined (Q_WS_WIN) || defined Q_WS_PM
+#if defined (Q_OS_WIN) || defined (Q_OS_OS2)
     #ifdef LIVE_DLL
         #define LIVE_EXPORT __declspec(dllexport)  //Export to dll
     #else

@@ -371,12 +371,12 @@ QString Statistics::userAgent() const
 			"Maemo"
 #elif defined Q_WS_MAEMO_6
 			"MeeGo"
-#elif defined Q_WS_WIN
+#elif defined Q_OS_WIN
 			// Nothing
 #elif defined Q_WS_X11
 			"X11; "
 // *** <<< eyeCU <<< ***
-#elif defined Q_WS_PM
+#elif defined Q_OS_OS2
 			"OS/2; "
 // *** >>> eyeCU >>> ***
 #else

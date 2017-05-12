@@ -198,7 +198,7 @@ void WidgetManager::showActivateRaiseWindow(QWidget *AWindow)
 
 void WidgetManager::setWindowSticky( QWidget *AWindow, bool ASticky )
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if (ASticky)
 		WindowSticker::insertWindow(AWindow);
 	else

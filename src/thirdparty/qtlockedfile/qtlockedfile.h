@@ -55,7 +55,7 @@
 #include <qt_os2.h>
 #endif
 
-#if defined(Q_WS_WIN)
+#if defined(Q_OS_WIN)
 #  if !defined(QT_QTLOCKEDFILE_EXPORT) && !defined(QT_QTLOCKEDFILE_IMPORT)
 #    define QT_QTLOCKEDFILE_EXPORT
 #  elif defined(QT_QTLOCKEDFILE_IMPORT)

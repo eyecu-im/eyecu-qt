@@ -197,7 +197,7 @@ QMultiMap<int, IOptionsDialogWidget *> OptionsManager::optionsDialogWidgets(cons
 	{
 		widgets.insertMulti(OHO_COMMON_SETTINGS, newOptionsDialogHeader(tr("Common settings"),AParent));
 		widgets.insertMulti(OWO_COMMON_ADVANCED, newOptionsDialogWidget(Options::node(OPV_COMMON_ADVANCED), tr("Show advanced options"), AParent)); // *** <<< eyeCU >>> ***
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		widgets.insertMulti(OWO_COMMON_AUTOSTART, newOptionsDialogWidget(Options::node(OPV_COMMON_AUTOSTART), tr("Auto run application on system startup"), AParent));
 #else
 		Q_UNUSED(AParent);
@@ -843,7 +843,7 @@ void OptionsManager::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_COMMON_AUTOSTART)
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QSettings reg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
 		if (ANode.value().toBool())
 			reg.setValue(CLIENT_NAME, QApplication::arguments().join(" "));
