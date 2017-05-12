@@ -1,5 +1,5 @@
-echo on
-set platform=x32
+echo off
+set platform=x64
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0

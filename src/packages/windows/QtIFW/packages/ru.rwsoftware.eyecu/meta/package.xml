@@ -2,10 +2,9 @@
 <Package>
  <DisplayName>eyeCU</DisplayName>
  <Description>XMPP-based IM client with positioning</Description>
- <Version>1.3.24</Version>
- <ReleaseDate>2017-04-29</ReleaseDate>
- <UpdateText>Insert avatars with &quot;file&quot; URL scheme.<br/>When contacts from all acounts displayed in a single list, account resources are children of accounts, not &quot;My Resources&quot; group!<br/>Synchronized with Vacuum-IM: hide URL element if BODY contains it and only it.
- Added support for standard storage locations in imported options. Added sorting option in IMessageReceiversWidget. Fixed authentication regression.</UpdateText>
+ <Version>1.3.25</Version>
+ <ReleaseDate>2017-05-12</ReleaseDate>
+ <UpdateText>Autostart option restored. Fix text color in different paces on Windows Vista style. Shortcuts (hot keys) fixed. Sticky windows fixed. Minor bugs fixed. .</UpdateText>
  <Name>ru.rwsoftware.eyecu</Name>
  <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
  <Licenses>

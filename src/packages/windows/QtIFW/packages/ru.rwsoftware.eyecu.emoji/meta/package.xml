@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Emoji</DisplayName>
  <Description>Emoji</Description>
- <Version>1.3.11</Version>
- <ReleaseDate>2016-12-13</ReleaseDate>
+ <Version>1.3.12</Version>
+ <ReleaseDate>2017-05-12</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.emoji</Name>
- <UpdateText>Updated emoji description file to version 3.0</UpdateText>
+ <UpdateText>Fixed text color in emoji set selection control on Windows Vista style</UpdateText>
  <SortingPriority>14</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
