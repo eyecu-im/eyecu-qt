@@ -361,7 +361,7 @@ bool Attention::writeMessageToText(int AOrder, Message &AMessage, QTextDocument 
         {
             QTextCursor cursor(ADocument);
             QString html = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" />")
-							.arg(FIconStorage->fileFullName(MNI_ATTENTION))
+							.arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_ATTENTION)).toString())
                             .arg(tr("Attention"));
 
             cursor.insertHtml(html);            
