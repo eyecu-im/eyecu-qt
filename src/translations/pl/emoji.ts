@@ -88,7 +88,7 @@
   <message numerus="yes">
    <location filename="../../plugins/emoji/iconsizespinbox.cpp" line="62"/>
    <source>pixel(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

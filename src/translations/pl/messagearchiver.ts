@@ -237,17 +237,17 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="42"/>
    <source>%n year(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="48"/>
    <source>%n month(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="54"/>
    <source>%n day(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="59"/>
@@ -375,7 +375,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="624"/>
    <source>%n conversation header(s) found</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="626"/>
@@ -405,7 +405,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
    <source>%n conversation(s) shown</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="664"/>
@@ -447,7 +447,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1170"/>
    <source>Found %n occurrence(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1180"/>
@@ -472,7 +472,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1269"/>
    <source>And %n other conversation(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1273"/>

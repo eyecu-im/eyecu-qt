@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru" sourcelanguage="en">
+<TS version="2.1" language="ru" sourcelanguage="en">
 <context>
     <name>EditProfilesDialog</name>
     <message>
@@ -227,6 +227,16 @@ Do you want to restart %1 now?</source>
     <message>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
         <translation>Вы всегда можете сменить режим настроек на странице &lt;i&gt;Общие&lt;/i&gt;.</translation>
+    </message>
+    <message>
+        <source>Language settings changed</source>
+        <translation>Настройки языка изменились</translation>
+    </message>
+    <message>
+        <source>To make changes intact, %1 needs to be restarted.
+Do you want to restart %1 now?</source>
+        <translation>Чтобы изменения вступили в силу, следует перезапустить %1.
+Вы хотите перезапустить %1?</translation>
     </message>
 </context>
 </TS>

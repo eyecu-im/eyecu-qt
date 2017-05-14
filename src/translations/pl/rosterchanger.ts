@@ -324,7 +324,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1196"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1323"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1235"/>

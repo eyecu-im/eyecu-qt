@@ -388,7 +388,7 @@
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="267"/>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="530"/>
    <source>pixels</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="353"/>
@@ -409,7 +409,7 @@
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="486"/>
    <source>%1: %2x%3 px; %n byte(s)</source>
    <comment>FORMAT: WIDTHxHEIGHT px; SIZE byte(s)</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/insertimage.cpp" line="450"/>
@@ -1058,37 +1058,37 @@
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2588"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2589"/>
    <source>minute(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2590"/>
    <source>hour(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2591"/>
    <source>day(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2592"/>
    <source>week(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2593"/>
    <source>month(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="2594"/>
    <source>year(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>
@@ -1116,7 +1116,7 @@
   <message numerus="yes">
    <location filename="../../plugins/xhtmlim/xhtmloptions.cpp" line="78"/>
    <source>byte(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
 </TS>

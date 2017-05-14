@@ -39,7 +39,7 @@
   <message numerus="yes">
    <source> second(s)</source>
    <comment>Keep space in front of unit if your language uses space to separate units from numbers</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

@@ -262,12 +262,14 @@ void PluginManager::loadSettings()
 	if (locale.language()==QLocale::C && !settings.value(SVN_LOCALE_NAME).toString().isEmpty())
 	{
 		locale = QLocale(settings.value(SVN_LOCALE_NAME).toString());
+		LOG_INFO(QString("Locale settings: %1").arg(locale.name()));
 	}
 	if (locale.language() == QLocale::C)
 	{
 		locale = QLocale::system();
 	}
 	QLocale::setDefault(locale);
+	LOG_INFO(QString("Default locale set to: %1").arg(locale.name()));
 
 	FDataPath = QString::null;
 	if (args.contains(CLO_APP_DATA_DIR))

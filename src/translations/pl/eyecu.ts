@@ -98,12 +98,12 @@
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
    <source>This plugin depends on %n other plugin(s).</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
@@ -118,7 +118,7 @@
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
    <source>%n dependency(ies) not found.</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>

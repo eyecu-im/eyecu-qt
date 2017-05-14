@@ -129,7 +129,7 @@ private:
 private:
 	Action *FChangeProfileAction;
 	Action *FShowOptionsDialogAction;
-	QList<IOptionsDialogHolder *> FOptionsHolders;
+	QList<IOptionsDialogHolder *> FOptionsHolders;	
 	QMap<QString, IOptionsDialogNode> FOptionsDialogNodes;
 	bool FAdvanced; // *** <<< eyeCU >>> ***
 };

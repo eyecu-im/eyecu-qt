@@ -855,8 +855,10 @@ void OptionsManager::onOptionsChanged(const OptionsNode &ANode)
 	{
 		QLocale locale(ANode.value().toString());
 		FPluginManager->setLocale(locale.language(),locale.country());
-	}
 // *** <<< eyeCU <<< ***
+		if (locale != QLocale() && QMessageBox::question(NULL, tr("Language settings changed"), tr("To make changes intact, %1 needs to be restarted.\nDo you want to restart %1 now?").arg(CLIENT_NAME), QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes)
+			FPluginManager->restart();
+	}
 	else if (ANode.path() == OPV_COMMON_ADVANCED)
 	{
 		if (ANode.value().toBool() != FAdvanced && QMessageBox::question(NULL, tr("Options mode changed"), tr("To switch options mode, %1 needs to be restarted.\nDo you want to restart %1 now?").arg(CLIENT_NAME), QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes)

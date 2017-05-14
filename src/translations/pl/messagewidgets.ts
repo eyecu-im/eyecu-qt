@@ -269,7 +269,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="356"/>
    <source>Selected %n contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>
