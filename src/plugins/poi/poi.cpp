@@ -1044,7 +1044,7 @@ QString Poi::parsePOI(const Message &AMessage)
     QString location = locationString(poi);
     if (!location.isEmpty())
         coord = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" > <i>%3</i></a>")
-                    .arg(getIconFileName("geoloc")).arg(tr("Location")).arg(location);
+					.arg(QUrl::fromLocalFile(getIconFileName("geoloc")).toString()).arg(tr("Location")).arg(location);
 
     // Build POI title element...
     if (direction==IMessageProcessor::DirectionIn)
@@ -1062,7 +1062,7 @@ QString Poi::parsePOI(const Message &AMessage)
         url.setEncodedUrl(uri.text().toLatin1(), QUrl::StrictMode);
 #endif
         urlString = QString("<br><img src=\"%1\" title=\"%2\" alt=\"%2\" /> <a href=\"%3\">%3</a>")
-                       .arg(FIconStorage->fileFullName(MNI_LINK))
+					   .arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_LINK)).toString())
                        .arg(tr("Link"))
                        .arg(url.toString());
     }
@@ -1072,7 +1072,7 @@ QString Poi::parsePOI(const Message &AMessage)
     QString tmp = poi.firstChildElement("description").text();
     if(!tmp.isEmpty())
         descr = QString("<br><img src=\"%1\" title=\"%2\" alt=\"%2\" /> %3")
-                        .arg(FIconStorage->fileFullName(MNI_DESCRIPTION))
+						.arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_DESCRIPTION)).toString())
                         .arg(tr("Description"))
                         .arg(tmp);
 
@@ -1080,7 +1080,7 @@ QString Poi::parsePOI(const Message &AMessage)
 
     QString type = poi.firstChildElement("type").text();
     QString icon = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\">")
-        .arg(getTypeIconFileName(type)).arg(FTranslatedTypes.value(type));
+		.arg(QUrl::fromLocalFile(getTypeIconFileName(type)).toString()).arg(FTranslatedTypes.value(type));
 
     // Append type icon subelement
     htmlPoi.append(icon);

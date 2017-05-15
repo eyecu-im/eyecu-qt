@@ -744,7 +744,7 @@ QString Tune::getLabel(const TuneData &ATuneData) const
     {
         QString imageFileName = tuneInfo("image", ATuneData.artist, ATuneData.source);
         if (!imageFileName.isEmpty())
-            label.append(QString("<div style=\"text-indent: 15px\"><strong><img src=\"%1\" /></div>").arg(FCachePath.absoluteFilePath(imageFileName)));
+			label.append(QString("<div style=\"text-indent: 15px\"><strong><img src=\"%1\" /></div>").arg(QUrl::fromLocalFile(FCachePath.absoluteFilePath(imageFileName)).toString()));
     }
     if (!ATuneData.title.isEmpty())
         label.append("<div style=\"text-indent: 15px\"><strong>").append(tr("Title")).append(":</strong> ").append(ATuneData.title).append("</div>");
@@ -1201,10 +1201,8 @@ void Tune::updateChatWindow(IMessageChatWindow *AMessageChatWindow)
 		options.senderName   = HTML_ESCAPE(FMessageStyleManager->contactName(AMessageChatWindow->streamJid(), AMessageChatWindow->contactJid()));
 		options.senderAvatar = FMessageStyleManager->contactAvatar(AMessageChatWindow->contactJid());
 
-
-		QUrl iconUrl = QUrl::fromLocalFile(getIconFileName());
 		QString html = QString("<img src=\"%1\" alt=\"%2\" title=\"%2\" /> %3")
-						.arg(iconUrl.toString())
+						.arg(QUrl::fromLocalFile(getIconFileName()).toString())
 						.arg(tr("Now playing"))
 						.arg(longMessage);
 		AMessageChatWindow->viewWidget()->appendHtml(html, options);
