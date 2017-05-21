@@ -30,6 +30,7 @@
 #include <definitions/shortcuts.h>
 #include <definitions/shortcutgrouporders.h>
 #include <utils/qt4qt5compat.h>
+#include <utils/logger.h>
 
 #include "tune.h"
 #include "tuneoptions.h"
@@ -744,7 +745,11 @@ QString Tune::getLabel(const TuneData &ATuneData) const
     {
         QString imageFileName = tuneInfo("image", ATuneData.artist, ATuneData.source);
         if (!imageFileName.isEmpty())
-			label.append(QString("<div style=\"text-indent: 15px\"><strong><img src=\"%1\" /></div>").arg(QUrl::fromLocalFile(FCachePath.absoluteFilePath(imageFileName)).toString()));
+		{
+//			QUrl url=QUrl::fromLocalFile(FCachePath.absoluteFilePath(imageFileName));
+//			LOG_DEBUG(QString("image URL=%1").arg(url.toString()));
+			label.append(QString("<div style=\'text-indent: 15px\'><strong><img src=\'%1\'/></div>").arg(FCachePath.absoluteFilePath(imageFileName)));
+		}
     }
     if (!ATuneData.title.isEmpty())
         label.append("<div style=\"text-indent: 15px\"><strong>").append(tr("Title")).append(":</strong> ").append(ATuneData.title).append("</div>");
