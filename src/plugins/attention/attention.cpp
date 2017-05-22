@@ -153,7 +153,7 @@ bool Attention::initObjects()
         FNotifications->registerNotificationType(NNT_ATTENTION, notifyType);
     }
 
-    Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CHAT_ATTENTION, tr("Attention"), tr("Shift+Return","Attention"), Shortcuts::WindowShortcut);
+	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CHAT_ATTENTION, tr("Attention"), tr("Alt+Return","Attention"), Shortcuts::WindowShortcut);
 
     return true;
 }
