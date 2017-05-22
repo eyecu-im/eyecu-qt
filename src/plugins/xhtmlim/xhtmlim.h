@@ -113,6 +113,8 @@ protected:
 	void updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWindow *ANormalWindow);
 	void updateMessageWindows(bool ARichTextEditor);
 	void registerDiscoFeatures();
+	void cleanupDocument(QTextDocument *ADocument);
+	bool isFormatted(const QTextDocument *ADocument);
 
 	IMessageEditWidget *messageEditWidget(Action **AAction);
 

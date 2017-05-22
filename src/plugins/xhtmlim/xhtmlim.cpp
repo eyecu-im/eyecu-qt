@@ -225,6 +225,38 @@ void XhtmlIm::registerDiscoFeatures()
 	FDiscovery->insertDiscoFeature(dfeature);
 }
 
+void XhtmlIm::cleanupDocument(QTextDocument *ADocument)
+{
+	QList<QPair<int,int> > fragments;
+	for (QTextBlock block = ADocument->begin(); block!=ADocument->end(); block=block.next())
+		for (QTextBlock::Iterator it=block.begin(); it!=block.end(); ++it)
+		{
+			QTextFragment fragment = it.fragment();
+			if (fragment.charFormat().hasProperty(QTextFormat::ImageName))
+				if (!fragment.text().contains(QChar::ObjectReplacementCharacter))
+					fragments.append(qMakePair<int,int>(fragment.position(), fragment.length()));
+		}
+
+	QTextCursor cursor(ADocument);
+	for (QList<QPair<int,int> >::ConstIterator it=fragments.constBegin(); it!=fragments.constEnd(); ++it)
+	{
+		cursor.setPosition((*it).first);
+		cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor, (*it).second);
+		QTextCharFormat format = cursor.charFormat();
+		format.clearProperty(QTextFormat::ImageName);
+		cursor.setCharFormat(format);
+	}
+}
+
+bool XhtmlIm::isFormatted(const QTextDocument *ADocument)
+{
+	for (QTextBlock block = ADocument->begin(); block!=ADocument->end(); block=block.next())
+		for (QTextBlock::Iterator it=block.begin(); it!=block.end(); ++it)
+			if (it.fragment().charFormat().propertyCount())
+				return true;
+	return false;
+}
+
 bool XhtmlIm::initSettings()
 {
 	QString pictures;
@@ -2251,11 +2283,8 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 	if (AOrder == MWO_XHTML_T2M)
 		if (!ADocument->isEmpty())  // Document is not empty
 		{
-			QVector<QTextFormat>formats=ADocument->allFormats();
-			if (Options::node(OPV_XHTML_NORICHTEXT).value().toBool() &&
-				formats.count()==3 && formats[0].type()==QTextFormat::CharFormat  && formats[0].propertyCount()==0 &&
-									  formats[1].type()==QTextFormat::BlockFormat && formats[1].propertyCount()==0 &&
-									  formats[2].type()==QTextFormat::FrameFormat && formats[2].propertyCount()==7)
+			cleanupDocument(ADocument);
+			if (Options::node(OPV_XHTML_NORICHTEXT).value().toBool() && !isFormatted(ADocument))
 				return false; // No formatting!
 
 			if (FBitsOfBinary)
