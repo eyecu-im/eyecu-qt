@@ -201,6 +201,11 @@
     <object mime="image/png">jimmaspro.png</object>
   </icon>
   <icon>
+    <key>http://jimm.net.ru/caps#android</key>
+    <client>Jimm aspro</client>
+    <object mime="image/png">jimmaspro.png</object>
+  </icon>
+  <icon>
     <key>http://mail.google.com/xmpp/client/caps</key>
     <client>Gmail</client>
     <object mime="image/png">gmail.png</object>
