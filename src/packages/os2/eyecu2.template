@@ -866,7 +866,7 @@
 <GROUP TITLE="Emoji One">
 
 <PCK 	INDEX=94
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (16)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (16)\3\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\16" FIXED
 	SELECT
@@ -876,7 +876,7 @@
 </PCK>
 
 <PCK 	INDEX=95
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (32)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (32)\3\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\32" FIXED
 	SELECT
@@ -886,31 +886,21 @@
 </PCK>
 
 <PCK 	INDEX=96
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (40)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (40)\3\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\40" FIXED
-	EXTERNAL="EmojiOne-2.1.3.wpi"
+	EXTERNAL="EmojiOne-3.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Emoji One icon set (40 x 40)
 	(c) Road Works Software
 </PCK>
 
-<PCK 	INDEX=97
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (48)\2\1\3"
-	TITLE="48 x 48"
-	TARGET="$(1)\resources\emoji\assets\Emoji One\png\48" FIXED
-	SELECT
-	REQUIRES=93
-	>eyeCU - Emoji: Emoji One icon set (48 x 48)
-	(c) Road Works Software
-</PCK>
-
 <PCK 	INDEX=98
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (64)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (64)\3\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\64" FIXED
-	EXTERNAL="EmojiOne-2.1.3.wpi"
+	EXTERNAL="EmojiOne-3.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Emoji One icon set (64 x 64)
@@ -918,10 +908,10 @@
 </PCK>
 
 <PCK 	INDEX=99
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (72)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (72)\3\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\72" FIXED
-	EXTERNAL="EmojiOne-2.1.3.wpi"
+	EXTERNAL="EmojiOne-3.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Emoji One icon set (72 x 72)
@@ -929,10 +919,10 @@
 </PCK>
 
 <PCK 	INDEX=100
-	PACKAGEID="Road Works Software\eyeCU\Emoji: One (128)\2\1\3"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: One (128)\3\0"
 	TITLE="128 x 128"
 	TARGET="$(1)\resources\emoji\assets\Emoji One\png\128" FIXED
-	EXTERNAL="EmojiOne-2.1.3.wpi"
+	EXTERNAL="EmojiOne-3.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Emoji One icon set (128 x 128)
@@ -944,10 +934,10 @@
 <GROUP TITLE="vKontakte">
 
 <PCK 	INDEX=200
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (16)\1\4"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\vKontakte\png\16" FIXED
-	EXTERNAL="vKontakte-1.0.wpi"
+	EXTERNAL="vKontakte-1.4.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: vKontakte icon set (16 x 16)
@@ -955,10 +945,10 @@
 </PCK>
 
 <PCK 	INDEX=201
-	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: VK (32)\1\4"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\vKontakte\png\32" FIXED
-	EXTERNAL="vKontakte-1.0.wpi"
+	EXTERNAL="vKontakte-1.4.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: vKontakte icon set (32 x 32)
@@ -970,10 +960,10 @@
 <GROUP TITLE="Apple">
 
 <PCK 	INDEX=210
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (16)\4\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\16" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (16 x 16)
@@ -981,10 +971,10 @@
 </PCK>
 
 <PCK 	INDEX=211
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (32)\4\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\32" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (32 x 32)
@@ -992,10 +982,10 @@
 </PCK>
 
 <PCK 	INDEX=212
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (40)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (40)\4\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\40" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (40 x 40)
@@ -1003,10 +993,10 @@
 </PCK>
 
 <PCK 	INDEX=213
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (48)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (48)\4\0"
 	TITLE="48 x 48"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\48" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (48 x 48)
@@ -1014,10 +1004,10 @@
 </PCK>
 
 <PCK 	INDEX=214
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (64)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (64)\4\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\64" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (64 x 64)
@@ -1025,10 +1015,10 @@
 </PCK>
 
 <PCK 	INDEX=215
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (72)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Apple (72)\4\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\Apple\png\72" FIXED
-	EXTERNAL="Apple-1.0.wpi"
+	EXTERNAL="Apple-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Apple icon set (72 x 72)
@@ -1040,10 +1030,10 @@
 <GROUP TITLE="Google">
 
 <PCK 	INDEX=220
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (16)\4\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\Google\png\16" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (16 x 16)
@@ -1051,10 +1041,10 @@
 </PCK>
 
 <PCK 	INDEX=221
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (32)\4\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\Google\png\32" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (32 x 32)
@@ -1062,10 +1052,10 @@
 </PCK>
 
 <PCK 	INDEX=222
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (40)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (40)\4\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\Google\png\40" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (40 x 40)
@@ -1073,10 +1063,10 @@
 </PCK>
 
 <PCK 	INDEX=223
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (48)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (48)\4\0"
 	TITLE="48 x 48"
 	TARGET="$(1)\resources\emoji\assets\Google\png\48" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (48 x 48)
@@ -1084,10 +1074,10 @@
 </PCK>
 
 <PCK 	INDEX=224
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (64)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (64)\4\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\Google\png\64" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (64 x 64)
@@ -1095,10 +1085,10 @@
 </PCK>
 
 <PCK 	INDEX=225
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (72)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (72)\4\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\Google\png\72" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (72 x 72)
@@ -1106,10 +1096,10 @@
 </PCK>
 
 <PCK 	INDEX=226
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (128)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Google (128)\4\0"
 	TITLE="128 x 128"
 	TARGET="$(1)\resources\emoji\assets\Google\png\128" FIXED
-	EXTERNAL="Google-1.0.wpi"
+	EXTERNAL="Google-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Google icon set (128 x 128)
@@ -1121,10 +1111,10 @@
 <GROUP TITLE="Twitter">
 
 <PCK 	INDEX=230
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (16)\4\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\16" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (16 x 16)
@@ -1132,10 +1122,10 @@
 </PCK>
 
 <PCK 	INDEX=231
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (32)\4\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\32" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (32 x 32)
@@ -1143,10 +1133,10 @@
 </PCK>
 
 <PCK 	INDEX=232
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (40)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (40)\4\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\40" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (40 x 40)
@@ -1154,10 +1144,10 @@
 </PCK>
 
 <PCK 	INDEX=233
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (48)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (48)\4\0"
 	TITLE="48 x 48"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\48" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (48 x 48)
@@ -1165,10 +1155,10 @@
 </PCK>
 
 <PCK 	INDEX=234
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (64)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (64)\4\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\64" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (64 x 64)
@@ -1176,10 +1166,10 @@
 </PCK>
 
 <PCK 	INDEX=235
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (72)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Twitter (72)\4\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\Twitter\png\72" FIXED
-	EXTERNAL="Twitter-1.0.wpi"
+	EXTERNAL="Twitter-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Twitter icon set (72 x 72)
@@ -1191,10 +1181,10 @@
 <GROUP TITLE="Samsung">
 
 <PCK 	INDEX=240
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (16)\4\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\16" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (16 x 16)
@@ -1202,10 +1192,10 @@
 </PCK>
 
 <PCK 	INDEX=241
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (32)\4\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\32" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (32 x 32)
@@ -1213,10 +1203,10 @@
 </PCK>
 
 <PCK 	INDEX=242
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (40)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (40)\4\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\40" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (40 x 40)
@@ -1224,10 +1214,10 @@
 </PCK>
 
 <PCK 	INDEX=243
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (48)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (48)\4\0"
 	TITLE="48 x 48"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\48" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (48 x 48)
@@ -1235,10 +1225,10 @@
 </PCK>
 
 <PCK 	INDEX=244
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (64)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (64)\4\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\64" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (64 x 64)
@@ -1246,10 +1236,10 @@
 </PCK>
 
 <PCK 	INDEX=245
-	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (72)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Samsung (72)\4\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\Samsung\png\72" FIXED
-	EXTERNAL="Samsung-1.0.wpi"
+	EXTERNAL="Samsung-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: Samsung icon set (72 x 72)
@@ -1261,7 +1251,7 @@
 <GROUP TITLE="BW Chart">
 
 <PCK 	INDEX=250
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (16)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (16)\4\0"
 	TITLE="16 x 16"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\16" FIXED
 	EXTERNAL="BWChart-1.0.wpi"
@@ -1272,10 +1262,10 @@
 </PCK>
 
 <PCK 	INDEX=251
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (32)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (32)\4\0"
 	TITLE="32 x 32"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\32" FIXED
-	EXTERNAL="BWChart-1.0.wpi"
+	EXTERNAL="BWChart-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: BW Chart icon set (32 x 32)
@@ -1283,10 +1273,10 @@
 </PCK>
 
 <PCK 	INDEX=252
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (40)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (40)\4\0"
 	TITLE="40 x 40"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\40" FIXED
-	EXTERNAL="BWChart-1.0.wpi"
+	EXTERNAL="BWChart-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: BW Chart icon set (40 x 40)
@@ -1294,10 +1284,10 @@
 </PCK>
 
 <PCK 	INDEX=253
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (48)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (48)\4\0"
 	TITLE="48 x 48"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\48" FIXED
-	EXTERNAL="BWChart-1.0.wpi"
+	EXTERNAL="BWChart-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: BW Chart icon set (48 x 48)
@@ -1305,10 +1295,10 @@
 </PCK>
 
 <PCK 	INDEX=254
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (64)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (64)\4\0"
 	TITLE="64 x 64"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\64" FIXED
-	EXTERNAL="BWChart-1.0.wpi"
+	EXTERNAL="BWChart-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: BW Chart icon set (64 x 64)
@@ -1316,13 +1306,282 @@
 </PCK>
 
 <PCK 	INDEX=255
-	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (72)\1\0"
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW Chart (72)\4\0"
 	TITLE="72 x 72"
 	TARGET="$(1)\resources\emoji\assets\BW Chart\png\72" FIXED
-	EXTERNAL="BWChart-1.0.wpi"
+	EXTERNAL="BWChart-4.0.wpi"
 	SELECT
 	REQUIRES=93
 	>eyeCU - Emoji: BW Chart icon set (72 x 72)
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<GROUP TITLE="BW EmojiOne">
+
+<PCK 	INDEX=260
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW EmojiOne (16)\3\0"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\BW EmojiOne\png\16" FIXED
+	REQUIRES=93
+	EXTERNAL="BWEmojiOne-3.0.wpi"
+	SELECT
+	>eyeCU - Emoji: BW EmojiOne icon set (16 x 16)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=261
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW EmojiOne (32)\3\0"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\BW EmojiOne\png\32" FIXED
+	REQUIRES=93
+	EXTERNAL="BWEmojiOne-3.0.wpi"
+	SELECT
+	>eyeCU - Emoji: BW EmojiOne icon set (32 x 32)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=262
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW EmojiOne (40)\3\0"
+	TITLE="40 x 40"
+	TARGET="$(1)\resources\emoji\assets\BW EmojiOne\png\40" FIXED
+	REQUIRES=93
+	EXTERNAL="BWEmojiOne-3.0.wpi"
+	SELECT
+	>eyeCU - Emoji: BW EmojiOne icon set (40 x 40)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=263
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW EmojiOne (48)\3\0"
+	TITLE="48 x 48"
+	TARGET="$(1)\resources\emoji\assets\BW EmojiOne\png\48" FIXED
+	REQUIRES=93
+	EXTERNAL="BWEmojiOne-3.0.wpi"
+	SELECT
+	>eyeCU - Emoji: BW EmojiOne icon set (48 x 48)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=264
+	PACKAGEID="Road Works Software\eyeCU\Emoji: BW EmojiOne (64)\3\0"
+	TITLE="64 x 64"
+	TARGET="$(1)\resources\emoji\assets\BW EmojiOne\png\64" FIXED
+	REQUIRES=93
+	EXTERNAL="BWEmojiOne-3.0.wpi"
+	SELECT
+	>eyeCU - Emoji: BW EmojiOne icon set (64 x 64)
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<GROUP TITLE="Facebook">
+
+<PCK 	INDEX=270
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (16)\4\0"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\16" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (16 x 16)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=271
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (32)\4\0"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\32" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (32 x 32)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=272
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (40)\4\0"
+	TITLE="40 x 40"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\40" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (40 x 40)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=273
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (48)\4\0"
+	TITLE="48 x 48"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\48" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (48 x 48)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=274
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (64)\4\0"
+	TITLE="64 x 64"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\64" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (64 x 64)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=275
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook (72)\4\0"
+	TITLE="72 x 72"
+	TARGET="$(1)\resources\emoji\assets\Facebook\png\72" FIXED
+	REQUIRES=93
+	EXTERNAL="Facebook-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook icon set (72 x 72)
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<GROUP TITLE="Facebook Mobile">
+
+<PCK 	INDEX=280
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (16)\4\0"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\16" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (16 x 16)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=281
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (32)\4\0"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\32" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (32 x 32)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=282
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (40)\4\0"
+	TITLE="40 x 40"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\40" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (40 x 40)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=283
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (48)\4\0"
+	TITLE="48 x 48"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\48" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (48 x 48)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=284
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (64)\4\0"
+	TITLE="64 x 64"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\64" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (64 x 64)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=285
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Facebook Mobile (72)\4\0"
+	TITLE="72 x 72"
+	TARGET="$(1)\resources\emoji\assets\Facebook Mobile\png\72" FIXED
+	REQUIRES=93
+	EXTERNAL="FacebookMobile-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Facebook Mobile icon set (72 x 72)
+	(c) Road Works Software
+</PCK>
+
+</GROUP>
+
+<GROUP TITLE="Windows">
+
+<PCK 	INDEX=290
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (16)\4\0"
+	TITLE="16 x 16"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\16" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (16 x 16)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=291
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (32)\4\0"
+	TITLE="32 x 32"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\32" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (32 x 32)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=292
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (40)\4\0"
+	TITLE="40 x 40"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\40" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (40 x 40)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=293
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (48)\4\0"
+	TITLE="48 x 48"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\48" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (48 x 48)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=294
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (64)\4\0"
+	TITLE="64 x 64"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\64" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (64 x 64)
+	(c) Road Works Software
+</PCK>
+
+<PCK 	INDEX=295
+	PACKAGEID="Road Works Software\eyeCU\Emoji: Windows (72)\4\0"
+	TITLE="72 x 72"
+	TARGET="$(1)\resources\emoji\assets\Windows\png\72" FIXED
+	REQUIRES=93
+	EXTERNAL="Windows-4.0.wpi"
+	SELECT
+	>eyeCU - Emoji: Windows icon set (72 x 72)
 	(c) Road Works Software
 </PCK>
 
@@ -1337,7 +1596,7 @@
 	TITLE="Map"
 	TARGET="$(1)" FIXED
 	SELECT
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\4"
+	REQUIRES="Purple Soft\QtPurple\Geo\2\0\0"
 	>Allows user to see interactive Map from different sources
 </PCK>
 
@@ -1368,15 +1627,6 @@
 	SELECT
 	REQUIRES=103
 	>Allows Map plugin use Twitter as map source
-</PCK>
-
-<PCK 	INDEX=107
-	PACKAGEID="Road Works Software\eyeCU\Map source: Yahoo\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Yahoo! map source"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=103
-	>Allows Map plugin use Yahoo! as map source
 </PCK>
 
 <PCK 	INDEX=108
@@ -1424,15 +1674,6 @@
 	>Allows Map plugin use Esri as map source
 </PCK>
 
-<PCK 	INDEX=113
-	PACKAGEID="Road Works Software\eyeCU\Map source: Navteq\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Navteq map source"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=103
-	>Allows Map plugin use Navteq as map source
-</PCK>
-
 <PCK 	INDEX=114
 	PACKAGEID="Road Works Software\eyeCU\Map source: Yandex\%MAJOR%\%MINOR%\%PATCH%\%REV%"
 	TITLE="Yandex map source"
@@ -1467,15 +1708,6 @@
 	SELECT
 	REQUIRES=103
 	>Allows Map plugin use Kosmosnimki as map source
-</PCK>
-
-<PCK 	INDEX=119
-	PACKAGEID="Road Works Software\eyeCU\Map source: Rosreestr\%MAJOR%\%MINOR%\%PATCH%\%REV%"
-	TITLE="Rosreestr map source"
-	TARGET="$(1)" FIXED
-	SELECT
-	REQUIRES=103
-	>Allows Map plugin use Rosreestr as map source
 </PCK>
 
 <PCK 	INDEX=120
@@ -1694,7 +1926,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=30
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\4"
+	REQUIRES="Purple Soft\QtPurple\Geo\2\0\0"
 	>eyeCU - Points of interest plugin
 	(c) Road Works Software
 </PCK>
@@ -1784,7 +2016,7 @@
 	TARGET="$(1)" FIXED
 	SELECT
 	REQUIRES=160
-	REQUIRES="Purple Soft\QtPurple\Geo\1\1\4"
+	REQUIRES="Purple Soft\QtPurple\Geo\2\0\0"
 	>Implements XEP-0080: User Location
 </PCK>
 
@@ -2102,7 +2334,7 @@
 <PCK 	INDEX=400
 	PACKAGEID="Purple Soft\QtPurple\Util\1\0\22"
 	TITLE="QtUtil library"
-	EXTERNAL="qtpurple-1.1.18.wpi"
+	EXTERNAL="qtpurple-2.0.0.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -2111,9 +2343,9 @@
 </PCK>
 
 <PCK 	INDEX=410
-	PACKAGEID="Purple Soft\QtPurple\Geo\1\1\14"
+	PACKAGEID="Purple Soft\QtPurple\Geo\2\0\0"
 	TITLE="QtGeo library"
-	EXTERNAL="qtpurple-1.1.18.wpi"
+	EXTERNAL="qtpurple-2.0.0.wpi"
 	TARGET='=("QtDLL")'
 	FIXED
 	SELECT
@@ -2126,7 +2358,7 @@
 		PACKAGEID="Purple Soft\QtPurple\EN\1\0\0"
 		REQUIRES=410
 		TITLE="English"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2137,7 +2369,7 @@
 		PACKAGEID="Purple Soft\QtPurple\RU\1\0\0"
 		REQUIRES=410
 		TITLE="Russian"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2148,7 +2380,7 @@
 		PACKAGEID="Purple Soft\QtPurple\UK\1\0\0"
 		REQUIRES=410
 		TITLE="Ukrainian"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2159,7 +2391,7 @@
 		PACKAGEID="Purple Soft\QtPurple\PL\1\0\0"
 		REQUIRES=410
 		TITLE="Polish"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2170,7 +2402,7 @@
 		PACKAGEID="Purple Soft\QtPurple\DE\1\0\0"
 		REQUIRES=410
 		TITLE="German"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2181,7 +2413,7 @@
 		PACKAGEID="Purple Soft\QtPurple\ES\1\0\0"
 		REQUIRES=410
 		TITLE="Spanish"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2192,7 +2424,7 @@
 		PACKAGEID="Purple Soft\QtPurple\NL\1\0\0"
 		REQUIRES=410
 		TITLE="Dutch"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
@@ -2203,7 +2435,7 @@
 		PACKAGEID="Purple Soft\QtPurple\JA\1\0\0"
 		REQUIRES=410
 		TITLE="Japanese"
-		EXTERNAL="qtpurple-1.1.18.wpi"
+		EXTERNAL="qtpurple-2.0.0.wpi"
 		TARGET='=("QtDIR")\translations'
 		FIXED
 		SELECT
