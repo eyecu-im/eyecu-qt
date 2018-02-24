@@ -97,10 +97,9 @@ bool DefaultConnection::connectToHost()
 		{
 			connectToNextHost();
 		}
-		else if (FDnsLookup.init(QPDnsLookup::Unicast, QHostAddress::Any))
+		else if (FDnsLookup.error()==QPDnsLookup::NoError)
 		{
 			LOG_DEBUG(QString("Starting DNS SRV lookup, domain=%1").arg(domain));
-			FDnsLookup.setNameServers(QPDnsLookup::systemInfo().nameServers);
 			FDnsLookup.setName(QString("_xmpp-client._tcp.%1.").arg(domain));
 			FSrvQueryId = FDnsLookup.lookup();
 #else
