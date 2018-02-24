@@ -4,7 +4,7 @@
 #include <interfaces/idefaultconnection.h>
 #include <utils/xmpperror.h>
 #if QT_VERSION < 0x050000
-#include <thirdparty/jdns/qjdns.h>
+#include <QPDnsLookup>
 #else
 #include <QDnsLookup>
 #include <definitions/internalerrors.h>
@@ -70,8 +70,8 @@ protected:
 	void connectToNextHost();
 protected slots:
 #if QT_VERSION < 0x050000
-	void onDnsResultsReady(int AId, const QJDns::Response &AResults);
-	void onDnsError(int AId, QJDns::Error AError);
+	void onDnsResultsReady(int AId, const QPDnsLookup::Response &AResults);
+	void onDnsError(int AId, QPDnsLookup::Error AError);
 	void onDnsShutdownFinished();
 #else
 	void onDnsLookupFinished();
@@ -84,16 +84,13 @@ protected slots:
 	void onSocketError(QAbstractSocket::SocketError AError);
 	void onSocketDisconnected();
 
-
-
-
 private:
 	IConnectionEngine *FEngine;
 private:
 #if QT_VERSION < 0x050000
-	QJDns FDns;
+	QPDnsLookup FDnsLookup;
 	int FSrvQueryId;
-	QList<QJDns::Record> FRecords;
+	QList<QPDnsLookup::Record> FRecords;
 #else
 	QDnsLookup FDnsLookup;
 	QList<SrvRecord> FRecords;
