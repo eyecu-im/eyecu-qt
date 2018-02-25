@@ -1,7 +1,7 @@
 @echo on
 set packagename=eyecu2
 set devpackagename=%packagename%-dev
-set version=1.3.0.20170209
+set version=1.3.0.20170524
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 
@@ -22,8 +22,8 @@ wic -a %packagefilename%.wpi 60 -cc:\eyecu\resources\statusicons\aim * 61 -cc:\e
 wic -a %packagefilename%.wpi 85 -cc:\eyecu plugins\xhtmlim.dll resources\xhtml\shared\* 
 wic -a %packagefilename%.wpi 90 -cc:\eyecu plugins\emoticon.dll 91 -cc:\eyecu\resources\emoticons\default * 92 -cc:\eyecu\resources\emoticons\blobs_purple *
 wic -a %packagefilename%.wpi 93 -cc:\eyecu plugins\emoji.dll resources\emoji\emoji.json resources\emoji\category_icons\* 94 -c"c:\eyecu\resources\emoji\assets\Emoji One\png\16" * 95 -c"c:\eyecu\resources\emoji\assets\Emoji One\png\32" * 97 -c"c:\eyecu\resources\emoji\assets\Emoji One\png\48" *
-wic -a %packagefilename%.wpi 103 -cc:\eyecu plugins\map.dll resources\mapicons\shared\* 104 -cc:\eyecu plugins\msosm.dll 105 -cc:\eyecu plugins\mswiki.dll 106 -cc:\eyecu plugins\msgoogle.dll 107 -cc:\eyecu plugins\msyahoo.dll 108 -cc:\eyecu plugins\msbing.dll 109 -cc:\eyecu plugins\msovi.dll 110 -cc:\eyecu plugins\msrumap.dll 111 -cc:\eyecu plugins\msvitel.dll 112 -cc:\eyecu plugins\msesri.dll
-wic -a %packagefilename%.wpi 113 -cc:\eyecu plugins\msnavteq.dll 114 -cc:\eyecu plugins\msyandex.dll 115 -cc:\eyecu plugins\msnavitl.dll 116 -cc:\eyecu plugins\ms2gis.dll 117 -cc:\eyecu plugins\mskosmos.dll 119 -cc:\eyecu plugins\msrosrsr.dll 120 -cc:\eyecu plugins\msmegafn.dll 121 -cc:\eyecu plugins\msprogrd.dll
+wic -a %packagefilename%.wpi 103 -cc:\eyecu plugins\map.dll resources\mapicons\shared\* 104 -cc:\eyecu plugins\msosm.dll 105 -cc:\eyecu plugins\mswiki.dll 106 -cc:\eyecu plugins\msgoogle.dll 108 -cc:\eyecu plugins\msbing.dll 109 -cc:\eyecu plugins\msovi.dll 110 -cc:\eyecu plugins\msrumap.dll 111 -cc:\eyecu plugins\msvitel.dll 112 -cc:\eyecu plugins\msesri.dll
+wic -a %packagefilename%.wpi 114 -cc:\eyecu plugins\msyandex.dll 115 -cc:\eyecu plugins\msnavitl.dll 116 -cc:\eyecu plugins\ms2gis.dll 117 -cc:\eyecu plugins\mskosmos.dll 120 -cc:\eyecu plugins\msmegafn.dll 121 -cc:\eyecu plugins\msprogrd.dll
 wic -a %packagefilename%.wpi 125 -cc:\eyecu plugins\mpcntcts.dll 126 -cc:\eyecu plugins\mapmessg.dll 130 -cc:\eyecu plugins\mpsearch.dll 131 -cc:\eyecu plugins\msposm.dll 132 -cc:\eyecu plugins\mspgoogl.dll 133 -cc:\eyecu plugins\msp2gis.dll 134 -cc:\eyecu plugins\mspyandx.dll 135 -cc:\eyecu plugins\mspnavtl.dll resources\navitel\shared\* 136 -cc:\eyecu plugins\msphere.dll 137 -cc:\eyecu plugins\mpmagnif.dll 138 -cc:\eyecu plugins\maplcsel.dll
 wic -a %packagefilename%.wpi 140 -cc:\eyecu plugins\datafrms.dll 141 -cc:\eyecu plugins\commands.dll 142 -cc:\eyecu plugins\captchaf.dll 143 -cc:\eyecu plugins\remtctrl.dll
 wic -a %packagefilename%.wpi 145 -cc:\eyecu plugins\plceview.dll 146 -cc:\eyecu plugins\pvpgoogl.dll 147 -cc:\eyecu plugins\strtview.dll 148 -cc:\eyecu plugins\svpgoogl.dll
@@ -35,11 +35,13 @@ wic -a %packagefilename%.wpi 180 -cc:\eyecu resources\wizards\shared\wizard.def.
 wic -a %packagefilename%.wpi 181 -cc:\eyecu plugins\waccount.dll resources\wizards\shared\*.html resources\wizards\shared\servers.xml resources\wizards\shared\software.def.xml resources\wizards\shared\networks.def.xml resources\wizards\shared\ejabberd.png resources\wizards\shared\jabberd.png resources\wizards\shared\openfire.png resources\wizards\shared\prosody.png resources\wizards\shared\tigase.png resources\wizards\shared\gtalk.png resources\wizards\shared\livejournal.png resources\wizards\shared\odnoklassniki.png resources\wizards\shared\qip.png resources\wizards\shared\xmpp.png resources\wizards\shared\yaonline.png resources\wizards\shared\account.png resources\wizards\shared\accountend.png
 wic -a %packagefilename%.wpi 182 -cc:\eyecu plugins\wtrnsprt.dll resources\wizards\shared\transports.xml resources\wizards\shared\transport.png resources\wizards\shared\transportend.png resources\wizards\shared\yes.png resources\wizards\shared\no.png
 wic -a %packagefilename%.wpi 183 -cc:\eyecu plugins\registrn.dll 184 -cc:\eyecu plugins\sessnego.dll 185 -cc:\eyecu plugins\filetran.dll plugins\fstrmmgr.dll plugins\dstrmmgr.dll 186 -cc:\eyecu plugins\sockstrm.dll 187 -cc:\eyecu plugins\ibbstrms.dll 188 -cc:\eyecu plugins\dstrmpbl.dll
+
 copy README.OS2 c:\eyecu
 wic -a %packagefilename%.wpi 189 -cc:\eyecu AUTHORS CHANGELOG COPYING README TRANSLATORS README.OS2 
 del c:\eyecu\README.OS2
 wic -a %packagefilename%.wpi 190 -cc:\eyecu\translations en\*.qm 191 -cc:\eyecu\translations ru\*.qm 192 -cc:\eyecu\translations uk\*.qm 193 -cc:\eyecu\translations pl\*.qm 194 -cc:\eyecu\translations de\*.qm 195 -cc:\eyecu\translations es\*.qm 196 -cc:\eyecu\translations nl\*.qm 197 -cc:\eyecu\translations ja\*.qm 198 -r -cc:\eyecu *.sym
 wic -a %packagefilename%.wpi -s %packagename%.wis 
+exit
 
 echo Creating Dev package
 call substver.cmd %devpackagename% %version%
