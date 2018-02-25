@@ -5,15 +5,15 @@
 #include <utils/xmpperror.h>
 #if QT_VERSION < 0x050000
 #include <QPDnsLookup>
+#define QDnsLookup QPDnsLookup
+#define QDnsServiceRecord QPDnsServiceRecord
 #else
 #include <QDnsLookup>
-#include <definitions/internalerrors.h>
-
+#endif
 struct SrvRecord {
 	QString target;
 	quint16 port;
 };
-#endif
 
 class DefaultConnection :
 	public QObject,
@@ -69,13 +69,7 @@ signals:
 protected:
 	void connectToNextHost();
 protected slots:
-#if QT_VERSION < 0x050000
-	void onDnsResultsReady(int AId, const QPDnsLookup::Response &AResults);
-	void onDnsError(int AId, QPDnsLookup::Error AError);
-	void onDnsShutdownFinished();
-#else
 	void onDnsLookupFinished();
-#endif
 	void onSocketProxyAuthenticationRequired(const QNetworkProxy &AProxy, QAuthenticator *AAuth);
 	void onSocketConnected();
 	void onSocketEncrypted();
@@ -87,14 +81,8 @@ protected slots:
 private:
 	IConnectionEngine *FEngine;
 private:
-#if QT_VERSION < 0x050000
-	QPDnsLookup FDnsLookup;
-	int FSrvQueryId;
-	QList<QPDnsLookup::Record> FRecords;
-#else
 	QDnsLookup FDnsLookup;
 	QList<SrvRecord> FRecords;
-#endif
 private:
 	bool FSSLError;
 	bool FDisconnecting;
