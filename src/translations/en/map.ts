@@ -214,118 +214,118 @@
  <context>
   <name>MapForm</name>
   <message>
-   <location line="1844" filename="../../plugins/map/mapform.ui"/>
+   <location line="2023" filename="../../plugins/map/mapform.ui"/>
    <source>Joystick</source>
    <translation>Joystick</translation>
   </message>
   <message>
-   <location line="2015" filename="../../plugins/map/mapform.ui"/>
+   <location line="2194" filename="../../plugins/map/mapform.ui"/>
    <source>Right</source>
    <translation>Right</translation>
   </message>
   <message>
-   <location line="1889" filename="../../plugins/map/mapform.ui"/>
+   <location line="2068" filename="../../plugins/map/mapform.ui"/>
    <source>Up</source>
    <translation>Up</translation>
   </message>
   <message>
-   <location line="1929" filename="../../plugins/map/mapform.ui"/>
+   <location line="2108" filename="../../plugins/map/mapform.ui"/>
    <source>Left</source>
    <translation>Left</translation>
   </message>
   <message>
-   <location line="1969" filename="../../plugins/map/mapform.ui"/>
+   <location line="2148" filename="../../plugins/map/mapform.ui"/>
    <source>Refresh map</source>
    <translation>Refresh map</translation>
   </message>
   <message>
-   <location line="2067" filename="../../plugins/map/mapform.ui"/>
+   <location line="2246" filename="../../plugins/map/mapform.ui"/>
    <source>Down</source>
    <translation>Down</translation>
   </message>
   <message>
-   <location line="2194" filename="../../plugins/map/mapform.ui"/>
+   <location line="2373" filename="../../plugins/map/mapform.ui"/>
    <source>Map Type</source>
    <translation>Map Type</translation>
   </message>
   <message>
-   <location line="46" filename="../../plugins/map/mapform.ui"/>
-   <location line="80" filename="../../plugins/map/mapform.ui"/>
+   <location line="1712" filename="../../plugins/map/mapform.ui"/>
+   <location line="1746" filename="../../plugins/map/mapform.ui"/>
    <source>My Location</source>
    <translation>My Location</translation>
   </message>
   <message>
-   <location line="115" filename="../../plugins/map/mapform.ui"/>
-   <location line="522" filename="../../plugins/map/mapform.ui"/>
-   <location line="1329" filename="../../plugins/map/mapform.ui"/>
+   <location line="369" filename="../../plugins/map/mapform.ui"/>
+   <location line="1175" filename="../../plugins/map/mapform.ui"/>
+   <location line="1781" filename="../../plugins/map/mapform.ui"/>
    <source>Lat:</source>
    <translation>Lat:</translation>
   </message>
   <message>
-   <location line="184" filename="../../plugins/map/mapform.ui"/>
-   <location line="1062" filename="../../plugins/map/mapform.ui"/>
-   <location line="1638" filename="../../plugins/map/mapform.ui"/>
+   <location line="909" filename="../../plugins/map/mapform.ui"/>
+   <location line="1484" filename="../../plugins/map/mapform.ui"/>
+   <location line="1850" filename="../../plugins/map/mapform.ui"/>
    <source>Lng:</source>
    <translation>Lng:</translation>
   </message>
   <message>
-   <location line="211" filename="../../plugins/map/mapform.ui"/>
-   <location line="336" filename="../../plugins/map/mapform.ui"/>
+   <location line="58" filename="../../plugins/map/mapform.ui"/>
+   <location line="183" filename="../../plugins/map/mapform.ui"/>
    <source>Map Center</source>
    <translation>Map Center</translation>
   </message>
   <message>
-   <location line="1099" filename="../../plugins/map/mapform.ui"/>
+   <location line="945" filename="../../plugins/map/mapform.ui"/>
    <source>Mouse selection</source>
    <translation>Mouse selection</translation>
   </message>
   <message>
-   <location line="1170" filename="../../plugins/map/mapform.ui"/>
+   <location line="1016" filename="../../plugins/map/mapform.ui"/>
    <source>Selection</source>
    <translation>Selection</translation>
   </message>
   <message>
-   <location line="2465" filename="../../plugins/map/mapform.ui"/>
+   <location line="1921" filename="../../plugins/map/mapform.ui"/>
    <source>Scale</source>
    <translation>Scale</translation>
   </message>
   <message>
-   <location line="2511" filename="../../plugins/map/mapform.ui"/>
+   <location line="1967" filename="../../plugins/map/mapform.ui"/>
    <source>Indicator</source>
    <translation>Indicator</translation>
   </message>
   <message>
-   <location line="2171" filename="../../plugins/map/mapform.ui"/>
+   <location line="2350" filename="../../plugins/map/mapform.ui"/>
    <source>Map scale</source>
    <translation>Map scale</translation>
   </message>
   <message>
-   <location line="191" filename="../../plugins/map/mapform.cpp"/>
+   <location line="188" filename="../../plugins/map/mapform.cpp"/>
    <source>Map (%1: %2)</source>
    <translation>Map (%1: %2)</translation>
   </message>
   <message>
-   <location line="193" filename="../../plugins/map/mapform.cpp"/>
+   <location line="190" filename="../../plugins/map/mapform.cpp"/>
    <source>Map</source>
    <translation>Map</translation>
   </message>
   <message>
-   <location line="662" filename="../../plugins/map/mapform.cpp"/>
+   <location line="657" filename="../../plugins/map/mapform.cpp"/>
    <source>%1S</source>
    <translation>%1S</translation>
   </message>
   <message>
-   <location line="662" filename="../../plugins/map/mapform.cpp"/>
+   <location line="657" filename="../../plugins/map/mapform.cpp"/>
    <source>%1N</source>
    <translation>%1N</translation>
   </message>
   <message>
-   <location line="667" filename="../../plugins/map/mapform.cpp"/>
+   <location line="662" filename="../../plugins/map/mapform.cpp"/>
    <source>%1W</source>
    <translation>%1W</translation>
   </message>
   <message>
-   <location line="667" filename="../../plugins/map/mapform.cpp"/>
+   <location line="662" filename="../../plugins/map/mapform.cpp"/>
    <source>%1E</source>
    <translation>%1E</translation>
   </message>
@@ -490,82 +490,82 @@
    <translation>Visible</translation>
   </message>
   <message>
-   <location line="203" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="210" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select text color</source>
    <translation>Select text color</translation>
   </message>
   <message>
-   <location line="215" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="222" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control foreground color</source>
    <translation>Select control foreground color</translation>
   </message>
   <message>
-   <location line="226" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="233" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control base color</source>
    <translation>Select control base color</translation>
   </message>
   <message>
-   <location line="237" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="244" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control button color</source>
    <translation>Select control button color</translation>
   </message>
   <message>
-   <location line="248" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="255" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control light color</source>
    <translation>Select control light color</translation>
   </message>
   <message>
-   <location line="259" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="266" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control midlight color</source>
    <translation>Select control midlight color</translation>
   </message>
   <message>
-   <location line="270" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="277" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control dark color</source>
    <translation>Select control dark color</translation>
   </message>
   <message>
-   <location line="281" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="288" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control shadow color</source>
    <translation>Select control shadow color</translation>
   </message>
   <message>
-   <location line="292" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="299" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select control background color</source>
    <translation>Select control background color</translation>
   </message>
   <message>
-   <location line="306" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="313" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select center marker color</source>
    <translation>Select center marker color</translation>
   </message>
   <message>
-   <location line="320" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="327" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select shadow color</source>
    <translation>Select shadow color</translation>
   </message>
   <message>
-   <location line="335" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="342" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select box foreground color</source>
    <translation>Select box foreground color</translation>
   </message>
   <message>
-   <location line="346" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="353" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select box light color</source>
    <translation>Select box light color</translation>
   </message>
   <message>
-   <location line="357" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="364" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select box midlight color</source>
    <translation>Select box midlight color</translation>
   </message>
   <message>
-   <location line="368" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="375" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select box dark color</source>
    <translation>Select box dark color</translation>
   </message>
   <message>
-   <location line="379" filename="../../plugins/map/mapoptions.cpp"/>
+   <location line="386" filename="../../plugins/map/mapoptions.cpp"/>
    <source>Select box background color</source>
    <translation>Select box background color</translation>
   </message>

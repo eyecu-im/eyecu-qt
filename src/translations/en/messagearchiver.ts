@@ -588,27 +588,27 @@
  <context>
   <name>ChatWindowMenu</name>
   <message>
-   <location line="99" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
+   <location line="101" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
    <source>Enable Message Archiving</source>
    <translation>Enable Message Archiving</translation>
   </message>
   <message>
-   <location line="105" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
+   <location line="108" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
    <source>Disable Message Archiving</source>
    <translation>Disable Message Archiving</translation>
   </message>
   <message>
-   <location line="110" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
+   <location line="114" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
    <source>Start Off-The-Record Session</source>
    <translation>Start Off-The-Record Session</translation>
   </message>
   <message>
-   <location line="115" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
+   <location line="119" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
    <source>Terminate Off-The-Record Session</source>
    <translation>Terminate Off-The-Record Session</translation>
   </message>
   <message>
-   <location line="277" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
+   <location line="281" filename="../../plugins/messagearchiver/chatwindowmenu.cpp"/>
    <source>Failed to change archive preferences: %1</source>
    <translation>Failed to change archive preferences: %1</translation>
   </message>

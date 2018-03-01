@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.0">
  <context>
   <name>EditProfilesDialog</name>
   <message>

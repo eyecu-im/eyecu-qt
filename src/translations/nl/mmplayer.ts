@@ -156,7 +156,7 @@
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="164"/>
-   <location filename="../../plugins/mmplayer/playerwindow.cpp" line="618"/>
+   <location filename="../../plugins/mmplayer/playerwindow.cpp" line="619"/>
    <source>Mute</source>
    <translation>Dempen</translation>
   </message>
@@ -262,7 +262,7 @@
    <translation>Alle bestanden</translation>
   </message>
   <message>
-   <location filename="../../plugins/mmplayer/playerwindow.cpp" line="605"/>
+   <location filename="../../plugins/mmplayer/playerwindow.cpp" line="606"/>
    <source>Unmute</source>
    <translation>Harder zetten</translation>
   </message>

@@ -212,118 +212,118 @@
  <context>
   <name>MapForm</name>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1844"/>
+   <location filename="../../plugins/map/mapform.ui" line="2023"/>
    <source>Joystick</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2015"/>
+   <location filename="../../plugins/map/mapform.ui" line="2194"/>
    <source>Right</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1889"/>
+   <location filename="../../plugins/map/mapform.ui" line="2068"/>
    <source>Up</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1929"/>
+   <location filename="../../plugins/map/mapform.ui" line="2108"/>
    <source>Left</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1969"/>
+   <location filename="../../plugins/map/mapform.ui" line="2148"/>
    <source>Refresh map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2067"/>
+   <location filename="../../plugins/map/mapform.ui" line="2246"/>
    <source>Down</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2194"/>
+   <location filename="../../plugins/map/mapform.ui" line="2373"/>
    <source>Map Type</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="46"/>
-   <location filename="../../plugins/map/mapform.ui" line="80"/>
+   <location filename="../../plugins/map/mapform.ui" line="1712"/>
+   <location filename="../../plugins/map/mapform.ui" line="1746"/>
    <source>My Location</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="115"/>
-   <location filename="../../plugins/map/mapform.ui" line="522"/>
-   <location filename="../../plugins/map/mapform.ui" line="1329"/>
+   <location filename="../../plugins/map/mapform.ui" line="369"/>
+   <location filename="../../plugins/map/mapform.ui" line="1175"/>
+   <location filename="../../plugins/map/mapform.ui" line="1781"/>
    <source>Lat:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="184"/>
-   <location filename="../../plugins/map/mapform.ui" line="1062"/>
-   <location filename="../../plugins/map/mapform.ui" line="1638"/>
+   <location filename="../../plugins/map/mapform.ui" line="909"/>
+   <location filename="../../plugins/map/mapform.ui" line="1484"/>
+   <location filename="../../plugins/map/mapform.ui" line="1850"/>
    <source>Lng:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="211"/>
-   <location filename="../../plugins/map/mapform.ui" line="336"/>
+   <location filename="../../plugins/map/mapform.ui" line="58"/>
+   <location filename="../../plugins/map/mapform.ui" line="183"/>
    <source>Map Center</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1099"/>
+   <location filename="../../plugins/map/mapform.ui" line="945"/>
    <source>Mouse selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="1170"/>
+   <location filename="../../plugins/map/mapform.ui" line="1016"/>
    <source>Selection</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2465"/>
+   <location filename="../../plugins/map/mapform.ui" line="1921"/>
    <source>Scale</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2511"/>
+   <location filename="../../plugins/map/mapform.ui" line="1967"/>
    <source>Indicator</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.ui" line="2171"/>
+   <location filename="../../plugins/map/mapform.ui" line="2350"/>
    <source>Map scale</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="191"/>
+   <location filename="../../plugins/map/mapform.cpp" line="188"/>
    <source>Map (%1: %2)</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="193"/>
+   <location filename="../../plugins/map/mapform.cpp" line="190"/>
    <source>Map</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="662"/>
+   <location filename="../../plugins/map/mapform.cpp" line="657"/>
    <source>%1S</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="662"/>
+   <location filename="../../plugins/map/mapform.cpp" line="657"/>
    <source>%1N</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="667"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1W</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapform.cpp" line="667"/>
+   <location filename="../../plugins/map/mapform.cpp" line="662"/>
    <source>%1E</source>
    <translation type="unfinished"/>
   </message>
@@ -488,82 +488,82 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="203"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="210"/>
    <source>Select text color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="215"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="222"/>
    <source>Select control foreground color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="226"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="233"/>
    <source>Select control base color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="237"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="244"/>
    <source>Select control button color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="248"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="255"/>
    <source>Select control light color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="259"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="266"/>
    <source>Select control midlight color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="270"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="277"/>
    <source>Select control dark color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="281"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="288"/>
    <source>Select control shadow color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="292"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="299"/>
    <source>Select control background color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="306"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="313"/>
    <source>Select center marker color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="320"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="327"/>
    <source>Select shadow color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="335"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="342"/>
    <source>Select box foreground color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="346"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="353"/>
    <source>Select box light color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="357"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="364"/>
    <source>Select box midlight color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="368"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="375"/>
    <source>Select box dark color</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/map/mapoptions.cpp" line="379"/>
+   <location filename="../../plugins/map/mapoptions.cpp" line="386"/>
    <source>Select box background color</source>
    <translation type="unfinished"/>
   </message>

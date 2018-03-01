@@ -2,12 +2,12 @@
  <context>
   <name>AboutBox</name>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="17"/>
+   <location filename="../../loader/aboutbox.cpp" line="18"/>
    <source>Version: %1.%2 %3</source>
    <translation>Versión: %1.%2 %3</translation>
   </message>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="18"/>
+   <location filename="../../loader/aboutbox.cpp" line="19"/>
    <source>Revision: %1</source>
    <translation>Revisión: %1</translation>
   </message>
@@ -28,52 +28,87 @@
  <context>
   <name>PluginManager</name>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="441"/>
+   <location filename="../../loader/pluginmanager.cpp" line="366"/>
+   <source>Saving settings</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="409"/>
+   <source>Loading plugin: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="450"/>
    <source>Duplicate plugin uuid</source>
    <translation>Duplicar uuid del complemento</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="448"/>
+   <location filename="../../loader/pluginmanager.cpp" line="457"/>
    <source>Wrong plugin interface</source>
    <translation>Interfaz de complemento inválida</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="468"/>
+   <location filename="../../loader/pluginmanager.cpp" line="477"/>
    <source>Dependencies not found</source>
    <translation>No se encontraron las dependencias</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="475"/>
+   <location filename="../../loader/pluginmanager.cpp" line="484"/>
    <source>Conflict with plugin %1</source>
    <translation>Conflicto con el componente %1</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="512"/>
+   <location filename="../../loader/pluginmanager.cpp" line="514"/>
+   <source>Initializing plugin connections: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="526"/>
    <source>Initialization failed</source>
    <translation>Ha ocurrido un error al iniciar</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="908"/>
+   <location filename="../../loader/pluginmanager.cpp" line="536"/>
+   <source>Initializing plugin objects: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="545"/>
+   <source>Initializing plugin settings: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="561"/>
+   <source>Starting plugin: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="656"/>
+   <source>Application started</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="946"/>
    <source>About Qt</source>
    <translation>Acerca de Qt</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="914"/>
+   <location filename="../../loader/pluginmanager.cpp" line="952"/>
    <source>About the program</source>
    <translation>Acerca del programa</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="920"/>
+   <location filename="../../loader/pluginmanager.cpp" line="958"/>
    <source>Setup plugins</source>
    <translation>Configurar complementos</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="929"/>
+   <location filename="../../loader/pluginmanager.cpp" line="967"/>
    <source>Global shortcuts</source>
    <translation>Atajos globales</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="930"/>
+   <location filename="../../loader/pluginmanager.cpp" line="968"/>
    <source>Application shortcuts</source>
    <translation>Atajos de la aplicación</translation>
   </message>

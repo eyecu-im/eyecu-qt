@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
   <context>
     <name>AddLink</name>
     <message>
@@ -469,7 +469,7 @@
     <message>
       <source>Ctrl+S</source>
       <comment>Strikeout</comment>
-      <translation>Ctrl+S</translation>
+      <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
       <source>Center</source>
@@ -587,7 +587,7 @@
     <message>
       <source>Alt+Return</source>
       <comment>Insert new line</comment>
-      <translation>Alt+Return</translation>
+      <translation type="obsolete">Alt+Return</translation>
     </message>
     <message>
       <source>Alt+C</source>
@@ -900,6 +900,16 @@
     <message>
       <source>Ctrl+0</source>
       <comment>Preformatted text</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Shift+Return</source>
+      <comment>Insert new line</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+-</source>
+      <comment>Strikeout</comment>
       <translation type="unfinished"/>
     </message>
   </context>

@@ -31,6 +31,7 @@
 #define ORGANIZATION_NAME           "RoadWorksSoftware"
 #define APPLICATION_NAME            "eyeCU"
 #define QUOTED(X)					#X
+#define SPLASH(message) emit splashMessage(message);
 // *** >>> eyeCU >>> ***
 
 #define FILE_PLUGINS_SETTINGS       "plugins.xml"
@@ -79,7 +80,8 @@
 #  define LIB_PREFIX_SIZE           3
 #endif
 
-PluginManager::PluginManager(QApplication *AParent) : QObject(AParent)
+PluginManager::PluginManager(QApplication *AParent):
+	QObject(AParent)
 {
 	FQuitReady = false;
 	FQuitStarted = false;
@@ -360,6 +362,8 @@ void PluginManager::saveSettings()
 {
 	if (!FPluginsSetup.documentElement().isNull())
 	{
+		SPLASH(tr("Saving settings")); // *** <<< eyeCU >>> ***
+
 		QDir homeDir(FDataPath);
 		QFile file(homeDir.absoluteFilePath(FILE_PLUGINS_SETTINGS));
 		if (file.open(QFile::WriteOnly|QFile::Truncate))
@@ -401,6 +405,8 @@ bool PluginManager::loadPlugins()
 			}
 			else
 			{
+				SPLASH(tr("Loading plugin: %1").arg(file)); // *** <<< eyeCU >>> ***
+
 				QPluginLoader *loader = new QPluginLoader(pluginsDir.absoluteFilePath(file),this);
 
 				QTranslator *translator = new QTranslator(loader);
@@ -501,6 +507,12 @@ bool PluginManager::initPlugins()
 	{
 		int initOrder = PIO_DEFAULT;
 		IPlugin *plugin = it.value().plugin;
+
+		IPluginInfo pluginInfo;
+		plugin->pluginInfo(&pluginInfo);
+// *** <<< eyeCU <<< ***
+		SPLASH(tr("Initializing plugin connections: %1").arg(pluginInfo.name));
+// *** >>> eyeCU >>> ***
 		if (plugin->initConnections(this,initOrder))
 		{
 			pluginOrder.insertMulti(initOrder,plugin);
@@ -518,10 +530,24 @@ bool PluginManager::initPlugins()
 	if (initOk)
 	{
 		foreach(IPlugin *plugin, pluginOrder)
+		{
+// *** <<< eyeCU <<< ***
+			IPluginInfo pluginInfo;
+			plugin->pluginInfo(&pluginInfo);
+			SPLASH(tr("Initializing plugin objects: %1").arg(pluginInfo.name));
+// *** >>> eyeCU >>> ***
 			plugin->initObjects();
+		}
 
 		foreach(IPlugin *plugin, pluginOrder)
+		{
+// *** <<< eyeCU <<< ***
+			IPluginInfo pluginInfo;
+			plugin->pluginInfo(&pluginInfo);
+			SPLASH(tr("Initializing plugin settings: %1").arg(pluginInfo.name));
+// *** >>> eyeCU >>> ***
 			plugin->initSettings();
+		}
 	}
 
 	return initOk;
@@ -534,6 +560,9 @@ bool PluginManager::startPlugins()
 	bool allStarted = true;
 	foreach(const PluginItem &pluginItem, FPluginItems)
 	{
+// *** <<< eyeCU <<< ***
+		SPLASH(tr("Starting plugin: %1").arg(pluginItem.info->name));
+// *** >>> eyeCU >>> ***
 		bool started = pluginItem.plugin->startPlugin();
 		allStarted = allStarted && started;
 	}
@@ -607,6 +636,8 @@ void PluginManager::finishQuit()
 			FShutdownKind = SK_WORK;
 			FShutdownDelayCount = 0;
 
+			SPLASH("Loading: Settings"); // *** <<< eyeCU >>> ***
+
 			loadSettings();
 			if (!loadPlugins())
 			{
@@ -625,6 +656,14 @@ void PluginManager::finishQuit()
 				FBlockedPlugins.clear();
 				REPORT_TIMING(STMP_APPLICATION_START,Logger::finishTiming(STMP_APPLICATION_START));
 				LOG_INFO("Application started");
+
+				SPLASH(tr("Application started")); // *** <<< eyeCU >>> ***
+				IPlugin *plugin = pluginInterface("IMainWindowPlugin").value(0);
+				IMainWindowPlugin *mainWindowPlugin = plugin!=NULL ? qobject_cast<IMainWindowPlugin *>(plugin->instance()) : NULL;
+				if (mainWindowPlugin)
+					emit closeSplash(mainWindowPlugin->mainWindow()->instance());
+				else
+					emit closeSplash();
 			}
 		}
 		else if (FShutdownKind == SK_QUIT)
@@ -664,7 +703,8 @@ void PluginManager::closeTopLevelWidgets()
 		FAboutDialog->reject();
 
 	foreach(QWidget *widget, QApplication::topLevelWidgets())
-		widget->close();
+		if (widget->windowType()!=Qt::SplashScreen)
+			widget->close();
 }
 
 void PluginManager::removePluginItem(const QUuid &AUuid, const QString &AError)

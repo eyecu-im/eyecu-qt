@@ -121,7 +121,7 @@
    <translation>Nieuwe koppeling toevoegen</translation>
   </message>
   <message>
-   <location filename="../../plugins/oob/oob.cpp" line="266"/>
+   <location filename="../../plugins/oob/oob.cpp" line="282"/>
    <source>Link</source>
    <translation>Link</translation>
   </message>

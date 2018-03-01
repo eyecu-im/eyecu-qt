@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/poi/messagepoilist.cpp" line="84"/>
    <source>Edit</source>
-   <translation type="unfinished"/>
+   <translation>Редагувати</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/messagepoilist.cpp" line="87"/>
@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/poi/messagepoilist.cpp" line="105"/>
    <source>Edit point of interest</source>
-   <translation type="unfinished"/>
+   <translation>Редагувати пам&apos;ятки</translation>
   </message>
  </context>
  <context>
@@ -22,104 +22,104 @@
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="23"/>
    <source>Edit POI</source>
-   <translation type="unfinished"/>
+   <translation>Редагувати пам&apos;ятки</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="61"/>
    <source>More</source>
-   <translation type="unfinished"/>
+   <translation>Більше</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="135"/>
    <source>Address</source>
-   <translation type="unfinished"/>
+   <translation>Адреса</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="177"/>
    <source>Country</source>
-   <translation type="unfinished"/>
+   <translation>Країна</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="193"/>
    <source>Region</source>
-   <translation type="unfinished"/>
+   <translation>Регіон</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="209"/>
    <source>Country code</source>
-   <translation type="unfinished"/>
+   <translation>Код країни</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="225"/>
    <source>Locality</source>
-   <translation type="unfinished"/>
+   <translation>Положення</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="241"/>
    <source>Street</source>
-   <translation type="unfinished"/>
+   <translation>Вулиця</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="267"/>
    <source>Building</source>
-   <translation type="unfinished"/>
+   <translation>Будівля</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="293"/>
    <source>Room</source>
-   <translation type="unfinished"/>
+   <translation>Кімната</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="322"/>
    <source>Postal code</source>
-   <translation type="unfinished"/>
+   <translation>Поштовий код</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="348"/>
    <source>Area</source>
-   <translation type="unfinished"/>
+   <translation>Зона</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="364"/>
    <source>URI</source>
-   <translation type="unfinished"/>
+   <translation>URI</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="412"/>
    <source>Timestamp</source>
-   <translation type="unfinished"/>
+   <translation>Відмітка часу</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="432"/>
    <location filename="../../plugins/poi/newpoi.cpp" line="71"/>
    <location filename="../../plugins/poi/newpoi.cpp" line="72"/>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>Ні</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="457"/>
    <source>Mail</source>
-   <translation type="unfinished"/>
+   <translation>Пошта</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="462"/>
    <source>Phone</source>
-   <translation type="unfinished"/>
+   <translation>Телефон</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="467"/>
    <source>Native</source>
-   <translation type="unfinished"/>
+   <translation>Рідний</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="494"/>
    <source>Floor</source>
-   <translation type="unfinished"/>
+   <translation>Поверх</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="571"/>
    <source>No timestamp</source>
-   <translation type="unfinished"/>
+   <translation>Без відмітки часу</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="607"/>
@@ -129,1284 +129,1284 @@
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="659"/>
    <source>POI Data</source>
-   <translation type="unfinished"/>
+   <translation>Дані пам&apos;яток</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="683"/>
    <source>Location</source>
-   <translation type="unfinished"/>
+   <translation>Розташування</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="702"/>
    <source>Type</source>
-   <translation type="unfinished"/>
+   <translation>Тип</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="742"/>
    <source>Name</source>
-   <translation type="unfinished"/>
+   <translation>Назва</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="782"/>
    <source>Description</source>
-   <translation type="unfinished"/>
+   <translation>Опис</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="866"/>
    <source>Lat</source>
-   <translation type="unfinished"/>
+   <translation>Широта</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="908"/>
    <source>Lon</source>
-   <translation type="unfinished"/>
+   <translation>Довгота</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.ui" line="956"/>
    <source>Select a location</source>
-   <translation type="unfinished"/>
+   <translation>Виберіть розташування</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="5"/>
    <source>Abkhazia</source>
-   <translation type="unfinished"/>
+   <translation>Абхазія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="6"/>
    <source>Afghanistan</source>
-   <translation type="unfinished"/>
+   <translation>Афганістан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="7"/>
    <source>Aland Islands</source>
-   <translation type="unfinished"/>
+   <translation>Аландські острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="8"/>
    <source>Albania</source>
-   <translation type="unfinished"/>
+   <translation>Албанія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="9"/>
    <source>Algeria</source>
-   <translation type="unfinished"/>
+   <translation>Алжир</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="10"/>
    <source>American Samoa</source>
-   <translation type="unfinished"/>
+   <translation>Американське Самоа</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="11"/>
    <source>Andorra</source>
-   <translation type="unfinished"/>
+   <translation>Андора</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="12"/>
    <source>Angola</source>
-   <translation type="unfinished"/>
+   <translation>Ангола</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="13"/>
    <source>Anguilla</source>
-   <translation type="unfinished"/>
+   <translation>Ангілья</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="14"/>
    <source>Antigua and Barbuda</source>
-   <translation type="unfinished"/>
+   <translation>Антігуа і Барбуда</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="15"/>
    <source>Argentina</source>
-   <translation type="unfinished"/>
+   <translation>Аргентина</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="16"/>
    <source>Armenia</source>
-   <translation type="unfinished"/>
+   <translation>Арменія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="17"/>
    <source>Aruba</source>
-   <translation type="unfinished"/>
+   <translation>Аруба</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="18"/>
    <source>Australia</source>
-   <translation type="unfinished"/>
+   <translation>Австралія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="19"/>
    <source>Austria</source>
-   <translation type="unfinished"/>
+   <translation>Австрія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="20"/>
    <source>Azerbaijan</source>
-   <translation type="unfinished"/>
+   <translation>Азербайджан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="21"/>
    <source>Bahamas</source>
-   <translation type="unfinished"/>
+   <translation>Багами</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="22"/>
    <source>Bahrain</source>
-   <translation type="unfinished"/>
+   <translation>Бахрейн</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="23"/>
    <source>Bangladesh</source>
-   <translation type="unfinished"/>
+   <translation>Бангладеш</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="24"/>
    <source>Barbados</source>
-   <translation type="unfinished"/>
+   <translation>Барбадос</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="25"/>
    <source>Belarus</source>
-   <translation type="unfinished"/>
+   <translation>Білорусь</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="26"/>
    <source>Belgium</source>
-   <translation type="unfinished"/>
+   <translation>Бельгія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="27"/>
    <source>Belize</source>
-   <translation type="unfinished"/>
+   <translation>Беліз</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="28"/>
    <source>Benin</source>
-   <translation type="unfinished"/>
+   <translation>Бенін</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="29"/>
    <source>Bermuda</source>
-   <translation type="unfinished"/>
+   <translation>Бермуди</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="30"/>
    <source>Bhutan</source>
-   <translation type="unfinished"/>
+   <translation>Бутан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="31"/>
    <source>Bolivia</source>
-   <translation type="unfinished"/>
+   <translation>Болівія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="32"/>
    <source>Bosnia and Herzegovina</source>
-   <translation type="unfinished"/>
+   <translation>Боснія і Герцоговина</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="33"/>
    <source>Botswana</source>
-   <translation type="unfinished"/>
+   <translation>Ботсвана</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="34"/>
    <source>Bouvet Island</source>
-   <translation type="unfinished"/>
+   <translation>Буве-Айленд</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="35"/>
    <source>Brazil</source>
-   <translation type="unfinished"/>
+   <translation>Бразилія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="36"/>
    <source>British Virgin Islands</source>
-   <translation type="unfinished"/>
+   <translation>Британські Віргінські острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="37"/>
    <source>British Indian Ocean Territory</source>
-   <translation type="unfinished"/>
+   <translation>Британська територія в Індійському океані</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="38"/>
    <source>Brunei Darussalam</source>
-   <translation type="unfinished"/>
+   <translation>Бруней-Даруссалам</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="39"/>
    <source>Bulgaria</source>
-   <translation type="unfinished"/>
+   <translation>Болгарія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="40"/>
    <source>Burkina Faso</source>
-   <translation type="unfinished"/>
+   <translation>Буркіна Фасо</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="41"/>
    <source>Burundi</source>
-   <translation type="unfinished"/>
+   <translation>Бурунді</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="42"/>
    <source>Cambodia</source>
-   <translation type="unfinished"/>
+   <translation>Камбоджія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="43"/>
    <source>Cameroon</source>
-   <translation type="unfinished"/>
+   <translation>Камерун</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="44"/>
    <source>Canada</source>
-   <translation type="unfinished"/>
+   <translation>Канада</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="45"/>
    <source>Cape Verde</source>
-   <translation type="unfinished"/>
+   <translation>Капе Верде</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="46"/>
    <source>Cayman Islands</source>
-   <translation type="unfinished"/>
+   <translation>Каманові острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="47"/>
    <source>Central African Republic</source>
-   <translation type="unfinished"/>
+   <translation>Центральна Африканська Республіка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="48"/>
    <source>Chad</source>
-   <translation type="unfinished"/>
+   <translation>Чад</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="49"/>
    <source>China</source>
-   <translation type="unfinished"/>
+   <translation>Китай</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="50"/>
    <source>Christmas Island</source>
-   <translation type="unfinished"/>
+   <translation>Острів Різдва</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="51"/>
    <source>Cocos (Keeling) Islands</source>
-   <translation type="unfinished"/>
+   <translation>Кокосові острови (Кілінг)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="52"/>
    <source>Colombia</source>
-   <translation type="unfinished"/>
+   <translation>Колумбія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="53"/>
    <source>Comoros</source>
-   <translation type="unfinished"/>
+   <translation>Коморо</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="54"/>
    <source>Republic of the Congo</source>
-   <translation type="unfinished"/>
+   <translation>Республіка Конго</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="55"/>
    <source>Republic of Chile</source>
-   <translation type="unfinished"/>
+   <translation>Республіка Чилі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="56"/>
    <source>Democratic Republic of the Congo</source>
-   <translation type="unfinished"/>
+   <translation>Демократична Республіка Конго</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="57"/>
    <source>Cook Islands</source>
-   <translation type="unfinished"/>
+   <translation>Острови Кука</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="58"/>
    <source>Costa Rica</source>
-   <translation type="unfinished"/>
+   <translation>Коста Ріка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="59"/>
    <source>Cote d&apos;Ivoire</source>
-   <translation type="unfinished"/>
+   <translation>Кот д&apos;Івуар</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="60"/>
    <source>Croatia</source>
-   <translation type="unfinished"/>
+   <translation>Хорватія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="61"/>
    <source>Cuba</source>
-   <translation type="unfinished"/>
+   <translation>Куба</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="62"/>
    <source>Cyprus</source>
-   <translation type="unfinished"/>
+   <translation>Кіпр</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="63"/>
    <source>Czech Republic</source>
-   <translation type="unfinished"/>
+   <translation>Чеська Республіка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="64"/>
    <source>Denmark</source>
-   <translation type="unfinished"/>
+   <translation>Данія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="65"/>
    <source>Djibouti</source>
-   <translation type="unfinished"/>
+   <translation>Джібуті</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="66"/>
    <source>Dominica</source>
-   <translation type="unfinished"/>
+   <translation>Домініка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="67"/>
    <source>Dominican Republic</source>
-   <translation type="unfinished"/>
+   <translation>Домініканська Республіка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="68"/>
    <source>East Timor</source>
-   <translation type="unfinished"/>
+   <translation>Східний Тімор</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="69"/>
    <source>Ecuador</source>
-   <translation type="unfinished"/>
+   <translation>Еквадор</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="70"/>
    <source>Egypt</source>
-   <translation type="unfinished"/>
+   <translation>Єгипет</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="71"/>
    <source>El Salvador</source>
-   <translation type="unfinished"/>
+   <translation>Ель Сальвадор</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="72"/>
    <source>Equatorial Guinea</source>
-   <translation type="unfinished"/>
+   <translation>Екваторіальна Гвінея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="73"/>
    <source>Eritrea</source>
-   <translation type="unfinished"/>
+   <translation>Ерітрея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="74"/>
    <source>Estonia</source>
-   <translation type="unfinished"/>
+   <translation>Естонія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="75"/>
    <source>Ethiopia</source>
-   <translation type="unfinished"/>
+   <translation>Ефіопіія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="76"/>
    <source>Falkland (Malvinas) Islands</source>
-   <translation type="unfinished"/>
+   <translation>Фолклендські Острови (Мальвіни)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="77"/>
    <source>Faroe Islands</source>
-   <translation type="unfinished"/>
+   <translation>Фороські Острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="78"/>
    <source>Federal Republic of Somalia</source>
-   <translation type="unfinished"/>
+   <translation>Федеральна Республіка Сомалі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="79"/>
    <source>Federated States of Micronesia</source>
-   <translation type="unfinished"/>
+   <translation>Федеральні Штати Мікронезії</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="80"/>
    <location filename="../../plugins/poi/countries.cpp" line="194"/>
    <source>Federation of Saint Kitts (Christopher) and Nevis</source>
-   <translation type="unfinished"/>
+   <translation>Федерація Святого Кітта і Невіса </translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="81"/>
    <source>Fiji</source>
-   <translation type="unfinished"/>
+   <translation>Фіджі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="82"/>
    <source>Finland</source>
-   <translation type="unfinished"/>
+   <translation>Фінляндія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="83"/>
    <source>France</source>
-   <translation type="unfinished"/>
+   <translation>Франція</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="84"/>
    <source>French Guiana</source>
-   <translation type="unfinished"/>
+   <translation>Французька Гвінея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="85"/>
    <source>French Polynesia</source>
-   <translation type="unfinished"/>
+   <translation>Французька Полінезія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="86"/>
    <source>French Southern and Antarctic Lands</source>
-   <translation type="unfinished"/>
+   <translation>Французькі Південні і Антарктичні Землі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="87"/>
    <source>Gabon</source>
-   <translation type="unfinished"/>
+   <translation>Габон</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="88"/>
    <source>Gambia</source>
-   <translation type="unfinished"/>
+   <translation>Гамбія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="89"/>
    <source>Georgia</source>
-   <translation type="unfinished"/>
+   <translation>Грузія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="90"/>
    <location filename="../../plugins/poi/countries.cpp" line="100"/>
    <source>Guernsey</source>
-   <translation type="unfinished"/>
+   <translation>Гернсі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="91"/>
    <source>Germany</source>
-   <translation type="unfinished"/>
+   <translation>Німеччина</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="92"/>
    <source>Ghana</source>
-   <translation type="unfinished"/>
+   <translation>Гана</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="93"/>
    <source>Gibraltar</source>
-   <translation type="unfinished"/>
+   <translation>Гібралтар</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="94"/>
    <source>Greece</source>
-   <translation type="unfinished"/>
+   <translation>Греція</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="95"/>
    <source>Greenland</source>
-   <translation type="unfinished"/>
+   <translation>Гренландія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="96"/>
    <source>Grenada</source>
-   <translation type="unfinished"/>
+   <translation>Гренада</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="97"/>
    <source>Guadeloupe</source>
-   <translation type="unfinished"/>
+   <translation>Гваделупа</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="98"/>
    <source>Guam</source>
-   <translation type="unfinished"/>
+   <translation>Гуам</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="99"/>
    <source>Guatemala</source>
-   <translation type="unfinished"/>
+   <translation>Гватемала</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="101"/>
    <source>Guinea</source>
-   <translation type="unfinished"/>
+   <translation>Гвінея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="102"/>
    <source>Guinea-Bissau</source>
-   <translation type="unfinished"/>
+   <translation>Гвінея-Басо</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="103"/>
    <source>Guyana</source>
-   <translation type="unfinished"/>
+   <translation>Гуяна</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="104"/>
    <source>Haiti</source>
-   <translation type="unfinished"/>
+   <translation>Гаїті</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="105"/>
    <source>Heard and McDonald Islands</source>
-   <translation type="unfinished"/>
+   <translation>Острови Херд і Макдональд</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="106"/>
    <source>Honduras</source>
-   <translation type="unfinished"/>
+   <translation>Гондурас</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="107"/>
    <source>Hong Kong</source>
-   <translation type="unfinished"/>
+   <translation>Гонг Конг</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="108"/>
    <source>Hungary</source>
-   <translation type="unfinished"/>
+   <translation>Угорщина</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="109"/>
    <source>Iceland</source>
-   <translation type="unfinished"/>
+   <translation>Ісландія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="110"/>
    <source>India</source>
-   <translation type="unfinished"/>
+   <translation>Індія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="111"/>
    <source>Indonesia</source>
-   <translation type="unfinished"/>
+   <translation>Індонезія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="112"/>
    <source>Iran</source>
-   <translation type="unfinished"/>
+   <translation>Іран</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="113"/>
    <source>Iraq</source>
-   <translation type="unfinished"/>
+   <translation>Ірак</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="114"/>
    <source>Ireland</source>
-   <translation type="unfinished"/>
+   <translation>Ірландія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="115"/>
    <source>Isle of Man</source>
-   <translation type="unfinished"/>
+   <translation>Острів Мен</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="116"/>
    <source>Israel</source>
-   <translation type="unfinished"/>
+   <translation>Ізраїль</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="117"/>
    <source>Italy</source>
-   <translation type="unfinished"/>
+   <translation>Італія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="118"/>
    <source>Jamaica</source>
-   <translation type="unfinished"/>
+   <translation>Ямайка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="119"/>
    <source>Japan</source>
-   <translation type="unfinished"/>
+   <translation>Японія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="120"/>
    <source>Jersey</source>
-   <translation type="unfinished"/>
+   <translation>Джерсі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="121"/>
    <source>Jordan</source>
-   <translation type="unfinished"/>
+   <translation>Йорданія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="122"/>
    <source>Kazakhstan</source>
-   <translation type="unfinished"/>
+   <translation>Казахстан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="123"/>
    <source>Kenya</source>
-   <translation type="unfinished"/>
+   <translation>Кенія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="124"/>
    <source>Kyrgyz Republic (Kyrgyzstan)</source>
-   <translation type="unfinished"/>
+   <translation>Киргизька Республіка (Киргизстан)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="125"/>
    <source>Kiribati</source>
-   <translation type="unfinished"/>
+   <translation>Кірібаті</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="126"/>
    <source>North Korea</source>
-   <translation type="unfinished"/>
+   <translation>Північна Корея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="127"/>
    <source>South Korea</source>
-   <translation type="unfinished"/>
+   <translation>Південна Корея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="128"/>
    <source>Kuwait</source>
-   <translation type="unfinished"/>
+   <translation>Кувейт</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="129"/>
    <source>Lao People&apos;s Democratic Republic (Laos)</source>
-   <translation type="unfinished"/>
+   <translation>Лаоська Демократична Республіка (Лаос)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="130"/>
    <source>Latvia</source>
-   <translation type="unfinished"/>
+   <translation>Латвія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="131"/>
    <source>Lebanon</source>
-   <translation type="unfinished"/>
+   <translation>Ліван</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="132"/>
    <source>Lesotho</source>
-   <translation type="unfinished"/>
+   <translation>Лесото</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="133"/>
    <source>Liberia</source>
-   <translation type="unfinished"/>
+   <translation>Ліберія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="134"/>
    <source>Libya</source>
-   <translation type="unfinished"/>
+   <translation>Лівія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="135"/>
    <source>Liechtenstein</source>
-   <translation type="unfinished"/>
+   <translation>Ліхтенштейн</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="136"/>
    <source>Lithuania</source>
-   <translation type="unfinished"/>
+   <translation>Литва</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="137"/>
    <source>Luxembourg</source>
-   <translation type="unfinished"/>
+   <translation>Люксембург</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="138"/>
    <source>Macau (Macao)</source>
-   <translation type="unfinished"/>
+   <translation>Макау (Макао)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="139"/>
    <source>Macedonia</source>
-   <translation type="unfinished"/>
+   <translation>Македонія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="140"/>
    <source>Madagascar</source>
-   <translation type="unfinished"/>
+   <translation>Мадагаскар</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="141"/>
    <source>Malawi</source>
-   <translation type="unfinished"/>
+   <translation>Малаві</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="142"/>
    <source>Malaysia</source>
-   <translation type="unfinished"/>
+   <translation>Малайзія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="143"/>
    <source>Maldives</source>
-   <translation type="unfinished"/>
+   <translation>Мальдіви</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="144"/>
    <source>Mali</source>
-   <translation type="unfinished"/>
+   <translation>Малі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="145"/>
    <source>Malta</source>
-   <translation type="unfinished"/>
+   <translation>Мальта</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="146"/>
    <source>Morocco</source>
-   <translation type="unfinished"/>
+   <translation>Мороко</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="147"/>
    <source>Marshall Islands</source>
-   <translation type="unfinished"/>
+   <translation>Маршалові Острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="148"/>
    <source>Martinique</source>
-   <translation type="unfinished"/>
+   <translation>Мартінік</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="149"/>
    <source>Mauritania</source>
-   <translation type="unfinished"/>
+   <translation>Мавританія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="150"/>
    <source>Mauritius</source>
-   <translation type="unfinished"/>
+   <translation>Мавритіус</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="151"/>
    <source>Mayotte</source>
-   <translation type="unfinished"/>
+   <translation>Майот</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="152"/>
    <source>Mexico</source>
-   <translation type="unfinished"/>
+   <translation>Мехіко</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="153"/>
    <source>Moldova</source>
-   <translation type="unfinished"/>
+   <translation>Молдова</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="154"/>
    <source>Monaco</source>
-   <translation type="unfinished"/>
+   <translation>Монако</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="155"/>
    <source>Mongolia</source>
-   <translation type="unfinished"/>
+   <translation>Монголія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="156"/>
    <source>Montenegro</source>
-   <translation type="unfinished"/>
+   <translation>Чорногорія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="157"/>
    <source>Montserrat</source>
-   <translation type="unfinished"/>
+   <translation>Монтсерат</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="158"/>
    <source>Mozambique</source>
-   <translation type="unfinished"/>
+   <translation>Мозамбік</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="159"/>
    <source>Myanmar</source>
-   <translation type="unfinished"/>
+   <translation>Мьянма</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="160"/>
    <source>Namibia</source>
-   <translation type="unfinished"/>
+   <translation>Намібія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="161"/>
    <source>Nauru</source>
-   <translation type="unfinished"/>
+   <translation>Науру</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="162"/>
    <source>Nepal</source>
-   <translation type="unfinished"/>
+   <translation>Непал</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="163"/>
    <source>Netherlands (Holland)</source>
-   <translation type="unfinished"/>
+   <translation>Нідерланди (Голандія)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="164"/>
    <source>Netherlands Antilles</source>
-   <translation type="unfinished"/>
+   <translation>Нідерландські Антіли</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="165"/>
    <source>New Caledonia</source>
-   <translation type="unfinished"/>
+   <translation>Нова Каледонія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="166"/>
    <source>New Zealand</source>
-   <translation type="unfinished"/>
+   <translation>Нова Зеландія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="167"/>
    <source>Nicaragua</source>
-   <translation type="unfinished"/>
+   <translation>Нікарагуа</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="168"/>
    <source>Niger</source>
-   <translation type="unfinished"/>
+   <translation>Нігер</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="169"/>
    <source>Nigeria</source>
-   <translation type="unfinished"/>
+   <translation>Нігерія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="170"/>
    <source>Niue</source>
-   <translation type="unfinished"/>
+   <translation>Ніуе</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="171"/>
    <source>Norfolk Island</source>
-   <translation type="unfinished"/>
+   <translation>Острів Норфолк</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="172"/>
    <source>Northern Mariana Islands</source>
-   <translation type="unfinished"/>
+   <translation>Північні Маріанські острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="173"/>
    <source>Norway</source>
-   <translation type="unfinished"/>
+   <translation>Норвегія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="174"/>
    <source>Oman</source>
-   <translation type="unfinished"/>
+   <translation>Оман</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="175"/>
    <source>Pakistan</source>
-   <translation type="unfinished"/>
+   <translation>Пакістан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="176"/>
    <source>Palau</source>
-   <translation type="unfinished"/>
+   <translation>Палау</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="177"/>
    <source>State of Palestine</source>
-   <translation type="unfinished"/>
+   <translation>Держава Палестина</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="178"/>
    <source>Panama</source>
-   <translation type="unfinished"/>
+   <translation>Панама</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="179"/>
    <source>Papua New Guinea</source>
-   <translation type="unfinished"/>
+   <translation>Папуа Нова Гвінея</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="180"/>
    <source>Paraguay</source>
-   <translation type="unfinished"/>
+   <translation>Парагвай</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="181"/>
    <source>Peru</source>
-   <translation type="unfinished"/>
+   <translation>Перу</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="182"/>
    <source>Philippines</source>
-   <translation type="unfinished"/>
+   <translation>Філіпіни</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="183"/>
    <source>Pitcairn Islands</source>
-   <translation type="unfinished"/>
+   <translation>Піткерні острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="184"/>
    <source>Poland</source>
-   <translation type="unfinished"/>
+   <translation>Польща</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="185"/>
    <source>Portugal</source>
-   <translation type="unfinished"/>
+   <translation>Португалія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="186"/>
    <source>Puerto Rico</source>
-   <translation type="unfinished"/>
+   <translation>Пуерто Ріко</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="187"/>
    <source>Qatar</source>
-   <translation type="unfinished"/>
+   <translation>Катар</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="188"/>
    <source>Republic of Suriname</source>
-   <translation type="unfinished"/>
+   <translation>Республіка Сурінам</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="189"/>
    <source>Reunion</source>
-   <translation type="unfinished"/>
+   <translation>Реюніон</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="190"/>
    <source>Romania</source>
-   <translation type="unfinished"/>
+   <translation>Румунія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="191"/>
    <source>Russian Federation (Russia)</source>
-   <translation type="unfinished"/>
+   <translation>Російська Федерація (Росія)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="192"/>
    <source>Rwanda</source>
-   <translation type="unfinished"/>
+   <translation>Руанда</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="193"/>
    <source>Saint Helena</source>
-   <translation type="unfinished"/>
+   <translation>Свята Гелена</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="195"/>
    <source>Saint Lucia</source>
-   <translation type="unfinished"/>
+   <translation>Свята Лучія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="196"/>
    <source>Saint Pierre and Miquelon</source>
-   <translation type="unfinished"/>
+   <translation>Святий П&apos;єр І Мікелон</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="197"/>
    <source>Saint Vincent and the Grenadines</source>
-   <translation type="unfinished"/>
+   <translation>Святий Вінсент і Гренадіни</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="198"/>
    <source>Samoa</source>
-   <translation type="unfinished"/>
+   <translation>Самоа</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="199"/>
    <source>San Marino</source>
-   <translation type="unfinished"/>
+   <translation>Сан Маріно</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="200"/>
    <source>Democratic Republic of Sao Tome and Principe</source>
-   <translation type="unfinished"/>
+   <translation>Демократична Республіка Сан-Томе і Принсіпі</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="201"/>
    <source>Saudi Arabia</source>
-   <translation type="unfinished"/>
+   <translation>Саудівська Аравія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="202"/>
    <source>Senegal</source>
-   <translation type="unfinished"/>
+   <translation>Сенегал</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="203"/>
    <source>Serbia</source>
-   <translation type="unfinished"/>
+   <translation>Сербія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="204"/>
    <source>Seychelles</source>
-   <translation type="unfinished"/>
+   <translation>Сейшели</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="205"/>
    <source>Sierra Leone</source>
-   <translation type="unfinished"/>
+   <translation>Сієра Леоне</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="206"/>
    <source>Singapore</source>
-   <translation type="unfinished"/>
+   <translation>Сінгапур</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="207"/>
    <source>Sint Maarten</source>
-   <translation type="unfinished"/>
+   <translation>Сінт Маартен</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="208"/>
    <source>Slovak Republic (Slovakia)</source>
-   <translation type="unfinished"/>
+   <translation>Словацька Республіка (Словаччина)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="209"/>
    <source>Slovenia</source>
-   <translation type="unfinished"/>
+   <translation>Словенія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="210"/>
    <source>Socialist Republic of Vietnam (Viet Nam)</source>
-   <translation type="unfinished"/>
+   <translation>Соціалістична Республіка В&apos;єтнам (В&apos;єтнам)</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="211"/>
    <source>Solomon Islands</source>
-   <translation type="unfinished"/>
+   <translation>Соломонові острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="212"/>
    <source>South Africa</source>
-   <translation type="unfinished"/>
+   <translation>Південна Африка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="213"/>
    <source>South Georgia and the South Sandwich Islands</source>
-   <translation type="unfinished"/>
+   <translation>Південна Джорджія та Південні Сандвічеві острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="214"/>
    <source>South Ossetia</source>
-   <translation type="unfinished"/>
+   <translation>Південна Осетія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="215"/>
    <source>Spain</source>
-   <translation type="unfinished"/>
+   <translation>Іспанія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="216"/>
    <source>Sri Lanka</source>
-   <translation type="unfinished"/>
+   <translation>Срі Ланка</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="217"/>
    <source>Sudan</source>
-   <translation type="unfinished"/>
+   <translation>Судан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="218"/>
    <source>Svalbard and Jan Mayen Islands</source>
-   <translation type="unfinished"/>
+   <translation>Свалбард та Ян Маєнські острови</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="219"/>
    <source>Swaziland</source>
-   <translation type="unfinished"/>
+   <translation>Свазіленд</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="220"/>
    <source>Sweden</source>
-   <translation type="unfinished"/>
+   <translation>Швеція</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="221"/>
    <source>Switzerland</source>
-   <translation type="unfinished"/>
+   <translation>Швейцарія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="222"/>
    <source>Syria</source>
-   <translation type="unfinished"/>
+   <translation>Сирія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="223"/>
    <source>Tajikistan</source>
-   <translation type="unfinished"/>
+   <translation>Таджикістан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="224"/>
    <source>Taiwan</source>
-   <translation type="unfinished"/>
+   <translation>Тайвань</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="225"/>
    <source>Tanzania</source>
-   <translation type="unfinished"/>
+   <translation>Танзанія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="226"/>
    <source>Thailand</source>
-   <translation type="unfinished"/>
+   <translation>Тайланд</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="227"/>
    <source>Togo</source>
-   <translation type="unfinished"/>
+   <translation>Того</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="228"/>
    <source>Tokelau</source>
-   <translation type="unfinished"/>
+   <translation>Токелау</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="229"/>
    <source>Tonga</source>
-   <translation type="unfinished"/>
+   <translation>Тонга</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="230"/>
    <source>Trinidad and Tobago</source>
-   <translation type="unfinished"/>
+   <translation>Трінідад і Тобаго</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="231"/>
    <source>Tunisia</source>
-   <translation type="unfinished"/>
+   <translation>Туніс</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="232"/>
    <source>Turkey</source>
-   <translation type="unfinished"/>
+   <translation>Турція</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="233"/>
    <source>Turkmenistan</source>
-   <translation type="unfinished"/>
+   <translation>Туркменістан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="234"/>
    <source>Turks and Caicos Islands</source>
-   <translation type="unfinished"/>
+   <translation>Острови Теркс і Кайкос</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="235"/>
    <source>Tuvalu</source>
-   <translation type="unfinished"/>
+   <translation>Тувалу</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="236"/>
    <source>Uganda</source>
-   <translation type="unfinished"/>
+   <translation>Уганда</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="237"/>
    <source>Ukraine</source>
-   <translation type="unfinished"/>
+   <translation>Україна</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="238"/>
    <source>United Arab Emirates</source>
-   <translation type="unfinished"/>
+   <translation>Об&apos;єднані Арабські Емірати</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="239"/>
    <source>United Kingdom of Great Britain and Northern Ireland</source>
-   <translation type="unfinished"/>
+   <translation>Об&apos;єднане Королівство Великої Британії та Північної Ірландії</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="240"/>
    <source>United States Minor Outlying Islands</source>
-   <translation type="unfinished"/>
+   <translation>Малі віддалені острови Сполучених Штатів</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="241"/>
    <source>United States of America</source>
-   <translation type="unfinished"/>
+   <translation>Сполучені Штати Америки</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="242"/>
    <source>Uruguay</source>
-   <translation type="unfinished"/>
+   <translation>Уругвай</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="243"/>
    <source>Uzbekistan</source>
-   <translation type="unfinished"/>
+   <translation>Узбекістан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="244"/>
    <source>Vanuatu</source>
-   <translation type="unfinished"/>
+   <translation>Вануату</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="245"/>
    <source>Vatican City</source>
-   <translation type="unfinished"/>
+   <translation>Місто Ватікан</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="246"/>
    <source>Venezuela</source>
-   <translation type="unfinished"/>
+   <translation>Венесуела</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="247"/>
    <source>Virgin Islands of the United States</source>
-   <translation type="unfinished"/>
+   <translation>Віргінські острови США</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="248"/>
    <source>Wallis and Futuna Islands</source>
-   <translation type="unfinished"/>
+   <translation>Острови Валліс і Футуна</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="249"/>
    <source>Western Sahara</source>
-   <translation type="unfinished"/>
+   <translation>Західна Сахара</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="250"/>
    <source>Yemen</source>
-   <translation type="unfinished"/>
+   <translation>Ємен</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="251"/>
    <source>Zambia</source>
-   <translation type="unfinished"/>
+   <translation>Замбія</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/countries.cpp" line="252"/>
    <source>Zimbabwe</source>
-   <translation type="unfinished"/>
+   <translation>Зімбабве</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.cpp" line="364"/>
    <source>Remove timestamp</source>
-   <translation type="unfinished"/>
+   <translation>Видалити відмітку часу</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/newpoi.cpp" line="371"/>
    <source>Set current time</source>
-   <translation type="unfinished"/>
+   <translation>Встановити поточний час</translation>
   </message>
  </context>
  <context>
@@ -1414,12 +1414,12 @@
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="62"/>
    <source>10pin</source>
-   <translation type="unfinished"/>
+   <translation>10pin</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="63"/>
    <source>Access</source>
-   <translation type="unfinished"/>
+   <translation>Доступ</translation>
   </message>
   <message>
    <location filename="../../plugins/poi/poi.cpp" line="64"/>

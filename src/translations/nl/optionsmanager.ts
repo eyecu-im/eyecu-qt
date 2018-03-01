@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
  <context>
   <name>EditProfilesDialog</name>
   <message>
@@ -265,13 +265,14 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
    <source>Language settings changed</source>
-   <translation type="unfinished"/>
+   <translation>Taal instellingen zijn veranderd</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
    <source>To make changes intact, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
-   <translation type="unfinished"/>
+   <translation>Om de veranderingen te houden, %1 moet worden geherstart.
+Wil je dat %1 wordt geherstart?</translation>
   </message>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>

@@ -12,11 +12,6 @@
         <translation>Реализует XEP-0244: Внимание</translation>
     </message>
     <message>
-        <source>Shift+Return</source>
-        <comment>Attention</comment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Implements XEP-0224: Allows to attract user&apos;s attention</source>
         <translation>Реализует XEP-0224: Позволяет привлекать внимание пользователя</translation>
     </message>
@@ -43,6 +38,11 @@
     <message>
         <source>Always play sound</source>
         <translation>Всегда проигрывать звук</translation>
+    </message>
+    <message>
+        <source>Alt+Return</source>
+        <comment>Attention</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

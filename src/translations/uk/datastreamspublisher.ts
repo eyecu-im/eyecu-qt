@@ -3,19 +3,19 @@
   <name>DataStreamsPublisher</name>
   <message>
    <source>Data Streams Publisher</source>
-   <translation type="unfinished"/>
+   <translation>Видавець потоків даних</translation>
   </message>
   <message>
    <source>Allows to publish available data streams</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє публікувати доступні потоки даних</translation>
   </message>
   <message>
    <source>Data Streams Publication</source>
-   <translation type="unfinished"/>
+   <translation>Видані потоки даних</translation>
   </message>
   <message>
    <source>Supports the publication of the data streams</source>
-   <translation type="unfinished"/>
+   <translation>Підтримує публікацію потоків даних</translation>
   </message>
  </context>
 </TS>

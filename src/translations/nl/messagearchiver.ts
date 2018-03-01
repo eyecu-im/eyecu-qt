@@ -566,27 +566,27 @@ Schakel automatisch archiveren van berichten op de server in</translation>
  <context>
   <name>ChatWindowMenu</name>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="99"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="101"/>
    <source>Enable Message Archiving</source>
    <translation>Schakel Bericht archivering in</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="105"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="108"/>
    <source>Disable Message Archiving</source>
    <translation>Schakel bericht archivering uit</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="110"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="114"/>
    <source>Start Off-The-Record Session</source>
    <translation>Start Off-The-Record sessie</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="115"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="119"/>
    <source>Terminate Off-The-Record Session</source>
    <translation>Beëindigd Off-The-Record sessie</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="277"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="281"/>
    <source>Failed to change archive preferences: %1</source>
    <translation>Mislukt om de archief veranderingen op te slaan: %1</translation>
   </message>

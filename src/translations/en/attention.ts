@@ -24,10 +24,15 @@
    <translation>When contact attempts to attract user's attention</translation>
   </message>
   <message>
-   <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation>Shift+Return</translation>
+   <translation type="obsolete">Shift+Return</translation>
+  </message>
+  <message>
+   <location line="156" filename="../../plugins/attention/attention.cpp"/>
+   <source>Alt+Return</source>
+   <comment>Attention</comment>
+   <translation>Alt+Return</translation>
   </message>
   <message>
    <location line="176" filename="../../plugins/attention/attention.cpp"/>

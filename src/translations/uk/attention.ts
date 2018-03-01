@@ -22,10 +22,15 @@
    <translation>Коли контакт намагається привабити увагу користувача</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation>Shift+Return</translation>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/attention/attention.cpp" line="156"/>
+   <source>Alt+Return</source>
+   <comment>Attention</comment>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>

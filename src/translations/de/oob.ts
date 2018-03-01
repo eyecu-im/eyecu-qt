@@ -121,7 +121,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/oob/oob.cpp" line="266"/>
+   <location filename="../../plugins/oob/oob.cpp" line="282"/>
    <source>Link</source>
    <translation type="unfinished"/>
   </message>

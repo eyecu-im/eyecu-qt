@@ -1,7 +1,10 @@
 #include <QLibrary>
 #include <QApplication>
+#include <QPalette>
 #include "pluginmanager.h"
-
+// *** <<< eyeCU <<< ***
+#include "splash.h"
+// *** >>> eyeCU >>> ***
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_MACX
@@ -15,10 +18,18 @@ int main(int argc, char *argv[])
 	app.setQuitOnLastWindowClosed(false);
 	app.addLibraryPath(app.applicationDirPath());
 	app.setApplicationName("eyeCU");
-	QLibrary utils(app.applicationDirPath()+"/utils",&app);
+// *** <<< eyeCU <<< ***
+	Splash splash;
+	splash.showMessage("Loading: Utils", Qt::AlignBottom, QPalette().color(QPalette::Text));
+// *** >>> eyeCU >>> ***
+	QLibrary utils(app.applicationDirPath()+"/utils", &app);
 	utils.load();
 
 	PluginManager pm(&app);
+// *** <<< eyeCU <<< ***
+	splash.connect(&pm, SIGNAL(closeSplash(QWidget*)), SLOT(finishSplash(QWidget*)));
+	splash.connect(&pm, SIGNAL(splashMessage(QString)), SLOT(displayMessage(QString)));
+// *** >>> eyeCU >>> ***
 	pm.restart();
 
 	return app.exec();

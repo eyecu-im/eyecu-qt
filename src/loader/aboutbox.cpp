@@ -5,6 +5,7 @@
 #include <utils/iconstorage.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/version.h>
 
 AboutBox::AboutBox(IPluginManager *APluginManager, QWidget *AParent) : QDialog(AParent)
 {
