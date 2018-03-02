@@ -1,10 +1,7 @@
 #include <QLibrary>
 #include <QApplication>
-#include <QPalette>
 #include "pluginmanager.h"
-// *** <<< eyeCU <<< ***
-#include "splash.h"
-// *** >>> eyeCU >>> ***
+#include "splash.h" // *** <<< eyeCU >>> ***
 int main(int argc, char *argv[])
 {
 	QApplication::setAttribute(Qt::AA_DontShowIconsInMenus,false);
@@ -18,7 +15,7 @@ int main(int argc, char *argv[])
 	app.setApplicationName("eyeCU");
 // *** <<< eyeCU <<< ***
 	Splash splash;
-	splash.showMessage("Loading: Utils", Qt::AlignBottom, QPalette().color(QPalette::Text));
+	splash.displayMessage("Loading: Utils");
 // *** >>> eyeCU >>> ***
 	QLibrary utils(app.applicationDirPath()+"/utils", &app);
 	utils.load();
