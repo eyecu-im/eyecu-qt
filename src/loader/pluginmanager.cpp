@@ -46,6 +46,7 @@
 #if defined(Q_OS_WIN)
 #  define ENV_APP_DATA              "APPDATA"
 #  define DIR_APP_DATA              APPLICATION_NAME
+<<<<<<< HEAD
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** <<< eyeCU <<< ***
 #elif defined(Q_OS_OS2)
@@ -53,6 +54,9 @@
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** >>> eyeCU >>> ***
+=======
+#  define PATH_APP_DATA             ORGANIZATION_NAME "/" DIR_APP_DATA
+>>>>>>> refs/remotes/vacuum/master
 #elif defined(Q_OS_LINUX)
 #  define ENV_APP_DATA              "HOME"
 // *** <<< eyeCU >>> ***
@@ -61,10 +65,11 @@
 #elif defined(Q_OS_MAC)
 #  define ENV_APP_DATA              "HOME"
 #  define DIR_APP_DATA              APPLICATION_NAME
-#  define PATH_APP_DATA             "Library/Application Support/"DIR_APP_DATA
-#elif defined(Q_WS_HAIKU)
+#  define PATH_APP_DATA             "Library/Application Support/" DIR_APP_DATA
+#elif defined(Q_OS_HAIKU)
 #  define ENV_APP_DATA              "APPDATA"
 #  define DIR_APP_DATA              APPLICATION_NAME
+<<<<<<< HEAD
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** <<< eyeCU <<< ***
 #elif defined(Q_WS_SIMULATOR) || defined(Q_OS_SYMBIAN)
@@ -72,6 +77,9 @@
 #  define DIR_APP_DATA              APPLICATION_NAME
 #  define PATH_APP_DATA             ORGANIZATION_NAME"/"DIR_APP_DATA
 // *** >>> eyeCU >>> ***
+=======
+#  define PATH_APP_DATA             ORGANIZATION_NAME "/" DIR_APP_DATA
+>>>>>>> refs/remotes/vacuum/master
 #endif
 
 #if defined(Q_OS_WIN) || defined(Q_OS_OS2)

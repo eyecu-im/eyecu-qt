@@ -3,19 +3,19 @@
   <name>DataStreamsPublisher</name>
   <message>
    <source>Data Streams Publisher</source>
-   <translation>Р’РёРґР°РІРµС†СЊ РїРѕС‚РѕРєС–РІ РґР°РЅРёС…</translation>
+   <translation>Видавець потоків даних</translation>
   </message>
   <message>
    <source>Allows to publish available data streams</source>
-   <translation>Р”РѕР·РІРѕР»СЏС” РїСѓР±Р»С–РєСѓРІР°С‚Рё РґРѕСЃС‚СѓРїРЅС– РїРѕС‚РѕРєРё РґР°РЅРёС…</translation>
+   <translation>Дозволяє публікувати доступні потоки даних</translation>
   </message>
   <message>
    <source>Data Streams Publication</source>
-   <translation>Р’РёРґР°РЅС– РїРѕС‚РѕРєРё РґР°РЅРёС…</translation>
+   <translation>Видані потоки даних</translation>
   </message>
   <message>
    <source>Supports the publication of the data streams</source>
-   <translation>РџС–РґС‚СЂРёРјСѓС” РїСѓР±Р»С–РєР°С†С–СЋ РїРѕС‚РѕРєС–РІ РґР°РЅРёС…</translation>
+   <translation>Підтримує публікацію потоків даних</translation>
   </message>
  </context>
 </TS>

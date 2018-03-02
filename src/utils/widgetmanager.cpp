@@ -4,8 +4,12 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-#ifdef Q_WS_X11
+#ifdef Q_OS_LINUX
+#if QT_VERSION < 0x050000
 	#include <QX11Info>
+#elde
+	#include <QtX11Extras/QX11Info>
+#endif
 	#include <X11/Xutil.h>
 	#include <X11/Xlib.h>
 	#include <X11/Xatom.h>
@@ -16,7 +20,7 @@
 #endif //Q_WS_X11
 
 // WindowSticker
-class WindowSticker : 
+class WindowSticker :
 	public QObject
 {
 public:
@@ -165,7 +169,7 @@ void WidgetManager::raiseWidget(QWidget *AWidget)
 	xev.data.l[2]    = xev.data.l[3] = xev.data.l[4] = 0;
 
 	XSendEvent(QX11Info::display(), QX11Info::appRootWindow(), False, SubstructureNotifyMask | SubstructureRedirectMask, (XEvent*)&xev);
-#endif //Q_WS_X11
+#endif //Q_OS_LINUX
 
 	AWidget->raise();
 }

@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -7,7 +9,7 @@
 
 #if QT_VERSION < 0x050000
 #include <stdlib.h>
-void myMessageHandler(QtMsgType type, const char *msg)
+void myMessageOutput(QtMsgType AType, const QMessageLogContext &AContext, const QString &AMessage)
 {
 	switch (type) 
 	{

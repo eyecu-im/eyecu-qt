@@ -29,9 +29,9 @@
 
 #define CONSECUTIVE_TIMEOUT                 2*60
 
-#define SHARED_STYLE_PATH                   RESOURCES_DIR"/"RSR_STORAGE_ADIUMMESSAGESTYLES"/"FILE_STORAGE_SHARED_DIR
+#define SHARED_STYLE_PATH                   RESOURCES_DIR "/" RSR_STORAGE_ADIUMMESSAGESTYLES "/" FILE_STORAGE_SHARED_DIR
 #define STYLE_CONTENTS_PATH                 "Contents"
-#define STYLE_RESOURCES_PATH                STYLE_CONTENTS_PATH"/Resources"
+#define STYLE_RESOURCES_PATH                STYLE_CONTENTS_PATH "/Resources"
 
 #define APPEND_MESSAGE_WITH_SCROLL          "checkIfScrollToBottomIsNeeded(); appendMessage(\"%1\"); scrollToBottomIfNeeded();"
 #define APPEND_NEXT_MESSAGE_WITH_SCROLL     "checkIfScrollToBottomIsNeeded(); appendNextMessage(\"%1\"); scrollToBottomIfNeeded();"
@@ -53,14 +53,14 @@ AdiumMessageStyle::AdiumMessageStyle(const QString &AStylePath, QNetworkAccessMa
 	if (FSharedPath.isEmpty())
 	{
 		if (QDir::isRelativePath(SHARED_STYLE_PATH))
-			FSharedPath = qApp->applicationDirPath()+"/"SHARED_STYLE_PATH;
+			FSharedPath = qApp->applicationDirPath() + "/" SHARED_STYLE_PATH;
 		else
 			FSharedPath = SHARED_STYLE_PATH;
 	}
 
 	FInfo = styleInfo(AStylePath);
 	FVariants = styleVariants(AStylePath);
-	FResourcePath = AStylePath+"/"STYLE_RESOURCES_PATH;
+	FResourcePath = AStylePath + "/" STYLE_RESOURCES_PATH;
 	FNetworkAccessManager = ANetworkAccessManager;
 
 	FScrollTimer.setSingleShot(true);
@@ -113,16 +113,8 @@ QString AdiumMessageStyle::senderColorById(const QString &ASenderId) const
 QTextDocumentFragment AdiumMessageStyle::selection(QWidget *AWidget) const
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
-#if QT_VERSION >= 0x040800
 	if (view && view->hasSelection())
 		return QTextDocumentFragment::fromHtml(view->selectedHtml());
-#else
-	if (view && !view->page()->selectedText().isEmpty())
-	{
-		view->page()->triggerAction(QWebPage::Copy);
-		return QTextDocumentFragment::fromHtml(QApplication::clipboard()->mimeData()->html());
-	}
-#endif
 	return QTextDocumentFragment();
 }
 
@@ -281,7 +273,7 @@ QList<QString> AdiumMessageStyle::styleVariants(const QString &AStylePath)
 	QList<QString> files;
 	if (!AStylePath.isEmpty())
 	{
-		QDir dir(AStylePath+"/"STYLE_RESOURCES_PATH"/Variants");
+		QDir dir(AStylePath + "/" STYLE_RESOURCES_PATH "/Variants");
 		files = dir.entryList(QStringList("*.css"),QDir::Files,QDir::Name);
 		for (int i=0; i<files.count();i++)
 			files[i].chop(4);
@@ -296,7 +288,7 @@ QList<QString> AdiumMessageStyle::styleVariants(const QString &AStylePath)
 QMap<QString, QVariant> AdiumMessageStyle::styleInfo(const QString &AStylePath)
 {
 	QMap<QString, QVariant> info;
-	QFile file(AStylePath+"/"STYLE_CONTENTS_PATH"/Info.plist");
+	QFile file(AStylePath + "/" STYLE_CONTENTS_PATH "/Info.plist");
 	if (!AStylePath.isEmpty() && file.open(QFile::ReadOnly))
 	{
 		QString xmlError;

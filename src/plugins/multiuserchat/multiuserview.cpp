@@ -497,9 +497,9 @@ void MultiUserView::repaintUserItem(const QStandardItem *AItem)
 		viewport()->repaint(rect);
 }
 
-QStyleOptionViewItemV4 MultiUserView::indexOption(const QModelIndex &AIndex) const
+QStyleOptionViewItem MultiUserView::indexOption(const QModelIndex &AIndex) const
 {
-	QStyleOptionViewItemV4 option = viewOptions();
+	QStyleOptionViewItem option = viewOptions();
 
 	option.index = AIndex;
 	option.rect = visualRect(AIndex);
@@ -524,7 +524,7 @@ QStyleOptionViewItemV4 MultiUserView::indexOption(const QModelIndex &AIndex) con
 	option.state &= ~(QStyle::State_Sibling|QStyle::State_Item);
 
 	if (wordWrap())
-		option.features |= QStyleOptionViewItemV2::WrapText;
+		option.features |= QStyleOptionViewItem::WrapText;
 
 	return option;
 }

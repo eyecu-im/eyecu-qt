@@ -363,7 +363,7 @@ QString Statistics::userAgent() const
 
 		firstPartTemp += QString::fromLatin1(" ("
 			// Platform
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MACOS
 			"Macintosh; "
 #elif defined Q_WS_QWS
 			"QtEmbedded; "
@@ -392,7 +392,7 @@ QString Statistics::userAgent() const
 		// Operating system
 #ifdef Q_OS_AIX
 		firstPartTemp += QString::fromLatin1("AIX");
-#elif defined Q_OS_WIN32
+#elif defined Q_OS_WIN
 		firstPartTemp += windowsVersion();
 #elif defined Q_OS_DARWIN
 #if defined(__powerpc__)
@@ -487,7 +487,7 @@ QString Statistics::userAgent() const
 
 QString Statistics::windowsVersion() const
 {
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
 	OSVERSIONINFOEX versionInfo;
 
 	ZeroMemory(&versionInfo, sizeof(versionInfo));
@@ -504,7 +504,7 @@ QString Statistics::windowsVersion() const
 
 QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 {
-	QUrl url(MP_URL);	
+	QUrl url(MP_URL);
 #if QT_VERSION < 0x050000
 	url.setQueryDelimiters('=','&');
 #define APPEND_QUERY(NAME,VALUE) url.addQueryItem(NAME,VALUE)

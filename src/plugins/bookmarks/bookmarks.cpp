@@ -1051,6 +1051,7 @@ void Bookmarks::onDiscoWindowAddBookmarkActionTriggered(bool)
 		if (isReady(streamJid) && !discoJid.isEmpty())
 		{
 			QUrl url;
+			QUrlQuery query;
 			url.setScheme("xmpp");
 			URL_SET_QUERY_DELIMITERS(url,'=',';');
 			url.setPath(discoJid);
@@ -1086,6 +1087,7 @@ void Bookmarks::onDiscoWindowAddBookmarkActionTriggered(bool)
 				LOG_STRM_INFO(streamJid,QString("Adding bookmark from disco window, name=%1").arg(ref.name));
 				setBookmarks(streamJid,bookmarkList);
 			}
+			url.setQuery(query);
 		}
 	}
 }

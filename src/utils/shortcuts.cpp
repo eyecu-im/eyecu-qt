@@ -5,7 +5,12 @@
 #include <QVariant>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <thirdparty/qxtglobalshortcut/qxtglobalshortcut.h>
+
+#ifdef USE_SYSTEM_QXTGLOBALSHORTCUT
+#       include <qxtglobalshortcut/qxtglobalshortcut.h>
+#else
+#       include <thirdparty/qxtglobalshortcut/qxtglobalshortcut.h>
+#endif
 
 QKeySequence correctKeySequence(const QKeySequence &AKey)
 {
@@ -196,7 +201,7 @@ void Shortcuts::setGlobalShortcut(const QString &AId, bool AEnabled)
 	{
 		shortcut = new QxtGlobalShortcut(instance());
 		q->globalShortcutsId.insert(shortcut,AId);
-		connect(shortcut,SIGNAL(activated()),instance(),SLOT(onGlobalShortcutActivated()));
+		connect(shortcut,&QxtGlobalShortcut::activated,instance(),&Shortcuts::onGlobalShortcutActivated);
 		updateGlobal(shortcut);
 		emit instance()->shortcutEnabled(AId, AEnabled);
 	}

@@ -79,7 +79,7 @@ QString SystemManager::osVersion()
 #if defined(Q_OS_WIN) || defined(Q_OS_CYGWIN)
 		QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", QSettings::NativeFormat);
 		osver = settings.value("ProductName").toString();
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
 		switch (QSysInfo::MacintoshVersion)
 		{
 # if QT_VERSION >= 0x050400

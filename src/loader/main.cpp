@@ -7,13 +7,11 @@
 // *** >>> eyeCU >>> ***
 int main(int argc, char *argv[])
 {
-#ifdef Q_OS_MACX
-	if (QSysInfo::MacintoshVersion == QSysInfo::MV_YOSEMITE )
-	{
-		// https://bugreports.qt-project.org/browse/QTBUG-40833
-		QFont::insertSubstitution(".Helvetica Neue DeskInterface", "Helvetica Neue");
-	}
+	QApplication::setAttribute(Qt::AA_DontShowIconsInMenus,false);
+#if (QT_VERSION >= QT_VERSION_CHECK(5,6,0))
+	QApplication::setAttribute(Qt::AA_EnableHighDpiScaling,true);
 #endif
+
 	QApplication app(argc, argv);
 	app.setQuitOnLastWindowClosed(false);
 	app.addLibraryPath(app.applicationDirPath());
@@ -34,3 +32,4 @@ int main(int argc, char *argv[])
 
 	return app.exec();
 }
+

@@ -217,7 +217,7 @@ class AdvancedDelegateLayoutItem :
 	public QLayoutItem
 {
 public:
-	AdvancedDelegateLayoutItem(const AdvancedDelegateItem &AItem, const QStyleOptionViewItemV4 &AOption) : 
+	AdvancedDelegateLayoutItem(const AdvancedDelegateItem &AItem, const QStyleOptionViewItem &AOption) : 
 			QLayoutItem(Qt::AlignCenter), FItem(AItem), FOption(AOption) 
 	{
 
@@ -270,7 +270,7 @@ public:
 	{
 		return FItem;
 	}
-	const QStyleOptionViewItemV4 &itemOption() const
+	const QStyleOptionViewItem &itemOption() const
 	{
 		return FOption;
 	}
@@ -348,7 +348,7 @@ public:
 				}
 			case AdvancedDelegateItem::Branch:
 				{
-					QStyleOptionViewItemV4 option(FOption);
+					QStyleOptionViewItem option(FOption);
 					option.rect = QStyle::alignedRect(option.direction,Qt::AlignCenter,FSizeHint,option.rect);
 					QStyle *style = option.widget ? option.widget->style() : QApplication::style();
 					style->proxy()->drawPrimitive(QStyle::PE_IndicatorBranch, &option, APainter, FOption.widget);
@@ -375,7 +375,7 @@ public:
 private:
 	mutable QSize FSizeHint;
 	AdvancedDelegateItem FItem;
-	QStyleOptionViewItemV4 FOption;
+	QStyleOptionViewItem FOption;
 };
 
 /**************************
@@ -412,7 +412,7 @@ struct AdvancedItemDelegate::ItemsLayout
 {
 	QBoxLayout *mainLayout;
 	QBoxLayout *middleLayout;
-	QStyleOptionViewItemV4 indexOption;
+	QStyleOptionViewItem indexOption;
 	QMap<int/*id*/, AdvancedDelegateLayoutItem *> items;
 	QMap<int/*position*/, QBoxLayout *> positionLayouts;
 	QMap<int/*position*/, QMap<int/*floor*/, QBoxLayout *> > floorLayouts;
@@ -563,7 +563,7 @@ const QItemEditorFactory *AdvancedItemDelegate::editorFactory() const
 
 void AdvancedItemDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const
 {
-	QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
+	QStyleOptionViewItem indexOption = indexStyleOption(AOption,AIndex);
 
 #if defined(Q_OS_WIN) && !defined(QT_NO_STYLE_WINDOWSVISTA)
 	QStyle *style = indexOption.widget ? indexOption.widget->style() : QApplication::style();
@@ -597,7 +597,7 @@ QSize AdvancedItemDelegate::sizeHint(const QStyleOptionViewItem &AOption, const 
 	if (hint.isValid())
 		return qvariant_cast<QSize>(hint);
 
-	QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex,true);
+	QStyleOptionViewItem indexOption = indexStyleOption(AOption,AIndex,true);
 	ItemsLayout *layout = createItemsLayout(getIndexItems(AIndex,indexOption),indexOption);
 	QSize size = layout->mainLayout->sizeHint() + QSize(FMargins.left()+FMargins.right(),FMargins.top()+FMargins.bottom());
 	destroyItemsLayout(layout);
@@ -616,7 +616,7 @@ QWidget *AdvancedItemDelegate::createEditor(QWidget *AParent, const QStyleOption
 			QVariant value = AIndex.data(FEditRole);
 			if (FEditItemId != AdvancedDelegateItem::NullId)
 			{
-				QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex,true);
+				QStyleOptionViewItem indexOption = indexStyleOption(AOption,AIndex,true);
 				AdvancedDelegateItems items = getIndexItems(AIndex,indexOption);
 				value = items.value(FEditItemId).c->value;
 			}
@@ -664,7 +664,7 @@ void AdvancedItemDelegate::updateEditorGeometry(QWidget *AEditor, const QStyleOp
 	}
 }
 
-AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIndex, const QStyleOptionViewItemV4 &AIndexOption) const
+AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIndex, const QStyleOptionViewItem &AIndexOption) const
 {
 	AdvancedDelegateItems items = AIndex.data(FItemsRole).value<AdvancedDelegateItems>();
 
@@ -678,7 +678,7 @@ AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIn
 		}
 	}
 
-	if (AIndexOption.features & QStyleOptionViewItemV4::HasCheckIndicator)
+	if (AIndexOption.features & QStyleOptionViewItem::HasCheckIndicator)
 	{
 		AdvancedDelegateItem &checkItem = items[AdvancedDelegateItem::CheckStateId];
 		if (checkItem.d->kind == AdvancedDelegateItem::Null)
@@ -689,7 +689,7 @@ AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIn
 		}
 	}
 
-	if (AIndexOption.features & QStyleOptionViewItemV4::HasDecoration)
+	if (AIndexOption.features & QStyleOptionViewItem::HasDecoration)
 	{
 		AdvancedDelegateItem &decorationItem = items[AdvancedDelegateItem::DecorationId];
 		if (decorationItem.d->kind == AdvancedDelegateItem::Null)
@@ -700,7 +700,7 @@ AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIn
 		}
 	}
 
-	if (AIndexOption.features & QStyleOptionViewItemV4::HasDisplay)
+	if (AIndexOption.features & QStyleOptionViewItem::HasDisplay)
 	{
 		AdvancedDelegateItem &displayItem = items[AdvancedDelegateItem::DisplayId];
 		if (displayItem.d->kind == AdvancedDelegateItem::Null)
@@ -741,9 +741,9 @@ AdvancedDelegateItems AdvancedItemDelegate::getIndexItems(const QModelIndex &AIn
 	return items;
 }
 
-QStyleOptionViewItemV4 AdvancedItemDelegate::indexStyleOption(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex, bool ACorrect) const
+QStyleOptionViewItem AdvancedItemDelegate::indexStyleOption(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex, bool ACorrect) const
 {
-	QStyleOptionViewItemV4 indexOption = AOption;
+	QStyleOptionViewItem indexOption = AOption;
 
 	if (ACorrect)
 	{
@@ -771,29 +771,29 @@ QStyleOptionViewItemV4 AdvancedItemDelegate::indexStyleOption(const QStyleOption
 
 	value = AIndex.data(Qt::CheckStateRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasCheckIndicator;
+		indexOption.features |= QStyleOptionViewItem::HasCheckIndicator;
 
 	value = AIndex.data(Qt::DecorationRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasDecoration;
+		indexOption.features |= QStyleOptionViewItem::HasDecoration;
 
 	value = AIndex.data(Qt::DisplayRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasDisplay;
+		indexOption.features |= QStyleOptionViewItem::HasDisplay;
 
 	indexOption.backgroundBrush = qvariant_cast<QBrush>(AIndex.data(Qt::BackgroundRole));
 
 	return indexOption;
 }
 
-QStyleOptionViewItemV4 AdvancedItemDelegate::itemStyleOption(const AdvancedDelegateItem &AItem, const QStyleOptionViewItemV4 &AIndexOption) const
+QStyleOptionViewItem AdvancedItemDelegate::itemStyleOption(const AdvancedDelegateItem &AItem, const QStyleOptionViewItem &AIndexOption) const
 {
-	QStyleOptionViewItemV4 itemOption = AIndexOption;
+	QStyleOptionViewItem itemOption = AIndexOption;
 
 	if (AItem.d->kind == AdvancedDelegateItem::CheckBox)
 	{
 		itemOption.state &= ~QStyle::State_HasFocus;
-		itemOption.features |= QStyleOptionViewItemV2::HasCheckIndicator;
+		itemOption.features |= QStyleOptionViewItem::HasCheckIndicator;
 		itemOption.checkState = static_cast<Qt::CheckState>(AItem.c->value.toInt());
 
 		switch (itemOption.checkState)
@@ -811,7 +811,7 @@ QStyleOptionViewItemV4 AdvancedItemDelegate::itemStyleOption(const AdvancedDeleg
 	}
 	else
 	{
-		itemOption.features &= ~QStyleOptionViewItemV2::HasCheckIndicator;
+		itemOption.features &= ~QStyleOptionViewItem::HasCheckIndicator;
 	}
 
 	if (!AItem.c->value.isNull() && AItem.c->value.canConvert<QString>())
@@ -879,7 +879,7 @@ QStyleOptionViewItemV4 AdvancedItemDelegate::itemStyleOption(const AdvancedDeleg
 	return itemOption;
 }
 
-AdvancedItemDelegate::ItemsLayout *AdvancedItemDelegate::createItemsLayout(const AdvancedDelegateItems &AItems, const QStyleOptionViewItemV4 &AIndexOption) const
+AdvancedItemDelegate::ItemsLayout *AdvancedItemDelegate::createItemsLayout(const AdvancedDelegateItems &AItems, const QStyleOptionViewItem &AIndexOption) const
 {
 	static const Qt::Alignment layoutAlign = Qt::AlignLeft|Qt::AlignVCenter;
 
@@ -899,7 +899,7 @@ AdvancedItemDelegate::ItemsLayout *AdvancedItemDelegate::createItemsLayout(const
 	QMap<int, QMap<int, QMultiMap<int, AdvancedDelegateLayoutItem *> > > orderedItems;
 	for (AdvancedDelegateItems::const_iterator it = AItems.constBegin(); it!=AItems.constEnd(); ++it)
 	{
-		QStyleOptionViewItemV4 itemOption = itemStyleOption(it.value(),AIndexOption);
+		QStyleOptionViewItem itemOption = itemStyleOption(it.value(),AIndexOption);
 		if (isItemVisible(it.value(),itemOption))
 		{
 			quint32 itemId = it->d->id;
@@ -987,7 +987,7 @@ QRect AdvancedItemDelegate::itemRect(quint32 AItemId, const QStyleOptionViewItem
 	QRect rect;
 	if (AIndex.isValid() && !AOption.rect.isEmpty())
 	{
-		QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
+		QStyleOptionViewItem indexOption = indexStyleOption(AOption,AIndex);
 		ItemsLayout *layout = createItemsLayout(getIndexItems(AIndex,indexOption),indexOption);
 		rect = itemRect(AItemId,layout,indexOption.rect);
 		destroyItemsLayout(layout);
@@ -1016,7 +1016,7 @@ quint32 AdvancedItemDelegate::itemAt(const QPoint &APoint, const QStyleOptionVie
 	quint32 itemId = AdvancedDelegateItem::NullId;
 	if (AIndex.isValid() && !AOption.rect.isEmpty())
 	{
-		QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
+		QStyleOptionViewItem indexOption = indexStyleOption(AOption,AIndex);
 		ItemsLayout *layout = createItemsLayout(getIndexItems(AIndex,indexOption),indexOption);
 		itemId = itemAt(APoint,layout,indexOption.rect);
 		destroyItemsLayout(layout);
@@ -1024,7 +1024,7 @@ quint32 AdvancedItemDelegate::itemAt(const QPoint &APoint, const QStyleOptionVie
 	return itemId;
 }
 
-bool AdvancedItemDelegate::isItemVisible(const AdvancedDelegateItem &AItem, const QStyleOptionViewItemV4 &AItemOption)
+bool AdvancedItemDelegate::isItemVisible(const AdvancedDelegateItem &AItem, const QStyleOptionViewItem &AItemOption)
 {
 	if ((AItem.d->flags & AdvancedDelegateItem::Hidden) > 0)
 		return false;
@@ -1042,7 +1042,7 @@ bool AdvancedItemDelegate::isItemVisible(const AdvancedDelegateItem &AItem, cons
 	case AdvancedDelegateItem::Branch:
 		return (AItemOption.state & QStyle::State_Children)>0;
 	case AdvancedDelegateItem::CheckBox:
-		return (AItemOption.features & QStyleOptionViewItemV4::HasCheckIndicator)>0;
+		return (AItemOption.features & QStyleOptionViewItem::HasCheckIndicator)>0;
 	case AdvancedDelegateItem::Stretch:
 		return true;
 	case AdvancedDelegateItem::CustomWidget:
@@ -1052,7 +1052,7 @@ bool AdvancedItemDelegate::isItemVisible(const AdvancedDelegateItem &AItem, cons
 	}
 }
 
-QSize AdvancedItemDelegate::itemSizeHint(const AdvancedDelegateItem &AItem, const QStyleOptionViewItemV4 &AItemOption)
+QSize AdvancedItemDelegate::itemSizeHint(const AdvancedDelegateItem &AItem, const QStyleOptionViewItem &AItemOption)
 {
 	static const QSize zeroSize = QSize(0,0);
 	static const QSize branchSize = QSize(12,12);
@@ -1116,13 +1116,13 @@ QSize AdvancedItemDelegate::itemSizeHint(const AdvancedDelegateItem &AItem, cons
 	}
 }
 
-void AdvancedItemDelegate::drawBackground(QPainter *APainter, const QStyleOptionViewItemV4 &AIndexOption) const
+void AdvancedItemDelegate::drawBackground(QPainter *APainter, const QStyleOptionViewItem &AIndexOption) const
 {
 	QStyle *style = AIndexOption.widget ? AIndexOption.widget->style() : QApplication::style();
 	style->proxy()->drawPrimitive(QStyle::PE_PanelItemViewItem,&AIndexOption,APainter,AIndexOption.widget);
 }
 
-void AdvancedItemDelegate::drawFocusRect(QPainter *APainter, const QStyleOptionViewItemV4 &AIndexOption, const QRect &ARect) const
+void AdvancedItemDelegate::drawFocusRect(QPainter *APainter, const QStyleOptionViewItem &AIndexOption, const QRect &ARect) const
 {
 	Q_UNUSED(ARect);
 	if (FFocusRectVisible && (AIndexOption.state & QStyle::State_HasFocus)>0)

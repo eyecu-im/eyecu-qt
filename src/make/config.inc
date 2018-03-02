@@ -13,6 +13,11 @@ CONFIG(debug, debug|release) {
   DEFINES               += DEBUG_MODE
 }
 
+#Exclude QtWebEngine from dependencies
+CONFIG(no_webengine) {
+  DEFINES               += NO_WEBENGINE
+}
+
 #Configurable values
 isEmpty(INSTALL_PREFIX) {
   win32:INSTALL_PREFIX   = "c:"

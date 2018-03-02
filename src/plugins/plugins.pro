@@ -1,6 +1,8 @@
 TEMPLATE = subdirs
 
-include(pkgtest.inc)
+qtHaveModule(webkit): !CONFIG(no_webkit) {
+  SUBDIRS += adiummessagestyle
+}
 
 SUBDIRS += optionsmanager
 SUBDIRS += xmppstreams

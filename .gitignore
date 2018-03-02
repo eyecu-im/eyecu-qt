@@ -1,6 +1,8 @@
 #################
 ## eyeCU
 #################
+*.dll
+*.exe
 /eyeCU/
 /plugins/*
 /src/libs/*
@@ -25,6 +27,7 @@ moc_*.cpp
 Makefile
 Makefile.Debug
 Makefile.Release
+.qmake.stash
 
 
 #################
@@ -36,6 +39,7 @@ Makefile.Release
 #################
 ## Qt Creator
 #################
+*.pro.user
 *.pro.user*
 *.pro.user.*
 
@@ -91,6 +95,9 @@ build/
 *.pidb
 *.log
 *.scc
+*.embed.manifest
+*_manifest.rc
+*_manifest.res
 
 # Visual C++ cache files
 ipch/
@@ -180,6 +187,7 @@ UpgradeLog*.htm
 App_Data/*.mdf
 App_Data/*.ldf
 
+
 #############
 ## Windows detritus
 #############
@@ -199,5 +207,7 @@ $RECYCLE.BIN/
 !/src/packages/macosx/DS_Store
 *.xcodeproj
 
-# SVN
-/.svn
+# Microsoft Visual Code and Studio 2017
+.vscode
+.vs
+CMakeSettings.json

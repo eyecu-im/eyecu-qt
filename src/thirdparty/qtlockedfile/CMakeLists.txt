@@ -16,7 +16,7 @@ endif (UNIX)
 add_definitions(-DUNICODE)
 
 add_library(qtlockedfile STATIC ${SOURCES})
-target_link_libraries(qtlockedfile ${QT_LIBRARIES})
+target_link_libraries(qtlockedfile Qt5::Widgets)
 set_target_properties(qtlockedfile PROPERTIES ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/src/libs"
 	COMPILE_FLAGS "${CMAKE_SHARED_LIBRARY_C_FLAGS}"
 	LINK_FLAGS "${CMAKE_SHARED_LIBRARY_C_FLAGS}")

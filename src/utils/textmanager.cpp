@@ -33,8 +33,8 @@ void TextManager::substituteHtmlText(QString &AHtml, const QString &ASourceText,
 // *** >>> eyeCU >>> ***
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
-	QRegExp regExpBody("<body.*>(.*)</body>");
-	regExpBody.setMinimal(false);
+	QRegExp body("<body.*>(.*)</body>");
+	body.setMinimal(false);
 // *** <<< eyeCU <<< ***
 	QDomDocument doc;
 	QDomElement  html=doc.createElementNS(NS_XHTML_IM, "html");
@@ -90,6 +90,14 @@ void TextManager::insertQuotedFragment(QTextCursor ACursor, const QTextDocumentF
 {
 	if (!AFragment.isEmpty())
 	{
+		QTextDocument doc;
+		QTextCursor cursor(&doc);
+		cursor.insertFragment(AFragment);
+
+		cursor.movePosition(QTextCursor::Start);
+		do { cursor.insertText("> "); } while (cursor.movePosition(QTextCursor::NextBlock));
+		cursor.select(QTextCursor::Document);
+
 		ACursor.beginEditBlock();
 		if (!ACursor.atBlockStart())
 // *** <<< eyeCU <<< ***
