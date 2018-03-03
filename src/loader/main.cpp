@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 // *** <<< eyeCU <<< ***
 	splash.connect(&pm, SIGNAL(closeSplash(QWidget*)), SLOT(finishSplash(QWidget*)));
 	splash.connect(&pm, SIGNAL(splashMessage(QString)), SLOT(displayMessage(QString)));
+	splash.connect(&pm, SIGNAL(showSplash()), SLOT(show()));
 // *** >>> eyeCU >>> ***
 	pm.restart();
 

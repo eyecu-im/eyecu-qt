@@ -635,9 +635,10 @@ void PluginManager::finishQuit()
 		{
 			FShutdownKind = SK_WORK;
 			FShutdownDelayCount = 0;
-
-			SPLASH("Loading: Settings"); // *** <<< eyeCU >>> ***
-
+// *** <<< eyeCU <<< ***
+			emit showSplash();
+			SPLASH("Loading: Settings");
+// *** >>> eyeCU >>> ***
 			loadSettings();
 			if (!loadPlugins())
 			{

@@ -60,6 +60,7 @@ signals:
 	void aboutToQuit();
 	void shutdownStarted();
 // *** <<< eyeCU <<< ***
+	void showSplash();
 	void splashMessage(const QString &AMessage);
 	void closeSplash(QWidget *AMainWindow = NULL);
 // *** >>> eyeCU >>> ***
