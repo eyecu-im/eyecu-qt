@@ -515,17 +515,14 @@ bool MultiUserChatWindow::messageDisplay(const Message &AMessage, int ADirection
 			if (user!=NULL && user->role()==MUC_ROLE_VISITOR)
 			{
 				displayed = true;
-
 				QUrl grantUrl;
-				QUrlQuery grantQuery;
 				grantUrl.setScheme(MUC_URL_SCHEME);
 				grantUrl.setPath(user->userJid().full());
 				grantUrl.setFragment(MUC_URL_GRANT_VOICE);
-				grantQuery.addQueryItem("id",AMessage.id());
-				grantQuery.addQueryItem("jid",reqJid.full());
-				grantQuery.addQueryItem("role",reqRole);
-				grantQuery.addQueryItem("roomnick",reqNick);
-				grantUrl.setQuery(grantQuery);
+                URL_ADD_QUERY_ITEM(grantUrl,"id",AMessage.id());
+                URL_ADD_QUERY_ITEM(grantUrl,"jid",reqJid.full());
+                URL_ADD_QUERY_ITEM(grantUrl,"role",reqRole);
+                URL_ADD_QUERY_ITEM(grantUrl,"roomnick",reqNick);
 
 				QString html = tr("User %1 requests a voice in the conference, %2").arg(HTML_ESCAPE(reqNick),QString("<a href='%1'>%2</a>").arg(grantUrl.toString(),tr("Grant Voice")));
 				showHTMLStatusMessage(FViewWidget,html,IMessageStyleContentOptions::TypeNotification);

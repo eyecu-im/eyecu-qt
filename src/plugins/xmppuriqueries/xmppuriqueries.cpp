@@ -117,8 +117,8 @@ QString XmppUriQueries::makeXmppUri(const Jid &AContactJid, const QString &AActi
 		QList< QPair<QString, QString> > queryItems;
 		queryItems.append(qMakePair<QString,QString>(AAction,QString::null));
 		for(QMultiMap<QString, QString>::const_iterator it=AParams.constBegin(); it!=AParams.end(); ++it)
-			query.append(qMakePair<QString,QString>(it.key(),it.value()));
-		URL_SET_QUERY_ITEMS(url,query);
+            queryItems.append(qMakePair<QString,QString>(it.key(),it.value()));
+        URL_SET_QUERY_ITEMS(url,queryItems);
 
 		return url.toString().replace(QString("?%1=;").arg(AAction),QString("?%1;").arg(AAction));
 	}

@@ -1,21 +1,21 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+п»ї<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
  <context>
   <name>DataStreamsPublisher</name>
   <message>
    <source>Data Streams Publisher</source>
-   <translation>Видавець потоків даних</translation>
+   <translation>Р’РёРґР°РІРµС†СЊ РїРѕС‚РѕРєС–РІ РґР°РЅРёС…</translation>
   </message>
   <message>
    <source>Allows to publish available data streams</source>
-   <translation>Дозволяє публікувати доступні потоки даних</translation>
+   <translation>Р”РѕР·РІРѕР»СЏС” РїСѓР±Р»С–РєСѓРІР°С‚Рё РґРѕСЃС‚СѓРїРЅС– РїРѕС‚РѕРєРё РґР°РЅРёС…</translation>
   </message>
   <message>
    <source>Data Streams Publication</source>
-   <translation>Видані потоки даних</translation>
+   <translation>Р’РёРґР°РЅС– РїРѕС‚РѕРєРё РґР°РЅРёС…</translation>
   </message>
   <message>
    <source>Supports the publication of the data streams</source>
-   <translation>Підтримує публікацію потоків даних</translation>
+   <translation>РџС–РґС‚СЂРёРјСѓС” РїСѓР±Р»С–РєР°С†С–СЋ РїРѕС‚РѕРєС–РІ РґР°РЅРёС…</translation>
   </message>
  </context>
 </TS>

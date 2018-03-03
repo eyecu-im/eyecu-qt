@@ -210,7 +210,7 @@ void IconsetDelegate::drawCheckButton(QPainter *APainter, const QStyleOptionView
 {
 	if (ARect.isValid())
 	{
-		QStyleOptionViewItem checkOption(AIndexOption);
+        QStyleOptionViewItemV4 checkOption(AIndexOption);
 		checkOption.rect = ARect;
 		checkOption.state = checkOption.state & ~QStyle::State_HasFocus;
 

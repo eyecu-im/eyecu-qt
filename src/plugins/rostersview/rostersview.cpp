@@ -1057,10 +1057,10 @@ void RostersView::setDropIndicatorRect(const QRect &ARect)
 
 QStyleOptionViewItem RostersView::indexOption(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const
 {
-	QStyleOptionViewItem option = AOption;
+    QStyleOptionViewItemV4 option = AOption;
 	
 	if (wordWrap())
-		option.features = QStyleOptionViewItem::WrapText;
+        option.features = QStyleOptionViewItemV4::WrapText;
 	option.widget = this;
 	option.locale = locale();
 	option.locale.setNumberOptions(QLocale::OmitGroupSeparator);
@@ -1231,7 +1231,7 @@ void RostersView::mouseMoveEvent(QMouseEvent *AEvent)
 			QAbstractItemDelegate *itemDeletage = itemDelegate(FPressedIndex);
 			if (itemDeletage)
 			{
-				QStyleOptionViewItem option = indexOption(viewOptions(),FPressedIndex);
+                QStyleOptionViewItemV4 option = indexOption(viewOptions(),FPressedIndex);
 				QPoint indexPos = option.rect.topLeft();
 				option.state &= ~QStyle::State_Selected;
 				option.state &= ~QStyle::State_MouseOver;

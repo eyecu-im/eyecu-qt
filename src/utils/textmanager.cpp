@@ -33,8 +33,8 @@ void TextManager::substituteHtmlText(QString &AHtml, const QString &ASourceText,
 // *** >>> eyeCU >>> ***
 QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 {
-	QRegExp body("<body.*>(.*)</body>");
-	body.setMinimal(false);
+    QRegExp regExpBody("<body.*>(.*)</body>");
+    regExpBody.setMinimal(false);
 // *** <<< eyeCU <<< ***
 	QDomDocument doc;
 	QDomElement  html=doc.createElementNS(NS_XHTML_IM, "html");

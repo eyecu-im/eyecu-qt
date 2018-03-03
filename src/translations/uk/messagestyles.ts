@@ -3,95 +3,95 @@
   <name>MessageStyleManager</name>
   <message>
    <source>Message Styles Manager</source>
-   <translation>Менеджер стилів повідомлень</translation>
+   <translation>РњРµРЅРµРґР¶РµСЂ СЃС‚РёР»С–РІ РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Allows to use different styles to display messages</source>
-   <translation>Дозволяє використовувати різні стилі для повідомлень</translation>
+   <translation>Р”РѕР·РІРѕР»СЏС” РІРёРєРѕСЂРёСЃС‚РѕРІСѓРІР°С‚Рё СЂС–Р·РЅС– СЃС‚РёР»С– РґР»СЏ РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Messages styles</source>
-   <translation>Стилі повідомлень</translation>
+   <translation>РЎС‚РёР»С– РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Show date separators in message window</source>
-   <translation>Показувати дати у вікні повідомлень</translation>
+   <translation>РџРѕРєР°Р·СѓРІР°С‚Рё РґР°С‚Рё Сѓ РІС–РєРЅС– РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>January</source>
-   <translation>Січень</translation>
+   <translation>РЎС–С‡РµРЅСЊ</translation>
   </message>
   <message>
    <source>February</source>
-   <translation>Лютий</translation>
+   <translation>Р›СЋС‚РёР№</translation>
   </message>
   <message>
    <source>March</source>
-   <translation>Березень</translation>
+   <translation>Р‘РµСЂРµР·РµРЅСЊ</translation>
   </message>
   <message>
    <source>April</source>
-   <translation>Квітень</translation>
+   <translation>РљРІС–С‚РµРЅСЊ</translation>
   </message>
   <message>
    <source>May</source>
-   <translation>Травень</translation>
+   <translation>РўСЂР°РІРµРЅСЊ</translation>
   </message>
   <message>
    <source>June</source>
-   <translation>Червень</translation>
+   <translation>Р§РµСЂРІРµРЅСЊ</translation>
   </message>
   <message>
    <source>July</source>
-   <translation>Липень</translation>
+   <translation>Р›РёРїРµРЅСЊ</translation>
   </message>
   <message>
    <source>August</source>
-   <translation>Серпень</translation>
+   <translation>РЎРµСЂРїРµРЅСЊ</translation>
   </message>
   <message>
    <source>September</source>
-   <translation>Вересень</translation>
+   <translation>Р’РµСЂРµСЃРµРЅСЊ</translation>
   </message>
   <message>
    <source>October</source>
-   <translation>Жовтень</translation>
+   <translation>Р–РѕРІС‚РµРЅСЊ</translation>
   </message>
   <message>
    <source>November</source>
-   <translation>Листопад</translation>
+   <translation>Р›РёСЃС‚РѕРїР°Рґ</translation>
   </message>
   <message>
    <source>December</source>
-   <translation>Грудень</translation>
+   <translation>Р“СЂСѓРґРµРЅСЊ</translation>
   </message>
   <message>
    <source>Monday</source>
-   <translation>Понеділок</translation>
+   <translation>РџРѕРЅРµРґС–Р»РѕРє</translation>
   </message>
   <message>
    <source>Tuesday</source>
-   <translation>Вівторок</translation>
+   <translation>Р’С–РІС‚РѕСЂРѕРє</translation>
   </message>
   <message>
    <source>Wednesday</source>
-   <translation>Середа</translation>
+   <translation>РЎРµСЂРµРґР°</translation>
   </message>
   <message>
    <source>Thursday</source>
-   <translation>Четвер</translation>
+   <translation>Р§РµС‚РІРµСЂ</translation>
   </message>
   <message>
    <source>Friday</source>
-   <translation>П&apos;ятниця</translation>
+   <translation>Рџ&apos;СЏС‚РЅРёС†СЏ</translation>
   </message>
   <message>
    <source>Saturday</source>
-   <translation>Субота</translation>
+   <translation>РЎСѓР±РѕС‚Р°</translation>
   </message>
   <message>
    <source>Sunday</source>
-   <translation>Неділя</translation>
+   <translation>РќРµРґС–Р»СЏ</translation>
   </message>
   <message>
    <source>%1, %2 dd</source>
@@ -99,7 +99,7 @@
   </message>
   <message>
    <source>Today</source>
-   <translation>Сьогодні</translation>
+   <translation>РЎСЊРѕРіРѕРґРЅС–</translation>
   </message>
   <message>
    <source>%1, %2 dd, yyyy</source>
@@ -119,129 +119,129 @@
   </message>
   <message>
    <source>Use monospaced font for unformatted text</source>
-   <translation>Використовувати моноширокий шрифт для неформатованого тексту</translation>
+   <translation>Р’РёРєРѕСЂРёСЃС‚РѕРІСѓРІР°С‚Рё РјРѕРЅРѕС€РёСЂРѕРєРёР№ С€СЂРёС„С‚ РґР»СЏ РЅРµС„РѕСЂРјР°С‚РѕРІР°РЅРѕРіРѕ С‚РµРєСЃС‚Сѓ</translation>
   </message>
  </context>
  <context>
   <name>StyleEditOptionsDialog</name>
   <message>
    <source>Preview</source>
-   <translation>Показати</translation>
+   <translation>РџРѕРєР°Р·Р°С‚Рё</translation>
   </message>
   <message>
    <source>Message Style - %1 - %2</source>
-   <translation>Стиль повідомлень - %1 - %2</translation>
+   <translation>РЎС‚РёР»СЊ РїРѕРІС–РґРѕРјР»РµРЅСЊ - %1 - %2</translation>
   </message>
   <message>
    <source>The message with a error code %1 is received</source>
-   <translation>Отримано повідомлення з помилкою %1</translation>
+   <translation>РћС‚СЂРёРјР°РЅРѕ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Р· РїРѕРјРёР»РєРѕСЋ %1</translation>
   </message>
   <message>
    <source>Error description</source>
-   <translation>Опис помилки</translation>
+   <translation>РћРїРёСЃ РїРѕРјРёР»РєРё</translation>
   </message>
   <message>
    <source>Subject: Message subject</source>
-   <translation>Тема: Тема повідомлення</translation>
+   <translation>РўРµРјР°: РўРµРјР° РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Message body line 1</source>
-   <translation>1 стрічка повідомлення</translation>
+   <translation>1 СЃС‚СЂС–С‡РєР° РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Message body line 2</source>
-   <translation>2 стрічка повідомлення</translation>
+   <translation>2 СЃС‚СЂС–С‡РєР° РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Incoming history message</source>
-   <translation>Історія вхідних повідомлень</translation>
+   <translation>Р†СЃС‚РѕСЂС–СЏ РІС…С–РґРЅРёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Incoming history consecutive message</source>
-   <translation>Історія послідовних вхідних повідомлень</translation>
+   <translation>Р†СЃС‚РѕСЂС–СЏ РїРѕСЃР»С–РґРѕРІРЅРёС… РІС…С–РґРЅРёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Incoming status message</source>
-   <translation>Статус вхідного повідомлення</translation>
+   <translation>РЎС‚Р°С‚СѓСЃ РІС…С–РґРЅРѕРіРѕ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Outgoing history message</source>
-   <translation>Історія вихідних повідомлень</translation>
+   <translation>Р†СЃС‚РѕСЂС–СЏ РІРёС…С–РґРЅРёС… РїРѕРІС–РґРѕРјР»РµРЅСЊ</translation>
   </message>
   <message>
    <source>Outgoing status message</source>
-   <translation>Статус вихідного повідомлення</translation>
+   <translation>РЎС‚Р°С‚СѓСЃ РІРёС…С–РґРЅРѕРіРѕ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Conference topic</source>
-   <translation>Тема конференції</translation>
+   <translation>РўРµРјР° РєРѕРЅС„РµСЂРµРЅС†С–С—</translation>
   </message>
   <message>
    <source>Incoming message</source>
-   <translation>Вхідне повідомлення</translation>
+   <translation>Р’С…С–РґРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Incoming event</source>
-   <translation>Віхдна подія</translation>
+   <translation>Р’С–С…РґРЅР° РїРѕРґС–СЏ</translation>
   </message>
   <message>
    <source>Incoming notification</source>
-   <translation>Вхідне сповіщення</translation>
+   <translation>Р’С…С–РґРЅРµ СЃРїРѕРІС–С‰РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Incoming mention message</source>
-   <translation>Вхідне повідомлення зі згадуванням</translation>
+   <translation>Р’С…С–РґРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ Р·С– Р·РіР°РґСѓРІР°РЅРЅСЏРј</translation>
   </message>
   <message>
    <source>Outgoing message</source>
-   <translation>Вихідне повідомлення</translation>
+   <translation>Р’РёС…С–РґРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Outgoing consecutive message</source>
-   <translation>Вихідне послідовне повідомлення</translation>
+   <translation>Р’РёС…С–РґРЅРµ РїРѕСЃР»С–РґРѕРІРЅРµ РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ</translation>
   </message>
   <message>
    <source>Contact</source>
-   <translation>Контакт</translation>
+   <translation>РљРѕРЅС‚Р°РєС‚</translation>
   </message>
   <message>
    <source>You</source>
-   <translation>Ви</translation>
+   <translation>Р’Рё</translation>
   </message>
   <message>
    <source>speaks of himself in the third person</source>
-   <translation>говорить про себе у третій особі</translation>
+   <translation>РіРѕРІРѕСЂРёС‚СЊ РїСЂРѕ СЃРµР±Рµ Сѓ С‚СЂРµС‚С–Р№ РѕСЃРѕР±С–</translation>
   </message>
  </context>
  <context>
   <name>StyleSelectOptionsWidget</name>
   <message>
    <source>Chat:</source>
-   <translation>Чат:</translation>
+   <translation>Р§Р°С‚:</translation>
   </message>
   <message>
    <source>Conference:</source>
-   <translation>Конференція:</translation>
+   <translation>РљРѕРЅС„РµСЂРµРЅС†С–СЏ:</translation>
   </message>
   <message>
    <source>Message:</source>
-   <translation>Повідомлення:</translation>
+   <translation>РџРѕРІС–РґРѕРјР»РµРЅРЅСЏ:</translation>
   </message>
   <message>
    <source>Headline:</source>
-   <translation>Заголовок:</translation>
+   <translation>Р—Р°РіРѕР»РѕРІРѕРє:</translation>
   </message>
   <message>
    <source>Error:</source>
-   <translation>Помилка:</translation>
+   <translation>РџРѕРјРёР»РєР°:</translation>
   </message>
   <message>
    <source>Unknown:</source>
-   <translation>Невідомо:</translation>
+   <translation>РќРµРІС–РґРѕРјРѕ:</translation>
   </message>
   <message>
    <source>Settings...</source>
-   <translation>Налаштування...</translation>
+   <translation>РќР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ...</translation>
   </message>
  </context>
 </TS>

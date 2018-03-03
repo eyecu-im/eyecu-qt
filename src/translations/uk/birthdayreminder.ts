@@ -1,50 +1,50 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+п»ї<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
  <context>
   <name>BirthdayReminder</name>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="50"/>
    <source>Birthday Reminder</source>
-   <translation>Нагадування про День народження</translation>
+   <translation>РќР°РіР°РґСѓРІР°РЅРЅСЏ РїСЂРѕ Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="51"/>
    <source>Reminds about birthdays of your friends</source>
-   <translation>Нагадує про дні народження друзів</translation>
+   <translation>РќР°РіР°РґСѓС” РїСЂРѕ РґРЅС– РЅР°СЂРѕРґР¶РµРЅРЅСЏ РґСЂСѓР·С–РІ</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="144"/>
    <source>When reminding of upcoming birthdays</source>
-   <translation>Коли нагадувати про дні народження</translation>
+   <translation>РљРѕР»Рё РЅР°РіР°РґСѓРІР°С‚Рё РїСЂРѕ РґРЅС– РЅР°СЂРѕРґР¶РµРЅРЅСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="284"/>
    <source>Birthday remind</source>
-   <translation>Пам&apos;ятка про День народження</translation>
+   <translation>РџР°Рј&apos;СЏС‚РєР° РїСЂРѕ Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday today!</source>
-   <translation>Сьогодні День народження!</translation>
+   <translation>РЎСЊРѕРіРѕРґРЅС– Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ!</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
  %1</source>
-   <translation><numerusform>День народження через %n день,
- %1</numerusform><numerusform>День Народження через %n днів,
- %1</numerusform><numerusform>День народження за %n днів,
+   <translation><numerusform>Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ С‡РµСЂРµР· %n РґРµРЅСЊ,
+ %1</numerusform><numerusform>Р”РµРЅСЊ РќР°СЂРѕРґР¶РµРЅРЅСЏ С‡РµСЂРµР· %n РґРЅС–РІ,
+ %1</numerusform><numerusform>Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ Р·Р° %n РґРЅС–РІ,
  %1</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>
    <source>%1 turns %n</source>
-   <translation><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform></translation>
+   <translation><numerusform>%1 РІРёРїРѕРІРЅРёС‚СЊСЃСЏ %n</numerusform><numerusform>%1 РІРёРїРѕРІРЅРёС‚СЊСЃСЏ %n</numerusform><numerusform>%1 РІРёРїРѕРІРЅРёС‚СЊСЃСЏ %n</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday in %n day(s)!</source>
-   <translation><numerusform>День народження за %n день!</numerusform><numerusform>День народження за %n днів!</numerusform><numerusform>День народження за %n днів!</numerusform></translation>
+   <translation><numerusform>Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ Р·Р° %n РґРµРЅСЊ!</numerusform><numerusform>Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ Р·Р° %n РґРЅС–РІ!</numerusform><numerusform>Р”РµРЅСЊ РЅР°СЂРѕРґР¶РµРЅРЅСЏ Р·Р° %n РґРЅС–РІ!</numerusform></translation>
   </message>
  </context>
 </TS>

@@ -71,7 +71,7 @@
     </message>
     <message>
       <source>Loading plugin: %1</source>
-      <translation>Загружается плаагин: %1</translation>
+      <translation>Загружается плагин: %1</translation>
     </message>
     <message>
       <source>Initializing plugin connections: %1</source>

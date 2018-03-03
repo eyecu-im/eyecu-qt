@@ -1,10 +1,10 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+п»ї<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
  <context>
   <name>CompressFeature</name>
   <message>
    <location filename="../../plugins/compress/compressfeature.cpp" line="203"/>
    <source>Error code: %1</source>
-   <translation>Код помилки: %1</translation>
+   <translation>РљРѕРґ РїРѕРјРёР»РєРё: %1</translation>
   </message>
  </context>
  <context>
@@ -12,52 +12,52 @@
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="29"/>
    <source>Stream Compression</source>
-   <translation>Стискання потоку</translation>
+   <translation>РЎС‚РёСЃРєР°РЅРЅСЏ РїРѕС‚РѕРєСѓ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="30"/>
    <source>Allows to compress a stream of messages sent and received from the server</source>
-   <translation>Дозволяє стискати потік повідомлення що надсилаються та приймаються сервером</translation>
+   <translation>Р”РѕР·РІРѕР»СЏС” СЃС‚РёСЃРєР°С‚Рё РїРѕС‚С–Рє РїРѕРІС–РґРѕРјР»РµРЅРЅСЏ С‰Рѕ РЅР°РґСЃРёР»Р°СЋС‚СЊСЃСЏ С‚Р° РїСЂРёР№РјР°СЋС‚СЊСЃСЏ СЃРµСЂРІРµСЂРѕРј</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="63"/>
    <source>Unsupported compression method</source>
-   <translation>Версія стиснення не підтримується</translation>
+   <translation>Р’РµСЂСЃС–СЏ СЃС‚РёСЃРЅРµРЅРЅСЏ РЅРµ РїС–РґС‚СЂРёРјСѓС”С‚СЊСЃСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="64"/>
    <source>Compression setup failed</source>
-   <translation>Налаштування стиснення не вдалося</translation>
+   <translation>РќР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ СЃС‚РёСЃРЅРµРЅРЅСЏ РЅРµ РІРґР°Р»РѕСЃСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="66"/>
    <source>ZLib error</source>
-   <translation>Помилка ZLib</translation>
+   <translation>РџРѕРјРёР»РєР° ZLib</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="67"/>
    <source>Out of memory for ZLib</source>
-   <translation>Недостатньо пам&apos;яті для ZLib</translation>
+   <translation>РќРµРґРѕСЃС‚Р°С‚РЅСЊРѕ РїР°Рј&apos;СЏС‚С– РґР»СЏ ZLib</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="68"/>
    <source>ZLib version mismatch</source>
-   <translation>Версія ZLib не збігається</translation>
+   <translation>Р’РµСЂСЃС–СЏ ZLib РЅРµ Р·Р±С–РіР°С”С‚СЊСЃСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="69"/>
    <source>Invalid or incomplete deflate data</source>
-   <translation>Невірні або неповні дані для розпакування</translation>
+   <translation>РќРµРІС–СЂРЅС– Р°Р±Рѕ РЅРµРїРѕРІРЅС– РґР°РЅС– РґР»СЏ СЂРѕР·РїР°РєСѓРІР°РЅРЅСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="70"/>
    <source>Invalid compression level</source>
-   <translation>Некоректний рівень стиснення</translation>
+   <translation>РќРµРєРѕСЂРµРєС‚РЅРёР№ СЂС–РІРµРЅСЊ СЃС‚РёСЃРЅРµРЅРЅСЏ</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="100"/>
    <source>Enable data compression transferred between client and server</source>
-   <translation>Увімкнути стиснення даних, що передаються між клієнтом та сервером</translation>
+   <translation>РЈРІС–РјРєРЅСѓС‚Рё СЃС‚РёСЃРЅРµРЅРЅСЏ РґР°РЅРёС…, С‰Рѕ РїРµСЂРµРґР°СЋС‚СЊСЃСЏ РјС–Р¶ РєР»С–С”РЅС‚РѕРј С‚Р° СЃРµСЂРІРµСЂРѕРј</translation>
   </message>
  </context>
 </TS>

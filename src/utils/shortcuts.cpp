@@ -201,7 +201,8 @@ void Shortcuts::setGlobalShortcut(const QString &AId, bool AEnabled)
 	{
 		shortcut = new QxtGlobalShortcut(instance());
 		q->globalShortcutsId.insert(shortcut,AId);
-		connect(shortcut,&QxtGlobalShortcut::activated,instance(),&Shortcuts::onGlobalShortcutActivated);
+//		connect(shortcut,&QxtGlobalShortcut::activated,instance(),&Shortcuts::onGlobalShortcutActivated);
+        connect(shortcut,SIGNAL(activated()),instance(),SLOT(onGlobalShortcutActivated()));
 		updateGlobal(shortcut);
 		emit instance()->shortcutEnabled(AId, AEnabled);
 	}

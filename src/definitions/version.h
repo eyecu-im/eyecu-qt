@@ -6,7 +6,7 @@
 #define CLIENT_VERSION          "1.3.0"
 #define CLIENT_VERSION_RC       1,3,0
 #define CLIENT_VERSION_SUFFIX   "beta"
-#define CLIENT_VERSION_FULL     "1.3.0 Alpha"
+#define CLIENT_VERSION_FULL     "1.3.0 beta"
 #define CLIENT_FILENAME_WIN     "eyecu.exe"
 #define CLIENT_HOME_PAGE        "http://www.eyecu.ru"
 #define CLINET_COPYRIGHT        "GNU General Public License v3.0"
