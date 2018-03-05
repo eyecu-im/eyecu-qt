@@ -2,7 +2,6 @@ TARGET = mmplayer
 
 include(mmplayer.pri)
 include(../plugins.inc)
-include(../pkgtest.inc)
 
 contains(QT_CONFIG, multimediakit): {
 CONFIG += mobility
