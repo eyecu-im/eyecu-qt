@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
+include(pkgtest.inc)
 
 SUBDIRS += optionsmanager
 SUBDIRS += xmppstreams
