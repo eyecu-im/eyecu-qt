@@ -2,7 +2,7 @@
 #define IPOSITIONING_H
 
 #include <math.h>
-#include <QtGeo/geolocelement.h>
+#include <GeolocElement>
 
 #define POSITIONING_UUID "{639EDBAA-A684-42e4-A9AD-28FC9BCB8F7C}"
 

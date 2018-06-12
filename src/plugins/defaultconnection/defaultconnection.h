@@ -3,13 +3,8 @@
 
 #include <interfaces/idefaultconnection.h>
 #include <utils/xmpperror.h>
-#if QT_VERSION < 0x050000
 #include <QPDnsLookup>
-#define QDnsLookup QPDnsLookup
-#define QDnsServiceRecord QPDnsServiceRecord
-#else
-#include <QDnsLookup>
-#endif
+
 struct SrvRecord {
 	QString target;
 	quint16 port;
@@ -81,7 +76,7 @@ protected slots:
 private:
 	IConnectionEngine *FEngine;
 private:
-	QDnsLookup FDnsLookup;
+	QPDnsLookup FDnsLookup;
 	QList<SrvRecord> FRecords;
 private:
 	bool FSSLError;

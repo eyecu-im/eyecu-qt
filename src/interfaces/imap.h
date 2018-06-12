@@ -8,9 +8,9 @@
 #include <QGraphicsItem>
 #include <QRectF>
 
-#include <QtGeo/mercatorcoordinates.h>
-#include <QtGeo/mapcoordinates.h>
-#include <QtGeo/geomap.h>
+#include <MercatorCoordinates>
+#include <MapCoordinates>
+#include <GeoMap>
 #include <interfaces/ioptionsmanager.h>
 #include <utils/action.h>
 #include <definitions/mapobjecttyperole.h>

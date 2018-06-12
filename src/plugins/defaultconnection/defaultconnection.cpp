@@ -11,7 +11,7 @@ DefaultConnection::DefaultConnection(IConnectionEngine *AEngine, QObject *AParen
 {
 	FEngine = AEngine;
 	FDisconnecting = false;
-	FDnsLookup.setType(QDnsLookup::SRV);
+	FDnsLookup.setType(QPDnsLookup::SRV);
 	connect(&FDnsLookup,SIGNAL(finished()),SLOT(onDnsLookupFinished()));
 
 	// Make FDnsLookup.isFinished to be true
@@ -266,12 +266,12 @@ void DefaultConnection::connectToNextHost()
 
 void DefaultConnection::onDnsLookupFinished()
 {
-	QList<QDnsServiceRecord> dnsRecords = FDnsLookup.serviceRecords();
+	QList<QPDnsServiceRecord> dnsRecords = FDnsLookup.serviceRecords();
 	LOG_DEBUG(QString("SRV records received, count=%1").arg(dnsRecords.count()));
 	if (!dnsRecords.isEmpty())
 	{
 		FRecords.clear();
-		foreach (const QDnsServiceRecord &dnsRecord, dnsRecords)
+		foreach (const QPDnsServiceRecord &dnsRecord, dnsRecords)
 		{
 			SrvRecord srvRecord;
 			srvRecord.target = dnsRecord.target();
@@ -279,7 +279,7 @@ void DefaultConnection::onDnsLookupFinished()
 			FRecords.append(srvRecord);
 		}
 	}
-	else if (FDnsLookup.error()!=QDnsLookup::NoError)
+	else if (FDnsLookup.error()!=QPDnsLookup::NoError)
 		LOG_ERROR(QString("SRV resolve failed! error: %1(%2)").arg(FDnsLookup.error()).arg(FDnsLookup.errorString()));
 
 	if (!FRecords.isEmpty())

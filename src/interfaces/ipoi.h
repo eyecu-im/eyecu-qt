@@ -5,9 +5,9 @@
 #include <QIcon>
 #include <QHash>
 #include <QTreeWidget>
+#include <GeolocElement>
 #include <utils/jid.h>
 #include <utils/action.h>
-#include <QtGeo/geolocelement.h>
 
 #define POI_UUID "{d2a856c7-8f74-4e95-9aba-b95f4fb42f00}"
 

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QNetworkAccessManager>
 #include <interfaces/ipoi.h>
-#include <QtUtil/httprequest.h>
+#include <HttpRequest>
 
 #define MAPSEARCH_UUID "{b9fc623b-92fa-bca1-6d5e-fac52301ba21}"
 

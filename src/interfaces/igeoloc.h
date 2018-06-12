@@ -4,8 +4,8 @@
 #include <QPointF>
 
 #include <utils/jid.h>
-#include <QtGeo/mercatorcoordinates.h>
-#include <QtGeo/geolocelement.h>
+#include <MercatorCoordinates>
+#include <GeolocElement>
 
 #define GEOLOC_UUID "{B387614D-A190-3B9B-8DA9-ED179B3BE20E}"
 

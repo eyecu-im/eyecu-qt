@@ -2438,7 +2438,7 @@
   <customwidget>
    <class>MapScaleWidget</class>
    <extends>QWidget</extends>
-   <header location="global">QtGeo/mapscale.h</header>
+   <header location="global">MapScale</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
