@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" sourcelanguage="en" language="ru">
+<TS sourcelanguage="en" version="2.1" language="ru">
   <context>
     <name>AboutBox</name>
     <message>
@@ -18,7 +18,7 @@
       <source>About the program</source>
       <translation>О Программе</translation>
     </message>
-    <message utf8="true">
+    <message>
       <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
       <translation>© 2010-2020 Константин Козлов, Вячеслав Целых, Сергей Потапов. Данное ПО выпускается на условиях GNU General Public License версии 3.</translation>
     </message>
@@ -64,6 +64,34 @@
     <message>
       <source>Dependencies not found</source>
       <translation>Зависимости не найдены</translation>
+    </message>
+    <message>
+      <source>Saving settings</source>
+      <translation>Сохраняются настройки</translation>
+    </message>
+    <message>
+      <source>Loading plugin: %1</source>
+      <translation>Загружается плагин: %1</translation>
+    </message>
+    <message>
+      <source>Initializing plugin connections: %1</source>
+      <translation>Инициализируются связи плагина: %1</translation>
+    </message>
+    <message>
+      <source>Initializing plugin objects: %1</source>
+      <translation>Инициализируются объекты плагина: %1</translation>
+    </message>
+    <message>
+      <source>Initializing plugin settings: %1</source>
+      <translation>Инициализируются настройки плагина: %1</translation>
+    </message>
+    <message>
+      <source>Starting plugin: %1</source>
+      <translation>Запускается плагин: %1</translation>
+    </message>
+    <message>
+      <source>Application started</source>
+      <translation>Приложение запущено</translation>
     </message>
   </context>
   <context>

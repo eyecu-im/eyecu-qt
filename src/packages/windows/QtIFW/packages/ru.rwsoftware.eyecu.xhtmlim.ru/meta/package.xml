@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>XHTML-IM Russian Translation</DisplayName>
-    <Description>XHTML-IM Russian translation</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-07</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.xhtmlim.ru</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.xhtmlim,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>XHTML-IM Russian Translation</DisplayName>
+ <Description>XHTML-IM Russian translation</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2017-05-07</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.xhtmlim.ru</Name>
+ <UpdateText>Fix minor typo in BOB-related options</UpdateText>
+ <AutoDependOn>ru.rwsoftware.eyecu.xhtmlim,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

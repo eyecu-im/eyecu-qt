@@ -55,19 +55,20 @@ macro(add_translations outvar tsname)
 		if (EXISTS ${TS})
 			if (APPLE)
 				set(QM "${CMAKE_BINARY_DIR}/${INSTALL_TRANSLATIONS}/${LANG}/${tsname}.qm")
+				file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/${INSTALL_TRANSLATIONS}/${LANG}")
 			else (APPLE)
 				set(QM "${CMAKE_BINARY_DIR}/translations/${LANG}/${tsname}.qm")
+				file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/translations/${LANG}")
 			endif (APPLE)
 			# Update *.ts
 			add_custom_command(TARGET updatets_${tsname} POST_BUILD
-					COMMAND "${QT_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTS} ${TS_SRCS} -ts "${TS}" 
+					COMMAND "${Qt5_LUPDATE_EXECUTABLE}" ${LUPDATE_OPTS} ${TS_SRCS} -ts "${TS}" 
 					DEPENDS ${TS_SRCS}
 					WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 					COMMENT "Updating ${TS}")
 			# Generate *.qm
-			file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/translations/${LANG}")
 			add_custom_command(OUTPUT ${QM}
-					COMMAND "${QT_LRELEASE_EXECUTABLE}" ${LRELEASE_OPTS} "${TS}" -qm "${QM}"
+					COMMAND "${Qt5_LRELEASE_EXECUTABLE}" ${LRELEASE_OPTS} "${TS}" -qm "${QM}"
 					DEPENDS ${TS})
 			set(QMS ${QMS} "${QM}")
 			# Install *.qm

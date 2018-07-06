@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>User Location Ukrainian Translation</DisplayName>
-    <Description>User Location Ukrainian translation</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-14</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.uk</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>User Location Ukrainian Translation</DisplayName>
+ <Description>User Location Ukrainian translation</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-01-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.uk</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

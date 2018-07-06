@@ -88,7 +88,7 @@
   </message>
   <message>
    <location line="95" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
-   <location line="567" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="569" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Quote selected text</source>
    <translation>Quote selected text</translation>
   </message>
@@ -100,7 +100,7 @@
   </message>
   <message>
    <location line="96" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
-   <location line="596" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="598" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Toggle /me command</source>
    <translation>Toggle /me command</translation>
   </message>
@@ -215,48 +215,48 @@
    <translation>Information bar icons</translation>
   </message>
   <message>
-   <location line="382" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="384" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Tab Window %1</source>
    <translation>Tab Window %1</translation>
   </message>
   <message>
-   <location line="566" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="568" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Quote Selected Text</source>
    <translation>Quote Selected Text</translation>
   </message>
   <message>
-   <location line="622" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="624" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Send mail</source>
    <translation>Send mail</translation>
   </message>
   <message>
-   <location line="622" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="624" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Open link</source>
    <translation>Open link</translation>
   </message>
   <message>
-   <location line="629" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="631" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Copy address</source>
    <translation>Copy address</translation>
   </message>
   <message>
-   <location line="638" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="640" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Copy</source>
    <translation>Copy</translation>
   </message>
   <message>
-   <location line="650" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="652" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Search on Google '%1'</source>
    <translation>Search on Google '%1'</translation>
   </message>
   <message>
-   <location line="682" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="684" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>google.com</source>
    <comment>Your google domain</comment>
    <translation>google.com</translation>
   </message>
   <message>
-   <location line="830" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
+   <location line="832" filename="../../plugins/messagewidgets/messagewidgets.cpp"/>
    <source>Main Tab Window</source>
    <translation>Main Tab Window</translation>
   </message>
@@ -264,12 +264,12 @@
  <context>
   <name>NormalWindow</name>
   <message>
-   <location line="38" filename="../../plugins/messagewidgets/normalwindow.cpp"/>
+   <location line="39" filename="../../plugins/messagewidgets/normalwindow.cpp"/>
    <source>Subject</source>
    <translation>Subject</translation>
   </message>
   <message numerus="yes">
-   <location line="351" filename="../../plugins/messagewidgets/normalwindow.cpp"/>
+   <location line="356" filename="../../plugins/messagewidgets/normalwindow.cpp"/>
    <source>Selected %n contact(s)</source>
    <translation>
     <numerusform>Selected %n contact</numerusform>
@@ -288,115 +288,120 @@
  <context>
   <name>ReceiversWidget</name>
   <message>
-   <location line="99" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="115" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Receivers</source>
    <translation>Receivers</translation>
   </message>
   <message>
-   <location line="306" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="322" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Select All Contacts</source>
    <translation>Select All Contacts</translation>
   </message>
   <message>
-   <location line="312" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="328" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Select Online Contact</source>
    <translation>Select Online Contact</translation>
   </message>
   <message>
-   <location line="318" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="334" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Select Available Contacts</source>
    <translation>Select Available Contacts</translation>
   </message>
   <message>
-   <location line="324" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="340" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Clear Selection</source>
    <translation>Clear Selection</translation>
   </message>
   <message>
-   <location line="330" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="346" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Expand All Groups</source>
    <translation>Expand All Groups</translation>
   </message>
   <message>
-   <location line="336" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="352" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Collapse All Groups</source>
    <translation>Collapse All Groups</translation>
   </message>
   <message>
-   <location line="344" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="360" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Load Last Selection</source>
    <translation>Load Last Selection</translation>
   </message>
   <message>
-   <location line="350" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="366" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Load Selection</source>
    <translation>Load Selection</translation>
   </message>
   <message>
-   <location line="355" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="371" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Save Selection</source>
    <translation>Save Selection</translation>
   </message>
   <message>
-   <location line="360" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="376" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Hide Offline Contacts</source>
    <translation>Hide Offline Contacts</translation>
   </message>
   <message>
-   <location line="404" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
-   <location line="1050" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="383" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <source>Sort Contacts by Status</source>
+   <translation>Sort Contacts by Status</translation>
+  </message>
+  <message>
+   <location line="437" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="1083" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Without Groups</source>
    <translation>Without Groups</translation>
   </message>
   <message>
-   <location line="415" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="448" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Not in Roster</source>
    <translation>Not in Roster</translation>
   </message>
   <message>
-   <location line="662" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
-   <location line="667" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
-   <location line="672" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="695" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="700" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="705" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Failed to Load Contacts</source>
    <translation>Failed to Load Contacts</translation>
   </message>
   <message>
-   <location line="662" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="695" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Incorrect file format</source>
    <translation>Incorrect file format</translation>
   </message>
   <message>
-   <location line="667" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="700" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Failed to read file: %1</source>
    <translation>Failed to read file: %1</translation>
   </message>
   <message>
-   <location line="672" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="705" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Failed to open file: %1</source>
    <translation>Failed to open file: %1</translation>
   </message>
   <message>
-   <location line="710" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="743" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Failed to Save Contacts</source>
    <translation>Failed to Save Contacts</translation>
   </message>
   <message>
-   <location line="710" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="743" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Failed to create file: %1</source>
    <translation>Failed to create file: %1</translation>
   </message>
   <message>
-   <location line="1045" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="1078" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Agents</source>
    <translation>Agents</translation>
   </message>
   <message>
-   <location line="1096" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="1132" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Load Contacts from File</source>
    <translation>Load Contacts from File</translation>
   </message>
   <message>
-   <location line="1101" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
+   <location line="1137" filename="../../plugins/messagewidgets/receiverswidget.cpp"/>
    <source>Save Contacts to File</source>
    <translation>Save Contacts to File</translation>
   </message>

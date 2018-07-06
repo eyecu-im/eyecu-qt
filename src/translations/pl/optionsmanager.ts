@@ -203,88 +203,99 @@
  <context>
   <name>OptionsManager</name>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="63"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="94"/>
    <source>Options Manager</source>
    <translation>Menedżer ustawień</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="64"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="95"/>
    <source>Allows to save, load and manage user preferences</source>
    <translation>Umożliwia zachowanie, wczytywanie i zmianę ustawień preferencji użytkownika</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="103"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="134"/>
    <source>Change Profile</source>
    <translation>Zmień profil</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="108"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="139"/>
    <source>Options</source>
    <translation>Opcje</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="136"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="167"/>
    <source>Common</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="139"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="170"/>
    <source>Appearance</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="167"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="198"/>
    <source>Common settings</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="199"/>
    <source>Show advanced options</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="170"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="201"/>
    <source>Auto run application on system startup</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="175"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="206"/>
    <source>Localization</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="200"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="231"/>
    <source>&lt;System Language&gt;</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="204"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="235"/>
    <source>Language:</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
+   <source>Language settings changed</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
+   <source>To make changes intact, %1 needs to be restarted.
+Do you want to restart %1 now?</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>
    <source>Options mode changed</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="874"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="914"/>
    <source>Display advanced options?</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="875"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="915"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="882"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="922"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
    <translation type="unfinished"/>
   </message>

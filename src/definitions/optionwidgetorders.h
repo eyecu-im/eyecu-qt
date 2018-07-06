@@ -224,8 +224,6 @@
 #define OWO_MAPSOURCE                             500
 //Node = ON_URLPROCESSOR
 #define OWO_URLPROCESSOR_URLPROXY                 500
-//Node = ON_CONTACTPROXIMITY
-#define OWO_CONTACTPROXIMITYNOTIFICATION          500
 //Node = ON_XHTML
 #define OHO_XHTML_GENERAL                         500
 #define   OWO_XHTML_NORICHTEXT                    520
@@ -235,7 +233,11 @@
 #define OHO_XHTML_BOB                             600
 #define   OWO_XHTML_BOB                           610
 //Node = ON_POSITIONING
-#define OWO_POSITIONING                           500
+#define OHO_POSITIONING                           500
+#define   OWO_POSITIONING                           520
+//Node = ON_CONTACTPROXIMITY
+#define OHO_CONTACTPROXIMITYNOTIFICATION          550
+#define   OWO_CONTACTPROXIMITYNOTIFICATION        570
 //Node = ON_SERIALPORT
 #define OWO_SERIALPORT                            500
 //Node = ON_NOPOSITION
@@ -272,5 +274,6 @@
 #define   OWO_JINGLERTP_CODECS                    660
 #define OHO_JINGLETRANSPORTS_RAWUDP               600
 #define   OWO_JINGLETRANSPORTS_RAWUDP             610
+#define OWO_SCHEDULER							  500
 // *** >>> eyeCU >>> ***
 #endif // DEF_OPTIONWIDGETORDERS_H

@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Qt Geo Dutch Translation</DisplayName>
-    <Description>Qt Geo Dutch translation</Description>
-    <Version>1.0.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.purplesoft.qtpurple.geo.nl</Name>
-    <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Qt Geo Dutch Translation</DisplayName>
+ <Description>Qt Geo Dutch translation</Description>
+ <Version>1.1.0</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple.geo.nl</Name>
+ <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

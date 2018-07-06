@@ -32,7 +32,7 @@ class ConnectionWizard : public QWizard
 {
     Q_OBJECT
     Q_PROPERTY(bool registerAccount READ registerAccount WRITE setRegisterAccount)
-	Q_PROPERTY(QString serverName READ serverName)
+	Q_PROPERTY(QString serverName READ serverName WRITE setServerName)
 	Q_PROPERTY(QString streamJid READ streamJid)
 
 public:
@@ -46,6 +46,7 @@ public:
     void setRegisterAccount(int ARegisterAccount) {FRegisterAccount = ARegisterAccount;}
 
 	QString serverName() const;
+	void setServerName(const QString &AServerName);
 	QString streamJid() const;
 
 protected:
@@ -59,6 +60,7 @@ private:
 	IOptionsDialogWidget *FConnectionSettingsWidget;
 	int					FCurrentId;
 	bool				FRegisterAccount;
+	QString				FServerName;
 };
 
 //!---------- Intro Page -----------
@@ -89,7 +91,6 @@ public:
 	enum NetworkType {
 		NetworkOther,
 		NetworkGoogle,
-		NetworkYandex,
 		NetworkOdnoklassniki,
 		NetworkLiveJournal,
 		NetworkQIP,
@@ -154,7 +155,6 @@ public:
 	QUrl	getRegistrationUrl() const;
 	QString	getInstructions(const QString &AServerName) const;
 	int		getFlags() const;
-	QString getServerName() const;
 
 public:
 	//QWizardPage
@@ -166,7 +166,6 @@ private slots:
     void onSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected);
 
 protected:
-    void accept();
     void loadServerList();
 
 protected slots:
@@ -241,11 +240,9 @@ private:
 	QLabel		*FLblServer;
 	ServerComboBox	*FCmbServer;
 	QLabel		*FLblPassword;
-	QLabel		*FLblPasswordRetype;
 	QLineEdit   *FLedUsername;
 	QLineEdit   *FLedResource;
 	QLineEdit   *FLedPassword;
-	QLineEdit   *FLedPasswordRetype;
     IAccountManager *FAccountManager;
 };
 

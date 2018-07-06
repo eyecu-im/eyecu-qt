@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Positioning Dutch Translation</DisplayName>
-    <Description>Positioning Dutch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.nl</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Positioning Dutch Translation</DisplayName>
+ <Description>Positioning Dutch translation</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2017-01-27</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.nl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

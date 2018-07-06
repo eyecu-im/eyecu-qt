@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Navitel English Translation</DisplayName>
-    <Description>Navitel English translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.mapsearch.navitel.en</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.mapsearch.navitel,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Navitel English Translation</DisplayName>
+ <Description>Navitel English translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.mapsearch.navitel.en</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.mapsearch.navitel,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

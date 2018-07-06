@@ -837,7 +837,7 @@
        </widget>
       </item>
       <item row="8" column="2">
-       <widget class="QLCDNumber" name="lcdCntrlCentralMarkerAlpha">
+       <widget class="QLCDNumber" name="lcdCenterMarkerAlpha">
         <property name="maximumSize">
          <size>
           <width>46</width>
@@ -850,7 +850,7 @@
        </widget>
       </item>
       <item row="8" column="3">
-       <widget class="QCheckBox" name="cbCntrlCentralMarkerVisible">
+       <widget class="QCheckBox" name="cbCenterMarkerVisible">
         <property name="text">
          <string>Visible</string>
         </property>
@@ -890,7 +890,7 @@
   <tabstop>cbCntrlBgTransparent</tabstop>
   <tabstop>pbCenterMarkerColor</tabstop>
   <tabstop>slCenterMarkerAlpha</tabstop>
-  <tabstop>cbCntrlCentralMarkerVisible</tabstop>
+  <tabstop>cbCenterMarkerVisible</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -901,8 +901,8 @@
    <slot>modifyBoxForeground()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>97</y>
+     <x>364</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -917,8 +917,8 @@
    <slot>modifyBoxLight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>97</y>
+     <x>68</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -933,8 +933,8 @@
    <slot>modifyBoxMidlight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>97</y>
+     <x>184</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -949,8 +949,8 @@
    <slot>modifyBoxDark()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
-     <y>97</y>
+     <x>274</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -965,8 +965,8 @@
    <slot>modifyBoxBackground()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>125</y>
+     <x>64</x>
+     <y>119</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -981,8 +981,8 @@
    <slot>modifyShadowColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>230</y>
+     <x>64</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -997,8 +997,8 @@
    <slot>modifyFont()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>180</y>
+     <x>64</x>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1013,8 +1013,8 @@
    <slot>modifyColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>205</y>
+     <x>64</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1029,8 +1029,8 @@
    <slot>modifyControlForeground()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>388</y>
+     <x>68</x>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1045,8 +1045,8 @@
    <slot>modifyControlBase()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>388</y>
+     <x>184</x>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1061,8 +1061,8 @@
    <slot>modifyControlButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
-     <y>388</y>
+     <x>274</x>
+     <y>382</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1077,8 +1077,8 @@
    <slot>modifyControlShadow()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>235</x>
-     <y>362</y>
+     <x>274</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1093,8 +1093,8 @@
    <slot>modifyControlLight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>57</x>
-     <y>362</y>
+     <x>68</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1109,8 +1109,8 @@
    <slot>modifyControlMidlight()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>362</y>
+     <x>184</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1125,8 +1125,8 @@
    <slot>modifyControlDark()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>324</x>
-     <y>362</y>
+     <x>364</x>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1141,8 +1141,8 @@
    <slot>modifyControlBackground()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>416</y>
+     <x>64</x>
+     <y>410</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1157,8 +1157,8 @@
    <slot>modifyCenterMarkerColor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>54</x>
-     <y>446</y>
+     <x>64</x>
+     <y>441</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1173,8 +1173,8 @@
    <slot>onBackgroundAlphaChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>163</x>
-     <y>126</y>
+     <x>222</x>
+     <y>122</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1189,8 +1189,8 @@
    <slot>onCenterMarkerAlphaChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>446</y>
+     <x>227</x>
+     <y>440</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1205,8 +1205,8 @@
    <slot>onBackgroundAlphaChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>164</x>
-     <y>417</y>
+     <x>227</x>
+     <y>413</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1221,8 +1221,8 @@
    <slot>onShadowAlphaChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>231</y>
+     <x>302</x>
+     <y>225</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1237,8 +1237,8 @@
    <slot>onShadowBlurChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>257</y>
+     <x>302</x>
+     <y>251</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1253,8 +1253,8 @@
    <slot>onShadowShiftXChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>283</y>
+     <x>302</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
@@ -1269,12 +1269,76 @@
    <slot>onShadowShiftYChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>207</x>
-     <y>309</y>
+     <x>302</x>
+     <y>303</y>
     </hint>
     <hint type="destinationlabel">
      <x>190</x>
      <y>263</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbBoxBgTransparent</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>disableBoxBackgroundAlpha(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbCntrlBgTransparent</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>disableCntrlBackgroundAlpha(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>324</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>187</x>
+     <y>227</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cbCenterMarkerVisible</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>enableCenterMarkerAlpha(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>430</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>374</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbBoxShape</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MapOptions</receiver>
+   <slot>onBoxFrameShapeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>129</x>
+     <y>31</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>153</x>
+     <y>1</y>
     </hint>
    </hints>
   </connection>
@@ -1305,5 +1369,9 @@
   <slot>onCenterMarkerAlphaChange(int)</slot>
   <slot>onShadowShiftXChange(int)</slot>
   <slot>onShadowShiftYChange(int)</slot>
+  <slot>disableBoxBackgroundAlpha(bool)</slot>
+  <slot>disableCntrlBackgroundAlpha(bool)</slot>
+  <slot>enableCenterMarkerAlpha(bool)</slot>
+  <slot>onBoxFrameShapeChanged(int)</slot>
  </slots>
 </ui>

@@ -24,10 +24,15 @@
    <translation>When contact attempts to attract user's attention</translation>
   </message>
   <message>
-   <location line="156" filename="../../plugins/attention/attention.cpp"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation>Shift+Return</translation>
+   <translation type="obsolete">Shift+Return</translation>
+  </message>
+  <message>
+   <location line="156" filename="../../plugins/attention/attention.cpp"/>
+   <source>Alt+Return</source>
+   <comment>Attention</comment>
+   <translation>Alt+Return</translation>
   </message>
   <message>
    <location line="176" filename="../../plugins/attention/attention.cpp"/>
@@ -63,12 +68,12 @@
  <context>
   <name>AttentionDialog</name>
   <message>
-   <location line="168" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="170" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>ATTENTION</source>
    <translation>ATTENTION</translation>
   </message>
   <message>
-   <location line="293" filename="../../plugins/attention/attentiondialog.ui"/>
+   <location line="295" filename="../../plugins/attention/attentiondialog.ui"/>
    <source>Ok</source>
    <translation>Ok</translation>
   </message>

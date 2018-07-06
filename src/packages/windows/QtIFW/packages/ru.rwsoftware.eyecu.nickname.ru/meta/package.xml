@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>User Nickname Russian Translation</DisplayName>
-    <Description>User Nickname Russian translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.nickname.ru</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.nickname,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>User Nickname Russian Translation</DisplayName>
+ <Description>User Nickname Russian translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.nickname.ru</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.nickname,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

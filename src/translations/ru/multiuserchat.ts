@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en" language="ru">
+<TS sourcelanguage="en" version="2.0" language="ru">
   <context>
     <name>ConfigPage</name>
     <message>
@@ -925,15 +925,15 @@
     </message>
     <message>
       <source>Address user by clicking nickname in the list with</source>
-      <translation>Обращаться к пользователю, щёлкая по его нику в списке</translation>
-    </message>
-    <message>
-      <source>Add this suffix when referring to the user</source>
-      <translation>Добавлять этот суффикс, обращаясь к пользователю</translation>
+      <translation>Обращаться к пользователю, щёлкнув по его нику в списке</translation>
     </message>
     <message>
       <source>Highlight alternation</source>
       <translation>Подсвечивать чередование</translation>
+    </message>
+    <message>
+      <source>Add this suffix when referring to the user</source>
+      <translation>Добавлять этот суффикс при обращении к пользователю</translation>
     </message>
     <message>
       <source>Display user status message</source>
@@ -1440,7 +1440,7 @@
     </message>
     <message>
       <source> by moderator %1</source>
-      <translation>модератором %1</translation>
+      <translation> модератором %1</translation>
     </message>
     <message>
       <source>Your nickname changed to %1</source>

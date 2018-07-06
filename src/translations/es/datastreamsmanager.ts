@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" sourcelanguage="en" version="2.1">
  <context>
   <name>DataStreamsManger</name>
   <message>
@@ -47,7 +47,7 @@
   </message>
   <message>
    <source>Unsupported stream initiation request</source>
-   <translation type="unfinished"/>
+   <translation>Solicitud de iniciación de flujo no soportada</translation>
   </message>
  </context>
 </TS>

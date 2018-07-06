@@ -10,16 +10,23 @@
 #include <definitions/namespaces.h>
 #include <definitions/rosterlabels.h>
 #include <definitions/rosterlabelholderorders.h>
+#include <definitions/rosternotifyorders.h>
 #include <definitions/rostertooltiporders.h>
 #include <definitions/rosterdataholderorders.h>
 #include <definitions/resources.h>
 #include <definitions/actiongroups.h>
 #include <definitions/shortcuts.h>
+#include <definitions/soundfiles.h>
+#include <definitions/notificationtypeorders.h>
+#include <definitions/notificationtypes.h>
+#include <definitions/notificationdataroles.h>
+#include <definitions/rosterclickhookerorders.h>
 
 #include <utils/options.h>
 #include <utils/logger.h>
 
 #include "geoloc.h"
+#include "contactproximitynotificationoptions.h"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr1
@@ -40,7 +47,8 @@ Geoloc::Geoloc():
 			FPositioning(NULL),
 			FAccountManager(NULL),
 			FIconStorage(NULL),
-			FRosterLabelId(-1),
+			FRosterLabelIdGeoloc(-1),
+			FRosterLabelIdProximity(-1),
 			FSimpleContactsView(false),
 			FToggleSend(false),
 			FRosterIndexKinds(QList<int>() << RIK_CONTACT << RIK_METACONTACT << RIK_METACONTACT_ITEM << RIK_RECENT_ITEM << RIK_MY_RESOURCE << RIK_STREAM_ROOT)
@@ -76,9 +84,18 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		connect(FMessageWidgets->instance(), SIGNAL(chatWindowCreated(IMessageChatWindow *)), SLOT(onChatWindowCreated(IMessageChatWindow *)));
 	}
 
-	plugin = APluginManager->pluginInterface("IMapContacts").value(0);
+	plugin = APluginManager->pluginInterface("IMapContacts").value(0,NULL);
 	if (plugin)
+	{
 		FMapContacts = qobject_cast<IMapContacts *>(plugin->instance());
+		connect(FMapContacts->instance(), SIGNAL(contactShowedOnTheMap(QString)), SLOT(onContactShowedOnTheMap(QString)));
+	}
+	else
+	{
+		plugin = APluginManager->pluginInterface("IMessageProcessor").value(0);
+		if (plugin)
+			FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
+	}
 
 	plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
 	if (plugin)
@@ -93,7 +110,10 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,NULL);
 	if (plugin)
+	{
+		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
 		connect(plugin->instance(), SIGNAL(presenceActiveChanged(IPresence *, bool)), SLOT(onPresenceActiveChanged(IPresence *,bool)));
+	}
 
 	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
 	if (plugin)
@@ -108,7 +128,15 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		FPositioning = qobject_cast<IPositioning *>(plugin->instance());
 		connect(FPositioning->instance(),SIGNAL(newPositionAvailable(GeolocElement)),SLOT(onNewPositionAvailable(GeolocElement)));
-	}
+
+		plugin = APluginManager->pluginInterface("INotifications").value(0, NULL);
+		if (plugin)
+		{
+			FNotifications = qobject_cast<INotifications *>(plugin->instance());
+			connect(FNotifications->instance(), SIGNAL(notificationActivated(int)), SLOT(onNotificationActivated(int)));
+			connect(FNotifications->instance(), SIGNAL(notificationRemoved(int)), SLOT(onNotificationRemoved(int)));
+		}
+	}	
 
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
@@ -165,8 +193,27 @@ bool Geoloc::initObjects()
 		AdvancedDelegateItem label(RLID_GEOLOC);
 		label.d->kind = AdvancedDelegateItem::CustomData;
 		label.d->data = FIconStorage->getIcon(MNI_GEOLOC);
-		FRosterLabelId = FRostersViewPlugin->rostersView()->registerLabel(label);
+		FRosterLabelIdGeoloc = FRostersViewPlugin->rostersView()->registerLabel(label);
+		// For roster notification
+		label = AdvancedDelegateItem(RLID_CONTACTPROXIMITY);
+		label.d->kind = AdvancedDelegateItem::CustomData;
+		label.d->data = FIconStorage->getIcon(MNI_GEOLOC);
+		label.d->flags = AdvancedDelegateItem::Blink;
+		FRosterLabelIdProximity = FRostersViewPlugin->rostersView()->registerLabel(label);
+
 		FRostersViewPlugin->rostersView()->insertLabelHolder(RLHO_GEOLOC, this);
+		FRostersViewPlugin->rostersView()->insertClickHooker(RCHO_GEOLOC, this);
+	}
+
+	if (FNotifications)
+	{
+		INotificationType notifyType;
+		notifyType.order = NTO_CONTACTPROXIMITY;
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC);
+		notifyType.title = tr("When contact appears nearby");
+		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay|INotification::RosterNotify|INotification::TrayNotify|INotification::TrayAction;
+		notifyType.kindDefs = notifyType.kindMask&~(INotification::TrayNotify|INotification::TrayAction);
+		FNotifications->registerNotificationType(NNT_CONTACTPROXIMITY, notifyType);
 	}
 
 	FTranslated.insert("accuracy", tr("Accuracy"));
@@ -202,8 +249,18 @@ bool Geoloc::initSettings()
 	Options::setDefaultValue(OPV_MESSAGES_GEOLOC_DISPLAY, true);
 	Options::setDefaultValue(OPV_ACCOUNT_PUBLISHUSERLOCATION, true);
 
+	// Contact proximity notifications
+	Options::setDefaultValue(OPV_CONTACTPROXIMITYNOTIFICATIONS_DISTANCE, 1000);
+	Options::setDefaultValue(OPV_CONTACTPROXIMITYNOTIFICATIONS_TRESHOLD, 200);
+	Options::setDefaultValue(OPV_CONTACTPROXIMITYNOTIFICATIONS_IGNOREOWN, true);
+
 	if (FOptionsManager)
+	{
+		IOptionsDialogNode dnode = {ONO_GEOLOC, OPN_GEOLOC, MNI_GEOLOC, tr("Location")};
+		FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
+	}
+
 	return true;
 }
 
@@ -221,9 +278,17 @@ QMultiMap<int, IOptionsDialogWidget *> Geoloc::optionsDialogWidgets(const QStrin
 			widgets.insertMulti(OWO_MESSAGES_INFOBAR_LOCATION, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MESSAGES_GEOLOC_DISPLAY),tr("Display user location icon"),AParent));
 		else if (FPositioning)   // Add "Send User Location" option to account settings page
 		{
-			QStringList nodeTree = ANodeId.split(".", QString::SkipEmptyParts);
-			if (nodeTree.count()==3 && nodeTree.at(0)==OPN_ACCOUNTS && nodeTree.at(2)=="Additional")
-				widgets.insertMulti(OWO_ACCOUNTS_ADDITIONAL_GEOLOC, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ACCOUNT_ITEM, nodeTree.at(1)).node(OPV_PUBLISHUSERLOCATION), tr("Publish location"), AParent));
+			if (ANodeId == OPN_GEOLOC)
+			{
+				widgets.insertMulti(OHO_CONTACTPROXIMITYNOTIFICATION, FOptionsManager->newOptionsDialogHeader(tr("Contact proximity notification"), AParent));
+				widgets.insertMulti(OWO_CONTACTPROXIMITYNOTIFICATION, new ContactProximityNotificationOptions(AParent));
+			}
+			else
+			{
+				QStringList nodeTree = ANodeId.split(".", QString::SkipEmptyParts);
+				if (nodeTree.count()==3 && nodeTree.at(0)==OPN_ACCOUNTS && nodeTree.at(2)=="Additional")
+					widgets.insertMulti(OWO_ACCOUNTS_ADDITIONAL_GEOLOC, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ACCOUNT_ITEM, nodeTree.at(1)).node(OPV_PUBLISHUSERLOCATION), tr("Publish location"), AParent));
+			}
 		}
 	}
 	return widgets;
@@ -234,7 +299,10 @@ QList<quint32> Geoloc::rosterLabels(int AOrder, const IRosterIndex *AIndex) cons
 	QList<quint32> labels;
 	if (AOrder==RLHO_GEOLOC && AIndex->kind()==RIK_RECENT_ITEM)
 		if (FSimpleContactsView)
+		{
 			labels.append(RLID_GEOLOC);
+			labels.append(RLID_CONTACTPROXIMITY);
+		}
 	return labels;
 }
 
@@ -245,17 +313,41 @@ AdvancedDelegateItem Geoloc::rosterLabel(int AOrder, quint32 ALabelId, const IRo
 	return null;
 }
 
+bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
+{
+	Q_UNUSED(AOrder)
+
+	QModelIndex index = FRostersViewPlugin->rostersView()->mapFromModel(FRostersViewPlugin->rostersView()->rostersModel()->modelIndexFromRosterIndex(AIndex));
+	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
+	if (labelId == FRosterLabelIdGeoloc)
+	{
+		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
+		return true;
+	}
+	else  if (labelId == FRosterLabelIdProximity)
+	{
+		FMapContacts->showContact(notificationJidForIndex(AIndex).full());
+		return true;
+	}
+	return false;
+}
+
+
 bool Geoloc::onNewPositionAvailable(const GeolocElement &APosition)
 {
-	//---timer public data on server xx sec ----
-
 	if (APosition.isValid())
 	{
 		sendGeoloc(APosition);
 		FToggleSend = false;
+		checkContactsProximity(APosition);
 	}
 	else
+	{
+		while (!FNotifies.isEmpty())
+			FNotifications->removeNotification(FNotifies.constBegin().value().constBegin().value());
+		FNotifiedContacts.clear();
 		retractGeoloc();
+	}
 	return true;
 }
 //---------------------
@@ -465,12 +557,7 @@ void Geoloc::updateRosterLabels(const Jid &AContactJid)
 		findData.insert(RDR_PREP_BARE_JID, AContactJid.pBare());
 		QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
 		for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
-		{
-			if (checkRosterIndex(*it))
-				FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelId, *it);
-			else
-				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelId, *it);
-		}
+			insertRosterLabel(*it, geolocJidForIndex(*it).isValid());
 	}
 }
 
@@ -498,15 +585,45 @@ bool Geoloc::hasGeoloc(const Jid &AJid) const
 															   :FGeolocHash.contains(AJid.bare());
 }
 
-bool Geoloc::checkRosterIndex(const IRosterIndex *AIndex) const
+Jid Geoloc::notificationJidForIndex(const IRosterIndex *AIndex) const
 {
+	if (FNotifies.contains(AIndex->data(RDR_STREAM_JID).toString()))
+	{
+		QHash<Jid, int> notifies = FNotifies.value(AIndex->data(RDR_STREAM_JID).toString());
+		Jid jid(AIndex->data(RDR_FULL_JID).toString());
+		if (notifies.contains(jid))
+			return jid;
+		QStringList jids(AIndex->data(RDR_RESOURCES).toStringList());
+		for (QStringList::ConstIterator it=jids.constBegin(); it!=jids.constEnd(); ++it)
+			if (notifies.contains(*it))
+				return *it;
+	}
+	return Jid::null;
+}
+
+Jid Geoloc::geolocJidForIndex(const IRosterIndex *AIndex) const
+{
+	Jid fullJid(AIndex->data(RDR_FULL_JID).toString());
+
+	if (hasGeoloc(fullJid))
+		return fullJid;
+
 	QStringList resources = AIndex->data(RDR_RESOURCES).toStringList();
-	if (resources.isEmpty())
-		return hasGeoloc(AIndex->data(RDR_FULL_JID).toString());
-	for (QStringList::ConstIterator it=resources.constBegin(); it!=resources.constEnd(); it++)
+	for (QStringList::ConstIterator it = resources.constBegin(); it!=resources.constEnd(); ++it)
 		if (hasGeoloc(*it))
-			return true;
-	return false;
+			return *it;
+
+	if (AIndex->kind()==RIK_METACONTACT) // Iterate thru metacontsct's children
+		for (int i=0; i<AIndex->childCount(); ++i)
+			if (Jid(AIndex->childIndex(i)->data(RDR_FULL_JID).toString()) != fullJid)
+			{
+				Jid jid = geolocJidForIndex(AIndex->childIndex(i));
+				if (jid.isValid())
+					return jid;
+			}
+
+
+	return Jid::null;
 }
 
 QString Geoloc::getLabel(const Jid &AContactJid) const
@@ -634,12 +751,30 @@ void Geoloc::putGeoloc(const Jid &AStreamJid, const Jid &AContactJid, const Geol
 	FGeolocHash.insert(AContactJid, AGeolocElement);
 	FGeolocBareHash.insert(AContactJid.bare(), AGeolocElement);
 	MercatorCoordinates coords(lat, lon);
+
+	// Contact proximity notification
+	if (AStreamJid!=AContactJid)
+	{
+		QPair<Jid, MercatorCoordinates> pair(AStreamJid, coords);
+		FContactCoordinates.insert(AContactJid, pair);
+		GeolocElement position = FPositioning->currentPosition();
+		if (position.isValid())
+			checkContactProximity(AStreamJid, AContactJid, coords, position);
+	}
+	// ==============================
 	emit locationReceived(AStreamJid, AContactJid, coords, AGeolocElement.reliability()!=reliable);
 }
 
 void Geoloc::removeGeoloc(const Jid &AStreamJid, const Jid &AContactJid)
 {
 	FGeolocHash.remove(AContactJid);
+
+	// Contact proximity notification
+	if (FContactCoordinates.contains(AContactJid))
+		FContactCoordinates.remove(AContactJid);
+	if (FNotifiedContacts.contains(AContactJid))
+		FNotifiedContacts.removeAll(AContactJid);
+	// ==============================
 	emit locationRemoved(AStreamJid, AContactJid);
 }
 
@@ -658,24 +793,19 @@ void Geoloc::onRosterIndexInserted(IRosterIndex *AIndex)
 {
 	if (FRostersViewPlugin &&  FRosterIndexKinds.contains(AIndex->kind()) &&
 		(Options::node(OPV_COMMON_ADVANCED).value().toBool()?Options::node(OPV_ROSTER_GEOLOC_SHOW).value().toBool():Options::node(OPV_ROSTER_VIEWMODE).value().toInt()==IRostersView::ViewFull) &&
-		checkRosterIndex(AIndex))
-	FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelId, AIndex);
+		geolocJidForIndex(AIndex).isValid())
+		insertRosterLabel(AIndex, true);
 }
 
 void Geoloc::onRosterIndexDataChanged(IRosterIndex *AIndex, int ARole)
 {
 	if (ARole==RDR_FULL_JID && Options::node(OPV_ROSTER_GEOLOC_SHOW).value().toBool() && FRostersViewPlugin &&  FRosterIndexKinds.contains(AIndex->kind()))
-	{
-		if (checkRosterIndex(AIndex))
-			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelId, AIndex);
-		else
-			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelId, AIndex);
-	}
+		insertRosterLabel(AIndex, geolocJidForIndex(AIndex).isValid());
 }
 
 void Geoloc::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMap<int, QString> &AToolTips)
 {
-	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelIdGeoloc  || ALabelId == FRosterLabelIdProximity)
 		 && FRosterIndexKinds.contains(AIndex->kind()))
 	{
 		Jid jid;
@@ -703,11 +833,9 @@ void Geoloc::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_ROSTER_RECENT_SIMPLEITEMSVIEW));
 }
 
-
-
 void Geoloc::onRosterIndexClipboardMenu(const QList<IRosterIndex *> &AIndexes, quint32 ALabelId, Menu *AMenu)
 {
-	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId)
+	if (ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelIdGeoloc)
 		for (QList<IRosterIndex *>::const_iterator it=AIndexes.constBegin(); it!=AIndexes.constEnd(); it++)
 		{
 			Jid jid((*it)->data(RDR_FULL_JID).toString());
@@ -991,7 +1119,10 @@ void Geoloc::onOptionsChanged(const OptionsNode &ANode)
 		findData.insert(RDR_KIND, RIK_RECENT_ITEM);
 		QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData, true);
 		for (QList<IRosterIndex *>::ConstIterator it = indexes.constBegin(); it!=indexes.constEnd(); it++)
+		{
 			emit rosterLabelChanged(RLID_GEOLOC, *it);
+			emit rosterLabelChanged(RLID_CONTACTPROXIMITY, *it);
+		}
 	}
 	else if (ANode.path() == (Options::node(OPV_COMMON_ADVANCED).value().toBool()?OPV_ROSTER_GEOLOC_SHOW:OPV_ROSTER_VIEWMODE))
 	{
@@ -1004,11 +1135,14 @@ void Geoloc::onOptionsChanged(const OptionsNode &ANode)
 					findData.insertMulti(RDR_KIND, *it);
 				QList<IRosterIndex *> indexes = FRostersModel->rootIndex()->findChilds(findData,true);
 				for (QList<IRosterIndex *>::const_iterator it=indexes.constBegin(); it!=indexes.constEnd(); it++)
-					if (checkRosterIndex(*it))
-					   FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelId, *it);
+					if (geolocJidForIndex(*it).isValid())
+						insertRosterLabel(*it, true);
 			}
 			else
-				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelId);
+			{
+				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc);
+				FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdProximity);
+			}
 		}
 	}
 }
@@ -1017,6 +1151,8 @@ void Geoloc::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindow(AWindow);
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+	// Contact proximity notification
+	connect(AWindow->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
 }
 
 void Geoloc::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
@@ -1040,6 +1176,188 @@ void Geoloc::onPresenceActiveChanged(IPresence *APresence, bool AActive)
 				sendGeoloc(position, APresence->streamJid());
 	}
 }
+
+// Contact proximity notifocation
+void Geoloc::displayNotification(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	if (AStreamJid.bare()==AContactJid.bare())
+		return;
+
+	INotification notify;
+	ushort kinds = FNotifications->enabledTypeNotificationKinds(NNT_CONTACTPROXIMITY);
+	notify.kinds = kinds&~INotification::RosterNotify;	// Remove original RosterNotify if any
+														// We have own implementation RosterNotify
+														// With Blackjack and hookers
+	if (notify.kinds)
+	{
+		QString html=tr("Appeared nearby!");
+		notify.typeId = NNT_CONTACTPROXIMITY;
+		notify.flags = 0;
+		notify.data.insert(NDR_STREAM_JID, AStreamJid.full());
+		notify.data.insert(NDR_CONTACT_JID, AContactJid.full());
+		notify.data.insert(NDR_ICON, IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_GEOLOC));
+		notify.data.insert(NDR_ROSTER_ORDER, RNO_CONTACTPROXIMITY);
+		notify.data.insert(NDR_ROSTER_FLAGS, IRostersNotify::Blink|IRostersNotify::AllwaysVisible|IRostersNotify::HookClicks);
+		notify.data.insert(NDR_POPUP_HTML, html);
+		notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+		notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+		notify.data.insert(NDR_SOUND_FILE, SDF_PROXIMITY_EVENT);
+		if (FNotifies[AStreamJid].contains(AContactJid))
+			FNotifications->removeNotification(FNotifies[AStreamJid].value(AContactJid));
+
+		int notifyId = FNotifications->appendNotification(notify);
+
+		FNotifies[AStreamJid].insert(AContactJid, notifyId);
+
+		if (kinds&INotification::RosterNotify)
+			updateRosterLabels(AContactJid);
+	}
+}
+
+void Geoloc::checkContactProximity(const Jid &AStreamJid, const Jid &AContactJid, const MercatorCoordinates &ACoordinates, const GeolocElement &ACurrentPosition)
+{
+	// Check, if contact should be ignored in the first place
+	if (Options::node(OPV_CONTACTPROXIMITYNOTIFICATIONS_IGNOREOWN).value().toBool() && (AStreamJid.bare() == AContactJid.bare()))
+		return;
+
+	IPresence *presence = FPresenceManager ? FPresenceManager->findPresence(AStreamJid) : NULL;
+	if (presence)
+	{
+		IPresenceItem item =presence->findItem(AContactJid);
+		if (item.show != IPresence::Offline && item.show != IPresence::Error) // Check, if contact is online
+		{
+			MercatorCoordinates coordinates(ACurrentPosition.coordinates());
+			int distance = Options::node(OPV_CONTACTPROXIMITYNOTIFICATIONS_DISTANCE).value().toInt();
+			int treshold = Options::node(OPV_CONTACTPROXIMITYNOTIFICATIONS_TRESHOLD).value().toInt();
+
+			// Check, if contact is within range
+			if (ACoordinates.distance(coordinates)<(distance-treshold))
+				if (!FNotifiedContacts.contains(AContactJid))
+				{
+					FNotifiedContacts.append(AContactJid);
+					displayNotification(AStreamJid, AContactJid);
+				}
+
+			// Check, if contact is out of range
+			if (ACoordinates.distance(coordinates)>(distance+treshold))
+				if (FNotifiedContacts.contains(AContactJid))
+				{
+					FNotifiedContacts.removeAll(AContactJid);
+					removeProximityNotification(AStreamJid, AContactJid);
+				}
+		}
+	}
+}
+
+void Geoloc::checkContactsProximity(const GeolocElement &ACurrentPosition)
+{
+	for (QHash<Jid, QPair<Jid, MercatorCoordinates> >::ConstIterator it=FContactCoordinates.constBegin(); it!=FContactCoordinates.constEnd(); it++)
+	{
+		QPair<Jid, MercatorCoordinates> pair=*it;
+		checkContactProximity(pair.first, it.key(), pair.second, ACurrentPosition);
+	}
+}
+
+void Geoloc::removeProximityNotification(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	if (FNotifies.contains(AStreamJid) && FNotifies[AStreamJid].contains(AContactJid))
+		FNotifications->removeNotification(FNotifies[AStreamJid][AContactJid]);
+}
+
+IPresenceItem Geoloc::presenceItemForBareJid(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+	IPresence *presence = FPresenceManager ? FPresenceManager->findPresence(AStreamJid) : NULL;
+	return presence ? FPresenceManager->sortPresenceItems(presence->findItems(AContactJid)).value(0) : IPresenceItem();
+}
+
+void Geoloc::insertRosterLabel(IRosterIndex *AIndex, bool AInsert)
+{
+	if (AInsert)
+	{
+		if (notificationJidForIndex(AIndex).isValid())
+		{
+			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc, AIndex);
+			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdProximity, AIndex);
+		}
+		else
+		{
+			FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdProximity, AIndex);
+			FRostersViewPlugin->rostersView()->insertLabel(FRosterLabelIdGeoloc, AIndex);
+		}
+	}
+	else
+	{
+		FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdGeoloc, AIndex);
+		FRostersViewPlugin->rostersView()->removeLabel(FRosterLabelIdProximity, AIndex);
+	}
+}
+
+void Geoloc::onNotificationActivated(int ANotifyId)
+{
+	for (QHash<Jid, QHash<Jid, int> >::const_iterator its=FNotifies.constBegin(); its!=FNotifies.constEnd(); its++)
+		for (QHash<Jid, int>::const_iterator itc=(*its).constBegin(); itc!=(*its).constEnd(); itc++)
+			if (itc.value()==ANotifyId) // Notification found! Activate window!
+			{
+				Jid contactJid = itc.key();
+				Jid streamJid  = its.key();
+				if (FMapContacts)
+				{
+					FMapContacts->showContact(contactJid.full());
+					removeProximityNotification(streamJid, contactJid);
+				}
+				else
+				{
+					IPresenceItem pitem = presenceItemForBareJid(its.key(), itc.key());
+					if (!pitem.itemJid.isEmpty())
+						contactJid=pitem.itemJid;
+
+					IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
+					if (!window)
+					{
+						FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
+						window = FMessageWidgets->findChatWindow(its.key(), contactJid);
+					}
+					if (window)
+						window->showTabPage();
+				}
+				return;
+			}
+}
+
+void Geoloc::onNotificationRemoved(int ANotifyId)
+{
+	for (QHash<Jid, QHash<Jid, int> >::iterator its=FNotifies.begin(); its!=FNotifies.end(); its++)
+		for (QHash<Jid, int>::iterator itc=(*its).begin(); itc!=(*its).end(); itc++)
+			if (*itc == ANotifyId)
+			{
+				Jid jid = itc.key();
+				(*its).remove(jid);
+				if ((*its).isEmpty())
+					FNotifies.remove(its.key());
+				if (FNotifications->enabledTypeNotificationKinds(NNT_CONTACTPROXIMITY)&INotification::RosterNotify)
+					updateRosterLabels(jid);
+				return;
+			}
+}
+
+void Geoloc::onWindowActivated()
+{
+	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());
+	if (window)
+		removeProximityNotification(window->streamJid(), window->contactJid());
+}
+
+void Geoloc::onContactShowedOnTheMap(const QString &AId)
+{
+	for (QHash<Jid, QHash<Jid, int> >::iterator its=FNotifies.begin(); its!=FNotifies.end(); its++)
+		for (QHash<Jid, int>::iterator itc=(*its).begin(); itc!=(*its).end(); itc++)
+			if (itc.key()== AId)
+			{
+				FNotifications->removeNotification(*itc);
+				return;
+			}
+}
+
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_geoloc, Geoloc)
 #endif

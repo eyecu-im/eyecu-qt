@@ -48,10 +48,10 @@ bool MapSourceGoogle::initObjects()
 
 bool MapSourceGoogle::initSettings()
 {
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 187);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_MAP, 500);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T, 500);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R, 500);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 719);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_MAP, 169);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T, 169);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R, 169);
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode node = {ONO_MAP_GOOGLE, OPN_MAP_GOOGLE, MNI_MAP_GOOGLE, tr("Google")};

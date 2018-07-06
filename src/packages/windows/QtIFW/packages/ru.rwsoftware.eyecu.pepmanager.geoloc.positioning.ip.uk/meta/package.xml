@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>IP-Based Positioning Method Ukrainian Translation</DisplayName>
-    <Description>IP-Based Positioning Method Ukrainian translation</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-01-19</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.uk</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>IP-Based Positioning Method Ukrainian Translation</DisplayName>
+ <Description>IP-Based Positioning Method Ukrainian translation</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-01-19</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.uk</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

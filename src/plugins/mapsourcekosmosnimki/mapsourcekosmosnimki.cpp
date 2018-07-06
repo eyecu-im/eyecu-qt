@@ -22,7 +22,7 @@ void MapSourceKosmosnimki::pluginInfo(IPluginInfo *APluginInfo)
 QList<int> MapSourceKosmosnimki::getModeIcons() const
 {
 	QList<int> list;
-	list << ICON_MAP << ICON_HYBRID << ICON_SATELLITE << ICON_TERRAIN;
+	list << ICON_MAP << ICON_MAP1 << ICON_HYBRID << ICON_SATELLITE << ICON_SATELLITE1 << ICON_TERRAIN;
 	return list;
 }
 

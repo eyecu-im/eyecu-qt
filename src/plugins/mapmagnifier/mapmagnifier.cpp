@@ -20,8 +20,17 @@
 
 #define MDR_MAGNIFIER 100
 
-MapMagnifierView::MapMagnifierView(QGraphicsScene *AScene, QWidget *AParent): QGraphicsView(AScene, AParent)
-{}
+MapMagnifierView::MapMagnifierView(QGraphicsScene *AScene, const QSize &ASize, QWidget *AParent): QGraphicsView(AScene, AParent)
+{
+	QRegion mask(0, 0, ASize.width(), ASize.height(), QRegion::Ellipse);
+	setMask(mask);
+	setFixedSize(ASize);
+	setInteractive(false);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setFrameShape(QFrame::NoFrame);
+	setCursor(Qt::CrossCursor);
+}
 
 bool MapMagnifierView::event(QEvent *AEvent)
 {
@@ -46,7 +55,12 @@ bool MapMagnifierView::event(QEvent *AEvent)
 
 void MapMagnifierView::paintEvent(QPaintEvent *APaintEvent)
 {
-    QGraphicsView::paintEvent(APaintEvent);
+	QGraphicsView::paintEvent(APaintEvent);
+}
+
+void MapMagnifierView::contextMenuEvent(QContextMenuEvent *AEvent)
+{
+	AEvent->ignore();
 }
 
 MapMagnifier::MapMagnifier(QObject *parent) :
@@ -203,22 +217,12 @@ QGraphicsItem *MapMagnifier::mapData(SceneObject *ASceneObject, int ARole, QGrap
             _LineY1 = scene->addLine(-2, 0, +2, 0, pen);    _LineY1->setZValue(ZVLine);
             _LineY2 = scene->addLine(-4, 0, +4, 0, pen);    _LineY2->setZValue(ZVLine);
 
-            onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR));
-            onOptionsChanged(Options::node(OPV_MAP_OSD_CONTR_CMARKER_VISIBLE));
+			onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_COLOR));
+			onOptionsChanged(Options::node(OPV_MAP_OSD_CMARKER_VISIBLE));
         }
 
-        MapMagnifierView *view=new MapMagnifierView(scene);
-        view->setInteractive(false);
-        view->setFixedSize(size*2, size*2);
-
+		MapMagnifierView *view=new MapMagnifierView(scene, QSize(size*2, size*2));
         scene->setParent(view);
-
-        QRegion mask(0, 0, size*2, size*2, QRegion::Ellipse);
-        view->setMask(mask);
-        view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        view->setFrameShape(QFrame::NoFrame);
-        view->setCursor(Qt::CrossCursor);
 
         QGraphicsProxyWidget *proxyWidget = new QGraphicsProxyWidget();
         proxyWidget->setAcceptedMouseButtons(Qt::NoButton);
@@ -506,7 +510,10 @@ void MapMagnifier::onOptionsChanged(const OptionsNode &ANode)
     if (ANode.path()==OPV_MAP_SOURCE)
     {
         if (scene)
+		{
 			scene->setMapSource(FMap->getMapSource()->mapSource());
+			scene->updateMap();
+		}
     }
     else if (ANode.path()==OPV_MAP_MODE)
     {
@@ -518,19 +525,19 @@ void MapMagnifier::onOptionsChanged(const OptionsNode &ANode)
         if (scene)
             scene->setZoom(ANode.value().toInt()+Options::node(OPV_MAP_MAGNIFIER_ZOOM).value().toInt());
     }    
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_COLOR)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_COLOR)
     {
         QColor color = ANode.value().value<QColor>();
-        color.setAlpha(Options::node(OPV_MAP_OSD_CONTR_CMARKER_ALPHA).value().toInt());
+		color.setAlpha(Options::node(OPV_MAP_OSD_CMARKER_ALPHA).value().toInt());
         setCenterMarkerColor(color);
     }
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_ALPHA)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_ALPHA)
     {
-        QColor color = Options::node(OPV_MAP_OSD_CONTR_CMARKER_COLOR).value().value<QColor>();
+		QColor color = Options::node(OPV_MAP_OSD_CMARKER_COLOR).value().value<QColor>();
         color.setAlpha(ANode.value().toInt());
         setCenterMarkerColor(color);
     }
-    else if (ANode.path()==OPV_MAP_OSD_CONTR_CMARKER_VISIBLE)
+	else if (ANode.path()==OPV_MAP_OSD_CMARKER_VISIBLE)
         setCenterMarkerVisible(ANode.value().toBool());
     else if (ANode.path()==OPV_MAP_OSD_CONTR_FOREGROUND ||
              ANode.path()==OPV_MAP_OSD_CONTR_SHADOW ||

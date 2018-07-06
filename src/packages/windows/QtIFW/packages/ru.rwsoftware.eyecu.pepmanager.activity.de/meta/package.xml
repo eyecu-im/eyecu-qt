@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>User Activity Deutsch Translation</DisplayName>
-    <Description>User Activity Deutsch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.pepmanager.activity.de</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.activity,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>User Activity Deutsch Translation</DisplayName>
+ <Description>User Activity Deutsch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.activity.de</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.activity,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

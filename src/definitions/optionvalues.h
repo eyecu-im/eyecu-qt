@@ -428,9 +428,10 @@
 #define OPV_MAP_OSD_CONTR_BACKGROUND_COLOR              "map.osd.contr.background.color"
 #define OPV_MAP_OSD_CONTR_BACKGROUND_ALPHA              "map.osd.contr.background.alpha"
 #define OPV_MAP_OSD_CONTR_BACKGROUND_TRANSPARENT        "map.osd.contr.background.transparent"
-#define OPV_MAP_OSD_CONTR_CMARKER_COLOR                 "map.osd.contr.cmarker.color"
-#define OPV_MAP_OSD_CONTR_CMARKER_ALPHA                 "map.osd.contr.cmarker.alpha"
-#define OPV_MAP_OSD_CONTR_CMARKER_VISIBLE               "map.osd.contr.cmarker.visible"
+
+#define OPV_MAP_OSD_CMARKER_COLOR                       "map.osd.cmarker.color"
+#define OPV_MAP_OSD_CMARKER_ALPHA                       "map.osd.cmarker.alpha"
+#define OPV_MAP_OSD_CMARKER_VISIBLE                     "map.osd.cmarker.visible"
 
 #define OPV_MAP_OSD_SHADOW_COLOR                        "map.osd.shadowcolor"
 #define OPV_MAP_OSD_SHADOW_ALPHA                        "map.osd.shadowalpha"
@@ -590,10 +591,14 @@
 #define OPV_JINGLE_RTP_AUDIO_BITRATE                    "jingle.rtp.audio.bitrate"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
 
+
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"
 #define OPV_MUC_CLIENTICON_SHOW                         "muc.clienticon.show"
 #define OPV_MESSAGES_CLIENTICON_DISPLAY                 "messages.clienticon.display"
+
+#define OPV_SCHEDULER_ACTIVE                           "scheduler.active"
+#define OPV_SCHEDULER_ITEMS                            "scheduler.items"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONVALUES_H

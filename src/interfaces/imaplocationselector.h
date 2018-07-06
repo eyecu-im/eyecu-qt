@@ -2,8 +2,8 @@
 #define IMAPLOCATIONSELECTOR_H
 
 #include <QObject>
-#include <QtGeo/mercatorcoordinates.h>
-#include <QtGeo/mapcoordinates.h>
+#include <MercatorCoordinates>
+#include <MapCoordinates>
 #include <definitions/mapobjecttyperole.h>
 
 #define MAPLOCATIONSELECTOR_UUID "{25f3d8a2-942a-37c1-f5dc-230b6c8de23b}"

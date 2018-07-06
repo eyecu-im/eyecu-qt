@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QApplication>
+#include <QDesktopServices>
 #include <QCryptographicHash>
 #include <QMessageBox> // *** <<< eyeCU >>> ***
 #include <definitions/actiongroups.h>
@@ -39,6 +40,36 @@
 #define ADR_PROFILE                     Action::DR_Parametr1
 
 #define AUTO_SAVE_TIMEOUT               5*60*1000
+
+
+static const int StandardLocationsCount = 11;
+
+#if QT_VERSION < 0x050000
+
+#else
+
+#endif
+
+#if QT_VERSION < 0x050000
+# define StandardPaths QDesktopServices
+# define storageLocation(X) QDesktopServices::storageLocation(X)
+#else
+# define StandardPaths QStandardPaths
+# define storageLocation(X) QStandardPaths::standardLocations(X).first()
+#endif
+static const struct { StandardPaths::StandardLocation location; QString key; } StandardLocations[StandardLocationsCount] = {
+	{ StandardPaths::DesktopLocation,        "%DesktopLocation%"      },
+	{ StandardPaths::DocumentsLocation,      "%DocumentsLocation%"    },
+	{ StandardPaths::FontsLocation,          "%FontsLocation%"        },
+	{ StandardPaths::ApplicationsLocation,   "%ApplicationsLocation%" },
+	{ StandardPaths::MusicLocation,          "%MusicLocation%"        },
+	{ StandardPaths::MoviesLocation,         "%MoviesLocation%"       },
+	{ StandardPaths::PicturesLocation,       "%PicturesLocation%"     },
+	{ StandardPaths::TempLocation,           "%TempLocation%"         },
+	{ StandardPaths::HomeLocation,           "%HomeLocation%"         },
+	{ StandardPaths::DataLocation,           "%DataLocation%"         },
+	{ StandardPaths::CacheLocation,          "%CacheLocation%"        },
+};
 
 OptionsManager::OptionsManager()
 {
@@ -166,7 +197,7 @@ QMultiMap<int, IOptionsDialogWidget *> OptionsManager::optionsDialogWidgets(cons
 	{
 		widgets.insertMulti(OHO_COMMON_SETTINGS, newOptionsDialogHeader(tr("Common settings"),AParent));
 		widgets.insertMulti(OWO_COMMON_ADVANCED, newOptionsDialogWidget(Options::node(OPV_COMMON_ADVANCED), tr("Show advanced options"), AParent)); // *** <<< eyeCU >>> ***
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		widgets.insertMulti(OWO_COMMON_AUTOSTART, newOptionsDialogWidget(Options::node(OPV_COMMON_AUTOSTART), tr("Auto run application on system startup"), AParent));
 #else
 		Q_UNUSED(AParent);
@@ -736,6 +767,7 @@ QMap<QString, QVariant> OptionsManager::loadOptionValues(const QString &AFilePat
 	{
 		QByteArray data = file.readAll();
 
+		// Replace system environment variables
 		foreach(const QString &env, QProcess::systemEnvironment())
 		{
 			int keyPos = env.indexOf('=');
@@ -745,6 +777,12 @@ QMap<QString, QVariant> OptionsManager::loadOptionValues(const QString &AFilePat
 				QString envVal = env.right(env.length() - keyPos - 1);
 				data.replace(envKey.toUtf8(),envVal.toUtf8());
 			}
+		}
+
+		// Replace standard storage locations variables
+		for(int i=0; i<StandardLocationsCount; i++)
+		{
+			data.replace(StandardLocations[i].key.toUtf8(), storageLocation(StandardLocations[i].location).toUtf8());
 		}
 
 		QString xmlError;
@@ -805,7 +843,7 @@ void OptionsManager::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_COMMON_AUTOSTART)
 	{
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 		QSettings reg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
 		if (ANode.value().toBool())
 			reg.setValue(CLIENT_NAME, QApplication::arguments().join(" "));
@@ -817,8 +855,10 @@ void OptionsManager::onOptionsChanged(const OptionsNode &ANode)
 	{
 		QLocale locale(ANode.value().toString());
 		FPluginManager->setLocale(locale.language(),locale.country());
-	}
 // *** <<< eyeCU <<< ***
+		if (locale != QLocale() && QMessageBox::question(NULL, tr("Language settings changed"), tr("To make changes intact, %1 needs to be restarted.\nDo you want to restart %1 now?").arg(CLIENT_NAME), QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes)
+			FPluginManager->restart();
+	}
 	else if (ANode.path() == OPV_COMMON_ADVANCED)
 	{
 		if (ANode.value().toBool() != FAdvanced && QMessageBox::question(NULL, tr("Options mode changed"), tr("To switch options mode, %1 needs to be restarted.\nDo you want to restart %1 now?").arg(CLIENT_NAME), QMessageBox::Yes|QMessageBox::No)==QMessageBox::Yes)

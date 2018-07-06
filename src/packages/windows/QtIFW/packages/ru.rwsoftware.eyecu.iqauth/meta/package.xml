@@ -1,13 +1,15 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Query Authentication</DisplayName>
-    <Description>Allow you to log on the Jabber server without support SASL authentication</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.iqauth</Name>
-    <SortingPriority>77</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Query Authentication</DisplayName>
+ <Description>Allow you to log on the Jabber server without support SASL authentication</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.iqauth</Name>
+ <SortingPriority>77</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

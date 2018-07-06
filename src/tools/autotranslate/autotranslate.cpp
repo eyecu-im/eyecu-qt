@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
@@ -7,21 +9,21 @@
 
 #if QT_VERSION < 0x050000
 #include <stdlib.h>
-void myMessageHandler(QtMsgType type, const char *msg)
+void myMessageOutput(QtMsgType AType, const char *AMessage)
 {
-	switch (type) 
+    switch (AType)
 	{
 		 case QtDebugMsg:
-			 fprintf(stderr, "%s\n", msg);
+             fprintf(stderr, "%s\n", AMessage);
 			 break;
 		 case QtWarningMsg:
-			 fprintf(stderr, "Warning: %s\n", msg);
+             fprintf(stderr, "Warning: %s\n", AMessage);
 			 break;
 		 case QtCriticalMsg:
-			 fprintf(stderr, "Critical: %s\n", msg);
+             fprintf(stderr, "Critical: %s\n", AMessage);
 			 break;
 		 case QtFatalMsg:
-			 fprintf(stderr, "Fatal: %s\n", msg);
+             fprintf(stderr, "Fatal: %s\n", AMessage);
 			 exit(-1);
 	}
 }
@@ -52,7 +54,7 @@ void myMessageHandler(QtMsgType AType, const QMessageLogContext &AContext, const
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < 0x050000
-	qInstallMsgHandler(myMessageHandler);
+    qInstallMsgHandler(myMessageOutput);
 #else
 	qInstallMessageHandler(myMessageHandler);
 #endif

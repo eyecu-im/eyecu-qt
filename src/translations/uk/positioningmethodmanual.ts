@@ -12,42 +12,42 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="68"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="72"/>
    <source>Stop location publication</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="68"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="72"/>
    <source>Ctrl+R</source>
    <comment>Stop publication</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="69"/>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="132"/>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="155"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="73"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="136"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="159"/>
    <source>Here I am!</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="69"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="73"/>
    <source>F6</source>
    <comment>Here I am! (POI)</comment>
    <translation>F6</translation>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="84"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="88"/>
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.h" line="49"/>
    <source>Manual</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="134"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="138"/>
    <source>Stop publication</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="144"/>
+   <location filename="../../plugins/positioningmethodmanual/positioningmethodmanual.cpp" line="148"/>
    <source>Set my position</source>
    <translation type="unfinished"/>
   </message>

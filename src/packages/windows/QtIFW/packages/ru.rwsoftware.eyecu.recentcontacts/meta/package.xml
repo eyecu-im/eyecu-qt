@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Recent Contacts</DisplayName>
-    <Description>Displays a recently used contacts</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.recentcontacts</Name>
-    <Dependencies>ru.rwsoftware.eyecu.privatestorage</Dependencies>
-    <SortingPriority>90</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Recent Contacts</DisplayName>
+ <Description>Displays a recently used contacts</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.recentcontacts</Name>
+ <Dependencies>ru.rwsoftware.eyecu.privatestorage</Dependencies>
+ <SortingPriority>90</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -20,8 +20,6 @@ class MapSourceProGorod:
 #endif
 public:
 	MapSourceProGorod();
-	~MapSourceProGorod();
-
 	// IMapSource interface
 	MapSource				*mapSource() {return this;}
 	virtual QList<int>      getModeIcons() const;

@@ -3,17 +3,12 @@
 
 #include <interfaces/idefaultconnection.h>
 #include <utils/xmpperror.h>
-#if QT_VERSION < 0x050000
-#include <thirdparty/jdns/qjdns.h>
-#else
-#include <QDnsLookup>
-#include <definitions/internalerrors.h>
+#include <QPDnsLookup>
 
 struct SrvRecord {
 	QString target;
 	quint16 port;
 };
-#endif
 
 class DefaultConnection :
 	public QObject,
@@ -69,13 +64,7 @@ signals:
 protected:
 	void connectToNextHost();
 protected slots:
-#if QT_VERSION < 0x050000
-	void onDnsResultsReady(int AId, const QJDns::Response &AResults);
-	void onDnsError(int AId, QJDns::Error AError);
-	void onDnsShutdownFinished();
-#else
 	void onDnsLookupFinished();
-#endif
 	void onSocketProxyAuthenticationRequired(const QNetworkProxy &AProxy, QAuthenticator *AAuth);
 	void onSocketConnected();
 	void onSocketEncrypted();
@@ -84,20 +73,11 @@ protected slots:
 	void onSocketError(QAbstractSocket::SocketError AError);
 	void onSocketDisconnected();
 
-
-
-
 private:
 	IConnectionEngine *FEngine;
 private:
-#if QT_VERSION < 0x050000
-	QJDns FDns;
-	int FSrvQueryId;
-	QList<QJDns::Record> FRecords;
-#else
-	QDnsLookup FDnsLookup;
+	QPDnsLookup FDnsLookup;
 	QList<SrvRecord> FRecords;
-#endif
 private:
 	bool FSSLError;
 	bool FDisconnecting;

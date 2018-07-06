@@ -1,8 +1,35 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
 project(vacuum-im)
 
-find_package(Qt4 REQUIRED)
+SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+if(APPLE)
+	 set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
+	 set_property(GLOBAL PROPERTY ALL_PLUGINS_FULLPATHS "")
+endif()
+
+if(POLICY CMP0020)
+	cmake_policy(SET CMP0020 NEW)
+endif()
+
+if(POLICY CMP0022)
+	cmake_policy(SET CMP0022 NEW)
+endif()
+
+if(POLICY CMP0043)
+	cmake_policy(SET CMP0043 NEW)
+endif()
+
+find_package (Qt5PrintSupport)
+find_package (Qt5Multimedia)
+find_package (Qt5Sql)
+find_package (Qt5Svg)
+find_package (Qt5Widgets REQUIRED)
+find_package (Qt5Network REQUIRED)
+find_package (Qt5Xml REQUIRED)
+find_package (Qt5LinguistTools REQUIRED)
 
 add_custom_target(updatets)
 
@@ -11,13 +38,9 @@ include("src/translations/languages.cmake")
 include_directories("${CMAKE_SOURCE_DIR}/src")
 
 if (APPLE)
-	file(COPY "resources/menuicons"
-		DESTINATION "${INSTALL_RESOURCES}"
-		PATTERN ".svn" EXCLUDE)
+	file(COPY "resources/menuicons" DESTINATION "${INSTALL_RESOURCES}")
 else (APPLE)
-	install(DIRECTORY "resources/menuicons"
-		DESTINATION "${INSTALL_RESOURCES}"
-		PATTERN ".svn" EXCLUDE)
+	install(DIRECTORY "resources/menuicons" DESTINATION "${INSTALL_RESOURCES}")
 endif (APPLE)
 
 include("src/packages/package.cmake")
@@ -33,7 +56,8 @@ set(FORCE_BUNDLED_MINIZIP NO CACHE BOOL "Use bundled minizip even if local syste
 find_library(SYSTEM_ZLIB_FOUND z)
 find_library(SYSTEM_IDN_FOUND idn)
 find_library(SYSTEM_MINIZIP_FOUND minizip)
-find_library(SYSTEM_QTLOCKEDFILE_FOUND QtSolutions_LockedFile-2.4)
+find_library(SYSTEM_QTLOCKEDFILE_FOUND Qt5Solutions_LockedFile-2.4)
+find_library(SYSTEM_QXTGLOBALSHORTCUT_FOUND qxtglobalshortcut)
 
 if (FORCE_BUNDLED_MINIZIP)
 	set(SYSTEM_MINIZIP_FOUND NO)
@@ -55,6 +79,10 @@ if (SYSTEM_QTLOCKEDFILE_FOUND)
 	add_definitions(-DUSE_SYSTEM_QTLOCKEDFILE)
 endif (SYSTEM_QTLOCKEDFILE_FOUND)
 
+if (SYSTEM_QXTGLOBALSHORTCUT_FOUND)
+	add_definitions(-DUSE_SYSTEM_QXTGLOBALSHORTCUT)
+endif (SYSTEM_QXTGLOBALSHORTCUT_FOUND)
+
 if ("${LANGS}" STREQUAL "")
 	process_lang_options()
 else ("${LANGS}" STREQUAL "")
@@ -68,110 +96,6 @@ endif (INSTALL_DOCS)
 
 add_subdirectory(src)
 
-# runtime deps on Windows
-if (WIN32)
-	set(WEBKIT_WITHOUT_PHONON NO CACHE BOOL "Turn this flag ON if you use QtWebKit built without Phonon support")
-	set(WEBKIT_WITHOUT_XMLPATTERNS NO CACHE BOOL "Turn this flag ON if you use QtWebKit built without QtXmlPatterns")
-	cpack_add_component_group(libs
-		DISPLAY_NAME "Shared libraries"
-		DESCRIPTION "Required libraries that already may be present in your system")
-	set(QT_LIBS "${QT_LIBRARY_DIR}/../bin/QtCore4.dll"
-		"${QT_LIBRARY_DIR}/../bin/QtGui4.dll"
-		"${QT_LIBRARY_DIR}/../bin/QtNetwork4.dll"
-		"${QT_LIBRARY_DIR}/../bin/QtXml4.dll"
-		"${QT_LIBRARY_DIR}/../bin/QtWebkit4.dll")
-	if (NOT WEBKIT_WITHOUT_PHONON)
-		set(QT_LIBS ${QT_LIBS} "${QT_LIBRARY_DIR}/../bin/phonon4.dll")
-	endif (NOT WEBKIT_WITHOUT_PHONON)
-	if (NOT WEBKIT_WITHOUT_XMLPATTERNS)
-		set(QT_LIBS ${QT_LIBS} "${QT_LIBRARY_DIR}/../bin/QtXmlPatterns4.dll")
-	endif (NOT WEBKIT_WITHOUT_XMLPATTERNS)
-	install(FILES ${QT_LIBS}
-		DESTINATION "${INSTALL_LIBS}"
-		COMPONENT qt_libs)
-	install(DIRECTORY "${QT_PLUGINS_DIR}/imageformats"
-		DESTINATION "${INSTALL_LIBS}"
-		COMPONENT qt_libs
-		FILES_MATCHING
-		PATTERN "*.dll"
-		PATTERN "*d4.dll" EXCLUDE)
-	cpack_add_component(qt_libs
-		DISPLAY_NAME "Qt4 libraries"
-		DESCRIPTION "May be unchecked if you already have working Qt4 installation"
-		GROUP libs)
-	# Qt localization
-	foreach(LANG ${LOCALIZED_LANGS})
-		string(SUBSTRING ${LANG} 0 2 SHORTLANG)
-		install(FILES "${QT_TRANSLATIONS_DIR}/qt_${SHORTLANG}.qm"
-			DESTINATION "${INSTALL_TRANSLATIONS}/${LANG}"
-			COMPONENT qt_${LANG})
-		cpack_add_component(qt_${LANG}
-			DISPLAY_NAME "Qt4 translation"
-			GROUP ${LANG}_translation
-			DEPENDS qt_libs)
-	endforeach(LANG)
-
-#	install(FILES "libeay32.dll" "ssleay32.dll"
-#		DESTINATION "${INSTALL_LIBS}"
-#		COMPONENT openssl_libs)
-#	cpack_add_component(openssl_libs
-#		DISPLAY_NAME "OpenSSL libraries"
-#		DESCRIPTION "May be unchecked if you already have OpenSSL installed"
-#		GROUP libs)
-
-	if (MINGW)
-		install(FILES "mingwm10.dll" "libgcc_s_dw2-1.dll"
-			DESTINATION "${INSTALL_LIBS}"
-			COMPONENT mingw_runtime)
-		cpack_add_component(mingw_runtime
-			DISPLAY_NAME "MinGW runtime libraries"
-			DESCRIPTION "May be unchecked if you already have MinGW installed"
-			GROUP libs)
-	elseif (MSVC)
-		# TODO: check these patterns
-		file(GLOB MSVC_DLLS "msvc*.dll")
-		file(GLOB MANIFEST "Microsoft.VC*.CRT.manifest")
-		install(FILES ${MSVC_DLLS} ${MANIFEST}
-			DESTINATION "${INSTALL_LIBS}"
-			COMPONENT msvc_runtime)
-		cpack_add_component(msvc_runtime
-			DISPLAY_NAME "MSVC runtime libraries"
-			DESCRIPTION "May be unchecked if you already have MS Visual C++ or it's redistributable package installed"
-			GROUP libs)
-	endif (MINGW)
-endif (WIN32)
-
-if (APPLE)
-	set_target_properties(${VACUUM_LOADER_NAME} PROPERTIES
-		MACOSX_BUNDLE_BUNDLE_NAME "vacuum"
-		MACOSX_BUNDLE_INFO_STRING "Vacuum-IM"
-		MACOSX_BUNDLE_BUNDLE_VERSION "${VERSION}"
-		MACOSX_BUNDLE_ICON_FILE "vacuum"
-		MACOSX_BUNDLE_GUI_IDENTIFIER "com.jrudevels.vacuum"
-		MACOSX_BUNDLE_COPYRIGHT "Copyright 2010-2012, Potapov S.A.")
-	list(APPEND DIRS
-		${QT_LIBRARY_DIR}
-		${CMAKE_INSTALL_PREFIX}/${LIBDIR})
-	install(CODE "
-		include(BundleUtilities)
-		file(GLOB_RECURSE PLUGINS \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${INSTALL_APP_DIR}/Contents/PlugIns/*.dylib\")
-		fixup_bundle(\"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${INSTALL_APP_DIR}\"   \"\${PLUGINS}\"   \"${DIRS}\")"
-		COMPONENT xxx-this_should_be_the_last_component_in_lexicographical_order_because_cmake_sucks)
-	file(COPY vacuum.icns
-		DESTINATION "${INSTALL_RESOURCES}")
-
-	file(WRITE "${CMAKE_BINARY_DIR}/${INSTALL_RESOURCES}/qt.conf" "[Paths]\nPlugins = PlugIns")
-	file(COPY "${QT_PLUGINS_DIR}/imageformats"
-		DESTINATION "${INSTALL_PLUGINS}")
-	file(COPY "${QT_PLUGINS_DIR}/sqldrivers/libqsqlite.dylib"
-		DESTINATION "${INSTALL_PLUGINS}/sqldrivers")
-	# Qt localization
-	foreach(LANG ${LOCALIZED_LANGS})
-		string(SUBSTRING ${LANG} 0 2 SHORTLANG)
-		file(COPY "${QT_TRANSLATIONS_DIR}/qt_${SHORTLANG}.qm"
-			DESTINATION "${INSTALL_TRANSLATIONS}/${LANG}")
-	endforeach(LANG)
-endif (APPLE)
 
 if (INSTALL_SDK)
 	cpack_add_component(sdk

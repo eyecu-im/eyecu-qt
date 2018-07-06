@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Connection Wizard Russian Translation</DisplayName>
-    <Description>Connection Wizard Russian translation</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-07</ReleaseDate>
-	<UpdateText>Fixed minor typo in "PEP not available" notification text</UpdateText>
-    <Name>ru.rwsoftware.eyecu.wizards.account.ru</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.wizards.account,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Connection Wizard Russian Translation</DisplayName>
+ <Description>Connection Wizard Russian translation</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-01-27</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.wizards.account.ru</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.wizards.account,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

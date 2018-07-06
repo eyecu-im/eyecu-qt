@@ -72,12 +72,12 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="118"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="121"/>
    <source>Normal</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="125"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="131"/>
    <source>Large</source>
    <translation type="unfinished"/>
   </message>

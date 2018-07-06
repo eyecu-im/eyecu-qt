@@ -51,6 +51,11 @@ protected slots:
     void onShadowBlurChange(int blur);
     void onShadowShiftXChange(int);
     void onShadowShiftYChange(int cy);
+	void onBoxFrameShapeChanged(int AIndex);
+
+	void disableBoxBackgroundAlpha(bool ADisable);
+	void disableCntrlBackgroundAlpha(bool ADisable);
+	void enableCenterMarkerAlpha(bool AEnable);
 
 // IOptionsWidget
 signals:
@@ -78,7 +83,7 @@ private:
     QColor contrShadow;
     QColor contrDark;
     QColor contrBackground;
-    QColor contrCentralMarker;
+	QColor centerMarker;
 
     QColor boxForeground;
     QColor boxLight;

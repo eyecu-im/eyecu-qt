@@ -11,6 +11,14 @@
         <source>Allows to determine device position</source>
         <translation>Позволяет определить местоположение устройства</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Основное</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Местоположение</translation>
+    </message>
 </context>
 <context>
     <name>PositioningOptions</name>

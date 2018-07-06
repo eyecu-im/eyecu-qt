@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>URL Processor</DisplayName>
-    <Description>Allows other plugins to load data from custom types of URLs</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2014-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.urlprocessor</Name>
-    <SortingPriority>57</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>URL Processor</DisplayName>
+ <Description>Allows other plugins to load data from custom types of URLs</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2014-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.urlprocessor</Name>
+ <SortingPriority>57</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

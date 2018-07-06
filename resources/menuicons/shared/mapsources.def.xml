@@ -9,10 +9,6 @@
     <object mime="image/png">yandex.png</object>
   </icon>
   <icon>
-    <key>yahoo</key>
-    <object mime="image/png">yahoo.png</object>
-  </icon>
-  <icon>
     <key>kosmosnimki</key>
     <object mime="image/png">kosmosnimki.png</object>
   </icon>
@@ -41,10 +37,6 @@
     <object mime="image/png">2gis.png</object>
   </icon>
   <icon>
-    <key>navteq</key>
-    <object mime="image/png">navteq.png</object>
-  </icon>
-  <icon>
     <key>esri</key>
     <object mime="image/png">esri.png</object>
   </icon>
@@ -59,10 +51,6 @@
   <icon>
     <key>progorod</key>
     <object mime="image/png">progorod.png</object>
-  </icon>
-  <icon>
-    <key>rosreestr</key>
-    <object mime="image/png">rosreestr.png</object>
   </icon>
   <icon>
     <key>geocentre-consulting</key>

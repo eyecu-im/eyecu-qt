@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Stream Compression Ukrainian Translation</DisplayName>
-    <Description>Stream Compression Ukrainian translation</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-07</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.compress.uk</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.compress,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Stream Compression Ukrainian Translation</DisplayName>
+ <Description>Stream Compression Ukrainian translation</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-04-07</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.compress.uk</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.compress,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

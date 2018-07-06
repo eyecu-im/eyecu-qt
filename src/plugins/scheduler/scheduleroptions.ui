@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SchedulerOptions</class>
+ <widget class="QWidget" name="SchedulerOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Scheduler options</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QCheckBox" name="cbActive">
+     <property name="text">
+      <string>Active</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTreeWidget" name="twSchedule">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <attribute name="headerDefaultSectionSize">
+      <number>48</number>
+     </attribute>
+     <attribute name="headerStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Account</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Contact</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Timeout</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Message</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pbAdd">
+       <property name="text">
+        <string>Add...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbEdit">
+       <property name="text">
+        <string>Edit...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pbDelete">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbAdd</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemAdd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbEdit</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>209</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>twSchedule</sender>
+   <signal>currentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>308</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>twSchedule</sender>
+   <signal>itemActivated(QTreeWidgetItem*,int)</signal>
+   <receiver>SchedulerOptions</receiver>
+   <slot>onItemEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>325</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onItemAdd()</slot>
+  <slot>onItemEdit()</slot>
+  <slot>onItemDelete()</slot>
+  <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+ </slots>
+</ui>

@@ -48,7 +48,7 @@ public:
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 	{
 		QMultiMap<int, IOptionsDialogWidget *> widgets;
-		if (ANodeId == OPN_POSITIONING"."+pluginUuid().toString())
+		if (ANodeId == OPN_GEOLOC"."+pluginUuid().toString())
 			widgets.insertMulti(OWO_MANUAL, new PositioningMethodLocationOptions(AParent));
 		return widgets;
 	}

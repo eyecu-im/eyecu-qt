@@ -14,7 +14,7 @@ void MapSourceBing::pluginInfo(IPluginInfo *APluginInfo)
 QList<int> MapSourceBing::getModeIcons() const
 {
 	QList<int> list;
-	list << ICON_MAP << ICON_HYBRID << ICON_SATELLITE;
+	list << ICON_MAP << ICON_HYBRID << ICON_SATELLITE << ICON_TERRAIN;
 	return list;
 }
 

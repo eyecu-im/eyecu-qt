@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Remote Control</DisplayName>
-    <Description>Allows to remotely control the client</Description>
-    <Version>1.3.1</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Name>ru.rwsoftware.eyecu.remotecontrol</Name>
-    <Dependencies>ru.rwsoftware.eyecu.commands</Dependencies>
-    <SortingPriority>92</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Remote Control</DisplayName>
+ <Description>Allows to remotely control the client</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2016-04-04</ReleaseDate>
+ <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Name>ru.rwsoftware.eyecu.remotecontrol</Name>
+ <Dependencies>ru.rwsoftware.eyecu.commands</Dependencies>
+ <SortingPriority>92</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

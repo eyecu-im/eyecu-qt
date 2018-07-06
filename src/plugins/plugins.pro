@@ -1,5 +1,4 @@
 TEMPLATE = subdirs
-
 include(pkgtest.inc)
 
 SUBDIRS += optionsmanager
@@ -96,19 +95,19 @@ SUBDIRS += mapsearchproviderhere
 SUBDIRS += mapsource2gis
 SUBDIRS += mapsourcebing
 SUBDIRS += mapsourceesri
-SUBDIRS += mapsourcerosreestr
+#SUBDIRS += mapsourcerosreestr
 SUBDIRS += mapsourcerumap
 SUBDIRS += mapsourcegoogle
 SUBDIRS += mapsourcekosmosnimki
 SUBDIRS += mapsourcemegafon
 SUBDIRS += mapsourcenavitel
-SUBDIRS += mapsourcenavteq
+#SUBDIRS += mapsourcenavteq
 SUBDIRS += mapsourceosm 
 SUBDIRS += mapsourceovi 
 SUBDIRS += mapsourceprogorod
 SUBDIRS += mapsourcevitel
 SUBDIRS += mapsourcewiki 
-SUBDIRS += mapsourceyahoo 
+#SUBDIRS += mapsourceyahoo
 SUBDIRS += mapsourceyandex
 SUBDIRS += receipts 
 SUBDIRS += attention 
@@ -125,7 +124,6 @@ CONFIG(debug, debug|release): SUBDIRS += gcompass
 CONFIG(debug, debug|release): SUBDIRS += tracker
 SUBDIRS += oob 
 SUBDIRS += mapcontacts 
-SUBDIRS += contactproximitynotification
 SUBDIRS += mapmessage 
 SUBDIRS += maplocationselector 
 SUBDIRS += xhtmlim 
@@ -147,3 +145,4 @@ CONFIG(debug, debug|release): SUBDIRS += weather
 CONFIG(debug, debug|release): SUBDIRS += weatherprovideropenweather
 SUBDIRS += wizardaccount
 SUBDIRS += wizardtransport
+SUBDIRS += scheduler 

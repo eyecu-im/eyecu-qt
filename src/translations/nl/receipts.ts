@@ -33,7 +33,7 @@
    <translation>Stuurt/Ontvangt Bericht bezorging</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="318"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="326"/>
    <source>Message delivered</source>
    <translation>Bericht afgeleverd</translation>
   </message>

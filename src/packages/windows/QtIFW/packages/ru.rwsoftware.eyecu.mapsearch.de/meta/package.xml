@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Search Deutsch Translation</DisplayName>
-    <Description>Map Search Deutsch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.mapsearch.de</Name>
-	<AutoDependOn>ru.rwsoftware.eyecu.mapsearch,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Map Search Deutsch Translation</DisplayName>
+ <Description>Map Search Deutsch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.mapsearch.de</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.mapsearch,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

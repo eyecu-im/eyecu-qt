@@ -33,7 +33,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="318"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="326"/>
    <source>Message delivered</source>
    <translation type="unfinished"/>
   </message>

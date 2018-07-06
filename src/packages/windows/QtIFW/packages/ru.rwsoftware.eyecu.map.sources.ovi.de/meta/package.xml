@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>OVI Deutsch Translation</DisplayName>
-    <Description>OVI Deutsch translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.sources.ovi.de</Name>
-	<AutoDependOn>ru.rwsoftware.eyecu.map.sources.ovi,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>OVI Deutsch Translation</DisplayName>
+ <Description>OVI Deutsch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.sources.ovi.de</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.map.sources.ovi,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

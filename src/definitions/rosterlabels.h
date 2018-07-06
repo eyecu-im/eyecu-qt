@@ -21,6 +21,7 @@
 #define RLID_MOOD                                  AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,128,AdvancedDelegateItem::AlignRightOrderMask | 2010)
 #define RLID_TUNE                                  AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,128,AdvancedDelegateItem::AlignRightOrderMask | 2020)
 #define RLID_GEOLOC                                AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,128,AdvancedDelegateItem::AlignRightOrderMask | 2030)
+#define RLID_CONTACTPROXIMITY                      AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,128,AdvancedDelegateItem::AlignRightOrderMask | 2031)
 #define RLID_CLIENTICONS                           AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,128,AdvancedDelegateItem::AlignRightOrderMask | 2040)
 #define RLID_AVATAR_IMAGE_LEFT                     AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleLeft,128, 50)
 #define RLID_AVATAR_IMAGE_RIGHT                    AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleRight,200, 500)

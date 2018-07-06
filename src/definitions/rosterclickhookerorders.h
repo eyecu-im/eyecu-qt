@@ -6,7 +6,7 @@
 #define RCHO_RECENTCONTACTS                 500
 #define RCHO_MULTIUSERCHAT                  1000
 /*** <<< eyeCU <<< ***/
-#define RCHO_MAPCONTACTS                    400
+#define RCHO_GEOLOC                         400
 #define RCHO_CLIENTICONS                    400
 #define RCHO_TUNE                           500
 /*** >>> eyeCU >>> ***/

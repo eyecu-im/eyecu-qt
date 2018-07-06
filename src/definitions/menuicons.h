@@ -264,9 +264,6 @@
 // User Nickname
 #define MNI_NICKNAME                    "nickname"
 
-// Contact proximity notification
-#define MNI_PROXIMITY                   "proximity"
-
 // Attention
 #define MNI_BELL                        "bell"
 #define MNI_ATTENTION                   "attention"

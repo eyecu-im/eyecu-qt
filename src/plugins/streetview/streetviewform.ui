@@ -525,20 +525,15 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ElevationSelector</class>
-   <extends>QWidget</extends>
-   <header location="global">QtGeo/elevationselector.h</header>
-   <container>1</container>
-   <slots>
-    <signal>elevationChanged(qreal)</signal>
-    <signal>elevationTrack(qreal)</signal>
-    <slot>setElevation(qreal)</slot>
-   </slots>
-  </customwidget>
-  <customwidget>
    <class>DirectionSelector</class>
    <extends>QWidget</extends>
-   <header location="global">QtGeo/directionselector.h</header>
+   <header location="global">DirectionSelector</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ElevationSelector</class>
+   <extends>QWidget</extends>
+   <header location="global">ElevationSelector</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -1,11 +1,18 @@
-file(GLOB SOURCES "*.cpp")
-file(GLOB UIS "*.ui")
-set(HEADERS "aboutbox.h"
-		"pluginmanager.h"
-		"setuppluginsdialog.h")
+set(SOURCES "main.cpp"
+			"aboutbox.cpp"
+			"pluginmanager.cpp"
+			"setuppluginsdialog.cpp")
 
-qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
-qt4_wrap_ui(UI_HEADERS ${UIS})
+set(UIS "aboutbox.ui"
+		"setuppluginsdialog.ui")
+
+set(HEADERS "aboutbox.h"
+			"pluginmanager.h"
+			"setuppluginsdialog.h")
+
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+qt5_wrap_ui(UI_HEADERS ${UIS})
+
 if (NOT MSVC)
-	qt4_add_resources(RC_SOURCES "loader.rc")
+	qt5_add_resources(RC_SOURCES "loader.rc")
 endif (NOT MSVC)

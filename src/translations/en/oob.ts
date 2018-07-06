@@ -123,7 +123,7 @@
    <translation>Add a new link</translation>
   </message>
   <message>
-   <location line="266" filename="../../plugins/oob/oob.cpp"/>
+   <location line="282" filename="../../plugins/oob/oob.cpp"/>
    <source>Link</source>
    <translation>Link</translation>
   </message>

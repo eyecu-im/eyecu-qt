@@ -71,7 +71,7 @@
   <message numerus="yes">
    <location filename="../../plugins/notifications/notifications.cpp" line="858"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="256"/>

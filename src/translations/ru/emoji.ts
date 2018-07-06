@@ -1,60 +1,60 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU">
+<TS version="2.0" language="ru_RU">
   <context>
     <name>Emoji</name>
     <message>
-      <location line="50" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="51" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Emoji</source>
       <translation>Эмодзи</translation>
     </message>
     <message>
-      <location line="51" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="52" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Allows to use emoji in messages</source>
       <translation>Позволяет использовать эмодзи в сообщениях</translation>
     </message>
     <message>
-      <location line="86" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="87" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Smileys &amp; People</source>
       <translation>Смайлики и Люди</translation>
     </message>
     <message>
-      <location line="87" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Animals &amp; Nature</source>
       <translation>Животные и Природа</translation>
     </message>
     <message>
-      <location line="88" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Food &amp; Drink</source>
       <translation>Еда и Напитки</translation>
     </message>
     <message>
-      <location line="89" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Travel &amp; Places</source>
       <translation>Путешествие и Места</translation>
     </message>
     <message>
-      <location line="90" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="91" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Symbols</source>
       <translation>Символы</translation>
     </message>
     <message>
-      <location line="91" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="92" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Activities</source>
       <translation>Виды деятельности</translation>
     </message>
     <message>
-      <location line="93" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="94" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Flags</source>
       <translation>Флаги</translation>
     </message>
     <message>
-      <location line="92" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="93" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Objects</source>
       <translation>Предметы</translation>
     </message>
     <message>
-      <location line="165" filename="../../plugins/emoji/emoji.cpp"/>
+      <location line="166" filename="../../plugins/emoji/emoji.cpp"/>
       <source>Message windows</source>
       <translation>Окна сообщений</translation>
     </message>

@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-
-    <DisplayName>Chat States Japanese Translation</DisplayName>
-    <Description>Chat States Japanese translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.chatstates.ja</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.chatstates,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Chat States Japanese Translation</DisplayName>
+ <Description>Chat States Japanese translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.chatstates.ja</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.chatstates,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

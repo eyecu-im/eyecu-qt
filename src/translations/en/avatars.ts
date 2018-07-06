@@ -74,12 +74,12 @@
    <translation>Small</translation>
   </message>
   <message>
-   <location line="118" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location line="121" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
    <source>Normal</source>
    <translation>Normal</translation>
   </message>
   <message>
-   <location line="125" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location line="131" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
    <source>Large</source>
    <translation>Large</translation>
   </message>

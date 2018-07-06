@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Runtime</DisplayName>
+ <Description>Qt5 Runtime</Description>
+ <Version>5.2.1</Version>
+ <ReleaseDate>2016-03-09</ReleaseDate>
+ <Name>org.digia.qt5</Name>
+ <Dependencies>com.microsoft.vcredist,org.icuproject.icu</Dependencies>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -11,7 +11,7 @@
 #include <definitions/rosterindexroles.h>
 #include <definitions/rosterindexkinds.h>
 #include <definitions/rosterlabels.h>
-#include <definitions/rosterclickhookerorders.h>
+// #include <definitions/rosterclickhookerorders.h>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionwidgetorders.h>
@@ -162,7 +162,7 @@ bool MapContacts::initObjects()
 
 	if (FRostersView)
 	{
-		FRostersView->insertClickHooker(RCHO_MAPCONTACTS, this);
+//		FRostersView->insertClickHooker(RCHO_MAPCONTACTS, this);
 		Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_SHOWCONTACTONTHEMAP, FRostersView->instance());
 	}
 
@@ -243,7 +243,7 @@ void MapContacts::showContact(QString AJid, bool AShowMap) const
 	if (hasGeoloc(AJid))
 		FMap->showObject(MOT_CONTACT, AJid, Options::node(OPV_MAP_CONTACTS_FOLLOW).value().toBool(), AShowMap);
 	else if (FGeoloc->hasGeoloc(AJid))
-	{		
+	{
 		FMap->geoMap()->getScene()->setMapCenter(FGeoloc->getGeoloc(AJid).coordinates(), true);
 		FMap->showMap();
 	}
@@ -376,18 +376,18 @@ QString MapContacts::toolTipText(const MapObject *AMapObject, const QHelpEvent *
 	return result;
 }
 
-bool MapContacts::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
-{
-	Q_UNUSED(AOrder)
+//bool MapContacts::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
+//{
+//	Q_UNUSED(AOrder)
 
-	QModelIndex index = FRostersView->mapFromModel(FRostersView->rostersModel()->modelIndexFromRosterIndex(AIndex));
-	if (FRostersView->labelAt(AEvent->pos(),index) == FGeoloc->rosterLabelId())
-	{
-		showContact(AIndex->data(RDR_FULL_JID).toString());
-		return true;
-	}
-	return false;
-}
+//	QModelIndex index = FRostersView->mapFromModel(FRostersView->rostersModel()->modelIndexFromRosterIndex(AIndex));
+//	if (FRostersView->labelAt(AEvent->pos(),index) == FGeoloc->rosterLabelId())
+//	{
+//		showContact(AIndex->data(RDR_FULL_JID).toString());
+//		return true;
+//	}
+//	return false;
+//}
 
 int MapContacts::getShow(const QString &AJid) const
 {

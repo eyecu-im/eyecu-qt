@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt4 Japanese Translation</DisplayName>
+ <Description>Qt4 Japanese translation</Description>
+ <Version>4.8.7</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>org.digia.qt4.ja</Name>
+ <AutoDependOn>org.digia.qt4,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

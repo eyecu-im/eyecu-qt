@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QIcon>
 #include <QNetworkAccessManager>
-#include <QtUtil/httprequest.h>
+#include <HttpRequest>
 
 #define PLACEVIEW_UUID "{ca41e58a-c87e-4f25-9998-0d58fbd51072}"
 

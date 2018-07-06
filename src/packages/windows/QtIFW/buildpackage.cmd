@@ -1,8 +1,9 @@
 echo off
+set platform=x64
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
-set packagefilename=%packagename%-%version%
+set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
 
@@ -10,19 +11,23 @@ echo Creating base package
 
 rem goto build
 
+if exist "c:\eyecu\hunspell\*" goto hunspell
+echo No Hunspell found in eyeCU installation directory!
+goto end
+:hunspell
+
 if exist "%qtdir%" goto exists
 echo No Qt installation found!
 goto end
-
 :exists
 
 if exist "%MSVCREDIST%" goto redistexists
 echo Cannot find MSVC Redistributable
 goto end
-
 :redistexists
-mkdir packages\com.microsoft.vcredist\data\
-copy "%MSVCREDIST%" packages\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+
+mkdir %packages%\com.microsoft.vcredist\data\
+mkdir %packages%\com.microsoft.vcredist\meta\
 
 if not exist "%OPENSSLDIR%\libeay32.dll"  goto noopenssl
 if not exist "%OPENSSLDIR%\ssleay32.dll"  goto noopenssl
@@ -32,43 +37,101 @@ echo Cannot find OpenSSL libraries
 goto end
 
 :opensslexists
-mkdir packages\org.openssl.shared\data
-for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll packages\org.openssl.shared\data\ /Y
+mkdir %packages%\org.openssl.shared\data
+for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll %packages%\org.openssl.shared\data\ /Y
 
-
-for %%f in (phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll) do xcopy %qtdir%\bin\%%f packages\org.digia.qt4\data\ /Y
-
-xcopy %qtdir%\plugins\imageformats\q*4.dll packages\org.digia.qt4\data\imageformats\ /Y
-del packages\org.digia.qt4\data\imageformats\q*d4.dll /Q
-xcopy %qtdir%\plugins\iconengines\q*4.dll packages\org.digia.qt4\data\iconengines\ /Y
-del packages\org.digia.qt4\data\iconengines\q*d4.dll /Q
-
-for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm packages\org.digia.qt4.%%f\data\translations\ /Y
-
-for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm packages\org.digia.qt4.locales\data\translations\ /Y
-
-if exist %qtdir%\bin\QtMultimedia4.dll (
-xcopy %qtdir%\bin\QtMultimedia4.dll packages\org.digia.qt4.multimedia\data\ /Y
-) else if exist %qtdir%\bin\QtMultimediaKit1.dll (
-xcopy %qtdir%\bin\QtMultimediaKit1.dll packages\org.digia.qt4.multimedia\data\ /Y
-) else goto no_multimedia
-goto multimedia
-:no_multimedia
-echo Error! No multimedia framework found!
-goto end
-
-:multimedia
-xcopy %qtdir%\bin\QtSql4.dll packages\org.digia.qt4.sql\data\ /Y
-xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll packages\org.digia.qt4.sql\data\sqldrivers\* /Y
-
-xcopy %qtdir%\bin\QtScript4.dll packages\org.digia.qt4.script\data\ /Y
-xcopy %qtdir%\bin\QtWebKit4.dll packages\org.digia.qt4.webkit\data\ /Y
-xcopy %qtdir%\bin\QtSerialPort.dll packages\org.digia.qt4.serialport\data\ /Y
+if %platform%==x64 goto x64_qt_files
+copy cfg\32\* config\
 
 if not exist %qtdir%\mkspecs\features\util.prf goto noqtpurple
 if not exist %qtdir%\mkspecs\features\ffmpeg.prf goto noqtpurple
 if not exist %qtdir%\mkspecs\features\geo.prf goto noqtpurple
+
+for /d %%p in (packages\org.digia.qt5.*) do rmdir %%p /S /Q
+
+xcopy qt\4\* packages\ /E /Y
+xcopy plugins\4\* packages\ /E /Y
+xcopy purple\4\* packages\ /E /Y
+
+if exist %qtdir%\bin\QtMultimedia4.dll (
+xcopy %qtdir%\bin\QtMultimedia4.dll %packages%\org.digia.qt4.multimedia\data\ /Y
+) else if exist %qtdir%\bin\QtMultimediaKit1.dll (
+xcopy %qtdir%\bin\QtMultimediaKit1.dll %packages%\org.digia.qt4.multimedia\data\ /Y
+) else goto no_multimedia
+xcopy vcredist\x86\* packages\com.microsoft.vcredist\meta\ /Y
+xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll %packages%\org.digia.qt4.sql\data\sqldrivers\* /Y
+xcopy %qtdir%\bin\QtSql4.dll %packages%\org.digia.qt4.sql\data\ /Y
+xcopy %qtdir%\bin\QtScript4.dll %packages%\org.digia.qt4.script\data\ /Y
+xcopy %qtdir%\bin\QtWebKit4.dll %packages%\org.digia.qt4.webkit\data\ /Y
+xcopy %qtdir%\bin\QtSerialPort.dll %packages%\org.digia.qt4.serialport\data\ /Y
+xcopy %qtdir%\bin\QtFFMpeg1.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QtGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QtUtil1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+
+set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
+set targetqt=qt4
+goto copy_qt_files
+:x64_qt_files
+copy cfg\64\* config\
+
+if not exist %qtdir%\mkspecs\modules\qt_lib_util.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_ffmpeg.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_geo.pri goto noqtpurple
+for /d %%p in (packages\org.digia.qt4.*) do rmdir %%p /S /Q
+xcopy qt\5\* packages\ /E /Y
+xcopy plugins\5\* packages\ /E /Y
+xcopy purple\5\* packages\ /E /Y
+if not exist %qtdir%\bin\Qt5Multimedia.dll goto no_multimedia
+
+xcopy vcredist\x64\* packages\com.microsoft.vcredist\meta\ /Y
+
+xcopy %qtdir%\bin\icu*.dll %packages%\org.icuproject.icu\data\ /Y
+
+xcopy %qtdir%\plugins\platforms\qwindows.dll %packages%\org.digia.qt5\data\platforms\ /Y
+xcopy %qtdir%\plugins\sqldrivers\qsqlite.dll %packages%\org.digia.qt5.sql\data\sqldrivers\* /Y
+
+xcopy %qtdir%\bin\Qt5Sql.dll %packages%\org.digia.qt5.sql\data\ /Y
+
+xcopy %qtdir%\bin\Qt5WebKit.dll %packages%\org.digia.qt5.webkit\data\ /Y
+xcopy %qtdir%\bin\Qt5WebKitWidgets.dll %packages%\org.digia.qt5.webkit\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Multimedia.dll %packages%\org.digia.qt5.multimedia\data\ /Y
+xcopy %qtdir%\bin\Qt5MultimediaWidgets.dll %packages%\org.digia.qt5.multimedia\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Positioning.dll %packages%\org.digia.qt5.mobility\data\ /Y
+xcopy %qtdir%\bin\Qt5Sensors.dll %packages%\org.digia.qt5.mobility\data\ /Y
+
+xcopy %qtdir%\bin\Qt5OpenGL.dll %packages%\org.digia.qt5.opengl\data\ /Y
+
+xcopy %qtdir%\bin\Qt5Quick.dll %packages%\org.digia.qt5.quick\data\ /Y
+xcopy %qtdir%\bin\Qt5Qml.dll %packages%\org.digia.qt5.quick\data\ /Y
+
+xcopy %qtdir%\bin\Qt5PrintSupport.dll %packages%\org.digia.qt5.printsupport\data\ /Y
+
+xcopy %qtdir%\bin\Qt5SerialPort.dll %packages%\org.digia.qt5.serialport\data\ /Y
+
+xcopy %qtdir%\bin\Qt5FFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\Qt5Geo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\Qt5Util.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+
+copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x64.exe /Y
+
+set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
+set targetqt=qt5
+:copy_qt_files
+for %%f in (%qt_files%) do xcopy %qtdir%\bin\%%f %packages%\org.digia.%targetqt%\data\ /Y
+
+xcopy %qtdir%\plugins\imageformats\q*.dll %packages%\org.digia.%targetqt%\data\imageformats\ /Y
+del %packages%\org.digia.%targetqt%\data\imageformats\q*d.dll /Q
+xcopy %qtdir%\plugins\iconengines\q*.dll %packages%\org.digia.%targetqt%\data\iconengines\ /Y
+del %packages%\org.digia.%targetqt%\data\iconengines\q*d.dll /Q
+for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.%%f\data\translations\ /Y
+for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.locales\data\translations\ /Y
 goto qtpurple
+:no_multimedia
+echo Error! No multimedia framework found!
+goto end
 
 :noqtpurple
 echo No QtPurple library found!
@@ -82,22 +145,22 @@ echo No FFMpeg library found! Make sure FFMPEGDIR environment variable set corre
 goto end
 
 :ffmpeg
-for %%f in (avcodec avfilter avformat avutil postproc swresample swscale) do xcopy %ffmpegdir%\bin\%%f-*.dll packages\org.ffmpeg.library\data\ /Y
+for %%f in (avcodec avfilter avformat avutil postproc swresample swscale) do xcopy %ffmpegdir%\bin\%%f-*.dll %packages%\org.ffmpeg.library\data\ /Y
 
-xcopy %qtdir%\bin\QtFFMpeg1.dll packages\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
-xcopy %qtdir%\bin\QtUtil1.dll packages\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QtGeo1.dll packages\ru.purplesoft.qtpurple.geo\data\ /Y
-for %%f in (de es nl pl ja ru uk) do xcopy %qtdir%\translations\qtgeo_%%f.qm packages\ru.purplesoft.qtpurple.geo.%%f\data\translations\ /Y
+xcopy %qtdir%\bin\QtFFMpeg1.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QtUtil1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QtGeo1.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+for %%f in (de es nl pl ja ru uk) do xcopy %qtdir%\translations\qtgeo_%%f.qm %packages%\ru.purplesoft.qtpurple.geo.%%f\data\translations\ /Y
 
-copy c:\eyecu\COPYING packages\ru.rwsoftware.eyecu\meta\LICENSE.TXT /Y
+copy c:\eyecu\COPYING %packages%\ru.rwsoftware.eyecu\meta\LICENSE.TXT /Y
 set pluginlist=accountmanager chatmessagehandler connectionmanager defaultconnection mainwindow messageprocessor messagestyles messagewidgets normalmessagehandler notifications optionsmanager presence roster rosterchanger rostersmodel rostersview saslauth simplemessagestyle stanzaprocessor starttls statuschanger statusicons traymanager xmppstreams
 call copyplugins ru.rwsoftware.eyecu
 set resources=statusicons simplemessagestyles sounds
 call copyresources ru.rwsoftware.eyecu
 set files=eyecuicon.def.xml eyecu.svg mainwindow.def.xml mainwindowlogo128.png mainwindowlogo16.png mainwindowlogo20.png mainwindowlogo24.png mainwindowlogo32.png mainwindowlogo40.png mainwindowlogo48.png mainwindowlogo64.png mainwindowlogo96.png mainwindowmenu.png mainwindowquit.png mainwindowshowroster.png pluginmanager.def.xml pluginmanagerabout.png pluginmanageraboutqt.png pluginmanagersetup.png account.png accountchange.png accountlist.png accountmanager.def.xml accountmove.png chatmessagehandler.def.xml chatmessagehandlerclearchat.png chatmessagehandlermessage.png connection.def.xml connectionencrypted.png messagewidgets.def.xml messagewidgetsquote.png messagewidgetsselect.png messagewidgetssend.png messagewidgetstabmenu.png messagewidgetsme.png normalmessagehandler.def.xml normalmessagehandlerforward.png normalmessagehandlermessage.png normalmessagehandlernext.png normalmessagehandlerreply.png normalmessagehandlersend.png notifications.def.xml notifications.png notificationsactivateall.png notificationspopupwindow.png notificationsremoveall.png notificationsshowminimized.png notificationssoundoff.png notificationssoundon.png notificationssoundplay.png options.def.xml optionsappearance.png optionsdialog.png optionseditprofiles.png optionsprofile.png optionsprofiles.png rchanger.def.xml rchangeraddcontact.png rchangercopygroup.png rchangercreategroup.png rchangergroup.png rchangermovegroup.png rchangerremovecontact.png rchangerremovecontacts.png rchangerremovefromgroup.png rchangerremovegroup.png rchangerrename.png rchangerrootgroup.png rchangersubscribe.png rchangersubscription.png rchangerthisgroup.png rchangerunsubscribe.png rosterview.def.xml rosterviewclipboard.png rosterviewcontacts.png rosterviewhideoffline.png rosterviewoptions.png rosterviewshowoffline.png schanger.def.xml schangerconnecting.png schangereditstatuses.png schangermodifystatus.png
 call copyresources2 ru.rwsoftware.eyecu menuicons\shared
-copy c:\eyecu\eyecuutils.dll packages\ru.rwsoftware.eyecu\data /Y
-xcopy c:\eyecu\eyecu.exe packages\ru.rwsoftware.eyecu.loader\data\ /Y
+copy c:\eyecu\eyecuutils.dll %packages%\ru.rwsoftware.eyecu\data /Y
+xcopy c:\eyecu\eyecu.exe %packages%\ru.rwsoftware.eyecu.loader\data\ /Y
 
 :copydict
 call copydict en.us en_US
@@ -282,7 +345,7 @@ set files=geoloc.def.xml geoloc.png geolocoff.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning positioning
-set files=positioning.def.xml positioning.png manual.png location.png serialport.png geoip.gif freegeoip.png
+set files=positioning.def.xml manual.png location.png serialport.png geoip.gif freegeoip.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc.positioning menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual positioningmethodmanual
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip positioningmethodip
@@ -351,10 +414,6 @@ call copyresources2 ru.rwsoftware.eyecu.mmplayer menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.clienticons clienticons
 call copyresources ru.rwsoftware.eyecu.clienticons clienticons\shared
 
-call copyplugins ru.rwsoftware.eyecu.contactproximitynotification contactproximitynotification
-set files=proximity.def.xml proximity.png
-call copyresources2 ru.rwsoftware.eyecu.contactproximitynotification menuicons\shared
-
 call copyplugins ru.rwsoftware.eyecu.poi poi
 call copyresources ru.rwsoftware.eyecu.poi typepoint\shared
 set files=poi.def.xml poi.png poiadd.png poinone.png poinotype.png poitoolbar.png poiview.png description.png flag24.png globus.png connect.png connectend.png connectlong.png bgrmap.png bgrsat.png folder.png folderopen.png
@@ -393,15 +452,12 @@ call copyplugins ru.rwsoftware.eyecu.map.sources.google  mapsourcegoogle
 call copyplugins ru.rwsoftware.eyecu.map.sources.yandex mapsourceyandex
 call copyplugins ru.rwsoftware.eyecu.map.sources.kosmosnimki mapsourcekosmosnimki
 call copyplugins ru.rwsoftware.eyecu.map.sources.2gis mapsource2gis
-call copyplugins ru.rwsoftware.eyecu.map.sources.yahoo mapsourceyahoo
 call copyplugins ru.rwsoftware.eyecu.map.sources.ovi mapsourceovi
 call copyplugins ru.rwsoftware.eyecu.map.sources.bing mapsourcebing
 call copyplugins ru.rwsoftware.eyecu.map.sources.navitel mapsourcenavitel
 call copyplugins ru.rwsoftware.eyecu.map.sources.progorod mapsourceprogorod
 call copyplugins ru.rwsoftware.eyecu.map.sources.esri mapsourceesri
 call copyplugins ru.rwsoftware.eyecu.map.sources.megafon mapsourcemegafon
-call copyplugins ru.rwsoftware.eyecu.map.sources.navteq mapsourcenavteq
-call copyplugins ru.rwsoftware.eyecu.map.sources.rosreestr mapsourcerosreestr
 call copyplugins ru.rwsoftware.eyecu.map.sources.rumap mapsourcerumap
 call copyplugins ru.rwsoftware.eyecu.map.sources.vitel mapsourcevitel
 
@@ -436,7 +492,7 @@ rem   Country
 call copyresources ru.rwsoftware.eyecu.resources.country country\shared
 
 rem   Menu Icons
-set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png megafon.png navitel.png navteq.png osm.png progorod.png rosreestr.png vitel.png wiki.png yahoo.png yandex.png
+set files=mapsources.def.xml 2gis.png bing.png esri.png geocon.png google.png here.png kosmosnimki.png megafon.png navitel.png osm.png progorod.png vitel.png wiki.png yandex.png
 call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.mapsources menuicons\shared
 
 set files=edit.def.xml edit.png editadd.png editcopy.png editdelete.png
@@ -446,13 +502,18 @@ set files=link.def.xml link.png linkadd.png
 call copyresources2 ru.rwsoftware.eyecu.resources.menuicons.link menuicons\shared
 
 rem *** Documentaion ***
-md packages\ru.rwsoftware.eyecu.docs\data
-for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f packages\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
+md %packages%\ru.rwsoftware.eyecu.docs\data
+for %%f in (AUTHORS CHANGELOG README TRANSLATORS) do copy c:\eyecu\%%f %packages%\ru.rwsoftware.eyecu.docs\data\%%f.TXT /Y
 
 :build
 del %packagefilename%.exe
 binarycreator.exe --offline-only -c config\config.xml -p %packages% %packagefilename%.exe
 
 :repo
-repogen.exe -p %packages% repository
+set repository=repository
+if %platform%==x64 set repository=%repository%.x64
+
+repogen.exe -p %packages% %repository%
 :end
+
+pause

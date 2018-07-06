@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>vKontakte</DisplayName>
-    <Description>vKontakte</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-01-21</ReleaseDate>
-    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
-    <Name>ru.rwsoftware.eyecu.statusicons.vkontakte</Name>
-    <SortingPriority>18</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>vKontakte</DisplayName>
+ <Description>vKontakte</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-01-21</ReleaseDate>
+ <UpdateText>Fixed incorrect icon association pattern</UpdateText>
+ <Name>ru.rwsoftware.eyecu.statusicons.vkontakte</Name>
+ <SortingPriority>18</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

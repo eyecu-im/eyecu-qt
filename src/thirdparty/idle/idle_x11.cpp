@@ -29,13 +29,14 @@ int IdlePlatform::secondsIdle() { return 0; }
 
 #else
 
+#include <utils/x11info.h>
 #include <qapplication.h>
 #include <QDesktopWidget>
 #include <QX11Info>
 
 #if QT_VERSION >= 0x050000
 #include <utils/x11info.h>
-#define QX11Info X11Info
+#include <QtX11Extras/QX11Info>
 #else
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

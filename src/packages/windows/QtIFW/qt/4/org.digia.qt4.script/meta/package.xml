@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt4 Script</DisplayName>
+ <Description>Qt4 Runtime - Script Framework</Description>
+ <Version>4.8.7</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>org.digia.qt4.script</Name>
+ <Dependencies>org.digia.qt4</Dependencies>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,10 +1,12 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>FFMpeg</DisplayName>
-    <Description>FFMpeg library</Description>
-    <Version>57.27.100.0</Version>
-    <UpdateText>FFMpeg libraries updated to the latest builds</UpdateText>
-    <ReleaseDate>2016-02-27</ReleaseDate>
-    <Name>org.ffmpeg.library</Name>
-    <Virtual>true</Virtual>
+ <DisplayName>FFMpeg</DisplayName>
+ <Description>FFMpeg library</Description>
+ <Version>57.27.100.0</Version>
+ <UpdateText>FFMpeg libraries updated to the latest builds</UpdateText>
+ <ReleaseDate>2016-02-27</ReleaseDate>
+ <Name>org.ffmpeg.library</Name>
+ <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -86,7 +86,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="567"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="569"/>
    <source>Quote selected text</source>
    <translation>Цитувати виділений текст</translation>
   </message>
@@ -98,7 +98,7 @@
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="596"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="598"/>
    <source>Toggle /me command</source>
    <translation type="unfinished"/>
   </message>
@@ -213,48 +213,48 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="382"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="384"/>
    <source>Tab Window %1</source>
    <translation>Вікно  з вкладками %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="566"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="568"/>
    <source>Quote Selected Text</source>
    <translation>Цитувати виділений текст</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="622"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="624"/>
    <source>Send mail</source>
    <translation>Відправити листа</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="622"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="624"/>
    <source>Open link</source>
    <translation>Відкрити посилання</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="629"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="631"/>
    <source>Copy address</source>
    <translation>Копіювати адресу</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="638"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="640"/>
    <source>Copy</source>
    <translation>Копіювати</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="650"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="652"/>
    <source>Search on Google &apos;%1&apos;</source>
    <translation>Шукати в Google &apos;%1&apos;</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="682"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="684"/>
    <source>google.com</source>
    <comment>Your google domain</comment>
    <translation>google.com.ua</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="830"/>
+   <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="832"/>
    <source>Main Tab Window</source>
    <translation>Основне вікно</translation>
   </message>
@@ -262,12 +262,12 @@
  <context>
   <name>NormalWindow</name>
   <message>
-   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="38"/>
+   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="39"/>
    <source>Subject</source>
    <translation>Тема</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="351"/>
+   <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="356"/>
    <source>Selected %n contact(s)</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
@@ -283,115 +283,120 @@
  <context>
   <name>ReceiversWidget</name>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="99"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="115"/>
    <source>Receivers</source>
    <translation>Отримувачі</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="306"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="322"/>
    <source>Select All Contacts</source>
    <translation>Вибрати всі контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="312"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="328"/>
    <source>Select Online Contact</source>
    <translation>Вибрати підключені контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="318"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="334"/>
    <source>Select Available Contacts</source>
    <translation>Вибрати незайняті контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="324"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="340"/>
    <source>Clear Selection</source>
    <translation>Очистити виділення</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="330"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="346"/>
    <source>Expand All Groups</source>
    <translation>Розвернути всі групи</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="336"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="352"/>
    <source>Collapse All Groups</source>
    <translation>Згорнути всі групи</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="344"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="360"/>
    <source>Load Last Selection</source>
    <translation>Завантажити останній вибір</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="350"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="366"/>
    <source>Load Selection</source>
    <translation>Завантажити вибір</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="355"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="371"/>
    <source>Save Selection</source>
    <translation>Зберегти вибір</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="360"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="376"/>
    <source>Hide Offline Contacts</source>
    <translation>Не показувати відключені контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="404"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1050"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="383"/>
+   <source>Sort Contacts by Status</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="437"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1083"/>
    <source>Without Groups</source>
    <translation>Без груп</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="415"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="448"/>
    <source>Not in Roster</source>
    <translation>Не в ростері</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="695"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="700"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="705"/>
    <source>Failed to Load Contacts</source>
    <translation>Не вдалося завантажити контакти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="662"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="695"/>
    <source>Incorrect file format</source>
    <translation>Невірний формат файлу</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="667"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="700"/>
    <source>Failed to read file: %1</source>
    <translation>Не вдалося прочитати файл: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="672"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="705"/>
    <source>Failed to open file: %1</source>
    <translation>Не вдалося відкрити файл: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="743"/>
    <source>Failed to Save Contacts</source>
    <translation>Не вдалося зберегти контакти до файлу</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="710"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="743"/>
    <source>Failed to create file: %1</source>
    <translation>Не вдалося створити файл: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1045"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1078"/>
    <source>Agents</source>
    <translation>Агенти</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1096"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1132"/>
    <source>Load Contacts from File</source>
    <translation>Завантажити контакти з файлу</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1101"/>
+   <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="1137"/>
    <source>Save Contacts to File</source>
    <translation>Зберегти контакти до файлу</translation>
   </message>

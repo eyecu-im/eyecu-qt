@@ -24,4 +24,4 @@ set(HEADERS "action.h"
             "pluginhelper.h"
             "passworddialog.h")
 
-qt4_wrap_cpp(MOC_SOURCES ${HEADERS})
+qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

@@ -1,11 +1,13 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Qt Util</DisplayName>
-    <Description>Qt Purple - Utilities</Description>
-    <Version>1.0.21</Version>
-    <ReleaseDate>2016-06-02</ReleaseDate>
-    <Name>ru.purplesoft.qtpurple.util</Name>
-    <UpdateText>No link URL were added to plain text, if link is at the end of the text. Display image alternative text enclosed by straight slashes, not parentheses. Automatically encode URLs in &quot;href&quot; and &quot;src&quot; attributes.</UpdateText>
-    <Dependencies>ru.purplesoft.qtpurple</Dependencies>
-    <Virtual>true</Virtual>
+ <DisplayName>Qt Util</DisplayName>
+ <Description>Qt Purple - Utilities</Description>
+ <Version>1.0.22</Version>
+ <ReleaseDate>2016-07-04</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple.util</Name>
+ <UpdateText>Rich text to plain text translation algorythm fixed: link address was placed in incorrect place; object replacement character for images wasn't removed.</UpdateText>
+ <Dependencies>ru.purplesoft.qtpurple</Dependencies>
+ <Virtual>true</Virtual>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

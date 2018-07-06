@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Russian Translation</DisplayName>
+ <Description>Qt5 Russian translation</Description>
+ <Version>5.2.1</Version>
+ <ReleaseDate>2014-02-02</ReleaseDate>
+ <Name>org.digia.qt5.ru</Name>
+ <AutoDependOn>org.digia.qt5,ru.rwsoftware.eyecu.translations.ru</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

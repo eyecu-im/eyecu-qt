@@ -203,89 +203,101 @@
  <context>
   <name>OptionsManager</name>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="63"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="94"/>
    <source>Options Manager</source>
    <translation>Opties manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="64"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="95"/>
    <source>Allows to save, load and manage user preferences</source>
    <translation>Opslaan laden en beheren van gebruikers voorkeuren toestaan</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="103"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="134"/>
    <source>Change Profile</source>
    <translation>Verander profiel</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="108"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="139"/>
    <source>Options</source>
    <translation>Opties</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="136"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="167"/>
    <source>Common</source>
    <translation>Gemeenschappelijk</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="139"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="170"/>
    <source>Appearance</source>
    <translation>Uiterlijk</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="167"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="198"/>
    <source>Common settings</source>
    <translation>Algemene instellingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="168"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="199"/>
    <source>Show advanced options</source>
    <translation>Toon geavanceerde opties</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="170"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="201"/>
    <source>Auto run application on system startup</source>
    <translation>Start EYECU als systeem wordt opgestart</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="175"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="206"/>
    <source>Localization</source>
    <translation>Lokalisatie</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="200"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="231"/>
    <source>&lt;System Language&gt;</source>
    <translation>&lt;Systeem Taal&gt;</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="204"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="235"/>
    <source>Language:</source>
    <translation>Taal:</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
+   <source>Language settings changed</source>
+   <translation>Taal instellingen zijn veranderd</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
+   <source>To make changes intact, %1 needs to be restarted.
+Do you want to restart %1 now?</source>
+   <translation>Om de veranderingen te houden, %1 moet worden geherstart.
+Wil je dat %1 wordt geherstart?</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>
    <source>Options mode changed</source>
    <translation>Opties mode is veranderd</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="824"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>
    <source>To switch options mode, %1 needs to be restarted.
 Do you want to restart %1 now?</source>
    <translation>Om opties om teschakelen, %1 moet worden geherstart.
 Wil je dat %1 wordt geherstart?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="874"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="914"/>
    <source>Display advanced options?</source>
    <translation>Toon geavanceerde opties?</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="875"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="915"/>
    <source>If you&apos;re experienced Jabber user, press &lt;i&gt;Yes&lt;/i&gt; to display advanced options. If you&apos;re new in Jabber, press &lt;i&gt;No&lt;/i&gt;. Simplified options will be displayed. </source>
    <translation>Als je een ervaren Jabber gebruiker bent, druk &lt;i&gt;Ja&lt;/ i&gt; om de geavanceerde opties weer te geven. Ben je nieuw met Jabber, druk &lt;i&gt;Nee&lt;i&gt; om simpele opties weer te geven.</translation>
   </message>
   <message>
-   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="882"/>
+   <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="922"/>
    <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
    <translation>Je kan altijd de optie veranderen op
 &lt;b&gt;Algemene&lt;/b&gt; pagina. </translation>

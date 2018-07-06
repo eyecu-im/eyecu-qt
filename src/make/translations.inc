@@ -1,6 +1,6 @@
 #Get coreect path to lrelease binary
 LRELEASE = $$[QT_INSTALL_BINS]/lrelease
-win32|o22: LRELEASE = $$replace(LRELEASE, \\\\, \\\\)
+win32|os2: LRELEASE = $$replace(LRELEASE, \\\\, \\\\)
 win32|os2: LRELEASE = $$replace(LRELEASE, /, \\\\)
   
 

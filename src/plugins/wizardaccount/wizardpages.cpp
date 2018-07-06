@@ -30,7 +30,6 @@
 #define WF_SERVER_NAME			"server.name"
 #define WF_USER_NAME			"user.name"
 #define WF_USER_PASSWORD		"user.password"
-#define WF_USER_PASSWORD_CONF	"user.password.conf"
 #define WF_USER_RESOURCE		"user.resource"
 #define WF_ACCOUNT_NAME			"account.name"
 #define WF_GO_ONLINE			"go.online"
@@ -97,7 +96,12 @@ ConnectionWizard::~ConnectionWizard()
 
 QString ConnectionWizard::serverName() const
 {
-	return (field(WF_SERVER_NAME).toString().isEmpty()?field(WF_SERVER_NAME_PRE):field(WF_SERVER_NAME)).toString();
+	return FServerName;
+}
+
+void ConnectionWizard::setServerName(const QString &AServerName)
+{
+	FServerName = AServerName;
 }
 
 QString ConnectionWizard::streamJid() const
@@ -157,8 +161,6 @@ NetworkPage::NetworkPage(QWidget *AParent): QWizardPage(AParent)
 	FNetworks.insert(NetworkOther,			NetworkInfo(tr("Other XMPP")   , NWI_XMPP,			tr("An independent XMPP server (Jabber)")));
 	FNetworks.insert(NetworkGoogle,			NetworkInfo(tr("Google Talk")  , NWI_GTALK,			tr("A social network and chat service from Google"), "https://accounts.google.com/SignUp?service=mail",
 														QStringList() << "gmail.com" << "googlemail.com"));
-	FNetworks.insert(NetworkYandex,			NetworkInfo(tr("Yandex Online"), NWI_YAONLINE,		tr("A popular Russian portal (internet serach, e-mail, news, chat and so on)"), "https://passport.yandex.com/registration/mail?from=mail&require_hint=1",
-														QStringList() << "ya.ru" << "yandex.ru" << "yandex.net" << "yandex.com" << "yandex.by" << "yandex.kz" << "yandex.ua" << "yandex-co.ru" << "narod.ru"));
 	FNetworks.insert(NetworkOdnoklassniki,	NetworkInfo(tr("Odnoklassniki"), NWI_ODNOKLASSNIKI,	tr("A popular Russian social network, owned by Mail.Ru Group"), "http://ok.ru/dk?st.cmd=anonymRegistrationEdit",
 														QStringList() << "odnoklassniki.ru"));
 	FNetworks.insert(NetworkLiveJournal,	NetworkInfo(tr("LiveJournal")  , NWI_LIVEJOURNAL,	tr("A popular blogging service"), "https://www.livejournal.com/create",
@@ -273,6 +275,7 @@ ServerPage::ServerPage(NetworkPage *ANtworkPage, QWidget *AParent):
 		FServerList->setCurrentIndex(first);
 
     connect(FServerList->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
+	connect(FServerList, SIGNAL(doubleClicked(QModelIndex)), parent(), SLOT(next()), Qt::UniqueConnection);
 }
 
 QUrl ServerPage::getRegistrationUrl() const
@@ -287,13 +290,7 @@ QString ServerPage::getInstructions(const QString &AServerName) const
 
 int ServerPage::getFlags() const
 {
-	return FServerInfo.value(getServerName()).flags;
-}
-
-QString ServerPage::getServerName() const
-{
-	QVariant value = field(WF_SERVER_NAME);
-	return (value.isNull()?field(WF_SERVER_NAME_PRE):value).toString();
+	return FServerInfo.value(field(WF_SERVER_NAME_PRE).toString()).flags;
 }
 
 //! listig fields
@@ -380,7 +377,8 @@ void ServerPage::loadServerList()
 
                 if (serverInfo.flags&ServerInfo::InBandRegistration)
                 {
-					items.append(new QStandardItem(storageMenu->getIcon(MNI_REGISTRATION), tr("In-band registration available")));
+					items.append(new QStandardItem(storageMenu->getIcon(MNI_REGISTRATION), QString()));
+					items[1]->setToolTip(tr("In-band registration available"));
 					items[1]->setData(true, Qt::UserRole);
                 }
 				else
@@ -478,7 +476,6 @@ void ServerPage::loadServerList()
 void ServerPage::initializePage()
 {
     FServerList->clearSelection();
-	connect(FServerList, SIGNAL(doubleClicked(QModelIndex)), wizard(), SLOT(next()), Qt::UniqueConnection);
 }
 
 bool ServerPage::validatePage()
@@ -516,6 +513,8 @@ bool ServerPage::validatePage()
             if (QMessageBox::warning(wizard(), tr("Attention!"), tr("The Server you selected do not support in-band registration!\nYou'll have to register via web!\nPress \"Ok\" to proceed or \"Cancel\" to select another server."), QMessageBox::Ok, QMessageBox::Cancel)==QMessageBox::Cancel)
 				return false;
 	}
+
+	wizard()->setProperty("serverName", field(WF_SERVER_NAME_PRE).toString());
 
 	return true;
 }
@@ -603,16 +602,10 @@ CredentialsPage::CredentialsPage(IAccountManager *AAccountManager, QWidget *APar
 	FLedPassword->setEchoMode(QLineEdit::Password);//PasswordEchoOnEdit
 	FLblPassword->setBuddy(FLedPassword);
 
-	FLblPasswordRetype = new QLabel(QString("&<b>%1<b/>:").arg(tr("Re-type password")));
-	FLedPasswordRetype = new QLineEdit;
-	FLedPasswordRetype->setEchoMode(QLineEdit::Password);
-	FLblPasswordRetype->setBuddy(FLedPasswordRetype);
-
 	registerField(WF_SERVER_NAME, FCmbServer, "currentItemText", SIGNAL(currentItemTextChanged));
 	registerField(WF_USER_RESOURCE, FLedResource);
 	registerField(WF_USER_NAME, FLedUsername);
 	registerField(WF_USER_PASSWORD, FLedPassword);
-	registerField(WF_USER_PASSWORD_CONF, FLedPasswordRetype);
 
     QGridLayout *layout = new QGridLayout;
 	layout->setHorizontalSpacing(0);
@@ -627,22 +620,17 @@ CredentialsPage::CredentialsPage(IAccountManager *AAccountManager, QWidget *APar
 	layout->addWidget(FLblPassword, 1, 0);
 	layout->addItem(new QSpacerItem(4, 0), 1, 1);
 	layout->addWidget(FLedPassword, 1, 2);
-	layout->addWidget(FLblPasswordRetype, 2, 0);
-	layout->addItem(new QSpacerItem(4, 0), 2, 1);
-	layout->addWidget(FLedPasswordRetype, 2, 2);
 	setLayout(layout);
 
     QWidget::setTabOrder(FLedUsername, FLedPassword);
-    QWidget::setTabOrder(FLedPassword, FLedPasswordRetype);
-    QWidget::setTabOrder(FLedPasswordRetype, FLedResource);
+	QWidget::setTabOrder(FLedPassword, FLedResource);
 
 	connect(FLedPassword,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
-	connect(FLedPasswordRetype,SIGNAL(textChanged(QString)),SIGNAL(completeChanged()));
 }
 
 bool CredentialsPage::isComplete() const
 {
-	return !FLedUsername->text().isEmpty() && !FLedResource->text().isEmpty() && !FLedPassword->text().isEmpty() && (FLedPassword->text()==FLedPasswordRetype->text() || !wizard()->property("registerAccount").toBool());
+	return !FLedUsername->text().isEmpty() && !FLedResource->text().isEmpty() && !FLedPassword->text().isEmpty();
 }
 
 void CredentialsPage::initializePage()
@@ -663,18 +651,6 @@ void CredentialsPage::initializePage()
 		FCmbServer->setVisible(false);
 		FLblServer->setVisible(true);
 	}
-
-	if (wizard()->property("registerAccount").toBool())
-	{
-		FLblPasswordRetype->setVisible(true);
-		FLedPasswordRetype->setVisible(true);
-	}
-	else
-	{
-		FLblPasswordRetype->setVisible(false);
-		FLedPasswordRetype->setVisible(false);
-    }
-    FLedUsername->setFocus();
 }
 
 bool CredentialsPage::validatePage()
@@ -685,6 +661,9 @@ bool CredentialsPage::validatePage()
 		QMessageBox::critical(wizard(), tr("Account exists"), tr("Account with specified Server and User Name exists already! Please choose different Server or User Name."), QMessageBox::Ok);
 		return false;
 	}
+
+	wizard()->setProperty("serverName", field(WF_SERVER_NAME).toString());
+
 	return true;
 }
 
@@ -697,14 +676,6 @@ QStringList CredentialsPage::getServerList()
 		case NetworkPage::NetworkGoogle:
 		{
 			QStringList domains = QStringList() << "gmail.com" << "googlemail.com";
-			return domains;
-		}
-
-		case NetworkPage::NetworkYandex:
-		{
-			QStringList domains = QStringList()
-				<< "ya.ru" << "yandex.ru" << "yandex.net" << "yandex.com" << "yandex.by"
-				<< "yandex.kz" << "yandex.ua" << "yandex-co.ru" << "narod.ru";
 			return domains;
 		}
 
@@ -1325,7 +1296,7 @@ ConclusionPage::ConclusionPage(IAccountManager *AAccountManager, IConnectionEngi
 	connect(FLbAccountSettingsLink, SIGNAL(linkActivated(QString)), SLOT(onAccountSettingsLinkActivated(QString)));
 	layout->addWidget(FLbAccountSettingsLink, 7, 0, 1, 2);
 
-	FChbGoOnline = new QCheckBox("Go online now");
+	FChbGoOnline = new QCheckBox(tr("Go online now"));
 	layout->addWidget(FChbGoOnline, 8, 0, 1, 2);
 	registerField(WF_GO_ONLINE, FChbGoOnline);
 
@@ -1345,7 +1316,7 @@ void ConclusionPage::initializePage()
 
 		FLblText1->setText((wizard()->property("registerAccount").toBool()?
 			tr("You successfully connected to Jabber as %1."):
-			tr("You successfully registered at Jabber as %1.")).arg(QString("<font color=blue><b>%1@%2</b></font>").arg(field(WF_USER_NAME).toString()).arg(field(WF_SERVER_NAME).toString())));
+			tr("You successfully registered at Jabber as %1.")).arg(QString("<font color=blue><b>%1</b></font>").arg(wizard()->property("streamJid").toString())));
 
 		FLblText2->setVisible(true);
 		FLblText3->setVisible(true);

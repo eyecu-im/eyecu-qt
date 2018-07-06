@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Contacts</DisplayName>
-    <Description>Displays roster contacts on the map</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-16</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.contacts</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.pepmanager.geoloc</Dependencies>
-    <SortingPriority>4</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Map Contacts</DisplayName>
+ <Description>Displays roster contacts on the map</Description>
+ <Version>1.3.5</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.contacts</Name>
+ <UpdateText>Use QtPurple v2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.pepmanager.geoloc,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <SortingPriority>4</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

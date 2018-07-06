@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include <QNetworkAccessManager>
-#include <QtUtil/httprequest.h>
-#include <QtGeo/geolocelement.h>
+#include <HttpRequest>
+#include <GeolocElement>
 
 class IPositioningMethodIpProvider
 {

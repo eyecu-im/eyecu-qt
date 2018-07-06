@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QIcon>
 #include <QNetworkAccessManager>
-#include <QtUtil/httprequest.h>
+#include <HttpRequest>
 
 #define STREETVIEW_UUID "{3322a1aa-3fa4-40b8-ab68-af4da153a7e7}"
                      

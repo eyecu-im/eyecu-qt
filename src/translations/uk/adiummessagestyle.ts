@@ -7,12 +7,12 @@
    <translation>hh:mm</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="647"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="643"/>
    <source>hh:mm:ss</source>
    <translation>hh:mm:ss</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="844"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="840"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
    <translation>Не вдалося завантажити стиль чату. Натисніть кнопку &quot;Очистити вікно&quot; щоб спробувати знову.</translation>
   </message>

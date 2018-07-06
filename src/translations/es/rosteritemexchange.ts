@@ -83,12 +83,12 @@
   <message>
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="290"/>
    <source>Contacts list management</source>
-   <translation type="unfinished"/>
+   <translation>Gestión de la lista de contactos</translation>
   </message>
   <message>
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="291"/>
    <source>Allow gateways and group services manage your contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Permite a los servicios de pasarela y grupo gestionar tu lista de contactos</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="528"/>

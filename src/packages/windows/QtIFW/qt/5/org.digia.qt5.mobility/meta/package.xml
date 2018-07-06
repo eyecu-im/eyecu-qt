@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Mobility</DisplayName>
+ <Description>Qt5 Runtime - Sensors and Positioning support</Description>
+ <Version>5.2.1</Version>
+ <ReleaseDate>2014-02-02</ReleaseDate>
+ <Name>org.digia.qt5.mobility</Name>
+ <Dependencies>org.digia.qt5</Dependencies>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

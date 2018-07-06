@@ -2,12 +2,12 @@
  <context>
   <name>XmppUriQueries</name>
   <message>
-   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="23"/>
+   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="24"/>
    <source>XMPP URI Queries</source>
    <translation>XMPP URI запроси</translation>
   </message>
   <message>
-   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="24"/>
+   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="25"/>
    <source>Allows other plugins to handle XMPP URI queries</source>
    <translation>Дозволяе іншим модулям обробляти XMPP URI запроси</translation>
   </message>

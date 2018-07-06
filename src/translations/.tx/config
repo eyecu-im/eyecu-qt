@@ -275,11 +275,11 @@ source_lang = en
 
 [eyecu-qt.metacontactsts]
 file_filter = <lang>/metacontacts.ts
-source_lang = ru
+source_lang = en
 
 [eyecu-qt.datastreamspublisherts]
 file_filter = <lang>/datastreamspublisher.ts
-source_lang = ru
+source_lang = en
 
 [eyecu-qt.abbreviationsts]
 file_filter = <lang>/abbreviations.ts
@@ -299,10 +299,6 @@ source_lang = en
 
 [eyecu-qt.clienticonsts]
 file_filter = <lang>/clienticons.ts
-source_lang = en
-
-[eyecu-qt.contactproximitynotificationts]
-file_filter = <lang>/contactproximitynotification.ts
 source_lang = en
 
 [eyecu-qt.geolocts]
@@ -397,10 +393,6 @@ source_lang = en
 file_filter = <lang>/mapsourcenavitel.ts
 source_lang = en
 
-[eyecu-qt.mapsourcenavteqts]
-file_filter = <lang>/mapsourcenavteq.ts
-source_lang = en
-
 [eyecu-qt.mapsourceosmts]
 file_filter = <lang>/mapsourceosm.ts
 source_lang = en
@@ -413,14 +405,6 @@ source_lang = en
 file_filter = <lang>/mapsourceprogorod.ts
 source_lang = en
 
-[eyecu-qt.mapsourcerosreestrts]
-file_filter = <lang>/mapsourcerosreestr.ts
-source_lang = en
-
-[eyecu-qt.mapsourcerumapts]
-file_filter = <lang>/mapsourcerumap.ts
-source_lang = en
-
 [eyecu-qt.mapsourcerumapts]
 file_filter = <lang>/mapsourcerumap.ts
 source_lang = en
@@ -429,24 +413,12 @@ source_lang = en
 file_filter = <lang>/mapsourcevitel.ts
 source_lang = en
 
-[eyecu-qt.activityts]
-file_filter = <lang>/activity.ts
-source_lang = en
-
 [eyecu-qt.mapsourcewikits]
 file_filter = <lang>/mapsourcewiki.ts
 source_lang = en
 
-[eyecu-qt.mapsourceyahoots]
-file_filter = <lang>/mapsourceyahoo.ts
-source_lang = en
-
 [eyecu-qt.mapsourceyandexts]
 file_filter = <lang>/mapsourceyandex.ts
-source_lang = en
-
-[eyecu-qt.activityts]
-file_filter = <lang>/activity.ts
 source_lang = en
 
 [eyecu-qt.mmplayerts]
@@ -545,10 +517,6 @@ source_lang = en
 file_filter = <lang>/tunelistenerquplayer.ts
 source_lang = en
 
-[eyecu-qt.tunelistenerquplayerts]
-file_filter = <lang>/tunelistenerquplayer.ts
-source_lang = en
-
 [eyecu-qt.tunelistenerwinampts]
 file_filter = <lang>/tunelistenerwinamp.ts
 source_lang = en
@@ -600,3 +568,8 @@ source_lang = en
 [eyecu-qt.filemessagearchivets]
 file_filter = <lang>/filemessagearchive.ts
 source_lang = en
+
+[eyecu-qt.schedulerts]
+file_filter = <lang>/scheduler.ts
+source_lang = en
+

@@ -5,11 +5,16 @@
 #include <QVariant>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <thirdparty/qxtglobalshortcut/qxtglobalshortcut.h>
+
+#ifdef USE_SYSTEM_QXTGLOBALSHORTCUT
+#       include <qxtglobalshortcut/qxtglobalshortcut.h>
+#else
+#       include <thirdparty/qxtglobalshortcut/qxtglobalshortcut.h>
+#endif
 
 QKeySequence correctKeySequence(const QKeySequence &AKey)
 {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 	if ((AKey[0] & ~Qt::KeyboardModifierMask) == Qt::Key_Backtab)
 		return QKeySequence(Qt::Key_Tab | (AKey[0] & Qt::KeyboardModifierMask));
 #endif
@@ -196,7 +201,8 @@ void Shortcuts::setGlobalShortcut(const QString &AId, bool AEnabled)
 	{
 		shortcut = new QxtGlobalShortcut(instance());
 		q->globalShortcutsId.insert(shortcut,AId);
-		connect(shortcut,SIGNAL(activated()),instance(),SLOT(onGlobalShortcutActivated()));
+//		connect(shortcut,&QxtGlobalShortcut::activated,instance(),&Shortcuts::onGlobalShortcutActivated);
+        connect(shortcut,SIGNAL(activated()),instance(),SLOT(onGlobalShortcutActivated()));
 		updateGlobal(shortcut);
 		emit instance()->shortcutEnabled(AId, AEnabled);
 	}

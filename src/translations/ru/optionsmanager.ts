@@ -228,5 +228,15 @@ Do you want to restart %1 now?</source>
         <source>You can always change options mode on &lt;b&gt;Common&lt;/b&gt; page.</source>
         <translation>Вы всегда можете сменить режим настроек на странице &lt;i&gt;Общие&lt;/i&gt;.</translation>
     </message>
+    <message>
+        <source>Language settings changed</source>
+        <translation>Настройки языка изменились</translation>
+    </message>
+    <message>
+        <source>To make changes intact, %1 needs to be restarted.
+Do you want to restart %1 now?</source>
+        <translation>Чтобы изменения вступили в силу, следует перезапустить %1.
+Вы хотите перезапустить %1?</translation>
+    </message>
 </context>
 </TS>

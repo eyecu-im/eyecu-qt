@@ -2,17 +2,20 @@
 EYECU_LOADER_NAME      = eyecu
 EYECU_UTILS_NAME       = eyecuutils
 os2:EYECU_UTILS_SNAME  = eyecutls
-QTLIVE_NAME            = qtlive
 
 #Library ABI version
 unix {
-QTLIVE_ABI      = 1
 EYECU_UTILS_ABI = 37
 }
 
 #Build config
 CONFIG(debug, debug|release) {
   DEFINES               += DEBUG_MODE
+}
+
+#Exclude QtWebEngine from dependencies
+CONFIG(no_webengine) {
+  DEFINES               += NO_WEBENGINE
 }
 
 #Configurable values

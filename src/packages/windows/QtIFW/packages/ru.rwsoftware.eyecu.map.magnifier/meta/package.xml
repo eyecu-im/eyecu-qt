@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Magnifier</DisplayName>
-    <Description>Allows to magnify area of Map</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.magnifier</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Dependencies>ru.rwsoftware.eyecu.map</Dependencies>
-    <SortingPriority>2</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Map Magnifier</DisplayName>
+ <Description>Allows to magnify area of Map</Description>
+ <Version>1.3.4</Version>
+ <ReleaseDate>2017-05-11</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.magnifier</Name>
+ <UpdateText>Context menu display fixed.</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.map,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <SortingPriority>2</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

@@ -1,9 +1,10 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Edit</DisplayName>
-    <Description>Edit Icons</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.resources.menuicons.edit</Name>
-    <Virtual>true</Virtual>
+ <DisplayName>Edit</DisplayName>
+ <Description>Edit Icons</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.resources.menuicons.edit</Name>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

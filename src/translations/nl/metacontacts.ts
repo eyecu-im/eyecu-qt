@@ -7,7 +7,7 @@
    <translation>Combineer Contacten</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/metacontacts/combinecontactsdialog.cpp" line="114"/>
+   <location filename="../../plugins/metacontacts/combinecontactsdialog.cpp" line="110"/>
    <source>The following &lt;b&gt;%n contact(s)&lt;/b&gt; will be merged into metacontact:</source>
    <translation><numerusform>De volgende &lt;b&gt;%n contact&lt;/b&gt; zal worden samengevoegd tot metacontact:</numerusform><numerusform>De volgende &lt;b&gt;%n contacten&lt;/b&gt; zullen worden samengevoegd tot metacontact:</numerusform></translation>
   </message>

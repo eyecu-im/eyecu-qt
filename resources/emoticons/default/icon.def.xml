@@ -90,8 +90,6 @@
     <object mime="image/gif">kissed.gif</object>
   </icon>
   <icon>
-    <text>:&apos;(</text>
-    <text>:&apos;-(</text> 
     <text>:~-(</text> 
     <text>:~(</text> 
     <object mime="image/gif">cry.gif</object>
@@ -290,8 +288,8 @@
     <object mime="image/gif">clapping.gif</object>
   </icon>
   <icon>
-    <text>:&apos;-(</text> 
-    <text>:&apos;(</text> 
+    <text>:&apos;(</text>
+    <text>:&apos;-(</text>
     <object mime="image/gif">really_sad.gif</object>
   </icon>
   <icon>
@@ -304,7 +302,7 @@
     <text>*stop*</text>
     <object mime="image/gif">stop.gif</object>
   </icon>
-    <icon>
+  <icon>
     <text>*WALL*</text>
     <text>*DASH*</text>
     <text>*wall*</text>
@@ -992,7 +990,9 @@
     <object mime="image/gif">shout.gif</object>
   </icon>
   <icon>
-    <text>*IN LOVE*</text> 
+    <text>%")</text>
+    <text>%-")</text>
+    <text>*CRAZY KISSED*</text>
     <object mime="image/gif">man_in_love.gif</object>
   </icon>
   <icon>

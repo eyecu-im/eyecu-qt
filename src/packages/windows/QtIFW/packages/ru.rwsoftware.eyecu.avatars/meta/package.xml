@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Avatars</DisplayName>
-    <Description>Allows to set and display avatars</Description>
-    <Version>1.3.3</Version>
-    <ReleaseDate>2016-04-18</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.avatars</Name>
-    <UpdateText>Add support of roster avatar size in advanced mode. Avatar Size options added. &quot;Display empty avatars&quot; is now common option for Roster, Multiuser Chat member list and Map contacts. Minor updates and fixes.</UpdateText>
-    <Dependencies>ru.rwsoftware.eyecu.vcard</Dependencies>
-    <SortingPriority>74</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Avatars</DisplayName>
+ <Description>Allows to set and display avatars</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2016-04-18</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.avatars</Name>
+ <UpdateText>Add support of roster avatar size in advanced mode. Avatar Size options added. "Display empty avatars" is now common option for Roster, Multiuser Chat member list and Map contacts. Minor updates and fixes.</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.vcard</Dependencies>
+ <SortingPriority>74</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

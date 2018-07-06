@@ -44,7 +44,7 @@ bool PositioningMethodLocation::initSettings()
     Options::setDefaultValue(OPV_POSITIONING_METHOD_LOCATION_INTERVAL,60);
     if (FOptionsManager)
     {
-		IOptionsDialogNode dnode = {ONO_LOCATION, OPN_POSITIONING"."+pluginUuid().toString(), MNI_POSITIONING_LOCATION, tr("Location")};
+		IOptionsDialogNode dnode = {ONO_LOCATION, OPN_GEOLOC"."+pluginUuid().toString(), MNI_POSITIONING_LOCATION, tr("Location")};
         FOptionsManager->insertOptionsDialogNode(dnode);
 		FOptionsManager->insertOptionsDialogHolder(this);
     }

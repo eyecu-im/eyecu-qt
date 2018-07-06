@@ -1053,9 +1053,11 @@ QString ArchiveViewWindow::showMessage(const Message &AMessage, const IMessageSt
 		bool meMessage = false;
 		if (!AOptions.senderName.isEmpty())
 		{
+			static const QRegExp me("/me\\s");
+
 			QTextCursor cursor(&doc);
 			cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,4);
-			if (cursor.selectedText() == "/me ")
+			if (me.exactMatch(cursor.selectedText()))
 			{
 				meMessage = true;
 				cursor.removeSelectedText();

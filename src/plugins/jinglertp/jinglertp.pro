@@ -9,5 +9,5 @@ MOBILITY += multimedia
 }
 else: contains(QT_CONFIG, multimedia): QT += multimedia
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += ffmpeg
-else: CONFIG += ffmpeg
+greaterThan(QT_MAJOR_VERSION, 4): QT += qpffmpeg
+else: CONFIG += qpffmpeg

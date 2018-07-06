@@ -9,12 +9,12 @@
    <translation>hh:mm</translation>
   </message>
   <message>
-   <location line="647" filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp"/>
+   <location line="643" filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp"/>
    <source>hh:mm:ss</source>
    <translation>hh:mm:ss</translation>
   </message>
   <message>
-   <location line="844" filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp"/>
+   <location line="840" filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
    <translation>Failed to load message style. Press clear window button to retry.</translation>
   </message>

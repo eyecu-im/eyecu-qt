@@ -2,7 +2,6 @@
 #define ABOUTBOX_H
 
 #include <QDialog>
-#include <definitions/version.h>
 #include <interfaces/ipluginmanager.h>
 #include "ui_aboutbox.h"
 

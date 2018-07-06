@@ -6,8 +6,8 @@
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <location filename="../../plugins/attention/attention.cpp" line="175"/>
    <location filename="../../plugins/attention/attention.cpp" line="188"/>
-   <location filename="../../plugins/attention/attention.cpp" line="351"/>
-   <location filename="../../plugins/attention/attention.cpp" line="488"/>
+   <location filename="../../plugins/attention/attention.cpp" line="365"/>
+   <location filename="../../plugins/attention/attention.cpp" line="510"/>
    <source>Attention</source>
    <translation>Увага</translation>
   </message>
@@ -22,10 +22,15 @@
    <translation>Коли контакт намагається привабити увагу користувача</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Shift+Return</source>
    <comment>Attention</comment>
-   <translation>Shift+Return</translation>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/attention/attention.cpp" line="156"/>
+   <source>Alt+Return</source>
+   <comment>Attention</comment>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
@@ -53,7 +58,7 @@
    <translation>УВАГА!!!</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attention.cpp" line="389"/>
+   <location filename="../../plugins/attention/attention.cpp" line="411"/>
    <source>%1 - Chat</source>
    <translation>%1 - Чат</translation>
   </message>
@@ -61,12 +66,12 @@
  <context>
   <name>AttentionDialog</name>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="168"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="170"/>
    <source>ATTENTION</source>
    <translation>УВАГА</translation>
   </message>
   <message>
-   <location filename="../../plugins/attention/attentiondialog.ui" line="293"/>
+   <location filename="../../plugins/attention/attentiondialog.ui" line="295"/>
    <source>Ok</source>
    <translation>Ок</translation>
   </message>

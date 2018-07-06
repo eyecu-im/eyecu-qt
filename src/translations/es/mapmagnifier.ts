@@ -101,72 +101,72 @@
  <context>
   <name>MapMagnifier</name>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="60"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="74"/>
    <source>Map Magnifier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="61"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="75"/>
    <source>Allows to see part of the map magnified</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="88"/>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="97"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="102"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="111"/>
    <source>Magnifier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="89"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
    <source>On/off</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="89"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
    <source>F8</source>
    <comment>Magnifier</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="90"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
    <source>Zoom in</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="90"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
    <source>Alt++</source>
    <comment>Zoom In</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="91"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
    <source>Zoom out</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="91"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
    <source>Alt+-</source>
    <comment>Zoom Out</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="125"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="139"/>
    <source>Map magnifier</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="240"/>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="499"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="244"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="503"/>
    <source>x%1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="257"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 m</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="257"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 km</source>
    <translation type="unfinished"/>
   </message>

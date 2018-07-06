@@ -25,19 +25,20 @@
    <translation>F3</translation>
   </message>
   <message>
-   <location line="204" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="205" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="210" filename="../../plugins/clienticons/clienticons.cpp"/>
    <source>Show client icons</source>
    <translation>Show client icons</translation>
   </message>
   <message>
-   <location line="207" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="213" filename="../../plugins/clienticons/clienticons.cpp"/>
    <source>Display client icon</source>
    <translation>Display client icon</translation>
   </message>
   <message>
-   <location line="309" filename="../../plugins/clienticons/clienticons.cpp"/>
-   <location line="428" filename="../../plugins/clienticons/clienticons.cpp"/>
-   <location line="581" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="315" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="429" filename="../../plugins/clienticons/clienticons.cpp"/>
+   <location line="588" filename="../../plugins/clienticons/clienticons.cpp"/>
    <source>Client:</source>
    <translation>Client:</translation>
   </message>

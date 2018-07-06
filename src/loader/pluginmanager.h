@@ -9,6 +9,7 @@
 #include <QApplication>
 #include <QPluginLoader>
 #include <QSessionManager>
+#include <QSplashScreen>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/imainwindow.h>
 #include <interfaces/itraymanager.h>
@@ -58,6 +59,11 @@ public slots:
 signals:
 	void aboutToQuit();
 	void shutdownStarted();
+// *** <<< eyeCU <<< ***
+	void showSplash();
+	void splashMessage(const QString &AMessage);
+	void closeSplash(QWidget *AMainWindow = NULL);
+// *** >>> eyeCU >>> ***
 protected:
 	void loadSettings();
 	void saveSettings();

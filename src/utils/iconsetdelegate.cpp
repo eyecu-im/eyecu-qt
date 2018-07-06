@@ -38,11 +38,11 @@ void IconsetDelegate::paint(QPainter *APainter, const QStyleOptionViewItem &AOpt
 
 	if (storage != NULL)
 	{
-		QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
+        QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
 
-#if defined(Q_WS_WIN) && !defined(QT_NO_STYLE_WINDOWSVISTA)
+#if defined(Q_OS_WIN) && !defined(QT_NO_STYLE_WINDOWSVISTA)
 		QStyle *style = indexOption.widget ? indexOption.widget->style() : QApplication::style();
-		if (qobject_cast<QWindowsVistaStyle *>(style))
+		if (style->inherits("QWindowsVistaStyle"))
 		{
 			indexOption.palette.setColor(QPalette::All, QPalette::HighlightedText, indexOption.palette.color(QPalette::Active, QPalette::Text));
 			indexOption.palette.setColor(QPalette::All, QPalette::Highlight, indexOption.palette.base().color().darker(108));
@@ -150,7 +150,7 @@ QSize IconsetDelegate::sizeHint(const QStyleOptionViewItem &AOption, const QMode
 		int space = 2;
 		QSize size(0,0);
 
-		QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
+        QStyleOptionViewItemV4 indexOption = indexStyleOption(AOption,AIndex);
 
 		if (!AIndex.data(IDR_HIDE_STORAGE_NAME).toBool())
 		{
@@ -275,9 +275,9 @@ void IconsetDelegate::drawCheckButton(QPainter *APainter, const QStyleOptionView
 	}
 }
 
-QStyleOptionViewItemV4 IconsetDelegate::indexStyleOption(const QStyleOptionViewItem &AOption, const QModelIndex &AIndex) const
+QStyleOptionViewItem IconsetDelegate::indexStyleOption(const QStyleOptionViewItemV4 &AOption, const QModelIndex &AIndex) const
 {
-	QStyleOptionViewItemV4 indexOption = AOption;
+    QStyleOptionViewItemV4 indexOption = AOption;
 
 	indexOption.index = AIndex;
 
@@ -298,15 +298,15 @@ QStyleOptionViewItemV4 IconsetDelegate::indexStyleOption(const QStyleOptionViewI
 
 	value = AIndex.data(Qt::CheckStateRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasCheckIndicator;
+        indexOption.features |= QStyleOptionViewItemV4::HasCheckIndicator;
 
 	value = AIndex.data(Qt::DecorationRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasDecoration;
+        indexOption.features |= QStyleOptionViewItemV4::HasDecoration;
 
 	value = AIndex.data(Qt::DisplayRole);
 	if (value.isValid() && !value.isNull()) 
-		indexOption.features |= QStyleOptionViewItemV2::HasDisplay;
+        indexOption.features |= QStyleOptionViewItemV4::HasDisplay;
 
 	indexOption.backgroundBrush = qvariant_cast<QBrush>(AIndex.data(Qt::BackgroundRole));
 

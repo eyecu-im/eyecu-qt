@@ -469,7 +469,7 @@
     <message>
       <source>Ctrl+S</source>
       <comment>Strikeout</comment>
-      <translation>Ctrl+S</translation>
+      <translation type="obsolete">Ctrl+S</translation>
     </message>
     <message>
       <source>Center</source>
@@ -587,7 +587,7 @@
     <message>
       <source>Alt+Return</source>
       <comment>Insert new line</comment>
-      <translation>Alt+Return</translation>
+      <translation type="obsolete">Alt+Return</translation>
     </message>
     <message>
       <source>Alt+C</source>
@@ -902,6 +902,16 @@
       <comment>Preformatted text</comment>
       <translation type="unfinished"/>
     </message>
+    <message>
+      <source>Shift+Return</source>
+      <comment>Insert new line</comment>
+      <translation type="unfinished"/>
+    </message>
+    <message>
+      <source>Ctrl+-</source>
+      <comment>Strikeout</comment>
+      <translation type="unfinished"/>
+    </message>
   </context>
   <context>
     <name>XhtmlOptions</name>
@@ -919,7 +929,7 @@
     </message>
     <message>
       <source>Default image format</source>
-      <translation>Фрмат изображения по умолчанию</translation>
+      <translation>Формат изображения по умолчанию</translation>
     </message>
     <message numerus="yes">
       <source>byte(s)</source>

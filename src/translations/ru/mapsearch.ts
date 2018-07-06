@@ -69,6 +69,18 @@
         <comment>Toggle &quot;Limit search range&quot; option</comment>
         <translation>Alt+L</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Основные</translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation>Соединение</translation>
+    </message>
+    <message>
+        <source>Providers</source>
+        <translation>Поставщики</translation>
+    </message>
 </context>
 <context>
     <name>MapSearchDialog</name>

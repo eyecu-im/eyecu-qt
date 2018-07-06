@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Twitter</DisplayName>
-    <Description>Twitter</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-01-21</ReleaseDate>
-    <UpdateText>Fixed incorrect icon association pattern</UpdateText>
-    <Name>ru.rwsoftware.eyecu.statusicons.twitter</Name>
-    <SortingPriority>17</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Twitter</DisplayName>
+ <Description>Twitter</Description>
+ <Version>1.3.2</Version>
+ <ReleaseDate>2016-01-21</ReleaseDate>
+ <UpdateText>Fixed incorrect icon association pattern</UpdateText>
+ <Name>ru.rwsoftware.eyecu.statusicons.twitter</Name>
+ <SortingPriority>17</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

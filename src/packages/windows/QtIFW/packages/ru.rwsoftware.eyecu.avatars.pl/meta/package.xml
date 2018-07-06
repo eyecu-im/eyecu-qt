@@ -1,10 +1,11 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Avatars Polish Translation</DisplayName>
-    <Description>Avatars Polish translation</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2015-02-24</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.avatars.pl</Name>
-    <AutoDependOn>ru.rwsoftware.eyecu.avatars,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
-    <Virtual>true</Virtual>
+ <DisplayName>Avatars Polish Translation</DisplayName>
+ <Description>Avatars Polish translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.avatars.pl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.avatars,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

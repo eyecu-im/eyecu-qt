@@ -5,7 +5,6 @@
   <name>Positioning</name>
   <message>
    <location line="16" filename="../../plugins/positioning/positioning.cpp"/>
-   <location line="51" filename="../../plugins/positioning/positioning.cpp"/>
    <source>Positioning</source>
    <translation>Positioning</translation>
   </message>
@@ -13,6 +12,16 @@
    <location line="17" filename="../../plugins/positioning/positioning.cpp"/>
    <source>Allows to determine device position</source>
    <translation>Allows to determine device position</translation>
+  </message>
+  <message>
+   <location line="51" filename="../../plugins/positioning/positioning.cpp"/>
+   <source>Location</source>
+   <translation>Location</translation>
+  </message>
+  <message>
+   <location line="64" filename="../../plugins/positioning/positioning.cpp"/>
+   <source>General</source>
+   <translation>General</translation>
   </message>
  </context>
  <context>

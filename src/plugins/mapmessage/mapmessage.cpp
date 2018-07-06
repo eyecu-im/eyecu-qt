@@ -10,6 +10,7 @@
 #include <definitions/notificationtypes.h>
 #include <definitions/notificationdataroles.h>
 #include <definitions/namespaces.h>
+#include <definitions/messageviewurlhandlerorders.h>
 #include <utils/iconstorage.h>
 #include <utils/textmanager.h>
 
@@ -107,10 +108,6 @@ bool MapMessage::initConnections(IPluginManager *APluginManager, int &AInitOrder
 
     connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)), SLOT(onOptionsChanged(OptionsNode)));
 
-/*
-    connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
-    connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));    
-*/
     AInitOrder = 150;   // This one should be initialized AFTER Map
     return true;
 }
@@ -139,6 +136,8 @@ bool MapMessage::initObjects()
 
     if (FNotifications)
         FNotifications->insertNotificationHandler(NHO_DEFAULT, this);
+
+	insertUrlHandler(MVUHO_MAPMESSAGE_DEFAULT, this);
 
     return true;
 }
@@ -253,7 +252,7 @@ void MapMessage::onMapObjectAboutToRemove(const MapObject *AMapObject)
 
 void MapMessage::onBubbleAnchorClicked(const QUrl &AUrl)
 {
-    Jid streamJid = FMessageStreamJids.value(sender());
+	Jid streamJid = FMessageStreamJids.value(sender());
     Jid contactJid = FMessageContactJids.value(sender());
     for (QMap<int, IBubbleUrlEventHandler*>::ConstIterator it=FUrlListeners.constBegin(); it!=FUrlListeners.constEnd(); it++)
         if ((*it)->bubbleUrlOpen(it.key(), AUrl, streamJid, contactJid))
@@ -325,12 +324,15 @@ void MapMessage::updatePosition(SceneObject *ASceneObject)
                 QList<QGraphicsItem *> children=messageText->childItems();
                 if (!children.isEmpty())
                 {                    
-                    BubblePathItem *bubble=qgraphicsitem_cast<BubblePathItem *>(children.first());
-                    QPointF newPosition(0, -bubble->boundingRect().height()/2-40);
-                    if (newPosition==ASceneObject->position())
+					BubblePathItem *bubble=qgraphicsitem_cast<BubblePathItem *>(children.first());
+					if (bubble->initialized())
                         bubble->updatePath(true);
-                    else
-                        ASceneObject->setPosition(newPosition);
+					else
+					{
+						bubble->setInitialized(true);
+						QPointF newPosition(0, -bubble->boundingRect().height()/2-40);
+						ASceneObject->setPosition(newPosition);
+					}
                 }
             }
             break;
@@ -448,22 +450,18 @@ void MapMessage::insertUrlHandler(int AOrder, IBubbleUrlEventHandler *ABubbleUrl
 void MapMessage::removeUrlHandler(int AOrder, IBubbleUrlEventHandler *ABubbleUrlEventHandler)
 {
     if (FUrlListeners.contains(AOrder, ABubbleUrlEventHandler))
-        FUrlListeners.remove(AOrder, ABubbleUrlEventHandler);
+		FUrlListeners.remove(AOrder, ABubbleUrlEventHandler);
 }
 
-/*
-void Mapmessage::onOptionsOpened()
+bool MapMessage::bubbleUrlOpen(int AOrder, const QUrl &AUrl, const Jid &AStreamJid, const Jid &AContactJid)
 {
+	Q_UNUSED(AOrder)
+	Q_UNUSED(AStreamJid)
+	Q_UNUSED(AContactJid)
+
+	return QDesktopServices::openUrl(AUrl);
 }
 
-void Mapmessage::onOptionsClosed()
-{
-}
-
-void Mapmessage::onOptionsChanged(const OptionsNode &ANode)
-{
-}
-*/
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_mapmessage,MapMessage)
 #endif

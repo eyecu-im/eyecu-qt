@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Serial Port</DisplayName>
+ <Description>Positioning method, which allows to use a positioning device, connected to a serial port</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport</Name>
+ <UpdateText>Use QtPurple v.2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning,org.digia.qt5.serialport,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <SortingPriority>3</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,12 +1,14 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Data Streams Publisher</DisplayName>
-    <Description>Allows to publish available data streams</Description>
-    <Version>1.3.0</Version>
-    <ReleaseDate>2016-03-07</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.datastreamspublisher</Name>
-    <SortingPriority>69</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Data Streams Publisher</DisplayName>
+ <Description>Allows to publish available data streams</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2016-03-07</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.datastreamspublisher</Name>
+ <SortingPriority>69</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

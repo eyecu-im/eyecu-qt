@@ -328,235 +328,236 @@
  <context>
   <name>ArchiveViewWindow</name>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="132"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="140"/>
    <source>Conversations are not found</source>
    <translation>Розмови не знайдені</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="144"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="152"/>
    <source>Conversation is not selected</source>
    <translation>Розмови не вибрані</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="181"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="189"/>
    <source>Export</source>
    <translation>Експортувати</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="203"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="211"/>
    <source>Search in text</source>
    <translation>Пошук по тексту</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="255"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="263"/>
    <source>Conversation History</source>
    <translation>Історія розмов</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="272"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="280"/>
    <source>Search is not supported</source>
    <translation>Пошук не підтримується</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="276"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="284"/>
    <source>Search in history</source>
    <translation>Пошук в історії</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="610"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="618"/>
    <source>Load more conversations</source>
    <translation>Завантажити більше розмов</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="612"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="620"/>
    <source>All conversations loaded</source>
    <translation>Всі розмови завантажено</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="616"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="624"/>
    <source>%n conversation header(s) found</source>
    <translation><numerusform>Знайдено %n заголовок розмов</numerusform><numerusform>Знайдено %n заголовки розмов</numerusform><numerusform>Знайдено %n заголовків розмов</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="618"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="626"/>
    <source>Conversation headers are not found</source>
    <translation>Заголовки розмов не знайдені</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="625"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="633"/>
    <source>Loading conversation headers...</source>
    <translation>Завантаження заголовків розмов...</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="632"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="640"/>
    <source>Retry</source>
    <translation>Повторити</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="635"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="643"/>
    <source>Failed to load conversation headers: %1</source>
    <translation>Не вдалося завантажити заголовки розмов: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="648"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="656"/>
    <source>Select conversation to show</source>
    <translation>Обрати розмови для відображення</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="650"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
    <source>%n conversation(s) shown</source>
    <translation><numerusform>Показано %n розмову</numerusform><numerusform>Показано %n розмови</numerusform><numerusform>Показано %n розмов</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="656"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="664"/>
    <source>Loading conversations...</source>
    <translation>Завантаження розмов...</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="666"/>
    <source>Shown %1 of %2 conversations...</source>
    <translation>Показані %1 з %2 розмов...</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="662"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="670"/>
    <source>Failed to load conversations: %1</source>
    <translation>Не вдалося завантажити розмови: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="793"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1268"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1477"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="817"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1292"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1518"/>
    <source>Archive is not accessible</source>
    <translation>Архів недоступний</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="940"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="964"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2 in %3</source>
    <translation>&lt;b&gt;%1&lt;/b&gt; з %2 в %3</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="946"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="970"/>
    <source>&lt;b&gt;%1&lt;/b&gt; in %2</source>
    <translation>&lt;b&gt;%1&lt;/b&gt; в %2</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="952"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="976"/>
    <source>&lt;b&gt;%1&lt;/b&gt; with %2</source>
    <translation>&lt;b&gt;%1&lt;/b&gt; в %2</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1146"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1170"/>
    <source>Found %n occurrence(s)</source>
    <translation><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадінь</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1156"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1180"/>
    <source>Phrase not found</source>
    <translation>Фраза не знайдена</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1227"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1251"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for &lt;b&gt;%2 %3&lt;/b&gt;?</source>
    <translation>з &lt;b&gt;%1&lt;/b&gt; для &lt;b&gt;%2 %3&lt;/b&gt;?</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1233"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1257"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; started at &lt;b&gt;%2&lt;/b&gt;?</source>
    <translation>з &lt;b&gt;%1&lt;/b&gt; починаючи з &lt;b&gt;%2&lt;/b&gt;?</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1237"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1261"/>
    <source>with &lt;b&gt;%1&lt;/b&gt; for all time?</source>
    <translation>з &lt;b&gt;%1&lt;/b&gt; за весь час?</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1245"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1269"/>
    <source>And %n other conversation(s)</source>
    <translation><numerusform>І %n інша розмова</numerusform><numerusform>І %n інші розмови</numerusform><numerusform>І %n інших розмов</numerusform></translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1249"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1273"/>
    <source>Remove conversation history</source>
    <translation>Видалити історію розмов</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1250"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1274"/>
    <source>Do you want to remove the following conversations?</source>
    <translation>Ви хочете видалити ці розмови?</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1266"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1290"/>
    <source>Removing conversations...</source>
    <translation>Видалення розмов...</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1268"/>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1554"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1292"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1595"/>
    <source>Failed to remove conversations: %1</source>
    <translation>Не вдалося видалити розмови: %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1319"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1349"/>
    <source>Remove Selected Conversations</source>
    <translation>Видалити обрані розмови</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1330"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1360"/>
    <source>Show Contact History</source>
    <translation>Показати історію контакту</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1337"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1367"/>
    <source>Remove all History with %1</source>
    <translation>Видалити всю історію з %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1348"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1378"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1389"/>
    <source>Remove History for %1</source>
    <translation>Видалити історію з %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1359"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1400"/>
    <source>Remove this Conversation</source>
    <translation>Видалити цю розмову</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1380"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1421"/>
    <source>Print Conversation History</source>
    <translation>Роздрукувати історію розмови</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1436"/>
    <source>HTML file (*.html)</source>
    <translation>Файл HTML (*.html)</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1395"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1436"/>
    <source>Text file (*.txt)</source>
    <translation>Текстовий файл (*.txt)</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1396"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1437"/>
    <source>Save Conversations to File</source>
    <translation>Зберегти розмову у файл</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1425"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1466"/>
    <source>Print...</source>
    <translation>Друкувати...</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1431"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1472"/>
    <source>Save as HTML</source>
    <translation>Зберегти як HTML</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1437"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1478"/>
    <source>Save as Text</source>
    <translation>Зберегти у вигляді тексту</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1607"/>
+   <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1648"/>
    <source>Conversation history removed successfully</source>
    <translation>Історія розмов успішно видалена</translation>
   </message>
@@ -564,27 +565,27 @@
  <context>
   <name>ChatWindowMenu</name>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="99"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="101"/>
    <source>Enable Message Archiving</source>
    <translation>Ввімкнути архівування повідомлень</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="105"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="108"/>
    <source>Disable Message Archiving</source>
    <translation>Вимкнути архівування повідомлень</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="110"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="114"/>
    <source>Start Off-The-Record Session</source>
    <translation>Почати сесію ЗЗІ</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="115"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="119"/>
    <source>Terminate Off-The-Record Session</source>
    <translation>Завершити сесію ЗЗІ</translation>
   </message>
   <message>
-   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="277"/>
+   <location filename="../../plugins/messagearchiver/chatwindowmenu.cpp" line="281"/>
    <source>Failed to change archive preferences: %1</source>
    <translation>Не вдалося змінити налаштування історії: %1</translation>
   </message>

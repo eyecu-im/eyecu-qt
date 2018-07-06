@@ -17,12 +17,13 @@ class MapMagnifierView: public QGraphicsView
 {
     Q_OBJECT
 public:
-    MapMagnifierView(QGraphicsScene *AScene, QWidget *AParent = 0);
+	MapMagnifierView(QGraphicsScene *AScene, const QSize &ASize, QWidget *AParent = 0);
 
 protected:
     // QWidget interface
     bool event(QEvent *AEvent);        
     virtual void paintEvent(QPaintEvent *APaintEvent);
+	void contextMenuEvent(QContextMenuEvent *AEvent);
 };
 
 class MapMagnifier: public QObject,

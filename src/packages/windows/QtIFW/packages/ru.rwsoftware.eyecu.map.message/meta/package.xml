@@ -1,14 +1,16 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
 <Package>
-    <DisplayName>Map Message</DisplayName>
-    <Description>Displays messages on the map</Description>
-    <Version>1.3.2</Version>
-    <ReleaseDate>2016-04-04</ReleaseDate>
-    <Name>ru.rwsoftware.eyecu.map.message</Name>
-    <UpdateText>Synchronized with Vacuum-IM</UpdateText>
-    <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.map.contacts</Dependencies>
-    <SortingPriority>4</SortingPriority>
-    <Default>true</Default>
-    <ForcedInstallation>false</ForcedInstallation>
-    <Essential>false</Essential>
+ <DisplayName>Map Message</DisplayName>
+ <Description>Displays messages on the map</Description>
+ <Version>1.3.3</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.message</Name>
+ <UpdateText>Fix wrong message bubble positioning during map drag. Do not display map menu after message bubble drag. Process URLs in map message bubbles. Use QtPurple v2.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.map.contacts,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <SortingPriority>4</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

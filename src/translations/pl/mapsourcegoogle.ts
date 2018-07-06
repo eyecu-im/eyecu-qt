@@ -12,7 +12,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="56"/>
+   <location filename="../../plugins/mapsourcegoogle/mapsourcegoogle.cpp" line="57"/>
    <source>Google</source>
    <translation type="unfinished"/>
   </message>

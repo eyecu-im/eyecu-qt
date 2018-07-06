@@ -8,9 +8,9 @@
 #include <QGraphicsItem>
 #include <QRectF>
 
-#include <QtGeo/mercatorcoordinates.h>
-#include <QtGeo/mapcoordinates.h>
-#include <QtGeo/geomap.h>
+#include <MercatorCoordinates>
+#include <MapCoordinates>
+#include <GeoMap>
 #include <interfaces/ioptionsmanager.h>
 #include <utils/action.h>
 #include <definitions/mapobjecttyperole.h>
@@ -18,13 +18,15 @@
 
 #define MAP_UUID "{3d5702bc-29b9-40f2-88fe-85887cd6d8d2}"
 
-#define  ICON_SATELLITE 0
-#define  ICON_HYBRID    1
-#define  ICON_HYBRID1   2
-#define  ICON_MAP       3
-#define  ICON_MAP1      4
-#define  ICON_MAP2      5
-#define  ICON_TERRAIN   6
+#define  ICON_MAP        0
+#define  ICON_MAP1       1
+#define  ICON_MAP2       2
+#define  ICON_MAP3       3
+#define  ICON_SATELLITE  10
+#define  ICON_SATELLITE1 11
+#define  ICON_HYBRID     20
+#define  ICON_HYBRID1    21
+#define  ICON_TERRAIN    30
 
 #define  UNCHANGED -1
 

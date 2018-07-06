@@ -76,13 +76,19 @@ QString SystemManager::osVersion()
 	static QString osver;
 	if (osver.isEmpty())
 	{
-#if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
+#if defined(Q_OS_WIN) || defined(Q_OS_CYGWIN)
 		QSettings settings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", QSettings::NativeFormat);
 		osver = settings.value("ProductName").toString();
-#elif defined(Q_WS_MAC)
+#elif defined(Q_OS_MAC)
 		switch (QSysInfo::MacintoshVersion)
 		{
-# if QT_VERSION >= 0x040807
+# if QT_VERSION >= 0x050400
+		case QSysInfo::MV_SIERRA:
+			osver = "macOS 10.12 Sierra";
+			break;
+		case QSysInfo::MV_ELCAPITAN:
+			osver = "OS X 10.11 El Capitan";
+			break;
 		case QSysInfo::MV_YOSEMITE:
 			osver = "OS X 10.10 Yosemite";
 			break;
