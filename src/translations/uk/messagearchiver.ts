@@ -237,17 +237,17 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="42"/>
    <source>%n year(s)</source>
-   <translation><numerusform>%n рік</numerusform><numerusform>%n роки</numerusform><numerusform>%n років</numerusform></translation>
+   <translation><numerusform>%n рік</numerusform><numerusform>%n роки</numerusform><numerusform>%n років</numerusform><numerusform>%n років</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="48"/>
    <source>%n month(s)</source>
-   <translation><numerusform>%n місяць</numerusform><numerusform>%n місяці</numerusform><numerusform>%n місяців</numerusform></translation>
+   <translation><numerusform>%n місяць</numerusform><numerusform>%n місяці</numerusform><numerusform>%n місяців</numerusform><numerusform>%n місяців</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="54"/>
    <source>%n day(s)</source>
-   <translation><numerusform>%n день</numerusform><numerusform>%n дні</numerusform><numerusform>%n днів</numerusform></translation>
+   <translation><numerusform>%n день</numerusform><numerusform>%n дні</numerusform><numerusform>%n днів</numerusform><numerusform>%n днів</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveaccountoptionswidget.cpp" line="59"/>
@@ -375,7 +375,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="624"/>
    <source>%n conversation header(s) found</source>
-   <translation><numerusform>Знайдено %n заголовок розмов</numerusform><numerusform>Знайдено %n заголовки розмов</numerusform><numerusform>Знайдено %n заголовків розмов</numerusform></translation>
+   <translation><numerusform>Знайдено %n заголовок розмов</numerusform><numerusform>Знайдено %n заголовки розмов</numerusform><numerusform>Знайдено %n заголовків розмов</numerusform><numerusform>Знайдено %n заголовків розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="626"/>
@@ -405,7 +405,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="658"/>
    <source>%n conversation(s) shown</source>
-   <translation><numerusform>Показано %n розмову</numerusform><numerusform>Показано %n розмови</numerusform><numerusform>Показано %n розмов</numerusform></translation>
+   <translation><numerusform>Показано %n розмову</numerusform><numerusform>Показано %n розмови</numerusform><numerusform>Показано %n розмов</numerusform><numerusform>Показано %n розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="664"/>
@@ -447,7 +447,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1170"/>
    <source>Found %n occurrence(s)</source>
-   <translation><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадінь</numerusform></translation>
+   <translation><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадіння</numerusform><numerusform>Знайдено %n співпадінь</numerusform><numerusform>Знайдено %n співпадінь</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1180"/>
@@ -472,7 +472,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1269"/>
    <source>And %n other conversation(s)</source>
-   <translation><numerusform>І %n інша розмова</numerusform><numerusform>І %n інші розмови</numerusform><numerusform>І %n інших розмов</numerusform></translation>
+   <translation><numerusform>І %n інша розмова</numerusform><numerusform>І %n інші розмови</numerusform><numerusform>І %n інших розмов</numerusform><numerusform>І %n інших розмов</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/messagearchiver/archiveviewwindow.cpp" line="1273"/>

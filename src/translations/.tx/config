@@ -1,6 +1,10 @@
 [main]
 host = https://www.transifex.com
 
+[eyecu-qt.gcompassts]
+file_filter = <lang>/gcompass.ts
+source_lang = en
+
 [eyecu-qt.rosterchangerts]
 file_filter = <lang>/rosterchanger.ts
 source_lang = en

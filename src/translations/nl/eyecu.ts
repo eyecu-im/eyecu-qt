@@ -30,12 +30,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="366"/>
    <source>Saving settings</source>
-   <translation type="unfinished"/>
+   <translation>Instellingen opslaan</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="409"/>
    <source>Loading plugin: %1</source>
-   <translation type="unfinished"/>
+   <translation>Laad: %1 plugin</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="450"/>
@@ -80,12 +80,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="561"/>
    <source>Starting plugin: %1</source>
-   <translation type="unfinished"/>
+   <translation>Plugin: %1 gestart</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="656"/>
    <source>Application started</source>
-   <translation type="unfinished"/>
+   <translation>Applicatie gestart</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="946"/>

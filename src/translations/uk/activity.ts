@@ -4,27 +4,27 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Doing chores</source>
-   <translation>Працює по дому</translation>
+   <translation>Працюю по дому</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Drinking</source>
-   <translation>Випиває</translation>
+   <translation>Випиваю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Eating</source>
-   <translation>Їсть</translation>
+   <translation>Їм</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Exercising</source>
-   <translation>Займається</translation>
+   <translation>Тренуюся</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Grooming</source>
-   <translation>Доглядає за тваринами</translation>
+   <translation>Доглядаю за собою</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
@@ -39,62 +39,62 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Relaxing</source>
-   <translation>Розслабляється</translation>
+   <translation>Відпочиваю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Talking</source>
-   <translation>Розмовляє</translation>
+   <translation>Розмовляю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Traveling</source>
-   <translation>Подорожує</translation>
+   <translation>Подорожую</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Working</source>
-   <translation>Працює</translation>
+   <translation>Працюю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Buying groceries</source>
-   <translation>Купує продукти</translation>
+   <translation>Купую продукти</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Cleaning</source>
-   <translation>Прибирає</translation>
+   <translation>Прибираю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Cooking</source>
-   <translation>Готує</translation>
+   <translation>Готую їжу</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Doing maintenance</source>
-   <translation>Обслуговує техніку</translation>
+   <translation>Ремонтую</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Writing</source>
-   <translation>Пише</translation>
+   <translation>Пишу</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Doing the dishes</source>
-   <translation>Миє посуд</translation>
+   <translation>Мию посуд</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Doing the laundry</source>
-   <translation>Займається пранням</translation>
+   <translation>Займаюсь пранням</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Gardening</source>
-   <translation>Займається садівництвом</translation>
+   <translation>Займаюсь садівництвом</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
@@ -104,52 +104,52 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Walking the dog</source>
-   <translation>Вигулює собаку</translation>
+   <translation>Вигулюю собаку</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having a beer</source>
-   <translation>П&apos;є пиво</translation>
+   <translation>П&apos;ю пиво</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having coffee</source>
-   <translation>П&apos;є каву</translation>
+   <translation>П&apos;ю каву</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having tea</source>
-   <translation>П&apos;є чай</translation>
+   <translation>П&apos;ю чай</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having a snack</source>
-   <translation>Перекусує</translation>
+   <translation>Перекус</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having breakfast</source>
-   <translation>Снідає</translation>
+   <translation>Снідаю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having dinner</source>
-   <translation>Вечеряє</translation>
+   <translation>Вечеряю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having lunch</source>
-   <translation>Обідає</translation>
+   <translation>Обідаю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Cycling</source>
-   <translation>Катається на велосипеді</translation>
+   <translation>Катаюсь на велосипеді</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Dancing</source>
-   <translation>Танцює</translation>
+   <translation>Танцюю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
@@ -159,32 +159,32 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Jogging</source>
-   <translation>Бігає підтюпцем</translation>
+   <translation>Бігаю підтюпцем</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Playing sports</source>
-   <translation>Займається спортом</translation>
+   <translation>Займаюсь спортом</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Running</source>
-   <translation>Бігає</translation>
+   <translation>Бігаю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Skiing</source>
-   <translation>Катаюється на лижах</translation>
+   <translation>Катаюсь на лижах</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Swimming</source>
-   <translation>Плаває</translation>
+   <translation>Плаваю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Working out</source>
-   <translation>Займається в тренажерці</translation>
+   <translation>На тренуванні</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
@@ -194,82 +194,82 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Brushing teeth</source>
-   <translation>Чистить зуби</translation>
+   <translation>Чищу зуби</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Getting a haircut</source>
-   <translation>Підстригається</translation>
+   <translation>В парикмахерській</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Shaving</source>
-   <translation>Бриється</translation>
+   <translation>Бриюся</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Taking a bath</source>
-   <translation>Приймає ванну</translation>
+   <translation>Приймаю ванну</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Taking a shower</source>
-   <translation>Приймає душ</translation>
+   <translation>Приймаю душ</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Day off</source>
-   <translation>У відгулі</translation>
+   <translation>Вихідний</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Hanging out</source>
-   <translation>Зависає</translation>
+   <translation>Гуляю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Hiding</source>
-   <translation>Ховається</translation>
+   <translation>Ховаюся</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>On vacation</source>
-   <translation>У відпустці</translation>
+   <translation>Канікули</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Praying</source>
-   <translation>Молиться</translation>
+   <translation>Молюся</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Scheduled holiday</source>
-   <translation>Запланував свята</translation>
+   <translation>Відпустка</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Sleeping</source>
-   <translation>Спить</translation>
+   <translation>Сплю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Thinking</source>
-   <translation>Думає</translation>
+   <translation>Думаю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Fishing</source>
-   <translation>Рибалить</translation>
+   <translation>Рибалю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Gaming</source>
-   <translation>Грає</translation>
+   <translation>Граю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Going out</source>
-   <translation>На побаченні</translation>
+   <translation>Вийшов</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
@@ -279,12 +279,12 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Reading</source>
-   <translation>Читає</translation>
+   <translation>Читаю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Rehearsing</source>
-   <translation>Повторює</translation>
+   <translation>Репетирую</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
@@ -294,37 +294,37 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Smoking</source>
-   <translation>Палить</translation>
+   <translation>Курю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Socializing</source>
-   <translation>Соціалізується</translation>
+   <translation>Спілкуюся</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Sunbathing</source>
-   <translation>Загорає</translation>
+   <translation>Загораю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Watching TV</source>
-   <translation>Дивиться ТБ</translation>
+   <translation>Дивлюся телевізор</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Watching a movie</source>
-   <translation>Дивиться фільм</translation>
+   <translation>Дивлюся фільм</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>In real life</source>
-   <translation>Пішов у реал</translation>
+   <translation>Вийшов до реалу</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>On the phone</source>
-   <translation>Розмовляє телефоном</translation>
+   <translation>Розмовляю по телефону</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
@@ -334,27 +334,27 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>Commuting</source>
-   <translation>В дорозі</translation>
+   <translation>На роботу/з роботи</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>Travelling by bicycle</source>
-   <translation>Подорожує велосипедом</translation>
+   <translation>Подорожую велосипедом</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>Driving</source>
-   <translation>Веде автомобіль</translation>
+   <translation>За кермом</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>In a car</source>
-   <translation>У автомобілі</translation>
+   <translation>В автомобілі</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>On a bus</source>
-   <translation>У автобусі</translation>
+   <translation>В автобусі</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
@@ -369,17 +369,17 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>On a trip</source>
-   <translation>У подорожі</translation>
+   <translation>Подорожую</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>Walking</source>
-   <translation>Прогулюється</translation>
+   <translation>Гуляю</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>Coding</source>
-   <translation>Займається кодингом</translation>
+   <translation>Займаюся кодингом</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
@@ -389,12 +389,12 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
    <source>Studying</source>
-   <translation>Навчається</translation>
+   <translation>Навчаюсь</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
    <source>No activity</source>
-   <translation>Нічим не займається</translation>
+   <translation>Не зайнятий</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="110"/>
@@ -405,7 +405,7 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="111"/>
    <source>Implements XEP-0108: User Activity</source>
-   <translation>XEP-0108: Активність користувача</translation>
+   <translation>Реалізація XEP-0108: Активність користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="213"/>

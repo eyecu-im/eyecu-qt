@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en">
+<TS version="2.1" language="en">
  <context>
   <name>PlaceViewProviderGoogle</name>
   <message>
-   <location line="39" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.h"/>
+   <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.h" line="39"/>
    <source>Google</source>
    <translation>Google</translation>
   </message>
   <message>
-   <location line="20" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
+   <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="20"/>
    <source>Place view provider Google</source>
    <translation>Place view provider Google</translation>
   </message>
   <message>
-   <location line="21" filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp"/>
+   <location filename="../../plugins/placeviewprovidergoogle/placeviewprovidergoogle.cpp" line="21"/>
    <source>Allows to view photos of places from Google</source>
    <translation>Allows to view photos of places from Google</translation>
   </message>

@@ -108,7 +108,7 @@
   <name>AccountsOptionsClass</name>
   <message>
    <source>Add or register a new account</source>
-   <translation>Додайте або зареєструйте новий обліковий запис</translation>
+   <translation>Додати або зареєструвати новий обліковий запис</translation>
   </message>
  </context>
  <context>
@@ -131,7 +131,7 @@
   </message>
   <message>
    <source>You are assured that wish to remove an account &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;All settings will be lost.</source>
-   <translation>Ви впевнені, що хочете видалити обліковий запис &lt;b&gt;%1&lt;/b&gt;? &lt;br&gt;Усі налаштування будуть втрачені.</translation>
+   <translation>Ви впевнені, що хочете видалити обліковий запис &lt;b&gt;%1&lt;/b&gt;? &lt;br&gt;Усі налаштування буде втрачено.</translation>
   </message>
   <message>
    <source>Use wizard...</source>

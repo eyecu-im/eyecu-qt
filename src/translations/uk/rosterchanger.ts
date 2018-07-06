@@ -324,7 +324,7 @@
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1196"/>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1323"/>
    <source>Are you sure you wish to remove &lt;b&gt;%n contact(s)&lt;/b&gt; from the roster?</source>
-   <translation><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакт&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакти&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform></translation>
+   <translation><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакт&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контакти&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform><numerusform>Ви впевнені, що бажаєте видалити &lt;b&gt;%n контактів&lt;/b&gt; з ростеру?</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosterchanger/rosterchanger.cpp" line="1235"/>
