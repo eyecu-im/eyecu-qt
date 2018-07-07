@@ -2964,7 +2964,22 @@ void MultiUserChatWindow::onRoomActionTriggered(bool)
 	}
 	else if (action == FExitRoom)
 	{
-		exitAndDestroy(QString::null);
+// *** <<< eyeCU <<< ***
+		if (Options::node(OPV_MUC_CONFIRMLEAVE).value().toBool())
+		{
+			QString status = QInputDialog::getText(this,tr("Exit from conference"),tr("Enter a status message"),QLineEdit::Normal,Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed());
+			if (!status.isEmpty())
+			{
+				FMultiChat->sendPresence(IPresence::Offline,status,0);
+				exitAndDestroy(QString::null);
+			}
+		}
+		else
+		{
+			FMultiChat->sendPresence(IPresence::Offline,Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed(),0);
+			exitAndDestroy(QString::null);
+		}
+// *** >>> eyeCU >>> ***
 	}
 	else if (action == FRequestVoice)
 	{

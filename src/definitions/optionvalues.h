@@ -167,6 +167,8 @@
 #define OPV_MUC_ADDRESSBUTTON							"muc.address-button"
 #define OPV_MUC_STATUSDISPLAY							"muc.status-display"
 #define OPV_MUC_ALTERNATIONHIGHLIGHT					"muc.alternation-highlight"
+#define OPV_MUC_CONFIRMLEAVE							"muc.confirm-before-leave"
+#define OPV_MUC_LEAVESTATUS								"muc.leave-status-message"
 
 // Avatars
 #define OPV_MUC_AVATARS									"muc.avatars"

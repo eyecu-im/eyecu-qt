@@ -127,6 +127,10 @@
 #define   OWO_CONFERENCES_REJOINAFTERKICK         150
 #define   OWO_CONFERENCES_REFERENUMERATION        160
 #define   OWO_CONFERENCES_SHOWAUTOJOINED          170
+// *** <<< eyeCU <<< ***
+#define   OWO_CONFERENCES_CONFIRMLEAVE			  180
+#define   OWO_CONFERENCES_LEAVESTATUS			  190
+// *** >>> eyeCU >>> ***
 #define OHO_CONFERENCES_USERVIEW                  300
 #define   OWO_CONFERENCES_USERVIEWMODE            390
 #define   OWO_MUC_CLIENTICONS				      390

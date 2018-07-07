@@ -247,6 +247,8 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
+	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE,true);
+	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,"Bye!");
 // *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
@@ -270,6 +272,10 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		widgets.insertMulti(OWO_CONFERENCES_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REJOINAFTERKICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REJOINAFTERKICK),tr("Automatically rejoin to conference after kick"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));
+// *** <<< eyeCU <<< ***
+		widgets.insertMulti(OWO_CONFERENCES_CONFIRMLEAVE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CONFIRMLEAVE),tr("Ask for confirmation before leave conference"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_LEAVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_LEAVESTATUS),tr("Default leave status message"),AParent));
+// *** >>> eyeCU >>> ***
 
 		widgets.insertMulti(OHO_CONFERENCES_USERVIEW,FOptionsManager->newOptionsDialogHeader(tr("Participants List"),AParent));
 
