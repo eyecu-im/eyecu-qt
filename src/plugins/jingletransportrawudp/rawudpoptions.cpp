@@ -51,6 +51,6 @@ bool RawUdpOptions::isLoopback(const QHostAddress &AHostAddress)
 	else
 		return AHostAddress == QHostAddress("0:0:0:0:0:0:0:1");
 #else
-	return AHostAddress.isLooback();
+	return AHostAddress.isLoopback();
 #endif
 }
