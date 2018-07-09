@@ -249,6 +249,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
 	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE,true);
 	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,tr("Bye!"));
+	Options::setDefaultValue(OPV_MUC_SHOWINITIALJOINS,false);
 // *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
@@ -267,6 +268,7 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 	{
 		widgets.insertMulti(OHO_CONFERENCES_MESSAGES,FOptionsManager->newOptionsDialogHeader(tr("Messages"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_SHOWENTERS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWENTERS),tr("Show users connections and disconnections"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_SHOWINITIALJOINS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWINITIALJOINS),tr("Show initial joins"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_SHOWSTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWSTATUS),tr("Show users status changes"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_ARCHIVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_ARCHIVESTATUS),tr("Save users status messages in history"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));

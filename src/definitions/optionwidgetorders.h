@@ -121,6 +121,9 @@
 //Node = ON_CONFERENCES
 #define OHO_CONFERENCES_MESSAGES                  100
 #define   OWO_CONFERENCES_SHOWENTERS              110
+// *** <<< eyeCU <<< ***
+#define   OWO_CONFERENCES_SHOWINITIALJOINS        115
+// *** >>> eyeCU >>> ***
 #define   OWO_CONFERENCES_SHOWSTATUS              120
 #define   OWO_CONFERENCES_ARCHIVESTATUS           130
 #define   OWO_CONFERENCES_QUITONWINDOWCLOSE       140

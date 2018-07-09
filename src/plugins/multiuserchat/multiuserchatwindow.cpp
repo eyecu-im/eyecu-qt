@@ -2437,7 +2437,18 @@ void MultiUserChatWindow::onMultiChatUserChanged(IMultiUser *AUser, int AData, c
 						enterMessage += QString(" - [%1] %2").arg(show).arg(presence.status);
 					showMultiChatStatusMessage(enterMessage,IMessageStyleContentOptions::TypeEmpty,IMessageStyleContentOptions::StatusJoined);
 				}
-
+// *** <<< eyeCU <<< ***
+				else if (AUser!=FMultiChat->mainUser() && Options::node(OPV_MUC_SHOWINITIALJOINS).value().toBool())
+				{
+					if (AUser->realJid().isValid())
+						enterMessage = tr("%1 <%2> has joined").arg(AUser->nick()).arg(AUser->realJid().uFull());
+					else
+						enterMessage = tr("%1 has joined").arg(AUser->nick());
+					if (!presence.status.isEmpty() && Options::node(OPV_MUC_SHOWSTATUS).value().toBool())
+						enterMessage += QString(" - [%1] %2").arg(show).arg(presence.status);
+					showMultiChatStatusMessage(enterMessage,IMessageStyleContentOptions::TypeEmpty,IMessageStyleContentOptions::StatusJoined);
+				}
+// *** >>> eyeCU >>> ***
 				refreshCompleteNicks();
 				updateMultiChatWindow();
 			}
