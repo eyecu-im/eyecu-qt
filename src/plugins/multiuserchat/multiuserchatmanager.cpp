@@ -248,7 +248,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
 	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE,true);
-	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,"Bye!");
+	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,tr("Bye!"));
 // *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
@@ -1701,10 +1701,16 @@ void MultiUserChatManager::onInviteActionTriggered(bool)
 		IMultiUserChatWindow *window = findMultiChatWindow(streamJid,roomJid);
 		if (window)
 		{
+		// *** <<< eyeCU <<< ***
+			bool ok;
+			QString reason = tr("You are welcome here");
+			reason = QInputDialog::getText(window->instance(),tr("Invite user"),tr("Enter a reason"),QLineEdit::Normal,reason,&ok);
 			QList<Jid> contacts;
-			foreach(const QString &contact, action->data(ADR_CONTACT_JID).toStringList())
-				contacts.append(contact);
-			window->multiUserChat()->sendInvitation(contacts);
+			if (ok)
+				foreach(const QString &contact, action->data(ADR_CONTACT_JID).toStringList())
+					contacts.append(contact);
+				window->multiUserChat()->sendInvitation(contacts,reason);
+		// *** >>> eyeCU >>> ***
 		}
 	}
 }
@@ -1727,7 +1733,12 @@ void MultiUserChatManager::onInviteDialogFinished(int AResult)
 
 			QDomElement declElem = stanza.addElement("x",NS_MUC_USER).appendChild(stanza.createElement("decline")).toElement();
 			declElem.setAttribute("to",invite.fromJid.full());
-
+			// *** <<< eyeCU <<< ***
+			QString reason = tr("I'm too busy right now");
+			reason = QInputDialog::getText(inviteDialog,tr("Decline invite"),tr("Enter a reason"),QLineEdit::Normal,reason);
+			if (!reason.isEmpty())
+				declElem.appendChild(stanza.createElement("reason")).appendChild(stanza.createTextNode(reason));
+			// *** >>> eyeCU >>> ***
 			if (FStanzaProcessor && FStanzaProcessor->sendStanzaOut(invite.streamJid,stanza))
 				LOG_STRM_INFO(invite.streamJid,QString("Rejected invite request from=%1 to room=%2").arg(invite.fromJid.full(),invite.roomJid.bare()));
 			else
