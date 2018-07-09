@@ -1,311 +1,436 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.1">
+ <context>
+  <name>AboutBox</name>
+  <message>
+   <location filename="../../loader/aboutbox.cpp" line="22"/>
+   <source>Version: %1 %2 of %3</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/aboutbox.cpp" line="23"/>
+   <source>Revision: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/aboutbox.cpp" line="27"/>
+   <source>Version: %1 %2</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
+ <context>
+  <name>AboutBoxClass</name>
+  <message>
+   <location filename="../../loader/aboutbox.ui" line="26"/>
+   <source>About the program</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/aboutbox.ui" line="188"/>
+   <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
  <context>
   <name>PasswordDialog</name>
   <message>
-   <location filename="../../utils/passworddialog.cpp" line="12"/>
    <source>Enter password:</source>
-   <translation>Paswoord invoeren:</translation>
+   <translation type="vanished">Paswoord invoeren:</translation>
   </message>
   <message>
-   <location filename="../../utils/passworddialog.cpp" line="18"/>
    <source>Save password</source>
-   <translation>Paswoord opslaan</translation>
+   <translation type="vanished">Paswoord opslaan</translation>
+  </message>
+ </context>
+ <context>
+  <name>PluginManager</name>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="365"/>
+   <source>Saving settings</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="408"/>
+   <source>Loading plugin: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="449"/>
+   <source>Duplicate plugin uuid</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="456"/>
+   <source>Wrong plugin interface</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="476"/>
+   <source>Dependencies not found</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="483"/>
+   <source>Conflict with plugin %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="514"/>
+   <source>Initializing plugin connections: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="526"/>
+   <source>Initialization failed</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="537"/>
+   <source>Initializing plugin objects: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="547"/>
+   <source>Initializing plugin settings: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="564"/>
+   <source>Starting plugin: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="661"/>
+   <source>Application started</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="950"/>
+   <source>About Qt</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="956"/>
+   <source>About the program</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="962"/>
+   <source>Setup plugins</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="971"/>
+   <source>Global shortcuts</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/pluginmanager.cpp" line="972"/>
+   <source>Application shortcuts</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
   <name>SearchLineEdit</name>
   <message>
-   <location filename="../../utils/searchlineedit.cpp" line="15"/>
    <source>Search options</source>
-   <translation>Zoek opties</translation>
+   <translation type="vanished">Zoek opties</translation>
   </message>
   <message>
-   <location filename="../../utils/searchlineedit.cpp" line="26"/>
    <source>Clear text</source>
-   <translation>Verwijder tekst</translation>
+   <translation type="vanished">Verwijder tekst</translation>
+  </message>
+ </context>
+ <context>
+  <name>SetupPluginsDialog</name>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="204"/>
+   <source>Disabled (%1)</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="207"/>
+   <source>With errors (%1)</source>
+   <translation type="unfinished"/>
+  </message>
+  <message numerus="yes">
+   <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
+   <source>This plugin depends on %n other plugin(s).</source>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>
+   <source>This plugin does not depend on other plugins.</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
+   <source>Another plugin depends on this plugin.</source>
+   <translation type="unfinished"/>
+  </message>
+  <message numerus="yes">
+   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
+   <source>Other %n plugin(s) depend on this plugin.</source>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>
+   <source>Other plugins don&apos;t depend on this plugin.</source>
+   <translation type="unfinished"/>
+  </message>
+  <message numerus="yes">
+   <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
+   <source>%n dependency(ies) not found.</source>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
+   <source>Restart Application</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
+   <source>Settings saved. Do you want to restart application?</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
+ <context>
+  <name>SetupPluginsDialogClass</name>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.ui" line="14"/>
+   <source>Setup Plugins</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.ui" line="76"/>
+   <source>Plugin Information</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>
+   <source>Search plugin</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
   <name>XmppSaslError</name>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="419"/>
    <source>Authorization aborted</source>
-   <translation>Toestemming afgebroken</translation>
+   <translation type="vanished">Toestemming afgebroken</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="420"/>
    <source>Account disabled</source>
-   <translation>Account uitgeschakeld</translation>
+   <translation type="vanished">Account uitgeschakeld</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="421"/>
    <source>Credentials expired</source>
-   <translation>Referenties verlopen</translation>
+   <translation type="vanished">Referenties verlopen</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="422"/>
    <source>Encryption required</source>
-   <translation>Encryptie verplicht</translation>
+   <translation type="vanished">Encryptie verplicht</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="423"/>
    <source>Incorrect encoding</source>
-   <translation>Verkeerde codering</translation>
+   <translation type="vanished">Verkeerde codering</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="424"/>
    <source>Invalid authorization id</source>
-   <translation>Ongeldige machtiging id</translation>
+   <translation type="vanished">Ongeldige machtiging id</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="425"/>
    <source>Invalid mechanism</source>
-   <translation>Ongeldige mechanisme</translation>
+   <translation type="vanished">Ongeldige mechanisme</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="426"/>
    <source>Malformed request</source>
-   <translation>Ongeldige aanvraag</translation>
+   <translation type="vanished">Ongeldige aanvraag</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="427"/>
    <source>Mechanism is too weak</source>
-   <translation>Mechanisme is te zwak</translation>
+   <translation type="vanished">Mechanisme is te zwak</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="428"/>
    <source>Not authorized</source>
-   <translation>Niet bevoegd</translation>
+   <translation type="vanished">Niet bevoegd</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="429"/>
    <source>Temporary authentication failure</source>
-   <translation>Tijdelijke verificatie storing</translation>
+   <translation type="vanished">Tijdelijke verificatie storing</translation>
   </message>
  </context>
  <context>
   <name>XmppStreamError</name>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="331"/>
-   <location filename="../../utils/xmpperror.cpp" line="581"/>
    <source>Undefined error condition</source>
-   <translation>Ongedefinieerde fout</translation>
+   <translation type="vanished">Ongedefinieerde fout</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="332"/>
-   <location filename="../../utils/xmpperror.cpp" line="582"/>
    <source>Bad request format</source>
-   <translation>Slechte verzoek formaat</translation>
+   <translation type="vanished">Slechte verzoek formaat</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="333"/>
    <source>Bad namespace prefix</source>
-   <translation>Slechte naamruimte prefix</translation>
+   <translation type="vanished">Slechte naamruimte prefix</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="334"/>
-   <location filename="../../utils/xmpperror.cpp" line="583"/>
    <source>Conflict</source>
-   <translation>Conflict</translation>
+   <translation type="vanished">Conflict</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="335"/>
    <source>Connection timeout</source>
-   <translation>Timeout van verbinding</translation>
+   <translation type="vanished">Timeout van verbinding</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="336"/>
    <source>Host is not serviced</source>
-   <translation>Host is niet bereikbaar</translation>
+   <translation type="vanished">Host is niet bereikbaar</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="337"/>
    <source>Unknown host</source>
-   <translation>Onbekende host</translation>
+   <translation type="vanished">Onbekende host</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="338"/>
    <source>Improper addressing</source>
-   <translation>Onjuiste adressering</translation>
+   <translation type="vanished">Onjuiste adressering</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="339"/>
-   <location filename="../../utils/xmpperror.cpp" line="587"/>
    <source>Internal server error</source>
-   <translation>Interne server fout</translation>
+   <translation type="vanished">Interne server fout</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="340"/>
    <source>Invalid from address</source>
-   <translation>Ongeldig adres</translation>
+   <translation type="vanished">Ongeldig adres</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="341"/>
    <source>Invalid namespace</source>
-   <translation>Ongeldige naamruimte</translation>
+   <translation type="vanished">Ongeldige naamruimte</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="342"/>
    <source>Invalid XML</source>
-   <translation>Ongeldige XML</translation>
+   <translation type="vanished">Ongeldige XML</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="343"/>
-   <location filename="../../utils/xmpperror.cpp" line="592"/>
    <source>Not authorized</source>
-   <translation>Niet bevoegd</translation>
+   <translation type="vanished">Niet bevoegd</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="344"/>
    <source>XML not well formed</source>
-   <translation>XML niet goed gevormd</translation>
+   <translation type="vanished">XML niet goed gevormd</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="345"/>
-   <location filename="../../utils/xmpperror.cpp" line="593"/>
    <source>Policy violation</source>
-   <translation>Police overtreding</translation>
+   <translation type="vanished">Police overtreding</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="346"/>
    <source>Remote connection failed</source>
-   <translation>Remore verbinding mislukt</translation>
+   <translation type="vanished">Remore verbinding mislukt</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="347"/>
    <source>Stream need to be reseted</source>
-   <translation>Spoo moet gereset worden</translation>
+   <translation type="vanished">Spoo moet gereset worden</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="348"/>
-   <location filename="../../utils/xmpperror.cpp" line="599"/>
    <source>Resource constraint</source>
-   <translation>Resource beperking</translation>
+   <translation type="vanished">Resource beperking</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="349"/>
    <source>Restricted XML</source>
-   <translation>Beperkt XML</translation>
+   <translation type="vanished">Beperkt XML</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="350"/>
    <source>See other host</source>
-   <translation>Zie andere host</translation>
+   <translation type="vanished">Zie andere host</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="351"/>
    <source>System shutdown</source>
-   <translation>Systeem sluit</translation>
+   <translation type="vanished">Systeem sluit</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="352"/>
    <source>Unsupported encoding</source>
-   <translation>Encoding niet ondersteund</translation>
+   <translation type="vanished">Encoding niet ondersteund</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="353"/>
    <source>Unsupported feature</source>
-   <translation>Functie niet ondersteunt</translation>
+   <translation type="vanished">Functie niet ondersteunt</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="354"/>
    <source>Unsupported stanza type</source>
-   <translation>Stanza type niet ondersteunt</translation>
+   <translation type="vanished">Stanza type niet ondersteunt</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="355"/>
    <source>Unsupported version</source>
-   <translation>Versie niet ondersteunt</translation>
+   <translation type="vanished">Versie niet ondersteunt</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="584"/>
    <source>Feature not implemented</source>
-   <translation>Functie niet geïmplementeerd</translation>
+   <translation type="vanished">Functie niet geïmplementeerd</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="585"/>
    <source>Insufficient permissions</source>
-   <translation>Onvoldoende rechten</translation>
+   <translation type="vanished">Onvoldoende rechten</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="586"/>
    <source>Recipient changed address</source>
-   <translation>Ontvanger heeft adres veranderd</translation>
+   <translation type="vanished">Ontvanger heeft adres veranderd</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="588"/>
    <source>Requested item not found</source>
-   <translation>Aangevraagde item niet gevonden</translation>
+   <translation type="vanished">Aangevraagde item niet gevonden</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="589"/>
    <source>Malformed XMPP address</source>
-   <translation>Ongeldige XMPP adres</translation>
+   <translation type="vanished">Ongeldige XMPP adres</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="590"/>
    <source>Not accepted by the recipient</source>
-   <translation>Niet geaccepteerd door ontvanger</translation>
+   <translation type="vanished">Niet geaccepteerd door ontvanger</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="591"/>
    <source>Not allowed by the recipient</source>
-   <translation>Niet toegestaan door ontvanger</translation>
+   <translation type="vanished">Niet toegestaan door ontvanger</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="594"/>
    <source>Recipient unavailable</source>
-   <translation>Ontvanger niet beschikbaar</translation>
+   <translation type="vanished">Ontvanger niet beschikbaar</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="595"/>
    <source>Redirect to another address</source>
-   <translation>Doorsturen naar een ander adres</translation>
+   <translation type="vanished">Doorsturen naar een ander adres</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="596"/>
    <source>Registration required</source>
-   <translation>Registratie verplicht</translation>
+   <translation type="vanished">Registratie verplicht</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="597"/>
    <source>Remote server not found</source>
-   <translation>Remote server niet gevonden</translation>
+   <translation type="vanished">Remote server niet gevonden</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="598"/>
    <source>Remote server timeout</source>
-   <translation>Remote sever timeout</translation>
+   <translation type="vanished">Remote sever timeout</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="600"/>
    <source>Service unavailable</source>
-   <translation>dienst onbereikbaar</translation>
+   <translation type="vanished">dienst onbereikbaar</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="601"/>
    <source>Subscription required</source>
-   <translation>Abonnement vereist</translation>
+   <translation type="vanished">Abonnement vereist</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="602"/>
    <source>Unexpected request</source>
-   <translation>Onverwachtte aanvraag</translation>
+   <translation type="vanished">Onverwachtte aanvraag</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="604"/>
    <source>Resource limit exceeded</source>
-   <translation>Resource limiet overschreden</translation>
+   <translation type="vanished">Resource limiet overschreden</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="605"/>
    <source>Stanza is too big</source>
-   <translation>Stanza is te groot</translation>
+   <translation type="vanished">Stanza is te groot</translation>
   </message>
   <message>
-   <location filename="../../utils/xmpperror.cpp" line="606"/>
    <source>Too many stanzas</source>
-   <translation>Te veel stanzas</translation>
+   <translation type="vanished">Te veel stanzas</translation>
   </message>
  </context>
 </TS>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ar" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ar" version="2.1">
  <context>
   <name>Attention</name>
   <message>
@@ -9,12 +9,12 @@
    <location filename="../../plugins/attention/attention.cpp" line="365"/>
    <location filename="../../plugins/attention/attention.cpp" line="510"/>
    <source>Attention</source>
-   <translation type="unfinished"/>
+   <translation>لفت الانتباه</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="52"/>
    <source>Implements XEP-0224: Attention</source>
-   <translation type="unfinished"/>
+   <translation>أداة XEP-0224: لفت الانتباه</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
@@ -30,27 +30,27 @@
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Alt+Return</source>
    <comment>Attention</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
    <source>Notification pop-up</source>
-   <translation type="unfinished"/>
+   <translation>الإشعار بنافذة منبثقة</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
    <source>Always play sound</source>
-   <translation type="unfinished"/>
+   <translation>تشغيل الصوت</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="189"/>
    <source>Implements XEP-0224: Allows to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>أداة XEP-0224: تتيح لفت انتباه المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="264"/>
    <source>Attention from %1</source>
-   <translation type="unfinished"/>
+   <translation>لفت انتباه من %1</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="274"/>
@@ -73,7 +73,7 @@
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="295"/>
    <source>Ok</source>
-   <translation type="unfinished"/>
+   <translation>موافق</translation>
   </message>
  </context>
 </TS>

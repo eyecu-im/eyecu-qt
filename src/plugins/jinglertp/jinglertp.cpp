@@ -41,9 +41,16 @@ JingleCallTimer::JingleCallTimer(QString ASoundFileName, QObject *parent):
 	start();
 }
 
+JingleCallTimer::~JingleCallTimer()
+{
+	qDebug() << "JingleCallTimer::~JingleCallTimer()";
+}
+
 void JingleCallTimer::timerEvent(QTimerEvent *e)
 {
 	Q_UNUSED(e)
+
+	qDebug() << "JingleCallTimer::timerEvent()";
 
 	if (!interval())        // Just started
 		setInterval(2000);  // Set correct interval
@@ -56,7 +63,8 @@ void JingleCallTimer::timerEvent(QTimerEvent *e)
 		FSound.play();
 #ifdef Q_WS_X11
 	else
-		QProcess::startDetached(Options::node(OPV_NOTIFICATIONS_SOUNDCOMMAND).value().toString(),QStringList()<<soundFile);
+		QProcess::startDetached(Options::node(OPV_NOTIFICATIONS_SOUNDCOMMAND)
+								.value().toString(),QStringList()<<soundFile);
 #endif
 }
 
@@ -196,6 +204,10 @@ bool JingleRtp::initObjects()
 		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_HANGUP);
 		notifyType.title = tr("When incoming voice or video call missed");
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_MISSED, notifyType);
+
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_ERROR);
+		notifyType.title = tr("Voice or video call session failed");
+		FNotifications->registerNotificationType(NNT_JINGLE_RTP_ERROR, notifyType);
 
 		FNotifications->insertNotificationHandler(NHO_DEFAULT, this);
 	}
@@ -416,7 +428,8 @@ void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus 
 		case IJingle::Decline:
 		{
 			type=Rejected;
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(streamJid, FJingle->contactJid(ASid));
+			IMessageChatWindow *window=FMessageWidgets->findChatWindow(streamJid,
+																	   FJingle->contactJid(ASid));
 			if (window)
 			{
 				removeNotification(window);
@@ -464,8 +477,14 @@ void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus 
 
 	callChatMessage(ASid, type, AReason);
 
-	if (type == Cancelled && APreviousStatus == IJingle::Initiated && !FJingle->isOutgoing(ASid))
+	if (type == Error ||
+		(type == Cancelled &&
+		 !FJingle->isOutgoing(ASid) &&
+		 APreviousStatus == IJingle::Initiated))
+	{
+		qDebug() << "Here!";
 		callNotify(ASid, type);
+	}
 
 	removeSid(ASid);
 }
@@ -519,10 +538,8 @@ void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 }
 
 
-INotification JingleRtp::callNotify(const QString &ASid, CallType ACallType)
+void JingleRtp::callNotify(const QString &ASid, CallType ACallType)
 {
-	INotification notification;
-
 	Jid contactJid=FJingle->contactJid(ASid);
 	Jid streamJid=FJingle->streamJid(ASid);
 
@@ -533,21 +550,32 @@ INotification JingleRtp::callNotify(const QString &ASid, CallType ACallType)
 	if (notify)
 		FNotifications->removeNotification(notify);
 
-	if (window && (!window->isActiveTabPage() || ACallType==Called))
+	if (window && (!window->isActiveTabPage() ||
+				   ACallType==Called ||
+				   ACallType==Error))
 	{
+		INotification notification;
+
 		bool video=hasVideo(ASid);
-		notification.kinds = FNotifications->enabledTypeNotificationKinds(ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED);
+		notification.kinds = FNotifications->enabledTypeNotificationKinds(
+					ACallType==Called?NNT_JINGLE_RTP_CALL:
+					ACallType==Rejected?NNT_JINGLE_RTP_MISSED:
+										NNT_JINGLE_RTP_ERROR);
 		if (notification.kinds > 0)
 		{
-			QIcon icon = FIconStorage->getIcon(ACallType==Called?(video?JNI_RTP_CALL_VIDEO:JNI_RTP_CALL)
-																	   :JNI_RTP_HANGUP);
+			QIcon icon = FIconStorage->getIcon(ACallType==Called?(video?JNI_RTP_CALL_VIDEO
+																	   :JNI_RTP_CALL)
+																:JNI_RTP_HANGUP);
 			QString name = FNotifications->contactName(streamJid, contactJid);
 
-			notification.typeId = ACallType==Called?NNT_JINGLE_RTP_CALL:NNT_JINGLE_RTP_MISSED;
+			notification.typeId = ACallType==Called  ?NNT_JINGLE_RTP_CALL:
+								  ACallType==Rejected?NNT_JINGLE_RTP_MISSED:
+													  NNT_JINGLE_RTP_ERROR;
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, ACallType);
 			notification.data.insert(NDR_ICON, icon);
-			QString tooltip=(ACallType==Called)?tr("Incoming %1 call from %2")
-											   :tr("Missed %1 call from %2");
+			QString tooltip=ACallType==Called  ?tr("Incoming %1 call from %2"):
+							ACallType==Rejected?tr("Missed %1 call from %2"):
+												tr("%1 call from %2 failed!");
 			notification.data.insert(NDR_TOOLTIP, tooltip.arg(video?tr("video"):tr("voice")).arg(name));
 			notification.data.insert(NDR_STREAM_JID, streamJid.full());
 			notification.data.insert(NDR_CONTACT_JID, contactJid.full());
@@ -559,7 +587,9 @@ INotification JingleRtp::callNotify(const QString &ASid, CallType ACallType)
 				if (!avatarFileName.isEmpty())
 					notification.data.insert(NDR_POPUP_IMAGE, avatarFileName);
 			}
-			notification.data.insert(NDR_POPUP_CAPTION, ACallType==Cancelled?tr("Missed call!"):tr("Incoming call!"));
+			notification.data.insert(NDR_POPUP_CAPTION, ACallType==Called?tr("Missed call!"):
+														ACallType==Cancelled?tr("Incoming call!"):
+																			 tr("Failed call!"));
 			notification.data.insert(NDR_POPUP_TITLE, name);
 			notification.data.insert(NDR_POPUP_HTML,HTML_ESCAPE_CHARS("Test"));
 			notification.data.insert(NDR_ROSTER_ORDER, RNO_JINGLE_RTP);
@@ -578,13 +608,16 @@ INotification JingleRtp::callNotify(const QString &ASid, CallType ACallType)
 
 			updateWindow(window);
 			int notify=FNotifications->appendNotification(notification);
-			FNotifies.insert(notify, window);
 
-			if (ACallType==Called && notification.kinds&INotification::SoundPlay)
-				sessionInfo(streamJid, contactJid, Ringing);
+			if (window->isActiveTabPage() && ACallType!=Called)
+				FNotifications->removeNotification(notify);
+			else {
+				FNotifies.insert(notify, window);
+				if (ACallType==Called && notification.kinds&INotification::SoundPlay)
+					sessionInfo(streamJid, contactJid, Ringing);
+			}
 		}
 	}
-	return notification;
 }
 
 void JingleRtp::updateWindow(IMessageChatWindow *AWindow)
@@ -654,6 +687,7 @@ void JingleRtp::onNotificationActivated(int ANotifyId)
 
 void JingleRtp::onNotificationRemoved(int ANotifyId)
 {
+	qDebug() << "JingleRtp::onNotificationRemoved(" << ANotifyId << ")";
 	if (FPendingCalls.contains(ANotifyId))
 	{
 		FPendingCalls.removeOne(ANotifyId);
@@ -795,6 +829,13 @@ void JingleRtp::callChatMessage(const QString &ASid, CallType AType, IJingle::Re
 		writeCallMessageIntoChat(window, AType, AReason);
 }
 
+QString JingleRtp::chatNotification(const QString &AIcon, const QString &AMessage)
+{
+	QString image("<img src=\'%1\'/> %2");
+	return image.arg(QUrl::fromLocalFile(FIconStorage->fileFullName(AIcon)).toString())
+				.arg(AMessage);
+}
+
 bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason)
 {
 	Jid contactJid = AWindow->contactJid();
@@ -808,37 +849,38 @@ bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType A
 	options.timeFormat = FMessageStyleManager->timeFormat(options.time);
 	options.type = IMessageStyleContentOptions::TypeHistory;
 	options.kind = IMessageStyleContentOptions::KindStatus;
-	options.direction = outgoing?IMessageStyleContentOptions::DirectionOut:IMessageStyleContentOptions::DirectionIn;
+	options.direction = outgoing?IMessageStyleContentOptions::DirectionOut
+								:IMessageStyleContentOptions::DirectionIn;
 	options.senderId  = streamJid.full();
 	options.senderName   = HTML_ESCAPE(FMessageStyleManager->contactName(streamJid, contactJid));
 	options.senderAvatar = FMessageStyleManager->contactAvatar(contactJid);
 
-	QString message;
-	QString image("<img src=\'%1\'/> %2");
+	QString message;	
 	switch (AType)
 	{
 		case Called:
-			message=video?image.arg(FIconStorage->fileFullName(outgoing
-															   ?JNI_RTP_OUTGOING_VIDEO
-															   :JNI_RTP_INCOMING_VIDEO)).arg(tr("Video call"))
-
-						 :image.arg(FIconStorage->fileFullName(outgoing
-															   ?JNI_RTP_OUTGOING
-															   :JNI_RTP_INCOMING)).arg(tr("Voice call"));
+			message = video?chatNotification(outgoing?JNI_RTP_OUTGOING_VIDEO
+													 :JNI_RTP_INCOMING_VIDEO,
+											 tr("Video call"))
+						   :chatNotification(outgoing?JNI_RTP_OUTGOING
+													 :JNI_RTP_INCOMING,
+											 tr("Voice call"));
 			break;
 		case Cancelled:
-			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call cancelled"));
+			message = chatNotification(JNI_RTP_HANGUP, tr("Call cancelled"));
 			break;
 		case Rejected:
-			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call rejected"));
+			message = chatNotification(JNI_RTP_HANGUP, tr("Call rejected"));
 			break;
 		case Finished:
-			message=image.arg(FIconStorage->fileFullName(JNI_RTP_HANGUP)).arg(tr("Call finished"));
+			message = chatNotification(JNI_RTP_HANGUP, tr("Call finished"));
 			break;
 		case Error:
 			QString errorMessage = FJingle->errorMessage(AReason);
-			message=image.arg(FIconStorage->fileFullName(JNI_RTP_ERROR)).arg(errorMessage.isEmpty()?tr("Call error")
-																										   :tr("Call error (%1)").arg(errorMessage));
+			message = chatNotification(JNI_RTP_ERROR,
+									   errorMessage.isEmpty()?tr("Call error")
+															 :tr("Call error (%1)")
+															  .arg(errorMessage));
 			options.status=IMessageStyleContentOptions::StatusError;
 			break;
 	}
@@ -1354,7 +1396,7 @@ void JingleRtp::onCall()
 	{
 		Jid streamJid  = action->data(ADR_STREAM_JID).toString();
 		Jid contactJid = action->data(ADR_CONTACT_JID).toString();
-		Command command=(Command)action->data(ADR_COMMAND).toInt();
+//		Command command=(Command)action->data(ADR_COMMAND).toInt();
 		QString sid;
 
 		QList<QString> sids = FSidHash.keys(contactJid);
@@ -1370,7 +1412,7 @@ void JingleRtp::onCall()
 		{
 			if (!FJingle->isOutgoing(sid))
 			{
-				IJingle::Reason reason;
+				IJingle::Reason reason(IJingle::NoReason);
 				QHash<QString, IJingleContent*> contents = FJingle->contents(sid);
 				for (QHash<QString, IJingleContent*>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 				{

@@ -5,11 +5,77 @@
     <name>Audio</name>
     <message>
         <source>Audio/Video chat</source>
-        <translation>Аудио/Видео чат</translation>
+        <translation type="vanished">Аудио/Видео чат</translation>
     </message>
     <message>
         <source>Audio</source>
-        <translation>Аудио</translation>
+        <translation type="vanished">Аудио</translation>
+    </message>
+</context>
+<context>
+    <name>AudioOptions</name>
+    <message>
+        <source>Jingle RTP options</source>
+        <translation>Опции Jingle RTP</translation>
+    </message>
+    <message>
+        <source>Input device</source>
+        <translation>Устройство ввода</translation>
+    </message>
+    <message>
+        <source>Output device</source>
+        <translation>Устройство вывода</translation>
+    </message>
+    <message>
+        <source>Bitrate</source>
+        <translation>Частота дискретизации</translation>
+    </message>
+</context>
+<context>
+    <name>CodecOptions</name>
+    <message>
+        <source>Jingle RTP options</source>
+        <translation>Опции Jingle RTP</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation>Доступны</translation>
+    </message>
+    <message>
+        <source>Use</source>
+        <translation>Использовать</translation>
+    </message>
+    <message>
+        <source>Remove payload type from in-use list</source>
+        <translation>Убрать тип полезной нагрузки из списка используемых</translation>
+    </message>
+    <message>
+        <source>Unuse</source>
+        <translation>Не использовать</translation>
+    </message>
+    <message>
+        <source>Add payload type to in-use list</source>
+        <translation>Добавить тип полезной нагрузки в список используемых</translation>
+    </message>
+    <message>
+        <source>Move Up</source>
+        <translation>Поднять</translation>
+    </message>
+    <message>
+        <source>Shifts payload type priority up</source>
+        <translation>Поднимает приоритет типа полезной нагрузки</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Опустить</translation>
+    </message>
+    <message>
+        <source>Shifts payload type priority down</source>
+        <translation>Опускает приоритет типа полезной нагрузки</translation>
+    </message>
+    <message>
+        <source>In use</source>
+        <translation>Используются</translation>
     </message>
 </context>
 <context>
@@ -100,42 +166,62 @@
     </message>
     <message>
         <source>Microphone OFF</source>
-        <translation>Микрофон ВЫКЛ</translation>
+        <translation type="vanished">Микрофон ВЫКЛ</translation>
     </message>
     <message>
         <source>Microphone ON</source>
-        <translation>Микрофон ВКЛ</translation>
+        <translation type="vanished">Микрофон ВКЛ</translation>
     </message>
-</context>
-<context>
-    <name>JingleRtpOptions</name>
     <message>
-        <source>Jingle RTP options</source>
-        <translation>Опции Jingle RTP</translation>
+        <source>Voice or video call session failed</source>
+        <translation>Неудачный сеанс голосовой или видео связи</translation>
     </message>
     <message>
         <source>Audio</source>
         <translation>Аудио</translation>
     </message>
     <message>
+        <source>Codecs</source>
+        <translation>Кодеки</translation>
+    </message>
+    <message>
+        <source>%1 call from %2 failed!</source>
+        <translation>Неудачный %1 вызов от %2!</translation>
+    </message>
+    <message>
+        <source>Failed call!</source>
+        <translation>Неудачный вызов!</translation>
+    </message>
+</context>
+<context>
+    <name>JingleRtpOptions</name>
+    <message>
+        <source>Jingle RTP options</source>
+        <translation type="vanished">Опции Jingle RTP</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation type="vanished">Аудио</translation>
+    </message>
+    <message>
         <source>Codec</source>
-        <translation>Кодек</translation>
+        <translation type="vanished">Кодек</translation>
     </message>
     <message>
         <source>Notify Interval, ms</source>
-        <translation>Интервал уведомлений, мс</translation>
+        <translation type="vanished">Интервал уведомлений, мс</translation>
     </message>
     <message>
         <source>Video</source>
-        <translation>Видео</translation>
+        <translation type="vanished">Видео</translation>
     </message>
     <message>
         <source>Use RTCP</source>
-        <translation>Использовать RTCP</translation>
+        <translation type="vanished">Использовать RTCP</translation>
     </message>
     <message>
         <source>Sample rate, Hz</source>
-        <translation>Частота дискретизации, Гц</translation>
+        <translation type="vanished">Частота дискретизации, Гц</translation>
     </message>
 </context>
 </TS>

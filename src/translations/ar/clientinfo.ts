@@ -1,52 +1,52 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ar" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ar" version="2.1">
  <context>
   <name>ClientInfo</name>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="74"/>
    <source>Client Information</source>
-   <translation type="unfinished"/>
+   <translation>معلومات حول التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="75"/>
    <source>Allows to send and receive information about the version of the application, the local time and the last activity of contact</source>
-   <translation type="unfinished"/>
+   <translation>يتيح إرسال واستقبال معلومات حول إصدار التطبيق والتوقيت المحلي وآخر نشاط للمستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="219"/>
    <source>Share information about your OS version</source>
-   <translation type="unfinished"/>
+   <translation>مشاركة معلومات حول إصدار نظام التشغيل الخاص بك</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="361"/>
    <source>Software information</source>
-   <translation type="unfinished"/>
+   <translation>معلومات البرنامج</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="362"/>
    <source>Software</source>
-   <translation type="unfinished"/>
+   <translation>التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="363"/>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="600"/>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="654"/>
    <source>Software Version</source>
-   <translation type="unfinished"/>
+   <translation>إصدار التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="364"/>
    <source>OS</source>
-   <translation type="unfinished"/>
+   <translation>نظام التشغيل</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="365"/>
    <source>OS Version</source>
-   <translation type="unfinished"/>
+   <translation>إصدار نظام التشغيل</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="613"/>
    <source>Service Uptime</source>
-   <translation type="unfinished"/>
+   <translation>مدة التشغيل</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="615"/>
@@ -57,7 +57,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="617"/>
    <source>Idle Time</source>
-   <translation type="unfinished"/>
+   <translation>وقت الخمول</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="629"/>
@@ -68,22 +68,22 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="655"/>
    <source>Supports the exchanging of the information about the application version</source>
-   <translation type="unfinished"/>
+   <translation>يدعم تبادل المعلومات حول إصدار التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="662"/>
    <source>Supports the exchanging of the information about the user last activity</source>
-   <translation type="unfinished"/>
+   <translation>يدعم تبادل المعلومات حول آخر نشاط للمستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="669"/>
    <source>Supports the exchanging of the information about the user local time</source>
-   <translation type="unfinished"/>
+   <translation>يدعم تبادل المعلومات حول التوقيت المحلي للمستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="675"/>
    <source>XMPP Ping</source>
-   <translation type="unfinished"/>
+   <translation>XMPP Ping</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="676"/>
@@ -96,45 +96,45 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="13"/>
    <source>Client info - %1</source>
-   <translation type="unfinished"/>
+   <translation>معلومات التطبيق - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="68"/>
    <source>Software Version</source>
-   <translation type="unfinished"/>
+   <translation>إصدار التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="71"/>
    <source>Name:</source>
-   <translation type="unfinished"/>
+   <translation>الاسم:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="73"/>
    <source>Version:</source>
-   <translation type="unfinished"/>
+   <translation>الإصدار:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="75"/>
    <source>OS:</source>
-   <translation type="unfinished"/>
+   <translation>نظام التشغيل:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="79"/>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="118"/>
    <source>Error:</source>
-   <translation type="unfinished"/>
+   <translation>خطأ:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="83"/>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="122"/>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="139"/>
    <source>Waiting response...</source>
-   <translation type="unfinished"/>
+   <translation>قيد الانتظار...</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="92"/>
    <source>Service Uptime</source>
-   <translation type="unfinished"/>
+   <translation>مدة التشغيل</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="94"/>
@@ -144,22 +144,22 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="96"/>
    <source>Idle Time</source>
-   <translation type="unfinished"/>
+   <translation>وقت الخمول</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="103"/>
    <source>Uptime:</source>
-   <translation type="unfinished"/>
+   <translation>مدة التشغيل:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="107"/>
    <source>Inactive:</source>
-   <translation type="unfinished"/>
+   <translation>غير نشط:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="109"/>
    <source>Status:</source>
-   <translation type="unfinished"/>
+   <translation>الحالة:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="113"/>
@@ -174,7 +174,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="133"/>
    <source>Time:</source>
-   <translation type="unfinished"/>
+   <translation>الوقت:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="134"/>
@@ -189,7 +189,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="143"/>
    <source>Not available</source>
-   <translation type="unfinished"/>
+   <translation>غير متاح</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="175"/>

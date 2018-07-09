@@ -25,5 +25,6 @@
 #define NNT_TUNE                      "Tune"
 #define NNT_JINGLE_RTP_CALL           "JingleRtpCall"
 #define NNT_JINGLE_RTP_MISSED         "JingleRtpMissed"
+#define NNT_JINGLE_RTP_ERROR          "JingleRtpError"
 // *** >>> eyeCU >>> ***
 #endif // DEF_NOTIFICATIONTYPES_H

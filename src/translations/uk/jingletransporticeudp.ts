@@ -1,9 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>JingleTransportIceUdp</name>
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="13"/>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="113"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="116"/>
    <source>Jingle ICE-UDP Transport</source>
    <translation>Транспорт Jingle ICE-UDP</translation>
   </message>
@@ -13,7 +13,7 @@
    <translation>XEP-0176: Метод передачі Jingle ICE-UDP</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="114"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="117"/>
    <source>Allows using ICE-UDP transport in Jingle sesions</source>
    <translation>Дозволяє використовувати транспорт ICE-UDP у сесіях Jingle</translation>
   </message>

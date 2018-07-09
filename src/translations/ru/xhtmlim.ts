@@ -465,11 +465,6 @@
         <translation>Перечёркивание</translation>
     </message>
     <message>
-        <source>Ctrl+S</source>
-        <comment>Strikeout</comment>
-        <translation type="obsolete">Ctrl+S</translation>
-    </message>
-    <message>
         <source>Center</source>
         <translation>По центру</translation>
     </message>
@@ -581,11 +576,6 @@
     <message>
         <source>Insert new line</source>
         <translation>Вставить перенос строки</translation>
-    </message>
-    <message>
-        <source>Alt+Return</source>
-        <comment>Insert new line</comment>
-        <translation type="obsolete">Alt+Return</translation>
     </message>
     <message>
         <source>Alt+C</source>

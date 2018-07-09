@@ -15,5 +15,32 @@
         <source>Allows using RAW-UDP transport in Jingle sesions</source>
         <translation>Позволяет использовать в сеансах Jingle транспорт RAW-UDIP</translation>
     </message>
+    <message>
+        <source>Raw UDP</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>RawUdpOptions</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Network interface</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Port range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

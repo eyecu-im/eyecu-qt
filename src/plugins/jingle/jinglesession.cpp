@@ -55,10 +55,14 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
                             qWarning() << "addContent() failed!";
                         FValid=true;
 						connect(this,SIGNAL(sessionAccepted(QString)),parent(), SLOT(onSessionAccepted(QString)));
-						connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
+						connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),
+								parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
 						connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
 						connect(this,SIGNAL(dataReceived(QString,QIODevice*)),parent(),SLOT(onDataReceived(QString,QIODevice*)));
-						connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
+						connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
+															   IJingle::SessionStatus,Jid,IJingle::Reason)),
+								parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
+																   IJingle::SessionStatus,Jid,IJingle::Reason)));
                     }
                 }
             }

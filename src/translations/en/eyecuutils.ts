@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>AboutBox</name>
   <message>
@@ -167,6 +167,11 @@
    <source>This plugin does not depend on other plugins.</source>
    <translation>This plugin does not depend on other plugins.</translation>
   </message>
+  <message>
+   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
+   <source>Another plugin depends on this plugin.</source>
+   <translation>Another plugin depends on this plugin.</translation>
+  </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
@@ -174,11 +179,6 @@
     <numerusform/>
     <numerusform/>
    </translation>
-  </message>
-  <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
-   <source>Another plugin depends on this plugin.</source>
-   <translation>Another plugin depends on this plugin.</translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>

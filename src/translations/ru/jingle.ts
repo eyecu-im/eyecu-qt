@@ -5,11 +5,11 @@
     <name>Jingle</name>
     <message>
         <source>Jingle</source>
-        <translation>Джингл</translation>
+        <translation>Jingle</translation>
     </message>
     <message>
         <source>Implements XEP-0166: Jingle</source>
-        <translation>Реализует XEP-0166: Джингл</translation>
+        <translation>Реализует XEP-0166: Jingle</translation>
     </message>
     <message>
         <source>Supports XEP-0166: Jingle</source>
@@ -82,6 +82,10 @@
     <message>
         <source>Transport not supported</source>
         <translation>Транспорт не поддерживается</translation>
+    </message>
+    <message>
+        <source>Jingle transports</source>
+        <translation>Транспорты Jingle</translation>
     </message>
 </context>
 </TS>

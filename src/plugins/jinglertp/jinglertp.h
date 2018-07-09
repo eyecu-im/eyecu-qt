@@ -29,6 +29,8 @@ class JingleCallTimer: public QTimer
 	Q_OBJECT
 public:
 	JingleCallTimer(QString ASoundFileName, QObject *parent=0);
+	~JingleCallTimer();
+
 protected:
 	void timerEvent(QTimerEvent *e);
 private:
@@ -132,8 +134,9 @@ protected:
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
 	void    registerDiscoFeatures();
-	INotification callNotify(const QString &ASid, CallType ACallType);
+	void	callNotify(const QString &ASid, CallType ACallType);
 	void    updateWindow(IMessageChatWindow *AWindow);
+	QString chatNotification(const QString &AIcon, const QString &AMessage);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 	bool    updateWindowActions(IMessageChatWindow *AWindow);
 	void    updateChatWindowActions(IMessageChatWindow *AChatWindow);
