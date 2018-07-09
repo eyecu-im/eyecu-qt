@@ -6,8 +6,8 @@ TEMPLATE           = lib
 VERSION            = $$EYECU_UTILS_ABI
 CONFIG            += dll
 QT                += xml network
-greaterThan(QT_MAJOR_VERSION, 4): QT += util widgets
-else: CONFIG += util
+greaterThan(QT_MAJOR_VERSION, 4): QT += qputil widgets
+else: CONFIG += qputil
 
 DEFINES           += UTILS_DLL QXT_STATIC
 

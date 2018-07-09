@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QIcon>
 #include <QNetworkAccessManager>
-#include <QtUtil/httprequest.h>
+#include <HttpRequest>
 
 #define WEATHER_UUID "{7de9475a-9e59-4cc7-98d6-97845169b40d}"
 
