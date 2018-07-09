@@ -247,6 +247,8 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
+	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE,true);
+	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,tr("Bye!"));
 // *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
@@ -270,6 +272,10 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		widgets.insertMulti(OWO_CONFERENCES_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REJOINAFTERKICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REJOINAFTERKICK),tr("Automatically rejoin to conference after kick"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));
+// *** <<< eyeCU <<< ***
+		widgets.insertMulti(OWO_CONFERENCES_CONFIRMLEAVE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CONFIRMLEAVE),tr("Ask for confirmation before leave conference"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_LEAVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_LEAVESTATUS),tr("Default leave status message"),AParent));
+// *** >>> eyeCU >>> ***
 
 		widgets.insertMulti(OHO_CONFERENCES_USERVIEW,FOptionsManager->newOptionsDialogHeader(tr("Participants List"),AParent));
 
@@ -1695,10 +1701,16 @@ void MultiUserChatManager::onInviteActionTriggered(bool)
 		IMultiUserChatWindow *window = findMultiChatWindow(streamJid,roomJid);
 		if (window)
 		{
+		// *** <<< eyeCU <<< ***
+			bool ok;
+			QString reason = tr("You are welcome here");
+			reason = QInputDialog::getText(window->instance(),tr("Invite user"),tr("Enter a reason"),QLineEdit::Normal,reason,&ok);
 			QList<Jid> contacts;
-			foreach(const QString &contact, action->data(ADR_CONTACT_JID).toStringList())
-				contacts.append(contact);
-			window->multiUserChat()->sendInvitation(contacts);
+			if (ok)
+				foreach(const QString &contact, action->data(ADR_CONTACT_JID).toStringList())
+					contacts.append(contact);
+				window->multiUserChat()->sendInvitation(contacts,reason);
+		// *** >>> eyeCU >>> ***
 		}
 	}
 }
@@ -1721,7 +1733,12 @@ void MultiUserChatManager::onInviteDialogFinished(int AResult)
 
 			QDomElement declElem = stanza.addElement("x",NS_MUC_USER).appendChild(stanza.createElement("decline")).toElement();
 			declElem.setAttribute("to",invite.fromJid.full());
-
+			// *** <<< eyeCU <<< ***
+			QString reason = tr("I'm too busy right now");
+			reason = QInputDialog::getText(inviteDialog,tr("Decline invite"),tr("Enter a reason"),QLineEdit::Normal,reason);
+			if (!reason.isEmpty())
+				declElem.appendChild(stanza.createElement("reason")).appendChild(stanza.createTextNode(reason));
+			// *** >>> eyeCU >>> ***
 			if (FStanzaProcessor && FStanzaProcessor->sendStanzaOut(invite.streamJid,stanza))
 				LOG_STRM_INFO(invite.streamJid,QString("Rejected invite request from=%1 to room=%2").arg(invite.fromJid.full(),invite.roomJid.bare()));
 			else
