@@ -134,7 +134,7 @@ protected:
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
 	void    registerDiscoFeatures();
-	void	callNotify(const QString &ASid, CallType ACallType);
+	void	callNotify(const QString &ASid, CallType AEventType);
 	void    updateWindow(IMessageChatWindow *AWindow);
 	QString chatNotification(const QString &AIcon, const QString &AMessage);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
@@ -149,7 +149,7 @@ protected:
 	void    connectionEstablished(const QString &ASid);
 	void    connectionTerminated(const QString &ASid);
 
-	MediaStreamer *startSendMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
+	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
 
 	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes=NULL);
