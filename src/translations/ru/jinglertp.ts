@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
-    <name>Audio</name>
-    <message>
-        <source>Audio/Video chat</source>
-        <translation type="vanished">Аудио/Видео чат</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="vanished">Аудио</translation>
-    </message>
-</context>
-<context>
     <name>AudioOptions</name>
     <message>
         <source>Jingle RTP options</source>
@@ -165,14 +154,6 @@
         <translation>Ошибка звонка (%1)</translation>
     </message>
     <message>
-        <source>Microphone OFF</source>
-        <translation type="vanished">Микрофон ВЫКЛ</translation>
-    </message>
-    <message>
-        <source>Microphone ON</source>
-        <translation type="vanished">Микрофон ВКЛ</translation>
-    </message>
-    <message>
         <source>Voice or video call session failed</source>
         <translation>Неудачный сеанс голосовой или видео связи</translation>
     </message>
@@ -191,37 +172,6 @@
     <message>
         <source>Failed call!</source>
         <translation>Неудачный вызов!</translation>
-    </message>
-</context>
-<context>
-    <name>JingleRtpOptions</name>
-    <message>
-        <source>Jingle RTP options</source>
-        <translation type="vanished">Опции Jingle RTP</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="vanished">Аудио</translation>
-    </message>
-    <message>
-        <source>Codec</source>
-        <translation type="vanished">Кодек</translation>
-    </message>
-    <message>
-        <source>Notify Interval, ms</source>
-        <translation type="vanished">Интервал уведомлений, мс</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation type="vanished">Видео</translation>
-    </message>
-    <message>
-        <source>Use RTCP</source>
-        <translation type="vanished">Использовать RTCP</translation>
-    </message>
-    <message>
-        <source>Sample rate, Hz</source>
-        <translation type="vanished">Частота дискретизации, Гц</translation>
     </message>
 </context>
 </TS>

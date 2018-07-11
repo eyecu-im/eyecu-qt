@@ -2,17 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en">
 <context>
-    <name>Audio</name>
-    <message>
-        <source>Audio/Video chat</source>
-        <translation type="vanished">Audio/Video chat</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="vanished">Audio</translation>
-    </message>
-</context>
-<context>
     <name>AudioOptions</name>
     <message>
         <location filename="../../plugins/jinglertp/audiooptions.ui" line="14"/>
@@ -226,45 +215,6 @@
         <location filename="../../plugins/jinglertp/jinglertp.cpp" line="987"/>
         <source>Hangup</source>
         <translation>Hangup</translation>
-    </message>
-    <message>
-        <source>Microphone OFF</source>
-        <translation type="vanished">Microphone OFF</translation>
-    </message>
-    <message>
-        <source>Microphone ON</source>
-        <translation type="vanished">Microphone ON</translation>
-    </message>
-</context>
-<context>
-    <name>JingleRtpOptions</name>
-    <message>
-        <source>Jingle RTP options</source>
-        <translation type="vanished">Jingle RTP options</translation>
-    </message>
-    <message>
-        <source>Audio</source>
-        <translation type="vanished">Audio</translation>
-    </message>
-    <message>
-        <source>Codec</source>
-        <translation type="vanished">Codec</translation>
-    </message>
-    <message>
-        <source>Notify Interval, ms</source>
-        <translation type="vanished">Notify Interval, ms</translation>
-    </message>
-    <message>
-        <source>Sample rate, Hz</source>
-        <translation type="vanished">Sample rate, Hz</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation type="vanished">Video</translation>
-    </message>
-    <message>
-        <source>Use RTCP</source>
-        <translation type="vanished">Use RTCP</translation>
     </message>
 </context>
 </TS>
