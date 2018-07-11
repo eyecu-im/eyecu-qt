@@ -1,5 +1,6 @@
 #include <QNetworkInterface>
 #include <QNetworkProxy>
+#include <QpUtil>
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <definitions/optionnodes.h>
@@ -63,7 +64,7 @@ bool JingleTransportRawUdp::initObjects()
 
 bool JingleTransportRawUdp::initSettings()
 {
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_IP, QNetworkInterface::allAddresses().first().toString());
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_IP, QVariant());
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST, 6666);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST, 8888);
     return true;
@@ -207,8 +208,13 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 
 	delete socket;
 
-    if (localAddress.isNull())
-		localAddress = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value().toString();
+	if (localAddress.isNull()) {
+		QVariant addr = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value();
+		if (addr.isNull())
+			localAddress = QpUtil::getHostIp(QAbstractSocket::UnknownNetworkLayerProtocol);
+		else
+			localAddress.setAddress(addr.toString());
+	}
 
 	if (!localAddress.isNull())
 	{

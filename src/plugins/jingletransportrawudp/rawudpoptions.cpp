@@ -10,10 +10,21 @@ RawUdpOptions::RawUdpOptions(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	QList<QHostAddress> addresses = QNetworkInterface::allAddresses();
-	for (QList<QHostAddress>::ConstIterator it = addresses.constBegin(); it!=addresses.constEnd(); ++it)
-		if (!isLoopback(*it))
-			ui->cmbNetworkInterface->addItem((*it).toString());
+	ui->cmbNetworkInterface->addItem(tr("Default"), QVariant());
+	QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+	for (QList<QNetworkInterface>::ConstIterator it=interfaces.constBegin();
+		 it!=interfaces.constEnd(); ++it)
+		if ((*it).flags().testFlag(QNetworkInterface::IsUp) &&
+			!(*it).flags().testFlag(QNetworkInterface::IsLoopBack))
+		{
+			QList<QNetworkAddressEntry> entries = (*it).addressEntries();
+			for (QList<QNetworkAddressEntry>::ConstIterator ita = entries.constBegin();
+				 ita!=entries.constEnd(); ++ita)
+				ui->cmbNetworkInterface->addItem(QString("%1 (%2)")
+													.arg((*ita).ip().toString())
+													.arg((*it).humanReadableName()),
+												 QVariant((*ita).ip().toString()));
+		}
 
 	connect(ui->cmbNetworkInterface, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 	connect(ui->spbPortFrom, SIGNAL(valueChanged(int)), SIGNAL(modified()));
@@ -28,14 +39,15 @@ RawUdpOptions::~RawUdpOptions()
 
 void RawUdpOptions::apply()
 {
-	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).setValue(ui->cmbNetworkInterface->currentText());
+	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).setValue(ui->cmbNetworkInterface->currentData());
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).setValue(ui->spbPortFrom->value());
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).setValue(ui->spbPortTo->value());
 }
 
 void RawUdpOptions::reset()
 {
-	ui->cmbNetworkInterface->setCurrentIndex(ui->cmbNetworkInterface->findText(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value().toString()));
+	QVariant address = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value();
+	ui->cmbNetworkInterface->setCurrentIndex(ui->cmbNetworkInterface->findData(address));
 	ui->spbPortFrom->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt());
 	ui->spbPortTo->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).value().toInt());
 }
