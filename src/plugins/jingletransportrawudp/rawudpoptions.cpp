@@ -1,30 +1,13 @@
+#include <QpUtil>
 #include <definitions/optionvalues.h>
 #include "rawudpoptions.h"
 #include "ui_rawudpoptions.h"
-
-
 
 RawUdpOptions::RawUdpOptions(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::RawUdpOptions)
 {
-	ui->setupUi(this);
-
-	ui->cmbNetworkInterface->addItem(tr("Default"), QVariant());
-	QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
-	for (QList<QNetworkInterface>::ConstIterator it=interfaces.constBegin();
-		 it!=interfaces.constEnd(); ++it)
-		if ((*it).flags().testFlag(QNetworkInterface::IsUp) &&
-			!(*it).flags().testFlag(QNetworkInterface::IsLoopBack))
-		{
-			QList<QNetworkAddressEntry> entries = (*it).addressEntries();
-			for (QList<QNetworkAddressEntry>::ConstIterator ita = entries.constBegin();
-				 ita!=entries.constEnd(); ++ita)
-				ui->cmbNetworkInterface->addItem(QString("%1 (%2)")
-													.arg((*ita).ip().toString())
-													.arg((*it).humanReadableName()),
-												 QVariant((*ita).ip().toString()));
-		}
+	ui->setupUi(this);	
 
 	connect(ui->cmbNetworkInterface, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 	connect(ui->spbPortFrom, SIGNAL(valueChanged(int)), SIGNAL(modified()));
@@ -46,6 +29,31 @@ void RawUdpOptions::apply()
 
 void RawUdpOptions::reset()
 {
+	// Get default host IP
+	QHostAddress localAddress = QpUtil::getHostIp(QAbstractSocket::UnknownNetworkLayerProtocol);
+
+	// Rebuild network interface list
+	ui->cmbNetworkInterface->clear();
+	QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
+	for (QList<QNetworkInterface>::ConstIterator it=interfaces.constBegin();
+		 it!=interfaces.constEnd(); ++it)
+		if ((*it).flags().testFlag(QNetworkInterface::IsUp) &&
+			!(*it).flags().testFlag(QNetworkInterface::IsLoopBack)) {
+			QList<QNetworkAddressEntry> entries = (*it).addressEntries();
+			for (QList<QNetworkAddressEntry>::ConstIterator ita = entries.constBegin();
+				 ita!=entries.constEnd(); ++ita) {
+				if ((*ita).ip() == localAddress)
+					ui->cmbNetworkInterface->insertItem(0, tr("Default (%1 - %2)")
+																.arg(localAddress.toString())
+																.arg((*it).humanReadableName()));
+
+				ui->cmbNetworkInterface->addItem(QString("%1 - %2")
+													.arg((*ita).ip().toString())
+													.arg((*it).humanReadableName()),
+												 QVariant((*ita).ip().toString()));
+			}
+		}
+
 	QVariant address = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value();
 	ui->cmbNetworkInterface->setCurrentIndex(ui->cmbNetworkInterface->findData(address));
 	ui->spbPortFrom->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt());

@@ -17,30 +17,30 @@
     </message>
     <message>
         <source>Raw UDP</source>
-        <translation type="unfinished"></translation>
+        <translation>Сырой UDP</translation>
     </message>
 </context>
 <context>
     <name>RawUdpOptions</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Network interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Сетевой интерефейс</translation>
     </message>
     <message>
         <source>Port range</source>
-        <translation type="unfinished"></translation>
+        <translation>Диапазон портов</translation>
     </message>
     <message>
         <source>from</source>
-        <translation type="unfinished"></translation>
+        <translation>от</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>до</translation>
+    </message>
+    <message>
+        <source>Default (%1 - %2)</source>
+        <translation>По умолчанию (%1 - %2)</translation>
     </message>
 </context>
 </TS>
