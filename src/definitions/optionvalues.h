@@ -169,6 +169,8 @@
 #define OPV_MUC_ALTERNATIONHIGHLIGHT					"muc.alternation-highlight"
 #define OPV_MUC_CONFIRMLEAVE							"muc.confirm-before-leave"
 #define OPV_MUC_LEAVESTATUS								"muc.leave-status-message"
+#define OPV_MUC_SHOWINITIALJOINS                        "muc.show-initial-joins"
+#define OPV_MUC_AFFILIATION_ICONS					    "muc.show-affiliation-icons"
 
 // Avatars
 #define OPV_MUC_AVATARS									"muc.avatars"
