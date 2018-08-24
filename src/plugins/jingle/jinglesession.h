@@ -31,15 +31,25 @@ public:
     const QDomElement &transportOutgoing() const {return FTransportOutgoing;}
     const QDomElement &transportIncoming() const {return FTransportIncoming;}
     const QDomDocument &document() const {return FDocument;}
-    bool        setOutgoingTransport(const QDomElement &ATransport);
-    QIODevice * inputDevice(const QString &AId) const {return FInputDevices.value(AId);}
-    void        setInputDevice(const QString &AId, QIODevice *ADevice);
-    QIODevice * outputDevice(const QString &AId) const {return FOutputDevices.value(AId);}
-    void        setOutputDevice(const QString &AId, QIODevice *ADevice);
+	bool		setOutgoingTransport(const QDomElement &ATransport);
+
+	int	  componentCount() const;
+	QIODevice	*inputDevice(int AComponentId) const {
+		return FInputDevices.value(AComponentId);
+	}
+	bool setInputDevice(int AComponentId, QIODevice *ADevice);
+	QIODevice	*outputDevice(int AComponentId) const {
+		return FOutputDevices.value(AComponentId);
+	}
+	bool        setOutputDevice(int AComponentId, QIODevice *ADevice);
 
 protected:
-	JingleContent(const QString &AName, const QString &ASid, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
-	JingleContent(const QString &AName, const QString &ASid, const QString &AApplicationNameSpace, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
+	JingleContent(const QString &AName, const QString &ASid,
+				  const QDomElement &ADescription,
+				  const QDomElement &ATransport, bool AFromResponder);
+	JingleContent(const QString &AName, const QString &ASid, int AComponentCount,
+				  const QString &AApplicationNameSpace, const QString &AMediaType,
+				  const QString &ATransportNS, bool AFromResponder);
 	virtual ~JingleContent();
     QDomElement     addElementToStanza(JingleStanza &AStanza);
 
@@ -47,12 +57,15 @@ private:
     QString         FName;
     QString         FSid;
     bool            FContentFromResponder;
+	int				FComponentCount;
+
     QDomDocument    FDocument;
     QDomElement     FDescription;
     QDomElement     FTransportOutgoing;
     QDomElement     FTransportIncoming;
-    QHash<QString, QIODevice*> FInputDevices;
-    QHash<QString, QIODevice*> FOutputDevices;
+
+	QMap<int, QIODevice*> FInputDevices;
+	QMap<int, QIODevice*> FOutputDevices;
     QMap<long, QDomElement> FTransportCandidates;
     QMap<long, QDomElement>::ConstIterator FTransportCandidateItreator;
 };
@@ -60,8 +73,8 @@ private:
 class JingleSession: public QObject
 {
     Q_OBJECT
-	friend void JingleContent::setInputDevice(const QString &, QIODevice *);
-	friend void JingleContent::setOutputDevice(const QString &, QIODevice *);
+	friend bool JingleContent::setInputDevice(int, QIODevice *);
+	friend bool JingleContent::setOutputDevice(int, QIODevice *);
 	friend JingleContent::~JingleContent();
 public:
     enum Direction
@@ -115,8 +128,10 @@ public:
     IJingle::SessionStatus status() const {return FStatus;}
     IJingle::Action lastAction() const {return FAction;}
 
-    JingleContent *addContent(const QString &AName, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
-    JingleContent *addContent(const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
+	JingleContent *addContent(const QString &AName, const QDomElement &ADescription,
+							  const QDomElement &ATransport, bool AFromResponder);
+	JingleContent *addContent(const QString &AName, const QString &AMediaType, int FComponentCount,
+							  IJingleTransport *ATransport, bool AFromResponder);
     JingleContent *getContent(const QString &AName) const {return FContents.value(AName);}
 	JingleContent *getContent(QIODevice *AIODevice);
 	bool deleteContent(const QString &AName);

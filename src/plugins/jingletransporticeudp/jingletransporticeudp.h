@@ -19,7 +19,7 @@ class JingleTransportIceUdp : public QObject, public IPlugin, public IJingleTran
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingleTransportIceUdp")
 #endif
 public:
-    explicit JingleTransportIceUdp(QObject *parent = 0);
+	explicit JingleTransportIceUdp(QObject *parent = nullptr);
 
     //IPlugin
     QObject *instance() { return this; }
@@ -31,11 +31,11 @@ public:
     bool startPlugin(){return true;}
 
     //IJingleTransport
-    bool isStreaming() const {return false;}
+	Types types() const {return Datagram;}
     virtual QString ns() const {return NS_JINGLE_TRANSPORTS_ICE_UDP;}
-    virtual int priority() const {return 100;}
+	virtual int priority() const {return 50;}
     bool openConnection(IJingleContent *AContent);
-    bool fillIncomingTransport(IJingleContent *AContent);
+	bool fillIncomingTransport(IJingleContent *AContent);
 	void freeIncomingTransport(IJingleContent *AContent);
 
 protected:

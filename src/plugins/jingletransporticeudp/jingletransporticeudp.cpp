@@ -4,7 +4,7 @@
 #include <QDebug>
 
 JingleTransportIceUdp::JingleTransportIceUdp(QObject *parent) :
-    QObject(parent),FOptionsManager(NULL),FServiceDiscovery(NULL)
+	QObject(parent),FOptionsManager(nullptr),FServiceDiscovery(nullptr)
 {
 }
 
@@ -24,11 +24,11 @@ bool JingleTransportIceUdp::initConnections(IPluginManager *APluginManager, int 
 
     qDebug() << "JingleTransportIceUdp::initConnections()";
 
-    IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
     if (plugin)
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-    plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0, nullptr);
     if (plugin)
         FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
@@ -59,12 +59,13 @@ bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
 
 bool JingleTransportIceUdp::fillIncomingTransport(IJingleContent *AContent)
 {
-    emit incomingTransportFillFailed(AContent);
 	return false;
 }
 
 void JingleTransportIceUdp::freeIncomingTransport(IJingleContent *AContent)
-{}
+{
+	Q_UNUSED(AContent)
+}
 
 /*
 QIODevice *JingleTransportIceUdp::tryCandidate(const QDomElement &ACandidate)

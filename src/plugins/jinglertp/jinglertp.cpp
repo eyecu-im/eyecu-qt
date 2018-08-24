@@ -74,18 +74,18 @@ void JingleCallTimer::timerEvent(QTimerEvent *e)
 const QString JingleRtp::types[]={"Active","Hold","Mute","Ringing"};
 
 JingleRtp::JingleRtp():
-	FJingle(NULL),
-	FServiceDiscovery(NULL),
-	FOptionsManager(NULL),
-	FMessageWidgets(NULL),
-	FMessageStyleManager(NULL),
-	FMessageProcessor(NULL),
-	FNotifications(NULL),
-	FAvatars(NULL),
-	FStatusIcons(NULL),
-	FIconStorage(NULL),
-	FJingleRtpOptions(NULL),
-	FCallTimer(NULL)
+	FJingle(nullptr),
+	FServiceDiscovery(nullptr),
+	FOptionsManager(nullptr),
+	FMessageWidgets(nullptr),
+	FMessageStyleManager(nullptr),
+	FMessageProcessor(nullptr),
+	FNotifications(nullptr),
+	FAvatars(nullptr),
+	FStatusIcons(nullptr),
+	FIconStorage(nullptr),
+	FJingleRtpOptions(nullptr),
+	FCallTimer(nullptr)
 {}
 
 JingleRtp::~JingleRtp()
@@ -127,7 +127,7 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
 	Q_UNUSED(AInitOrder);
 
-	IPlugin *plugin= APluginManager->pluginInterface("IJingle").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IJingle").value(0, nullptr);
 	if (plugin)
 	{
 		FJingle = qobject_cast<IJingle *>(plugin->instance());
@@ -137,31 +137,31 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0, nullptr);
 	if (plugin)
 		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0, nullptr);
 	if (plugin)
 		FMessageStyleManager = qobject_cast<IMessageStyleManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0, nullptr);
 	if (plugin)
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IAvatars").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IAvatars").value(0, nullptr);
 	if (plugin)
 		FAvatars = qobject_cast<IAvatars *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IStatusIcons").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IStatusIcons").value(0, nullptr);
 	if (plugin)
 		FStatusIcons = qobject_cast<IStatusIcons *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("INotifications").value(0,NULL);
+	plugin = APluginManager->pluginInterface("INotifications").value(0, nullptr);
 	if (plugin)
 	{
 		FNotifications = qobject_cast<INotifications *>(plugin->instance());
@@ -172,7 +172,7 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		}
 	}
 
-	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0, nullptr);
 	if (plugin)
 	{
 		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
@@ -217,14 +217,12 @@ bool JingleRtp::initObjects()
 	}
 
 	QPayloadType::initialize();
-	QAVCodec::registerAll();
-	QAVFormat::registerAll();
 	QAVFormat::networkInit();
 
-	for (QAVOutputFormat format = QAVOutputFormat::first(); format; ++format)
-		if (format.name()=="rtp")
+	for (QAVOutputFormat::Iterator it; it; ++it)
+		if ((*it).name()=="rtp")
 		{
-			FRtp = format;
+			FRtp = *it;
 			break;
 		}
 
@@ -368,12 +366,10 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
 		LOG_DEBUG(QString("content: \"%1\"").arg((*it)->name()));
-		QList<QDomElement> candidates = (*it)->candidates();
-		for (QList<QDomElement>::ConstIterator it1 = candidates.constBegin(); it1!=candidates.constEnd(); it1++)
+		int compCnt = (*it)->componentCount();
+		for (int comp = 1; comp<=compCnt; ++comp)
 		{
-			QString id = (*it1).attribute("id");
-
-			QUdpSocket *outputSocket = qobject_cast<QUdpSocket *>((*it)->outputDevice(id));
+			QUdpSocket *outputSocket = qobject_cast<QUdpSocket *>((*it)->outputDevice(comp));
 			if (outputSocket)
 			{
 				LOG_DEBUG(QString("output socket state: %1").arg(outputSocket->state()));
@@ -421,7 +417,6 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 
 void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason)
 {
-	qDebug() << "JingleRtp::onSessionTerminated(" << ASid << "," << APreviousStatus << "," << AReason << "," << ")";
 	CallType type;
 	Jid streamJid = FJingle->streamJid(ASid);
 	switch (AReason)
@@ -493,29 +488,23 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 
 void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 {
-	qDebug() << "JingleRtp::onDataReceived(" << ASid << "," << ADevice << ")";
-
-	qDebug() << "ADevice->openMode()=" << ADevice->openMode();
 	IJingleContent *content = FJingle->content(ASid, ADevice);
 	if (content)
 	{
 		QUdpSocket *socket = qobject_cast<QUdpSocket*>(ADevice);
 		if (socket)
 		{
-			qDebug() << "socket state:" << socket->state();
 			char data[64];
-			quint64 size = socket->readDatagram(data, 64);
+			qint64 size = socket->readDatagram(data, 64);
 			if (size>1)
 			{
 				int payloadTypeId = data[1]&0x7F;
-				qDebug() << "payloadTypeId=" << payloadTypeId;
 
 				QDomElement description(content->description());
 				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
 				for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
 					if ((*it).id==payloadTypeId)
 					{
-						qDebug() << "payload type found:" << *it;
 						QHostAddress address = socket->localAddress();
 						quint16	port = socket->localPort();
 						socket->disconnectFromHost();
@@ -597,11 +586,14 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 			notification.data.insert(NDR_SOUND_FILE, AEventType==Called?SDF_JINGLE_RTP_CALL
 																	  :SDF_SCHANGER_CONNECTION_ERROR);
 
-			notification.data.insert(NDR_ALERT_WIDGET, (qint64)window->instance());
-			notification.data.insert(NDR_TABPAGE_WIDGET, (qint64)window->instance());
+			notification.data.insert(NDR_ALERT_WIDGET,
+									 reinterpret_cast<qint64>(window->instance()));
+			notification.data.insert(NDR_TABPAGE_WIDGET,
+									 reinterpret_cast<qint64>(window->instance()));
 			notification.data.insert(NDR_TABPAGE_PRIORITY, TPNP_JINGLE_RTP);
 			notification.data.insert(NDR_TABPAGE_ICONBLINK, true);
-			notification.data.insert(NDR_SHOWMINIMIZED_WIDGET, (qint64)window->instance());
+			notification.data.insert(NDR_SHOWMINIMIZED_WIDGET,
+									 reinterpret_cast<qint64>(window->instance()));
 
 			updateWindow(window);
 
@@ -702,7 +694,8 @@ void JingleRtp::onTabPageActivated()
 	if (notify)
 	{
 		INotification notification=FNotifications->notificationById(notify);
-		CallType type=(CallType)notification.data.value(NDR_JINGLE_RTP_EVENT_TYPE).toInt();
+		CallType type=static_cast<CallType>(notification.data
+											.value(NDR_JINGLE_RTP_EVENT_TYPE).toInt());
 		if (type!=Called)                   // All the events but incoming Call
 			removeNotification(window);     // should be removed immediately!
 	}
@@ -733,8 +726,8 @@ void JingleRtp::removeNotification(const Jid &AStreamJid, const QString &ASid)
 //TODO: Check, if entity is online
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	return FServiceDiscovery==NULL || !FServiceDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
-			|| FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP);
+	return !FServiceDiscovery || !FServiceDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
+			FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP);
 }
 
 bool JingleRtp::checkContent(IJingleContent *AContent)
@@ -903,7 +896,7 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
 		for (QList<QAction *>::iterator it=actions.begin(); it!=actions.end(); it++)
 		{
 			Action *action=toolBarChanger->handleAction(*it);
-			Command command=(Command)action->data(ADR_COMMAND).toInt();
+			Command command=static_cast<Command>(action->data(ADR_COMMAND).toInt());
 			if (command==VoiceCall) // Voice call
 				action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
 			else if (command==VideoCall) // Video call
@@ -918,8 +911,8 @@ bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
 		bool outgoing = FJingle->isOutgoing(sid);
 		for (QList<QAction *>::iterator it=actions.begin(); it!=actions.end(); it++)
 		{
-			Action *action=toolBarChanger->handleAction(*it);
-			Command command=(Command)action->data(ADR_COMMAND).toInt();
+			Action *action = toolBarChanger->handleAction(*it);
+			Command command = static_cast<Command>(action->data(ADR_COMMAND).toInt());
 			if (command==VoiceCall) // Voice call
 			{
 				if (video)
@@ -1103,7 +1096,7 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType, QUd
 	}
 	else
 		LOG_ERROR(QString("codec name not found: %1").arg(APayloadType.name));
-	return NULL;
+	return nullptr;
 }
 
 MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort)
@@ -1125,7 +1118,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType, const Q
 	else
 		LOG_ERROR(QString("MediaPlayer is not in Closed state: %1").arg(player->status()));
 	delete player;
-	return NULL;
+	return nullptr;
 }
 
 QHash<int,QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes)
@@ -1186,7 +1179,7 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(QDomElement &ADescription, const
 				{
 					if (!tmp.fill())
 					{
-						LOG_ERROR(QString("Failed to fill payloadType: %1").arg((QString)(*it)));
+						LOG_ERROR(QString("Failed to fill payloadType: %1").arg(*it));
 						continue;
 					}
 				}
@@ -1261,7 +1254,7 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const QPayloadType &APa
 
 IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	IMessageChatWindow *window = NULL;
+	IMessageChatWindow *window(nullptr);
 	if (AStreamJid.isValid() && AContactJid.isValid())
 		if (FMessageWidgets)
 		{
@@ -1431,7 +1424,9 @@ void JingleRtp::onCall()
 		if (!sid.isNull())
 		{
 			QSet<int> ids;
-			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", NS_JINGLE_TRANSPORTS_RAW_UDP, false);
+//TODO: Use 2 components for RTP content
+			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", 1,
+														  IJingleTransport::Datagram, false);
 			if (content)
 			{
 				QAudioDeviceInfo inputDevice = selectedAudioDevice(QAudio::AudioInput);
@@ -1569,7 +1564,6 @@ void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 
 void JingleRtp::onContentAdded(IJingleContent *AContent)
 {
-	qDebug() << "JingleRtp::onContentAdded(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->sid(), AddContent))
 		FJingle->sessionAccept(AContent->sid());
@@ -1577,7 +1571,6 @@ void JingleRtp::onContentAdded(IJingleContent *AContent)
 
 void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 {
-	qDebug() << "JingleRtp::onContentAddFailed(" << AContent << ")";
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->sid(), AddContent))
 	{
@@ -1590,7 +1583,6 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 
 void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 {
-	qDebug() << "JingleRtp::onIncomingTransportFilled(" << AContent << ")";
 	removePendingContent(AContent, FillTransport);
 	if (!hasPendingContents(AContent->sid(), FillTransport))
 		FJingle->sessionAccept(AContent->sid());
@@ -1598,7 +1590,6 @@ void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 
 void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	qDebug() << "JingleRtp::onIncomingTransportFillFailed(" << AContent << ")";
 	removePendingContent(AContent, FillTransport);	
 	if (!hasPendingContents(AContent->sid(), FillTransport))
 	{

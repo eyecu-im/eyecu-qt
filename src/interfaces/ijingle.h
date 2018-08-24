@@ -8,8 +8,42 @@
 #define JINGLE_UUID "{c2fdea84-bc30-f2dc-9b11-45bc7df68e23}"
 
 class IJingleApplication;
-class IJingleTransport;
 class IJingleContent;
+
+class IJingleTransport
+{
+public:
+	enum Type {
+		Datagram,
+		Streaming
+	};
+	Q_DECLARE_FLAGS(Types, Type)
+
+	virtual QObject *instance() =0;
+	virtual Types    types() const =0; // Is the transport streaming or datagram
+	virtual QString ns() const =0;          // Transport namespace
+	virtual int     priority() const =0;    // Transport priority
+	//!
+	//! \brief openConnection Try to open connections
+	//! \param AContent Jingle content
+	//! \return success indicator
+	//!
+	virtual bool openConnection(IJingleContent *AContent) =0;
+	//!
+	//! \brief fillIncomingTransport fills incoming transport data in jingle content
+	//! \param AContent jingle content to process
+	//! \return success indicator
+	//!
+	virtual bool fillIncomingTransport(IJingleContent *AContent) =0;
+	virtual void freeIncomingTransport(IJingleContent *AContent) =0;
+
+protected:
+	virtual void connectionOpened(IJingleContent *AContent) =0;
+	virtual void connectionError(IJingleContent *AContent) =0;
+	virtual void incomingTransportFilled(IJingleContent *AContent) =0;
+	virtual void incomingTransportFillFailed(IJingleContent *AContent) =0;
+};
+Q_DECLARE_OPERATORS_FOR_FLAGS(IJingleTransport::Types);
 
 class IJingle
 {
@@ -89,9 +123,14 @@ public:
 	virtual bool    sessionInitiate(const QString &ASid) =0;
 	virtual bool    sessionAccept(const QString &ASid) =0;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
-	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement) =0;
-	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements) =0;
-	virtual IJingleContent *contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder) =0;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
+							   const QDomElement &AJingleElement) =0;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
+							   const QDomNodeList &AJingleElements) =0;
+	virtual IJingleContent *contentAdd(const QString &ASid, const QString &AName,
+									   const QString &AMediaType, int AComponentCount,
+									   IJingleTransport::Type ATransportType,
+									   bool AFromResponder) =0;
 	virtual QHash<QString, IJingleContent *> contents(const QString &ASid) const =0;
 	virtual IJingleContent *content(const QString &ASid, const QString &AName) const =0;
 	virtual IJingleContent *content(const QString &ASid, QIODevice *ADevice) const =0;
@@ -101,8 +140,8 @@ public:
 	virtual void    freeIncomingTransport(IJingleContent *AContent) =0;
 	virtual Jid     contactJid(const QString &ASid) const =0;
 	virtual Jid     streamJid(const QString &ASid) const =0;
-	virtual bool    selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId) =0;
-
+	virtual bool    selectTransportCandidate(const QString &ASid, const QString &AContentName,
+											 const QString &ACandidateId) =0;
 	virtual SessionStatus sessionStatus(const QString &ASid) const =0;
 	virtual bool isOutgoing(const QString &ASid) const =0;
 	virtual QString errorMessage(Reason AReason) const =0;
@@ -132,34 +171,6 @@ public:
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;
 };
 
-class IJingleTransport
-{
-public:
-	virtual QObject *instance() =0;
-	virtual bool    isStreaming() const =0; // Is the transport streaming or datagram
-	virtual QString ns() const =0;          // Transport namespace
-	virtual int     priority() const =0;        // Transport priority
-	//!
-	//! \brief openConnection Try to open connections
-	//! \param AContent Jingle content
-	//! \return success indicator
-	//!
-	virtual bool openConnection(IJingleContent *AContent) =0;
-	//!
-	//! \brief fillIncomingTransport fills incoming transport data in jingle content
-	//! \param AContent jingle content to process
-	//! \return success indicator
-	//!
-	virtual bool fillIncomingTransport(IJingleContent *AContent) =0;
-	virtual void freeIncomingTransport(IJingleContent *AContent) =0;
-
-protected:
-	virtual void connectionOpened(IJingleContent *AContent) =0;
-	virtual void connectionError(IJingleContent *AContent) =0;
-	virtual void incomingTransportFilled(IJingleContent *AContent) =0;
-	virtual void incomingTransportFillFailed(IJingleContent *AContent) =0;
-};
-
 class IJingleContent
 {
 public:
@@ -179,10 +190,11 @@ public:
 	virtual const   QDomElement &transportOutgoing() const =0;
 	virtual const   QDomElement &transportIncoming() const =0;
 	virtual const   QDomDocument &document() const =0;
-	virtual         QIODevice   *inputDevice(const QString &AId) const =0;
-	virtual         void        setInputDevice(const QString &AId, QIODevice *ADevice) =0;
-	virtual         QIODevice   *outputDevice(const QString &AId) const =0;
-	virtual         void        setOutputDevice(const QString &AId, QIODevice *ADevice) =0;
+	virtual			int			componentCount() const =0;
+	virtual         QIODevice   *inputDevice(int AComponentId) const =0;
+	virtual         bool        setInputDevice(int AComponentId, QIODevice *ADevice) =0;
+	virtual         QIODevice   *outputDevice(int AComponentId) const =0;
+	virtual         bool        setOutputDevice(int AComponentId, QIODevice *ADevice) =0;
 };
 
 Q_DECLARE_INTERFACE(IJingle, "RWS.Plugin.IJingle/1.0")

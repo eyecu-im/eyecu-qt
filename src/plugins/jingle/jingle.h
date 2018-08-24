@@ -19,7 +19,7 @@ class Jingle: public QObject,
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingle")
 #endif
 public:
-    Jingle(QObject *parent = 0);
+	Jingle(QObject *parent = nullptr);
 	~Jingle();
     bool sendStanzaOut(Stanza &AStanza);
 
@@ -36,19 +36,27 @@ public:
     bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 
     //IJingle
-    IJingleApplication *appByNS(const QString &AApplicationNS) {return FApplications.value(AApplicationNS);}
-    QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS);
+	IJingleApplication *appByNS(const QString &AApplicationNS) {
+		return FApplications.value(AApplicationNS);
+	}
+	QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
+						  const QString &AApplicationNS);
     bool    sessionInitiate(const QString &ASid);
     bool    sessionAccept(const QString &ASid);
     bool    sessionTerminate(const QString &ASid, Reason AReason);
-	bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement);
-    bool    sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements);  
-
-    IJingleContent *contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
+	bool    sendAction(const QString &ASid, IJingle::Action AAction,
+					   const QDomElement &AJingleElement);
+	bool    sendAction(const QString &ASid, IJingle::Action AAction,
+					   const QDomNodeList &AJingleElements);
+	IJingleContent *contentAdd(const QString &ASid, const QString &AName,
+							   const QString &AMediaType, int AComponentCount,
+							   IJingleTransport::Type ATransportType,
+							   bool AFromResponder);
     QHash<QString, IJingleContent *> contents(const QString &ASid) const;
     IJingleContent *content(const QString &ASid, const QString &AName) const;
 	IJingleContent *content(const QString &ASid, QIODevice *ADevice) const;
-	bool    selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId);
+	bool    selectTransportCandidate(const QString &ASid, const QString &AContentName,
+									 const QString &ACandidateId);
 	bool    connectContent(const QString &ASid, const QString &AName);
     bool    setConnected(const QString &ASid);
     bool    fillIncomingTransport(IJingleContent *AContent);
@@ -66,6 +74,7 @@ protected:
     bool processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
 	bool processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
 	bool processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept);
+	IJingleTransport *transportByNs(const QString &ANameSpace);
 
 protected slots:
 	void onConnectionOpened(IJingleContent *AContent);
@@ -85,10 +94,10 @@ private:
     IStanzaProcessor    *FStanzaProcessor;
     IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager		*FOptionsManager;
-    QMap<QString, IJingleApplication*>  FApplications;
-    QMap<QString, IJingleTransport*>    FTransports;
-    QHash<QIODevice *, IJingleContent *> FCandidateTries;
-    QList<IJingleContent *> FPendingContents;
+	QMap<QString, IJingleApplication*>	FApplications;
+	QMap<int, IJingleTransport*>	FTransports;
+	QHash<QIODevice *, IJingleContent *>	FCandidateTries;
+	QList<IJingleContent *>	FPendingContents;
     int FSHIRequest;
     int FSHIResult;
     int FSHIError;

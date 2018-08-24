@@ -15,7 +15,7 @@ class RawUdpOptions:
 	Q_OBJECT
 	Q_INTERFACES(IOptionsDialogWidget)
 public:
-	explicit RawUdpOptions(QWidget *parent = 0);
+	explicit RawUdpOptions(QWidget *parent = nullptr);
 	~RawUdpOptions();
 
 	// IOptionsDialogWidget

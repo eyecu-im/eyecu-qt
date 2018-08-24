@@ -20,11 +20,10 @@ CodecOptions::CodecOptions(QWidget *parent):
 	ui->pbUnuse->setIcon(QApplication::style()->standardIcon(QStyle::SP_ArrowLeft));
 
 	// Build list of supported payload types
-	QAVOutputFormat rtp(NULL);
-	for (QAVOutputFormat format = QAVOutputFormat::first(); format; ++format)
-		if (format.name()=="rtp")
+	for (QAVOutputFormat::Iterator it; it; ++it)
+		if ((*it).name()=="rtp")
 		{
-			FRtp = format;
+			FRtp = *it;
 			break;
 		}
 
@@ -95,38 +94,19 @@ void CodecOptions::apply()
 
 	Options::node(OPV_JINGLE_RTP_CODECS_USED).setValue(JingleRtp::stringFromInts(usedCodecIds));
 
-//	QList<PayloadType> dynamicPayloadTypes, usedPayloadTypes;
-//	for (int i=0; i<ui->rptAvailable->rowCount(); ++i)
-//	{
-//		PayloadType payloadType = ui->rptAvailable->getAvp(i);
-//		if (payloadType.id<0)	// Dynamic
-//			dynamicPayloadTypes.append(payloadType);
-//	}
-
-//	for (int i=0; i<ui->rptUsed->rowCount(); ++i)
-//	{
-//		PayloadType payloadType = ui->rptUsed->getAvp(i);
-//		if (payloadType.id<0)	// Dynamic
-//			dynamicPayloadTypes.append(payloadType);
-//		usedPayloadTypes.append(payloadType);
-//	}
-
-//	Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).setValue(JingleRtp::stringsFromAvps(dynamicPayloadTypes));
-//	Options::node(OPV_JINGLE_RTP_PT_USED).setValue(JingleRtp::stringsFromAvps(usedPayloadTypes));
-
     emit childApply();
 }
 
 void CodecOptions::reset()
 {
-	qDebug() << "CodecOptions::reset()";
 	if (FRtp)
 	{
 		ui->lwAvailable->clear();
 		ui->lwUsed->clear();
 		const QStringList codecNames = QPayloadType::names(true);
 		QList<int> usedCodecIds = JingleRtp::intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
-		QSet<int> codecIds;		
+		QSet<int> codecIds;
+
 		for (QStringList::ConstIterator it = codecNames.constBegin(); it != codecNames.constEnd(); ++it)
 		{
 			int id = QPayloadType::idByName(*it);
@@ -149,18 +129,19 @@ void CodecOptions::reset()
 		ui->lwAvailable->sortItems();
 
 		for (QList<int>::ConstIterator it = usedCodecIds.constBegin(); it!=usedCodecIds.constEnd(); ++it)
+		{
 			if (FRtp.queryCodec(*it))
 			{
 				QAVCodec decoder(QAVCodec::findDecoder(*it));
 				QAVCodec encoder(QAVCodec::findEncoder(*it));
 				if (decoder && encoder && decoder.type()==QAVCodec::MT_Audio)	// Video is not available yet
 				{
-
 					QListWidgetItem *item = new QListWidgetItem(decoder.longName());
 					item->setData(Qt::UserRole, *it);
 					ui->lwUsed->addItem(item);
 				}
 			}
+		}
 	}
 
 	if (ui->lwAvailable->currentRow()<0)

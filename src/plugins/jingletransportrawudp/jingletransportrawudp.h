@@ -36,7 +36,7 @@ public:
 	bool startPlugin(){return true;}
 
 	//IJingleTransport
-	bool    isStreaming() const {return false;}
+	Types	types() const {return Datagram;}
 	QString ns() const {return NS_JINGLE_TRANSPORTS_RAW_UDP;}
 	int     priority() const {return 90;}
 	bool    openConnection(IJingleContent *AContent);

@@ -18,9 +18,9 @@
 
 Jingle::Jingle(QObject *parent):
 	QObject(parent),
-	FStanzaProcessor(NULL),
-	FServiceDiscovery(NULL),
-	FOptionsManager(NULL)
+	FStanzaProcessor(nullptr),
+	FServiceDiscovery(nullptr),
+	FOptionsManager(nullptr)
 {
 	JingleSession::setJingle(this);
 }
@@ -48,15 +48,15 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {	
 	Q_UNUSED(AInitOrder)
 
-	IPlugin *plugin= APluginManager->pluginInterface("IStanzaProcessor").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IStanzaProcessor").value(0,nullptr);
 	if (plugin)
 		FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,nullptr);
 	if (plugin)
 		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
@@ -65,7 +65,7 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugins.isEmpty())
 		return false;
 
-	for (QList<IPlugin *>::iterator it=plugins.begin(); it!=plugins.end(); it++)
+	for (QList<IPlugin *>::Iterator it=plugins.begin(); it!=plugins.end(); it++)
 	{
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
@@ -77,10 +77,10 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugins.isEmpty())
 		return false;
 
-	for (QList<IPlugin *>::iterator it=plugins.begin(); it!=plugins.end(); it++)
+	for (QList<IPlugin *>::Iterator it=plugins.begin(); it!=plugins.end(); it++)
 	{
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
-		FTransports.insert(transort->ns(), transort);
+		FTransports.insertMulti(transort->priority(), transort);
 		connect((*it)->instance(),SIGNAL(connectionOpened(IJingleContent*)),
 								  SLOT(onConnectionOpened(IJingleContent*)),Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
@@ -191,7 +191,7 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(AContent->name()));
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg((int)AContent, 8, 16));
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
@@ -226,11 +226,12 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 	AAccept=true;
 
-	IJingleApplication *app=NULL;
+	IJingleApplication *app(nullptr);
 	QString appns;
 	QHash<QString, JingleContent *> contents=session->contents();
 	bool wrong(false);
-	for (QHash<QString, JingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
+	for (QHash<QString, JingleContent *>::ConstIterator it=contents.constBegin();
+		 it!=contents.constEnd(); it++)
 	{
 		bool supported(false);
 
@@ -265,11 +266,13 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 		if (supported)  // Ok, let's check, if transport is supported
 		{
 			supported = false;
-			if (FTransports.contains((*it)->transportNS()))
-			{
-				supported = true;
-				break;
-			}
+			for (QMap<int, IJingleTransport*>::ConstIterator itt=FTransports.constBegin();
+				 itt != FTransports.constEnd(); ++itt)
+				if ((*itt)->ns() == (*it)->transportNS())
+				{
+					supported = true;
+					break;
+				}
 		}
 		if (!supported)
 			session->deleteContent(it.key());
@@ -386,6 +389,15 @@ bool Jingle::processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStan
 	return result;
 }
 
+IJingleTransport *Jingle::transportByNs(const QString &ANameSpace)
+{
+	for (QMap<int, IJingleTransport*>::ConstIterator it=FTransports.constBegin();
+		 it != FTransports.constEnd(); ++it)
+		if ((*it)->ns() == ANameSpace)
+			return *it;
+	return nullptr;
+}
+
 bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
 //	qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
@@ -454,37 +466,53 @@ bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 	return session?session->terminate(AReason):false;
 }
 
-bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement)
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction,
+						const QDomElement &AJingleElement)
 {
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElement):false;
 }
 
-bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements)
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction,
+						const QDomNodeList &AJingleElements)
 {
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElements):false;
 }
 
 // Sessions
-IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder)
+IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
+								   const QString &AMediaType, int AComponentCount,
+								   IJingleTransport::Type ATransportType,
+								   bool AFromResponder)
 {
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
-		IJingleContent *content=session->addContent(AName, AMediaType, ATransportNameSpace, AFromResponder);
-		if (content)
-		{
-			if (FTransports[ATransportNameSpace]->fillIncomingTransport(content))
+		for (QMap<int, IJingleTransport*>::ConstIterator it=FTransports.constBegin();
+			 it != FTransports.constEnd(); ++it)
+			if ((*it)->types().testFlag(ATransportType) &&
+				FServiceDiscovery->discoInfo(session->thisParty(),
+											 session->otherParty()).features.contains((*it)->ns()))
 			{
-				FPendingContents.append(content);
-				return content;
+				qDebug() << "Transport" << (*it)->ns() << "is supported! Creating content...";
+				IJingleContent *content = session->addContent(AName, AMediaType,
+															  AComponentCount, *it,
+															  AFromResponder);
+				if (content)
+				{
+					qDebug() << "Content created successfuly!";
+					FPendingContents.append(content);
+					return content;
+				}
+				else
+					qDebug() << "Content creation failed!";
 			}
-			else
-				session->deleteContent(AName);
-		}
+
+		// An appropriate transport not found
+		session->deleteContent(AName);
 	}
-	return NULL;
+	return nullptr;
 }
 
 IJingle::SessionStatus Jingle::sessionStatus(const QString &ASid) const
@@ -567,13 +595,13 @@ QHash<QString, IJingleContent *> Jingle::contents(const QString &ASid) const
 IJingleContent *Jingle::content(const QString &ASid, const QString &AName) const
 {
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
-	return session?session->getContent(AName):NULL;
+	return session?session->getContent(AName):nullptr;
 }
 
 IJingleContent *Jingle::content(const QString &ASid, QIODevice *ADevice) const
 {
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
-	return session?session->getContent(ADevice):NULL;
+	return session?session->getContent(ADevice):nullptr;
 }
 
 bool Jingle::selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId)
@@ -593,8 +621,11 @@ bool Jingle::connectContent(const QString &ASid, const QString &AName)
 		IJingleContent *content =  session->getContent(AName);
 		if (content)
 		{
-			qDebug() << "content=" << content;
-			return FTransports[content->transportNS()]->openConnection(content);
+			IJingleTransport *transport(transportByNs(content->transportNS()));
+			if (transport)
+				return transport->openConnection(content);
+			else
+				LOG_ERROR("Invalid transport!");
 		}
 		else
 			LOG_ERROR("No content!");
@@ -620,12 +651,23 @@ bool Jingle::setConnected(const QString &ASid)
 
 bool Jingle::fillIncomingTransport(IJingleContent *AContent)
 {
-	return FTransports[AContent->transportNS()]->fillIncomingTransport(AContent);
+	IJingleTransport *transport(transportByNs(AContent->transportNS()));
+	if (transport)
+		return transport->fillIncomingTransport(AContent);
+	else
+	{
+		LOG_ERROR("Invalid transport");
+		return false;
+	}
 }
 
 void Jingle::freeIncomingTransport(IJingleContent *AContent)
 {
-	return FTransports[AContent->transportNS()]->freeIncomingTransport(AContent);
+	IJingleTransport *transport(transportByNs(AContent->transportNS()));
+	if (transport)
+		transport->freeIncomingTransport(AContent);
+	else
+		LOG_ERROR("Invalid transport");
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_Jingle,Jingle)
