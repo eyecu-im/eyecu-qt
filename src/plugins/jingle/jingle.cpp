@@ -69,8 +69,16 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
-		connect(this,SIGNAL(startSendData(IJingleContent *)),(*it)->instance(), SLOT(onConnectionEstablished(IJingleContent *)),Qt::QueuedConnection);
-		connect(this,SIGNAL(connectionFailed(IJingleContent *)),(*it)->instance(), SLOT(onConnectionFailed(IJingleContent *)),Qt::QueuedConnection);
+		qDebug() << "connecting" << this << "SIGNAL(startSendData(IJingleContent*) to"
+				 << (*it)->instance() << "SLOT(onConnectionEstablished(IJingleContent *))";
+
+		if (connect(this,SIGNAL(startSendData(IJingleContent*)),(*it)->instance(),
+				SLOT(onConnectionEstablished(IJingleContent*)), Qt::QueuedConnection))
+			qDebug() << "CONNECTED successfuly!";
+		else
+			qWarning() << "CONNECT failed!";
+		connect(this,SIGNAL(connectionFailed(IJingleContent*)),(*it)->instance(),
+				SLOT(onConnectionFailed(IJingleContent*)), Qt::QueuedConnection);
 	}
 
 	plugins = APluginManager->pluginInterface("IJingleTransport");
@@ -153,7 +161,9 @@ void Jingle::registerDiscoFeatures()
 
 void Jingle::onConnectionOpened(IJingleContent *AContent)
 {
+	qDebug() << "Jingle::onConnectionOpened(" << AContent->name() << "); this=" << this;
 	emit startSendData(AContent);
+	qDebug() << "signal startSendData(" << AContent->name() << ") emitted!";
 }
 
 void Jingle::onConnectionFailed(IJingleContent *AContent)
@@ -486,6 +496,7 @@ IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
 								   IJingleTransport::Type ATransportType,
 								   bool AFromResponder)
 {
+	qDebug() << "Jingle::contentAdd(" << ASid << "," << AName << "," << AMediaType << "," << AComponentCount << ", ...)";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
@@ -637,7 +648,8 @@ bool Jingle::connectContent(const QString &ASid, const QString &AName)
 
 bool Jingle::setConnected(const QString &ASid)
 {
-	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
+//	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
+	qDebug() << "Jingle::setConnected(" << ASid << ")";
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{

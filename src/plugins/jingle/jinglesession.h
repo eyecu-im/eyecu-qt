@@ -34,6 +34,7 @@ public:
 	bool		setOutgoingTransport(const QDomElement &ATransport);
 
 	int	  componentCount() const;
+	virtual int			component(QIODevice *ADevice) const;
 	QIODevice	*inputDevice(int AComponentId) const {
 		return FInputDevices.value(AComponentId);
 	}
@@ -130,8 +131,9 @@ public:
 
 	JingleContent *addContent(const QString &AName, const QDomElement &ADescription,
 							  const QDomElement &ATransport, bool AFromResponder);
-	JingleContent *addContent(const QString &AName, const QString &AMediaType, int FComponentCount,
-							  IJingleTransport *ATransport, bool AFromResponder);
+	JingleContent *addContent(const QString &AName, const QString &AMediaType,
+							  int AComponentCount, IJingleTransport *ATransport,
+							  bool AFromResponder);
     JingleContent *getContent(const QString &AName) const {return FContents.value(AName);}
 	JingleContent *getContent(QIODevice *AIODevice);
 	bool deleteContent(const QString &AName);

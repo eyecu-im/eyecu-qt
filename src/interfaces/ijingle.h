@@ -191,6 +191,7 @@ public:
 	virtual const   QDomElement &transportIncoming() const =0;
 	virtual const   QDomDocument &document() const =0;
 	virtual			int			componentCount() const =0;
+	virtual			int			component(QIODevice *) const =0;
 	virtual         QIODevice   *inputDevice(int AComponentId) const =0;
 	virtual         bool        setInputDevice(int AComponentId, QIODevice *ADevice) =0;
 	virtual         QIODevice   *outputDevice(int AComponentId) const =0;

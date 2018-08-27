@@ -238,7 +238,7 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 	Q_UNUSED(AstatusOld)
 	LOG_DEBUG(QString("MmPlayer::onMediaStreamStatusChanged(%1, %2").arg(AStatusNew).arg(AstatusOld));
 
-	MediaPlayer *streamer = qobject_cast<MediaPlayer *>(sender());
+	MediaPlayer *player = qobject_cast<MediaPlayer *>(sender());
 	switch (AStatusNew)
     {
 		case MediaPlayer::Running:
@@ -247,7 +247,7 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 			IFileStream *fileStream = FBuffers.key(FStreamerBuffers[sender()]);
 			if (fileStream)
 			{
-				PlayerWindow *window = new PlayerWindow(this, streamer, QFileInfo(fileStream->fileName()).fileName(), fileStream->fileSize());
+				PlayerWindow *window = new PlayerWindow(this, player, QFileInfo(fileStream->fileName()).fileName(), fileStream->fileSize());
 				if (FOptionsManager)
 					connect(window, SIGNAL(showOptions()), SLOT(onShowOptions()));
 			}

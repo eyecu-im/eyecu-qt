@@ -79,7 +79,8 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 
 	QSet<int> comps;
     QDomElement incomingTransport = AContent->transportIncoming();
-    for (QDomElement candidate = incomingTransport.firstChildElement("candidate"); !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
+	for (QDomElement candidate = incomingTransport.firstChildElement("candidate");
+		 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
         if (candidate.hasAttribute("id") &&
             candidate.hasAttribute("ip") &&
             candidate.hasAttribute("port"))
@@ -87,6 +88,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             candidates++;
 //			QString id = candidate.attribute("id");
 			int comp = candidate.attribute("component").toInt();
+			qDebug() << "comp=" << comp;
 			if (comp < 1 || comp > compCnt)
 			{
 				LOG_WARNING("Invalid component!");
@@ -105,9 +107,14 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 			QUdpSocket *socket = qobject_cast<QUdpSocket *>(AContent->inputDevice(comp));
             if (!socket)
 			{
+				qDebug() << "NO input socket for comp" << comp << "found! Creating a new one...";
 				AContent->setInputDevice(comp, socket = new QUdpSocket(this));
 				socket->setProxy(QNetworkProxy::NoProxy);
 			}
+			else
+				qDebug() << "Found input socket for comp" << comp << ":" << socket;
+			qDebug() << "socket->state():" << socket->state();
+
             if (socket->state() != QUdpSocket::UnconnectedState &&
                (socket->state() != QUdpSocket::BoundState ||
                 socket->localAddress() != address ||
@@ -213,6 +220,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 		return false;
 	}
 
+	qDebug() << "emitting connectionOpened(" << AContent->name() << ")";
 	emit connectionOpened(AContent);
 	qDebug() << "JingleTransportRawUdp::openConnection(): return true";
     return true;
@@ -220,15 +228,18 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 
 bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 {
+	qDebug() << "JingleTransportRawUdp::fillIncomingTransport()";
+
     QUdpSocket *socket = new QUdpSocket(this);
 	socket->setProxy(QNetworkProxy::NoProxy);
     QHostAddress localAddress;
 
     QDomElement outgoingTransport = AContent->transportOutgoing();
+	qDebug() << "outgoingTransport child nodes:" << outgoingTransport.childNodes().size();
     for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
-         !candidate.isNull();
-         candidate = candidate.nextSiblingElement("candidate"))
+		 !candidate.isNull(); candidate = candidate.nextSiblingElement("candidate"))
     {
+		qDebug() << "candidate found!";
 		if (candidate.hasAttribute("ip") && candidate.hasAttribute("port") &&
 			candidate.hasAttribute("component") && candidate.hasAttribute("generation") &&
 			candidate.hasAttribute("id"))
@@ -246,6 +257,8 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
             qWarning() << "Candidate is broken!";
         break;
     }
+
+	qDebug() << "outgoingTransport child node iterations finished!";
 
 	delete socket;
 
@@ -289,12 +302,15 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 				}
 			}
 			else
+			{
 				qWarning() << "Failed to get a local socket!";
-
-			qDebug() << "emitting incomingTransportFilled(" << AContent << ")";
-			emit incomingTransportFilled(AContent);
-			return true;
+				return false;
+			}
 		}
+
+		qDebug() << "emitting incomingTransportFilled(" << AContent << ")";
+		emit incomingTransportFilled(AContent);
+		return true;
 	}
 	else
 		qWarning() << "Failed to determine local address!";

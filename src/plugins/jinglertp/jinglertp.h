@@ -149,8 +149,8 @@ protected:
 	void    connectionEstablished(const QString &ASid);
 	void    connectionTerminated(const QString &ASid);
 
-	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket);
-	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort);
+	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket, QUdpSocket *AInputRtcpSocket);
+	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort, quint16 ARtcpPort);
 
 	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes=NULL);
 	static bool fillDescriptionWithPayloadTypes(QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes);
@@ -168,8 +168,8 @@ protected slots:
 	void onHangup();
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
-	void onSenderStatusChanged(int AStatus);
-	void onStreamerStatusChanged(int AStatusNew, int AStatusOld);
+	void onStreamerStatusChanged(int AStatus);
+	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
 
 protected slots:
 	void onContentAdded(IJingleContent *AContent);
