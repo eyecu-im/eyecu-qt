@@ -530,19 +530,14 @@ void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 					{
 						QHostAddress address = socket->localAddress();
 						quint16	port = socket->localPort();
-						socket->disconnectFromHost();
-						qDebug() << "media player local address:" << address;
-						qDebug() << "media player local port:" << port;
+						socket->close();
 
 						QUdpSocket *targetSocket = qobject_cast<QUdpSocket *>(content->outputDevice(2));
-						qDebug() << "media player target socket:" << targetSocket;
 						quint16 rtcpPort = 0;
 						if (targetSocket)
 						{
 							rtcpPort = targetSocket->peerPort();
-							qDebug() << "media player target rtcp port:" << rtcpPort;
-							qDebug() << "media player target rtcp host:" << targetSocket->peerPort();
-							targetSocket->close();
+							targetSocket->disconnectFromHost();
 						}
 
 						MediaPlayer *player = startPlayMedia(*it, address, port, rtcpPort);
@@ -1105,23 +1100,17 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 										AOutputSocket->peerPort());
 			QString targetHost = peerAddress.toString(QPSocketAddress::WITH_BRACKETS|
 													  QPSocketAddress::WITH_SCOPE_ID);
-
-			qDebug() << "targetHost:" << targetHost;
-			qDebug() << "targetPort:" << peerAddress.port();
-
-			AOutputSocket->close();
+			AOutputSocket->disconnectFromHost();
 
 			int rtcpPort = AInputRtcpSocket->localPort();
-			qDebug() << "Local RTCP port:" << rtcpPort;
-
-			AInputRtcpSocket->disconnectFromHost();
+			AInputRtcpSocket->close();
 
 			QVariantHash options;
 			options.insert("payload_type", APayloadType.id);
 			MediaStreamer *streamer =
 					new MediaStreamer(selectedAudioDevice(QAudio::AudioInput),
 									  encoder, targetHost, peerAddress.port(),
-									  rtcpPort, APayloadType.clockrate,
+									  APayloadType.clockrate,
 									  Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE)
 										.value().toInt(),
 									  options, this);
@@ -1157,8 +1146,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 									   quint16 APort, quint16 ARtcpPort)
 {
 	MediaPlayer *player = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput),
-										  AHostAddress, APort, ARtcpPort, APayloadType,
-										  this);
+										  AHostAddress, APort, APayloadType, this);
 	if (player->status() == MediaPlayer::Closed)
 		if (connect(player, SIGNAL(statusChanged(int,int)), SLOT(onPlayerStatusChanged(int,int))))
 		{
@@ -1503,10 +1491,8 @@ void JingleRtp::onCall()
 					for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
 					{
 						MediaStreamer *streamer =
-								new MediaStreamer(inputDevice, encoder,
-												  "127.0.0.1", 6666,
-												  0, *itr, bitrate,
-												  QVariantHash(), this);
+								new MediaStreamer(inputDevice, encoder, "127.0.0.1", 6666,
+												  *itr, bitrate, QVariantHash(), this);
 
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
