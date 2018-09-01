@@ -28,7 +28,7 @@ class JingleCallTimer: public QTimer
 {
 	Q_OBJECT
 public:
-	JingleCallTimer(QString ASoundFileName, QObject *parent=0);
+	JingleCallTimer(QString ASoundFileName, QObject *parent=nullptr);
 	~JingleCallTimer();
 
 protected:
@@ -130,6 +130,7 @@ protected:
 	void    removeNotification(const Jid &AStreamJid, const QString &ASid);
 	void    putSid(const Jid &AContactJid, const QString &ASid);
 	void    callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
+	void	checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice);
 
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
@@ -137,7 +138,8 @@ protected:
 	void	callNotify(const QString &ASid, CallType AEventType);
 	void    updateWindow(IMessageChatWindow *AWindow);
 	QString chatNotification(const QString &AIcon, const QString &AMessage);
-	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
+	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType,
+									 IJingle::Reason AReason = IJingle::NoReason);
 	bool    updateWindowActions(IMessageChatWindow *AWindow);
 	void    updateChatWindowActions(IMessageChatWindow *AChatWindow);
 
@@ -149,11 +151,13 @@ protected:
 	void    connectionEstablished(const QString &ASid);
 	void    connectionTerminated(const QString &ASid);
 
-	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QUdpSocket *AOutputSocket, QUdpSocket *AInputRtcpSocket);
-	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, const QHostAddress &AHostAddress, quint16 APort, quint16 ARtcpPort);
+	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QIODevice *ARtpDevice);
+	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, QIODevice *ARtpIODevice);
 
-	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes=NULL);
-	static bool fillDescriptionWithPayloadTypes(QDomElement &ADescription, const QList<QPayloadType> &APayloadTypes);
+	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription,
+																QList<QPayloadType> *APayloadTypes=nullptr);
+	static bool fillDescriptionWithPayloadTypes(QDomElement &ADescription,
+												const QList<QPayloadType> &APayloadTypes);
 	static void clearDescription(QDomElement &ADescription);
 
 	static QAudioDeviceInfo selectedAudioDevice(QAudio::Mode AMode);
@@ -164,12 +168,14 @@ protected slots:
 	void onNotificationActivated(int ANotifyId);
 	void onNotificationRemoved(int ANotifyId);
 	void onTabPageActivated();
-	void onCall();
-	void onHangup();
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onStreamerStatusChanged(int AStatus);
 	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
+	void onCall();
+	void onHangup();
+
+	void onRtpReadyRead();
 
 protected slots:
 	void onContentAdded(IJingleContent *AContent);
@@ -198,6 +204,7 @@ private:
 	QAVOutputFormat		FRtp;
 	QMultiHash<int, IJingleContent *> FPendingContents;
 
+	QHash<QIODevice *, IJingleContent *> FContents;
 	QHash<IJingleContent *, MediaStreamer *> FStreamers;
 	QHash<IJingleContent *, MediaPlayer *> FPlayers;
 

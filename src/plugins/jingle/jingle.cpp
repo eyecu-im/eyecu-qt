@@ -176,27 +176,27 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 	qDebug() << "Jingle::onIncomingTransportFilled(" << AContent << ")";
 	QDomElement incoming = AContent->transportIncoming();
 	if (incoming.isNull())
-		LOG_WARNING("incoming is NULL!");
+		qDebug() << "incoming is NULL!";
 	else
 	{
 		QDomElement candidate = incoming.firstChildElement("candidate");
 		if (candidate.isNull())
-			LOG_WARNING("candidate is NULL!");
+			qDebug() << "candidate is NULL!";
 		else
-			LOG_DEBUG(QString("ip=%1; port=%2").arg(candidate.attribute("ip")).arg(candidate.attribute("port")));
+			qDebug() << "ip=" << candidate.attribute("ip") << "; port=" << candidate.attribute("port");
 	}
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
-		LOG_DEBUG(QString("emitting contentAdded(\"%1\")").arg(AContent->name()));
+		qDebug() << "emitting contentAdded(\"" << AContent->name() << "\")";
 		emit contentAdded(AContent);
 	}
 	else
 	{
-		LOG_DEBUG(QString("incomingTransportFilled(\"%1\")").arg(AContent->name()));
+		qDebug() << "emitting incomingTransportFilled(\"" << AContent->name() << "\")";
 		emit incomingTransportFilled(AContent);
 	}
-	LOG_DEBUG("Jingle::onIncomingTransportFilled(): Finished!");
+	qDebug() << "Jingle::onIncomingTransportFilled(): Finished!";
 }
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
@@ -320,6 +320,7 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 			JingleContent *content = session->getContent(contentElement.attribute("name"));
 			if (content)
 			{
+				qDebug() << "content doc=" << content->document().toString();
 				QDomElement transport = contentElement.firstChildElement("transport");
 				if (transport.isNull())
 					LOG_ERROR("Outgoing transport is NULL!");
@@ -466,6 +467,7 @@ bool Jingle::sessionInitiate(const QString &ASid)
 
 bool Jingle::sessionAccept(const QString &ASid)
 {
+	qDebug() << "Jingle::sessionAccept(" << ASid << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->accept():false;
 }

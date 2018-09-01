@@ -192,10 +192,10 @@ public:
 	virtual const   QDomDocument &document() const =0;
 	virtual			int			componentCount() const =0;
 	virtual			int			component(QIODevice *) const =0;
-	virtual         QIODevice   *inputDevice(int AComponentId) const =0;
-	virtual         bool        setInputDevice(int AComponentId, QIODevice *ADevice) =0;
-	virtual         QIODevice   *outputDevice(int AComponentId) const =0;
-	virtual         bool        setOutputDevice(int AComponentId, QIODevice *ADevice) =0;
+	virtual         QIODevice   *ioDevice(int AComponentId) const =0;
+	virtual         bool        setIoDevice(int AComponentId, QIODevice *ADevice) =0;
+//	virtual         QIODevice   *outputDevice(int AComponentId) const =0;
+//	virtual         bool        setOutputDevice(int AComponentId, QIODevice *ADevice) =0;
 };
 
 Q_DECLARE_INTERFACE(IJingle, "RWS.Plugin.IJingle/1.0")

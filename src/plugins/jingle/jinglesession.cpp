@@ -21,13 +21,20 @@ JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty, cons
     if (FThisParty.isValid() && FOtherParty.isValid())
     {
         FValid=true;
-		connect(this,SIGNAL(sessionInitiated(QString)),parent(),SLOT(onSessionInitiated(QString)));
-		connect(this,SIGNAL(sessionAccepted(QString)),parent(),SLOT(onSessionAccepted(QString)));
-		connect(this,SIGNAL(sessionConnected(QString)),parent(),SLOT(onSessionConnected(QString)));
-		connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
-        connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
-		connect(this,SIGNAL(dataReceived(QString,QIODevice*)),parent(),SLOT(onDataReceived(QString,QIODevice*)));
-		connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
+		connect(this,SIGNAL(sessionInitiated(QString)),
+				parent(),SLOT(onSessionInitiated(QString)));
+		connect(this,SIGNAL(sessionAccepted(QString)),
+				parent(),SLOT(onSessionAccepted(QString)));
+		connect(this,SIGNAL(sessionConnected(QString)),
+				parent(),SLOT(onSessionConnected(QString)));
+		connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),
+				parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
+		connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),
+				SLOT(onSessionInformed(QDomElement)));
+		connect(this,SIGNAL(dataReceived(QString,QIODevice*)),parent(),
+				SLOT(onDataReceived(QString,QIODevice*)));
+		connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),
+				parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
     }
 }
 
@@ -122,7 +129,7 @@ void JingleSession::setConnected()
 		int compCnt = (*it)->componentCount();
 		for (int comp=1; comp <= compCnt; ++comp)
 		{
-			QIODevice *device = (*it)->inputDevice(comp);
+			QIODevice *device = (*it)->ioDevice(comp);
 			qDebug() << "bytes available:" << device->bytesAvailable();
 
 			if (device->bytesAvailable())
@@ -260,6 +267,7 @@ bool JingleSession::initiate()
 
 bool JingleSession::accept()
 {
+	qDebug() << "JingleSession::accept()";
     JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionAccept);
 
     if (!FValid || FContents.isEmpty())    // Invalid session
@@ -271,6 +279,7 @@ bool JingleSession::accept()
 
     FActionId=stanza.id();
     FAction=IJingle::SessionAccept;
+	qDebug() << "Sending output stanza:" << stanza.toString();
     return FJingle->sendStanzaOut(stanza);
 }
 
@@ -418,18 +427,18 @@ JingleContent::~JingleContent() // Cleanup device list
 	JingleSession *session = JingleSession::sessionBySessionId(FSid);
 	if (session)
 	{
-		for(QMap<int, QIODevice*>::ConstIterator it = FInputDevices.constBegin();
-			it!=FInputDevices.constEnd(); it++)
+		for(QMap<int, QIODevice*>::ConstIterator it = FIODevices.constBegin();
+			it!=FIODevices.constEnd(); it++)
 		{
 			(*it)->deleteLater();
 			session->FContentByDevice.remove(*it);
 		}
-		for(QMap<int, QIODevice*>::ConstIterator it = FOutputDevices.constBegin();
-			it!=FOutputDevices.constEnd(); it++)
-		{
-			(*it)->deleteLater();
-			session->FContentByDevice.remove(*it);
-		}
+//		for(QMap<int, QIODevice*>::ConstIterator it = FOutputDevices.constBegin();
+//			it!=FOutputDevices.constEnd(); it++)
+//		{
+//			(*it)->deleteLater();
+//			session->FContentByDevice.remove(*it);
+//		}
 	}
 	else
 		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
@@ -549,29 +558,29 @@ int JingleContent::componentCount() const
 
 int JingleContent::component(QIODevice *ADevice) const
 {
-	int comp = FInputDevices.key(ADevice, 0);
-	return comp?comp:FOutputDevices.key(ADevice, 0);
+	return FIODevices.key(ADevice, 0);
+//	return comp?comp:FOutputDevices.key(ADevice, 0);
 }
 
-bool JingleContent::setInputDevice(int AComponentId, QIODevice *ADevice)
+bool JingleContent::setIoDevice(int AComponentId, QIODevice *ADevice)
 {
 	if (AComponentId <1 || AComponentId > FComponentCount)
 		return false;
-	if (FInputDevices.value(AComponentId) != ADevice)
+	if (FIODevices.value(AComponentId) != ADevice)
     {
 		JingleSession *session = JingleSession::sessionBySessionId(FSid);
 		if (session)
 		{
-			if (FInputDevices.contains(AComponentId))
+			if (FIODevices.contains(AComponentId))
 			{
-				QIODevice *device = FInputDevices.take(AComponentId);
+				QIODevice *device = FIODevices.take(AComponentId);
 				session->FContentByDevice.remove(device);
 				device->deleteLater();
 			}
 
 			if (ADevice)
 			{
-				FInputDevices.insert(AComponentId, ADevice);
+				FIODevices.insert(AComponentId, ADevice);
 				session->FContentByDevice.insert(ADevice, this);
 			}
 		}
@@ -584,32 +593,32 @@ bool JingleContent::setInputDevice(int AComponentId, QIODevice *ADevice)
 	return true;
 }
 
-bool JingleContent::setOutputDevice(int AComponentId, QIODevice *ADevice)
-{
-	if (AComponentId <1 || AComponentId > FComponentCount)
-		return false;
-	if (FOutputDevices.value(AComponentId) != ADevice)
-    {
-		JingleSession *session = JingleSession::sessionBySessionId(FSid);
-		if (session)
-		{
-			if (FOutputDevices.contains(AComponentId))
-			{
-				QIODevice *device = FOutputDevices.take(AComponentId);
-				session->FContentByDevice.remove(device);
-				device->deleteLater();
-			}
-			if (ADevice)
-			{
-				FOutputDevices.insert(AComponentId, ADevice);
-				session->FContentByDevice.insert(ADevice, this);
-			}
-		}
-    }
-	else
-	{
-		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
-		return false;
-	}
-	return true;
-}
+//bool JingleContent::setOutputDevice(int AComponentId, QIODevice *ADevice)
+//{
+//	if (AComponentId <1 || AComponentId > FComponentCount)
+//		return false;
+//	if (FOutputDevices.value(AComponentId) != ADevice)
+//    {
+//		JingleSession *session = JingleSession::sessionBySessionId(FSid);
+//		if (session)
+//		{
+//			if (FOutputDevices.contains(AComponentId))
+//			{
+//				QIODevice *device = FOutputDevices.take(AComponentId);
+//				session->FContentByDevice.remove(device);
+//				device->deleteLater();
+//			}
+//			if (ADevice)
+//			{
+//				FOutputDevices.insert(AComponentId, ADevice);
+//				session->FContentByDevice.insert(ADevice, this);
+//			}
+//		}
+//    }
+//	else
+//	{
+//		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
+//		return false;
+//	}
+//	return true;
+//}

@@ -35,14 +35,14 @@ public:
 
 	int	  componentCount() const;
 	virtual int			component(QIODevice *ADevice) const;
-	QIODevice	*inputDevice(int AComponentId) const {
-		return FInputDevices.value(AComponentId);
+	QIODevice	*ioDevice(int AComponentId) const {
+		return FIODevices.value(AComponentId);
 	}
-	bool setInputDevice(int AComponentId, QIODevice *ADevice);
-	QIODevice	*outputDevice(int AComponentId) const {
-		return FOutputDevices.value(AComponentId);
-	}
-	bool        setOutputDevice(int AComponentId, QIODevice *ADevice);
+	bool setIoDevice(int AComponentId, QIODevice *ADevice);
+//	QIODevice	*outputDevice(int AComponentId) const {
+//		return FOutputDevices.value(AComponentId);
+//	}
+//	bool        setOutputDevice(int AComponentId, QIODevice *ADevice);
 
 protected:
 	JingleContent(const QString &AName, const QString &ASid,
@@ -65,8 +65,8 @@ private:
     QDomElement     FTransportOutgoing;
     QDomElement     FTransportIncoming;
 
-	QMap<int, QIODevice*> FInputDevices;
-	QMap<int, QIODevice*> FOutputDevices;
+	QMap<int, QIODevice*> FIODevices;
+//	QMap<int, QIODevice*> FOutputDevices;
     QMap<long, QDomElement> FTransportCandidates;
     QMap<long, QDomElement>::ConstIterator FTransportCandidateItreator;
 };
@@ -74,8 +74,8 @@ private:
 class JingleSession: public QObject
 {
     Q_OBJECT
-	friend bool JingleContent::setInputDevice(int, QIODevice *);
-	friend bool JingleContent::setOutputDevice(int, QIODevice *);
+	friend bool JingleContent::setIoDevice(int, QIODevice *);
+//	friend bool JingleContent::setOutputDevice(int, QIODevice *);
 	friend JingleContent::~JingleContent();
 public:
     enum Direction

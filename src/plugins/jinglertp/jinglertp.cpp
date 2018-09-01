@@ -27,6 +27,7 @@
 #include <QPSocketAddress>
 
 #include "jinglertp.h"
+#include "rtpiodevice.h"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr4
@@ -133,8 +134,10 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugin)
 	{
 		FJingle = qobject_cast<IJingle *>(plugin->instance());
-		connect(FJingle->instance(),SIGNAL(incomingTransportFilled(IJingleContent *)),SLOT(onIncomingTransportFilled(IJingleContent*)), Qt::QueuedConnection);
-		connect(FJingle->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent *)),SLOT(onIncomingTransportFillFailed(IJingleContent*)), Qt::QueuedConnection);
+		connect(FJingle->instance(),SIGNAL(incomingTransportFilled(IJingleContent *)),
+				SLOT(onIncomingTransportFilled(IJingleContent*)), Qt::QueuedConnection);
+		connect(FJingle->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent *)),
+				SLOT(onIncomingTransportFillFailed(IJingleContent*)), Qt::QueuedConnection);
 	}
 	else
 		return false;
@@ -362,53 +365,56 @@ void JingleRtp::onSessionAccepted(const QString &ASid)
 
 void JingleRtp::onSessionConnected(const QString &ASid)
 {
-	LOG_DEBUG(QString("JingleRtp::onSessionConnected(%1)").arg(ASid));
+	qDebug() << "JingleRtp::onSessionConnected(" << ASid << ")";
 	bool success(false);
 	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
-		LOG_DEBUG(QString("content: \"%1\"").arg((*it)->name()));
-//		int compCnt = (*it)->componentCount();
-//		for (int comp = 1; comp<=compCnt; ++comp)
-		int comp = 1;
+		QIODevice *rtpDevice = (*it)->ioDevice(1);
+		if (rtpDevice)
 		{
-			QUdpSocket *outputSocket = qobject_cast<QUdpSocket *>((*it)->outputDevice(comp));
-			if (outputSocket)
-			{
-				LOG_DEBUG(QString("output socket state: %1").arg(outputSocket->state()));
-				LOG_DEBUG(QString("output socket open mode: %1").arg(outputSocket->openMode()));
+			rtpDevice->setObjectName("RTP");
+			QList<QPayloadType> payloadTypeList;
+			QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription((*it)->description(), &payloadTypeList);
+			QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
 
-				QList<QPayloadType> payloadTypeList;
-				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription((*it)->description(), &payloadTypeList);
-				QList<int> codecIds = intsFromString(Options::node(OPV_JINGLE_RTP_CODECS_USED).value().toString());
-
-				QPayloadType payloadType;
-				for (QList<int>::ConstIterator itc = codecIds.constBegin(); itc!=codecIds.constEnd(); ++itc)
-					if (payloadTypes.contains(*itc))
-					{
-						payloadType = payloadTypes[*itc];
-						break;
-					}
-
-				if (payloadType.isNull())
-					payloadType = payloadTypeList.first();
-
-				if (!payloadType.isFilled())
-					payloadType.fill();
-
-				QUdpSocket *inputSocket = qobject_cast<QUdpSocket *>((*it)->inputDevice(2));
-				MediaStreamer *streamer = startStreamMedia(payloadType, outputSocket, inputSocket);
-				if (streamer)
+			QPayloadType payloadType;
+			for (QList<int>::ConstIterator itc = codecIds.constBegin(); itc!=codecIds.constEnd(); ++itc)
+				if (payloadTypes.contains(*itc))
 				{
-					FStreamers.insert(*it, streamer);
-					success = true;
+					payloadType = payloadTypes[*itc];
+					break;
 				}
-				else
-					LOG_FATAL("Failed to start send media");
+
+			if (payloadType.isNull())
+				payloadType = payloadTypeList.first();
+
+			if (!payloadType.isFilled())
+				payloadType.fill();
+
+			QIODevice *rtcpDevice = (*it)->ioDevice(2);
+			if (rtcpDevice)
+				rtcpDevice->setObjectName("RTCP");
+			RtpIODevice *rtpio = new RtpIODevice(rtpDevice, rtcpDevice);
+			MediaStreamer *streamer = startStreamMedia(payloadType, rtpio);
+
+			if (streamer)
+			{
+				FStreamers.insert(*it, streamer);
+
+				if (rtpDevice->bytesAvailable())
+					checkRtpContent(*it, rtpDevice);
+				else {
+					FContents.insert(rtpDevice, *it);
+					connect(rtpDevice, SIGNAL(readyRead()), SLOT(onRtpReadyRead()));
+				}
+				success = true;
 			}
 			else
-				LOG_FATAL("Output device is NOT a UDP socket!");
+				LOG_FATAL("Failed to start send media");
 		}
+		else
+			LOG_FATAL("Output device is NOT a UDP socket!");
 	}
 	if (!success)
 	{
@@ -477,11 +483,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus 
 
 	connectionTerminated(ASid);
 
-	qDebug() << "A...";
-
 	callChatMessage(ASid, type, AReason);
-
-	qDebug() << "B...";
 
 	if (type == Error ||
 		(type == Cancelled &&
@@ -489,11 +491,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid, IJingle::SessionStatus 
 		 APreviousStatus == IJingle::Initiated))
 		callNotify(ASid, type);
 
-	qDebug() << "C...";
-
 	removeSid(ASid);
-
-	qDebug() << "D!";
 }
 
 void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
@@ -503,58 +501,77 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 
 void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
 {
-	qDebug() << "JingleRtp::onDataReceived(" << ASid << "," << ADevice << ")";
-	IJingleContent *content = FJingle->content(ASid, ADevice);
-	if (content)
-	{
-		if (content->component(ADevice)!=1)
-		{
-			qDebug() << "NOT RTP component";
-			return;
-		}
-		else
-			qDebug() << "RTP component";
-		QUdpSocket *socket = qobject_cast<QUdpSocket*>(ADevice);
-		if (socket)
-		{
-			char data[64];
-			qint64 size = socket->readDatagram(data, 64);
-			if (size>1)
-			{
-				int payloadTypeId = data[1]&0x7F;
+//	qDebug() << "JingleRtp::onDataReceived(" << ASid << "," << ADevice << ")";
+//	IJingleContent *content = FJingle->content(ASid, ADevice);
+//	if (content)
+//	{
+//		if (content->component(ADevice)!=1)
+//		{
+//			qDebug() << "NOT RTP component";
+//			return;
+//		}
+//		else
+//			qDebug() << "RTP component";
 
-				QDomElement description(content->description());
-				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
-				for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
-					if ((*it).id==payloadTypeId)
-					{
-						QHostAddress address = socket->localAddress();
-						quint16	port = socket->localPort();
-						socket->close();
+//		QByteArray data = ADevice->peek(2);
+//		if (data.size()==2)
+//		{
+//			if (data[1]>=char(200) &&
+//				data[1]<=char(207)) // RTCP
+//				ADevice->readAll();
+//			else
+//			{
+//				int payloadTypeId = data[1]&0x7F;
+//				qDebug() << "payloadTypeId=" << payloadTypeId;
 
-						QUdpSocket *targetSocket = qobject_cast<QUdpSocket *>(content->outputDevice(2));
-						quint16 rtcpPort = 0;
-						if (targetSocket)
-						{
-							rtcpPort = targetSocket->peerPort();
-							targetSocket->disconnectFromHost();
-						}
-
-						MediaPlayer *player = startPlayMedia(*it, address, port, rtcpPort);
-						if (player)
-							FPlayers.insert(content, player);
-						else
-							LOG_ERROR("Failed to start media play!");
-					}
-			}
-		}
-		else
-			LOG_FATAL("Not a UDP socket!");
-	}
-	else
-		LOG_FATAL("Content not found");
+//				QDomElement description(content->description());
+//				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
+//				for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+//					if ((*it).id==payloadTypeId)
+//					{
+//						MediaPlayer *player = startPlayMedia(*it, ADevice);
+//						if (player) {
+//							FPlayers.insert(content, player);
+//							return;
+//						} else
+//							LOG_ERROR("Failed to start media play!");
+//					}
+//				qWarning() << "Invalid payload type! Skip packet...";
+//				ADevice->readAll();
+//			}
+//		}
+//	}
+//	else
+//		LOG_FATAL("Content not found");
 }
 
+void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
+{
+	qDebug() << "JingleRtp::checkRtpContent(" << AContent << "," << ARtpDevice << ")";
+
+	QByteArray data = ARtpDevice->peek(2);
+	if (data.size()==2)
+	{
+		int payloadTypeId = data[1]&0x7F;
+		qDebug() << "payloadTypeId=" << payloadTypeId;
+
+		QDomElement description(AContent->description());
+		QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
+		for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
+			if ((*it).id==payloadTypeId)
+			{
+				QIODevice *rtcpDevice = AContent->ioDevice(2);
+				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice);
+				MediaPlayer *player = startPlayMedia(*it, rtpio);
+				if (player) {
+					FPlayers.insert(AContent, player);
+					return;
+				} else
+					LOG_ERROR("Failed to start media play!");
+			}
+		qWarning() << "Invalid payload type!";
+	}
+}
 
 void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 {
@@ -1084,10 +1101,9 @@ void JingleRtp::connectionTerminated(const QString &ASid)
 }
 
 MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
-										   QUdpSocket *AOutputSocket,
-										   QUdpSocket *AInputRtcpSocket)
+										   QIODevice *ARtpDevice)
 {
-	qDebug() << "startStreamMedia()" << APayloadType.getSdp(AOutputSocket->peerAddress(), AOutputSocket->peerPort());
+	qDebug() << "JingleRtp::startStreamMedia(" << APayloadType << "," << ARtpDevice << ")";
 	int codecId = QPayloadType::idByName(APayloadType.name);
 
 	// Now, let's start sending content
@@ -1096,30 +1112,21 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 		QAVCodec encoder = QAVCodec::findEncoder(codecId);
 		if (encoder)
 		{
-			QPSocketAddress peerAddress(AOutputSocket->peerAddress(),
-										AOutputSocket->peerPort());
-			QString targetHost = peerAddress.toString(QPSocketAddress::WITH_BRACKETS|
-													  QPSocketAddress::WITH_SCOPE_ID);
-			AOutputSocket->disconnectFromHost();
-
-			int rtcpPort = AInputRtcpSocket->localPort();
-			AInputRtcpSocket->close();
-
 			QVariantHash options;
 			options.insert("payload_type", APayloadType.id);
-			MediaStreamer *streamer =
-					new MediaStreamer(selectedAudioDevice(QAudio::AudioInput),
-									  encoder, targetHost, peerAddress.port(),
-									  APayloadType.clockrate,
-									  Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE)
-										.value().toInt(),
-									  options, this);
+
+			ARtpDevice->open(QIODevice::WriteOnly);
+			MediaStreamer *streamer = new MediaStreamer(selectedAudioDevice(QAudio::AudioInput), encoder,
+														ARtpDevice, "rtp", APayloadType.clockrate,
+														Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE)
+														.value().toInt(), options, this);
 
 			if (streamer->status() == MediaStreamer::Stopped)
 			{
 				if (connect(streamer, SIGNAL(statusChanged(int)),
 									  SLOT(onStreamerStatusChanged(int))))
 				{
+					ARtpDevice->setParent(streamer);
 					streamer->setStatus(MediaStreamer::Running);
 					return streamer;
 				}
@@ -1138,15 +1145,20 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 	}
 	else
 		LOG_ERROR(QString("codec name not found: %1").arg(APayloadType.name));
+
+	delete ARtpDevice; // Don't need it anymore
 	return nullptr;
 }
 
 MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
-									   const QHostAddress &AHostAddress,
-									   quint16 APort, quint16 ARtcpPort)
+//									   const QHostAddress &AHostAddress,
+//									   quint16 APort, quint16 ARtcpPort)
+									   QIODevice *ARtpIODevice)
 {
 	MediaPlayer *player = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput),
-										  AHostAddress, APort, APayloadType, this);
+										  ARtpIODevice, APayloadType, this);	
+	ARtpIODevice->setParent(player); // To delete it automaticaly once MediaPlayer is deleted
+	ARtpIODevice->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 	if (player->status() == MediaPlayer::Closed)
 		if (connect(player, SIGNAL(statusChanged(int,int)), SLOT(onPlayerStatusChanged(int,int))))
 		{
@@ -1181,7 +1193,7 @@ QHash<int,QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement
 				if (element.hasAttribute("id"))
 				{
 					bool ok;
-					qint8 id = element.attribute("id").toInt(&ok);
+					qint8 id = static_cast<qint8>(element.attribute("id").toInt(&ok));
 					if (ok && (id<35 || (id>95 && element.hasAttribute("name") && element.hasAttribute("clockrate"))))
 					{
 						QPayloadType payloadType(id, element.attribute("name"), mediaType, element.attribute("clockrate").toInt(), element.attribute("channels").toInt(), element.attribute("ptime").toInt(), element.attribute("maxptime").toInt());
@@ -1467,11 +1479,13 @@ void JingleRtp::onCall()
 			return; // Session exists already
 		}
 
-		sid=FJingle->sessionCreate(streamJid, contactJid, NS_JINGLE_APPS_RTP);
+		sid=FJingle->sessionCreate(streamJid, contactJid, NS_JINGLE_APPS_RTP);		
 		if (!sid.isNull())
 		{
 			QSet<int> ids;
 //TODO: Use 2 components for RTP content
+			QByteArray tmp;
+			QBuffer device(&tmp);
 			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", 2,
 														  IJingleTransport::Datagram, false);
 			if (content)
@@ -1488,11 +1502,12 @@ void JingleRtp::onCall()
 					QList<int> sampleRates = encoder.supportedSampleRates();
 					if (sampleRates.isEmpty())
 						sampleRates=inputDevice.supportedSampleRates();
-					for (QList<int>::ConstIterator itr = sampleRates.constBegin(); itr!=sampleRates.constEnd(); ++itr)
+					for (QList<int>::ConstIterator itr = sampleRates.constBegin();
+						 itr!=sampleRates.constEnd(); ++itr)
 					{
-						MediaStreamer *streamer =
-								new MediaStreamer(inputDevice, encoder, "127.0.0.1", 6666,
-												  *itr, bitrate, QVariantHash(), this);
+						MediaStreamer *streamer = new MediaStreamer(inputDevice, encoder, &device,
+																	"rtp", *itr, bitrate,
+																	QVariantHash(), this);
 
 						if (streamer->status()==MediaStreamer::Stopped)
 						{
@@ -1589,6 +1604,18 @@ void JingleRtp::onHangup()
 	}
 }
 
+void JingleRtp::onRtpReadyRead()
+{
+	qDebug() << "JingleRtp::onRtpReadyRead()";
+	qDebug() << "sender()=" << sender();
+	QIODevice *rtpDevice = qobject_cast<QIODevice *>(sender());
+	Q_ASSERT(rtpDevice);
+	IJingleContent *content = FContents.take(rtpDevice);
+	Q_ASSERT(content);
+	rtpDevice->disconnect(SIGNAL(readyRead()), this, SLOT(onRtpReadyRead()));
+	checkRtpContent(content, rtpDevice);
+}
+
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
 	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
@@ -1633,6 +1660,7 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 
 void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onIncomingTransportFilled(" << AContent->name() << ")";
 	removePendingContent(AContent, FillTransport);
 	if (!hasPendingContents(AContent->sid(), FillTransport))
 		FJingle->sessionAccept(AContent->sid());
