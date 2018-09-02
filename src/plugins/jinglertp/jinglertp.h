@@ -112,7 +112,6 @@ public slots:
 	virtual void onSessionConnected(const QString &ASid);
 	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	virtual void onSessionInformed(const QDomElement &AInfoElement);
-	virtual void onDataReceived(const QString &ASid, QIODevice *ADevice);
 	virtual void onConnectionEstablished(IJingleContent *AContent);
 	virtual void onConnectionFailed(IJingleContent *AContent);
 

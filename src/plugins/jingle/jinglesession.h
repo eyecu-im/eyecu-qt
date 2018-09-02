@@ -39,10 +39,6 @@ public:
 		return FIODevices.value(AComponentId);
 	}
 	bool setIoDevice(int AComponentId, QIODevice *ADevice);
-//	QIODevice	*outputDevice(int AComponentId) const {
-//		return FOutputDevices.value(AComponentId);
-//	}
-//	bool        setOutputDevice(int AComponentId, QIODevice *ADevice);
 
 protected:
 	JingleContent(const QString &AName, const QString &ASid,
@@ -141,12 +137,12 @@ public:
     const QHash<QString, JingleContent *> contents() const;
 
 protected:
-	void	emitDataReceived(QIODevice *ADevice);
+//	void	emitDataReceived(QIODevice *ADevice);
 	static QString getSid();
 
 protected slots:
-    void onTimeout();
-    void onDeviceReadyRead();
+//	void onTimeout();
+//	void onDeviceReadyRead();
 
 signals:
 	void sessionInitiated(const QString &ASid);

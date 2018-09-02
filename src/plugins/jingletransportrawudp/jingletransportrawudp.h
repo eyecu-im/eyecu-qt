@@ -48,14 +48,15 @@ public:
 
 protected:
 	void registerDiscoFeatures();
-	QUdpSocket *getSocket(const QHostAddress &ALocalAddress);
+	QUdpSocket *getSocket(const QHostAddress &ALocalAddress, quint16 AFirst=0);
 
 protected slots:
-	void onSocketStateChanged(QAbstractSocket::SocketState ASocketState);
+	void onReadyRead();
+	void onTimeout();
 
 signals:
+	//IJingleTransport
 	void connectionOpened(IJingleContent *AContent);
-	void startReceive(IJingleContent *AContent);
 	void connectionError(IJingleContent *AContent);
 	void incomingTransportFilled(IJingleContent *AContent);
 	void incomingTransportFillFailed(IJingleContent *AContent);
@@ -64,7 +65,8 @@ private:
 	IJingle             *FJingle;
 	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager		*FOptionsManager;
-	QHash<quint16, QUdpSocket *> FPorts;
+	QHash<QIODevice *, IJingleContent *> FPendingContents;
+	QHash<QTimer *, IJingleContent *> FPendingTimers;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

@@ -34,9 +34,11 @@ protected:
 protected slots:
 	void onWriteSocket();
 	void onReadyRead();
+	void onUpdateSockets();
 
 signals:
 	void writeSocket();
+	void updateSockets();
 
 private:
 	QUdpSocket *FInputSocket;

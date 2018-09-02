@@ -11,27 +11,37 @@ RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket,
 	qDebug() << "RawUdpIODevice(" << AInputSocket << "," << AOutputSocket
 			 << "," << AParent << "); this=" << this;
 	qDebug() << "curren thread:" << thread();
+
+	if (FInputSocket) {
+//		FInputSocket->moveToThread(targetThread);
+//		qDebug() << "input socket moved to thread:" << FInputSocket->thread();
+		FInputSocket->setParent(this);
+		qDebug() << "input socket's parent:" << FInputSocket->parent();
+	}
+	if (FOutputSocket) {
+//		FOutputSocket->moveToThread(targetThread);
+//		qDebug() << "output socket moved to thread:" << FInputSocket->thread();
+		FOutputSocket->setParent(this);
+		qDebug() << "input socket's parent:" << FInputSocket->parent();
+	}
+
+	qDebug() << "HERE!";
+
 	QThread *targetThread = new QThread();
 	moveToThread(targetThread);
 	qDebug() << "moved to thread:" << thread();
 
 	if (FInputSocket) {
-		FInputSocket->moveToThread(targetThread);
-		qDebug() << "input socket moved to thread:" << FInputSocket->thread();
-//		FInputSocket->setParent(this);
-//		qDebug() << "input socket's parent:" << FInputSocket->parent();
-	}
-	if (FOutputSocket) {
-		FOutputSocket->moveToThread(targetThread);
-		qDebug() << "output socket moved to thread:" << FInputSocket->thread();
-//		FOutputSocket->setParent(this);
-//		qDebug() << "input socket's parent:" << FInputSocket->parent();
+		qDebug() << "FInputSocket thread:" << FInputSocket->thread();
 	}
 
-	qDebug() << "HERE!";
+	if (FOutputSocket) {
+		qDebug() << "FInputSocket thread:" << FOutputSocket->thread();
+	}
 
 	connect(this, SIGNAL(aboutToClose()), targetThread, SLOT(quit()));
 	connect(this, SIGNAL(writeSocket()), SLOT(onWriteSocket()));
+	connect(this, SIGNAL(updateSockets()), SLOT(onUpdateSockets()));
 	qDebug() << "CONNECTED!";
 	targetThread->start();
 	qDebug() << "STARTED!";
@@ -55,6 +65,7 @@ void RawUdpIODevice::setInputSocket(QUdpSocket *ASocket)
 		{
 			FInputSocket->moveToThread(thread());
 			qDebug() << "input socket moved to thread:" << FInputSocket->thread();
+			emit updateSockets(); // Socket parent must be set in the same thread!
 //			FInputSocket->setParent(this);
 //			qDebug() << "input socket's parent:" << FInputSocket->parent();
 			if (openMode().testFlag(ReadOnly)) {
@@ -90,6 +101,7 @@ void RawUdpIODevice::setOutputSocket(QUdpSocket *ASocket)
 		if (FOutputSocket)
 		{
 			FOutputSocket->moveToThread(thread());
+			emit updateSockets(); // Socket parent must be set in the same thread!
 			qDebug() << "output socket moved to thread:" << FOutputSocket->thread();
 //			FOutputSocket->setParent(this);
 //			qDebug() << "output socket's parent:" << FOutputSocket->parent();
@@ -104,10 +116,8 @@ void RawUdpIODevice::setOutputSocket(QUdpSocket *ASocket)
 	}
 	FOutputMutex.unlock();
 
-	qDebug() << "A!";
 	if (emitSignal)
 		emit writeSocket();
-	qDebug() << "B!";
 }
 
 QUdpSocket *RawUdpIODevice::outputSocket() const
@@ -128,10 +138,7 @@ bool RawUdpIODevice::open(QIODevice::OpenMode mode)
 	}
 
 	if (mode.testFlag(WriteOnly))
-	{
-//		FOutputSocket->setParent(this);
 		connect(FOutputSocket, SIGNAL(bytesWritten(qint64)), SIGNAL(bytesWritten(qint64)));
-	}
 
 	return QIODevice::open(mode);
 }
@@ -197,6 +204,7 @@ qint64 RawUdpIODevice::readData(char *data, qint64 maxlen)
 	FInputMutex.unlock();
 	if (emitSignal)
 		emit readyRead();
+
 	qDebug() << "returning" << size;
 	return size;
 }
@@ -227,7 +235,7 @@ void RawUdpIODevice::onWriteSocket()
 
 void RawUdpIODevice::onReadyRead()
 {
-//	qDebug() << "RawUdpIODevice::onReadyRead(); this=" << this;
+	qDebug() << "RawUdpIODevice::onReadyRead(); this=" << this;
 	if (FInputSocket->hasPendingDatagrams())
 	{
 		qint64 size = FInputSocket->pendingDatagramSize();
@@ -245,9 +253,21 @@ void RawUdpIODevice::onReadyRead()
 			FInputQueue.enqueue(data);
 			FInputMutex.unlock();
 
-			qDebug() << "received" << size << "bytes from" << addr << ":" << port;
-
 			emit readyRead();
 		}
+	}
+}
+
+void RawUdpIODevice::onUpdateSockets()
+{
+	qDebug() << "RawUdpIODevice::onUpdateSockets(); this=" << this;
+	if (FInputSocket && FInputSocket->parent() != this) {
+		qDebug() << "setting input socket parent to:" << this;
+		FInputSocket->setParent(this);
+	}
+
+	if (FOutputSocket && FOutputSocket->parent() != this) {
+		qDebug() << "setting output socket parent to:" << this;
+		FOutputSocket->setParent(this);
 	}
 }

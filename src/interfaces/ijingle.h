@@ -43,7 +43,7 @@ protected:
 	virtual void incomingTransportFilled(IJingleContent *AContent) =0;
 	virtual void incomingTransportFillFailed(IJingleContent *AContent) =0;
 };
-Q_DECLARE_OPERATORS_FOR_FLAGS(IJingleTransport::Types);
+Q_DECLARE_OPERATORS_FOR_FLAGS(IJingleTransport::Types)
 
 class IJingle
 {
@@ -54,7 +54,7 @@ public:
 		Initiated,
 		Accepted,
 		Connected,
-		ReceivingData,
+//		ReceivingData,
 		Terminated
 	};
 
@@ -165,7 +165,6 @@ public:
 	virtual void onSessionConnected(const QString &ASid) =0;
 	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
 	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
-	virtual void onDataReceived(const QString &ASid, QIODevice *ADevice) =0;
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;

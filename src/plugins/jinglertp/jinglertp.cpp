@@ -499,52 +499,6 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
 }
 
-void JingleRtp::onDataReceived(const QString &ASid, QIODevice *ADevice)
-{
-//	qDebug() << "JingleRtp::onDataReceived(" << ASid << "," << ADevice << ")";
-//	IJingleContent *content = FJingle->content(ASid, ADevice);
-//	if (content)
-//	{
-//		if (content->component(ADevice)!=1)
-//		{
-//			qDebug() << "NOT RTP component";
-//			return;
-//		}
-//		else
-//			qDebug() << "RTP component";
-
-//		QByteArray data = ADevice->peek(2);
-//		if (data.size()==2)
-//		{
-//			if (data[1]>=char(200) &&
-//				data[1]<=char(207)) // RTCP
-//				ADevice->readAll();
-//			else
-//			{
-//				int payloadTypeId = data[1]&0x7F;
-//				qDebug() << "payloadTypeId=" << payloadTypeId;
-
-//				QDomElement description(content->description());
-//				QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
-//				for (QHash<int,QPayloadType>::ConstIterator it = payloadTypes.constBegin(); it!=payloadTypes.constEnd(); ++it)
-//					if ((*it).id==payloadTypeId)
-//					{
-//						MediaPlayer *player = startPlayMedia(*it, ADevice);
-//						if (player) {
-//							FPlayers.insert(content, player);
-//							return;
-//						} else
-//							LOG_ERROR("Failed to start media play!");
-//					}
-//				qWarning() << "Invalid payload type! Skip packet...";
-//				ADevice->readAll();
-//			}
-//		}
-//	}
-//	else
-//		LOG_FATAL("Content not found");
-}
-
 void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 {
 	qDebug() << "JingleRtp::checkRtpContent(" << AContent << "," << ARtpDevice << ")";
@@ -1373,6 +1327,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 		{
 			if (streamer)
 			{
+				qDebug() << "Streamer is Running! Terminating...";
 				LOG_DEBUG("Removing streamer...");
 				FStreamers.remove(content);
 				delete streamer;
@@ -1408,13 +1363,18 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 		case MediaPlayer::Finished:
 		{
 			LOG_DEBUG("Finished!");
+			qDebug() << "MediaPlayer::Finished";
 			if (player)
 			{
 				LOG_DEBUG("Removing player...");
 				FPlayers.remove(content);
-				qDebug() << "About to delete player(a)...";
 				delete player;
-				qDebug() << "Player deleted!";
+			}
+
+			if (//FJingle->sessionStatus(content->sid()) == IJingle::ReceivingData ||
+				FJingle->sessionStatus(content->sid()) == IJingle::Connected) {
+				LOG_DEBUG("Session is Running! Terminating...");
+				FJingle->sessionTerminate(content->sid(), IJingle::MediaError);
 			}
 			break;
 		}
@@ -1586,7 +1546,7 @@ void JingleRtp::onHangup()
 			IJingle::Reason reason;
 			switch (status)
 			{
-				case IJingle::ReceivingData:
+				case IJingle::Connected:
 					reason = IJingle::Success;
 					break;
 
@@ -1606,14 +1566,14 @@ void JingleRtp::onHangup()
 
 void JingleRtp::onRtpReadyRead()
 {
-	qDebug() << "JingleRtp::onRtpReadyRead()";
-	qDebug() << "sender()=" << sender();
 	QIODevice *rtpDevice = qobject_cast<QIODevice *>(sender());
-	Q_ASSERT(rtpDevice);
-	IJingleContent *content = FContents.take(rtpDevice);
-	Q_ASSERT(content);
-	rtpDevice->disconnect(SIGNAL(readyRead()), this, SLOT(onRtpReadyRead()));
-	checkRtpContent(content, rtpDevice);
+	if (rtpDevice)	// sender() may be QObject(0x0), if SIGNAL
+	{				// is disconnected from the SLOT already!
+		IJingleContent *content = FContents.take(rtpDevice);
+		Q_ASSERT(content);
+		rtpDevice->disconnect(SIGNAL(readyRead()), this, SLOT(onRtpReadyRead()));
+		checkRtpContent(content, rtpDevice);
+	}
 }
 
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
@@ -1629,6 +1589,7 @@ void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 
 void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onConnectionFailed(" << AContent << ")";
 	removePendingContent(AContent, Connect);
 	if (!hasPendingContents(AContent->sid(), Connect))
 	{
