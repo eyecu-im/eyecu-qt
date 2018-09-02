@@ -5,6 +5,7 @@
 #include <QQueue>
 #include <QMutex>
 #include <QTimer>
+#include <QWaitCondition>
 
 class RtpIODevice: public QIODevice
 {
@@ -19,6 +20,7 @@ public:
 	virtual void close() override;
 	virtual bool isSequential() const override;
 	virtual qint64 bytesAvailable() const override;
+	virtual bool waitForReadyRead(int msecs) override;
 
 protected:
 	virtual qint64 readData(char *data, qint64 maxlen) override;
@@ -34,13 +36,8 @@ private:
 	QIODevice *FRtcp;
 
 	QQueue<QByteArray> FInputQueue;
-//	QQueue<QByteArray> FOutputQueue;
-
 	mutable QMutex FInputMutex;
-//	mutable QMutex FOutputMutex;
-
-//	QTimer FSendTimer;
-//	QTimer FReadyReadTimer;
+	mutable QWaitCondition FInputWait;
 };
 
 #endif // RTPIODEVICE_H

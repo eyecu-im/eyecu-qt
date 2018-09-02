@@ -35,6 +35,16 @@ qint64 RtpIODevice::bytesAvailable() const
 	return bytes;
 }
 
+bool RtpIODevice::waitForReadyRead(int msecs)
+{
+	if (bytesAvailable())
+		return true;
+	FInputMutex.lock();
+	bool result = FInputWait.wait(&FInputMutex, msecs);
+	FInputMutex.unlock();
+	return result;
+}
+
 qint64 RtpIODevice::readData(char *data, qint64 maxlen)
 {
 //	qDebug() << "RtpIODevice::readData(" << (void *)data << "," << maxlen << ")";
@@ -85,6 +95,7 @@ void RtpIODevice::readDevice(QIODevice *device, qint64 bytes)
 	FInputMutex.lock();
 	FInputQueue.enqueue(data);
 	FInputMutex.unlock();
+	FInputWait.wakeAll();
 	qDebug() << "B: emitting readyRead()";
 	emit readyRead();
 }
