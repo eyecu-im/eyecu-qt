@@ -62,7 +62,6 @@ private:
     QDomElement     FTransportIncoming;
 
 	QMap<int, QIODevice*> FIODevices;
-//	QMap<int, QIODevice*> FOutputDevices;
     QMap<long, QDomElement> FTransportCandidates;
     QMap<long, QDomElement>::ConstIterator FTransportCandidateItreator;
 };
@@ -71,7 +70,6 @@ class JingleSession: public QObject
 {
     Q_OBJECT
 	friend bool JingleContent::setIoDevice(int, QIODevice *);
-//	friend bool JingleContent::setOutputDevice(int, QIODevice *);
 	friend JingleContent::~JingleContent();
 public:
     enum Direction
@@ -137,12 +135,7 @@ public:
     const QHash<QString, JingleContent *> contents() const;
 
 protected:
-//	void	emitDataReceived(QIODevice *ADevice);
 	static QString getSid();
-
-protected slots:
-//	void onTimeout();
-//	void onDeviceReadyRead();
 
 signals:
 	void sessionInitiated(const QString &ASid);
@@ -150,7 +143,6 @@ signals:
 	void sessionConnected(const QString &ASid);
 	void sessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
 	void sessionInformed(const QDomElement &AInfoElement);
-	void dataReceived(const QString &ASid, QIODevice *ADevice);
 	void actionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 
 private:

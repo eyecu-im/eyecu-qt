@@ -370,6 +370,7 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 
 bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
+	qDebug() << "Jingle::processSessionTerminate()";
 	AAccept=true;
 	bool result;
 	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
@@ -411,7 +412,8 @@ IJingleTransport *Jingle::transportByNs(const QString &ANameSpace)
 
 bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-//	qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
+	qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full()
+			 << "," << AStanza.toString() << "," << AAccept << ")";
 	if (AHandleId==FSHIRequest)
 	{
 		JingleStanza stanza(AStanza);
@@ -474,6 +476,7 @@ bool Jingle::sessionAccept(const QString &ASid)
 
 bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 {
+	qDebug() << "Jingle::sessionTerminate(" << ASid << "," << AReason << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->terminate(AReason):false;
 }

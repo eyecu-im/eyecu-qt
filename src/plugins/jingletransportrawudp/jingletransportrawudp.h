@@ -24,7 +24,7 @@ class JingleTransportRawUdp:
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingleTransportRawUdp")
 #endif
 public:
-	explicit JingleTransportRawUdp(QObject *AParent = 0);
+	explicit JingleTransportRawUdp(QObject *AParent = nullptr);
 
 	//IPlugin
 	QObject *instance() { return this; }

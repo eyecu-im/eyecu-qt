@@ -104,7 +104,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
             QHostAddress address(candidate.attribute("ip"));
 			quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
 			RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(AContent->ioDevice(comp));
-			QUdpSocket *socket = device?device->inputSocket():nullptr;
+			QUdpSocket *socket = device?device->socket():nullptr;
 
             if (!socket)
 			{
@@ -127,14 +127,6 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 			{
 				AContent->setIoDevice(comp, nullptr); // Remove broken socket
 				successful--;
-			}
-			else
-			{
-				qDebug() << "about to set local locket for component" << comp << ":" << socket;
-				if (device)
-					device->setInputSocket(socket);
-				else
-					AContent->setIoDevice(comp, new RawUdpIODevice(socket));
 			}
         }
         else
@@ -178,43 +170,20 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 				LOG_WARNING("Candidate for the component exists already!");
 				continue;
 			}
+
 			comps.insert(comp);
             QHostAddress address(candidate.attribute("ip"));
 			quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
 			RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(AContent->ioDevice(comp));
-			QUdpSocket *socket = device?device->outputSocket():nullptr;
-            if (!socket)
+			if (device)
 			{
-				socket = new QUdpSocket();
-				socket->setProxy(QNetworkProxy::NoProxy);
-			}
-
-            if (socket->state() != QUdpSocket::UnconnectedState &&
-               (socket->state() != QUdpSocket::ConnectedState ||
-                socket->peerAddress() != address ||
-                socket->peerPort() != port))
-                socket->disconnectFromHost();
-
-            if (socket->state() == QUdpSocket::UnconnectedState)
-				socket->connectToHost(address, port,
-									  QIODevice::WriteOnly|QIODevice::Unbuffered);
-
-            if (socket->state() == QUdpSocket::ConnectedState &&
-				socket->openMode() == (QIODevice::WriteOnly|QIODevice::Unbuffered)) {
-				if (device) {
-					device->setOutputSocket(socket);
-					device->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
-				} else {
-					device = new RawUdpIODevice(nullptr, socket);
-					device->open(QIODevice::WriteOnly);
-					AContent->setIoDevice(comp, device);
-				}
-
+				device->setTargetAddress(address, port);
+				device->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 				continue;
 			}
 
-            qWarning() << "Failed to connect output socket!";
-			AContent->setIoDevice(comp, nullptr); // Remove broken socket
+			qWarning() << "NO I/O device for the component!";
+			AContent->setIoDevice(comp, nullptr); // Remove broken I/O device
         }
         else
             qWarning() << "Incoming candidate is broken!";
@@ -381,7 +350,8 @@ void JingleTransportRawUdp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-QUdpSocket *JingleTransportRawUdp::getSocket(const QHostAddress &ALocalAddress, quint16 AFirst)
+QUdpSocket *JingleTransportRawUdp::getSocket(const QHostAddress &ALocalAddress,
+											 quint16 AFirst)
 {
 	QUdpSocket *socket = new QUdpSocket();
 	socket->setProxy(QNetworkProxy::NoProxy); // UDP sockets cannot work with proxies in most cases
@@ -428,10 +398,9 @@ void JingleTransportRawUdp::onTimeout()
 		delete timer;
 		QList<QIODevice *> devices = FPendingContents.keys(content);
 		for (QList<QIODevice *>::ConstIterator it = devices.constBegin();
-			 it != devices.constEnd(); ++it) {
-			qDebug() << "removing pending device for the content:" << *it;
+			 it != devices.constEnd(); ++it)
 			FPendingContents.remove(*it);
-		}
+
 		emit connectionError(content);
 	}
 }

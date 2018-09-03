@@ -40,14 +40,13 @@ bool RtpIODevice::waitForReadyRead(int msecs)
 	if (bytesAvailable())
 		return true;
 	FInputMutex.lock();
-	bool result = FInputWait.wait(&FInputMutex, msecs);
+	bool result = FInputWait.wait(&FInputMutex, quint32(msecs));
 	FInputMutex.unlock();
 	return result;
 }
 
 qint64 RtpIODevice::readData(char *data, qint64 maxlen)
 {
-//	qDebug() << "RtpIODevice::readData(" << (void *)data << "," << maxlen << ")";
 	FInputMutex.lock();
 	bool emitSignal(false);
 	qint64 len = FInputQueue.isEmpty()?0:qMin(qint64(FInputQueue.first().size()), maxlen);
@@ -65,10 +64,10 @@ qint64 RtpIODevice::readData(char *data, qint64 maxlen)
 		}
 	}
 	FInputMutex.unlock();
-	if (emitSignal) {
-		qDebug() << "A: emitting readyRead()";
+
+	if (emitSignal)
 		emit readyRead();
-	}
+
 //TODO: Check, conditions to return -1
 	return len;
 }
@@ -96,18 +95,18 @@ void RtpIODevice::readDevice(QIODevice *device, qint64 bytes)
 	FInputQueue.enqueue(data);
 	FInputMutex.unlock();
 	FInputWait.wakeAll();
-	qDebug() << "B: emitting readyRead()";
 	emit readyRead();
 }
 
 void RtpIODevice::onReadyRead()
 {
 	QIODevice *device = qobject_cast<QIODevice *>(sender());
-	Q_ASSERT(device);
-
-	qint64 bytes = device->bytesAvailable();
-	if (bytes)
-		readDevice(device, bytes);
+	if (device)
+	{
+		qint64 bytes = device->bytesAvailable();
+		if (bytes)
+			readDevice(device, bytes);
+	}
 }
 
 bool RtpIODevice::open(QIODevice::OpenMode mode)
@@ -117,8 +116,10 @@ bool RtpIODevice::open(QIODevice::OpenMode mode)
 		if (FRtp){
 			connect(FRtp, SIGNAL(readyRead()), SLOT(onReadyRead()));
 			qint64 bytes = FRtp->bytesAvailable();
-			if (bytes)
+			if (bytes) {
+				qDebug() << "A2";
 				readDevice(FRtp, bytes);
+			}
 		}
 		if (FRtcp) {
 			connect(FRtcp, SIGNAL(readyRead()), SLOT(onReadyRead()));

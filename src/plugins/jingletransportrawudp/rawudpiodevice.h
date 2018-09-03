@@ -5,20 +5,18 @@
 #include <QMutex>
 #include <QQueue>
 
+//TODO: Maybe inherit QUdpSocket instead of QIODevice?
 class RawUdpIODevice: public QIODevice
 {
 	Q_OBJECT
 
 public:
 	RawUdpIODevice(QUdpSocket *AInputSocket=nullptr,
-				   QUdpSocket *AOutputSocket=nullptr,
 				   QObject *AParent=nullptr);
 
-	void setInputSocket(QUdpSocket *ASocket);
-	QUdpSocket *inputSocket() const;
+	QUdpSocket *socket() const;
 
-	void setOutputSocket(QUdpSocket *ASocket);
-	QUdpSocket *outputSocket() const;
+	void setTargetAddress(const QHostAddress &AHostAddress, quint16 APort);
 
 	// QIODevice interface
 	virtual bool open(OpenMode mode) override;
@@ -34,15 +32,17 @@ protected:
 protected slots:
 	void onWriteSocket();
 	void onReadyRead();
-	void onUpdateSockets();
+	void emitReadyRead();
 
 signals:
 	void writeSocket();
 	void updateSockets();
 
 private:
-	QUdpSocket *FInputSocket;
-	QUdpSocket *FOutputSocket;
+	QHostAddress FTargetAddress;
+	quint16		 FTargetPort;
+
+	QUdpSocket *FSocket;
 
 	QQueue<QByteArray> FInputQueue;
 	QQueue<QByteArray> FOutputQueue;

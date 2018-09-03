@@ -1,118 +1,41 @@
 #include "rawudpiodevice.h"
 #include <QBuffer>
 #include <QThread>
+#include <QTimer>
 
-RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket,
-							   QUdpSocket *AOutputSocket,
-							   QObject *AParent):
-	QIODevice(AParent), FInputSocket(AInputSocket),
-	FOutputSocket(AOutputSocket)
+RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket, QObject *AParent):
+	QIODevice(AParent), FSocket(AInputSocket)
 {
-	qDebug() << "RawUdpIODevice(" << AInputSocket << "," << AOutputSocket
-			 << "," << AParent << "); this=" << this;
-	qDebug() << "curren thread:" << thread();
 
-	if (FInputSocket) {
-//		FInputSocket->moveToThread(targetThread);
-//		qDebug() << "input socket moved to thread:" << FInputSocket->thread();
-		FInputSocket->setParent(this);
-		qDebug() << "input socket's parent:" << FInputSocket->parent();
-	}
-	if (FOutputSocket) {
-//		FOutputSocket->moveToThread(targetThread);
-//		qDebug() << "output socket moved to thread:" << FInputSocket->thread();
-		FOutputSocket->setParent(this);
-		qDebug() << "input socket's parent:" << FInputSocket->parent();
-	}
-
-	qDebug() << "HERE!";
+	if (FSocket)
+		FSocket->setParent(this);
 
 	QThread *targetThread = new QThread();
 	moveToThread(targetThread);
-	qDebug() << "moved to thread:" << thread();
-
-	if (FInputSocket) {
-		qDebug() << "FInputSocket thread:" << FInputSocket->thread();
-	}
-
-	if (FOutputSocket) {
-		qDebug() << "FInputSocket thread:" << FOutputSocket->thread();
-	}
 
 	connect(this, SIGNAL(aboutToClose()), targetThread, SLOT(quit()));
 	connect(this, SIGNAL(writeSocket()), SLOT(onWriteSocket()));
-	connect(this, SIGNAL(updateSockets()), SLOT(onUpdateSockets()));
-	qDebug() << "CONNECTED!";
 	targetThread->start();
-	qDebug() << "STARTED!";
 }
 
-void RawUdpIODevice::setInputSocket(QUdpSocket *ASocket)
+QUdpSocket *RawUdpIODevice::socket() const
 {
-	qDebug() << "RawUdpIODevice::setInputSocket(" << ASocket << "); this=" << this;
-	FInputMutex.lock();
-	if (ASocket != FInputSocket)
-	{
-		if (FInputSocket)
-		{
-			FInputSocket->disconnect(SIGNAL(readyRead()), this,
-									 SLOT(onReadyRead()));
-			FInputSocket->close();
-			FInputSocket->deleteLater();
-		}
-		FInputSocket = ASocket;		
-		if (FInputSocket)
-		{
-			FInputSocket->moveToThread(thread());
-			qDebug() << "input socket moved to thread:" << FInputSocket->thread();
-			emit updateSockets(); // Socket parent must be set in the same thread!
-//			FInputSocket->setParent(this);
-//			qDebug() << "input socket's parent:" << FInputSocket->parent();
-			if (openMode().testFlag(ReadOnly)) {
-				connect(FInputSocket, SIGNAL(readyRead()),
-									  SLOT(onReadyRead()));
-				onReadyRead();
-			}
-		}
-	}
-	FInputMutex.unlock();
+	return FSocket;
 }
 
-QUdpSocket *RawUdpIODevice::inputSocket() const
+void RawUdpIODevice::setTargetAddress(const QHostAddress &AHostAddress,
+									  quint16 APort)
 {
-	return FInputSocket;
-}
-
-void RawUdpIODevice::setOutputSocket(QUdpSocket *ASocket)
-{
-	qDebug() << "RawUdpIODevice::setOutputSocket(" << ASocket << "); this=" << this;
 	bool emitSignal(false);
 	FOutputMutex.lock();
-	if (ASocket != FOutputSocket)
+	if (AHostAddress != FTargetAddress ||
+		APort != FTargetPort)
 	{
-		if (FOutputSocket)
-		{
-			FOutputSocket->disconnect(SIGNAL(bytesWritten(qint64)), this,
-									  SIGNAL(bytesWritten(qint64)));
-			FOutputSocket->disconnectFromHost();
-			FOutputSocket->deleteLater();
-		}
-		FOutputSocket = ASocket;
-		if (FOutputSocket)
-		{
-			FOutputSocket->moveToThread(thread());
-			emit updateSockets(); // Socket parent must be set in the same thread!
-			qDebug() << "output socket moved to thread:" << FOutputSocket->thread();
-//			FOutputSocket->setParent(this);
-//			qDebug() << "output socket's parent:" << FOutputSocket->parent();
-			if (openMode().testFlag(WriteOnly)) {
-				qDebug() << "CONNECTING SIGNAL...";
-				connect(FOutputSocket, SIGNAL(bytesWritten(qint64)),
-									   SIGNAL(bytesWritten(qint64)));
-				qDebug() << "CONNECTED SIGNAL!";
-				emitSignal = !FOutputQueue.isEmpty();
-			}
-		}
+		FTargetAddress = AHostAddress;
+		FTargetPort = APort;
+
+		if (openMode().testFlag(WriteOnly))
+			emitSignal = !FOutputQueue.isEmpty();
 	}
 	FOutputMutex.unlock();
 
@@ -120,39 +43,30 @@ void RawUdpIODevice::setOutputSocket(QUdpSocket *ASocket)
 		emit writeSocket();
 }
 
-QUdpSocket *RawUdpIODevice::outputSocket() const
-{
-	return FOutputSocket;
-}
-
 bool RawUdpIODevice::open(QIODevice::OpenMode mode)
 {
-	if ((mode.testFlag(ReadOnly) && !FInputSocket) ||
-		(mode.testFlag(WriteOnly) && !FInputSocket))
-		return false;
-
 	if (mode.testFlag(ReadOnly))
 	{
-		connect(FInputSocket, SIGNAL(readyRead()), SLOT(onReadyRead()));
-		onReadyRead();
+		connect(FSocket, SIGNAL(readyRead()), SLOT(onReadyRead()));
+		QTimer::singleShot(0, this, SLOT(onReadyRead())); // This slot must be called from this objet's thread!
 	}
 
 	if (mode.testFlag(WriteOnly))
-		connect(FOutputSocket, SIGNAL(bytesWritten(qint64)), SIGNAL(bytesWritten(qint64)));
+		connect(FSocket, SIGNAL(bytesWritten(qint64)), SIGNAL(bytesWritten(qint64)));
 
 	return QIODevice::open(mode);
 }
 
 void RawUdpIODevice::close()
 {
-	QIODevice::close();
-
 	if (openMode().testFlag(ReadOnly))
-		FInputSocket->disconnect(SIGNAL(readyRead()), this,
+		FSocket->disconnect(SIGNAL(readyRead()), this,
 								 SLOT(onReadyRead()));
 	if (openMode().testFlag(WriteOnly))
-		FOutputSocket->disconnect(SIGNAL(bytesWritten(qint64)), this,
+		FSocket->disconnect(SIGNAL(bytesWritten(qint64)), this,
 								  SIGNAL(bytesWritten(qint64)));
+
+	QIODevice::close();
 }
 
 bool RawUdpIODevice::isSequential() const
@@ -161,7 +75,7 @@ bool RawUdpIODevice::isSequential() const
 }
 
 qint64 RawUdpIODevice::bytesAvailable() const
-{	
+{
 	qint64 bytes(QIODevice::bytesAvailable());
 	if (bytes == 0)
 	{
@@ -184,9 +98,7 @@ qint64 RawUdpIODevice::bytesToWrite() const
 
 qint64 RawUdpIODevice::readData(char *data, qint64 maxlen)
 {
-	qDebug() << "RawUdpIODevice::readData(data," << maxlen << ")";
 	FInputMutex.lock();
-	bool emitSignal(false);
 	qint64 size = FInputQueue.isEmpty()?0:qMin(static_cast<qint64>(FInputQueue.first().size()), maxlen);
 	if (size>0)
 	{
@@ -197,21 +109,17 @@ qint64 RawUdpIODevice::readData(char *data, qint64 maxlen)
 		if (size < FInputQueue.first().size())
 			FInputQueue.first().remove(0, static_cast<int>(size));
 		else {
-			FInputQueue.removeFirst();			
-			emitSignal = !FInputQueue.isEmpty();
+			FInputQueue.removeFirst();
+			QTimer::singleShot(0, this, SLOT(emitReadyRead()));
 		}
 	}
 	FInputMutex.unlock();
-	if (emitSignal)
-		emit readyRead();
 
-	qDebug() << "returning" << size;
 	return size;
 }
 
 qint64 RawUdpIODevice::writeData(const char *data, qint64 len)
 {
-//	qDebug() << "RawUdpIODevice::writeData(data," << len << "); this=" << this;
 	FOutputMutex.lock();
 	FOutputQueue.enqueue(QByteArray(data, int(len)));
 	FOutputMutex.unlock();
@@ -221,13 +129,14 @@ qint64 RawUdpIODevice::writeData(const char *data, qint64 len)
 
 void RawUdpIODevice::onWriteSocket()
 {
-//	qDebug() << "RawUdpIODevice::writeSocket(); this=" << this;
+	if (FTargetAddress.isNull() || !FTargetPort)
+		return;
+
 	FOutputMutex.lock();
 	while (!FOutputQueue.isEmpty())
 	{
-		qint64 size = FOutputSocket->write(FOutputQueue.dequeue());
-//		qDebug() << size << "bytes sent to" << FOutputSocket->peerAddress()
-//						 << ":" << FOutputSocket->peerPort();
+		qint64 size = FSocket->writeDatagram(QByteArray(FOutputQueue.dequeue()),
+												  FTargetAddress, FTargetPort);
 		Q_ASSERT(size>0);
 	}
 	FOutputMutex.unlock();
@@ -235,10 +144,9 @@ void RawUdpIODevice::onWriteSocket()
 
 void RawUdpIODevice::onReadyRead()
 {
-	qDebug() << "RawUdpIODevice::onReadyRead(); this=" << this;
-	if (FInputSocket->hasPendingDatagrams())
+	if (FSocket->hasPendingDatagrams())
 	{
-		qint64 size = FInputSocket->pendingDatagramSize();
+		qint64 size = FSocket->pendingDatagramSize();
 		if (size>0)
 		{
 			QByteArray data;
@@ -246,28 +154,23 @@ void RawUdpIODevice::onReadyRead()
 
 			QHostAddress addr;
 			quint16 port;
-			size = FInputSocket->readDatagram(data.data(), size, &addr, &port);
+			size = FSocket->readDatagram(data.data(), size, &addr, &port);
 			Q_ASSERT(size==data.size());
 
 			FInputMutex.lock();
 			FInputQueue.enqueue(data);
 			FInputMutex.unlock();
 
+			QTimer::singleShot(0, this, SLOT(emitReadyRead()));
 			emit readyRead();
 		}
 	}
 }
 
-void RawUdpIODevice::onUpdateSockets()
+void RawUdpIODevice::emitReadyRead()
 {
-	qDebug() << "RawUdpIODevice::onUpdateSockets(); this=" << this;
-	if (FInputSocket && FInputSocket->parent() != this) {
-		qDebug() << "setting input socket parent to:" << this;
-		FInputSocket->setParent(this);
-	}
-
-	if (FOutputSocket && FOutputSocket->parent() != this) {
-		qDebug() << "setting output socket parent to:" << this;
-		FOutputSocket->setParent(this);
-	}
+	FInputMutex.lock();
+	if (!FInputQueue.isEmpty())
+		emit readyRead();
+	FInputMutex.unlock();
 }

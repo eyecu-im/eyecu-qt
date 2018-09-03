@@ -222,7 +222,6 @@ bool JingleRtp::initObjects()
 	}
 
 	QPayloadType::initialize();
-	QAVFormat::networkInit();
 
 	for (QAVOutputFormat::Iterator it; it; ++it)
 		if ((*it).name()=="rtp")
