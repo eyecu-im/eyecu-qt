@@ -85,8 +85,10 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 
 JingleSession::~JingleSession()
 {
+	qDebug() << "JingleSession::~JingleSession()";
 	for (QHash<QString, JingleContent *>::const_iterator it=FContents.constBegin(); it!=FContents.constEnd(); it++)
 		delete (*it);
+	qDebug() << "All contents deleted!";
 	FContents.clear();	
 
 	if (FSessions.value(FSid)==this)
@@ -128,7 +130,7 @@ void JingleSession::setTerminated(IJingle::Reason AReason)
     IJingle::SessionStatus currentStatus=FStatus;
     FStatus=IJingle::Terminated;
     FReason=AReason;
-    deleteLater();
+//    deleteLater();
 	emit sessionTerminated(FSid, currentStatus, AReason);
 }
 
@@ -216,6 +218,7 @@ JingleContent *JingleSession::getContent(QIODevice *AIODevice)
 
 bool JingleSession::deleteContent(const QString &AName)
 {
+	qDebug() << "JingleSession::deleteContent(" << AName << ")";
     if (FContents.contains(AName))
     {
         JingleContent *content=FContents.take(AName);

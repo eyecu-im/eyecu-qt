@@ -412,8 +412,6 @@ IJingleTransport *Jingle::transportByNs(const QString &ANameSpace)
 
 bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full()
-			 << "," << AStanza.toString() << "," << AAccept << ")";
 	if (AHandleId==FSHIRequest)
 	{
 		JingleStanza stanza(AStanza);
@@ -481,6 +479,18 @@ bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 	return session?session->terminate(AReason):false;
 }
 
+bool Jingle::sessionDestroy(const QString &ASid)
+{
+	qDebug() << "Jingle::sessionDestroy(" << ASid << ")";
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
+	if (session) {
+		session->deleteLater();
+		return true;
+	}
+	else
+		return false;
+}
+
 bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction,
 						const QDomElement &AJingleElement)
 {
@@ -511,13 +521,11 @@ IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
 				FServiceDiscovery->discoInfo(session->thisParty(),
 											 session->otherParty()).features.contains((*it)->ns()))
 			{
-				qDebug() << "Transport" << (*it)->ns() << "is supported! Creating content...";
 				IJingleContent *content = session->addContent(AName, AMediaType,
-															  AComponentCount, *it,
-															  AFromResponder);
+															  AComponentCount,
+															  *it, AFromResponder);
 				if (content)
 				{
-					qDebug() << "Content created successfuly!";
 					FPendingContents.append(content);
 					return content;
 				}

@@ -147,8 +147,8 @@ protected:
 	bool    hasPendingContents(const QString &ASid, PendingType AType);
 
 	void    establishConnection(const QString &ASid);
-	void    connectionEstablished(const QString &ASid);
-	void    connectionTerminated(const QString &ASid);
+
+	void checkRunningContents(const QString &ASid);
 
 	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QIODevice *ARtpDevice);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, QIODevice *ARtpIODevice);
@@ -193,7 +193,7 @@ private:
 	IAvatars            *FAvatars;
 	IStatusIcons        *FStatusIcons;
 	IconStorage         *FIconStorage;
-	AudioOptions    *FJingleRtpOptions;
+	AudioOptions		*FJingleRtpOptions;
 	QHash<QString, Jid>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, IMessageChatWindow *> FNotifies;

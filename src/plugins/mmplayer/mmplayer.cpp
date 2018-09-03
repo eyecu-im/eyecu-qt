@@ -82,6 +82,7 @@ bool MmPlayer::initObjects()
 		connect(FAction,SIGNAL(triggered(bool)),SLOT(onStartPlayer(bool)));
 		FMainWindowPlugin->mainWindow()->topToolBarChanger()->insertAction(FAction, TBG_MWTTB_MMPLAYER);
 	}
+
     return true;
 }
 
@@ -196,17 +197,17 @@ void MmPlayer::onFileStreamStateChanged()
             FifoDataBuffer *buffer=new FifoDataBuffer(0, this);
             if (buffer->input()->open(QIODevice::ReadOnly))
             {
-				MediaPlayer *mediaStreamer=new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), buffer->input(), this);
-                if(mediaStreamer)
+				MediaPlayer *player=new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), buffer->input(), this);
+				if(player)
                     if(buffer->output()->open(QIODevice::WriteOnly))
                     {
                         stream->addOutputDevice(buffer->output());
                         FBuffers.insert(stream, buffer);
-						FStreamerBuffers.insert(mediaStreamer, buffer);
-						connect(mediaStreamer,SIGNAL(statusChanged(int,int)),SLOT(onMediaStreamStatusChanged(int,int)));
-						connect(mediaStreamer,SIGNAL(destroyed()),SLOT(onMediaStreamerDestroyed()));
-						mediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
-						mediaStreamer->setStatus(MediaPlayer::Running);
+						FPlayerBuffers.insert(player, buffer);
+						connect(player,SIGNAL(statusChanged(int,int)),SLOT(onPlayerStatusChanged(int,int)));
+						connect(player,SIGNAL(destroyed()),SLOT(onPlayerDestroyed()));
+						player->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
+						player->setStatus(MediaPlayer::Running);
                     }
             }
             else
@@ -224,7 +225,7 @@ void MmPlayer::onFileStreamStateChanged()
 			FifoDataBuffer *buffer = FBuffers.value(stream);
 			if (buffer)
 			{
-				if (!FStreamerBuffers.key(buffer))
+				if (!FPlayerBuffers.key(buffer))
 					FBuffers.remove(stream);
 				buffer->output()->close();
 			}
@@ -233,7 +234,7 @@ void MmPlayer::onFileStreamStateChanged()
 	}
 }
 
-void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
+void MmPlayer::onPlayerStatusChanged(int AStatusNew, int AstatusOld)
 {
 	Q_UNUSED(AstatusOld)
 	LOG_DEBUG(QString("MmPlayer::onMediaStreamStatusChanged(%1, %2").arg(AStatusNew).arg(AstatusOld));
@@ -244,7 +245,7 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 		case MediaPlayer::Running:
         {
 			LOG_DEBUG("Running");
-			IFileStream *fileStream = FBuffers.key(FStreamerBuffers[sender()]);
+			IFileStream *fileStream = FBuffers.key(FPlayerBuffers[sender()]);
 			if (fileStream)
 			{
 				PlayerWindow *window = new PlayerWindow(this, player, QFileInfo(fileStream->fileName()).fileName(), fileStream->fileSize());
@@ -258,7 +259,7 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
 		case MediaPlayer::Finished:
         {
 			LOG_DEBUG("Error or Finished");
-            FifoDataBuffer *buffer=FStreamerBuffers.take(sender());
+			FifoDataBuffer *buffer=FPlayerBuffers.take(sender());
             if (buffer)
             {
                 IFileStream *fileStream=FBuffers.key(buffer);
@@ -277,13 +278,13 @@ void MmPlayer::onMediaStreamStatusChanged(int AStatusNew, int AstatusOld)
         default:
             return;
     }
-	disconnect(sender(),SIGNAL(statusChanged(int,int)),this,SLOT(onMediaStreamStatusChanged(int,int)));
+	disconnect(sender(),SIGNAL(statusChanged(int,int)),this,SLOT(onPlayerStatusChanged(int,int)));
 }
 
-void MmPlayer::onMediaStreamerDestroyed()
+void MmPlayer::onPlayerDestroyed()
 {
 	LOG_DEBUG("MmPlayer::onMediaStreamerDestroyed()");
-    FifoDataBuffer *buffer=FStreamerBuffers.take(sender());
+	FifoDataBuffer *buffer=FPlayerBuffers.take(sender());
     if (buffer)
     {
         IFileStream *stream=FBuffers.key(buffer);

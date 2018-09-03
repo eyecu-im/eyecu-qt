@@ -20,53 +20,54 @@ class Jingle: public QObject,
 #endif
 public:
 	Jingle(QObject *parent = nullptr);
-	~Jingle();
+	~Jingle() override;
     bool sendStanzaOut(Stanza &AStanza);
 
     //IPlugin
-    QObject *instance() { return this; }
-    QUuid pluginUuid() const { return JINGLE_UUID; }
-    void pluginInfo(IPluginInfo *APluginInfo);
-    bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-    bool initObjects();
-    bool initSettings();
-    bool startPlugin(){return true;}
+	virtual QObject *instance() override { return this; }
+	virtual QUuid pluginUuid() const  override { return JINGLE_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo) override;
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	virtual bool initObjects() override;
+	virtual bool initSettings() override;
+	virtual bool startPlugin() override {return true;}
 
     //IStanzaHandler
-    bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
+	virtual bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept) override;
 
     //IJingle
-	IJingleApplication *appByNS(const QString &AApplicationNS) {
+	virtual IJingleApplication *appByNS(const QString &AApplicationNS)  override {
 		return FApplications.value(AApplicationNS);
 	}
-	QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
-						  const QString &AApplicationNS);
-    bool    sessionInitiate(const QString &ASid);
-    bool    sessionAccept(const QString &ASid);
-    bool    sessionTerminate(const QString &ASid, Reason AReason);
-	bool    sendAction(const QString &ASid, IJingle::Action AAction,
-					   const QDomElement &AJingleElement);
-	bool    sendAction(const QString &ASid, IJingle::Action AAction,
-					   const QDomNodeList &AJingleElements);
-	IJingleContent *contentAdd(const QString &ASid, const QString &AName,
+	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
+						  const QString &AApplicationNS) override;
+	virtual bool    sessionInitiate(const QString &ASid) override;
+	virtual bool    sessionAccept(const QString &ASid) override;
+	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) override;
+	virtual bool	sessionDestroy(const QString &ASid) override;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
+					   const QDomElement &AJingleElement) override;
+	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
+					   const QDomNodeList &AJingleElements) override;
+	virtual IJingleContent *contentAdd(const QString &ASid, const QString &AName,
 							   const QString &AMediaType, int AComponentCount,
 							   IJingleTransport::Type ATransportType,
-							   bool AFromResponder);
-    QHash<QString, IJingleContent *> contents(const QString &ASid) const;
-    IJingleContent *content(const QString &ASid, const QString &AName) const;
-	IJingleContent *content(const QString &ASid, QIODevice *ADevice) const;
-	bool    selectTransportCandidate(const QString &ASid, const QString &AContentName,
-									 const QString &ACandidateId);
-	bool    connectContent(const QString &ASid, const QString &AName);
-    bool    setConnected(const QString &ASid);
-    bool    fillIncomingTransport(IJingleContent *AContent);
-	void    freeIncomingTransport(IJingleContent *AContent);
+							   bool AFromResponder) override;
+	virtual QHash<QString, IJingleContent *> contents(const QString &ASid) const override;
+	virtual IJingleContent *content(const QString &ASid, const QString &AName) const override;
+	virtual IJingleContent *content(const QString &ASid, QIODevice *ADevice) const override;
+	virtual bool    selectTransportCandidate(const QString &ASid, const QString &AContentName,
+									 const QString &ACandidateId) override;
+	virtual bool    connectContent(const QString &ASid, const QString &AName) override;
+	virtual bool    setConnected(const QString &ASid) override;
+	virtual bool    fillIncomingTransport(IJingleContent *AContent) override;
+	virtual void    freeIncomingTransport(IJingleContent *AContent) override;
 
-    SessionStatus sessionStatus(const QString &ASid) const;
-    bool    isOutgoing(const QString &ASid) const;
-    Jid     contactJid(const QString &ASid) const;
-	Jid     streamJid(const QString &ASid) const;
-    QString errorMessage(Reason AReason) const;
+	virtual SessionStatus sessionStatus(const QString &ASid) const override;
+	virtual bool    isOutgoing(const QString &ASid) const override;
+	virtual Jid     contactJid(const QString &ASid) const override;
+	virtual Jid     streamJid(const QString &ASid) const override;
+	virtual QString errorMessage(Reason AReason) const override;
 
 protected:
     void registerDiscoFeatures();
@@ -83,10 +84,11 @@ protected slots:
     void onIncomingTransportFillFailed(IJingleContent *AContent);
 
 signals:
-	void startSendData(IJingleContent *AContent);
-    void connectionFailed(IJingleContent *AContent);
-    void contentAdded(IJingleContent *AContent);
-    void contentAddFailed(IJingleContent *AContent);
+	void startSendData(IJingleContent *AContent) override;
+	void connectionFailed(IJingleContent *AContent) override;
+	void contentAdded(IJingleContent *AContent) override;
+	void contentAddFailed(IJingleContent *AContent) override;
+
     void incomingTransportFilled(IJingleContent *AContent);
     void incomingTransportFillFailed(IJingleContent *AContent);
 
@@ -101,6 +103,10 @@ private:
     int FSHIRequest;
     int FSHIResult;
     int FSHIError;
+
+	// IJingle interface
+public:
+
 };
 
 #endif // JINGLE_H

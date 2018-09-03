@@ -20,9 +20,9 @@ public:
 	Q_DECLARE_FLAGS(Types, Type)
 
 	virtual QObject *instance() =0;
-	virtual Types    types() const =0; // Is the transport streaming or datagram
-	virtual QString ns() const =0;          // Transport namespace
-	virtual int     priority() const =0;    // Transport priority
+	virtual Types    types() const =0;		// Is the transport streaming or datagram
+	virtual QString ns() const =0;			// Transport namespace
+	virtual int     priority() const =0;	// Transport priority
 	//!
 	//! \brief openConnection Try to open connections
 	//! \param AContent Jingle content
@@ -54,7 +54,6 @@ public:
 		Initiated,
 		Accepted,
 		Connected,
-//		ReceivingData,
 		Terminated
 	};
 
@@ -123,6 +122,7 @@ public:
 	virtual bool    sessionInitiate(const QString &ASid) =0;
 	virtual bool    sessionAccept(const QString &ASid) =0;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
+	virtual bool    sessionDestroy(const QString &ASid) =0;
 	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
 							   const QDomElement &AJingleElement) =0;
 	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
@@ -158,11 +158,11 @@ class IJingleApplication
 public:
 	virtual QObject *instance() =0;
 	virtual QString ns() const =0;
-	virtual bool checkSupported(QDomElement &ADescription) =0;  // To check if Jingle request is supported
+	virtual bool checkSupported(QDomElement &ADescription) =0;	// To check if Jingle request is supported
 
-	virtual void onSessionInitiated(const QString &ASid) =0;       // To notify, about new initiate request
-	virtual void onSessionAccepted(const QString &ASid) =0;
-	virtual void onSessionConnected(const QString &ASid) =0;
+	virtual void onSessionInitiated(const QString &ASid) =0;	// To notify, about new initiate request
+	virtual void onSessionAccepted(const QString &ASid) =0;		// To notify, about session acceptance
+	virtual void onSessionConnected(const QString &ASid) =0;	// To notify, about session connection
 	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
 	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
 
@@ -193,8 +193,6 @@ public:
 	virtual			int			component(QIODevice *) const =0;
 	virtual         QIODevice   *ioDevice(int AComponentId) const =0;
 	virtual         bool        setIoDevice(int AComponentId, QIODevice *ADevice) =0;
-//	virtual         QIODevice   *outputDevice(int AComponentId) const =0;
-//	virtual         bool        setOutputDevice(int AComponentId, QIODevice *ADevice) =0;
 };
 
 Q_DECLARE_INTERFACE(IJingle, "RWS.Plugin.IJingle/1.0")
