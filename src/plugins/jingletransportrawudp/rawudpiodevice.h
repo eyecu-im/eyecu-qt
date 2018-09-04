@@ -4,6 +4,7 @@
 #include <QUdpSocket>
 #include <QMutex>
 #include <QQueue>
+#include <QThread>
 
 //TODO: Maybe inherit QUdpSocket instead of QIODevice?
 class RawUdpIODevice: public QIODevice
@@ -11,8 +12,9 @@ class RawUdpIODevice: public QIODevice
 	Q_OBJECT
 
 public:
-	RawUdpIODevice(QUdpSocket *AInputSocket=nullptr,
-				   QObject *AParent=nullptr);
+	RawUdpIODevice(QUdpSocket *AInputSocket, QThread *AThread);
+
+	~RawUdpIODevice() override;
 
 	QUdpSocket *socket() const;
 

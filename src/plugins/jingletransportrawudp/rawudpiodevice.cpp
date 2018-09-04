@@ -1,20 +1,22 @@
 #include "rawudpiodevice.h"
 #include <QBuffer>
-#include <QThread>
 #include <QTimer>
 
-RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket, QObject *AParent):
-	QIODevice(AParent), FSocket(AInputSocket)
+RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket, QThread *AThread):
+	QIODevice(nullptr), FSocket(AInputSocket)
 {
 	if (FSocket)
 		FSocket->setParent(this);
 
-	QThread *targetThread = new QThread();
-	moveToThread(targetThread);
+	moveToThread(AThread);
 
-	connect(this, SIGNAL(aboutToClose()), targetThread, SLOT(quit()));
+	connect(this, SIGNAL(aboutToClose()), AThread, SLOT(quit()));
 	connect(this, SIGNAL(writeSocket()), SLOT(onWriteSocket()));
-	targetThread->start();
+}
+
+RawUdpIODevice::~RawUdpIODevice()
+{
+	qDebug() << "~RawUdpIODevice(); this=" << this;
 }
 
 QUdpSocket *RawUdpIODevice::socket() const

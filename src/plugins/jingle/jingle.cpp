@@ -174,26 +174,13 @@ void Jingle::onConnectionFailed(IJingleContent *AContent)
 void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 {
 	qDebug() << "Jingle::onIncomingTransportFilled(" << AContent << ")";
-	QDomElement incoming = AContent->transportIncoming();
-	if (incoming.isNull())
-		qDebug() << "incoming is NULL!";
-	else
-	{
-		QDomElement candidate = incoming.firstChildElement("candidate");
-		if (candidate.isNull())
-			qDebug() << "candidate is NULL!";
-		else
-			qDebug() << "ip=" << candidate.attribute("ip") << "; port=" << candidate.attribute("port");
-	}
 	if (FPendingContents.contains(AContent))
 	{
 		FPendingContents.removeAll(AContent);
-		qDebug() << "emitting contentAdded(\"" << AContent->name() << "\")";
 		emit contentAdded(AContent);
 	}
 	else
 	{
-		qDebug() << "emitting incomingTransportFilled(\"" << AContent->name() << "\")";
 		emit incomingTransportFilled(AContent);
 	}
 	qDebug() << "Jingle::onIncomingTransportFilled(): Finished!";

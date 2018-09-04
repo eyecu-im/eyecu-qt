@@ -67,6 +67,7 @@ private:
 	IOptionsManager		*FOptionsManager;
 	QHash<QIODevice *, IJingleContent *> FPendingContents;
 	QHash<QTimer *, IJingleContent *> FPendingTimers;
+	QHash<IJingleContent *, QThread *>	FThreads;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

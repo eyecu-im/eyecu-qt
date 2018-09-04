@@ -1,5 +1,6 @@
 #include <QNetworkInterface>
 #include <QNetworkProxy>
+#include <QThread>
 #include <QpUtil>
 #include <utils/options.h>
 #include <utils/logger.h>
@@ -250,6 +251,9 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 	if (!localAddress.isNull())
 	{
 		quint16 port(0);
+		QThread *ioThread = new QThread(this);
+		connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
+
 		for (int component=1; component<=AContent->componentCount(); ++component)
 		{
 			socket = getSocket(localAddress, port);
@@ -271,38 +275,50 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 					candidate.setAttribute("port", QString::number(port));
 					LOG_INFO(QString("About to set input device for local socket %1:%2")
 							 .arg(socket->localAddress().toString()).arg(socket->localPort()));
-					AContent->setIoDevice(component, new RawUdpIODevice(socket, nullptr));
+
+					RawUdpIODevice *ioDevice = new RawUdpIODevice(socket, ioThread);
+					AContent->setIoDevice(component, ioDevice);
 					++port;
 				}
 				else
 				{
 					qWarning() << "Candidate 1 is in wrong state!";
 					socket->deleteLater();
+					delete ioThread;
 					return false;
 				}
 			}
 			else
 			{
 				qWarning() << "Failed to get a local socket!";
+				delete ioThread;
 				return false;
 			}
 		}
 
-		qDebug() << "emitting incomingTransportFilled(" << AContent << ")";
+		FThreads.insert(AContent, ioThread);
+
 		emit incomingTransportFilled(AContent);
+
+		LOG_DEBUG(QString("Starting I/O thread for the content: %1").arg(AContent->name()));
+		ioThread->start();
 		return true;
 	}
 	else
 		qWarning() << "Failed to determine local address!";
+
 	return false;
 }
 
-//TODO: Get rid of it
 void JingleTransportRawUdp::freeIncomingTransport(IJingleContent *AContent)
 {
 	int compCnt = AContent->componentCount();
 	for (int comp = 1; comp <= compCnt; ++comp)
 		AContent->setIoDevice(comp, nullptr);
+
+	Q_ASSERT(FThreads.contains(AContent));
+
+	FThreads[AContent]->quit();
 }
 
 QMultiMap<int, IOptionsDialogWidget *> JingleTransportRawUdp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)

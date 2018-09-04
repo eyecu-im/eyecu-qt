@@ -86,9 +86,12 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 JingleSession::~JingleSession()
 {
 	qDebug() << "JingleSession::~JingleSession()";
-	for (QHash<QString, JingleContent *>::const_iterator it=FContents.constBegin(); it!=FContents.constEnd(); it++)
-		delete (*it);
-	qDebug() << "All contents deleted!";
+	for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin();
+		 it!=FContents.constEnd(); ++it) {
+		FJingle->freeIncomingTransport(*it);
+		delete *it;
+	}
+
 	FContents.clear();	
 
 	if (FSessions.value(FSid)==this)
@@ -118,19 +121,15 @@ void JingleSession::setAccepted()
 void JingleSession::setConnected()
 {
 	LOG_DEBUG("JingleSession::setConnected()");
-	qDebug() << "JingleSession::setConnected()";
     FStatus=IJingle::Connected;
 	emit sessionConnected(FSid);
 }
 
 void JingleSession::setTerminated(IJingle::Reason AReason)
 {
-	for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin(); it!=FContents.constEnd(); ++it)
-		FJingle->freeIncomingTransport(*it);
     IJingle::SessionStatus currentStatus=FStatus;
     FStatus=IJingle::Terminated;
     FReason=AReason;
-//    deleteLater();
 	emit sessionTerminated(FSid, currentStatus, AReason);
 }
 
@@ -222,7 +221,7 @@ bool JingleSession::deleteContent(const QString &AName)
     if (FContents.contains(AName))
     {
         JingleContent *content=FContents.take(AName);
-        delete content;
+		delete content;
         return true;
     }
     return false;
@@ -381,10 +380,7 @@ JingleContent::~JingleContent() // Cleanup device list
 	{
 		for(QMap<int, QIODevice*>::ConstIterator it = FIODevices.constBegin();
 			it!=FIODevices.constEnd(); it++)
-		{
-			(*it)->deleteLater();
 			session->FContentByDevice.remove(*it);
-		}
 	}
 	else
 		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
