@@ -346,6 +346,11 @@
     <object mime="image/png">mirandang.png</object>
   </icon>
     <icon>
+    <key>http://moxl.movim.eu/</key>
+    <client>Movim</client>
+    <object mime="image/png">movim.png</object>
+  </icon>
+  <icon>
     <key>nimbuzz:caps</key>
     <client>Nimbuzz</client>
     <object mime="image/png">nimbuzz.png</object>
