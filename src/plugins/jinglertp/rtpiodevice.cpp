@@ -116,10 +116,8 @@ bool RtpIODevice::open(QIODevice::OpenMode mode)
 		if (FRtp){
 			connect(FRtp, SIGNAL(readyRead()), SLOT(onReadyRead()));
 			qint64 bytes = FRtp->bytesAvailable();
-			if (bytes) {
-				qDebug() << "A2";
+			if (bytes)
 				readDevice(FRtp, bytes);
-			}
 		}
 		if (FRtcp) {
 			connect(FRtcp, SIGNAL(readyRead()), SLOT(onReadyRead()));

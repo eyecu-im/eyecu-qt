@@ -6,7 +6,6 @@
 RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket, QObject *AParent):
 	QIODevice(AParent), FSocket(AInputSocket)
 {
-
 	if (FSocket)
 		FSocket->setParent(this);
 
@@ -26,7 +25,6 @@ QUdpSocket *RawUdpIODevice::socket() const
 void RawUdpIODevice::setTargetAddress(const QHostAddress &AHostAddress,
 									  quint16 APort)
 {
-	bool emitSignal(false);
 	FOutputMutex.lock();
 	if (AHostAddress != FTargetAddress ||
 		APort != FTargetPort)
@@ -34,13 +32,10 @@ void RawUdpIODevice::setTargetAddress(const QHostAddress &AHostAddress,
 		FTargetAddress = AHostAddress;
 		FTargetPort = APort;
 
-		if (openMode().testFlag(WriteOnly))
-			emitSignal = !FOutputQueue.isEmpty();
+		if (openMode().testFlag(WriteOnly) && !FOutputQueue.isEmpty())
+			emit writeSocket();
 	}
 	FOutputMutex.unlock();
-
-	if (emitSignal)
-		emit writeSocket();
 }
 
 bool RawUdpIODevice::open(QIODevice::OpenMode mode)
@@ -136,7 +131,7 @@ void RawUdpIODevice::onWriteSocket()
 	while (!FOutputQueue.isEmpty())
 	{
 		qint64 size = FSocket->writeDatagram(QByteArray(FOutputQueue.dequeue()),
-												  FTargetAddress, FTargetPort);
+											 FTargetAddress, FTargetPort);
 		Q_ASSERT(size>0);
 	}
 	FOutputMutex.unlock();

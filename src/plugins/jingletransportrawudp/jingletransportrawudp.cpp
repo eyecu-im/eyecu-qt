@@ -99,50 +99,27 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 				LOG_WARNING("Candidate for the component exists already!");
 				continue;
 			}
-			comps.insert(comp);
-			successful++;
-            QHostAddress address(candidate.attribute("ip"));
-			quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
-			RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(AContent->ioDevice(comp));
-			QUdpSocket *socket = device?device->socket():nullptr;
 
-            if (!socket)
+			if (AContent->ioDevice(comp)) // The device for the component MUST exist
 			{
-				qDebug() << "NO input socket for comp" << comp << "found! Creating a new one...";
-				socket = new QUdpSocket();
-				socket->setProxy(QNetworkProxy::NoProxy);
+				comps.insert(comp);
+				successful++;
 			}
-
-            if (socket->state() != QUdpSocket::UnconnectedState &&
-               (socket->state() != QUdpSocket::BoundState ||
-                socket->localAddress() != address ||
-                socket->localPort() != port))
-                socket->disconnectFromHost();
-
-            if (socket->state() == QUdpSocket::UnconnectedState)
-				if (!socket->bind(address, port, QUdpSocket::DontShareAddress))
-					LOG_WARNING(QString("Failed to bind input socket on %1:%2").arg(address.toString()).arg(port));
-
-			if (socket->state() != QUdpSocket::BoundState)
-			{
-				AContent->setIoDevice(comp, nullptr); // Remove broken socket
-				successful--;
-			}
-        }
-        else
+		}
+		else
 			LOG_WARNING("Incoming candidate is broken!");
 
-    if (!candidates)
-    {
+	if (!candidates)
+	{
 		LOG_FATAL("No input candidates found!");
-        return false;
-    }
+		return false;
+	}
 
-    if (candidates > successful)
-    {
+	if (candidates > successful)
+	{
 		LOG_WARNING("Some input candidates are failed!");
-        return false;
-    }
+		return false;
+	}
 
 	if (comps.size() != AContent->componentCount())
 	{
@@ -151,13 +128,13 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 	}
 
 	comps.clear();
-    QDomElement outgoingTransport = AContent->transportOutgoing();
+	QDomElement outgoingTransport = AContent->transportOutgoing();
 	for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
 		 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
-        if (candidate.hasAttribute("id") &&
-            candidate.hasAttribute("ip") &&
-            candidate.hasAttribute("port"))
-        {
+		if (candidate.hasAttribute("id") &&
+			candidate.hasAttribute("ip") &&
+			candidate.hasAttribute("port"))
+		{
 			int comp = candidate.attribute("component").toInt();
 			if (comp < 1 || comp > compCnt)
 			{
@@ -172,7 +149,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 			}
 
 			comps.insert(comp);
-            QHostAddress address(candidate.attribute("ip"));
+			QHostAddress address(candidate.attribute("ip"));
 			quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
 			RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(AContent->ioDevice(comp));
 			if (device)
@@ -184,21 +161,21 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 
 			qWarning() << "NO I/O device for the component!";
 			AContent->setIoDevice(comp, nullptr); // Remove broken I/O device
-        }
-        else
-            qWarning() << "Incoming candidate is broken!";
+		}
+		else
+			qWarning() << "Incoming candidate is broken!";
 
-    if (!candidates)
-    {
-        qWarning() << "No output candidates found!";
-        return false;
-    }
+	if (!candidates)
+	{
+		qWarning() << "No output candidates found!";
+		return false;
+	}
 
-    if (candidates > successful)
-    {
-        qWarning() << "Some output candidates are failed!";
-        return false;
-    }
+	if (candidates > successful)
+	{
+		qWarning() << "Some output candidates are failed!";
+		return false;
+	}
 
 	if (comps.size() != compCnt)
 	{
@@ -229,7 +206,7 @@ bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
 	}
 
 	emit connectionOpened(AContent);
-    return true;
+	return true;
 }
 
 bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
