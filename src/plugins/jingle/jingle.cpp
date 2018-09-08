@@ -3,7 +3,10 @@
 #include "definitions/menuicons.h"
 #include "definitions/resources.h"
 #include "definitions/stanzahandlerorders.h"
+#include "definitions/optionnodes.h"
+#include "definitions/optionnodeorders.h"
 #include "utils/xmpperror.h"
+#include "utils/logger.h"
 
 #include <QList>
 
@@ -15,8 +18,9 @@
 
 Jingle::Jingle(QObject *parent):
 	QObject(parent),
-	FStanzaProcessor(NULL),
-	FServiceDiscovery(NULL)
+	FStanzaProcessor(nullptr),
+	FServiceDiscovery(nullptr),
+	FOptionsManager(nullptr)
 {
 	JingleSession::setJingle(this);
 }
@@ -44,42 +48,54 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {	
 	Q_UNUSED(AInitOrder)
 
-	IPlugin *plugin= APluginManager->pluginInterface("IStanzaProcessor").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IStanzaProcessor").value(0,nullptr);
 	if (plugin)
 		FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,nullptr);
 	if (plugin)
 		FServiceDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
+	if (plugin)
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
 	// Find application and transport plugins
 	QList<IPlugin *>plugins = APluginManager->pluginInterface("IJingleApplication");
 	if (plugins.isEmpty())
 		return false;
 
-	for (QList<IPlugin *>::iterator it=plugins.begin(); it!=plugins.end(); it++)
+	for (QList<IPlugin *>::Iterator it=plugins.begin(); it!=plugins.end(); it++)
 	{
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
-		connect(this,SIGNAL(connectionEstablished(IJingleContent *)),(*it)->instance(), SLOT(onConnectionEstablished(IJingleContent *)),Qt::QueuedConnection);
-		connect(this,SIGNAL(connectionFailed(IJingleContent *)),(*it)->instance(), SLOT(onConnectionFailed(IJingleContent *)),Qt::QueuedConnection);
+
+		connect(this,SIGNAL(connectionOpened(IJingleContent*)),(*it)->instance(),
+				SLOT(onConnectionEstablished(IJingleContent*)), Qt::QueuedConnection);
+		connect(this,SIGNAL(connectionFailed(IJingleContent*)),(*it)->instance(),
+				SLOT(onConnectionFailed(IJingleContent*)), Qt::QueuedConnection);
 	}
 
 	plugins = APluginManager->pluginInterface("IJingleTransport");
 	if (plugins.isEmpty())
 		return false;
 
-	for (QList<IPlugin *>::iterator it=plugins.begin(); it!=plugins.end(); it++)
+	for (QList<IPlugin *>::Iterator it=plugins.begin(); it!=plugins.end(); it++)
 	{
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
-		FTransports.insert(transort->ns(), transort);
-		connect((*it)->instance(),SIGNAL(connectionsOpened(IJingleContent*)),
-								  SLOT(onConnectionsOpened(IJingleContent*)),Qt::QueuedConnection);
-		connect((*it)->instance(),SIGNAL(connectionsOpenFailed(IJingleContent*)),
-								  SLOT(onConnectionsOpenFailed(IJingleContent*)),Qt::QueuedConnection);
+		FTransports.insertMulti(transort->priority(), transort);
+		connect((*it)->instance(),SIGNAL(connectionOpened(IJingleContent*)),
+								  SLOT(onConnectionOpened(IJingleContent*)),
+				Qt::QueuedConnection);
+		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
+								  SLOT(onConnectionFailed(IJingleContent*)),
+				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
-								  SLOT(onIncomingTransportFilled(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onIncomingTransportFilled(IJingleContent*)),
+				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent*)),
-								  SLOT(onIncomingTransportFillFailed(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onIncomingTransportFillFailed(IJingleContent*)),
+				Qt::QueuedConnection);
 	}
 
 	return true;
@@ -96,6 +112,12 @@ bool Jingle::initObjects()
 		registerDiscoFeatures();    // Register discovery features
 	else
 		return false;
+
+	if (FOptionsManager)
+	{
+		IOptionsDialogNode dnode = {ONO_JINGLETRANSPORTS, OPN_JINGLETRANSPORTS, MNI_JINGLE, tr("Jingle transports")};
+		FOptionsManager->insertOptionsDialogNode(dnode);
+	}
 
 	if (FStanzaProcessor)
 	{   // Register Stanza handlers
@@ -136,66 +158,59 @@ void Jingle::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-void Jingle::onConnectionsOpened(IJingleContent *AContent)
+void Jingle::onConnectionOpened(IJingleContent *AContent)
 {
-	emit connectionEstablished(AContent);
+	emit connectionOpened(AContent);
 }
 
-void Jingle::onConnectionsOpenFailed(IJingleContent *AContent)
+void Jingle::onConnectionFailed(IJingleContent *AContent)
 {
 	emit connectionFailed(AContent);
 }
 
 void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 {
-	qDebug() << "Jingle::onIncomingTransportFilled(" << AContent << ")";
-	QDomElement incoming = AContent->transportIncoming();
-	if (incoming.isNull())
-		qWarning() << "incoming is NULL!";
-	else
+	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
+	if (session)
 	{
-		QDomElement candidate = incoming.firstChildElement("candidate");
-		if (candidate.isNull())
-			qWarning() << "candidate is NULL!";
-		else
+		if (session->status() == None && session->isOutgoing())
 		{
-			qDebug() << "ip=" << candidate.attribute("ip");
-			qDebug() << "port=" << candidate.attribute("port");
+			if (!session->initiate())
+				LOG_ERROR("Session initiate failed!");
+//TODO: Notify application about failure
+		}
+		else if (session->status() == Initiated && !session->isOutgoing())
+		{
+			if (!session->accept())
+				LOG_ERROR("Session accept failed!");
+//TODO: Notify application about failure
 		}
 	}
-	if (FPendingContents.contains(AContent))
-	{
-		FPendingContents.removeAll(AContent);
-		qDebug() << "emitting contentAdded(" << AContent->name() << ")";
-		emit contentAdded(AContent);
-	}
 	else
-	{
-		qDebug() << "incomingTransportFilled(" << AContent->name() << ")";
-		emit incomingTransportFilled(AContent);
-	}
+		LOG_ERROR(QString("Session not found! sid=%1").arg(AContent->sid()));
 }
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	qDebug() << "Jingle::onIncomingTransportFillFailed(" << AContent << ")";
-	if (FPendingContents.contains(AContent))
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(qintptr(AContent), 8, 16));
+	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
+	if (session)
 	{
-		FPendingContents.removeAll(AContent);
-		emit contentAddFailed(AContent);
-		JingleSession::sessionBySessionId(AContent->streamJid(), AContent->sid())->deleteContent(AContent->name());
+		if (session->status() == None)
+			session->deleteLater();
+		else
+			session->terminate(FailedTransport);
 	}
-	else
-		emit incomingTransportFillFailed(AContent);
 }
 
 bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
+	LOG_DEBUG(QString("Jingle::processSessionInitiate(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept));
 	JingleSession *session = new JingleSession(AStanza);
 
 	if (!session->isOk())
 	{
-		qWarning() << "Session exists! Replying with error!";
+		LOG_WARNING("Session exists! Replying with error!");
 		Stanza ack = AStanza.ack(IJingle::ResourceConstraint);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		session->deleteLater();
@@ -203,7 +218,7 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 	}
 	else if (!session->isValid())
 	{
-		qWarning() << "Invalid session! Replying with error!";
+		LOG_WARNING("Invalid session! Replying with error!");
 		Stanza ack = AStanza.ack(IJingle::BadRequest);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		session->deleteLater();
@@ -212,13 +227,14 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 	AAccept=true;
 
-	IJingleApplication *app=NULL;
+	IJingleApplication *app(nullptr);
 	QString appns;
 	QHash<QString, JingleContent *> contents=session->contents();
-	bool    wrong=false;
-	for (QHash<QString, JingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
+	bool wrong(false);
+	for (QHash<QString, JingleContent *>::ConstIterator it=contents.constBegin();
+		 it!=contents.constEnd(); it++)
 	{
-		bool    supported=false;
+		bool supported(false);
 
 		QDomElement descr = (*it)->description();
 		if (descr.isNull())
@@ -229,33 +245,35 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 		QString appns_=descr.namespaceURI();
 		if (appns_.isNull())
 		{
-			wrong=true;
+			wrong = true;
 			break;
 		}
 		if (appns.isNull())
 		{
-			appns=appns_;
-			app=FApplications.value(appns);
+			appns = appns_;
+			app = FApplications.value(appns);
 			if (app && app->checkSupported(descr))
-				supported=true;
+				supported = true;
 			else
 				break;
 		}
 		else
-			if (appns!=appns_)
+			if (appns != appns_)
 			{
-				wrong=true;
+				wrong = true;
 				break;
 			}
 
 		if (supported)  // Ok, let's check, if transport is supported
 		{
-			supported=false;
-			if (FTransports.contains((*it)->transportNS()))
-			{
-				supported=true;
-				break;
-			}
+			supported = false;
+			for (QMap<int, IJingleTransport*>::ConstIterator itt=FTransports.constBegin();
+				 itt != FTransports.constEnd(); ++itt)
+				if ((*itt)->ns() == (*it)->transportNS())
+				{
+					supported = true;
+					break;
+				}
 		}
 		if (!supported)
 			session->deleteContent(it.key());
@@ -263,7 +281,7 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 	if (wrong || session->contents().isEmpty())
 	{
-		qWarning() << "No contents! Replying with error!";
+		LOG_WARNING("No contents! Replying with error!");
 		Stanza ack = AStanza.ack(BadRequest);
 		FStanzaProcessor->sendStanzaOut(AStreamJid, ack);
 		delete session;
@@ -276,45 +294,50 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 		session->setInitiated(app);
 		return true;
 	}
-	qWarning() << "Something gone wrong! Returning false.";
+	LOG_FATAL("Something gone wrong! Returning false.");
 	return false;
 }
 
 bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::processSessionAccept(" << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
 	AAccept=true;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session = JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		QDomElement jingle = AStanza.jingleElement();
-		for (QDomElement contentElement = jingle.firstChildElement("content"); !contentElement.isNull(); contentElement=contentElement.nextSiblingElement("content"))
+		for (QDomElement contentElement = jingle.firstChildElement("content");
+			 !contentElement.isNull();
+			 contentElement=contentElement.nextSiblingElement("content"))
 		{
 			JingleContent *content = session->getContent(contentElement.attribute("name"));
 			if (content)
 			{
 				QDomElement transport = contentElement.firstChildElement("transport");
-				if (!transport.isNull())
-					if (content->setOutgoingTransport(transport))
-						qDebug() << "Outgoing transport set successfuly!";
-					else
-						qWarning() << "Outgoing transport set error!";
+				if (transport.isNull())
+					LOG_ERROR("Outgoing transport is NULL!");
 				else
-					qWarning() << "Outgoing transport is NULL!";
+				{
+					if (content->setOutgoingTransport(transport))
+						LOG_DEBUG("Outgoing transport set successfuly!");
+					else
+						LOG_ERROR("Outgoing transport set error!");
+				}
 			}
 			else
-				qWarning() << "Content with name=\"" << contentElement.attribute("name") << "\" found!";
+				LOG_WARNING(QString("Content with name=\"%1\" found!").arg(contentElement.attribute("name")));
 		}
 
 		Stanza ack=AStanza.ack(Acknowledge);
 		if (FStanzaProcessor->sendStanzaOut(AStreamJid, ack))
 		{
 			session->setAccepted();
+			LOG_DEBUG("returning true");
 			return true;
 		}
 	}
 	else
-		qWarning() << "session not found: sid=" << AStanza.sid();
+		LOG_WARNING(QString("session not found: sid=%1").arg(AStanza.sid()));
+	LOG_DEBUG("returning false");
 	return false;
 }
 
@@ -322,7 +345,7 @@ bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &
 {
 	AAccept=true;
 	bool result;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		Stanza ack=AStanza.ack(Acknowledge);
@@ -338,7 +361,7 @@ bool Jingle::processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStan
 {
 	AAccept=true;
 	bool result;
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, AStanza.sid());
+	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		Stanza ack=AStanza.ack(Acknowledge);
@@ -350,9 +373,17 @@ bool Jingle::processSessionInfo(const Jid &AStreamJid, const JingleStanza &AStan
 	return result;
 }
 
+IJingleTransport *Jingle::transportByNs(const QString &ANameSpace)
+{
+	for (QMap<int, IJingleTransport*>::ConstIterator it=FTransports.constBegin();
+		 it != FTransports.constEnd(); ++it)
+		if ((*it)->ns() == ANameSpace)
+			return *it;
+	return nullptr;
+}
+
 bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-//    qDebug() << "Jingle::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
 	if (AHandleId==FSHIRequest)
 	{
 		JingleStanza stanza(AStanza);
@@ -376,14 +407,14 @@ bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStan
 	}
 	else if (AHandleId==FSHIResult || AHandleId==FSHIError)
 	{
-		JingleSession *session=JingleSession::sessionByStanzaId(AStreamJid, AStanza.id());
+		JingleSession *session=JingleSession::sessionByStanzaId(AStanza.id());
 		if (session)
 		{
 			if (AHandleId==FSHIResult)
 				session->acknowledge(Acknowledge, Jid());
 			else    // Error!
 			{
-				qWarning() << "Error! sid=" << session->sid();
+				LOG_WARNING(QString("Error! sid=%1").arg(session->sid()));
 				QDomElement error=AStanza.firstElement("error");
 				if (!error.isNull())
 					session->acknowledge(BadRequest, Jid());
@@ -400,73 +431,98 @@ QString Jingle::sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, con
 	return session->sid();
 }
 
-bool Jingle::sessionInitiate(const Jid &AStreamJid, const QString &ASid)
+bool Jingle::sessionAccept(const QString &ASid)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
-	return session?session->initiate():false;
-}
-
-bool Jingle::sessionAccept(const Jid &AStreamJid, const QString &ASid)
-{
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->accept():false;
 }
 
-bool Jingle::sessionTerminate(const Jid &AStreamJid, const QString &ASid, Reason AReason)
+bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->terminate(AReason):false;
 }
 
-bool Jingle::sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomElement &AJingleElement)
+bool Jingle::sessionDestroy(const QString &ASid)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
+	if (session) {
+		session->deleteLater();
+		return true;
+	}
+	else
+		return false;
+}
+
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction,
+						const QDomElement &AJingleElement)
+{
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElement):false;
 }
 
-bool Jingle::sendAction(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, const QDomNodeList &AJingleElements)
+bool Jingle::sendAction(const QString &ASid, IJingle::Action AAction,
+						const QDomNodeList &AJingleElements)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->sendAction(AAction, AJingleElements):false;
 }
 
 // Sessions
-IJingleContent *Jingle::contentAdd(const Jid &AStreamJid, const QString &ASid, const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder)
+IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
+								   const QString &AMediaType, int AComponentCount,
+								   IJingleTransport::Type ATransportType,
+								   bool AFromResponder)
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
-		IJingleContent *content=session->addContent(AName, AMediaType, ATransportNameSpace, AFromResponder);
-		if (content)
-		{
-			if (FTransports[ATransportNameSpace]->fillIncomingTransport(content))
+		for (QMap<int, IJingleTransport*>::ConstIterator it=FTransports.constBegin();
+			 it != FTransports.constEnd(); ++it)
+			if ((*it)->types().testFlag(ATransportType) &&
+				FServiceDiscovery->discoInfo(session->thisParty(),
+											 session->otherParty()).features.contains((*it)->ns()))
 			{
-				FPendingContents.append(content);
-				return content;
+				IJingleContent *content = session->addContent(AName, AMediaType,
+															  AComponentCount,
+															  *it, AFromResponder);
+				if (content)
+				{
+					LOG_DEBUG("Jingle content added!");
+					return content;
+				}
+				else
+					LOG_ERROR("Content creation failed!");
 			}
-			else
-				session->deleteContent(AName);
-		}
+
+		// An appropriate transport not found
+		session->deleteContent(AName);
 	}
-	return NULL;
+	return nullptr;
 }
 
-IJingle::SessionStatus Jingle::sessionStatus(const Jid &AStreamJid, const QString &ASid) const
+IJingle::SessionStatus Jingle::sessionStatus(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->status():IJingle::None;
 }
 
-bool Jingle::isOutgoing(const Jid &AStreamJid, const QString &ASid) const
+bool Jingle::isOutgoing(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->isOutgoing():false;
 }
 
-Jid Jingle::contactJid(const Jid &AStreamJid, const QString &ASid) const
+Jid Jingle::contactJid(const QString &ASid) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->otherParty():Jid();
+}
+
+Jid Jingle::streamJid(const QString &ASid) const
+{
+	JingleSession *session=JingleSession::sessionBySessionId(ASid);
+	return session?session->thisParty():Jid();
 }
 
 QString Jingle::errorMessage(IJingle::Reason AReason) const
@@ -512,61 +568,91 @@ QString Jingle::errorMessage(IJingle::Reason AReason) const
 	}
 }
 
-QHash<QString, IJingleContent *> Jingle::contents(const Jid &AStreamJid, const QString &ASid) const
+QHash<QString, IJingleContent *> Jingle::contents(const QString &ASid) const
 {
 	QHash<QString, IJingleContent *> rc;
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 		for (QHash<QString, JingleContent *>::ConstIterator it=session->contents().constBegin(); it!=session->contents().constEnd(); it++)
 			rc.insert(it.key(), *it);
 	return rc;
 }
 
-IJingleContent *Jingle::content(const Jid &AStreamJid, const QString &ASid, const QString &AName) const
+IJingleContent *Jingle::content(const QString &ASid, const QString &AName) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
-	IJingleContent *content = session?session->getContent(AName):NULL;
-	return content;
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
+	return session?session->getContent(AName):nullptr;
 }
 
-bool Jingle::selectTransportCandidate(const Jid &AStreamJid, const QString &ASid, const QString &AContentName, const QString &ACandidateId)
+IJingleContent *Jingle::content(const QString &ASid, QIODevice *ADevice) const
 {
-	JingleSession *session=JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
+	return session?session->getContent(ADevice):nullptr;
+}
+
+bool Jingle::selectTransportCandidate(const QString &ASid, const QString &AContentName, const QString &ACandidateId)
+{
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 		return session->selectTransportCandidate(AContentName, ACandidateId);
 	return false;
 }
 
-bool Jingle::connectContent(const Jid &AStreamJid, const QString &ASid, const QString &AName)
+bool Jingle::connectContent(const QString &ASid, const QString &AName)
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
 		IJingleContent *content =  session->getContent(AName);
 		if (content)
-			return FTransports[content->transportNS()]->openConnection(content);
+		{
+			IJingleTransport *transport(transportByNs(content->transportNS()));
+			if (transport)
+				return transport->openConnection(content);
+			else
+				LOG_ERROR("Invalid transport!");
+		}
 		else
-			qWarning() << "No content!";
+			LOG_ERROR("No content!");
 	}
 	else
-		qWarning() << "No session!";
+		LOG_ERROR("No session!");
 	return false;
 }
 
-bool Jingle::setConnected(const Jid &AStreamJid, const QString &ASid)
+bool Jingle::setConnected(const QString &ASid)
 {
-	JingleSession *session = JingleSession::sessionBySessionId(AStreamJid, ASid);
+	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
 		session->setConnected();
 		return true;
 	}
+	else
+		LOG_ERROR("Session not found!");
 	return false;
 }
 
 bool Jingle::fillIncomingTransport(IJingleContent *AContent)
 {
-	return FTransports[AContent->transportNS()]->fillIncomingTransport(AContent);
+	IJingleTransport *transport(transportByNs(AContent->transportNS()));
+	if (transport)
+		return transport->fillIncomingTransport(AContent);
+	else
+	{
+		LOG_ERROR("Invalid transport");
+		return false;
+	}
+}
+
+void Jingle::freeIncomingTransport(IJingleContent *AContent)
+{
+	IJingleTransport *transport(transportByNs(AContent->transportNS()));
+	if (transport)
+		transport->freeIncomingTransport(AContent);
+	else
+		LOG_ERROR("Invalid transport");
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_Jingle,Jingle)

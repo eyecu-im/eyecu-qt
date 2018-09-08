@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>PositioningMethodManual</name>
   <message>
@@ -68,7 +68,7 @@
    <location filename="../../plugins/positioningmethodmanual/positioningmethodmanualoptions.cpp" line="44"/>
    <source>second(s)</source>
    <comment>Send interval units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

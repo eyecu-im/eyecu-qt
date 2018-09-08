@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AudioOptions</class>
+ <widget class="QWidget" name="AudioOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>402</width>
+    <height>100</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Jingle RTP options</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblAudioDeviceInput">
+     <property name="text">
+      <string>Input device</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbAudioDeviceInput</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblAudioDeviceOutput">
+     <property name="text">
+      <string>Output device</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbAudioDeviceOutput</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QComboBox" name="cmbAudioDeviceInput"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="cmbAudioDeviceOutput"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblAudioBitrate">
+     <property name="text">
+      <string>Bitrate</string>
+     </property>
+     <property name="buddy">
+      <cstring>spbBitrate</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QSpinBox" name="spbBitrate">
+     <property name="minimum">
+      <number>1000</number>
+     </property>
+     <property name="maximum">
+      <number>360000</number>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cmbAudioDeviceInput</tabstop>
+  <tabstop>cmbAudioDeviceOutput</tabstop>
+  <tabstop>spbBitrate</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>onAvailablePayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypeSelectionChanged()</slot>
+  <slot>onUsedPayloadTypePriorityUp()</slot>
+  <slot>onUsedPayloadTypePriorityDown()</slot>
+  <slot>onPayloadTypeUse()</slot>
+  <slot>onPayloadTypeUnuse()</slot>
+  <slot>onPayloadTypeAdd()</slot>
+  <slot>onPayloadTypeEdit()</slot>
+  <slot>onPayloadTypeRemove()</slot>
+ </slots>
+</ui>

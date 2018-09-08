@@ -1,18 +1,15 @@
 HEADERS = \   
     jinglertp.h \
-    jinglertpoptions.h \
-    audio.h \
-    renderarea.h \
-    mediathread.h \
-    $$PWD/audioinfo.h
+    audiooptions.h \
+    codecoptions.h \
+	rtpiodevice.h
+
 SOURCES = \   
     jinglertp.cpp \
-    jinglertpoptions.cpp \
-    renderarea.cpp \
-    audio.cpp \
-    mediathread.cpp \
-    $$PWD/audioinfo.cpp
+    audiooptions.cpp \
+    codecoptions.cpp \
+	rtpiodevice.cpp
 
 FORMS += \
-    jinglertpoptions.ui \
-    audio.ui
+    audiooptions.ui \
+    codecoptions.ui

@@ -1,52 +1,70 @@
 #ifndef JINGLETRANSPORTICEUDP_H
 #define JINGLETRANSPORTICEUDP_H
 
-#include <QObject>
+#include <QPIceTransport>
 #include "interfaces/ipluginmanager.h"
 #include "interfaces/ijingle.h"
 #include "interfaces/iservicediscovery.h"
 #include "interfaces/ioptionsmanager.h"
 #include "definitions/namespaces.h"
 #include "utils/iconstorage.h"
+#include "icethread.h"
 
 #define JINGLETRANSPORTICEUDP_UUID "{7e2841af-24ba-9c82-d3cb-ad24b36cd4ab}"
 
-class JingleTransportIceUdp : public QObject, public IPlugin, public IJingleTransport
+class JingleTransportIceUdp:
+		public QObject,
+		public IPlugin,
+		public IJingleTransport,
+		public IOptionsDialogHolder
 {
     Q_OBJECT
-	Q_INTERFACES(IPlugin IJingleTransport)
+	Q_INTERFACES(IPlugin IJingleTransport IOptionsDialogHolder)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IJingleTransportIceUdp")
 #endif
 public:
-    explicit JingleTransportIceUdp(QObject *parent = 0);
+	explicit JingleTransportIceUdp(QObject *parent = nullptr);
 
     //IPlugin
-    QObject *instance() { return this; }
-    QUuid pluginUuid() const { return JINGLETRANSPORTICEUDP_UUID; }
-    void pluginInfo(IPluginInfo *APluginInfo);
-    bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-    bool initObjects();
-    bool initSettings();
-    bool startPlugin(){return true;}
+	QObject *instance()  override { return this; }
+	QUuid pluginUuid() const  override{ return JINGLETRANSPORTICEUDP_UUID; }
+	void pluginInfo(IPluginInfo *APluginInfo) override;
+	bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	bool initObjects() override;
+	bool initSettings() override;
+	bool startPlugin() override {return true;}
 
     //IJingleTransport
-    bool isStreaming() const {return false;}
-    virtual QString ns() const {return NS_JINGLE_TRANSPORTS_ICE_UDP;}
-    virtual int priority() const {return 100;}
-    bool openConnection(IJingleContent *AContent);
-    bool fillIncomingTransport(IJingleContent *AContent);
+	Types types() const override {return Datagram;}
+	virtual QString ns() const override {return NS_JINGLE_TRANSPORTS_ICE_UDP;}
+	virtual int priority() const override {return 50;}
+	bool openConnection(IJingleContent *AContent) override;
+	bool fillIncomingTransport(IJingleContent *AContent) override;
+	void freeIncomingTransport(IJingleContent *AContent) override;
+
+	// IOptionsDialogHolder interface
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
 
 protected:
-    void    registerDiscoFeatures();
+	void registerDiscoFeatures();
+	int readCandidates(IceThread *AIceThread);
+	static QHash<QHostAddress, int> networksByIp();
+
+protected slots:
+	void onOptionsOpened();
+	void onOptionsChanged(const OptionsNode &ANode);
+
+	void onIceSuccess(int AOperation);
+	void onIceThreadFinished();
 
 signals:
-    void connectionsOpened(IJingleContent *AContent);
-    void connectionsOpenFailed(IJingleContent *AContent);
-    void incomingTransportFilled(IJingleContent *AContent);
-    void incomingTransportFillFailed(IJingleContent *AContent);
+	//IJingleTransport
+	void connectionOpened(IJingleContent *AContent) override;
+	void connectionError(IJingleContent *AContent) override;
+	void incomingTransportFilled(IJingleContent *AContent) override;
+	void incomingTransportFillFailed(IJingleContent *AContent) override;
 
-signals:
     void deviceOpened(QIODevice *ADevice);
     void deviceClosed(QIODevice *ADevice);
     void connectionEstablished(QIODevice *ADevice);
@@ -55,7 +73,11 @@ signals:
 
 private:
     IOptionsManager   *FOptionsManager;
-    IServiceDiscovery *FServiceDiscovery;
+    IServiceDiscovery *FServiceDiscovery;	
+	IJingle			  *FJingle;
+	QPIceTransport::Config FIceCfg;
+//	QHash<IJingleContent *, IceThread *> FIceThreads;
+	QList<IceThread *> FIceThreads;
 };
 
 #endif // JINGLETRANSPORTICEUDP_H

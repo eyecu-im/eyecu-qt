@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>ContactProximityNotificationOptions</name>
   <message>
@@ -20,7 +20,7 @@
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.cpp" line="38"/>
    <source>meter(s)</source>
    <comment>distance units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

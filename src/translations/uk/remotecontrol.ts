@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>RemoteControl</name>
   <message>
@@ -181,7 +181,7 @@
   <message numerus="yes">
    <location filename="../../plugins/remotecontrol/remotecontrol.cpp" line="649"/>
    <source>%n message(s) from &apos;%1&apos;</source>
-   <translation><numerusform>%n повідомлення від &apos;%1&apos;</numerusform><numerusform>%n повідомленнь від &apos;%1&apos;</numerusform><numerusform>%n повідомленнь від &apos;%1&apos;</numerusform></translation>
+   <translation><numerusform>%n повідомлення від &apos;%1&apos;</numerusform><numerusform>%n повідомленнь від &apos;%1&apos;</numerusform><numerusform>%n повідомленнь від &apos;%1&apos;</numerusform><numerusform>%n повідомленнь від &apos;%1&apos;</numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/remotecontrol/remotecontrol.cpp" line="661"/>

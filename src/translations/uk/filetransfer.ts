@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" sourcelanguage="en" version="2.1">
  <context>
   <name>FileTransfer</name>
   <message>
@@ -52,7 +52,7 @@
   </message>
   <message numerus="yes">
    <source>/me share %n file(s): %1</source>
-   <translation><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform></translation>
+   <translation><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform><numerusform>/me поділився %n файлом(ами): %1</numerusform></translation>
   </message>
   <message>
    <source>Select Files</source>

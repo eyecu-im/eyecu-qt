@@ -311,7 +311,6 @@ void ServerPage::loadServerList()
         QDomDocument doc;
         if(doc.setContent(file.readAll(), true))
         {
-            int columnWidth = 160;
             QStringList headers;
 			headers << tr("Server")<< tr("Registration") << tr("PEP") << tr("Message Archive")
 					<< tr("Message Carbons") << tr("User Search") << tr("MUC") << tr("Proxy")
@@ -322,7 +321,7 @@ void ServerPage::loadServerList()
 			model->setSortRole(Qt::UserRole);
 			FServerList->setSortingEnabled(true);
 
-            FServerList->setColumnWidth(0, columnWidth);//icon,jid
+			FServerList->setColumnWidth(0, 160);//icon,jid
 			FServerList->setColumnWidth(1, 80); //Registration type=[??=0,server=1,web=2,both=3]
 			FServerList->setColumnWidth(2, 30); //pep
 			FServerList->setColumnWidth(3, 30); //Message Archive
@@ -332,7 +331,7 @@ void ServerPage::loadServerList()
 			FServerList->setColumnWidth(7, 30); //proxy
 			FServerList->setColumnWidth(8, 30); //Store Files
 			FServerList->setColumnWidth(9, 280); //Transports
-			FServerList->setColumnWidth(10, 35); //country			
+			FServerList->setColumnWidth(10, 35); //country
 
             for (QDomElement e = doc.documentElement().firstChildElement("server");
                  !e.isNull();

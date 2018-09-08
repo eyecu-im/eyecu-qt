@@ -1,18 +1,18 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>AdiumMessageStyle</name>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="632"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="624"/>
    <source>hh:mm</source>
    <translation>hh:mm</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="643"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="635"/>
    <source>hh:mm:ss</source>
    <translation>hh:mm:ss</translation>
   </message>
   <message>
-   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="840"/>
+   <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="832"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
    <translation>Не вдалося завантажити стиль чату. Натисніть кнопку &quot;Очистити вікно&quot; щоб спробувати знову.</translation>
   </message>

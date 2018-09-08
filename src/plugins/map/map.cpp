@@ -347,7 +347,7 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 
 				FMyLocation->setDisabled(true);
 				if (FFollowedObject)
-					FFollowedObject = NULL;
+					FFollowedObject = nullptr;
 			}
 			else
 			{
@@ -360,7 +360,7 @@ void Map::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path()==OPV_MAP_SOURCE)
 		FMapForm->setMapSource(getMapSource(findMapSource(ANode.value().toString())));
 	else if (ANode.path()==OPV_MAP_MODE)
-		FMapForm->setMapMode(ANode.value().toInt());
+		FMapForm->setMapMode(qint8(ANode.value().toInt()));
 	else if (ANode.path()==OPV_MAP_ZOOM)
 	{
 		MercatorCoordinates coordsOld;

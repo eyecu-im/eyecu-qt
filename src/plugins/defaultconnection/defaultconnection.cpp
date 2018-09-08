@@ -1,5 +1,4 @@
 #include "defaultconnection.h"
-
 #include <QNetworkProxy>
 #include <QAuthenticator>
 #include <definitions/internalerrors.h>
@@ -12,11 +11,11 @@ DefaultConnection::DefaultConnection(IConnectionEngine *AEngine, QObject *AParen
 	FEngine = AEngine;
 	FDisconnecting = false;
 	FDnsLookup.setType(QPDnsLookup::SRV);
-	connect(&FDnsLookup,SIGNAL(finished()),SLOT(onDnsLookupFinished()));
 
 	// Make FDnsLookup.isFinished to be true
 	FDnsLookup.lookup();
 	FDnsLookup.abort();
+	connect(&FDnsLookup,SIGNAL(finished()),SLOT(onDnsLookupFinished()));
 
 	FSocket.setSocketOption(QAbstractSocket::KeepAliveOption,1);
 	connect(&FSocket, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *)),

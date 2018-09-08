@@ -133,12 +133,12 @@
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
    <source>This plugin depends on %n other plugin(s).</source>
-   <translation><numerusform>Цей плагін залежить від %n іншого плагіну.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform></translation>
+   <translation><numerusform>Цей плагін залежить від %n іншого плагіну.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
    <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation><numerusform>%n інший плагін залежить від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform></translation>
+   <translation><numerusform>%n інший плагін залежить від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform><numerusform>%n інших плагінів залежать від цього плагіну.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
@@ -153,7 +153,7 @@
   <message numerus="yes">
    <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
    <source>%n dependency(ies) not found.</source>
-   <translation><numerusform>%n залежність не знайдена.</numerusform><numerusform>%n залежностей не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform></translation>
+   <translation><numerusform>%n залежність не знайдена.</numerusform><numerusform>%n залежностей не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform></translation>
   </message>
   <message>
    <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>

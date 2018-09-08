@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name>Jingle</name>
     <message>
         <source>Jingle</source>
-        <translation>Джингл</translation>
+        <translation>Jingle</translation>
     </message>
     <message>
         <source>Implements XEP-0166: Jingle</source>
-        <translation>Реализует XEP-0166: Джингл</translation>
+        <translation>Реализует XEP-0166: Jingle</translation>
     </message>
     <message>
         <source>Supports XEP-0166: Jingle</source>
@@ -82,6 +82,10 @@
     <message>
         <source>Transport not supported</source>
         <translation>Транспорт не поддерживается</translation>
+    </message>
+    <message>
+        <source>Jingle transports</source>
+        <translation>Транспорты Jingle</translation>
     </message>
 </context>
 </TS>

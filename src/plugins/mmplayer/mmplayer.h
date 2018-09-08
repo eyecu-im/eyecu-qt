@@ -46,8 +46,8 @@ public:
 protected slots:
     void onStreamCreated(IFileStream *AStream);
     void onFileStreamStateChanged();
-	void onMediaStreamStatusChanged(int AStatusNew, int AstatusOld);
-    void onMediaStreamerDestroyed();
+	void onPlayerStatusChanged(int AStatusNew, int AstatusOld);
+    void onPlayerDestroyed();
     void onShowOptions() const;
 	void onStartPlayer(bool AState);
 	void onPlayerWindowDestroyed();
@@ -63,7 +63,7 @@ private:
 	PlayerWindow		*FPlayerWindow;
 	Action				*FAction;
     QMap<IFileStream*, FifoDataBuffer*> FBuffers;
-    QMap<QObject*, FifoDataBuffer*> FStreamerBuffers;
+    QMap<QObject*, FifoDataBuffer*> FPlayerBuffers;
 };
 
 #endif // MMPLAYER_H

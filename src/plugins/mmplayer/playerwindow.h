@@ -5,7 +5,7 @@
 #include <QCloseEvent>
 #include <QWheelEvent>
 #include <QHideEvent>
-#include <MediaStreamer>
+#include <MediaPlayer>
 
 #include <interfaces/ifilestreamsmanager.h>
 #include <interfaces/itune.h>
@@ -22,7 +22,7 @@ class PlayerWindow: public QWidget
     Q_OBJECT
 
 public:
-	PlayerWindow(QObject *APlugin, MediaStreamer *AMediaStreamer, QString AFileName, qint64 ALenth, QWidget *AParent = 0);
+	PlayerWindow(QObject *APlugin, MediaPlayer *AMediaStreamer, QString AFileName, qint64 ALenth, QWidget *AParent = 0);
 	PlayerWindow(QObject *APlugin, QWidget *AParent = 0);
     //qint64 duration
     ~PlayerWindow();
@@ -66,7 +66,7 @@ signals:
 	void stopped();
 
 private:
-	MediaStreamer	*FMediaStreamer;
+	MediaPlayer	*FMediaStreamer;
 	QFile			*FFile;
 	QStringList		FPlayList;
 	QStringList		FMidiFormats;

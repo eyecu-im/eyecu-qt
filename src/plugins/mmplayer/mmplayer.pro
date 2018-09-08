@@ -4,8 +4,8 @@ include(mmplayer.pri)
 include(../plugins.inc)
 
 contains(QT_CONFIG, multimediakit): {
-CONFIG += mobility
-MOBILITY += multimedia
+	CONFIG += mobility
+	MOBILITY += multimedia
 }
 else: contains(QT_CONFIG, multimedia): QT += multimedia
 

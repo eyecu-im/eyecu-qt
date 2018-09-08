@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en">
+<TS version="2.1" language="en">
  <context>
   <name>TrayManager</name>
   <message>
-   <location line="43" filename="../../plugins/traymanager/traymanager.cpp"/>
+   <location filename="../../plugins/traymanager/traymanager.cpp" line="43"/>
    <source>Tray Icon</source>
    <translation>Tray Icon</translation>
   </message>
   <message>
-   <location line="44" filename="../../plugins/traymanager/traymanager.cpp"/>
+   <location filename="../../plugins/traymanager/traymanager.cpp" line="44"/>
    <source>Allows other modules to access the icon and context menu in the tray</source>
    <translation>Allows other modules to access the icon and context menu in the tray</translation>
   </message>
   <message>
-   <location line="64" filename="../../plugins/traymanager/traymanager.cpp"/>
+   <location filename="../../plugins/traymanager/traymanager.cpp" line="64"/>
    <source>Quit</source>
    <translation>Quit</translation>
   </message>

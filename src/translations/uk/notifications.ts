@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>Notifications</name>
   <message>
@@ -71,7 +71,7 @@
   <message numerus="yes">
    <location filename="../../plugins/notifications/notifications.cpp" line="858"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/notifications/notifications.cpp" line="256"/>

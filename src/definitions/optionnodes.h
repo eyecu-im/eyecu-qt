@@ -31,7 +31,8 @@
 #define OPN_POI                 "Poi"
 #define OPN_MMPLAYER            "MultimediaPlayer"
 #define OPN_TRACKER             "Tracker"
-#define OPN_JINGLERTP           "Jinglertp"
+#define OPN_JINGLERTP           "JingleRtp"
+#define OPN_JINGLETRANSPORTS    "JingleTransports"
 #define OPN_WIZARD_ACC          "WizardAcc"
 #define OPN_SCHEDULER           "Scheduler"
 // *** >>> eyeCU >>> ***

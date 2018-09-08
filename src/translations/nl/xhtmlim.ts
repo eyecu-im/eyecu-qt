@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.1">
  <context>
   <name>AddLink</name>
   <message>
@@ -914,7 +914,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="155"/>
    <source>Shift+Return</source>
    <comment>Insert new line</comment>
-   <translation type="unfinished"/>
+   <translation>Shift+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="160"/>
@@ -926,7 +926,7 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="161"/>
    <source>Ctrl+-</source>
    <comment>Strikeout</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+</translation>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="171"/>

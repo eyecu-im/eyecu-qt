@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>Emoji</name>
   <message>
@@ -88,7 +88,7 @@
   <message numerus="yes">
    <location filename="../../plugins/emoji/iconsizespinbox.cpp" line="62"/>
    <source>pixel(s)</source>
-   <translation><numerusform>піксель</numerusform><numerusform>пікселі</numerusform><numerusform>пікселів</numerusform></translation>
+   <translation><numerusform>піксель</numerusform><numerusform>пікселі</numerusform><numerusform>пікселів</numerusform><numerusform>пікселів</numerusform></translation>
   </message>
  </context>
  <context>

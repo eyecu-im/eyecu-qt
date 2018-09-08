@@ -17,7 +17,6 @@ friend class JingleSession;
 public:
     const QString &name() const {return FName;}
     const QString &sid() const {return FSid;}
-    const QString &streamJid() const {return FStreamJid;}
     bool  fromResponder() const {return FContentFromResponder;}
     QStringList candidateIds() const;
     const QDomElement candidate(const QString &AId) const;    
@@ -32,29 +31,38 @@ public:
     const QDomElement &transportOutgoing() const {return FTransportOutgoing;}
     const QDomElement &transportIncoming() const {return FTransportIncoming;}
     const QDomDocument &document() const {return FDocument;}
-    bool        setOutgoingTransport(const QDomElement &ATransport);
-    QIODevice * inputDevice(const QString &AId) const {return FInputDevices.value(AId);}
-    void        setInputDevice(const QString &AId, QIODevice *ADevice);
-    QIODevice * outputDevice(const QString &AId) const {return FOutputDevices.value(AId);}
-    void        setOutputDevice(const QString &AId, QIODevice *ADevice);
+	bool		setOutgoingTransport(const QDomElement &ATransport);
+
+	int			componentCount() const;
+	void		setComponentCount(int ACount);
+	virtual int	component(QIODevice *ADevice) const;
+	QIODevice	*ioDevice(int AComponentId) const {
+		return FIODevices.value(AComponentId);
+	}
+	bool setIoDevice(int AComponentId, QIODevice *ADevice);
 
 protected:
-    JingleContent(const QString &AName, const QString &ASid, const QString &AStreamJid, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
-    JingleContent(const QString &AName, const QString &ASid, const QString &AStreamJid, const QString &AApplicationNameSpace, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
-    ~JingleContent();
+	JingleContent(const QString &AName, const QString &ASid,
+				  const QDomElement &ADescription,
+				  const QDomElement &ATransport, bool AFromResponder);
+	JingleContent(const QString &AName, const QString &ASid, int AComponentCount,
+				  const QString &AApplicationNameSpace, const QString &AMediaType,
+				  const QString &ATransportNS, bool AFromResponder);
+	virtual ~JingleContent();
     QDomElement     addElementToStanza(JingleStanza &AStanza);
 
 private:    
     QString         FName;
     QString         FSid;
-    QString         FStreamJid; //! Temporary
     bool            FContentFromResponder;
+	int				FComponentCount;
+
     QDomDocument    FDocument;
     QDomElement     FDescription;
     QDomElement     FTransportOutgoing;
     QDomElement     FTransportIncoming;
-    QHash<QString, QIODevice*> FInputDevices;
-    QHash<QString, QIODevice*> FOutputDevices;
+
+	QMap<int, QIODevice*> FIODevices;
     QMap<long, QDomElement> FTransportCandidates;
     QMap<long, QDomElement>::ConstIterator FTransportCandidateItreator;
 };
@@ -62,7 +70,8 @@ private:
 class JingleSession: public QObject
 {
     Q_OBJECT
-
+	friend bool JingleContent::setIoDevice(int, QIODevice *);
+	friend JingleContent::~JingleContent();
 public:
     enum Direction
     {
@@ -72,10 +81,10 @@ public:
 
     JingleSession(const Jid &AThisParty, const Jid &AOtherParty, const QString &AApplicationNS);
     JingleSession(const JingleStanza &AStanza);
-    ~JingleSession();
+	virtual ~JingleSession();
 
     void setInitiated(IJingleApplication *AApplication);
-    void setAccepted();
+	void setAccepted();
     void setConnected();
     void setTerminated(IJingle::Reason AReason);
 
@@ -90,7 +99,7 @@ public:
 
     bool selectTransportCandidate(const QString &AContentName, const QString &ACandidateId);
 
-    bool isOk() const { return FSessions.value(FThisParty).value(FSid)==this;}
+	bool isOk() const { return FSessions.value(FSid)==this;}
     bool isValid() const {return FValid;}
 
     const Jid   &thisParty() const {return FThisParty;}
@@ -100,8 +109,8 @@ public:
     QDomElement &transport(const QString &AContent) {return FContents[AContent]->FTransportIncoming;}
     QDomElement &description(const QString &AContent) {return FContents[AContent]->FDescription;}
 
-    static JingleSession* sessionBySessionId(const Jid &AStreamJid, const QString &ASid) {return FSessions.contains(AStreamJid)?FSessions[AStreamJid].value(ASid):NULL;}
-    static JingleSession* sessionByStanzaId(const Jid &AStreamJid, const QString &AId);
+	static JingleSession* sessionBySessionId(const QString &ASid) {return FSessions.value(ASid);}
+	static JingleSession* sessionByStanzaId(const QString &AId);
     static void setJingle(Jingle *AJingle);
 
     QObject *instance() {return this;}
@@ -115,28 +124,27 @@ public:
     IJingle::SessionStatus status() const {return FStatus;}
     IJingle::Action lastAction() const {return FAction;}
 
-    JingleContent *addContent(const QString &AName, const QDomElement &ADescription, const QDomElement &ATransport, bool AFromResponder);
-    JingleContent *addContent(const QString &AName, const QString &AMediaType, const QString &ATransportNameSpace, bool AFromResponder);
+	JingleContent *addContent(const QString &AName, const QDomElement &ADescription,
+							  const QDomElement &ATransport, bool AFromResponder);
+	JingleContent *addContent(const QString &AName, const QString &AMediaType,
+							  int AComponentCount, IJingleTransport *ATransport,
+							  bool AFromResponder);
     JingleContent *getContent(const QString &AName) const {return FContents.value(AName);}
-    bool deleteContent(const QString &AName);    
+	JingleContent *getContent(QIODevice *AIODevice);
+	bool deleteContent(const QString &AName);
 
     const QHash<QString, JingleContent *> contents() const;
 
 protected:
-    static QString getSid(const Jid &AStreamJid);
-
-protected slots:
-    void onTimeout();
-    void onDeviceReadyRead();
+	static QString getSid();
 
 signals:
-    void sessionInitiated(const Jid &AStreamJid, const QString &ASid);
-    void sessionAccepted(const Jid &AStreamJid, const QString &ASid);
-    void sessionConnected(const Jid &AStreamJid, const QString &ASid);    
-    void sessionTerminated(const Jid &AStreamJid, const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
-    void sessionInformed(const QDomElement &AInfoElement);
-    void receivingData(const Jid &AStreamJid, const QString &ASid);
-    void actionAcknowledged(const Jid &AStreamJid, const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
+	void sessionInitiated(const QString &ASid);
+	void sessionAccepted(const QString &ASid);
+	void sessionConnected(const QString &ASid);
+	void sessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
+	void sessionInformed(const QDomElement &AInfoElement);
+	void actionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 
 private:
     bool        FValid;
@@ -152,8 +160,9 @@ private:
     IJingle::Action FAction;
     IJingle::Reason FReason;
     QHash<QString, JingleContent *> FContents;
+	QHash<QIODevice*, JingleContent*> FContentByDevice;
 
-    static QHash<Jid, QHash<QString, JingleSession*> >  FSessions;
+	static QHash<QString, JingleSession*> FSessions;
     static Jingle   *FJingle;
 };
 

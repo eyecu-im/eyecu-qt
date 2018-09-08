@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>PortInfo</name>
   <message>
@@ -124,25 +124,25 @@
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="348"/>
    <source>byte(s)</source>
    <comment>Buffer size units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="350"/>
    <source>second(s)</source>
    <comment>Time treshold units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="352"/>
    <source>meter(s)</source>
    <comment>Distance treshold units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.cpp" line="354"/>
    <source>millisecond(s)</source>
    <comment>Port timeout units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodserialport/positioningmethodserialportoptions.ui" line="38"/>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>ExchangeApproveDialog</name>
   <message>
@@ -93,7 +93,7 @@
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="528"/>
    <source>Send %n Contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message>
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="650"/>
@@ -113,12 +113,12 @@
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="810"/>
    <source>%n contact(s) sent</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/rosteritemexchange/rosteritemexchange.cpp" line="812"/>
    <source>Failed to send %n contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
 </TS>

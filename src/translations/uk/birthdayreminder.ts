@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>BirthdayReminder</name>
   <message>
@@ -34,17 +34,18 @@
    <translation><numerusform>День народження через %n день,
  %1</numerusform><numerusform>День Народження через %n днів,
  %1</numerusform><numerusform>День народження за %n днів,
+ %1</numerusform><numerusform>День народження за %n днів,
  %1</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>
    <source>%1 turns %n</source>
-   <translation><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform></translation>
+   <translation><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform><numerusform>%1 виповниться %n</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
    <source>Birthday in %n day(s)!</source>
-   <translation><numerusform>День народження за %n день!</numerusform><numerusform>День народження за %n днів!</numerusform><numerusform>День народження за %n днів!</numerusform></translation>
+   <translation><numerusform>День народження за %n день!</numerusform><numerusform>День народження за %n днів!</numerusform><numerusform>День народження за %n днів!</numerusform><numerusform>День народження за %n днів!</numerusform></translation>
   </message>
  </context>
 </TS>

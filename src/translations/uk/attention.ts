@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
   <name>Attention</name>
   <message>
@@ -30,7 +30,7 @@
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
    <source>Alt+Return</source>
    <comment>Attention</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+Enter</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
