@@ -119,7 +119,7 @@ public:
 	virtual QObject *instance() =0;
 	virtual IJingleApplication *appByNS(const QString &AApplicationNS) =0;
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS) =0;
-	virtual bool    sessionInitiate(const QString &ASid) =0;
+//	virtual bool    sessionInitiate(const QString &ASid) =0;
 	virtual bool    sessionAccept(const QString &ASid) =0;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
 	virtual bool    sessionDestroy(const QString &ASid) =0;
@@ -147,7 +147,7 @@ public:
 	virtual QString errorMessage(Reason AReason) const =0;
 
 protected:
-	virtual void startSendData(IJingleContent *AContent) =0;
+	virtual void connectionOpened(IJingleContent *AContent) =0;
 	virtual void connectionFailed(IJingleContent *AContent) =0;
 	virtual void contentAdded(IJingleContent *AContent) =0;
 	virtual void contentAddFailed(IJingleContent *AContent) =0;
@@ -190,6 +190,7 @@ public:
 	virtual const   QDomElement &transportIncoming() const =0;
 	virtual const   QDomDocument &document() const =0;
 	virtual			int			componentCount() const =0;
+	virtual			void		setComponentCount(int ACount) =0;
 	virtual			int			component(QIODevice *) const =0;
 	virtual         QIODevice   *ioDevice(int AComponentId) const =0;
 	virtual         bool        setIoDevice(int AComponentId, QIODevice *ADevice) =0;

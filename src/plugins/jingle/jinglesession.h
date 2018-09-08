@@ -33,8 +33,9 @@ public:
     const QDomDocument &document() const {return FDocument;}
 	bool		setOutgoingTransport(const QDomElement &ATransport);
 
-	int	  componentCount() const;
-	virtual int			component(QIODevice *ADevice) const;
+	int			componentCount() const;
+	void		setComponentCount(int ACount);
+	virtual int	component(QIODevice *ADevice) const;
 	QIODevice	*ioDevice(int AComponentId) const {
 		return FIODevices.value(AComponentId);
 	}

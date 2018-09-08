@@ -6,7 +6,6 @@
 #include <QAVOutputFormat>
 
 #include <interfaces/ioptionsmanager.h>
-#include <utils/options.h>
 
 #include "ui_codecoptions.h"
 
@@ -22,7 +21,7 @@ class CodecOptions :
 	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-	explicit CodecOptions(QWidget *parent = 0);
+	explicit CodecOptions(QWidget *parent = nullptr);
 	~CodecOptions();
     virtual QWidget* instance() { return this; }
 	Ui::CodecOptions *ui;

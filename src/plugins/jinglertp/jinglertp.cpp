@@ -134,10 +134,10 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugin)
 	{
 		FJingle = qobject_cast<IJingle *>(plugin->instance());
-		connect(FJingle->instance(),SIGNAL(incomingTransportFilled(IJingleContent *)),
-				SLOT(onIncomingTransportFilled(IJingleContent*)), Qt::QueuedConnection);
-		connect(FJingle->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent *)),
-				SLOT(onIncomingTransportFillFailed(IJingleContent*)), Qt::QueuedConnection);
+//		connect(FJingle->instance(),SIGNAL(incomingTransportFilled(IJingleContent *)),
+//				SLOT(onIncomingTransportFilled(IJingleContent*)), Qt::QueuedConnection);
+//		connect(FJingle->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent *)),
+//				SLOT(onIncomingTransportFillFailed(IJingleContent*)), Qt::QueuedConnection);
 	}
 	else
 		return false;
@@ -1394,7 +1394,7 @@ void JingleRtp::onCall()
 	{
 		Jid streamJid  = action->data(ADR_STREAM_JID).toString();
 		Jid contactJid = action->data(ADR_CONTACT_JID).toString();
-//		Command command=(Command)action->data(ADR_COMMAND).toInt();
+
 		QString sid;
 
 		QList<QString> sids = FSidHash.keys(contactJid);
@@ -1404,7 +1404,6 @@ void JingleRtp::onCall()
 				sid = *it;
 				break;
 			}
-
 
 		if (!sid.isEmpty())
 		{
@@ -1436,7 +1435,6 @@ void JingleRtp::onCall()
 		if (!sid.isNull())
 		{
 			QSet<int> ids;
-//TODO: Use 2 components for RTP content
 			QByteArray tmp;
 			QBuffer device(&tmp);
 			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", 2,
@@ -1504,7 +1502,7 @@ void JingleRtp::onCall()
 //					addPendingContent(content, AddContent);
 //				}
 					putSid(contactJid, sid);
-					FJingle->sessionInitiate(sid);
+//					FJingle->sessionInitiate(sid);
 				}
 				else
 					LOG_ERROR("No payload types available!");
@@ -1569,7 +1567,7 @@ void JingleRtp::onRtpReadyRead()
 
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
+	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));	
 	removePendingContent(AContent, Connect);
 	if (!hasPendingContents(AContent->sid(), Connect))
 		FJingle->setConnected(AContent->sid());
@@ -1581,13 +1579,23 @@ void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onConnectionFailed(" << AContent << ")";
 	removePendingContent(AContent, Connect);
+	qDebug() << "A!";
+	qDebug() << "AContent->sid()=" << AContent->sid();
 	if (!hasPendingContents(AContent->sid(), Connect))
 	{
+		qDebug() << "B!";
 		if (FJingle->contents(AContent->sid()).isEmpty())
+		{
+			qDebug() << "C!";
 			FJingle->sessionTerminate(AContent->sid(), IJingle::ConnectivityError);
+		}
 		else
+		{
+			qDebug() << "D!";
 			FJingle->setConnected(AContent->sid());
+		}
 	}
+	qDebug() << "JingleRtp::onConnectionFailed() finished!";
 }
 
 void JingleRtp::onContentAdded(IJingleContent *AContent)
@@ -1609,24 +1617,24 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 	}
 }
 
-void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
-{
-	removePendingContent(AContent, FillTransport);
-	if (!hasPendingContents(AContent->sid(), FillTransport))
-		FJingle->sessionAccept(AContent->sid());
-}
+//void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
+//{
+//	removePendingContent(AContent, FillTransport);
+//	if (!hasPendingContents(AContent->sid(), FillTransport))
+//		FJingle->sessionAccept(AContent->sid());
+//}
 
-void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
-{
-	removePendingContent(AContent, FillTransport);	
-	if (!hasPendingContents(AContent->sid(), FillTransport))
-	{
-		if (FJingle->contents(AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
-		else
-			FJingle->sessionAccept(AContent->sid());
-	}
-}
+//void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
+//{
+//	removePendingContent(AContent, FillTransport);
+//	if (!hasPendingContents(AContent->sid(), FillTransport))
+//	{
+//		if (FJingle->contents(AContent->sid()).isEmpty())
+//			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
+//		else
+//			FJingle->sessionAccept(AContent->sid());
+//	}
+//}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_JingleRtp,JingleRtp)
 #endif

@@ -41,7 +41,7 @@ public:
 	}
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
 						  const QString &AApplicationNS) override;
-	virtual bool    sessionInitiate(const QString &ASid) override;
+//	virtual bool    sessionInitiate(const QString &ASid) override;
 	virtual bool    sessionAccept(const QString &ASid) override;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) override;
 	virtual bool	sessionDestroy(const QString &ASid) override;
@@ -84,13 +84,13 @@ protected slots:
     void onIncomingTransportFillFailed(IJingleContent *AContent);
 
 signals:
-	void startSendData(IJingleContent *AContent) override;
+	void connectionOpened(IJingleContent *AContent) override;
 	void connectionFailed(IJingleContent *AContent) override;
 	void contentAdded(IJingleContent *AContent) override;
 	void contentAddFailed(IJingleContent *AContent) override;
 
-    void incomingTransportFilled(IJingleContent *AContent);
-    void incomingTransportFillFailed(IJingleContent *AContent);
+//    void incomingTransportFilled(IJingleContent *AContent);
+//    void incomingTransportFillFailed(IJingleContent *AContent);
 
 private:
     IStanzaProcessor    *FStanzaProcessor;
@@ -99,7 +99,7 @@ private:
 	QMap<QString, IJingleApplication*>	FApplications;
 	QMap<int, IJingleTransport*>	FTransports;
 	QHash<QIODevice *, IJingleContent *>	FCandidateTries;
-	QList<IJingleContent *>	FPendingContents;
+//	QList<IJingleContent *>	FPendingContents;
     int FSHIRequest;
     int FSHIResult;
     int FSHIError;

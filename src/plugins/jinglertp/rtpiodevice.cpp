@@ -1,21 +1,25 @@
-#include "rtpiodevice.h"
 #include <QUdpSocket>
 #include <QThread>
 #include <QBuffer>
 #include <QTimer>
 #include <QMutexLocker>
 
+#include <utils/logger.h>
+
+#include "rtpiodevice.h"
+
 RtpIODevice::RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, QObject *AParent):
 	QIODevice(AParent),
 	FRtp(ARtp),
 	FRtcp(ARtcp)
 {
-	qDebug() << "RtpIODevice::RtpIODevice(" << ARtp << "," << ARtcp << ")";
+	LOG_DEBUG(QString("RtpIODevice(%1, %2); this=%3")
+			  .arg(qintptr(ARtp)).arg(qintptr(ARtcp)).arg(qintptr(this)));
 }
 
 RtpIODevice::~RtpIODevice()
 {
-	qDebug() << "~RtpIODevice(); this=" << this;
+	LOG_DEBUG(QString("~RtpIODevice(); this=%1").arg(qintptr(this)));
 }
 
 bool RtpIODevice::isSequential() const
@@ -80,7 +84,7 @@ qint64 RtpIODevice::writeData(const char *data, qint64 len)
 	{
 		if (data[1] >= char(200) &&
 			data[1] <= char(207)) // RTCP
-			sent = FRtcp->write(data, len);
+			sent = FRtcp?FRtcp->write(data, len):len;	// Just drop RTCP packet if no RTCP device available
 		else	// RTP
 			sent = FRtp->write(data, len);
 	}

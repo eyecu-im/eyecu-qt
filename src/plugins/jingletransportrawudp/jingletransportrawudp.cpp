@@ -254,14 +254,14 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 		QThread *ioThread = new QThread(this);
 		connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
 
+		QDomElement incomingTransport = AContent->transportIncoming();
 		for (int component=1; component<=AContent->componentCount(); ++component)
 		{
 			socket = getSocket(localAddress, port);
 			if (socket)
 			{
-				int id=100;
+				int id=qrand();
 				QString candidateId=QString("id%1").arg(id);
-				QDomElement incomingTransport = AContent->transportIncoming();
 				if (!incomingTransport.isNull())
 				{
 					QDomElement candidate=incomingTransport.ownerDocument().createElement("candidate");
@@ -297,11 +297,12 @@ bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
 		}
 
 		FThreads.insert(AContent, ioThread);
-
-		emit incomingTransportFilled(AContent);
-
 		LOG_DEBUG(QString("Starting I/O thread for the content: %1").arg(AContent->name()));
 		ioThread->start();
+
+		FTransportFillNotifications.append(AContent);
+		QTimer::singleShot(0, this, SLOT(emitIncomingTransportFilled()));
+
 		return true;
 	}
 	else
@@ -395,6 +396,15 @@ void JingleTransportRawUdp::onTimeout()
 			FPendingContents.remove(*it);
 
 		emit connectionError(content);
+	}
+}
+
+void JingleTransportRawUdp::emitIncomingTransportFilled()
+{
+	qDebug() << "JingleTransportRawUdp::emitIncomingTransportFilled()";
+	while (!FTransportFillNotifications.isEmpty()) {
+		qDebug() << "emitting incomingTransportFilled()";
+		emit incomingTransportFilled(FTransportFillNotifications.takeFirst());
 	}
 }
 

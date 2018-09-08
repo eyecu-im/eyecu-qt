@@ -53,6 +53,7 @@ protected:
 protected slots:
 	void onReadyRead();
 	void onTimeout();
+	void emitIncomingTransportFilled();
 
 signals:
 	//IJingleTransport
@@ -68,6 +69,7 @@ private:
 	QHash<QIODevice *, IJingleContent *> FPendingContents;
 	QHash<QTimer *, IJingleContent *> FPendingTimers;
 	QHash<IJingleContent *, QThread *>	FThreads;
+	QList<IJingleContent *> FTransportFillNotifications;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

@@ -3,5 +3,5 @@ OS2:TARGET_SHORT = jticeudp
 include(jingletransporticeudp.pri) 
 include(../plugins.inc) 
 
-greaterThan(QT_MAJOR_VERSION, 4): CONFIG += c++11
-else: win32-g++:QMAKE_CXXFLAGS += -std=c++11
+greaterThan(QT_MAJOR_VERSION, 4): QT += qpice
+else: CONFIG += qpice

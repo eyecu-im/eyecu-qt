@@ -37,13 +37,11 @@ CodecOptions::~CodecOptions()
 
 void CodecOptions::onAvailableCodecCurrentRowChanged(int ARow)
 {
-	qDebug() << "CodecOptions::onAvailableCodecCurrentRowChanged(" << ARow << ")";
 	ui->pbUse->setEnabled(ARow>-1);
 }
 
 void CodecOptions::onUsedCodecCurrentRowChanged(int ARow)
 {
-	qDebug() << "CodecOptions::onUsedCodecCurrentRowChanged(" << ARow << ")";
 	if (ARow>-1)
 	{
 		ui->pbUsedUp->setEnabled(ARow>0);
@@ -129,7 +127,6 @@ void CodecOptions::reset()
 		ui->lwAvailable->sortItems();
 
 		for (QList<int>::ConstIterator it = usedCodecIds.constBegin(); it!=usedCodecIds.constEnd(); ++it)
-		{
 			if (FRtp.queryCodec(*it))
 			{
 				QAVCodec decoder(QAVCodec::findDecoder(*it));
@@ -141,7 +138,6 @@ void CodecOptions::reset()
 					ui->lwUsed->addItem(item);
 				}
 			}
-		}
 	}
 
 	if (ui->lwAvailable->currentRow()<0)
@@ -153,30 +149,6 @@ void CodecOptions::reset()
 	else
 		ui->lwUsed->setCurrentRow(-1);	
 
-//	QList<PayloadType> dynamicPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_DYNAMIC).value().toStringList());
-//	QList<PayloadType> usedPayloadTypes = JingleRtp::avpsFromStrings(Options::node(OPV_JINGLE_RTP_PT_USED).value().toStringList());
-
-//	ui->rptAvailable->clear();
-//	ui->rptAvailable->setSortingEnabled(false);
-//	for (QList<PayloadType>::ConstIterator it=FAvailableStaticPayloadTypes.constBegin(); it!=FAvailableStaticPayloadTypes.constEnd(); ++it)
-//		if (!usedPayloadTypes.contains(*it))
-//			ui->rptAvailable->appendAvp(*it);
-
-//	for (QList<PayloadType>::ConstIterator it=dynamicPayloadTypes.constBegin(); it!=dynamicPayloadTypes.constEnd(); ++it)
-//		if (!usedPayloadTypes.contains(*it))
-//			ui->rptAvailable->appendAvp(*it);
-
-//	ui->rptAvailable->sortByColumn(0, Qt::AscendingOrder);
-//	ui->rptAvailable->setSortingEnabled(true);
-
-//	onAvailableCodecSelectionChanged();
-
-//	ui->rptUsed->clear();
-//	for (QList<PayloadType>::ConstIterator it=usedPayloadTypes.constBegin(); it!=usedPayloadTypes.constEnd(); ++it)
-//		ui->rptUsed->appendAvp(*it);
-
-//	onUsedCodecSelectionChanged();
-
     emit childReset();
 }
 
@@ -184,10 +156,10 @@ void CodecOptions::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
+		case QEvent::LanguageChange:
+			ui->retranslateUi(this);
+			break;
+		default:
+			break;
 	}
 }

@@ -3,7 +3,13 @@ include(../make/config.inc)
 TEMPLATE            = lib
 CONFIG             += plugin
 QT                 += network xml
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+	QT += widgets
+	CONFIG += c++11
+} else {
+	win32-g++:QMAKE_CXXFLAGS += -std=c++11
+}
 
 LIBS               += -L../../libs
 LIBS               += -l$$EYECU_UTILS_NAME

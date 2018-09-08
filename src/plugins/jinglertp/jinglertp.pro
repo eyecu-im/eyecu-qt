@@ -9,10 +9,5 @@ MOBILITY += multimedia
 }
 else: contains(QT_CONFIG, multimedia): QT += multimedia
 
-greaterThan(QT_MAJOR_VERSION, 4) {
-	QT += qpffmpeg qputil
-	CONFIG += c++11
-} else {
-	CONFIG += qpffmpeg qputil
-	win32-g++:QMAKE_CXXFLAGS += -std=c++11
-}
+greaterThan(QT_MAJOR_VERSION, 4): QT += qpffmpeg qputil
+else: CONFIG += qpffmpeg qputil

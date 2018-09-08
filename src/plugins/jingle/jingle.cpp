@@ -69,14 +69,9 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
-		qDebug() << "connecting" << this << "SIGNAL(startSendData(IJingleContent*) to"
-				 << (*it)->instance() << "SLOT(onConnectionEstablished(IJingleContent *))";
 
-		if (connect(this,SIGNAL(startSendData(IJingleContent*)),(*it)->instance(),
-				SLOT(onConnectionEstablished(IJingleContent*)), Qt::QueuedConnection))
-			qDebug() << "CONNECTED successfuly!";
-		else
-			qWarning() << "CONNECT failed!";
+		connect(this,SIGNAL(connectionOpened(IJingleContent*)),(*it)->instance(),
+				SLOT(onConnectionEstablished(IJingleContent*)), Qt::QueuedConnection);
 		connect(this,SIGNAL(connectionFailed(IJingleContent*)),(*it)->instance(),
 				SLOT(onConnectionFailed(IJingleContent*)), Qt::QueuedConnection);
 	}
@@ -90,13 +85,17 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		IJingleTransport *transort=qobject_cast<IJingleTransport *>((*it)->instance());
 		FTransports.insertMulti(transort->priority(), transort);
 		connect((*it)->instance(),SIGNAL(connectionOpened(IJingleContent*)),
-								  SLOT(onConnectionOpened(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onConnectionOpened(IJingleContent*)),
+				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
-								  SLOT(onConnectionFailed(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onConnectionFailed(IJingleContent*)),
+				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
-								  SLOT(onIncomingTransportFilled(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onIncomingTransportFilled(IJingleContent*)),
+				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent*)),
-								  SLOT(onIncomingTransportFillFailed(IJingleContent*)),Qt::QueuedConnection);
+								  SLOT(onIncomingTransportFillFailed(IJingleContent*)),
+				Qt::QueuedConnection);
 	}
 
 	return true;
@@ -161,9 +160,7 @@ void Jingle::registerDiscoFeatures()
 
 void Jingle::onConnectionOpened(IJingleContent *AContent)
 {
-	qDebug() << "Jingle::onConnectionOpened(" << AContent->name() << "); this=" << this;
-	emit startSendData(AContent);
-	qDebug() << "signal startSendData(" << AContent->name() << ") emitted!";
+	emit connectionOpened(AContent);
 }
 
 void Jingle::onConnectionFailed(IJingleContent *AContent)
@@ -173,30 +170,37 @@ void Jingle::onConnectionFailed(IJingleContent *AContent)
 
 void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 {
-	qDebug() << "Jingle::onIncomingTransportFilled(" << AContent << ")";
-	if (FPendingContents.contains(AContent))
+	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
+	if (session)
 	{
-		FPendingContents.removeAll(AContent);
-		emit contentAdded(AContent);
+		if (session->status() == None && session->isOutgoing())
+		{
+			if (!session->initiate())
+				LOG_ERROR("Session initiate failed!");
+//TODO: Notify application about failure
+		}
+		else if (session->status() == Initiated && !session->isOutgoing())
+		{
+			if (!session->accept())
+				LOG_ERROR("Session accept failed!");
+//TODO: Notify application about failure
+		}
 	}
 	else
-	{
-		emit incomingTransportFilled(AContent);
-	}
-	qDebug() << "Jingle::onIncomingTransportFilled(): Finished!";
+		LOG_ERROR(QString("Session not found! sid=%1").arg(AContent->sid()));
 }
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg((int)AContent, 8, 16));
-	if (FPendingContents.contains(AContent))
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(qintptr(AContent), 8, 16));
+	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
+	if (session)
 	{
-		FPendingContents.removeAll(AContent);
-		emit contentAddFailed(AContent);
-		JingleSession::sessionBySessionId(AContent->sid())->deleteContent(AContent->name());
+		if (session->status() == None)
+			session->deleteLater();
+		else
+			session->terminate(FailedTransport);
 	}
-	else
-		emit incomingTransportFillFailed(AContent);
 }
 
 bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
@@ -296,18 +300,18 @@ bool Jingle::processSessionInitiate(const Jid &AStreamJid, const JingleStanza &A
 
 bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << QString("Jingle::processSessionAccept(%1, %2, %3)").arg(AStreamJid.full()).arg(AStanza.toString()).arg(AAccept);
 	AAccept=true;
 	JingleSession *session = JingleSession::sessionBySessionId(AStanza.sid());
 	if (session)
 	{
 		QDomElement jingle = AStanza.jingleElement();
-		for (QDomElement contentElement = jingle.firstChildElement("content"); !contentElement.isNull(); contentElement=contentElement.nextSiblingElement("content"))
+		for (QDomElement contentElement = jingle.firstChildElement("content");
+			 !contentElement.isNull();
+			 contentElement=contentElement.nextSiblingElement("content"))
 		{
 			JingleContent *content = session->getContent(contentElement.attribute("name"));
 			if (content)
 			{
-				qDebug() << "content doc=" << content->document().toString();
 				QDomElement transport = contentElement.firstChildElement("transport");
 				if (transport.isNull())
 					LOG_ERROR("Outgoing transport is NULL!");
@@ -318,24 +322,6 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 					else
 						LOG_ERROR("Outgoing transport set error!");
 				}
-
-				QDomElement description = contentElement.firstChildElement("description");
-				if (description.isNull())
-					LOG_ERROR("Description is NULL!");
-				else
-					if (content->description()!=description)
-					{
-						qDebug() << "description updated!";
-						QDomElement contentElement = content->description().parentNode().toElement();
-						if (contentElement.isNull() || contentElement.tagName()!="content")
-							LOG_FATAL("Invalid content element");
-						else
-						{
-							qDebug() << "Updating content...";
-							contentElement.removeChild(content->description()).clear();
-							contentElement.insertBefore(description, QDomNode());
-						}
-					}
 			}
 			else
 				LOG_WARNING(QString("Content with name=\"%1\" found!").arg(contentElement.attribute("name")));
@@ -357,7 +343,6 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 
 bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::processSessionTerminate()";
 	AAccept=true;
 	bool result;
 	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
@@ -429,7 +414,7 @@ bool Jingle::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStan
 				session->acknowledge(Acknowledge, Jid());
 			else    // Error!
 			{
-				qWarning() << "Error! sid=" << session->sid();
+				LOG_WARNING(QString("Error! sid=%1").arg(session->sid()));
 				QDomElement error=AStanza.firstElement("error");
 				if (!error.isNull())
 					session->acknowledge(BadRequest, Jid());
@@ -446,29 +431,20 @@ QString Jingle::sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, con
 	return session->sid();
 }
 
-bool Jingle::sessionInitiate(const QString &ASid)
-{
-	JingleSession *session=JingleSession::sessionBySessionId(ASid);
-	return session?session->initiate():false;
-}
-
 bool Jingle::sessionAccept(const QString &ASid)
 {
-	qDebug() << "Jingle::sessionAccept(" << ASid << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->accept():false;
 }
 
 bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 {
-	qDebug() << "Jingle::sessionTerminate(" << ASid << "," << AReason << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	return session?session->terminate(AReason):false;
 }
 
 bool Jingle::sessionDestroy(const QString &ASid)
 {
-	qDebug() << "Jingle::sessionDestroy(" << ASid << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session) {
 		session->deleteLater();
@@ -498,7 +474,6 @@ IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
 								   IJingleTransport::Type ATransportType,
 								   bool AFromResponder)
 {
-	qDebug() << "Jingle::contentAdd(" << ASid << "," << AName << "," << AMediaType << "," << AComponentCount << ", ...)";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
@@ -513,11 +488,11 @@ IJingleContent *Jingle::contentAdd(const QString &ASid, const QString &AName,
 															  *it, AFromResponder);
 				if (content)
 				{
-					FPendingContents.append(content);
+					LOG_DEBUG("Jingle content added!");
 					return content;
 				}
 				else
-					qDebug() << "Content creation failed!";
+					LOG_ERROR("Content creation failed!");
 			}
 
 		// An appropriate transport not found
@@ -625,7 +600,6 @@ bool Jingle::selectTransportCandidate(const QString &ASid, const QString &AConte
 
 bool Jingle::connectContent(const QString &ASid, const QString &AName)
 {
-	qDebug() << "Jingle::connectContent(" << ASid << "," << AName << ")";
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
@@ -648,8 +622,7 @@ bool Jingle::connectContent(const QString &ASid, const QString &AName)
 
 bool Jingle::setConnected(const QString &ASid)
 {
-//	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
-	qDebug() << "Jingle::setConnected(" << ASid << ")";
+	LOG_DEBUG(QString("Jingle::setConnected(%1)").arg(ASid));
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
