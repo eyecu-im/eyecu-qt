@@ -343,6 +343,7 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 
 bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
+	qDebug() << "Jingle::processSessionTerminate()";
 	AAccept=true;
 	bool result;
 	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());

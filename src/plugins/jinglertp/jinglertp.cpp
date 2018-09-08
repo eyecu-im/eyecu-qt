@@ -108,7 +108,6 @@ QString JingleRtp::stringFromInts(const QList<int> &FInts)
 
 QList<int> JingleRtp::intsFromString(const QString &FString)
 {
-	qDebug() << "JingleRtp::intsFromString(" << FString << ")";
 	QList<int> result;
 	QStringList strings = FString.split(';');
 	for (QStringList::ConstIterator it=strings.constBegin(); it!=strings.constEnd(); ++it)
@@ -132,13 +131,7 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	IPlugin *plugin= APluginManager->pluginInterface("IJingle").value(0, nullptr);
 	if (plugin)
-	{
 		FJingle = qobject_cast<IJingle *>(plugin->instance());
-//		connect(FJingle->instance(),SIGNAL(incomingTransportFilled(IJingleContent *)),
-//				SLOT(onIncomingTransportFilled(IJingleContent*)), Qt::QueuedConnection);
-//		connect(FJingle->instance(),SIGNAL(incomingTransportFillFailed(IJingleContent *)),
-//				SLOT(onIncomingTransportFillFailed(IJingleContent*)), Qt::QueuedConnection);
-	}
 	else
 		return false;
 

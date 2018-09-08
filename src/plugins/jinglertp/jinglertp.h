@@ -179,8 +179,6 @@ protected slots:
 protected slots:
 	void onContentAdded(IJingleContent *AContent);
 	void onContentAddFailed(IJingleContent *AContent);
-//	void onIncomingTransportFilled(IJingleContent *AContent);
-//	void onIncomingTransportFillFailed(IJingleContent *AContent);
 
 private:
 	IJingle             *FJingle;

@@ -258,6 +258,7 @@ bool JingleSession::accept()
 
 bool JingleSession::terminate(IJingle::Reason AReason)
 {
+	qDebug() << "JingleSession::terminate(" << AReason << ")";
     JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionTerminate);
     FActionId=stanza.id();
     FAction=IJingle::SessionTerminate;
