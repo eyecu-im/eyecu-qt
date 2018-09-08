@@ -13,6 +13,7 @@
 #include <definitions/optionvalues.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <utils/qt4qt5compat.h>
 // *** >>> eyeCU >>> ***
 #include <utils/logger.h>
 
@@ -476,16 +477,19 @@ void MultiUserView::updateUserItem(IMultiUser *AUser)
 		userItem->setData(userPresence.show, MUDR_PRESENCE_SHOW);
 // *** <<< eyeCU <<< ***
 		IconStorage *iconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-		userItem->setData(iconStorage->getIcon(userStar), MUDR_MUC_AFFILIATION);
+		userItem->setData(iconStorage->getIcon(userStar), MUDR_AFFILIATION);
 		QString statusMessage = userPresence.status;
 		if (statusMessage.isEmpty())
+		{
 			QString statusName = FStatusChanger!=NULL ? FStatusChanger->nameByShow(userPresence.show) : QString::null;
 			userItem->setData(statusName, MUDR_PRESENCE_STATUS);
-		else userItem->setData(Qt::escape(statusMessage), MUDR_PRESENCE_STATUS);
+		}
+		else
+			userItem->setData(HTML_ESCAPE(statusMessage), MUDR_PRESENCE_STATUS);
 // *** >>> eyeCU >>> ***
 
 		AdvancedDelegateItem nickLabel = userItem->data(MUDR_LABEL_ITEMS).value<AdvancedDelegateItems>().value(MUIL_MULTIUSERCHAT_NICK);
-		if (nickLabel.d->hints.value(AdvancedDelegateItem::FontHint)!=userFont || nickLabel.d->hints.value(AdvancedDelegateItem::Foreground)!=userColor)
+		if (nickLabel.d->hints.value(AdvancedDelegateItem::FontHint)!=userFont ||nickLabel.d->hints.value(AdvancedDelegateItem::Foreground)!=userColor)
 		{
 			nickLabel.d->hints.insert(AdvancedDelegateItem::FontHint,userFont);
 			nickLabel.d->hints.insert(AdvancedDelegateItem::Foreground,userColor);
@@ -520,7 +524,7 @@ void MultiUserView::updateItemNotify(QStandardItem *AItem)
 	if (!newNotify.footer.isNull())
 		aflIconLabel.d->data = newNotify.footer;
 	else if (Options::node(OPV_MUC_AFFILIATION_ICONS).value().toBool() || FViewMode == IMultiUserView::ViewFull)
-		aflIconLabel.d->data = MUDR_MUC_AFFILIATION;
+		aflIconLabel.d->data = MUDR_AFFILIATION;
 	else
 		aflIconLabel.d->data = QVariant();
 	insertItemLabel(aflIconLabel,AItem);
@@ -683,14 +687,19 @@ void MultiUserView::onMultiUserChanged(IMultiUser *AUser, int AData, const QVari
 				AdvancedDelegateItem aflIconLabel;
 				aflIconLabel.d->id = MUIL_MULTIUSERCHAT_AFFILIATION;
 				aflIconLabel.d->kind = AdvancedDelegateItem::CustomData;
-				aflIconLabel.d->data = Options::node(OPV_MUC_AFFILIATION_ICONS).value().toBool() || FViewMode==IMultiUserView::ViewFull ? QVariant(MUDR_MUC_AFFILIATION) : QVariant();
+				aflIconLabel.d->data = Options::node(OPV_MUC_AFFILIATION_ICONS).value().toBool() ||
+										FViewMode==IMultiUserView::ViewFull?
+											QVariant(MUDR_AFFILIATION) : QVariant();
 				insertItemLabel(aflIconLabel,userItem);
 // *** >>> eyeCU >>> ***
 				AdvancedDelegateItem statusLabel;
 				statusLabel.d->id = MUIL_MULTIUSERCHAT_STATUS;
 				statusLabel.d->kind = AdvancedDelegateItem::CustomData;
 // *** <<< eyeCU <<< ***
-				statusLabel.d->data = Options::node(OPV_COMMON_ADVANCED).value().toBool() && Options::node(OPV_MUC_STATUSDISPLAY).value().toBool() || FViewMode==IMultiUserView::ViewFull ? QVariant(MUDR_PRESENCE_STATUS) : QVariant();
+				statusLabel.d->data = (Options::node(OPV_COMMON_ADVANCED).value().toBool() &&
+									   Options::node(OPV_MUC_STATUSDISPLAY).value().toBool()) ||
+									  FViewMode==IMultiUserView::ViewFull ?
+										QVariant(MUDR_PRESENCE_STATUS) : QVariant();
 // *** >>> eyeCU >>> ***
 				statusLabel.d->hints.insert(AdvancedDelegateItem::FontSizeDelta,-1);
 				statusLabel.d->hints.insert(AdvancedDelegateItem::FontItalic,true);
@@ -815,9 +824,9 @@ void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
 			updateItemNotify(item);
 	}
 	else if (showAvatars() &&
-		(ANode.path() == OPV_AVATARS_SMALLSIZE && avatarSize()==IAvatars::AvatarSmall ||
-		 ANode.path() == OPV_AVATARS_NORMALSIZE && avatarSize()==IAvatars::AvatarNormal ||
-		 ANode.path() == OPV_AVATARS_LARGESIZE && avatarSize()==IAvatars::AvatarLarge))
+		((ANode.path() == OPV_AVATARS_SMALLSIZE && avatarSize()==IAvatars::AvatarSmall) ||
+		 (ANode.path() == OPV_AVATARS_NORMALSIZE && avatarSize()==IAvatars::AvatarNormal) ||
+		 (ANode.path() == OPV_AVATARS_LARGESIZE && avatarSize()==IAvatars::AvatarLarge)))
 	{
 		FAvatarSize = ANode.value().toInt();
 		updateLabels(MUDR_AVATAR_IMAGE);

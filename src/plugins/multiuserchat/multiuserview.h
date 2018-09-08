@@ -3,6 +3,7 @@
 
 #include <interfaces/imultiuserchat.h>
 #include <interfaces/istatusicons.h>
+#include <interfaces/istatuschanger.h>
 #include <interfaces/iavatars.h>
 #include <utils/pluginhelper.h>
 
@@ -87,6 +88,7 @@ private:
 	PluginPointer<IAvatars> FAvatars;
 	PluginPointer<IStatusIcons> FStatusIcons;
 	PluginPointer<IMultiUserChat> FMultiChat;
+	PluginPointer<IStatusChanger> FStatusChanger;
 private:
 	QTimer FBlinkTimer;
 	QMultiMap<quint32, QStandardItem *> FBlinkItems;
