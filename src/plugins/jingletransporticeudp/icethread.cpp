@@ -78,25 +78,20 @@ int IceThread::initIce()
 {
 	int status;
 
-	FIceTransport = new QPIceTransport(FIceConfig, unsigned(FContent->componentCount()), &status);
+	FIceTransport = new QPIceTransport(FIceConfig, FContent->componentCount(), &status);
 
 	if (status != QP_NO_ERROR)
 		return status;
 
 	// Connect SIGNALS/SLOTS
-	if (!connect(FIceTransport, SIGNAL(complete(QPIceTransport::Operation,int)),
-				 SLOT(onIceComplete(QPIceTransport::Operation,int))))
-		return QP_EUNKNOWN;
+	connect(FIceTransport, SIGNAL(complete(QPIceTransport::Operation,int)),
+						   SLOT(onIceComplete(QPIceTransport::Operation,int)));
 
-	if (!connect(FIceTransport, SIGNAL(destroyed(QObject *)), SLOT(onIceDestroyed(QObject *))))
-		return QP_EUNKNOWN;
+	connect(FIceTransport, SIGNAL(destroyed(QObject *)), SLOT(onIceDestroyed(QObject *)));
 
-	if (!connect(this, SIGNAL(iceStart(QString,QByteArray)),
-					   SLOT(onIceStart(QString,QByteArray))))
-		return QP_EUNKNOWN;
+	connect(this, SIGNAL(iceStart(QString,QByteArray)), SLOT(onIceStart(QString,QByteArray)));
 
-	if (!connect(this, SIGNAL(iceDestroy()), SLOT(onIceDestroy())))
-		return QP_EUNKNOWN;
+	connect(this, SIGNAL(iceDestroy()), SLOT(onIceDestroy()));
 
 	return QP_NO_ERROR;
 }

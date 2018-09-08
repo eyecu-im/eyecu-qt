@@ -34,9 +34,9 @@ protected slots:
 	void onCurrentItemChanged(QTreeWidgetItem *ACurrent, QTreeWidgetItem *APrevious);
 
 signals:
-	virtual void modified() override;
-	virtual void childApply() override;
-	virtual void childReset() override;
+	void modified() override;
+	void childApply() override;
+	void childReset() override;
 
 private:
 	Ui::IceOptions *ui;
