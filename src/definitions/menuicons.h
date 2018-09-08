@@ -136,6 +136,12 @@
 #define MNI_MUC_USERS_HIDE              "mucUsersHide"
 #define MNI_MUC_MODERATE                "mucModerate"
 #define MNI_MUC_NOTIFY_SILENCE          "mucNotifySilence"
+#define MNI_MUC_ROLE_MODERATOR          "mucRoleModerate"
+#define MNI_MUC_ROLE_PARTICIPANT        "mucRoleParticpant"
+#define MNI_MUC_ROLE_VISITOR            "mucRoleVisitor"
+#define MNI_MUC_AFFILIATION_OWNER       "mucAffiliationOwner"
+#define MNI_MUC_AFFILIATION_ADMIN       "mucAffiliationAdmin"
+#define MNI_MUC_AFFILIATION_MEMBER      "mucAffiliationMember"
 
 //NormalMessageHandler
 #define MNI_NORMALMHANDLER_MESSAGE      "normalmessagehandlerMessage"

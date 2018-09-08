@@ -121,6 +121,9 @@
 //Node = ON_CONFERENCES
 #define OHO_CONFERENCES_MESSAGES                  100
 #define   OWO_CONFERENCES_SHOWENTERS              110
+// *** <<< eyeCU <<< ***
+#define   OWO_CONFERENCES_SHOWINITIALJOINS        115
+// *** >>> eyeCU >>> ***
 #define   OWO_CONFERENCES_SHOWSTATUS              120
 #define   OWO_CONFERENCES_ARCHIVESTATUS           130
 #define   OWO_CONFERENCES_QUITONWINDOWCLOSE       140
@@ -136,6 +139,7 @@
 #define   OWO_MUC_CLIENTICONS				      390
 // *** <<< eyeCU <<< ***
 #define   OWO_CONFERENCES_STATUSDISPLAY           460
+#define   OWO_CONFERENCES_AFFILIATION_ICONS		  465
 #define   OWO_CONFERENCES_ALTERNATIONHIGHLIGHT    470
 #define   OWO_CONFERENCES_ADDRESSBUTTON           480
 #define   OWO_CONFERENCES_NICKNAMESUFFIX          490
