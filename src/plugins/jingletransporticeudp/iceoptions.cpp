@@ -3,6 +3,7 @@
 
 #include <definitions/optionvalues.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 #include "iceoptions.h"
 #include "addserver.h"
@@ -44,7 +45,7 @@ void IceOptions::apply()
 		QStringList parts;
 		for (int c=1; c< count; ++c)
 			parts.append(item->text(c));
-		QString string(parts.join(':'));
+		QString string(parts.join(":"));
 		if (isTurn)
 			turn.append(string);
 		else

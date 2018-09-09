@@ -27,7 +27,6 @@
 #include <QPSocketAddress>
 
 #include "jinglertp.h"
-#include "rtpiodevice.h"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr4
@@ -334,6 +333,9 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 {
 	qDebug() << "JingleRtp::onSessionConnected(" << ASid << ")";
 	bool success(false);
+	QThread *ioThread = new QThread(this);
+	connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
+
 	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
 	{
@@ -363,10 +365,15 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 			if (rtcpDevice)
 				rtcpDevice->setObjectName("RTCP");
 			RtpIODevice *rtpio = new RtpIODevice(rtpDevice, rtcpDevice);
+			connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
+			rtpio->moveToThread(ioThread);
+			ioThread->start(QThread::HighPriority);
+
 			MediaStreamer *streamer = startStreamMedia(payloadType, rtpio);
 
 			if (streamer)
 			{
+				FIOThreads.insert(ASid, ioThread);
 				FStreamers.insert(*it, streamer);
 
 				if (rtpDevice->bytesAvailable())
@@ -378,7 +385,11 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 				success = true;
 			}
 			else
+			{
+				delete rtpio;
+				ioThread->exit();
 				LOG_FATAL("Failed to start send media");
+			}
 		}
 		else
 			LOG_FATAL("Output device is NOT a UDP socket!");
@@ -464,13 +475,12 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 
 void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 {
-	qDebug() << "JingleRtp::checkRtpContent(" << AContent << "," << ARtpDevice << ")";
+	LOG_DEBUG(QString("JingleRtp::checkRtpContent(%1, %2)").arg(AContent->name()).arg(ARtpDevice->objectName()));
 
 	QByteArray data = ARtpDevice->peek(2);
 	if (data.size()==2)
 	{
 		int payloadTypeId = data[1]&0x7F;
-		qDebug() << "payloadTypeId=" << payloadTypeId;
 
 		QDomElement description(AContent->description());
 		QHash<int,QPayloadType> payloadTypes = payloadTypesFromDescription(description);
@@ -479,12 +489,17 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 			{
 				QIODevice *rtcpDevice = AContent->ioDevice(2);
 				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice);
+				QThread *ioThread = FIOThreads.value(AContent->sid());
+				connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
+				rtpio->moveToThread(ioThread);
 				MediaPlayer *player = startPlayMedia(*it, rtpio);
 				if (player) {
 					FPlayers.insert(AContent, player);
 					return;
-				} else
+				} else {
+					delete rtpio;
 					LOG_ERROR("Failed to start media play!");
+				}
 			}
 		qWarning() << "Invalid payload type!";
 	}
@@ -1025,7 +1040,12 @@ void JingleRtp::checkRunningContents(const QString &ASid)
 	}
 
 	if (!pending) {
-		qDebug() << "No pending contents left! Destroying session!";
+		LOG_DEBUG("No pending contents left!");
+		QThread *ioThread(FIOThreads.value(ASid));
+		Q_ASSERT(ioThread);
+		LOG_DEBUG("Terminating I/O thread...");
+		ioThread->quit();
+		LOG_DEBUG("Destroying session...");
 		FJingle->sessionDestroy(ASid);
 	}
 }
@@ -1274,7 +1294,8 @@ void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBe
 
 void JingleRtp::onStreamerStatusChanged(int AStatus)
 {
-	qDebug() << "JingleRtp::onStreamerStatusChanged(" << AStatus << ")";
+	LOG_DEBUG(QString("JingleRtp::onStreamerStatusChanged(%1)").arg(AStatus));
+
 	MediaStreamer *streamer = qobject_cast<MediaStreamer *>(sender());
 	IJingleContent *content = FStreamers.key(streamer);
 	switch (AStatus)
@@ -1298,7 +1319,6 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 		{
 			if (streamer)
 			{
-				qDebug() << "Streamer is Running! Terminating...";
 				LOG_DEBUG("Removing streamer...");
 				FStreamers.remove(content);
 				delete streamer;
@@ -1310,8 +1330,8 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 				} else if (FJingle->sessionStatus(sid) == IJingle::Terminated)
 					checkRunningContents(sid);
 				else
-					qCritical() << "Wrong session status:"
-								<< FJingle->sessionStatus(sid);
+					LOG_ERROR(QString("Wrong session status: %1")
+							  .arg(FJingle->sessionStatus(sid)));
 				break;
 			}
 			break;
@@ -1324,7 +1344,8 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 
 void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 {
-	qDebug() << "JingleRtp::onPlayerStatusChanged(" << AStatusNew << "," << AStatusOld << ")";
+	LOG_DEBUG(QString("JingleRtp::onPlayerStatusChanged(%1, %2)")
+			  .arg(AStatusNew).arg(AStatusOld));
 
 	MediaPlayer *player = qobject_cast<MediaPlayer*>(sender());
 	IJingleContent *content = FPlayers.key(player);
@@ -1360,8 +1381,8 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 			} else if (FJingle->sessionStatus(sid) == IJingle::Terminated)
 				checkRunningContents(sid);
 			else
-				qCritical() << "Wrong session status:"
-							<< FJingle->sessionStatus(sid);
+				LOG_ERROR(QString("Wrong session status: %1")
+						  .arg(FJingle->sessionStatus(sid)));
 			break;
 		}
 
@@ -1572,21 +1593,12 @@ void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
 	qDebug() << "JingleRtp::onConnectionFailed(" << AContent << ")";
 	removePendingContent(AContent, Connect);
-	qDebug() << "A!";
-	qDebug() << "AContent->sid()=" << AContent->sid();
 	if (!hasPendingContents(AContent->sid(), Connect))
 	{
-		qDebug() << "B!";
 		if (FJingle->contents(AContent->sid()).isEmpty())
-		{
-			qDebug() << "C!";
 			FJingle->sessionTerminate(AContent->sid(), IJingle::ConnectivityError);
-		}
 		else
-		{
-			qDebug() << "D!";
 			FJingle->setConnected(AContent->sid());
-		}
 	}
 	qDebug() << "JingleRtp::onConnectionFailed() finished!";
 }
@@ -1610,24 +1622,6 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 	}
 }
 
-//void JingleRtp::onIncomingTransportFilled(IJingleContent *AContent)
-//{
-//	removePendingContent(AContent, FillTransport);
-//	if (!hasPendingContents(AContent->sid(), FillTransport))
-//		FJingle->sessionAccept(AContent->sid());
-//}
-
-//void JingleRtp::onIncomingTransportFillFailed(IJingleContent *AContent)
-//{
-//	removePendingContent(AContent, FillTransport);
-//	if (!hasPendingContents(AContent->sid(), FillTransport))
-//	{
-//		if (FJingle->contents(AContent->sid()).isEmpty())
-//			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
-//		else
-//			FJingle->sessionAccept(AContent->sid());
-//	}
-//}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_JingleRtp,JingleRtp)
 #endif

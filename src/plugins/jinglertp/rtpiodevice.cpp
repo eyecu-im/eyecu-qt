@@ -13,13 +13,15 @@ RtpIODevice::RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, QObject *AParent):
 	FRtp(ARtp),
 	FRtcp(ARtcp)
 {
-	LOG_DEBUG(QString("RtpIODevice(%1, %2); this=%3")
-			  .arg(qintptr(ARtp)).arg(qintptr(ARtcp)).arg(qintptr(this)));
+	LOG_DEBUG(QString("RtpIODevice(0x%1, 0x%2); this=0x%3")
+			  .arg(unsigned(ARtp), sizeof(int)*2, 16)
+			  .arg(unsigned(ARtcp), sizeof(int)*2, 16)
+			  .arg(unsigned(this), sizeof(int)*2, 16));
 }
 
 RtpIODevice::~RtpIODevice()
 {
-	LOG_DEBUG(QString("~RtpIODevice(); this=%1").arg(qintptr(this)));
+	LOG_DEBUG(QString("~RtpIODevice(); this=%1").arg(unsigned(this), sizeof(int)*2, 16));
 }
 
 bool RtpIODevice::isSequential() const

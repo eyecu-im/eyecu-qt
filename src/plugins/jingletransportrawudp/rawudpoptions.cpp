@@ -22,7 +22,8 @@ RawUdpOptions::~RawUdpOptions()
 
 void RawUdpOptions::apply()
 {
-	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).setValue(ui->cmbNetworkInterface->currentData());
+	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP)
+			.setValue(ui->cmbNetworkInterface->itemData(ui->cmbNetworkInterface->currentIndex()));
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).setValue(ui->spbPortFrom->value());
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).setValue(ui->spbPortTo->value());
 }

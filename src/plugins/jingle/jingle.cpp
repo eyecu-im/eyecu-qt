@@ -192,7 +192,8 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)").arg(qintptr(AContent), 8, 16));
+	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)")
+			  .arg(int(AContent), 8, 16));
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
 	if (session)
 	{

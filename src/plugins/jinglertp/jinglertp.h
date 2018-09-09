@@ -21,6 +21,7 @@
 
 #include "audiooptions.h"
 #include "codecoptions.h"
+#include "rtpiodevice.h"
 
 #define JINGLERTP_UUID "{3d5702bc-29b9-40f2-88fe-85887cd6d8dc}"
 
@@ -204,6 +205,7 @@ private:
 	QHash<QIODevice *, IJingleContent *> FContents;
 	QHash<IJingleContent *, MediaStreamer *> FStreamers;
 	QHash<IJingleContent *, MediaPlayer *> FPlayers;
+	QHash<QString, QThread *> FIOThreads;
 
 	static const QString    types[4];	
 };
