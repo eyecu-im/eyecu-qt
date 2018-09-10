@@ -19,7 +19,7 @@ class IceOptions:
 
 public:
 	explicit IceOptions(QWidget *parent = nullptr);
-	virtual ~IceOptions() override;
+	virtual ~IceOptions();
 
 	// IOptionsDialogWidget interface
 	virtual QWidget *instance() override { return this; }

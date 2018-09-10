@@ -13,7 +13,7 @@ class RtpIODevice: public QIODevice
 
 public:
 	RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, QObject *AParent=nullptr);
-	virtual ~RtpIODevice() override;
+	virtual ~RtpIODevice();
 
 	// QIODevice interface
 	virtual bool open(OpenMode mode) override;

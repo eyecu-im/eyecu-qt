@@ -20,7 +20,7 @@ class Jingle: public QObject,
 #endif
 public:
 	Jingle(QObject *parent = nullptr);
-	~Jingle() override;
+	~Jingle();
     bool sendStanzaOut(Stanza &AStanza);
 
     //IPlugin

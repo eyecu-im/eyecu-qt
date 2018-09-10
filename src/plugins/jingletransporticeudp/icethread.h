@@ -15,7 +15,7 @@ public:
 	IceThread(const QPIceTransport::Config &AIceCfg, QPIceSession::Role AIceRole,
 			  IJingleContent * AContent, QObject *AParent=nullptr);
 
-	virtual ~IceThread() override;
+	virtual ~IceThread();
 
 	int status() const;
 	QPIceTransport::State state() const;

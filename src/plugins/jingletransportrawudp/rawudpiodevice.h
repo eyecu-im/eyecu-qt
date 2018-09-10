@@ -14,7 +14,7 @@ class RawUdpIODevice: public QIODevice
 public:
 	RawUdpIODevice(QUdpSocket *AInputSocket, QThread *AThread);
 
-	~RawUdpIODevice() override;
+	~RawUdpIODevice();
 
 	QUdpSocket *socket() const;
 
