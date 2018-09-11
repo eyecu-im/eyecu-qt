@@ -384,6 +384,7 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 
 void JingleTransportIceUdp::onIceSuccess(int AOperation)
 {
+	LOG_DEBUG(QString("JingleTransportIceUdp::onIceSuccess(%1)").arg(AOperation));
 	IceThread *iceThread = qobject_cast<IceThread*>(sender());
 	IJingleContent *content = iceThread->content();
 	switch (AOperation)

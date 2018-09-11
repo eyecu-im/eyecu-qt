@@ -365,6 +365,7 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 			if (rtcpDevice)
 				rtcpDevice->setObjectName("RTCP");
 			RtpIODevice *rtpio = new RtpIODevice(rtpDevice, rtcpDevice);
+			rtpio->setObjectName("Output");
 			connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
 			rtpio->moveToThread(ioThread);
 			ioThread->start(QThread::HighPriority);
@@ -489,6 +490,7 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 			{
 				QIODevice *rtcpDevice = AContent->ioDevice(2);
 				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice);
+				rtpio->setObjectName("Intput");
 				QThread *ioThread = FIOThreads.value(AContent->sid());
 				connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
 				rtpio->moveToThread(ioThread);
