@@ -2,12 +2,12 @@ HEADERS = \
     jingletransporticeudp.h \
 	iceoptions.h \
 	addserver.h \
-    $$PWD/icethread.h
+	icethread.h
 SOURCES = \ 
     jingletransporticeudp.cpp \
 	iceoptions.cpp \
 	addserver.cpp \
-    $$PWD/icethread.cpp
+	icethread.cpp
 
 FORMS += \
 	iceoptions.ui \
