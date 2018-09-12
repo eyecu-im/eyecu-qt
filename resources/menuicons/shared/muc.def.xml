@@ -88,28 +88,4 @@
     <key>mucNotifySilence</key>
     <object mime="image/png">mucnotifysilence.png</object>
   </icon>
-  <icon>
-    <key>mucRoleModerate</key>
-    <object mime="image/png">mucstarmoderate.png</object>
-  </icon>
-  <icon>
-    <key>mucRoleParticpant</key>
-    <object mime="image/png">mucstarparticpant.png</object>
-  </icon>
-  <icon>
-    <key>mucAffiliationOwner</key>
-    <object mime="image/png">mucstarowner.png</object>
-  </icon>
-  <icon>
-    <key>mucAffiliationAdmin</key>
-    <object mime="image/png">mucstaradmin.png</object>
-  </icon>
-  <icon>
-    <key>mucAffiliationMember</key>
-    <object mime="image/png">mucstarmember.png</object>
-  </icon>
-  <icon>
-    <key>mucRoleVisitor</key>
-    <object mime="image/png">mucstarvisitor.png</object>
-  </icon>
 </icondef>

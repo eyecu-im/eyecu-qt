@@ -242,7 +242,6 @@ bool MultiUserChatManager::initSettings()
 // *** <<< eyeCU <<< ***
 	Options::setDefaultValue(OPV_MUC_ADDRESSBUTTON, Qt::MidButton);
 	Options::setDefaultValue(OPV_MUC_STATUSDISPLAY, false);
-	Options::setDefaultValue(OPV_MUC_AFFILIATION_ICONS, true);
 	Options::setDefaultValue(OPV_MUC_ALTERNATIONHIGHLIGHT, false);
 	Options::setDefaultValue(OPV_MUC_AVATARS_SIZE, IAvatars::AvatarSmall);
 	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
@@ -292,7 +291,6 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		{
 			widgets.insertMulti(OWO_CONFERENCES_NICKNAMESUFFIX,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_NICKNAMESUFFIX),tr("Add this suffix when referring to the user"),AParent));
 			widgets.insertMulti(OWO_CONFERENCES_STATUSDISPLAY,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_STATUSDISPLAY),tr("Display user status message"),AParent));
-			widgets.insertMulti(OWO_CONFERENCES_AFFILIATION_ICONS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_AFFILIATION_ICONS),tr("Show affiliation icons"),AParent));
 		}
 		else
 		{
