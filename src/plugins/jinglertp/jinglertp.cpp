@@ -274,16 +274,11 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 	{
 		case IJingle::Acknowledge:
 		{
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
+            LOG_INFO(QString("Action acknowledged: %1").arg(AAction));
 			switch (AAction)
 			{
-				case IJingle::SessionInitiate:
-//					callChatMessage(ASid, Called);
-					break;
-
 				case IJingle::SessionAccept:
-					removeNotification(window);
-					updateWindowActions(window);
+                    LOG_DEBUG("It's session-accept. Trying to establish connection.");
 					establishConnection(ASid);
 					break;
 
@@ -293,22 +288,22 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 			break;
 		}
 		case IJingle::ServiceUnavailable:
-			qWarning() << "Service unavailable";
+            LOG_WARNING("Service unavailable");
 			removeSid(ASid);
 			callChatMessage(ASid, Error);
 			break;
 		case IJingle::Redirect:
-			qWarning() << "Redirected: " << ARedirect.full();
+            LOG_WARNING(QString("Redirected: %1").arg(ARedirect.full()));
 			removeSid(ASid);
 			callChatMessage(ASid, Error);
 			break;
 		case IJingle::ResourceConstraint:
-			qWarning() << "Resource constraint";
+            LOG_WARNING("Resource constraint");
 			removeSid(ASid);
 			callChatMessage(ASid, Error);
 			break;
 		case IJingle::BadRequest:
-			qWarning() << "Bad request";
+            LOG_WARNING("Bad request");
 			removeSid(ASid);
 			callChatMessage(ASid, Error);
 			break;
@@ -1447,7 +1442,8 @@ void JingleRtp::onCall()
 					FJingle->setAccepting(sid);
 					IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid),
 																			   FJingle->contactJid(sid));
-					updateWindowActions(window);
+                    removeNotification(window);
+                    updateWindowActions(window);
 				}
 			}
 			else
