@@ -51,7 +51,9 @@ public:
 	enum SessionStatus
 	{
 		None,
+		Initiating,
 		Initiated,
+		Accepting,
 		Accepted,
 		Connected,
 		Terminated
@@ -136,6 +138,7 @@ public:
 	virtual IJingleContent *content(const QString &ASid, QIODevice *ADevice) const =0;
 	virtual bool    connectContent(const QString &ASid, const QString &ANAme) =0;
 	virtual bool    setConnected(const QString &ASid) =0;
+	virtual bool    setAccepting(const QString &ASid) =0;
 	virtual bool    fillIncomingTransport(IJingleContent *AContent) =0;
 	virtual void    freeIncomingTransport(IJingleContent *AContent) =0;
 	virtual Jid     contactJid(const QString &ASid) const =0;

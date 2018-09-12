@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QDateTime>
 #include <QStringList>
 
@@ -15,7 +14,7 @@ Jingle* JingleSession::FJingle;
 JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty,
 							 const QString &AApplicationNS):
     QObject(FJingle->appByNS(AApplicationNS)->instance()),FValid(false), FOutgoing(true),
-	FStatus(IJingle::None), FApplicationNamespace(AApplicationNS),FThisParty(AThisParty),
+	FStatus(IJingle::Initiating), FApplicationNamespace(AApplicationNS),FThisParty(AThisParty),
 	FOtherParty(AOtherParty), FSid(getSid()), FActionId(), FAction(IJingle::NoAction),
 	FReason(IJingle::NoReason)
 {
@@ -42,7 +41,7 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 	FValid(false), FOutgoing(false), FStatus(IJingle::Initiated), FThisParty(AStanza.to()),
 	FOtherParty(AStanza.from()), FActionId(), FAction(IJingle::NoAction)
 {
-	qDebug() << "JingleSession(" << AStanza.toString() << ")";
+	LOG_DEBUG(QString("JingleSession(%1)").arg(AStanza.toString()));
     QDomElement jingle=AStanza.firstElement("jingle", NS_JINGLE);
     if (!jingle.isNull())
     {
@@ -89,7 +88,7 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 
 JingleSession::~JingleSession()
 {
-	qDebug() << "JingleSession::~JingleSession()";
+	LOG_DEBUG("~JingleSession()");
 	for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin();
 		 it!=FContents.constEnd(); ++it) {
 		FJingle->freeIncomingTransport(*it);
@@ -114,6 +113,11 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
     connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
 	connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
 	emit sessionInitiated(FSid);
+}
+
+void JingleSession::setAccepting()
+{
+	FStatus=IJingle::Accepting;
 }
 
 void JingleSession::setAccepted()
@@ -161,7 +165,7 @@ void JingleSession::acknowledge(IJingle::CommandRespond ARespond, Jid ARedirect)
             break;
 
         case IJingle::SessionTerminate:
-            qWarning() << "Something wrong!!!";
+			LOG_WARNING("Acknowledge of session-terminate!");
             break;
 
         default:
@@ -258,7 +262,6 @@ bool JingleSession::accept()
 
 bool JingleSession::terminate(IJingle::Reason AReason)
 {
-	qDebug() << "JingleSession::terminate(" << AReason << ")";
     JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionTerminate);
     FActionId=stanza.id();
     FAction=IJingle::SessionTerminate;
@@ -329,7 +332,9 @@ IJingle::SessionState JingleSession::state() const
 {
     switch (FStatus)
     {
+		case IJingle::Initiating:
         case IJingle::Initiated:
+		case IJingle::Accepting:
         case IJingle::Accepted:
             return IJingle::Pending;
         case IJingle::Connected:

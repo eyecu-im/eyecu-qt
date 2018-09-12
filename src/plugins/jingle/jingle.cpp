@@ -173,13 +173,13 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
 	if (session)
 	{
-		if (session->status() == None && session->isOutgoing())
+		if (session->isOutgoing() && session->status() == Initiating)
 		{
 			if (!session->initiate())
 				LOG_ERROR("Session initiate failed!");
 //TODO: Notify application about failure
 		}
-		else if (session->status() == Initiated && !session->isOutgoing())
+		else if (!session->isOutgoing() && session->status() == Accepting)
 		{
 			if (!session->accept())
 				LOG_ERROR("Session accept failed!");
@@ -197,7 +197,8 @@ void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
 	if (session)
 	{
-		if (session->status() == None)
+		if (session->status() == Initiated && session->isOutgoing()) // Didn't send session-initiate request yet
+//FIXME: Notify user about error!
 			session->deleteLater();
 		else
 			session->terminate(FailedTransport);
@@ -344,7 +345,6 @@ bool Jingle::processSessionAccept(const Jid &AStreamJid, const JingleStanza &ASt
 
 bool Jingle::processSessionTerminate(const Jid &AStreamJid, const JingleStanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Jingle::processSessionTerminate()";
 	AAccept=true;
 	bool result;
 	JingleSession *session=JingleSession::sessionBySessionId(AStanza.sid());
@@ -634,6 +634,21 @@ bool Jingle::setConnected(const QString &ASid)
 	else
 		LOG_ERROR("Session not found!");
 	return false;
+}
+
+bool Jingle::setAccepting(const QString &ASid)
+{
+	LOG_DEBUG(QString("Jingle::setAccepting(%1)").arg(ASid));
+	JingleSession *session = JingleSession::sessionBySessionId(ASid);
+	if (session)
+	{
+		session->setAccepting();
+		return true;
+	}
+	else
+		LOG_ERROR("Session not found!");
+	return false;
+
 }
 
 bool Jingle::fillIncomingTransport(IJingleContent *AContent)

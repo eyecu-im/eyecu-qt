@@ -41,7 +41,6 @@ public:
 	}
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
 						  const QString &AApplicationNS) override;
-//	virtual bool    sessionInitiate(const QString &ASid) override;
 	virtual bool    sessionAccept(const QString &ASid) override;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) override;
 	virtual bool	sessionDestroy(const QString &ASid) override;
@@ -60,6 +59,7 @@ public:
 									 const QString &ACandidateId) override;
 	virtual bool    connectContent(const QString &ASid, const QString &AName) override;
 	virtual bool    setConnected(const QString &ASid) override;
+	virtual bool    setAccepting(const QString &ASid) override;
 	virtual bool    fillIncomingTransport(IJingleContent *AContent) override;
 	virtual void    freeIncomingTransport(IJingleContent *AContent) override;
 
@@ -89,9 +89,6 @@ signals:
 	void contentAdded(IJingleContent *AContent) override;
 	void contentAddFailed(IJingleContent *AContent) override;
 
-//    void incomingTransportFilled(IJingleContent *AContent);
-//    void incomingTransportFillFailed(IJingleContent *AContent);
-
 private:
     IStanzaProcessor    *FStanzaProcessor;
     IServiceDiscovery   *FServiceDiscovery;
@@ -99,14 +96,9 @@ private:
 	QMap<QString, IJingleApplication*>	FApplications;
 	QMap<int, IJingleTransport*>	FTransports;
 	QHash<QIODevice *, IJingleContent *>	FCandidateTries;
-//	QList<IJingleContent *>	FPendingContents;
     int FSHIRequest;
     int FSHIResult;
     int FSHIError;
-
-	// IJingle interface
-public:
-
 };
 
 #endif // JINGLE_H

@@ -30,7 +30,6 @@ class JingleCallTimer: public QTimer
 	Q_OBJECT
 public:
 	JingleCallTimer(QString ASoundFileName, QObject *parent=nullptr);
-	~JingleCallTimer();
 
 protected:
 	void timerEvent(QTimerEvent *e);
@@ -207,7 +206,7 @@ private:
 	QHash<IJingleContent *, MediaPlayer *> FPlayers;
 	QHash<QString, QThread *> FIOThreads;
 
-	static const QString    types[4];	
+	static const QString FTypes[4];
 };
 
 #endif // JINGLERTP_H

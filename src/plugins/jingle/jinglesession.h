@@ -84,6 +84,7 @@ public:
 	virtual ~JingleSession();
 
     void setInitiated(IJingleApplication *AApplication);
+	void setAccepting();
 	void setAccepted();
     void setConnected();
     void setTerminated(IJingle::Reason AReason);
