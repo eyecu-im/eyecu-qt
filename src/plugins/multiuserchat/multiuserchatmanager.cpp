@@ -1,4 +1,5 @@
 #include "multiuserchatmanager.h"
+#include "confirmationdialog.h"
 
 #include <QComboBox>
 #include <QClipboard>
@@ -246,10 +247,17 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_SIZE, IAvatars::AvatarSmall);
 	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
-	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);
-	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE,true);
-	Options::setDefaultValue(OPV_MUC_LEAVESTATUS,tr("Bye!"));
-	Options::setDefaultValue(OPV_MUC_SHOWINITIALJOINS,false);
+	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);	
+	Options::setDefaultValue(OPV_MUC_SHOWINITIALJOINS, false);
+	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE, true);
+	Options::setDefaultValue(OPV_MUC_LEAVESTATUS, tr("Bye-bye!"));
+	Options::setDefaultValue(OPV_MUC_LEAVESTATUSSTORE, false);
+	Options::setDefaultValue(OPV_MUC_INVITATIONREASON, tr("You are welcome here"));
+	Options::setDefaultValue(OPV_MUC_INVITATIONREASONASK, true);
+	Options::setDefaultValue(OPV_MUC_INVITATIONREASONSTORE, true);
+	Options::setDefaultValue(OPV_MUC_INVITATIONDECLINEREASON, tr("I'm too busy right now"));
+	Options::setDefaultValue(OPV_MUC_INVITATIONDECLINEREASONASK, true);
+	Options::setDefaultValue(OPV_MUC_INVITATIONDECLINEREASONSTORE, true);
 // *** >>> eyeCU >>> ***
 	if (FOptionsManager)
 	{
@@ -268,17 +276,20 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 	{
 		widgets.insertMulti(OHO_CONFERENCES_MESSAGES,FOptionsManager->newOptionsDialogHeader(tr("Messages"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_SHOWENTERS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWENTERS),tr("Show users connections and disconnections"),AParent));
-		widgets.insertMulti(OWO_CONFERENCES_SHOWINITIALJOINS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWINITIALJOINS),tr("Show initial joins"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_SHOWSTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWSTATUS),tr("Show users status changes"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_ARCHIVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_ARCHIVESTATUS),tr("Save users status messages in history"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_QUITONWINDOWCLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_QUITONWINDOWCLOSE),tr("Leave the conference when window closed"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REJOINAFTERKICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REJOINAFTERKICK),tr("Automatically rejoin to conference after kick"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_REFERENUMERATION,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REFERENUMERATION),tr("Select a user to refer by enumeration in the input field"),AParent));
 // *** <<< eyeCU <<< ***
+		widgets.insertMulti(OWO_CONFERENCES_SHOWINITIALJOINS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_SHOWINITIALJOINS),tr("Show initial joins"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_CONFIRMLEAVE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CONFIRMLEAVE),tr("Ask for confirmation before leave conference"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_LEAVESTATUS,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_LEAVESTATUS),tr("Default leave status message"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_INVITATIONREASON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONREASON),tr("Default invitation reason"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_INVITATIONREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONREASONASK),tr("Display invitation reason dialog"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_DECLINEREASON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONDECLINEREASON),tr("Default invitation decline reason"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_DECLINEREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONDECLINEREASONASK),tr("Display invitation decline reason dialog"),AParent));
 // *** >>> eyeCU >>> ***
-
 		widgets.insertMulti(OHO_CONFERENCES_USERVIEW,FOptionsManager->newOptionsDialogHeader(tr("Participants List"),AParent));
 
 // *** <<< eyeCU <<< ***
@@ -1704,14 +1715,33 @@ void MultiUserChatManager::onInviteActionTriggered(bool)
 		if (window)
 		{
 		// *** <<< eyeCU <<< ***
-			bool ok;
-			QString reason = tr("You are welcome here");
-			reason = QInputDialog::getText(window->instance(),tr("Invite user"),tr("Enter a reason"),QLineEdit::Normal,reason,&ok);
-			QList<Jid> contacts;
-			if (ok)
+			bool ok(true);
+			QString reason = Options::node(OPV_MUC_INVITATIONREASON).value().toString();
+			bool ask = Options::node(OPV_MUC_INVITATIONREASONASK).value().toBool();
+			if (ask)
+			{
+				bool store = Options::node(OPV_MUC_INVITATIONREASONSTORE).value().toBool();
+				ConfirmationDialog *dialog = new ConfirmationDialog(tr("Invite user to a conference"),
+																	tr("Invitation reason:"),
+																	reason, store, ask);
+				if (dialog->exec())
+				{
+					if (store)
+						Options::node(OPV_MUC_INVITATIONREASON).setValue(reason);
+					Options::node(OPV_MUC_INVITATIONREASONASK).setValue(ask);
+					Options::node(OPV_MUC_INVITATIONREASONSTORE).setValue(store);
+				}
+				else
+					ok = false;
+				dialog->deleteLater();
+			}
+
+			if (ok) {
+				QList<Jid> contacts;
 				foreach(const QString &contact, action->data(ADR_CONTACT_JID).toStringList())
 					contacts.append(contact);
 				window->multiUserChat()->sendInvitation(contacts,reason);
+			}
 		// *** >>> eyeCU >>> ***
 		}
 	}
@@ -1736,10 +1766,30 @@ void MultiUserChatManager::onInviteDialogFinished(int AResult)
 			QDomElement declElem = stanza.addElement("x",NS_MUC_USER).appendChild(stanza.createElement("decline")).toElement();
 			declElem.setAttribute("to",invite.fromJid.full());
 			// *** <<< eyeCU <<< ***
-			QString reason = tr("I'm too busy right now");
-			reason = QInputDialog::getText(inviteDialog,tr("Decline invite"),tr("Enter a reason"),QLineEdit::Normal,reason);
-			if (!reason.isEmpty())
+			bool ok(true);
+			QString reason(Options::node(OPV_MUC_INVITATIONDECLINEREASON).value().toString());
+			bool ask = Options::node(OPV_MUC_INVITATIONDECLINEREASONASK).value().toBool();
+			if (ask)
+			{
+				bool store = Options::node(OPV_MUC_INVITATIONDECLINEREASONSTORE).value().toBool();
+				ConfirmationDialog *dialog = new ConfirmationDialog(tr("Decline invitation to a conference"),
+																	tr("Invitation decline reason:"),
+																	reason, store, ask);
+				if (dialog->exec())
+				{
+					if (store)
+						Options::node(OPV_MUC_INVITATIONDECLINEREASON).setValue(reason);
+					Options::node(OPV_MUC_INVITATIONDECLINEREASONASK).setValue(ask);
+					Options::node(OPV_MUC_INVITATIONDECLINEREASONSTORE).setValue(store);
+				}
+				else
+					ok = false;
+				dialog->deleteLater();
+			}
+
+			if (ok && !reason.isEmpty())
 				declElem.appendChild(stanza.createElement("reason")).appendChild(stanza.createTextNode(reason));
+
 			// *** >>> eyeCU >>> ***
 			if (FStanzaProcessor && FStanzaProcessor->sendStanzaOut(invite.streamJid,stanza))
 				LOG_STRM_INFO(invite.streamJid,QString("Rejected invite request from=%1 to room=%2").arg(invite.fromJid.full(),invite.roomJid.bare()));

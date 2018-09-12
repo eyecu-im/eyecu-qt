@@ -4,27 +4,27 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="284"/>
    <source>Waiting for a response to send a file request</source>
-   <translation>Wacht op een antwoord om een bestand te verzenden</translation>
+   <translation>Bezig met wachten op antwoord voor bestandsverzoek</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="533"/>
    <source>Connecting</source>
-   <translation>Verbinding</translation>
+   <translation>Bezig met verbinden</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="544"/>
    <source>Data transmission</source>
-   <translation>Gegevens overdracht</translation>
+   <translation>Gegevensoverdracht</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="568"/>
    <source>Data transmission finished</source>
-   <translation>Gegevens overdracht voltooid</translation>
+   <translation>Gegevensoverdracht voltooid</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="596"/>
    <source>Disconnecting</source>
-   <translation>Verbinding verbreken</translation>
+   <translation>Bezig met verbreken van verbinding</translation>
   </message>
  </context>
  <context>
@@ -32,17 +32,17 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="45"/>
    <source>File Streams Manager</source>
-   <translation>Streams bestandsbeheer</translation>
+   <translation>Bestandsstreams-beheer</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="46"/>
    <source>Allows to initiate a thread for transferring files between two XMPP entities</source>
-   <translation>Toestaan om het starten van een thread voor het overbrengen van bestanden tussen twee XMPP entiteiten</translation>
+   <translation>Toestaan om het starten van een thread voor het overbrengen van bestanden tussen twee XMPP-diensten</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
    <source>Show file transfers</source>
-   <translation>Toon bestandsoverdrachten</translation>
+   <translation>Bestandsoverdrachten tonen</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
@@ -53,7 +53,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="91"/>
    <source>File input/output error</source>
-   <translation>Bestandsfout invoer/uitvoer</translation>
+   <translation>In-/Uitvoerfout</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="92"/>
@@ -63,7 +63,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="93"/>
    <source>Connection timed out</source>
-   <translation>Time-out verbinding</translation>
+   <translation>Verbinding is verlopen</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="94"/>
@@ -83,12 +83,12 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="146"/>
    <source>Create separate folder for each sender</source>
-   <translation>Maak een aparte map voor elke afzender</translation>
+   <translation>Aparte map creëren voor elke afzender</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="156"/>
    <source>Default transfer method:</source>
-   <translation>Standaard overdrachts methode:</translation>
+   <translation>Standaard overdrachtsmethode:</translation>
   </message>
  </context>
  <context>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.cpp" line="33"/>
    <source>Select default directory</source>
-   <translation>Selecteer standaard map</translation>
+   <translation>Kies standaardmap</translation>
   </message>
  </context>
  <context>
@@ -104,7 +104,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.ui" line="20"/>
    <source>Default directory:</source>
-   <translation>Standaard map:</translation>
+   <translation>Standaardmap:</translation>
   </message>
  </context>
  <context>
@@ -132,7 +132,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>Progress</source>
-   <translation>Vooruitgang</translation>
+   <translation>Voortgang</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
@@ -142,7 +142,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="137"/>
    <source>Create</source>
-   <translation>Maak</translation>
+   <translation>Creëren</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="140"/>
@@ -152,7 +152,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="143"/>
    <source>Connect</source>
-   <translation>Verbind</translation>
+   <translation>Verbinden</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="146"/>
@@ -213,7 +213,7 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="331"/>
    <source>Active: %1/%2</source>
-   <translation>Actieve: %1/%2</translation>
+   <translation>Actief: %1/%2</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>

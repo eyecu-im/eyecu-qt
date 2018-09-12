@@ -1,4 +1,5 @@
 #include "multiuserchatwindow.h"
+#include "confirmationdialog.h"
 
 #include <QPair>
 #include <QTimer>
@@ -2980,14 +2981,25 @@ void MultiUserChatWindow::onRoomActionTriggered(bool)
 	else if (action == FExitRoom)
 	{
 // *** <<< eyeCU <<< ***
-		if (Options::node(OPV_MUC_CONFIRMLEAVE).value().toBool())
+		bool confirm = Options::node(OPV_MUC_CONFIRMLEAVE).value().toBool();
+		if (confirm)
 		{
-			QString status = QInputDialog::getText(this,tr("Exit from conference"),tr("Enter a status message"),QLineEdit::Normal,Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed());
-			if (!status.isEmpty())
+			bool store = Options::node(OPV_MUC_LEAVESTATUSSTORE).value().toBool();
+			QString status = Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed();
+			ConfirmationDialog *dialog = new ConfirmationDialog(tr("Leave conference"),
+																tr("Leave status message:"),
+																status, store, confirm, this);
+
+			if (dialog->exec() == QDialog::Accepted)
 			{
-				FMultiChat->sendPresence(IPresence::Offline,status,0);
+				if (store)
+					Options::node(OPV_MUC_LEAVESTATUS).setValue(status);
+				Options::node(OPV_MUC_LEAVESTATUSSTORE).setValue(store);
+				Options::node(OPV_MUC_CONFIRMLEAVE).setValue(confirm);
+				FMultiChat->sendPresence(IPresence::Offline, status, 0);
 				exitAndDestroy(QString::null);
 			}
+			dialog->deleteLater();
 		}
 		else
 		{

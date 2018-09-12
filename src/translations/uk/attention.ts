@@ -14,12 +14,12 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="52"/>
    <source>Implements XEP-0224: Attention</source>
-   <translation>XEP-0224: Увага</translation>
+   <translation>Виконується XEP-0224: Увага</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
    <source>When contact attempts to attract user&apos;s attention</source>
-   <translation>Коли контакт намагається привабити увагу користувача</translation>
+   <translation>Коли контакт намагається привернути увагу користувача</translation>
   </message>
   <message>
    <source>Shift+Return</source>
@@ -35,7 +35,7 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
    <source>Notification pop-up</source>
-   <translation>Спливаюче вікно зі сповіщенням</translation>
+   <translation>Спливаюче сповіщення</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
@@ -45,7 +45,7 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="189"/>
    <source>Implements XEP-0224: Allows to attract user&apos;s attention</source>
-   <translation>XEP-0224: Дозволити відправляти запити уваги</translation>
+   <translation>Виконується XEP-0224: Дозволяє привертати увагу користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="264"/>

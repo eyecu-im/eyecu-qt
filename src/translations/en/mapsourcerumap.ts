@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceRuMap</name>
   <message>
-   <location filename="../../plugins/mapsourcerumap/mapsourcerumap.cpp" line="12"/>
+   <location line="12" filename="../../plugins/mapsourcerumap/mapsourcerumap.cpp"/>
    <source>RuMap map source</source>
    <translation>RuMap map source</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcerumap/mapsourcerumap.cpp" line="13"/>
+   <location line="13" filename="../../plugins/mapsourcerumap/mapsourcerumap.cpp"/>
    <source>Allows Map plugin to use RuMap (Geocentre-Consulting) as map source</source>
    <translation>Allows Map plugin to use RuMap (Geocentre-Consulting) as map source</translation>
   </message>

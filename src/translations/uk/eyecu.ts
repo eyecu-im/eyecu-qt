@@ -30,12 +30,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="366"/>
    <source>Saving settings</source>
-   <translation type="unfinished"/>
+   <translation>Збереження налаштувань</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="409"/>
    <source>Loading plugin: %1</source>
-   <translation type="unfinished"/>
+   <translation>Завантаження плагіна: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="450"/>
@@ -60,7 +60,7 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="514"/>
    <source>Initializing plugin connections: %1</source>
-   <translation type="unfinished"/>
+   <translation>Ініціалізація підключень плагіна: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="526"/>
@@ -70,22 +70,22 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="536"/>
    <source>Initializing plugin objects: %1</source>
-   <translation type="unfinished"/>
+   <translation>Ініціалізація об&apos;єктів плагіна: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="545"/>
    <source>Initializing plugin settings: %1</source>
-   <translation type="unfinished"/>
+   <translation>Ініціалізація налаштувань плагіна: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="561"/>
    <source>Starting plugin: %1</source>
-   <translation type="unfinished"/>
+   <translation>Запуск плагіна: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="656"/>
    <source>Application started</source>
-   <translation type="unfinished"/>
+   <translation>Запуск програми</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="946"/>

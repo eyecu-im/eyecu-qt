@@ -9,27 +9,27 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
    <source>Allows to use emoji in messages</source>
-   <translation>Toestaan om emoji in berichten te gebruiken</translation>
+   <translation>Stelt je in staat om emoji te gebruiken in berichten</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Smileys &amp; People</source>
-   <translation>Smileys &amp; Mensen</translation>
+   <translation>Smileys en mensen</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Animals &amp; Nature</source>
-   <translation>Dieren &amp; Natuur</translation>
+   <translation>Dieren en natuur</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Food &amp; Drink</source>
-   <translation>Eten &amp; Drinken</translation>
+   <translation>Eten en drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Travel &amp; Places</source>
-   <translation>Reizen &amp; Plaatsen</translation>
+   <translation>Reizen en locaties</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
@@ -54,7 +54,7 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
    <source>Message windows</source>
-   <translation>Berichten venster</translation>
+   <translation>Berichtvensters</translation>
   </message>
  </context>
  <context>
@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.cpp" line="14"/>
    <source>Do not use emoji</source>
-   <translation>Gebruik geen emoji</translation>
+   <translation>Geen emoji gebruiken</translation>
   </message>
  </context>
  <context>
@@ -70,17 +70,17 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="29"/>
    <source>Emoji set:</source>
-   <translation>Emoji set:</translation>
+   <translation>Emoji-set:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="39"/>
    <source>Menu icon size:</source>
-   <translation>Menu icon grootte:</translation>
+   <translation>Menupictogram-grootte:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="49"/>
    <source>Chat icon size:</source>
-   <translation>Chat icon grootte:</translation>
+   <translation>Gesprekspictogram-grootte:</translation>
   </message>
  </context>
  <context>
@@ -102,7 +102,7 @@
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
    <source>Skin color</source>
-   <translation>Skin kleur</translation>
+   <translation>Huidskleur</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>

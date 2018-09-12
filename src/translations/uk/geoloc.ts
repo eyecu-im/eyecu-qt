@@ -4,23 +4,23 @@
   <message>
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.ui" line="65"/>
    <source>Distance</source>
-   <translation type="unfinished"/>
+   <translation>Відстань</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.ui" line="72"/>
    <source>Treshold</source>
-   <translation type="unfinished"/>
+   <translation>Поріг</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.ui" line="92"/>
    <source>Ignore own resources</source>
-   <translation type="unfinished"/>
+   <translation>Ігнорувати власні ресурси</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.cpp" line="38"/>
    <source>meter(s)</source>
    <comment>distance units</comment>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>метр</numerusform><numerusform>метра</numerusform><numerusform>метрів</numerusform><numerusform>метрів</numerusform></translation>
   </message>
  </context>
  <context>
@@ -50,7 +50,7 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="213"/>
    <source>When contact appears nearby</source>
-   <translation type="unfinished"/>
+   <translation>Коли контакт з&apos;являється поруч</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="219"/>
@@ -180,7 +180,7 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="283"/>
    <source>Contact proximity notification</source>
-   <translation type="unfinished"/>
+   <translation>Контактне повідомлення про близькість</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="290"/>
@@ -246,13 +246,13 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="926"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="942"/>
    <source>%1: %2%3</source>
-   <translation type="unfinished"/>
+   <translation>%1: %2%3</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="927"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="945"/>
    <source>&lt;b&gt;%1:&lt;/b&gt;&lt;span %4&gt;&amp;nbsp;%2%3&lt;/span&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt;&lt;span %4&gt;&amp;nbsp;%2%3&lt;/span&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="951"/>
@@ -271,17 +271,17 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1085"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1096"/>
    <source>%1: %2</source>
-   <translation type="unfinished"/>
+   <translation>%1: %2</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="954"/>
    <source>&lt;b&gt;%1:&lt;/b&gt;&lt;span %3&gt;&amp;nbsp;%2&lt;/span&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt;&lt;span %3&gt;&amp;nbsp;%2&lt;/span&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="963"/>
    <source>&lt;b&gt;%1:&lt;/b&gt; %2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt;%2</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="972"/>
@@ -298,12 +298,12 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1078"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1099"/>
    <source>&lt;b&gt;%1:&lt;/b&gt;&amp;nbsp;%2</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt;&amp;nbsp;%2</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1088"/>
    <source>&lt;b&gt;%1:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;%1:&lt;/b&gt;&amp;nbsp;&lt;a href=&quot;%2&quot;&gt;%2&lt;/a&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="1193"/>

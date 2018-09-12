@@ -4,22 +4,22 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="41"/>
    <source>Connection Manager</source>
-   <translation>Verbindings manager</translation>
+   <translation>Verbindingsbeheer</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="42"/>
    <source>Allows to use different types of connections to a Jabber server</source>
-   <translation>Toestaan om verschillende soorten verbindingen te gebruiken voor een ​​Jabber server</translation>
+   <translation>Stelt je in staat om verschillende soorten verbinden te gebruiken naar een Jabber-server</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="95"/>
    <source>Connection error</source>
-   <translation>Verbindings fout</translation>
+   <translation>Verbindingsfout</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="118"/>
    <source>New Proxy</source>
-   <translation>Nieuw proxy</translation>
+   <translation>Nieuwe proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="130"/>
@@ -29,7 +29,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="150"/>
    <source>&lt;No Proxy&gt;</source>
-   <translation>&lt;Geen proxy&gt;</translation>
+   <translation>&lt;No Proxy&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="471"/>
@@ -59,22 +59,22 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="476"/>
    <source>State/Province: %1</source>
-   <translation>Staat/Provinsie: %1</translation>
+   <translation>Staat/Provincie: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="483"/>
    <source>&lt;b&gt;Certificate holder:&lt;/b&gt;</source>
-   <translation>&lt;b&gt;Certificaat houder:&lt;/b&gt;</translation>
+   <translation>&lt;b&gt;Certificaathouder:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="491"/>
    <source>&lt;b&gt;Certificate issuer:&lt;/b&gt;</source>
-   <translation>&lt;b&gt;Certificaat Uitgever:&lt;/b&gt;</translation>
+   <translation>&lt;b&gt;Certificaatuitgever:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="499"/>
    <source>&lt;b&gt;Certificate details:&lt;/b&gt;</source>
-   <translation>&lt;b&gt;Certificaat details:&lt;/b&gt;</translation>
+   <translation>&lt;b&gt;Certificaatdetails:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="500"/>
@@ -105,17 +105,17 @@
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.cpp" line="34"/>
    <source>HTTP Proxy</source>
-   <translation>HTTP Proxy</translation>
+   <translation>HTTP-proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.cpp" line="35"/>
    <source>Socks5 Proxy</source>
-   <translation>Socks5 Proxy</translation>
+   <translation>Socks5-proxy</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.cpp" line="97"/>
    <source>New Proxy</source>
-   <translation>Nieuw proxy</translation>
+   <translation>Nieuwe proxy</translation>
   </message>
  </context>
  <context>
@@ -123,7 +123,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="14"/>
    <source>Proxy Manager</source>
-   <translation>Proxy Manager</translation>
+   <translation>Proxybeheer</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="34"/>
@@ -153,7 +153,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="121"/>
    <source>Password:</source>
-   <translation>Paswoord:</translation>
+   <translation>Wachtwoord:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="148"/>
@@ -163,7 +163,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="155"/>
    <source>Delete</source>
-   <translation>Verwijder</translation>
+   <translation>Verwijderen</translation>
   </message>
  </context>
  <context>
@@ -171,12 +171,12 @@
   <message>
    <location filename="../../plugins/connectionmanager/proxysettingswidget.cpp" line="13"/>
    <source>Default proxy:</source>
-   <translation>Standaard proxy:</translation>
+   <translation>Standaardproxy:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/proxysettingswidget.cpp" line="15"/>
    <source>&lt;Default Proxy&gt;</source>
-   <translation>&lt;Standaard proxy&gt;</translation>
+   <translation>&lt;Default Proxy&gt;</translation>
   </message>
  </context>
  <context>
@@ -189,7 +189,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/proxysettingswidget.ui" line="43"/>
    <source>Edit</source>
-   <translation>Bewerk</translation>
+   <translation>Bewerken</translation>
   </message>
  </context>
 </TS>

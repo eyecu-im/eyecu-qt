@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="16"/>
    <source>Positioning</source>
-   <translation type="unfinished"/>
+   <translation>Позиціонування</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="17"/>
    <source>Allows to determine device position</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє визначати положення пристрою</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioning.cpp" line="51"/>
@@ -27,12 +27,12 @@
   <message>
    <location filename="../../plugins/positioning/positioningoptions.ui" line="32"/>
    <source>Positioning method </source>
-   <translation type="unfinished"/>
+   <translation>Метод позиціонування</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioningoptions.ui" line="73"/>
    <source>Setup positioning method</source>
-   <translation type="unfinished"/>
+   <translation>Метод налаштування позиціонування</translation>
   </message>
   <message>
    <location filename="../../plugins/positioning/positioningoptions.ui" line="76"/>

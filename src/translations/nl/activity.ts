@@ -9,27 +9,27 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Drinking</source>
-   <translation>Drinken</translation>
+   <translation>Aan het drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Eating</source>
-   <translation>Eten</translation>
+   <translation>Aan het eten</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="82"/>
    <source>Exercising</source>
-   <translation>Oefenen</translation>
+   <translation>Aan het oefenen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Grooming</source>
-   <translation>Verzorgen</translation>
+   <translation>Aan het verzorgen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Having appointment</source>
-   <translation>Een afspraak hebben</translation>
+   <translation>Ben op een afspraak</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
@@ -39,122 +39,122 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="83"/>
    <source>Relaxing</source>
-   <translation>Relaxen</translation>
+   <translation>Aan het relaxen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Talking</source>
-   <translation>Praten</translation>
+   <translation>Aan het praten</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Traveling</source>
-   <translation>Reizen</translation>
+   <translation>Aan het reizen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Working</source>
-   <translation>Werken</translation>
+   <translation>Aan het werk</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="84"/>
    <source>Buying groceries</source>
-   <translation>Boodschappen doen</translation>
+   <translation>Boodschappen aan het doen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Cleaning</source>
-   <translation>Opruimen</translation>
+   <translation>Bezig met opruimen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Cooking</source>
-   <translation>Koken</translation>
+   <translation>Aan het koken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Doing maintenance</source>
-   <translation>Onderhoudswerkzaamheden</translation>
+   <translation>Onderhoudswerkzaamheden aan het doen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="85"/>
    <source>Writing</source>
-   <translation>Schrijven</translation>
+   <translation>Bezig met schrijven</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Doing the dishes</source>
-   <translation>De afwas doen</translation>
+   <translation>De afwas aan het doen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Doing the laundry</source>
-   <translation>De was doen</translation>
+   <translation>De was aan het doen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Gardening</source>
-   <translation>Tuinieren</translation>
+   <translation>Bezig met tuinieren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="86"/>
    <source>Running an errand</source>
-   <translation>Een boodschap doen</translation>
+   <translation>Even een boodschap aan het doen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Walking the dog</source>
-   <translation>Hond uitlaten</translation>
+   <translation>De hond aan het uitlaten</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having a beer</source>
-   <translation>Biertje drinken</translation>
+   <translation>Bezig een biertje te drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having coffee</source>
-   <translation>Koffie drinken</translation>
+   <translation>Koffie aan het drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="87"/>
    <source>Having tea</source>
-   <translation>Thee drinken</translation>
+   <translation>Thee aan het drinken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having a snack</source>
-   <translation>Snack eten</translation>
+   <translation>Bezig met snoepen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having breakfast</source>
-   <translation>Aan het ontbijten</translation>
+   <translation>Bezig met ontbijten</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having dinner</source>
-   <translation>Aan het dineren</translation>
+   <translation>Bezig met dineren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="88"/>
    <source>Having lunch</source>
-   <translation>Aan het lunchen</translation>
+   <translation>Bezig met lunchen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Cycling</source>
-   <translation>Fietsen</translation>
+   <translation>Bezig met fietsen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Dancing</source>
-   <translation>Dansen</translation>
+   <translation>Bezig met dansen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
    <source>Hiking</source>
-   <translation>Wandelen</translation>
+   <translation>Bezig met wandelen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="89"/>
@@ -169,152 +169,152 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Running</source>
-   <translation>Hardlopen</translation>
+   <translation>Bezig met hardlopen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Skiing</source>
-   <translation>Skieen</translation>
+   <translation>Aan het skieën</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="90"/>
    <source>Swimming</source>
-   <translation>Zwemmen</translation>
+   <translation>Aan het zwemmen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Working out</source>
-   <translation>Aan het uitwerken</translation>
+   <translation>Aan het fitnessen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>At the spa</source>
-   <translation>In het kuuroord</translation>
+   <translation>Ben in een kuuroord</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Brushing teeth</source>
-   <translation>Tandenpoetsen</translation>
+   <translation>Bezig met tanden poetsen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="91"/>
    <source>Getting a haircut</source>
-   <translation>Naar de kapper</translation>
+   <translation>Ben bij de kapper</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Shaving</source>
-   <translation>Scheren</translation>
+   <translation>Bezig met scheren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Taking a bath</source>
-   <translation>Een bad nemen</translation>
+   <translation>Ben in het bad</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Taking a shower</source>
-   <translation>Een douche nemen</translation>
+   <translation>Ben onder de douche</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="92"/>
    <source>Day off</source>
-   <translation>Een vrije dag</translation>
+   <translation>Heb een vrije dag</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Hanging out</source>
-   <translation>Ergens uithangen</translation>
+   <translation>Ben ergens aan het hangen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Hiding</source>
-   <translation>Verbergen</translation>
+   <translation>Heb me verborgen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>On vacation</source>
-   <translation>Op vakantie</translation>
+   <translation>Ben op vakantie</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="93"/>
    <source>Praying</source>
-   <translation>Bidden</translation>
+   <translation>Ben aan het bidden</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Scheduled holiday</source>
-   <translation>Geplande vakantie</translation>
+   <translation>Ben op mijn geplande vakantie</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Sleeping</source>
-   <translation>Slapen</translation>
+   <translation>Bezig met slapen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Thinking</source>
-   <translation>Slapen</translation>
+   <translation>Bezig met nadenken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="94"/>
    <source>Fishing</source>
-   <translation>Vissen</translation>
+   <translation>Aan het vissen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Gaming</source>
-   <translation>Gamen</translation>
+   <translation>Aan het gamen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Going out</source>
-   <translation>Uitgaan</translation>
+   <translation>Ben naar een uitgaansgelegenheid</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Partying</source>
-   <translation>Feesten</translation>
+   <translation>Aan het feesten</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="95"/>
    <source>Reading</source>
-   <translation>Lezen</translation>
+   <translation>Aan het lezen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Rehearsing</source>
-   <translation>Repeteren</translation>
+   <translation>Aan het repeteren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Shopping</source>
-   <translation>Winkelen</translation>
+   <translation>Aan het winkelen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Smoking</source>
-   <translation>Roken</translation>
+   <translation>Bezig met roken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="96"/>
    <source>Socializing</source>
-   <translation>Gezelligheid</translation>
+   <translation>Ben in gezelschap</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Sunbathing</source>
-   <translation>Zonnebaden</translation>
+   <translation>Aan het zonnebaden</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Watching TV</source>
-   <translation>Tv kijken</translation>
+   <translation>TV aan het kijken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
    <source>Watching a movie</source>
-   <translation>Een film kijken</translation>
+   <translation>Een film aan het kijken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="97"/>
@@ -329,67 +329,67 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>On video phone</source>
-   <translation>Video telefoon</translation>
+   <translation>In een videogesprek</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>Commuting</source>
-   <translation>woon-werkverkeer</translation>
+   <translation>Woon-werkverkeer</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="98"/>
    <source>Travelling by bicycle</source>
-   <translation>Reizen per fiets</translation>
+   <translation>Ben aan het reizen per fiets</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>Driving</source>
-   <translation>Auto rijden</translation>
+   <translation>Bezig met autorijden</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>In a car</source>
-   <translation>In een auto</translation>
+   <translation>Ben in een auto</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>On a bus</source>
-   <translation>In een bus</translation>
+   <translation>Ben in een bus</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="99"/>
    <source>On a plane</source>
-   <translation>In een vliegtuig</translation>
+   <translation>Ben in een vliegtuig</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>On a train</source>
-   <translation>In de trein</translation>
+   <translation>Ben in de trein</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>On a trip</source>
-   <translation>Op reis</translation>
+   <translation>Ben op reis</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>Walking</source>
-   <translation>Wandelen</translation>
+   <translation>Aan het wandelen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="100"/>
    <source>Coding</source>
-   <translation>Compileren</translation>
+   <translation>Aan het programmeren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
    <source>In a meeting</source>
-   <translation>In een vergadering</translation>
+   <translation>Ben in een vergadering</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
    <source>Studying</source>
-   <translation>Studeren</translation>
+   <translation>Aan het studeren</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="101"/>
@@ -400,18 +400,18 @@
    <location filename="../../plugins/activity/activity.cpp" line="110"/>
    <location filename="../../plugins/activity/activity.cpp" line="399"/>
    <source>User Activity</source>
-   <translation>Gebruikers activiteit</translation>
+   <translation>Gebruikersactiviteit</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="111"/>
    <source>Implements XEP-0108: User Activity</source>
-   <translation>Uitvoor: XEP-0108:Gebruikers activiteit</translation>
+   <translation>Implementeert XEP-0108: Gebruikersactiviteit</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="213"/>
    <location filename="../../plugins/activity/activity.cpp" line="214"/>
    <source>Set activity</source>
-   <translation>Stel activiteit in</translation>
+   <translation>Activiteit instellen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="213"/>
@@ -428,7 +428,7 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="250"/>
    <source>When user activity changed</source>
-   <translation>Wanneer gebruikers activiteit veranderd</translation>
+   <translation>Bij wijzigingen in gebruikersactiviteit</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="257"/>
@@ -440,32 +440,32 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="400"/>
    <source>Supports publishing of current user activity</source>
-   <translation>Ondersteunt het publiceren van de huidige activiteit van de gebruiker</translation>
+   <translation>Ondersteunt het publiceren van de huidige gebruikersactiviteit</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="404"/>
    <source>User Activity Notification</source>
-   <translation>Gebruikers Activiteit melding</translation>
+   <translation>Gebruikersactiviteit-melding</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="405"/>
    <source>Receives notification of current user activity</source>
-   <translation>Ontvangt een melding van huidige gebruikers activiteit</translation>
+   <translation>Ontvang een melding van huidige gebruikersactiviteit</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="502"/>
    <source>Show user activity icons</source>
-   <translation>Toon activiteit pictogram van gebruiker</translation>
+   <translation>Activiteitspictogrammen van gebruiker tonen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="506"/>
    <source>Display user activity icon</source>
-   <translation>Toon activiteit pictogram van gebruiker</translation>
+   <translation>Activiteitspictogram van gebruiker tonen</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="507"/>
    <source>Activity events in chat</source>
-   <translation>Activiteits gebeurtenissen in de chat</translation>
+   <translation>Activiteitsgebeurtenissen in gesprekken</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="576"/>
@@ -475,12 +475,12 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="717"/>
    <source>%1 changed activity to %2</source>
-   <translation>%1 veranderd activiteit naar %2</translation>
+   <translation>%1 heeft zijn/haar activiteit gewijzigd in %2</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="876"/>
    <source>Changed activity to: %1</source>
-   <translation>Veranderd activiteit tot: %1</translation>
+   <translation>Activiteit gewijzigd in: %1</translation>
   </message>
  </context>
  <context>
@@ -488,7 +488,7 @@
   <message>
    <location filename="../../plugins/activity/activityselect.ui" line="26"/>
    <source>Activity select</source>
-   <translation>Selecteer je activiteit</translation>
+   <translation>Kies een activiteit</translation>
   </message>
  </context>
 </TS>

@@ -7,7 +7,7 @@
   </message>
   <message>
    <source>Send File</source>
-   <translation>Bestand verzenden</translation>
+   <translation>Bestand versturen</translation>
   </message>
   <message>
    <source>File transfer completed</source>
@@ -15,11 +15,11 @@
   </message>
   <message>
    <source>Allows to send a file to another contact</source>
-   <translation>Toestaan om een bestand te verzenden naar een ander contactpersoon</translation>
+   <translation>Stelt je in staat om een bestand te versturen naar een contactpersoon</translation>
   </message>
   <message>
    <source>Supports the sending of the file to another contact</source>
-   <translation>Ondersteunt het verzenden van een bestand naar een ander contactpersoon</translation>
+   <translation>Ondersteunt het versturen van een bestand naar een contactpersoon</translation>
   </message>
   <message>
    <source>Failed to start file transfer</source>
@@ -27,11 +27,11 @@
   </message>
   <message>
    <source>Send file</source>
-   <translation>Bestand verzenden</translation>
+   <translation>Bestand versturen</translation>
   </message>
   <message>
    <source>When receiving a prompt to accept the file</source>
-   <translation>Bij het ontvangen van een prompt aanvaard het bestand</translation>
+   <translation>Bij het ontvangen van een bestandsverzoek</translation>
   </message>
   <message>
    <source>Data transmission terminated</source>
@@ -44,23 +44,23 @@
   </message>
   <message>
    <source>Automatically receive files from authorized contacts</source>
-   <translation>Bestanden automatisch ontvangen van erkende contacten</translation>
+   <translation>Automatisch bestanden ontvangen van erkende contactpersonen</translation>
   </message>
   <message>
    <source>Hide file transfer dialog after transfer started</source>
-   <translation>Verberg bestandsoverdracht dialoog als overdracht is begonnen</translation>
+   <translation>Bestandsoverdrachtvenster verbergen nadat overdracht begonnen is</translation>
   </message>
   <message numerus="yes">
    <source>/me share %n file(s): %1</source>
-   <translation><numerusform>/Ik deel %n bestand: %1</numerusform><numerusform>/Ik deel %n bestanden: %1</numerusform></translation>
+   <translation><numerusform>/me deelt %n bestand: %1</numerusform><numerusform>/me deelt %n bestanden: %1</numerusform></translation>
   </message>
   <message>
    <source>Select Files</source>
-   <translation>Selecteer bestanden</translation>
+   <translation>Bestanden kiezen</translation>
   </message>
   <message>
    <source>Failed to send request for file &apos;%1&apos;</source>
-   <translation>Mislukt om aanvraag van bestand te verzenden &apos;%1&apos;</translation>
+   <translation>Verzoek voor bestand &apos;%1&apos; versturen mislukt</translation>
   </message>
   <message>
    <source>File transfer</source>
@@ -68,15 +68,15 @@
   </message>
   <message>
    <source>File transfer request from %1</source>
-   <translation>Bestandsoverdracht verzoek van %1</translation>
+   <translation>Bestandsoverdrachtverzoek van %1</translation>
   </message>
   <message>
    <source>%1 wants to send you a file &apos;%2&apos;</source>
-   <translation>%1 wil je bestand &apos;%2&apos; sturen </translation>
+   <translation>%1 wil je bestand &apos;%2&apos; sturen</translation>
   </message>
   <message>
    <source>Sending file &apos;%1&apos; to %2 started automatically</source>
-   <translation>Verstuur automatisch bestand &apos;%1&apos; naar &apos;%2&apos; </translation>
+   <translation>Bestand wordt automatisch verstuurd</translation>
   </message>
   <message>
    <source>Receiving file &apos;%1&apos; from %2 started automatically</source>

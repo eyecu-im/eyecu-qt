@@ -169,7 +169,14 @@
 #define OPV_MUC_ALTERNATIONHIGHLIGHT					"muc.alternation-highlight"
 #define OPV_MUC_CONFIRMLEAVE							"muc.confirm-before-leave"
 #define OPV_MUC_LEAVESTATUS								"muc.leave-status-message"
+#define OPV_MUC_LEAVESTATUSSTORE						"muc.leave-status-message-store"
 #define OPV_MUC_SHOWINITIALJOINS                        "muc.show-initial-joins"
+#define OPV_MUC_INVITATIONREASON                        "muc.invitation-reason"
+#define OPV_MUC_INVITATIONREASONASK                     "muc.invitation-reason-ask"
+#define OPV_MUC_INVITATIONREASONSTORE                   "muc.invitation-reason-store"
+#define OPV_MUC_INVITATIONDECLINEREASON                 "muc.invitation-decline-reason"
+#define OPV_MUC_INVITATIONDECLINEREASONASK              "muc.invitation-decline-reason-ask"
+#define OPV_MUC_INVITATIONDECLINEREASONSTORE            "muc.invitation-decline-reason-store"
 
 // Avatars
 #define OPV_MUC_AVATARS									"muc.avatars"

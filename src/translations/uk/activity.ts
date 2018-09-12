@@ -440,7 +440,7 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="400"/>
    <source>Supports publishing of current user activity</source>
-   <translation>Підтримує публікацію активності користувача</translation>
+   <translation>Підтримує публікацію поточної активності користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="404"/>
@@ -460,17 +460,17 @@
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="506"/>
    <source>Display user activity icon</source>
-   <translation>Показувати іконки іконки активності користувача</translation>
+   <translation>Відображати іконку активності користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="507"/>
    <source>Activity events in chat</source>
-   <translation>Події, що пов&apos;язані з активностями у чаті</translation>
+   <translation>Активність в чаті</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="576"/>
    <source>%1: %2</source>
-   <translation type="unfinished"/>
+   <translation>%1: %2</translation>
   </message>
   <message>
    <location filename="../../plugins/activity/activity.cpp" line="717"/>

@@ -4,32 +4,32 @@
  <context>
   <name>StatusIcons</name>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="47"/>
+   <location line="47" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Status Icons Manager</source>
    <translation>Status Icons Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="48"/>
+   <location line="48" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Allows to set the status icons for contacts on the basis of standard rules or user-defined</source>
    <translation>Allows to set the status icons for contacts on the basis of standard rules or user-defined</translation>
   </message>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="127"/>
+   <location line="127" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Status icon</source>
    <translation>Status icon</translation>
   </message>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="130"/>
+   <location line="130" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Default</source>
    <translation>Default</translation>
   </message>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="182"/>
+   <location line="182" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Contacts list</source>
    <translation>Contacts list</translation>
   </message>
   <message>
-   <location filename="../../plugins/statusicons/statusicons.cpp" line="183"/>
+   <location line="183" filename="../../plugins/statusicons/statusicons.cpp"/>
    <source>Status icons:</source>
    <translation>Status icons:</translation>
   </message>

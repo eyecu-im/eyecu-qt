@@ -22,12 +22,12 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="27"/>
    <source>Adium Message Style</source>
-   <translation>Стиль повідомлень Adium</translation>
+   <translation>Стиль повідомлення Adium</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="28"/>
    <source>Allows to use a Adium style in message design</source>
-   <translation>Дозволяє використовувати стиль Adium в дизайні чату</translation>
+   <translation>Дозволяє використовувати стиль Adium в дизайні повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="74"/>
@@ -45,13 +45,13 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="13"/>
    <source>Background</source>
-   <translation>Тло</translation>
+   <translation>Фон</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="21"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="23"/>
    <source>Default</source>
-   <translation>За замовчанням</translation>
+   <translation>За замовчуванням</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="36"/>
@@ -66,22 +66,22 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="38"/>
    <source>Title</source>
-   <translation>Нагорі</translation>
+   <translation>Заголовок</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="39"/>
    <source>Title center</source>
-   <translation>Нагорі по центру</translation>
+   <translation>Заголовок в центрі</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="40"/>
    <source>Scale</source>
-   <translation>Розтягнути</translation>
+   <translation>Масштаб</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="125"/>
    <source>Select font family and size</source>
-   <translation>Виберіть фришт</translation>
+   <translation>Виберіть стиль шрифтів та розмір шрифту</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="158"/>
@@ -91,7 +91,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="158"/>
    <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
-   <translation>Файли зображень</translation>
+   <translation>Файли зображень (*.png *.jpg *.bmp *.gif)</translation>
   </message>
  </context>
  <context>

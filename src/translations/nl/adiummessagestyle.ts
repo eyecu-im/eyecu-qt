@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyle.cpp" line="832"/>
    <source>Failed to load message style. Press clear window button to retry.</source>
-   <translation>Mislukt om bericht stijl te laden. Druk op venster knop om opnieuw te proberen.</translation>
+   <translation>Laden van berichtstijl mislukt. Druk op de knop &quot;Venster leegmaken&quot; om opnieuw te proberen.</translation>
   </message>
  </context>
  <context>
@@ -22,12 +22,12 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="27"/>
    <source>Adium Message Style</source>
-   <translation>Adium bericht stijl</translation>
+   <translation>Adium-berichtstijl</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="28"/>
    <source>Allows to use a Adium style in message design</source>
-   <translation>Toestaan om een Adium stijl te gebruiken in  de berichtenontwerp</translation>
+   <translation>Stelt je in staat om een Adium-stijl te gebruiken in berichtvensters</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiummessagestyleengine.cpp" line="74"/>
@@ -61,7 +61,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="37"/>
    <source>Center</source>
-   <translation>Centrum</translation>
+   <translation>Gecentreerd</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="38"/>
@@ -71,7 +71,7 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="39"/>
    <source>Title center</source>
-   <translation>Titel centrum</translation>
+   <translation>Titel gecentreerd</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="40"/>
@@ -81,17 +81,17 @@
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="125"/>
    <source>Select font family and size</source>
-   <translation>Kies lettertype familie en grootte</translation>
+   <translation>Kies lettertype en lettergrootte</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="158"/>
    <source>Select background image</source>
-   <translation>Kies achtergrond afbeelding</translation>
+   <translation>Kies achtergrondafbeelding</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="158"/>
    <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
-   <translation>Afbeelding bestanden (*.png *.jpg *.bmp *.gif)</translation>
+   <translation>Afbeeldingsbestanden (*.png *.jpg *.bmp *.gif)</translation>
   </message>
  </context>
  <context>
@@ -111,13 +111,13 @@
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="158"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.cpp" line="33"/>
    <source>Change...</source>
-   <translation>Verander...</translation>
+   <translation>Wijzigen...</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="95"/>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="165"/>
    <source>Reset</source>
-   <translation>Herstel</translation>
+   <translation>Standaardwaarden</translation>
   </message>
   <message>
    <location filename="../../plugins/adiummessagestyle/adiumoptionswidget.ui" line="112"/>

@@ -47,12 +47,12 @@
   <message>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="30"/>
    <source>Auto Status</source>
-   <translation>Авто-статус</translation>
+   <translation>Авто-Статус</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="31"/>
    <source>Allows to change the status in accordance with the time of inactivity</source>
-   <translation>Дозволяє автоматично змінювати статус залежно від часу простою</translation>
+   <translation>Дозволяє автоматично змінювати статус залежно від часу бездіяльності</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="103"/>
@@ -63,7 +63,7 @@
    <location filename="../../plugins/autostatus/autostatus.cpp" line="229"/>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="249"/>
    <source>Auto status</source>
-   <translation>Авто-статус</translation>
+   <translation>Авто статус</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="304"/>
@@ -73,7 +73,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatus.cpp" line="312"/>
    <source>Disconnected due to inactivity for more than #(m) minutes</source>
-   <translation>Від&apos;єднаний через неактивність у більш ніж #(m) хвилин</translation>
+   <translation>Відключення через неактивність у більш ніж #(m) хвилин</translation>
   </message>
  </context>
  <context>
@@ -96,7 +96,7 @@
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="123"/>
    <source>Auto Status</source>
-   <translation>Авто-статус</translation>
+   <translation>Авто Статус</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autostatusoptionswidget.cpp" line="124"/>

@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/compress/compressfeature.cpp" line="203"/>
    <source>Error code: %1</source>
-   <translation>Fout code: %1</translation>
+   <translation>Foutcode: %1</translation>
   </message>
  </context>
  <context>
@@ -12,52 +12,52 @@
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="29"/>
    <source>Stream Compression</source>
-   <translation>Stream compressie</translation>
+   <translation>Streamcompressie</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="30"/>
    <source>Allows to compress a stream of messages sent and received from the server</source>
-   <translation>Maakt het mogelijk om een stream van berichtjes te comprimeren te versturen en ontvangen van de server</translation>
+   <translation>Stelt je in staat om meerdere ontvangen en verstuurde serverberichten te comprimeren</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="63"/>
    <source>Unsupported compression method</source>
-   <translation>Geen ondersteunde compressiemethode</translation>
+   <translation>Niet-ondersteunde compressiemethode</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="64"/>
    <source>Compression setup failed</source>
-   <translation>Compressie-configuratie mislukt</translation>
+   <translation>Compressieconfiguratie mislukt</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="66"/>
    <source>ZLib error</source>
-   <translation>Zlib fout</translation>
+   <translation>ZLib-fout</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="67"/>
    <source>Out of memory for ZLib</source>
-   <translation>Niet genoeg geheugen voor Zlib</translation>
+   <translation>Niet genoeg geheugen voor ZLib</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="68"/>
    <source>ZLib version mismatch</source>
-   <translation>Geen juiste Zlib versie</translation>
+   <translation>Onjuiste Zlib-versie</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="69"/>
    <source>Invalid or incomplete deflate data</source>
-   <translation>Ongeldige of onvolledige deflate gegevens</translation>
+   <translation>Ongeldige of onvolledige deflate-gegevens</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="70"/>
    <source>Invalid compression level</source>
-   <translation>Ongeldige compressie level</translation>
+   <translation>Ongeldig compressieniveau</translation>
   </message>
   <message>
    <location filename="../../plugins/compress/compressfeaturefactory.cpp" line="100"/>
    <source>Enable data compression transferred between client and server</source>
-   <translation>Schakel datacompressie in tussen cliënt en server</translation>
+   <translation>Gegevenscompressie inschakelen tussen client en server</translation>
   </message>
  </context>
 </TS>

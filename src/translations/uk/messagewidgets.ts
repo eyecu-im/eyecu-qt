@@ -94,13 +94,13 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="95"/>
    <source>Ctrl+Q</source>
    <comment>Quote selected text</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Q</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="598"/>
    <source>Toggle /me command</source>
-   <translation type="unfinished"/>
+   <translation>Перемкнути команду /me</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>

@@ -90,17 +90,17 @@
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="132"/>
    <source>General</source>
-   <translation type="unfinished"/>
+   <translation>Загальний</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="134"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>Підключення</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearch/mapsearch.cpp" line="137"/>
    <source>Providers</source>
-   <translation type="unfinished"/>
+   <translation>Провайдери</translation>
   </message>
  </context>
  <context>

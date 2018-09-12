@@ -3,11 +3,11 @@
   <name>Account</name>
   <message>
    <source>Enter password for account &lt;b&gt;%1&lt;/b&gt;</source>
-   <translation>Paswoord invoeren voor account &lt;b&gt;%1&lt;/b&gt;</translation>
+   <translation>Voer het wachtwoord in voor account &lt;b&gt;%1&lt;/b&gt;</translation>
   </message>
   <message>
    <source>Account Password</source>
-   <translation>Account paswoord</translation>
+   <translation>Accountwachtwoord</translation>
   </message>
  </context>
  <context>
@@ -25,15 +25,15 @@
   </message>
   <message>
    <source>Modify account</source>
-   <translation>Wijzig account</translation>
+   <translation>Account bewerken</translation>
   </message>
   <message>
    <source>Account Manager</source>
-   <translation>Account manager</translation>
+   <translation>Accountbeheer</translation>
   </message>
   <message>
    <source>Allows to create and manage Jabber accounts</source>
-   <translation>Toestaan om jabber accounts aan te maken en te beheren</translation>
+   <translation>Stelt je in staat om Jabber-accounts te creëren en bewerken</translation>
   </message>
   <message>
    <source>Common account settings</source>
@@ -49,11 +49,11 @@
   </message>
   <message>
    <source>Password:</source>
-   <translation>Paswoord:</translation>
+   <translation>Wachtwoord:</translation>
   </message>
   <message>
    <source>Resource:</source>
-   <translation>Resource:</translation>
+   <translation>Bron:</translation>
   </message>
   <message>
    <source>Additional settings</source>
@@ -61,7 +61,7 @@
   </message>
   <message>
    <source>Require secure connection to server</source>
-   <translation>Vereist beveiligde verbinding met de server</translation>
+   <translation>Beveiligde serververbinding vereist</translation>
   </message>
   <message>
    <source>Parameters</source>
@@ -73,7 +73,7 @@
   </message>
   <message>
    <source>Home</source>
-   <translation>Home</translation>
+   <translation>Thuis</translation>
   </message>
   <message>
    <source>Work</source>
@@ -81,7 +81,7 @@
   </message>
   <message>
    <source>Notebook</source>
-   <translation>Notitieboekje</translation>
+   <translation>Notitieboek</translation>
   </message>
   <message>
    <source>(default)</source>
@@ -89,11 +89,11 @@
   </message>
   <message>
    <source>&lt;Empty&gt;</source>
-   <translation>&lt;Leeg&gt;</translation>
+   <translation>&lt;Empty&gt;</translation>
   </message>
   <message>
    <source>Default resource:</source>
-   <translation>Standaard resource:</translation>
+   <translation>Standaardbron:</translation>
   </message>
   <message>
    <source>New account</source>
@@ -101,7 +101,7 @@
   </message>
   <message>
    <source>Jabber ID:</source>
-   <translation>Jabber ID:</translation>
+   <translation>Jabber-ID:</translation>
   </message>
  </context>
  <context>
@@ -119,23 +119,23 @@
   </message>
   <message>
    <source>Show inactive accounts</source>
-   <translation>Toon inactieve accounts</translation>
+   <translation>Inactieve accounts tonen</translation>
   </message>
   <message>
    <source>Hide inactive accounts</source>
-   <translation>Verberg inactieve accounts</translation>
+   <translation>Inactieve accounts verbergen</translation>
   </message>
   <message>
    <source>Remove Account</source>
-   <translation>Verwijder account</translation>
+   <translation>Account verwijderen</translation>
   </message>
   <message>
    <source>You are assured that wish to remove an account &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;All settings will be lost.</source>
-   <translation>Ben je er zeker van de je een account wilt verwijderen &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt; Alle instellingen gaan verloren.</translation>
+   <translation>Weet je zeker dat je het &lt;b&gt;%1&lt;/b&gt;  wilt verwijderen?&lt;br&gt; Alle instellingen gaan verloren.</translation>
   </message>
   <message>
    <source>Use wizard...</source>
-   <translation>Gebruik Wizard...</translation>
+   <translation>Instelhulp gebruiken...</translation>
   </message>
  </context>
 </TS>

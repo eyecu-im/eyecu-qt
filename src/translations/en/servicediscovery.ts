@@ -4,12 +4,12 @@
  <context>
   <name>DiscoInfoWindow</name>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.cpp" line="18"/>
+   <location line="18" filename="../../plugins/servicediscovery/discoinfowindow.cpp"/>
    <source>Discovery Info - %1</source>
    <translation>Discovery Info - %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.cpp" line="126"/>
+   <location line="126" filename="../../plugins/servicediscovery/discoinfowindow.cpp"/>
    <source>Error: %1</source>
    <translation>Error: %1</translation>
   </message>
@@ -17,42 +17,42 @@
  <context>
   <name>DiscoInfoWindowClass</name>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="50"/>
+   <location line="50" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Identities:</source>
    <translation>Identities:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="88"/>
+   <location line="88" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Category</source>
    <translation>Category</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="93"/>
+   <location line="93" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Type</source>
    <translation>Type</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="98"/>
+   <location line="98" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Name</source>
    <translation>Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="106"/>
+   <location line="106" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Features:</source>
    <translation>Features:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="135"/>
+   <location line="135" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Description:</source>
    <translation>Description:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="167"/>
+   <location line="167" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Extensions</source>
    <translation>Extensions</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoinfowindow.ui" line="187"/>
+   <location line="187" filename="../../plugins/servicediscovery/discoinfowindow.ui"/>
    <source>Update</source>
    <translation>Update</translation>
   </message>
@@ -60,47 +60,47 @@
  <context>
   <name>DiscoItemsModel</name>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="129"/>
+   <location line="129" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>Name</source>
    <translation>Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="131"/>
+   <location line="131" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>Jid</source>
    <translation>Jid</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="133"/>
+   <location line="133" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>Node</source>
    <translation>Node</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="234"/>
+   <location line="234" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>&lt;li>&lt;b>Identity:&lt;/b>&lt;/li></source>
    <translation>&lt;li>&lt;b>Identity:&lt;/b>&lt;/li></translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="236"/>
+   <location line="236" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>&lt;li>%1 (Category: '%2'; Type: '%3')&lt;/li></source>
    <translation>&lt;li>%1 (Category: '%2'; Type: '%3')&lt;/li></translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="243"/>
+   <location line="243" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>&lt;li>&lt;b>Features:&lt;/b>&lt;/li></source>
    <translation>&lt;li>&lt;b>Features:&lt;/b>&lt;/li></translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="265"/>
+   <location line="265" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>true</source>
    <translation>true</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="265"/>
+   <location line="265" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>false</source>
    <translation>false</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemsmodel.cpp" line="276"/>
+   <location line="276" filename="../../plugins/servicediscovery/discoitemsmodel.cpp"/>
    <source>Error: %1</source>
    <translation>Error: %1</translation>
   </message>
@@ -108,42 +108,42 @@
  <context>
   <name>DiscoItemsWindow</name>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="50"/>
+   <location line="50" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Service Discovery - %1</source>
    <translation>Service Discovery - %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="189"/>
+   <location line="189" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Back</source>
    <translation>Back</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="195"/>
+   <location line="195" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Forward</source>
    <translation>Forward</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="201"/>
+   <location line="201" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Discover</source>
    <translation>Discover</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="207"/>
+   <location line="207" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Reload</source>
    <translation>Reload</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="213"/>
+   <location line="213" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Disco info</source>
    <translation>Disco info</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="219"/>
+   <location line="219" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>Add Contact</source>
    <translation>Add Contact</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.cpp" line="225"/>
+   <location line="225" filename="../../plugins/servicediscovery/discoitemswindow.cpp"/>
    <source>vCard</source>
    <translation>vCard</translation>
   </message>
@@ -151,22 +151,22 @@
  <context>
   <name>DiscoItemsWindowClass</name>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="32"/>
+   <location line="32" filename="../../plugins/servicediscovery/discoitemswindow.ui"/>
    <source>Item:</source>
    <translation>Item:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="61"/>
+   <location line="61" filename="../../plugins/servicediscovery/discoitemswindow.ui"/>
    <source>Node:</source>
    <translation>Node:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="90"/>
+   <location line="90" filename="../../plugins/servicediscovery/discoitemswindow.ui"/>
    <source>Search:</source>
    <translation>Search:</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/discoitemswindow.ui" line="126"/>
+   <location line="126" filename="../../plugins/servicediscovery/discoitemswindow.ui"/>
    <source>Actions</source>
    <translation>Actions</translation>
   </message>
@@ -174,75 +174,75 @@
  <context>
   <name>ServiceDiscovery</name>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="80"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="200"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="932"/>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1230"/>
+   <location line="80" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="200" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="932" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
+   <location line="1230" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Service Discovery</source>
    <translation>Service Discovery</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="81"/>
+   <location line="81" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Allows to receive information about Jabber entities</source>
    <translation>Allows to receive information about Jabber entities</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="933"/>
+   <location line="933" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery information and items</source>
    <translation>Supports the exchange of the discovery information and items</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="939"/>
+   <location line="939" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Information</source>
    <translation>Discovery Information</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="940"/>
+   <location line="940" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery information</source>
    <translation>Supports the exchange of the discovery information</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="946"/>
+   <location line="946" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Items</source>
    <translation>Discovery Items</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="947"/>
+   <location line="947" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the exchange of the discovery items</source>
    <translation>Supports the exchange of the discovery items</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="953"/>
+   <location line="953" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Publish Items</source>
    <translation>Publish Items</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="954"/>
+   <location line="954" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the publishing of the discovery items</source>
    <translation>Supports the publishing of the discovery items</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="960"/>
+   <location line="960" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Entity Capabilities</source>
    <translation>Entity Capabilities</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="961"/>
+   <location line="961" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the caching of the discovery information</source>
    <translation>Supports the caching of the discovery information</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="967"/>
+   <location line="967" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>JID Escaping</source>
    <translation>JID Escaping</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="968"/>
+   <location line="968" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Supports the displaying of the jabber identifiers with disallowed characters</source>
    <translation>Supports the displaying of the jabber identifiers with disallowed characters</translation>
   </message>
   <message>
-   <location filename="../../plugins/servicediscovery/servicediscovery.cpp" line="1218"/>
+   <location line="1218" filename="../../plugins/servicediscovery/servicediscovery.cpp"/>
    <source>Discovery Info</source>
    <translation>Discovery Info</translation>
   </message>

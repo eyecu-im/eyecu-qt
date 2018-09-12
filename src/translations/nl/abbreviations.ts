@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/abbreviations/abbreviations.cpp" line="37"/>
    <source>Translates abbreviations frequently used in network communities</source>
-   <translation>Vertaal vaak gebruikte afkortingen in netwerk van gemeenschappen</translation>
+   <translation>Vertaal vaak gebruikte afkortingen in netwerken</translation>
   </message>
  </context>
 </TS>

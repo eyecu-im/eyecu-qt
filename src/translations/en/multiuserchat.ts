@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en" sourcelanguage="en">
+<TS version="2.1" sourcelanguage="en" language="en">
  <context>
   <name>ConfigPage</name>
   <message>
@@ -66,6 +66,17 @@
   <message>
    <source>Failed to update conference settings: %1</source>
    <translation>Failed to update conference settings: %1</translation>
+  </message>
+ </context>
+ <context>
+  <name>ConfirmationDialog</name>
+  <message>
+   <source>Store as default</source>
+   <translation>Store as default</translation>
+  </message>
+  <message>
+   <source>Ask next time</source>
+   <translation>Ask next time</translation>
   </message>
  </context>
  <context>
@@ -933,6 +944,62 @@
    <source>Display user status message</source>
    <translation>Display user status message</translation>
   </message>
+  <message>
+   <source>Bye-bye!</source>
+   <translation>Bye-bye!</translation>
+  </message>
+  <message>
+   <source>You are welcome here</source>
+   <translation>You are welcome here</translation>
+  </message>
+  <message>
+   <source>Show initial joins</source>
+   <translation>Show initial joins</translation>
+  </message>
+  <message>
+   <source>Ask for confirmation before leave conference</source>
+   <translation>Ask for confirmation before leave conference</translation>
+  </message>
+  <message>
+   <source>Default leave status message</source>
+   <translation>Default leave status message</translation>
+  </message>
+  <message>
+   <source>Default invitation reason</source>
+   <translation>Default invitation reason</translation>
+  </message>
+  <message>
+   <source>Display invitation reason dialog</source>
+   <translation>Display invitation reason dialog</translation>
+  </message>
+  <message>
+   <source>Invite user to a conference</source>
+   <translation>Invite user to a conference</translation>
+  </message>
+  <message>
+   <source>Invitation reason:</source>
+   <translation>Invitation reason:</translation>
+  </message>
+  <message>
+   <source>I'm too busy right now</source>
+   <translation>I'm too busy right now</translation>
+  </message>
+  <message>
+   <source>Default invitation decline reason</source>
+   <translation>Default invitation decline reason</translation>
+  </message>
+  <message>
+   <source>Display invitation decline reason dialog</source>
+   <translation>Display invitation decline reason dialog</translation>
+  </message>
+  <message>
+   <source>Decline invitation to a conference</source>
+   <translation>Decline invitation to a conference</translation>
+  </message>
+  <message>
+   <source>Invitation decline reason:</source>
+   <translation>Invitation decline reason:</translation>
+  </message>
  </context>
  <context>
   <name>MultiUserChatWindow</name>
@@ -1513,6 +1580,18 @@
   <message>
    <source>This conference was destroyed by owner %1 %2</source>
    <translation>This conference was destroyed by owner %1 %2</translation>
+  </message>
+  <message>
+   <source>%1 has changed the subject to: %2</source>
+   <translation>%1 has changed the subject to: %2</translation>
+  </message>
+  <message>
+   <source>Leave conference</source>
+   <translation>Leave conference</translation>
+  </message>
+  <message>
+   <source>Leave status message:</source>
+   <translation>Leave status message:</translation>
   </message>
  </context>
  <context>

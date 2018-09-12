@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="13"/>
    <source>Street View Provider Google</source>
-   <translation type="unfinished"/>
+   <translation>Перегляд вулиць Google</translation>
   </message>
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="14"/>
    <source>Allows to use Google as a Street View provider</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати Google для перегляду вулиць</translation>
   </message>
   <message>
    <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="33"/>
    <source>Google</source>
-   <translation type="unfinished"/>
+   <translation>Google</translation>
   </message>
  </context>
 </TS>

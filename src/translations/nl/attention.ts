@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
    <source>When contact attempts to attract user&apos;s attention</source>
-   <translation>Als contactpersoon de aandacht van de gebruiker probeert te trekken</translation>
+   <translation>Als een contactpersoon de aandacht van de gebruiker probeert te trekken</translation>
   </message>
   <message>
    <source>Shift+Return</source>
@@ -35,12 +35,12 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="176"/>
    <source>Notification pop-up</source>
-   <translation>Melding pop-up</translation>
+   <translation>Meldinspop-up</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="177"/>
    <source>Always play sound</source>
-   <translation>Speel altijd geluid</translation>
+   <translation>Altijd geluid afspelen</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="189"/>
@@ -60,7 +60,7 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="411"/>
    <source>%1 - Chat</source>
-   <translation>%1 - Chat</translation>
+   <translation>%1 - Gesprek</translation>
   </message>
  </context>
  <context>
@@ -73,7 +73,7 @@
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="295"/>
    <source>Ok</source>
-   <translation>OK</translation>
+   <translation>Oké</translation>
   </message>
  </context>
 </TS>

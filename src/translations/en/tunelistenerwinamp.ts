@@ -4,12 +4,12 @@
  <context>
   <name>TuneListenerWinamp</name>
   <message>
-   <location filename="../../plugins/tunelistenerwinamp/tunelistenerwinamp.cpp" line="41"/>
+   <location line="41" filename="../../plugins/tunelistenerwinamp/tunelistenerwinamp.cpp"/>
    <source>Tune Listener WINAMP</source>
    <translation>Tune Listener WINAMP</translation>
   </message>
   <message>
-   <location filename="../../plugins/tunelistenerwinamp/tunelistenerwinamp.cpp" line="42"/>
+   <location line="42" filename="../../plugins/tunelistenerwinamp/tunelistenerwinamp.cpp"/>
    <source>Allow User Tune plugin to obtain currently playing tune information from WINAMP</source>
    <translation>Allow User Tune plugin to obtain currently playing tune information from WINAMP</translation>
   </message>

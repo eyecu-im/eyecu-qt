@@ -3,35 +3,35 @@
   <name>ChatStates</name>
   <message>
    <source>Chat State Notifications</source>
-   <translation>Meldingen van de chat</translation>
+   <translation>Gespreksstatus-meldingen</translation>
   </message>
   <message>
    <source>Allow Chat State Notifications</source>
-   <translation>Toestaan chat meldingen</translation>
+   <translation>Meldingen toestaan</translation>
   </message>
   <message>
    <source>Disallow Chat State Notifications</source>
-   <translation>Niet toestaan van chat meldingen</translation>
+   <translation>Meldingen niet toestaan</translation>
   </message>
   <message>
    <source>Allows to share information about the user&apos;s activity in the chat</source>
-   <translation>Toestaan om informatie te delen over gebruikers activiteit in de chat</translation>
+   <translation>Stelt je in staat om informatie te delen over gebruikersactiviteit in het gesprek</translation>
   </message>
   <message>
    <source>Supports the exchanging of the information about the user&apos;s activity in the chat</source>
-   <translation>Ondersteunt de uitwisseling van informatie over gebruikers activiteit in de chat</translation>
+   <translation>Ondersteunt de uitwisseling van informatie over gebruikersactiviteit in het gesprek</translation>
   </message>
   <message>
    <source>When contact is typing the message for you</source>
-   <translation>Wanneer de contactpersoon een bericht voor je tikt</translation>
+   <translation>Als een contactpersoon bezig is een bericht te typen</translation>
   </message>
   <message>
    <source>Typing a message...</source>
-   <translation>Tikt een bericht....</translation>
+   <translation>is bezig een bericht te typen...</translation>
   </message>
   <message>
    <source>Send notifications of your chat activity</source>
-   <translation>Stuur aanmelding van je chat-activiteit</translation>
+   <translation>Meldingen versturen over je gespreksactiviteit</translation>
   </message>
  </context>
  <context>
@@ -50,7 +50,7 @@
   </message>
   <message>
    <source>Paused</source>
-   <translation>Pauze</translation>
+   <translation>Gepauzeerd</translation>
   </message>
   <message>
    <source>Inactive %1</source>
@@ -58,11 +58,11 @@
   </message>
   <message>
    <source>Gone %1</source>
-   <translation>Weg %1</translation>
+   <translation>Afwezig %1</translation>
   </message>
   <message>
    <source>User activity in chat</source>
-   <translation>Gebruikers activiteit in chat</translation>
+   <translation>Gebruikersactiviteit in gesprek</translation>
   </message>
   <message>
    <source>and %1 other</source>
@@ -70,15 +70,15 @@
   </message>
   <message>
    <source>Always send my chat activity</source>
-   <translation>Verstuur altijd mijn chat activiteit</translation>
+   <translation>Mijn gespreksactiviteit altijd versturen</translation>
   </message>
   <message>
    <source>Never send my chat activity</source>
-   <translation>Verstuur nooit mijn chat activiteit</translation>
+   <translation>Mijn gespreksactiviteit nooit versturen</translation>
   </message>
   <message>
    <source>Participants activity in conference</source>
-   <translation>Deelnemers activiteit aan conferentie</translation>
+   <translation>Deelname-activiteit aan conferentie</translation>
   </message>
  </context>
 </TS>

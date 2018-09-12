@@ -5,7 +5,7 @@
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="36"/>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="66"/>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="78"/>
-   <location filename="../../plugins/mmplayer/mmplayer.cpp" line="130"/>
+   <location filename="../../plugins/mmplayer/mmplayer.cpp" line="131"/>
    <source>Multimedia player</source>
    <translation type="unfinished"/>
   </message>
@@ -92,7 +92,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/mmplayer/mmplayer.cpp" line="143"/>
+   <location filename="../../plugins/mmplayer/mmplayer.cpp" line="144"/>
    <source>Play multimedia data during file transfer</source>
    <translation type="unfinished"/>
   </message>

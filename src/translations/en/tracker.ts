@@ -4,97 +4,97 @@
  <context>
   <name>TrackOptions</name>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="26"/>
+   <location line="26" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Form</source>
    <translation>Form</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="61"/>
+   <location line="61" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Track line</source>
    <translation>Track line</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="117"/>
+   <location line="117" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Map</source>
    <translation>Map</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="129"/>
+   <location line="129" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Satellite</source>
    <translation>Satellite</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="172"/>
+   <location line="172" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Text color</source>
    <translation>Text color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="188"/>
+   <location line="188" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Shadow color</source>
    <translation>Shadow color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="212"/>
+   <location line="212" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>1</source>
    <translation>1</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="217"/>
+   <location line="217" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>2</source>
    <translation>2</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="222"/>
+   <location line="222" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>3</source>
    <translation>3</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="227"/>
+   <location line="227" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>4</source>
    <translation>4</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="246"/>
+   <location line="246" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Line siize, px</source>
    <translation>Line siize, px</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="264"/>
+   <location line="264" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Line type</source>
    <translation>Line type</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="293"/>
+   <location line="293" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Line Color</source>
    <translation>Line Color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="312"/>
+   <location line="312" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Shadow Color</source>
    <translation>Shadow Color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="331"/>
+   <location line="331" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Text Color</source>
    <translation>Text Color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.ui" line="350"/>
+   <location line="350" filename="../../plugins/tracker/trackoptions.ui"/>
    <source>Font</source>
    <translation>Font</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.cpp" line="50"/>
+   <location line="50" filename="../../plugins/tracker/trackoptions.cpp"/>
    <source>Select line color</source>
    <translation>Select line color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.cpp" line="61"/>
+   <location line="61" filename="../../plugins/tracker/trackoptions.cpp"/>
    <source>Select text color</source>
    <translation>Select text color</translation>
   </message>
   <message>
-   <location filename="../../plugins/tracker/trackoptions.cpp" line="77"/>
+   <location line="77" filename="../../plugins/tracker/trackoptions.cpp"/>
    <source>Select Shadow color</source>
    <translation>Select Shadow color</translation>
   </message>
@@ -102,9 +102,9 @@
  <context>
   <name>Tracker</name>
   <message>
-   <location filename="../../plugins/tracker/tracker.cpp" line="23"/>
-   <location filename="../../plugins/tracker/tracker.cpp" line="24"/>
-   <location filename="../../plugins/tracker/tracker.cpp" line="79"/>
+   <location line="23" filename="../../plugins/tracker/tracker.cpp"/>
+   <location line="24" filename="../../plugins/tracker/tracker.cpp"/>
+   <location line="79" filename="../../plugins/tracker/tracker.cpp"/>
    <source>Tracker</source>
    <translation>Tracker</translation>
   </message>

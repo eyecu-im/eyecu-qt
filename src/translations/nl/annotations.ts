@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="48"/>
    <source>Allows to add comments to the contacts in the roster</source>
-   <translation>Toestaan om opmerking toe tevoegen aan contactpersonen in de rooster</translation>
+   <translation>Stelt je in staat aantekeningen te maken bij contactpersonen</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="124"/>
@@ -36,12 +36,12 @@
   <message>
    <location filename="../../plugins/annotations/editnotedialog.ui" line="22"/>
    <source>Created:</source>
-   <translation>Gemaakt:</translation>
+   <translation>Gecreëerd:</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/editnotedialog.ui" line="54"/>
    <source>Modified:</source>
-   <translation>Veranderd:</translation>
+   <translation>Bewerkt:</translation>
   </message>
  </context>
 </TS>

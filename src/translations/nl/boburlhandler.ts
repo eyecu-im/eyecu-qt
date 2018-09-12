@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/boburlhandler/boburlhandler.cpp" line="10"/>
    <source>BOB URL handler</source>
-   <translation>BOB URL geleider</translation>
+   <translation>BOB URL-behandeling</translation>
   </message>
   <message>
    <location filename="../../plugins/boburlhandler/boburlhandler.cpp" line="11"/>
    <source>Allows URL processor plugin to handle Bits of Binary links (cid: scheme)</source>
-   <translation>Laat URL processor plugin toe het hanteren van stukjes binaire links (cid: schema)</translation>
+   <translation>Laat de URL-processorplug-in stukjes binaire links behandelen (cid: schema)</translation>
   </message>
  </context>
 </TS>

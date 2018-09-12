@@ -67,6 +67,17 @@
   </message>
  </context>
  <context>
+  <name>ConfirmationDialog</name>
+  <message>
+   <source>Store as default</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Ask next time</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
+ <context>
   <name>CreateMultiChatWizard</name>
   <message>
    <source>Error</source>
@@ -922,6 +933,62 @@
    <source>Display user status message</source>
    <translation type="unfinished"/>
   </message>
+  <message>
+   <source>Bye-bye!</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>You are welcome here</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Show initial joins</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Ask for confirmation before leave conference</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Default leave status message</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Default invitation reason</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Display invitation reason dialog</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Invite user to a conference</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Invitation reason:</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>I&apos;m too busy right now</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Default invitation decline reason</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Display invitation decline reason dialog</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Decline invitation to a conference</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Invitation decline reason:</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>MultiUserChatWindow</name>
@@ -1487,6 +1554,18 @@
   </message>
   <message>
    <source>This conference was destroyed by owner %1 %2</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>%1 has changed the subject to: %2</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Leave conference</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <source>Leave status message:</source>
    <translation type="unfinished"/>
   </message>
  </context>

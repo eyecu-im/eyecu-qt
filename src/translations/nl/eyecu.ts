@@ -60,7 +60,7 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="514"/>
    <source>Initializing plugin connections: %1</source>
-   <translation type="unfinished"/>
+   <translation>Bezig met initialiseren van plug-inverbindingen: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="526"/>
@@ -70,12 +70,12 @@
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="536"/>
    <source>Initializing plugin objects: %1</source>
-   <translation type="unfinished"/>
+   <translation>Bezig met initialiseren van plug-inobjecten: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="545"/>
    <source>Initializing plugin settings: %1</source>
-   <translation type="unfinished"/>
+   <translation>Bezig met initialiseren van plug-ininstellingen: %1</translation>
   </message>
   <message>
    <location filename="../../loader/pluginmanager.cpp" line="561"/>

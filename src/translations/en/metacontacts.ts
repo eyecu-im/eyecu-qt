@@ -4,12 +4,12 @@
  <context>
   <name>CombineContactsDialog</name>
   <message>
-   <location filename="../../plugins/metacontacts/combinecontactsdialog.ui" line="14"/>
+   <location line="14" filename="../../plugins/metacontacts/combinecontactsdialog.ui"/>
    <source>Combine Contacts</source>
    <translation>Combine Contacts</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/metacontacts/combinecontactsdialog.cpp" line="110"/>
+   <location line="110" filename="../../plugins/metacontacts/combinecontactsdialog.cpp"/>
    <source>The following &lt;b>%n contact(s)&lt;/b> will be merged into metacontact:</source>
    <translation>
     <numerusform>The following &lt;b>%n contacts&lt;/b> will be merged into metacontact:</numerusform>
@@ -20,79 +20,79 @@
  <context>
   <name>MetaContacts</name>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="80"/>
+   <location line="80" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Metacontacts</source>
    <translation>Metacontacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="81"/>
+   <location line="81" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Allows to combine single contacts to metacontacts</source>
    <translation>Allows to combine single contacts to metacontacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="202"/>
+   <location line="202" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Combine contacts</source>
    <translation>Combine contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="202"/>
+   <location line="202" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Ctrl+M</source>
    <comment>Combine contacts</comment>
    <translation>Ctrl+M</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="203"/>
+   <location line="203" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Destroy metacontact</source>
    <translation>Destroy metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="204"/>
+   <location line="204" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Detach from metacontact</source>
    <translation>Detach from metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="519"/>
+   <location line="519" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Copy Metacontact to Group</source>
    <translation>Copy Metacontact to Group</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="525"/>
+   <location line="525" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Move Metacontact to Group</source>
    <translation>Move Metacontact to Group</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="565"/>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1936"/>
+   <location line="565" filename="../../plugins/metacontacts/metacontacts.cpp"/>
+   <location line="1936" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Combine Contacts...</source>
    <translation>Combine Contacts...</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1149"/>
+   <location line="1149" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
+   <location line="1461" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Rename Metacontact</source>
    <translation>Rename Metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1461"/>
+   <location line="1461" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Enter name:</source>
    <translation>Enter name:</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1949"/>
+   <location line="1949" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Detach from Metacontact</source>
    <translation>Detach from Metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1961"/>
+   <location line="1961" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Destroy Metacontact</source>
    <translation>Destroy Metacontact</translation>
   </message>
   <message>
-   <location filename="../../plugins/metacontacts/metacontacts.cpp" line="1973"/>
+   <location line="1973" filename="../../plugins/metacontacts/metacontacts.cpp"/>
    <source>Rename</source>
    <translation>Rename</translation>
   </message>

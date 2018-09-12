@@ -2,23 +2,23 @@
  <context>
   <name>JingleTransportRawUdp</name>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="24"/>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="284"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="26"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="342"/>
    <source>Jingle RAW-UDP Transport</source>
    <translation>Jingle RAW-UDP Transport</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="25"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="27"/>
    <source>Implements XEP-0177: Jingle RAW-UDP transport method</source>
    <translation>Implementeert XEP-0177: Jingle RAW transport methode</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="272"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="330"/>
    <source>Raw UDP</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="285"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="343"/>
    <source>Allows using RAW-UDP transport in Jingle sesions</source>
    <translation>Maakt gebruik van RAW-UDP transport in Jingle sessies</translation>
   </message>
@@ -38,15 +38,15 @@
   <message>
    <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="36"/>
    <source>from</source>
-   <translation type="unfinished"/>
+   <translation>Van</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="53"/>
    <source>to</source>
-   <translation type="unfinished"/>
+   <translation>naar</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="46"/>
+   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="47"/>
    <source>Default (%1 - %2)</source>
    <translation type="unfinished"/>
   </message>

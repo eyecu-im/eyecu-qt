@@ -9,12 +9,12 @@
   <message>
    <location filename="../../plugins/dataforms/dataformwidget.cpp" line="176"/>
    <source>The are %1 field(s) with invalid values:&lt;br&gt;</source>
-   <translation>Er zijn %1 veld(en) met ongeldige waarden:&lt;br&gt;</translation>
+   <translation>Er is/zijn %1 veld(en) met ongeldige waarden:&lt;br&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataformwidget.cpp" line="181"/>
    <source>Do you want to continue with invalid values?</source>
-   <translation>Wil je verder gaan met ongeldige waarden?</translation>
+   <translation>Wil je doorgaan met ongeldige waarden?</translation>
   </message>
  </context>
  <context>
@@ -22,32 +22,32 @@
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="20"/>
    <source>Data Forms Manager</source>
-   <translation>Gegevens formulieren manager</translation>
+   <translation>Gegevensformulieren-beheer</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="21"/>
    <source>Allows other modules to process and display the form with the data intended for user</source>
-   <translation>Toestaan om andere modules te verwerken en  formulier weer te geven met de gegevens die bestemd zijn voor de gebruiker</translation>
+   <translation>Stelt andere modules in staat om het formulier te verwerken en te tonen met de voor de gebruiker bestemde gegevens</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="48"/>
    <source>Unsupported media type</source>
-   <translation>Niet ondersteund media type</translation>
+   <translation>Niet-ondersteund mediatype</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="49"/>
    <source>Unsupported data format</source>
-   <translation>Niet ondersteund gegevens formaat</translation>
+   <translation>Niet-ondersteund gegevensformaat</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="50"/>
    <source>Unsupported url scheme</source>
-   <translation>Niet ondersteund url schema</translation>
+   <translation>Niet-ondersteund URL-schema</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="51"/>
    <source>Url load failed</source>
-   <translation>Laden van url mislukt</translation>
+   <translation>Laden van URL mislukt</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="863"/>
@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1055"/>
    <source>Data Forms</source>
-   <translation>Gegevens formulieren</translation>
+   <translation>Gegevensformulieren</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1056"/>
@@ -72,7 +72,7 @@
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1061"/>
    <source>Data Forms Validation</source>
-   <translation>Validatie gegevens formulieren</translation>
+   <translation>Validatie van gegevensformulieren</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1062"/>
@@ -82,7 +82,7 @@
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1067"/>
    <source>Data Forms Layout</source>
-   <translation>Opmaak gegevens formulieren</translation>
+   <translation>Opmaak van gegevensformulieren</translation>
   </message>
   <message>
    <location filename="../../plugins/dataforms/dataforms.cpp" line="1068"/>
@@ -95,7 +95,7 @@
   <message>
    <location filename="../../plugins/dataforms/datamediawidget.cpp" line="48"/>
    <source>Loading data...</source>
-   <translation>Laden van gegevens...</translation>
+   <translation>Bezig met laden van gegevens...</translation>
   </message>
  </context>
 </TS>

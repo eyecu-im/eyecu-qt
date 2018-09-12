@@ -7,62 +7,62 @@
   </message>
   <message>
    <source>Allows to create bookmarks at the jabber conference and web pages</source>
-   <translation>Toestaan om bladwijzers te maken bij een Jabber conferentie en webpagina&apos;s</translation>
+   <translation>Stelt je in staat om bladwijzers te creëren op de jabber-conferentie en webpagina&apos;s</translation>
   </message>
   <message>
    <source>Edit Bookmarks</source>
-   <translation>Bewerk Bladwijzers</translation>
+   <translation>Bladwijzers bewerken</translation>
   </message>
   <message>
    <source>Add to Bookmarks</source>
-   <translation>Voeg toe aan bladwijzers</translation>
+   <translation>Toevoegen aan bladwijzers</translation>
   </message>
   <message>
    <source>Remove from Bookmarks</source>
-   <translation>Verwijder van bladwijzers</translation>
+   <translation>Verwijderen uit bladwijzers</translation>
   </message>
   <message>
    <source>Edit Bookmark</source>
-   <translation>Bewerk bladwijzer</translation>
+   <translation>Bladwijzer bewerken</translation>
   </message>
   <message>
    <source>Rename Bookmark</source>
-   <translation>Hernoem bladwijzer</translation>
+   <translation>Bladwijzernaam wijzigen</translation>
   </message>
   <message>
    <source>Enter bookmark name:</source>
-   <translation>Voer bladwijzer naam in:</translation>
+   <translation>Voer een naam in voor de bladwijzer:</translation>
   </message>
   <message>
    <source>Join to Conference at Startup</source>
-   <translation>De conferentie binnengaan bij het opstarten</translation>
+   <translation>Conferentie binnengaan bij opstarten</translation>
   </message>
   <message>
    <source>Conferences</source>
-   <translation>Vergaderingen</translation>
+   <translation>Conferenties</translation>
   </message>
   <message>
    <source>Disable auto join to conferences on this computer</source>
-   <translation>Schakel auto-join voor vergaderingen uit op deze computer</translation>
+   <translation>Automatisch deelnemen aan conferenties uitschakelen op deze computer</translation>
   </message>
   <message>
    <source>Show windows of auto joined conferences at startup</source>
-   <translation>Toon vensters van auto-join vergaderingen met opstarten</translation>
+   <translation>Vensters van automatisch deelgenomen conferenties tonen bij opstarten</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarkDialog</name>
   <message>
    <source>Field &apos;Name&apos; should not be empty</source>
-   <translation>Veld &apos;Naam&apos; mag niet leeg zijn</translation>
+   <translation>Het veld &apos;Naam&apos; mag niet blanco zijn</translation>
   </message>
   <message>
    <source>In URL bookmark field &apos;URL&apos; should not be empty</source>
-   <translation>In URL bladwijzer mag het veld &apos;URL&apos; niet leeg zijn</translation>
+   <translation>In het URL-bladwijzerveld mag &apos;URL&apos; niet blanco zijn</translation>
   </message>
   <message>
    <source>In conference bookmark field &apos;Room&apos; should not be empty</source>
-   <translation>In conferentie bladwijzer mag het veld &apos;Kamer&apos;niet leeg zijn</translation>
+   <translation>In het conferentie-bladwijzerveld mag &apos;Kamer&apos;niet blanco zijn</translation>
   </message>
   <message>
    <source>Error</source>
@@ -73,15 +73,15 @@
   <name>EditBookmarkDialogClass</name>
   <message>
    <source>Edit bookmark</source>
-   <translation>Bewerk bladwijzer</translation>
+   <translation>Bladwijzer bewerken</translation>
   </message>
   <message>
    <source>Password:</source>
-   <translation>Paswoord:</translation>
+   <translation>Wachtwoord:</translation>
   </message>
   <message>
    <source>Auto join</source>
-   <translation>Automatisch binnengaan</translation>
+   <translation>Automatisch deelnemen</translation>
   </message>
   <message>
    <source>Conference:</source>
@@ -89,7 +89,7 @@
   </message>
   <message>
    <source>Conference as &apos;name@service.server.com&apos;</source>
-   <translation>Conferentie als </translation>
+   <translation>Conferentie als &apos;naam@dienst.server.com&apos;</translation>
   </message>
   <message>
    <source>Nickname:</source>
@@ -97,11 +97,11 @@
   </message>
   <message>
    <source>Your nickname in conference</source>
-   <translation>Je bijnaam in conferentie</translation>
+   <translation>Je bijnaam in conferenties</translation>
   </message>
   <message>
    <source>Conference password if required</source>
-   <translation>Conferentie paswoord is vereist</translation>
+   <translation>Conferentiewachtwoord (indien vereist)</translation>
   </message>
   <message>
    <source>Name:</source>
@@ -109,34 +109,34 @@
   </message>
   <message>
    <source>Bookmark to Conference</source>
-   <translation>Bladwijzer naar Conferentie</translation>
+   <translation>Conferentie toevoegen aan bladwijzers</translation>
   </message>
   <message>
    <source>Bookmark to Link</source>
-   <translation>Bladwijzer naar link</translation>
+   <translation>Link toevoegen aan bladwijzers</translation>
   </message>
   <message>
    <source>Link:</source>
-   <translation>Koppeling:</translation>
+   <translation>Link:</translation>
   </message>
   <message>
    <source>Any valid link</source>
-   <translation>Elke geldige koppeling</translation>
+   <translation>Elke geldige link</translation>
   </message>
   <message>
    <source>Bookmark name</source>
-   <translation>Bladwijzer naam</translation>
+   <translation>Bladwijzernaam</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarksDialog</name>
   <message>
    <source>Cant save bookmarks to server</source>
-   <translation>Kan bladwijzer niet op server opslaan</translation>
+   <translation>Kan bladwijzers niet opslaan op server</translation>
   </message>
   <message>
    <source>Edit bookmarks - %1</source>
-   <translation>Bewerk Bladwijzers - %1</translation>
+   <translation>Bladwijzers bewerken - %1</translation>
   </message>
   <message>
    <source>Error</source>
@@ -147,7 +147,7 @@
   <name>EditBookmarksDialogClass</name>
   <message>
    <source>Edit bookmarks</source>
-   <translation>Bewerk bladwijzers</translation>
+   <translation>Bladwijzers bewerken</translation>
   </message>
   <message>
    <source>Name</source>
@@ -167,11 +167,11 @@
   </message>
   <message>
    <source>Edit</source>
-   <translation>Bewerk</translation>
+   <translation>Bewerken</translation>
   </message>
   <message>
    <source>Delete</source>
-   <translation>Verwijder</translation>
+   <translation>Verwijderen</translation>
   </message>
   <message>
    <source>Up</source>

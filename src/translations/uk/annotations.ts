@@ -4,23 +4,23 @@
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="47"/>
    <source>Annotations</source>
-   <translation>Коментарі</translation>
+   <translation>Примітки</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="48"/>
    <source>Allows to add comments to the contacts in the roster</source>
-   <translation>Дозволяє додавати короткі записи до контактів у ростері</translation>
+   <translation>Дозволяє додавати коментарі до контактів у реєстрі</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="124"/>
    <location filename="../../plugins/annotations/annotations.cpp" line="388"/>
    <source>Annotation</source>
-   <translation>Коментар</translation>
+   <translation>Примітка</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="423"/>
    <source>&lt;b&gt;Annotation:&lt;/b&gt;</source>
-   <translation>&lt;b&gt;Комментар:&lt;/b&gt;</translation>
+   <translation>&lt;b&gt;Примітка:&lt;/b&gt;</translation>
   </message>
  </context>
  <context>
@@ -28,7 +28,7 @@
   <message>
    <location filename="../../plugins/annotations/editnotedialog.cpp" line="13"/>
    <source>Annotation - %1</source>
-   <translation>Коментар - %1</translation>
+   <translation>Примітка - %1</translation>
   </message>
  </context>
  <context>
