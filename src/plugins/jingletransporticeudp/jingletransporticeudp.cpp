@@ -76,8 +76,8 @@ bool JingleTransportIceUdp::initObjects()
 bool JingleTransportIceUdp::initSettings()
 {
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE, false);
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN,
-							 QStringList() << "numb.viagenie.ca:");
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN, QStringList());
+//							 QStringList() << "numb.viagenie.ca:");
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN,
 							 QStringList() << "13.250.13.83::YzYNCouZM1mhqhmseWk6:YzYNCouZM1mhqhmseWk6");
     return true;
@@ -273,7 +273,7 @@ int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
 			}
 		}
 
-//		Q_ASSERT(network!=-1);
+		Q_ASSERT(network != -1);
 
 		QDomElement candidate = incomingTransport.ownerDocument().createElement("candidate");
 		candidate.setAttribute("protocol", "udp");
@@ -334,6 +334,7 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 			if (parts.size() == 2)
 			{
 				QPIceTransport::StunConfig stunCfg;
+				stunCfg.ignoreStunError = true;
 				stunCfg.server = parts[0];
 				if (parts[1].isEmpty())
 					stunCfg.port = QP_STUN_PORT;
@@ -350,34 +351,94 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 			else
 				LOG_ERROR("Invalid STUN server record!");
 		}
+
+		// Add TURN servers as well
+		servers = ANode.value().toStringList();
+		for (QStringList::ConstIterator it=servers.constBegin();
+			 it!=servers.constEnd(); ++it) {
+			QStringList parts = (*it).split(':');
+			if (parts.size() == 4) {
+				QPIceTransport::StunConfig stunCfg;
+				stunCfg.ignoreStunError = true;
+				stunCfg.server = parts[0];
+
+				if (parts[1].isEmpty())
+					stunCfg.port = QP_STUN_PORT;
+				else
+				{
+					bool ok;
+					stunCfg.port = quint16(parts[1].toInt(&ok));
+					if (!ok || !stunCfg.port)
+						LOG_ERROR("Invalid port number!");
+				}
+
+				FIceCfg.stunTransportCfg.append(stunCfg);
+			}
+			else
+				LOG_ERROR("Invalid TURN server record!");
+		}
 	}
 	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN) // TURN servers
 	{
+		// TURN servers will be added as both TURN and STUN servers
 		FIceCfg.turnTransportCfg.clear();
+		FIceCfg.stunTransportCfg.clear();
 		QStringList servers = ANode.value().toStringList();
 		for (QStringList::ConstIterator it=servers.constBegin();
 			 it!=servers.constEnd(); ++it) {
 			QStringList parts = (*it).split(':');
 			if (parts.size() == 4) {
 				QPIceTransport::TurnConfig turnCfg;
+				QPIceTransport::StunConfig stunCfg;
+				stunCfg.ignoreStunError = true;
+				stunCfg.server = turnCfg.server = parts[0];
 
-				turnCfg.server = parts[0];
 				if (parts[1].isEmpty())
-					turnCfg.port = QP_STUN_PORT;
+					stunCfg.port = turnCfg.port = QP_STUN_PORT;
 				else
 				{
 					bool ok;
-					turnCfg.port = quint16(parts[1].toInt(&ok));
-					if (!ok || !turnCfg.port)
+					quint16 port = quint16(parts[1].toInt(&ok));
+					if (ok && port)
+						stunCfg.port = turnCfg.port = port;
+					else
 						LOG_ERROR("Invalid port number!");
 				}
 				turnCfg.authCredential = QPStunAuthCred(turnCfg.server, parts[2],
 														QPStunAuthCred::PasswordPlain,
 														parts[3].toLatin1());
+
 				FIceCfg.turnTransportCfg.append(turnCfg);
+				FIceCfg.stunTransportCfg.append(stunCfg);
 			}
 			else
 				LOG_ERROR("Invalid TURN server record!");
+		}
+
+		// Re-add STUN servers
+		servers = Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN).value().toStringList();
+		for (QStringList::ConstIterator it=servers.constBegin();
+			 it!=servers.constEnd(); ++it) {
+			QStringList parts = (*it).split(':');
+			if (parts.size() == 2)
+			{
+				QPIceTransport::StunConfig stunCfg;
+				stunCfg.ignoreStunError = true;
+				stunCfg.server = parts[0];
+				if (parts[1].isEmpty())
+					stunCfg.port = QP_STUN_PORT;
+				else
+				{
+					bool ok;
+					stunCfg.port = quint16(parts[1].toInt(&ok));
+					if (!ok || !stunCfg.port)
+						LOG_ERROR("Invalid port number!");
+				}
+
+				FIceCfg.stunTransportCfg.append(stunCfg);
+			}
+			else
+				LOG_ERROR("Invalid STUN server record!");
 		}
 	}
 }

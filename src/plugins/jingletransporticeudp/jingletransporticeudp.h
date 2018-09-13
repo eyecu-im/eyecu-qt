@@ -76,7 +76,6 @@ private:
     IServiceDiscovery *FServiceDiscovery;	
 	IJingle			  *FJingle;
 	QPIceTransport::Config FIceCfg;
-//	QHash<IJingleContent *, IceThread *> FIceThreads;
 	QList<IceThread *> FIceThreads;
 };
 
