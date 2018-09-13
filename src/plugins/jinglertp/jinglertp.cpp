@@ -315,7 +315,7 @@ void JingleRtp::onSessionAccepted(const QString &ASid)
 	LOG_DEBUG((QString("JingleRtp::onSessionAccepted(%1)").arg(ASid)));
 	IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
 	if (window)
-		updateWindowActions(window);
+		updateChatWindowActions(window);
 	establishConnection(ASid);
 }
 
@@ -414,7 +414,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 			if (window)
 			{
 				removeNotification(window);
-				updateWindowActions(window);
+				updateChatWindowActions(window);
 			}
 			break;
 		}
@@ -506,12 +506,12 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 	Jid contactJid=FJingle->contactJid(ASid);
 	Jid streamJid=FJingle->streamJid(ASid);
 
-	IMessageChatWindow *window = getWindow(streamJid, contactJid);
-
 	// Remove existing notification for the window, if any
-	int notify=FNotifies.key(window);
+	int notify=FNotifies.key(QPair<Jid,Jid>(streamJid, contactJid));
 	if (notify)
 		FNotifications->removeNotification(notify);
+
+	IMessageChatWindow *window = getWindow(streamJid, contactJid);
 
 	if (window && (!window->isActiveTabPage() ||
 				   AEventType==Called ||
@@ -577,7 +577,7 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 			if (window->isActiveTabPage() && AEventType!=Called)
 				FNotifications->removeNotification(notify);
 			else {
-				FNotifies.insert(notify, window);
+				FNotifies.insert(notify, QPair<Jid,Jid>(streamJid, contactJid));
 				if (AEventType==Called &&
 					notification.kinds&INotification::SoundPlay)
 					sessionInfo(streamJid, contactJid, Ringing);
@@ -646,7 +646,8 @@ void JingleRtp::onNotificationActivated(int ANotifyId)
 {
 	if (FNotifies.contains(ANotifyId))
 	{
-		IMessageChatWindow *window=FNotifies.value(ANotifyId);
+		QPair<Jid,Jid> address = FNotifies.value(ANotifyId);
+		IMessageChatWindow *window = getWindow(address.first, address.second);
 		window->showTabPage();
 	}
 }
@@ -664,19 +665,20 @@ void JingleRtp::onNotificationRemoved(int ANotifyId)
 
 void JingleRtp::onTabPageActivated()
 {
-	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());
-	int notify=FNotifies.key(window);
+	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());	
+	int notify=FNotifies.key(QPair<Jid,Jid>(window->address()->streamJid(),
+											window->address()->contactJid()));
 	if (notify)
 	{
 		INotification notification=FNotifications->notificationById(notify);
-		CallType type=static_cast<CallType>(notification.data
+		CallType type = CallType(notification.data
 											.value(NDR_JINGLE_RTP_EVENT_TYPE).toInt());
-		if (type!=Called)                   // All the events but incoming Call
+		if (type != Called)                 // All the events but incoming Call
 			removeNotification(window);     // should be removed immediately!
 	}
 	if (FPendingChats.contains(window))
 	{
-		updateWindowActions(window);
+		updateChatWindowActions(window);
 		FPendingChats.removeAll(window);
 	}
 }
@@ -685,7 +687,9 @@ void JingleRtp::removeNotification(IMessageChatWindow *AWindow)
 {
 	if (AWindow)
 	{
-		int notify=FNotifies.key(AWindow, 0);
+		int notify=FNotifies.key(QPair<Jid,Jid>(AWindow->address()->streamJid(),
+												AWindow->address()->contactJid()),
+								 0);
 		if (notify)
 		{
 			FNotifications->removeNotification(notify);
@@ -758,8 +762,11 @@ bool JingleRtp::removeSid(const QString &ASid)
 
 bool JingleRtp::windowNotified(const IMessageChatWindow *window) const
 {
-	for (QMap<int, IMessageChatWindow *>::const_iterator it=FNotifies.constBegin(); it!=FNotifies.constEnd(); it++)
-		if (*it==window)
+	QPair<Jid,Jid> address(window->address()->streamJid(),
+						   window->address()->contactJid());
+	for (QMap<int, QPair<Jid,Jid> >::const_iterator it=FNotifies.constBegin();
+		 it!=FNotifies.constEnd(); it++)
+		if (*it == address)
 			return true;
 	return false;
 }
@@ -851,66 +858,8 @@ bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType A
 			break;
 	}
 	AWindow->viewWidget()->appendHtml(message, options);
-	return updateWindowActions(AWindow);
-}
-
-bool JingleRtp::updateWindowActions(IMessageChatWindow *AWindow)
-{
-	if (!AWindow)
-		return false;
-	ToolBarChanger *toolBarChanger=AWindow->toolBarWidget()->toolBarChanger();
-	QList<QAction *>actions = toolBarChanger->groupItems(TBG_MWTBW_JINGLE_RTP);
-	Jid streamJid=AWindow->streamJid();
-	Jid contactJid=AWindow->contactJid();
-	QString sid = getSid(streamJid, contactJid);
-
-	IJingle::SessionStatus status=sid.isEmpty()?IJingle::None
-											   :FJingle->sessionStatus(sid);
-
-	if (status==IJingle::None || status==IJingle::Terminated)
-	{
-		for (QList<QAction *>::iterator it=actions.begin(); it!=actions.end(); it++)
-		{
-			Action *action=toolBarChanger->handleAction(*it);
-			Command command=static_cast<Command>(action->data(ADR_COMMAND).toInt());
-			if (command==VoiceCall) // Voice call
-				action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
-			else if (command==VideoCall) // Video call
-				action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
-			else if (command==Hangup)
-				action->setEnabled(false);
-		}
-	}
-	else
-	{
-		bool video = hasVideo(sid);
-		bool outgoing = FJingle->isOutgoing(sid);
-		for (QList<QAction *>::iterator it=actions.begin(); it!=actions.end(); it++)
-		{
-			Action *action = toolBarChanger->handleAction(*it);
-			Command command = Command(action->data(ADR_COMMAND).toInt());
-			if (command==VoiceCall) // Voice call
-			{
-				if (video)
-					action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
-				else
-					action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated||status==IJingle::Initiating?(outgoing?JNI_RTP_OUTGOING:JNI_RTP_INCOMING):
-														status==IJingle::Accepted||status==IJingle::Accepting?JNI_RTP_CONNECT:JNI_RTP_TALK);
-			}
-			else if (command==VideoCall) // Video call
-			{
-				if (video)
-					action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated||status==IJingle::Initiating?(outgoing?JNI_RTP_OUTGOING_VIDEO:JNI_RTP_INCOMING_VIDEO):
-														status==IJingle::Accepted||status==IJingle::Accepting?JNI_RTP_CONNECT_VIDEO:JNI_RTP_TALK_VIDEO);
-				else
-					action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
-			}
-			else if (command==Hangup)
-				action->setEnabled(true);
-		}
-	}
-
-	return false;
+	updateChatWindowActions(AWindow);
+	return true;
 }
 
 void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
@@ -921,11 +870,27 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 		Jid contactJid = AChatWindow->contactJid();
 		Jid streamJid  = AChatWindow->streamJid();
 
+		QString sid = getSid(streamJid, contactJid);
+		IJingle::SessionStatus status=sid.isEmpty()?IJingle::None
+												   :FJingle->sessionStatus(sid);
+
 		if (actions.isEmpty())
 		{
 			Action *action = new Action(AChatWindow->toolBarWidget()->instance());
 			action->setText(tr("Voice call"));
-			action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL));
+
+			if (status==IJingle::None || status==IJingle::Terminated)
+				action->setIcon(FIconStorage->getIcon(JNI_RTP_CALL));
+			else {
+				bool video = hasVideo(sid);
+				bool outgoing = FJingle->isOutgoing(sid);
+				if (video)
+					action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
+				else
+					action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated||status==IJingle::Initiating?(outgoing?JNI_RTP_OUTGOING:JNI_RTP_INCOMING):
+														status==IJingle::Accepted||status==IJingle::Accepting?JNI_RTP_CONNECT:JNI_RTP_TALK);
+			}
+
 			//action->setShortcutId(SCT_MESSAGEWINDOWS_SHOWVCARD);
 			//action->setData(ADR_ACTION, ACT_CONST);
 			action->setData(ADR_CONTACT_JID, contactJid.full());
@@ -954,20 +919,65 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 			action->setData(ADR_CONTACT_JID, contactJid.full());
 			action->setData(ADR_STREAM_JID, streamJid.full());
 			action->setData(ADR_COMMAND, Hangup);
-			action->setDisabled(true);
+			action->setDisabled(status==IJingle::None || status==IJingle::Terminated);
 			connect(action,SIGNAL(triggered()),SLOT(onHangup()));
 			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_JINGLE_RTP);
 			AChatWindow->toolBarWidget()->toolBarChanger()->setSeparatorsVisible(true);
 		}
 		else
 		{
-			for (QList<QAction *>::const_iterator it=actions.constBegin(); it!=actions.constEnd(); it++)
+			if (status==IJingle::None || status==IJingle::Terminated)
+				for (QList<QAction *>::const_iterator it=actions.constBegin();
+					 it!=actions.constEnd(); it++)
+				{
+					Action *action = AChatWindow->toolBarWidget()->toolBarChanger()->handleAction(*it);
+					if (action)
+					{
+						action->setData(ADR_CONTACT_JID, contactJid.full());
+						Command command = Command(action->data(ADR_COMMAND).toInt());
+						if (command==VoiceCall) // Voice call
+							action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
+						else if (command==VideoCall) // Video call
+							action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
+						else if (command==Hangup)
+							action->setEnabled(false);
+					}
+				}
+			else
 			{
-				Action *action = AChatWindow->toolBarWidget()->toolBarChanger()->handleAction(*it);
-				if (action)
-					action->setData(ADR_CONTACT_JID, contactJid.full());
-				else
-					LOG_ERROR("Invalid action handle!");
+				bool video = hasVideo(sid);
+				bool outgoing = FJingle->isOutgoing(sid);
+				for (QList<QAction *>::const_iterator it=actions.constBegin();
+					 it!=actions.constEnd(); it++)
+				{
+					Action *action = AChatWindow->toolBarWidget()->toolBarChanger()->handleAction(*it);
+					if (action)
+					{
+						action->setData(ADR_CONTACT_JID, contactJid.full());
+
+						Command command = Command(action->data(ADR_COMMAND).toInt());
+						if (command==VoiceCall) // Voice call
+						{
+							if (video)
+								action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL);
+							else
+								action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated||status==IJingle::Initiating?(outgoing?JNI_RTP_OUTGOING:JNI_RTP_INCOMING):
+																	status==IJingle::Accepted||status==IJingle::Accepting?JNI_RTP_CONNECT:JNI_RTP_TALK);
+						}
+						else if (command==VideoCall) // Video call
+						{
+							if (video)
+								action->setIcon(RSR_STORAGE_JINGLE, status==IJingle::Initiated||status==IJingle::Initiating?(outgoing?JNI_RTP_OUTGOING_VIDEO:JNI_RTP_INCOMING_VIDEO):
+																	status==IJingle::Accepted||status==IJingle::Accepting?JNI_RTP_CONNECT_VIDEO:JNI_RTP_TALK_VIDEO);
+							else
+								action->setIcon(RSR_STORAGE_JINGLE, JNI_RTP_CALL_VIDEO);
+						}
+						else if (command==Hangup)
+							action->setEnabled(true);
+					}
+					else
+						LOG_ERROR("Invalid action handle!");
+				}
 			}
 		}
 	}
@@ -1269,8 +1279,10 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
 					FPendingChats.append(window);
 				}
 
-			if (window)
+			if (window) {
+				window->address()->setAddress(AStreamJid, AContactJid);
 				connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onTabPageActivated()));
+			}
 		}
 	return window;
 }
@@ -1359,7 +1371,7 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 			IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid),
 																	   FJingle->contactJid(sid));
 			if (window)
-				updateWindowActions(window);
+				updateChatWindowActions(window);
 			break;
 		}
 
@@ -1443,7 +1455,7 @@ void JingleRtp::onCall()
 					IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid),
 																			   FJingle->contactJid(sid));
                     removeNotification(window);
-                    updateWindowActions(window);
+					updateChatWindowActions(window);
 				}
 			}
 			else

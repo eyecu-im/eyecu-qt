@@ -139,7 +139,6 @@ protected:
 	QString chatNotification(const QString &AIcon, const QString &AMessage);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType,
 									 IJingle::Reason AReason = IJingle::NoReason);
-	bool    updateWindowActions(IMessageChatWindow *AWindow);
 	void    updateChatWindowActions(IMessageChatWindow *AChatWindow);
 
 	void    addPendingContent(IJingleContent *AContent, PendingType AType);
@@ -194,7 +193,7 @@ private:
 	AudioOptions		*FJingleRtpOptions;
 	QHash<QString, Jid>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
-	QMap<int, IMessageChatWindow *> FNotifies;
+	QMap<int, QPair<Jid,Jid> > FNotifies;
 	QList<IMessageChatWindow *> FPendingChats;
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
