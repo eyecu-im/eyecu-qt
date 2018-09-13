@@ -58,7 +58,7 @@
       <string>Use</string>
      </property>
      <property name="whatsThis">
-      <string>Remove payload type from in-use list</string>
+      <string>Adds codec to in-use list</string>
      </property>
      <property name="text">
       <string/>
@@ -77,7 +77,7 @@
       <string>Unuse</string>
      </property>
      <property name="whatsThis">
-      <string>Add payload type to in-use list</string>
+      <string>Removes codec from in-use list</string>
      </property>
      <property name="text">
       <string/>
@@ -103,7 +103,7 @@
       <string>Move Up</string>
      </property>
      <property name="whatsThis">
-      <string>Shifts payload type priority up</string>
+      <string>Shifts codec priority up</string>
      </property>
      <property name="text">
       <string/>
@@ -139,7 +139,7 @@
       <string>Move down</string>
      </property>
      <property name="whatsThis">
-      <string>Shifts payload type priority down</string>
+      <string>Shifts codec priority down</string>
      </property>
      <property name="text">
       <string/>

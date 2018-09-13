@@ -35,36 +35,36 @@
         <translation>Использовать</translation>
     </message>
     <message>
-        <source>Remove payload type from in-use list</source>
-        <translation>Убрать тип полезной нагрузки из списка используемых</translation>
-    </message>
-    <message>
         <source>Unuse</source>
         <translation>Не использовать</translation>
-    </message>
-    <message>
-        <source>Add payload type to in-use list</source>
-        <translation>Добавить тип полезной нагрузки в список используемых</translation>
     </message>
     <message>
         <source>Move Up</source>
         <translation>Поднять</translation>
     </message>
     <message>
-        <source>Shifts payload type priority up</source>
-        <translation>Поднимает приоритет типа полезной нагрузки</translation>
-    </message>
-    <message>
         <source>Move down</source>
         <translation>Опустить</translation>
     </message>
     <message>
-        <source>Shifts payload type priority down</source>
-        <translation>Опускает приоритет типа полезной нагрузки</translation>
-    </message>
-    <message>
         <source>In use</source>
         <translation>Используются</translation>
+    </message>
+    <message>
+        <source>Removes codec from in-use list</source>
+        <translation>Убирает кодек из списка используемых</translation>
+    </message>
+    <message>
+        <source>Adds codec to in-use list</source>
+        <translation>Добавляет кодек в список используемых</translation>
+    </message>
+    <message>
+        <source>Shifts codec priority up</source>
+        <translation>Поднимает приоритет кодека</translation>
+    </message>
+    <message>
+        <source>Shifts codec priority down</source>
+        <translation>Опускает приоритет кодека</translation>
     </message>
 </context>
 <context>
