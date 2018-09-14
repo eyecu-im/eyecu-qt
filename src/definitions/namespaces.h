@@ -115,6 +115,8 @@
 #define NS_JINGLE                               "urn:xmpp:jingle:1"
 #define NS_JINGLE_APPS_RTP                      "urn:xmpp:jingle:apps:rtp:1"
 #define NS_JINGLE_APPS_RTP_INFO                 "urn:xmpp:jingle:apps:rtp:info:1"
+#define NS_JINGLE_APPS_RTP_AUDIO                "urn:xmpp:jingle:apps:rtp:audio"
+#define NS_JINGLE_APPS_RTP_VIDEO                "urn:xmpp:jingle:apps:rtp:video"
 
 #define NS_JINGLE_TRANSPORTS_RAW_UDP            "urn:xmpp:jingle:transports:raw-udp:1"
 #define NS_JINGLE_TRANSPORTS_ICE_UDP            "urn:xmpp:jingle:transports:ice-udp:1"

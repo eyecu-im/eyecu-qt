@@ -630,6 +630,19 @@ void JingleRtp::registerDiscoFeatures()
 	dfeature.name = tr("Jingle RTP Sessions");
 	dfeature.description = tr("Audio/Video chat via Jingle RTP");
 	FServiceDiscovery->insertDiscoFeature(dfeature);
+
+    dfeature.var = NS_JINGLE_APPS_RTP_AUDIO;
+    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL);
+    dfeature.name = tr("Jingle RTP Audio");
+    dfeature.description = tr("Jingle RTP Audio streaming");
+    FServiceDiscovery->insertDiscoFeature(dfeature);
+
+    dfeature.var = NS_JINGLE_APPS_RTP_VIDEO;
+    dfeature.active = false;
+    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL_VIDEO);
+    dfeature.name = tr("Jingle RTP Video");
+    dfeature.description = tr("Jingle RTP Video streaming");
+    FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
 bool JingleRtp::hasVideo(const QString &ASid) const
@@ -706,7 +719,8 @@ void JingleRtp::removeNotification(const Jid &AStreamJid, const QString &ASid)
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
 	return !FServiceDiscovery || !FServiceDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
-			FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP);
+           (FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP) &&
+            FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP_AUDIO));
 }
 
 bool JingleRtp::checkContent(IJingleContent *AContent)
@@ -1230,16 +1244,20 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(QDomElement &ADescription, const
 
 void JingleRtp::clearDescription(QDomElement &ADescription)
 {
-	for (QDomElement payloadType = ADescription.firstChildElement("payload-type"); !payloadType.isNull(); payloadType = ADescription.firstChildElement("payload-type"))
+    for (QDomElement payloadType = ADescription.firstChildElement("payload-type");
+         !payloadType.isNull(); payloadType = ADescription.firstChildElement("payload-type"))
 		ADescription.removeChild(payloadType).clear();
 }
 
 QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 {
 	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(AMode));
-	QString deviceName = Options::node(AMode==QAudio::AudioInput?OPV_JINGLE_RTP_AUDIO_INPUT:OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
+    QString deviceName = Options::node(AMode==QAudio::AudioInput?
+                                           OPV_JINGLE_RTP_AUDIO_INPUT:
+                                           OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
 
-	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin(); it!=devices.constEnd(); ++it)
+    for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin();
+        it!=devices.constEnd(); ++it)
 		if ((*it).deviceName()==deviceName)
 			return *it;
 
@@ -1290,7 +1308,8 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
 void JingleRtp::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindowActions(AWindow);
-	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+    connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
+                                            SLOT(onAddressChanged(Jid,Jid)));
 }
 
 void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
