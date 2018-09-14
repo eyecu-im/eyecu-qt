@@ -313,7 +313,7 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 void JingleRtp::onSessionAccepted(const QString &ASid)
 {
 	LOG_DEBUG((QString("JingleRtp::onSessionAccepted(%1)").arg(ASid)));
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid), FJingle->contactJid(ASid));
+	IMessageChatWindow *window = chatWindow(ASid);
 	if (window)
 		updateChatWindowActions(window);
 	establishConnection(ASid);
@@ -379,11 +379,11 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 			{
 				delete rtpio;
 				ioThread->exit();
-				LOG_FATAL("Failed to start send media");
+				LOG_FATAL("Failed to start stream media");
 			}
 		}
 		else
-			LOG_FATAL("Output device is NOT a UDP socket!");
+			LOG_FATAL("No Output device for component 1 UDP available!");
 	}
 	if (!success)
 	{
@@ -400,7 +400,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 			   .arg(ASid).arg(APreviousStatus).arg(AReason)));
 
 	CallType type;
-	Jid streamJid = FJingle->streamJid(ASid);
+
 	switch (AReason)
 	{
 		case IJingle::Success:
@@ -409,8 +409,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 		case IJingle::Decline:
 		{
 			type=Rejected;
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(streamJid,
-																	   FJingle->contactJid(ASid));
+			IMessageChatWindow *window = chatWindow(ASid);
 			if (window)
 			{
 				removeNotification(window);
@@ -425,30 +424,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 			type=Error;
 	}
 
-	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
-	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
-	{
-		MediaStreamer *streamer = FStreamers.value(*it);
-		if (streamer)
-		{
-			if (streamer->status()==MediaStreamer::Running ||
-				streamer->status()==MediaStreamer::Paused)
-				streamer->setStatus(MediaStreamer::Stopped);
-			else
-				delete streamer;
-		}
-
-		MediaPlayer *player = FPlayers.value(*it);
-		if (player)
-		{
-			if (player->status()==MediaPlayer::Running ||
-				player->status()==MediaPlayer::Opened ||
-				player->status()==MediaPlayer::Paused)
-				player->setStatus(MediaPlayer::Finished);
-			else
-				delete player;
-		}
-	}
+	stopSessionMedia(ASid);
 
 	callChatMessage(ASid, type, AReason);
 
@@ -631,18 +607,18 @@ void JingleRtp::registerDiscoFeatures()
 	dfeature.description = tr("Audio/Video chat via Jingle RTP");
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 
-    dfeature.var = NS_JINGLE_APPS_RTP_AUDIO;
-    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL);
-    dfeature.name = tr("Jingle RTP Audio");
-    dfeature.description = tr("Jingle RTP Audio streaming");
-    FServiceDiscovery->insertDiscoFeature(dfeature);
+	dfeature.var = NS_JINGLE_APPS_RTP_AUDIO;
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL);
+	dfeature.name = tr("Jingle RTP Audio");
+	dfeature.description = tr("Jingle RTP Audio streaming");
+	FServiceDiscovery->insertDiscoFeature(dfeature);
 
-    dfeature.var = NS_JINGLE_APPS_RTP_VIDEO;
-    dfeature.active = false;
-    dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL_VIDEO);
-    dfeature.name = tr("Jingle RTP Video");
-    dfeature.description = tr("Jingle RTP Video streaming");
-    FServiceDiscovery->insertDiscoFeature(dfeature);
+	dfeature.var = NS_JINGLE_APPS_RTP_VIDEO;
+	dfeature.active = false;
+	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_CALL_VIDEO);
+	dfeature.name = tr("Jingle RTP Video");
+	dfeature.description = tr("Jingle RTP Video streaming");
+	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
 bool JingleRtp::hasVideo(const QString &ASid) const
@@ -719,8 +695,8 @@ void JingleRtp::removeNotification(const Jid &AStreamJid, const QString &ASid)
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
 	return !FServiceDiscovery || !FServiceDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
-           (FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP) &&
-            FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP_AUDIO));
+		   (FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP) &&
+			FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP_AUDIO));
 }
 
 bool JingleRtp::checkContent(IJingleContent *AContent)
@@ -1147,6 +1123,46 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 	return nullptr;
 }
 
+void JingleRtp::stopSessionMedia(const QString &ASid)
+{
+	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
+	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
+	{
+		MediaStreamer *streamer = FStreamers.value(*it);
+		if (streamer)
+		{
+			if (streamer->status()==MediaStreamer::Running ||
+				streamer->status()==MediaStreamer::Paused)
+				streamer->setStatus(MediaStreamer::Stopped);
+			else
+			{
+				FStreamers.remove(*it);
+				delete streamer;
+			}
+		}
+
+		MediaPlayer *player = FPlayers.value(*it);
+		if (player)
+		{
+			if (player->status()==MediaPlayer::Running ||
+				player->status()==MediaPlayer::Opened ||
+				player->status()==MediaPlayer::Paused)
+				player->setStatus(MediaPlayer::Finished);
+			else
+			{
+				FPlayers.remove(*it);
+				delete player;
+			}
+		}
+	}
+}
+
+IMessageChatWindow *JingleRtp::chatWindow(const QString &ASid) const
+{
+	return FMessageWidgets->findChatWindow(FJingle->streamJid(ASid),
+										   FJingle->contactJid(ASid));
+}
+
 QHash<int,QPayloadType> JingleRtp::payloadTypesFromDescription(const QDomElement &ADescription, QList<QPayloadType> *APayloadTypes)
 {
 	QHash<int,QPayloadType> result;
@@ -1244,20 +1260,20 @@ bool JingleRtp::fillDescriptionWithPayloadTypes(QDomElement &ADescription, const
 
 void JingleRtp::clearDescription(QDomElement &ADescription)
 {
-    for (QDomElement payloadType = ADescription.firstChildElement("payload-type");
-         !payloadType.isNull(); payloadType = ADescription.firstChildElement("payload-type"))
+	for (QDomElement payloadType = ADescription.firstChildElement("payload-type");
+		 !payloadType.isNull(); payloadType = ADescription.firstChildElement("payload-type"))
 		ADescription.removeChild(payloadType).clear();
 }
 
 QAudioDeviceInfo JingleRtp::selectedAudioDevice(QAudio::Mode AMode)
 {
 	QList<QAudioDeviceInfo> devices(QAudioDeviceInfo::availableDevices(AMode));
-    QString deviceName = Options::node(AMode==QAudio::AudioInput?
-                                           OPV_JINGLE_RTP_AUDIO_INPUT:
-                                           OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
+	QString deviceName = Options::node(AMode==QAudio::AudioInput?
+										   OPV_JINGLE_RTP_AUDIO_INPUT:
+										   OPV_JINGLE_RTP_AUDIO_OUTPUT).value().toString();
 
-    for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin();
-        it!=devices.constEnd(); ++it)
+	for(QList<QAudioDeviceInfo>::ConstIterator it=devices.constBegin();
+		it!=devices.constEnd(); ++it)
 		if ((*it).deviceName()==deviceName)
 			return *it;
 
@@ -1308,8 +1324,8 @@ IMessageChatWindow *JingleRtp::getWindow(const Jid &AStreamJid, const Jid &ACont
 void JingleRtp::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindowActions(AWindow);
-    connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
-                                            SLOT(onAddressChanged(Jid,Jid)));
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
+											SLOT(onAddressChanged(Jid,Jid)));
 }
 
 void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
@@ -1318,7 +1334,8 @@ void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBe
 	Q_UNUSED(AContactBefore)
 
 	IMessageAddress *address=qobject_cast<IMessageAddress *>(sender());
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(), address->contactJid());
+	IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(),
+															   address->contactJid());
 	if (window)
 		updateChatWindowActions(window);
 }
@@ -1386,9 +1403,7 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 		case MediaPlayer::Running:
 		{
 			LOG_DEBUG("Running!");
-			QString sid(content->sid());
-			IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid),
-																	   FJingle->contactJid(sid));
+			IMessageChatWindow *window = chatWindow(content->sid());
 			if (window)
 				updateChatWindowActions(window);
 			break;
@@ -1471,8 +1486,7 @@ void JingleRtp::onCall()
 					FJingle->sessionTerminate(sid, reason);
 				else {
 					FJingle->setAccepting(sid);
-					IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(sid),
-																			   FJingle->contactJid(sid));
+					IMessageChatWindow *window = chatWindow(sid);
                     removeNotification(window);
 					updateChatWindowActions(window);
 				}
@@ -1588,6 +1602,7 @@ void JingleRtp::onHangup()
 			switch (status)
 			{
 				case IJingle::Connected:
+//					stopSessionMedia(sid);
 					reason = IJingle::Success;
 					break;
 
@@ -1602,6 +1617,7 @@ void JingleRtp::onHangup()
 			}
 
 			FJingle->sessionTerminate(sid, reason);
+//			updateChatWindowActions(chatWindow(sid));
 		}
 	}
 }

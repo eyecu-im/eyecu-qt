@@ -151,6 +151,9 @@ protected:
 
 	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QIODevice *ARtpDevice);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, QIODevice *ARtpIODevice);
+	void stopSessionMedia(const QString &ASid);
+
+	IMessageChatWindow *chatWindow(const QString &ASid) const;
 
 	static QHash<int, QPayloadType> payloadTypesFromDescription(const QDomElement &ADescription,
 																QList<QPayloadType> *APayloadTypes=nullptr);
