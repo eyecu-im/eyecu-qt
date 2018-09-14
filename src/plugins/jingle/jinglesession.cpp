@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QDateTime>
 #include <QStringList>
 
@@ -9,7 +10,8 @@
 #include <utils/logger.h>
 
 QHash<QString, JingleSession*> JingleSession::FSessions;
-Jingle* JingleSession::FJingle;
+Jingle * JingleSession::FJingle;
+IPresenceManager * JingleSession::FPresenceManager;
 
 JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty,
 							 const QString &AApplicationNS):
@@ -34,6 +36,11 @@ JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty,
 				SLOT(onSessionInformed(QDomElement)));
 		connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),
 				parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
+
+		IPresence *presence = FPresenceManager->findPresence(FThisParty);
+		if (presence)
+			connect(presence->instance(), SIGNAL(itemReceived(IPresenceItem, IPresenceItem)),
+										  SLOT(onPresenceitemReceived(IPresenceItem, IPresenceItem)));
     }
 }
 
@@ -75,6 +82,11 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 															   IJingle::SessionStatus,Jid,IJingle::Reason)),
 								parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
 																   IJingle::SessionStatus,Jid,IJingle::Reason)));
+
+						IPresence *presence = FPresenceManager->findPresence(FThisParty);
+						if (presence)
+							connect(presence->instance(), SIGNAL(itemReceived(IPresenceItem, IPresenceItem)),
+														  SLOT(onPresenceitemReceived(IPresenceItem, IPresenceItem)));
                     }
                 }
             }
@@ -133,12 +145,16 @@ void JingleSession::setConnected()
 	emit sessionConnected(FSid);
 }
 
-void JingleSession::setTerminated(IJingle::Reason AReason)
+bool JingleSession::setTerminated(IJingle::Reason AReason)
 {
-    IJingle::SessionStatus currentStatus=FStatus;
-    FStatus=IJingle::Terminated;
-    FReason=AReason;
+	if (FStatus == IJingle::Terminated) // Do not terminate session if it's already terminated
+		return false;
+
+	IJingle::SessionStatus currentStatus=FStatus;
+	FStatus=IJingle::Terminated;
+	FReason=AReason;
 	emit sessionTerminated(FSid, currentStatus, AReason);
+	return true;
 }
 
 void JingleSession::inform(const JingleStanza &AStanza)
@@ -262,15 +278,15 @@ bool JingleSession::accept()
 
 bool JingleSession::terminate(IJingle::Reason AReason)
 {
-    JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionTerminate);
-    FActionId=stanza.id();
-    FAction=IJingle::SessionTerminate;
-    stanza.setReason(AReason);
-    if (FJingle->sendStanzaOut(stanza))
-    {
-		setTerminated(AReason);
-        return true;
-    }
+	if (setTerminated(AReason)) // Do not terminate session if it's already terminated
+	{
+		JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionTerminate);
+		FActionId=stanza.id();
+		FAction=IJingle::SessionTerminate;
+		stanza.setReason(AReason);
+		if (FJingle->sendStanzaOut(stanza))
+			return true;
+	}
     return false;
 }
 
@@ -320,12 +336,29 @@ QString JingleSession::getSid()
 	for (sid=QString("jingleSid%1").arg(dt, 0, 16); FSessions.contains(sid);
 		 sid=QString("jingleSid%1").arg(++dt, 0, 16))
 		;
-    return sid;
+	return sid;
+}
+
+void JingleSession::onPresenceitemReceived(const IPresenceItem &AItem, const IPresenceItem &ABefore)
+{
+	Q_UNUSED((ABefore))
+
+	if (AItem.itemJid == FOtherParty &&
+		AItem.show == IPresence::Offline) // Item gone offline
+	{
+		qDebug() << "Item" << AItem.itemJid.uFull() << "gone offline! Terminating... session";
+		terminate(IJingle::Gone);
+	}
 }
 
 void JingleSession::setJingle(Jingle *AJingle)
 {
-    FJingle=AJingle;
+	FJingle=AJingle;
+}
+
+void JingleSession::setPresenceManager(IPresenceManager *APresenceManager)
+{
+	FPresenceManager = APresenceManager;
 }
 
 IJingle::SessionState JingleSession::state() const

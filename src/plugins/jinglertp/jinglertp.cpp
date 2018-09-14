@@ -496,24 +496,24 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 				   AEventType==Error))
 	{
 		INotification notification;
-		notification.typeId = AEventType==Called	? NNT_JINGLE_RTP_CALL:
-							  AEventType==Error	? NNT_JINGLE_RTP_ERROR:
-												  NNT_JINGLE_RTP_MISSED;
+		notification.typeId = AEventType==Called ? NNT_JINGLE_RTP_CALL:
+							  AEventType==Error	 ? NNT_JINGLE_RTP_ERROR:
+												   NNT_JINGLE_RTP_MISSED;
 		notification.kinds = FNotifications->enabledTypeNotificationKinds(notification.typeId);
 		if (notification.kinds > 0)
 		{
 			bool video=hasVideo(ASid);
-			QIcon icon = FIconStorage->getIcon(AEventType==Called ? (video?JNI_RTP_CALL_VIDEO
-																		  :JNI_RTP_CALL):
-											   AEventType==Error	 ? JNI_RTP_ERROR:
-																   JNI_RTP_HANGUP);
+			QIcon icon = FIconStorage->getIcon(AEventType==Called ? (video ? JNI_RTP_CALL_VIDEO
+																		   : JNI_RTP_CALL):
+											   AEventType==Error  ? JNI_RTP_ERROR
+																  : JNI_RTP_HANGUP);
 			QString name = FNotifications->contactName(streamJid, contactJid);
 
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, AEventType);
 			notification.data.insert(NDR_ICON, icon);
-			QString tooltip=AEventType==Called	? tr("Incoming %1 call from %2"):
-							AEventType==Error	? tr("%1 call from %2 failed!"):
-												  tr("Missed %1 call from %2");
+			QString tooltip=AEventType==Called	  ? tr("Incoming %1 call from %2"):
+							AEventType==Cancelled ? tr("Missed %1 call from %2"):
+													tr("%1 call from %2 failed!");
 
 			notification.data.insert(NDR_TOOLTIP, tooltip.arg(video?tr("video")
 																   :tr("voice"))
@@ -528,12 +528,13 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 				if (!avatarFileName.isEmpty())
 					notification.data.insert(NDR_POPUP_IMAGE, avatarFileName);
 			}
-			notification.data.insert(NDR_POPUP_CAPTION, AEventType==Called	? tr("Incoming call!"):
-														AEventType==Cancelled? tr("Missed call!"):
-																			  tr("Failed call!"));
+			notification.data.insert(NDR_POPUP_CAPTION, AEventType==Called	  ? tr("Incoming call!"):
+														AEventType==Cancelled ? tr("Missed call!"):
+																				tr("Failed call!"));
 			notification.data.insert(NDR_POPUP_TITLE, name);
 //			notification.data.insert(NDR_POPUP_HTML, HTML_ESCAPE_CHARS("Test"));
-			notification.data.insert(NDR_POPUP_TIMEOUT, 0);
+			if (AEventType==Cancelled)
+				notification.data.insert(NDR_POPUP_TIMEOUT, 0);
 			notification.data.insert(NDR_ROSTER_ORDER, RNO_JINGLE_RTP);
 			notification.data.insert(NDR_ROSTER_FLAGS, IRostersNotify::Blink|
 													   IRostersNotify::AllwaysVisible|
@@ -552,7 +553,7 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 
 			int notify=FNotifications->appendNotification(notification);
 
-			if (window->isActiveTabPage() && AEventType!=Called)
+			if (window->isActiveTabPage() && AEventType != Called)
 				FNotifications->removeNotification(notify);
 			else {
 				FNotifies.insert(notify, QPair<Jid,Jid>(streamJid, contactJid));
@@ -663,9 +664,9 @@ void JingleRtp::onTabPageActivated()
 	{
 		INotification notification=FNotifications->notificationById(notify);
 		CallType type = CallType(notification.data
-											.value(NDR_JINGLE_RTP_EVENT_TYPE).toInt());
-		if (type != Called)                 // All the events but incoming Call
-			removeNotification(window);     // should be removed immediately!
+								 .value(NDR_JINGLE_RTP_EVENT_TYPE).toInt());
+		if (type != Called)				// All the events but incoming Call
+			removeNotification(window);	// should be removed immediately!
 	}
 	if (FPendingChats.contains(window))
 	{

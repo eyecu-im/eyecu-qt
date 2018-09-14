@@ -6,6 +6,7 @@
 #include <interfaces/istanzaprocessor.h>
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/ioptionsmanager.h>
+
 #include "jinglesession.h"
 
 class Jingle: public QObject,

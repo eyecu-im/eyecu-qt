@@ -1,12 +1,14 @@
 #include "jingle.h"
-#include "definitions/namespaces.h"
-#include "definitions/menuicons.h"
-#include "definitions/resources.h"
-#include "definitions/stanzahandlerorders.h"
-#include "definitions/optionnodes.h"
-#include "definitions/optionnodeorders.h"
-#include "utils/xmpperror.h"
-#include "utils/logger.h"
+
+#include <definitions/namespaces.h>
+#include <definitions/menuicons.h>
+#include <definitions/resources.h>
+#include <definitions/stanzahandlerorders.h>
+#include <definitions/optionnodes.h>
+#include <definitions/optionnodeorders.h>
+#include <interfaces/ipresencemanager.h>
+#include <utils/xmpperror.h>
+#include <utils/logger.h>
 
 #include <QList>
 
@@ -59,6 +61,10 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,nullptr);
+	if (plugin)
+		JingleSession::setPresenceManager(qobject_cast<IPresenceManager *>(plugin->instance()));
 
 	// Find application and transport plugins
 	QList<IPlugin *>plugins = APluginManager->pluginInterface("IJingleApplication");

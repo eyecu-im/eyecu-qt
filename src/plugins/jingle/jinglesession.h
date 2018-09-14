@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <utils/jid.h>
 #include <interfaces/ijingle.h>
+#include <interfaces/ipresencemanager.h>
 #include "jinglestanza.h"
 
 class JingleSession;
@@ -72,6 +73,7 @@ class JingleSession: public QObject
     Q_OBJECT
 	friend bool JingleContent::setIoDevice(int, QIODevice *);
 	friend JingleContent::~JingleContent();
+
 public:
     enum Direction
     {
@@ -87,7 +89,7 @@ public:
 	void setAccepting();
 	void setAccepted();
     void setConnected();
-    void setTerminated(IJingle::Reason AReason);
+	bool setTerminated(IJingle::Reason AReason);
 
     void inform(const JingleStanza &AStanza);
     void acknowledge(IJingle::CommandRespond ARespond, Jid ARedirect);
@@ -113,6 +115,7 @@ public:
 	static JingleSession* sessionBySessionId(const QString &ASid) {return FSessions.value(ASid);}
 	static JingleSession* sessionByStanzaId(const QString &AId);
     static void setJingle(Jingle *AJingle);
+	static void setPresenceManager(IPresenceManager *APresenceManager);
 
     QObject *instance() {return this;}
     const QString &applicationNS() const {return FApplicationNamespace;}
@@ -137,7 +140,10 @@ public:
     const QHash<QString, JingleContent *> contents() const;
 
 protected:
-	static QString getSid();
+	static QString getSid();	
+
+protected slots:
+	void onPresenceitemReceived(const IPresenceItem &AItem, const IPresenceItem &ABefore);
 
 signals:
 	void sessionInitiated(const QString &ASid);
@@ -165,6 +171,7 @@ private:
 
 	static QHash<QString, JingleSession*> FSessions;
     static Jingle   *FJingle;
+	static IPresenceManager *FPresenceManager;
 };
 
 #endif // JINGLESESSION_H
