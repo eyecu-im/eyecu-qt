@@ -376,6 +376,11 @@
     <object mime="image/png">pandion.png</object>
   </icon>
   <icon>
+    <key>http://jabber.pix-art.de</key>
+    <client>Pix-Art</client>
+    <object mime="image/png">pix-art.png</object>
+  </icon>
+  <icon>
     <key>http://sleekxmpp.com/ver/1.1.11</key>
     <client>Poezio</client>
     <object mime="image/png">poezio.png</object>
@@ -434,6 +439,11 @@
     <key>http://pidgin.im/</key>
     <client>Pidgin</client>
     <object mime="image/png">pidgin.png</object>
+  </icon>  
+  <icon>
+    <key>http://www.profanity.im</key>
+    <client>Profanity</client>
+    <object mime="image/png">profanity.png</object>
   </icon>
   <icon>
     <key>http://psi-im.org</key>
@@ -522,6 +532,11 @@
   </icon>
   <icon>
     <key>http://www.igniterealtime.org/projects/smack/</key>
+    <client>Xabber</client>
+    <object mime="image/png">xabber.png</object>
+  </icon>
+  <icon>
+    <key>https://www.xabber.com/</key>
     <client>Xabber</client>
     <object mime="image/png">xabber.png</object>
   </icon>

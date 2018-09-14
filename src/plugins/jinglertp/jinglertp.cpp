@@ -424,8 +424,10 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 			type=Error;
 	}
 
+	// Stop media
 	stopSessionMedia(ASid);
 
+	// Type termination message
 	callChatMessage(ASid, type, AReason);
 
 	if (type == Error ||
@@ -1602,7 +1604,6 @@ void JingleRtp::onHangup()
 			switch (status)
 			{
 				case IJingle::Connected:
-//					stopSessionMedia(sid);
 					reason = IJingle::Success;
 					break;
 
@@ -1617,7 +1618,6 @@ void JingleRtp::onHangup()
 			}
 
 			FJingle->sessionTerminate(sid, reason);
-//			updateChatWindowActions(chatWindow(sid));
 		}
 	}
 }
