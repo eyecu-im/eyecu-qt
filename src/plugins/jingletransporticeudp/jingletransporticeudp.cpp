@@ -459,10 +459,14 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 
 		case QPIceTransport::OperationNegotiation:
 		{
+			LOG_INFO("ICE negotiation succeeded");
 			int count = iceThread->componentCount();
 			content->setComponentCount(count);
 			for (int i=1; i<=count; ++i) {
 				QPIceComponent *comp = iceThread->component(i);
+//				qDebug() << "comp" << i <<
+//							": lcand:" << comp->localCandidate()->type << "; addr=" << comp->localCandidate()->addr << "; rel-addr=" << comp->localCandidate()->relAddr <<
+//							": rcand:" << comp->remoteCandidate()->type << "; addr=" << comp->remoteCandidate()->addr << "; rel-addr=" << comp->remoteCandidate()->relAddr;
 				comp->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 				content->setIoDevice(i, comp);
 			}

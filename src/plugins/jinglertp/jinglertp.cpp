@@ -70,6 +70,7 @@ JingleRtp::JingleRtp():
 	FServiceDiscovery(nullptr),
 	FOptionsManager(nullptr),
 	FPresenceManager(nullptr),
+	FPluginManager(nullptr),
 	FMessageWidgets(nullptr),
 	FMessageStyleManager(nullptr),
 	FMessageProcessor(nullptr),
@@ -119,6 +120,8 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
 	Q_UNUSED(AInitOrder);
 
+	FPluginManager = APluginManager;
+
 	IPlugin *plugin= APluginManager->pluginInterface("IJingle").value(0, nullptr);
 	if (plugin)
 		FJingle = qobject_cast<IJingle *>(plugin->instance());
@@ -135,7 +138,11 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,nullptr);
 	if (plugin)
+	{
 		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
+		connect(FPresenceManager->instance(), SIGNAL(contactStateChanged(Jid,Jid,bool)),
+											  SLOT(onContactStateChanged(Jid,Jid,bool)));
+	}
 
 	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0, nullptr);
 	if (plugin)
@@ -271,7 +278,7 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 									 IJingle::SessionStatus APreviousStatus,
 									 const Jid &ARedirect, IJingle::Reason AReason)
 {
-	LOG_DEBUG(QString("JingleRtp::onActionAcknowleged(%1, %2, %3, %4")
+	LOG_DEBUG(QString("JingleRtp::onActionAcknowleged(%1, %2, %3, %4, %5")
 			  .arg(ASid).arg(AAction).arg(ARespond).arg(APreviousStatus)
 			  .arg(ARedirect.full()).arg(AReason));
 
@@ -1086,6 +1093,7 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 
 				ARtpDevice->setParent(streamer);
 				streamer->setStatus(MediaStreamer::Running);
+				FPluginManager->delayShutdown();
 				return streamer;
 			}
 			else
@@ -1120,6 +1128,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 		if (player->setStatus(MediaPlayer::Running))
 		{
 			LOG_INFO("Player started successfuly!");
+			FPluginManager->delayShutdown();
 			return player;
 		}
 		else
@@ -1146,6 +1155,7 @@ void JingleRtp::stopSessionMedia(const QString &ASid)
 			{
 				FStreamers.remove(*it);
 				delete streamer;
+				FPluginManager->continueShutdown();
 			}
 		}
 
@@ -1160,6 +1170,7 @@ void JingleRtp::stopSessionMedia(const QString &ASid)
 			{
 				FPlayers.remove(*it);
 				delete player;
+				FPluginManager->continueShutdown();
 			}
 		}
 	}
@@ -1368,6 +1379,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 				LOG_DEBUG("Removing streamer...");
 				FStreamers.remove(content);
 				delete streamer;
+				FPluginManager->continueShutdown();
 			}
 			break;
 		}
@@ -1388,7 +1400,8 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 				else
 					LOG_ERROR(QString("Wrong session status: %1")
 							  .arg(FJingle->sessionStatus(sid)));
-				break;
+
+				FPluginManager->continueShutdown();
 			}
 			break;
 		}
@@ -1425,6 +1438,7 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 				LOG_DEBUG("Removing player...");
 				FPlayers.remove(content);
 				delete player;
+				FPluginManager->continueShutdown();
 			}
 
 			QString sid(content->sid());
@@ -1680,6 +1694,22 @@ void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
 		else
 			FJingle->sessionAccept(AContent->sid());
+	}
+}
+
+void JingleRtp::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)
+{
+	if (!AStateOnline)
+	{
+		QList<int> notifies;
+		for (QMap<int, QPair<Jid,Jid> >::ConstIterator it = FNotifies.constBegin();
+			 it != FNotifies.constEnd(); ++it)
+			if ((*it).first == AStreamJid && (*it).second == AContactJid)
+				notifies.append(it.key());
+
+		for (QList<int>::ConstIterator it = notifies.constBegin();
+			 it != notifies.constEnd(); ++it)
+			FNotifications->removeNotification(*it);
 	}
 }
 

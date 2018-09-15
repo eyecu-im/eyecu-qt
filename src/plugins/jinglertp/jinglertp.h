@@ -182,12 +182,14 @@ protected slots:
 protected slots:
 	void onContentAdded(IJingleContent *AContent);
 	void onContentAddFailed(IJingleContent *AContent);
+	void onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline);
 
 private:
 	IJingle             *FJingle;
 	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager     *FOptionsManager;
 	IPresenceManager    *FPresenceManager;
+	IPluginManager		*FPluginManager;
 	IMessageWidgets     *FMessageWidgets;
 	IMessageStyleManager *FMessageStyleManager;
 	IMessageProcessor   *FMessageProcessor;

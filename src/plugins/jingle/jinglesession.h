@@ -143,7 +143,8 @@ protected:
 	static QString getSid();	
 
 protected slots:
-	void onPresenceitemReceived(const IPresenceItem &AItem, const IPresenceItem &ABefore);
+	void onPresenceItemReceived(const IPresenceItem &AItem, const IPresenceItem &ABefore);
+	void onPresenceAboutToClose(int AShow, const QString &AStatus);
 
 signals:
 	void sessionInitiated(const QString &ASid);
