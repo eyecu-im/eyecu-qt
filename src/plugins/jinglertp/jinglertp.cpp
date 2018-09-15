@@ -538,7 +538,7 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 																				tr("Failed call!"));
 			notification.data.insert(NDR_POPUP_TITLE, name);
 //			notification.data.insert(NDR_POPUP_HTML, HTML_ESCAPE_CHARS("Test"));
-			if (AEventType==Cancelled)
+			if (AEventType==Called || AEventType==Cancelled)
 				notification.data.insert(NDR_POPUP_TIMEOUT, 0);
 			notification.data.insert(NDR_ROSTER_ORDER, RNO_JINGLE_RTP);
 			notification.data.insert(NDR_ROSTER_FLAGS, IRostersNotify::Blink|
