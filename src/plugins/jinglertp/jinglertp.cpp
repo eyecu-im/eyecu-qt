@@ -69,6 +69,7 @@ JingleRtp::JingleRtp():
 	FJingle(nullptr),
 	FServiceDiscovery(nullptr),
 	FOptionsManager(nullptr),
+	FPresenceManager(nullptr),
 	FMessageWidgets(nullptr),
 	FMessageStyleManager(nullptr),
 	FMessageProcessor(nullptr),
@@ -131,6 +132,10 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,nullptr);
+	if (plugin)
+		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0, nullptr);
 	if (plugin)

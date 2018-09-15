@@ -18,6 +18,7 @@
 #include <interfaces/iavatars.h>
 #include <interfaces/irostersview.h>
 #include <interfaces/istatusicons.h>
+#include <interfaces/ipresencemanager.h>
 
 #include "audiooptions.h"
 #include "codecoptions.h"
@@ -186,6 +187,7 @@ private:
 	IJingle             *FJingle;
 	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager     *FOptionsManager;
+	IPresenceManager    *FPresenceManager;
 	IMessageWidgets     *FMessageWidgets;
 	IMessageStyleManager *FMessageStyleManager;
 	IMessageProcessor   *FMessageProcessor;

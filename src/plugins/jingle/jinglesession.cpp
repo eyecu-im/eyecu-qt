@@ -278,8 +278,14 @@ bool JingleSession::accept()
 
 bool JingleSession::terminate(IJingle::Reason AReason)
 {
+	qDebug() << "JingleSession::terminate(" << AReason << ")";
 	if (setTerminated(AReason)) // Do not terminate session if it's already terminated
 	{
+		IPresence *presence = FPresenceManager->findPresence(FThisParty);
+		if (presence)
+			presence->instance()->disconnect(SIGNAL(itemReceived(IPresenceItem, IPresenceItem)), this,
+											 SLOT(onPresenceitemReceived(IPresenceItem, IPresenceItem)));
+
 		JingleStanza stanza(FThisParty, FOtherParty, FSid, IJingle::SessionTerminate);
 		FActionId=stanza.id();
 		FAction=IJingle::SessionTerminate;
@@ -287,6 +293,8 @@ bool JingleSession::terminate(IJingle::Reason AReason)
 		if (FJingle->sendStanzaOut(stanza))
 			return true;
 	}
+	else
+		qDebug() << "Session is already terminated!";
     return false;
 }
 
