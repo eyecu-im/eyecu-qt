@@ -12,7 +12,7 @@ class RtpIODevice: public QIODevice
 	Q_OBJECT
 
 public:
-	RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, QObject *AParent=nullptr);
+	RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, int AReadTimeout=0, QObject *AParent=nullptr);
 	virtual ~RtpIODevice();
 
 	// QIODevice interface
@@ -34,6 +34,7 @@ protected slots:
 private:
 	QIODevice *FRtp;
 	QIODevice *FRtcp;
+	int		  FReadTimeout;
 
 	QQueue<QByteArray> FInputQueue;
 	mutable QMutex FInputMutex;

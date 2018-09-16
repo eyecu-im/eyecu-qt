@@ -12,32 +12,32 @@
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="19"/>
    <source>XMPP Streams Manager</source>
-   <translation type="unfinished"/>
+   <translation>Менеджер потоків XMPP</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="20"/>
    <source>Allows other modules to create XMPP streams and get access to them</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє іншим модулям створювати потоки XMPP і отримувати до них доступ</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="34"/>
    <source>XMPP stream destroyed</source>
-   <translation type="unfinished"/>
+   <translation>Потік XMPP знищено</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="35"/>
    <source>Secure connection is not established</source>
-   <translation type="unfinished"/>
+   <translation>Безпечне з&apos;єднання не встановлено</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="36"/>
    <source>Connection closed unexpectedly</source>
-   <translation type="unfinished"/>
+   <translation>З&apos;єднання несподівано закрито</translation>
   </message>
   <message>
    <location filename="../../plugins/xmppstreams/xmppstreammanager.cpp" line="37"/>
    <source>Failed to start connection</source>
-   <translation type="unfinished"/>
+   <translation>Не вдалося запустити з&apos;єднання</translation>
   </message>
  </context>
 </TS>

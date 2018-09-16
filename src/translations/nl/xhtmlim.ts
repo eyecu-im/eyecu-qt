@@ -518,11 +518,6 @@
    <translation>Voeg nieuwe lijn toe</translation>
   </message>
   <message>
-   <source>Alt+Return</source>
-   <comment>Insert new line</comment>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="156"/>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="915"/>
    <source>Set tool tip</source>
@@ -575,11 +570,6 @@
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="749"/>
    <source>Strikeout</source>
    <translation>Doorstrepen</translation>
-  </message>
-  <message>
-   <source>Ctrl+S</source>
-   <comment>Strikeout</comment>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/xhtmlim/xhtmlim.cpp" line="163"/>

@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceWiki</name>
   <message>
-   <location line="13" filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp"/>
+   <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="13"/>
    <source>Wikimapia map source</source>
    <translation>Wikimapia map source</translation>
   </message>
   <message>
-   <location line="14" filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp"/>
+   <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="14"/>
    <source>Allows Map plugin to use Wikimapia as map source</source>
    <translation>Allows Map plugin to use Wikimapia as map source</translation>
   </message>

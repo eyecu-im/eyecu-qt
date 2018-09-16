@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceBing</name>
   <message>
-   <location line="6" filename="../../plugins/mapsourcebing/mapsourcebing.cpp"/>
+   <location filename="../../plugins/mapsourcebing/mapsourcebing.cpp" line="6"/>
    <source>Bing map source</source>
    <translation>Bing map source</translation>
   </message>
   <message>
-   <location line="7" filename="../../plugins/mapsourcebing/mapsourcebing.cpp"/>
+   <location filename="../../plugins/mapsourcebing/mapsourcebing.cpp" line="7"/>
    <source>Allows Map plugin to use Microsoft's Bing service as map source</source>
    <translation>Allows Map plugin to use Microsoft's Bing service as map source</translation>
   </message>

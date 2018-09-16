@@ -218,10 +218,6 @@
    <translation>Paswoord</translation>
   </message>
   <message>
-   <source>Re-type password</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="661"/>
    <source>Account exists</source>
    <translation>Account bestaat al</translation>
@@ -291,14 +287,6 @@
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="162"/>
    <source>A social network and chat service from Google</source>
    <translation>Een sociaal netwerk en chatsdienst van Google</translation>
-  </message>
-  <message>
-   <source>Yandex Online</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <source>A popular Russian portal (internet serach, e-mail, news, chat and so on)</source>
-   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="164"/>

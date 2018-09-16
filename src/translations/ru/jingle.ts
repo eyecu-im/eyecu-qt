@@ -8,10 +8,6 @@
         <translation>Jingle</translation>
     </message>
     <message>
-        <source>Implements XEP-0166: Jingle</source>
-        <translation>Реализует XEP-0166: Jingle</translation>
-    </message>
-    <message>
         <source>Supports XEP-0166: Jingle</source>
         <translation>Поддерживает XEP-0166: Jingle</translation>
     </message>
@@ -86,6 +82,10 @@
     <message>
         <source>Jingle transports</source>
         <translation>Транспорты Jingle</translation>
+    </message>
+    <message>
+        <source>Allows to establish Jingle sessions for media exchange</source>
+        <translation>Позволяет устанавливать сеансы Jingle для обмена данными</translation>
     </message>
 </context>
 </TS>

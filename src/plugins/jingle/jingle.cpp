@@ -38,7 +38,7 @@ bool Jingle::sendStanzaOut(Stanza &AStanza)
 void Jingle::pluginInfo(IPluginInfo *APluginInfo)
 {
 	APluginInfo->name = tr("Jingle");
-	APluginInfo->description = tr("Implements XEP-0166: Jingle");
+	APluginInfo->description = tr("Allows to establish Jingle sessions for media exchange");
 	APluginInfo->version = "1.0";
 	APluginInfo->author = "Road Works Software";
 	APluginInfo->homePage = "http://www.eyecu.ru";

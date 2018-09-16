@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceOsm</name>
   <message>
-   <location line="12" filename="../../plugins/mapsourceosm/mapsourceosm.cpp"/>
+   <location filename="../../plugins/mapsourceosm/mapsourceosm.cpp" line="12"/>
    <source>OSM map source</source>
    <translation>OSM map source</translation>
   </message>
   <message>
-   <location line="13" filename="../../plugins/mapsourceosm/mapsourceosm.cpp"/>
+   <location filename="../../plugins/mapsourceosm/mapsourceosm.cpp" line="13"/>
    <source>Allows Map plugin to use Open Street Maps as map source</source>
    <translation>Allows Map plugin to use Open Street Maps as map source</translation>
   </message>

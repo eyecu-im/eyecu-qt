@@ -4,10 +4,6 @@
 <context>
     <name>AudioOptions</name>
     <message>
-        <source>Jingle RTP options</source>
-        <translation>Опции Jingle RTP</translation>
-    </message>
-    <message>
         <source>Input device</source>
         <translation>Устройство ввода</translation>
     </message>
@@ -17,15 +13,27 @@
     </message>
     <message>
         <source>Bitrate</source>
-        <translation>Частота дискретизации</translation>
+        <translation>Битрейт</translation>
+    </message>
+    <message>
+        <source> bps</source>
+        <translation> бит/с</translation>
+    </message>
+    <message>
+        <source>Data receive timeout</source>
+        <translation>Таймаут получения данных</translation>
+    </message>
+    <message>
+        <source> msec</source>
+        <translation> мсек</translation>
+    </message>
+    <message>
+        <source>Audio options</source>
+        <translation>Опции аудио</translation>
     </message>
 </context>
 <context>
     <name>CodecOptions</name>
-    <message>
-        <source>Jingle RTP options</source>
-        <translation>Опции Jingle RTP</translation>
-    </message>
     <message>
         <source>Available</source>
         <translation>Доступны</translation>
@@ -66,13 +74,21 @@
         <source>Shifts codec priority down</source>
         <translation>Опускает приоритет кодека</translation>
     </message>
+    <message>
+        <source>Codec options</source>
+        <translation>Опции кодеков</translation>
+    </message>
+    <message>
+        <source>List of used codecs</source>
+        <translation>Список используемых кодеков</translation>
+    </message>
+    <message>
+        <source>List of codecs, available for use</source>
+        <translation>Список кодеков, доступных для использования</translation>
+    </message>
 </context>
 <context>
     <name>JingleRtp</name>
-    <message>
-        <source>Implements XEP-0167: Jingle RTP Sessions</source>
-        <translation>Реализует XEP-0167: Сеансы RTP Джингл</translation>
-    </message>
     <message>
         <source>Missed call!</source>
         <translation>Пропущенный звонок!</translation>
@@ -83,11 +99,11 @@
     </message>
     <message>
         <source>Jingle RTP Sessions</source>
-        <translation>Сеансы RTP Джингл</translation>
+        <translation>Сеансы Jingle RTP</translation>
     </message>
     <message>
         <source>Audio/Video chat via Jingle RTP</source>
-        <translation>Аудио/Видео чат через Джингл</translation>
+        <translation>Аудио/Видео чат через Jingle</translation>
     </message>
     <message>
         <source>Voice call</source>
@@ -104,14 +120,6 @@
     <message>
         <source>When incoming voice or video call missed</source>
         <translation>При пропущенном голосовом или видеозвонке</translation>
-    </message>
-    <message>
-        <source>Incoming %1 call from %2</source>
-        <translation>Входящий %1 звонок от %2</translation>
-    </message>
-    <message>
-        <source>Missed %1 call from %2</source>
-        <translation>Пропущенный %1 звонок от %2</translation>
     </message>
     <message>
         <source>video</source>
@@ -147,7 +155,7 @@
     </message>
     <message>
         <source>Jingle RTP</source>
-        <translation></translation>
+        <translation>Jingle RTP</translation>
     </message>
     <message>
         <source>Call error (%1)</source>
@@ -166,12 +174,43 @@
         <translation>Кодеки</translation>
     </message>
     <message>
-        <source>%1 call from %2 failed!</source>
-        <translation>Неудачный %1 вызов от %2!</translation>
-    </message>
-    <message>
         <source>Failed call!</source>
         <translation>Неудачный вызов!</translation>
+    </message>
+    <message>
+        <source>Jingle RTP Audio</source>
+        <translation>Jingle RTP аудио</translation>
+    </message>
+    <message>
+        <source>Jingle RTP Audio streaming</source>
+        <translation>Трансляция Jingle RTP аудио</translation>
+    </message>
+    <message>
+        <source>Jingle RTP Video</source>
+        <translation>Jingle RTP видео</translation>
+    </message>
+    <message>
+        <source>Jingle RTP Video streaming</source>
+        <translation>Трансляция Jingle RTP видео</translation>
+    </message>
+    <message>
+        <source>Allows to perform voice calls</source>
+        <translation>Позволяет осуществлять голосовые вызовы</translation>
+    </message>
+    <message>
+        <source>Incoming %1 call from %2</source>
+        <comment>%1: call type (audio or video); %2: caller title</comment>
+        <translation>Входящий %1 звонок от %2</translation>
+    </message>
+    <message>
+        <source>Missed %1 call from %2</source>
+        <comment>%1: call type (audio or video); %2: caller title</comment>
+        <translation>Пропущенный %1 звонок от %2</translation>
+    </message>
+    <message>
+        <source>%1 call from %2 failed!</source>
+        <comment>%1: call type (audio or video); %2: caller title</comment>
+        <translation>Неудачный %1 вызов от %2!</translation>
     </message>
 </context>
 </TS>

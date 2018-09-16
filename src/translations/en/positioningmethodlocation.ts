@@ -4,22 +4,22 @@
  <context>
   <name>PositioningMethodLocation</name>
   <message>
-   <location line="16" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp" line="16"/>
    <source>Positioning Method Location</source>
    <translation>Positioning Method Location</translation>
   </message>
   <message>
-   <location line="17" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp" line="17"/>
    <source>Positioning method, which uses Location interface</source>
    <translation>Positioning method, which uses Location interface</translation>
   </message>
   <message>
-   <location line="47" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocation.cpp" line="47"/>
    <source>Location</source>
    <translation>Location</translation>
   </message>
   <message>
-   <location line="42" filename="../../plugins/positioningmethodlocation/positioningmethodlocation.h"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocation.h" line="42"/>
    <source>Location</source>
    <comment>This is the name of positioning method. Please, leave it untranslated, if not sure, what does that mean!</comment>
    <translation>Location</translation>
@@ -28,17 +28,17 @@
  <context>
   <name>PositioningMethodLocationOptions</name>
   <message>
-   <location line="32" filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui" line="32"/>
    <source>Data send interval</source>
    <translation>Data send interval</translation>
   </message>
   <message>
-   <location line="65" filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui" line="65"/>
    <source>Disable</source>
    <translation>Disable</translation>
   </message>
   <message>
-   <location line="143" filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui"/>
+   <location filename="../../plugins/positioningmethodlocation/positioningmethodlocationoptions.ui" line="143"/>
    <source>seconds</source>
    <translation>seconds</translation>
   </message>

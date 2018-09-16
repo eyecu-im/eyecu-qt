@@ -8,10 +8,11 @@
 
 #include "rtpiodevice.h"
 
-RtpIODevice::RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, QObject *AParent):
+RtpIODevice::RtpIODevice(QIODevice *ARtp, QIODevice *ARtcp, int AReadTimeout, QObject *AParent):
 	QIODevice(AParent),
 	FRtp(ARtp),
-	FRtcp(ARtcp)
+	FRtcp(ARtcp),
+	FReadTimeout(AReadTimeout)
 {
 	LOG_DEBUG(QString("RtpIODevice(0x%1, 0x%2); this=0x%3")
 			  .arg(unsigned(ARtp), sizeof(int)*2, 16)
@@ -52,7 +53,9 @@ bool RtpIODevice::waitForReadyRead(int msecs)
 }
 
 qint64 RtpIODevice::readData(char *data, qint64 maxlen)
-{
+{	
+	waitForReadyRead(FReadTimeout); // RtpIODevice is blocking!
+
 	FInputMutex.lock();
 	bool emitSignal(false);
 	qint64 len = FInputQueue.isEmpty()?0:qMin(qint64(FInputQueue.first().size()), maxlen);

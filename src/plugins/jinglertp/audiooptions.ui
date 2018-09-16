@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>402</width>
-    <height>100</height>
+    <height>114</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Jingle RTP options</string>
+   <string>Audio options</string>
   </property>
   <layout class="QFormLayout" name="formLayout">
    <property name="leftMargin">
@@ -64,11 +64,31 @@
    </item>
    <item row="3" column="1">
     <widget class="QSpinBox" name="spbBitrate">
+     <property name="suffix">
+      <string> bps</string>
+     </property>
      <property name="minimum">
       <number>1000</number>
      </property>
      <property name="maximum">
       <number>360000</number>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="lblTimeout">
+     <property name="text">
+      <string>Data receive timeout</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QSpinBox" name="spbTimeout">
+     <property name="suffix">
+      <string> msec</string>
+     </property>
+     <property name="maximum">
+      <number>60000</number>
      </property>
     </widget>
    </item>

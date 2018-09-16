@@ -108,8 +108,8 @@ QList<int> JingleRtp::intsFromString(const QString &FString)
 
 void JingleRtp::pluginInfo(IPluginInfo *APluginInfo)
 {
-	APluginInfo->name = tr("Jingle RTP");
-	APluginInfo->description = tr("Implements XEP-0167: Jingle RTP Sessions");
+	APluginInfo->name = tr("Jingle RTP Sessions");
+	APluginInfo->description = tr("Allows to perform voice calls");
 	APluginInfo->version = "1.0";
 	APluginInfo->author = "Road Works Software";
 	APluginInfo->homePage = "http://www.eyecu.ru";
@@ -230,9 +230,10 @@ bool JingleRtp::initObjects()
 bool JingleRtp::initSettings()
 {
 	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used codecs
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);    //Audio encoding bitrate
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant()); //Audio input device
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant()); //Audio output device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);		//Audio encoding bitrate
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_TIMEOUT, 5000);		//Audio data receive timeout
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant());	//Audio input device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant());	//Audio output device
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode dnode = {ONO_JINGLERTP, OPN_JINGLERTP, MNI_JINGLE_RTP, tr("Jingle RTP")};
@@ -473,7 +474,8 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 			if ((*it).id==payloadTypeId)
 			{
 				QIODevice *rtcpDevice = AContent->ioDevice(2);
-				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice);
+				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice,
+													 Options::node(OPV_JINGLE_RTP_AUDIO_TIMEOUT).value().toInt());
 				rtpio->setObjectName("Intput");
 				QThread *ioThread = FIOThreads.value(AContent->sid());
 				connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
@@ -523,9 +525,9 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, AEventType);
 			notification.data.insert(NDR_ICON, icon);
-			QString tooltip=AEventType==Called	  ? tr("Incoming %1 call from %2"):
-							AEventType==Cancelled ? tr("Missed %1 call from %2"):
-													tr("%1 call from %2 failed!");
+			QString tooltip=AEventType==Called	  ? tr("Incoming %1 call from %2", "%1: call type (audio or video); %2: caller title"):
+							AEventType==Cancelled ? tr("Missed %1 call from %2", "%1: call type (audio or video); %2: caller title"):
+													tr("%1 call from %2 failed!", "%1: call type (audio or video); %2: caller title");
 
 			notification.data.insert(NDR_TOOLTIP, tooltip.arg(video?tr("video")
 																   :tr("voice"))

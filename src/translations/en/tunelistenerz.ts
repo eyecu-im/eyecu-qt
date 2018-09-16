@@ -4,12 +4,12 @@
  <context>
   <name>TuneListenerZ</name>
   <message>
-   <location line="24" filename="../../plugins/tunelistenerz/tunelistenerz.cpp"/>
+   <location filename="../../plugins/tunelistenerz/tunelistenerz.cpp" line="24"/>
    <source>Tune Listener Z!</source>
    <translation>Tune Listener Z!</translation>
   </message>
   <message>
-   <location line="25" filename="../../plugins/tunelistenerz/tunelistenerz.cpp"/>
+   <location filename="../../plugins/tunelistenerz/tunelistenerz.cpp" line="25"/>
    <source>Allow User Tune plugin to obtain currently playing tune information from Z! player</source>
    <translation>Allow User Tune plugin to obtain currently playing tune information from Z! player</translation>
   </message>
@@ -17,12 +17,12 @@
  <context>
   <name>TuneListenerZOptions</name>
   <message>
-   <location line="35" filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui"/>
+   <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="35"/>
    <source>Z!</source>
    <translation>Z!</translation>
   </message>
   <message>
-   <location line="56" filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui"/>
+   <location filename="../../plugins/tunelistenerz/tunelistenerzoptions.ui" line="56"/>
    <source>Pipe name</source>
    <translation>Pipe name</translation>
   </message>

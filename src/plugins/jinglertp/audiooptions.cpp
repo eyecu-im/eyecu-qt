@@ -51,6 +51,7 @@ void AudioOptions::apply()
 	}
 
 	Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).setValue(ui->spbBitrate->value());
+	Options::node(OPV_JINGLE_RTP_AUDIO_TIMEOUT).setValue(ui->spbTimeout->value());
 
     emit childApply();
 }
@@ -78,7 +79,7 @@ void AudioOptions::reset()
 	}
 
 	ui->spbBitrate->setValue(Options::node(OPV_JINGLE_RTP_AUDIO_BITRATE).value().toInt());
-
+	ui->spbTimeout->setValue(Options::node(OPV_JINGLE_RTP_AUDIO_TIMEOUT).value().toInt());
     emit childReset();
 }
 

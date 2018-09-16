@@ -604,6 +604,7 @@
 #define OPV_JINGLE_RTP_AUDIO_INPUT                      "jingle.rtp.audio.input"
 #define OPV_JINGLE_RTP_AUDIO_OUTPUT                     "jingle.rtp.audio.output"
 #define OPV_JINGLE_RTP_AUDIO_BITRATE                    "jingle.rtp.audio.bitrate"
+#define OPV_JINGLE_RTP_AUDIO_TIMEOUT                    "jingle.rtp.audio.timeout"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
 
 
