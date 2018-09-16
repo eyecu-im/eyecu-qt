@@ -230,10 +230,11 @@ bool JingleRtp::initObjects()
 bool JingleRtp::initSettings()
 {
 	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used codecs
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);		//Audio encoding bitrate
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_TIMEOUT, 5000);		//Audio data receive timeout
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant());	//Audio input device
-	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant());	//Audio output device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);		// Audio encoding bitrate
+	Options::setDefaultValue(OPV_JINGLE_RTP_TIMEOUT, 5000);				// Audio data receive timeout
+	Options::setDefaultValue(OPV_JINGLE_RTP_RTCP, true);				// Use RTCP
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant());	// Audio input device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant());	// Audio output device
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode dnode = {ONO_JINGLERTP, OPN_JINGLERTP, MNI_JINGLE_RTP, tr("Jingle RTP")};
@@ -249,6 +250,16 @@ QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QSt
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_JINGLERTP)
 	{
+		widgets.insertMulti(OHO_JINGLERTP_COMMON, FOptionsManager->newOptionsDialogHeader(tr("Common"), AParent));
+		QSpinBox *spbTimeout = new QSpinBox();
+		spbTimeout->setMinimum(0);
+		spbTimeout->setMaximum(60000);
+		spbTimeout->setSuffix(QString(" %1").arg(tr("msec")));
+		IOptionsDialogWidget *timeout = FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_TIMEOUT),
+																				tr("Data receive timeout"), spbTimeout, AParent);
+		widgets.insertMulti(OWO_JINGLERTP_COMMON_TIMEOUT, timeout);
+		widgets.insertMulti(OWO_JINGLERTP_COMMON_RTCP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RTCP),
+																								  tr("Use RTCP"),AParent));
 		widgets.insertMulti(OHO_JINGLERTP_AUDIO, FOptionsManager->newOptionsDialogHeader(tr("Audio"), AParent));
 		widgets.insertMulti(OWO_JINGLERTP_AUDIO, new AudioOptions(AParent));
 		widgets.insertMulti(OHO_JINGLERTP_CODECS, FOptionsManager->newOptionsDialogHeader(tr("Codecs"), AParent));
@@ -475,7 +486,7 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 			{
 				QIODevice *rtcpDevice = AContent->ioDevice(2);
 				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice,
-													 Options::node(OPV_JINGLE_RTP_AUDIO_TIMEOUT).value().toInt());
+													 Options::node(OPV_JINGLE_RTP_TIMEOUT).value().toInt());
 				rtpio->setObjectName("Intput");
 				QThread *ioThread = FIOThreads.value(AContent->sid());
 				connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
@@ -1526,7 +1537,8 @@ void JingleRtp::onCall()
 			QSet<int> ids;
 			QByteArray tmp;
 			QBuffer device(&tmp);
-			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio", 2,
+			IJingleContent *content = FJingle->contentAdd(sid, "voice", "audio",
+														  Options::node(OPV_JINGLE_RTP_RTCP).value().toBool()?2:1,
 														  IJingleTransport::Datagram, false);
 			if (content)
 			{

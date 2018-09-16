@@ -12,7 +12,7 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/audiooptions.ui" line="42"/>
+   <location filename="../../plugins/jinglertp/audiooptions.ui" line="45"/>
    <source>Output device</source>
    <translation type="unfinished"/>
   </message>
@@ -24,16 +24,6 @@
   <message>
    <location filename="../../plugins/jinglertp/audiooptions.ui" line="68"/>
    <source> bps</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <location filename="../../plugins/jinglertp/audiooptions.ui" line="81"/>
-   <source>Data receive timeout</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <location filename="../../plugins/jinglertp/audiooptions.ui" line="88"/>
-   <source> msec</source>
    <translation type="unfinished"/>
   </message>
  </context>
@@ -108,7 +98,7 @@
  <context>
   <name>JingleRtp</name>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="239"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="240"/>
    <source>Jingle RTP</source>
    <translation>Jingle RTP</translation>
   </message>
@@ -128,48 +118,48 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="252"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="263"/>
    <source>Audio</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="254"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="265"/>
    <source>Codecs</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="532"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="543"/>
    <source>video</source>
    <translation>video</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="533"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="544"/>
    <source>voice</source>
    <translation>Stem</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="546"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="557"/>
    <source>Missed call!</source>
    <translation>Gemiste oproep!</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="545"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="556"/>
    <source>Incoming call!</source>
    <translation>Inkomend gesprek!</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="547"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="558"/>
    <source>Failed call!</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="590"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="601"/>
    <source>%1 - Chat</source>
    <translation>%1 - Chat</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="111"/>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="623"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="634"/>
    <source>Jingle RTP Sessions</source>
    <translation>Jingle RTP sessie</translation>
   </message>
@@ -179,86 +169,106 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="528"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="253"/>
+   <source>Common</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="257"/>
+   <source>msec</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="259"/>
+   <source>Data receive timeout</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="262"/>
+   <source>Use RTCP</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="539"/>
    <source>Incoming %1 call from %2</source>
    <comment>%1: call type (audio or video); %2: caller title</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="529"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="540"/>
    <source>Missed %1 call from %2</source>
    <comment>%1: call type (audio or video); %2: caller title</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="530"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="541"/>
    <source>%1 call from %2 failed!</source>
    <comment>%1: call type (audio or video); %2: caller title</comment>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="624"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="635"/>
    <source>Audio/Video chat via Jingle RTP</source>
    <translation>Audio/Video chat met Jingle RTP</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="629"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="640"/>
    <source>Jingle RTP Audio</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="630"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="641"/>
    <source>Jingle RTP Audio streaming</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="636"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="647"/>
    <source>Jingle RTP Video</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="637"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="648"/>
    <source>Jingle RTP Video streaming</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="844"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="855"/>
    <source>Video call</source>
    <translation>Video oproep</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="847"/>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="887"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="858"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="898"/>
    <source>Voice call</source>
    <translation>Spraakoproep</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="850"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="861"/>
    <source>Call cancelled</source>
    <translation>Oproep geannuleerd</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="853"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="864"/>
    <source>Call rejected</source>
    <translation>Oproep afgewezen</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="856"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="867"/>
    <source>Call finished</source>
    <translation>Oproep voltooid</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="861"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="872"/>
    <source>Call error</source>
    <translation>Bel fout</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="862"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="873"/>
    <source>Call error (%1)</source>
    <translation>Bel fout (%1)</translation>
   </message>
   <message>
-   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="922"/>
+   <location filename="../../plugins/jinglertp/jinglertp.cpp" line="933"/>
    <source>Hangup</source>
    <translation>Ophangen</translation>
   </message>

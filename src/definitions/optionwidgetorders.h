@@ -277,8 +277,11 @@
 #define   OWO_ATTENTION_AYWAYSPLAYSOUND           610
 #define   OWO_ATTENTION_NOTIFICATIONPOPUP         620
 #define   OWO_ATTENTION_MAINWINDOWACTIVATE        630
-#define OHO_JINGLERTP_AUDIO                       600
-#define   OWO_JINGLERTP_AUDIO                     610
+#define OHO_JINGLERTP_COMMON                      600
+#define   OWO_JINGLERTP_COMMON_TIMEOUT            610
+#define   OWO_JINGLERTP_COMMON_RTCP               620
+#define OHO_JINGLERTP_AUDIO                       630
+#define   OWO_JINGLERTP_AUDIO                     640
 #define OHO_JINGLERTP_CODECS                      650
 #define   OWO_JINGLERTP_CODECS                    660
 #define OHO_JINGLETRANSPORTS_RAWUDP               600

@@ -19,15 +19,7 @@
         <source> bps</source>
         <translation> бит/с</translation>
     </message>
-    <message>
-        <source>Data receive timeout</source>
-        <translation>Таймаут получения данных</translation>
-    </message>
-    <message>
-        <source> msec</source>
-        <translation> мсек</translation>
-    </message>
-    <message>
+	<message>
         <source>Audio options</source>
         <translation>Опции аудио</translation>
     </message>
@@ -211,6 +203,22 @@
         <source>%1 call from %2 failed!</source>
         <comment>%1: call type (audio or video); %2: caller title</comment>
         <translation>Неудачный %1 вызов от %2!</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>Общие</translation>
+    </message>
+    <message>
+        <source>msec</source>
+        <translation>мсек</translation>
+    </message>
+    <message>
+        <source>Data receive timeout</source>
+        <translation>Таймаут получения данных</translation>
+    </message>
+    <message>
+        <source>Use RTCP</source>
+        <translation>Использовать RTCP</translation>
     </message>
 </context>
 </TS>
