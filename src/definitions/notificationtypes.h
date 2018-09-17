@@ -24,6 +24,8 @@
 #define NNT_MOOD                      "Mood"
 #define NNT_TUNE                      "Tune"
 #define NNT_JINGLE_RTP_CALL           "JingleRtpCall"
+#define NNT_JINGLE_RTP_CONNECT        "JingleRtpConnect"
+#define NNT_JINGLE_RTP_TALK           "JingleRtpTalk"
 #define NNT_JINGLE_RTP_MISSED         "JingleRtpMissed"
 #define NNT_JINGLE_RTP_ERROR          "JingleRtpError"
 // *** >>> eyeCU >>> ***

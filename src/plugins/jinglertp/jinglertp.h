@@ -61,8 +61,10 @@ public:
 	enum CallType
 	{
 		Called,
+		Accepted,
 		Rejected,
 		Cancelled,
+		Connected,
 		Finished,
 		Error
 	};
@@ -127,7 +129,7 @@ protected:
 	bool    sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, InfoType AType, const QString &AName=QString::null);
 
 	void    removeNotification(IMessageChatWindow *AWindow);
-	void    removeNotification(const Jid &AStreamJid, const QString &ASid);
+	void    removeNotification(const QString &ASid);
 	void    putSid(const Jid &AContactJid, const QString &ASid);
 	void    callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 	void	checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice);
