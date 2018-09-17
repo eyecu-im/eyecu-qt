@@ -4,17 +4,17 @@
  <context>
   <name>MapSearchProviderYandex</name>
   <message>
-   <location filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp" line="14"/>
+   <location line="14" filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp"/>
    <source>Map Search Provider Yandex</source>
    <translation>Map Search Provider Yandex</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp" line="15"/>
+   <location line="15" filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp"/>
    <source>Allows to use Yandex as a map search provider</source>
    <translation>Allows to use Yandex as a map search provider</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp" line="42"/>
+   <location line="42" filename="../../plugins/mapsearchprovideryandex/mapsearchprovideryandex.cpp"/>
    <source>Yandex</source>
    <translation>Yandex</translation>
   </message>

@@ -31,11 +31,7 @@
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
  %1</source>
-   <translation><numerusform>День народження через %n день,
- %1</numerusform><numerusform>День Народження через %n днів,
- %1</numerusform><numerusform>День народження за %n днів,
- %1</numerusform><numerusform>День народження за %n днів,
- %1</numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>

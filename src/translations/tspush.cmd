@@ -16,3 +16,4 @@ tx.exe push -t -f --no-interactive -l ru,pl,de,uk,es,nl,ja,ar --skip
 :end
 echo Done!
 
+pause

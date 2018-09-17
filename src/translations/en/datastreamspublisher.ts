@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS sourcelanguage="en" language="en" version="2.1">
+<TS language="en" sourcelanguage="en" version="2.1">
  <context>
   <name>DataStreamsPublisher</name>
   <message>

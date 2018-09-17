@@ -19,7 +19,7 @@
         <source> bps</source>
         <translation> бит/с</translation>
     </message>
-	<message>
+    <message>
         <source>Audio options</source>
         <translation>Опции аудио</translation>
     </message>
@@ -86,10 +86,6 @@
         <translation>Пропущенный звонок!</translation>
     </message>
     <message>
-        <source>Incoming call!</source>
-        <translation>Входящий звонок!</translation>
-    </message>
-    <message>
         <source>Jingle RTP Sessions</source>
         <translation>Сеансы Jingle RTP</translation>
     </message>
@@ -154,10 +150,6 @@
         <translation>Ошибка звонка (%1)</translation>
     </message>
     <message>
-        <source>Voice or video call session failed</source>
-        <translation>Неудачный сеанс голосовой или видео связи</translation>
-    </message>
-    <message>
         <source>Audio</source>
         <translation>Аудио</translation>
     </message>
@@ -190,11 +182,6 @@
         <translation>Позволяет осуществлять голосовые вызовы</translation>
     </message>
     <message>
-        <source>Incoming %1 call from %2</source>
-        <comment>%1: call type (audio or video); %2: caller title</comment>
-        <translation>Входящий %1 звонок от %2</translation>
-    </message>
-    <message>
         <source>Missed %1 call from %2</source>
         <comment>%1: call type (audio or video); %2: caller title</comment>
         <translation>Пропущенный %1 звонок от %2</translation>
@@ -219,6 +206,57 @@
     <message>
         <source>Use RTCP</source>
         <translation>Использовать RTCP</translation>
+    </message>
+    <message>
+        <source>When outgoing voice or video call initiated</source>
+        <translation>При исходящем голосовом или видео звонке</translation>
+    </message>
+    <message>
+        <source>When voice or video chat in progress</source>
+        <translation>Когда происходит голосовое или видео общение</translation>
+    </message>
+    <message>
+        <source>%1 %2 call from %3</source>
+        <comment>%1: call direction (Incoming or Outgoing); %2: call type (audio or video); %3: caller title</comment>
+        <translation>%1 %2 вызов от %3</translation>
+    </message>
+    <message>
+        <source>%1 chat with %2</source>
+        <comment>%1: call type (audio or video); %2: caller title</comment>
+        <translation>%1 чат с %2</translation>
+    </message>
+    <message>
+        <source>Outgoing</source>
+        <translation>Исходящий</translation>
+    </message>
+    <message>
+        <source>Incoming</source>
+        <translation>Входящий</translation>
+    </message>
+    <message>
+        <source>%1 call!</source>
+        <comment>%1: call direction (Incoming or Outgoing)</comment>
+        <translation>%1 вызов!</translation>
+    </message>
+    <message>
+        <source>%1 chat</source>
+        <translation>%1 чат</translation>
+    </message>
+    <message>
+        <source>Video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
+        <source>Voice</source>
+        <translation>Голосовой</translation>
+    </message>
+    <message>
+        <source>Ringing!</source>
+        <translation>Звонит!</translation>
+    </message>
+    <message>
+        <source>When voice or video chat session failed</source>
+        <translation>При неудачном сеансе голосовой или видео связи</translation>
     </message>
 </context>
 </TS>

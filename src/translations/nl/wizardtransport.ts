@@ -25,8 +25,7 @@
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1237"/>
    <source>Some transports may report about successful registreation, even if wrong credentials were provided. They may inform you about authentication error later, with a message.
 If you receive such message, please rerun the Wizard to register at transport with correct credentials.</source>
-   <translation>Sommige transporten kunnen rapporteren over succesvolle registrati, zelfs als verkeerde referenties worden verstrekt. Zij kunnen je later informeren over een authenticatie fout, met een bericht.
-Als u een dergelijk bericht ontvangt, kunt u de wizard weer starten om vervoer registratie met de juiste referenties.</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1242"/>

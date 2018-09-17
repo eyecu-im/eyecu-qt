@@ -333,9 +333,7 @@
    <source>There are some social networks, portals or blogging services, which have their own XMPP servers. If you have an account in some of those networks, you may use it in eyeCU.
 Please, note, that those XMPP servers usually have implemented their own specific features, which cannot be used with standard XMPP clients, like eyeCU. At the same time, they implenment only limited set of standard XMPP extensions, which could be used with standard clients.So, it's hardly recommended to use such accounts only as additional account, to have convenient access to your social networks and services. To have full-featured XMPP experienece, it's recommended to have an account on independent XMPP (Jabber) server. To connect to such server, please, select &quot;Other XMPP&quot;.
 If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No&quot; to register in Jabber.</source>
-   <translation>Er zijn een aantal sociale netwerken, portals of bloggen diensten, die hun eigen XMPP servers hebben. Als je een account hebt in een aantal van die netwerken, kunt u deze gebruiken in eyeCU.
-Let op, dat die XMPP servers meestal hun eigen specifieke kenmerken hebben, die niet kunnen worden gebruikt met een standaard XMPP cliënt, zoals eyeCU. Tegelijkertijd, implenmenteren  ze slechts een beperkt aantal standaard XMPP uitbreidingen die alleen kunnen worden gebruikt met standaard clients. Daarom, is het niet aanbevolen dergelijke accounts alleen te gebruiken voor een extra account om gemakkelijke toegang aan sociale en -diensten. Om de volledige functionaliteit van XMPP ervaringen te hebben, is het aan te raden om een account te hebben op een onafhankelijke XMPP (Jabber) server. Om verbinding te maken met een dergelijke server, alsjeblieft, selecteer &quot;Andere XMPP&quot;
-Als je nog geen Jabber account hebt, ga terug en selecteer &quot;Nee&quot; om te registreren bij Jabber.</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="197"/>
@@ -459,11 +457,7 @@ Als je nog geen Jabber account hebt, ga terug en selecteer &quot;Nee&quot; om te
 Some %1 features (like User Location, User Activity, User Mood and User Tune) will not work!
 Using this server for your primary account is deprecated.
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
-   <translation>De geselecteerde Server heeft geen ondersteuning voor persoonlijke gebeurtenissen (PEP)!
-Sommige %1 functies (zoals Gebruikerslocatie, Gebruikers activiteit, Gebruikers stemming en Gebruikers melodie) zal niet werken!
-Gebruik van deze server voor eerste account wordt afgeraden.
-Druk op &quot;OK&quot; om door te gaan of &quot;Annuleer&quot; om andere server te kiezen.
-</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="498"/>
@@ -476,10 +470,7 @@ Druk op &quot;OK&quot; om door te gaan of &quot;Annuleer&quot; om andere server 
    <source>The Server you selected belongs to %1 network!
 It is not recommended to use such servers as your primary account, due to restricted functionality they have. In-band registration is also unavailable.
 Please, choose another server. If you have an account in such network, please, go back and select &quot;Yes&quot; on the first page. If you don&apos;t have an account, but want to have it, you&apos;ll need to visit %2 to register first.</source>
-   <translation>Jou geselecteerde Server behoort tot het %1 netwerk!
-Het is niet aan te raden om dergelijke servers te gebruiken voor uw primaire account, gevolg is de beperkte functionaliteit die ze hebben. In-band registratie is niet beschikbaar.
-Aub, kies een andere server. Als je een account hebt in zo&apos;n netwerk, ga terug en selecteer &quot;Ja&quot; op de eerste pagina. Als u nog geen account hebt, maar wil registreren, moet u een bezoek brengen aan %2 om je te registreren.
-</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="509"/>
@@ -491,9 +482,7 @@ Aub, kies een andere server. Als je een account hebt in zo&apos;n netwerk, ga te
    <source>The Server you selected do not support in-band registration!
 You'll have to register via web!
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
-   <translation>De geselecteerde Server heeft geen ondersteuning voor in-band registratie! 
-Je moet je inschrijven via het web! 
-Druk op &quot;Ok&quot; om verder te gaan of &quot;Annuleren&quot; om een andere server te selecteren.</translation>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>

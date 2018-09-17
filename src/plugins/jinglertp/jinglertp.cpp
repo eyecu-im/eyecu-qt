@@ -209,7 +209,7 @@ bool JingleRtp::initObjects()
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_MISSED, notifyType);
 
 		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_ERROR);
-		notifyType.title = tr("When voice or video call session failed");
+		notifyType.title = tr("When voice or video chat session failed");
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_ERROR, notifyType);
 
 		notifyType.kindMask &= ~(INotification::TrayNotify|INotification::TrayAction|
