@@ -61,7 +61,6 @@ public:
 	enum CallType
 	{
 		Called,
-		Accepted,
 		Rejected,
 		Cancelled,
 		Connected,
@@ -203,6 +202,7 @@ private:
 	QHash<QString, Jid>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, QPair<Jid,Jid> > FNotifies;
+	QStringList			FRinging;
 	QList<IMessageChatWindow *> FPendingChats;
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
