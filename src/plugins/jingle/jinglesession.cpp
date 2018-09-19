@@ -348,6 +348,15 @@ JingleSession *JingleSession::sessionByStanzaId(const QString &AId)
 	return nullptr;
 }
 
+JingleSession *JingleSession::sessionByContact(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	for (QHash<QString, JingleSession*>::ConstIterator it = FSessions.constBegin();
+		 it != FSessions.constEnd(); ++it)
+		if ((*it)->thisParty() == AStreamJid && (*it)->otherParty() == AContactJid)
+			return *it;
+	return nullptr;
+}
+
 QString JingleSession::getSid()
 {
     QString sid;

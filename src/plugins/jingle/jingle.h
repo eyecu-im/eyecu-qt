@@ -68,6 +68,7 @@ public:
 	virtual bool    isOutgoing(const QString &ASid) const override;
 	virtual Jid     contactJid(const QString &ASid) const override;
 	virtual Jid     streamJid(const QString &ASid) const override;
+	virtual QString findSid(const Jid &AStreamJid, const Jid &AContactJid) const override;
 	virtual QString errorMessage(Reason AReason) const override;
 
 protected:

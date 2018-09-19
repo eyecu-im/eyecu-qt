@@ -27,6 +27,8 @@
 #define NNT_JINGLE_RTP_OUTGOING       "JingleRtpCallOutgoing"
 #define NNT_JINGLE_RTP_TALK           "JingleRtpTalk"
 #define NNT_JINGLE_RTP_MISSED         "JingleRtpMissed"
+#define NNT_JINGLE_RTP_REJECTED       "JingleRtpRejected"
+#define NNT_JINGLE_RTP_FINISHED       "JingleRtpFinished"
 #define NNT_JINGLE_RTP_ERROR          "JingleRtpError"
 // *** >>> eyeCU >>> ***
 #endif // DEF_NOTIFICATIONTYPES_H

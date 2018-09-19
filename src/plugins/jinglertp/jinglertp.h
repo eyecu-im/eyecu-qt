@@ -122,24 +122,21 @@ protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	bool	checkContent(IJingleContent *AContent);
 	bool    hasVideo(const QString &ASid) const;
-	QString getSid(const Jid &AStreamJid, const Jid &AContactJid) const;
-	bool    removeSid(const QString &ASid);
+	QString findSid(const Jid &AStreamJid, const Jid &AContactJid) const;
 	bool    windowNotified(const IMessageChatWindow *window) const;
 
 	bool    sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, InfoType AType, const QString &AName=QString::null);
 
 	void    removeNotification(IMessageChatWindow *AWindow);
 	void    removeNotification(const QString &ASid);
-	void    putSid(const Jid &AContactJid, const QString &ASid);
 	void    callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 	void	checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice);
 
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
 	void    registerDiscoFeatures();
-	void	callNotify(const QString &ASid, CallType AEventType);
-	int		notifyMucUser(const QString &ASid, CallType AType);
-	void	removeMucNotification(const QString &ASid);
+	void	callNotify(const QString &ASid, CallType AEventType, IJingle::Reason AReason = IJingle::NoReason);
+	void	removeMucNotification(const Jid &AStreamJid, const Jid &AUserJid);
 	void    updateWindow(IMessageChatWindow *AWindow);
 	QString chatNotification(const QString &AIcon, const QString &AMessage);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType,
@@ -176,9 +173,7 @@ protected slots:
 	void onTabPageActivated();
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
-	void onMultiChatWindowActivated();
 	void onMultiChatUserChanged(IMultiUser *AUser, int AData, const QVariant &ABefore);
-	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onStreamerStatusChanged(int AStatus);
 	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
@@ -207,7 +202,7 @@ private:
 	IStatusIcons        *FStatusIcons;
 	IconStorage         *FIconStorage;
 	AudioOptions		*FJingleRtpOptions;
-	QHash<Jid, QString>	FSidHash;
+//	QHash<Jid, QString>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, QPair<Jid,Jid> > FNotifies;
 	QMap<int, int>		FMucNotifies;

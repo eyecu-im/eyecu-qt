@@ -121,7 +121,6 @@ public:
 	virtual QObject *instance() =0;
 	virtual IJingleApplication *appByNS(const QString &AApplicationNS) =0;
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS) =0;
-//	virtual bool    sessionInitiate(const QString &ASid) =0;
 	virtual bool    sessionAccept(const QString &ASid) =0;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
 	virtual bool    sessionDestroy(const QString &ASid) =0;
@@ -143,6 +142,7 @@ public:
 	virtual void    freeIncomingTransport(IJingleContent *AContent) =0;
 	virtual Jid     contactJid(const QString &ASid) const =0;
 	virtual Jid     streamJid(const QString &ASid) const =0;
+	virtual QString findSid(const Jid &AStreamJid, const Jid &AContactJid) const =0;
 	virtual bool    selectTransportCandidate(const QString &ASid, const QString &AContentName,
 											 const QString &ACandidateId) =0;
 	virtual SessionStatus sessionStatus(const QString &ASid) const =0;

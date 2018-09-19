@@ -532,6 +532,13 @@ Jid Jingle::streamJid(const QString &ASid) const
 	return session?session->thisParty():Jid();
 }
 
+QString Jingle::findSid(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+	qDebug() << "Jingle::findSid(" << AStreamJid.full() << "," << AContactJid.full() << ")";
+	JingleSession *session = JingleSession::sessionByContact(AStreamJid, AContactJid);
+	return session ? session->sid() : QString();
+}
+
 QString Jingle::errorMessage(IJingle::Reason AReason) const
 {
 	switch (AReason)

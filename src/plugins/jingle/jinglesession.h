@@ -114,6 +114,7 @@ public:
 
 	static JingleSession* sessionBySessionId(const QString &ASid) {return FSessions.value(ASid);}
 	static JingleSession* sessionByStanzaId(const QString &AId);
+	static JingleSession* sessionByContact(const Jid &AStreamJid, const Jid &AContactJid);
     static void setJingle(Jingle *AJingle);
 	static void setPresenceManager(IPresenceManager *APresenceManager);
 
