@@ -17,6 +17,8 @@
 #include <definitions/optionnodeorders.h>
 #include <definitions/optionwidgetorders.h>
 #include <definitions/optionvalues.h>
+#include <definitions/multiuserdataroles.h>
+#include <definitions/multiusernotifyorders.h>
 
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
@@ -142,6 +144,17 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
 		connect(FPresenceManager->instance(), SIGNAL(contactStateChanged(Jid,Jid,bool)),
 											  SLOT(onContactStateChanged(Jid,Jid,bool)));
+	}
+
+	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,nullptr);
+	if (plugin)
+	{
+		FMultiChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
+		if (FMultiChatManager)
+		{
+			connect(FMultiChatManager->instance(),SIGNAL(multiChatWindowCreated(IMultiUserChatWindow *)), SLOT(onMultiChatWindowCreated(IMultiUserChatWindow *)));
+			connect(FMultiChatManager->instance(),SIGNAL(multiChatWindowDestroyed(IMultiUserChatWindow *)), SLOT(onMultiChatWindowDestroyed(IMultiUserChatWindow *)));
+		}
 	}
 
 	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0, nullptr);
@@ -572,14 +585,14 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, AEventType);
 			notification.data.insert(NDR_ICON, icon);
-			QString tooltip = AEventType == Called	  ? tr("%1 %2 call from %3", "%1: call direction (Incoming or Outgoing); %2: call type (audio or video); %3: caller title"):
+
+			QString tooltip = AEventType == Called	  ? outgoing?tr("Outgoing %1 call from %2", "%1: call type (audio or video); %2: caller title"):
+																 tr("Incoming %1 call to %2", "%1: call type (audio or video); %2: caller title"):
 							  AEventType == Connected ? tr("%1 chat with %2", "%1: call type (audio or video); %2: caller title"):
 							  AEventType == Cancelled ? tr("Missed %1 call from %2", "%1: call type (audio or video); %2: caller title"):
 														tr("%1 call from %2 failed!", "%1: call type (audio or video); %2: caller title");
 
-			QString direction(outgoing?tr("Outgoing"):tr("Incoming"));
-			notification.data.insert(NDR_TOOLTIP, tooltip.arg(direction)
-														 .arg(video?tr("video")
+			notification.data.insert(NDR_TOOLTIP, tooltip.arg(video?tr("video")
 																   :tr("voice"))
 														 .arg(name));
 			notification.data.insert(NDR_STREAM_JID, streamJid.full());
@@ -589,8 +602,8 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 			if (FAvatars)
 				notification.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(contactJid));
 
-			QString html(AEventType == Called	 ? tr("%1 call!", "%1: call direction (Incoming or Outgoing)")
-														.arg(direction):
+			QString html(AEventType == Called	 ? outgoing?tr("Ougoing call!")
+														   :tr("Incoming call!"):
 						 AEventType == Connected ? tr("%1 chat").arg(video?tr("Video")
 																		  :tr("Voice")):
 						 AEventType == Cancelled ? tr("Missed call!"):
@@ -625,7 +638,16 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType)
 
 			updateWindow(window);
 
-			int notify=FNotifications->appendNotification(notification);
+			int mucNotify(0);
+			if (notification.kinds & INotification::RosterNotify)
+			{
+				mucNotify = notifyMucUser(ASid, AEventType);
+				if (mucNotify)
+					notification.kinds &= ~INotification::RosterNotify;
+			}
+			int notify = FNotifications->appendNotification(notification);
+			if (mucNotify)
+				FMucNotifies.insert(notify, mucNotify);
 
 			if (window->isActiveTabPage() && AEventType != Called && AEventType != Connected)
 				FNotifications->removeNotification(notify);
@@ -769,8 +791,9 @@ void JingleRtp::removeNotification(const QString &ASid)
 {
 	if (FRinging.contains(ASid))
 		FRinging.removeOne(ASid);
+	removeMucNotification(ASid);
 	removeNotification(FMessageWidgets->findChatWindow(FJingle->streamJid(ASid),
-													   FJingle->contactJid(ASid)));
+													   FJingle->contactJid(ASid)));	
 }
 //TODO: Check, if entity is online
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -819,7 +842,7 @@ bool JingleRtp::checkContent(IJingleContent *AContent)
 
 QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	QList<QString> sids = FSidHash.keys(AContactJid);
+	QList<QString> sids = FSidHash.values(AContactJid);
 	for (QList<QString>::ConstIterator it = sids.constBegin(); it!=sids.constEnd(); ++it)
 		if (FJingle->streamJid(*it)==AStreamJid)
 			return *it;
@@ -828,7 +851,13 @@ QString JingleRtp::getSid(const Jid &AStreamJid, const Jid &AContactJid) const
 
 bool JingleRtp::removeSid(const QString &ASid)
 {
-	return FSidHash.remove(ASid)>0;
+	QList<Jid> jids = FSidHash.keys(ASid);
+	if (jids.isEmpty())
+		return false;
+	else
+		for (QList<Jid>::ConstIterator it=jids.constBegin(); it!=jids.constEnd(); ++it)
+			FSidHash.remove(*it);
+	return true;
 }
 
 bool JingleRtp::windowNotified(const IMessageChatWindow *window) const
@@ -862,7 +891,7 @@ bool JingleRtp::sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, Jingl
 
 void JingleRtp::putSid(const Jid &AContactJid, const QString &ASid)
 {
-	FSidHash.insertMulti(ASid, AContactJid);
+	FSidHash.insertMulti(AContactJid, ASid);
 }
 
 void JingleRtp::callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason)
@@ -1414,7 +1443,127 @@ void JingleRtp::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	updateChatWindowActions(AWindow);
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
-											SLOT(onAddressChanged(Jid,Jid)));
+			SLOT(onAddressChanged(Jid,Jid)));
+}
+
+void JingleRtp::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+{
+//	StateWidget *widget = new StateWidget(this,AWindow,AWindow->toolBarWidget()->toolBarChanger()->toolBar());
+//	AWindow->toolBarWidget()->toolBarChanger()->insertWidget(widget,TBG_MWTBW_CHATSTATES);
+//	widget->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+//	widget->setPopupMode(QToolButton::InstantPopup);
+
+	connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onMultiChatWindowActivated()));
+//	connect(AWindow->editWidget()->textEdit(),SIGNAL(textChanged()),SLOT(onMultiChatWindowTextChanged()));
+	connect(AWindow->multiUserChat()->instance(),SIGNAL(userChanged(IMultiUser *, int, const QVariant &)),
+		SLOT(onMultiChatUserChanged(IMultiUser *, int, const QVariant &)));
+	//	FRoomByEditor.insert(AWindow->editWidget()->textEdit(),AWindow);
+}
+
+void JingleRtp::onMultiChatWindowActivated()
+{
+	IMultiUserChatWindow *window = qobject_cast<IMultiUserChatWindow *>(sender());
+	if (window)
+	{
+//		int state = selfRoomState(window->streamJid(),window->contactJid());
+//		if (state == IChatStates::StatePaused)
+//			setRoomSelfState(window->streamJid(),window->contactJid(),IChatStates::StateComposing);
+//		else if (state != IChatStates::StateComposing)
+//			setRoomSelfState(window->streamJid(),window->contactJid(),IChatStates::StateActive);
+	}
+}
+
+void JingleRtp::onMultiChatUserChanged(IMultiUser *AUser, int AData, const QVariant &ABefore)
+{
+	if (AData == MUDR_PRESENCE)
+	{
+		if (AUser->presence().show==IPresence::Offline || AUser->presence().show==IPresence::Error)
+		{
+			IMultiUserChat *multiChat = qobject_cast<IMultiUserChat *>(sender());
+			if (multiChat)
+			{
+//TODO: Check, if we need to perform something about MUC users going offline
+//				setChatUserState(multiChat->streamJid(),AUser->userJid(),IChatStates::StateUnknown);
+//				setChatSelfState(multiChat->streamJid(),AUser->userJid(),IChatStates::StateUnknown,false);
+//				FChatParams[multiChat->streamJid()].remove(AUser->userJid());
+
+//				setRoomUserState(multiChat->streamJid(),AUser->userJid(),IChatStates::StateUnknown);
+//				FRoomParams[multiChat->streamJid()][multiChat->roomJid()].user.remove(AUser->userJid());
+			}
+		}
+	}
+	else if (AData == MUDR_NICK)
+	{ // Update notification user
+		Jid beforeJid = AUser->userJid();
+		beforeJid.setResource(ABefore.toString());
+		QPair<Jid, Jid> pair(AUser->streamJid(), beforeJid);
+		int notify = FNotifies.key(pair, 0);
+		if (notify)
+			FNotifies[notify].second=AUser->userJid();
+//		IMultiUserChat *multiChat = qobject_cast<IMultiUserChat *>(sender());
+//		if (multiChat!=NULL && FRoomParams.value(multiChat->streamJid()).value(multiChat->roomJid()).user.contains(beforeJid))
+//		{
+//			UserParams userParam = FRoomParams[multiChat->streamJid()][multiChat->roomJid()].user.take(beforeJid);
+//			FRoomParams[multiChat->streamJid()][multiChat->roomJid()].user.insert(AUser->userJid(),userParam);
+//		}
+	}
+}
+
+void JingleRtp::onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow)
+{
+//	setChatSelfState(AWindow->streamJid(),AWindow->contactJid(),IChatStates::StateGone);
+//	FChatByEditor.remove(AWindow->editWidget()->textEdit());
+}
+
+int JingleRtp::notifyMucUser(const QString &ASid, CallType AType)
+{
+	Jid streamJid = FJingle->streamJid(ASid);
+	Jid userJid = FJingle->contactJid(ASid);
+	IMultiUserChatWindow *window = FMultiChatManager?
+				FMultiChatManager->findMultiChatWindow(streamJid,userJid.bare()) : nullptr;
+	if (window)
+	{
+		IMultiUser *user = window->multiUserChat()->findUser(userJid.resource());
+		if (user != window->multiUserChat()->mainUser())
+		{
+			QStandardItem *userItem = window->multiUserView()->findUserItem(user);
+			if (userItem)
+			{
+				bool outgoing(FJingle->isOutgoing(ASid));
+//TODO: Add Video support
+				QString iconId = AType == Called?outgoing?JNI_RTP_CALL:JNI_RTP_TALK:
+								 AType == Connected?JNI_RTP_TALK:
+								 AType == Cancelled?JNI_RTP_HANGUP:
+													JNI_RTP_ERROR;
+
+				IMultiUserViewNotify notify;
+				notify.order = MUNO_JINGLE_RTP_CALL;
+				notify.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(iconId);
+				notify.flags = IMultiUserViewNotify::Blink;
+				qDebug() << "notify.flags=" << notify.flags;
+				return window->multiUserView()->insertItemNotify(notify, userItem);
+			}
+		}
+	}
+	return 0;
+}
+
+void JingleRtp::removeMucNotification(const QString &ASid)
+{
+	Jid streamJid = FJingle->streamJid(ASid);
+	Jid userJid = FJingle->contactJid(ASid);
+	IMultiUserChatWindow *window = FMultiChatManager?
+				FMultiChatManager->findMultiChatWindow(streamJid,userJid.bare()) : nullptr;
+	if (window)
+	{
+		IMultiUser *user = window->multiUserChat()->findUser(userJid.resource());
+		if (user != window->multiUserChat()->mainUser())
+		{
+			int notifyId = FMucNotifies.take(FNotifies.key(QPair<Jid,Jid>(streamJid, userJid)));
+			if (notifyId)
+				window->multiUserView()->removeItemNotify(notifyId);
+		}
+	}
 }
 
 void JingleRtp::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
@@ -1548,7 +1697,7 @@ void JingleRtp::onCall()
 
 		QString sid;
 
-		QList<QString> sids = FSidHash.keys(contactJid);
+		QList<QString> sids = FSidHash.values(contactJid);
 		for (QList<QString>::ConstIterator it=sids.constBegin(); it!=sids.constEnd(); ++it)
 			if (FJingle->streamJid(*it)==streamJid)
 			{
@@ -1680,7 +1829,7 @@ void JingleRtp::onHangup()
 
 		QString sid;
 
-		QList<QString> sids = FSidHash.keys(contactJid);
+		QList<QString> sids = FSidHash.values(contactJid);
 		for (QList<QString>::ConstIterator it=sids.constBegin(); it!=sids.constEnd(); ++it)
 			if (FJingle->streamJid(*it)==streamJid)
 			{
@@ -1758,6 +1907,8 @@ void JingleRtp::onContentAdded(IJingleContent *AContent)
 
 void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 {
+	qDebug() << "JingleRtp::onContentAddFailed(" << AContent << ")";
+	qDebug() << "Session status:" << FJingle->sessionStatus(AContent->sid());
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->sid(), AddContent))
 	{

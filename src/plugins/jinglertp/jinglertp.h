@@ -12,6 +12,7 @@
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/imessagewidgets.h>
+#include <interfaces/imultiuserchat.h>
 #include <interfaces/imessagestylemanager.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/inotifications.h>
@@ -137,6 +138,8 @@ protected:
 
 	void    registerDiscoFeatures();
 	void	callNotify(const QString &ASid, CallType AEventType);
+	int		notifyMucUser(const QString &ASid, CallType AType);
+	void	removeMucNotification(const QString &ASid);
 	void    updateWindow(IMessageChatWindow *AWindow);
 	QString chatNotification(const QString &AIcon, const QString &AMessage);
 	bool    writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType,
@@ -149,11 +152,11 @@ protected:
 
 	void    establishConnection(const QString &ASid);
 
-	void checkRunningContents(const QString &ASid);
+	void	checkRunningContents(const QString &ASid);
 
 	MediaStreamer *startStreamMedia(const QPayloadType &APayloadType, QIODevice *ARtpDevice);
 	MediaPlayer *startPlayMedia(const QPayloadType &APayloadType, QIODevice *ARtpIODevice);
-	void stopSessionMedia(const QString &ASid);
+	void	stopSessionMedia(const QString &ASid);
 
 	IMessageChatWindow *chatWindow(const QString &ASid) const;
 
@@ -172,6 +175,10 @@ protected slots:
 	void onNotificationRemoved(int ANotifyId);
 	void onTabPageActivated();
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
+	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
+	void onMultiChatWindowActivated();
+	void onMultiChatUserChanged(IMultiUser *AUser, int AData, const QVariant &ABefore);
+	void onMultiChatWindowDestroyed(IMultiUserChatWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onStreamerStatusChanged(int AStatus);
 	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
@@ -191,6 +198,7 @@ private:
 	IOptionsManager     *FOptionsManager;
 	IPresenceManager    *FPresenceManager;
 	IPluginManager		*FPluginManager;
+	IMultiUserChatManager *FMultiChatManager;
 	IMessageWidgets     *FMessageWidgets;
 	IMessageStyleManager *FMessageStyleManager;
 	IMessageProcessor   *FMessageProcessor;
@@ -199,9 +207,10 @@ private:
 	IStatusIcons        *FStatusIcons;
 	IconStorage         *FIconStorage;
 	AudioOptions		*FJingleRtpOptions;
-	QHash<QString, Jid>	FSidHash;
+	QHash<Jid, QString>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, QPair<Jid,Jid> > FNotifies;
+	QMap<int, int>		FMucNotifies;
 	QStringList			FRinging;
 	QList<IMessageChatWindow *> FPendingChats;
 	QList<int>          FPendingCalls;

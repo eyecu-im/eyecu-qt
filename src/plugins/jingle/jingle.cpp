@@ -203,9 +203,8 @@ void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
 	if (session)
 	{
-		if (session->status() == Initiated && session->isOutgoing()) // Didn't send session-initiate request yet
-//FIXME: Notify user about error!
-			session->deleteLater();
+		if (session->status() == Initiating) // Didn't send session-initiate request yet
+			session->setTerminated(FailedTransport);
 		else
 			session->terminate(FailedTransport);
 	}

@@ -634,9 +634,14 @@ void ClientIcons::onChatWindowCreated(IMessageChatWindow *AWindow)
 void ClientIcons::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
 {
 	AWindow->multiUserView()->model()->insertItemDataHolder(MUDHO_CLIENTICONS, this);
-	displayMucLabels(AWindow->multiUserView(), Options::node(OPV_COMMON_ADVANCED).value().toBool()?Options::node(OPV_MUC_CLIENTICON_SHOW).value().toBool():AWindow->multiUserView()->viewMode()== IMultiUserView::ViewFull);
-	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)), SLOT(onViewModeChanged(int)));
-	connect(AWindow->multiUserView()->instance(), SIGNAL(itemToolTips(QStandardItem*,QMap<int,QString>&)), SLOT(onMucItemToolTips(QStandardItem*,QMap<int,QString>&)));
+	displayMucLabels(AWindow->multiUserView(),
+					 Options::node(OPV_COMMON_ADVANCED).value().toBool()
+						?Options::node(OPV_MUC_CLIENTICON_SHOW).value().toBool()
+						:AWindow->multiUserView()->viewMode()== IMultiUserView::ViewFull);
+	connect(AWindow->multiUserView()->instance(), SIGNAL(viewModeChanged(int)),
+												  SLOT(onViewModeChanged(int)));
+	connect(AWindow->multiUserView()->instance(), SIGNAL(itemToolTips(QStandardItem*,QMap<int,QString>&)),
+												  SLOT(onMucItemToolTips(QStandardItem*,QMap<int,QString>&)));
 }
 
 void ClientIcons::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)

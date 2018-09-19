@@ -82,7 +82,7 @@ public:
     //IRostersClickHooker
     virtual bool rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
 	virtual bool rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent){Q_UNUSED(AOrder) Q_UNUSED(AIndex) Q_UNUSED(AEvent) return false;}
-	// AdvancedItemDataHolder
+	//AdvancedItemDataHolder
 	virtual QList<int> advancedItemDataRoles(int AOrder) const;
 	virtual QVariant advancedItemData(int AOrder, const QStandardItem *AItem, int ARole) const;
 	//IClientIcons
@@ -91,6 +91,14 @@ public:
 	virtual QString clientByKey(const QString &key) const;
 	virtual QString contactClient(const Jid &contactJid) const;
 	virtual QIcon contactIcon(const Jid &contactJid) const;
+
+protected:
+	void displayMucLabels(IMultiUserView *AView, bool ADisplay);
+	void updateChatWindows();
+	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
+	void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
+	//IRosterDataHolder
+	void updateDataHolder(const Jid &streamJid, const Jid &clientJid);
 
 protected slots:
     void onChatWindowCreated(IMessageChatWindow *AWindow);
@@ -115,18 +123,9 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
     void onSoftwareVersionActionTriggered();
 
-protected:
-	void displayMucLabels(IMultiUserView *AView, bool ADisplay);
-	void updateChatWindows();
-	void updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
-    void updateChatWindow(IMessageChatWindow *AMessageChatWindow);
-	//IRosterDataHolder
-	void updateDataHolder(const Jid &streamJid, const Jid &clientJid);
-
-
 signals:
 	//IRosterDataHolder
-	void rosterDataChanged(IRosterIndex *AIndex = NULL, int ARole = 0);
+	void rosterDataChanged(IRosterIndex *AIndex = nullptr, int ARole = 0);
 	//IRostersLabelHolder
 	void rosterLabelChanged(quint32 ALabelId, IRosterIndex *AIndex);
 
