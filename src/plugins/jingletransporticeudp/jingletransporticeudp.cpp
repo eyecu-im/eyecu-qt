@@ -76,10 +76,10 @@ bool JingleTransportIceUdp::initObjects()
 bool JingleTransportIceUdp::initSettings()
 {
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE, false);
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN, QStringList());
-//							 QStringList() << "numb.viagenie.ca:");
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN,
-							 QStringList() << "13.250.13.83::YzYNCouZM1mhqhmseWk6:YzYNCouZM1mhqhmseWk6");
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN,
+							 QStringList() << "stun.voipstunt.com:");
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN, QStringList());
+//							 QStringList() << "13.250.13.83::YzYNCouZM1mhqhmseWk6:YzYNCouZM1mhqhmseWk6");
     return true;
 }
 
