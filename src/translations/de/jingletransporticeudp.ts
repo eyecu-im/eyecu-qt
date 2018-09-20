@@ -60,53 +60,53 @@
  <context>
   <name>IceOptions</name>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="14"/>
-   <source>Form</source>
-   <translation type="unfinished"/>
-  </message>
-  <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="35"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="32"/>
    <source>Servers list</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="59"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="56"/>
    <source>&amp;Remove</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="79"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="76"/>
    <source>Add &amp;STUN...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="99"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="96"/>
    <source>Add &amp;TURN...</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="135"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="132"/>
    <source>Type</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="143"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="140"/>
    <source>Address</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="148"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="145"/>
    <source>Port</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="153"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="150"/>
    <source>Username</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="158"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="155"/>
    <source>Password</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="166"/>
+   <source>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</source>
    <translation type="unfinished"/>
   </message>
   <message>

@@ -118,8 +118,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="whatsThis">
+     <property name="toolTip">
       <string>List of codecs, available for use</string>
+     </property>
+     <property name="whatsThis">
+      <string>Codecs in this list will not be offered to the other party, but still available and will be used if all the codecs offered by other party are not in the in-use list.</string>
      </property>
      <property name="sortingEnabled">
       <bool>true</bool>
@@ -134,8 +137,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="whatsThis">
+     <property name="toolTip">
       <string>List of used codecs</string>
+     </property>
+     <property name="whatsThis">
+      <string>Codecs in this list will be offered to the other party and will be prefered among codecs offered by other party.</string>
      </property>
     </widget>
    </item>

@@ -51,10 +51,6 @@
 <context>
     <name>IceOptions</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Servers list</source>
         <translation>Список серверов</translation>
     </message>
@@ -93,6 +89,10 @@
     <message>
         <source>&amp;Aggressive nomination</source>
         <translation>&amp;Агрессивное номинирование</translation>
+    </message>
+    <message>
+        <source>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</source>
+        <translation>Обычно, агрессивное номинирование может немного уменьшить время согласования сеанса, но в некоторых редких случаях может привести к тому, что согласование не удастся.</translation>
     </message>
 </context>
 <context>

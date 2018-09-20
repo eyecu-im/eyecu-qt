@@ -7,11 +7,8 @@
     <x>0</x>
     <y>0</y>
     <width>568</width>
-    <height>375</height>
+    <height>177</height>
    </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -165,6 +162,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="chkAggressive">
+     <property name="whatsThis">
+      <string>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</string>
+     </property>
      <property name="text">
       <string>&amp;Aggressive nomination</string>
      </property>

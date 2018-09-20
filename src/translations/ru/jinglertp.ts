@@ -78,13 +78,17 @@
         <source>List of codecs, available for use</source>
         <translation>Список кодеков, доступных для использования</translation>
     </message>
+    <message>
+        <source>Codecs in this list will not be offered to the other party, but still available and will be used if all the codecs offered by other party are not in the in-use list.</source>
+        <translation>Кодеки в этом списке не будут предложены другой стороне, но всё ещё доступны и будуи использованы, если все кодеки, предоженные другой стороной не содержатся в списке используемых.</translation>
+    </message>
+    <message>
+        <source>Codecs in this list will be offered to the other party and will be prefered among codecs offered by other party.</source>
+        <translation>Кодеки в этом списке будут предложены другой стороне и будут предпочитаться при выборе среди кодеков, предложенных другой стороной.</translation>
+    </message>
 </context>
 <context>
     <name>JingleRtp</name>
-    <message>
-        <source>Missed call!</source>
-        <translation>Пропущенный звонок!</translation>
-    </message>
     <message>
         <source>Jingle RTP Sessions</source>
         <translation>Сеансы Jingle RTP</translation>
@@ -108,14 +112,6 @@
     <message>
         <source>When incoming voice or video call missed</source>
         <translation>При пропущенном голосовом или видеозвонке</translation>
-    </message>
-    <message>
-        <source>video</source>
-        <translation>видео</translation>
-    </message>
-    <message>
-        <source>voice</source>
-        <translation>голосовой</translation>
     </message>
     <message>
         <source>%1 - Chat</source>
@@ -158,10 +154,6 @@
         <translation>Кодеки</translation>
     </message>
     <message>
-        <source>Failed call!</source>
-        <translation>Неудачный вызов!</translation>
-    </message>
-    <message>
         <source>Jingle RTP Audio</source>
         <translation>Jingle RTP аудио</translation>
     </message>
@@ -180,16 +172,6 @@
     <message>
         <source>Allows to perform voice calls</source>
         <translation>Позволяет осуществлять голосовые вызовы</translation>
-    </message>
-    <message>
-        <source>Missed %1 call from %2</source>
-        <comment>%1: call type (audio or video); %2: caller title</comment>
-        <translation>Пропущенный %1 звонок от %2</translation>
-    </message>
-    <message>
-        <source>%1 call from %2 failed!</source>
-        <comment>%1: call type (audio or video); %2: caller title</comment>
-        <translation>Неудачный %1 вызов от %2!</translation>
     </message>
     <message>
         <source>Common</source>
@@ -216,47 +198,132 @@
         <translation>Когда происходит голосовое или видео общение</translation>
     </message>
     <message>
-        <source>%1 %2 call from %3</source>
-        <comment>%1: call direction (Incoming or Outgoing); %2: call type (audio or video); %3: caller title</comment>
-        <translation>%1 %2 вызов от %3</translation>
-    </message>
-    <message>
-        <source>%1 chat with %2</source>
-        <comment>%1: call type (audio or video); %2: caller title</comment>
-        <translation>%1 чат с %2</translation>
-    </message>
-    <message>
-        <source>Outgoing</source>
-        <translation>Исходящий</translation>
-    </message>
-    <message>
-        <source>Incoming</source>
-        <translation>Входящий</translation>
-    </message>
-    <message>
-        <source>%1 call!</source>
-        <comment>%1: call direction (Incoming or Outgoing)</comment>
-        <translation>%1 вызов!</translation>
-    </message>
-    <message>
-        <source>%1 chat</source>
-        <translation>%1 чат</translation>
-    </message>
-    <message>
-        <source>Video</source>
-        <translation>Видео</translation>
-    </message>
-    <message>
-        <source>Voice</source>
-        <translation>Голосовой</translation>
-    </message>
-    <message>
         <source>Ringing!</source>
         <translation>Звонит!</translation>
     </message>
     <message>
         <source>When voice or video chat session failed</source>
         <translation>При неудачном сеансе голосовой или видео связи</translation>
+    </message>
+    <message>
+        <source>When outgoing voice or video call rejected by callee</source>
+        <translation>Когда исходящий голосовой или видео вызов был отклонён</translation>
+    </message>
+    <message>
+        <source>When voice or video chat finished</source>
+        <translation>Когда головосое или видео общение завершилось</translation>
+    </message>
+    <message>
+        <source>Outgoing video call to %1</source>
+        <translation>Исходящий видео вызов %1</translation>
+    </message>
+    <message>
+        <source>Outgoing voice call to %1</source>
+        <translation>Исходящий голосовой вызов %1</translation>
+    </message>
+    <message>
+        <source>Ougoing video call!</source>
+        <translation>Исходящий видео вызов!</translation>
+    </message>
+    <message>
+        <source>Ougoing voice call!</source>
+        <translation>Исходящий голосовой вызов!</translation>
+    </message>
+    <message>
+        <source>Incoming video call from %1</source>
+        <translation>Входящий видео вызов от %1</translation>
+    </message>
+    <message>
+        <source>Incoming voice call from %1</source>
+        <translation>Входящий голосовой вызов от %1</translation>
+    </message>
+    <message>
+        <source>Incoming video call!</source>
+        <translation>Входящий видео вызов!</translation>
+    </message>
+    <message>
+        <source>Incoming voice call!</source>
+        <translation>Входящий голосовой вызов!</translation>
+    </message>
+    <message>
+        <source>Video chat with %1</source>
+        <translation>Видео общение с %1</translation>
+    </message>
+    <message>
+        <source>Voice chat with %1</source>
+        <translation>Голосовое общение с %1</translation>
+    </message>
+    <message>
+        <source>Video chat</source>
+        <translation>Видео общение</translation>
+    </message>
+    <message>
+        <source>Voice chat</source>
+        <translation>Голосовое общение</translation>
+    </message>
+    <message>
+        <source>Missed video call from %1</source>
+        <translation>Пропущенный видео вызов от %1</translation>
+    </message>
+    <message>
+        <source>Missed voice call from %1</source>
+        <translation>Пропущенный голосовой вызов от %1</translation>
+    </message>
+    <message>
+        <source>Missed video call!</source>
+        <translation>Пропущенный видео вызов!</translation>
+    </message>
+    <message>
+        <source>Missed voice call!</source>
+        <translation>Пропущенный голосовой вызов!</translation>
+    </message>
+    <message>
+        <source>Rejected video call to %1</source>
+        <translation>Отклонённый видео вызов %1</translation>
+    </message>
+    <message>
+        <source>Rejected voice call to %1</source>
+        <translation>Отклонённый видео вызов %1</translation>
+    </message>
+    <message>
+        <source>Video call rejected!</source>
+        <translation>Видео вызов отклонён!</translation>
+    </message>
+    <message>
+        <source>Voice call rejected!</source>
+        <translation>Голосовой вызов отклонён!</translation>
+    </message>
+    <message>
+        <source>Finished video chat with %1</source>
+        <translation>Закончено видео общение с %1</translation>
+    </message>
+    <message>
+        <source>Finished voice chat with %1</source>
+        <translation>Закончено голосовое общение с %1</translation>
+    </message>
+    <message>
+        <source>Video chat finished</source>
+        <translation>Видео общение завершено</translation>
+    </message>
+    <message>
+        <source>Voice chat finished</source>
+        <translation>Голосовое общение завершено</translation>
+    </message>
+    <message>
+        <source>Failed video chat with %1</source>
+        <translation>Неудавшееся видео общение с %1</translation>
+    </message>
+    <message>
+        <source>Failed voice chat with %1</source>
+        <translation>Неудавшееся голосовое общение с %1</translation>
+    </message>
+    <message>
+        <source>Video call failed!</source>
+        <translation>Видео вызов не удался!</translation>
+    </message>
+    <message>
+        <source>Voice call failed!</source>
+        <translation>Голосовой вызов не удался!</translation>
     </message>
 </context>
 </TS>
