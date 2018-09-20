@@ -568,36 +568,98 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 		if (notification.kinds > 0)
 		{
 			bool video=hasVideo(ASid);
-			QString iconId = AEventType == Called?
-						(video ? outgoing?JNI_RTP_TALK_VIDEO
-										 :JNI_RTP_CALL_VIDEO
-							   : outgoing?JNI_RTP_TALK
-										 :JNI_RTP_CALL):
-	   AEventType == Connected ? (video	? JNI_RTP_TALK_VIDEO
-										: JNI_RTP_TALK):
-	   AEventType == Error	   ? JNI_RTP_ERROR
-							   : JNI_RTP_HANGUP;
-			qDebug() << "iconId =" << iconId;
-			QIcon icon = FIconStorage->getIcon(iconId);
 
 			IMultiUserChatWindow *mucWindow = FMultiChatManager?FMultiChatManager->findMultiChatWindow(streamJid, contactJid.bare())
 															   :nullptr;
-			QString name = mucWindow ? contactJid.resource() // Do not call INotifications::contactName() for MUC users!
-									 : FNotifications->contactName(streamJid, contactJid);
+			bool notifyMuc(false); // Check, if we need to notify MUC as well
+			QString name;
+			IMultiUser *mucUser(nullptr);
+			if (mucWindow)
+			{
+				mucUser = mucWindow->multiUserChat()->findUser(contactJid.resource());
+				if (mucUser != mucWindow->multiUserChat()->mainUser())
+				{
+					name = contactJid.resource();
+					notifyMuc = true;
+				}
+			}
+
+			if (name.isEmpty())	// Fill Roster notification data only if Roster notification is enabled
+				name = FNotifications->contactName(streamJid, contactJid);
+
+			int rosterFlags = IRostersNotify::AllwaysVisible | IRostersNotify::HookClicks;
+			if (AEventType != Connected && AEventType != Rejected && AEventType != Finished) // Session in progress notification must not blink
+				rosterFlags |= IRostersNotify::Blink;
+
+			notification.data.insert(NDR_ROSTER_ORDER, RNO_JINGLE_RTP);
+			notification.data.insert(NDR_ROSTER_FLAGS, rosterFlags);
+			notification.data.insert(NDR_ROSTER_CREATE_INDEX, false);
 
 			notification.data.insert(NDR_JINGLE_RTP_EVENT_TYPE, AEventType);
+
+			QString tooltip;
+			QString html;
+			QString iconId;
+
+			switch (AEventType) {
+				case Called:
+					if (outgoing)
+					{
+						tooltip = video?tr("Outgoing video call to %1"):tr("Outgoing voice call to %1");
+						html = video?tr("Ougoing video call!"):tr("Ougoing voice call!");
+						iconId = video?JNI_RTP_TALK_VIDEO:JNI_RTP_TALK;
+
+						if (FRinging.contains(ASid))
+							html.append(QString("<br><img src=\"%1\"> <b>%2</b>")
+										.arg(QUrl::fromLocalFile(
+											IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
+												->fileFullName(MNI_NOTIFICATIONS)).toString())
+										.arg(tr("Ringing!")));
+					}
+					else
+					{
+						iconId = video?JNI_RTP_CALL_VIDEO:JNI_RTP_CALL;
+						tooltip = video?tr("Incoming video call from %1"):tr("Incoming voice call from %1");
+						html = video?tr("Incoming video call!"):tr("Incoming voice call!");
+					}
+					break;
+				case Connected:
+					iconId = video?JNI_RTP_TALK_VIDEO:JNI_RTP_TALK;
+					tooltip = video?tr("Video chat with %1"):tr("Voice chat with %1");
+					html = video?tr("Video chat"):tr("Voice chat");
+					break;
+
+				case Cancelled:
+					iconId = JNI_RTP_HANGUP;
+					tooltip = video?tr("Missed video call from %1"):tr("Missed voice call from %1");
+					html = video?tr("Missed video call!"):tr("Missed voice call!");
+					break;
+
+				case Rejected:
+					iconId = JNI_RTP_HANGUP;
+					tooltip = video?tr("Rejected video call to %1"):tr("Rejected voice call to %1");
+					html = video?tr("Video call rejected!"):tr("Voice call rejected!");
+					break;
+
+				case Finished:
+					iconId = JNI_RTP_HANGUP;
+					tooltip = video?tr("Finished video chat with %1"):tr("Finished voice chat with %1");
+					html = video?tr("Video chat finished"):tr("Voice chat finished");
+					break;
+
+				default: // Error occured
+					iconId = JNI_RTP_ERROR;
+					tooltip = video?tr("Failed video chat with %1"):tr("Failed voice chat with %1");
+					html = video?tr("Video call failed!"):tr("Voice call failed!");
+					if (AReason)
+						html.append(QString("<br><i>%1</i>").arg(FJingle->errorMessage(AReason)));
+					break;
+			}
+
+			QIcon icon = FIconStorage->getIcon(iconId);
 			notification.data.insert(NDR_ICON, icon);
 
-			QString callType(video?tr("Video"):tr("Voice"));
-			QString tooltip = AEventType == Called	  ? outgoing?tr("Outgoing %1 call from %2", "%1: call type (audio or video); %2: caller title"):
-																 tr("Incoming %1 call to %2", "%1: call type (audio or video); %2: caller title"):
-							  AEventType == Connected ? tr("%1 chat with %2", "%1: call type (audio or video); %2: caller title"):
-							  AEventType == Cancelled ? tr("Missed %1 call from %2", "%1: call type (audio or video); %2: caller title"):
-							  AEventType == Rejected ?  tr("Rejected %1 call from %2", "%1: call type (audio or video); %2: caller title"):
-							  AEventType == Finished ?  tr("Finished %1 chat with %2", "%1: call type (audio or video); %2: caller title"):
-														tr("Failed to establish %1 chat with %2!", "%1: call type (audio or video); %2: caller title");
-
-			notification.data.insert(NDR_TOOLTIP, tooltip.arg(callType).arg(name));
+			notification.data.insert(NDR_TOOLTIP, tooltip.arg(name));
 			notification.data.insert(NDR_STREAM_JID, streamJid.full());
 			notification.data.insert(NDR_CONTACT_JID, contactJid.full());
 
@@ -605,27 +667,6 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 			if (FAvatars)
 				notification.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(contactJid));
 
-			QString html(AEventType == Called	 ? outgoing?tr("Ougoing %1 call!").arg(callType)
-														   :tr("Incoming %1 call!").arg(callType):
-						 AEventType == Connected ? tr("%1 chat").arg(callType):
-						 AEventType == Cancelled ? tr("Missed %1 call!").arg(callType):
-						 AEventType == Rejected  ? tr("%1 call rejected!").arg(callType):
-						 AEventType == Finished  ? tr("%1 chat finished").arg(callType):
-												   tr("%1 call failed!").arg(callType));
-
-			if (AEventType == Called)
-			{
-				if (outgoing && FRinging.contains(ASid))
-					html.append(QString("<br><img src=\"%1\"> <b>%2</b>")
-								.arg(QUrl::fromLocalFile(
-									IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
-										->fileFullName(MNI_NOTIFICATIONS)).toString())
-								.arg(tr("Ringing!")));
-			}
-			else if (AEventType == Error && AReason)
-			{
-				html.append(QString("<br><i>%1</i>").arg(FJingle->errorMessage(AReason)));
-			}
 			notification.data.insert(NDR_POPUP_HTML, html);
 			notification.data.insert(NDR_POPUP_TITLE, name);
 
@@ -643,29 +684,6 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 
 			updateWindow(window);
 
-			bool notifyMuc(false); // Check, if we need to notify MUC as well
-			IMultiUser *mucUser(nullptr);
-			if (notification.kinds & INotification::RosterNotify)
-			{				
-				if (mucWindow)
-				{
-					mucUser = mucWindow->multiUserChat()->findUser(contactJid.resource());
-					if (mucUser != mucWindow->multiUserChat()->mainUser())
-					{
-						notifyMuc = true;
-						notification.kinds &= ~INotification::RosterNotify;
-					}
-				}
-				if (!notifyMuc)	// Fill Roster notification data only if Roster notification is enabled
-				{
-					int rosterFlags = IRostersNotify::AllwaysVisible | IRostersNotify::HookClicks;
-					if (AEventType != Connected && AEventType != Rejected && AEventType != Finished) // Session in progress notification must not blink
-						rosterFlags |= IRostersNotify::Blink;
-					notification.data.insert(NDR_ROSTER_ORDER, RNO_JINGLE_RTP);
-					notification.data.insert(NDR_ROSTER_FLAGS, rosterFlags);
-					notification.data.insert(NDR_ROSTER_CREATE_INDEX, true);
-				}
-			}
 			int notify = FNotifications->appendNotification(notification);
 
 			if (window->isActiveTabPage() && AEventType != Called && AEventType != Connected)
@@ -673,15 +691,15 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 			else
 			{
 				FNotifies.insert(notify, QPair<Jid,Jid>(streamJid, contactJid));
-				if (notifyMuc)
+				if (notifyMuc && notification.kinds & INotification::RosterNotify)
 				{
 					QStandardItem *userItem = mucWindow->multiUserView()->findUserItem(mucUser);
 					if (userItem)
 					{
 						IMultiUserViewNotify mucNotify;
 						mucNotify.order = MUNO_JINGLE_RTP_CALL;
-						mucNotify.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(iconId);
-						if (AEventType != Connected && AEventType != Rejected && AEventType != Finished) // Session in progress notification must not blink
+						mucNotify.icon = icon;
+						if (rosterFlags & IRostersNotify::Blink) // Set correct blink flag
 							mucNotify.flags = IMultiUserViewNotify::Blink;
 						FMucNotifies.insert(notify, mucWindow->multiUserView()->insertItemNotify(mucNotify, userItem));
 					}
