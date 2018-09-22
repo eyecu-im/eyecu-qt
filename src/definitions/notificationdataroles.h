@@ -37,7 +37,7 @@ enum NotificationDataRoles {
     // Avatar data for Attention dialog
     NDR_ATTENTION_DIALOG_AVATAR_FILE_NAME,
     // Jingle call type
-    NDR_JINGLE_RTP_EVENT_TYPE
+	NDR_JINGLE_RTP_EVENT_TYPE
     // *** >>> eyeCU >>> ***
 };
 

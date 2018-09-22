@@ -44,8 +44,9 @@
 #define SDF_PEP_EVENT                     "pepEvent"
 //Contact Proximity
 #define SDF_PROXIMITY_EVENT               "proximityEvent"
-//Jingle RTP
+//Jingle RTP Sessions
 #define SDF_JINGLE_RTP_CALL               "jingleRtpCall"
+#define SDF_JINGLE_RTP_RINGBACK_LONG      "jingleRtpRingbackLong"
 // *** >>> eyeCU >>> ***
 
 #endif

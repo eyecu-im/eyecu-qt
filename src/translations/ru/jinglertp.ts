@@ -95,23 +95,23 @@
     </message>
     <message>
         <source>Audio/Video chat via Jingle RTP</source>
-        <translation>Аудио/Видео чат через Jingle</translation>
+        <translation>Аудио/Видео общение через Jingle</translation>
     </message>
     <message>
         <source>Voice call</source>
-        <translation>Голосовой звонок</translation>
+        <translation>Голосовой вызов</translation>
     </message>
     <message>
         <source>Video call</source>
-        <translation>Видеозвонок</translation>
+        <translation>Видеовызов</translation>
     </message>
     <message>
         <source>When incoming voice or video call received</source>
-        <translation>При входящем голосовом или видео звонке</translation>
+        <translation>При входящем голосовом или видео вызове</translation>
     </message>
     <message>
         <source>When incoming voice or video call missed</source>
-        <translation>При пропущенном голосовом или видеозвонке</translation>
+        <translation>При пропущенном голосовом или видео вызове</translation>
     </message>
     <message>
         <source>%1 - Chat</source>
@@ -119,19 +119,19 @@
     </message>
     <message>
         <source>Call cancelled</source>
-        <translation>Звонок отменён</translation>
+        <translation>Вызов отменён</translation>
     </message>
     <message>
         <source>Call rejected</source>
-        <translation>Звонок отклонён</translation>
+        <translation>Вызов отклонён</translation>
     </message>
     <message>
         <source>Call finished</source>
-        <translation>Звонок завершён</translation>
+        <translation>Вызов завершён</translation>
     </message>
     <message>
         <source>Call error</source>
-        <translation>Ошибка звонка</translation>
+        <translation>Ошибка вызова</translation>
     </message>
     <message>
         <source>Hangup</source>
@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>Call error (%1)</source>
-        <translation>Ошибка звонка (%1)</translation>
+        <translation>Ошибка вызова (%1)</translation>
     </message>
     <message>
         <source>Audio</source>
@@ -328,6 +328,10 @@
     <message>
         <source>Assume the other party ringing, once the call is acknowledged</source>
         <translation>Считать, что клиент на другой стороне звонит, как только получение вызова подтверждено</translation>
+    </message>
+    <message>
+        <source>Incoming call missed</source>
+        <translation>Входящий вызов пропущен</translation>
     </message>
 </context>
 </TS>

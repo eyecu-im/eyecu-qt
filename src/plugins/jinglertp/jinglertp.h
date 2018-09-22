@@ -31,12 +31,13 @@ class JingleCallTimer: public QTimer
 {
 	Q_OBJECT
 public:
-	JingleCallTimer(QString ASoundFileName, QObject *parent=nullptr);
+	JingleCallTimer(const QString &ASoundFileName, int ATimeout, QObject *parent=nullptr);
 
 protected:
 	void timerEvent(QTimerEvent *e);
 private:
 	QSound  FSound;
+	int		FTimeout;
 };
 
 class JingleRtp: public QObject,
@@ -62,6 +63,7 @@ public:
 	enum CallType
 	{
 		Called,
+		Ring,
 		Rejected,
 		Cancelled,
 		Connected,
@@ -206,7 +208,6 @@ private:
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, QPair<Jid,Jid> > FNotifies;
 	QMap<int, int>		FMucNotifies;
-	QStringList			FRinging;
 	QList<IMessageChatWindow *> FPendingChats;
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
