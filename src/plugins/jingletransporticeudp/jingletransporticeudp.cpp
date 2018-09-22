@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QNetworkInterface>
 #include <QpLog>
 #include <definitions/version.h>
@@ -313,6 +312,41 @@ QHash<QHostAddress, int> JingleTransportIceUdp::networksByIp()
 	return networkByIp;
 }
 
+void JingleTransportIceUdp::addStunServers(const QStringList &AServers)
+{
+	for (QStringList::ConstIterator it=AServers.constBegin();
+		 it!=AServers.constEnd(); ++it) {
+		QStringList parts = (*it).split(':');
+		if (parts.size() == 2)
+		{
+			QPIceTransport::StunConfig stunCfg;
+			stunCfg.ignoreStunError = true;
+			stunCfg.server = parts[0];
+			if (parts[1].isEmpty())
+				stunCfg.port = QP_STUN_PORT;
+			else
+			{
+				bool ok;
+				stunCfg.port = quint16(parts[1].toInt(&ok));
+				if (!ok || !stunCfg.port)
+					LOG_ERROR("Invalid port number!");
+			}
+
+			FIceCfg.stunTransportCfg.append(stunCfg);
+		}
+		else
+			LOG_ERROR("Invalid STUN server record!");
+	}
+
+	if (FIceCfg.stunTransportCfg.isEmpty())
+	{	// Add empty STUN transport config if no STUN servers configured
+		QPIceTransport::StunConfig stun_cfg;
+		stun_cfg.protocol = QAbstractSocket::IPv4Protocol;
+		FIceCfg.stunTransportCfg.append(stun_cfg);
+	}
+
+}
+
 void JingleTransportIceUdp::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE));
@@ -327,33 +361,9 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN) // STUN servers
 	{
 		FIceCfg.stunTransportCfg.clear();
+
+		// Add TURN servers first
 		QStringList servers = ANode.value().toStringList();
-		for (QStringList::ConstIterator it=servers.constBegin();
-			 it!=servers.constEnd(); ++it) {
-			QStringList parts = (*it).split(':');
-			if (parts.size() == 2)
-			{
-				QPIceTransport::StunConfig stunCfg;
-				stunCfg.ignoreStunError = true;
-				stunCfg.server = parts[0];
-				if (parts[1].isEmpty())
-					stunCfg.port = QP_STUN_PORT;
-				else
-				{
-					bool ok;
-					stunCfg.port = quint16(parts[1].toInt(&ok));
-					if (!ok || !stunCfg.port)
-						LOG_ERROR("Invalid port number!");
-				}
-
-				FIceCfg.stunTransportCfg.append(stunCfg);
-			}
-			else
-				LOG_ERROR("Invalid STUN server record!");
-		}
-
-		// Add TURN servers as well
-		servers = ANode.value().toStringList();
 		for (QStringList::ConstIterator it=servers.constBegin();
 			 it!=servers.constEnd(); ++it) {
 			QStringList parts = (*it).split(':');
@@ -377,6 +387,8 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 			else
 				LOG_ERROR("Invalid TURN server record!");
 		}
+
+		addStunServers(ANode.value().toStringList());
 	}
 	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN) // TURN servers
 	{
@@ -416,30 +428,7 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 		}
 
 		// Re-add STUN servers
-		servers = Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN).value().toStringList();
-		for (QStringList::ConstIterator it=servers.constBegin();
-			 it!=servers.constEnd(); ++it) {
-			QStringList parts = (*it).split(':');
-			if (parts.size() == 2)
-			{
-				QPIceTransport::StunConfig stunCfg;
-				stunCfg.ignoreStunError = true;
-				stunCfg.server = parts[0];
-				if (parts[1].isEmpty())
-					stunCfg.port = QP_STUN_PORT;
-				else
-				{
-					bool ok;
-					stunCfg.port = quint16(parts[1].toInt(&ok));
-					if (!ok || !stunCfg.port)
-						LOG_ERROR("Invalid port number!");
-				}
-
-				FIceCfg.stunTransportCfg.append(stunCfg);
-			}
-			else
-				LOG_ERROR("Invalid STUN server record!");
-		}
+		addStunServers(Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN).value().toStringList());
 	}
 }
 
@@ -464,9 +453,6 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 			content->setComponentCount(count);
 			for (int i=1; i<=count; ++i) {
 				QPIceComponent *comp = iceThread->component(i);
-//				qDebug() << "comp" << i <<
-//							": lcand:" << comp->localCandidate()->type << "; addr=" << comp->localCandidate()->addr << "; rel-addr=" << comp->localCandidate()->relAddr <<
-//							": rcand:" << comp->remoteCandidate()->type << "; addr=" << comp->remoteCandidate()->addr << "; rel-addr=" << comp->remoteCandidate()->relAddr;
 				comp->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 				content->setIoDevice(i, comp);
 			}

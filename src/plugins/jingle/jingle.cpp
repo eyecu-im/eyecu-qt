@@ -534,7 +534,6 @@ Jid Jingle::streamJid(const QString &ASid) const
 
 QString Jingle::findSid(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	qDebug() << "Jingle::findSid(" << AStreamJid.full() << "," << AContactJid.full() << ")";
 	JingleSession *session = JingleSession::sessionByContact(AStreamJid, AContactJid);
 	return session ? session->sid() : QString();
 }

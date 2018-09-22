@@ -539,8 +539,6 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 {
 	LOG_DEBUG(QString("JingleRtp::callNotify(%1, %2)").arg(ASid).arg(AEventType));
 
-	qDebug() << "JingleRtp::callNotify(" << ASid << "," << AEventType << ")";
-
 	Jid contactJid=FJingle->contactJid(ASid);
 	Jid streamJid=FJingle->streamJid(ASid);
 
@@ -555,7 +553,6 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 				   AEventType == Connected || AEventType==Error))
 	{
 		bool outgoing(FJingle->isOutgoing(ASid));
-		qDebug() << "outgoing=" << outgoing;
 		INotification notification;
 		notification.typeId = AEventType == Called? outgoing?NNT_JINGLE_RTP_OUTGOING
 															:NNT_JINGLE_RTP_INCOMING:
@@ -804,17 +801,14 @@ void JingleRtp::onNotificationRemoved(int ANotifyId)
 
 void JingleRtp::onTabPageActivated()
 {
-	qDebug() << "JingleRtp::onTabPageActivated()";
 	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());	
 	int notify=FNotifies.key(QPair<Jid,Jid>(window->address()->streamJid(),
 											window->address()->contactJid()));
 	if (notify)
 	{
-		qDebug() << "notify=" << notify;
 		INotification notification=FNotifications->notificationById(notify);
 		CallType type = CallType(notification.data
 									.value(NDR_JINGLE_RTP_EVENT_TYPE).toInt());
-		qDebug() << "type=" << type;
 		if (type != Called && type != Connected)				// All the events but incoming Call
 		{
 			removeNotification(window);
@@ -934,7 +928,6 @@ bool JingleRtp::sessionInfo(const Jid &AStreamJid, const Jid &AContactJid, Jingl
 
 void JingleRtp::callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason)
 {
-	qDebug() << "JingleRtp::callChatMessage(" << ASid << "," << AType << "," << AReason << ")";
 	IMessageChatWindow *window=FMessageWidgets->findChatWindow(FJingle->streamJid(ASid),
 															   FJingle->contactJid(ASid));
 	if (window)
@@ -950,14 +943,11 @@ QString JingleRtp::chatNotification(const QString &AIcon, const QString &AMessag
 
 bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType AType, IJingle::Reason AReason)
 {
-	qDebug() << "JingleRtp::writeCallMessageIntoChat(" << AWindow << "," << AType << "," << AReason << ")";
 	Jid contactJid = AWindow->contactJid();
 	Jid streamJid = AWindow->streamJid();
 	QString sid = findSid(streamJid, contactJid);
-	qDebug() << "sid=" << sid;
 	bool video = hasVideo(sid);
 	bool outgoing = AType==Called?FJingle->isOutgoing(sid):false;
-	qDebug() << "outgoing=" << outgoing;
 
 	IMessageStyleContentOptions options;
 	options.time = QDateTime::currentDateTime();
@@ -1009,15 +999,14 @@ bool JingleRtp::writeCallMessageIntoChat(IMessageChatWindow *AWindow, CallType A
 void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 {
 	QList<QAction *> actions = AChatWindow->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_JINGLE_RTP);
-	if (isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
-	{
-		Jid contactJid = AChatWindow->contactJid();
-		Jid streamJid  = AChatWindow->streamJid();
+	Jid streamJid(AChatWindow->streamJid());
+	Jid contactJid(AChatWindow->contactJid());
 
+	if (isSupported(streamJid, contactJid))
+	{
 		QString sid = findSid(streamJid, contactJid);
 		IJingle::SessionStatus status=sid.isEmpty()?IJingle::None
 												   :FJingle->sessionStatus(sid);
-
 		if (actions.isEmpty())
 		{
 			Action *action = new Action(AChatWindow->toolBarWidget()->instance());
@@ -1527,22 +1516,14 @@ void JingleRtp::onMultiChatUserChanged(IMultiUser *AUser, int AData, const QVari
 
 void JingleRtp::removeMucNotification(const Jid &AStreamJid, const Jid &AUserJid)
 {
-	qDebug() << "JingleRtp::removeMucNotification(" << AStreamJid.full() << "," << AUserJid.full() << ")";
 	IMultiUserChatWindow *window = FMultiChatManager?
 				FMultiChatManager->findMultiChatWindow(AStreamJid, AUserJid.bare()) : nullptr;
-	qDebug() << "window=" << window;
 	if (window)
 	{
 		IMultiUser *user = window->multiUserChat()->findUser(AUserJid.resource());
-		qDebug() << "user=" << user;
 		if (user != window->multiUserChat()->mainUser())
 		{
-			int notify = FNotifies.key(QPair<Jid,Jid>(AStreamJid, AUserJid));
-			qDebug() << "notify=" << notify;
-
-			int notifyId = FMucNotifies.take(notify);
-			qDebug() << "notifyId=" << notifyId;
-
+			int notifyId = FMucNotifies.take(FNotifies.key(QPair<Jid,Jid>(AStreamJid, AUserJid)));
 			if (notifyId)
 				window->multiUserView()->removeItemNotify(notifyId);
 		}
@@ -1873,8 +1854,6 @@ void JingleRtp::onContentAdded(IJingleContent *AContent)
 
 void JingleRtp::onContentAddFailed(IJingleContent *AContent)
 {
-	qDebug() << "JingleRtp::onContentAddFailed(" << AContent << ")";
-	qDebug() << "Session status:" << FJingle->sessionStatus(AContent->sid());
 	removePendingContent(AContent, AddContent);
 	if (!hasPendingContents(AContent->sid(), AddContent))
 	{

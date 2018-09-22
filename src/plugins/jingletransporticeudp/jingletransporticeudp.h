@@ -50,6 +50,7 @@ protected:
 	void registerDiscoFeatures();
 	int readCandidates(IceThread *AIceThread);
 	static QHash<QHostAddress, int> networksByIp();
+	void addStunServers(const QStringList &AServers);
 
 protected slots:
 	void onOptionsOpened();
