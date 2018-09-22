@@ -4,17 +4,17 @@
  <context>
   <name>PositioningMethodIpProviderFreegeoip</name>
   <message>
-   <location filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp" line="19"/>
+   <location line="19" filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp"/>
    <source>Positining Method IP Provider ipstack</source>
    <translation>Positining Method IP Provider ipstack</translation>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp" line="20"/>
+   <location line="20" filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp"/>
    <source>Allows to use ipstack as an IP positioning provider</source>
    <translation>Allows to use ipstack as an IP positioning provider</translation>
   </message>
   <message>
-   <location filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp" line="44"/>
+   <location line="44" filename="../../plugins/positioningmethodipprovideripstack/positioningmethodipprovideripstack.cpp"/>
    <source>ipstack</source>
    <translation>ipstack</translation>
   </message>

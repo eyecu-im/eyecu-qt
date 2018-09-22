@@ -279,7 +279,8 @@
 #define   OWO_ATTENTION_MAINWINDOWACTIVATE        630
 #define OHO_JINGLERTP_COMMON                      600
 #define   OWO_JINGLERTP_COMMON_TIMEOUT            610
-#define   OWO_JINGLERTP_COMMON_RTCP               620
+#define   OWO_JINGLERTP_COMMON_RTCP               615
+#define   OWO_JINGLERTP_COMMON_RINGING            620
 #define OHO_JINGLERTP_AUDIO                       630
 #define   OWO_JINGLERTP_AUDIO                     640
 #define OHO_JINGLERTP_CODECS                      650

@@ -4,49 +4,49 @@
  <context>
   <name>RegisterDialog</name>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="59"/>
+   <location line="59" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Registration at %1</source>
    <translation>Registration at %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="94"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="214"/>
+   <location line="94" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="214" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Waiting for host response ...</source>
    <translation>Waiting for host response ...</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="96"/>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="216"/>
+   <location line="96" filename="../../plugins/registration/registerdialog.cpp"/>
+   <location line="216" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Error: Can't send request to host.</source>
    <translation>Error: Can't send request to host.</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="103"/>
+   <location line="103" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Do you really want to remove registration from %1?</source>
    <translation>Do you really want to remove registration from %1?</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="110"/>
+   <location line="110" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Enter your username and new password.</source>
    <translation>Enter your username and new password.</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="167"/>
+   <location line="167" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>You are successfully registered at %1</source>
    <translation>You are successfully registered at %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="169"/>
+   <location line="169" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>You are successfully unregistered from %1</source>
    <translation>You are successfully unregistered from %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="171"/>
+   <location line="171" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Password was successfully changed at %1</source>
    <translation>Password was successfully changed at %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.cpp" line="182"/>
+   <location line="182" filename="../../plugins/registration/registerdialog.cpp"/>
    <source>Requested operation failed: %1</source>
    <translation>Requested operation failed: %1</translation>
   </message>
@@ -54,17 +54,17 @@
  <context>
   <name>RegisterDialogClass</name>
   <message>
-   <location filename="../../plugins/registration/registerdialog.ui" line="56"/>
+   <location line="56" filename="../../plugins/registration/registerdialog.ui"/>
    <source>Username:</source>
    <translation>Username:</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.ui" line="72"/>
+   <location line="72" filename="../../plugins/registration/registerdialog.ui"/>
    <source>Password:</source>
    <translation>Password:</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registerdialog.ui" line="92"/>
+   <location line="92" filename="../../plugins/registration/registerdialog.ui"/>
    <source>Email:</source>
    <translation>Email:</translation>
   </message>
@@ -72,131 +72,131 @@
  <context>
   <name>Registration</name>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="47"/>
-   <location filename="../../plugins/registration/registration.cpp" line="207"/>
-   <location filename="../../plugins/registration/registration.cpp" line="293"/>
-   <location filename="../../plugins/registration/registration.cpp" line="480"/>
+   <location line="47" filename="../../plugins/registration/registration.cpp"/>
+   <location line="207" filename="../../plugins/registration/registration.cpp"/>
+   <location line="293" filename="../../plugins/registration/registration.cpp"/>
+   <location line="480" filename="../../plugins/registration/registration.cpp"/>
    <source>Registration</source>
    <translation>Registration</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="48"/>
+   <location line="48" filename="../../plugins/registration/registration.cpp"/>
    <source>Allows to register on the Jabber servers and services</source>
    <translation>Allows to register on the Jabber servers and services</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="113"/>
+   <location line="113" filename="../../plugins/registration/registration.cpp"/>
    <source>Registration is not supported</source>
    <translation>Registration is not supported</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="114"/>
+   <location line="114" filename="../../plugins/registration/registration.cpp"/>
    <source>Invalid registration fields</source>
    <translation>Invalid registration fields</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="115"/>
+   <location line="115" filename="../../plugins/registration/registration.cpp"/>
    <source>Registration rejected by user</source>
    <translation>Registration rejected by user</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="211"/>
+   <location line="211" filename="../../plugins/registration/registration.cpp"/>
    <source>Register</source>
    <translation>Register</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="220"/>
+   <location line="220" filename="../../plugins/registration/registration.cpp"/>
    <source>Unregister</source>
    <translation>Unregister</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="229"/>
+   <location line="229" filename="../../plugins/registration/registration.cpp"/>
    <source>Change password</source>
    <translation>Change password</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="294"/>
+   <location line="294" filename="../../plugins/registration/registration.cpp"/>
    <source>Register new account on server</source>
    <translation>Register new account on server</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="305"/>
+   <location line="305" filename="../../plugins/registration/registration.cpp"/>
    <source>Registration Form</source>
    <translation>Registration Form</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="306"/>
+   <location line="306" filename="../../plugins/registration/registration.cpp"/>
    <source>Account Name</source>
    <translation>Account Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="307"/>
+   <location line="307" filename="../../plugins/registration/registration.cpp"/>
    <source>Nickname</source>
    <translation>Nickname</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="308"/>
-   <location filename="../../plugins/registration/registration.cpp" line="604"/>
+   <location line="308" filename="../../plugins/registration/registration.cpp"/>
+   <location line="604" filename="../../plugins/registration/registration.cpp"/>
    <source>Password</source>
    <translation>Password</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="309"/>
+   <location line="309" filename="../../plugins/registration/registration.cpp"/>
    <source>Full Name</source>
    <translation>Full Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="310"/>
+   <location line="310" filename="../../plugins/registration/registration.cpp"/>
    <source>Given Name</source>
    <translation>Given Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="311"/>
+   <location line="311" filename="../../plugins/registration/registration.cpp"/>
    <source>Family Name</source>
    <translation>Family Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="312"/>
+   <location line="312" filename="../../plugins/registration/registration.cpp"/>
    <source>Email Address</source>
    <translation>Email Address</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="313"/>
+   <location line="313" filename="../../plugins/registration/registration.cpp"/>
    <source>Street</source>
    <translation>Street</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="314"/>
+   <location line="314" filename="../../plugins/registration/registration.cpp"/>
    <source>City</source>
    <translation>City</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="315"/>
+   <location line="315" filename="../../plugins/registration/registration.cpp"/>
    <source>Region</source>
    <translation>Region</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="316"/>
+   <location line="316" filename="../../plugins/registration/registration.cpp"/>
    <source>Zip Code</source>
    <translation>Zip Code</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="317"/>
+   <location line="317" filename="../../plugins/registration/registration.cpp"/>
    <source>Telephone Number</source>
    <translation>Telephone Number</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="318"/>
+   <location line="318" filename="../../plugins/registration/registration.cpp"/>
    <source>Your Web Page</source>
    <translation>Your Web Page</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="481"/>
+   <location line="481" filename="../../plugins/registration/registration.cpp"/>
    <source>Supports the registration</source>
    <translation>Supports the registration</translation>
   </message>
   <message>
-   <location filename="../../plugins/registration/registration.cpp" line="613"/>
+   <location line="613" filename="../../plugins/registration/registration.cpp"/>
    <source>e-mail</source>
    <translation>e-mail</translation>
   </message>

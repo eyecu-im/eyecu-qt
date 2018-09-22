@@ -325,5 +325,9 @@
         <source>Voice call failed!</source>
         <translation>Голосовой вызов не удался!</translation>
     </message>
+    <message>
+        <source>Assume the other party ringing, once the call is acknowledged</source>
+        <translation>Считать, что клиент на другой стороне звонит, как только получение вызова подтверждено</translation>
+    </message>
 </context>
 </TS>

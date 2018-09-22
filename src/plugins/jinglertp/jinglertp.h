@@ -131,6 +131,7 @@ protected:
 	void    removeNotification(const QString &ASid);
 	void    callChatMessage(const QString &ASid, CallType AType, IJingle::Reason AReason = IJingle::NoReason);
 	void	checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice);
+	void	notifyRinging(const QString &ASid);
 
 	IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
 
@@ -202,7 +203,6 @@ private:
 	IStatusIcons        *FStatusIcons;
 	IconStorage         *FIconStorage;
 	AudioOptions		*FJingleRtpOptions;
-//	QHash<Jid, QString>	FSidHash;
 	QHash<QString, IMessageChatWindow *>   FChatWindows;
 	QMap<int, QPair<Jid,Jid> > FNotifies;
 	QMap<int, int>		FMucNotifies;

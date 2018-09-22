@@ -4,57 +4,57 @@
  <context>
   <name>AddServer</name>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="23"/>
+   <location line="23" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Server address</source>
    <translation>Server address</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="29"/>
+   <location line="29" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Host</source>
    <translation>Host</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="46"/>
+   <location line="46" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Port</source>
    <translation>Port</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="56"/>
+   <location line="56" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Default</source>
    <translation>Default</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="69"/>
+   <location line="69" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Credentials</source>
    <translation>Credentials</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="85"/>
+   <location line="85" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Username</source>
    <translation>Username</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="95"/>
+   <location line="95" filename="../../plugins/jingletransporticeudp/addserver.ui"/>
    <source>Password</source>
    <translation>Password</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="10"/>
+   <location line="10" filename="../../plugins/jingletransporticeudp/addserver.cpp"/>
    <source>Add %1 server</source>
    <translation>Add %1 server</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="16"/>
+   <location line="16" filename="../../plugins/jingletransporticeudp/addserver.cpp"/>
    <source>Server host name or IP address</source>
    <translation>Server host name or IP address</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="17"/>
+   <location line="17" filename="../../plugins/jingletransporticeudp/addserver.cpp"/>
    <source>TURN server username</source>
    <translation>TURN server username</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="18"/>
+   <location line="18" filename="../../plugins/jingletransporticeudp/addserver.cpp"/>
    <source>TURN server password</source>
    <translation>TURN server password</translation>
   </message>
@@ -62,57 +62,57 @@
  <context>
   <name>IceOptions</name>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="32"/>
+   <location line="32" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Servers list</source>
    <translation>Servers list</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="56"/>
+   <location line="56" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>&amp;Remove</source>
    <translation>&amp;Remove</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="76"/>
+   <location line="76" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Add &amp;STUN...</source>
    <translation>Add &amp;STUN...</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="96"/>
+   <location line="96" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Add &amp;TURN...</source>
    <translation>Add &amp;TURN...</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="132"/>
+   <location line="132" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Type</source>
    <translation>Type</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="140"/>
+   <location line="140" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Address</source>
    <translation>Address</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="145"/>
+   <location line="145" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Port</source>
    <translation>Port</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="150"/>
+   <location line="150" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Username</source>
    <translation>Username</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="155"/>
+   <location line="155" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Password</source>
    <translation>Password</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="166"/>
+   <location line="166" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</source>
    <translation>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="169"/>
+   <location line="169" filename="../../plugins/jingletransporticeudp/iceoptions.ui"/>
    <source>&amp;Aggressive nomination</source>
    <translation>&amp;Aggressive nomination</translation>
   </message>
@@ -120,23 +120,23 @@
  <context>
   <name>JingleTransportIceUdp</name>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="25"/>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="228"/>
+   <location line="25" filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp"/>
+   <location line="228" filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp"/>
    <source>Jingle ICE-UDP Transport</source>
    <translation>Jingle ICE-UDP Transport</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="26"/>
+   <location line="26" filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp"/>
    <source>Implements XEP-0176: Jingle ICE-UDP transport Method</source>
    <translation>Implements XEP-0176: Jingle ICE-UDP transport Method</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="216"/>
+   <location line="216" filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp"/>
    <source>ICE</source>
    <translation>ICE</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="229"/>
+   <location line="229" filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp"/>
    <source>Allows using ICE-UDP transport in Jingle sesions</source>
    <translation>Allows using ICE-UDP transport in Jingle sesions</translation>
   </message>

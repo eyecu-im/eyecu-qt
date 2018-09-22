@@ -258,6 +258,7 @@ bool JingleRtp::initSettings()
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);		// Audio encoding bitrate
 	Options::setDefaultValue(OPV_JINGLE_RTP_TIMEOUT, 5000);				// Audio data receive timeout
 	Options::setDefaultValue(OPV_JINGLE_RTP_RTCP, true);				// Use RTCP
+	Options::setDefaultValue(OPV_JINGLE_RTP_RINGING, false);			// Consider other party's clint ringing once the Call is acknowledged
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant());	// Audio input device
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant());	// Audio output device
 	if (FOptionsManager)
@@ -285,6 +286,8 @@ QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QSt
 		widgets.insertMulti(OWO_JINGLERTP_COMMON_TIMEOUT, timeout);
 		widgets.insertMulti(OWO_JINGLERTP_COMMON_RTCP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RTCP),
 																								  tr("Use RTCP"),AParent));
+		widgets.insertMulti(OWO_JINGLERTP_COMMON_RINGING, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RINGING),
+																								  tr("Assume the other party ringing, once the call is acknowledged"),AParent));
 		widgets.insertMulti(OHO_JINGLERTP_AUDIO, FOptionsManager->newOptionsDialogHeader(tr("Audio"), AParent));
 		widgets.insertMulti(OWO_JINGLERTP_AUDIO, new AudioOptions(AParent));
 		widgets.insertMulti(OHO_JINGLERTP_CODECS, FOptionsManager->newOptionsDialogHeader(tr("Codecs"), AParent));
@@ -325,6 +328,15 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
             LOG_INFO(QString("Action acknowledged: %1").arg(AAction));
 			switch (AAction)
 			{
+				case IJingle::SessionInitiate:
+					LOG_DEBUG("It's session-accept.");
+					if (Options::node(OPV_JINGLE_RTP_RINGING).value().toBool())
+					{
+						qDebug() << "Assume the client is ringing! updateNotification.";
+						notifyRinging(ASid);
+					}
+					break;
+
 				case IJingle::SessionAccept:
                     LOG_DEBUG("It's session-accept. Trying to establish connection.");
 					establishConnection(ASid);
@@ -488,10 +500,15 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 	{
 		if (event.tagName() == FTypes[Ringing])
 		{
-			QString sid = AInfoElement.attribute("sid");
-			removeNotification(sid);
-			FRinging.append(sid);
-			callNotify(sid, Called);
+			if (!Options::node(OPV_JINGLE_RTP_RINGING).value().toBool())
+			{
+				qDebug() << "The other party is Ringined! Display Ringing notification";
+				notifyRinging(AInfoElement.attribute("sid"));
+			}
+			else
+			{
+				qDebug() << "Ringing notification must be displayed already! Nothing to do";
+			}
 		}
 	}
 }
@@ -533,6 +550,13 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 
 		LOG_WARNING("Invalid payload type!");
 	}
+}
+
+void JingleRtp::notifyRinging(const QString &ASid)
+{
+	removeNotification(ASid);
+	FRinging.append(ASid);
+	callNotify(ASid, Called);
 }
 
 void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Reason AReason)
@@ -846,12 +870,16 @@ void JingleRtp::removeNotification(const QString &ASid)
 	removeNotification(FMessageWidgets->findChatWindow(FJingle->streamJid(ASid),
 													   FJingle->contactJid(ASid)));	
 }
+
 //TODO: Check, if entity is online
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	return !FServiceDiscovery || !FServiceDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
+	qDebug() << "JingleRtp::isSupported(" << AStreamJid.full() << "," << AContactJid.full() << ")";
+	return (AStreamJid != AContactJid) &&
+		   FPresenceManager->isOnlineContact(AContactJid) &&
+		   (!FServiceDiscovery ||
 		   (FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP) &&
-			FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP_AUDIO));
+			FServiceDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JINGLE_APPS_RTP_AUDIO)));
 }
 
 bool JingleRtp::checkContent(IJingleContent *AContent)

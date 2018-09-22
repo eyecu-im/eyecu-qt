@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceNavitel</name>
   <message>
-   <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="13"/>
+   <location line="13" filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp"/>
    <source>Navitel map source</source>
    <translation>Navitel map source</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="14"/>
+   <location line="14" filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp"/>
    <source>Allows Map plugin to use Navitel as map source</source>
    <translation>Allows Map plugin to use Navitel as map source</translation>
   </message>

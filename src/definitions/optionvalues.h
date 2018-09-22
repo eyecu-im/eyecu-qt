@@ -606,6 +606,7 @@
 #define OPV_JINGLE_RTP_AUDIO_BITRATE                    "jingle.rtp.audio.bitrate"
 #define OPV_JINGLE_RTP_TIMEOUT							"jingle.rtp.timeout"
 #define OPV_JINGLE_RTP_RTCP								"jingle.rtp.rtcp"
+#define OPV_JINGLE_RTP_RINGING							"jingle.rtp.ringing"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
 
 // Client Icons
