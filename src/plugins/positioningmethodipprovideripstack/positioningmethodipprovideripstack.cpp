@@ -1,24 +1,27 @@
+#include "positioningmethodipprovideripstack.h"
+
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 
 #include <utils/iconstorage.h>
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
-#include "positioningmethodipproviderfreegeoip.h"
-
-#define	REQUEST_ID "freegeoip"
+#define	REQUEST_ID "ipstack"
+#define API_KEY "ed5ff0672b9782bd2372f39dcf6aae4c"
+#define REQUEST_URL "http://api.ipstack.com/check?output=xml&fields=main"
 
 PositioningMethodIpProviderFreegeoip::PositioningMethodIpProviderFreegeoip(QObject *parent): QObject(parent)
 {}
 
 void PositioningMethodIpProviderFreegeoip::pluginInfo(IPluginInfo *APluginInfo)
 {
-    APluginInfo->name = tr("Positining Method IP Provider freegeoip.net");
-    APluginInfo->description = tr("Allows to use freegeoip.net as an IP positioning provider");
+	APluginInfo->name = tr("Positining Method IP Provider ipstack");
+	APluginInfo->description = tr("Allows to use ipstack as an IP positioning provider");
     APluginInfo->version = "1.0";
     APluginInfo->author = "Road Works Software";
     APluginInfo->homePage = "http://www.eyecu.ru";
-    APluginInfo->dependences.append(MAPSEARCH_UUID);
+	APluginInfo->dependences.append(POSITIONINGMETHODIP_UUID);
 }
 
 bool PositioningMethodIpProviderFreegeoip::initConnections(IPluginManager *APluginManager, int &AInitOrder)
@@ -30,17 +33,20 @@ bool PositioningMethodIpProviderFreegeoip::initConnections(IPluginManager *APlug
 
 bool PositioningMethodIpProviderFreegeoip::request()
 {
-	return FHttpRequester->request(QUrl("https://freegeoip.net/xml/"), REQUEST_ID, this, SLOT(onResultReceived(QByteArray,QString)));
+	QUrl url(REQUEST_URL);
+	URL_ADD_QUERY_ITEM(url, "access_key", API_KEY)
+
+	return FHttpRequester->request(url, REQUEST_ID, this, SLOT(onResultReceived(QByteArray,QString)));
 }
 
 QString PositioningMethodIpProviderFreegeoip::name() const
 {
-	return tr("freegeoip.net");
+	return tr("ipstack");
 }
 
 QIcon PositioningMethodIpProviderFreegeoip::icon() const
 {
-	return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_POSITIONING_IP_FREEGEOIP);
+	return IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_POSITIONING_IP_IPSTACK);
 }
 
 void PositioningMethodIpProviderFreegeoip::parseResult(QByteArray ASearchResult)
@@ -49,25 +55,25 @@ void PositioningMethodIpProviderFreegeoip::parseResult(QByteArray ASearchResult)
 	doc.setContent(ASearchResult);
 
 	QDomElement root = doc.documentElement();
-	if (root.tagName() == "Response")	// Ok
+	if (root.tagName() == "result")	// Ok
 	{
 		GeolocElement geoloc;
-		QDomElement countryCode = root.firstChildElement("CountryCode");
+		QDomElement countryCode = root.firstChildElement("country_code");
 		if (!countryCode.isNull()  && !countryCode.text().isEmpty())
 			geoloc.setCountryCode(countryCode.text());
-		QDomElement countryName = root.firstChildElement("CountryName");
+		QDomElement countryName = root.firstChildElement("country_name");
 		if (!countryName.isNull() && !countryName.text().isEmpty())
 			geoloc.setCountry(countryName.text());
-		QDomElement regionName = root.firstChildElement("RegionName");
+		QDomElement regionName = root.firstChildElement("region_name");
 		if (!regionName.isNull() && !regionName.text().isEmpty())
 			geoloc.setRegion(regionName.text());
-		QDomElement city = root.firstChildElement("City");
+		QDomElement city = root.firstChildElement("city");
 		if (!city.isNull() && !city.text().isEmpty())
 			geoloc.setLocality(city.text());
-		QDomElement zipCode = root.firstChildElement("ZipCode");
-		if (!zipCode.isNull() && !zipCode.text().isEmpty())
-			geoloc.setPostalCode(zipCode.text());
-		QDomElement latitude = root.firstChildElement("Latitude");
+		QDomElement zip = root.firstChildElement("zip");
+		if (!zip.isNull() && !zip.text().isEmpty())
+			geoloc.setPostalCode(zip.text());
+		QDomElement latitude = root.firstChildElement("latitude");
 		if (!latitude.isNull() && !latitude.text().isEmpty())
 		{
 			bool ok;
@@ -75,7 +81,7 @@ void PositioningMethodIpProviderFreegeoip::parseResult(QByteArray ASearchResult)
 			if (ok)
 				geoloc.setLat(lat);
 		}
-		QDomElement longitude = root.firstChildElement("Longitude");
+		QDomElement longitude = root.firstChildElement("longitude");
 		if (!longitude.isNull() && !longitude.text().isEmpty())
 		{
 			bool ok;

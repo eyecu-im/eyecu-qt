@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en" sourcelanguage="en">
+<TS language="en" version="2.1" sourcelanguage="en">
  <context>
   <name>XmppUriQueries</name>
   <message>
-   <location line="24" filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp"/>
+   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="24"/>
    <source>XMPP URI Queries</source>
    <translation>XMPP URI Queries</translation>
   </message>
   <message>
-   <location line="25" filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp"/>
+   <location filename="../../plugins/xmppuriqueries/xmppuriqueries.cpp" line="25"/>
    <source>Allows other plugins to handle XMPP URI queries</source>
    <translation>Allows other plugins to handle XMPP URI queries</translation>
   </message>

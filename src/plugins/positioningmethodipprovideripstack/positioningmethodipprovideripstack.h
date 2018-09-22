@@ -3,7 +3,6 @@
 
 #include <interfaces/ipositioningmethodipprovider.h>
 #include <interfaces/ipluginmanager.h>
-#include <interfaces/imapsearch.h>
 
 #define POSITIONINGMETHODIPPROVIDERFREEGEOIP_UUID "{4d62bcd8-af35-67d0-b9a8-247bdaf7035a}"
 
@@ -18,7 +17,7 @@ class PositioningMethodIpProviderFreegeoip:
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.PositioningMethodIpProviderFreegeoip")
 #endif
 public:
-	PositioningMethodIpProviderFreegeoip(QObject *parent = 0);
+	PositioningMethodIpProviderFreegeoip(QObject *parent = nullptr);
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid   pluginUuid() const { return POSITIONINGMETHODIPPROVIDERFREEGEOIP_UUID; }

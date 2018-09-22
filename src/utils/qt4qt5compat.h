@@ -14,14 +14,15 @@
 #define URL_SET_QUERY_DELIMITERS(URL,VALUE,PAIR) URL.setQueryDelimiters(VALUE,PAIR)
 #define MAYBE_JOIN
 #else
+#include <QUrlQuery>
 #define HTML_ESCAPE(value) (value).toHtmlEscaped()
 #define HTML_ESCAPE_CHARS(value) QString(value).toHtmlEscaped()
 #define URL_ENCODE(value) = QUrl::fromEncoded(value)
 #define SETRESIZEMODE setSectionResizeMode
 #define SETCLICABLE setSectionsClickable
 #define URL_QUERY_ITEM_VALUE(URL,KEY) QUrlQuery(URL).queryItemValue(KEY)
-#define URL_ADD_QUERY_ITEM(URL,KEY,VALUE) QUrlQuery(URL).addQueryItem(KEY,VALUE)
-#define URL_SET_QUERY_ITEMS(URL,ITEMS) QUrlQuery(URL).setQueryItems(ITEMS)
+#define URL_ADD_QUERY_ITEM(URL,KEY,VALUE) {QUrlQuery _query(URL); _query.addQueryItem(KEY,VALUE); URL.setQuery(_query);}
+#define URL_SET_QUERY_ITEMS(URL,ITEMS) {QUrlQuery _query(URL); _query.setQueryItems(ITEMS); URL.setQuery(_query);}
 #define URL_QUERY_ITEMS(URL) QUrlQuery(URL).queryItems()
 #define URL_SET_QUERY_DELIMITERS(URL,VALUE,PAIR) QUrlQuery(URL).setQueryDelimiters(VALUE,PAIR)
 #define MAYBE_JOIN .join("; ")

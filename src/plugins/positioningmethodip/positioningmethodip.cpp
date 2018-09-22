@@ -7,10 +7,10 @@
 
 PositioningMethodIp::PositioningMethodIp():
     FCurrentState(Stopped),
-    FOptionsManager(NULL),
-    FPositioning(NULL),
-	FConnectionManager(NULL),
-	FOptions(NULL),
+	FOptionsManager(nullptr),
+	FPositioning(nullptr),
+	FConnectionManager(nullptr),
+	FOptions(nullptr),
 	FHttpRequester(new QNetworkAccessManager(this))
 {}
 
@@ -43,11 +43,11 @@ bool PositioningMethodIp::initConnections(IPluginManager *APluginManager, int &A
 		connect((*it)->instance(), SIGNAL(requestError()), SLOT(onRequestError()));
 	}
 
-	IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin= APluginManager->pluginInterface("IConnectionManager").value(0,NULL);
+	plugin= APluginManager->pluginInterface("IConnectionManager").value(0,nullptr);
 	if (plugin)
 		FConnectionManager = qobject_cast<IConnectionManager *>(plugin->instance());
 

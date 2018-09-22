@@ -461,8 +461,8 @@ source_lang = en
 file_filter = <lang>/positioningmethodip.ts
 source_lang = en
 
-[eyecu-qt.positioningmethodipproviderfreegeoipts]
-file_filter = <lang>/positioningmethodipproviderfreegeoip.ts
+[eyecu-qt.positioningmethodipprovideripstackts]
+file_filter = <lang>/positioningmethodipprovideripstack.ts
 source_lang = en
 
 [eyecu-qt.positioningmethodlocationts]

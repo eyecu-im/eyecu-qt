@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>TuneListenerQuPlayer</name>
   <message>
-   <location line="23" filename="../../plugins/tunelistenerquplayer/tunelistenerquplayer.cpp"/>
+   <location filename="../../plugins/tunelistenerquplayer/tunelistenerquplayer.cpp" line="23"/>
    <source>Tune Listener QuPlayer</source>
    <translation>Tune Listener QuPlayer</translation>
   </message>
   <message>
-   <location line="24" filename="../../plugins/tunelistenerquplayer/tunelistenerquplayer.cpp"/>
+   <location filename="../../plugins/tunelistenerquplayer/tunelistenerquplayer.cpp" line="24"/>
    <source>Allow User Tune plugin to obtain currently playing tune information from QuPlayer</source>
    <translation>Allow User Tune plugin to obtain currently playing tune information from QuPlayer</translation>
   </message>
@@ -17,12 +17,12 @@
  <context>
   <name>TuneListenerQuPlayerOptions</name>
   <message>
-   <location line="35" filename="../../plugins/tunelistenerquplayer/tunelistenerquplayeroptions.ui"/>
+   <location filename="../../plugins/tunelistenerquplayer/tunelistenerquplayeroptions.ui" line="35"/>
    <source>QuPlayer</source>
    <translation>QuPlayer</translation>
   </message>
   <message>
-   <location line="56" filename="../../plugins/tunelistenerquplayer/tunelistenerquplayeroptions.ui"/>
+   <location filename="../../plugins/tunelistenerquplayer/tunelistenerquplayeroptions.ui" line="56"/>
    <source>Pipe name</source>
    <translation>Pipe name</translation>
   </message>

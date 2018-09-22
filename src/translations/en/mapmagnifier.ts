@@ -1,101 +1,101 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>MagnifierOptions</name>
   <message>
-   <location line="26" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="26"/>
    <source>Magnifier</source>
    <translation>Magnifier</translation>
   </message>
   <message>
-   <location line="99" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="99"/>
    <source>Size</source>
    <translation>Size</translation>
   </message>
   <message>
-   <location line="106" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="106"/>
    <source>Zoom gain</source>
    <translation>Zoom gain</translation>
   </message>
   <message>
-   <location line="113" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="113"/>
    <source>High precision</source>
    <translation>High precision</translation>
   </message>
   <message>
-   <location line="120" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="120"/>
    <source>Show objects</source>
    <translation>Show objects</translation>
   </message>
   <message>
-   <location line="127" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="127"/>
    <source>Enable central rulers</source>
    <translation>Enable central rulers</translation>
   </message>
   <message>
-   <location line="134" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="134"/>
    <source>Enable scale</source>
    <translation>Enable scale</translation>
   </message>
   <message>
-   <location line="144" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="144"/>
    <source>Shadow</source>
    <translation>Shadow</translation>
   </message>
   <message>
-   <location line="150" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
-   <location line="326" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="150"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="326"/>
    <source>Color</source>
    <translation>Color</translation>
   </message>
   <message>
-   <location line="183" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="183"/>
    <source>Blur radius</source>
    <translation>Blur radius</translation>
   </message>
   <message>
-   <location line="216" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="216"/>
    <source>Horizontal shift</source>
    <translation>Horizontal shift</translation>
   </message>
   <message>
-   <location line="242" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="242"/>
    <source>Vertical shift</source>
    <translation>Vertical shift</translation>
   </message>
   <message>
-   <location line="297" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="297"/>
    <source>Zoom factor</source>
    <translation>Zoom factor</translation>
   </message>
   <message>
-   <location line="333" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="333"/>
    <source>Font</source>
    <translation>Font</translation>
   </message>
   <message>
-   <location line="340" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="340"/>
    <source>Sample text</source>
    <translation>Sample text</translation>
   </message>
   <message>
-   <location line="347" filename="../../plugins/mapmagnifier/magnifieroptions.ui"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="347"/>
    <source>Display</source>
    <translation>Display</translation>
   </message>
   <message>
-   <location line="104" filename="../../plugins/mapmagnifier/magnifieroptions.cpp"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.cpp" line="104"/>
    <source>Choose shadow color</source>
    <translation>Choose shadow color</translation>
   </message>
   <message>
-   <location line="120" filename="../../plugins/mapmagnifier/magnifieroptions.cpp"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.cpp" line="120"/>
    <source>Choose zoom factor color</source>
    <translation>Choose zoom factor color</translation>
   </message>
   <message>
-   <location line="137" filename="../../plugins/mapmagnifier/magnifieroptions.cpp"/>
+   <location filename="../../plugins/mapmagnifier/magnifieroptions.cpp" line="137"/>
    <source>Choose zoom factor font</source>
    <translation>Choose zoom factor font</translation>
   </message>
@@ -103,72 +103,72 @@
  <context>
   <name>MapMagnifier</name>
   <message>
-   <location line="74" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="74"/>
    <source>Map Magnifier</source>
    <translation>Map Magnifier</translation>
   </message>
   <message>
-   <location line="75" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="75"/>
    <source>Allows to see part of the map magnified</source>
    <translation>Allows to see part of the map magnified</translation>
   </message>
   <message>
-   <location line="102" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
-   <location line="111" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="102"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="111"/>
    <source>Magnifier</source>
    <translation>Magnifier</translation>
   </message>
   <message>
-   <location line="103" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
    <source>On/off</source>
    <translation>On/off</translation>
   </message>
   <message>
-   <location line="103" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
    <source>F8</source>
    <comment>Magnifier</comment>
    <translation>F8</translation>
   </message>
   <message>
-   <location line="104" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
    <source>Zoom in</source>
    <translation>Zoom in</translation>
   </message>
   <message>
-   <location line="104" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
    <source>Alt++</source>
    <comment>Zoom In</comment>
    <translation>Alt++</translation>
   </message>
   <message>
-   <location line="105" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
    <source>Zoom out</source>
    <translation>Zoom out</translation>
   </message>
   <message>
-   <location line="105" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
    <source>Alt+-</source>
    <comment>Zoom Out</comment>
    <translation>Alt+-</translation>
   </message>
   <message>
-   <location line="139" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="139"/>
    <source>Map magnifier</source>
    <translation>Map magnifier</translation>
   </message>
   <message>
-   <location line="244" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
-   <location line="503" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="244"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="503"/>
    <source>x%1</source>
    <translation>x%1</translation>
   </message>
   <message>
-   <location line="261" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 m</source>
    <translation>%1 m</translation>
   </message>
   <message>
-   <location line="261" filename="../../plugins/mapmagnifier/mapmagnifier.cpp"/>
+   <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 km</source>
    <translation>%1 km</translation>
   </message>

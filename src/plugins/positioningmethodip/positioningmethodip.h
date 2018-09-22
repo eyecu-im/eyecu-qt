@@ -14,8 +14,6 @@
 
 #include "positioningmethodipoptions.h"
 
-#define POSITIONINGMETHODIP_UUID "{07C3DBA5-8DC4-B2E0-F732-05C6D7A10BC3}"
-
 class PositioningMethodIp:
         public QObject,
         public IPlugin,

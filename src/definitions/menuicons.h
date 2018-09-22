@@ -327,7 +327,7 @@
 #define MNI_POSITIONING_GEOIP           "positioningGeoip"
 
 //Positioning providers
-#define MNI_POSITIONING_IP_FREEGEOIP    "positioningIpFreegeoip"
+#define MNI_POSITIONING_IP_IPSTACK		"positioningIpIpstack"
 
 //Edit
 #define MNI_EDIT                        "edit"

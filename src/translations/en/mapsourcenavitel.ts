@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>MapSourceNavitel</name>
   <message>
-   <location line="13" filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp"/>
+   <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="13"/>
    <source>Navitel map source</source>
    <translation>Navitel map source</translation>
   </message>
   <message>
-   <location line="14" filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp"/>
+   <location filename="../../plugins/mapsourcenavitel/mapsourcenavitel.cpp" line="14"/>
    <source>Allows Map plugin to use Navitel as map source</source>
    <translation>Allows Map plugin to use Navitel as map source</translation>
   </message>
