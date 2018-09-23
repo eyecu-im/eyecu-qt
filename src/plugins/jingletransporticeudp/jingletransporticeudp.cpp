@@ -231,6 +231,7 @@ void JingleTransportIceUdp::registerDiscoFeatures()
 
 int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
 {
+	qDebug() << "JingleTransportIceUdp::readCandidates(" << AIceThread << ")";
 	QHash<QHostAddress, int> networkByIp = networksByIp();
 
 	// Enumerate local candidates
@@ -440,11 +441,20 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 	switch (AOperation)
 	{
 		case QPIceTransport::OperationInit:
-			if (readCandidates(iceThread) == QP_NO_ERROR)
+		{
+			qDebug() << "QPIceTransport::OperationInit:";
+			int status = readCandidates(iceThread);
+			qDebug() << "status=" << status;
+			if (status == QP_NO_ERROR)
 				emit incomingTransportFilled(content);
 			else
+			{
+				qDebug() << "error string:" << QpErrno::errorString(status);
+				qDebug() << "emitting incomingTransportFillFailed()";
 				emit incomingTransportFillFailed(content);
+			}
 			break;
+		}
 
 		case QPIceTransport::OperationNegotiation:
 		{
@@ -472,13 +482,28 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 
 void JingleTransportIceUdp::onIceThreadFinished()
 {
+	qDebug() << "JingleTransportIceUdp::onIceThreadFinished()";
 	IceThread *iceThread = qobject_cast<IceThread*>(sender());
+	qDebug() << "iceThread=" << iceThread;
 	if (FIceThreads.contains(iceThread)) {
+		qDebug() << "A!";
 		LOG_DEBUG("ICE thread unexpectedly finished!");
 		FIceThreads.removeOne(iceThread);
-		emit incomingTransportFillFailed(iceThread->content());
+		qDebug() << "B!";
+		if (iceThread->state() < QPIceTransport::StateReady)
+		{
+			qDebug() << "C!";
+			emit incomingTransportFillFailed(iceThread->content());
+		}
+		else
+		{
+			qDebug() << "D!";
+			emit connectionError(iceThread->content());
+		}
+		qDebug() << "E!";
 		delete iceThread;
 	}
+	qDebug() << "END!";
 }
 
 #if QT_VERSION < 0x050000

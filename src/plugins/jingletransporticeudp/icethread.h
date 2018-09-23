@@ -59,7 +59,10 @@ private:
 	QString FLocalPwd;
 
 	QHash<QString, QPIceCandidate> FRemCands;
-	IJingleContent	*FContent;
+//	IJingleContent	*FContent;
+	const QString FSid;
+	const QString FContentName;
+	const int	  FComponentCount;
 };
 
 #endif // ICETHREAD_H

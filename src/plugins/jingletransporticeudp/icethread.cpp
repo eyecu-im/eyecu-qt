@@ -11,7 +11,9 @@ IceThread::IceThread(const QPIceTransport::Config &AIceCfg,
 	FLastStatus(QP_NO_ERROR),
 	FLocalUfrag(QUuid::createUuid().toString()),
 	FLocalPwd(QUuid::createUuid().toString()),
-	FContent(AContent)
+	FSid(AContent->sid()),
+	FContentName(AContent->name()),
+	FComponentCount(AContent->componentCount())
 {
 	setObjectName(AContent->name());
 	moveToThread(this);
@@ -108,6 +110,7 @@ void IceThread::run()
 
 void IceThread::onIceComplete(QPIceTransport::Operation AOperation, int ALastStatus)
 {
+	qDebug() << "IceThread::onIceComplete(" << AOperation << "," << ALastStatus << ")";
 	if (ALastStatus == QP_NO_ERROR) {
 		if (AOperation == QPIceTransport::OperationInit)
 			ALastStatus = FIceTransport->initIce(FIceRole, FLocalUfrag, FLocalPwd);
@@ -121,6 +124,8 @@ void IceThread::onIceComplete(QPIceTransport::Operation AOperation, int ALastSta
 		}
 	}
 
+	qDebug() << "status string:" << QpErrno::errorString(ALastStatus);
+
 	FLastStatus = ALastStatus;
 	FLastState = FIceTransport->state();
 	FIceTransport->destroy();
@@ -128,6 +133,7 @@ void IceThread::onIceComplete(QPIceTransport::Operation AOperation, int ALastSta
 
 void IceThread::onIceDestroyed(QObject *)
 {
+	qDebug() << "IceThread::onIceDestroyed()";
 	exit();
 }
 
@@ -139,6 +145,7 @@ void IceThread::onIceStart(const QString &ARemoteUFrag, const QByteArray &ARemot
 
 void IceThread::onIceDestroy()
 {
+	qDebug() << "IceThread::onIceDestroy()";
 	if (FIceTransport)
 		FIceTransport->destroy();
 	else

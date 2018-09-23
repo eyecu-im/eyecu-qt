@@ -81,7 +81,7 @@ protected:
 
 protected slots:
 	void onConnectionOpened(IJingleContent *AContent);
-	void onConnectionFailed(IJingleContent *AContent);
+	void onConnectionError(IJingleContent *AContent);
     void onIncomingTransportFilled(IJingleContent *AContent);
     void onIncomingTransportFillFailed(IJingleContent *AContent);
 

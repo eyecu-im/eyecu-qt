@@ -94,7 +94,7 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 								  SLOT(onConnectionOpened(IJingleContent*)),
 				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(connectionError(IJingleContent*)),
-								  SLOT(onConnectionFailed(IJingleContent*)),
+								  SLOT(onConnectionError(IJingleContent*)),
 				Qt::QueuedConnection);
 		connect((*it)->instance(),SIGNAL(incomingTransportFilled(IJingleContent*)),
 								  SLOT(onIncomingTransportFilled(IJingleContent*)),
@@ -169,13 +169,16 @@ void Jingle::onConnectionOpened(IJingleContent *AContent)
 	emit connectionOpened(AContent);
 }
 
-void Jingle::onConnectionFailed(IJingleContent *AContent)
+void Jingle::onConnectionError(IJingleContent *AContent)
 {
+	qDebug() << "Jingle::onConnectionError()";
 	emit connectionFailed(AContent);
+	qDebug() << "Jingle::onConnectionError(): Finished!";
 }
 
 void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 {
+	qDebug() << "Jingle::onIncomingTransportFilled()";
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
 	if (session)
 	{
@@ -198,6 +201,7 @@ void Jingle::onIncomingTransportFilled(IJingleContent *AContent)
 
 void Jingle::onIncomingTransportFillFailed(IJingleContent *AContent)
 {
+	qDebug() << "Jingle::onIncomingTransportFillFailed()";
 	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1)")
 			  .arg(int(AContent), 8, 16));
 	JingleSession *session = JingleSession::sessionBySessionId(AContent->sid());
@@ -452,8 +456,10 @@ bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 
 bool Jingle::sessionDestroy(const QString &ASid)
 {
+	qDebug() << "Jingle::sessionDestroy(" << ASid << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
 	if (session) {
+		qDebug() << "session:" << session << "schedule to delete...";
 		session->deleteLater();
 		return true;
 	}

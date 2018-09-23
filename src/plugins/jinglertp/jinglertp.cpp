@@ -488,6 +488,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 		(FJingle->isOutgoing(ASid) && type == Rejected))
 		callNotify(ASid, type, AReason);
 
+	qDebug() << "calling checkRunningContents(" << ASid << ")";
 	checkRunningContents(ASid);
 }
 
@@ -1167,11 +1168,21 @@ void JingleRtp::removePendingContent(IJingleContent *AContent, PendingType AType
 
 bool JingleRtp::hasPendingContents(const QString &ASid, PendingType AType)
 {
+	qDebug() << "JingleRtp::hasPendingContents(" << ASid << "," << AType << ")";
 	QList<IJingleContent *> pendingContents = FPendingContents.values(AType);
+	qDebug() << "pendingContents.size()=" << pendingContents.size();
 	for (QList<IJingleContent *>::ConstIterator it = pendingContents.constBegin();
 		 it!=pendingContents.constEnd(); it++)
+	{
+		qDebug() << "*it=" << *it;
+		qDebug() << "(*it)->sid()=" << (*it)->sid();
 		if ((*it)->sid() == ASid)
+		{
+			qDebug() << "TRUE";
 			return true;
+		}
+	}
+	qDebug() << "FALSE";
 	return false;
 }
 
@@ -1194,6 +1205,7 @@ void JingleRtp::establishConnection(const QString &ASid)
 
 void JingleRtp::checkRunningContents(const QString &ASid)
 {
+	qDebug() << "JingleRtp::checkRunningContents(" << ASid << ")";
 	bool pending(false);
 	QHash<QString,IJingleContent*> contents = FJingle->contents(ASid);
 	for (QHash<QString,IJingleContent*>::ConstIterator it=contents.constBegin();
@@ -1855,7 +1867,11 @@ void JingleRtp::onRtpReadyRead()
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
 	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));	
+	qDebug() << "JingleRtp::onConnectionEstablished(" << AContent << ")";
+	qDebug() << "content name=" << AContent->name();
 	removePendingContent(AContent, Connect);
+	qDebug() << "HERE!";
+
 	if (!hasPendingContents(AContent->sid(), Connect))
 		FJingle->setConnected(AContent->sid());
 	else
@@ -1865,7 +1881,9 @@ void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
 	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AContent->name()));
+	qDebug() << "JingleRtp::onConnectionFailed()";
 	removePendingContent(AContent, Connect);
+	qDebug() << "HERE!!!";
 	if (!hasPendingContents(AContent->sid(), Connect))
 	{
 		if (FJingle->contents(AContent->sid()).isEmpty())
