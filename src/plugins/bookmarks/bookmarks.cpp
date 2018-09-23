@@ -801,20 +801,22 @@ void Bookmarks::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &AInde
 				}
 			}
 
+// *** <<< eyeCU <<< ***
+			if (!isMultiSelection)
+			{
+				Action *editAction = new Action(bookmarksMenu);
+				editAction->setIcon(RSR_STORAGE_MENUICONS,MNI_BOOKMARKS_EDIT);
+				editAction->setText(tr("Edit Bookmarks..."));
+				editAction->setData(ADR_STREAM_JID,index->data(RDR_STREAM_JID).toString());
+				connect(editAction,SIGNAL(triggered(bool)),SLOT(onEditBookmarksActionTriggered(bool)));
+				bookmarksMenu->addAction(editAction,AG_RVCM_BOOKMARS_EDIT);
+			}
+
 			if (!bookmarksMenu->isEmpty())
 				AMenu->addAction(bookmarksMenu->menuAction(),AG_RVCM_BOOKMARS_LIST);
 			else
 				delete bookmarksMenu;
-
-			if (!isMultiSelection)
-			{
-				Action *editAction = new Action(AMenu);
-				editAction->setIcon(RSR_STORAGE_MENUICONS,MNI_BOOKMARKS_EDIT);
-				editAction->setText(tr("Edit Bookmarks"));
-				editAction->setData(ADR_STREAM_JID,index->data(RDR_STREAM_JID).toString());
-				connect(editAction,SIGNAL(triggered(bool)),SLOT(onEditBookmarksActionTriggered(bool)));
-				AMenu->addAction(editAction,AG_RVCM_BOOKMARS_EDIT);
-			}
+// *** >>> eyeCU >>> ***
 		}
 		else if (index->kind() == RIK_MUC_ITEM)
 		{

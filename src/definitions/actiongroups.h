@@ -80,8 +80,11 @@
 #define AG_RVCM_RCHANGER_ADD_CONTACT                            300
 #define AG_RVCM_GATEWAYS_ADD_LEGACY_USER                        300
 #define AG_RVCM_MULTIUSERCHAT_JOIN                              300
-#define AG_RVCM_BOOKMARS_LIST                                   350
+// *** <<< eyeCU <<< ***
+#define AG_RVCM_BOOKMARS_LIST                                   300
+// *** >>> eyeCU >>> ***
 #define AG_RVCM_BOOKMARS_EDIT                                   350
+
 #define AG_RVCM_CLIENTINFO_SHOW                                 400
 #define AG_RVCM_MULTIUSERCHAT_INVITE                            400
 #define AG_RVCM_DISCOVERY_FEATURES                              400
