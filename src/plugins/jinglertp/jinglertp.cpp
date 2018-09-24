@@ -47,7 +47,7 @@ void JingleCallTimer::timerEvent(QTimerEvent *e)
 {
 	Q_UNUSED(e)
 
-	if (!interval())        // Just started
+	if (!interval())			// Just started
 		setInterval(FTimeout);  // Set correct interval
 
 #if QT_VERSION >= 0x050000
@@ -254,7 +254,10 @@ bool JingleRtp::initObjects()
 
 bool JingleRtp::initSettings()
 {
-	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>() << QAVCodec::AvCodecIdOpus << QAVCodec::AvCodecIdSpeex << QAVCodec::AvCodecIdADPCMG722));	//Used codecs
+	Options::setDefaultValue(OPV_JINGLE_RTP_CODECS_USED, stringFromInts(QList<int>()
+																		<< QAVCodec::AvCodecIdOpus
+																		<< QAVCodec::AvCodecIdSpeex
+																		<< QAVCodec::AvCodecIdADPCMG722));	//Used codecs
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_BITRATE, 32000);		// Audio encoding bitrate
 	Options::setDefaultValue(OPV_JINGLE_RTP_TIMEOUT, 5000);				// Audio data receive timeout
 	Options::setDefaultValue(OPV_JINGLE_RTP_RTCP, true);				// Use RTCP

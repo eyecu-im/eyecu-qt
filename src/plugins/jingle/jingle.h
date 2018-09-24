@@ -80,10 +80,10 @@ protected:
 	IJingleTransport *transportByNs(const QString &ANameSpace);
 
 protected slots:
-	void onConnectionOpened(IJingleContent *AContent);
-	void onConnectionError(IJingleContent *AContent);
-    void onIncomingTransportFilled(IJingleContent *AContent);
-    void onIncomingTransportFillFailed(IJingleContent *AContent);
+	void onConnectionOpened(const QString &ASid, const QString &AContentName);
+	void onConnectionError(const QString &ASid, const QString &ContentName);
+	void onIncomingTransportFilled(const QString &ASid, const QString &ContentName);
+	void onIncomingTransportFillFailed(const QString &ASid, const QString &AContentName);
 
 signals:
 	void connectionOpened(IJingleContent *AContent) override;

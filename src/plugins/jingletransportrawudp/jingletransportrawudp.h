@@ -39,9 +39,9 @@ public:
 	Types	types() const {return Datagram;}
 	QString ns() const {return NS_JINGLE_TRANSPORTS_RAW_UDP;}
 	int     priority() const {return 90;}
-	bool    openConnection(IJingleContent *AContent);
-	bool    fillIncomingTransport(IJingleContent *AContent);
-	void	freeIncomingTransport(IJingleContent *AContent);
+	bool    openConnection(const QString &ASid, const QString &AContentName) override;
+	bool    fillIncomingTransport(const QString &ASid, const QString &AContentName) override;
+	void	freeIncomingTransport(const QString &ASid, const QString &AContentName) override;
 
 	// IOptionsDialogHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
@@ -57,19 +57,19 @@ protected slots:
 
 signals:
 	//IJingleTransport
-	void connectionOpened(IJingleContent *AContent);
-	void connectionError(IJingleContent *AContent);
-	void incomingTransportFilled(IJingleContent *AContent);
-	void incomingTransportFillFailed(IJingleContent *AContent);
+	void connectionOpened(const QString &ASid, const QString &AContentName) override;
+	void connectionError(const QString &ASid, const QString &AContentName) override;
+	void incomingTransportFilled(const QString &ASid, const QString &AContentName) override;
+	void incomingTransportFillFailed(const QString &ASid, const QString &AContentName) override;
 
 private:
 	IJingle             *FJingle;
 	IServiceDiscovery   *FServiceDiscovery;
 	IOptionsManager		*FOptionsManager;
-	QHash<QIODevice *, IJingleContent *> FPendingContents;
-	QHash<QTimer *, IJingleContent *> FPendingTimers;
-	QHash<IJingleContent *, QThread *>	FThreads;
-	QList<IJingleContent *> FTransportFillNotifications;
+	QHash<QIODevice *, QPair<QString, QString> > FPendingContents;
+	QHash<QTimer *, QPair<QString, QString> > FPendingTimers;
+	QHash<QString, QHash<QString, QThread *> >	FThreads;
+	QHash<QString, QString> FTransportFillNotifications;
 };
 
 #endif // JINGLETRANSPORTRAWUDP_H

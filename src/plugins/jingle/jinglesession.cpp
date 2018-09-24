@@ -107,7 +107,6 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 
 JingleSession::~JingleSession()
 {
-	qDebug() << "~JingleSession()";
 	LOG_DEBUG("~JingleSession()");
 	for (QHash<QString, JingleContent *>::ConstIterator it=FContents.constBegin();
 		 it!=FContents.constEnd(); ++it) {
@@ -119,7 +118,6 @@ JingleSession::~JingleSession()
 
 	if (FSessions.value(FSid)==this)
 		FSessions.remove(FSid);        // remove it from the list!
-	qDebug() << "~JingleSession(): Done!";
 }
 
 void JingleSession::setInitiated(IJingleApplication *AApplication)
@@ -130,9 +128,13 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
 	connect(this,SIGNAL(sessionInitiated(QString)),parent(),SLOT(onSessionInitiated(QString)));
 	connect(this,SIGNAL(sessionAccepted(QString)),parent(),SLOT(onSessionAccepted(QString)));
 	connect(this,SIGNAL(sessionConnected(QString)),parent(),SLOT(onSessionConnected(QString)));
-	connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
+	connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)),
+			parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,IJingle::Reason)));
     connect(this,SIGNAL(sessionInformed(QDomElement)),parent(),SLOT(onSessionInformed(QDomElement)));
-	connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
+	connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
+										   IJingle::SessionStatus,Jid,IJingle::Reason)),
+			parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
+											   IJingle::SessionStatus,Jid,IJingle::Reason)));
 	emit sessionInitiated(FSid);
 }
 
@@ -229,13 +231,12 @@ JingleContent *JingleSession::addContent(const QString &AName, const QString &AM
 {
     if (FContents.contains(AName))
 		return nullptr;
-	JingleContent *content=new JingleContent(AName, FSid, AComponentCount, FApplicationNamespace,
+	JingleContent *content = new JingleContent(AName, FSid, AComponentCount, FApplicationNamespace,
 											 AMediaType, ATransport->ns(), AFromResponder);
-	if (ATransport->fillIncomingTransport(content))
-	{
-		FContents.insert(AName, content);
-		return content;
-	}
+	FContents.insert(AName, content);
+	if (ATransport->fillIncomingTransport(FSid, AName))
+		return content;	
+	FContents.remove(AName);
 	delete content;
 	return nullptr;
 }
@@ -524,7 +525,8 @@ bool JingleContent::chooseCandidate(const QString &AId)
 
 bool JingleContent::enumerateCandidates()
 {
-    for (QDomElement c=FTransportOutgoing.firstChildElement("candidate"); !c.isNull(); c=c.nextSiblingElement("candidate")) // Iterate thru candidates
+	for (QDomElement c=FTransportOutgoing.firstChildElement("candidate");
+		 !c.isNull(); c=c.nextSiblingElement("candidate")) // Iterate thru candidates
     {
         QString id=c.attribute("id");
         if (!id.isNull())

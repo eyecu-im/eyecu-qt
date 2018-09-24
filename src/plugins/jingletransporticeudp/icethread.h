@@ -12,8 +12,8 @@ class IceThread : public QThread
 	Q_OBJECT
 
 public:
-	IceThread(const QPIceTransport::Config &AIceCfg, QPIceSession::Role AIceRole,
-			  IJingleContent * AContent, QObject *AParent=nullptr);
+	IceThread(const QPIceTransport::Config &AIceCfg, QPIceSession::Role AIceRole, const QString &ASid,
+			  const QString &AContentName, int AComponentCount, QObject *AParent=nullptr);
 
 	virtual ~IceThread();
 
@@ -26,7 +26,8 @@ public:
 	bool startIce(const QString &ARemoteUFrag, const QByteArray &ARemotePassword,
 				  const QHash<QString, QPIceCandidate> &ARemoteCandidates);
 	void destroy();
-	IJingleContent *content() const;
+
+	const QString &sid() const;
 
 	const QString &localUfrag() const {return FLocalUfrag;}
 	const QString &localPwd() const {return FLocalPwd;}
@@ -59,9 +60,7 @@ private:
 	QString FLocalPwd;
 
 	QHash<QString, QPIceCandidate> FRemCands;
-//	IJingleContent	*FContent;
 	const QString FSid;
-	const QString FContentName;
 	const int	  FComponentCount;
 };
 

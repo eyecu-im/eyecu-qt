@@ -39,16 +39,16 @@ public:
 	Types types() const override {return Datagram;}
 	virtual QString ns() const override {return NS_JINGLE_TRANSPORTS_ICE_UDP;}
 	virtual int priority() const override {return 50;}
-	bool openConnection(IJingleContent *AContent) override;
-	bool fillIncomingTransport(IJingleContent *AContent) override;
-	void freeIncomingTransport(IJingleContent *AContent) override;
+	bool openConnection(const QString &ASid, const QString &AContentName) override;
+	bool fillIncomingTransport(const QString &ASid, const QString &AContentName) override;
+	void freeIncomingTransport(const QString &ASid, const QString &AContentName) override;
 
 	// IOptionsDialogHolder interface
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
 
 protected:
 	void registerDiscoFeatures();
-	int readCandidates(IceThread *AIceThread);
+	int readCandidates(IceThread *AIceThread, QDomElement AIncomingTransport);
 	static QHash<QHostAddress, int> networksByIp();
 	void addStunServers(const QStringList &AServers);
 
@@ -61,10 +61,10 @@ protected slots:
 
 signals:
 	//IJingleTransport
-	void connectionOpened(IJingleContent *AContent) override;
-	void connectionError(IJingleContent *AContent) override;
-	void incomingTransportFilled(IJingleContent *AContent) override;
-	void incomingTransportFillFailed(IJingleContent *AContent) override;
+	void connectionOpened(const QString &ASid, const QString &AContentName) override;
+	void connectionError(const QString &ASid, const QString &AContentName) override;
+	void incomingTransportFilled(const QString &ASid, const QString &AContentName) override;
+	void incomingTransportFillFailed(const QString &ASid, const QString &AContentName) override;
 
     void deviceOpened(QIODevice *ADevice);
     void deviceClosed(QIODevice *ADevice);

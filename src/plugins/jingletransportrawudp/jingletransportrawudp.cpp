@@ -72,254 +72,282 @@ bool JingleTransportRawUdp::initSettings()
     return true;
 }
 
-bool JingleTransportRawUdp::openConnection(IJingleContent *AContent)
+bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &AContentName)
 {
-	qDebug() << "JingleTransportRawUdp::openConnection(" << AContent << ")";
-    int candidates = 0; // Total candidates
-    int successful = 0; // Successfuly connected candidates
-	int compCnt = AContent->componentCount();
+	qDebug() << "JingleTransportRawUdp::openConnection(" << ASid << "," << AContentName << ")";
+	IJingleContent *content = FJingle->content(ASid, AContentName);
+	if (content)
+	{
+		int candidates = 0; // Total candidates
+		int successful = 0; // Successfuly connected candidates
+		int compCnt = content->componentCount();
 
-	QSet<int> comps;
-    QDomElement incomingTransport = AContent->transportIncoming();
-	for (QDomElement candidate = incomingTransport.firstChildElement("candidate");
-		 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
-        if (candidate.hasAttribute("id") &&
-            candidate.hasAttribute("ip") &&
-            candidate.hasAttribute("port"))
-        {
-            candidates++;
-			int comp = candidate.attribute("component").toInt();
-			if (comp < 1 || comp > compCnt)
+		QSet<int> comps;
+		QDomElement incomingTransport = content->transportIncoming();
+		for (QDomElement candidate = incomingTransport.firstChildElement("candidate");
+			 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
+			if (candidate.hasAttribute("id") &&
+				candidate.hasAttribute("ip") &&
+				candidate.hasAttribute("port"))
 			{
-				LOG_WARNING("Invalid component!");
-				continue;
-			}
-
-			if (comps.contains(comp))
-			{
-				LOG_WARNING("Candidate for the component exists already!");
-				continue;
-			}
-
-			if (AContent->ioDevice(comp)) // The device for the component MUST exist
-			{
-				comps.insert(comp);
-				successful++;
-			}
-		}
-		else
-			LOG_WARNING("Incoming candidate is broken!");
-
-	if (!candidates)
-	{
-		LOG_FATAL("No input candidates found!");
-		return false;
-	}
-
-	if (candidates > successful)
-	{
-		LOG_WARNING("Some input candidates are failed!");
-		return false;
-	}
-
-	if (comps.size() != AContent->componentCount())
-	{
-		LOG_WARNING("Component count for the content do not match!");
-		return false;
-	}
-
-	comps.clear();
-	QDomElement outgoingTransport = AContent->transportOutgoing();
-	for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
-		 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
-		if (candidate.hasAttribute("id") &&
-			candidate.hasAttribute("ip") &&
-			candidate.hasAttribute("port"))
-		{
-			int comp = candidate.attribute("component").toInt();
-			if (comp < 1 || comp > compCnt)
-			{
-				LOG_WARNING("Invalid component!");
-				continue;
-			}
-
-			if (comps.contains(comp))
-			{
-				LOG_WARNING("Candidate for the component exists already!");
-				continue;
-			}
-
-			comps.insert(comp);
-			QHostAddress address(candidate.attribute("ip"));
-			quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
-			RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(AContent->ioDevice(comp));
-			if (device)
-			{
-				device->setTargetAddress(address, port);
-				device->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
-				continue;
-			}
-
-			qWarning() << "NO I/O device for the component!";
-			AContent->setIoDevice(comp, nullptr); // Remove broken I/O device
-		}
-		else
-			qWarning() << "Incoming candidate is broken!";
-
-	if (!candidates)
-	{
-		qWarning() << "No output candidates found!";
-		return false;
-	}
-
-	if (candidates > successful)
-	{
-		qWarning() << "Some output candidates are failed!";
-		return false;
-	}
-
-	if (comps.size() != compCnt)
-	{
-		qWarning() << "Wrong number of components!";
-		return false;
-	}
-
-	for (QSet<int>::ConstIterator it = comps.constBegin();
-		 it != comps.constEnd(); ++it)
-	{
-		QIODevice *device = AContent->ioDevice(*it);
-		Q_ASSERT(device);
-		if (!device->bytesAvailable())
-		{
-			FPendingContents.insert(device, AContent);
-			connect(device, SIGNAL(readyRead()), SLOT(onReadyRead()));
-			QTimer::singleShot(1000, this, SLOT(onTimeout()));
-		}
-	}
-
-	if (!FPendingContents.keys(AContent).isEmpty()) // Have pending content
-	{
-		QTimer *timer = new QTimer();
-		timer->setSingleShot(true);
-		connect(timer, SIGNAL(timeout()), SLOT(onTimeout()));
-		FPendingTimers.insert(timer, AContent);
-		timer->start(1000);	// 1 second timeout
-	}
-
-	emit connectionOpened(AContent);
-	return true;
-}
-
-bool JingleTransportRawUdp::fillIncomingTransport(IJingleContent *AContent)
-{
-	qDebug() << "JingleTransportRawUdp::fillIncomingTransport()";
-
-	QUdpSocket *socket = new QUdpSocket();
-	socket->setProxy(QNetworkProxy::NoProxy);
-    QHostAddress localAddress;
-
-    QDomElement outgoingTransport = AContent->transportOutgoing();
-    for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
-		 !candidate.isNull(); candidate = candidate.nextSiblingElement("candidate"))
-    {
-		if (candidate.hasAttribute("ip") && candidate.hasAttribute("port") &&
-			candidate.hasAttribute("component") && candidate.hasAttribute("generation") &&
-			candidate.hasAttribute("id"))
-        {
-			QHostAddress targetAddress(candidate.attribute("ip"));
-			quint16 port = static_cast<quint16>(candidate.attribute("port").toUInt());
-			socket->connectToHost(targetAddress, port,
-                                  QIODevice::ReadOnly|QIODevice::Unbuffered);			
-            localAddress =  socket->localAddress();
-			socket->disconnectFromHost();
-        }
-        else
-            qWarning() << "Candidate is broken!";
-        break;
-    }
-
-	delete socket;
-
-	if (localAddress.isNull()) {
-		QVariant addr = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value();
-		if (addr.isNull())
-			localAddress = QpUtil::getHostIp(QAbstractSocket::UnknownNetworkLayerProtocol);
-		else
-			localAddress.setAddress(addr.toString());
-	}
-
-	if (!localAddress.isNull())
-	{
-		quint16 port(0);
-		QThread *ioThread = new QThread(this);
-		connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
-
-		QDomElement incomingTransport = AContent->transportIncoming();
-		for (int component=1; component<=AContent->componentCount(); ++component)
-		{
-			socket = getSocket(localAddress, port);
-			if (socket)
-			{
-				int id=qrand();
-				QString candidateId=QString("id%1").arg(id);
-				if (!incomingTransport.isNull())
+				candidates++;
+				int comp = candidate.attribute("component").toInt();
+				if (comp < 1 || comp > compCnt)
 				{
-					QDomElement candidate=incomingTransport.ownerDocument().createElement("candidate");
-					QString ip = socket->localAddress().toString();
-					port = socket->localPort();
-					incomingTransport.appendChild(candidate);
-					candidate.setAttribute("component", QString().setNum(component));
-					candidate.setAttribute("generation", 0);
-					candidate.setAttribute("id", candidateId);
-					candidate.setAttribute("ip", ip);
-					candidate.setAttribute("port", QString::number(port));
-					LOG_INFO(QString("About to set input device for local socket %1:%2")
-							 .arg(socket->localAddress().toString()).arg(socket->localPort()));
-
-					RawUdpIODevice *ioDevice = new RawUdpIODevice(socket, ioThread);
-					AContent->setIoDevice(component, ioDevice);
-					++port;
+					LOG_WARNING("Invalid component!");
+					continue;
 				}
-				else
+
+				if (comps.contains(comp))
 				{
-					qWarning() << "Candidate 1 is in wrong state!";
-					socket->deleteLater();
-					delete ioThread;
-					return false;
+					LOG_WARNING("Candidate for the component exists already!");
+					continue;
+				}
+
+				if (content->ioDevice(comp)) // The device for the component MUST exist
+				{
+					comps.insert(comp);
+					successful++;
 				}
 			}
 			else
+				LOG_WARNING("Incoming candidate is broken!");
+
+		if (!candidates)
+		{
+			LOG_FATAL("No input candidates found!");
+			return false;
+		}
+
+		if (candidates > successful)
+		{
+			LOG_WARNING("Some input candidates are failed!");
+			return false;
+		}
+
+		if (comps.size() != content->componentCount())
+		{
+			LOG_WARNING("Component count for the content do not match!");
+			return false;
+		}
+
+		comps.clear();
+		QDomElement outgoingTransport = content->transportOutgoing();
+		for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
+			 !candidate.isNull(); candidate=candidate.nextSiblingElement("candidate"))
+			if (candidate.hasAttribute("id") &&
+				candidate.hasAttribute("ip") &&
+				candidate.hasAttribute("port"))
 			{
-				qWarning() << "Failed to get a local socket!";
-				delete ioThread;
-				return false;
+				int comp = candidate.attribute("component").toInt();
+				if (comp < 1 || comp > compCnt)
+				{
+					LOG_WARNING("Invalid component!");
+					continue;
+				}
+
+				if (comps.contains(comp))
+				{
+					LOG_WARNING("Candidate for the component exists already!");
+					continue;
+				}
+
+				comps.insert(comp);
+				QHostAddress address(candidate.attribute("ip"));
+				quint16 port = static_cast<quint16>(candidate.attribute("port").toInt());
+				RawUdpIODevice *device = qobject_cast<RawUdpIODevice *>(content->ioDevice(comp));
+				if (device)
+				{
+					device->setTargetAddress(address, port);
+					device->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
+					continue;
+				}
+
+				qWarning() << "NO I/O device for the component!";
+				content->setIoDevice(comp, nullptr); // Remove broken I/O device
+			}
+			else
+				qWarning() << "Incoming candidate is broken!";
+
+		if (!candidates)
+		{
+			qWarning() << "No output candidates found!";
+			return false;
+		}
+
+		if (candidates > successful)
+		{
+			qWarning() << "Some output candidates are failed!";
+			return false;
+		}
+
+		if (comps.size() != compCnt)
+		{
+			qWarning() << "Wrong number of components!";
+			return false;
+		}
+
+
+		QPair<QString, QString> cid(ASid, AContentName);
+
+		for (QSet<int>::ConstIterator it = comps.constBegin();
+			 it != comps.constEnd(); ++it)
+		{
+			QIODevice *device = content->ioDevice(*it);
+			Q_ASSERT(device);
+			if (!device->bytesAvailable())
+			{
+				FPendingContents.insert(device, cid);
+				connect(device, SIGNAL(readyRead()), SLOT(onReadyRead()));
+				QTimer::singleShot(1000, this, SLOT(onTimeout()));
 			}
 		}
 
-		FThreads.insert(AContent, ioThread);
-		LOG_DEBUG(QString("Starting I/O thread for the content: %1").arg(AContent->name()));
-		ioThread->start();
+		if (!FPendingContents.keys(cid).isEmpty()) // Have pending content
+		{
+			QTimer *timer = new QTimer();
+			timer->setSingleShot(true);
+			connect(timer, SIGNAL(timeout()), SLOT(onTimeout()));
+			FPendingTimers.insert(timer, cid);
+//TODO: Make this timeout configurable
+			timer->start(1000);	// 1 second timeout
+		}
 
-		FTransportFillNotifications.append(AContent);
-		QTimer::singleShot(0, this, SLOT(emitIncomingTransportFilled()));
-
+		emit connectionOpened(ASid, AContentName);
 		return true;
 	}
 	else
-		qWarning() << "Failed to determine local address!";
+		LOG_ERROR(QString("Content not found: %1: %2").arg(ASid).arg(AContentName));
 
 	return false;
 }
 
-void JingleTransportRawUdp::freeIncomingTransport(IJingleContent *AContent)
+bool JingleTransportRawUdp::fillIncomingTransport(const QString &ASid, const QString &AContentName)
 {
-	int compCnt = AContent->componentCount();
-	for (int comp = 1; comp <= compCnt; ++comp)
-		AContent->setIoDevice(comp, nullptr);
+	qDebug() << "JingleTransportRawUdp::fillIncomingTransport()";
+	IJingleContent *content = FJingle->content(ASid, AContentName);
 
-	Q_ASSERT(FThreads.contains(AContent));
+	if (content)
+	{
+		QUdpSocket *socket = new QUdpSocket();
+		socket->setProxy(QNetworkProxy::NoProxy);
+		QHostAddress localAddress;
 
-	FThreads[AContent]->quit();
+		QDomElement outgoingTransport = content->transportOutgoing();
+		for (QDomElement candidate = outgoingTransport.firstChildElement("candidate");
+			 !candidate.isNull(); candidate = candidate.nextSiblingElement("candidate"))
+		{
+			if (candidate.hasAttribute("ip") && candidate.hasAttribute("port") &&
+				candidate.hasAttribute("component") && candidate.hasAttribute("generation") &&
+				candidate.hasAttribute("id"))
+			{
+				QHostAddress targetAddress(candidate.attribute("ip"));
+				quint16 port = static_cast<quint16>(candidate.attribute("port").toUInt());
+				socket->connectToHost(targetAddress, port,
+									  QIODevice::ReadOnly|QIODevice::Unbuffered);
+				localAddress =  socket->localAddress();
+				socket->disconnectFromHost();
+			}
+			else
+				qWarning() << "Candidate is broken!";
+			break;
+		}
+
+		delete socket;
+
+		if (localAddress.isNull()) {
+			QVariant addr = Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_IP).value();
+			if (addr.isNull())
+				localAddress = QpUtil::getHostIp(QAbstractSocket::UnknownNetworkLayerProtocol);
+			else
+				localAddress.setAddress(addr.toString());
+		}
+
+		if (!localAddress.isNull())
+		{
+			quint16 port(0);
+			QThread *ioThread = new QThread(this);
+			connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
+
+			QDomElement incomingTransport = content->transportIncoming();
+			for (int component=1; component <= content->componentCount(); ++component)
+			{
+				socket = getSocket(localAddress, port);
+				if (socket)
+				{
+					int id=qrand();
+					QString candidateId=QString("id%1").arg(id);
+					if (!incomingTransport.isNull())
+					{
+						QDomElement candidate=incomingTransport.ownerDocument().createElement("candidate");
+						QString ip = socket->localAddress().toString();
+						port = socket->localPort();
+						incomingTransport.appendChild(candidate);
+						candidate.setAttribute("component", QString().setNum(component));
+						candidate.setAttribute("generation", 0);
+						candidate.setAttribute("id", candidateId);
+						candidate.setAttribute("ip", ip);
+						candidate.setAttribute("port", QString::number(port));
+						LOG_INFO(QString("About to set input device for local socket %1:%2")
+								 .arg(socket->localAddress().toString()).arg(socket->localPort()));
+
+						RawUdpIODevice *ioDevice = new RawUdpIODevice(socket, ioThread);
+						content->setIoDevice(component, ioDevice);
+						++port;
+					}
+					else
+					{
+						qWarning() << "Candidate 1 is in wrong state!";
+						socket->deleteLater();
+						delete ioThread;
+						return false;
+					}
+				}
+				else
+				{
+					qWarning() << "Failed to get a local socket!";
+					delete ioThread;
+					return false;
+				}
+			}
+
+			FThreads[ASid].insert(AContentName, ioThread);
+			LOG_DEBUG(QString("Starting I/O thread for the content: %1").arg(AContentName));
+			ioThread->start();
+
+			FTransportFillNotifications.insertMulti(ASid, AContentName);
+			QTimer::singleShot(0, this, SLOT(emitIncomingTransportFilled()));
+
+			return true;
+		}
+		else
+			qWarning() << "Failed to determine local address!";
+	}
+	else
+		qWarning() << "Content do not exist!";
+
+	return false;
+}
+
+void JingleTransportRawUdp::freeIncomingTransport(const QString &ASid, const QString &AContentName)
+{
+	IJingleContent *content = FJingle->content(ASid, AContentName);
+	if (content)
+	{
+		int compCnt = content->componentCount();
+		for (int comp = 1; comp <= compCnt; ++comp)
+			content->setIoDevice(comp, nullptr);
+	}
+
+	if (!FThreads.contains(ASid))
+		return;
+
+	Q_ASSERT(FThreads.value(ASid).contains(AContentName));
+
+	if (!FThreads[ASid].contains(AContentName))
+		return;
+
+	FThreads[ASid][AContentName]->quit();
 }
 
 QMultiMap<int, IOptionsDialogWidget *> JingleTransportRawUdp::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
@@ -369,11 +397,11 @@ void JingleTransportRawUdp::onReadyRead()
 	if (device)
 	{
 		device->disconnect(SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-		IJingleContent *content = FPendingContents.take(device);
-		Q_ASSERT(content);
-		if (FPendingContents.keys(content).isEmpty()) // The last content device was removed
+		Q_ASSERT(FPendingContents.contains(device));
+		QPair<QString,QString> cid = FPendingContents.take(device);
+		if (FPendingContents.keys(cid).isEmpty()) // The last content device was removed
 		{
-			QTimer *timer = FPendingTimers.key(content);
+			QTimer *timer = FPendingTimers.key(cid);
 			Q_ASSERT(timer);
 			FPendingTimers.remove(timer);
 			timer->stop();
@@ -388,24 +416,24 @@ void JingleTransportRawUdp::onTimeout()
 	QTimer *timer = qobject_cast<QTimer *>(sender());
 	if (timer)
 	{
-		IJingleContent *content = FPendingTimers.take(timer);
+		Q_ASSERT(FPendingTimers.contains(timer));
+		QPair<QString, QString> content = FPendingTimers.take(timer);
 		delete timer;
 		QList<QIODevice *> devices = FPendingContents.keys(content);
 		for (QList<QIODevice *>::ConstIterator it = devices.constBegin();
 			 it != devices.constEnd(); ++it)
 			FPendingContents.remove(*it);
 
-		emit connectionError(content);
+		emit connectionError(content.first, content.second);
 	}
 }
 
 void JingleTransportRawUdp::emitIncomingTransportFilled()
 {
-	qDebug() << "JingleTransportRawUdp::emitIncomingTransportFilled()";
-	while (!FTransportFillNotifications.isEmpty()) {
-		qDebug() << "emitting incomingTransportFilled()";
-		emit incomingTransportFilled(FTransportFillNotifications.takeFirst());
-	}
+	for (QHash<QString, QString>::ConstIterator it = FTransportFillNotifications.constBegin();
+		 it != FTransportFillNotifications.constEnd(); ++it)
+		emit incomingTransportFilled(it.key(), it.value());
+	FTransportFillNotifications.clear();
 }
 
 #if QT_VERSION < 0x050000

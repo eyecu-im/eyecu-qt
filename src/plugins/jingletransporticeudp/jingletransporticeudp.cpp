@@ -82,12 +82,12 @@ bool JingleTransportIceUdp::initSettings()
     return true;
 }
 
-bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
+bool JingleTransportIceUdp::openConnection(const QString &ASid, const QString &AContentName)
 {
 	IceThread *iceThread(nullptr);
 	for (QList<IceThread*>::ConstIterator it=FIceThreads.constBegin();
 		 it != FIceThreads.constEnd(); ++it)
-		if ((*it)->content() == AContent) {
+		if ((*it)->sid() == ASid && (*it)->objectName()==AContentName) {
 			iceThread = *it;
 			break;
 		}
@@ -95,69 +95,75 @@ bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
 	if (iceThread) {
 		if (iceThread->state() == QPIceTransport::StateSessionReady)
 		{
-			QDomElement outgoingTransport = AContent->transportOutgoing();
-			if (!outgoingTransport.hasAttribute("ufrag") ||
-				!outgoingTransport.hasAttribute("pwd")) {
-				LOG_ERROR("Broket <transport/> element! returning false!");
-				return false;
+			IJingleContent *content = FJingle->content(ASid, AContentName);
+			if (content)
+			{
+				QDomElement outgoingTransport = content->transportOutgoing();
+				if (!outgoingTransport.hasAttribute("ufrag") ||
+					!outgoingTransport.hasAttribute("pwd")) {
+					LOG_ERROR("Broket <transport/> element! returning false!");
+					return false;
+				}
+
+				QHash<QString, QPIceCandidate> candidates;
+				for (QDomElement candidate=outgoingTransport.firstChildElement("candidate");
+					 !candidate.isNull();
+					 candidate=candidate.nextSiblingElement("candidate"))
+					if (candidate.hasAttribute("id") &&
+						candidate.hasAttribute("component") &&
+						candidate.hasAttribute("type") &&
+						candidate.hasAttribute("foundation") &&
+						candidate.hasAttribute("ip") &&
+						candidate.hasAttribute("port") &&
+						candidate.hasAttribute("priority"))
+					{
+						QPIceCandidate cand;
+						cand.addr = QPSocketAddress(candidate.attribute("ip"),
+												quint16(candidate.attribute("port").toInt()));
+						cand.type = QPIceCandidate::getTypeByName(candidate.attribute("type"));
+						if (cand.type == QPIceCandidate::Host)
+							cand.relAddr = cand.addr;
+						else if (candidate.hasAttribute("rel-addr") &&
+								 candidate.hasAttribute("rel-port"))
+							cand.relAddr = QPSocketAddress(candidate.attribute("rel-addr"),
+														   quint16(candidate.attribute("rel-port").toInt()));
+						else {
+							LOG_ERROR(QString("Invalid candidate! "
+											  "No related address specified for type %1. "
+											  "Skipped.").arg(candidate.attribute("type")));
+							continue;
+						}
+
+						int network = candidate.attribute("network").toInt(); // Don't need it right now
+						Q_UNUSED(network)
+
+						QString id = candidate.attribute("id");
+						cand.componentId = quint8(candidate.attribute("component").toInt());
+						cand.foundation = candidate.attribute("foundation");
+
+						cand.prio = unsigned(candidate.attribute("priority").toInt());
+						cand.transportId = 0; // Not sure if we need it
+						cand.status = QP_NO_ERROR;
+						cand.localPreference = 0;
+						cand.setBaseAddr();
+						candidates.insert(id, cand);
+					} else
+						LOG_WARNING("Invalid candidate! Skipped.");
+
+				if (candidates.isEmpty())
+					LOG_ERROR("Remote candidate list is empty!");
+				else {
+					// Look for an approprite thread
+					QString remoteUfrag = outgoingTransport.attribute("ufrag");
+					QString remotePwd = outgoingTransport.attribute("pwd");
+					if (iceThread->startIce(remoteUfrag, remotePwd.toLatin1(), candidates))
+						return true;
+					else
+						LOG_ERROR("ICE session negotiation start failed!");
+				}
 			}
-
-			QHash<QString, QPIceCandidate> candidates;
-			for (QDomElement candidate=outgoingTransport.firstChildElement("candidate");
-				 !candidate.isNull();
-				 candidate=candidate.nextSiblingElement("candidate"))
-				if (candidate.hasAttribute("id") &&
-					candidate.hasAttribute("component") &&
-					candidate.hasAttribute("type") &&
-					candidate.hasAttribute("foundation") &&
-					candidate.hasAttribute("ip") &&
-					candidate.hasAttribute("port") &&
-					candidate.hasAttribute("priority"))
-				{
-					QPIceCandidate cand;
-					cand.addr = QPSocketAddress(candidate.attribute("ip"),
-											quint16(candidate.attribute("port").toInt()));
-					cand.type = QPIceCandidate::getTypeByName(candidate.attribute("type"));
-					if (cand.type == QPIceCandidate::Host)
-						cand.relAddr = cand.addr;
-					else if (candidate.hasAttribute("rel-addr") &&
-							 candidate.hasAttribute("rel-port"))
-						cand.relAddr = QPSocketAddress(candidate.attribute("rel-addr"),
-													   quint16(candidate.attribute("rel-port").toInt()));
-					else {
-						LOG_ERROR(QString("Invalid candidate! "
-										  "No related address specified for type %1. "
-										  "Skipped.").arg(candidate.attribute("type")));
-						continue;
-					}
-
-					int network = candidate.attribute("network").toInt(); // Don't need it right now
-					Q_UNUSED(network)
-
-					QString id = candidate.attribute("id");
-					cand.componentId = quint8(candidate.attribute("component").toInt());
-					cand.foundation = candidate.attribute("foundation");
-
-					cand.prio = unsigned(candidate.attribute("priority").toInt());
-					cand.transportId = 0; // Not sure if we need it
-					cand.status = QP_NO_ERROR;
-					cand.localPreference = 0;
-					cand.setBaseAddr();
-					candidates.insert(id, cand);
-				} else
-					LOG_WARNING("Invalid candidate! Skipped.");
-
-			if (candidates.isEmpty())
-				LOG_ERROR("Remote candidate list is empty!");
-			else {
-				// Look for an approprite thread
-				QString remoteUfrag = outgoingTransport.attribute("ufrag");
-				QString remotePwd = outgoingTransport.attribute("pwd");
-				if (iceThread->startIce(remoteUfrag, remotePwd.toLatin1(), candidates))
-					return true;
-				else
-					LOG_ERROR("ICE session negotiation start failed!");
-			}
+			else
+				LOG_ERROR(QString("Content not found: %1: %2").arg(ASid).arg(AContentName));
 		}
 		else
 			LOG_ERROR(QString("ICE thread is in invalid state: %1")
@@ -169,27 +175,35 @@ bool JingleTransportIceUdp::openConnection(IJingleContent *AContent)
     return false;
 }
 
-bool JingleTransportIceUdp::fillIncomingTransport(IJingleContent *AContent)
+bool JingleTransportIceUdp::fillIncomingTransport(const QString &ASid, const QString &AContentName)
 {
-	QPIceSession::Role role = FJingle->isOutgoing(AContent->sid())?
-				QPIceSession::Controlling:QPIceSession::Controlled;
+	IJingleContent *content = FJingle->content(ASid, AContentName);
+	if (content)
+	{
+		QPIceSession::Role role = FJingle->isOutgoing(ASid)?
+					QPIceSession::Controlling:QPIceSession::Controlled;
 
-	IceThread *iceThread = new IceThread(FIceCfg, role, AContent);
-	connect(iceThread, SIGNAL(iceSuccess(int)), SLOT(onIceSuccess(int)));
-	connect(iceThread, SIGNAL(finished()), SLOT(onIceThreadFinished()));
-	FIceThreads.append(iceThread);
+		IceThread *iceThread = new IceThread(FIceCfg, role, ASid, AContentName, content->componentCount());
+		connect(iceThread, SIGNAL(iceSuccess(int)), SLOT(onIceSuccess(int)));
+		connect(iceThread, SIGNAL(finished()), SLOT(onIceThreadFinished()));
+		FIceThreads.append(iceThread);
 
-	iceThread->start();
+		iceThread->start();
 
-	return true;
+		return true;
+	}
+	else
+		LOG_ERROR(QString("Component not found: %1: %2").arg(ASid).arg(AContentName));
+
+	return false;
 }
 
-void JingleTransportIceUdp::freeIncomingTransport(IJingleContent *AContent)
+void JingleTransportIceUdp::freeIncomingTransport(const QString &ASid, const QString &AContentName)
 {
 	IceThread *iceThread(nullptr);
 	for (QList<IceThread *>::ConstIterator it=FIceThreads.constBegin();
 		 it != FIceThreads.constEnd(); ++it)
-		if ((*it)->content() == AContent)
+		if ((*it)->sid() == ASid && (*it)->objectName() == AContentName)
 		{
 			iceThread = *it;
 			break;
@@ -229,9 +243,8 @@ void JingleTransportIceUdp::registerDiscoFeatures()
 	FServiceDiscovery->insertDiscoFeature(dfeature);
 }
 
-int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
+int JingleTransportIceUdp::readCandidates(IceThread *AIceThread, QDomElement AIncomingTransport)
 {
-	qDebug() << "JingleTransportIceUdp::readCandidates(" << AIceThread << ")";
 	QHash<QHostAddress, int> networkByIp = networksByIp();
 
 	// Enumerate local candidates
@@ -251,9 +264,8 @@ int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
 			static_cast<QHostAddress>(it->relAddr))
 			relAddrByAddr.insert(it->addr, it->relAddr);
 
-	QDomElement incomingTransport = AIceThread->content()->transportIncoming();
-	incomingTransport.setAttribute("ufrag", AIceThread->localUfrag());
-	incomingTransport.setAttribute("pwd", AIceThread->localPwd());
+	AIncomingTransport.setAttribute("ufrag", AIceThread->localUfrag());
+	AIncomingTransport.setAttribute("pwd", AIceThread->localPwd());
 
 	for (QHash<QString,QPIceCandidate>::ConstIterator it=cand.constBegin();
 		 it!=cand.constEnd(); ++it)
@@ -275,7 +287,7 @@ int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
 
 		Q_ASSERT(network != -1);
 
-		QDomElement candidate = incomingTransport.ownerDocument().createElement("candidate");
+		QDomElement candidate = AIncomingTransport.ownerDocument().createElement("candidate");
 		candidate.setAttribute("protocol", "udp");
 		candidate.setAttribute("component", QString::number(it->componentId));
 		candidate.setAttribute("type", it->getTypeName());
@@ -290,7 +302,7 @@ int JingleTransportIceUdp::readCandidates(IceThread *AIceThread)
 			candidate.setAttribute("rel-addr", it->relAddr.toString());
 			candidate.setAttribute("rel-port", QString::number(it->relAddr.port()));
 		}
-		incomingTransport.appendChild(candidate);
+		AIncomingTransport.appendChild(candidate);
 	}
 
 	return QP_NO_ERROR;
@@ -437,21 +449,23 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 {
 	LOG_DEBUG(QString("JingleTransportIceUdp::onIceSuccess(%1)").arg(AOperation));
 	IceThread *iceThread = qobject_cast<IceThread*>(sender());
-	IJingleContent *content = iceThread->content();
+	IJingleContent *content = FJingle->content(iceThread->sid(), iceThread->objectName());
+	if (!content)
+		return;
+
 	switch (AOperation)
 	{
 		case QPIceTransport::OperationInit:
 		{
-			qDebug() << "QPIceTransport::OperationInit:";
-			int status = readCandidates(iceThread);
-			qDebug() << "status=" << status;
+			LOG_INFO("ICE initialization succeeded");
+			int status = readCandidates(iceThread,  content->transportIncoming());
 			if (status == QP_NO_ERROR)
-				emit incomingTransportFilled(content);
+				emit incomingTransportFilled(iceThread->sid(), iceThread->objectName());
 			else
 			{
-				qDebug() << "error string:" << QpErrno::errorString(status);
-				qDebug() << "emitting incomingTransportFillFailed()";
-				emit incomingTransportFillFailed(content);
+				LOG_ERROR(QString("Candidate list parsing failed: %1 (%2)")
+						  .arg(status).arg(QpErrno::errorString(status)));
+				emit incomingTransportFillFailed(iceThread->sid(), iceThread->objectName());
 			}
 			break;
 		}
@@ -463,10 +477,10 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 			content->setComponentCount(count);
 			for (int i=1; i<=count; ++i) {
 				QPIceComponent *comp = iceThread->component(i);
-				comp->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
-				content->setIoDevice(i, comp);
+				if (comp->open(QIODevice::ReadOnly|QIODevice::WriteOnly))
+					content->setIoDevice(i, comp);
 			}
-			emit connectionOpened(content);
+			emit connectionOpened(iceThread->sid(), iceThread->objectName());
 			break;
 		}
 
@@ -482,28 +496,16 @@ void JingleTransportIceUdp::onIceSuccess(int AOperation)
 
 void JingleTransportIceUdp::onIceThreadFinished()
 {
-	qDebug() << "JingleTransportIceUdp::onIceThreadFinished()";
 	IceThread *iceThread = qobject_cast<IceThread*>(sender());
-	qDebug() << "iceThread=" << iceThread;
 	if (FIceThreads.contains(iceThread)) {
-		qDebug() << "A!";
 		LOG_DEBUG("ICE thread unexpectedly finished!");
 		FIceThreads.removeOne(iceThread);
-		qDebug() << "B!";
 		if (iceThread->state() < QPIceTransport::StateReady)
-		{
-			qDebug() << "C!";
-			emit incomingTransportFillFailed(iceThread->content());
-		}
+			emit incomingTransportFillFailed(iceThread->sid(), iceThread->objectName());
 		else
-		{
-			qDebug() << "D!";
-			emit connectionError(iceThread->content());
-		}
-		qDebug() << "E!";
+			emit connectionError(iceThread->sid(), iceThread->objectName());
 		delete iceThread;
 	}
-	qDebug() << "END!";
 }
 
 #if QT_VERSION < 0x050000

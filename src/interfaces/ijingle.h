@@ -25,23 +25,32 @@ public:
 	virtual int     priority() const =0;	// Transport priority
 	//!
 	//! \brief openConnection Try to open connections
-	//! \param AContent Jingle content
+	//! \param ASid Jingle session ID
+	//! \param AContentName Jingle content name
 	//! \return success indicator
 	//!
-	virtual bool openConnection(IJingleContent *AContent) =0;
+	virtual bool openConnection(const QString &ASid, const QString &AContentName) =0;
+
 	//!
 	//! \brief fillIncomingTransport fills incoming transport data in jingle content
-	//! \param AContent jingle content to process
+	//! \param ASid Jingle session ID
+	//! \param AContentName Jingle content name
 	//! \return success indicator
 	//!
-	virtual bool fillIncomingTransport(IJingleContent *AContent) =0;
-	virtual void freeIncomingTransport(IJingleContent *AContent) =0;
+	virtual bool fillIncomingTransport(const QString &ASid, const QString &AContentName) =0;
+
+	//!
+	//! \brief freeIncomingTransport frees resources allocatd by transport for the content
+	//! \param ASid Jingle session ID
+	//! \param AContentName Jingle content name
+	//!
+	virtual void freeIncomingTransport(const QString &ASid, const QString &AContentName) =0;
 
 protected:
-	virtual void connectionOpened(IJingleContent *AContent) =0;
-	virtual void connectionError(IJingleContent *AContent) =0;
-	virtual void incomingTransportFilled(IJingleContent *AContent) =0;
-	virtual void incomingTransportFillFailed(IJingleContent *AContent) =0;
+	virtual void connectionOpened(const QString &ASid, const QString &AContentName) =0;
+	virtual void connectionError(const QString &ASid, const QString &AContentName) =0;
+	virtual void incomingTransportFilled(const QString &ASid, const QString &AContentName) =0;
+	virtual void incomingTransportFillFailed(const QString &ASid, const QString &AContentName) =0;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(IJingleTransport::Types)
 
