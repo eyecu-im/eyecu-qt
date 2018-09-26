@@ -69,7 +69,7 @@ bool JingleTransportRawUdp::initSettings()
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_IP, QVariant());
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST, 6666);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST, 8888);
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT, 1000);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT, 1000); // 1 second timeout
     return true;
 }
 
@@ -209,7 +209,7 @@ bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &A
 			connect(timer, SIGNAL(timeout()), SLOT(onTimeout()));
 			FPendingTimers.insert(timer, cid);
 //TODO: Make this timeout configurable
-			timer->start(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT).value().toInt());	// 1 second timeout
+			timer->start(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT).value().toInt());
 		}
 
 		emit connectionOpened(ASid, AContentName);

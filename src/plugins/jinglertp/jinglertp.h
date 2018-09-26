@@ -118,8 +118,8 @@ public slots:
 	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason) override;
 	virtual void onSessionInformed(const QDomElement &AInfoElement) override;
 	virtual void onSessionDestroyed(const QString &ASid) override;
-	virtual void onConnectionEstablished(IJingleContent *AContent) override;
-	virtual void onConnectionFailed(IJingleContent *AContent) override;
+	virtual void onConnectionEstablished(const QString &ASid, const QString &AName) override;
+	virtual void onConnectionFailed(const QString &ASid, const QString &AName) override;
 
 protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
@@ -147,9 +147,9 @@ protected:
 									 IJingle::Reason AReason = IJingle::NoReason);
 	void    updateChatWindowActions(IMessageChatWindow *AChatWindow);
 
-	void    addPendingContent(IJingleContent *AContent, PendingType AType);
-	void    removePendingContent(IJingleContent *AContent, PendingType AType);
-	bool    hasPendingContents(const QString &ASid, PendingType AType);
+	void    addPendingContent(const QString &ASid, const QString &AName);
+	void    removePendingContent(const QString &ASid, const QString &AName);
+	bool    hasPendingContents(const QString &ASid);
 
 	void    establishConnection(const QString &ASid);
 
@@ -187,8 +187,6 @@ protected slots:
 	void onRtpReadyRead();
 
 protected slots:
-	void onContentAdded(IJingleContent *AContent);
-	void onContentAddFailed(IJingleContent *AContent);
 	void onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline);
 
 private:
@@ -213,7 +211,7 @@ private:
 	QList<int>          FPendingCalls;
 	JingleCallTimer     *FCallTimer;
 	QAVOutputFormat		FRtp;
-	QMultiHash<int, IJingleContent *> FPendingContents;
+	QMultiHash<QString, QString> FPendingContents;
 
 	QHash<QIODevice *, IJingleContent *> FContents;
 	QHash<IJingleContent *, MediaStreamer *> FStreamers;

@@ -130,7 +130,6 @@ public:
 	virtual QObject *instance() =0;
 	virtual IJingleApplication *appByNS(const QString &AApplicationNS) =0;
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, const QString &AApplicationNS) =0;
-	virtual bool    sessionAccept(const QString &ASid) =0;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) =0;
 	virtual bool    sessionDestroy(const QString &ASid) =0;
 	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
@@ -159,10 +158,10 @@ public:
 	virtual QString errorMessage(Reason AReason) const =0;
 
 protected:
-	virtual void connectionOpened(IJingleContent *AContent) =0;
-	virtual void connectionFailed(IJingleContent *AContent) =0;
-	virtual void contentAdded(IJingleContent *AContent) =0;
-	virtual void contentAddFailed(IJingleContent *AContent) =0;
+	virtual void connectionOpened(const QString &ASid, const QString &AName) =0;
+	virtual void connectionFailed(const QString &ASid, const QString &AName) =0;
+//	virtual void contentAdded(const QString &ASid, const QString &AName) =0;
+//	virtual void contentAddFailed(const QString &ASid, const QString &AName) =0;
 };
 
 class IJingleApplication
@@ -180,8 +179,8 @@ public:
 	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
 	virtual void onSessionDestroyed(const QString &ASid) =0;	// Session destroyed
 
-	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
-	virtual void onConnectionFailed(IJingleContent *AContent) =0;
+	virtual void onConnectionEstablished(const QString &ASid, const QString &AName) =0;
+	virtual void onConnectionFailed(const QString &ASid, const QString &AName) =0;
 };
 
 class IJingleContent

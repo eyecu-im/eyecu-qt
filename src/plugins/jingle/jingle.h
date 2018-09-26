@@ -42,7 +42,6 @@ public:
 	}
 	virtual QString sessionCreate(const Jid &AStreamJid, const Jid &AContactJid,
 						  const QString &AApplicationNS) override;
-	virtual bool    sessionAccept(const QString &ASid) override;
 	virtual bool    sessionTerminate(const QString &ASid, Reason AReason) override;
 	virtual bool	sessionDestroy(const QString &ASid) override;
 	virtual bool    sendAction(const QString &ASid, IJingle::Action AAction,
@@ -81,15 +80,15 @@ protected:
 
 protected slots:
 	void onConnectionOpened(const QString &ASid, const QString &AContentName);
-	void onConnectionError(const QString &ASid, const QString &ContentName);
-	void onIncomingTransportFilled(const QString &ASid, const QString &ContentName);
+	void onConnectionError(const QString &ASid, const QString &AContentName);
+	void onIncomingTransportFilled(const QString &ASid, const QString &AContentName);
 	void onIncomingTransportFillFailed(const QString &ASid, const QString &AContentName);
 
 signals:
-	void connectionOpened(IJingleContent *AContent) override;
-	void connectionFailed(IJingleContent *AContent) override;
-	void contentAdded(IJingleContent *AContent) override;
-	void contentAddFailed(IJingleContent *AContent) override;
+	void connectionOpened(const QString &ASid, const QString &AName) override;
+	void connectionFailed(const QString &ASid, const QString &AName) override;
+//	void contentAdded(const QString &ASid, const QString &AName) override;
+//	void contentAddFailed(const QString &ASid, const QString &AName) override;
 
 private:
     IStanzaProcessor    *FStanzaProcessor;

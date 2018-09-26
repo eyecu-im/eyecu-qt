@@ -155,8 +155,7 @@ bool JingleTransportIceUdp::openConnection(const QString &ASid, const QString &A
 
 				if (candidates.isEmpty())
 					LOG_ERROR("Remote candidate list is empty!");
-				else {
-					// Look for an approprite thread
+				else { // Look for an approprite thread
 					QString remoteUfrag = outgoingTransport.attribute("ufrag");
 					QString remotePwd = outgoingTransport.attribute("pwd");
 					if (iceThread->startIce(remoteUfrag, remotePwd.toLatin1(), candidates))

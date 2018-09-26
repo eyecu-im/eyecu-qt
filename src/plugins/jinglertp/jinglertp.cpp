@@ -1171,25 +1171,29 @@ void JingleRtp::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 	}
 }
 
-void JingleRtp::addPendingContent(IJingleContent *AContent, PendingType AType)
+void JingleRtp::addPendingContent(const QString &ASid, const QString &AName)
 {
-	FPendingContents.insert(AType, AContent);
+	qDebug() << "JingleRtp::addPendingContent(" << ASid << "," << AName << ")";
+	FPendingContents.insert(ASid, AName);
 }
 
-void JingleRtp::removePendingContent(IJingleContent *AContent, PendingType AType)
+void JingleRtp::removePendingContent(const QString &ASid, const QString &AName)
 {
-	FPendingContents.remove(AType, AContent);
+	qDebug() << "JingleRtp::removePendingContent(" << ASid << "," << AName << ")";
+	FPendingContents.remove(ASid, AName);
+	qDebug() << "pending contents size:" << FPendingContents.size();
 }
 
-bool JingleRtp::hasPendingContents(const QString &ASid, PendingType AType)
+bool JingleRtp::hasPendingContents(const QString &ASid)
 {
-	QList<IJingleContent *> pendingContents = FPendingContents.values(AType);
-	for (QList<IJingleContent *>::ConstIterator it = pendingContents.constBegin();
-		 it!=pendingContents.constEnd(); it++)
-		if ((*it)->sid() == ASid)
-			return true;
+	return FPendingContents.contains(ASid);
+//	QList<QString> pendingContents = FPendingContents.values(ASid);
+//	for (QList<IJingleContent *>::ConstIterator it = pendingContents.constBegin();
+//		 it!=pendingContents.constEnd(); it++)
+//		if ((*it)->sid() == ASid)
+//			return true;
 
-	return false;
+//	return false;
 }
 
 void JingleRtp::establishConnection(const QString &ASid)
@@ -1203,9 +1207,9 @@ void JingleRtp::establishConnection(const QString &ASid)
 	{
 		LOG_DEBUG(QString("content=%1").arg((*it)->name()));
 		if (FJingle->connectContent(ASid, it.key()))
-			addPendingContent(*it, Connect);
+			addPendingContent(ASid, (*it)->name());
 	}
-	if (!hasPendingContents(ASid, Connect))
+	if (!hasPendingContents(ASid))
 		FJingle->sessionTerminate(ASid, IJingle::ConnectivityError);
 }
 
@@ -1717,15 +1721,18 @@ void JingleRtp::onCall()
 				{
 					if (checkContent(*it))
 					{
-						if (FJingle->fillIncomingTransport(*it))
-							addPendingContent(*it, FillTransport);
-						else
+						if (!FJingle->fillIncomingTransport(*it))
+//							addPendingContent(*it, FillTransport);
+//						else
 							reason = IJingle::FailedTransport;
 					}
 					else
 						reason = IJingle::FailedApplication;
+					if (reason != IJingle::NoReason)
+						break;
 				}
-				if (!hasPendingContents(sid, FillTransport))
+//				if (!hasPendingContents(sid, FillTransport))
+				if (reason != IJingle::NoReason)
 					FJingle->sessionTerminate(sid, reason);
 				else {
 					FJingle->setAccepting(sid);
@@ -1803,7 +1810,7 @@ void JingleRtp::onCall()
 				if (!payloadTypes.isEmpty())
 				{
 					fillDescriptionWithPayloadTypes(description, payloadTypes);
-					addPendingContent(content, AddContent);
+					addPendingContent(sid, content->name());
 //				Video is not supported yet
 //				if (command==VideoCall)
 //				{   // Add video content
@@ -1867,48 +1874,37 @@ void JingleRtp::onRtpReadyRead()
 	}
 }
 
-void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
+void JingleRtp::onConnectionEstablished(const QString &ASid, const QString &AName)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
-	removePendingContent(AContent, Connect);
-
-	if (!hasPendingContents(AContent->sid(), Connect))
-		FJingle->setConnected(AContent->sid());
-	else
-		LOG_DEBUG("More contents pending!");
+	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AName));
+	IJingleContent *content = FJingle->content(ASid, AName);
+	if (content)
+	{
+		removePendingContent(ASid, AName);
+		if (!hasPendingContents(ASid))
+			FJingle->setConnected(ASid);
+		else
+			LOG_DEBUG("More contents pending!");
+	}
 }
 
-void JingleRtp::onConnectionFailed(IJingleContent *AContent)
+void JingleRtp::onConnectionFailed(const QString &ASid, const QString &AName)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AContent->name()));
-	removePendingContent(AContent, Connect);
-	if (!hasPendingContents(AContent->sid(), Connect))
+	qDebug() << "JingleRtp::onConnectionFailed(" << ASid << "," << AName << ")";
+	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AName));
+
+	removePendingContent(ASid, AName);
+	if (!hasPendingContents(ASid))
 	{
-		if (FJingle->contents(AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->sid(), IJingle::ConnectivityError);
+		if (FJingle->contents(ASid).isEmpty())
+		{
+			qDebug() << "Connectivity error";
+			FJingle->sessionTerminate(ASid, IJingle::ConnectivityError);
+		}
 		else
-			FJingle->setConnected(AContent->sid());
+			FJingle->setConnected(ASid);
 	}
 	LOG_DEBUG("JingleRtp::onConnectionFailed() finished!");
-}
-
-void JingleRtp::onContentAdded(IJingleContent *AContent)
-{
-	removePendingContent(AContent, AddContent);
-	if (!hasPendingContents(AContent->sid(), AddContent))
-		FJingle->sessionAccept(AContent->sid());
-}
-
-void JingleRtp::onContentAddFailed(IJingleContent *AContent)
-{
-	removePendingContent(AContent, AddContent);
-	if (!hasPendingContents(AContent->sid(), AddContent))
-	{
-		if (FJingle->contents(AContent->sid()).isEmpty())
-			FJingle->sessionTerminate(AContent->sid(), IJingle::FailedTransport);
-		else
-			FJingle->sessionAccept(AContent->sid());
-	}
 }
 
 void JingleRtp::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)

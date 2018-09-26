@@ -76,10 +76,10 @@ bool Jingle::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		IJingleApplication *application=qobject_cast<IJingleApplication *>((*it)->instance());
 		FApplications.insert(application->ns(), application);
 
-		connect(this,SIGNAL(connectionOpened(IJingleContent*)),(*it)->instance(),
-				SLOT(onConnectionEstablished(IJingleContent*)), Qt::QueuedConnection);
-		connect(this,SIGNAL(connectionFailed(IJingleContent*)),(*it)->instance(),
-				SLOT(onConnectionFailed(IJingleContent*)), Qt::QueuedConnection);
+		connect(this,SIGNAL(connectionOpened(QString,QString)),(*it)->instance(),
+				SLOT(onConnectionEstablished(QString,QString)), Qt::QueuedConnection);
+		connect(this,SIGNAL(connectionFailed(QString,QString)),(*it)->instance(),
+				SLOT(onConnectionFailed(QString,QString)), Qt::QueuedConnection);
 	}
 
 	plugins = APluginManager->pluginInterface("IJingleTransport");
@@ -171,7 +171,7 @@ void Jingle::onConnectionOpened(const QString &ASid, const QString &AContentName
 	{
 		IJingleContent *content = session->contents().value(AContentName);
 		if (content)
-			emit connectionOpened(content);
+			emit connectionOpened(ASid, AContentName);
 	}
 }
 
@@ -180,14 +180,14 @@ void Jingle::onConnectionError(const QString &ASid, const QString &AContentName)
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session && session->status() != Terminated)
 	{
-		IJingleContent *content = session->contents().value(AContentName);
-		if (content)
-			emit connectionFailed(content);
+		session->deleteContent(AContentName);
+		emit connectionFailed(ASid, AContentName);
 	}
 }
 
-void Jingle::onIncomingTransportFilled(const QString &ASid, const QString &ContentName)
+void Jingle::onIncomingTransportFilled(const QString &ASid, const QString &AContentName)
 {
+	Q_UNUSED(AContentName)
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
@@ -450,12 +450,6 @@ QString Jingle::sessionCreate(const Jid &AStreamJid, const Jid &AContactJid, con
 {
 	JingleSession *session = new JingleSession(AStreamJid, AContactJid, AApplicationNS);
 	return session->sid();
-}
-
-bool Jingle::sessionAccept(const QString &ASid)
-{
-	JingleSession *session=JingleSession::sessionBySessionId(ASid);
-	return session?session->accept():false;
 }
 
 bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
