@@ -94,6 +94,26 @@
         <source>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</source>
         <translation>Обычно, агрессивное номинирование может немного уменьшить время согласования сеанса, но в некоторых редких случаях может привести к тому, что согласование не удастся.</translation>
     </message>
+    <message>
+        <source> msec</source>
+        <translation> мсек</translation>
+    </message>
+    <message>
+        <source>STUN round-trip time estimation</source>
+        <translation>Оценочное время прохождения сообщения STUN в обе стороны</translation>
+    </message>
+    <message>
+        <source>Controlling agent nomination delay</source>
+        <translation>Задержка перед началом номинирования</translation>
+    </message>
+    <message>
+        <source>Controlled agent nomination timeout</source>
+        <translation>Таймаут номинирования</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Нет</translation>
+    </message>
 </context>
 <context>
     <name>JingleTransportIceUdp</name>

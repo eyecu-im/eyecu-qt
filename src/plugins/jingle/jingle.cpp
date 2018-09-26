@@ -177,20 +177,17 @@ void Jingle::onConnectionOpened(const QString &ASid, const QString &AContentName
 
 void Jingle::onConnectionError(const QString &ASid, const QString &AContentName)
 {
-	qDebug() << "Jingle::onConnectionError()";
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
-	if (session)
+	if (session && session->status() != Terminated)
 	{
 		IJingleContent *content = session->contents().value(AContentName);
 		if (content)
 			emit connectionFailed(content);
 	}
-	qDebug() << "Jingle::onConnectionError(): Finished!";
 }
 
 void Jingle::onIncomingTransportFilled(const QString &ASid, const QString &ContentName)
 {
-	qDebug() << "Jingle::onIncomingTransportFilled()";
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session)
 	{
@@ -215,7 +212,6 @@ void Jingle::onIncomingTransportFilled(const QString &ASid, const QString &Conte
 
 void Jingle::onIncomingTransportFillFailed(const QString &ASid, const QString &AContentName)
 {
-	qDebug() << "Jingle::onIncomingTransportFillFailed(" << ASid << "," << AContentName << ")";
 	LOG_DEBUG(QString("Jingle::onIncomingTransportFillFailed(%1, %2)")
 			  .arg(ASid).arg(AContentName));
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
@@ -470,10 +466,9 @@ bool Jingle::sessionTerminate(const QString &ASid, Reason AReason)
 
 bool Jingle::sessionDestroy(const QString &ASid)
 {
-	qDebug() << "Jingle::sessionDestroy(" << ASid << ")";
 	JingleSession *session=JingleSession::sessionBySessionId(ASid);
-	if (session) {
-		qDebug() << "session:" << session << "schedule to delete...";
+	if (session)
+	{
 		session->deleteLater();
 		return true;
 	}

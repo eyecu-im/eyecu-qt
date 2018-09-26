@@ -4,47 +4,47 @@
  <context>
   <name>AvatarOptionsWidget</name>
   <message>
-   <location line="63" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="63"/>
    <source>Small</source>
    <translation>Small</translation>
   </message>
   <message>
-   <location line="68" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="68"/>
    <source>Normal</source>
    <translation>Normal</translation>
   </message>
   <message>
-   <location line="73" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="73"/>
    <source>Large</source>
    <translation>Large</translation>
   </message>
   <message>
-   <location line="87" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="87"/>
    <source>Avatar position</source>
    <translation>Avatar position</translation>
   </message>
   <message>
-   <location line="97" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="97"/>
    <source>Avatar size</source>
    <translation>Avatar size</translation>
   </message>
   <message>
-   <location line="107" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="107"/>
    <source>Display avatars for offline contacts grayscaled</source>
    <translation>Display avatars for offline contacts grayscaled</translation>
   </message>
   <message>
-   <location line="49" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="49"/>
    <source>At Right</source>
    <translation>At Right</translation>
   </message>
   <message>
-   <location line="54" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="54"/>
    <source>At Left</source>
    <translation>At Left</translation>
   </message>
   <message>
-   <location line="35" filename="../../plugins/avatars/avataroptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avataroptionswidget.ui" line="35"/>
    <source>Display avatars</source>
    <translation>Display avatars</translation>
   </message>
@@ -52,34 +52,34 @@
  <context>
   <name>AvatarSizeOptionsWidget</name>
   <message>
-   <location line="35" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="35"/>
    <source>Display empty avatars</source>
    <translation type="unfinished">Display empty avatars</translation>
   </message>
   <message>
-   <location line="42" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="42"/>
    <source>Avatar size</source>
    <translation>Avatar size</translation>
   </message>
   <message>
-   <location line="63" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
-   <location line="79" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
-   <location line="95" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="63"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="79"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="95"/>
    <source>px</source>
    <translation>px</translation>
   </message>
   <message>
-   <location line="111" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="111"/>
    <source>Small</source>
    <translation>Small</translation>
   </message>
   <message>
-   <location line="121" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="121"/>
    <source>Normal</source>
    <translation>Normal</translation>
   </message>
   <message>
-   <location line="131" filename="../../plugins/avatars/avatarsizeoptionswidget.ui"/>
+   <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="131"/>
    <source>Large</source>
    <translation>Large</translation>
   </message>
@@ -87,55 +87,55 @@
  <context>
   <name>Avatars</name>
   <message>
-   <location line="151" filename="../../plugins/avatars/avatars.cpp"/>
-   <location line="484" filename="../../plugins/avatars/avatars.cpp"/>
-   <location line="490" filename="../../plugins/avatars/avatars.cpp"/>
-   <location line="496" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="151"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="484"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="490"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="496"/>
    <source>Avatars</source>
    <translation>Avatars</translation>
   </message>
   <message>
-   <location line="152" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="152"/>
    <source>Allows to set and display avatars</source>
    <translation>Allows to set and display avatars</translation>
   </message>
   <message>
-   <location line="990" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="990"/>
    <source>Avatar</source>
    <translation>Avatar</translation>
   </message>
   <message>
-   <location line="994" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="994"/>
    <source>Set avatar</source>
    <translation>Set avatar</translation>
   </message>
   <message>
-   <location line="1001" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1001"/>
    <source>Clear avatar</source>
    <translation>Clear avatar</translation>
   </message>
   <message>
-   <location line="1012" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1012"/>
    <source>Custom picture</source>
    <translation>Custom picture</translation>
   </message>
   <message>
-   <location line="1016" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1016"/>
    <source>Set custom picture</source>
    <translation>Set custom picture</translation>
   </message>
   <message>
-   <location line="1023" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1023"/>
    <source>Clear custom picture</source>
    <translation>Clear custom picture</translation>
   </message>
   <message>
-   <location line="1056" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1056"/>
    <source>Select avatar image</source>
    <translation>Select avatar image</translation>
   </message>
   <message>
-   <location line="1056" filename="../../plugins/avatars/avatars.cpp"/>
+   <location filename="../../plugins/avatars/avatars.cpp" line="1056"/>
    <source>Image Files (*.png *.jpg *.bmp *.gif)</source>
    <translation>Image Files (*.png *.jpg *.bmp *.gif)</translation>
   </message>

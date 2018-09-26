@@ -331,7 +331,9 @@
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="175"/>
    <source>There are some social networks, portals or blogging services, which have their own XMPP servers. If you have an account in some of those networks, you may use it in eyeCU.
+
 Please, note, that those XMPP servers usually have implemented their own specific features, which cannot be used with standard XMPP clients, like eyeCU. At the same time, they implenment only limited set of standard XMPP extensions, which could be used with standard clients.So, it's hardly recommended to use such accounts only as additional account, to have convenient access to your social networks and services. To have full-featured XMPP experienece, it's recommended to have an account on independent XMPP (Jabber) server. To connect to such server, please, select &quot;Other XMPP&quot;.
+
 If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No&quot; to register in Jabber.</source>
    <translation type="unfinished"/>
   </message>
@@ -454,8 +456,11 @@ If you don&apos;t have a Jabber account yet, please, go Back and select &quot;No
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="486"/>
    <source>The Server you selected do not support Personal Events (PEP)!
+
 Some %1 features (like User Location, User Activity, User Mood and User Tune) will not work!
+
 Using this server for your primary account is deprecated.
+
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
    <translation type="unfinished"/>
   </message>
@@ -468,7 +473,9 @@ Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.<
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="499"/>
    <source>The Server you selected belongs to %1 network!
+
 It is not recommended to use such servers as your primary account, due to restricted functionality they have. In-band registration is also unavailable.
+
 Please, choose another server. If you have an account in such network, please, go back and select &quot;Yes&quot; on the first page. If you don&apos;t have an account, but want to have it, you&apos;ll need to visit %2 to register first.</source>
    <translation type="unfinished"/>
   </message>
@@ -480,7 +487,9 @@ Please, choose another server. If you have an account in such network, please, g
   <message>
    <location filename="../../plugins/wizardaccount/wizardpages.cpp" line="513"/>
    <source>The Server you selected do not support in-band registration!
+
 You'll have to register via web!
+
 Press &quot;Ok&quot; to proceed or &quot;Cancel&quot; to select another server.</source>
    <translation type="unfinished"/>
   </message>

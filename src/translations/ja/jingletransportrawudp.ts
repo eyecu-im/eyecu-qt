@@ -3,7 +3,7 @@
   <name>JingleTransportRawUdp</name>
   <message>
    <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="26"/>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="342"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="368"/>
    <source>Jingle RAW-UDP Transport</source>
    <translation type="unfinished"/>
   </message>
@@ -13,12 +13,12 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="330"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="356"/>
    <source>Raw UDP</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="343"/>
+   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="369"/>
    <source>Allows using RAW-UDP transport in Jingle sesions</source>
    <translation type="unfinished"/>
   </message>
@@ -46,7 +46,17 @@
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="47"/>
+   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="72"/>
+   <source>Connection timeout</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="79"/>
+   <source> msec</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="49"/>
    <source>Default (%1 - %2)</source>
    <translation type="unfinished"/>
   </message>

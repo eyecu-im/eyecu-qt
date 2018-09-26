@@ -152,6 +152,7 @@ signals:
 	void sessionAccepted(const QString &ASid);
 	void sessionConnected(const QString &ASid);
 	void sessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
+	void sessionDestroyed(const QString &ASid);
 	void sessionInformed(const QDomElement &AInfoElement);
 	void actionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, Jid ARedirectJid, IJingle::Reason AReason);
 

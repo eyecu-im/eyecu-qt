@@ -4,22 +4,22 @@
  <context>
   <name>ModifyStatusDialogClass</name>
   <message>
-   <location line="14" filename="../../plugins/statuschanger/modifystatusdialog.ui"/>
+   <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="14"/>
    <source>Modify Status</source>
    <translation>Modify Status</translation>
   </message>
   <message>
-   <location line="25" filename="../../plugins/statuschanger/modifystatusdialog.ui"/>
+   <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="25"/>
    <source>Status</source>
    <translation>Status</translation>
   </message>
   <message>
-   <location line="41" filename="../../plugins/statuschanger/modifystatusdialog.ui"/>
+   <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="41"/>
    <source>Name</source>
    <translation>Name</translation>
   </message>
   <message>
-   <location line="57" filename="../../plugins/statuschanger/modifystatusdialog.ui"/>
+   <location filename="../../plugins/statuschanger/modifystatusdialog.ui" line="57"/>
    <source>Priority</source>
    <translation>Priority</translation>
   </message>
@@ -27,132 +27,132 @@
  <context>
   <name>StatusChanger</name>
   <message>
-   <location line="60" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="60"/>
    <source>Status Manager</source>
    <translation>Status Manager</translation>
   </message>
   <message>
-   <location line="61" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="61"/>
    <source>Allows to change the status in Jabber network</source>
    <translation>Allows to change the status in Jabber network</translation>
   </message>
   <message>
-   <location line="173" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="173"/>
    <source>Modify Status</source>
    <translation>Modify Status</translation>
   </message>
   <message>
-   <location line="214" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="214"/>
    <source>On loss of connection to the server</source>
    <translation>On loss of connection to the server</translation>
   </message>
   <message>
-   <location line="238" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="1157" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="1167" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="238"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="1157"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="1167"/>
    <source>Status</source>
    <translation>Status</translation>
   </message>
   <message>
-   <location line="259" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="259"/>
    <source>Connect to server on startup</source>
    <translation>Connect to server on startup</translation>
   </message>
   <message>
-   <location line="260" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="260"/>
    <source>Reconnect to server on connection errors</source>
    <translation>Reconnect to server on connection errors</translation>
   </message>
   <message>
-   <location line="264" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="264"/>
    <source>Standard and users statuses</source>
    <translation>Standard and users statuses</translation>
   </message>
   <message>
-   <location line="565" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="565"/>
    <source>Offline</source>
    <translation>Offline</translation>
   </message>
   <message>
-   <location line="567" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="591" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="567"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="591"/>
    <source>Online</source>
    <translation>Online</translation>
   </message>
   <message>
-   <location line="569" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="569"/>
    <source>Chat</source>
    <translation>Chat</translation>
   </message>
   <message>
-   <location line="571" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="571"/>
    <source>Away</source>
    <translation>Away</translation>
   </message>
   <message>
-   <location line="573" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="573"/>
    <source>Extended Away</source>
    <translation>Extended Away</translation>
   </message>
   <message>
-   <location line="575" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="615" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="575"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="615"/>
    <source>Do not disturb</source>
    <translation>Do not disturb</translation>
   </message>
   <message>
-   <location line="577" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="577"/>
    <source>Invisible</source>
    <translation>Invisible</translation>
   </message>
   <message>
-   <location line="579" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="579"/>
    <source>Error</source>
    <translation>Error</translation>
   </message>
   <message>
-   <location line="581" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="581"/>
    <source>Unknown Status</source>
    <translation>Unknown Status</translation>
   </message>
   <message>
-   <location line="599" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="599"/>
    <source>Free for chat</source>
    <translation>Free for chat</translation>
   </message>
   <message>
-   <location line="607" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="607"/>
    <source>I'm away from my desk</source>
    <translation>I'm away from my desk</translation>
   </message>
   <message>
-   <location line="623" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="623"/>
    <source>Not available</source>
    <translation>Not available</translation>
   </message>
   <message>
-   <location line="631" filename="../../plugins/statuschanger/statuschanger.cpp"/>
-   <location line="639" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="631"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="639"/>
    <source>Disconnected</source>
    <translation>Disconnected</translation>
   </message>
   <message>
-   <location line="652" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="652"/>
    <source>Connecting...</source>
    <translation>Connecting...</translation>
   </message>
   <message>
-   <location line="859" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="859"/>
    <source>%1 - %2</source>
    <translation>%1 - %2</translation>
   </message>
   <message>
-   <location line="992" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="992"/>
    <source>Connection error</source>
    <translation>Connection error</translation>
   </message>
   <message>
-   <location line="1288" filename="../../plugins/statuschanger/statuschanger.cpp"/>
+   <location filename="../../plugins/statuschanger/statuschanger.cpp" line="1288"/>
    <source>Left %1</source>
    <translation>Left %1</translation>
   </message>
@@ -160,50 +160,50 @@
  <context>
   <name>StatusOptionsWidget</name>
   <message>
-   <location line="158" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="158"/>
    <source>Add</source>
    <translation>Add</translation>
   </message>
   <message>
-   <location line="162" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="162"/>
    <source>Delete</source>
    <translation>Delete</translation>
   </message>
   <message>
-   <location line="176" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Status</source>
    <translation>Status</translation>
   </message>
   <message>
-   <location line="176" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
-   <location line="316" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="316"/>
    <source>Name</source>
    <translation>Name</translation>
   </message>
   <message>
-   <location line="176" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
-   <location line="330" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="330"/>
    <source>Message</source>
    <translation>Message</translation>
   </message>
   <message>
-   <location line="176" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="176"/>
    <source>Priority</source>
    <translation>Priority</translation>
   </message>
   <message>
-   <location line="360" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
-   <location line="364" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="364"/>
    <source>Can't delete status</source>
    <translation>Can't delete status</translation>
   </message>
   <message>
-   <location line="360" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="360"/>
    <source>You can not delete standard statuses.</source>
    <translation>You can not delete standard statuses.</translation>
   </message>
   <message>
-   <location line="364" filename="../../plugins/statuschanger/statusoptionswidget.cpp"/>
+   <location filename="../../plugins/statuschanger/statusoptionswidget.cpp" line="364"/>
    <source>You can not delete active statuses.</source>
    <translation>You can not delete active statuses.</translation>
   </message>

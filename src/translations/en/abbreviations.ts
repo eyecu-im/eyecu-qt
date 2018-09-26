@@ -4,12 +4,12 @@
  <context>
   <name>Abbreviations</name>
   <message>
-   <location line="36" filename="../../plugins/abbreviations/abbreviations.cpp"/>
+   <location filename="../../plugins/abbreviations/abbreviations.cpp" line="36"/>
    <source>Abbreviations</source>
    <translation>Abbreviations</translation>
   </message>
   <message>
-   <location line="37" filename="../../plugins/abbreviations/abbreviations.cpp"/>
+   <location filename="../../plugins/abbreviations/abbreviations.cpp" line="37"/>
    <source>Translates abbreviations frequently used in network communities</source>
    <translation>Translates abbreviations frequently used in network communities</translation>
   </message>

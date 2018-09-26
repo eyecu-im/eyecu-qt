@@ -12,6 +12,7 @@ RawUdpOptions::RawUdpOptions(QWidget *parent) :
 	connect(ui->cmbNetworkInterface, SIGNAL(currentIndexChanged(int)), SIGNAL(modified()));
 	connect(ui->spbPortFrom, SIGNAL(valueChanged(int)), SIGNAL(modified()));
 	connect(ui->spbPortTo, SIGNAL(valueChanged(int)), SIGNAL(modified()));
+	connect(ui->spbTimeout, SIGNAL(valueChanged(int)), SIGNAL(modified()));
 	reset();
 }
 
@@ -26,6 +27,7 @@ void RawUdpOptions::apply()
 			.setValue(ui->cmbNetworkInterface->itemData(ui->cmbNetworkInterface->currentIndex()));
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).setValue(ui->spbPortFrom->value());
 	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).setValue(ui->spbPortTo->value());
+	Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT).setValue(ui->spbTimeout->value());
 }
 
 void RawUdpOptions::reset()
@@ -59,6 +61,7 @@ void RawUdpOptions::reset()
 	ui->cmbNetworkInterface->setCurrentIndex(ui->cmbNetworkInterface->findData(address));
 	ui->spbPortFrom->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST).value().toInt());
 	ui->spbPortTo->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST).value().toInt());
+	ui->spbTimeout->setValue(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT).value().toInt());
 }
 
 bool RawUdpOptions::isLoopback(const QHostAddress &AHostAddress)

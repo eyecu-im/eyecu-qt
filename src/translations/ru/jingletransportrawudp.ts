@@ -42,5 +42,13 @@
         <source>Default (%1 - %2)</source>
         <translation>По умолчанию (%1 - %2)</translation>
     </message>
+    <message>
+        <source>Connection timeout</source>
+        <translation>Таймаут подключения</translation>
+    </message>
+    <message>
+        <source> msec</source>
+        <translation> мсек</translation>
+    </message>
 </context>
 </TS>

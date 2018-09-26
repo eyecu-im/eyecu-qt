@@ -69,12 +69,12 @@ bool JingleTransportRawUdp::initSettings()
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_IP, QVariant());
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST, 6666);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST, 8888);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT, 1000);
     return true;
 }
 
 bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &AContentName)
 {
-	qDebug() << "JingleTransportRawUdp::openConnection(" << ASid << "," << AContentName << ")";
 	IJingleContent *content = FJingle->content(ASid, AContentName);
 	if (content)
 	{
@@ -199,7 +199,6 @@ bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &A
 			{
 				FPendingContents.insert(device, cid);
 				connect(device, SIGNAL(readyRead()), SLOT(onReadyRead()));
-				QTimer::singleShot(1000, this, SLOT(onTimeout()));
 			}
 		}
 
@@ -210,7 +209,7 @@ bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &A
 			connect(timer, SIGNAL(timeout()), SLOT(onTimeout()));
 			FPendingTimers.insert(timer, cid);
 //TODO: Make this timeout configurable
-			timer->start(1000);	// 1 second timeout
+			timer->start(Options::node(OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT).value().toInt());	// 1 second timeout
 		}
 
 		emit connectionOpened(ASid, AContentName);
@@ -224,7 +223,6 @@ bool JingleTransportRawUdp::openConnection(const QString &ASid, const QString &A
 
 bool JingleTransportRawUdp::fillIncomingTransport(const QString &ASid, const QString &AContentName)
 {
-	qDebug() << "JingleTransportRawUdp::fillIncomingTransport()";
 	IJingleContent *content = FJingle->content(ASid, AContentName);
 
 	if (content)
@@ -397,16 +395,16 @@ void JingleTransportRawUdp::onReadyRead()
 	if (device)
 	{
 		device->disconnect(SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-		Q_ASSERT(FPendingContents.contains(device));
-		QPair<QString,QString> cid = FPendingContents.take(device);
-		if (FPendingContents.keys(cid).isEmpty()) // The last content device was removed
-		{
-			QTimer *timer = FPendingTimers.key(cid);
-			Q_ASSERT(timer);
-			FPendingTimers.remove(timer);
-			timer->stop();
-			timer->disconnect(SIGNAL(timeout()), this, SLOT(onTimeout()));
-			delete timer;
+		if(FPendingContents.contains(device))	// The timer may already be removed
+		{										//  because of timeout
+			QPair<QString,QString> cid = FPendingContents.take(device);
+			if (FPendingContents.keys(cid).isEmpty()) // The last content device was removed
+			{
+				QTimer *timer = FPendingTimers.key(cid);
+				Q_ASSERT(timer);
+				FPendingTimers.remove(timer);
+				delete timer;
+			}
 		}
 	}
 }
@@ -419,7 +417,7 @@ void JingleTransportRawUdp::onTimeout()
 		Q_ASSERT(FPendingTimers.contains(timer));
 		QPair<QString, QString> content = FPendingTimers.take(timer);
 		delete timer;
-		QList<QIODevice *> devices = FPendingContents.keys(content);
+		QList<QIODevice *> devices = FPendingContents.keys(content);		
 		for (QList<QIODevice *>::ConstIterator it = devices.constBegin();
 			 it != devices.constEnd(); ++it)
 			FPendingContents.remove(*it);

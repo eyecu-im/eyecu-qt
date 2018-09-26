@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>568</width>
-    <height>177</height>
+    <width>597</width>
+    <height>237</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -170,14 +170,90 @@
      </property>
     </widget>
    </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="2" column="1">
+      <widget class="QSpinBox" name="spbRto">
+       <property name="suffix">
+        <string> msec</string>
+       </property>
+       <property name="minimum">
+        <number>10</number>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lblRto">
+       <property name="text">
+        <string>STUN round-trip time estimation</string>
+       </property>
+       <property name="buddy">
+        <cstring>spbRto</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lblNominationDelay">
+       <property name="text">
+        <string>Controlling agent nomination delay</string>
+       </property>
+       <property name="buddy">
+        <cstring>spbNominationDelay</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="spbNominationDelay">
+       <property name="suffix">
+        <string> msec</string>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lblNominationTimeout">
+       <property name="text">
+        <string>Controlled agent nomination timeout</string>
+       </property>
+       <property name="buddy">
+        <cstring>spbNominationTimeout</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="spbNominationTimeout">
+       <property name="specialValueText">
+        <string>None</string>
+       </property>
+       <property name="suffix">
+        <string> msec</string>
+       </property>
+       <property name="minimum">
+        <number>100</number>
+       </property>
+       <property name="maximum">
+        <number>10000</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
   <tabstop>twServers</tabstop>
+  <tabstop>chkAggressive</tabstop>
+  <tabstop>spbNominationDelay</tabstop>
+  <tabstop>spbNominationTimeout</tabstop>
+  <tabstop>spbRto</tabstop>
   <tabstop>pbAddStun</tabstop>
   <tabstop>pbAddTurn</tabstop>
   <tabstop>pbRemove</tabstop>
-  <tabstop>chkAggressive</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -188,8 +264,8 @@
    <slot>onAdd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>516</x>
-     <y>116</y>
+     <x>590</x>
+     <y>54</y>
     </hint>
     <hint type="destinationlabel">
      <x>568</x>
@@ -204,8 +280,8 @@
    <slot>onAdd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>534</x>
-     <y>143</y>
+     <x>590</x>
+     <y>80</y>
     </hint>
     <hint type="destinationlabel">
      <x>569</x>
@@ -220,12 +296,12 @@
    <slot>onRemove()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>517</x>
-     <y>258</y>
+     <x>590</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>568</x>
-     <y>315</y>
+     <y>236</y>
     </hint>
    </hints>
   </connection>
@@ -236,12 +312,28 @@
    <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>232</y>
+     <x>388</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>381</x>
-     <y>375</y>
+     <y>236</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkAggressive</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>IceOptions</receiver>
+   <slot>onAggressiveNominationToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>151</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>298</x>
+     <y>118</y>
     </hint>
    </hints>
   </connection>
@@ -250,5 +342,6 @@
   <slot>onAdd()</slot>
   <slot>onRemove()</slot>
   <slot>onCurrentItemChanged(QTreeWidgetItem*,QTreeWidgetItem*)</slot>
+  <slot>onAggressiveNominationToggled(bool)</slot>
  </slots>
 </ui>

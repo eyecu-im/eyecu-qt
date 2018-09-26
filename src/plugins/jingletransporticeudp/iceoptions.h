@@ -32,6 +32,7 @@ protected slots:
 	void onAdd();
 	void onRemove();
 	void onCurrentItemChanged(QTreeWidgetItem *ACurrent, QTreeWidgetItem *APrevious);
+	void onAggressiveNominationToggled(bool AState);
 
 signals:
 	void modified() override;

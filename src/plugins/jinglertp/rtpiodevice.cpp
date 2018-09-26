@@ -53,7 +53,7 @@ bool RtpIODevice::waitForReadyRead(int msecs)
 }
 
 qint64 RtpIODevice::readData(char *data, qint64 maxlen)
-{	
+{
 	waitForReadyRead(FReadTimeout); // RtpIODevice is blocking!
 
 	FInputMutex.lock();
@@ -118,18 +118,25 @@ void RtpIODevice::onReadyRead()
 	}
 }
 
+void RtpIODevice::onAboutToClose()
+{
+	close();
+}
+
 bool RtpIODevice::open(QIODevice::OpenMode mode)
 {
 	if (mode.testFlag(ReadOnly))
 	{
 		if (FRtp){
 			connect(FRtp, SIGNAL(readyRead()), SLOT(onReadyRead()));
+			connect(FRtp, SIGNAL(aboutToClose()), SLOT(onAboutToClose()));
 			qint64 bytes = FRtp->bytesAvailable();
 			if (bytes)
 				readDevice(FRtp, bytes);
 		}
 		if (FRtcp) {
 			connect(FRtcp, SIGNAL(readyRead()), SLOT(onReadyRead()));
+			connect(FRtcp, SIGNAL(aboutToClose()), SLOT(onAboutToClose()));
 			qint64 bytes = FRtcp->bytesAvailable();
 			if (bytes)
 				readDevice(FRtcp, bytes);
@@ -139,11 +146,15 @@ bool RtpIODevice::open(QIODevice::OpenMode mode)
 	if (mode.testFlag(WriteOnly))
 	{
 		if (FRtp)
-			connect(FRtp, SIGNAL(bytesWritten(qint64)),
-						  SIGNAL(bytesWritten(qint64)));
+		{
+			connect(FRtp, SIGNAL(bytesWritten(qint64)), SIGNAL(bytesWritten(qint64)));
+			connect(FRtp, SIGNAL(aboutToClose()), SLOT(onAboutToClose()));
+		}
 		if (FRtcp)
-			connect(FRtcp, SIGNAL(bytesWritten(qint64)),
-						   SIGNAL(bytesWritten(qint64)));
+		{
+			connect(FRtcp, SIGNAL(bytesWritten(qint64)), SIGNAL(bytesWritten(qint64)));
+			connect(FRtcp, SIGNAL(aboutToClose()), SLOT(onAboutToClose()));
+		}
 	}
 
 	return QIODevice::open(mode);

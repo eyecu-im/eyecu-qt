@@ -172,11 +172,13 @@ public:
 	virtual QString ns() const =0;
 	virtual bool checkSupported(QDomElement &ADescription) =0;	// To check if Jingle request is supported
 
-	virtual void onSessionInitiated(const QString &ASid) =0;	// To notify, about new initiate request
-	virtual void onSessionAccepted(const QString &ASid) =0;		// To notify, about session acceptance
-	virtual void onSessionConnected(const QString &ASid) =0;	// To notify, about session connection
+	virtual void onSessionInitiated(const QString &ASid) =0;	// To notify about new initiate request
+	virtual void onSessionAccepted(const QString &ASid) =0;		// To notify about session acceptance
+	virtual void onSessionConnected(const QString &ASid) =0;	// To notify about session connection
 	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus ASessionStatus, IJingle::Reason AReason) =0;
+	virtual void onSessionInformed(const QDomElement &AInfoElement) =0; // To notify about session inform request
 	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus ASessionStatus, const Jid &ARedirect, IJingle::Reason AReason) =0; // To notify, about own initiate request acknowleged
+	virtual void onSessionDestroyed(const QString &ASid) =0;	// Session destroyed
 
 	virtual void onConnectionEstablished(IJingleContent *AContent) =0;
 	virtual void onConnectionFailed(IJingleContent *AContent) =0;

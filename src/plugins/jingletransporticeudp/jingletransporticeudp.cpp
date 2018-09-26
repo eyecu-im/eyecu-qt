@@ -74,7 +74,10 @@ bool JingleTransportIceUdp::initObjects()
 
 bool JingleTransportIceUdp::initSettings()
 {
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE, false);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE, false);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY, QP_ICE_NOMINATED_CHECK_DELAY);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT, ICE_CONTROLLED_AGENT_WAIT_NOMINATION_TIMEOUT);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO, QP_STUN_RTO_VALUE);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN,
 							 QStringList() << "stun.voipstunt.com:");
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN, QStringList());
@@ -362,15 +365,23 @@ void JingleTransportIceUdp::addStunServers(const QStringList &AServers)
 
 void JingleTransportIceUdp::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE));
+	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE));
+	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT));
+	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO));
 	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN));
 	onOptionsChanged(Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN));
 }
 
 void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE) // Aggressive nomination
+	if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE) // Aggressive nomination
 		FIceCfg.options.aggressive = ANode.value().toBool();
+	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT) // Timeout for controlled agent for nominated check
+		FIceCfg.options.controlledAgentWantNomTimeout = ANode.value().toInt();
+	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY) // Delay for controlling agent before it starts sending nominated checks
+		FIceCfg.options.nominatedCheckDelay = ANode.value().toInt();
+	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_STUN_RTO) // STUN round-trip time estimation
+		FIceCfg.stunConfig.rto = unsigned(ANode.value().toInt());
 	else if (ANode.path()==OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN) // STUN servers
 	{
 		FIceCfg.stunTransportCfg.clear();

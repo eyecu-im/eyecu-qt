@@ -85,6 +85,7 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
 															   IJingle::SessionStatus,Jid,IJingle::Reason)),
 								parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
 																   IJingle::SessionStatus,Jid,IJingle::Reason)));
+						connect(this, SIGNAL(sessionDestroyed(QString)),parent(),SLOT(onSessionDestroyed(QString)));
 
 						IPresence *presence = FPresenceManager->findPresence(FThisParty);
 						if (presence)
@@ -118,6 +119,8 @@ JingleSession::~JingleSession()
 
 	if (FSessions.value(FSid)==this)
 		FSessions.remove(FSid);        // remove it from the list!
+
+	emit sessionDestroyed(FSid);
 }
 
 void JingleSession::setInitiated(IJingleApplication *AApplication)
@@ -134,38 +137,48 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
 	connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
 										   IJingle::SessionStatus,Jid,IJingle::Reason)),
 			parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
-											   IJingle::SessionStatus,Jid,IJingle::Reason)));
+											   IJingle::SessionStatus,Jid,IJingle::Reason)));	
+	connect(this, SIGNAL(sessionDestroyed(QString)),parent(),SLOT(onSessionDestroyed(QString)));
 	emit sessionInitiated(FSid);
 }
 
 void JingleSession::setAccepting()
 {
-	FStatus=IJingle::Accepting;
+	if (FStatus != IJingle::Accepting)
+		FStatus=IJingle::Accepting;
 }
 
 void JingleSession::setAccepted()
 {
-    FStatus=IJingle::Accepted;
-	emit sessionAccepted(FSid);
+	if (FStatus != IJingle::Accepted)
+	{
+		FStatus=IJingle::Accepted;
+		emit sessionAccepted(FSid);
+	}
 }
 
 void JingleSession::setConnected()
 {
 	LOG_DEBUG("JingleSession::setConnected()");
-    FStatus=IJingle::Connected;
-	emit sessionConnected(FSid);
+	if (FStatus != IJingle::Connected)
+	{
+		FStatus=IJingle::Connected;
+		emit sessionConnected(FSid);
+	}
 }
 
 bool JingleSession::setTerminated(IJingle::Reason AReason)
 {
-	if (FStatus == IJingle::Terminated) // Do not terminate session if it's already terminated
-		return false;
-
-	IJingle::SessionStatus currentStatus=FStatus;
-	FStatus=IJingle::Terminated;
-	FReason=AReason;
-	emit sessionTerminated(FSid, currentStatus, AReason);
-	return true;
+	LOG_DEBUG(QString("JingleSession::setConnected(%1)").arg(AReason));
+	if (FStatus != IJingle::Terminated) // Do not terminate session if it's already terminated
+	{
+		IJingle::SessionStatus currentStatus=FStatus;
+		FStatus=IJingle::Terminated;
+		FReason=AReason;
+		emit sessionTerminated(FSid, currentStatus, AReason);
+		return true;
+	}
+	return false;
 }
 
 void JingleSession::inform(const JingleStanza &AStanza)
@@ -248,7 +261,6 @@ JingleContent *JingleSession::getContent(QIODevice *AIODevice)
 
 bool JingleSession::deleteContent(const QString &AName)
 {
-	qDebug() << "JingleSession()::deleteContent(" << AName << ")";
     if (FContents.contains(AName))
     {
         JingleContent *content=FContents.take(AName);
@@ -447,14 +459,13 @@ JingleContent::JingleContent(const QString &AName, const QString &ASid, int ACom
 
 JingleContent::~JingleContent() // Cleanup device list
 {
-	qDebug() << "~JingleContent(): this=" << this;
 	JingleSession *session = JingleSession::sessionBySessionId(FSid);
 	if (session)
 		for(QMap<int, QIODevice*>::ConstIterator it = FIODevices.constBegin();
 			it!=FIODevices.constEnd(); it++)
 			session->FContentByDevice.remove(*it);
 	else
-		qWarning() << "Session not found:" << FSid;
+		qWarning(QString("Session not found: %1").arg(FSid).toLatin1().data());
 }
 
 QDomElement JingleContent::addElementToStanza(JingleStanza &AStanza)

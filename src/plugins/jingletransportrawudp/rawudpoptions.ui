@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>66</height>
+    <height>92</height>
    </rect>
   </property>
   <layout class="QFormLayout" name="formLayout">
@@ -65,6 +65,26 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblTimeout">
+     <property name="text">
+      <string>Connection timeout</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QSpinBox" name="spbTimeout">
+     <property name="suffix">
+      <string> msec</string>
+     </property>
+     <property name="minimum">
+      <number>50</number>
+     </property>
+     <property name="maximum">
+      <number>60000</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

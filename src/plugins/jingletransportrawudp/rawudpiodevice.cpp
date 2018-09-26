@@ -16,7 +16,6 @@ RawUdpIODevice::RawUdpIODevice(QUdpSocket *AInputSocket, QThread *AThread):
 
 RawUdpIODevice::~RawUdpIODevice()
 {
-	qDebug() << "~RawUdpIODevice(); this=" << this;
 }
 
 QUdpSocket *RawUdpIODevice::socket() const

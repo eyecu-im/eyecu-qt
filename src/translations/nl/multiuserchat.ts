@@ -1059,15 +1059,7 @@
  /nick &lt;newnick&gt; 
  /leave [comment] 
  /topic &lt;foo&gt;</source>
-   <translation>Ondersteunde lijst van commando&apos;s: 
- /ban &lt;kamerbijnaam&gt; [Commentaar] 
- /invite &lt;jid&gt; [Commentaar] 
- /join &lt;kamerbijnaam&gt; [paswoord] 
- /kick &lt;kamerbijnaam&gt; [Commentaar] 
- /msg &lt;kamerbijnaam&gt; &lt;foo&gt; 
- /nick &lt;nieuwebijnaam&gt; 
- /leave [Commentaar] 
- /topic &lt;foo&gt;</translation>
+   <translation type="unfinished"/>
   </message>
   <message>
    <source>%1 changed status to [%2] %3</source>

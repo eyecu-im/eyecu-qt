@@ -593,9 +593,13 @@
 #define OPV_JINGLE_TRANSPORT_RAWUDP_IP                  "jingle.transport.raw-udp.ip"
 #define OPV_JINGLE_TRANSPORT_RAWUDP_PORT_FIRST          "jingle.transport.raw-udp.port.first"
 #define OPV_JINGLE_TRANSPORT_RAWUDP_PORT_LAST           "jingle.transport.raw-udp.port.last"
+#define OPV_JINGLE_TRANSPORT_RAWUDP_TIMEOUT             "jingle.transport.raw-udp.timeout"
 //   ICE
 #define OPV_JINGLE_TRANSPORT_ICE                        "jingle.transport.ice"
-#define OPV_JINGLE_TRANSPORT_ICE_AGGRESSIVE             "jingle.transport.ice.aggressive"
+#define OPV_JINGLE_TRANSPORT_ICE_STUN_RTO				"jingle.transport.ice.stun.rto"
+#define OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE  "jingle.transport.ice.nomination.aggressive"
+#define OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY       "jingle.transport.ice.nomination.delay"
+#define OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT        "jingle.transport.ice.nomination.wait"
 #define OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN           "jingle.transport.ice.servers.stun"
 #define OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN           "jingle.transport.ice.servers.turn"
 //  Applications

@@ -270,6 +270,7 @@
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="859"/>
    <source>To make changes intact, %1 needs to be restarted.
+
 Do you want to restart %1 now?</source>
    <translation type="unfinished"/>
   </message>
@@ -281,6 +282,7 @@ Do you want to restart %1 now?</source>
   <message>
    <location filename="../../plugins/optionsmanager/optionsmanager.cpp" line="864"/>
    <source>To switch options mode, %1 needs to be restarted.
+
 Do you want to restart %1 now?</source>
    <translation type="unfinished"/>
   </message>

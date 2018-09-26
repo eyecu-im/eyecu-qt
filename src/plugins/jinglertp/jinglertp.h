@@ -95,30 +95,31 @@ public:
 	static QList<int> intsFromString(const QString &FString);
 
 	//IPlugin
-	QObject *instance() { return this; }
-	QUuid pluginUuid() const { return JINGLERTP_UUID; }
-	void pluginInfo(IPluginInfo *APluginInfo);
-	bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-	bool initObjects();
-	bool initSettings();
-	bool startPlugin(){return true;}
+	QObject *instance() override { return this; }
+	QUuid pluginUuid() const override { return JINGLERTP_UUID; }
+	void pluginInfo(IPluginInfo *APluginInfo) override;
+	bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	bool initObjects() override;
+	bool initSettings() override;
+	bool startPlugin() override {return true;}
 	//IOptionsHolder
-	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
 	//INotificationHandler
-	bool showNotification(int AOrder, ushort AKind, int ANotifyId, const INotification &ANotification);
+	bool showNotification(int AOrder, ushort AKind, int ANotifyId, const INotification &ANotification) override;
 	//IJingleApplication
-	QString ns() const;
-	bool checkSupported(QDomElement &ADescription);
+	QString ns() const override;
+	bool checkSupported(QDomElement &ADescription) override;
 
 public slots:
-	virtual void onSessionInitiated(const QString &ASid);
-	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason); // To notify, about own initiate request acknowleged
-	virtual void onSessionAccepted(const QString &ASid);
-	virtual void onSessionConnected(const QString &ASid);
-	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason);
-	virtual void onSessionInformed(const QDomElement &AInfoElement);
-	virtual void onConnectionEstablished(IJingleContent *AContent);
-	virtual void onConnectionFailed(IJingleContent *AContent);
+	virtual void onSessionInitiated(const QString &ASid) override;
+	virtual void onActionAcknowledged(const QString &ASid, IJingle::Action AAction, IJingle::CommandRespond ARespond, IJingle::SessionStatus APreviousStatus, const Jid &ARedirect, IJingle::Reason AReason) override; // To notify, about own initiate request acknowleged
+	virtual void onSessionAccepted(const QString &ASid) override;
+	virtual void onSessionConnected(const QString &ASid) override;
+	virtual void onSessionTerminated(const QString &ASid, IJingle::SessionStatus APreviousStatus, IJingle::Reason AReason) override;
+	virtual void onSessionInformed(const QDomElement &AInfoElement) override;
+	virtual void onSessionDestroyed(const QString &ASid) override;
+	virtual void onConnectionEstablished(IJingleContent *AContent) override;
+	virtual void onConnectionFailed(IJingleContent *AContent) override;
 
 protected:
 	bool    isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
@@ -218,6 +219,7 @@ private:
 	QHash<IJingleContent *, MediaStreamer *> FStreamers;
 	QHash<IJingleContent *, MediaPlayer *> FPlayers;
 	QHash<QString, QThread *> FIOThreads;
+	QHash<QString, QIODevice *> FIODevices;
 
 	static const QString FTypes[4];
 };

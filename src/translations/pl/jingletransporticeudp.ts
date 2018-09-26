@@ -114,27 +114,54 @@
    <source>&amp;Aggressive nomination</source>
    <translation type="unfinished"/>
   </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="178"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="211"/>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="234"/>
+   <source> msec</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="191"/>
+   <source>STUN round-trip time estimation</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="201"/>
+   <source>Controlling agent nomination delay</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="221"/>
+   <source>Controlled agent nomination timeout</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="231"/>
+   <source>None</source>
+   <translation type="unfinished"/>
+  </message>
  </context>
  <context>
   <name>JingleTransportIceUdp</name>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="25"/>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="228"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="24"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="244"/>
    <source>Jingle ICE-UDP Transport</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="26"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="25"/>
    <source>Implements XEP-0176: Jingle ICE-UDP transport Method</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="216"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="232"/>
    <source>ICE</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="229"/>
+   <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="245"/>
    <source>Allows using ICE-UDP transport in Jingle sesions</source>
    <translation type="unfinished"/>
   </message>

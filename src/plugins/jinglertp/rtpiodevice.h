@@ -30,6 +30,7 @@ protected:
 
 protected slots:
 	void onReadyRead();
+	void onAboutToClose();
 
 private:
 	QIODevice *FRtp;

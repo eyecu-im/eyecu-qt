@@ -4,12 +4,12 @@
  <context>
   <name>PrivateStorage</name>
   <message>
-   <location line="30" filename="../../plugins/privatestorage/privatestorage.cpp"/>
+   <location filename="../../plugins/privatestorage/privatestorage.cpp" line="30"/>
    <source>Private Storage</source>
    <translation>Private Storage</translation>
   </message>
   <message>
-   <location line="31" filename="../../plugins/privatestorage/privatestorage.cpp"/>
+   <location filename="../../plugins/privatestorage/privatestorage.cpp" line="31"/>
    <source>Allows other modules to store arbitrary data on a server</source>
    <translation>Allows other modules to store arbitrary data on a server</translation>
   </message>

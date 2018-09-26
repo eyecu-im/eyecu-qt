@@ -424,7 +424,8 @@ void JingleRtp::onSessionConnected(const QString &ASid)
 			if (streamer)
 			{
 				FIOThreads.insert(ASid, ioThread);
-				FStreamers.insert(*it, streamer);
+				FIODevices.insertMulti(ASid, rtpio);
+				FStreamers.insert(*it, streamer);				
 
 				if (rtpDevice->bytesAvailable())
 					checkRtpContent(*it, rtpDevice);
@@ -491,7 +492,6 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 		(FJingle->isOutgoing(ASid) && type == Rejected))
 		callNotify(ASid, type, AReason);
 
-	qDebug() << "calling checkRunningContents(" << ASid << ")";
 	checkRunningContents(ASid);
 }
 
@@ -504,6 +504,18 @@ void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 		if (event.tagName() == FTypes[Ringing])
 			if (!Options::node(OPV_JINGLE_RTP_RINGING).value().toBool())
 				notifyRinging(AInfoElement.attribute("sid"));
+}
+
+void JingleRtp::onSessionDestroyed(const QString &ASid)
+{
+	QThread *ioThread(FIOThreads.value(ASid));
+	if (ioThread)
+	{
+		LOG_DEBUG("Terminating I/O thread...");
+		ioThread->quit();
+	}
+	else
+		LOG_DEBUG("No I/O thread for the session");
 }
 
 void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
@@ -1171,21 +1183,12 @@ void JingleRtp::removePendingContent(IJingleContent *AContent, PendingType AType
 
 bool JingleRtp::hasPendingContents(const QString &ASid, PendingType AType)
 {
-	qDebug() << "JingleRtp::hasPendingContents(" << ASid << "," << AType << ")";
 	QList<IJingleContent *> pendingContents = FPendingContents.values(AType);
-	qDebug() << "pendingContents.size()=" << pendingContents.size();
 	for (QList<IJingleContent *>::ConstIterator it = pendingContents.constBegin();
 		 it!=pendingContents.constEnd(); it++)
-	{
-		qDebug() << "*it=" << *it;
-		qDebug() << "(*it)->sid()=" << (*it)->sid();
 		if ((*it)->sid() == ASid)
-		{
-			qDebug() << "TRUE";
 			return true;
-		}
-	}
-	qDebug() << "FALSE";
+
 	return false;
 }
 
@@ -1208,7 +1211,6 @@ void JingleRtp::establishConnection(const QString &ASid)
 
 void JingleRtp::checkRunningContents(const QString &ASid)
 {
-	qDebug() << "JingleRtp::checkRunningContents(" << ASid << ")";
 	bool pending(false);
 	QHash<QString,IJingleContent*> contents = FJingle->contents(ASid);
 	for (QHash<QString,IJingleContent*>::ConstIterator it=contents.constBegin();
@@ -1225,15 +1227,13 @@ void JingleRtp::checkRunningContents(const QString &ASid)
 	}
 
 	if (!pending) {
-		LOG_DEBUG("No pending contents left!");
-		QThread *ioThread(FIOThreads.value(ASid));
-		if (ioThread)
-		{
-			LOG_DEBUG("Terminating I/O thread...");
-			ioThread->quit();
-		}
-		else
-			LOG_DEBUG("No I/O thread for the session");
+		LOG_DEBUG("No pending contents left! Closing I/O devices..");
+		QList<QIODevice *> devices = FIODevices.values(ASid);
+		for (QList<QIODevice *>::ConstIterator it = devices.constBegin();
+			 it != devices.constEnd(); ++it)
+			(*it)->close();
+		FIODevices.remove(ASid);
+
 		LOG_DEBUG("Destroying session...");
 		FJingle->sessionDestroy(ASid);
 	}
@@ -1869,11 +1869,8 @@ void JingleRtp::onRtpReadyRead()
 
 void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));	
-	qDebug() << "JingleRtp::onConnectionEstablished(" << AContent << ")";
-	qDebug() << "content name=" << AContent->name();
+	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AContent->name()));
 	removePendingContent(AContent, Connect);
-	qDebug() << "HERE!";
 
 	if (!hasPendingContents(AContent->sid(), Connect))
 		FJingle->setConnected(AContent->sid());
@@ -1884,9 +1881,7 @@ void JingleRtp::onConnectionEstablished(IJingleContent *AContent)
 void JingleRtp::onConnectionFailed(IJingleContent *AContent)
 {
 	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AContent->name()));
-	qDebug() << "JingleRtp::onConnectionFailed()";
 	removePendingContent(AContent, Connect);
-	qDebug() << "HERE!!!";
 	if (!hasPendingContents(AContent->sid(), Connect))
 	{
 		if (FJingle->contents(AContent->sid()).isEmpty())
