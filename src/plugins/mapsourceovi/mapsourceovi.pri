@@ -1,2 +1,9 @@
-HEADERS = mapsourceovi.h 
-SOURCES = mapsourceovi.cpp
+HEADERS =  \
+	mapsourceovi.h \
+	settingshere.h
+SOURCES = \
+	mapsourceovi.cpp \
+	settingshere.cpp
+
+FORMS += \
+	settingshere.ui

@@ -22,6 +22,7 @@
 #define ONO_MAP                   950
 #define ONO_MAP_GOOGLE            951
 #define ONO_MAP_YANDEX            952
+#define ONO_MAP_HERE			  953
 #define ONO_MAPMAGNIFIER          955
 #define ONO_MAPSEARCH             956
 #define ONO_CONTACTPROXIMITY      957

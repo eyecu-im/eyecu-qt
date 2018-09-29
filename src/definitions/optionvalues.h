@@ -466,6 +466,11 @@
 #define OPV_MAP_SOURCE_YANDEX                           "map.source.yandex"
 #define OPV_MAP_SOURCE_YANDEX_VERSION_SCHEME            "map.source.yandex.version.scheme"
 #define OPV_MAP_SOURCE_YANDEX_VERSION_SATELLITE         "map.source.yandex.version.satellite"
+#define OPV_MAP_SOURCE_HERE                             "map.source.here"
+#define OPV_MAP_SOURCE_HERE_LANG_PRIMARY                "map.source.here.lang.primary"
+#define OPV_MAP_SOURCE_HERE_LANG_SECONDARY              "map.source.here.lang.secondary"
+#define OPV_MAP_SOURCE_HERE_MODE_NIGHT					"map.source.here.night"
+#define OPV_MAP_SOURCE_HERE_POLITICALVIEW				"map.source.political_view"
 
 #define OPV_MAP_MAGNIFIER_SIZE                          "map.magnifier.size"
 #define OPV_MAP_MAGNIFIER_ZOOM                          "map.magnifier.zoom"
@@ -490,7 +495,8 @@
 #define OPV_MAP_SEARCH_PAGESIZE_DEFAULT                 "map.search.page-size.default"
 #define OPV_MAP_SEARCH_PROVIDER                         "map.search.provider"
 #define OPV_MAP_SEARCH_PROXY                            "map.search.proxy"
-#define OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE               "map.search.provider.doublegis.type"
+#define OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE               "map.search.provider.2gis.type"
+#define OPV_MAP_SEARCH_PROVIDER_HERE_POLITICALVIEW      "map.search.provider.here.political_view"
 
 // Street View
 #define OPV_MAP_STREETVIEW                              "map.streetview"

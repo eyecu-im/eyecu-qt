@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SettingsHere</class>
+ <widget class="QWidget" name="SettingsHere">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>153</height>
+   </rect>
+  </property>
+  <layout class="QFormLayout" name="formLayout_2">
+   <property name="horizontalSpacing">
+    <number>2</number>
+   </property>
+   <property name="verticalSpacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>3</number>
+   </property>
+   <property name="topMargin">
+    <number>3</number>
+   </property>
+   <property name="rightMargin">
+    <number>3</number>
+   </property>
+   <property name="bottomMargin">
+    <number>3</number>
+   </property>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblPView">
+     <property name="text">
+      <string>Political views</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbPView</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="grpbLanguages">
+     <property name="title">
+      <string>Languages</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="lblPrimary">
+        <property name="text">
+         <string>Primary</string>
+        </property>
+        <property name="buddy">
+         <cstring>cmbPrimary</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lblSecondary">
+        <property name="text">
+         <string>Secondary</string>
+        </property>
+        <property name="buddy">
+         <cstring>cmbSecondary</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cmbPrimary"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cmbSecondary"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QGroupBox" name="grpbStyle">
+     <property name="title">
+      <string>Style</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>6</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="rbDay">
+        <property name="text">
+         <string>Day</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="rbNight">
+        <property name="text">
+         <string>Night</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="cmbPView"/>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cmbPrimary</tabstop>
+  <tabstop>cmbSecondary</tabstop>
+  <tabstop>rbDay</tabstop>
+  <tabstop>rbNight</tabstop>
+  <tabstop>cmbPView</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

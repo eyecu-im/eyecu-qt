@@ -250,5 +250,15 @@ void MapSearchProviderHere::fillCountryCodes()
     FCountryCodes.insert("YEM", "YE");
     FCountryCodes.insert("ZAF", "ZA");
     FCountryCodes.insert("ZMB", "ZM");
-    FCountryCodes.insert("ZWE", "ZW");
+	FCountryCodes.insert("ZWE", "ZW");
+}
+
+QString MapSearchProviderHere::lang(const QString &aLocale)
+{
+	return fLocales.value(aLocale.split('_').first());
+}
+
+QString MapSearchProviderHere::lang(const QLocale &aLocale)
+{
+	return lang(aLocale.name());
 }

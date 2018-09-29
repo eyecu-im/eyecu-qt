@@ -28,11 +28,11 @@ bool MapSourceGoogle::initConnections(IPluginManager *APluginManager, int &AInit
 {
 	Q_UNUSED(AInitOrder)
 
-	IPlugin *plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	IPlugin *plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IMap").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMap").value(0, nullptr);
 	if (plugin)
 		FMap = qobject_cast<IMap *>(plugin->instance());
 
@@ -43,21 +43,21 @@ bool MapSourceGoogle::initConnections(IPluginManager *APluginManager, int &AInit
 
 bool MapSourceGoogle::initObjects()
 {
-	return true;
-}
-
-bool MapSourceGoogle::initSettings()
-{
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 719);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_MAP, 169);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T, 169);
-	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R, 169);
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode node = {ONO_MAP_GOOGLE, OPN_MAP_GOOGLE, MNI_MAP_GOOGLE, tr("Google")};
 		FMap->insertOptionsDialogNode(node);
 		FOptionsManager->insertOptionsDialogHolder(this);
 	}
+	return true;
+}
+
+bool MapSourceGoogle::initSettings()
+{
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_SATELLITE, 810);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_MAP, 169);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_T, 169);
+	Options::setDefaultValue(OPV_MAP_SOURCE_GOOGLE_VERSION_TERRAIN_R, 169);
 	return true;
 }
 

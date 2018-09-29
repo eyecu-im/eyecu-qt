@@ -229,6 +229,7 @@
 #define   OWO_MAPSEARCH_CONNECTION                610
 #define OHO_MAPSEARCH_PROVIDERS                   700
 #define   OWO_MAPSEARCH_PROVIDER_2GIS             710
+#define   OWO_MAPSEARCH_PROVIDER_HERE             720
 #define OWO_MAPMAGNIFIER                          500
 #define OWO_MAPSOURCE                             500
 //Node = ON_URLPROCESSOR

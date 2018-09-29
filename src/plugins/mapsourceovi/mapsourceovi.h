@@ -2,6 +2,7 @@
 #define MAPSOURCEOVI_H
 
 #include <interfaces/ipluginmanager.h>
+#include <interfaces/ioptionsmanager.h>
 #include <interfaces/imap.h>
 #include <definitions/menuicons.h>
 #include <SourceOvi>
@@ -11,10 +12,11 @@
 class MapSourceOvi:
 		public SourceOvi,
 		public IPlugin,
-		public IMapSource
+		public IMapSource,
+		public IOptionsDialogHolder
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IMapSource)
+	Q_INTERFACES(IPlugin IMapSource IOptionsDialogHolder)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IMapSourceOvi")
 #endif
@@ -22,18 +24,30 @@ public:
 	MapSourceOvi();
 	~MapSourceOvi();
 
-	virtual MapSource		*mapSource() {return this;}
-	virtual QList<int>      getModeIcons() const;
-	virtual QString			getIconId() const {return MNI_MAP_HERE;}
+	// MapSource interface
+	virtual MapSource		*mapSource() override {return this;}
+	virtual QList<int>      getModeIcons() const override;
+	virtual QString			getIconId() const override {return MNI_MAP_HERE;}
 
 	//IPlugin
-	virtual QObject *instance() { return this; }
-	virtual QUuid pluginUuid() const { return MAPSOURCEOVI_UUID; }
-	virtual void pluginInfo(IPluginInfo *APluginInfo);
-	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) {Q_UNUSED(APluginManager) Q_UNUSED(AInitOrder) return true;}
-	virtual bool initObjects(){return true;}
-	virtual bool initSettings(){return true;}
-	virtual bool startPlugin(){return true;}
+	virtual QObject *instance() override { return this; }
+	virtual QUuid pluginUuid() const override { return MAPSOURCEOVI_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo) override;
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	virtual bool initObjects() override;
+	virtual bool initSettings() override;
+	virtual bool startPlugin() override {return true;}
+
+	// IOptionsDialogHolder interface
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
+
+protected slots:
+	void onOptionsOpened();
+	void onOptionsChanged(const OptionsNode &ANode);
+
+private:
+	IOptionsManager *FOptionsManager;
+	IMap			*FMap;
 };
 
 #endif // MAPSOURCEOVI_H

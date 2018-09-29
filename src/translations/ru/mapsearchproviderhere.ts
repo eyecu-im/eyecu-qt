@@ -16,4 +16,23 @@
         <translation>Here</translation>
     </message>
 </context>
+<context>
+    <name>MapSearchProviderHereOptions</name>
+    <message>
+        <source>Here</source>
+        <translation>Here</translation>
+    </message>
+    <message>
+        <source>Geopolitical views</source>
+        <translation>Геополитические взгляды</translation>
+    </message>
+    <message>
+        <source>For current locale (%1)</source>
+        <translation>Для текущей локали (%1)</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation>По умолчанию</translation>
+    </message>
+</context>
 </TS>
