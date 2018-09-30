@@ -1,3 +1,0 @@
-set(SOURCES address.cpp tabwidget.cpp editwidget.cpp receiverswidget.cpp messagewidgets.cpp messageeditor.cpp normalwindow.cpp chatwindow.cpp statusbarwidget.cpp infowidget.cpp toolbarwidget.cpp menubarwidget.cpp viewwidget.cpp tabwindow.cpp tabpagenotifier.cpp)
-set(HEADERS address.h tabwindow.h messagewidgets.h editwidget.h chatwindow.h receiverswidget.h messageeditor.h toolbarwidget.h menubarwidget.h normalwindow.h viewwidget.h tabwidget.h infowidget.h statusbarwidget.h tabpagenotifier.h)
-set(UIS editwidget.ui normalwindow.ui viewwidget.ui chatwindow.ui tabwindow.ui infowidget.ui receiverswidget.ui )
