@@ -6,8 +6,13 @@ TEMPLATE           = lib
 VERSION            = $$EYECU_UTILS_ABI
 CONFIG            += dll
 QT                += xml network
-greaterThan(QT_MAJOR_VERSION, 4): QT += qputil widgets
-else: CONFIG += qputil
+greaterThan(QT_MAJOR_VERSION, 4) {
+	QT += qputil widgets
+	CONFIG += c++11
+} else {
+	CONFIG += qputil
+	win32-g++:QMAKE_CXXFLAGS += -std=c++11
+}
 
 DEFINES           += UTILS_DLL QXT_STATIC
 

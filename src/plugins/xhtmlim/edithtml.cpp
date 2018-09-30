@@ -6,7 +6,7 @@
 #include <QTextImageFormat>
 #include <QFontDialog>
 #include <QBuffer>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <definitions/xhtmlicons.h>
@@ -29,16 +29,18 @@
 #define ADR_FORMATTING_TYPE Action::DR_Parametr1
 #define ADR_SPECIAL_SYMBOL  Action::DR_Parametr1
 
+using namespace QpXhtml;
+
 EditHtml::EditHtml(IMessageEditWidget *AEditWidget, bool AEnableFormatAutoReset, IBitsOfBinary *BOB , QNetworkAccessManager *ANetworkAccessManager, XhtmlIm *AXhtmlIm, QWidget *parent) :
 	QToolBar(parent),
 	FToolBarChanger(new ToolBarChanger(this)),
 	FEditWidget(AEditWidget),
 	FTextEdit(AEditWidget->textEdit()),
-	FIconStorage(NULL),
+	FIconStorage(nullptr),
 	FBitsOfBinary(BOB),
 	FXhtmlIm(AXhtmlIm),
 	FNetworkAccessManager(ANetworkAccessManager),
-	FCurrentList(NULL),
+	FCurrentList(nullptr),
 	FCurrentListItemCount(0),
 	FCurrentListItemNumber(0),
 	FCurrentPosition(0),
@@ -599,7 +601,7 @@ void EditHtml::onInsertImage()
 				pixmap = QPixmap::fromImage(imageResource.value<QImage>());
 			size.setWidth(imageFormat.width());
 			size.setHeight(imageFormat.height());
-			alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+			alt=imageFormat.property(ImageAlternativeText).toString();
 		}
 
 	InsertImage *inserImage = new InsertImage(FXhtmlIm, FNetworkAccessManager, imageData, pixmap, imageUrl, size, alt);
@@ -614,7 +616,7 @@ void EditHtml::onInsertImage()
 			QTextImageFormat imageFormat;
 			QString          alt=inserImage->getAlternativeText();
 			if (!alt.isEmpty())
-				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
+				imageFormat.setProperty(ImageAlternativeText, alt);
 			if (!inserImage->physResize())
 			{
 				if(inserImage->newHeight()!=inserImage->originalHeight())
@@ -661,7 +663,7 @@ void EditHtml::onSetToolTip()
 		cursor.select(QTextCursor::WordUnderCursor);
 
 	Action *action=qobject_cast<Action *>(sender());
-	int toolTipType = charFormat.intProperty(XmlTextDocumentParser::ToolTipType);
+	int toolTipType = charFormat.intProperty(ToolTipType);
 
 	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), action->parentWidget()->parentWidget());
 	if(setToolTip->exec() == QDialog::Accepted)
@@ -672,7 +674,7 @@ void EditHtml::onSetToolTip()
 			if (cursor.hasSelection())
 			{
 				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
-				charFormat.setProperty(XmlTextDocumentParser::ToolTipType, XmlTextDocumentParser::None);
+				charFormat.setProperty(ToolTipType, None);
 				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
 				{
 					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
@@ -683,7 +685,7 @@ void EditHtml::onSetToolTip()
 			else
 			{
 				charFormat.clearProperty(QTextFormat::TextToolTip);
-				charFormat.clearProperty(XmlTextDocumentParser::ToolTipType);
+				charFormat.clearProperty(ToolTipType);
 				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
 				{
 					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
@@ -708,7 +710,7 @@ void EditHtml::onSetToolTip()
 					format.setUnderlineStyle(QTextCharFormat::NoUnderline);
 					format.setUnderlineColor(QColor());
 				}
-			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
+			format.setProperty(ToolTipType, setToolTip->type());
 			cursor.mergeCharFormat(format);
 		}
 		cursor.endEditBlock();
@@ -972,7 +974,7 @@ void EditHtml::onInsertList()
 //{
 //	QTextCharFormat  charFormat = ACursor.blockCharFormat();
 //	QTextBlockFormat format = ACursor.blockFormat();
-//	int header=XmlTextDocumentParser::header(charFormat);
+//	int header=QpXhtm::header(charFormat);
 //	if (header)
 //		return header;
 //	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines) && charFormat.boolProperty(QTextFormat::FontFixedPitch))

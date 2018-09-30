@@ -16,13 +16,13 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/menu.h>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
 
 #include "abbreviations.h"
 
 Abbreviations::Abbreviations()
 {
-	FMessageProcessor = NULL;
+	FMessageProcessor = nullptr;
 	FMaxAbbreviationsInMessage = 20;
 }
 
@@ -209,7 +209,7 @@ int Abbreviations::translateAbbreviations(QTextDocument *ADocument, int AStartPo
 				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::KeepAnchor,it->length());
 
                 QTextCharFormat charFormat;
-				charFormat.setProperty(XmlTextDocumentParser::ToolTipType, XmlTextDocumentParser::Abbreviation);
+				charFormat.setProperty(QpXhtml::ToolTipType, QpXhtml::Abbreviation);
                 charFormat.setProperty(QTextCharFormat::TextToolTip, translated);
                 charFormat.setUnderlineStyle(QTextCharFormat::DotLine);
                 charFormat.setUnderlineColor(Qt::red);

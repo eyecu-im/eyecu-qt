@@ -37,7 +37,7 @@
 #include <utils/textmanager.h>
 #include <utils/animatedtextbrowser.h>
 #include <utils/action.h>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
 
 #include "xhtmlim.h"
 #include "savequery.h"
@@ -64,15 +64,17 @@
 #define INDENT_LESS	0
 #define INDENT_MORE	1
 
+using namespace QpXhtml;
+
 XhtmlIm::XhtmlIm():
-	FOptionsManager(NULL),
-	FMessageProcessor(NULL),
-	FMessageWidgets(NULL),
-	FMultiUserChatManager(NULL),
-	FDiscovery(NULL),
-	FBitsOfBinary(NULL),
-	FNetworkAccessManager(NULL),
-	FIconStorage(NULL),
+	FOptionsManager(nullptr),
+	FMessageProcessor(nullptr),
+	FMessageWidgets(nullptr),
+	FMultiUserChatManager(nullptr),
+	FDiscovery(nullptr),
+	FBitsOfBinary(nullptr),
+	FNetworkAccessManager(nullptr),
+	FIconStorage(nullptr),
 	FSpecialCharacter(QChar::Nbsp)
 {}
 
@@ -92,7 +94,7 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
 	Q_UNUSED(AInitOrder);
 
-	IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	IPlugin *plugin= APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
@@ -101,15 +103,15 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
 	else  return false;
 
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,nullptr);
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IBitsOfBinary").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IBitsOfBinary").value(0,nullptr);
 	if (plugin)
 		FBitsOfBinary = qobject_cast<IBitsOfBinary *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,nullptr);
 	if (plugin)
 	{
 		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
@@ -121,7 +123,7 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		}
 	}
 
-	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,nullptr);
 	if (plugin)
 	{
 		FMultiUserChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
@@ -326,7 +328,7 @@ QMultiMap<int, IOptionsDialogWidget *> XhtmlIm::optionsDialogWidgets(const QStri
 
 bool XhtmlIm::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	return FDiscovery==NULL || !FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
+	return FDiscovery==nullptr || !FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
 			|| FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_XHTML_IM);
 }
 
@@ -1568,7 +1570,7 @@ void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 		!ACursor.hasSelection())
 		ACursor.select(QTextCursor::WordUnderCursor);
 
-	int toolTipType = charFormat.intProperty(XmlTextDocumentParser::ToolTipType);
+	int toolTipType = charFormat.intProperty(ToolTipType);
 
 	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), AEditWidget->instance()->window());
 
@@ -1580,7 +1582,7 @@ void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 			if (ACursor.hasSelection())
 			{
 				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
-				charFormat.setProperty(XmlTextDocumentParser::ToolTipType, XmlTextDocumentParser::None);
+				charFormat.setProperty(ToolTipType, None);
 				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
 				{
 					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
@@ -1591,7 +1593,7 @@ void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 			else
 			{
 				charFormat.clearProperty(QTextFormat::TextToolTip);
-				charFormat.clearProperty(XmlTextDocumentParser::ToolTipType);
+				charFormat.clearProperty(ToolTipType);
 				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
 				{
 					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
@@ -1616,7 +1618,7 @@ void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 					format.setUnderlineStyle(QTextCharFormat::NoUnderline);
 					format.setUnderlineColor(QColor());
 				}
-			format.setProperty(XmlTextDocumentParser::ToolTipType, setToolTip->type());
+			format.setProperty(ToolTipType, setToolTip->type());
 
 			mergeFormatOnSelection(ACursor, format, AEditWidget->textEdit());
 		}
@@ -1778,9 +1780,9 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 					imageData = QByteArray::fromBase64(parts[1].toLatin1());
 			}
 		}
-		size.setWidth(imageFormat.width());
-		size.setHeight(imageFormat.height());
-		alt=imageFormat.property(XmlTextDocumentParser::ImageAlternativeText).toString();
+		size.setWidth(int(imageFormat.width()));
+		size.setHeight(int(imageFormat.height()));
+		alt=imageFormat.property(ImageAlternativeText).toString();
 	}
 
 	InsertImage *insertImage = new InsertImage(this, FNetworkAccessManager, imageData, pixmap, imageUrl, size, alt, AEditWidget->instance()->window());
@@ -1796,7 +1798,7 @@ void XhtmlIm::insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
 			QTextImageFormat imageFormat;
 			QString          alt=insertImage->getAlternativeText();
 			if (!alt.isEmpty())
-				imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
+				imageFormat.setProperty(ImageAlternativeText, alt);
 			if (!insertImage->physResize())
 			{
 				if(insertImage->newHeight()!=insertImage->originalHeight())
@@ -1867,7 +1869,10 @@ void XhtmlIm::onSelectCapitalization()
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
-		setCapitalization(editWidget->textEdit(), getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), (QFont::Capitalization)action->data(ADR_CAPITALIZATION_TYPE).toInt());
+		setCapitalization(editWidget->textEdit(),
+						  getCursor(editWidget->textEdit(),
+									action->data(ADR_CURSOR_POSITION).toInt()),
+						  QFont::Capitalization(action->data(ADR_CAPITALIZATION_TYPE).toInt()));
 }
 
 void XhtmlIm::onInsertLink()
@@ -1935,7 +1940,8 @@ void XhtmlIm::onTextAlign()
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
-		setAlignment(getCursor(editWidget->textEdit(), false, false), (Qt::AlignmentFlag)action->data(ADR_ALIGN_TYPE).toInt());
+		setAlignment(getCursor(editWidget->textEdit(), false, false),
+					 Qt::AlignmentFlag(action->data(ADR_ALIGN_TYPE).toInt()));
 }
 
 void XhtmlIm::onInsertList()
@@ -1944,7 +1950,7 @@ void XhtmlIm::onInsertList()
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
 	{
-		QTextListFormat::Style style = (QTextListFormat::Style)action->data(ADR_LIST_TYPE).toInt();// = QTextListFormat::ListStyleUndefined;
+		QTextListFormat::Style style = QTextListFormat::Style(action->data(ADR_LIST_TYPE).toInt());// = QTextListFormat::ListStyleUndefined;
 		QTextCursor cursor = getCursor(editWidget->textEdit());
 		if (style >=QTextListFormat::ListUpperRoman && style <=QTextListFormat::ListStyleUndefined)
 		{
@@ -1995,7 +2001,9 @@ void XhtmlIm::onSetFormat()
 	Action *action;
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
-		setFormat(editWidget->textEdit(), (Qt::AlignmentFlag)action->data(ADR_FORMATTING_TYPE).toInt(), action->data(ADR_CURSOR_POSITION).toInt());
+		setFormat(editWidget->textEdit(),
+				  Qt::AlignmentFlag(action->data(ADR_FORMATTING_TYPE).toInt()),
+				  action->data(ADR_CURSOR_POSITION).toInt());
 }
 
 QTextCursor XhtmlIm::getCursor(QTextEdit *ATextEdit, bool ASelectWholeDocument, bool ASelect)
@@ -2076,16 +2084,16 @@ IMessageEditWidget *XhtmlIm::messageEditWidget(Action **AAction)
 			if (messageEditWidget)
 				return messageEditWidget;
 		}
-	return NULL;
+	return nullptr;
 }
 
 int XhtmlIm::checkBlockFormat(const QTextCursor &ACursor)
 {
 	QTextCharFormat  charFormat = QTextCursor(ACursor.block()).charFormat();
 	QTextBlockFormat format = ACursor.blockFormat();
-	int header=XmlTextDocumentParser::header(charFormat);
-	if (header)
-		return header;
+	int h = header(charFormat);
+	if (h)
+		return h;
 	else if (format.boolProperty(QTextFormat::BlockNonBreakableLines))
 		return FMT_PREFORMAT;
 	return FMT_NORMAL;
@@ -2218,7 +2226,10 @@ void XhtmlIm::onImageSave()
 		if (index<0)
 			index=0;
 		QString fileName = path.right(path.length()-1-index);
-		fileName = QFileDialog::getSaveFileName(NULL, tr("Please, choose image file"), QDir(Options::node(OPV_XHTML_IMAGESAVEDIRECTORY).value().toString()).absoluteFilePath(fileName));
+		fileName = QFileDialog::getSaveFileName(nullptr,
+												tr("Please, choose image file"),
+												QDir(Options::node(OPV_XHTML_IMAGESAVEDIRECTORY)
+													 .value().toString()).absoluteFilePath(fileName));
 		if (!fileName.isNull())
 		{
 			Options::node(OPV_XHTML_IMAGESAVEDIRECTORY).setValue(QFileInfo(fileName).absolutePath());
@@ -2256,7 +2267,7 @@ bool XhtmlIm::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *A
 		QDomNode imported=doc.importNode(body, true);
 		doc.appendChild(imported);
 		ADocument->clear();
-		XmlTextDocumentParser::xmlToText(ADocument, doc);
+		xmlToText(ADocument, doc);
 		if (FBitsOfBinary)
 		{
 			QVector<QTextFormat> formats=ADocument->allFormats();
@@ -2338,11 +2349,9 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 										buffer.close();
 									}
 
-									quint64 maxAge;
-									if (format.hasProperty(PMimeType))
-										maxAge = format.property(PMaxAge).toLongLong();
-									else
-										maxAge = Options::node(OPV_XHTML_MAXAGE).value().toLongLong();
+									quint64 maxAge = quint64(format.hasProperty(PMimeType)?
+																format.property(PMaxAge).toLongLong():
+																Options::node(OPV_XHTML_MAXAGE).value().toLongLong());
 
 									QString cid;
 									if (imageUrl.scheme()=="cid")
@@ -2376,9 +2385,9 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 			QDomElement  body=AMessage.stanza().document().createElementNS(NS_XHTML, "body");
 			html.appendChild(body);
 			AMessage.stanza().element().appendChild(html);
-			XmlTextDocumentParser::textToXml(body, *ADocument);
+			textToXml(body, *ADocument);
 			// Set message body
-			AMessage.setBody(XmlTextDocumentParser::textToPlainText(*ADocument));
+			AMessage.setBody(textToPlainText(*ADocument));
 			return true;
 		}
 	return false;
@@ -2418,7 +2427,7 @@ bool XhtmlIm::messageEditContentsCanInsert(int AOrder, IMessageEditWidget *AWidg
 						QByteArray format = QImageReader::imageFormat(reply);
 						reply->deleteLater();
 						return !format.isNull();
-						return true;
+//						return true;
 					}
 				}
 
@@ -2447,7 +2456,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 					QUrl url = QUrl::fromEncoded(root.attribute("src").toLatin1());
 					imageFormat.setName(url.toString());
 					if (root.hasAttribute("alt"))
-						imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, root.attribute("alt"));
+						imageFormat.setProperty(ImageAlternativeText, root.attribute("alt"));
 					if (root.hasAttribute("title"))
 						imageFormat.setToolTip(root.attribute("title"));
 					AWidget->textEdit()->document()->addResource(QTextDocument::ImageResource, url, AData->imageData().value<QImage>());
@@ -2459,8 +2468,8 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 					QString html=AData->html();
 					fixHtml(html);
 					QTextCursor(ADocument).insertHtml(html);
-//TODO: Fix XmlTextDocumentParser::htmlToText() to make it fully compatible with clipboard contents
-//					XmlTextDocumentParser::htmlToText(ADocument, html);
+//TODO: Fix	QpXhtml::htmlToText() to make it fully compatible with clipboard contents
+//					htmlToText(ADocument, html);
 					return true;
 				}
 			}
@@ -2475,7 +2484,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 				QTextImageFormat imageFormat;
 				imageFormat.setName(url.toString());
 				if (!alt.isEmpty())
-					imageFormat.setProperty(XmlTextDocumentParser::ImageAlternativeText, alt);
+					imageFormat.setProperty(ImageAlternativeText, alt);
 				AWidget->textEdit()->document()->addResource(QTextDocument::ImageResource, url, AData->imageData().value<QImage>());
 				QTextCursor(ADocument).insertImage(imageFormat);
 				return true;
@@ -2515,7 +2524,7 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 				{
 					buffer.close();
 					QString contentId=FBitsOfBinary->contentIdentifier(bytes);
-					quint64 maxAge = Options::node(OPV_XHTML_MAXAGE).value().toLongLong();
+					quint64 maxAge = quint64(Options::node(OPV_XHTML_MAXAGE).value().toLongLong());
 					QString uri=QString("cid:").append(contentId);
 					imageFormat.setName(uri);
 					imageFormat.setProperty(PMaxAge, maxAge);
@@ -2559,8 +2568,8 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 				cursor.setCharFormat(format);
 			}
 
-//TODO: Fix XmlTextDocumentParser::htmlToText() to make it fully compatible with clipboard contents
-//			XmlTextDocumentParser::htmlToText(ADocument, html);
+//TODO: Fix QpXhtml::htmlToText() to make it fully compatible with clipboard contents
+//			htmlToText(ADocument, html);
 			return true;
 		}
 	}

@@ -22,7 +22,7 @@
 #include <utils/menu.h>
 // *** <<< eyeCU <<< ***
 #include <utils/qt4qt5compat.h>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
 #include "emoticonsoptions.h"
 
 #define DEFAULT_ICONSET                 "default"

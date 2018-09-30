@@ -16,15 +16,15 @@
 #include <utils/options.h>
 #include <utils/logger.h>
 #include <utils/pluginhelper.h>
+// *** <<< eyeCU <<< ***
 #include <utils/qt4qt5compat.h>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
+// *** >>> eyeCU >>> ***
 
 #define CONSECUTIVE_TIMEOUT                 2*60
 
 #define SCROLL_TIMEOUT                      100
 #define SHARED_STYLE_PATH                   RESOURCES_DIR "/" RSR_STORAGE_SIMPLEMESSAGESTYLES "/" FILE_STORAGE_SHARED_DIR
-
-// *** <<< eyeCU >>> ***
 
 QString SimpleMessageStyle::FSharedPath = QString::null;
 
@@ -238,7 +238,7 @@ bool SimpleMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, c
 		int startPos = cursor.position();
 
 // <<< *** eyeCU *** <<<
-		XmlTextDocumentParser::htmlToText(cursor, content);
+		QpXhtml::htmlToText(cursor, content);
 // >>> *** eyeCU *** >>>
 		item.size = cursor.position()-startPos;
 

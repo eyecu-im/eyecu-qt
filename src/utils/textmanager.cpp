@@ -1,6 +1,6 @@
 #include <QTextBlock>
 #include <definitions/namespaces.h>
-#include <xmltextdocumentparser.h>
+#include <QpXhtml>
 #include "textmanager.h"
 
 TextManager::TextManager()
@@ -41,7 +41,7 @@ QString TextManager::getDocumentBody(const QTextDocument &ADocument)
 	QDomElement  body=doc.createElementNS(NS_XHTML, "body");
 	html.appendChild(body);
 	doc.appendChild(html);
-	XmlTextDocumentParser::textToXml(body, ADocument, true);
+	QpXhtml::textToXml(body, ADocument, true);
 	if (body.firstChild().isElement() && body.firstChild().toElement().tagName()=="p")
 	{
 		QDomElement firstP=body.firstChildElement("p");

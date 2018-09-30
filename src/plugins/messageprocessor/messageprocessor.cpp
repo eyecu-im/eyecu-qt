@@ -10,7 +10,7 @@
 // *** <<< eyeCU <<< ***
 #include <utils/options.h>
 #include <definitions/optionvalues.h>
-#include <XmlTextDocumentParser>
+#include <QpXhtml>
 // *** >>> eyeCU >>> ***
 #define SHC_MESSAGE         "/message"
 
@@ -107,7 +107,7 @@ bool MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 		if (!AMessage.body().isEmpty())
 		{
 			QTextCursor cursor(ADocument);
-			XmlTextDocumentParser::xmlToText(cursor, convertBodyToHtml(AMessage.body(ALang), Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED).value().toBool())); // *** <<< eyeCU >>> ***
+			QpXhtml::xmlToText(cursor, convertBodyToHtml(AMessage.body(ALang), Options::node(OPV_MESSAGESTYLE_FONT_MONOSPACED).value().toBool())); // *** <<< eyeCU >>> ***
 			changed = true;
 		}
 // *** >>> eyeCU >>> ***
