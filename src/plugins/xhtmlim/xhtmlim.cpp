@@ -45,7 +45,6 @@
 #include "imageopenthread.h"
 #include "insertimage.h"
 #include "addlink.h"
-#include "settooltip.h"
 
 #define ADR_DECORATION_TYPE		Action::DR_Parametr1
 #define ADR_CAPITALIZATION_TYPE Action::DR_Parametr1
@@ -155,7 +154,6 @@ bool XhtmlIm::initObjects()
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, tr("Insert link"), tr("Alt+L", "Insert link"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, tr("Insert non-breaking space"), tr("Ctrl+Space", "Insert NBSP"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, tr("Insert new line"), tr("Shift+Return", "Insert new line"), Shortcuts::WindowShortcut);
-	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, tr("Set tool tip"), tr("Alt+T", "Insert link"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_BOLD, tr("Bold"), tr("Ctrl+B", "Bold"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC, tr("Italic"), tr("Ctrl+I", "Italic"), Shortcuts::WindowShortcut);
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE, tr("Underline"), tr("Ctrl+U", "Underline"), Shortcuts::WindowShortcut);
@@ -253,9 +251,11 @@ void XhtmlIm::cleanupDocument(QTextDocument *ADocument)
 bool XhtmlIm::isFormatted(const QTextDocument *ADocument)
 {
 	for (QTextBlock block = ADocument->begin(); block!=ADocument->end(); block=block.next())
+	{
 		for (QTextBlock::Iterator it=block.begin(); it!=block.end(); ++it)
 			if (it.fragment().charFormat().propertyCount())
 				return true;
+	}
 	return false;
 }
 
@@ -364,7 +364,6 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
@@ -405,7 +404,6 @@ void XhtmlIm::updateChatWindowActions(bool ARichTextEditor, IMessageChatWindow *
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
@@ -463,7 +461,6 @@ void XhtmlIm::updateMultiChatWindowActions(bool ARichTextEditor, IMultiUserChatW
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, AChatWindow->editWidget()->instance());
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, AChatWindow->editWidget()->instance());
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, AChatWindow->editWidget()->instance());
-	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, AChatWindow->editWidget()->instance());
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, AChatWindow->editWidget()->instance());
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, AChatWindow->editWidget()->instance());
 	Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, AChatWindow->editWidget()->instance());
@@ -525,7 +522,6 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, ANormalWindow->editWidget()->instance());
-		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, ANormalWindow->editWidget()->instance());
 		Shortcuts::insertWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, ANormalWindow->editWidget()->instance());
@@ -567,7 +563,6 @@ void XhtmlIm::updateNormalWindowActions(bool ARichTextEditor, IMessageNormalWind
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_CAPSSMALL, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE, ANormalWindow->editWidget()->instance());
-		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE, ANormalWindow->editWidget()->instance());
 		Shortcuts::removeWidgetShortcut(SCT_MESSAGEWINDOWS_XHTMLIM_FORMATREMOVE, ANormalWindow->editWidget()->instance());
@@ -910,18 +905,6 @@ void XhtmlIm::onEditWidgetContextMenuRequested(const QPoint &APosition, Menu *AM
 			insertImage->setCheckable(true);
 			insertImage->setChecked(charFormat.isImageFormat());
 			menu->addAction(insertImage, AG_XHTMLIM_INSERT);
-
-			//  Set tool tip
-			Action *setToolTip=new Action(menu);
-			setToolTip->setIcon(QIcon::fromTheme("set-tooltip", FIconStorage->getIcon(XHI_SET_TOOLTIP)));
-			setToolTip->setText(tr("Set tool tip"));
-			setToolTip->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP);
-			setToolTip->setPriority(QAction::LowPriority);
-			setToolTip->setData(ADR_CURSOR_POSITION, cursorPosition);
-			connect(setToolTip, SIGNAL(triggered()), SLOT(onSetToolTip()));
-			setToolTip->setCheckable(true);
-			setToolTip->setChecked(charFormat.hasProperty(QTextFormat::TextToolTip));
-			menu->addAction(setToolTip, AG_XHTMLIM_INSERT);
 
 			// *** Special characters ***
 			Menu *special = new Menu(menu);
@@ -1354,8 +1337,6 @@ void XhtmlIm::onShortcutActivated(const QString &AId, QWidget *AWidget)
 			insertLink(getCursor(messageEditWidget->textEdit()), messageEditWidget->instance());
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTIMAGE)
 			insertImage(getCursor(messageEditWidget->textEdit()), messageEditWidget);
-		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP)
-			setToolTip(getCursor(messageEditWidget->textEdit()), messageEditWidget);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP)
 			insertSpecial(getCursor(messageEditWidget->textEdit()), QChar::Nbsp);
 		else if (AId==SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE)
@@ -1561,70 +1542,6 @@ void XhtmlIm::insertLink(QTextCursor ACursor, QWidget *AParent)
 		}
 	}
 	addLink->deleteLater();
-}
-
-void XhtmlIm::setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget)
-{
-	QTextCharFormat charFormat=ACursor.charFormat();
-	if (!charFormat.hasProperty(QTextFormat::TextToolTip) &&
-		!ACursor.hasSelection())
-		ACursor.select(QTextCursor::WordUnderCursor);
-
-	int toolTipType = charFormat.intProperty(ToolTipType);
-
-	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), AEditWidget->instance()->window());
-
-	if(setToolTip->exec() == QDialog::Accepted)
-	{
-		ACursor.beginEditBlock();
-		if (setToolTip->toolTipText().isEmpty())	// Remove tooltip
-		{
-			if (ACursor.hasSelection())
-			{
-				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
-				charFormat.setProperty(ToolTipType, None);
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
-				{
-					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
-					charFormat.setUnderlineColor(QColor());
-				}
-				ACursor.mergeCharFormat(charFormat);
-			}
-			else
-			{
-				charFormat.clearProperty(QTextFormat::TextToolTip);
-				charFormat.clearProperty(ToolTipType);
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
-				{
-					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
-					charFormat.clearProperty(QTextFormat::TextUnderlineColor);
-				}
-				ACursor.setCharFormat(charFormat);
-			}
-		}
-		else
-		{
-			QTextCharFormat format;
-			format.setProperty(QTextFormat::TextToolTip, setToolTip->toolTipText());
-			if (setToolTip->type()!=SetToolTip::None)
-			{
-				format.setUnderlineStyle(QTextCharFormat::DotLine);
-				format.setUnderlineColor(Qt::red);
-			}
-			else
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine &&
-					charFormat.underlineColor()==Qt::red)
-				{
-					format.setUnderlineStyle(QTextCharFormat::NoUnderline);
-					format.setUnderlineColor(QColor());
-				}
-			format.setProperty(ToolTipType, setToolTip->type());
-
-			mergeFormatOnSelection(ACursor, format, AEditWidget->textEdit());
-		}
-		ACursor.endEditBlock();
-	}
-	setToolTip->deleteLater();
 }
 
 void XhtmlIm::insertSpecial(QTextCursor ACursor, QChar ASpecialCharacter)
@@ -1889,14 +1806,6 @@ void XhtmlIm::onInsertImage()
 	IMessageEditWidget *editWidget = messageEditWidget(&action);
 	if (editWidget)
 		insertImage(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), editWidget);
-}
-
-void XhtmlIm::onSetToolTip()
-{
-	Action *action;
-	IMessageEditWidget *editWidget = messageEditWidget(&action);
-	if (editWidget)
-		setToolTip(getCursor(editWidget->textEdit(), action->data(ADR_CURSOR_POSITION).toInt()), editWidget);
 }
 
 void XhtmlIm::onInsertSpecial()
@@ -2457,8 +2366,6 @@ bool XhtmlIm::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget,
 					imageFormat.setName(url.toString());
 					if (root.hasAttribute("alt"))
 						imageFormat.setProperty(ImageAlternativeText, root.attribute("alt"));
-					if (root.hasAttribute("title"))
-						imageFormat.setToolTip(root.attribute("title"));
 					AWidget->textEdit()->document()->addResource(QTextDocument::ImageResource, url, AData->imageData().value<QImage>());
 					QTextCursor(ADocument).insertImage(imageFormat);
 					return true;

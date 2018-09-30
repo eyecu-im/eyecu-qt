@@ -20,7 +20,6 @@
 #include "xhtmlim.h"
 #include "insertimage.h"
 #include "addlink.h"
-#include "settooltip.h"
 
 #define ADR_DECORATION_TYPE Action::DR_Parametr1
 #define ADR_CAPITALIZATION_TYPE Action::DR_Parametr1
@@ -227,16 +226,6 @@ void EditHtml::setupFontActions(bool AEnableReset)
 	connect(FActionInsertImage, SIGNAL(triggered()), SLOT(onInsertImage()));
 	FActionInsertImage->setCheckable(false);
 	FToolBarChanger->insertAction(FActionInsertImage, AG_XHTMLIM_INSERT);
-
-	//  Tool tip
-	FActionSetTitle=new Action(this);
-	FActionSetTitle->setIcon(QIcon::fromTheme("set-tooltip", FIconStorage->getIcon(XHI_SET_TOOLTIP)));
-	FActionSetTitle->setText(tr("Set tool tip"));
-//	FActionSetTitle->setShortcutId(SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP);
-	FActionSetTitle->setPriority(QAction::LowPriority);
-	connect(FActionSetTitle, SIGNAL(triggered()), SLOT(onSetToolTip()));
-	FActionSetTitle->setCheckable(true);
-	FToolBarChanger->insertAction(FActionSetTitle, AG_XHTMLIM_INSERT);
 
 	//-----
 	FActionRemoveFormat=new Action(this);
@@ -652,70 +641,6 @@ void EditHtml::onInsertImage()
 		}
 	}
 	inserImage->deleteLater();
-}
-
-void EditHtml::onSetToolTip()
-{
-	QTextCursor cursor = FTextEdit->textCursor();
-	QTextCharFormat charFormat=cursor.charFormat();
-	if (!charFormat.hasProperty(QTextFormat::TextToolTip) &&
-		!cursor.hasSelection())
-		cursor.select(QTextCursor::WordUnderCursor);
-
-	Action *action=qobject_cast<Action *>(sender());
-	int toolTipType = charFormat.intProperty(ToolTipType);
-
-	SetToolTip *setToolTip = new SetToolTip(toolTipType, charFormat.toolTip(), action->parentWidget()->parentWidget());
-	if(setToolTip->exec() == QDialog::Accepted)
-	{
-		cursor.beginEditBlock();
-		if (setToolTip->toolTipText().isEmpty())	// Remove tooltip
-		{
-			if (cursor.hasSelection())
-			{
-				charFormat.setProperty(QTextFormat::TextToolTip, QVariant());
-				charFormat.setProperty(ToolTipType, None);
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
-				{
-					charFormat.setUnderlineStyle(QTextCharFormat::NoUnderline);
-					charFormat.setUnderlineColor(QColor());
-				}
-				cursor.mergeCharFormat(charFormat);
-			}
-			else
-			{
-				charFormat.clearProperty(QTextFormat::TextToolTip);
-				charFormat.clearProperty(ToolTipType);
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine && charFormat.underlineColor()==Qt::red)
-				{
-					charFormat.clearProperty(QTextFormat::TextUnderlineStyle);
-					charFormat.clearProperty(QTextFormat::TextUnderlineColor);
-				}
-				cursor.setCharFormat(charFormat);
-			}
-		}
-		else
-		{
-			QTextCharFormat format;
-			format.setProperty(QTextFormat::TextToolTip, setToolTip->toolTipText());
-			if (setToolTip->type()!=SetToolTip::None)
-			{
-				format.setUnderlineStyle(QTextCharFormat::DotLine);
-				format.setUnderlineColor(Qt::red);
-			}
-			else
-				if (charFormat.underlineStyle()==QTextCharFormat::DotLine &&
-					charFormat.underlineColor()==Qt::red)
-				{
-					format.setUnderlineStyle(QTextCharFormat::NoUnderline);
-					format.setUnderlineColor(QColor());
-				}
-			format.setProperty(ToolTipType, setToolTip->type());
-			cursor.mergeCharFormat(format);
-		}
-		cursor.endEditBlock();
-	}
-	setToolTip->deleteLater();
 }
 
 void EditHtml::onInsertLink()

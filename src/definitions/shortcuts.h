@@ -104,7 +104,6 @@
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTLINK                    "message-windows.xhtml-im.insert-link"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNBSP                    "message-windows.xhtml-im.insert-nbsp"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_INSERTNEWLINE                 "message-windows.xhtml-im.insert-newline"
-#define   SCT_MESSAGEWINDOWS_XHTMLIM_SETTOOLTIP                    "message-windows.xhtml-im.set-title"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_BOLD                          "message-windows.xhtml-im.bold"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_ITALIC                        "message-windows.xhtml-im.italic"
 #define   SCT_MESSAGEWINDOWS_XHTMLIM_UNDERLINE                     "message-windows.xhtml-im.underline"

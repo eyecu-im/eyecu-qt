@@ -23,7 +23,6 @@
 #define XHI_INSERT_IMAGE          "insertImage"
 #define XHI_INSERT_NEWLINE        "newLine"
 #define XHI_INSERT_NBSP           "nbsp"
-#define XHI_SET_TOOLTIP           "toolTip"
 #define XHI_INDENT                "indent"
 #define XHI_OUTDENT               "outdent"
 #define XHI_REMOVEFORMAT          "removeFormat"

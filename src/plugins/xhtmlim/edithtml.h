@@ -98,7 +98,6 @@ protected:
 protected slots:
     void onRemoveFormat();
     void onInsertImage();
-    void onSetToolTip();
     void onInsertLink();
 	void onSelectDecoration(bool ASelected);
 	void onSelectCapitalization();

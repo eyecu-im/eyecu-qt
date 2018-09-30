@@ -123,7 +123,6 @@ protected:
 	void selectDecoration(QTextEdit *ATextEdit, QTextCursor ACursor, int ADecorationType, bool ASelected);
 	void insertLink(QTextCursor ACursor, QWidget *AParent);
 	void insertImage(QTextCursor ACursor, IMessageEditWidget *AEditWidget);
-	void setToolTip(QTextCursor ACursor, IMessageEditWidget *AEditWidget);
 	void insertSpecial(QTextCursor ACursor, QChar ASpecialCharacter);
 	void setCode(QTextEdit *ATextEdit, QTextCursor ACursor, bool ACode);
 	void setCapitalization(QTextEdit *ATextEdit, QTextCursor ACursor, QFont::Capitalization ACapitalization);
@@ -155,7 +154,6 @@ protected slots:
 	void onSelectCapitalization();
 	void onInsertLink();
 	void onInsertImage();
-	void onSetToolTip();
 	void onInsertSpecial();
 	void onTextCode(bool AChecked);
 	void onColor();
