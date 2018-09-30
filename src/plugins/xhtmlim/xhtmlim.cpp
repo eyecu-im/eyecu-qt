@@ -252,6 +252,8 @@ bool XhtmlIm::isFormatted(const QTextDocument *ADocument)
 {
 	for (QTextBlock block = ADocument->begin(); block!=ADocument->end(); block=block.next())
 	{
+		if (block.blockFormat().propertyCount())
+			return true;
 		for (QTextBlock::Iterator it=block.begin(); it!=block.end(); ++it)
 			if (it.fragment().charFormat().propertyCount())
 				return true;
