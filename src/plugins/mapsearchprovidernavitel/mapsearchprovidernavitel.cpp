@@ -59,7 +59,7 @@ bool MapSearchProviderNavitel::startSearch(const QString &ASearchString, qreal A
     qreal longitude = (ALngWest + ALngEast)/2;
     qreal latitude  = (ALatNorth + ALatSouth)/2;
     QUrl request = searchRequest(ASearchString, latitude, longitude, AZoom);
-    return FHttpRequester->request(request, "search", this, SLOT(onResultReceived(QByteArray,QString)));
+	return FHttpRequester->request(request, "search", this, SLOT(onResultReceived(QByteArray,QString)));
 }
 
 QString MapSearchProviderNavitel::sourceName() const
@@ -74,24 +74,25 @@ QIcon MapSearchProviderNavitel::sourceIcon() const
 
 QUrl MapSearchProviderNavitel::searchRequest(const QString &ASearchString, qreal ALongitude, qreal ALatitude, int AZoom) const
 {    
-// http://maps.navitel.su/webmaps/searchTwoStep?s=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C+%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%2C+16&lon=58.981432&lat=53.438370993898&z=11
-//    QString lang=QLocale().name();
-//    lang[2]='-';
-    return QUrl(QString("http://maps.navitel.su/webmaps/searchTwoStep?s=%1&lon=%2&lat=%3&z=%4")
+	QUrl url(QString("http://maps.navitel.ru/webmaps/searchTwoStep?s=%1&lon=%2&lat=%3&z=%4")
 		.arg(ASearchString)
         .arg(ALongitude)
         .arg(ALatitude)
         .arg(AZoom));
+
+	return url;
 }
 
 QUrl MapSearchProviderNavitel::infoRequest(int ALocationId) const
 {
-    // http://maps.navitel.su/webmaps/searchTwoStepInfo?id=818890
-    return QUrl(QString("http://maps.navitel.su/webmaps/searchTwoStepInfo?id=%1").arg(ALocationId));
+	qDebug() << "MapSearchProviderNavitel::infoRequest(" << ALocationId << ")";
+	QUrl url(QString("http://maps.navitel.ru/webmaps/searchTwoStepInfo?id=%1").arg(ALocationId));
+	return url;
 }
 
 void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
 {
+	qDebug() << "MapSearchProviderNavitel::parseSearchResult(" << ASearchResult << ")";
 #if QT_VERSION < 0x050000
     QScriptEngine engine;
     QScriptValue value = engine.evaluate("("+QString::fromUtf8(ASearchResult)+")");
@@ -109,7 +110,7 @@ void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
 			for (JSON_ARRAY::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
 			{
 				JSON_ARRAY result = (*it).TO_ARRAY();
-				qulonglong id = result.first().TO_LONGLONG();
+				qulonglong id = qulonglong(result.first().TO_LONGLONG());
 				JSON_ARRAY info1 = result[1].TO_ARRAY();
 
 				GeolocElement poi;
@@ -238,7 +239,10 @@ void MapSearchProviderNavitel::parseInfoResult(QByteArray ASearchResult, qulongl
 void MapSearchProviderNavitel::onResultReceived(const QByteArray &AResult, const QString &AId)
 {
     Q_UNUSED(AId)
-    if (!AResult.isNull())
+
+	if (AResult.isNull())
+		emit searchFinished(false);  // Signal search finished
+	else
     {
         if (AId=="search")
             parseSearchResult(AResult);

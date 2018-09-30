@@ -71,7 +71,7 @@ QUrl MapSearchProviderYandex::searchRequest(const QString &ASearchString, qreal 
     lang[2]='-';
     qreal longitude = (ALngWest + ALngEast)/2;
     qreal latitude  = (ALatNorth + ALatSouth)/2;
-    QString url("http://geocode-maps.yandex.ru/1.x/?geocode=%1&ll=%2,%3&spn=%4,%5&format=xml&lang=%6&rspn=%7");
+	QString url("https://geocode-maps.yandex.ru/1.x/?geocode=%1&ll=%2,%3&spn=%4,%5&format=xml&lang=%6&rspn=%7");
     if (AMaxResults!=-1)
         url.append("&results=").append(QString::number(AMaxResults));
     if (AMore)

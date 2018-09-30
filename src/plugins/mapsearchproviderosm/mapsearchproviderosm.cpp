@@ -73,7 +73,7 @@ void MapSearchProviderOsm::getPageValues(int *AMin, int *AMax, int *ADefault) co
 QUrl MapSearchProviderOsm::searchRequest(QString ASearchString, qreal ALatSouth, qreal ALngWest, qreal ALatNorth, qreal ALngEast, int ABounded, int ALimit)
 {
 // http://nominatim.openstreetmap.org/search?q=%D0%9D%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F,+16&format=xml&polygon=1&addressdetails=1&accept-language=ru-RU&viewbox=58,54,60,52&bounded=1
-	QString url("http://nominatim.openstreetmap.org/search?q=%1&format=xml&addressdetails=1&accept-language=%2&viewbox=%3,%4,%5,%6&bounded=%7");
+	QString url("https://nominatim.openstreetmap.org/search?q=%1&format=xml&addressdetails=1&accept-language=%2&viewbox=%3,%4,%5,%6&bounded=%7");
 	if (ALimit != -1)
 		url.append("&limit=").append(QString::number(ALimit));
 	return QUrl(url.arg(ASearchString)

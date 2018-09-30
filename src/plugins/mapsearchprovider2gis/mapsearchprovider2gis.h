@@ -21,7 +21,7 @@ class MapSearchProvider2gis : public QObject,
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IMapSearchProvider2gis")
 #endif
 public:
-    MapSearchProvider2gis(QObject *parent = 0);
+	MapSearchProvider2gis(QObject *parent = nullptr);
     //IPlugin
     virtual QObject *instance() { return this; }
     virtual QUuid   pluginUuid() const { return MAPSEARCHPROVIDER2GIS_UUID; }

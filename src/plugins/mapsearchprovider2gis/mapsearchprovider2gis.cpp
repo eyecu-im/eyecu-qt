@@ -7,7 +7,8 @@
 #include "mapsearchprovider2gis.h"
 #include "mapsearchprovider2gisoptions.h"
 
-MapSearchProvider2gis::MapSearchProvider2gis(QObject *parent) : QObject(parent), FOptionsManager(NULL), FLastResultFound(0)
+MapSearchProvider2gis::MapSearchProvider2gis(QObject *parent):
+	QObject(parent), FOptionsManager(nullptr), FLastResultFound(0)
 {}
 
 void MapSearchProvider2gis::pluginInfo(IPluginInfo *APluginInfo)
@@ -22,7 +23,7 @@ void MapSearchProvider2gis::pluginInfo(IPluginInfo *APluginInfo)
 
 bool MapSearchProvider2gis::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
-    IPlugin *plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	IPlugin *plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
     if (plugin)
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
     AInitOrder = 200;
@@ -31,14 +32,15 @@ bool MapSearchProvider2gis::initConnections(IPluginManager *APluginManager, int 
 
 bool MapSearchProvider2gis::initObjects()
 {
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 
 bool MapSearchProvider2gis::initSettings()
 {
-    Options::setDefaultValue(OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE, MapSearchProvider2GisOptions::SearchFirm);
-    if (FOptionsManager)
-		FOptionsManager->insertOptionsDialogHolder(this);
+	Options::setDefaultValue(OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE, MapSearchProvider2GisOptions::SearchFirm);
+
     return true;
 }
 
@@ -58,6 +60,7 @@ bool MapSearchProvider2gis::startSearch(const QString &ASearchString, qreal ALat
     QUrl request = Options::node(OPV_MAP_SEARCH_PROVIDER_2GIS_TYPE).value().toInt() == MapSearchProvider2GisOptions::SearchFirm?
                 searchRequest(ASearchString, ALatSouth, ALngWest, ALatNorth, ALngEast, AMaxResults, AMore):
                 searchRequest(ASearchString, ALatSouth, ALngWest, ALatNorth, ALngEast, AMaxResults);
+
     return FHttpRequester->request(request, "request", this, SLOT(onResultReceived(QByteArray,QString)));
 }
 
