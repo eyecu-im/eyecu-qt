@@ -1,5 +1,6 @@
 #include "messageprocessor.h"
 
+#include <QDebug>
 #include <QVariant>
 #include <QTextCursor>
 #include <definitions/messagedataroles.h>
@@ -117,21 +118,55 @@ bool MessageProcessor::writeMessageToText(int AOrder, Message &AMessage, QTextDo
 // *** <<< eyeCU <<< ***
 //		QRegExp regexp("\\b((https?|ftp)://|www\\.|xmpp:|magnet:|mailto:)\\S+(s|/|#|~|@|&|=|-|\\+|\\*|\\$|\\b|\\\")");
 		QRegExp regexp("((https?|ftp)://|(magnet|mailto|xmpp):|(www|ftp)\\.)[^\"\\s$]+[^\"\\.\\s$]");
-// *** >>> eyeCU >>> ***
+
 		regexp.setCaseSensitivity(Qt::CaseInsensitive);
-		for (QTextCursor cursor = ADocument->find(regexp); !cursor.isNull(); cursor = ADocument->find(regexp,cursor))
+		for (QTextBlock block = ADocument->begin(); block != ADocument->end(); block = block.next())
 		{
-// *** <<< eyeCU <<< ***
-			QTextCharFormat linkFormat = cursor.charFormat();
-			if (!linkFormat.isAnchor())
+			QString text;
+			int startPos = block.position();
+			for (QTextBlock::iterator it=block.begin(); ; it++)
 			{
-				linkFormat.setAnchor(true);
-				linkFormat.setAnchorHref(QUrl::fromUserInput(cursor.selectedText()).toString());
-				cursor.setCharFormat(linkFormat);
-				changed = true;
+				bool end(false);
+				if (it == block.end())
+					end = true;
+				else
+				{
+					QTextFragment fragment = it.fragment();
+					if (fragment.charFormat().isAnchor() &&
+						fragment.charFormat().hasProperty(QTextFormat::AnchorHref))
+						end = true;
+					else
+						text.append(fragment.text());
+				}
+
+				if (end)
+				{
+					if (!text.isEmpty())
+					{
+						for (int i = text.indexOf(regexp); i !=- 1;
+							 i = text.indexOf(regexp, i))
+						{
+							QTextCursor cursor(ADocument);
+							cursor.setPosition(startPos+i);
+							cursor.movePosition(QTextCursor::Right,
+												QTextCursor::KeepAnchor,
+												regexp.matchedLength());
+
+							QTextCharFormat linkFormat;
+							linkFormat.setAnchor(true);
+							linkFormat.setAnchorHref(QUrl::fromUserInput(cursor.selectedText()).toString());
+							cursor.mergeCharFormat(linkFormat);
+							changed = true;
+							i += regexp.matchedLength();
+						}
+					}
+
+					if (it == block.end())
+						break;
+				}
 			}
-// *** >>> eyeCU >>> ***
 		}
+// *** >>> eyeCU >>> ***
 	}
 	return changed;
 }
