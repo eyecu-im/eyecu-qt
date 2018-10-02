@@ -579,8 +579,10 @@ void MapForm::selectMapSource(const QUuid &AUuid)
 
 void MapForm::setMapSource(IMapSource *AMapSource)
 {
+	qDebug() << "MapForm::setMapSource(" << AMapSource << ")";
 	int index = chooseMapSource(FMapSource=AMapSource);
-	FMapScene->setMapSource(AMapSource?AMapSource->mapSource():NULL);
+	qDebug() << "index:" << index;
+	FMapScene->setMapSource(AMapSource?AMapSource->mapSource():nullptr);
 	if (index!=-1)
 		selectMapMode(index);
 }
@@ -702,41 +704,42 @@ int MapForm::chooseMapSource(IMapSource *ASource)
 			index=i;
 	}
 
-	if (FOldType==TYPE_NONE)                 // Initialization
-		return -1;
-
 	if (ASource)
 	{
 		if (index==-1)  // Not found - check for neares match
 		{
-			int i=0;
-			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
-				if (FOldType==TYPE_HYBRID)
-				{
-					if (*it==TYPE_SATELLITE)
+			if (FOldType != TYPE_NONE)                 // Initialization
+			{
+				int i=0;
+				for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
+					if (FOldType==TYPE_HYBRID)
+					{
+						if (*it==TYPE_SATELLITE)
+						{
+							index=i;
+							break;
+						}
+					}
+					else if (FOldType==TYPE_SATELLITE)
+					{
+						if (*it==TYPE_HYBRID)
+						{
+							index=i;
+							break;
+						}
+					}
+			}
+
+			if (index==-1)  // Not found - fall back to first available index
+			{
+				int i=0;
+				for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
+					if (*it!=-1)
 					{
 						index=i;
 						break;
 					}
-				}
-				else if (FOldType==TYPE_SATELLITE)
-				{
-					if (*it==TYPE_HYBRID)
-					{
-						index=i;
-						break;
-					}
-				}
-		}
-		if (index==-1)  // Not found - fall back to first available index
-		{
-			int i=0;
-			for (QList<int>::ConstIterator it=FTypes.constBegin(); it!=FTypes.constEnd(); ++it, ++i)
-				if (*it!=-1)
-				{
-					index=i;
-					break;
-				}
+			}
 		}
 	}
 	return index;
