@@ -917,7 +917,7 @@ void OptionsManager::onNewProfileOpened()
 											   "If you're new in Jabber, press <i>No</i>. "
 											   "Simplified options will be displayed. "),
 											QMessageBox::Yes|QMessageBox::No,
-											NULL);
+											FMainWindowPlugin->mainWindow()->instance());
 
 	question->setInformativeText(tr("You can always change options mode on <b>Common</b> page."));
 	question->setAttribute(Qt::WA_DeleteOnClose);
