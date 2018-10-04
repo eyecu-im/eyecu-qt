@@ -9,9 +9,7 @@
 
 #include <interfaces/ifilestreamsmanager.h>
 #include <interfaces/itune.h>
-#include <utils/volumecontrol.h>
 #include <utils/microtime.h>
-
 
 namespace Ui {
 class PlayerWindow;
@@ -66,7 +64,7 @@ signals:
 	void stopped();
 
 private:
-	MediaPlayer	*FMediaStreamer;
+	MediaPlayer		*FMediaStreamer;
 	QFile			*FFile;
 	QStringList		FPlayList;
 	QStringList		FMidiFormats;

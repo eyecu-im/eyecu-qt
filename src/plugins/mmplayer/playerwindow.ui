@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>332</width>
-    <height>75</height>
+    <width>399</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -172,7 +172,7 @@
       </widget>
      </item>
      <item>
-      <widget class="VolumeControl" name="sldVolume">
+      <widget class="QpVolumeControl" name="sldVolume">
        <property name="minimumSize">
         <size>
          <width>105</width>
@@ -326,9 +326,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>VolumeControl</class>
+   <class>QpVolumeControl</class>
    <extends>QSlider</extends>
-   <header location="global">utils/volumecontrol.h</header>
+   <header location="global">QpVolumeControl</header>
   </customwidget>
  </customwidgets>
  <resources/>

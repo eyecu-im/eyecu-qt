@@ -261,7 +261,7 @@ void PlayerWindow::start()
 		FMediaStreamer = new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
 		LOG_DEBUG("Media Streamer created!");
 		connect(FMediaStreamer, SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
-		FMediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
+		FMediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt()/100.0);
 		FMediaStreamer->setStatus(MediaPlayer::Running);
 	}
 	LOG_DEBUG("start(): finished");
@@ -596,7 +596,7 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
         int volume = ANode.value().toInt();
         ui->lcdVolume->display(volume);
 		if(FMediaStreamer)
-			FMediaStreamer->setVolume(volume);
+			FMediaStreamer->setVolume(volume/100.0);
     }
     else if (ANode.path() == OPV_MMPLAYER_MUTE)
     {
@@ -623,7 +623,7 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
             ui->sldVolume->blockSignals(false);
             ui->lcdVolume->display(volume);
 			if(FMediaStreamer)
-				FMediaStreamer->setVolume(volume);
+				FMediaStreamer->setVolume(volume/100.0);
         }
     }
     else if (ANode.path() == OPV_MMPLAYER_SMOOTHRESIZE)
