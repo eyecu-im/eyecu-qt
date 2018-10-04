@@ -1140,7 +1140,6 @@ void EditHtml::onCurrentCharFormatChanged(const QTextCharFormat &ACharFormat)
 		FColorToolButton->setBackgroundColor(brush.color());
 	else
 		FColorToolButton->setBackgroundColor(FTextEdit->palette().background().color());
-	FActionSetTitle->setChecked(ACharFormat.hasProperty(QTextFormat::TextToolTip));
 
 	switch (ACharFormat.fontCapitalization())
 	{

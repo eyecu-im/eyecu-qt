@@ -40,7 +40,6 @@ private:
             *FActionInsertLink,
             *FActionInsertNewline,
             *FActionInsertNbsp,
-            *FActionSetTitle,
             *FActionTextBold,
             *FActionTextItalic,
             *FActionTextUnderline,
