@@ -171,6 +171,9 @@ protected:
 	static void addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType);
 
 protected slots:
+	// Options
+	void onOptionsChanged(const OptionsNode &ANode);
+
 	// Notofications
 	void onNotificationActivated(int ANotifyId);
 	void onNotificationRemoved(int ANotifyId);

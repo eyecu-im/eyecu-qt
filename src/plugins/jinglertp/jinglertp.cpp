@@ -191,7 +191,9 @@ bool JingleRtp::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 			connect(FMessageWidgets->instance(),SIGNAL(chatWindowCreated(IMessageChatWindow *)),SLOT(onChatWindowCreated(IMessageChatWindow *)));
 	}
 
-	//AInitOrder = 200;   // This one should be initialized AFTER ...
+	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),
+								SLOT(onOptionsChanged(const OptionsNode &)));
+
 	return true; //FMessageWidgets!=NULL
 }
 
@@ -263,7 +265,9 @@ bool JingleRtp::initSettings()
 	Options::setDefaultValue(OPV_JINGLE_RTP_RTCP, true);				// Use RTCP
 	Options::setDefaultValue(OPV_JINGLE_RTP_RINGING, false);			// Consider other party's clint ringing once the Call is acknowledged
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT, QVariant());	// Audio input device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME, 100);	// Audio input volume
 	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT, QVariant());	// Audio output device
+	Options::setDefaultValue(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME, 100);	// Audio input volume
 	if (FOptionsManager)
 	{
 		IOptionsDialogNode dnode = {ONO_JINGLERTP, OPN_JINGLERTP, MNI_JINGLE_RTP, tr("Jingle RTP")};
@@ -1267,11 +1271,12 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 														.value().toInt(), options, this);
 
 			if (streamer->status() == MediaStreamer::Stopped)
-			{
+			{				
 				connect(streamer, SIGNAL(statusChanged(int)),
 								  SLOT(onStreamerStatusChanged(int)));
 
 				ARtpDevice->setParent(streamer);
+				streamer->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt()/100.0);
 				streamer->setStatus(MediaStreamer::Running);
 				FPluginManager->delayShutdown();
 				return streamer;
@@ -1302,9 +1307,8 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 	ARtpIODevice->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 	if (player->status() == MediaPlayer::Closed)
 	{
-		connect(player, SIGNAL(statusChanged(int,int)),
-				SLOT(onPlayerStatusChanged(int,int)));
-
+		connect(player, SIGNAL(statusChanged(int,int)), SLOT(onPlayerStatusChanged(int,int)));
+		player->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME).value().toInt()/100.0);
 		if (player->setStatus(MediaPlayer::Running))
 		{
 			LOG_INFO("Player started successfuly!");
@@ -1494,6 +1498,22 @@ void JingleRtp::addPayloadType(IJingleContent *AContent, const QPayloadType &APa
 			payloadType.setAttribute("channels", QString::number(APayloadType.channels));
 		QDomElement description = AContent->description();
 		description.appendChild(payloadType);
+	}
+}
+
+void JingleRtp::onOptionsChanged(const OptionsNode &ANode)
+{
+	if (ANode.path() == OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME)
+	{
+		for (QHash<IJingleContent *, MediaStreamer *>::ConstIterator it = FStreamers.constBegin();
+			 it != FStreamers.constEnd(); ++it)
+			(*it)->setVolume(ANode.value().toInt()/100.0);
+	}
+	else if (ANode.path() == OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME)
+	{
+		for (QHash<IJingleContent *, MediaPlayer *>::ConstIterator it = FPlayers.constBegin();
+			 it != FPlayers.constEnd(); ++it)
+			(*it)->setVolume(ANode.value().toInt()/100.0);
 	}
 }
 

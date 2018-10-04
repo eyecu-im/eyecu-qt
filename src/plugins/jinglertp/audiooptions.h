@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QAVCodec>
 #include <QAudioDeviceInfo>
+#include <QAudioInput>
+#include <QpAudioLevel>
 
 #include <interfaces/ioptionsmanager.h>
 #include <utils/options.h>
@@ -37,10 +39,20 @@ signals:
     void childReset();
 
 protected:
+	void initializeAudio();
+	void createAudioInput();
+
 	void changeEvent(QEvent *e);
 
 protected slots:
     void modify(int);
+	void onInputVolumeChanged(int value);
+
+private:
+	QAudioInput *m_audioInput;
+	QpAudioLevel *m_audioInfo;
+	QAudioDeviceInfo m_device;
+	QAudioFormat m_format;
 };
 
 #endif // AUDIOOPTIONS_H

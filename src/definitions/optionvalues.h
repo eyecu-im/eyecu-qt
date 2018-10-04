@@ -612,7 +612,9 @@
 //   RTP
 #define OPV_JINGLE_RTP                                  "jingle.rtp"
 #define OPV_JINGLE_RTP_AUDIO_INPUT                      "jingle.rtp.audio.input"
+#define OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME               "jingle.rtp.audio.input.volume"
 #define OPV_JINGLE_RTP_AUDIO_OUTPUT                     "jingle.rtp.audio.output"
+#define OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME              "jingle.rtp.audio.output.volume"
 #define OPV_JINGLE_RTP_AUDIO_BITRATE                    "jingle.rtp.audio.bitrate"
 #define OPV_JINGLE_RTP_TIMEOUT							"jingle.rtp.timeout"
 #define OPV_JINGLE_RTP_RTCP								"jingle.rtp.rtcp"

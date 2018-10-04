@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
-    <height>88</height>
+    <width>558</width>
+    <height>176</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,10 @@
    <item row="1" column="1">
     <widget class="QComboBox" name="cmbAudioDeviceInput"/>
    </item>
-   <item row="2" column="0">
+   <item row="3" column="0" colspan="2">
+    <widget class="QpAudioLevelDisplay" name="audioLevel" native="true"/>
+   </item>
+   <item row="4" column="0">
     <widget class="QLabel" name="lblAudioDeviceOutput">
      <property name="text">
       <string>Output device</string>
@@ -49,10 +52,10 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
+   <item row="4" column="1">
     <widget class="QComboBox" name="cmbAudioDeviceOutput"/>
    </item>
-   <item row="3" column="0">
+   <item row="6" column="0">
     <widget class="QLabel" name="lblAudioBitrate">
      <property name="text">
       <string>Bitrate</string>
@@ -62,7 +65,7 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
+   <item row="6" column="1">
     <widget class="QSpinBox" name="spbBitrate">
      <property name="suffix">
       <string> bps</string>
@@ -75,15 +78,175 @@
      </property>
     </widget>
    </item>
+   <item row="2" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="hlInputVolume">
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QpVolumeControl" name="vcInput">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdInputVolume">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="digitCount">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="hlOutputVolume">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QpVolumeControl" name="vcOutput">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdOutputVolume">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="digitCount">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QpAudioLevelDisplay</class>
+   <extends>QWidget</extends>
+   <header location="global">QpAudioLevelDisplay</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QpVolumeControl</class>
+   <extends>QSlider</extends>
+   <header location="global">QpVolumeControl</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>cmbAudioDeviceInput</tabstop>
+  <tabstop>vcInput</tabstop>
   <tabstop>cmbAudioDeviceOutput</tabstop>
+  <tabstop>vcOutput</tabstop>
   <tabstop>spbBitrate</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>vcInput</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdInputVolume</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>114</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>542</x>
+     <y>63</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vcOutput</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>lcdOutputVolume</receiver>
+   <slot>display(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>277</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>506</x>
+     <y>132</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vcInput</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>AudioOptions</receiver>
+   <slot>onInputVolumeChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>169</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>64</x>
+     <y>154</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>onAvailablePayloadTypeSelectionChanged()</slot>
   <slot>onUsedPayloadTypeSelectionChanged()</slot>
@@ -94,5 +257,6 @@
   <slot>onPayloadTypeAdd()</slot>
   <slot>onPayloadTypeEdit()</slot>
   <slot>onPayloadTypeRemove()</slot>
+  <slot>onInputVolumeChanged(int)</slot>
  </slots>
 </ui>
