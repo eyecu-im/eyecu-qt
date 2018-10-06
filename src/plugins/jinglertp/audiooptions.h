@@ -24,7 +24,7 @@ class AudioOptions :
 	Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-	explicit AudioOptions(QWidget *parent = 0);
+	explicit AudioOptions(QWidget *parent = nullptr);
 	~AudioOptions();
     virtual QWidget* instance() { return this; }
 	Ui::AudioOptions *ui;
@@ -47,12 +47,13 @@ protected:
 protected slots:
     void modify(int);
 	void onInputVolumeChanged(int value);
+	void onInputDeviceChanged(int index);
 
 private:
-	QAudioInput *m_audioInput;
-	QpAudioLevel *m_audioInfo;
-	QAudioDeviceInfo m_device;
-	QAudioFormat m_format;
+	QAudioInput		 *FAudioInput;
+	QpAudioLevel	 *FAudioLevel;
+	QAudioDeviceInfo FInputDevice;
+	QAudioFormat	 FInputFormat;
 };
 
 #endif // AUDIOOPTIONS_H
