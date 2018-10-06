@@ -1,192 +1,311 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
  <context>
-  <name>AboutBox</name>
+  <name>PasswordDialog</name>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="22"/>
-   <source>Version: %1 %2 of %3</source>
-   <translation>Версія: %1 %2 з %3</translation>
+   <location filename="../../utils/passworddialog.cpp" line="12"/>
+   <source>Enter password:</source>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="23"/>
-   <source>Revision: %1</source>
-   <translation>Редакція: %1</translation>
-  </message>
-  <message>
-   <location filename="../../loader/aboutbox.cpp" line="27"/>
-   <source>Version: %1 %2</source>
-   <translation>Версія : %1 %2</translation>
+   <location filename="../../utils/passworddialog.cpp" line="18"/>
+   <source>Save password</source>
+   <translation type="unfinished"/>
   </message>
  </context>
  <context>
-  <name>AboutBoxClass</name>
+  <name>SearchLineEdit</name>
   <message>
-   <location filename="../../loader/aboutbox.ui" line="26"/>
-   <source>About the program</source>
-   <translation>Про програму</translation>
+   <location filename="../../utils/searchlineedit.cpp" line="15"/>
+   <source>Search options</source>
+   <translation>Налаштування пошуку</translation>
   </message>
   <message>
-   <location filename="../../loader/aboutbox.ui" line="188"/>
-   <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
-   <translation>© 2010-2020 Костянтин Козлов, В&apos;ячеслав Целих, Сергій Потапов. Це програмне забезпечення випускається згідно з умовами GNU General Public License версії 3.</translation>
+   <location filename="../../utils/searchlineedit.cpp" line="26"/>
+   <source>Clear text</source>
+   <translation>Очистити текст</translation>
   </message>
  </context>
  <context>
-  <name>PluginManager</name>
+  <name>XmppSaslError</name>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="365"/>
-   <source>Saving settings</source>
-   <translation>Збереження налаштувань</translation>
+   <location filename="../../utils/xmpperror.cpp" line="419"/>
+   <source>Authorization aborted</source>
+   <translation>Авторизація відмінена</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="408"/>
-   <source>Loading plugin: %1</source>
-   <translation>Завантаження плагіна: %1</translation>
+   <location filename="../../utils/xmpperror.cpp" line="420"/>
+   <source>Account disabled</source>
+   <translation>Акаунт відключено</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="449"/>
-   <source>Duplicate plugin uuid</source>
-   <translation>Дублювати плагін uuid</translation>
+   <location filename="../../utils/xmpperror.cpp" line="421"/>
+   <source>Credentials expired</source>
+   <translation>Закінчився термін повноважень</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="456"/>
-   <source>Wrong plugin interface</source>
-   <translation>Невірний інтерфейс плагіна</translation>
+   <location filename="../../utils/xmpperror.cpp" line="422"/>
+   <source>Encryption required</source>
+   <translation>Потребує шифрування</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="476"/>
-   <source>Dependencies not found</source>
-   <translation>Залежність не знайдено</translation>
+   <location filename="../../utils/xmpperror.cpp" line="423"/>
+   <source>Incorrect encoding</source>
+   <translation>Невірне кодування</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="483"/>
-   <source>Conflict with plugin %1</source>
-   <translation>Конфлікт із плагіном %1</translation>
+   <location filename="../../utils/xmpperror.cpp" line="424"/>
+   <source>Invalid authorization id</source>
+   <translation>Невірний id авторизації</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="514"/>
-   <source>Initializing plugin connections: %1</source>
-   <translation>Ініціалізація підключення плагіна: %1</translation>
+   <location filename="../../utils/xmpperror.cpp" line="425"/>
+   <source>Invalid mechanism</source>
+   <translation>Невірний механізм</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="526"/>
-   <source>Initialization failed</source>
-   <translation>Помилка ініціалізації</translation>
+   <location filename="../../utils/xmpperror.cpp" line="426"/>
+   <source>Malformed request</source>
+   <translation>Некоректний запит</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="537"/>
-   <source>Initializing plugin objects: %1</source>
-   <translation>Ініціалізація об&apos;єктів плагіна: %1</translation>
+   <location filename="../../utils/xmpperror.cpp" line="427"/>
+   <source>Mechanism is too weak</source>
+   <translation>Механізм занадто слабкий</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="547"/>
-   <source>Initializing plugin settings: %1</source>
-   <translation>Ініціалізація налаштувань плагіна: %1</translation>
+   <location filename="../../utils/xmpperror.cpp" line="428"/>
+   <source>Not authorized</source>
+   <translation>Не пройдено авторизацію</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="564"/>
-   <source>Starting plugin: %1</source>
-   <translation>Запуск плагіна: %1</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="661"/>
-   <source>Application started</source>
-   <translation>Програму запущено</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="950"/>
-   <source>About Qt</source>
-   <translation>Про Qt</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="956"/>
-   <source>About the program</source>
-   <translation>Про програму</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="962"/>
-   <source>Setup plugins</source>
-   <translation>Налаштування плагінів</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="971"/>
-   <source>Global shortcuts</source>
-   <translation>Глобальні ярлики</translation>
-  </message>
-  <message>
-   <location filename="../../loader/pluginmanager.cpp" line="972"/>
-   <source>Application shortcuts</source>
-   <translation>Ярлики програми</translation>
+   <location filename="../../utils/xmpperror.cpp" line="429"/>
+   <source>Temporary authentication failure</source>
+   <translation>Тимчасовий збій авторизації</translation>
   </message>
  </context>
  <context>
-  <name>SetupPluginsDialog</name>
+  <name>XmppStreamError</name>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="204"/>
-   <source>Disabled (%1)</source>
-   <translation>Відключено (% 1)</translation>
-  </message>
-  <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="207"/>
-   <source>With errors (%1)</source>
-   <translation>З помилками (%1)</translation>
-  </message>
-  <message numerus="yes">
-   <location filename="../../loader/setuppluginsdialog.cpp" line="242"/>
-   <source>This plugin depends on %n other plugin(s).</source>
-   <translation><numerusform>Цей плагін залежить від %n іншого плагіна.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform><numerusform>Цей плагін залежить від %n інших плагінів.</numerusform></translation>
+   <location filename="../../utils/xmpperror.cpp" line="331"/>
+   <location filename="../../utils/xmpperror.cpp" line="581"/>
+   <source>Undefined error condition</source>
+   <translation>Невідома помилка</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="244"/>
-   <source>This plugin does not depend on other plugins.</source>
-   <translation>Цей плагін не залежить від інших плагінів.</translation>
+   <location filename="../../utils/xmpperror.cpp" line="332"/>
+   <location filename="../../utils/xmpperror.cpp" line="582"/>
+   <source>Bad request format</source>
+   <translation>Невірний формат запиту</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
-   <source>Another plugin depends on this plugin.</source>
-   <translation>Інший плагін залежить від цього плагіна.</translation>
-  </message>
-  <message numerus="yes">
-   <location filename="../../loader/setuppluginsdialog.cpp" line="249"/>
-   <source>Other %n plugin(s) depend on this plugin.</source>
-   <translation><numerusform>Інший %n плагін залежать від цього плагіна.</numerusform><numerusform>Інші %n плагіни залежать від цього плагіна.</numerusform><numerusform>Інші %n плагінів залежать від цього плагіна.</numerusform><numerusform>Інші %n плагінів залежать від цього плагіна.</numerusform></translation>
+   <location filename="../../utils/xmpperror.cpp" line="333"/>
+   <source>Bad namespace prefix</source>
+   <translation>Невірний префікс простору імен</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="252"/>
-   <source>Other plugins don&apos;t depend on this plugin.</source>
-   <translation>Інші плагіни не залежать від цього плагіна.</translation>
-  </message>
-  <message numerus="yes">
-   <location filename="../../loader/setuppluginsdialog.cpp" line="271"/>
-   <source>%n dependency(ies) not found.</source>
-   <translation><numerusform>%n залежність не знайдено.</numerusform><numerusform>%n залежності не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform><numerusform>%n залежностей не знайдено.</numerusform></translation>
+   <location filename="../../utils/xmpperror.cpp" line="334"/>
+   <location filename="../../utils/xmpperror.cpp" line="583"/>
+   <source>Conflict</source>
+   <translation>Конфлікт</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
-   <source>Restart Application</source>
-   <translation>Перезапуск програми</translation>
+   <location filename="../../utils/xmpperror.cpp" line="335"/>
+   <source>Connection timeout</source>
+   <translation>Перевищено час з’єднання</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="285"/>
-   <source>Settings saved. Do you want to restart application?</source>
-   <translation>Налаштування збережено. Ви хочете перезапустити програму?</translation>
-  </message>
- </context>
- <context>
-  <name>SetupPluginsDialogClass</name>
-  <message>
-   <location filename="../../loader/setuppluginsdialog.ui" line="14"/>
-   <source>Setup Plugins</source>
-   <translation>Налаштування плагінів</translation>
+   <location filename="../../utils/xmpperror.cpp" line="336"/>
+   <source>Host is not serviced</source>
+   <translation>Хост не обслуговується</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.ui" line="76"/>
-   <source>Plugin Information</source>
-   <translation>Інформація про плагін</translation>
+   <location filename="../../utils/xmpperror.cpp" line="337"/>
+   <source>Unknown host</source>
+   <translation>Невідомий хост</translation>
   </message>
   <message>
-   <location filename="../../loader/setuppluginsdialog.cpp" line="89"/>
-   <source>Search plugin</source>
-   <translation>Пошук плагіна</translation>
+   <location filename="../../utils/xmpperror.cpp" line="338"/>
+   <source>Improper addressing</source>
+   <translation>Неправильна адресація</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="339"/>
+   <location filename="../../utils/xmpperror.cpp" line="587"/>
+   <source>Internal server error</source>
+   <translation>Внутрішня помилка сервера</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="340"/>
+   <source>Invalid from address</source>
+   <translation>Невірна адреса відправника</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="341"/>
+   <source>Invalid namespace</source>
+   <translation>Невірний простір імен</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="342"/>
+   <source>Invalid XML</source>
+   <translation>Недопустимий XML</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="343"/>
+   <location filename="../../utils/xmpperror.cpp" line="592"/>
+   <source>Not authorized</source>
+   <translation>Не пройдена авторизація</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="344"/>
+   <source>XML not well formed</source>
+   <translation>XML сформовано неправильно</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="345"/>
+   <location filename="../../utils/xmpperror.cpp" line="593"/>
+   <source>Policy violation</source>
+   <translation>Порушені обмеження</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="346"/>
+   <source>Remote connection failed</source>
+   <translation>Сбій віддаленого з’єднання</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="347"/>
+   <source>Stream need to be reseted</source>
+   <translation>Потік необхідно перевстановити</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="348"/>
+   <location filename="../../utils/xmpperror.cpp" line="599"/>
+   <source>Resource constraint</source>
+   <translation>Недостатньо ресурсів</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="349"/>
+   <source>Restricted XML</source>
+   <translation>Заборонений XML</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="350"/>
+   <source>See other host</source>
+   <translation>Використайте інший хост</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="351"/>
+   <source>System shutdown</source>
+   <translation>Система відключена</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="352"/>
+   <source>Unsupported encoding</source>
+   <translation>Кодування не підтримується</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="353"/>
+   <source>Unsupported feature</source>
+   <translation>Функція не підтримується</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="354"/>
+   <source>Unsupported stanza type</source>
+   <translation>Тип станзи не підтримується </translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="355"/>
+   <source>Unsupported version</source>
+   <translation>Версія не підтримується</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="584"/>
+   <source>Feature not implemented</source>
+   <translation>Можливість не реалізована</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="585"/>
+   <source>Insufficient permissions</source>
+   <translation>Недостатньо прав</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="586"/>
+   <source>Recipient changed address</source>
+   <translation>Адресат змінив адресу</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="588"/>
+   <source>Requested item not found</source>
+   <translation>Запитуваний елемент не знайдено</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="589"/>
+   <source>Malformed XMPP address</source>
+   <translation>Неприпустима XMPP адреса</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="590"/>
+   <source>Not accepted by the recipient</source>
+   <translation>Не прийнято адресатом</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="591"/>
+   <source>Not allowed by the recipient</source>
+   <translation>Не дозволено адресатом</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="594"/>
+   <source>Recipient unavailable</source>
+   <translation>Адресат недоступний</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="595"/>
+   <source>Redirect to another address</source>
+   <translation>Перенаправлення на іншу адресу</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="596"/>
+   <source>Registration required</source>
+   <translation>Потребує регістрації</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="597"/>
+   <source>Remote server not found</source>
+   <translation>Віддалений сервер не знайдено</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="598"/>
+   <source>Remote server timeout</source>
+   <translation>Перевищено час очікування віддаленого сервера</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="600"/>
+   <source>Service unavailable</source>
+   <translation>Сервіс недоступний</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="601"/>
+   <source>Subscription required</source>
+   <translation>Потребує підписку</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="602"/>
+   <source>Unexpected request</source>
+   <translation>Неочікуваний запит</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="604"/>
+   <source>Resource limit exceeded</source>
+   <translation>Перевищено ліміт ресурсів</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="605"/>
+   <source>Stanza is too big</source>
+   <translation>Станза занадто велика</translation>
+  </message>
+  <message>
+   <location filename="../../utils/xmpperror.cpp" line="606"/>
+   <source>Too many stanzas</source>
+   <translation>Забагато станз</translation>
   </message>
  </context>
 </TS>

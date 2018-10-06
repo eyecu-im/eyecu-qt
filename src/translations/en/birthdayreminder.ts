@@ -1,36 +1,36 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>BirthdayReminder</name>
   <message>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="50"/>
+   <location line="50" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday Reminder</source>
    <translation>Birthday Reminder</translation>
   </message>
   <message>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="51"/>
+   <location line="51" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Reminds about birthdays of your friends</source>
    <translation>Reminds about birthdays of your friends</translation>
   </message>
   <message>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="144"/>
+   <location line="144" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>When reminding of upcoming birthdays</source>
    <translation>When reminding of upcoming birthdays</translation>
   </message>
   <message>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="284"/>
+   <location line="284" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday remind</source>
    <translation>Birthday remind</translation>
   </message>
   <message>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
+   <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
+   <location line="354" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday today!</source>
    <translation>Birthday today!</translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
+   <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday in %n day(s),&#xd;&#xd;
  %1</source>
    <translation type="unfinished">
@@ -39,7 +39,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>
+   <location line="351" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>%1 turns %n</source>
    <translation>
     <numerusform>%1 turns %n</numerusform>
@@ -47,7 +47,7 @@
    </translation>
   </message>
   <message numerus="yes">
-   <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="354"/>
+   <location line="354" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
    <source>Birthday in %n day(s)!</source>
    <translation>
     <numerusform>Birthday in %n day!</numerusform>

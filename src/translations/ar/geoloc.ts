@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.ui" line="65"/>
    <source>Distance</source>
-   <translation type="unfinished"/>
+   <translation>البعد</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.ui" line="72"/>
@@ -29,7 +29,7 @@
    <location filename="../../plugins/geoloc/geoloc.cpp" line="62"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="432"/>
    <source>User Location</source>
-   <translation type="unfinished"/>
+   <translation>موقع المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="63"/>
@@ -39,18 +39,18 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="186"/>
    <source>Show contact on the map</source>
-   <translation type="unfinished"/>
+   <translation>عرض جهة الاتصال على الخريطة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="186"/>
    <source>F10</source>
    <comment>Show contact on the map (chat)</comment>
-   <translation type="unfinished"/>
+   <translation>F10</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="213"/>
    <source>When contact appears nearby</source>
-   <translation type="unfinished"/>
+   <translation>عندما تكون جهة الاتصال في مكان قريب</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="219"/>
@@ -60,122 +60,122 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="220"/>
    <source>Altitude</source>
-   <translation type="unfinished"/>
+   <translation>الإرتفاع</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="221"/>
    <source>Area</source>
-   <translation type="unfinished"/>
+   <translation>المنطقة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="222"/>
    <source>Bearing</source>
-   <translation type="unfinished"/>
+   <translation>الاتجاه</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="223"/>
    <source>Building</source>
-   <translation type="unfinished"/>
+   <translation>المبنى</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="224"/>
    <source>Country</source>
-   <translation type="unfinished"/>
+   <translation>البلد</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="225"/>
    <source>Country code</source>
-   <translation type="unfinished"/>
+   <translation>كود البلد</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="226"/>
    <source>Datum</source>
-   <translation type="unfinished"/>
+   <translation>المعطيات</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="227"/>
    <source>Description</source>
-   <translation type="unfinished"/>
+   <translation>الوصف</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="228"/>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="229"/>
    <source>Floor</source>
-   <translation type="unfinished"/>
+   <translation>الطابق</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="230"/>
    <source>Latitude</source>
-   <translation type="unfinished"/>
+   <translation>خط العرض</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="231"/>
    <source>Locality</source>
-   <translation type="unfinished"/>
+   <translation>المنطقة المجاورة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="232"/>
    <source>Longitude</source>
-   <translation type="unfinished"/>
+   <translation>خط الطول</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="233"/>
    <source>Postal code</source>
-   <translation type="unfinished"/>
+   <translation>الرمز البريدي</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="234"/>
    <source>Region</source>
-   <translation type="unfinished"/>
+   <translation>المنطقة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="235"/>
    <source>Room</source>
-   <translation type="unfinished"/>
+   <translation>الغرفة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="236"/>
    <source>Speed</source>
-   <translation type="unfinished"/>
+   <translation>السرعة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="237"/>
    <source>Street</source>
-   <translation type="unfinished"/>
+   <translation>الشارع</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="238"/>
    <source>Text</source>
-   <translation type="unfinished"/>
+   <translation>النص</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="239"/>
    <source>Timestamp</source>
-   <translation type="unfinished"/>
+   <translation>الطابع الزمني</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="240"/>
    <source>TZO</source>
-   <translation type="unfinished"/>
+   <translation>TZO</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="241"/>
    <source>URI</source>
-   <translation type="unfinished"/>
+   <translation>URI</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="275"/>
    <source>Show user location icons</source>
-   <translation type="unfinished"/>
+   <translation>عرض رموز موقع المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="278"/>
    <source>Display user location icon</source>
-   <translation type="unfinished"/>
+   <translation>عرض رمز موقع المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="283"/>
@@ -185,12 +185,12 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="290"/>
    <source>Publish location</source>
-   <translation type="unfinished"/>
+   <translation>نشر الموقع</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="433"/>
    <source>Supports user Geolocation</source>
-   <translation type="unfinished"/>
+   <translation>يدعم تحديد الموقع الجغرافي للمستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="437"/>
@@ -200,47 +200,47 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="438"/>
    <source>Receives notification of current user Geolocation</source>
-   <translation type="unfinished"/>
+   <translation>يتلقى إشعارات حول الموقع الجغرافي للمستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="666"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="854"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="921"/>
    <source>S</source>
-   <translation type="unfinished"/>
+   <translation>جنوب</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="670"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="858"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="925"/>
    <source>N</source>
-   <translation type="unfinished"/>
+   <translation>شمال</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="678"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="866"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="935"/>
    <source>W</source>
-   <translation type="unfinished"/>
+   <translation>غرب</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="682"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="870"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="939"/>
    <source>E</source>
-   <translation type="unfinished"/>
+   <translation>شرق</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="693"/>
    <source>m</source>
    <comment>Short for &quot;meters&quot;</comment>
-   <translation type="unfinished"/>
+   <translation>متر</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="259"/>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="738"/>
    <source>Location</source>
-   <translation type="unfinished"/>
+   <translation>الموقع</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="926"/>

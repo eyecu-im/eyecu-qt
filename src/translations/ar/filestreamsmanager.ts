@@ -4,27 +4,27 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="284"/>
    <source>Waiting for a response to send a file request</source>
-   <translation type="unfinished"/>
+   <translation>في انتظار الرد على طلب تحميل الملف</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="533"/>
    <source>Connecting</source>
-   <translation type="unfinished"/>
+   <translation>توصيل</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="544"/>
    <source>Data transmission</source>
-   <translation type="unfinished"/>
+   <translation>نقل البيانات</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="568"/>
    <source>Data transmission finished</source>
-   <translation type="unfinished"/>
+   <translation>اكتمل نقل البيانات</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="596"/>
    <source>Disconnecting</source>
-   <translation type="unfinished"/>
+   <translation>قطع الاتصال</translation>
   </message>
  </context>
  <context>
@@ -42,53 +42,53 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
    <source>Show file transfers</source>
-   <translation type="unfinished"/>
+   <translation>عرض نقل الملفات</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
    <source>Ctrl+T</source>
    <comment>Show file transfers</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+T</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="91"/>
    <source>File input/output error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ في إدخال/إخراج الملف</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="92"/>
    <source>File size unexpectedly changed</source>
-   <translation type="unfinished"/>
+   <translation>حجم الملف تغير بشكل غير متوقع</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="93"/>
    <source>Connection timed out</source>
-   <translation type="unfinished"/>
+   <translation>انتهت مدة الاتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="94"/>
    <source>Data transmission terminated by remote user</source>
-   <translation type="unfinished"/>
+   <translation>تم إحباط نقل البيانات بواسطة المستخدم عن بعد</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="104"/>
    <source>File Transfers</source>
-   <translation type="unfinished"/>
+   <translation>نقل الملفات</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="144"/>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>نقل الملف</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="146"/>
    <source>Create separate folder for each sender</source>
-   <translation type="unfinished"/>
+   <translation>إنشاء مجلد منفصل لكل مرسل</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="156"/>
    <source>Default transfer method:</source>
-   <translation type="unfinished"/>
+   <translation>طريقة النقل الافتراضية:</translation>
   </message>
  </context>
  <context>
@@ -112,32 +112,32 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="38"/>
    <source>File Transfers</source>
-   <translation type="unfinished"/>
+   <translation>نقل الملفات</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>File Name</source>
-   <translation type="unfinished"/>
+   <translation>اسم الملف</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>State</source>
-   <translation type="unfinished"/>
+   <translation>الحالة</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>Size</source>
-   <translation type="unfinished"/>
+   <translation>الحجم</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>Progress</source>
-   <translation type="unfinished"/>
+   <translation>التقدم</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
    <source>Speed</source>
-   <translation type="unfinished"/>
+   <translation>السرعة</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="137"/>
@@ -152,68 +152,68 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="143"/>
    <source>Connect</source>
-   <translation type="unfinished"/>
+   <translation>اتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="146"/>
    <source>Transfer</source>
-   <translation type="unfinished"/>
+   <translation>النقل</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="149"/>
    <source>Disconnect</source>
-   <translation type="unfinished"/>
+   <translation>قطع الاتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="152"/>
    <source>Finished</source>
-   <translation type="unfinished"/>
+   <translation>انتهى</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="155"/>
    <source>Aborted</source>
-   <translation type="unfinished"/>
+   <translation>تم إحباطها</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="158"/>
    <source>Unknown</source>
-   <translation type="unfinished"/>
+   <translation>غير معروف</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="169"/>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="333"/>
    <source>/sec</source>
-   <translation type="unfinished"/>
+   <translation>/ثانية</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="229"/>
    <source>B</source>
    <comment>Byte</comment>
-   <translation type="unfinished"/>
+   <translation>بايت</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="235"/>
    <source>KB</source>
    <comment>Kilobyte</comment>
-   <translation type="unfinished"/>
+   <translation>كيلوبايت</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="240"/>
    <source>MB</source>
    <comment>Megabyte</comment>
-   <translation type="unfinished"/>
+   <translation>ميغابايت</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="245"/>
    <source>GB</source>
    <comment>Gigabyte</comment>
-   <translation type="unfinished"/>
+   <translation>جيجابايت</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="331"/>
    <source>Active: %1/%2</source>
-   <translation type="unfinished"/>
+   <translation>نشط: %1/%2</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>

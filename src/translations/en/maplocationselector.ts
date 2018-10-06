@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>MapLocationSelector</name>
   <message>
-   <location filename="../../plugins/maplocationselector/maplocationselector.cpp" line="16"/>
+   <location line="16" filename="../../plugins/maplocationselector/maplocationselector.cpp"/>
    <source>Map location selector</source>
    <translation>Map location selector</translation>
   </message>
   <message>
-   <location filename="../../plugins/maplocationselector/maplocationselector.cpp" line="17"/>
+   <location line="17" filename="../../plugins/maplocationselector/maplocationselector.cpp"/>
    <source>Allows other plugins to select a location on the Map</source>
    <translation>Allows other plugins to select a location on the Map</translation>
   </message>

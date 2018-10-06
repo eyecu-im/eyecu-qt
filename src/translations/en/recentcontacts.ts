@@ -1,76 +1,76 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>RecentContacts</name>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="99"/>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="220"/>
+   <location line="99" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
+   <location line="220" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Recent Contacts</source>
    <translation>Recent Contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="100"/>
+   <location line="100" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Displays a recently used contacts</source>
    <translation>Displays a recently used contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="196"/>
+   <location line="196" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Add contact to favorites</source>
    <translation>Add contact to favorites</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="197"/>
+   <location line="197" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Remove contact from favorites</source>
    <translation>Remove contact from favorites</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="335"/>
+   <location line="335" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Recent contacts</source>
    <translation>Recent contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="336"/>
+   <location line="336" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Hide inactive contacts</source>
    <translation>Hide inactive contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="337"/>
+   <location line="337" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Sort contacts by last activity</source>
    <translation>Sort contacts by last activity</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="338"/>
+   <location line="338" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Always show offline contacts</source>
    <translation>Always show offline contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="339"/>
+   <location line="339" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Show only favorite contacts</source>
    <translation>Show only favorite contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="340"/>
+   <location line="340" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Simplify recent contacts view</source>
    <translation>Simplify recent contacts view</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1410"/>
+   <location line="1410" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Add to Favorites</source>
    <translation>Add to Favorites</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1421"/>
+   <location line="1421" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Remove from Favorites</source>
    <translation>Remove from Favorites</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1431"/>
+   <location line="1431" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>Remove from Recent Contacts</source>
    <translation>Remove from Recent Contacts</translation>
   </message>
   <message>
-   <location filename="../../plugins/recentcontacts/recentcontacts.cpp" line="1469"/>
+   <location line="1469" filename="../../plugins/recentcontacts/recentcontacts.cpp"/>
    <source>&lt;b>Account:&lt;/b> %1</source>
    <translation>&lt;b>Account:&lt;/b> %1</translation>
   </message>

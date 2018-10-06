@@ -1,25 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>ConsolePlugin</name>
   <message>
-   <location filename="../../plugins/console/consoleplugin.cpp" line="26"/>
+   <location line="26" filename="../../plugins/console/consoleplugin.cpp"/>
    <source>Console</source>
    <translation>Console</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consoleplugin.cpp" line="27"/>
+   <location line="27" filename="../../plugins/console/consoleplugin.cpp"/>
    <source>Allows to view XML stream between the client and server</source>
    <translation>Allows to view XML stream between the client and server</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consoleplugin.cpp" line="58"/>
+   <location line="58" filename="../../plugins/console/consoleplugin.cpp"/>
    <source>XML Console</source>
    <translation>XML Console</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consoleplugin.cpp" line="68"/>
+   <location line="68" filename="../../plugins/console/consoleplugin.cpp"/>
    <source>Default Context</source>
    <translation>Default Context</translation>
   </message>
@@ -27,47 +27,47 @@
  <context>
   <name>ConsoleWidget</name>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="29"/>
+   <location line="29" filename="../../plugins/console/consolewidget.cpp"/>
    <source>&lt;All Streams></source>
    <translation>&lt;All Streams></translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="70"/>
+   <location line="70" filename="../../plugins/console/consolewidget.cpp"/>
    <source>Search</source>
    <translation>Search</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="140"/>
+   <location line="140" filename="../../plugins/console/consolewidget.cpp"/>
    <source>XML Console - %1</source>
    <translation>XML Console - %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="252"/>
+   <location line="252" filename="../../plugins/console/consolewidget.cpp"/>
    <source>Start sending user stanza...</source>
    <translation>Start sending user stanza...</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="256"/>
+   <location line="256" filename="../../plugins/console/consolewidget.cpp"/>
    <source>User stanza sent.</source>
    <translation>User stanza sent.</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="260"/>
+   <location line="260" filename="../../plugins/console/consolewidget.cpp"/>
    <source>Stanza is not well formed.</source>
    <translation>Stanza is not well formed.</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="265"/>
+   <location line="265" filename="../../plugins/console/consolewidget.cpp"/>
    <source>XML is not well formed.</source>
    <translation>XML is not well formed.</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="271"/>
+   <location line="271" filename="../../plugins/console/consolewidget.cpp"/>
    <source>New Context</source>
    <translation>New Context</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.cpp" line="271"/>
+   <location line="271" filename="../../plugins/console/consolewidget.cpp"/>
    <source>Enter context name</source>
    <translation>Enter context name</translation>
   </message>
@@ -75,65 +75,65 @@
  <context>
   <name>ConsoleWidgetClass</name>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="14"/>
+   <location line="14" filename="../../plugins/console/consolewidget.ui"/>
    <source>XML Console</source>
    <translation>XML Console</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="33"/>
+   <location line="33" filename="../../plugins/console/consolewidget.ui"/>
    <source>Filter</source>
    <translation>Filter</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="42"/>
+   <location line="42" filename="../../plugins/console/consolewidget.ui"/>
    <source>Stream:</source>
    <translation>Stream:</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="62"/>
+   <location line="62" filename="../../plugins/console/consolewidget.ui"/>
    <source>Condition:</source>
    <translation>Condition:</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="96"/>
-   <location filename="../../plugins/console/consolewidget.ui" line="159"/>
+   <location line="96" filename="../../plugins/console/consolewidget.ui"/>
+   <location line="159" filename="../../plugins/console/consolewidget.ui"/>
    <source>Add</source>
    <translation>Add</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="109"/>
-   <location filename="../../plugins/console/consolewidget.ui" line="172"/>
+   <location line="109" filename="../../plugins/console/consolewidget.ui"/>
+   <location line="172" filename="../../plugins/console/consolewidget.ui"/>
    <source>Remove</source>
    <translation>Remove</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="122"/>
-   <location filename="../../plugins/console/consolewidget.ui" line="322"/>
+   <location line="122" filename="../../plugins/console/consolewidget.ui"/>
+   <location line="322" filename="../../plugins/console/consolewidget.ui"/>
    <source>Clear</source>
    <translation>Clear</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="138"/>
+   <location line="138" filename="../../plugins/console/consolewidget.ui"/>
    <source>Available context:</source>
    <translation>Available context:</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="188"/>
+   <location line="188" filename="../../plugins/console/consolewidget.ui"/>
    <source>Console</source>
    <translation>Console</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="298"/>
+   <location line="298" filename="../../plugins/console/consolewidget.ui"/>
    <source>Word wrap</source>
    <translation>Word wrap</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="305"/>
+   <location line="305" filename="../../plugins/console/consolewidget.ui"/>
    <source>Highlight XML</source>
    <translation>Highlight XML</translation>
   </message>
   <message>
-   <location filename="../../plugins/console/consolewidget.ui" line="315"/>
+   <location line="315" filename="../../plugins/console/consolewidget.ui"/>
    <source>Send</source>
    <translation>Send</translation>
   </message>
