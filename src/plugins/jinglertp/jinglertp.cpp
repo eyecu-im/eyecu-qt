@@ -894,7 +894,6 @@ void JingleRtp::removeNotification(const QString &ASid)
 
 bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	qDebug() << "JingleRtp::isSupported(" << AStreamJid.full() << "," << AContactJid.full() << ")";
 	return (AStreamJid != AContactJid) &&
 		   FPresenceManager->isOnlineContact(AContactJid) &&
 		   (!FServiceDiscovery ||
@@ -1324,7 +1323,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 	if (player->status() == MediaPlayer::Closed)
 	{
 		connect(player, SIGNAL(statusChanged(int,int)), SLOT(onPlayerStatusChanged(int,int)));
-		player->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME).value().toInt()/100.0);
+		player->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME).value().toInt());
 		if (player->setStatus(MediaPlayer::Running))
 		{
 			LOG_INFO("Player started successfuly!");
@@ -1529,7 +1528,7 @@ void JingleRtp::onOptionsChanged(const OptionsNode &ANode)
 	{
 		for (QHash<IJingleContent *, MediaPlayer *>::ConstIterator it = FPlayers.constBegin();
 			 it != FPlayers.constEnd(); ++it)
-			(*it)->setVolume(ANode.value().toInt()/100.0);
+			(*it)->setVolume(ANode.value().toInt());
 	}
 }
 
@@ -1925,17 +1924,12 @@ void JingleRtp::onConnectionEstablished(const QString &ASid, const QString &ANam
 
 void JingleRtp::onConnectionFailed(const QString &ASid, const QString &AName)
 {
-	qDebug() << "JingleRtp::onConnectionFailed(" << ASid << "," << AName << ")";
 	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AName));
-
 	removePendingContent(ASid, AName);
 	if (!hasPendingContents(ASid))
 	{
 		if (FJingle->contents(ASid).isEmpty())
-		{
-			qDebug() << "Connectivity error";
 			FJingle->sessionTerminate(ASid, IJingle::ConnectivityError);
-		}
 		else
 			FJingle->setConnected(ASid);
 	}

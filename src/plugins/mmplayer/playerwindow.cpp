@@ -26,7 +26,7 @@
 
 PlayerWindow::PlayerWindow(QObject *APlugin, MediaPlayer *AMediaStreamer, QString AFileName, qint64 AFileLenth, QWidget *AParent) :
 	QWidget(AParent),
-    FMediaStreamer(AMediaStreamer),
+	FMediaPlayer(AMediaStreamer),
 	FFile(NULL),
     ui(new Ui::PlayerWindow)
 {
@@ -38,7 +38,7 @@ PlayerWindow::PlayerWindow(QObject *APlugin, MediaPlayer *AMediaStreamer, QStrin
 
 	calculate(AFileName, AFileLenth);
 
-	connect(FMediaStreamer,SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
+	connect(FMediaPlayer,SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
 
     show();
 	LOG_DEBUG("PlayerWindow created");
@@ -52,7 +52,7 @@ PlayerWindow::PlayerWindow(QObject *APlugin, MediaPlayer *AMediaStreamer, QStrin
 
 PlayerWindow::PlayerWindow(QObject *APlugin, QWidget *AParent):
 	QWidget(AParent),
-    FMediaStreamer(NULL),    
+	FMediaPlayer(NULL),
 	FFile(NULL),
 	FSupportedAudioFormats("*.asf *.au *.flac *.mka *.mp2 *.mp3 *.mpa *.ogg *.snd *.wav *.wma"),
 	FSupportedVideoFormats("*.3gp *.avi *.flv *.flc *.fli *.mov *.mpg *.mpe *.mpeg *.mp4 *.mkv *.ogm *.dat *.wmv"),
@@ -145,7 +145,7 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 	LOG_DEBUG(QString("calculate(%1, %2)").arg(AFileName).arg(AFileLength));
 
 	// Set window title
-	QHash<QString, QString> metadata = FMediaStreamer->getMetadata();
+	QHash<QString, QString> metadata = FMediaPlayer->getMetadata();
 	QString name;
 	if (metadata.contains("title"))
 	{
@@ -190,10 +190,10 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 		setWindowTitle(tr("Multimedia player - %1").arg(CLIENT_NAME));
 
 	// Calculate duration
-	qint64 duration = FMediaStreamer->duration();
+	qint64 duration = FMediaPlayer->duration();
 	if (duration <= 0)
 	{
-		int bitRate = FMediaStreamer->bitRate();
+		int bitRate = FMediaPlayer->bitRate();
 		duration = bitRate? (qint64)AFileLength*8000000/bitRate : -1;
 	}
 	if (duration >= 0)
@@ -207,11 +207,11 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 	emit playing(FCurrentTune = tune);
 
 	// Initialize video widget
-	QWidget *videoWidget = FMediaStreamer->getVideoWidget();
+	QWidget *videoWidget = FMediaPlayer->getVideoWidget();
 	if(videoWidget)
 	{
-		FMediaStreamer->setSmoothResize(Options::node(OPV_MMPLAYER_SMOOTHRESIZE).value().toBool());
-		FMediaStreamer->setAspectRatioMode((Qt::AspectRatioMode)Options::node(OPV_MMPLAYER_ASPECTRATIOMODE).value().toInt());
+		FMediaPlayer->setSmoothResize(Options::node(OPV_MMPLAYER_SMOOTHRESIZE).value().toBool());
+		FMediaPlayer->setAspectRatioMode((Qt::AspectRatioMode)Options::node(OPV_MMPLAYER_ASPECTRATIOMODE).value().toInt());
 		videoWidget->setSizePolicy(QSizePolicy());
 		ui->verticalLayout->insertWidget(0, videoWidget, 1);
 		videoWidget->setCursor(Qt::PointingHandCursor);
@@ -222,7 +222,7 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 		setMaximumSize(65536,80);
 
 	// Initialize volume/mute controls
-	if (FMediaStreamer->volumeAvailable())  // Add Volume and Mute controls, if volume available
+	if (FMediaPlayer->volumeAvailable())  // Add Volume and Mute controls, if volume available
 	{
 		bool    mute    = Options::node(OPV_MMPLAYER_MUTE).value().toBool();
 		int     volume  = mute? 0 : Options::node(OPV_MMPLAYER_VOLUME).value().toInt();
@@ -247,7 +247,7 @@ void PlayerWindow::calculate(const QString &AFileName, int AFileLength)
 	ui->btnPlay->setToolTip(tr("Pause"));
 	ui->btnPlay->setEnabled(true);
 
-	connect(FMediaStreamer,SIGNAL(playTimeChanged(qint64)),SLOT(onPlayTimeChanged(qint64)));
+	connect(FMediaPlayer,SIGNAL(playTimeChanged(qint64)),SLOT(onPlayTimeChanged(qint64)));
 
 	LOG_DEBUG("PlayerWindow::calculate(): finished");
 }
@@ -258,11 +258,11 @@ void PlayerWindow::start()
 	LOG_INFO(QString("File name: %1").arg(FFile->fileName()));
 	if(FFile->open(QFile::ReadOnly))
 	{
-		FMediaStreamer = new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
+		FMediaPlayer = new MediaPlayer(QAudioDeviceInfo::defaultOutputDevice(), FFile, this);
 		LOG_DEBUG("Media Streamer created!");
-		connect(FMediaStreamer, SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
-		FMediaStreamer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt()/100.0);
-		FMediaStreamer->setStatus(MediaPlayer::Running);
+		connect(FMediaPlayer, SIGNAL(statusChanged(int,int)),SLOT(onStreamerStatusChanged(int,int)));
+		FMediaPlayer->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt());
+		FMediaPlayer->setStatus(MediaPlayer::Running);
 	}
 	LOG_DEBUG("start(): finished");
 }
@@ -273,8 +273,8 @@ void PlayerWindow::closeEvent(QCloseEvent *AEvent)
 	LOG_DEBUG("closeEvent()");
 	if (FFile)
 		FFile->close();
-    if(FMediaStreamer)
-		FMediaStreamer->setStatus(MediaPlayer::Finished);
+	if(FMediaPlayer)
+		FMediaPlayer->setStatus(MediaPlayer::Finished);
     AEvent->accept();
 	LOG_DEBUG("closeEvent(): finished");
 }
@@ -298,7 +298,7 @@ void PlayerWindow::resizeEvent(QResizeEvent *AEvent)
 
 void PlayerWindow::hideEvent(QHideEvent *AEvent)
 {
-	if (!AEvent->spontaneous() && !FMediaStreamer)
+	if (!AEvent->spontaneous() && !FMediaPlayer)
 		deleteLater();
 }
 
@@ -399,10 +399,10 @@ void PlayerWindow::onStreamerStatusChanged(int AStatusNew, int AStatusOld)
 				if (AStatusNew == MediaPlayer::Error)
 					FFile=NULL;
 			}
-			if(FMediaStreamer)
+			if(FMediaPlayer)
 			{
-				FMediaStreamer->deleteLater();
-				FMediaStreamer=NULL;
+				FMediaPlayer->deleteLater();
+				FMediaPlayer=NULL;
 				LOG_DEBUG("Media Streamer destroyed!");
 			}
 			if (isHidden())		// Player windows closed
@@ -455,12 +455,12 @@ void PlayerWindow::setupControls(int AState)
 
 void PlayerWindow::onOpenClicked()
 {	
-	if(FMediaStreamer)
+	if(FMediaPlayer)
 	{
 		ui->btnOpen->setDisabled(true);
 		ui->btnPlay->setDisabled(true);
 		FPlayList.clear();
-		FMediaStreamer->setStatus(MediaPlayer::Finished);
+		FMediaPlayer->setStatus(MediaPlayer::Finished);
 	}
 	else
 	{
@@ -482,7 +482,7 @@ void PlayerWindow::onOpenClicked()
 void PlayerWindow::onDropClicked(QStringList APlayList)
 {
 	LOG_DEBUG("onDropClicked()");
-    if(FMediaStreamer) {
+	if(FMediaPlayer) {
         FPlayList.append(APlayList);
         FPlayList.removeDuplicates();
         FPlayList.sort();
@@ -534,17 +534,17 @@ void PlayerWindow::onPlayClicked()
 {
 	LOG_DEBUG("onPlayClicked()");
 	ui->btnPlay->setDisabled(true);
-	if (FMediaStreamer)
-		switch (FMediaStreamer->status())
+	if (FMediaPlayer)
+		switch (FMediaPlayer->status())
 		{
 			case MediaPlayer::Running:
 				LOG_DEBUG("Runing");
-				FMediaStreamer->setStatus(MediaPlayer::Paused);
+				FMediaPlayer->setStatus(MediaPlayer::Paused);
 				break;
 	
 			case MediaPlayer::Paused:
 				LOG_DEBUG("Paused");
-				FMediaStreamer->setStatus(MediaPlayer::Running);
+				FMediaPlayer->setStatus(MediaPlayer::Running);
 				break;
 	
 			default:
@@ -595,8 +595,8 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
     {
         int volume = ANode.value().toInt();
         ui->lcdVolume->display(volume);
-		if(FMediaStreamer)
-			FMediaStreamer->setVolume(volume/100.0);
+		if(FMediaPlayer)
+			FMediaPlayer->setVolume(volume);
     }
     else if (ANode.path() == OPV_MMPLAYER_MUTE)
     {
@@ -609,8 +609,8 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
             ui->sldVolume->setDisabled(true);
             ui->sldVolume->blockSignals(false);
             ui->lcdVolume->display(0);
-			if(FMediaStreamer)
-				FMediaStreamer->setVolume(0);
+			if(FMediaPlayer)
+				FMediaPlayer->setVolume(0);
         }
         else
         {
@@ -622,18 +622,18 @@ void PlayerWindow::onOptionsChanged(const OptionsNode &ANode)
             ui->sldVolume->setEnabled(true);
             ui->sldVolume->blockSignals(false);
             ui->lcdVolume->display(volume);
-			if(FMediaStreamer)
-				FMediaStreamer->setVolume(volume/100.0);
+			if(FMediaPlayer)
+				FMediaPlayer->setVolume(volume);
         }
     }
     else if (ANode.path() == OPV_MMPLAYER_SMOOTHRESIZE)
 	{
-		if(FMediaStreamer)
-			FMediaStreamer->setSmoothResize(ANode.value().toBool());
+		if(FMediaPlayer)
+			FMediaPlayer->setSmoothResize(ANode.value().toBool());
 	}
     else if (ANode.path() == OPV_MMPLAYER_ASPECTRATIOMODE)
 	{
-		if(FMediaStreamer)
-			FMediaStreamer->setAspectRatioMode((Qt::AspectRatioMode)ANode.value().toInt());
+		if(FMediaPlayer)
+			FMediaPlayer->setAspectRatioMode((Qt::AspectRatioMode)ANode.value().toInt());
 	}
 }
