@@ -1,7 +1,8 @@
 FORMS = edituserslistdialog.ui \
         inputtextdialog.ui \
         inviteuserswidget.ui \
-    $$PWD/confirmationdialog.ui
+    $$PWD/confirmationdialog.ui \
+    $$PWD/reasonseditordialog.ui
         
 HEADERS = multiuser.h \
           multiuserchat.h \
@@ -13,7 +14,8 @@ HEADERS = multiuser.h \
           multiuserview.h \
           inviteuserswidget.h \
           inviteusersmenu.h \
-    $$PWD/confirmationdialog.h
+    $$PWD/confirmationdialog.h \
+    $$PWD/reasonseditordialog.h
 
 
 SOURCES = multiuser.cpp \
@@ -26,4 +28,5 @@ SOURCES = multiuser.cpp \
           multiuserview.cpp \
           inviteuserswidget.cpp \
           inviteusersmenu.cpp \
-    $$PWD/confirmationdialog.cpp
+    $$PWD/confirmationdialog.cpp \
+    $$PWD/reasonseditordialog.cpp
