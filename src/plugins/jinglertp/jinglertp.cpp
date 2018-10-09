@@ -1291,7 +1291,7 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 								  SLOT(onStreamerStatusChanged(int)));
 
 				ARtpDevice->setParent(streamer);
-				streamer->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt()/100.0);
+				streamer->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt());
 				streamer->setStatus(MediaStreamer::Running);
 				FPluginManager->delayShutdown();
 				return streamer;
@@ -1522,7 +1522,7 @@ void JingleRtp::onOptionsChanged(const OptionsNode &ANode)
 	{
 		for (QHash<IJingleContent *, MediaStreamer *>::ConstIterator it = FStreamers.constBegin();
 			 it != FStreamers.constEnd(); ++it)
-			(*it)->setVolume(ANode.value().toInt()/100.0);
+			(*it)->setVolume(ANode.value().toInt());
 	}
 	else if (ANode.path() == OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME)
 	{
