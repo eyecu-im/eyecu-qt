@@ -208,7 +208,7 @@ bool JingleRtp::initObjects()
 		INotificationType notifyType;
 		notifyType.order = NTO_JINGLE_RTP_CALL;
 		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)
-				->getIcon(JNI_RTP_CALL);
+				->getIcon(JNI_RTP_INCOMING);
 		notifyType.title = tr("When incoming voice or video call received");
 		notifyType.kindMask = INotification::RosterNotify|INotification::TrayNotify|
 							  INotification::TrayAction|INotification::PopupWindow|
@@ -226,13 +226,13 @@ bool JingleRtp::initObjects()
 		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_ERROR);
 		notifyType.title = tr("When voice or video chat session failed");
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_ERROR, notifyType);
-		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_TALK);
-		notifyType.title = tr("When outgoing voice or video call initiated");
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_OUTGOING);
+		notifyType.title = tr("When outgoing voice or video call initiated");		
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_OUTGOING, notifyType);
-
 		notifyType.kindMask &= ~(INotification::TrayNotify|INotification::TrayAction|
 								 INotification::SoundPlay);
-		notifyType.kindDefs = notifyType.kindMask & ~(INotification::AutoActivate);		
+		notifyType.kindDefs = notifyType.kindMask & ~(INotification::AutoActivate);
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_TALK);
 		notifyType.title = tr("When voice or video chat in progress");
 		FNotifications->registerNotificationType(NNT_JINGLE_RTP_TALK, notifyType);
 		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_JINGLE)->getIcon(JNI_RTP_HANGUP);
@@ -539,7 +539,7 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 				QIODevice *rtcpDevice = AContent->ioDevice(2);
 				RtpIODevice *rtpio = new RtpIODevice(ARtpDevice, rtcpDevice,
 													 Options::node(OPV_JINGLE_RTP_TIMEOUT).value().toInt());
-				rtpio->setObjectName("Intput");
+				rtpio->setObjectName("Input");
 				QThread *ioThread = FIOThreads.value(AContent->sid());
 				connect(ioThread, SIGNAL(finished()), rtpio, SLOT(deleteLater()));
 				rtpio->moveToThread(ioThread);
@@ -642,7 +642,7 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 					{
 						tooltip = video?tr("Outgoing video call to %1"):tr("Outgoing voice call to %1");
 						html = video?tr("Ougoing video call!"):tr("Ougoing voice call!");
-						iconId = video?JNI_RTP_TALK_VIDEO:JNI_RTP_TALK;
+						iconId = video?JNI_RTP_OUTGOING_VIDEO:JNI_RTP_OUTGOING;
 
 						if (AEventType == Ring)
 							html.append(QString("<br><img src=\"%1\"> <b>%2</b>")
@@ -653,7 +653,7 @@ void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Re
 					}
 					else
 					{
-						iconId = video?JNI_RTP_CALL_VIDEO:JNI_RTP_CALL;
+						iconId = video?JNI_RTP_INCOMING_VIDEO:JNI_RTP_INCOMING;
 						tooltip = video?tr("Incoming video call from %1"):tr("Incoming voice call from %1");
 						html = video?tr("Incoming video call!"):tr("Incoming voice call!");
 					}
