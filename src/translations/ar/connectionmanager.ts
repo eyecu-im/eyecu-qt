@@ -9,12 +9,12 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="42"/>
    <source>Allows to use different types of connections to a Jabber server</source>
-   <translation type="unfinished"/>
+   <translation>يتيح استخدام أنواع مختلفة من الاتصالات بسيرفر Jabber</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="95"/>
    <source>Connection error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ في الإتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="118"/>
@@ -24,7 +24,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="130"/>
    <source>Connection</source>
-   <translation type="unfinished"/>
+   <translation>الاتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="150"/>
@@ -34,57 +34,57 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="471"/>
    <source>Name: %1</source>
-   <translation type="unfinished"/>
+   <translation>الاسم: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="472"/>
    <source>Organization: %1</source>
-   <translation type="unfinished"/>
+   <translation>المنظمة: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="473"/>
    <source>Subunit: %1</source>
-   <translation type="unfinished"/>
+   <translation>الوحدة الفرعية: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="474"/>
    <source>Country: %1</source>
-   <translation type="unfinished"/>
+   <translation>البلد: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="475"/>
    <source>Locality: %1</source>
-   <translation type="unfinished"/>
+   <translation>الموقع: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="476"/>
    <source>State/Province: %1</source>
-   <translation type="unfinished"/>
+   <translation>الولاية/المقاطعة: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="483"/>
    <source>&lt;b&gt;Certificate holder:&lt;/b&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;حامل الشهادة:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="491"/>
    <source>&lt;b&gt;Certificate issuer:&lt;/b&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;مصدر الشهادة:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="499"/>
    <source>&lt;b&gt;Certificate details:&lt;/b&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;b&gt;تفاصيل الشهادة:&lt;/b&gt;</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="500"/>
    <source>Effective from: %1</source>
-   <translation type="unfinished"/>
+   <translation>صالحة من: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="501"/>
    <source>Expired at: %1</source>
-   <translation type="unfinished"/>
+   <translation>تنتهي في: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/connectionmanager.cpp" line="502"/>
@@ -97,7 +97,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/connectionoptionswidget.ui" line="28"/>
    <source>Connection:</source>
-   <translation type="unfinished"/>
+   <translation>الاتصال:</translation>
   </message>
  </context>
  <context>
@@ -128,42 +128,42 @@
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="34"/>
    <source>Name:</source>
-   <translation type="unfinished"/>
+   <translation>الاسم:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="50"/>
    <source>Type:</source>
-   <translation type="unfinished"/>
+   <translation>النوع:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="66"/>
    <source>Host:</source>
-   <translation type="unfinished"/>
+   <translation>المضيف:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="82"/>
    <source>Port:</source>
-   <translation type="unfinished"/>
+   <translation>المنفذ:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="105"/>
    <source>User:</source>
-   <translation type="unfinished"/>
+   <translation>المستخدم:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="121"/>
    <source>Password:</source>
-   <translation type="unfinished"/>
+   <translation>كلمة المرور:</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="148"/>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>إضافة</translation>
   </message>
   <message>
    <location filename="../../plugins/connectionmanager/editproxydialog.ui" line="155"/>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>حذف</translation>
   </message>
  </context>
  <context>
@@ -189,7 +189,7 @@
   <message>
    <location filename="../../plugins/connectionmanager/proxysettingswidget.ui" line="43"/>
    <source>Edit</source>
-   <translation type="unfinished"/>
+   <translation>تعديل</translation>
   </message>
  </context>
 </TS>

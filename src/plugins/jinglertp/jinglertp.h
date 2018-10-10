@@ -181,7 +181,7 @@ protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
 	void onMultiChatUserChanged(IMultiUser *AUser, int AData, const QVariant &ABefore);
-	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+	void onAddressesChanged();
 	void onStreamerStatusChanged(int AStatus);
 	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
 	void onCall();

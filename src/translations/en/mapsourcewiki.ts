@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>MapSourceWiki</name>
   <message>
-   <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="13"/>
+   <location line="13" filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp"/>
    <source>Wikimapia map source</source>
    <translation>Wikimapia map source</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp" line="14"/>
+   <location line="14" filename="../../plugins/mapsourcewiki/mapsourcewiki.cpp"/>
    <source>Allows Map plugin to use Wikimapia as map source</source>
    <translation>Allows Map plugin to use Wikimapia as map source</translation>
   </message>

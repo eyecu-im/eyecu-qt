@@ -579,9 +579,7 @@ void MapForm::selectMapSource(const QUuid &AUuid)
 
 void MapForm::setMapSource(IMapSource *AMapSource)
 {
-	qDebug() << "MapForm::setMapSource(" << AMapSource << ")";
 	int index = chooseMapSource(FMapSource=AMapSource);
-	qDebug() << "index:" << index;
 	FMapScene->setMapSource(AMapSource?AMapSource->mapSource():nullptr);
 	if (index!=-1)
 		selectMapMode(index);

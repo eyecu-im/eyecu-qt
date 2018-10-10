@@ -249,7 +249,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);	
 	Options::setDefaultValue(OPV_MUC_SHOWINITIALJOINS, false);
-	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE, true);
+	Options::setDefaultValue(OPV_MUC_CONFIRMLEAVE, false);
 	Options::setDefaultValue(OPV_MUC_LEAVESTATUS, tr("Bye-bye!"));
 	Options::setDefaultValue(OPV_MUC_LEAVESTATUSSTORE, false);
 	Options::setDefaultValue(OPV_MUC_INVITATIONREASON, tr("You are welcome here"));

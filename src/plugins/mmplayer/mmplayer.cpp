@@ -206,7 +206,8 @@ void MmPlayer::onFileStreamStateChanged()
 						FPlayerBuffers.insert(player, buffer);
 						connect(player,SIGNAL(statusChanged(int,int)),SLOT(onPlayerStatusChanged(int,int)));
 						connect(player,SIGNAL(destroyed()),SLOT(onPlayerDestroyed()));
-						player->setVolume(Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt()/100.0);
+						quint8 volume = Options::node(OPV_MMPLAYER_MUTE).value().toBool()?0:Options::node(OPV_MMPLAYER_VOLUME).value().toInt();
+						player->setVolume(volume);
 						player->setStatus(MediaPlayer::Running);
                     }
             }

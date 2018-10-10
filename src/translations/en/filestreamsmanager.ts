@@ -1,30 +1,30 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>FileStream</name>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="284"/>
+   <location line="284" filename="../../plugins/filestreamsmanager/filestream.cpp"/>
    <source>Waiting for a response to send a file request</source>
    <translation>Waiting for a response to send a file request</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="533"/>
+   <location line="533" filename="../../plugins/filestreamsmanager/filestream.cpp"/>
    <source>Connecting</source>
    <translation>Connecting</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="544"/>
+   <location line="544" filename="../../plugins/filestreamsmanager/filestream.cpp"/>
    <source>Data transmission</source>
    <translation>Data transmission</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="568"/>
+   <location line="568" filename="../../plugins/filestreamsmanager/filestream.cpp"/>
    <source>Data transmission finished</source>
    <translation>Data transmission finished</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestream.cpp" line="596"/>
+   <location line="596" filename="../../plugins/filestreamsmanager/filestream.cpp"/>
    <source>Disconnecting</source>
    <translation>Disconnecting</translation>
   </message>
@@ -32,63 +32,63 @@
  <context>
   <name>FileStreamsManager</name>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="45"/>
+   <location line="45" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>File Streams Manager</source>
    <translation>File Streams Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="46"/>
+   <location line="46" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Allows to initiate a thread for transferring files between two XMPP entities</source>
    <translation>Allows to initiate a thread for transferring files between two XMPP entities</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
+   <location line="89" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Show file transfers</source>
    <translation>Show file transfers</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="89"/>
+   <location line="89" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Ctrl+T</source>
    <comment>Show file transfers</comment>
    <translation>Ctrl+T</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="91"/>
+   <location line="91" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>File input/output error</source>
    <translation>File input/output error</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="92"/>
+   <location line="92" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>File size unexpectedly changed</source>
    <translation>File size unexpectedly changed</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="93"/>
+   <location line="93" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Connection timed out</source>
    <translation>Connection timed out</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="94"/>
+   <location line="94" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Data transmission terminated by remote user</source>
    <translation>Data transmission terminated by remote user</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="104"/>
+   <location line="104" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>File Transfers</source>
    <translation>File Transfers</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="144"/>
+   <location line="144" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>File transfer</source>
    <translation>File transfer</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="146"/>
+   <location line="146" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Create separate folder for each sender</source>
    <translation>Create separate folder for each sender</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp" line="156"/>
+   <location line="156" filename="../../plugins/filestreamsmanager/filestreamsmanager.cpp"/>
    <source>Default transfer method:</source>
    <translation>Default transfer method:</translation>
   </message>
@@ -96,7 +96,7 @@
  <context>
   <name>FileStreamsOptionsWidget</name>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.cpp" line="33"/>
+   <location line="33" filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.cpp"/>
    <source>Select default directory</source>
    <translation>Select default directory</translation>
   </message>
@@ -104,7 +104,7 @@
  <context>
   <name>FileStreamsOptionsWidgetClass</name>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.ui" line="20"/>
+   <location line="20" filename="../../plugins/filestreamsmanager/filestreamsoptionswidget.ui"/>
    <source>Default directory:</source>
    <translation>Default directory:</translation>
   </message>
@@ -112,118 +112,118 @@
  <context>
   <name>FileStreamsWindow</name>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="38"/>
+   <location line="38" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>File Transfers</source>
    <translation>File Transfers</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
+   <location line="76" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>File Name</source>
    <translation>File Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
+   <location line="76" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>State</source>
    <translation>State</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
+   <location line="76" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Size</source>
    <translation>Size</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
+   <location line="76" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Progress</source>
    <translation>Progress</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="76"/>
+   <location line="76" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Speed</source>
    <translation>Speed</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="137"/>
+   <location line="137" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Create</source>
    <translation>Create</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="140"/>
+   <location line="140" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Negotiate</source>
    <translation>Negotiate</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="143"/>
+   <location line="143" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Connect</source>
    <translation>Connect</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="146"/>
+   <location line="146" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Transfer</source>
    <translation>Transfer</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="149"/>
+   <location line="149" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Disconnect</source>
    <translation>Disconnect</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="152"/>
+   <location line="152" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Finished</source>
    <translation>Finished</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="155"/>
+   <location line="155" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Aborted</source>
    <translation>Aborted</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="158"/>
+   <location line="158" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Unknown</source>
    <translation>Unknown</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="169"/>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="333"/>
+   <location line="169" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
+   <location line="332" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
+   <location line="333" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>/sec</source>
    <translation>/sec</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="229"/>
+   <location line="229" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>B</source>
    <comment>Byte</comment>
    <translation>B</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="235"/>
+   <location line="235" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>KB</source>
    <comment>Kilobyte</comment>
    <translation>KB</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="240"/>
+   <location line="240" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>MB</source>
    <comment>Megabyte</comment>
    <translation>MB</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="245"/>
+   <location line="245" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>GB</source>
    <comment>Gigabyte</comment>
    <translation>GB</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="331"/>
+   <location line="331" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Active: %1/%2</source>
    <translation>Active: %1/%2</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>
+   <location line="332" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Downloads: %1 at %2</source>
    <translation>Downloads: %1 at %2</translation>
   </message>
   <message>
-   <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="333"/>
+   <location line="333" filename="../../plugins/filestreamsmanager/filestreamswindow.cpp"/>
    <source>Uploads: %1 at %2</source>
    <translation>Uploads: %1 at %2</translation>
   </message>

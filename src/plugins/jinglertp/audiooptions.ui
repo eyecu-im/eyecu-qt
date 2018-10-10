@@ -39,9 +39,6 @@
    <item row="1" column="1">
     <widget class="QComboBox" name="cmbAudioDeviceInput"/>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QpAudioLevelDisplay" name="audioLevel" native="true"/>
-   </item>
    <item row="4" column="0">
     <widget class="QLabel" name="lblAudioDeviceOutput">
      <property name="text">
@@ -78,7 +75,58 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="2">
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="hlOutputVolume">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>3</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QpVolumeControl" name="vcOutput">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximum">
+        <number>200</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="tickPosition">
+        <enum>QSlider::TicksBelow</enum>
+       </property>
+       <property name="tickInterval">
+        <number>10</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLCDNumber" name="lcdOutputVolume">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="digitCount">
+        <number>3</number>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
     <layout class="QHBoxLayout" name="hlInputVolume">
      <property name="topMargin">
       <number>3</number>
@@ -95,7 +143,7 @@
         </sizepolicy>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>200</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -123,56 +171,8 @@
      </item>
     </layout>
    </item>
-   <item row="5" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="hlOutputVolume">
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>3</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>3</number>
-     </property>
-     <item>
-      <widget class="QpVolumeControl" name="vcOutput">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximum">
-        <number>100</number>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
-       </property>
-       <property name="tickInterval">
-        <number>10</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLCDNumber" name="lcdOutputVolume">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="digitCount">
-        <number>3</number>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="3" column="1">
+    <widget class="QpAudioLevelDisplay" name="audioLevel" native="true"/>
    </item>
   </layout>
  </widget>
@@ -205,8 +205,8 @@
    <slot>display(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>114</x>
-     <y>47</y>
+     <x>252</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel">
      <x>542</x>
@@ -231,18 +231,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>vcInput</sender>
-   <signal>valueChanged(int)</signal>
+   <sender>cmbAudioDeviceInput</sender>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>AudioOptions</receiver>
-   <slot>onInputVolumeChanged(int)</slot>
+   <slot>onInputDeviceChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>169</x>
-     <y>56</y>
+     <x>142</x>
+     <y>20</y>
     </hint>
     <hint type="destinationlabel">
-     <x>64</x>
-     <y>154</y>
+     <x>185</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>
@@ -258,5 +258,6 @@
   <slot>onPayloadTypeEdit()</slot>
   <slot>onPayloadTypeRemove()</slot>
   <slot>onInputVolumeChanged(int)</slot>
+  <slot>onInputDeviceChanged(int)</slot>
  </slots>
 </ui>

@@ -386,7 +386,7 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 		FIceCfg.stunTransportCfg.clear();
 
 		// Add TURN servers first
-		QStringList servers = ANode.value().toStringList();
+		QStringList servers = Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN).value().toStringList();
 		for (QStringList::ConstIterator it=servers.constBegin();
 			 it!=servers.constEnd(); ++it) {
 			QStringList parts = (*it).split(':');

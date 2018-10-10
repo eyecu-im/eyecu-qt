@@ -1,41 +1,41 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>Receipts</name>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="35"/>
-   <location filename="../../plugins/receipts/receipts.cpp" line="158"/>
+   <location line="35" filename="../../plugins/receipts/receipts.cpp"/>
+   <location line="158" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message Delivery Receipts</source>
    <translation>Message Delivery Receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="36"/>
+   <location line="36" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Sends, receives and displays message delivery receipts</source>
    <translation>Sends, receives and displays message delivery receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="97"/>
+   <location line="97" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Show delivery notifications</source>
    <translation>Show delivery notifications</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="98"/>
+   <location line="98" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Send delivery notifications</source>
    <translation>Send delivery notifications</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="126"/>
+   <location line="126" filename="../../plugins/receipts/receipts.cpp"/>
    <source>When message delivery notification recieved</source>
    <translation>When message delivery notification recieved</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="159"/>
+   <location line="159" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Sends/receives Message Delivery Receipts</source>
    <translation>Sends/receives Message Delivery Receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="326"/>
+   <location line="326" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message delivered</source>
    <translation>Message delivered</translation>
   </message>

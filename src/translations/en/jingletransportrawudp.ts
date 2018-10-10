@@ -1,26 +1,26 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>JingleTransportRawUdp</name>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="26"/>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="368"/>
+   <location line="26" filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp"/>
+   <location line="368" filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp"/>
    <source>Jingle RAW-UDP Transport</source>
    <translation>Jingle RAW-UDP Transport</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="27"/>
+   <location line="27" filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp"/>
    <source>Implements XEP-0177: Jingle RAW-UDP transport method</source>
    <translation>Implements XEP-0177: Jingle RAW-UDP transport method</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="356"/>
+   <location line="356" filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp"/>
    <source>Raw UDP</source>
    <translation>Raw UDP</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp" line="369"/>
+   <location line="369" filename="../../plugins/jingletransportrawudp/jingletransportrawudp.cpp"/>
    <source>Allows using RAW-UDP transport in Jingle sesions</source>
    <translation>Allows using RAW-UDP transport in Jingle sesions</translation>
   </message>
@@ -28,37 +28,37 @@
  <context>
   <name>RawUdpOptions</name>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="17"/>
+   <location line="17" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source>Network interface</source>
    <translation>Network interface</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="27"/>
+   <location line="27" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source>Port range</source>
    <translation>Port range</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="36"/>
+   <location line="36" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source>from</source>
    <translation>from</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="53"/>
+   <location line="53" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source>to</source>
    <translation>to</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="72"/>
+   <location line="72" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source>Connection timeout</source>
    <translation>Connection timeout</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="79"/>
+   <location line="79" filename="../../plugins/jingletransportrawudp/rawudpoptions.ui"/>
    <source> msec</source>
    <translation> msec</translation>
   </message>
   <message>
-   <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="49"/>
+   <location line="49" filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp"/>
    <source>Default (%1 - %2)</source>
    <translation>Default (%1 - %2)</translation>
   </message>

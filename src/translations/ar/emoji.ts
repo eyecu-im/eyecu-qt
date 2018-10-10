@@ -4,57 +4,57 @@
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
    <source>Emoji</source>
-   <translation type="unfinished"/>
+   <translation>الرموز التعبيرية</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
    <source>Allows to use emoji in messages</source>
-   <translation type="unfinished"/>
+   <translation>يسمح باستخدام الرموز التعبيرية في الرسائل</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
    <source>Smileys &amp; People</source>
-   <translation type="unfinished"/>
+   <translation>الوجوه الضاحكة والناس</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
    <source>Animals &amp; Nature</source>
-   <translation type="unfinished"/>
+   <translation>الحيوانات والطبيعة</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
    <source>Food &amp; Drink</source>
-   <translation type="unfinished"/>
+   <translation>الطعام والشراب</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
    <source>Travel &amp; Places</source>
-   <translation type="unfinished"/>
+   <translation>السفر والأماكن</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
    <source>Symbols</source>
-   <translation type="unfinished"/>
+   <translation>الرموز</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
    <source>Activities</source>
-   <translation type="unfinished"/>
+   <translation>النشاطات</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="94"/>
    <source>Flags</source>
-   <translation type="unfinished"/>
+   <translation>الأعلام</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
    <source>Objects</source>
-   <translation type="unfinished"/>
+   <translation>الاشياء</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
    <source>Message windows</source>
-   <translation type="unfinished"/>
+   <translation>نوافذ الرسائل</translation>
   </message>
  </context>
  <context>
@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.cpp" line="14"/>
    <source>Do not use emoji</source>
-   <translation type="unfinished"/>
+   <translation>لا تستخدم الرموز التعبيرية</translation>
   </message>
  </context>
  <context>
@@ -75,12 +75,12 @@
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="39"/>
    <source>Menu icon size:</source>
-   <translation type="unfinished"/>
+   <translation>حجم الرموز في القائمة:</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/emojioptions.ui" line="49"/>
    <source>Chat icon size:</source>
-   <translation type="unfinished"/>
+   <translation>حجم الرموز في الدردشة:</translation>
   </message>
  </context>
  <context>
@@ -107,12 +107,12 @@
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>افتراضي</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
    <source>1 or 2</source>
-   <translation type="unfinished"/>
+   <translation>1 او 2</translation>
   </message>
  </context>
 </TS>

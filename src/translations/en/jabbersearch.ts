@@ -1,47 +1,47 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="en" version="2.1">
+<TS version="2.1" language="en">
  <context>
   <name>JabberSearch</name>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="32"/>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="214"/>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="299"/>
+   <location line="32" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="214" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
+   <location line="299" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Jabber Search</source>
    <translation>Jabber Search</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="33"/>
+   <location line="33" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Allows to search in the Jabber network</source>
    <translation>Allows to search in the Jabber network</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="199"/>
+   <location line="199" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Search</source>
    <translation>Search</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="215"/>
+   <location line="215" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>First Name</source>
    <translation>First Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="216"/>
+   <location line="216" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Last Name</source>
    <translation>Last Name</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="217"/>
+   <location line="217" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Nickname</source>
    <translation>Nickname</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="218"/>
+   <location line="218" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Email Address</source>
    <translation>Email Address</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="300"/>
+   <location line="300" filename="../../plugins/jabbersearch/jabbersearch.cpp"/>
    <source>Supports the searching of the information</source>
    <translation>Supports the searching of the information</translation>
   </message>
@@ -49,39 +49,39 @@
  <context>
   <name>SearchDialog</name>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="103"/>
+   <location line="103" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Search in %1</source>
    <translation>Search in %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="131"/>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="164"/>
+   <location line="131" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
+   <location line="164" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Waiting for host response ...</source>
    <translation>Waiting for host response ...</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="136"/>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="169"/>
+   <location line="136" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
+   <location line="169" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Error: Can't send request to host.</source>
    <translation>Error: Can't send request to host.</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="196"/>
+   <location line="196" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Disco info</source>
    <translation>Disco info</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="205"/>
+   <location line="205" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Add Contact</source>
    <translation>Add Contact</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="214"/>
+   <location line="214" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>vCard</source>
    <translation>vCard</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.cpp" line="299"/>
+   <location line="299" filename="../../plugins/jabbersearch/searchdialog.cpp"/>
    <source>Requested operation failed: %1</source>
    <translation>Requested operation failed: %1</translation>
   </message>
@@ -89,47 +89,47 @@
  <context>
   <name>SearchDialogClass</name>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="49"/>
+   <location line="49" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>First:</source>
    <translation>First:</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="62"/>
+   <location line="62" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>Last:</source>
    <translation>Last:</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="75"/>
+   <location line="75" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>Nick:</source>
    <translation>Nick:</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="88"/>
+   <location line="88" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>Email:</source>
    <translation>Email:</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="147"/>
+   <location line="147" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>JID</source>
    <translation>JID</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="152"/>
+   <location line="152" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>First</source>
    <translation>First</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="157"/>
+   <location line="157" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>Last</source>
    <translation>Last</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="162"/>
+   <location line="162" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>Nick</source>
    <translation>Nick</translation>
   </message>
   <message>
-   <location filename="../../plugins/jabbersearch/searchdialog.ui" line="167"/>
+   <location line="167" filename="../../plugins/jabbersearch/searchdialog.ui"/>
    <source>EMail</source>
    <translation>EMail</translation>
   </message>

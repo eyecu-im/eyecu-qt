@@ -64,7 +64,7 @@ signals:
 	void stopped();
 
 private:
-	MediaPlayer		*FMediaStreamer;
+	MediaPlayer		*FMediaPlayer;
 	QFile			*FFile;
 	QStringList		FPlayList;
 	QStringList		FMidiFormats;

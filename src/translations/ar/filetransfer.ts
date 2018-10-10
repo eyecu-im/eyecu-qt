@@ -7,48 +7,48 @@
   </message>
   <message>
    <source>Send File</source>
-   <translation type="unfinished"/>
+   <translation>إرسال ملف</translation>
   </message>
   <message>
    <source>File transfer completed</source>
-   <translation type="unfinished"/>
+   <translation>اكتمل نقل الملف</translation>
   </message>
   <message>
    <source>Allows to send a file to another contact</source>
-   <translation type="unfinished"/>
+   <translation>يسمح بإرسال ملف إلى جهة اتصال أخرى</translation>
   </message>
   <message>
    <source>Supports the sending of the file to another contact</source>
-   <translation type="unfinished"/>
+   <translation>يدعم إرسال الملف إلى جهة اتصال أخرى</translation>
   </message>
   <message>
    <source>Failed to start file transfer</source>
-   <translation type="unfinished"/>
+   <translation>فشل بدء نقل الملف</translation>
   </message>
   <message>
    <source>Send file</source>
-   <translation type="unfinished"/>
+   <translation>إرسال ملف</translation>
   </message>
   <message>
    <source>When receiving a prompt to accept the file</source>
-   <translation type="unfinished"/>
+   <translation>عندما تتلقى طلبًا لقبول ملف</translation>
   </message>
   <message>
    <source>Data transmission terminated</source>
-   <translation type="unfinished"/>
+   <translation>تم إحباط نقل البيانات</translation>
   </message>
   <message>
    <source>Ctrl+S</source>
    <comment>Send file</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+S</translation>
   </message>
   <message>
    <source>Automatically receive files from authorized contacts</source>
-   <translation type="unfinished"/>
+   <translation>استلام الملفات تلقائيا من جهات الاتصال المصرح بها</translation>
   </message>
   <message>
    <source>Hide file transfer dialog after transfer started</source>
-   <translation type="unfinished"/>
+   <translation>إخفاء نافذة نقل الملفات بعد بدء عملية النقل</translation>
   </message>
   <message numerus="yes">
    <source>/me share %n file(s): %1</source>
@@ -56,154 +56,154 @@
   </message>
   <message>
    <source>Select Files</source>
-   <translation type="unfinished"/>
+   <translation>اختر الملفات</translation>
   </message>
   <message>
    <source>Failed to send request for file &apos;%1&apos;</source>
-   <translation type="unfinished"/>
+   <translation>فشل إرسال طلب للملف &apos;%1&apos;</translation>
   </message>
   <message>
    <source>File transfer</source>
-   <translation type="unfinished"/>
+   <translation>نقل الملف</translation>
   </message>
   <message>
    <source>File transfer request from %1</source>
-   <translation type="unfinished"/>
+   <translation>طلب نقل ملف من</translation>
   </message>
   <message>
    <source>%1 wants to send you a file &apos;%2&apos;</source>
-   <translation type="unfinished"/>
+   <translation>%1 يريد أن يرسل لك ملف &apos;%2&apos;</translation>
   </message>
   <message>
    <source>Sending file &apos;%1&apos; to %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>بدأ إرسال ملف &apos;%1&apos; إلى %2 تلقائيًا</translation>
   </message>
   <message>
    <source>Receiving file &apos;%1&apos; from %2 started automatically</source>
-   <translation type="unfinished"/>
+   <translation>بدأ استلام ملف &apos;%1&apos; من %2 تلقائيًا</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully sent to %2</source>
-   <translation type="unfinished"/>
+   <translation>تم إرسال ملف &apos;%1&apos; بنجاح إلى %2</translation>
   </message>
   <message>
    <source>File &apos;%1&apos; successfully received from %2</source>
-   <translation type="unfinished"/>
+   <translation>تم استلام ملف &apos;%1&apos; بنجاح من %2</translation>
   </message>
   <message>
    <source>File transfer failed</source>
-   <translation type="unfinished"/>
+   <translation>فشل نقل الملف</translation>
   </message>
   <message>
    <source>Failed to send file &apos;%1&apos; to %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>فشل إرسال ملف &apos;%1&apos; إلى %2: %3</translation>
   </message>
   <message>
    <source>Failed to receive file &apos;%1&apos; from %2: %3</source>
-   <translation type="unfinished"/>
+   <translation>فشل استلام ملف &apos;%1&apos; من %2: %3</translation>
   </message>
   <message>
    <source>Select File</source>
-   <translation type="unfinished"/>
+   <translation>اختر ملف</translation>
   </message>
   <message>
    <source>File request rejected: %1</source>
-   <translation type="unfinished"/>
+   <translation>تم رفض طلب الملف: %1</translation>
   </message>
  </context>
  <context>
   <name>StreamDialog</name>
   <message>
    <source>Send File - %1</source>
-   <translation type="unfinished"/>
+   <translation>إرسال ملف - %1</translation>
   </message>
   <message>
    <source>Receive File - %1</source>
-   <translation type="unfinished"/>
+   <translation>تلقي ملف - %1</translation>
   </message>
   <message>
    <source>B</source>
    <comment>Byte</comment>
-   <translation type="unfinished"/>
+   <translation>بايت</translation>
   </message>
   <message>
    <source>KB</source>
    <comment>Kilobyte</comment>
-   <translation type="unfinished"/>
+   <translation>كيلوبايت</translation>
   </message>
   <message>
    <source>MB</source>
    <comment>Megabyte</comment>
-   <translation type="unfinished"/>
+   <translation>ميغابايت</translation>
   </message>
   <message>
    <source>GB</source>
    <comment>Gigabyte</comment>
-   <translation type="unfinished"/>
+   <translation>جيجابايت</translation>
   </message>
   <message>
    <source>/sec</source>
-   <translation type="unfinished"/>
+   <translation>/ثانية</translation>
   </message>
   <message>
    <source>Select file for receive</source>
-   <translation type="unfinished"/>
+   <translation>اختر ملفًا لتلقيه</translation>
   </message>
   <message>
    <source>Continue file transfer</source>
-   <translation type="unfinished"/>
+   <translation>متابعة نقل الملفات</translation>
   </message>
   <message>
    <source>Warning</source>
-   <translation type="unfinished"/>
+   <translation>تحذير</translation>
   </message>
   <message>
    <source>A file with this name already exists. Do you want to remove existing file?</source>
-   <translation type="unfinished"/>
+   <translation>يوجد بالفعل ملف بهذا الاسم. هل تريد إزالة الملف الموجود؟</translation>
   </message>
   <message>
    <source>Select file to send</source>
-   <translation type="unfinished"/>
+   <translation>حدد ملف لإرساله</translation>
   </message>
   <message>
    <source>Unable to send request for file transfer, check settings and try again!</source>
-   <translation type="unfinished"/>
+   <translation>تعذر إرسال طلب لنقل الملفات ، تحقق من الإعدادات وحاول مرة أخرى!</translation>
   </message>
   <message>
    <source>Unable to start the file transfer, check settings and try again!</source>
-   <translation type="unfinished"/>
+   <translation>غير قادر على بدء نقل الملف ، تحقق من الإعدادات وحاول مرة أخرى!</translation>
   </message>
   <message>
    <source>Are you sure you want to cancel a file transfer?</source>
-   <translation type="unfinished"/>
+   <translation>هل أنت متأكد من أنك تريد إلغاء نقل الملفات؟</translation>
   </message>
   <message>
    <source>Cancel file transfer</source>
-   <translation type="unfinished"/>
+   <translation>إلغاء نقل الملف</translation>
   </message>
   <message>
    <source>Can not delete existing file</source>
-   <translation type="unfinished"/>
+   <translation>لا يمكن حذف الملف الموجود</translation>
   </message>
   <message>
    <source>Remove file</source>
-   <translation type="unfinished"/>
+   <translation>إزالة الملف</translation>
   </message>
   <message>
    <source>Selected file does not exists</source>
-   <translation type="unfinished"/>
+   <translation>الملف المحدد غير موجود</translation>
   </message>
   <message>
    <source>To:</source>
-   <translation type="unfinished"/>
+   <translation>إلى:</translation>
   </message>
   <message>
    <source>From:</source>
-   <translation type="unfinished"/>
+   <translation>من:</translation>
   </message>
   <message>
    <source>Speed %1.</source>
-   <translation type="unfinished"/>
+   <translation>السرعة %1.</translation>
   </message>
   <message>
    <source>Selected data stream is not available</source>
@@ -215,58 +215,58 @@
   </message>
   <message>
    <source>A file with this name, but a smaller size already exists.</source>
-   <translation type="unfinished"/>
+   <translation>يوجد بالفعل ملف يحمل نفس الاسم ولكن بحجم أصغر.</translation>
   </message>
   <message>
    <source>If you want to change file name press &apos;Cancel&apos;</source>
-   <translation type="unfinished"/>
+   <translation>إذا كنت تريد تغيير اسم الملف اضغط &apos;Cancel&apos;</translation>
   </message>
   <message>
    <source>If you want to download the rest of file press &apos;Yes&apos;</source>
-   <translation type="unfinished"/>
+   <translation>إذا كنت تريد تحميل ما تبقى من الملف اضغط &apos;Yes&apos;</translation>
   </message>
   <message>
    <source>If you want to start download from the beginning press &apos;Retry&apos;</source>
-   <translation type="unfinished"/>
+   <translation>إذا كنت تريد بدء التحميل من البداية ، اضغط &apos;Retry&apos;</translation>
   </message>
   <message>
    <source>Transferred %1 of %2.</source>
-   <translation type="unfinished"/>
+   <translation>تم نقل %1 من %2.</translation>
   </message>
   <message>
    <source>Methods:</source>
-   <translation type="unfinished"/>
+   <translation>الطرق:</translation>
   </message>
  </context>
  <context>
   <name>StreamDialogClass</name>
   <message>
    <source>To/From:</source>
-   <translation type="unfinished"/>
+   <translation>إلى/من:</translation>
   </message>
   <message>
    <source>File:</source>
-   <translation type="unfinished"/>
+   <translation>الملف:</translation>
   </message>
   <message>
    <source>...</source>
-   <translation type="unfinished"/>
+   <translation>...</translation>
   </message>
   <message>
    <source>Description:</source>
-   <translation type="unfinished"/>
+   <translation>الوصف:</translation>
   </message>
   <message>
    <source>Progress:</source>
-   <translation type="unfinished"/>
+   <translation>التقدم:</translation>
   </message>
   <message>
    <source>Status:</source>
-   <translation type="unfinished"/>
+   <translation>الحالة:</translation>
   </message>
   <message>
    <source>Method:</source>
-   <translation type="unfinished"/>
+   <translation>الطريقة:</translation>
   </message>
  </context>
 </TS>

@@ -1,174 +1,248 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS language="ru" version="2.1" sourcelanguage="en">
-  <context>
-    <name>AboutBox</name>
+<TS version="2.1" language="ru" sourcelanguage="en">
+<context>
+    <name>PasswordDialog</name>
     <message>
-      <source>Version: %1 %2 of %3</source>
-      <translation type="unfinished"/>
-    </message>
-    <message>
-      <source>Revision: %1</source>
-      <translation type="unfinished"/>
+        <source>Enter password:</source>
+        <translation>Введите пароль:</translation>
     </message>
     <message>
-      <source>Version: %1 %2</source>
-      <translation type="unfinished"/>
+        <source>Save password</source>
+        <translation>Сохранить пароль</translation>
     </message>
-  </context>
-  <context>
-    <name>AboutBoxClass</name>
+</context>
+<context>
+    <name>SearchLineEdit</name>
     <message>
-      <source>About the program</source>
-      <translation type="unfinished"/>
-    </message>
-    <message>
-      <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
-      <translation type="unfinished"/>
-    </message>
-  </context>
-  <context>
-    <name>PluginManager</name>
-    <message>
-      <source>Saving settings</source>
-      <translation type="unfinished"/>
+        <source>Search options</source>
+        <translation>Настройки поиска</translation>
     </message>
     <message>
-      <source>Loading plugin: %1</source>
-      <translation type="unfinished"/>
+        <source>Clear text</source>
+        <translation>Очистить текст</translation>
+    </message>
+</context>
+<context>
+    <name>XmppSaslError</name>
+    <message>
+        <source>Authorization aborted</source>
+        <translation>Авторизация отменена</translation>
     </message>
     <message>
-      <source>Duplicate plugin uuid</source>
-      <translation type="unfinished"/>
+        <source>Account disabled</source>
+        <translation>Аккаунт отключен</translation>
     </message>
     <message>
-      <source>Wrong plugin interface</source>
-      <translation type="unfinished"/>
+        <source>Credentials expired</source>
+        <translation>Истек срок полномочий</translation>
     </message>
     <message>
-      <source>Dependencies not found</source>
-      <translation type="unfinished"/>
+        <source>Encryption required</source>
+        <translation>Требуется шифрование</translation>
     </message>
     <message>
-      <source>Conflict with plugin %1</source>
-      <translation type="unfinished"/>
+        <source>Incorrect encoding</source>
+        <translation>Неверная кодировка</translation>
     </message>
     <message>
-      <source>Initializing plugin connections: %1</source>
-      <translation type="unfinished"/>
+        <source>Invalid authorization id</source>
+        <translation>Неверный id авторизации</translation>
     </message>
     <message>
-      <source>Initialization failed</source>
-      <translation type="unfinished"/>
+        <source>Invalid mechanism</source>
+        <translation>Неверный механизм</translation>
     </message>
     <message>
-      <source>Initializing plugin objects: %1</source>
-      <translation type="unfinished"/>
+        <source>Malformed request</source>
+        <translation>Некорректный запрос</translation>
     </message>
     <message>
-      <source>Initializing plugin settings: %1</source>
-      <translation type="unfinished"/>
+        <source>Mechanism is too weak</source>
+        <translation>Механиз слишком слаб</translation>
     </message>
     <message>
-      <source>Starting plugin: %1</source>
-      <translation type="unfinished"/>
+        <source>Not authorized</source>
+        <translation>Не пройдена авторизация</translation>
     </message>
     <message>
-      <source>Application started</source>
-      <translation type="unfinished"/>
+        <source>Temporary authentication failure</source>
+        <translation>Временный сбой авторизации</translation>
+    </message>
+</context>
+<context>
+    <name>XmppStreamError</name>
+    <message>
+        <source>Undefined error condition</source>
+        <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-      <source>About Qt</source>
-      <translation type="unfinished"/>
+        <source>Bad request format</source>
+        <translation>Неверный формат запроса</translation>
     </message>
     <message>
-      <source>About the program</source>
-      <translation type="unfinished"/>
+        <source>Bad namespace prefix</source>
+        <translation>Неверный префикс пространства имён</translation>
     </message>
     <message>
-      <source>Setup plugins</source>
-      <translation type="unfinished"/>
+        <source>Conflict</source>
+        <translation>Конфликт</translation>
     </message>
     <message>
-      <source>Global shortcuts</source>
-      <translation type="unfinished"/>
+        <source>Connection timeout</source>
+        <translation>Превышено время подключения</translation>
     </message>
     <message>
-      <source>Application shortcuts</source>
-      <translation type="unfinished"/>
-    </message>
-  </context>
-  <context>
-    <name>SetupPluginsDialog</name>
-    <message>
-      <source>Disabled (%1)</source>
-      <translation type="unfinished"/>
+        <source>Host is not serviced</source>
+        <translation>Хост не обслуживается</translation>
     </message>
     <message>
-      <source>With errors (%1)</source>
-      <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-      <source>This plugin depends on %n other plugin(s).</source>
-      <translation type="unfinished">
-        <numerusform/>
-        <numerusform/>
-        <numerusform/>
-        <numerusform></numerusform>
-      </translation>
+        <source>Unknown host</source>
+        <translation>Неизвестный хост</translation>
     </message>
     <message>
-      <source>This plugin does not depend on other plugins.</source>
-      <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-      <source>Other %n plugin(s) depend on this plugin.</source>
-      <translation type="unfinished">
-        <numerusform/>
-        <numerusform/>
-        <numerusform/>
-        <numerusform></numerusform>
-      </translation>
+        <source>Improper addressing</source>
+        <translation>Неправильная адресация</translation>
     </message>
     <message>
-      <source>Another plugin depends on this plugin.</source>
-      <translation type="unfinished"/>
+        <source>Internal server error</source>
+        <translation>Внутренняя ошибка сервера</translation>
     </message>
     <message>
-      <source>Other plugins don't depend on this plugin.</source>
-      <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-      <source>%n dependency(ies) not found.</source>
-      <translation type="unfinished">
-        <numerusform/>
-        <numerusform/>
-        <numerusform/>
-        <numerusform></numerusform>
-      </translation>
+        <source>Invalid from address</source>
+        <translation>Неверный адрес отправителя</translation>
     </message>
     <message>
-      <source>Restart Application</source>
-      <translation type="unfinished"/>
+        <source>Invalid namespace</source>
+        <translation>Неверное пространство имен</translation>
     </message>
     <message>
-      <source>Settings saved. Do you want to restart application?</source>
-      <translation type="unfinished"/>
-    </message>
-  </context>
-  <context>
-    <name>SetupPluginsDialogClass</name>
-    <message>
-      <source>Setup Plugins</source>
-      <translation type="unfinished"/>
+        <source>Invalid XML</source>
+        <translation>Недопустимый XML</translation>
     </message>
     <message>
-      <source>Plugin Information</source>
-      <translation type="unfinished"/>
+        <source>Not authorized</source>
+        <translation>Не пройдена авторизация</translation>
     </message>
     <message>
-      <source>Search plugin</source>
-      <translation type="unfinished"/>
+        <source>XML not well formed</source>
+        <translation>XML сформирован неправильно</translation>
     </message>
-  </context>
+    <message>
+        <source>Policy violation</source>
+        <translation>Нарушены ограничения</translation>
+    </message>
+    <message>
+        <source>Remote connection failed</source>
+        <translation>Сбой удалённого подключения</translation>
+    </message>
+    <message>
+        <source>Stream need to be reseted</source>
+        <translation>Поток необходимо переустановить</translation>
+    </message>
+    <message>
+        <source>Resource constraint</source>
+        <translation>Недостаточно ресурсов</translation>
+    </message>
+    <message>
+        <source>Restricted XML</source>
+        <translation>Запрещенный XML</translation>
+    </message>
+    <message>
+        <source>See other host</source>
+        <translation>Используйте другой хост</translation>
+    </message>
+    <message>
+        <source>System shutdown</source>
+        <translation>Система отключена</translation>
+    </message>
+    <message>
+        <source>Unsupported encoding</source>
+        <translation>Неподдерживаемая кодировка</translation>
+    </message>
+    <message>
+        <source>Unsupported feature</source>
+        <translation>Неподдерживаемая функция</translation>
+    </message>
+    <message>
+        <source>Unsupported stanza type</source>
+        <translation>Неподдерживаемый тип станзы</translation>
+    </message>
+    <message>
+        <source>Unsupported version</source>
+        <translation>Неподдерживаемая версия</translation>
+    </message>
+    <message>
+        <source>Feature not implemented</source>
+        <translation>Возможность не реализована</translation>
+    </message>
+    <message>
+        <source>Insufficient permissions</source>
+        <translation>Недостаточно прав</translation>
+    </message>
+    <message>
+        <source>Recipient changed address</source>
+        <translation>Адресат изменил адрес</translation>
+    </message>
+    <message>
+        <source>Requested item not found</source>
+        <translation>Запрашиваемый элемент не найден</translation>
+    </message>
+    <message>
+        <source>Malformed XMPP address</source>
+        <translation>Недопустимый XMPP адрес</translation>
+    </message>
+    <message>
+        <source>Not accepted by the recipient</source>
+        <translation>Не принято адресатом</translation>
+    </message>
+    <message>
+        <source>Not allowed by the recipient</source>
+        <translation>Не разрешено адресатом</translation>
+    </message>
+    <message>
+        <source>Recipient unavailable</source>
+        <translation>Адресат недоступен</translation>
+    </message>
+    <message>
+        <source>Redirect to another address</source>
+        <translation>Перенаправление на другой адрес</translation>
+    </message>
+    <message>
+        <source>Registration required</source>
+        <translation>Требуется регистрация</translation>
+    </message>
+    <message>
+        <source>Remote server not found</source>
+        <translation>Удаленный сервер не найден</translation>
+    </message>
+    <message>
+        <source>Remote server timeout</source>
+        <translation>Превышено время ожидания удалённого сервера</translation>
+    </message>
+    <message>
+        <source>Service unavailable</source>
+        <translation>Сервис недоступен</translation>
+    </message>
+    <message>
+        <source>Subscription required</source>
+        <translation>Требуется подписка</translation>
+    </message>
+    <message>
+        <source>Unexpected request</source>
+        <translation>Неожиданный запрос</translation>
+    </message>
+    <message>
+        <source>Resource limit exceeded</source>
+        <translation>Превышен лимит ресурсов</translation>
+    </message>
+    <message>
+        <source>Stanza is too big</source>
+        <translation>Станза слишком большая</translation>
+    </message>
+    <message>
+        <source>Too many stanzas</source>
+        <translation>Слишком много станз</translation>
+    </message>
+</context>
 </TS>
