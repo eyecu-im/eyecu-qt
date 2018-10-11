@@ -13,7 +13,7 @@ DESTDIR            = ../..
 unix:!macx: MAYBE_QUOTE=
 else: MAYBE_QUOTE=\\\"
 
-DEFINES           += EXTRA_TRANSLATORS=\"$${MAYBE_QUOTE}$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;$${MAYBE_QUOTE}\"
+DEFINES           += EXTRA_TRANSLATORS=\"$${MAYBE_QUOTE}$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qpgeo;$${MAYBE_QUOTE}\"
 
 include(loader.pri)
 #Appication icon
