@@ -297,8 +297,8 @@ QMultiMap<int, IOptionsDialogWidget *> MultiUserChatManager::optionsDialogWidget
 		widgets.insertMulti(OWO_CONFERENCES_INVITATIONREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONREASONASK),tr("Display invitation reason dialog"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_DECLINEREASON,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONDECLINEREASON),tr("Default invitation decline reason"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_DECLINEREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_INVITATIONDECLINEREASONASK),tr("Display invitation decline reason dialog"),AParent));
-		widgets.insertMulti(OWO_CONFERENCES_REASONSEDITOR,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REASONSEDITOR),tr("Switch to reasons editor dialog"),AParent));
-		widgets.insertMulti(OWO_CONFERENCES_CHANGEROLEREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CHANGEROLEREASONASK),tr("Display role channge reason dialog"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_REASONSEDITOR,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_REASONSEDITOR),tr("Switch to the edit reason dialog"),AParent));
+		widgets.insertMulti(OWO_CONFERENCES_CHANGEROLEREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CHANGEROLEREASONASK),tr("Display role change reason dialog"),AParent));
 		widgets.insertMulti(OWO_CONFERENCES_CHANGEAFFILREASONASK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_MUC_CHANGEAFFILREASONASK),tr("Display affiliation change reason dialog"),AParent));
 // *** >>> eyeCU >>> ***
 		widgets.insertMulti(OHO_CONFERENCES_USERVIEW,FOptionsManager->newOptionsDialogHeader(tr("Participants List"),AParent));
