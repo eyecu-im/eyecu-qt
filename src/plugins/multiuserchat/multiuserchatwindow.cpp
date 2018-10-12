@@ -1,5 +1,6 @@
 #include "multiuserchatwindow.h"
 #include "confirmationdialog.h"
+#include "reasonseditordialog.h"
 
 #include <QPair>
 #include <QTimer>
@@ -3096,14 +3097,78 @@ void MultiUserChatWindow::onChangeUserRoleActionTriggeted(bool)
 	{
 		QString nick = action->data(ADR_USER_NICK).toString();
 		QString role = action->data(ADR_USER_ROLE).toString();
-
-		bool ok = true;
+// *** <<< eyeCU <<< ***
+		bool ok(true);
 		QString reason;
-		if (role == MUC_ROLE_NONE)
-			reason = QInputDialog::getText(this,tr("Kick User - %1").arg(nick),tr("Enter a message:"),QLineEdit::Normal,QString::null,&ok);
+		QDialog *dialog;
+		QString dialogTitle;
+		QString dialogLabel;
 
-		if (ok)
+		bool ask = Options::node(OPV_MUC_CHANGEROLEREASONASK).value().toBool();
+
+		if (role == MUC_ROLE_NONE || ask)
+		{
+			bool bad(false);
+			if (role == MUC_ROLE_NONE)
+			{
+				dialogTitle = tr("Kick User - %1").arg(nick);
+				dialogLabel = tr("Kick reason:");
+				bad = true;
+			}
+			else if (role == MUC_ROLE_VISITOR)
+			{
+				dialogTitle = tr("Revoke User Voice - %1").arg(nick);
+				dialogLabel = tr("Revoke voice reason:");
+				bad = true;
+			}
+			else
+			{
+				dialogTitle = tr("Change User Role - %1").arg(nick);
+				dialogLabel = tr("Change role reason:");
+				reason = Options::node(OPV_MUC_CHANGEROLEREASON).value().toString();
+			}
+			if (bad)
+				reason = Options::node(OPV_MUC_KICKREASON).value().toString();
+			bool store = Options::node(OPV_MUC_REASONSEDITORSTORE).value().toBool();
+
+			if (Options::node(OPV_MUC_REASONSEDITOR).value().toBool())
+			{
+				dialog = new ReasonsEditorDialog(dialogTitle,
+													dialogLabel,
+													reason, bad, store, ask);
+			}
+			else
+			{
+				dialog = new ConfirmationDialog(dialogTitle,
+													dialogLabel,
+													reason, store, ask);
+			}
+
+			if (dialog->exec())
+			{
+				if (bad)
+				{
+					if (store)
+						Options::node(OPV_MUC_KICKREASON).setValue(reason);
+					Options::node(OPV_MUC_REASONSEDITORSTORE).setValue(store);
+				}
+				else
+				{
+					if (store)
+						Options::node(OPV_MUC_CHANGEROLEREASON).setValue(reason);
+					Options::node(OPV_MUC_CHANGEROLEREASONASK).setValue(ask);
+					Options::node(OPV_MUC_REASONSEDITORSTORE).setValue(store);
+				}
+			}
+			else
+				ok = false;
+			dialog->deleteLater();
+		}
+// *** >>> eyeCU >>> ***
+		if (ok) {
 			FRoleRequestId = FMultiChat->setUserRole(nick,role,reason);
+		}
+
 	}
 }
 
@@ -3115,13 +3180,72 @@ void MultiUserChatWindow::onChangeUserAffiliationActionTriggered(bool)
 		QString nick = action->data(ADR_USER_NICK).toString();
 		QString affiliation = action->data(ADR_USER_AFFIL).toString();
 
-		bool ok = true;
+// *** <<< eyeCU <<< ***
+		bool ok(true);
 		QString reason;
-		if (affiliation == MUC_AFFIL_OUTCAST)
-			reason = QInputDialog::getText(this,tr("Ban User - %1").arg(nick),tr("Enter a message:"),QLineEdit::Normal,QString::null,&ok);
+		QDialog *dialog;
+		QString dialogTitle;
+		QString dialogLabel;
+		
+		bool ask = Options::node(OPV_MUC_CHANGEAFFILREASONASK).value().toBool();
 
-		if (ok)
+		if (affiliation == MUC_AFFIL_OUTCAST || ask)
+		{
+			bool bad(false);
+			if (affiliation == MUC_AFFIL_OUTCAST)
+			{
+				dialogTitle = tr("Ban User - %1").arg(nick);
+				dialogLabel = tr("Ban reason:");
+				bad = true;
+			}
+			else
+			{
+				reason = Options::node(OPV_MUC_CHANGEAFFILREASON).value().toString();
+				dialogTitle = tr("Change User Affiliation - %1").arg(nick);
+				dialogLabel = tr("Change affiliation reason:");
+			}
+			if (bad)
+				reason = Options::node(OPV_MUC_BANREASON).value().toString();
+			bool store = Options::node(OPV_MUC_REASONSEDITORSTORE).value().toBool();
+
+			if (Options::node(OPV_MUC_REASONSEDITOR).value().toBool())
+			{
+				dialog = new ReasonsEditorDialog(dialogTitle,
+													dialogLabel,
+													reason, bad, store, ask);
+			}
+			else
+			{
+				dialog = new ConfirmationDialog(dialogTitle,
+													dialogLabel,
+													reason, store, ask);
+			}
+
+			if (dialog->exec())
+			{
+				if (bad)
+				{
+					if (store)
+						Options::node(OPV_MUC_BANREASON).setValue(reason);
+					Options::node(OPV_MUC_REASONSEDITORSTORE).setValue(store);
+				}
+				else
+				{
+					if (store)
+						Options::node(OPV_MUC_CHANGEAFFILREASON).setValue(reason);
+					Options::node(OPV_MUC_CHANGEAFFILREASONASK).setValue(ask);
+					Options::node(OPV_MUC_REASONSEDITORSTORE).setValue(store);
+				}
+			}
+			else
+				ok = false;
+			dialog->deleteLater();
+		}
+// *** >>> eyeCU >>> ***
+		if (ok) {
 			FAffilRequestId = FMultiChat->setUserAffiliation(nick,affiliation,reason);
+		}
+
 	}
 }
 

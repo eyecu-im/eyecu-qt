@@ -177,6 +177,17 @@
 #define OPV_MUC_INVITATIONDECLINEREASON                 "muc.invitation-decline-reason"
 #define OPV_MUC_INVITATIONDECLINEREASONASK              "muc.invitation-decline-reason-ask"
 #define OPV_MUC_INVITATIONDECLINEREASONSTORE            "muc.invitation-decline-reason-store"
+// MultiUserChat ReasonsEditor
+#define OPV_MUC_REASONS                                 "muc.groupchat-reasons"
+#define OPV_MUC_BADREASONS                              "muc.groupchat-reasons-bad"
+#define OPV_MUC_KICKREASON                              "muc.kick-reason"
+#define OPV_MUC_BANREASON                               "muc.ban-reason"
+#define OPV_MUC_CHANGEROLEREASON                        "muc.role-change-reason"
+#define OPV_MUC_CHANGEROLEREASONSASK                    "muc.role-change-reason-ask"
+#define OPV_MUC_CHANGEAFFILREASON                       "muc.affiliation-change-reason"
+#define OPV_MUC_CHANGEAFFILREASONASK                    "muc.affiliation-change-reason-ask"
+#define OPV_MUC_REASONSEDITOR                           "muc.reasons-editor"
+#define OPV_MUC_REASONSEDITORSTORE                      "muc.reasons-editor-store"
 
 // Avatars
 #define OPV_MUC_AVATARS									"muc.avatars"
