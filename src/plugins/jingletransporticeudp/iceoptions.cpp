@@ -23,10 +23,24 @@ IceOptions::IceOptions(QWidget *parent) :
 
 	connect(ui->twServers->model(), SIGNAL(rowsInserted(QModelIndex,int,int)), SIGNAL(modified()));
 	connect(ui->twServers->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SIGNAL(modified()));
-	connect(ui->chkAggressive, SIGNAL(stateChanged(int)), SIGNAL(modified()));
-	connect(ui->spbRto, SIGNAL(valueChanged(int)), SIGNAL(modified()));
-	connect(ui->spbNominationDelay, SIGNAL(valueChanged(int)), SIGNAL(modified()));
-	connect(ui->spbNominationTimeout, SIGNAL(valueChanged(int)), SIGNAL(modified()));
+
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		connect(ui->chkAggressive, SIGNAL(stateChanged(int)), SIGNAL(modified()));
+		connect(ui->spbRto, SIGNAL(valueChanged(int)), SIGNAL(modified()));
+		connect(ui->spbNominationDelay, SIGNAL(valueChanged(int)), SIGNAL(modified()));
+		connect(ui->spbNominationTimeout, SIGNAL(valueChanged(int)), SIGNAL(modified()));
+	}
+	else
+	{
+		ui->chkAggressive->hide();
+		ui->lblRto->hide();
+		ui->spbRto->hide();
+		ui->lblNominationDelay->hide();
+		ui->spbNominationDelay->hide();
+		ui->lblNominationTimeout->hide();
+		ui->spbNominationTimeout->hide();
+	}
 
 	reset();
 }
@@ -38,17 +52,20 @@ IceOptions::~IceOptions()
 
 void IceOptions::apply()
 {
-	Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE)
-			.setValue(ui->chkAggressive->isChecked());
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE)
+				.setValue(ui->chkAggressive->isChecked());
 
-	Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY)
-			.setValue(ui->spbNominationDelay->value());
+		Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY)
+				.setValue(ui->spbNominationDelay->value());
 
-	Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT)
-			.setValue(ui->spbNominationTimeout->value());
+		Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT)
+				.setValue(ui->spbNominationTimeout->value());
 
-	Options::node(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO)
-			.setValue(ui->spbRto->value());
+		Options::node(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO)
+				.setValue(ui->spbRto->value());
+	}
 
 	QStringList turn, stun;
 
@@ -76,17 +93,20 @@ void IceOptions::apply()
 
 void IceOptions::reset()
 {
-	ui->chkAggressive->setChecked(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE)
-								  .value().toBool());
+	if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	{
+		ui->chkAggressive->setChecked(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE)
+									  .value().toBool());
 
-	ui->spbNominationDelay->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY)
-								  .value().toInt());
+		ui->spbNominationDelay->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY)
+									  .value().toInt());
 
-	ui->spbNominationTimeout->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT)
-								  .value().toInt());
+		ui->spbNominationTimeout->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT)
+									  .value().toInt());
 
-	ui->spbRto->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO)
-								  .value().toInt());
+		ui->spbRto->setValue(Options::node(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO)
+									  .value().toInt());
+	}
 
 	QStringList stun(Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_STUN)
 					 .value().toStringList());

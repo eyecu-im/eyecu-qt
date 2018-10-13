@@ -291,14 +291,18 @@ QMultiMap<int, IOptionsDialogWidget *> JingleRtp::optionsDialogWidgets(const QSt
 		IOptionsDialogWidget *timeout = FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_TIMEOUT),
 																				tr("Data receive timeout"), spbTimeout, AParent);
 		widgets.insertMulti(OWO_JINGLERTP_COMMON_TIMEOUT, timeout);
-		widgets.insertMulti(OWO_JINGLERTP_COMMON_RTCP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RTCP),
-																								  tr("Use RTCP"),AParent));
-		widgets.insertMulti(OWO_JINGLERTP_COMMON_RINGING, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RINGING),
-																								  tr("Assume the other party ringing, once the call is acknowledged"),AParent));
 		widgets.insertMulti(OHO_JINGLERTP_AUDIO, FOptionsManager->newOptionsDialogHeader(tr("Audio"), AParent));
 		widgets.insertMulti(OWO_JINGLERTP_AUDIO, new AudioOptions(AParent));
-		widgets.insertMulti(OHO_JINGLERTP_CODECS, FOptionsManager->newOptionsDialogHeader(tr("Codecs"), AParent));
-		widgets.insertMulti(OWO_JINGLERTP_CODECS, new CodecOptions(AParent));
+
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+		{
+			widgets.insertMulti(OWO_JINGLERTP_COMMON_RTCP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RTCP),
+																									  tr("Use RTCP"),AParent));
+			widgets.insertMulti(OWO_JINGLERTP_COMMON_RINGING, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_JINGLE_RTP_RINGING),
+																									  tr("Assume the other party ringing, once the call is acknowledged"),AParent));
+			widgets.insertMulti(OHO_JINGLERTP_CODECS, FOptionsManager->newOptionsDialogHeader(tr("Codecs"), AParent));
+			widgets.insertMulti(OWO_JINGLERTP_CODECS, new CodecOptions(AParent));
+		}
 	}
 	return widgets;
 }
