@@ -182,7 +182,7 @@ bool MapContacts::initSettings()
 void MapContacts::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
-	onOptionsChanged(Options::node(OPV_AVATARS_LETTERPILLAR));
+	onOptionsChanged(Options::node(OPV_AVATARS_ASPECTCROP));
 }
 
 void MapContacts::onOptionsClosed()
@@ -193,7 +193,7 @@ void MapContacts::onOptionsChanged(const OptionsNode &ANode)
 	if (ANode.path() == OPV_MAP_CONTACTS_VIEW)
 		FMap->geoMap()->updateObjects(MOT_CONTACT, MDR_NONE);
 	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY ||
-			 ANode.path() == OPV_AVATARS_LETTERPILLAR)
+			 ANode.path() == OPV_AVATARS_ASPECTCROP)
 		FMap->geoMap()->updateObjects(MOT_CONTACT, MDR_CONTACT_AVATAR);
 	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINE)
 	{

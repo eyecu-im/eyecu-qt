@@ -57,7 +57,7 @@
 
 // Avatars
 #define OPV_AVATARS_DISPLAYEMPTY						"avatars.display-empty"
-#define OPV_AVATARS_LETTERPILLAR						"avatars.letter-pillar"
+#define OPV_AVATARS_ASPECTCROP							"avatars.aspect-crop"
 #define OPV_AVATARS_SMALLSIZE                           "avatars.small-size"
 #define OPV_AVATARS_LARGESIZE                           "avatars.large-size"
 #define OPV_AVATARS_NORMALSIZE                          "avatars.normal-size"

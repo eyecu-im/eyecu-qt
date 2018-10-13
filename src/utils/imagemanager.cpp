@@ -28,7 +28,7 @@ QImage ImageManager::grayscaled(const QImage &AImage)
 	return AImage;
 }
 
-QImage ImageManager::squared(const QImage &AImage, int ASize, bool ALettePillarBox)
+QImage ImageManager::squared(const QImage &AImage, int ASize, bool AAspectCrop) // *** <<< eyeCU >>> ***
 {
 	if (!AImage.isNull() && ((AImage.width()!=ASize) || (AImage.height()!=ASize)))
 	{
@@ -38,39 +38,25 @@ QImage ImageManager::squared(const QImage &AImage, int ASize, bool ALettePillarB
 		int w = AImage.width();
 		int h = AImage.height();
 		QImage scaled = AImage;
-		if (ALettePillarBox)
-		{
-			if (w<h && h!=ASize)
-				scaled = AImage.scaledToHeight(ASize, Qt::SmoothTransformation);
-			else if (w>=h && w!=ASize)
-				scaled = AImage.scaledToWidth(ASize, Qt::SmoothTransformation);
-		}
-		else
-		{
-			if (w>h && h!=ASize)
-				scaled = AImage.scaledToHeight(ASize, Qt::SmoothTransformation);
-			else if (w<=h && w!=ASize)
-				scaled = AImage.scaledToWidth(ASize, Qt::SmoothTransformation);
-		}
-
+// *** <<< eyeCU <<< ***
+		if ((w > h && h != ASize && AAspectCrop) ||
+			(w < h && w != ASize && !AAspectCrop))
+			scaled = AImage.scaledToHeight(ASize, Qt::SmoothTransformation);
+		else if ((w <= h && h != ASize && AAspectCrop) ||
+				 (w >= h && w != ASize && !AAspectCrop))
+			scaled = AImage.scaledToWidth(ASize, Qt::SmoothTransformation);
+// *** >>> eyeCU >>> ***
 		w = scaled.width();
 		h = scaled.height();
 		QPoint offset(0,0);
-		if (ALettePillarBox)
-		{
-			if (w > h)
-				offset.setY((ASize - h) / 2);
-			else if (h > w)
-				offset.setX((ASize - w) / 2);
-		}
-		else
-		{
-			if (w < h)
-				offset.setY((ASize - h) / 2);
-			else if (h < w)
-				offset.setX((ASize - w) / 2);
-		}
-
+// *** <<< eyeCU <<< ***
+		if ((w < h && AAspectCrop) ||
+			(w > h && !AAspectCrop))
+			offset.setY((ASize - h) / 2);
+		else if ((h < w && AAspectCrop) ||
+				 (h > w  && !AAspectCrop))
+			offset.setX((ASize - w) / 2);
+// *** >>> eyeCU >>> ***
 		QPainter p(&result);
 		p.drawImage(offset, scaled);
 		p.end();

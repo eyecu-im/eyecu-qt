@@ -767,7 +767,7 @@ void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
 		updateLabels(MUDR_AVATAR_IMAGE);
 	}
 	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY ||
-			 ANode.path() == OPV_AVATARS_LETTERPILLAR)
+			 ANode.path() == OPV_AVATARS_ASPECTCROP)
 	{
 		updateLabels(MUDR_AVATAR_IMAGE);
 	}

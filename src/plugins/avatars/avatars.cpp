@@ -51,7 +51,7 @@ static const QList<int> AvatarRosterKinds = QList<int>() << RIK_STREAM_ROOT << R
 void NormalizeAvatarImage(const QImage &AImage, quint8 ASize, QImage &AColor, QImage &AGray)
 {
 	AColor = ASize>0 ? ImageManager::squared(AImage, ASize,
-											 Options::node(OPV_AVATARS_LETTERPILLAR).value().toBool())
+											 Options::node(OPV_AVATARS_ASPECTCROP).value().toBool())
 					 : AImage;
 // *** >>> eyeCU >>> ***
 	AGray = ImageManager::opacitized(ImageManager::grayscaled(AColor));
@@ -275,7 +275,7 @@ bool Avatars::initSettings()
 	Options::setDefaultValue(OPV_AVATARS_LARGESIZE, 64);
 // *** <<< eyeCU <<< ***
 	Options::setDefaultValue(OPV_AVATARS_DISPLAYEMPTY, true);
-	Options::setDefaultValue(OPV_AVATARS_LETTERPILLAR, false);
+	Options::setDefaultValue(OPV_AVATARS_ASPECTCROP, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_ROUNDED, 0.5);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_POSITION, Left);
@@ -654,9 +654,9 @@ QImage Avatars::emptyAvatarImage(quint8 ASize, bool AGray) const
 
 QImage Avatars::cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray) const
 {
-	if (FLetterPillarBox != Options::node(OPV_AVATARS_LETTERPILLAR).value().toBool())
+	if (FLetterPillarBox != Options::node(OPV_AVATARS_ASPECTCROP).value().toBool())
 	{
-		FLetterPillarBox = Options::node(OPV_AVATARS_LETTERPILLAR).value().toBool();
+		FLetterPillarBox = Options::node(OPV_AVATARS_ASPECTCROP).value().toBool();
 		FAvatarImages.clear();
 		FAvatarGrayImages.clear();
 	}
@@ -1152,7 +1152,7 @@ void Avatars::onOptionsOpened()
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_ROUNDED));
 	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
-	onOptionsChanged(Options::node(OPV_AVATARS_LETTERPILLAR));
+	onOptionsChanged(Options::node(OPV_AVATARS_ASPECTCROP));
 /*** >>> eyeCU >>> ***/
 }
 
@@ -1209,7 +1209,7 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
 // *** <<< eyeCU <<< ***
-	else if (ANode.path() == OPV_AVATARS_LETTERPILLAR)
+	else if (ANode.path() == OPV_AVATARS_ASPECTCROP)
 	{
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
@@ -1227,9 +1227,9 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
-	else if (ANode.path() == OPV_AVATARS_SMALLSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarSmall ||
-			 ANode.path() == OPV_AVATARS_NORMALSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarNormal ||
-			 ANode.path() == OPV_AVATARS_LARGESIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarLarge)
+	else if ((ANode.path() == OPV_AVATARS_SMALLSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarSmall) ||
+			 (ANode.path() == OPV_AVATARS_NORMALSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarNormal) ||
+			 (ANode.path() == OPV_AVATARS_LARGESIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarLarge))
 	{
 		FAvatarSize  = ANode.value().toInt();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);

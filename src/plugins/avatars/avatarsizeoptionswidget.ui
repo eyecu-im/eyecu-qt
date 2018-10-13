@@ -37,9 +37,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="cbLetterPillarBox">
+    <widget class="QCheckBox" name="cbAspectCrop">
      <property name="text">
-      <string>Letter/pillar box</string>
+      <string>Crop to keep aspect ratio</string>
      </property>
     </widget>
    </item>
@@ -149,7 +149,7 @@
  </widget>
  <tabstops>
   <tabstop>cbDisplayEmpty</tabstop>
-  <tabstop>cbLetterPillarBox</tabstop>
+  <tabstop>cbAspectCrop</tabstop>
   <tabstop>spbSmall</tabstop>
   <tabstop>spbNormal</tabstop>
   <tabstop>spbLarge</tabstop>
