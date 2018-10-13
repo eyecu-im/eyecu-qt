@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>302</width>
-    <height>84</height>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,13 @@
     <widget class="QCheckBox" name="cbDisplayEmpty">
      <property name="text">
       <string>Display empty avatars</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbLetterPillarBox">
+     <property name="text">
+      <string>Letter/pillar box</string>
      </property>
     </widget>
    </item>
@@ -142,6 +149,7 @@
  </widget>
  <tabstops>
   <tabstop>cbDisplayEmpty</tabstop>
+  <tabstop>cbLetterPillarBox</tabstop>
   <tabstop>spbSmall</tabstop>
   <tabstop>spbNormal</tabstop>
   <tabstop>spbLarge</tabstop>

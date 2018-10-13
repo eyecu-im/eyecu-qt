@@ -34,7 +34,7 @@ public:
 	virtual QImage emptyAvatarImage(quint8 ASize, bool AGray=false) const =0;
 	virtual QImage cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const =0;
 	virtual QImage loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const =0;
-	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false, bool ADummy=false) const =0;
+	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false, bool ADummy=false, qreal ARound=0) const =0;
 protected:
 	virtual void avatarChanged(const Jid &AContactJid) =0;
 };

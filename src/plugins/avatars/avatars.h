@@ -29,10 +29,10 @@ public:
 	QString FFile;
 	QObject *FAvatars;
 public:
-	QString FHash;
+	QString	FHash;
 	QByteArray FData;
-	QImage FGrayImage;
-	QImage FColorImage;
+	QImage	FGrayImage;
+	QImage	FColorImage;
 };
 
 class Avatars :
@@ -86,7 +86,7 @@ public:
 	virtual QImage emptyAvatarImage(quint8 ASize, bool AGray=false) const;
 	virtual QImage cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
 	virtual QImage loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false) const;
-	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false, bool ADummy=false) const;
+	virtual QImage visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray=false, bool ADummy=false, qreal ARound=0) const;
 signals:
 	void avatarChanged(const Jid &AContactJid);
 	//IRosterDataHolder
@@ -138,7 +138,9 @@ private:
 	quint8 FAvatarSize;
 	bool FAvatarsVisible;
 /*** <<< eyeCU <<< ***/
-	int	FAvatarPosition;
+	mutable bool FLetterPillarBox;
+	int		FAvatarPosition;
+	qreal	FRosterAvatarRounded;
 	quint32 FAvatarRightLabelId;
 	quint32 FAvatarLeftLabelId;
 /*** >>> eyeCU >>> ***/
@@ -156,7 +158,6 @@ private:
 	QHash<Jid, QString> FIqAvatars;
 	QMap<QString, Jid> FIqAvatarRequests;
 private:
-	bool FShowEmptyAvatars;
 	bool FShowGrayAvatars;
 	QMap<Jid, QString> FCustomPictures;
 private:

@@ -8,7 +8,7 @@ class UTILS_EXPORT ImageManager
 {
 public:
 	static QImage grayscaled(const QImage &AImage);
-	static QImage squared(const QImage &AImage, int ASize);
+	static QImage squared(const QImage &AImage, int ASize, bool ALettePillarBox=true);
 	static QImage roundSquared(const QImage &AImage, int ASize, int ARadius);
 	static QImage addShadow(const QImage &AImage, const QColor &AColor, const QPoint &AOffset);
 	static QImage colorized(const QImage &AImage, const QColor &AColor);

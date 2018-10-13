@@ -27,8 +27,9 @@ MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTr
 	FAvatarLabel = Options::node(OPV_MUC_AVATARS_POSITION).value().toInt()==IAvatars::Right?MUIL_MULTIUSERCHAT_AVATAR_RIGHT:MUIL_MULTIUSERCHAT_AVATAR_LEFT;
 	FShowAvatars = Options::node(OPV_MUC_AVATARS_DISPLAY).value().toBool();
 // *** >>> eyeCU >>> ***
+	FAvatarRounded = Options::node(OPV_MUC_AVATARS_ROUNDED).value().toReal();
 	FViewMode = -1;
-	FAvatarSize = 24;
+	FAvatarSize = 24;	
 
 	header()->hide();
 	header()->setStretchLastSection(true);
@@ -105,7 +106,7 @@ QVariant MultiUserView::advancedItemData(int AOrder, const QStandardItem *AItem,
 			case MUDR_AFFILIATION:
 				return user->affiliation();
 			case MUDR_AVATAR_IMAGE:
-				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize,false,Options::node(OPV_MUC_AVATARS_POSITION).value().toInt()==IAvatars::Left) : QVariant();
+				return FAvatars!=NULL ? FAvatars->visibleAvatarImage(FAvatars->avatarHash(user->userJid()),FAvatarSize,false,Options::node(OPV_MUC_AVATARS_POSITION).value().toInt()==IAvatars::Left, FAvatarRounded) : QVariant();
 			}
 		}
 	}
@@ -760,7 +761,13 @@ void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
 		FAvatarSize = FAvatars->avatarSize(ANode.value().toInt());
 		updateLabels(MUDR_AVATAR_IMAGE);
 	}
-	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
+	else if (ANode.path() == OPV_MUC_AVATARS_ROUNDED)
+	{
+		FAvatarRounded = ANode.value().toReal();
+		updateLabels(MUDR_AVATAR_IMAGE);
+	}
+	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY ||
+			 ANode.path() == OPV_AVATARS_LETTERPILLAR)
 	{
 		updateLabels(MUDR_AVATAR_IMAGE);
 	}

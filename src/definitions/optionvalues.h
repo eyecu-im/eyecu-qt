@@ -57,6 +57,7 @@
 
 // Avatars
 #define OPV_AVATARS_DISPLAYEMPTY						"avatars.display-empty"
+#define OPV_AVATARS_LETTERPILLAR						"avatars.letter-pillar"
 #define OPV_AVATARS_SMALLSIZE                           "avatars.small-size"
 #define OPV_AVATARS_LARGESIZE                           "avatars.large-size"
 #define OPV_AVATARS_NORMALSIZE                          "avatars.normal-size"
@@ -184,6 +185,7 @@
 #define OPV_MUC_AVATARS_POSITION						"muc.avatars.position"
 #define OPV_MUC_AVATARS_DISPLAY							"muc.avatars.display"
 #define OPV_MUC_AVATARS_DISPLAYEMPTY					"muc.avatars.display-empty"
+#define OPV_MUC_AVATARS_ROUNDED							"muc.avatars.rounded"
 // *** >>> eyeCU >>> ***
 // Bookmarks
 #define OPV_MUC_SHOWAUTOJOINED                          "muc.show-auto-joined"
@@ -280,6 +282,7 @@
 // Avatars
 #define OPV_ROSTER_AVATARS		                        "roster.avatars"
 #define OPV_ROSTER_AVATARS_SIZE                         "roster.avatars.size"
+#define OPV_ROSTER_AVATARS_ROUNDED                      "roster.avatars.rounded"
 #define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
 #define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
 #define OPV_ROSTER_AVATARS_DISPLAYGRAY                  "roster.avatars.display-gray"
