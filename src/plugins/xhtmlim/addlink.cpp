@@ -6,7 +6,7 @@
 
 AddLink::AddLink(const QIcon &AIcon, const QUrl &AHref, const QString &ADescription, QWidget *parent) :
     QDialog(parent),
-    FSchemeMasks(QStringList() << "http" << "https" << "ftp" << "xmpp" << "mail" << "tel" << "native"),
+	FSchemeMasks(QStringList() << "http" << "https" << "ftp" << "xmpp" << "mailto" << "tel" << "native"),
     FOriginalHref(AHref),
     FOriginalDescription(ADescription),
     ui(new Ui::AddLink)
