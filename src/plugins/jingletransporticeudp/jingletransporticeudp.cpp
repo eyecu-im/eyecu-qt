@@ -17,6 +17,13 @@ JingleTransportIceUdp::JingleTransportIceUdp(QObject *parent) :
 	FServiceDiscovery(nullptr),
 	FJingle(nullptr)
 {
+	qpIceInit();
+	QpLog::setLevel(1);
+}
+
+JingleTransportIceUdp::~JingleTransportIceUdp()
+{
+	qpIceUnInit();
 }
 
 void JingleTransportIceUdp::pluginInfo(IPluginInfo *APluginInfo)
@@ -65,9 +72,6 @@ bool JingleTransportIceUdp::initObjects()
 		FOptionsManager->insertOptionsDialogHolder(this);
 
 	FIceCfg.stunConfig.softwareName = QString("%1 %2").arg(CLIENT_NAME).arg(CLIENT_VERSION_FULL);
-
-	qpIceInit();
-	QpLog::setLevel(1);
 
     return true;
 }

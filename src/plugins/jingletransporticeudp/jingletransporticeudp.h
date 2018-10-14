@@ -25,6 +25,7 @@ class JingleTransportIceUdp:
 #endif
 public:
 	explicit JingleTransportIceUdp(QObject *parent = nullptr);
+	~JingleTransportIceUdp();
 
     //IPlugin
 	QObject *instance()  override { return this; }
