@@ -387,6 +387,7 @@ bool PluginManager::loadPlugins()
 	{
 		QString localeName = QLocale().name();
 		QDir tsDir(QApplication::applicationDirPath());
+		LOG_DEBUG(QString("QApplication::applicationDirPath(): %1").arg(tsDir.path()));
 		tsDir.cd(TRANSLATIONS_DIR);
 		loadCoreTranslations(tsDir,localeName);
 
@@ -804,14 +805,14 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 // *** <<< eyeCU <<< ***
 	QTranslator *translator = new QTranslator(this);
 
-	if (translator->load("qt_"+ALocaleName, ADir.absolutePath()) ||
-		translator->load("qt_"+ALocaleName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)) ||
-		translator->load("qt_"+QLocale().name(), ADir.absolutePath()) ||
-		translator->load("qt_"+QLocale().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+	if (translator->load(QString("qt_%1").arg(ALocaleName), ADir.absolutePath()) ||
+		translator->load(QString("qt_%1").arg(ALocaleName), QLibraryInfo::location(QLibraryInfo::TranslationsPath)) ||
+		translator->load(QString("qt_%1").arg(QLocale().name()), ADir.absolutePath()) ||
+		translator->load(QString("qt_%1").arg(QLocale().name()), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		qApp->installTranslator(translator);
 	else
 	{
-		LOG_DEBUG("Translation for 'Qt' not found");
+		LOG_WARNING("Translation for 'Qt' not found");
 		translator->deleteLater();
 		translator=NULL;
 	}
@@ -825,7 +826,7 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 		translator = new QTranslator(this);
 		if (translator->load(*it, ADir.absoluteFilePath(ALocaleName)) ||
 			translator->load(*it, ADir.absoluteFilePath(ALocaleName.left(2))) ||
-			translator->load(*it+'_'+ALocaleName) ||
+			translator->load(*it+'_'+ALocaleName, ADir.absolutePath()) ||
 			translator->load(*it+'_'+ALocaleName, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
 		{
 			qApp->installTranslator(translator);
@@ -833,7 +834,7 @@ void PluginManager::loadCoreTranslations(const QDir &ADir, const QString &ALocal
 		}
 		else
 		{
-			LOG_DEBUG(QString("Translation for '%1' not found").arg(*it));
+			LOG_WARNING(QString("Translation for '%1' not found").arg(*it));
 			translator->deleteLater();
 		}
 	}
