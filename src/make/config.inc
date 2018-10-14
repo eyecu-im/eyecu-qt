@@ -5,7 +5,7 @@ os2:EYECU_UTILS_SNAME  = eyecutls
 
 #Library ABI version
 unix {
-EYECU_UTILS_ABI = 37
+EYECU_UTILS_ABI = 38
 }
 
 #Build config
