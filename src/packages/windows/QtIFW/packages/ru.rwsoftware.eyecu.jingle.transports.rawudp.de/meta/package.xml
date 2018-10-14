@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle RAW-UDP Deutsch Translation</DisplayName>
+ <Description>Jingle RAW-UDP Deutsch translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-09-14</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.transports.rawudp.de</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.jingle.transports.rawudp,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

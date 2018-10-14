@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt FFMpeg</DisplayName>
+ <DisplayName>QpFFMpeg</DisplayName>
  <Description>Qt Purple - FFMpeg Framework</Description>
  <Version>1.0.2</Version>
  <ReleaseDate>2015-11-10</ReleaseDate>

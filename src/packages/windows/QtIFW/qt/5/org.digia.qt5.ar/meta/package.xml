@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Qt5 Arabic Translation</DisplayName>
+ <Description>Qt5 Arabic translation</Description>
+ <Version>5.5.1</Version>
+ <ReleaseDate>2014-02-02</ReleaseDate>
+ <Name>org.digia.qt5.ar</Name>
+ <AutoDependOn>org.digia.qt5,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

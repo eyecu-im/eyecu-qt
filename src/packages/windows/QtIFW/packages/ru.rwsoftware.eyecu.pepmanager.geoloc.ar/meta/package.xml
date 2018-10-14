@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>User Location Arabic Translation</DisplayName>
+ <Description>User Location Arabic translation</Description>
+ <Version>1.3.1</Version>
+ <ReleaseDate>2015-11-30</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

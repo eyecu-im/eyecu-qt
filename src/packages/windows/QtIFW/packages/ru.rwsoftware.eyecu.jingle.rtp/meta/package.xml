@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle RTP Sessions</DisplayName>
+ <Description>Perform VoiP calls</Description>
+ <Version>1.0.0</Version>
+ <ReleaseDate>2018-09-14</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.rtp</Name>
+ <Dependencies>ru.purplesoft.qtpurple.ffmpeg</Dependencies>
+ <SortingPriority>1</SortingPriority>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,0 +1,10 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle</DisplayName>
+ <Description>Modern way of session negotiation for media exchange</Description>
+ <Version>1.0.0</Version>
+ <ReleaseDate>2018-09-14</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle</Name>
+ <SortingPriority>23</SortingPriority>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

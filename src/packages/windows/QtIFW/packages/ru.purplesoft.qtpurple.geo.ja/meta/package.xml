@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt Geo Japanese Translation</DisplayName>
- <Description>Qt Geo Japanese translation</Description>
+ <DisplayName>QpGeo Japanese Translation</DisplayName>
+ <Description>QpGeo Japanese translation</Description>
  <Version>1.1.0</Version>
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.geo.ja</Name>

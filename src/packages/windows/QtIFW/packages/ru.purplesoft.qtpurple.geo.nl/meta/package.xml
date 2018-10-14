@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt Geo Dutch Translation</DisplayName>
- <Description>Qt Geo Dutch translation</Description>
+ <DisplayName>QpGeo Dutch Translation</DisplayName>
+ <Description>QpGeo Dutch translation</Description>
  <Version>1.1.0</Version>
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.geo.nl</Name>

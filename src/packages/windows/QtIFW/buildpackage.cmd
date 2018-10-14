@@ -1,5 +1,11 @@
 echo off
-set platform=x64
+
+set qtdir=d:\qt\5.5\msvc2013
+set MSVCREDIST=d:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
+set OPENSSLDIR=d:\openssl
+
+set platform=x86
+set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
 set version=1.3.0
@@ -21,7 +27,7 @@ echo No Qt installation found!
 goto end
 :exists
 
-if exist "%MSVCREDIST%" goto redistexists
+if exist "%MSVCREDIST%\vcredist_%platform%.exe" goto redistexists
 echo Cannot find MSVC Redistributable
 goto end
 :redistexists
@@ -40,12 +46,20 @@ goto end
 mkdir %packages%\org.openssl.shared\data
 for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll %packages%\org.openssl.shared\data\ /Y
 
-if %platform%==x64 goto x64_qt_files
+if %platform%==x64 goto x64_platform
 copy cfg\32\* config\
+goto qt_selection
+:x64_platform
+copy cfg\64\* config\
 
-if not exist %qtdir%\mkspecs\features\util.prf goto noqtpurple
-if not exist %qtdir%\mkspecs\features\ffmpeg.prf goto noqtpurple
-if not exist %qtdir%\mkspecs\features\geo.prf goto noqtpurple
+:qt_selection
+
+if %qt%==5 goto qt5_files
+if not exist %qtdir%\mkspecs\features\qputil.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\qpdns.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\qpgeo.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\qpffmpeg.prf goto noqtpurple
+if not exist %qtdir%\mkspecs\features\qpice.prf goto noqtpurple
 
 for /d %%p in (packages\org.digia.qt5.*) do rmdir %%p /S /Q
 
@@ -58,37 +72,42 @@ xcopy %qtdir%\bin\QtMultimedia4.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 ) else if exist %qtdir%\bin\QtMultimediaKit1.dll (
 xcopy %qtdir%\bin\QtMultimediaKit1.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 ) else goto no_multimedia
-xcopy vcredist\x86\* packages\com.microsoft.vcredist\meta\ /Y
+
+rem xcopy %MSVCREDIST%\vcredist_%platform%.exe packages\com.microsoft.vcredist\meta\ /Y
 xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll %packages%\org.digia.qt4.sql\data\sqldrivers\* /Y
 xcopy %qtdir%\bin\QtSql4.dll %packages%\org.digia.qt4.sql\data\ /Y
 xcopy %qtdir%\bin\QtScript4.dll %packages%\org.digia.qt4.script\data\ /Y
 xcopy %qtdir%\bin\QtWebKit4.dll %packages%\org.digia.qt4.webkit\data\ /Y
 xcopy %qtdir%\bin\QtSerialPort.dll %packages%\org.digia.qt4.serialport\data\ /Y
-xcopy %qtdir%\bin\QtFFMpeg1.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
-xcopy %qtdir%\bin\QtGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
-xcopy %qtdir%\bin\QtUtil1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+xcopy %qtdir%\bin\QpFFMpeg2.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QpGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QpUtil2.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+
+rem copy "%MSVCREDIST%\vcredist_%platform%.exe" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
 
 set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
 set targetqt=qt4
 goto copy_qt_files
-:x64_qt_files
-copy cfg\64\* config\
-
-if not exist %qtdir%\mkspecs\modules\qt_lib_util.pri goto noqtpurple
-if not exist %qtdir%\mkspecs\modules\qt_lib_ffmpeg.pri goto noqtpurple
-if not exist %qtdir%\mkspecs\modules\qt_lib_geo.pri goto noqtpurple
+:qt5_files
+if not exist %qtdir%\mkspecs\modules\qt_lib_qputil.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_qpdns.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_qpgeo.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_qpffmpeg.pri goto noqtpurple
+if not exist %qtdir%\mkspecs\modules\qt_lib_qpice.pri goto noqtpurple
 for /d %%p in (packages\org.digia.qt4.*) do rmdir %%p /S /Q
 xcopy qt\5\* packages\ /E /Y
 xcopy plugins\5\* packages\ /E /Y
 xcopy purple\5\* packages\ /E /Y
 if not exist %qtdir%\bin\Qt5Multimedia.dll goto no_multimedia
 
-xcopy vcredist\x64\* packages\com.microsoft.vcredist\meta\ /Y
+rem xcopy vcredist\x64\* packages\com.microsoft.vcredist\meta\ /Y
 
 xcopy %qtdir%\bin\icu*.dll %packages%\org.icuproject.icu\data\ /Y
 
 xcopy %qtdir%\plugins\platforms\qwindows.dll %packages%\org.digia.qt5\data\platforms\ /Y
+xcopy %qtdir%\plugins\audio\qtaudio_windows.dll %packages%\org.digia.qt5\data\audio\ /Y
 xcopy %qtdir%\plugins\sqldrivers\qsqlite.dll %packages%\org.digia.qt5.sql\data\sqldrivers\* /Y
 
 xcopy %qtdir%\bin\Qt5Sql.dll %packages%\org.digia.qt5.sql\data\ /Y
@@ -111,11 +130,13 @@ xcopy %qtdir%\bin\Qt5PrintSupport.dll %packages%\org.digia.qt5.printsupport\data
 
 xcopy %qtdir%\bin\Qt5SerialPort.dll %packages%\org.digia.qt5.serialport\data\ /Y
 
-xcopy %qtdir%\bin\Qt5FFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
-xcopy %qtdir%\bin\Qt5Geo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
-xcopy %qtdir%\bin\Qt5Util.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpFFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QpGeo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QpUtil.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 
-copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x64.exe /Y
+rem copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x64.exe /Y
 
 set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
 set targetqt=qt5
@@ -126,8 +147,12 @@ xcopy %qtdir%\plugins\imageformats\q*.dll %packages%\org.digia.%targetqt%\data\i
 del %packages%\org.digia.%targetqt%\data\imageformats\q*d.dll /Q
 xcopy %qtdir%\plugins\iconengines\q*.dll %packages%\org.digia.%targetqt%\data\iconengines\ /Y
 del %packages%\org.digia.%targetqt%\data\iconengines\q*d.dll /Q
-for %%f in (de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.%%f\data\translations\ /Y
-for %%f in (ar cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.locales\data\translations\ /Y
+for %%f in (ar de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.%%f\data\translations\ /Y
+for %%f in (cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.locales\data\translations\ /Y
+
+xcopy vcredist\%platform%\* packages\com.microsoft.vcredist\meta\ /Y
+copy "%MSVCREDIST%\vcredist_%platform%.exe" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+
 goto qtpurple
 :no_multimedia
 echo Error! No multimedia framework found!
@@ -147,10 +172,13 @@ goto end
 :ffmpeg
 for %%f in (avcodec avfilter avformat avutil postproc swresample swscale) do xcopy %ffmpegdir%\bin\%%f-*.dll %packages%\org.ffmpeg.library\data\ /Y
 
-xcopy %qtdir%\bin\QtFFMpeg1.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
-xcopy %qtdir%\bin\QtUtil1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QtGeo1.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
-for %%f in (de es nl pl ja ru uk) do xcopy %qtdir%\translations\qtgeo_%%f.qm %packages%\ru.purplesoft.qtpurple.geo.%%f\data\translations\ /Y
+xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QpUtil2.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+xcopy %qtdir%\bin\QpFFMpeg2.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
+xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
+
+for %%f in (de es nl pl ja ru uk) do xcopy %qtdir%\translations\qpgeo_%%f.qm %packages%\ru.purplesoft.qtpurple.geo.%%f\data\translations\ /Y
 
 copy c:\eyecu\COPYING %packages%\ru.rwsoftware.eyecu\meta\LICENSE.TXT /Y
 set pluginlist=accountmanager chatmessagehandler connectionmanager defaultconnection mainwindow messageprocessor messagestyles messagewidgets normalmessagehandler notifications optionsmanager presence roster rosterchanger rostersmodel rostersview saslauth simplemessagestyle stanzaprocessor starttls statuschanger statusicons traymanager xmppstreams
@@ -410,6 +438,21 @@ call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer
 set files=mmplayer.def.xml mmplayer.png mmplayereject.png
 call copyresources2 ru.rwsoftware.eyecu.mmplayer menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.jingle jingle
+set files=jingle.def.xml jingle.png
+call copyresources2 ru.rwsoftware.eyecu.jingle menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.jingle.rtp jinglertp
+call copyresources ru.rwsoftware.eyecu.jingle.rtp jingle\shared
+set files=jinglertp.png
+call copyresources2 ru.rwsoftware.eyecu.jingle menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.jingle.transports.iceudp jingletransporticeudp
+call copyplugins ru.rwsoftware.eyecu.jingle.transports.rawudp jingletransportrawudp
+
+set files=moodicon.def.xml mood.png
+call copyresources2 ru.rwsoftware.eyecu.pepmanager.mood menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.clienticons clienticons
 call copyresources ru.rwsoftware.eyecu.clienticons clienticons\shared

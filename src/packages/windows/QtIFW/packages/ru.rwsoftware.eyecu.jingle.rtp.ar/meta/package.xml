@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle RTP Sessions Arabic Translation</DisplayName>
+ <Description>Jingle RTP Sessions Arabic translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-09-14</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.rtp.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.jingle.rtp,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>
