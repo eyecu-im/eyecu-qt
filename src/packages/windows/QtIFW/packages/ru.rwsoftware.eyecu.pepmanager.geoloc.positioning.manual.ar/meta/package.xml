@@ -1,11 +1,11 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Serial Port Positioning Method Arabic Translation</DisplayName>
- <Description>Serial Port Positioning Method Arabic translation</Description>
+ <DisplayName>Manual Positioning Method Arabic Translation</DisplayName>
+ <Description>Manual Positioning Method Arabic translation</Description>
  <Version>1.3.0</Version>
  <ReleaseDate>2015-02-24</ReleaseDate>
- <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport.ar</Name>
- <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
  <Virtual>true</Virtual>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

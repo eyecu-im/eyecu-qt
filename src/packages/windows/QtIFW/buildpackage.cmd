@@ -1,8 +1,9 @@
 echo off
 
-set qtdir=d:\qt\5.5\msvc2013
-set MSVCREDIST=d:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
-set OPENSSLDIR=d:\openssl
+set qtdir=h:\qt\5.5\msvc2013
+set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
+set OPENSSLDIR=h:\openssl
+set FFMPEGDIR=h:\ffmpeg
 
 set platform=x86
 set qt=5
@@ -373,11 +374,11 @@ set files=geoloc.def.xml geoloc.png geolocoff.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning positioning
-set files=positioning.def.xml manual.png location.png serialport.png geoip.gif freegeoip.png
+set files=positioning.def.xml manual.png location.png serialport.png geoip.gif ipstack.png
 call copyresources2 ru.rwsoftware.eyecu.pepmanager.geoloc.positioning menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.manual positioningmethodmanual
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip positioningmethodip
-call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.freegeoip positioningmethodipproviderfreegeoip
+call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack positioningmethodipprovideripstack
 call copyplugins ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.serialport positioningmethodserialport
 
 call copyresources ru.rwsoftware.eyecu.statusicons.aim statusicons\aim

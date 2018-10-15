@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>IP-Based Positioning Method Provider ipstack Deutsch Translation</DisplayName>
+ <Description>IP-Based Positioning Method Provider ipstack Deutsch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack.de</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack,ru.rwsoftware.eyecu.translations.de</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

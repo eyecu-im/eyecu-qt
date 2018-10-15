@@ -5,6 +5,7 @@
  <Version>1.0.0</Version>
  <ReleaseDate>2018-09-14</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.jingle.transports.rawudp</Name>
+ <Default>true</Default>
  <SortingPriority>2</SortingPriority>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>
