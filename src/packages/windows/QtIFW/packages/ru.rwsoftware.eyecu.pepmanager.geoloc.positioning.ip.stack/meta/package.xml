@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>IP-Based Positioning Method Provider ipstack</DisplayName>
  <Description>Allows to use ipstack as an IP positioning provider</Description>
- <Version>1.3.3</Version>
- <ReleaseDate>2017-04-21</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack</Name>
- <UpdateText>Use QtPurple v2.0</UpdateText>
+ <UpdateText>Former freegeoip</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip</Dependencies>
  <SortingPriority>1</SortingPriority>
  <Default>true</Default>

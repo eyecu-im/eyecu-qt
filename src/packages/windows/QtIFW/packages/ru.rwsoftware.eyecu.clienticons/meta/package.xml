@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Client Icons</DisplayName>
  <Description>Displays icon of a contact client application</Description>
- <Version>1.3.5</Version>
- <ReleaseDate>2016-04-21</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <UpdateText>Aliases for new versions of Poezio clent added.</UpdateText>
  <Name>ru.rwsoftware.eyecu.clienticons</Name>
  <SortingPriority>60</SortingPriority>

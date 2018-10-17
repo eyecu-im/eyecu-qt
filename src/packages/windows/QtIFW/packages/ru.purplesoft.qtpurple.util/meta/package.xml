@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Qt Util</DisplayName>
  <Description>Qt Purple - Utilities</Description>
- <Version>1.0.22</Version>
- <ReleaseDate>2016-07-04</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.util</Name>
  <UpdateText>Rich text to plain text translation algorythm fixed: link address was placed in incorrect place; object replacement character for images wasn't removed.</UpdateText>
  <Dependencies>ru.purplesoft.qtpurple</Dependencies>

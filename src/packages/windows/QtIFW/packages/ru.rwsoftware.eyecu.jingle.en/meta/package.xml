@@ -3,7 +3,7 @@
  <DisplayName>Jingle English Translation</DisplayName>
  <Description>Jingle English translation</Description>
  <Version>2.0.0</Version>
- <ReleaseDate>2018-09-14</ReleaseDate>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.jingle.en</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.jingle,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
  <Virtual>true</Virtual>

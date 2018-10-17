@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Tune Listener WINAMP English Translation</DisplayName>
  <Description>Tune Listener WINAMP English translation</Description>
- <Version>1.3.0</Version>
- <ReleaseDate>2015-02-24</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp.en</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.winamp,ru.rwsoftware.eyecu.translations.en</AutoDependOn>
  <Virtual>true</Virtual>

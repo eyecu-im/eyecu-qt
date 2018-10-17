@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Qt5 Spanish Translation</DisplayName>
  <Description>Qt5 Spanish translation</Description>
- <Version>5.2.1</Version>
- <ReleaseDate>2014-02-02</ReleaseDate>
+ <Version>5.5.1</Version>
+ <ReleaseDate>2015-10-13</ReleaseDate>
  <Name>org.digia.qt5.es</Name>
  <AutoDependOn>org.digia.qt5,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
  <Virtual>true</Virtual>

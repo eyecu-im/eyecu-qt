@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Query Authentication Ukrainian Translation</DisplayName>
  <Description>Query Authentication Ukrainian translation</Description>
- <Version>1.3.1</Version>
- <ReleaseDate>2016-04-14</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.iqauth.uk</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.iqauth,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
  <Virtual>true</Virtual>
