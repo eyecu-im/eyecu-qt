@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>IP-Based Positioning Method Provider ipstack Polish Translation</DisplayName>
- <Description>IP-Based Positioning Method Provider ipstack Polish translation</Description>
+ <DisplayName>ipstack Polish Translation</DisplayName>
+ <Description>ipstack Polish translation</Description>
  <Version>1.3.0</Version>
  <ReleaseDate>2015-02-24</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack.pl</Name>

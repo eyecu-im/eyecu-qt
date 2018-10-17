@@ -6,6 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu</Name>
  <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util->=2.0.0,org.openssl.shared->=1.0.2.16</Dependencies>
+ <UpdateText>Fix URL processing to eliminate conflict with XHTML-IM anchors.</UpdateText>
  <Licenses>
   <License name="License Agreement" file="LICENSE.TXT"/>
  </Licenses>

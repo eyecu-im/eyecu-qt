@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.mapsearch.yandex</Name>
  <Dependencies>ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
- <UpdateText>Use QtPurple v3.0</UpdateText>
+ <UpdateText>Use QtPurple v3.0. Restore compatibility with Yandex.</UpdateText>
  <SortingPriority>40</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

@@ -4,7 +4,7 @@
  <Description>Displays icon of a contact client application</Description>
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Aliases for new versions of Poezio clent added.</UpdateText>
+ <UpdateText>Alias for Jimm for android added. More aliases for Poezio, Xabber and Vacuum-IM added. Icons for Movim, Dino, Pix-Art, Profanity and Yaxim added.</UpdateText>
  <Name>ru.rwsoftware.eyecu.clienticons</Name>
  <SortingPriority>60</SortingPriority>
  <Default>true</Default>

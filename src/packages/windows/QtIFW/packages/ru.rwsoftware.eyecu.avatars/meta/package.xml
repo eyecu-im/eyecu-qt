@@ -5,7 +5,7 @@
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.avatars</Name>
- <UpdateText>Add support of roster avatar size in advanced mode. Avatar Size options added. "Display empty avatars" is now common option for Roster, Multiuser Chat member list and Map contacts. Minor updates and fixes.</UpdateText>
+ <UpdateText>Fix avatar display in MUC. Implement round and rounded avatars. Replace empty avatar image with the one with transparent background.</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.vcard</Dependencies>
  <SortingPriority>74</SortingPriority>
  <Default>true</Default>

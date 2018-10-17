@@ -4,7 +4,7 @@
  <Description>Allows to use Jabber multi-user conferences</Description>
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Synchronized with Vacuum-IM: Extended away status in MUC was processed incorrectly. All the messages in MUC private chat were displayed as history. A critical bug when delete more than one notification in MUC user list fixed.</UpdateText>
+ <UpdateText>Add option to display initial join messages (default is off). Add ability to specify MUC leave and invitation reasons.</UpdateText>
  <Name>ru.rwsoftware.eyecu.multiuserchat</Name>
  <SortingPriority>86</SortingPriority>
  <Default>true</Default>

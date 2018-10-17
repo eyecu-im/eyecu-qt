@@ -5,7 +5,7 @@
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.abbreviations</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <UpdateText>IINM abbreviation added</UpdateText>
  <SortingPriority>50</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

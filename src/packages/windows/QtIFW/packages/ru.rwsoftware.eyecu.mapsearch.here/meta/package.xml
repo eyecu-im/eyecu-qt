@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.mapsearch.here</Name>
  <Dependencies>ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
- <UpdateText>Use QtPurple v3.0</UpdateText>
+ <UpdateText>A lot of improvements. Add support of locale. Add support of political views. Use QtPurple v3.0.</UpdateText>
  <SortingPriority>60</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
