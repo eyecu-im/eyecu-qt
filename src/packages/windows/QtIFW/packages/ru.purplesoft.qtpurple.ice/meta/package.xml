@@ -1,11 +1,11 @@
 <?xml version='1.0'?>
 <Package>
  <DisplayName>QpIce</DisplayName>
- <Description>QtPurple - ICE</Description>
+ <Description>QtPurple - ICE library</Description>
  <Version>1.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.ice</Name>
- <Dependencies>ru.purplesoft.qtpurple.util,ru.purplesoft.qtpurple.dns</Dependencies>
+ <Dependencies>ru.purplesoft.qtpurple->=3.0.0,ru.purplesoft.qtpurple.util->=2.0.0,ru.purplesoft.qtpurple.dns->=1.0.0</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>

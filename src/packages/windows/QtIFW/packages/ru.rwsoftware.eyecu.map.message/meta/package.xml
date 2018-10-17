@@ -5,8 +5,8 @@
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.map.message</Name>
- <UpdateText>Fix wrong message bubble positioning during map drag. Do not display map menu after message bubble drag. Process URLs in map message bubbles. Use QtPurple v2.0</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.map.contacts,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <UpdateText>Use QtPurple v3.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.map,ru.rwsoftware.eyecu.map.contacts,ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>4</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

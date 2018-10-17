@@ -5,8 +5,8 @@
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.geoloc</Name>
- <UpdateText>Change settings page name from &quot;Positioning&quot; to &quot;Location&quot;. Create this page, if not created by Positioning plugin.</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=2.0.0, ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
+ <UpdateText>Use QtPurple v3.0</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=3.0.0, ru.rwsoftware.eyecu.resources.menuicons.link</Dependencies>
  <SortingPriority>7</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

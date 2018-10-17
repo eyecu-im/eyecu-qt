@@ -1,11 +1,11 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt Purple</DisplayName>
- <Description>Qt Purple</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2017-04-21</ReleaseDate>
+ <DisplayName>QtPurple</DisplayName>
+ <Description>QtPurple tramework</Description>
+ <Version>3.0.0</Version>
+ <ReleaseDate>2018-10-17</ReleaseDate>
  <Name>ru.purplesoft.qtpurple</Name>
- <Dependencies>org.digia.qt5</Dependencies>
+ <Dependencies>org.digia.qt5->=5.5.1</Dependencies>
  <Virtual>true</Virtual>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

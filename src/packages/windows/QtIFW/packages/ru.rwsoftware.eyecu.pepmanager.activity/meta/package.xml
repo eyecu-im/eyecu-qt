@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.activity</Name>
  <UpdateText>Use Qp Geo v2.0</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>9</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

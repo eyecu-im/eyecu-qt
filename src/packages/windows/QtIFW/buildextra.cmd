@@ -9,3 +9,5 @@ call copyplugins ru.rwsoftware.eyecu.scheduler scheduler
 call copyresources ru.rwsoftware.eyecu.statusicons.qip statusicons\qip
 
 repogen.exe -p %packages% repository-extra
+
+pause

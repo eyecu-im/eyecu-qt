@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.jingle.transports.iceudp</Name>
  <Default>true</Default>
- <Dependencies>ru.purplesoft.qtpurple.ice</Dependencies>
+ <Dependencies>ru.purplesoft.qtpurple.ice->=1.0.0</Dependencies>
  <SortingPriority>1</SortingPriority>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

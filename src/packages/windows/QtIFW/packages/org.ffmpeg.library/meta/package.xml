@@ -2,7 +2,7 @@
 <Package>
  <DisplayName>FFMpeg</DisplayName>
  <Description>FFMpeg library</Description>
- <Version>4.0.2.0</Version>
+ <Version>58.25.100</Version>
  <UpdateText>FFMpeg libraries updated to the latest builds</UpdateText>
  <ReleaseDate>2018-08-26</ReleaseDate>
  <Name>org.ffmpeg.library</Name>

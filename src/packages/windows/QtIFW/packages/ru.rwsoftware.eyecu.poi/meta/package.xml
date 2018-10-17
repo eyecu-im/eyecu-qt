@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.poi</Name>
  <UpdateText>Fix icon display in chat</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.privatestorage,ru.rwsoftware.eyecu.map.locationselector, ru.purplesoft.qtpurple.geo->=2.0.0,ru.rwsoftware.eyecu.resources.menuicons.link, ru.rwsoftware.eyecu.resources.menuicons.edit,ru.rwsoftware.eyecu.resources.country</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.privatestorage,ru.rwsoftware.eyecu.map.locationselector, ru.purplesoft.qtpurple.geo->=3.0.0,ru.rwsoftware.eyecu.resources.menuicons.link, ru.rwsoftware.eyecu.resources.menuicons.edit,ru.rwsoftware.eyecu.resources.country</Dependencies>
  <SortingPriority>39</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

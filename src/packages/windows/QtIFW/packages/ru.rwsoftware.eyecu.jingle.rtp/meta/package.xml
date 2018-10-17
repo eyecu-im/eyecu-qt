@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.jingle.rtp</Name>
  <Default>true</Default>
- <Dependencies>ru.purplesoft.qtpurple.ffmpeg</Dependencies>
+ <Dependencies>ru.purplesoft.qtpurple.ffmpeg->=2.0.0</Dependencies>
  <SortingPriority>1</SortingPriority>
  <RequiresAdminRights>true</RequiresAdminRights>
 </Package>

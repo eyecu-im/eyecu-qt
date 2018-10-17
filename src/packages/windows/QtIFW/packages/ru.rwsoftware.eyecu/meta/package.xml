@@ -4,9 +4,8 @@
  <Description>XMPP-based IM client with positioning</Description>
  <Version>2.0.0</Version>
  <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Add splash screen. Fix translation installing.</UpdateText>
  <Name>ru.rwsoftware.eyecu</Name>
- <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util->=2.0.0,org.openssl.shared->=1.0.2.16</Dependencies>
  <Licenses>
   <License name="License Agreement" file="LICENSE.TXT"/>
  </Licenses>

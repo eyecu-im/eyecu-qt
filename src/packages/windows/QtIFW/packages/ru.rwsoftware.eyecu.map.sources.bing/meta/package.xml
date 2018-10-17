@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.map.sources.bing</Name>
  <UpdateText>QtPurple v2.0</UpdateText>
- <Dependencies>ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <Dependencies>ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>17</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

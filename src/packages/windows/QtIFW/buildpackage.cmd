@@ -115,6 +115,7 @@ xcopy %qtdir%\bin\Qt5Sql.dll %packages%\org.digia.qt5.sql\data\ /Y
 
 xcopy %qtdir%\bin\Qt5WebKit.dll %packages%\org.digia.qt5.webkit\data\ /Y
 xcopy %qtdir%\bin\Qt5WebKitWidgets.dll %packages%\org.digia.qt5.webkit\data\ /Y
+xcopy %qtdir%\bin\Qt5WebChannel.dll %packages%\org.digia.qt5.webkit\data\ /Y
 
 xcopy %qtdir%\bin\Qt5Multimedia.dll %packages%\org.digia.qt5.multimedia\data\ /Y
 xcopy %qtdir%\bin\Qt5MultimediaWidgets.dll %packages%\org.digia.qt5.multimedia\data\ /Y
@@ -476,15 +477,15 @@ call copyresources2 ru.rwsoftware.eyecu.map.magnifier menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.map.contacts mapcontacts
 
-call copyplugins ru.rwsoftware.eyecu.map.streetview streetview
-set files=streetview.def.xml streetview.png
-call copyresources2 ru.rwsoftware.eyecu.map.streetview menuicons\shared
-call copyplugins ru.rwsoftware.eyecu.map.streetview.google streetviewprovidergoogle
+rem call copyplugins ru.rwsoftware.eyecu.map.streetview streetview
+rem set files=streetview.def.xml streetview.png
+rem call copyresources2 ru.rwsoftware.eyecu.map.streetview menuicons\shared
+rem call copyplugins ru.rwsoftware.eyecu.map.streetview.google streetviewprovidergoogle
 
-call copyplugins ru.rwsoftware.eyecu.map.placeview placeview
-set files=placeview.def.xml placeview.png
-call copyresources2 ru.rwsoftware.eyecu.map.placeview menuicons\shared
-call copyplugins ru.rwsoftware.eyecu.map.placeview.google placeviewprovidergoogle
+rem call copyplugins ru.rwsoftware.eyecu.map.placeview placeview
+rem set files=placeview.def.xml placeview.png
+rem call copyresources2 ru.rwsoftware.eyecu.map.placeview menuicons\shared
+rem call copyplugins ru.rwsoftware.eyecu.map.placeview.google placeviewprovidergoogle
 
 call copyplugins ru.rwsoftware.eyecu.map.message mapmessage
 set files=close.def.xml closeactive.png closeinactive.png
@@ -509,8 +510,8 @@ call copyplugins ru.rwsoftware.eyecu.mapsearch mapsearch
 set files=mapsearch.def.xml mapsearch.png
 call copyresources2 ru.rwsoftware.eyecu.mapsearch menuicons\shared
 
-call copyplugins ru.rwsoftware.eyecu.mapsearch.2gis mapsearchprovider2gis
-call copyplugins ru.rwsoftware.eyecu.mapsearch.google mapsearchprovidergoogle
+rem call copyplugins ru.rwsoftware.eyecu.mapsearch.2gis mapsearchprovider2gis
+rem call copyplugins ru.rwsoftware.eyecu.mapsearch.google mapsearchprovidergoogle
 call copyplugins ru.rwsoftware.eyecu.mapsearch.here mapsearchproviderhere
 call copyplugins ru.rwsoftware.eyecu.mapsearch.osm mapsearchproviderosm
 call copyplugins ru.rwsoftware.eyecu.mapsearch.yandex mapsearchprovideryandex
