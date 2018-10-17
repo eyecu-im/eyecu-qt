@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="ru" version="2.1" sourcelanguage="en">
+<TS sourcelanguage="en" language="ru" version="2.1">
   <context>
     <name>BirthdayReminder</name>
     <message>

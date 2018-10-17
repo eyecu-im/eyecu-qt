@@ -4,12 +4,12 @@
   <message>
    <location filename="../../utils/passworddialog.cpp" line="12"/>
    <source>Enter password:</source>
-   <translation type="unfinished"/>
+   <translation>Введіть пароль:</translation>
   </message>
   <message>
    <location filename="../../utils/passworddialog.cpp" line="18"/>
    <source>Save password</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти пароль</translation>
   </message>
  </context>
  <context>

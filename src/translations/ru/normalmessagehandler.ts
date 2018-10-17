@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>When receiving new single message</source>
-        <translation>При получении нового отдельно сообщения</translation>
+        <translation>При получении нового отдельного сообщения</translation>
     </message>
     <message>
         <source>&lt;b&gt;The message with a error is received&lt;/b&gt;</source>

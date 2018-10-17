@@ -4,28 +4,28 @@
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="32"/>
    <source>Weather viewer</source>
-   <translation type="unfinished"/>
+   <translation>Погодні переглядачі</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="33"/>
    <source>Provides data about the weather</source>
-   <translation type="unfinished"/>
+   <translation>Надає дані про погоду</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="78"/>
    <location filename="../../plugins/weather/weather.cpp" line="97"/>
    <source>View Weather</source>
-   <translation type="unfinished"/>
+   <translation>Переглянути погоду</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="139"/>
    <source>View</source>
-   <translation type="unfinished"/>
+   <translation>Вид</translation>
   </message>
   <message>
    <location filename="../../plugins/weather/weather.cpp" line="147"/>
    <source>Close</source>
-   <translation type="unfinished"/>
+   <translation>Закрити</translation>
   </message>
  </context>
 </TS>

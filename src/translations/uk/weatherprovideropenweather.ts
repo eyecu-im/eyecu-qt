@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/weatherprovideropenweather/weatherprovideropenweather.cpp" line="13"/>
    <source>Weather Provider OpenWeatherMap</source>
-   <translation type="unfinished"/>
+   <translation>Провайдер погоди OpenWeatherMap</translation>
   </message>
   <message>
    <location filename="../../plugins/weatherprovideropenweather/weatherprovideropenweather.cpp" line="14"/>
    <source>Allows to use OpenWeatherMap as a Weather Provider</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє використовувати OpenWeatherMap як постачальника погоди</translation>
   </message>
   <message>
    <location filename="../../plugins/weatherprovideropenweather/weatherprovideropenweather.cpp" line="33"/>
    <source>Google</source>
-   <translation type="unfinished"/>
+   <translation>Google</translation>
   </message>
  </context>
 </TS>
