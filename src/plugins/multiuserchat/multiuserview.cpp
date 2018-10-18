@@ -11,6 +11,8 @@
 #include <definitions/multiusersorthandlerorders.h>
 // *** <<< eyeCU <<< ***
 #include <definitions/optionvalues.h>
+#include <definitions/resources.h>
+#include <definitions/menuicons.h>
 // *** >>> eyeCU >>> ***
 #include <utils/logger.h>
 
@@ -395,22 +397,32 @@ void MultiUserView::updateUserItem(IMultiUser *AUser)
 	{
 		QIcon userIcon;
 		QColor userColor;
+		QString userStar;
 		QFont userFont = userItem->font();
 		IPresenceItem userPresence = AUser->presence();
 
 		// User Role
 		if (AUser->role() == MUC_ROLE_MODERATOR)
 		{
+// *** <<< eyeCU <<< ***
+			userStar = MNI_MUC_ROLE_MODERATOR;
+// *** >>> eyeCU >>> ***
 			userFont.setBold(true);
 			userColor = palette().color(QPalette::Active, QPalette::Text);
 		}
 		else if (AUser->role() == MUC_ROLE_PARTICIPANT)
 		{
+// *** <<< eyeCU <<< ***
+			userStar = MNI_MUC_ROLE_PARTICIPANT;
+// *** >>> eyeCU >>> ***
 			userFont.setBold(false);
 			userColor = palette().color(QPalette::Active, QPalette::Text);
 		}
 		else
 		{
+// *** <<< eyeCU <<< ***
+			userStar = MNI_MUC_ROLE_VISITOR;
+// *** >>> eyeCU >>> ***
 			userFont.setBold(false);
 			userColor = palette().color(QPalette::Disabled, QPalette::Text);
 		}
@@ -419,18 +431,38 @@ void MultiUserView::updateUserItem(IMultiUser *AUser)
 		QString affilation = AUser->affiliation();
 		if (AUser->affiliation() == MUC_AFFIL_OWNER)
 		{
+// *** <<< eyeCU <<< ***
+			userStar = MNI_MUC_AFFIL_OWNER;
+// *** >>> eyeCU >>> ***
 			userFont.setStrikeOut(false);
 			userFont.setUnderline(true);
 			userFont.setItalic(false);
 		}
 		else if (AUser->affiliation() == MUC_AFFIL_ADMIN)
 		{
+// *** <<< eyeCU <<< ***
+			userStar = MNI_MUC_AFFIL_ADMIN;
+// *** >>> eyeCU >>> ***
 			userFont.setStrikeOut(false);
 			userFont.setUnderline(false);
 			userFont.setItalic(false);
 		}
 		else if (AUser->affiliation() == MUC_AFFIL_MEMBER)
 		{
+// *** <<< eyeCU <<< ***
+			if (AUser->role() == MUC_ROLE_VISITOR)
+			{
+				userStar = MNI_MUC_ROLE_VISITOR;
+			}
+			else if (AUser->role() == MUC_ROLE_MODERATOR)
+			{
+				userStar = MNI_MUC_ROLE_MODERATOR;
+			}
+			else
+			{
+				userStar = MNI_MUC_AFFIL_MEMBER;
+			}
+// *** >>> eyeCU >>> ***
 			userFont.setStrikeOut(false);
 			userFont.setUnderline(false);
 			userFont.setItalic(false);
@@ -455,7 +487,16 @@ void MultiUserView::updateUserItem(IMultiUser *AUser)
 		userItem->setText(AUser->nick());
 
 		userItem->setData(userPresence.show, MUDR_PRESENCE_SHOW);
-		userItem->setData(userPresence.status, MUDR_PRESENCE_STATUS);
+// *** <<< eyeCU <<< ***
+		QString statusName = FStatusChanger!=NULL ? FStatusChanger->nameByShow(userPresence.show) : QString::null;
+		QString statusMessage = userPresence.status;
+		if (statusMessage.isEmpty())
+			userItem->setData(statusName, MUDR_PRESENCE_STATUS);
+		else userItem->setData(Qt::escape(statusMessage), MUDR_PRESENCE_STATUS);
+
+		IconStorage *iconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
+		userItem->setData(iconStorage->getIcon(userStar), MUDR_AFFILICON);
+// *** >>> eyeCU >>> ***
 
 		AdvancedDelegateItem nickLabel = userItem->data(MUDR_LABEL_ITEMS).value<AdvancedDelegateItems>().value(MUIL_MULTIUSERCHAT_NICK);
 		if (nickLabel.d->hints.value(AdvancedDelegateItem::FontHint)!=userFont ||nickLabel.d->hints.value(AdvancedDelegateItem::Foreground)!=userColor)
@@ -488,6 +529,17 @@ void MultiUserView::updateItemNotify(QStandardItem *AItem)
 	else
 		statusLabel.d->data = QVariant();
 	insertItemLabel(statusLabel,AItem);
+
+// *** <<< eyeCU <<< ***
+	AdvancedDelegateItem affilIconLabel = labels.value(MUIL_MULTIUSERCHAT_AFFILICON);
+	if (!newNotify.footer.isNull())
+		affilIconLabel.d->data = newNotify.footer;
+	else if (Options::node(OPV_MUC_AFFILICON_SHOW).value().toBool() && FViewMode == IMultiUserView::ViewFull)
+		affilIconLabel.d->data = MUDR_AFFILICON;
+	else
+		affilIconLabel.d->data = QVariant();
+	insertItemLabel(affilIconLabel,AItem);
+// *** >>> eyeCU >>> ***
 }
 
 void MultiUserView::repaintUserItem(const QStandardItem *AItem)
@@ -656,6 +708,14 @@ void MultiUserView::onMultiUserChanged(IMultiUser *AUser, int AData, const QVari
 				statusLabel.d->hints.insert(AdvancedDelegateItem::FontItalic,true);
 				insertItemLabel(statusLabel,userItem);
 
+// *** <<< eyeCU <<< ***
+				AdvancedDelegateItem affilIconLabel;
+				affilIconLabel.d->id = MUIL_MULTIUSERCHAT_AFFILICON;
+				affilIconLabel.d->kind = AdvancedDelegateItem::CustomData;
+				affilIconLabel.d->data = Options::node(OPV_MUC_AFFILICON_SHOW).value().toBool() && FViewMode==IMultiUserView::ViewFull ? QVariant(MUDR_AFFILICON) : QVariant();
+				insertItemLabel(affilIconLabel,userItem);
+// *** >>> eyeCU >>> ***
+
 				foreach(const AdvancedDelegateItem &label, FGeneralLabels)
 					insertItemLabel(label,userItem);
 				updateUserItem(AUser);
@@ -765,6 +825,11 @@ void MultiUserView::onOptionsChanged(const OptionsNode &ANode)
 		updateLabels(MUDR_AVATAR_IMAGE);
 	}
 	else if (ANode.path() == OPV_MUC_STATUSDISPLAY)
+	{
+		foreach(QStandardItem *item, FUserItem)
+			updateItemNotify(item);
+	}
+	else if (ANode.path() == OPV_MUC_AFFILICON_SHOW)
 	{
 		foreach(QStandardItem *item, FUserItem)
 			updateItemNotify(item);

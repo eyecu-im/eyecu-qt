@@ -7,6 +7,9 @@
 
 //Position=MiddleCenter; Floor=200
 #define MUIL_MULTIUSERCHAT_STATUS                    AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleCenter,200,500)
+// *** <<< eyeCU <<< ***
+#define MUIL_MULTIUSERCHAT_AFFILICON                 AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleLeft,200,500)
+// *** >>> eyeCU >>> ***
 
 //Position=MiddleRight; Floor=128
 #define MUIL_MULTIUSERCHAT_AVATAR_RIGHT              AdvancedDelegateItem::makeId(AdvancedDelegateItem::MiddleRight,200,500)

@@ -77,6 +77,7 @@
 #define   OWO_ROSTER_PEP_ACTIVITY                 230
 #define   OWO_ROSTER_PEP_TUNE                     240
 #define   OWO_ROSTER_PEP_LOCATION                 250
+#define   OWO_CONFERENCES_AFFILICON_SHOW          270
 #define   OHO_ROSTER_AVATARS                      170
 #define   OWO_ROSTER_AVATARS_DISPLAYGRAY          180
 #define   OWO_ROSTER_AVATARS                      190
