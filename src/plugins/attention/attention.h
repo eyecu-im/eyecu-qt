@@ -15,6 +15,8 @@
 #include <interfaces/irostersview.h>
 #include <interfaces/irostersmodel.h>
 #include <interfaces/istatusicons.h>
+#include <interfaces/istatuschanger.h>
+#include <interfaces/ipresencemanager.h>
 
 #include "attentiondialog.h"
 
@@ -81,6 +83,7 @@ protected:
     void registerDiscoFeatures();
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void updateToolbar(IMessageChatWindow *AWindow);
+    void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const;
 
 // Imported Lion's code
     IMessageChatWindow *getWindow(const Jid &AStreamJid, const Jid &AContactJid);
@@ -100,6 +103,7 @@ private:
 	IMessageWidgets		*FMessageWidgets;
 	IMessageStyleManager *FMessageStyleManager;
 	IconStorage			*FIconStorage;
+    IStatusChanger      *FStatusChanger;
 	IStatusIcons		*FStatusIcons;
 	IMainWindowPlugin	*FMainWindowPlugin;
 	QMainWindow			*FMainWindow;
@@ -109,6 +113,9 @@ private:
     QMultiMap<IMessageChatWindow*, int>     FNotifiedMessages;
     QMap<int, AttentionDialog*>             FAttentionDialogs;
     QMap<IMessageChatWindow*, WindowStatus> FWindowStatus;
+    QTimer *FNudgeTimer;
+    QPoint FOldPoint;
+    void nudge();
 
 protected slots:
     void onChatWindowCreated(IMessageChatWindow *AWindow);
@@ -119,6 +126,7 @@ protected slots:
     void onNotificationRemoved(int ANotifyId);
     //-----
     void onWindowActivated();
+    void nudgeTimerTimeout();
 };
 
 #endif // ATTENTION_H

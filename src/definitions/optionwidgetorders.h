@@ -275,9 +275,11 @@
 #define OWO_MMPLAYER                              500
 #define OWO_TRACKER                               500
 #define OHO_ATTENTION                             600
-#define   OWO_ATTENTION_AYWAYSPLAYSOUND           610
+#define   OWO_ATTENTION_ALWAYSPLAYSOUND           610
 #define   OWO_ATTENTION_NOTIFICATIONPOPUP         620
 #define   OWO_ATTENTION_MAINWINDOWACTIVATE        630
+#define   OWO_ATTENTION_NUDGE                     640
+#define   OWO_ATTENTION_DISABLEIFDND              650
 #define OHO_JINGLERTP_COMMON                      600
 #define   OWO_JINGLERTP_COMMON_TIMEOUT            610
 #define   OWO_JINGLERTP_COMMON_RTCP               615

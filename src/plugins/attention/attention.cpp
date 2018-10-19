@@ -37,6 +37,7 @@ Attention::Attention():
         FMessageWidgets(NULL),
         FMessageStyleManager(NULL),
         FIconStorage(NULL),
+        FStatusChanger(NULL),
         FStatusIcons(NULL),
         FMainWindowPlugin(NULL),        
         FMainWindow(NULL),
@@ -93,6 +94,12 @@ bool Attention::initConnections(IPluginManager *APluginManager, int & /*AInitOrd
     if (plugin)
         FStatusIcons = qobject_cast<IStatusIcons *>(plugin->instance());
 
+    plugin = APluginManager->pluginInterface("IStatusChanger").value(0,NULL);
+    if (plugin)
+    {
+        FStatusChanger = qobject_cast<IStatusChanger *>(plugin->instance());
+    }
+
     plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
     if (plugin)
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
@@ -120,6 +127,9 @@ bool Attention::initConnections(IPluginManager *APluginManager, int & /*AInitOrd
 
     // AInitOrder = 200;   // This one should be initialized AFTER !
 
+    FNudgeTimer = new QTimer(this);
+    FNudgeTimer->setInterval(50);
+    connect(FNudgeTimer, SIGNAL(timeout()), SLOT(nudgeTimerTimeout()));
     return true;
 }
 
@@ -161,7 +171,9 @@ bool Attention::initObjects()
 bool Attention::initSettings()
 {
     Options::setDefaultValue(OPV_ATTENTION_NOTIFICATIONPOPUP, true);
-    Options::setDefaultValue(OPV_ATTENTION_AYWAYSPLAYSOUND, true);
+    Options::setDefaultValue(OPV_ATTENTION_ALWAYSPLAYSOUND, true);
+    Options::setDefaultValue(OPV_ATTENTION_NUDGE, true);
+    Options::setDefaultValue(OPV_ATTENTION_SILENTIFDND, true);
     if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
     return true;
@@ -174,7 +186,9 @@ QMultiMap<int, IOptionsDialogWidget *> Attention::optionsDialogWidgets(const QSt
 	{
 		widgets.insertMulti(OHO_ATTENTION, FOptionsManager->newOptionsDialogHeader(tr("Attention"), AParent));
 		widgets.insertMulti(OWO_ATTENTION_NOTIFICATIONPOPUP, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_NOTIFICATIONPOPUP), tr("Notification pop-up"), AParent));
-		widgets.insertMulti(OWO_ATTENTION_AYWAYSPLAYSOUND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_AYWAYSPLAYSOUND), tr("Always play sound"), AParent));
+		widgets.insertMulti(OWO_ATTENTION_ALWAYSPLAYSOUND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_ALWAYSPLAYSOUND), tr("Always play sound"), AParent));
+        widgets.insertMulti(OWO_ATTENTION_NUDGE, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_NUDGE), tr("Main window nudge"), AParent));
+        widgets.insertMulti(OWO_ATTENTION_DISABLEIFDND,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ATTENTION_SILENTIFDND),tr("Disable nudge and popup window if status is 'Do not disturb'"),AParent));
 	}
     return widgets;
 }
@@ -236,8 +250,14 @@ bool Attention::messageDisplay(const Message &AMessage, int ADirection)
 INotification Attention::messageNotify(INotifications *ANotifications, const Message &AMessage, int ADirection)
 {
     INotification notify;
+    bool isDND = FStatusChanger!=NULL ? FStatusChanger->statusItemShow(STATUS_MAIN_ID)==IPresence::DoNotDisturb : false;
+    bool isSilent = isDND && Options::node(OPV_ATTENTION_SILENTIFDND).value().toBool();
+    if (isSilent)
+        return notify;
     if (ADirection == IMessageProcessor::DirectionIn)
     {
+        if (FMainWindow && FMainWindow->isVisible() && Options::node(OPV_ATTENTION_NUDGE).value().toBool())
+            nudge();
         int kinds = ANotifications->enabledTypeNotificationKinds(NNT_ATTENTION);
         if (Options::node(OPV_ATTENTION_NOTIFICATIONPOPUP).value().toBool())
             kinds |= AttentionPopup;
@@ -246,7 +266,7 @@ INotification Attention::messageNotify(INotifications *ANotifications, const Mes
             IMessageChatWindow *window = getWindow(AMessage.to(), AMessage.from());
             if (window)
             {
-                if (!window->isActiveTabPage() || (kinds&INotification::SoundPlay && Options::node(OPV_ATTENTION_AYWAYSPLAYSOUND).value().toBool()))
+                if (!window->isActiveTabPage() || (kinds&INotification::SoundPlay && Options::node(OPV_ATTENTION_ALWAYSPLAYSOUND).value().toBool()))
                 {
                     notify.typeId = NNT_ATTENTION;
                     notify.data.insert(NDR_SOUND_FILE, SDF_ATTENTION_ALARM);
@@ -457,6 +477,20 @@ void Attention::fillContentOptions(IMessageChatWindow *AWindow, IMessageStyleCon
     }
 }
 
+void Attention::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const
+{
+    IMessageChatWindow *window = FMessageWidgets!=NULL ? FMessageWidgets->findChatWindow(AStreamJid,AContactJid,true) : NULL;
+    if (window)
+    {
+        IMessageStyleContentOptions options;
+        options.kind = IMessageStyleContentOptions::KindStatus;
+        options.type |= IMessageStyleContentOptions::TypeEvent;
+        options.direction = IMessageStyleContentOptions::DirectionIn;
+        options.time = QDateTime::currentDateTime();
+        window->viewWidget()->appendText(AMessage,options);
+    }
+}
+
 void Attention::showDateSeparator(IMessageChatWindow *AWindow, const QDateTime &ADateTime)
 {
     if (Options::node(OPV_MESSAGES_SHOWDATESEPARATORS).value().toBool())
@@ -486,6 +520,7 @@ void Attention::showStyledMessage(IMessageChatWindow *AWindow, const Message &AM
 	options.kind = IMessageStyleContentOptions::KindMessage;
 	options.type = IMessageStyleContentOptions::TypeEvent;
     options.time = AMessage.dateTime();
+    QString notifyMsg;
 
     if (Options::node(OPV_MESSAGES_SHOWDATESEPARATORS).value().toBool())
         options.timeFormat = FMessageStyleManager->timeFormat(options.time, options.time);
@@ -493,13 +528,23 @@ void Attention::showStyledMessage(IMessageChatWindow *AWindow, const Message &AM
         options.timeFormat = FMessageStyleManager->timeFormat(options.time);
 
 	if (AWindow->streamJid().isValid() && AWindow->contactJid().isValid() ? AWindow->contactJid()!=AMessage.to() : !(AWindow->contactJid().isValid() && !AMessage.to().isEmpty()))
-		options.direction = IMessageStyleContentOptions::DirectionIn;
+    {
+        options.direction = IMessageStyleContentOptions::DirectionIn;
+        notifyMsg = tr("%1 sent you Attention message!").arg(HTML_ESCAPE(FMessageStyleManager->contactName(AWindow->streamJid(),AWindow->contactJid())));
+    }
     else
-		options.direction = IMessageStyleContentOptions::DirectionOut;
+    {
+        options.direction = IMessageStyleContentOptions::DirectionOut;
+        notifyMsg = tr("You sent Attention message to %1").arg(HTML_ESCAPE(FMessageStyleManager->contactName(AWindow->streamJid(),AWindow->contactJid())));
+    }
 
-    fillContentOptions(AWindow,options);
-    showDateSeparator(AWindow,options.time);
-    AWindow->viewWidget()->appendMessage(AMessage, options);
+    notifyInChatWindow(AWindow->streamJid(),AWindow->contactJid(), notifyMsg);
+    if (!AMessage.body().isEmpty() && !AMessage.body().isNull())
+    {
+    //    showDateSeparator(AWindow,options.time);
+        fillContentOptions(AWindow,options);
+        AWindow->viewWidget()->appendMessage(AMessage, options);
+    }
 }
 
 // SLOTS
@@ -584,6 +629,37 @@ void Attention::onNotificationRemoved(int ANotifyId)
 {
     if (FAttentionDialogs.contains(ANotifyId))
         FAttentionDialogs.take(ANotifyId)->accept();
+}
+
+void Attention::nudge()
+{
+    if (FMainWindow || FNudgeTimer || !FNudgeTimer->isActive())
+    {
+        FOldPoint = FMainWindow->pos();
+        FNudgeTimer->start();
+    }
+
+}
+
+void Attention::nudgeTimerTimeout() {
+    static uint count = 0;
+
+    if(!FMainWindow) {
+        FNudgeTimer->stop();
+        count = 0;
+        return;
+    }
+    if(count < 40) {
+        int rH = qrand()%10, rW = qrand()%10;
+        QPoint newPoint(FOldPoint.x()+rH, FOldPoint.y()+rW);
+        FMainWindow->move(newPoint);
+        count++;
+    }
+    else {
+        count = 0;
+        FNudgeTimer->stop();
+        FMainWindow->move(FOldPoint);
+    }
 }
 
 #if QT_VERSION < 0x050000

@@ -588,7 +588,9 @@
 // Attention
 #define OPV_ATTENTION_ROOT                              "attention"
 #define OPV_ATTENTION_NOTIFICATIONPOPUP                 "attention.notification-popup"
-#define OPV_ATTENTION_AYWAYSPLAYSOUND                   "attention.always-play-sound"
+#define OPV_ATTENTION_ALWAYSPLAYSOUND                   "attention.always-play-sound"
+#define OPV_ATTENTION_NUDGE                             "attention.mainwindow-nudge"
+#define OPV_ATTENTION_SILENTIFDND                       "attention.silent-if-dnd"
 
 // Jingle
 #define OPV_JINGLE                                      "jingle"
