@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>QpFFMpeg</DisplayName>
  <Description>QtPurple - FFMpeg library</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-17</ReleaseDate>
+ <Version>2.0.1</Version>
+ <ReleaseDate>2018-10-19</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
- <UpdateText>Updated to new FFMgeg library version (4.0.2)</UpdateText>
+ <UpdateText>Replace buggy QpFFMpeg.dll with a good one.</UpdateText>
  <Dependencies>ru.purplesoft.qtpurple,org.digia.qt5.multimedia->=5.5.1,org.ffmpeg.library-=58.25.100</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>

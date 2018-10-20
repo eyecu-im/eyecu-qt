@@ -1,15 +1,15 @@
 echo off
 
-set qtdir=h:\qt\5.5\msvc2013
+set qtdir=h:\qt\5.5\msvc2013_64
 set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
-set OPENSSLDIR=h:\openssl
-set FFMPEGDIR=h:\ffmpeg
+set OPENSSLDIR=h:\openssl.x64
+set FFMPEGDIR=h:\ffmpeg.x64
 
-set platform=x86
+set platform=x64
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=2.0.0.20181017
+set version=2.0.0.20181019
 set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
