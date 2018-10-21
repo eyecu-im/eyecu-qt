@@ -35,6 +35,7 @@ JingleSession::JingleSession(const Jid &AThisParty, const Jid &AOtherParty,
 				SLOT(onSessionInformed(QDomElement)));
 		connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)),
 				parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,IJingle::SessionStatus,Jid,IJingle::Reason)));
+		connect(this, SIGNAL(sessionDestroyed(QString)),parent(),SLOT(onSessionDestroyed(QString)));
 
 		IPresence *presence = FPresenceManager->findPresence(FThisParty);
 		if (presence)
@@ -71,37 +72,15 @@ JingleSession::JingleSession(const JingleStanza &AStanza):
                         setParent(FJingle->appByNS(FApplicationNamespace)->instance());
 						if (!addContent(content.attribute("name"), description, transport,
 										content.attribute("initiator")==QString("responder")))
-                            qWarning() << "addContent() failed!";
+							LOG_WARNING("addContent() failed!");
                         FValid=true;
-						connect(this,SIGNAL(sessionAccepted(QString)),
-								parent(), SLOT(onSessionAccepted(QString)));
-						connect(this,SIGNAL(sessionTerminated(QString,IJingle::SessionStatus,
-															  IJingle::Reason)),
-								parent(),SLOT(onSessionTerminated(QString,IJingle::SessionStatus,
-																  IJingle::Reason)));
-						connect(this,SIGNAL(sessionInformed(QDomElement)),
-								parent(),SLOT(onSessionInformed(QDomElement)));
-						connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
-															   IJingle::SessionStatus,Jid,IJingle::Reason)),
-								parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
-																   IJingle::SessionStatus,Jid,IJingle::Reason)));
-						connect(this, SIGNAL(sessionDestroyed(QString)),parent(),SLOT(onSessionDestroyed(QString)));
-
-						IPresence *presence = FPresenceManager->findPresence(FThisParty);
-						if (presence)
-						{
-							connect(presence->instance(), SIGNAL(itemReceived(IPresenceItem, IPresenceItem)),
-														  SLOT(onPresenceItemReceived(IPresenceItem, IPresenceItem)));
-							connect(presence->instance(), SIGNAL(aboutToClose(int,QString)),
-														  SLOT(onPresenceAboutToClose(int,QString)));
-						}
                     }
                 }
             }
 			if (!FSessions.contains(FSid))
 				FSessions.insert(FSid, this);
             else
-                qWarning() << "Session exists!";
+				LOG_WARNING("Session exists!");
         }
     }
 }
@@ -137,8 +116,18 @@ void JingleSession::setInitiated(IJingleApplication *AApplication)
 	connect(this,SIGNAL(actionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
 										   IJingle::SessionStatus,Jid,IJingle::Reason)),
 			parent(),SLOT(onActionAcknowledged(QString,IJingle::Action,IJingle::CommandRespond,
-											   IJingle::SessionStatus,Jid,IJingle::Reason)));	
+											   IJingle::SessionStatus,Jid,IJingle::Reason)));
 	connect(this, SIGNAL(sessionDestroyed(QString)),parent(),SLOT(onSessionDestroyed(QString)));
+
+	IPresence *presence = FPresenceManager->findPresence(FThisParty);
+	if (presence)
+	{
+		connect(presence->instance(), SIGNAL(itemReceived(IPresenceItem, IPresenceItem)),
+									  SLOT(onPresenceItemReceived(IPresenceItem, IPresenceItem)));
+		connect(presence->instance(), SIGNAL(aboutToClose(int,QString)),
+									  SLOT(onPresenceAboutToClose(int,QString)));
+	}
+
 	emit sessionInitiated(FSid);
 }
 

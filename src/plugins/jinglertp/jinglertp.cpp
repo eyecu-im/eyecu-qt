@@ -316,7 +316,7 @@ bool JingleRtp::checkSupported(QDomElement &ADescription)
 
 void JingleRtp::onSessionInitiated(const QString &ASid)
 {
-	LOG_DEBUG(QString("JingleRtp::onSessionInitiated(%1)").arg(ASid));
+	LOG_DEBUG(QString("onSessionInitiated(%1)").arg(ASid));
 	Jid contactJid = FJingle->contactJid(ASid);
 	Jid streamJid = FJingle->streamJid(ASid);
 	writeCallMessageIntoChat(getWindow(streamJid, contactJid), Called);
@@ -328,7 +328,7 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 									 IJingle::SessionStatus APreviousStatus,
 									 const Jid &ARedirect, IJingle::Reason AReason)
 {
-	LOG_DEBUG(QString("JingleRtp::onActionAcknowleged(%1, %2, %3, %4, %5, %6")
+	LOG_DEBUG(QString("onActionAcknowleged(%1, %2, %3, %4, %5, %6")
 			  .arg(ASid).arg(AAction).arg(ARespond).arg(APreviousStatus)
 			  .arg(ARedirect.full()).arg(AReason));
 
@@ -379,7 +379,7 @@ void JingleRtp::onActionAcknowledged(const QString &ASid, IJingle::Action AActio
 
 void JingleRtp::onSessionAccepted(const QString &ASid)
 {
-	LOG_DEBUG((QString("JingleRtp::onSessionAccepted(%1)").arg(ASid)));
+	LOG_DEBUG((QString("onSessionAccepted(%1)").arg(ASid)));
 	IMessageChatWindow *window = chatWindow(ASid);
 	if (window)
 		updateChatWindowActions(window);
@@ -388,10 +388,10 @@ void JingleRtp::onSessionAccepted(const QString &ASid)
 
 void JingleRtp::onSessionConnected(const QString &ASid)
 {
-	LOG_DEBUG((QString("JingleRtp::onSessionConnected(%1)").arg(ASid)));
+	LOG_DEBUG((QString("onSessionConnected(%1)").arg(ASid)));
 	bool success(false);
 	QThread *ioThread = new QThread(this);
-	connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
+	connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));	
 
 	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it=contents.constBegin(); it!=contents.constEnd(); it++)
@@ -464,7 +464,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 									IJingle::SessionStatus APreviousStatus,
 									IJingle::Reason AReason)
 {
-	LOG_DEBUG((QString("JingleRtp::onSessionTerminated(%1, %2, %3)")
+	LOG_DEBUG((QString("onSessionTerminated(%1, %2, %3)")
 			   .arg(ASid).arg(APreviousStatus).arg(AReason)));
 
 	CallType type;
@@ -505,7 +505,7 @@ void JingleRtp::onSessionTerminated(const QString &ASid,
 
 void JingleRtp::onSessionInformed(const QDomElement &AInfoElement)
 {
-	LOG_DEBUG(QString("JingleRtp::onSessionInformed(%1)").arg(AInfoElement.tagName()));
+	LOG_DEBUG(QString("onSessionInformed(%1)").arg(AInfoElement.tagName()));
 
 	QDomElement event = AInfoElement.firstChildElement();
 	if (event.namespaceURI() == NS_JINGLE_APPS_RTP_INFO)
@@ -528,7 +528,7 @@ void JingleRtp::onSessionDestroyed(const QString &ASid)
 
 void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 {
-	LOG_DEBUG(QString("JingleRtp::checkRtpContent(%1, %2)").arg(AContent->name())
+	LOG_DEBUG(QString("checkRtpContent(%1, %2)").arg(AContent->name())
 														   .arg(ARtpDevice->objectName()));
 	QByteArray data = ARtpDevice->peek(2);
 	if (data.size()==2)
@@ -573,7 +573,7 @@ void JingleRtp::notifyRinging(const QString &ASid)
 
 void JingleRtp::callNotify(const QString &ASid, CallType AEventType, IJingle::Reason AReason)
 {
-	LOG_DEBUG(QString("JingleRtp::callNotify(%1, %2)").arg(ASid).arg(AEventType));
+	LOG_DEBUG(QString("callNotify(%1, %2)").arg(ASid).arg(AEventType));
 
 	Jid contactJid=FJingle->contactJid(ASid);
 	Jid streamJid=FJingle->streamJid(ASid);
@@ -907,7 +907,7 @@ bool JingleRtp::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 
 bool JingleRtp::checkContent(IJingleContent *AContent)
 {
-	LOG_DEBUG("JingleRtp::checkContent()");
+	LOG_DEBUG("checkContent()");
 	QDomElement description(AContent->description());
 
 	QHash<int, QPayloadType> sourcePayloadTypes = payloadTypesFromDescription(description);
@@ -932,12 +932,12 @@ bool JingleRtp::checkContent(IJingleContent *AContent)
 
 	if (description.firstChildElement("payload-type").isNull())
 	{
-		LOG_ERROR("JingleRtp::checkContent() returns false: no supported payload types found");
+		LOG_ERROR("checkContent() returns FALSE: no supported payload types found");
 		return false;
 	}
 	else
 	{
-		LOG_INFO("JingleRtp::checkContent() returns true");
+		LOG_INFO("checkContent() returns TRUE");
 		return true;
 	}
 }
@@ -1221,7 +1221,7 @@ bool JingleRtp::hasPendingContents(const QString &ASid)
 
 void JingleRtp::establishConnection(const QString &ASid)
 {
-	LOG_DEBUG(QString("JingleRtp::establishConnection(%1)").arg(ASid));
+	LOG_DEBUG(QString("establishConnection(%1)").arg(ASid));
 
 	removeNotification(ASid);
 	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
@@ -1269,7 +1269,7 @@ void JingleRtp::checkRunningContents(const QString &ASid)
 MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 										   QIODevice *ARtpDevice)
 {
-	LOG_DEBUG(QString("JingleRtp::startStreamMedia(%1, %2)")
+	LOG_DEBUG(QString("startStreamMedia(%1, %2)")
 			  .arg(APayloadType).arg(ARtpDevice->objectName()));
 
 	int codecId = QPayloadType::idByName(APayloadType.name);
@@ -1291,10 +1291,7 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 
 			if (streamer->status() == MediaStreamer::Stopped)
 			{				
-				connect(streamer, SIGNAL(statusChanged(int)),
-								  SLOT(onStreamerStatusChanged(int)));
-
-				ARtpDevice->setParent(streamer);
+				connect(streamer, SIGNAL(statusChanged(int)), SLOT(onStreamerStatusChanged(int)));
 				streamer->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt());
 				streamer->setStatus(MediaStreamer::Running);
 				FPluginManager->delayShutdown();
@@ -1321,8 +1318,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 									   QIODevice *ARtpIODevice)
 {
 	MediaPlayer *player = new MediaPlayer(selectedAudioDevice(QAudio::AudioOutput),
-										  ARtpIODevice, APayloadType, this);	
-	ARtpIODevice->setParent(player); // To delete it automaticaly once MediaPlayer is deleted
+										  ARtpIODevice, APayloadType, this);
 	ARtpIODevice->open(QIODevice::ReadOnly|QIODevice::WriteOnly);
 	if (player->status() == MediaPlayer::Closed)
 	{
@@ -1632,7 +1628,7 @@ void JingleRtp::onAddressesChanged()
 
 void JingleRtp::onStreamerStatusChanged(int AStatus)
 {
-	LOG_DEBUG(QString("JingleRtp::onStreamerStatusChanged(%1)").arg(AStatus));
+	LOG_DEBUG(QString("onStreamerStatusChanged(%1)").arg(AStatus));
 
 	MediaStreamer *streamer = qobject_cast<MediaStreamer *>(sender());
 	IJingleContent *content = FStreamers.key(streamer);
@@ -1684,7 +1680,7 @@ void JingleRtp::onStreamerStatusChanged(int AStatus)
 
 void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 {
-	LOG_DEBUG(QString("JingleRtp::onPlayerStatusChanged(%1, %2)")
+	LOG_DEBUG(QString("onPlayerStatusChanged(%1, %2)")
 			  .arg(AStatusNew).arg(AStatusOld));
 
 	MediaPlayer *player = qobject_cast<MediaPlayer*>(sender());
@@ -1914,7 +1910,7 @@ void JingleRtp::onRtpReadyRead()
 
 void JingleRtp::onConnectionEstablished(const QString &ASid, const QString &AName)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionEstablished(%1)").arg(AName));
+	LOG_DEBUG(QString("onConnectionEstablished(%1)").arg(AName));
 	IJingleContent *content = FJingle->content(ASid, AName);
 	if (content)
 	{
@@ -1928,7 +1924,7 @@ void JingleRtp::onConnectionEstablished(const QString &ASid, const QString &ANam
 
 void JingleRtp::onConnectionFailed(const QString &ASid, const QString &AName)
 {
-	LOG_DEBUG(QString("JingleRtp::onConnectionFailed(%1)").arg(AName));
+	LOG_DEBUG(QString("onConnectionFailed(%1)").arg(AName));
 	removePendingContent(ASid, AName);
 	if (!hasPendingContents(ASid))
 	{
@@ -1937,7 +1933,7 @@ void JingleRtp::onConnectionFailed(const QString &ASid, const QString &AName)
 		else
 			FJingle->setConnected(ASid);
 	}
-	LOG_DEBUG("JingleRtp::onConnectionFailed() finished!");
+	LOG_DEBUG("onConnectionFailed() finished!");
 }
 
 void JingleRtp::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)

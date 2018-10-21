@@ -3,7 +3,6 @@
 
 #include <QString>
 #include <QDomDocument>
-#include <QDebug>
 #include <utils/jid.h>
 #include <interfaces/ijingle.h>
 #include <interfaces/ipresencemanager.h>
