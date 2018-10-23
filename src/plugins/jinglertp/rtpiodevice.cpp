@@ -46,15 +46,18 @@ bool RtpIODevice::waitForReadyRead(int msecs)
 {
 	if (bytesAvailable())
 		return true;
+	if (!isOpen())
+		return false;
 	FInputMutex.lock();
-	bool result = FInputWait.wait(&FInputMutex, quint32(msecs));
+	bool result = FInputWait.wait(&FInputMutex, quint32(msecs)) && isOpen();
 	FInputMutex.unlock();
 	return result;
 }
 
 qint64 RtpIODevice::readData(char *data, qint64 maxlen)
 {
-	waitForReadyRead(FReadTimeout); // RtpIODevice is blocking!
+	if (!waitForReadyRead(FReadTimeout)) // RtpIODevice is blocking!
+		return -1;
 
 	FInputMutex.lock();
 	bool emitSignal(false);
@@ -172,4 +175,6 @@ void RtpIODevice::close()
 		FRtcp->disconnect(SIGNAL(bytesWritten(qint64)), this, SIGNAL(bytesWritten(qint64)));
 		FRtcp->disconnect(SIGNAL(readyRead()), this, SIGNAL(onReadyRead()));
 	}
+
+	FInputWait.wakeAll();
 }

@@ -820,12 +820,12 @@ void JingleRtp::registerDiscoFeatures()
 }
 
 bool JingleRtp::hasVideo(const QString &ASid) const
-{
-	return false; // Video is not supported yet
-	QHash<QString, IJingleContent *> contents=FJingle->contents(ASid);
-	for (QHash<QString, IJingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
-		if ((*it)->description().attribute("media")=="video")
-			return true;
+{	
+	Q_UNUSED(ASid); // Video is not supported yet
+//	QHash<QString, IJingleContent *> contents=FJingle->contents(ASid);
+//	for (QHash<QString, IJingleContent *>::const_iterator it=contents.constBegin(); it!=contents.constEnd(); it++)
+//		if ((*it)->description().attribute("media")=="video")
+//			return true;
 	return false;
 }
 
@@ -1238,6 +1238,7 @@ void JingleRtp::establishConnection(const QString &ASid)
 
 void JingleRtp::checkRunningContents(const QString &ASid)
 {
+	LOG_DEBUG(QString("checkRunningContents(%1)").arg(ASid));
 	bool pending(false);
 	QHash<QString,IJingleContent*> contents = FJingle->contents(ASid);
 	for (QHash<QString,IJingleContent*>::ConstIterator it=contents.constBegin();
@@ -1254,16 +1255,12 @@ void JingleRtp::checkRunningContents(const QString &ASid)
 	}
 
 	if (!pending) {
-		LOG_DEBUG("No pending contents left! Closing I/O devices..");
-		QList<QIODevice *> devices = FIODevices.values(ASid);
-		for (QList<QIODevice *>::ConstIterator it = devices.constBegin();
-			 it != devices.constEnd(); ++it)
-			(*it)->close();
+		LOG_DEBUG("No pending contents left! Removing I/O devices from the list...");
 		FIODevices.remove(ASid);
-
 		LOG_DEBUG("Destroying session...");
 		FJingle->sessionDestroy(ASid);
 	}
+	LOG_DEBUG("checkRunningContents(): Done!");
 }
 
 MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
@@ -1292,7 +1289,7 @@ MediaStreamer *JingleRtp::startStreamMedia(const QPayloadType &APayloadType,
 			if (streamer->status() == MediaStreamer::Stopped)
 			{				
 				connect(streamer, SIGNAL(statusChanged(int)), SLOT(onStreamerStatusChanged(int)));
-				streamer->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt());
+				streamer->setVolume(quint8(Options::node(OPV_JINGLE_RTP_AUDIO_INPUT_VOLUME).value().toInt()));
 				streamer->setStatus(MediaStreamer::Running);
 				FPluginManager->delayShutdown();
 				return streamer;
@@ -1323,7 +1320,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 	if (player->status() == MediaPlayer::Closed)
 	{
 		connect(player, SIGNAL(statusChanged(int,int)), SLOT(onPlayerStatusChanged(int,int)));
-		player->setVolume(Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME).value().toInt());
+		player->setVolume(quint8(Options::node(OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME).value().toInt()));
 		if (player->setStatus(MediaPlayer::Running))
 		{
 			LOG_INFO("Player started successfuly!");
@@ -1373,6 +1370,11 @@ void JingleRtp::stopSessionMedia(const QString &ASid)
 			}
 		}
 	}
+
+	QList<QIODevice *> devices = FIODevices.values(ASid);
+	for (QList<QIODevice *>::ConstIterator it=devices.constBegin();
+		 it != devices.constEnd(); ++it)
+		(*it)->close();
 }
 
 IMessageChatWindow *JingleRtp::chatWindow(const QString &ASid) const
@@ -1522,13 +1524,13 @@ void JingleRtp::onOptionsChanged(const OptionsNode &ANode)
 	{
 		for (QHash<IJingleContent *, MediaStreamer *>::ConstIterator it = FStreamers.constBegin();
 			 it != FStreamers.constEnd(); ++it)
-			(*it)->setVolume(ANode.value().toInt());
+			(*it)->setVolume(quint8(ANode.value().toInt()));
 	}
 	else if (ANode.path() == OPV_JINGLE_RTP_AUDIO_OUTPUT_VOLUME)
 	{
 		for (QHash<IJingleContent *, MediaPlayer *>::ConstIterator it = FPlayers.constBegin();
 			 it != FPlayers.constEnd(); ++it)
-			(*it)->setVolume(ANode.value().toInt());
+			(*it)->setVolume(quint8(ANode.value().toInt()));
 	}
 }
 
@@ -1756,8 +1758,6 @@ void JingleRtp::onCall()
 					if (checkContent(*it))
 					{
 						if (!FJingle->fillIncomingTransport(*it))
-//							addPendingContent(*it, FillTransport);
-//						else
 							reason = IJingle::FailedTransport;
 					}
 					else
@@ -1765,7 +1765,7 @@ void JingleRtp::onCall()
 					if (reason != IJingle::NoReason)
 						break;
 				}
-//				if (!hasPendingContents(sid, FillTransport))
+
 				if (reason != IJingle::NoReason)
 					FJingle->sessionTerminate(sid, reason);
 				else {
