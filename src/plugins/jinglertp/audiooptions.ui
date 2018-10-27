@@ -119,6 +119,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
        <property name="digitCount">
         <number>3</number>
        </property>
@@ -163,6 +166,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="digitCount">
         <number>3</number>
