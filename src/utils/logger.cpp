@@ -186,7 +186,7 @@ void Logger::writeLog(quint32 AType, const QString &AClass, const QString &AMess
 		q->logFile.flush();
 
 #if defined(DEBUG_MODE)
-		if (AType <= Logger::Warning)
+		if (AType <= Logger::Warning || AType == Logger::Debug)
 			qDebug() << logLine;
 #endif
 
