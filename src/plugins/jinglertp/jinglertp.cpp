@@ -550,6 +550,8 @@ void JingleRtp::checkRtpContent(IJingleContent *AContent, QIODevice *ARtpDevice)
 				MediaPlayer *player = startPlayMedia(*it, rtpio);
 				if (player)
 				{
+					LOG_DEBUG(QString("Inserting player for content: %1/%2").arg(AContent->sid())
+																			.arg(AContent->name()));
 					FPlayers.insert(AContent, player);
 					callNotify(AContent->sid(), Connected);
 					return;
@@ -1338,6 +1340,7 @@ MediaPlayer *JingleRtp::startPlayMedia(const QPayloadType &APayloadType,
 
 void JingleRtp::stopSessionMedia(const QString &ASid)
 {
+	LOG_DEBUG(QString("stopSessionMedia(%1)").arg(ASid));
 	QHash<QString, IJingleContent *> contents = FJingle->contents(ASid);
 	for (QHash<QString, IJingleContent *>::ConstIterator it = contents.constBegin(); it!=contents.constEnd(); ++it)
 	{
@@ -1364,6 +1367,8 @@ void JingleRtp::stopSessionMedia(const QString &ASid)
 				player->setStatus(MediaPlayer::Finished);
 			else
 			{
+				LOG_DEBUG(QString("Removing player (a): %1/%2").arg((*it)->sid())
+															   .arg((*it)->name()));
 				FPlayers.remove(*it);
 				delete player;
 				FPluginManager->continueShutdown();
@@ -1704,7 +1709,8 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 			LOG_DEBUG("Finished!");
 			if (player)
 			{
-				LOG_DEBUG("Removing player...");
+				LOG_DEBUG(QString("Removing player (b): %1/%2").arg(content->sid())
+															   .arg(content->name()));
 				FPlayers.remove(content);
 				delete player;
 				FPluginManager->continueShutdown();
@@ -1729,7 +1735,8 @@ void JingleRtp::onPlayerStatusChanged(int AStatusNew, int AStatusOld)
 			{
 				LOG_DEBUG("Terminating session...");
 				FJingle->sessionTerminate(content->sid(), IJingle::FailedApplication);
-				LOG_DEBUG("Removing player...");
+				LOG_DEBUG(QString("Removing player (c): %1/%2").arg(content->sid())
+															   .arg(content->name()));
 				FPlayers.remove(content);
 			}
 			break;

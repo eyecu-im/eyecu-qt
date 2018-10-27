@@ -179,10 +179,7 @@ void Jingle::onConnectionError(const QString &ASid, const QString &AContentName)
 {
 	JingleSession *session = JingleSession::sessionBySessionId(ASid);
 	if (session && session->status() != Terminated)
-	{
-		session->deleteContent(AContentName);
 		emit connectionFailed(ASid, AContentName);
-	}
 }
 
 void Jingle::onIncomingTransportFilled(const QString &ASid, const QString &AContentName)

@@ -94,7 +94,7 @@ JingleSession::~JingleSession()
 		delete *it;
 	}
 
-	FContents.clear();	
+	FContents.clear();
 
 	if (FSessions.value(FSid)==this)
 		FSessions.remove(FSid);        // remove it from the list!
@@ -250,6 +250,7 @@ JingleContent *JingleSession::getContent(QIODevice *AIODevice)
 
 bool JingleSession::deleteContent(const QString &AName)
 {
+	LOG_DEBUG(QString("deleteContent(%1)").arg(AName));
     if (FContents.contains(AName))
     {
         JingleContent *content=FContents.take(AName);
@@ -448,6 +449,7 @@ JingleContent::JingleContent(const QString &AName, const QString &ASid, int ACom
 
 JingleContent::~JingleContent() // Cleanup device list
 {
+	qDebug() << "~JingleContent():" << FSid << "/" << FName;
 	JingleSession *session = JingleSession::sessionBySessionId(FSid);
 	if (session)
 		for(QMap<int, QIODevice*>::ConstIterator it = FIODevices.constBegin();
