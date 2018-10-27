@@ -2,14 +2,14 @@ echo off
 
 set qtdir=h:\qt\5.5\msvc2013_64
 set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
-set OPENSSLDIR=h:\openssl.x64
+set OPENSSLDIR=h:\openssl
 set FFMPEGDIR=h:\ffmpeg.x64
 
 set platform=x64
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=2.0.0.20181019
+set version=2.0.0.20181027
 set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
@@ -36,8 +36,8 @@ goto end
 mkdir %packages%\com.microsoft.vcredist\data\
 mkdir %packages%\com.microsoft.vcredist\meta\
 
-if not exist "%OPENSSLDIR%\libeay32.dll"  goto noopenssl
-if not exist "%OPENSSLDIR%\ssleay32.dll"  goto noopenssl
+if not exist "%OPENSSLDIR%\%platform%\libeay32.dll"  goto noopenssl
+if not exist "%OPENSSLDIR%\%platform%\ssleay32.dll"  goto noopenssl
 goto opensslexists
 :noopenssl
 echo Cannot find OpenSSL libraries
@@ -45,7 +45,7 @@ goto end
 
 :opensslexists
 mkdir %packages%\org.openssl.shared\data
-for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%%f.dll %packages%\org.openssl.shared\data\ /Y
+for %%f in (libeay32 ssleay32) do copy %OPENSSLDIR%\%platform%\%%f.dll %packages%\org.openssl.shared\data\ /Y
 
 if %platform%==x64 goto x64_platform
 copy cfg\32\* config\
@@ -74,7 +74,6 @@ xcopy %qtdir%\bin\QtMultimedia4.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 xcopy %qtdir%\bin\QtMultimediaKit1.dll %packages%\org.digia.qt4.multimedia\data\ /Y
 ) else goto no_multimedia
 
-rem xcopy %MSVCREDIST%\vcredist_%platform%.exe packages\com.microsoft.vcredist\meta\ /Y
 xcopy %qtdir%\plugins\sqldrivers\qsqlite4.dll %packages%\org.digia.qt4.sql\data\sqldrivers\* /Y
 xcopy %qtdir%\bin\QtSql4.dll %packages%\org.digia.qt4.sql\data\ /Y
 xcopy %qtdir%\bin\QtScript4.dll %packages%\org.digia.qt4.script\data\ /Y
@@ -85,8 +84,6 @@ xcopy %qtdir%\bin\QpGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
 xcopy %qtdir%\bin\QpUtil2.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-
-rem copy "%MSVCREDIST%\vcredist_%platform%.exe" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
 
 set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
 set targetqt=qt4
@@ -102,8 +99,6 @@ xcopy qt\5\* packages\ /E /Y
 xcopy plugins\5\* packages\ /E /Y
 xcopy purple\5\* packages\ /E /Y
 if not exist %qtdir%\bin\Qt5Multimedia.dll goto no_multimedia
-
-rem xcopy vcredist\x64\* packages\com.microsoft.vcredist\meta\ /Y
 
 xcopy %qtdir%\bin\icu*.dll %packages%\org.icuproject.icu\data\ /Y
 
@@ -138,8 +133,6 @@ xcopy %qtdir%\bin\QpUtil.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
 
-rem copy "%MSVCREDIST%" %packages%\com.microsoft.vcredist\data\vcredist_x64.exe /Y
-
 set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
 set targetqt=qt5
 :copy_qt_files
@@ -153,7 +146,7 @@ for %%f in (ar de es pl ja ru uk) do xcopy %qtdir%\translations\qt_%%f.qm %packa
 for %%f in (cs da eu fa fr gl he hu ko lt pt sk sl sv zh_CN zh_TW) do xcopy %qtdir%\translations\qt_%%f.qm %packages%\org.digia.%targetqt%.locales\data\translations\ /Y
 
 xcopy vcredist\%platform%\* packages\com.microsoft.vcredist\meta\ /Y
-copy "%MSVCREDIST%\vcredist_%platform%.exe" %packages%\com.microsoft.vcredist\data\vcredist_x86.exe /Y
+copy "%MSVCREDIST%\vcredist_%platform%.exe" %packages%\com.microsoft.vcredist\data\ /Y
 
 goto qtpurple
 :no_multimedia

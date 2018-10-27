@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>eyeCU</DisplayName>
  <Description>XMPP-based IM client with positioning</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
+ <Version>2.0.1</Version>
+ <ReleaseDate>2018-10-27</ReleaseDate>
  <Name>ru.rwsoftware.eyecu</Name>
  <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util->=2.0.0,org.openssl.shared->=1.0.2.16</Dependencies>
- <UpdateText>Fix URL processing to eliminate conflict with XHTML-IM anchors.</UpdateText>
+ <UpdateText>Updates in logging facility.</UpdateText>
  <Licenses>
   <License name="License Agreement" file="LICENSE.TXT"/>
  </Licenses>

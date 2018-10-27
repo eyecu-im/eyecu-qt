@@ -2,9 +2,10 @@
 <Package>
  <DisplayName>Jingle</DisplayName>
  <Description>Modern way of session negotiation for media exchange</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
+ <Version>2.0.2</Version>
+ <ReleaseDate>2018-10-27</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.jingle</Name>
+ <UpdateText>Minor fixes in Jingle stack. Fix crash on connection error.</UpdateText>
  <Default>true</Default>
  <SortingPriority>23</SortingPriority>
  <RequiresAdminRights>true</RequiresAdminRights>

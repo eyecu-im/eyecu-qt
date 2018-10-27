@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>QpFFMpeg</DisplayName>
  <Description>QtPurple - FFMpeg library</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-17</ReleaseDate>
+ <Version>2.0.3</Version>
+ <ReleaseDate>2018-10-27</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
- <UpdateText>Updated to new FFMgeg library version (4.0.2)</UpdateText>
+ <UpdateText>Correctly terminate play once input dewvice is closed. Some other fixes and imrovements.</UpdateText>
  <Dependencies>ru.purplesoft.qtpurple,org.digia.qt4.multimedia->=4.8.7,org.ffmpeg.library-=58.25.100</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
