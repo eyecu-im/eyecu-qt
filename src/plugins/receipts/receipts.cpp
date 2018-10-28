@@ -123,7 +123,7 @@ bool Receipts::initObjects()
         notifyType.order = NTO_RECEIPTS_NOTIFY;
         if (FIconStorage)
             notifyType.icon = FIconStorage->getIcon(MNI_RECEIPTS);
-        notifyType.title = tr("When message delivery notification recieved");
+        notifyType.title = tr("When message delivery notification received");
         notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
         notifyType.kindDefs = notifyType.kindMask;
         FNotifications->registerNotificationType(NNT_RECEIPTS, notifyType);
@@ -293,7 +293,7 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
     Q_UNUSED(AStreamJid)
     Q_UNUSED(ADirectionIn)
 
-    if (!AMessage.stanza().firstElement("recieved", NS_RECEIPTS).isNull())
+    if (!AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull())
         return true;
     if (!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
     {

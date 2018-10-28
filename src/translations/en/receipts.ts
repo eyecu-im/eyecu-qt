@@ -26,8 +26,8 @@
   </message>
   <message>
    <location line="126" filename="../../plugins/receipts/receipts.cpp"/>
-   <source>When message delivery notification recieved</source>
-   <translation>When message delivery notification recieved</translation>
+   <source>When message delivery notification received</source>
+   <translation>When message delivery notification received</translation>
   </message>
   <message>
    <location line="159" filename="../../plugins/receipts/receipts.cpp"/>
