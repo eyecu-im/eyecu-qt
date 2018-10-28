@@ -272,6 +272,9 @@
 // Message receipts
 #define MNI_RECEIPTS                    "receipts"
 
+// Chat Markers
+#define MNI_CHATMARKERS                 "chatmarkers"
+
 //Poi
 #define MNI_POI                         "poi"
 #define MNI_POI_TLB                     "poitoolbar"

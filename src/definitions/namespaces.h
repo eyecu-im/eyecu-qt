@@ -110,6 +110,7 @@
 #define NS_XHTML								"http://www.w3.org/1999/xhtml"
 #define NS_XHTML_IM								"http://jabber.org/protocol/xhtml-im"
 #define NS_X_POI                                "jabber:x:poi"
+#define NS_CHATMARKERS                          "urn:xmpp:chat-markers:0"
 
 //Jingle
 #define NS_JINGLE                               "urn:xmpp:jingle:1"

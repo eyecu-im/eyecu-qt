@@ -40,6 +40,8 @@
 #define SDF_ATTENTION_ALARM               "attentionAlarm"
 //Receipts
 #define SDF_RECEIPTS_DELIVERED            "receiptsDelivered"
+//ChatMarkers
+#define SDF_CHATMARKERS_MARKED            "chatmarkersMarked"
 //PEP
 #define SDF_PEP_EVENT                     "pepEvent"
 //Contact Proximity
