@@ -1,0 +1,1432 @@
+# Mesajele în limba românã pentru libgpg-error.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# Acest fiºier este distribuit sub aceeaºi licenþã ca ºi pachetul libgpg-error.
+# Laurentiu Buzdugan <lbuz@rolix.org>, 2005.
+#
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgpg-error 1.1\n"
+"Report-Msgid-Bugs-To: translations@gnupg.org\n"
+"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"Last-Translator: Laurentiu Buzdugan <lbuz@rolix.org>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Unspecified source"
+msgstr "Sursã nespecificatã"
+
+msgid "gcrypt"
+msgstr "gcrypt"
+
+msgid "GnuPG"
+msgstr "GnuPG"
+
+msgid "GpgSM"
+msgstr "GpgSM"
+
+msgid "GPG Agent"
+msgstr "GPG Agent"
+
+msgid "Pinentry"
+msgstr "Introducere pin (pinentry)"
+
+msgid "SCD"
+msgstr "SCD"
+
+msgid "GPGME"
+msgstr "GPGME"
+
+msgid "Keybox"
+msgstr "Keybox"
+
+msgid "KSBA"
+msgstr "KSBA"
+
+msgid "Dirmngr"
+msgstr "Dirmngr"
+
+msgid "GSTI"
+msgstr "GSTI"
+
+msgid "GPA"
+msgstr "GPA"
+
+msgid "Kleopatra"
+msgstr "Kleopatra"
+
+msgid "G13"
+msgstr "G13"
+
+msgid "Assuan"
+msgstr "Assuan"
+
+msgid "TLS"
+msgstr ""
+
+#, fuzzy
+msgid "Any source"
+msgstr "Sursã necunoscutã"
+
+msgid "User defined source 1"
+msgstr "Sursã definitã de utilizator 1"
+
+msgid "User defined source 2"
+msgstr "Sursã definitã de utilizator 2"
+
+msgid "User defined source 3"
+msgstr "Sursã definitã de utilizator 3"
+
+msgid "User defined source 4"
+msgstr "Sursã definitã de utilizator 4"
+
+msgid "Unknown source"
+msgstr "Sursã necunoscutã"
+
+msgid "Success"
+msgstr "Succes"
+
+msgid "General error"
+msgstr "Eroare generalã"
+
+msgid "Unknown packet"
+msgstr "Pachet necunoscut"
+
+msgid "Unknown version in packet"
+msgstr "versiune necunoscutã în pachet"
+
+msgid "Invalid public key algorithm"
+msgstr "Algoritm cu cheie publicã invalid"
+
+msgid "Invalid digest algorithm"
+msgstr "Algoritm rezumat invalid"
+
+msgid "Bad public key"
+msgstr "Cheie publicã incorectã"
+
+msgid "Bad secret key"
+msgstr "Cheie secretã incorectã"
+
+msgid "Bad signature"
+msgstr "Semnãturã incorectã"
+
+msgid "No public key"
+msgstr "Nici o cheie publicã"
+
+msgid "Checksum error"
+msgstr "Eroare checksum"
+
+msgid "Bad passphrase"
+msgstr "Frazã-parolã incorectã"
+
+msgid "Invalid cipher algorithm"
+msgstr "Algoritm cifrare invalid"
+
+msgid "Keyring open"
+msgstr "Inel de chei deschis"
+
+msgid "Invalid packet"
+msgstr "Pachet invalid"
+
+msgid "Invalid armor"
+msgstr "Armurã invalidã"
+
+msgid "No user ID"
+msgstr "Nici un ID utilizator."
+
+msgid "No secret key"
+msgstr "Nici o cheie secretã"
+
+msgid "Wrong secret key used"
+msgstr "A fost folositã o cheie secretã greºitã"
+
+msgid "Bad session key"
+msgstr "Cheie de sesiune incorectã"
+
+msgid "Unknown compression algorithm"
+msgstr "Algoritm compresie necunoscut"
+
+msgid "Number is not prime"
+msgstr "Numãrul nu este prim"
+
+msgid "Invalid encoding method"
+msgstr "Valoare de encodare invalidã"
+
+msgid "Invalid encryption scheme"
+msgstr "Schemã de cifrare invalidã"
+
+msgid "Invalid signature scheme"
+msgstr "Schemã de semnãturi invalidã"
+
+msgid "Invalid attribute"
+msgstr "Argument invalid"
+
+msgid "No value"
+msgstr "Nici o valoare"
+
+msgid "Not found"
+msgstr "Nu a fost gãsit(ã)"
+
+msgid "Value not found"
+msgstr "Valoarea nu a fost gãsitã"
+
+msgid "Syntax error"
+msgstr "Eroare de sintaxã"
+
+msgid "Bad MPI value"
+msgstr "Valoare MPI incorectã"
+
+msgid "Invalid passphrase"
+msgstr "Frazã-parolã invalidã"
+
+msgid "Invalid signature class"
+msgstr "Clasã semnãturi invalidã"
+
+msgid "Resources exhausted"
+msgstr "Resurse epuizate"
+
+msgid "Invalid keyring"
+msgstr "Inel de chei invalid"
+
+msgid "Trust DB error"
+msgstr "Eroare bazã de date încredere"
+
+msgid "Bad certificate"
+msgstr "Certificat incorect"
+
+msgid "Invalid user ID"
+msgstr "ID utilizator invalid"
+
+msgid "Unexpected error"
+msgstr "Eroare neaºteptatã"
+
+msgid "Time conflict"
+msgstr "Conflict de timp"
+
+msgid "Keyserver error"
+msgstr "Eroare server de chei"
+
+msgid "Wrong public key algorithm"
+msgstr "Algoritm cheie publicã greºit"
+
+msgid "Tribute to D. A."
+msgstr "Tribut lui D. A."
+
+msgid "Weak encryption key"
+msgstr "Cheie de cifrare slabã"
+
+msgid "Invalid key length"
+msgstr "Lungime cheie invalidã"
+
+msgid "Invalid argument"
+msgstr "Argument invalid"
+
+msgid "Syntax error in URI"
+msgstr "Eroare de sintaxã în URI"
+
+msgid "Invalid URI"
+msgstr "URI incorect"
+
+msgid "Network error"
+msgstr "Eroare reþea"
+
+msgid "Unknown host"
+msgstr "Gazdã necunoscutã"
+
+msgid "Selftest failed"
+msgstr "Auto-test eºuat"
+
+msgid "Data not encrypted"
+msgstr "Date necifrate"
+
+msgid "Data not processed"
+msgstr "Date neprocesate"
+
+msgid "Unusable public key"
+msgstr "Cheie publicã de nefolosit"
+
+msgid "Unusable secret key"
+msgstr "cheie secretã de nefolosit"
+
+msgid "Invalid value"
+msgstr "Valoare invalidã"
+
+msgid "Bad certificate chain"
+msgstr "Lanþ certificate incorect"
+
+msgid "Missing certificate"
+msgstr "Certificat lipsã"
+
+msgid "No data"
+msgstr "Nici o datã"
+
+msgid "Bug"
+msgstr "Bug"
+
+msgid "Not supported"
+msgstr "Nu este suportat(ã)"
+
+msgid "Invalid operation code"
+msgstr "Cod operaþie invalid"
+
+msgid "Timeout"
+msgstr "Pauzã"
+
+msgid "Internal error"
+msgstr "Eroare internã"
+
+msgid "EOF (gcrypt)"
+msgstr "EOF (gcrypt)"
+
+msgid "Invalid object"
+msgstr "Obiect invalid"
+
+msgid "Provided object is too short"
+msgstr "Obiectul furnizat e prea scurt"
+
+msgid "Provided object is too large"
+msgstr "Obiectul furnizat e prea larg"
+
+msgid "Missing item in object"
+msgstr "Articol lipsã în obiect"
+
+msgid "Not implemented"
+msgstr "Nu a fost implementat(ã)"
+
+msgid "Conflicting use"
+msgstr "Folosire în conflict"
+
+msgid "Invalid cipher mode"
+msgstr "Mod cifru invalid"
+
+msgid "Invalid flag"
+msgstr "Atribut invalid"
+
+msgid "Invalid handle"
+msgstr "Handle invalid"
+
+msgid "Result truncated"
+msgstr "Rezultat invalid"
+
+msgid "Incomplete line"
+msgstr "Linie incompletã"
+
+msgid "Invalid response"
+msgstr "Rãspuns invalid"
+
+msgid "No agent running"
+msgstr "Nu ruleazã nici un agent"
+
+#, fuzzy
+#| msgid "agent error"
+msgid "Agent error"
+msgstr "eroare agent"
+
+msgid "Invalid data"
+msgstr "Date invalide"
+
+#, fuzzy
+msgid "Unspecific Assuan server fault"
+msgstr "Eroare server Assuan"
+
+#, fuzzy
+msgid "General Assuan error"
+msgstr "Eroare generalã"
+
+msgid "Invalid session key"
+msgstr "Cheie de sesiune invalidã"
+
+msgid "Invalid S-expression"
+msgstr "Expresie-S invalidã"
+
+msgid "Unsupported algorithm"
+msgstr "Algoritm nesuportat"
+
+msgid "No pinentry"
+msgstr "Nici introducere pin (pinentry)"
+
+msgid "pinentry error"
+msgstr "eroare introducere pin (pinentry) "
+
+msgid "Bad PIN"
+msgstr "PIN incorect"
+
+msgid "Invalid name"
+msgstr "Nume invalid"
+
+msgid "Bad data"
+msgstr "Date incorecte"
+
+msgid "Invalid parameter"
+msgstr "Parametru invalid"
+
+msgid "Wrong card"
+msgstr "Card greºit"
+
+msgid "No dirmngr"
+msgstr "Nici un dirmngr"
+
+msgid "dirmngr error"
+msgstr "eroare dirmngr"
+
+msgid "Certificate revoked"
+msgstr "Certificat revocat"
+
+msgid "No CRL known"
+msgstr "Nici un CRL cunoscut"
+
+msgid "CRL too old"
+msgstr "CRL prea vechi"
+
+msgid "Line too long"
+msgstr "Linie prea lungã"
+
+msgid "Not trusted"
+msgstr "Nu este de încredere"
+
+msgid "Operation cancelled"
+msgstr "Operaþiune anulatã"
+
+msgid "Bad CA certificate"
+msgstr "Certificat CA incorect"
+
+msgid "Certificate expired"
+msgstr "Certificat expirat"
+
+msgid "Certificate too young"
+msgstr "Certificat prea recent"
+
+msgid "Unsupported certificate"
+msgstr "Certificat nesuportat"
+
+msgid "Unknown S-expression"
+msgstr "Expresie-S necunoscutã"
+
+msgid "Unsupported protection"
+msgstr "Protecþie nesuportatã"
+
+msgid "Corrupted protection"
+msgstr "Protecþie coruptã"
+
+msgid "Ambiguous name"
+msgstr "Nume ambiguu"
+
+msgid "Card error"
+msgstr "Eroare card"
+
+msgid "Card reset required"
+msgstr "Este necesarã resetarea cardului"
+
+msgid "Card removed"
+msgstr "Card scos"
+
+msgid "Invalid card"
+msgstr "Card invalid"
+
+msgid "Card not present"
+msgstr "Cardul nu este prezent"
+
+msgid "No PKCS15 application"
+msgstr "Nici o aplicaþie PKCS15"
+
+msgid "Not confirmed"
+msgstr "Neconfirmat(ã)"
+
+msgid "Configuration error"
+msgstr "Eroare de configurare"
+
+msgid "No policy match"
+msgstr "Nici o potrivire de politici"
+
+msgid "Invalid index"
+msgstr "Index invalid"
+
+msgid "Invalid ID"
+msgstr "ID invalid"
+
+msgid "No SmartCard daemon"
+msgstr "Nici un daemon SmartCard"
+
+msgid "SmartCard daemon error"
+msgstr "Eroare daemon SmartCard"
+
+msgid "Unsupported protocol"
+msgstr "Protocol nesuportat"
+
+msgid "Bad PIN method"
+msgstr "Metodã PIN incorectã"
+
+msgid "Card not initialized"
+msgstr "Card neiniþializat"
+
+msgid "Unsupported operation"
+msgstr "Operaþie nesuportatã"
+
+msgid "Wrong key usage"
+msgstr "Folosire cheie greºitã"
+
+msgid "Nothing found"
+msgstr "Nu a fost gãsit nimic"
+
+msgid "Wrong blob type"
+msgstr "Tip de blob incorect"
+
+msgid "Missing value"
+msgstr "Valoare lipsã"
+
+msgid "Hardware problem"
+msgstr "Problemã hardware"
+
+msgid "PIN blocked"
+msgstr "PIN blocat"
+
+msgid "Conditions of use not satisfied"
+msgstr "Condiþii de folosire nesatisfãcute"
+
+msgid "PINs are not synced"
+msgstr "PIN-urile nu sunt sincronizate"
+
+msgid "Invalid CRL"
+msgstr "CRL invalid"
+
+msgid "BER error"
+msgstr "Eroare BER"
+
+msgid "Invalid BER"
+msgstr "BER invalid"
+
+msgid "Element not found"
+msgstr "Elementul nu a fost gãsit"
+
+msgid "Identifier not found"
+msgstr "Identificator nu a fost gãsit"
+
+msgid "Invalid tag"
+msgstr "Etichetã invalidã"
+
+msgid "Invalid length"
+msgstr "Lungime invalidã"
+
+msgid "Invalid key info"
+msgstr "Informaþii cheie invalide"
+
+msgid "Unexpected tag"
+msgstr "Etichetã neaºteptatã"
+
+msgid "Not DER encoded"
+msgstr "Nu e encodat DER"
+
+msgid "No CMS object"
+msgstr "Nici un obiect CMS"
+
+msgid "Invalid CMS object"
+msgstr "Obiect CMS invalid"
+
+msgid "Unknown CMS object"
+msgstr "Obiect CMS necunoscut"
+
+msgid "Unsupported CMS object"
+msgstr "Obiect CMS nesuportat"
+
+msgid "Unsupported encoding"
+msgstr "Encodare nesuportatã"
+
+msgid "Unsupported CMS version"
+msgstr "Versiune CMS nesuportatã"
+
+msgid "Unknown algorithm"
+msgstr "Algoritm necunoscut"
+
+msgid "Invalid crypto engine"
+msgstr "Motor cifrare invalid"
+
+msgid "Public key not trusted"
+msgstr "Cheia publicã nu este de încredere"
+
+msgid "Decryption failed"
+msgstr "Decriptarea a eºuat"
+
+msgid "Key expired"
+msgstr "Cheie expiratã"
+
+msgid "Signature expired"
+msgstr "Semnãturã expiratã"
+
+msgid "Encoding problem"
+msgstr "Problemã de encodare"
+
+msgid "Invalid state"
+msgstr "Stare invalidã"
+
+msgid "Duplicated value"
+msgstr "Valoare dublã"
+
+msgid "Missing action"
+msgstr "Acþiune lipsã"
+
+msgid "ASN.1 module not found"
+msgstr "Modulul ASN.1 nu a fost gãsit"
+
+msgid "Invalid OID string"
+msgstr "ªir OID invalid"
+
+msgid "Invalid time"
+msgstr "Timp invalid"
+
+msgid "Invalid CRL object"
+msgstr "Obiect CRL invalid"
+
+msgid "Unsupported CRL version"
+msgstr "Versiune CRL nesuportatã"
+
+msgid "Invalid certificate object"
+msgstr "Obiect certificat incorect"
+
+msgid "Unknown name"
+msgstr "Nume necunoscut"
+
+msgid "A locale function failed"
+msgstr "O funcþie locale a eºuat"
+
+msgid "Not locked"
+msgstr "Neforþat(ã)"
+
+msgid "Protocol violation"
+msgstr "Violare de protocol"
+
+msgid "Invalid MAC"
+msgstr "MAC invalid"
+
+msgid "Invalid request"
+msgstr "Cerere invalidã"
+
+#, fuzzy
+msgid "Unknown extension"
+msgstr "Expresie-S necunoscutã"
+
+#, fuzzy
+msgid "Unknown critical extension"
+msgstr "Expresie-S necunoscutã"
+
+#, fuzzy
+msgid "Locked"
+msgstr "Neforþat(ã)"
+
+#, fuzzy
+msgid "Unknown option"
+msgstr "Expresie-S necunoscutã"
+
+#, fuzzy
+msgid "Unknown command"
+msgstr "Cod de eroare necunoscut"
+
+#, fuzzy
+msgid "Not operational"
+msgstr "Operaþie nesuportatã"
+
+#, fuzzy
+msgid "No passphrase given"
+msgstr "Frazã-parolã incorectã"
+
+msgid "No PIN given"
+msgstr ""
+
+#, fuzzy
+msgid "Not enabled"
+msgstr "Neforþat(ã)"
+
+#, fuzzy
+msgid "No crypto engine"
+msgstr "Motor cifrare invalid"
+
+#, fuzzy
+msgid "Missing key"
+msgstr "Valoare lipsã"
+
+#, fuzzy
+msgid "Too many objects"
+msgstr "Nici un obiect CMS"
+
+msgid "Limit reached"
+msgstr ""
+
+#, fuzzy
+msgid "Not initialized"
+msgstr "Card neiniþializat"
+
+#, fuzzy
+msgid "Missing issuer certificate"
+msgstr "Certificat lipsã"
+
+msgid "No keyserver available"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid elliptic curve"
+msgstr "Timp invalid"
+
+#, fuzzy
+msgid "Unknown elliptic curve"
+msgstr "Sursã necunoscutã"
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated key"
+msgstr "Valoare dublã"
+
+#, fuzzy
+#| msgid "Ambiguous name"
+msgid "Ambiguous result"
+msgstr "Nume ambiguu"
+
+#, fuzzy
+msgid "No crypto context"
+msgstr "Motor cifrare invalid"
+
+#, fuzzy
+msgid "Wrong crypto context"
+msgstr "Motor cifrare invalid"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Bad crypto context"
+msgstr "Motor cifrare invalid"
+
+msgid "Conflict in the crypto context"
+msgstr ""
+
+#, fuzzy
+#| msgid "No public key"
+msgid "Broken public key"
+msgstr "Nici o cheie publicã"
+
+#, fuzzy
+#| msgid "No secret key"
+msgid "Broken secret key"
+msgstr "Nici o cheie secretã"
+
+#, fuzzy
+#| msgid "Invalid digest algorithm"
+msgid "Invalid MAC algorithm"
+msgstr "Algoritm rezumat invalid"
+
+#, fuzzy
+msgid "Operation fully cancelled"
+msgstr "Operaþiune anulatã"
+
+#, fuzzy
+msgid "Operation not yet finished"
+msgstr "Operaþiune anulatã"
+
+msgid "Buffer too short"
+msgstr "Buffer prea scurt"
+
+msgid "Invalid length specifier in S-expression"
+msgstr "Specificarea lungimii invalidã în expresia-S"
+
+msgid "String too long in S-expression"
+msgstr "ªir prea lung în expresia-S"
+
+msgid "Unmatched parentheses in S-expression"
+msgstr "Parantezã fãrã pereche în expresia-S"
+
+msgid "S-expression not canonical"
+msgstr "Expresia-S nu este canonicã"
+
+msgid "Bad character in S-expression"
+msgstr "Caracter invalid în expresia-S"
+
+msgid "Bad quotation in S-expression"
+msgstr "Ghilimele incorecte în expresia-S"
+
+msgid "Zero prefix in S-expression"
+msgstr "Prefix zero în expresia-S"
+
+msgid "Nested display hints in S-expression"
+msgstr "Indicaþii de afiºare încuibãrite în expresia-S"
+
+msgid "Unmatched display hints"
+msgstr "Indicaþii de afiºare fãrã pereche"
+
+msgid "Unexpected reserved punctuation in S-expression"
+msgstr "Punctuaþie rezervatã neaºteptatã în expresia-S"
+
+msgid "Bad hexadecimal character in S-expression"
+msgstr "Caracter hexazecimal incorect în expresia-S"
+
+msgid "Odd hexadecimal numbers in S-expression"
+msgstr "Numere hexazecimale ciudate în expresia-S"
+
+msgid "Bad octal character in S-expression"
+msgstr "Caracter octal incorect în expresia-S"
+
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "Database is corrupted"
+msgstr "Date necifrate"
+
+msgid "Server indicated a failure"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "No name"
+msgstr "Nume necunoscut"
+
+#, fuzzy
+#| msgid "No public key"
+msgid "No key"
+msgstr "Nici o cheie publicã"
+
+msgid "Legacy key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Buffer too short"
+msgid "Request too short"
+msgstr "Buffer prea scurt"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "Request too long"
+msgstr "Linie prea lungã"
+
+msgid "Object is in termination state"
+msgstr ""
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "No certificate chain"
+msgstr "Lanþ certificate incorect"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Certificate is too large"
+msgstr "Certificat prea recent"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid record"
+msgstr "Card invalid"
+
+msgid "The MAC does not verify"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unexpected tag"
+msgid "Unexpected message"
+msgstr "Etichetã neaºteptatã"
+
+msgid "Compression or decompression failed"
+msgstr ""
+
+msgid "A counter would wrap"
+msgstr ""
+
+msgid "Fatal alert message received"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid cipher algorithm"
+msgid "No cipher algorithm"
+msgstr "Algoritm cifrare invalid"
+
+#, fuzzy
+msgid "Missing client certificate"
+msgstr "Certificat lipsã"
+
+#, fuzzy
+#| msgid "Certificate revoked"
+msgid "Close notification received"
+msgstr "Certificat revocat"
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Ticket expired"
+msgstr "Cheie expiratã"
+
+#, fuzzy
+#| msgid "Bad public key"
+msgid "Bad ticket"
+msgstr "Cheie publicã incorectã"
+
+#, fuzzy
+#| msgid "Unknown packet"
+msgid "Unknown identity"
+msgstr "Pachet necunoscut"
+
+#, fuzzy
+#| msgid "Bad certificate chain"
+msgid "Bad certificate message in handshake"
+msgstr "Lanþ certificate incorect"
+
+msgid "Bad certificate request message in handshake"
+msgstr ""
+
+msgid "Bad certificate verify message in handshake"
+msgstr ""
+
+msgid "Bad change cipher messsage in handshake"
+msgstr ""
+
+msgid "Bad client hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello message in handshake"
+msgstr ""
+
+msgid "Bad server hello done message in hanshake"
+msgstr ""
+
+msgid "Bad finished message in handshake"
+msgstr ""
+
+msgid "Bad server key exchange message in handshake"
+msgstr ""
+
+msgid "Bad client key exchange message in handshake"
+msgstr ""
+
+msgid "Bogus string"
+msgstr ""
+
+msgid "Forbidden"
+msgstr ""
+
+#, fuzzy
+#| msgid "Key expired"
+msgid "Key disabled"
+msgstr "Cheie expiratã"
+
+msgid "Not possible with a card based key"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid object"
+msgid "Invalid lock object"
+msgstr "Obiect invalid"
+
+msgid "True"
+msgstr ""
+
+msgid "False"
+msgstr ""
+
+#, fuzzy
+msgid "General IPC error"
+msgstr "Eroare generalã"
+
+msgid "IPC accept call failed"
+msgstr ""
+
+msgid "IPC connect call failed"
+msgstr ""
+
+#, fuzzy
+msgid "Invalid IPC response"
+msgstr "Rãspuns invalid"
+
+#, fuzzy
+msgid "Invalid value passed to IPC"
+msgstr "Valoare invalidã"
+
+#, fuzzy
+msgid "Incomplete line passed to IPC"
+msgstr "Linie incompletã"
+
+#, fuzzy
+msgid "Line passed to IPC too long"
+msgstr "Linie prea lungã"
+
+msgid "Nested IPC commands"
+msgstr ""
+
+msgid "No data callback in IPC"
+msgstr ""
+
+msgid "No inquire callback in IPC"
+msgstr ""
+
+msgid "Not an IPC server"
+msgstr ""
+
+msgid "Not an IPC client"
+msgstr ""
+
+msgid "Problem starting IPC server"
+msgstr ""
+
+#, fuzzy
+msgid "IPC read error"
+msgstr "Eroare card"
+
+#, fuzzy
+msgid "IPC write error"
+msgstr "Eroare card"
+
+msgid "Too much data for IPC layer"
+msgstr ""
+
+#, fuzzy
+msgid "Unexpected IPC command"
+msgstr "Etichetã neaºteptatã"
+
+#, fuzzy
+msgid "Unknown IPC command"
+msgstr "Cod de eroare necunoscut"
+
+#, fuzzy
+msgid "IPC syntax error"
+msgstr "Eroare de sintaxã"
+
+msgid "IPC call has been cancelled"
+msgstr ""
+
+msgid "No input source for IPC"
+msgstr ""
+
+msgid "No output source for IPC"
+msgstr ""
+
+#, fuzzy
+msgid "IPC parameter error"
+msgstr "Eroare card"
+
+#, fuzzy
+msgid "Unknown IPC inquire"
+msgstr "Sursã necunoscutã"
+
+#, fuzzy
+msgid "General LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP attribute error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP name error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+msgid "General LDAP security error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "General error"
+msgid "General LDAP service error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+msgid "General LDAP update error"
+msgstr "Eroare generalã"
+
+msgid "Experimental LDAP error code"
+msgstr ""
+
+#, fuzzy
+msgid "Private LDAP error code"
+msgstr "Eroare card"
+
+#, fuzzy
+msgid "Other general LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP connecting failed (X)"
+msgstr "Decriptarea a eºuat"
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral limit exceeded"
+msgstr "Eroare generalã"
+
+msgid "LDAP client loop"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "No LDAP results returned"
+msgstr "Este necesarã resetarea cardului"
+
+#, fuzzy
+#| msgid "Element not found"
+msgid "LDAP control not found"
+msgstr "Elementul nu a fost gãsit"
+
+#, fuzzy
+#| msgid "Not supported"
+msgid "Not supported by LDAP"
+msgstr "Nu este suportat(ã)"
+
+#, fuzzy
+#| msgid "Unexpected error"
+msgid "LDAP connect error"
+msgstr "Eroare neaºteptatã"
+
+msgid "Out of memory in LDAP"
+msgstr ""
+
+msgid "Bad parameter to an LDAP routine"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported operation"
+msgid "User cancelled LDAP operation"
+msgstr "Operaþie nesuportatã"
+
+#, fuzzy
+#| msgid "Bad certificate"
+msgid "Bad LDAP search filter"
+msgstr "Certificat incorect"
+
+#, fuzzy
+msgid "Unknown LDAP authentication method"
+msgstr "Expresie-S necunoscutã"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "Timeout in LDAP"
+msgstr "Pauzã"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP decoding error"
+msgstr "eroare dirmngr"
+
+#, fuzzy
+#| msgid "dirmngr error"
+msgid "LDAP encoding error"
+msgstr "eroare dirmngr"
+
+#, fuzzy
+msgid "LDAP local error"
+msgstr "Eroare card"
+
+msgid "Cannot contact LDAP server"
+msgstr ""
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP success"
+msgstr "Succes"
+
+#, fuzzy
+#| msgid "Configuration error"
+msgid "LDAP operations error"
+msgstr "Eroare de configurare"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP protocol error"
+msgstr "Violare de protocol"
+
+msgid "Time limit exceeded in LDAP"
+msgstr ""
+
+msgid "Size limit exceeded in LDAP"
+msgstr ""
+
+msgid "LDAP compare false"
+msgstr ""
+
+msgid "LDAP compare true"
+msgstr ""
+
+#, fuzzy
+msgid "LDAP authentication method not supported"
+msgstr "Expresie-S necunoscutã"
+
+msgid "Strong(er) LDAP authentication required"
+msgstr ""
+
+msgid "Partial LDAP results+referral received"
+msgstr ""
+
+#, fuzzy
+#| msgid "General error"
+msgid "LDAP referral"
+msgstr "Eroare generalã"
+
+msgid "Administrative LDAP limit exceeded"
+msgstr ""
+
+msgid "Critical LDAP extension is unavailable"
+msgstr ""
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Confidentiality required by LDAP"
+msgstr "Este necesarã resetarea cardului"
+
+msgid "LDAP SASL bind in progress"
+msgstr ""
+
+msgid "No such LDAP attribute"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid attribute"
+msgid "Undefined LDAP attribute type"
+msgstr "Argument invalid"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate matching in LDAP"
+msgstr "Protecþie nesuportatã"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Constraint violation in LDAP"
+msgstr "Violare de protocol"
+
+msgid "LDAP type or value exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid syntax in LDAP"
+msgstr "Stare invalidã"
+
+#, fuzzy
+#| msgid "No CMS object"
+msgid "No such LDAP object"
+msgstr "Nici un obiect CMS"
+
+#, fuzzy
+#| msgid "Hardware problem"
+msgid "LDAP alias problem"
+msgstr "Problemã hardware"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid DN syntax in LDAP"
+msgstr "Stare invalidã"
+
+msgid "LDAP entry is a leaf"
+msgstr ""
+
+#, fuzzy
+#| msgid "Encoding problem"
+msgid "LDAP alias dereferencing problem"
+msgstr "Problemã de encodare"
+
+msgid "LDAP proxy authorization failure (X)"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Inappropriate LDAP authentication"
+msgstr "Protecþie nesuportatã"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "Invalid LDAP credentials"
+msgstr "Card invalid"
+
+msgid "Insufficient access for LDAP"
+msgstr ""
+
+msgid "LDAP server is busy"
+msgstr ""
+
+msgid "LDAP server is unavailable"
+msgstr ""
+
+msgid "LDAP server is unwilling to perform"
+msgstr ""
+
+msgid "Loop detected by LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Missing action"
+msgid "LDAP naming violation"
+msgstr "Acþiune lipsã"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "LDAP object class violation"
+msgstr "Violare de protocol"
+
+#, fuzzy
+msgid "LDAP operation not allowed on non-leaf"
+msgstr "Operaþiune anulatã"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation not allowed on RDN"
+msgstr "Operaþiune anulatã"
+
+msgid "Already exists (LDAP)"
+msgstr ""
+
+msgid "Cannot modify LDAP object class"
+msgstr ""
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "LDAP results too large"
+msgstr "Linie prea lungã"
+
+#, fuzzy
+#| msgid "Operation cancelled"
+msgid "LDAP operation affects multiple DSAs"
+msgstr "Operaþiune anulatã"
+
+msgid "Virtual LDAP list view error"
+msgstr ""
+
+#, fuzzy
+msgid "Other LDAP error"
+msgstr "Eroare generalã"
+
+#, fuzzy
+#| msgid "Resources exhausted"
+msgid "Resources exhausted in LCUP"
+msgstr "Resurse epuizate"
+
+#, fuzzy
+#| msgid "Protocol violation"
+msgid "Security violation in LCUP"
+msgstr "Violare de protocol"
+
+#, fuzzy
+#| msgid "Invalid state"
+msgid "Invalid data in LCUP"
+msgstr "Stare invalidã"
+
+#, fuzzy
+#| msgid "Unsupported certificate"
+msgid "Unsupported scheme in LCUP"
+msgstr "Certificat nesuportat"
+
+#, fuzzy
+#| msgid "Card reset required"
+msgid "Reload required in LCUP"
+msgstr "Este necesarã resetarea cardului"
+
+#, fuzzy
+#| msgid "Success"
+msgid "LDAP cancelled"
+msgstr "Succes"
+
+#, fuzzy
+msgid "No LDAP operation to cancel"
+msgstr "Operaþie nesuportatã"
+
+#, fuzzy
+msgid "Too late to cancel LDAP"
+msgstr "Operaþie nesuportatã"
+
+msgid "Cannot cancel LDAP"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "LDAP assertion failed"
+msgstr "Decriptarea a eºuat"
+
+msgid "Proxied authorization denied by LDAP"
+msgstr ""
+
+msgid "User defined error code 1"
+msgstr "Cod de eroare definit de utilizator 1"
+
+msgid "User defined error code 2"
+msgstr "Cod de eroare definit de utilizator 2"
+
+msgid "User defined error code 3"
+msgstr "Cod de eroare definit de utilizator 3"
+
+msgid "User defined error code 4"
+msgstr "Cod de eroare definit de utilizator 4"
+
+msgid "User defined error code 5"
+msgstr "Cod de eroare definit de utilizator 5"
+
+msgid "User defined error code 6"
+msgstr "Cod de eroare definit de utilizator 6"
+
+msgid "User defined error code 7"
+msgstr "Cod de eroare definit de utilizator 7"
+
+msgid "User defined error code 8"
+msgstr "Cod de eroare definit de utilizator 8"
+
+msgid "User defined error code 9"
+msgstr "Cod de eroare definit de utilizator 9"
+
+msgid "User defined error code 10"
+msgstr "Cod de eroare definit de utilizator 10"
+
+msgid "User defined error code 11"
+msgstr "Cod de eroare definit de utilizator 11"
+
+msgid "User defined error code 12"
+msgstr "Cod de eroare definit de utilizator 12"
+
+msgid "User defined error code 13"
+msgstr "Cod de eroare definit de utilizator 13"
+
+msgid "User defined error code 14"
+msgstr "Cod de eroare definit de utilizator 14"
+
+msgid "User defined error code 15"
+msgstr "Cod de eroare definit de utilizator 15"
+
+msgid "User defined error code 16"
+msgstr "Cod de eroare definit de utilizator 16"
+
+msgid "System error w/o errno"
+msgstr ""
+
+msgid "Unknown system error"
+msgstr "Eroare de sistem necunoscutã"
+
+msgid "End of file"
+msgstr "Sfârºit de fiºier"
+
+msgid "Unknown error code"
+msgstr "Cod de eroare necunoscut"
+
+#, c-format
+msgid "Usage: %s GPG-ERROR [...]\n"
+msgstr "Folosire: %s EROARE-GPG [...]\n"
+
+#, c-format
+msgid "%s: warning: could not recognize %s\n"
+msgstr "%s: avertisment: nu am putut recunoaºte %s\n"
+
+#, fuzzy
+#~| msgid "Resources exhausted"
+#~ msgid "LCUP Resources exhausted"
+#~ msgstr "Resurse epuizate"
+
+#, fuzzy
+#~| msgid "Invalid data"
+#~ msgid "LCUP Invalid data"
+#~ msgstr "Date invalide"
+
+#, fuzzy
+#~| msgid "Decryption failed"
+#~ msgid "Assertion failed in lDAP"
+#~ msgstr "Decriptarea a eºuat"
+
+#, fuzzy
+#~| msgid "General error"
+#~ msgid "LDAP Other general error"
+#~ msgstr "Eroare generalã"
+
+#, fuzzy
+#~| msgid "dirmngr error"
+#~ msgid "Encoding error"
+#~ msgstr "eroare dirmngr"
