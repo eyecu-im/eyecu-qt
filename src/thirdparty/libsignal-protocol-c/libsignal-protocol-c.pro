@@ -1,6 +1,6 @@
 include(../../make/config.inc)
 
-include(libsignal.pri)
+include(libsignal-protocol-c.pri)
 
 CONFIG  += ordered
 TEMPLATE = lib
