@@ -20,10 +20,13 @@ public:
 	QWidget *instance() { return this; }
 	QString iconSet() const;
 	void setIconSet(const QString &AIconSet);
+
 signals:
 	void iconSelected(const QString &AIconKey, const QString &AIconText);
+
 public:
 	virtual QSize sizeHint() const;
+
 protected slots:
 	void onAboutToShow();
 	void onSkinColorSelected();
@@ -31,9 +34,10 @@ protected slots:
 	void onRecentIconTriggered();
 	void onHasColoredChanged(bool AHasColored);
 	void onCategorySwitched(int ACategory);
+
 protected:
 	void updateRecentActions(const QString &AColor);
-//	static QString typeUcs4(const QString &AText);
+
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;

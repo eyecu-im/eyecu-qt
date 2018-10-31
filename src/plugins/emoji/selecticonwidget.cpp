@@ -9,7 +9,7 @@
 SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, uint ARows, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
-	FPressed(NULL),
+	FPressed(nullptr),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
 	FHasColored(false),
 	FNotReady(true),
@@ -69,7 +69,7 @@ void SelectIconWidget::createLabels()
 			label->setToolTip((*it).name);
 			FKeyByLabel.insert(label, (*it).unicode);
 			FLayout->addWidget(label, row, column);
-			if ((*it).colored)
+			if (!(*it).diversities.isEmpty())
 				FHasColored=true;
 			column = (column+1) % FColumns;
 			row += column==0 ? 1 : 0;
@@ -99,7 +99,7 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 	{
 		if (FPressed == label)
 			emit iconSelected(FKeyByLabel.value(label), label->toolTip());
-		FPressed = NULL;
+		FPressed = nullptr;
 	}
 	return QWidget::eventFilter(AWatched,AEvent);
 }
