@@ -358,5 +358,10 @@
 //JINGLE
 #define MNI_JINGLE                      "jingle"
 #define MNI_JINGLE_RTP                  "jingleRtp"
+
+//OTR
+#define MNI_OTR_ENCRYPTED               "otr_yes"
+#define MNI_OTR_UNVERFIFIED             "otr_unverified"
+#define MNI_OTR_NO                      "otr_no"
 // >>> eyeCU >>>
 #endif // DEF_MENUICONS_H

@@ -47,6 +47,8 @@
 //Jingle RTP Sessions
 #define SDF_JINGLE_RTP_CALL               "jingleRtpCall"
 #define SDF_JINGLE_RTP_RINGBACK_LONG      "jingleRtpRingbackLong"
+//OTR
+#define SDF_OTR_EVENT                     "OTREvent"
 // *** >>> eyeCU >>> ***
 
 #endif

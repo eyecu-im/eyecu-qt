@@ -36,6 +36,7 @@
 #define OPN_JINGLETRANSPORTS    "JingleTransports"
 #define OPN_WIZARD_ACC          "WizardAcc"
 #define OPN_SCHEDULER           "Scheduler"
+#define OPN_OTR                 "OTR Messaging"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONNODES_H

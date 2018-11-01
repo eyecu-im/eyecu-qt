@@ -24,6 +24,7 @@
 #define NTO_TUNE_CHANGE                        920
 #define NTO_JINGLE_RTP_CALL                    100
 #define NTO_CONTACTPROXIMITY                   1000
+#define NTO_OTR_NOTIFY                         1010
 // *** >>> eyeCU >>> ***
 
 #endif //  DEF_NOTIFICATIONTYPEORDERS_H
