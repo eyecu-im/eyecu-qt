@@ -184,7 +184,7 @@
 #define OPV_MUC_KICKREASON                              "muc.kick-reason"
 #define OPV_MUC_BANREASON                               "muc.ban-reason"
 #define OPV_MUC_CHANGEROLEREASON                        "muc.role-change-reason"
-#define OPV_MUC_CHANGEROLEREASONSASK                    "muc.role-change-reason-ask"
+#define OPV_MUC_CHANGEROLEREASONASK                     "muc.role-change-reason-ask"
 #define OPV_MUC_CHANGEAFFILREASON                       "muc.affiliation-change-reason"
 #define OPV_MUC_CHANGEAFFILREASONASK                    "muc.affiliation-change-reason-ask"
 #define OPV_MUC_REASONSEDITOR                           "muc.reasons-editor"

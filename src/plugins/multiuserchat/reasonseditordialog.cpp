@@ -1,4 +1,5 @@
 #include "reasonseditordialog.h"
+#include <definitions/optionvalues.h>
 #include "ui_reasonseditordialog.h"
 
 ReasonsEditorDialog::ReasonsEditorDialog(const QString &ATitle, const QString &ALabel, QString &AReason, bool &ABad, bool &AStore, bool &AAsk, QWidget *parent) :
