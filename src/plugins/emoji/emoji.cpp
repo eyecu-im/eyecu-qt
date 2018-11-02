@@ -463,75 +463,76 @@ void Emoji::findEmojiSets()
 						QJsonObject object = jsonDoc.object();
 						for (QJsonObject::ConstIterator it = object.constBegin(); it!=object.constEnd(); ++it)
 						{
-							EmojiData emojiData;
-
-							emojiData.id = it.key();
 							QJsonObject object = (*it).toObject();
-
-							emojiData.name = object.value("name").toString();
-							QString category = object.value("category").toString();
-							int order = object.value("order").toInt();
-
-							if (!object.value("ascii").isNull())
+							if (object.value("display").toInt() > 0) // Do not process symbols without "display" flag
 							{
-								QVariantList list = object.value("ascii").toVariant().toList();
-								QList<QString> aliases;
-								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-									aliases.append((*it).toString());
-								emojiData.aliases = aliases;
-							}
+								EmojiData emojiData;
+								emojiData.id = it.key();
+								emojiData.name = object.value("name").toString();
+								QString category = object.value("category").toString();
+								int order = object.value("order").toInt();
 
-							if (!object.value("keywords").isNull())
-							{
-								QVariantList list = object.value("keywords").toVariant().toList();
-								QString out;
-								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+								if (!object.value("ascii").isNull())
 								{
-									if (!out.isEmpty())
-										out.append(',');
-									out.append((*it).toString());
+									QVariantList list = object.value("ascii").toVariant().toList();
+									QList<QString> aliases;
+									for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+										aliases.append((*it).toString());
+									emojiData.aliases = aliases;
 								}
-							}
 
-							uint ucs4[16];
-							int  i(0);
-
-							QJsonObject codePoints = object.value("code_points").toObject();
-							emojiData.ucs4 = codePoints.value("fully_qualified").toString();
-
-							qDebug() << "ucs4=" << emojiData.ucs4;
-
-							bool ok;
-							QJsonValue diversity = object.value("diversity");
-							emojiData.diversity = diversity.isNull()?0:diversity.toString().toInt(&ok, 16);
-							if (emojiData.diversity)
-								qDebug() << "diversity=" << QString::number(emojiData.diversity, 16);
-
-							QJsonValue gender = object.value("gender");
-							emojiData.gender = gender.isNull()?0:gender.toString().toInt(&ok, 16);
-							if (emojiData.gender)
-								qDebug() << "gender=" << QString::number(emojiData.gender, 16);
-
-							if (!emojiData.diversity && !emojiData.gender)
-							{
-								QJsonArray diversities = object.value("diversities").toArray();
-								for (QJsonArray::ConstIterator it = diversities.constBegin();
-									 it != diversities.constEnd(); ++it)
-									emojiData.diversities.append((*it).toString());
-
-								bool ok(false);
-								QList<QString> splitted = emojiData.id.split('-');
-								for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+								if (!object.value("keywords").isNull())
 								{
-									ucs4[i]=(*it).toInt(&ok, 16);
-									if (!ok)
-										break;
+									QVariantList list = object.value("keywords").toVariant().toList();
+									QString out;
+									for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
+									{
+										if (!out.isEmpty())
+											out.append(',');
+										out.append((*it).toString());
+									}
 								}
-								if (ok)
+
+								uint ucs4[16];
+								int  i(0);
+
+								QJsonObject codePoints = object.value("code_points").toObject();
+								emojiData.ucs4 = codePoints.value("fully_qualified").toString();
+
+								qDebug() << "ucs4=" << emojiData.ucs4;
+
+								bool ok;
+								QJsonValue diversity = object.value("diversity");
+								emojiData.diversity = diversity.isNull()?0:diversity.toString().toInt(&ok, 16);
+								if (emojiData.diversity)
+									qDebug() << "diversity=" << QString::number(emojiData.diversity, 16);
+
+								QJsonValue gender = object.value("gender");
+								emojiData.gender = gender.isNull()?0:gender.toString().toInt(&ok, 16);
+								if (emojiData.gender)
+									qDebug() << "gender=" << QString::number(emojiData.gender, 16);
+
+								if (!emojiData.diversity && !emojiData.gender)
 								{
-									emojiData.unicode = QString::fromUcs4(ucs4, i);
-									FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
-									FEmojiData.insert(emojiData.unicode, emojiData);
+									QJsonArray diversities = object.value("diversities").toArray();
+									for (QJsonArray::ConstIterator it = diversities.constBegin();
+										 it != diversities.constEnd(); ++it)
+										emojiData.diversities.append((*it).toString());
+
+									bool ok(false);
+									QList<QString> splitted = emojiData.ucs4.split('-');
+									for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+									{
+										ucs4[i]=(*it).toInt(&ok, 16);
+										if (!ok)
+											break;
+									}
+									if (ok)
+									{
+										emojiData.unicode = QString::fromUcs4(ucs4, i);
+										FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
+										FEmojiData.insert(emojiData.unicode, emojiData);
+									}
 								}
 							}
 						}
