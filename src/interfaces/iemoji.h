@@ -1,7 +1,8 @@
 #ifndef IEMOJI_H
 #define IEMOJI_H
 
-#include "iemoticons.h"
+#include <QUrl>
+#include <QIcon>
 
 #define EMOJI_UUID "{3FCAB06C-B748-BFAC-839B-24F8B6A75D91}"
 
@@ -13,13 +14,15 @@ struct EmojiData {
 //	QString ucs4alt;
 	QList<QString> aliases;
 	QList<QString> diversities;
-	int		diversity;
-	int		gender;
+	QList<QString> genders;
+//	int		diversity;
+//	int		gender;
 //	bool	colored;
+	bool	variation;
 	bool	present;
 };
 
-class IEmoji: public IEmoticons
+class IEmoji // : public IEmoticons
 {
 public:
 	enum Category {
@@ -55,6 +58,7 @@ public:
 	virtual QStringList emojiSets() const = 0;
 	virtual QList<int> availableSizes(const QString &ASetName) const = 0;
 	virtual QMap<uint, QString> setEmoji(const QString &AEmojiSet) const = 0;
+	virtual QStringList recentIcons(const QString &ASetName) const =0;
 };
 
 Q_DECLARE_INTERFACE(IEmoji,"RWS.Plugin.IEmoji/1.0")

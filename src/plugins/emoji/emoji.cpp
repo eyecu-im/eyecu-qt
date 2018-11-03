@@ -501,38 +501,51 @@ void Emoji::findEmojiSets()
 
 								qDebug() << "ucs4=" << emojiData.ucs4;
 
-								bool ok;
-								QJsonValue diversity = object.value("diversity");
-								emojiData.diversity = diversity.isNull()?0:diversity.toString().toInt(&ok, 16);
-								if (emojiData.diversity)
-									qDebug() << "diversity=" << QString::number(emojiData.diversity, 16);
-
-								QJsonValue gender = object.value("gender");
-								emojiData.gender = gender.isNull()?0:gender.toString().toInt(&ok, 16);
-								if (emojiData.gender)
-									qDebug() << "gender=" << QString::number(emojiData.gender, 16);
-
-								if (!emojiData.diversity && !emojiData.gender)
+								emojiData.variation = false;
+								if (object.value("diversity").isNull()) // May have diversities
 								{
 									QJsonArray diversities = object.value("diversities").toArray();
 									for (QJsonArray::ConstIterator it = diversities.constBegin();
 										 it != diversities.constEnd(); ++it)
 										emojiData.diversities.append((*it).toString());
+								}
+								else
+									emojiData.variation = true;
 
-									bool ok(false);
-									QList<QString> splitted = emojiData.ucs4.split('-');
-									for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
-									{
-										ucs4[i]=(*it).toInt(&ok, 16);
-										if (!ok)
-											break;
-									}
-									if (ok)
-									{
-										emojiData.unicode = QString::fromUcs4(ucs4, i);
+								if (object.value("gender").isNull()) // May have diversities
+								{
+									QJsonArray genders = object.value("genders").toArray();
+									for (QJsonArray::ConstIterator it = genders.constBegin();
+										 it != genders.constEnd(); ++it)
+										emojiData.genders.append((*it).toString());
+								}
+								else
+									emojiData.variation = true;
+
+//								QJsonValue diversity = object.value("diversity");
+//								emojiData.diversity = diversity.isNull()?0:diversity.toString().toInt(&ok, 16);
+//								if (emojiData.diversity)
+//									qDebug() << "diversity=" << QString::number(emojiData.diversity, 16);
+
+//								QJsonValue gender = object.value("gender");
+//								emojiData.gender = gender.isNull()?0:gender.toString().toInt(&ok, 16);
+//								if (emojiData.gender)
+//									qDebug() << "gender=" << QString::number(emojiData.gender, 16);
+
+								bool ok(false);
+								QList<QString> splitted = emojiData.ucs4.split('-');
+								for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+								{
+									ucs4[i]=(*it).toInt(&ok, 16);
+									if (!ok)
+										break;
+								}
+								if (ok)
+								{
+									emojiData.unicode = QString::fromUcs4(ucs4, i);
+									FEmojiData.insert(emojiData.unicode, emojiData);
+									if (!emojiData.variation)
 										FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
-										FEmojiData.insert(emojiData.unicode, emojiData);
-									}
 								}
 							}
 						}
