@@ -11,6 +11,7 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 	FEmoji(AEmoji),
 	FPressed(nullptr),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
+	FColor(0),
 	FHasColored(false),
 	FNotReady(true),
 	FColumns(AColumns),
@@ -26,27 +27,26 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 SelectIconWidget::~SelectIconWidget()
 {}
 
-void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
+void SelectIconWidget::updateLabels(int AColor)
 {
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize size(extent, extent);
 	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
 		QString key(*it);
-		if (FEmoji->isColored(key))
-			key.chop(2);
-		QIcon icon = FEmoji->getIcon(key+AColor, size);
-		if (icon.isNull() && !AColor.isEmpty())
-			icon = FEmoji->getIcon(key, size);
-		else
-			key.append(AColor);
-
-		if (*it!=key || AForce)
+		EmojiData data = FEmoji->findData(key);
+		if (FNotReady || (FColor!=AColor && !data.diversities.isEmpty()))
 		{
-			(*it)=key;
+			if (AColor && data.diversities.size() >= AColor)
+				key = data.diversities[AColor-1];
+			QIcon icon = FEmoji->getIcon(key, size);
 			it.key()->setPixmap(icon.pixmap(size));
 		}
 	}
+	if (FNotReady)
+		FNotReady = false;
+	if (FColor != AColor)
+		FColor = AColor;
 }
 
 void SelectIconWidget::createLabels()
@@ -67,16 +67,16 @@ void SelectIconWidget::createLabels()
 			label->installEventFilter(this);
 			label->setPixmap(QPixmap(iconSize));
 			label->setToolTip((*it).name);
-			FKeyByLabel.insert(label, (*it).unicode);
-			FLayout->addWidget(label, row, column);
+			FKeyByLabel.insert(label, (*it).id);
+			FLayout->addWidget(label, int(row), int(column));
 			if (!(*it).diversities.isEmpty())
 				FHasColored=true;
 			column = (column+1) % FColumns;
 			row += column==0 ? 1 : 0;
-			FLayout->setRowStretch(row, 0);
+			FLayout->setRowStretch(int(row), 0);
 		}
-	if (row<FRows)
-		FLayout->setRowStretch(row+1, 1);
+	if (row < FRows)
+		FLayout->setRowStretch(int(row+1), 1);
 }
 
 bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
@@ -98,7 +98,7 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 	else if (AEvent->type() == QEvent::MouseButtonRelease)
 	{
 		if (FPressed == label)
-			emit iconSelected(FKeyByLabel.value(label), label->toolTip());
+			emit iconSelected(FKeyByLabel.value(label));
 		FPressed = nullptr;
 	}
 	return QWidget::eventFilter(AWatched,AEvent);
@@ -108,11 +108,7 @@ void SelectIconWidget::showEvent(QShowEvent *AShowEvent)
 {
 	Q_UNUSED(AShowEvent)
 	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
-	if ((FHasColored && FColor!=color) || FNotReady)
-	{
-		updateLabels(FColor=color, FNotReady);
-		FNotReady = false;
-	}
+	if ((FHasColored && FColor!=index) || FNotReady)
+		updateLabels(index);
 	emit hasColoredChanged(FHasColored);
 }

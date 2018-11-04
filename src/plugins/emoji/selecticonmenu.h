@@ -22,7 +22,7 @@ public:
 	void setIconSet(const QString &AIconSet);
 
 signals:
-	void iconSelected(const QString &AIconKey, const QString &AIconText);
+	void iconSelected(const QString &AIconKey);
 
 public:
 	virtual QSize sizeHint() const;
@@ -36,7 +36,7 @@ protected slots:
 	void onCategorySwitched(int ACategory);
 
 protected:
-	void updateRecentActions(const QString &AColor);
+	void updateRecentActions(int AColor);
 
 private:
 	IEmoji *FEmoji;

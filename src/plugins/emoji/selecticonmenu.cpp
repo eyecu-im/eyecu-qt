@@ -14,9 +14,9 @@
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
-	FLayout(NULL),
-	FTabWidget(NULL),
-	FToolBarChanger(NULL)
+	FLayout(nullptr),
+	FTabWidget(nullptr),
+	FToolBarChanger(nullptr)
 {
 	FLayout = new QVBoxLayout(this);
 	FLayout->setMargin(0);
@@ -43,7 +43,8 @@ QString SelectIconMenu::iconSet() const
 
 void SelectIconMenu::setIconSet(const QString &AIconSet)
 {
-	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().unicode, QSize(16, 16)));
+	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().id,
+										  QSize(16, 16)));
 	menuAction()->setToolTip(AIconSet);
 }
 
@@ -55,24 +56,23 @@ QSize SelectIconMenu::sizeHint() const
 void SelectIconMenu::onAboutToShow()
 {
 	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
 	if (!FTabWidget)
 	{
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
-		int columns = 0;
-		int rows = 0;
-		int count = 0;
+		unsigned columns = 0;
+		unsigned rows = 0;
+		unsigned count = 0;
 		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
-			int cnt = FEmoji->categoryCount((IEmoji::Category)c);
-			if (count<cnt)
+			unsigned cnt = FEmoji->categoryCount(IEmoji::Category(c));
+			if (count < cnt)
 			{
 				count = cnt;
-				int cols = cnt/2 + 1;
+				unsigned cols = cnt/2 + 1;
 				while (cols>1 && cols*cols>cnt)
 					cols--;
-				int r = cnt/cols;
+				unsigned r = cnt/cols;
 				if (cols*r<cnt)
 					r++;
 				if (r>cols)
@@ -86,10 +86,11 @@ void SelectIconMenu::onAboutToShow()
 		}
 		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
-			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, columns, rows, FEmoji, this);
-			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
-			FTabWidget->setTabEnabled(c, FEmoji->categoryCount((IEmoji::Category)c));
-			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
+			SelectIconWidget *widget = new SelectIconWidget(IEmoji::Category(c), columns, rows, FEmoji, this);
+			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon(IEmoji::Category(c)),
+														 QString()), FEmoji->categoryName(IEmoji::Category(c)));
+			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
+			connect(widget,SIGNAL(iconSelected(QString)),SIGNAL(iconSelected(QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 		}
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
@@ -115,24 +116,25 @@ void SelectIconMenu::onAboutToShow()
 	action->setActionGroup(group);
 	action->setIcon(FMenu->icon());
 	FMenu->addAction(action);
-	if (color.isEmpty())
+	if (index==0)
 	{
 		action->setChecked(true);
 		FMenu->setIcon(action->icon());
 	}
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 	QStringList colorSuffixes = FEmoji->colorSuffixes();
-	for (int i=Emoji::SkinDefault; i<Emoji::SkinTone5; ++i)
+	for (int i=Emoji::SkinTone1; i<=Emoji::SkinTone5; ++i)
 	{
-		QString c = colorSuffixes[i];
+		QString c = colorSuffixes[i-1];
 		action = new Action(group);
-		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
+		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale")
+						.arg(i==Emoji::SkinTone1?QString::number(i+1):tr("1 or 2")));
 		action->setIcon(FEmoji->getIcon(c, size));
-		action->setData(ADR_COLOR, i+1);
+		action->setData(ADR_COLOR, i);
 		action->setCheckable(true);
 		action->setActionGroup(group);
 		FMenu->addAction(action);
-		if (c == color)
+		if (i == index)
 		{
 			action->setChecked(true);
 			FMenu->setIcon(action->icon());
@@ -144,19 +146,16 @@ void SelectIconMenu::onAboutToShow()
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
-		QString emoji = *it+color;
-		QIcon icon = FEmoji->getIcon(emoji, size);
-		if (icon.isNull() && !color.isEmpty())
-		{
-			icon = FEmoji->getIcon(*it, size);
-			emoji = *it;
-		}
+		EmojiData data = FEmoji->findData(*it);
+		if (index && data.diversities.size() >= index)
+			data = FEmoji->findData(data.diversities[index-1]);
+		QIcon icon = FEmoji->getIcon(data.id, size);
 		if (!icon.isNull())
 		{
 			Action *action = new Action();
 			action->setIcon(icon);
 			action->setToolTip(FEmoji->findData(*it).name);
-			action->setData(ADR_EMOJI, emoji);
+			action->setData(ADR_EMOJI, data.id);
 			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
 			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
 		}
@@ -173,14 +172,11 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 	if (isVisible() && ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
 	{
 		int index = ANode.value().toInt();
-		QString color;
-		if (index)
-			color = FEmoji->colorSuffixes()[index-1];
-		FMenu->setIcon(index?FEmoji->getIcon(color):FEmptyIcon);
+		FMenu->setIcon(index?FEmoji->getIcon(FEmoji->colorSuffixes()[index-1]):FEmptyIcon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
-			widget->updateLabels(color);
-		updateRecentActions(color);
+			widget->updateLabels(index);
+		updateRecentActions(index);
 	}
 }
 
@@ -189,7 +185,7 @@ void SelectIconMenu::onRecentIconTriggered()
 	hide();
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
-		emit iconSelected(action->data(ADR_EMOJI).toString(), action->toolTip());
+		emit iconSelected(action->data(ADR_EMOJI).toString());
 }
 
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)
@@ -202,40 +198,27 @@ void SelectIconMenu::onCategorySwitched(int ACategory)
 	Options::node(OPV_MESSAGES_EMOJI_CATEGORY).setValue(ACategory);
 }
 
-void SelectIconMenu::updateRecentActions(const QString &AColor)
+void SelectIconMenu::updateRecentActions(int AColor)
 {
 	QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
 	for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
 	{
 		Action *action = FToolBarChanger->handleAction(*it);
-		QString unicode = action->data(ADR_EMOJI).toString();
-		if (FEmoji->isColored(unicode))
-			unicode.chop(2);
-		QString emoji = unicode+AColor;
-		QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
-		if (icon.isNull() && !AColor.isEmpty())
+		QString id = action->data(ADR_EMOJI).toString();
+
+		EmojiData data = FEmoji->findData(id);
+		if (!data.diversities.isEmpty()) // Has skin color color
 		{
-			icon = FEmoji->getIcon(unicode, QSize(16, 16));
-			emoji = unicode;
-		}
-		if (!icon.isNull())
-		{
+			if (AColor)
+			{
+				id = data.diversities[AColor-1];
+				data = FEmoji->findData(id);
+			}
+			QIcon icon = FEmoji->getIcon(id, QSize(16, 16));
 			action->setIcon(icon);
-			action->setToolTip(FEmoji->findData(unicode).name);
-			action->setData(ADR_EMOJI, emoji);
+			action->setToolTip(data.name);
 		}
 	}
 }
 
-//QString SelectIconMenu::typeUcs4(const QString &AText)
-//{
-//	QString output;
-//	QVector<uint> ucs4 = AText.toUcs4();
-//	for (QVector<uint>::ConstIterator it=ucs4.constBegin(); it!=ucs4.constEnd(); ++it)
-//	{
-//		if (!output.isEmpty())
-//			output.append('-');
-//		output.append(QString::number(*it, 16));
-//	}
-//	return output;
-//}
+

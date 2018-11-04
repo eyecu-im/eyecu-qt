@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QDir>
 #include <QSet>
 #include <QChar>
@@ -118,11 +117,14 @@ bool Emoji::initObjects()
 	return true;
 }
 
-bool Emoji::isColored(const QString &AEmojiCode) const
+bool Emoji::isColored(const QString &AEmojiId) const
 {
-	int size = AEmojiCode.size();
-	ushort last = AEmojiCode.at(size-1).unicode();
-	return (size>1) && (AEmojiCode.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
+	if (FEmojiData.contains(AEmojiId))
+		return !FEmojiData[AEmojiId].diversities.isEmpty();
+	return false;
+//	int size = AEmojiCode.size();
+//	ushort last = AEmojiCode.at(size-1).unicode();
+//	return (size>1) && (AEmojiCode.at(size-2)==QChar(0xD83C)) && (last>0xDFFA) && (last<0xE000);
 }
 
 bool Emoji::initSettings()
@@ -188,7 +190,7 @@ bool Emoji::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, c
 	Q_UNUSED(AOrder); Q_UNUSED(AData);
 	if (AOrder == MECHO_EMOJI_CONVERT_IMAGE2TEXT)
 	{
-		QList<QUrl> urlList = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).values();
+		QList<QString> urlList = FFileByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).values();
 		QTextBlock block = ADocument->firstBlock();
 		while (block.isValid())
 		{
@@ -198,9 +200,9 @@ bool Emoji::messageEditContentsInsert(int AOrder, IMessageEditWidget *AWidget, c
 				if (fragment.charFormat().isImageFormat())
 				{
 					QUrl url = fragment.charFormat().toImageFormat().name();
-					if (AWidget->document()->resource(QTextDocument::ImageResource,url).isNull() && urlList.contains(url))
+					if (AWidget->document()->resource(QTextDocument::ImageResource,url).isNull() && FEmojiData.contains(url.path()))
 					{
-						AWidget->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
+						AWidget->document()->addResource(QTextDocument::ImageResource,url,QImage(fileByKey(url.path())));
 						AWidget->document()->markContentsDirty(fragment.position(),fragment.length());
 					}
 				}
@@ -224,82 +226,84 @@ QList<QString> Emoji::activeIconsets() const
 	return iconsets;
 }
 
-QUrl Emoji::urlByKey(const QString &AKey) const
+QString Emoji::fileByKey(const QString &AKey) const
 {
-	return FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AKey);
+	return FFileByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AKey);
 }
 
-QString Emoji::keyByUrl(const QUrl &AUrl) const
+QString Emoji::keyByFile(const QString &AName) const
 {
-	return FKeyByUrl.value(AUrl.toString());
+	return FKeyByFile.value(AName);
 }
 
-QMap<int, QString> Emoji::findTextEmoticons(const QTextDocument *ADocument, int AStartPos, int ALength) const
+QMap<int, QString> Emoji::findTextEmoji(const QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	QMap<int,QString> emoji;
-	if (!FUrlByKey.isEmpty())
-	{
-		int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
-		for (QTextBlock block = ADocument->findBlock(AStartPos); block.isValid() && block.position()<stopPos; block = block.next())
-			for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it)
-			{
-				QTextFragment fragment = it.fragment();
-				if (fragment.length()>0 && fragment.position()<stopPos)
-				{
-					QString searchText = fragment.text();
-					for (int keyPos=0; keyPos<searchText.length(); keyPos++)
-						if (!searchText.at(keyPos).isSpace())
-						{
-							int keyLength = 0, keyLengthCurrent = 0;
-							QString key;
-							for (const EmojiTreeItem *item = &FRootTreeItem; item && keyLengthCurrent<=searchText.length()-keyPos && fragment.position()+keyPos+keyLengthCurrent<=stopPos; ++keyLengthCurrent)
-							{
-								if (!item->url.isEmpty())
-									key = searchText.mid(keyPos, keyLength = keyLengthCurrent);
-								if (keyPos+keyLengthCurrent<searchText.length())
-									item = item->childs.value(searchText.at(keyPos+keyLengthCurrent));
-							}
 
-							if (!key.isEmpty())
-							{
-								emoji.insert(fragment.position()+keyPos, key);
-								keyPos += keyLength-1;
-								key.clear();
-							}
+	int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
+	for (QTextBlock block = ADocument->findBlock(AStartPos); block.isValid() && block.position()<stopPos; block = block.next())
+		for (QTextBlock::iterator it = block.begin(); !it.atEnd(); ++it)
+		{
+			QTextFragment fragment = it.fragment();
+			if (fragment.length()>0 && fragment.position()<stopPos)
+			{
+				QString searchText = fragment.text();
+				for (int keyPos=0; keyPos<searchText.length(); keyPos++)
+					if (!searchText.at(keyPos).isSpace())
+					{
+						int keyLength = 0, keyLengthCurrent = 0;
+						QString key;
+						for (const EmojiTreeItem *item = &FRootTreeItem;
+							 item && keyLengthCurrent<=searchText.length()-keyPos &&
+							 fragment.position()+keyPos+keyLengthCurrent<=stopPos;
+							 ++keyLengthCurrent)
+						{
+							if (!item->name.isEmpty())
+								key = searchText.mid(keyPos, keyLength = keyLengthCurrent);
+							if (keyPos+keyLengthCurrent<searchText.length())
+								item = item->childs.value(searchText.at(keyPos+keyLengthCurrent));
 						}
-				}
+
+						if (!key.isEmpty())
+						{
+							emoji.insert(fragment.position()+keyPos, key);
+							keyPos += keyLength-1;
+							key.clear();
+						}
+					}
 			}
-	}
+		}
 	return emoji;
 }
 
-QMap<int, QString> Emoji::findImageEmoticons(const QTextDocument *ADocument, int AStartPos, int ALength) const
+QMap<int, QString> Emoji::findImageEmoji(const QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	QMap<int,QString> emoji;
-	if (!FKeyByUrl.isEmpty())
+	QTextBlock block = ADocument->findBlock(AStartPos);
+	int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
+	while (block.isValid() && block.position()<stopPos)
 	{
-		QTextBlock block = ADocument->findBlock(AStartPos);
-		int stopPos = ALength < 0 ? ADocument->characterCount() : AStartPos+ALength;
-		while (block.isValid() && block.position()<stopPos)
+		for (QTextBlock::iterator it = block.begin(); !it.atEnd() && it.fragment().position()<stopPos; ++it)
 		{
-			for (QTextBlock::iterator it = block.begin(); !it.atEnd() && it.fragment().position()<stopPos; ++it)
+			const QTextFragment fragment = it.fragment();
+			if (fragment.charFormat().isImageFormat())
 			{
-				const QTextFragment fragment = it.fragment();
-				if (fragment.charFormat().isImageFormat())
+				QUrl url(fragment.charFormat().toImageFormat().name());
+				if (url.isValid())
 				{
-					QString key = FKeyByUrl.value(fragment.charFormat().toImageFormat().name());
-					if (!key.isEmpty())
+					if (FEmojiData.contains(url.path()))
 					{
 						int i = 0;
 						QString text = fragment.text();
-						for (QString::ConstIterator itc=text.constBegin(); itc!=text.constEnd(); ++itc, ++i)
+						for (QString::ConstIterator itc=text.constBegin();
+							 itc!=text.constEnd(); ++itc, ++i)
 							if (*itc==QChar::ObjectReplacementCharacter)
-								emoji.insert(fragment.position()+i,key);
+								emoji.insert(fragment.position()+i, FEmojiData[url.path()].unicode);
 					}
 				}
 			}
-			block = block.next();
 		}
+		block = block.next();
 	}
 	return emoji;
 }
@@ -316,10 +320,10 @@ QIcon Emoji::getIcon(const QString &AEmojiCode, const QSize &ASize) const
 		icon = FIconHash[AEmojiCode];
 	if (!icon.availableSizes().contains(ASize))
 	{
-		QHash<QString, QUrl> urlByKey = FUrlByKey.value(ASize.height());
-		if (urlByKey.contains(AEmojiCode))
+		QHash<QString, QString> fileByKey = FFileByKey.value(ASize.height());
+		if (fileByKey.contains(AEmojiCode))
 		{
-			QFile file(urlByKey[AEmojiCode].toLocalFile());
+			QFile file(fileByKey[AEmojiCode]);
 			if (file.open(QIODevice::ReadOnly))
 			{
 				QImageReader reader(&file);
@@ -360,9 +364,9 @@ QMap<uint, EmojiData> Emoji::emojiData(Category ACategory) const
 	return FCategories.value(ACategory);
 }
 
-EmojiData Emoji::findData(const QString &AEmojiCode) const
+EmojiData Emoji::findData(const QString &AEmojiId) const
 {
-	return FEmojiData.value(AEmojiCode);
+	return FEmojiData.value(AEmojiId);
 }
 
 void Emoji::findEmojiSets()
@@ -470,6 +474,7 @@ void Emoji::findEmojiSets()
 								emojiData.id = it.key();
 								emojiData.name = object.value("name").toString();
 								QString category = object.value("category").toString();
+								emojiData.category = FCategoryIDs.key(category);
 								int order = object.value("order").toInt();
 
 								if (!object.value("ascii").isNull())
@@ -499,8 +504,6 @@ void Emoji::findEmojiSets()
 								QJsonObject codePoints = object.value("code_points").toObject();
 								emojiData.ucs4 = codePoints.value("fully_qualified").toString();
 
-								qDebug() << "ucs4=" << emojiData.ucs4;
-
 								emojiData.variation = false;
 								if (object.value("diversity").isNull()) // May have diversities
 								{
@@ -522,16 +525,6 @@ void Emoji::findEmojiSets()
 								else
 									emojiData.variation = true;
 
-//								QJsonValue diversity = object.value("diversity");
-//								emojiData.diversity = diversity.isNull()?0:diversity.toString().toInt(&ok, 16);
-//								if (emojiData.diversity)
-//									qDebug() << "diversity=" << QString::number(emojiData.diversity, 16);
-
-//								QJsonValue gender = object.value("gender");
-//								emojiData.gender = gender.isNull()?0:gender.toString().toInt(&ok, 16);
-//								if (emojiData.gender)
-//									qDebug() << "gender=" << QString::number(emojiData.gender, 16);
-
 								bool ok(false);
 								QList<QString> splitted = emojiData.ucs4.split('-');
 								for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
@@ -543,9 +536,10 @@ void Emoji::findEmojiSets()
 								if (ok)
 								{
 									emojiData.unicode = QString::fromUcs4(ucs4, i);
-									FEmojiData.insert(emojiData.unicode, emojiData);
+									FEmojiData.insert(emojiData.id, emojiData);
+									FIdByUnicode.insert(emojiData.unicode, emojiData.id);
 									if (!emojiData.variation)
-										FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
+										FCategories[Category(emojiData.category)].insert(order, emojiData);
 								}
 							}
 						}
@@ -639,8 +633,8 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	dir.cd("png");
 
 	FIconHash.clear();
-	FUrlByKey.clear();
-	FKeyByUrl.clear();
+	FFileByKey.clear();
+	FKeyByFile.clear();
 	clearTreeItem(&FRootTreeItem);
 
 	if (!AEmojiSet.isEmpty())
@@ -655,35 +649,42 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 			for (QStringList::ConstIterator itd = dirs.constBegin(); itd!=dirs.constEnd(); ++itd)
 				if (dir.cd(*itd))
 				{
-					for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
-					{
-						FCategoryCount[itc.key()]=0;
-						for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+					for (int c = People; c < Last; ++c)
+						FCategoryCount[c] = 0;
+//					for (QHash<Category, QMap<uint, EmojiData> >::Iterator itc=FCategories.begin(); itc!=FCategories.end(); ++itc)
+//					{
+//						FCategoryCount[itc.key()]=0;
+//						for (QMap<uint, EmojiData>::Iterator it = (*itc).begin(); it!=(*itc).end(); ++it)
+					for (QHash<QString, EmojiData>::Iterator it = FEmojiData.begin();
+						 it != FEmojiData.end(); ++it)
 						{
 							QFile file(getFileName(*it, dir));
 							if (file.exists())
 							{
-								QUrl url(QUrl::fromLocalFile(file.fileName()));
+//								QUrl url(QUrl::fromLocalFile(file.fileName()));
+								QString fileName(file.fileName());
 //								(*it).colored = false;
-								for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
-								{
-									QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
-									if (!file.exists())
-										file.setFileName(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).id).arg(c, 0, 16)));
-									if (file.exists())
-									{
+//								for (uint c=0x1f3fb; c<=0x1f3ff; ++c)
+//								{
+//									QFile file(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).ucs4).arg(c, 0, 16)));
+//									if (!file.exists())
+//										file.setFileName(dir.absoluteFilePath(QString("%1-%2.png").arg((*it).id).arg(c, 0, 16)));
+//									if (file.exists())
+//									{
 //										(*it).colored = true;
-										QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
-										QUrl url(QUrl::fromLocalFile(file.fileName()));
-										FUrlByKey[(*itd).toInt()].insert(unicode, url);
-										FKeyByUrl.insertMulti(url.toString(), unicode);
-										createTreeItem(unicode, url);
-									}
-								}
-								FCategoryCount[itc.key()]++;
-								FUrlByKey[(*itd).toInt()].insert((*it).unicode, url);
-								FKeyByUrl.insertMulti(url.toString(), (*it).unicode);
-								createTreeItem((*it).unicode, url);
+//										QString unicode = (*it).unicode+QString::fromUcs4(&c, 1);
+//										QUrl url(QUrl::fromLocalFile(file.fileName()));
+//										QString fileName(file.fileName());
+//										FFileByKey[(*itd).toInt()].insert(unicode, fileName);
+//										FKeyByFile.insertMulti(fileName, unicode);
+//										createTreeItem(unicode, fileName);
+//									}
+//								}
+								if (!(*it).variation)
+									FCategoryCount[(*it).category]++;
+								FFileByKey[(*itd).toInt()].insert(it.key(), fileName);
+								FKeyByFile.insertMulti(fileName, it.key());
+								createTreeItem((*it).unicode, fileName);
 								(*it).present = true;
 							}
 							else
@@ -696,12 +697,13 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 							if (file.exists())
 							{
 								QString unicode = QString::fromUcs4(&c, 1);
-								QUrl url(QUrl::fromLocalFile(file.fileName()));
-								FUrlByKey[(*itd).toInt()].insert(unicode, url);
-								FKeyByUrl.insertMulti(url.toString(), unicode);
+//								QUrl url(QUrl::fromLocalFile(file.fileName()));
+								QString fileName(file.fileName());
+								FFileByKey[(*itd).toInt()].insert(unicode, fileName);
+								FKeyByFile.insertMulti(fileName, unicode);
 							}
 						}
-					}
+//					}
 					dir.cdUp();
 				}
 		}
@@ -711,7 +713,7 @@ void Emoji::loadEmojiSet(const QString &AEmojiSet)
 	updateSelectIconMenu(AEmojiSet);
 }
 
-void Emoji::createTreeItem(const QString &AKey, const QUrl &AUrl)
+void Emoji::createTreeItem(const QString &AKey, const QString &AName)
 {
 	EmojiTreeItem *item = &FRootTreeItem;
 	for (int i=0; i<AKey.size(); i++)
@@ -728,7 +730,7 @@ void Emoji::createTreeItem(const QString &AKey, const QUrl &AUrl)
 			item = item->childs.value(itemChar);
 		}
 	}
-	item->url = AUrl;
+	item->name = AName;
 }
 
 void Emoji::clearTreeItem(EmojiTreeItem *AItem) const
@@ -749,24 +751,27 @@ bool Emoji::isWordBoundary(const QString &AText) const
 int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	int posOffset = 0;
-	QMap<int,QString> emoji = findTextEmoticons(ADocument,AStartPos,ALength);
+	QMap<int,QString> emoji = findTextEmoji(ADocument,AStartPos,ALength);
 	if (!emoji.isEmpty())
 	{
 		QTextCursor cursor(ADocument);
 		cursor.beginEditBlock();
 		for (QMap<int,QString>::const_iterator it=emoji.constBegin(); it!=emoji.constEnd(); ++it)
 		{
-			QUrl url = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(it.value());
-			if (!url.isEmpty())
+			QString id = FIdByUnicode[*it];
+			QString fileName = FFileByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT)
+												.value().toInt()).value(id);
+			if (!fileName.isEmpty())
 			{
 				cursor.setPosition(it.key()-posOffset);
-				cursor.setPosition(cursor.position()+it->length(), QTextCursor::KeepAnchor);
+				cursor.setPosition(cursor.position()+it->length(), QTextCursor::KeepAnchor);				
 
 				QTextImageFormat format;
+				QUrl url(QUrl::fromLocalFile(fileName));
 				format.setName(url.toString());
-				format.setToolTip(findData(it.value()).name);
+				format.setToolTip(findData(id).name);
 				if (!ADocument->resource(QTextDocument::ImageResource,url).isValid())
-					ADocument->addResource(QTextDocument::ImageResource, url, QImage(url.toLocalFile()));
+					ADocument->addResource(QTextDocument::ImageResource, url, QImage(fileName));
 				cursor.insertImage(format);
 				posOffset += it->length()-1;
 			}
@@ -779,7 +784,7 @@ int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALeng
 int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	int posOffset = 0;
-	QMap<int,QString> emoticons = findImageEmoticons(ADocument,AStartPos,ALength);
+	QMap<int,QString> emoticons = findImageEmoji(ADocument,AStartPos,ALength);
 	if (!emoticons.isEmpty())
 	{
 		QTextCursor cursor(ADocument);
@@ -804,7 +809,7 @@ int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALeng
 SelectIconMenu *Emoji::createSelectIconMenu(const QString &AIconSet, QWidget *AParent)
 {
 	SelectIconMenu *menu = new SelectIconMenu(AIconSet, this, AParent);
-	connect(menu->instance(),SIGNAL(iconSelected(QString, QString)), SLOT(onSelectIconMenuSelected(QString, QString)));
+	connect(menu->instance(),SIGNAL(iconSelected(QString)), SLOT(onSelectIconMenuSelected(QString)));
 	connect(menu->instance(),SIGNAL(destroyed(QObject *)),SLOT(onSelectIconMenuDestroyed(QObject *)));
 	return menu;
 }
@@ -858,20 +863,19 @@ void Emoji::updateSize(OptionsNode ANode)
 	int value = ANode.value().toInt(&ok);
 	if (ok)
 	{
-		if (!FUrlByKey.contains(value))
+		if (!FFileByKey.contains(value))
 		{
-			QList<int> keys = FUrlByKey.keys();
+			QList<int> keys = FFileByKey.keys();
 			int shift = abs(keys.first()-value);
-			int val;
+			int val(0);
 			for (QList<int>::ConstIterator it=keys.constBegin(); it!=keys.constEnd(); ++it)
-			{
 				if (abs(*it-value)<shift)
 				{
 					shift = abs(*it-value);
 					val = *it;
 				}
-			}
-			ANode.setValue(val);
+			if (val)
+				ANode.setValue(val);
 		}
 	}
 }
@@ -917,18 +921,24 @@ void Emoji::onToolBarWidgetDestroyed(QObject *AObject)
 	}
 }
 
-void Emoji::onSelectIconMenuSelected(QString AIconKey, const QString &AIconText)
+void Emoji::onSelectIconMenuSelected(QString AIconId)
 {
-	Q_UNUSED(AIconText)
-
 	SelectIconMenu *menu = qobject_cast<SelectIconMenu *>(sender());
 	if (FToolBarWidgetByMenu.contains(menu))
 	{
 		IMessageEditWidget *widget = FToolBarWidgetByMenu.value(menu)->messageWindow()->editWidget();
 		if (widget)
 		{
-			QUrl url = FUrlByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AIconKey);
-			if (!url.isEmpty())
+			// Calculate correct icon id for current skin color
+			int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+			if (color)
+			{
+				EmojiData data = findData(AIconId);
+				if (!data.diversities.isEmpty() && color <= data.diversities.size())
+					AIconId = data.diversities[color-1];
+			}
+			QString fileName = FFileByKey.value(Options::node(OPV_MESSAGES_EMOJI_SIZE_CHAT).value().toInt()).value(AIconId);
+			if (!fileName.isEmpty())
 			{
 				QTextEdit *editor = widget->textEdit();
 				QTextCursor cursor = editor->textCursor();
@@ -937,8 +947,11 @@ void Emoji::onSelectIconMenuSelected(QString AIconKey, const QString &AIconText)
 				if (cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,1))
 					cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor,1);
 
+				QUrl url;
+				url.setScheme("emoji");
+				url.setPath(AIconId);
 				if (!editor->document()->resource(QTextDocument::ImageResource,url).isValid())
-					editor->document()->addResource(QTextDocument::ImageResource,url,QImage(url.toLocalFile()));
+					editor->document()->addResource(QTextDocument::ImageResource,url,QImage(fileName));
 				QTextImageFormat imageFormat;
 				imageFormat.setName(url.toString());
 				cursor.insertImage(imageFormat);
@@ -946,16 +959,16 @@ void Emoji::onSelectIconMenuSelected(QString AIconKey, const QString &AIconText)
 				cursor.endEditBlock();
 				editor->setFocus();
 
-				if (isColored(AIconKey))
-					AIconKey.chop(2);
+				if (isColored(AIconId))
+					AIconId.chop(2);
 
 				QStringList recent = FRecent;
 
-				if (recent.isEmpty() || recent.first()!=AIconKey)
+				if (recent.isEmpty() || recent.first()!=AIconId)
 				{
-					if (recent.contains(AIconKey))
-						recent.removeOne(AIconKey);
-					recent.insert(0, AIconKey);
+					if (recent.contains(AIconId))
+						recent.removeOne(AIconId);
+					recent.insert(0, AIconId);
 					if (recent.size()>10)
 						recent.removeLast();
 					FRecent = recent;
