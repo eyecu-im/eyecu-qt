@@ -11,8 +11,10 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 	FEmoji(AEmoji),
 	FPressed(nullptr),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
-	FColor(0),
+	FColor(IEmoji::SkinDefault),
 	FHasColored(false),
+	FGender(IEmoji::GenderDefault),
+	FHasGendered(false),
 	FNotReady(true),
 	FColumns(AColumns),
 	FRows(ARows)
@@ -27,26 +29,50 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 SelectIconWidget::~SelectIconWidget()
 {}
 
-void SelectIconWidget::updateLabels(int AColor)
+void SelectIconWidget::updateLabels()
 {
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize size(extent, extent);
 	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
 		QString key(*it);
 		EmojiData data = FEmoji->findData(key);
-		if (FNotReady || (FColor!=AColor && !data.diversities.isEmpty()))
+		bool changed(false);
+
+		if (!data.diversities.isEmpty())
 		{
-			if (AColor && data.diversities.size() >= AColor)
-				key = data.diversities[AColor-1];
+			if (color != FColor)
+				changed = true;
+			if (color && data.diversities.size() >= color)
+				key = data.diversities[color-1];
+		}
+
+		data = FEmoji->findData(key);
+		if (data.genders.size() == 2)
+		{
+			if (FGender != gender)
+				changed = true;
+			if (gender)
+				key = data.genders[gender-1];
+		}
+
+		if (FNotReady || changed)
+		{
 			QIcon icon = FEmoji->getIcon(key, size);
 			it.key()->setPixmap(icon.pixmap(size));
 		}
 	}
+
 	if (FNotReady)
 		FNotReady = false;
-	if (FColor != AColor)
-		FColor = AColor;
+
+	if (FColor != color)
+		FColor = color;
+
+	if (FGender != gender)
+		FGender = gender;
 }
 
 void SelectIconWidget::createLabels()
@@ -69,8 +95,10 @@ void SelectIconWidget::createLabels()
 			label->setToolTip((*it).name);
 			FKeyByLabel.insert(label, (*it).id);
 			FLayout->addWidget(label, int(row), int(column));
-			if (!(*it).diversities.isEmpty())
+			if (!it->diversities.isEmpty())
 				FHasColored=true;
+			if (it->genders.size() == 2)
+				FHasGendered=true;
 			column = (column+1) % FColumns;
 			row += column==0 ? 1 : 0;
 			FLayout->setRowStretch(int(row), 0);
@@ -107,8 +135,12 @@ bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 void SelectIconWidget::showEvent(QShowEvent *AShowEvent)
 {
 	Q_UNUSED(AShowEvent)
-	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	if ((FHasColored && FColor!=index) || FNotReady)
-		updateLabels(index);
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
+	if ((FHasColored && FColor!=color) ||
+		(FHasGendered && FGender!=gender) ||
+		FNotReady)
+		updateLabels();
 	emit hasColoredChanged(FHasColored);
+	emit hasGenderedChanged(FHasGendered);
 }

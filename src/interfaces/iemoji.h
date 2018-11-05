@@ -18,6 +18,7 @@ struct EmojiData {
 	int		category;
 	bool	variation;
 	bool	present;
+	bool	display;
 };
 
 class IEmoji // : public IEmoticons
@@ -44,8 +45,14 @@ public:
 		SkinTone5
 	};
 
+	enum Gender {
+		GenderDefault,
+		GenderMale,
+		GenderFemale
+	};
+
 	virtual QString fileByKey(const QString &AKey) const = 0;
-	virtual QString keyByFile(const QString &AName) const = 0;
+//	virtual QString keyByFile(const QString &AName) const = 0;
 	virtual QMap<int, QString> findTextEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const = 0;
 	virtual QMap<int, QString> findImageEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const = 0;
 	virtual QStringList recentIcons(const QString &ASetName) const = 0;

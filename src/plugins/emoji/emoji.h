@@ -55,7 +55,7 @@ public:
 	virtual QList<QString> activeIconsets() const;	
 	//IEmoji
 	virtual QString fileByKey(const QString &AKey) const;
-	virtual QString keyByFile(const QString &AName) const;
+//	virtual QString keyByFile(const QString &AName) const;
 	virtual QMap<int, QString> findTextEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QStringList recentIcons(const QString &ASetName) const {Q_UNUSED(ASetName) return FRecent;}
@@ -100,7 +100,7 @@ private:
 private:
 	EmojiTreeItem FRootTreeItem;
 	QMap<int, QHash<QString, QString> > FFileByKey;
-	QHash<QString, QString> FKeyByFile;
+//	QHash<QString, QString> FKeyByFile;
 	QHash<Category, QMap<uint, EmojiData> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
 	QHash<QString, QString> FIdByUnicode;

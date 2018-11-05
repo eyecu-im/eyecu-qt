@@ -15,7 +15,7 @@ class SelectIconMenu :
 {
 	Q_OBJECT
 public:
-	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = nullptr);
 	~SelectIconMenu();
 	QWidget *instance() { return this; }
 	QString iconSet() const;
@@ -30,21 +30,25 @@ public:
 protected slots:
 	void onAboutToShow();
 	void onSkinColorSelected();
+	void onGenderSelected();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onRecentIconTriggered();
 	void onHasColoredChanged(bool AHasColored);
+	void onHasGenderedChanged(bool AHasGendered);
 	void onCategorySwitched(int ACategory);
 
 protected:
-	void updateRecentActions(int AColor);
+	void updateRecentActions();
 
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
-	QPointer<Menu> FMenu;
+	QPointer<Menu> FSkinColor;
+	QPointer<Menu> FGender;
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
+	static const QStringList FGenderSuffixes;
 };
 
 #endif // SELECTICONMENU_H

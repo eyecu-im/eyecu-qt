@@ -9,7 +9,10 @@
 #include <utils/qt4qt5compat.h>
 
 #define ADR_COLOR Action::DR_Parametr1
+#define ADR_GENDER Action::DR_Parametr1
 #define ADR_EMOJI Action::DR_Parametr1
+
+const QStringList SelectIconMenu::FGenderSuffixes(QStringList() << "2642" << "2640");
 
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
@@ -54,8 +57,7 @@ QSize SelectIconMenu::sizeHint() const
 }
 
 void SelectIconMenu::onAboutToShow()
-{
-	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+{	
 	if (!FTabWidget)
 	{
 		FTabWidget = new QTabWidget(this);
@@ -92,10 +94,13 @@ void SelectIconMenu::onAboutToShow()
 			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
 			connect(widget,SIGNAL(iconSelected(QString)),SIGNAL(iconSelected(QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
+			connect(widget,SIGNAL(hasGenderedChanged(bool)), SLOT(onHasGenderedChanged(bool)));
 		}
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
 		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
 	}
+
+	// Create toolbar
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize size(extent, extent);
 	if (FToolBarChanger)
@@ -105,21 +110,25 @@ void SelectIconMenu::onAboutToShow()
 	FLayout->addWidget(toolBar);
 	FToolBarChanger = new ToolBarChanger(toolBar);
 	FToolBarChanger->setSeparatorsVisible(true);
-	FMenu = new Menu(toolBar);
-	FMenu->setIcon(FEmptyIcon);
-	QActionGroup *group = new QActionGroup(FMenu);
+
+	// Skin color submenu
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	FSkinColor = new Menu(toolBar);
+	FSkinColor->setIcon(FEmptyIcon);
+	QActionGroup *group = new QActionGroup(FSkinColor);
 
 	Action *action = new Action(group);
 	action->setText(tr("Default"));
 	action->setData(ADR_COLOR, Emoji::SkinDefault);
 	action->setCheckable(true);
 	action->setActionGroup(group);
-	action->setIcon(FMenu->icon());
-	FMenu->addAction(action);
-	if (index==0)
+	action->setIcon(FSkinColor->icon());
+	FSkinColor->addAction(action);
+
+	if (color==0)
 	{
 		action->setChecked(true);
-		FMenu->setIcon(action->icon());
+		FSkinColor->setIcon(action->icon());
 	}
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 	QStringList colorSuffixes = FEmoji->colorSuffixes();
@@ -133,29 +142,87 @@ void SelectIconMenu::onAboutToShow()
 		action->setData(ADR_COLOR, i);
 		action->setCheckable(true);
 		action->setActionGroup(group);
-		FMenu->addAction(action);
-		if (i == index)
+		FSkinColor->addAction(action);
+		if (i == color)
 		{
 			action->setChecked(true);
-			FMenu->setIcon(action->icon());
+			FSkinColor->setIcon(action->icon());
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 	}
-	FToolBarChanger->insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
-	FMenu->setTitle(tr("Skin color"));
+	FToolBarChanger->insertAction(FSkinColor->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
+	FSkinColor->setTitle(tr("Skin color"));
+
+	// Gender submenu
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
+	FGender = new Menu(toolBar);
+	FGender->setIcon(FEmptyIcon);
+	group = new QActionGroup(FGender);
+
+//	QStringList genderSuffixes = FEmoji->genderSuffixes();
+
+	action = new Action(group);
+	action->setText(tr("Default"));
+	action->setData(ADR_GENDER, Emoji::GenderDefault);
+	action->setCheckable(true);
+	action->setActionGroup(group);
+	action->setIcon(FGender->icon());
+	FGender->addAction(action);
+	if (gender==Emoji::GenderDefault)
+	{
+		action->setChecked(true);
+		FGender->setIcon(action->icon());
+	}
+	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
+
+	action = new Action(group);
+	action->setText(tr("Male"));
+	action->setData(ADR_GENDER, Emoji::GenderMale);
+	action->setCheckable(true);
+	action->setActionGroup(group);
+	action->setIcon(FEmoji->getIcon(FGenderSuffixes[0], size));
+	FGender->addAction(action);
+	if (gender==Emoji::GenderMale)
+	{
+		action->setChecked(true);
+		FGender->setIcon(action->icon());
+	}
+	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
+
+	action = new Action(group);
+	action->setText(tr("Female"));
+	action->setData(ADR_GENDER, Emoji::GenderFemale);
+	action->setCheckable(true);
+	action->setActionGroup(group);
+	action->setIcon(FEmoji->getIcon(FGenderSuffixes[1], size));
+	FGender->addAction(action);
+	if (gender==Emoji::GenderFemale)
+	{
+		action->setChecked(true);
+		FGender->setIcon(action->icon());
+	}
+	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
+
+	FToolBarChanger->insertAction(FGender->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
+	FGender->setTitle(tr("Gender"));
+
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
 		EmojiData data = FEmoji->findData(*it);
-		if (index && data.diversities.size() >= index)
-			data = FEmoji->findData(data.diversities[index-1]);
+		QString id = data.id;
+		QString name = data.name;
+		if (color && data.diversities.size() >= color)
+			data = FEmoji->findData(data.diversities[color-1]);
+		if (gender && data.genders.size() == 2)
+			data = FEmoji->findData(data.genders[gender-1]);
 		QIcon icon = FEmoji->getIcon(data.id, size);
 		if (!icon.isNull())
 		{
 			Action *action = new Action();
 			action->setIcon(icon);
-			action->setToolTip(FEmoji->findData(*it).name);
-			action->setData(ADR_EMOJI, data.id);
+			action->setToolTip(name);
+			action->setData(ADR_EMOJI, id);
 			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
 			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
 		}
@@ -164,19 +231,34 @@ void SelectIconMenu::onAboutToShow()
 
 void SelectIconMenu::onSkinColorSelected()
 {
-	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).setValue(qobject_cast<Action *>(sender())->data(ADR_COLOR));
+	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).
+			setValue(qobject_cast<Action *>(sender())->data(ADR_COLOR));
+}
+
+void SelectIconMenu::onGenderSelected()
+{
+	Options::node(OPV_MESSAGES_EMOJI_GENDER).
+			setValue(qobject_cast<Action *>(sender())->data(ADR_GENDER));
 }
 
 void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (isVisible() && ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
+	if (isVisible() &&
+		(ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR ||
+		 ANode.path() == OPV_MESSAGES_EMOJI_GENDER))
 	{
 		int index = ANode.value().toInt();
-		FMenu->setIcon(index?FEmoji->getIcon(FEmoji->colorSuffixes()[index-1]):FEmptyIcon);
+
+		if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR) // Skin color
+			FSkinColor->setIcon(index?FEmoji->getIcon(FEmoji->colorSuffixes()[index-1])
+									 :FEmptyIcon);
+		else // Gender
+			FGender->setIcon(index?FEmoji->getIcon(FGenderSuffixes[index-1])
+								  :FEmptyIcon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
-			widget->updateLabels(index);
-		updateRecentActions(index);
+			widget->updateLabels();
+		updateRecentActions();
 	}
 }
 
@@ -190,7 +272,12 @@ void SelectIconMenu::onRecentIconTriggered()
 
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)
 {
-	FMenu->setEnabled(AHasColored);
+	FSkinColor->setEnabled(AHasColored);
+}
+
+void SelectIconMenu::onHasGenderedChanged(bool AHasGendered)
+{
+	FGender->setEnabled(AHasGendered);
 }
 
 void SelectIconMenu::onCategorySwitched(int ACategory)
@@ -198,26 +285,25 @@ void SelectIconMenu::onCategorySwitched(int ACategory)
 	Options::node(OPV_MESSAGES_EMOJI_CATEGORY).setValue(ACategory);
 }
 
-void SelectIconMenu::updateRecentActions(int AColor)
+void SelectIconMenu::updateRecentActions()
 {
 	QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
 	for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
 	{
 		Action *action = FToolBarChanger->handleAction(*it);
 		QString id = action->data(ADR_EMOJI).toString();
 
 		EmojiData data = FEmoji->findData(id);
-		if (!data.diversities.isEmpty()) // Has skin color color
-		{
-			if (AColor)
-			{
-				id = data.diversities[AColor-1];
-				data = FEmoji->findData(id);
-			}
-			QIcon icon = FEmoji->getIcon(id, QSize(16, 16));
-			action->setIcon(icon);
-			action->setToolTip(data.name);
-		}
+		if (color && !data.diversities.isEmpty() &&
+			color <= data.diversities.size()) // Has skin color color
+			data = FEmoji->findData(data.diversities[color-1]);
+
+		if (gender && data.genders.size() == 2) // Has skin color color
+			data = FEmoji->findData(data.genders[gender-1]);
+
+		action->setIcon(FEmoji->getIcon(data.id, FToolBarChanger->toolBar()->iconSize()));
 	}
 }
 
