@@ -49,6 +49,7 @@ private:
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
 	static const QStringList FGenderSuffixes;
+	static const QStringList FSkinColorSuffixes;
 };
 
 #endif // SELECTICONMENU_H

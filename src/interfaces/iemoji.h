@@ -7,18 +7,16 @@
 
 #define EMOJI_UUID "{3FCAB06C-B748-BFAC-839B-24F8B6A75D91}"
 
-struct EmojiData {
-	QString id;
-	QString unicode;
-	QString name;
-	QString ucs4;
-	QList<QString> aliases;
-	QList<QString> diversities;
-	QList<QString> genders;
-	int		category;
-	bool	variation;
-	bool	present;
-	bool	display;
+class IEmojiData {
+public:
+	virtual const QString &id() const =0;
+	virtual const QString &name() const =0;
+	virtual const QStringList &diversities() const =0;
+	virtual const QStringList &genders() const =0;
+
+	virtual bool variation() const =0;
+	virtual bool present() const =0;
+	virtual bool display() const =0;
 };
 
 class IEmoji // : public IEmoticons
@@ -61,10 +59,10 @@ public:
 	virtual QIcon categoryIcon(Category ACategory) const = 0;
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const = 0;
 	virtual QIcon getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, const QSize &ASize=QSize()) const = 0;
-	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const = 0;
-	virtual EmojiData findData(const QString &AEmojiId) const = 0;
+	virtual QMap<uint, IEmojiData*> emojiData(Category ACategory) const = 0;
+	virtual const IEmojiData *findData(const QString &AEmojiId) const = 0;
 	virtual bool isColored(const QString &AEmojiId) const = 0;
-	virtual const QStringList &colorSuffixes() const = 0;
+//	virtual const QStringList &colorSuffixes() const = 0;
 	virtual unsigned categoryCount(Category ACategory) const = 0;
 	virtual QStringList emojiSets() const = 0;
 	virtual QList<int> availableSizes(const QString &ASetName) const = 0;

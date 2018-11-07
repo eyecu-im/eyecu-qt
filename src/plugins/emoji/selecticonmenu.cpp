@@ -13,6 +13,11 @@
 #define ADR_EMOJI Action::DR_Parametr1
 
 const QStringList SelectIconMenu::FGenderSuffixes(QStringList() << "2642" << "2640");
+const QStringList SelectIconMenu::FSkinColorSuffixes(QStringList() << "1f3fb"
+																   << "1f3fc"
+																   << "1f3fd"
+																   << "1f3fe"
+																   << "1f3ff");
 
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
@@ -46,7 +51,8 @@ QString SelectIconMenu::iconSet() const
 
 void SelectIconMenu::setIconSet(const QString &AIconSet)
 {
-	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().id,
+	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People)
+										  .constBegin().value()->id(),
 										  QSize(16, 16)));
 	menuAction()->setToolTip(AIconSet);
 }
@@ -86,6 +92,7 @@ void SelectIconMenu::onAboutToShow()
 				rows=r;
 			}
 		}
+
 		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
 			SelectIconWidget *widget = new SelectIconWidget(IEmoji::Category(c), columns, rows, FEmoji, this);
@@ -131,14 +138,13 @@ void SelectIconMenu::onAboutToShow()
 		FSkinColor->setIcon(action->icon());
 	}
 	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-	QStringList colorSuffixes = FEmoji->colorSuffixes();
+//	QStringList colorSuffixes = FEmoji->colorSuffixes();
 	for (int i=Emoji::SkinTone1; i<=Emoji::SkinTone5; ++i)
 	{
-		QString c = colorSuffixes[i-1];
 		action = new Action(group);
 		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale")
 						.arg(i==Emoji::SkinTone1?QString::number(i+1):tr("1 or 2")));
-		action->setIcon(FEmoji->getIcon(c, size));
+		action->setIcon(FEmoji->getIcon(FSkinColorSuffixes[i-1], size));
 		action->setData(ADR_COLOR, i);
 		action->setCheckable(true);
 		action->setActionGroup(group);
@@ -209,14 +215,14 @@ void SelectIconMenu::onAboutToShow()
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
-		EmojiData data = FEmoji->findData(*it);
-		QString id = data.id;
-		QString name = data.name;
-		if (color && data.diversities.size() >= color)
-			data = FEmoji->findData(data.diversities[color-1]);
-		if (gender && data.genders.size() == 2)
-			data = FEmoji->findData(data.genders[gender-1]);
-		QIcon icon = FEmoji->getIcon(data.id, size);
+		const IEmojiData *data = FEmoji->findData(*it);
+		QString id = data->id();
+		QString name = data->name();
+		if (color && data->diversities().size() >= color)
+			data = FEmoji->findData(data->diversities()[color-1]);
+		if (gender && data->genders().size() == 2)
+			data = FEmoji->findData(data->genders()[gender-1]);
+		QIcon icon = FEmoji->getIcon(data->id(), size);
 		if (!icon.isNull())
 		{
 			Action *action = new Action();
@@ -250,7 +256,7 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		int index = ANode.value().toInt();
 
 		if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR) // Skin color
-			FSkinColor->setIcon(index?FEmoji->getIcon(FEmoji->colorSuffixes()[index-1])
+			FSkinColor->setIcon(index?FEmoji->getIcon(FSkinColorSuffixes[index-1])
 									 :FEmptyIcon);
 		else // Gender
 			FGender->setIcon(index?FEmoji->getIcon(FGenderSuffixes[index-1])
@@ -295,15 +301,15 @@ void SelectIconMenu::updateRecentActions()
 		Action *action = FToolBarChanger->handleAction(*it);
 		QString id = action->data(ADR_EMOJI).toString();
 
-		EmojiData data = FEmoji->findData(id);
-		if (color && !data.diversities.isEmpty() &&
-			color <= data.diversities.size()) // Has skin color color
-			data = FEmoji->findData(data.diversities[color-1]);
+		const IEmojiData *data = FEmoji->findData(id);
+		if (color && !data->diversities().isEmpty() &&
+			color <= data->diversities().size()) // Has skin color color
+			data = FEmoji->findData(data->diversities()[color-1]);
 
-		if (gender && data.genders.size() == 2) // Has skin color color
-			data = FEmoji->findData(data.genders[gender-1]);
+		if (gender && data->genders().size() == 2) // Has skin color color
+			data = FEmoji->findData(data->genders()[gender-1]);
 
-		action->setIcon(FEmoji->getIcon(data.id, FToolBarChanger->toolBar()->iconSize()));
+		action->setIcon(FEmoji->getIcon(data->id(), FToolBarChanger->toolBar()->iconSize()));
 	}
 }
 

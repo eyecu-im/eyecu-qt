@@ -38,24 +38,24 @@ void SelectIconWidget::updateLabels()
 	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
 	{
 		QString key(*it);
-		EmojiData data = FEmoji->findData(key);
+		const IEmojiData *data = FEmoji->findData(key);
 		bool changed(false);
 
-		if (!data.diversities.isEmpty())
+		if (!data->diversities().isEmpty())
 		{
 			if (color != FColor)
 				changed = true;
-			if (color && data.diversities.size() >= color)
-				key = data.diversities[color-1];
+			if (color && data->diversities().size() >= color)
+				key = data->diversities()[color-1];
 		}
 
 		data = FEmoji->findData(key);
-		if (data.genders.size() == 2)
+		if (data->genders().size() == 2)
 		{
 			if (FGender != gender)
 				changed = true;
 			if (gender)
-				key = data.genders[gender-1];
+				key = data->genders()[gender-1];
 		}
 
 		if (FNotReady || changed)
@@ -81,8 +81,11 @@ void SelectIconWidget::createLabels()
 	uint column = 0;
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize iconSize(extent, extent);
-	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
-		if ((*it).present)
+
+	for (QMap<uint, IEmojiData*>::ConstIterator it=FEmojiMap.constBegin();
+		 it!=FEmojiMap.constEnd(); ++it)
+	{
+		if ((*it)->present())
 		{
 			QLabel *label; //(NULL);
 			label = new QLabel(this);
@@ -92,17 +95,18 @@ void SelectIconWidget::createLabels()
 			label->setFrameShadow(QFrame::Sunken);
 			label->installEventFilter(this);
 			label->setPixmap(QPixmap(iconSize));
-			label->setToolTip((*it).name);
-			FKeyByLabel.insert(label, (*it).id);
+			label->setToolTip((*it)->name());
+			FKeyByLabel.insert(label, (*it)->id());
 			FLayout->addWidget(label, int(row), int(column));
-			if (!it->diversities.isEmpty())
+			if (!(*it)->diversities().isEmpty())
 				FHasColored=true;
-			if (it->genders.size() == 2)
+			if ((*it)->genders().size() == 2)
 				FHasGendered=true;
 			column = (column+1) % FColumns;
 			row += column==0 ? 1 : 0;
 			FLayout->setRowStretch(int(row), 0);
 		}
+	}
 	if (row < FRows)
 		FLayout->setRowStretch(int(row+1), 1);
 }

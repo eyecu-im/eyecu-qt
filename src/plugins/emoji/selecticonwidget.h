@@ -34,7 +34,7 @@ private:
 	IEmoji *FEmoji;
 	QLabel *FPressed;
 	QGridLayout *FLayout;
-	const QMap<uint, EmojiData> FEmojiMap;
+	const QMap<uint, IEmojiData*> FEmojiMap;
 	QMap<QLabel *, QString> FKeyByLabel;
 	int	FColor;
 	bool FHasColored;

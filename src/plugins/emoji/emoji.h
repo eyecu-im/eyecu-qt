@@ -17,6 +17,32 @@ struct EmojiTreeItem {
 	QMap<QChar, EmojiTreeItem *> childs;
 };
 
+class EmojiData : public IEmojiData {
+	// IEmojiData interface
+public:
+	virtual ~EmojiData();
+	virtual const QString &id() const override;
+	virtual const QString &name() const override;
+	virtual const QStringList &diversities() const override;
+	virtual const QStringList &genders() const override;
+	virtual bool variation() const override;
+	virtual bool present() const override;
+	virtual bool display() const override;
+
+	QString FId;
+	QString FUnicode;
+	QString FName;
+	QString FUcs4;
+	QStringList FAliases;
+	QStringList FDiversities;
+	QStringList FGenders;
+	int		FCategory;
+	bool	FVariation;
+	bool	FPresent;
+	bool	FDisplay;
+};
+
+
 class Emoji :
 	public QObject,
 	public IPlugin,
@@ -64,10 +90,10 @@ public:
 	virtual QIcon categoryIcon(Category ACategory) const {return FCategoryIcons.value(ACategory);}
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
 	virtual QIcon getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, const QSize &ASize=QSize()) const;
-	virtual QMap<uint, EmojiData> emojiData(Category ACategory) const;
-	virtual EmojiData findData(const QString &AEmojiId) const;
+	virtual QMap<uint, IEmojiData*> emojiData(Category ACategory) const;
+	virtual const IEmojiData *findData(const QString &AEmojiId) const;
 	virtual bool isColored(const QString &AEmojiId) const;
-	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
+//	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
 	virtual unsigned categoryCount(Category ACategory) const {return FCategoryCount[ACategory];}
 	virtual QStringList emojiSets() const {return FEmojiSets.keys();}
 	virtual QList<int> availableSizes(const QString &ASetName) const {return FAvailableSizes.value(ASetName);}
@@ -101,13 +127,13 @@ private:
 	EmojiTreeItem FRootTreeItem;
 	QMap<int, QHash<QString, QString> > FFileByKey;
 //	QHash<QString, QString> FKeyByFile;
-	QHash<Category, QMap<uint, EmojiData> > FCategories;
+	QHash<Category, QMap<uint, IEmojiData*> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
 	QHash<QString, QString> FIdByUnicode;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 
-	QStringList FColorSuffixes;
+//	QStringList FColorSuffixes;
 	QStringList FRecent;
 	QHash<QString, QMap<uint, QString> > FEmojiSets;
 	QHash<QString, QList<int> >	FAvailableSizes;
