@@ -823,8 +823,8 @@ int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALeng
 SelectIconMenu *Emoji::createSelectIconMenu(const QString &AIconSet, QWidget *AParent)
 {
 	SelectIconMenu *menu = new SelectIconMenu(AIconSet, this, AParent);
-	connect(menu->instance(),SIGNAL(iconSelected(QString)), SLOT(onSelectIconMenuSelected(QString)));
-	connect(menu->instance(),SIGNAL(destroyed(QObject *)),SLOT(onSelectIconMenuDestroyed(QObject *)));
+	connect(menu, SIGNAL(iconSelected(QString)), SLOT(onSelectIconMenuSelected(QString)));
+	connect(menu, SIGNAL(destroyed(QObject *)), SLOT(onSelectIconMenuDestroyed(QObject *)));
 	return menu;
 }
 

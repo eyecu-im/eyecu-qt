@@ -7,8 +7,7 @@
 #include <utils/menu.h>
 #include <utils/options.h>
 #include <utils/toolbarchanger.h>
-
-#include "selecticonwidget.h"
+#include <interfaces/iemoji.h>
 
 class SelectIconMenu :
 	public Menu
@@ -17,7 +16,6 @@ class SelectIconMenu :
 public:
 	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = nullptr);
 	~SelectIconMenu();
-	QWidget *instance() { return this; }
 	QString iconSet() const;
 	void setIconSet(const QString &AIconSet);
 

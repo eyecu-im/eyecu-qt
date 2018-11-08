@@ -1,4 +1,5 @@
 #include "selecticonmenu.h"
+#include "selecticonwidget.h"
 #include "emoji.h"
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
