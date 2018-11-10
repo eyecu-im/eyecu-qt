@@ -34,6 +34,7 @@ protected slots:
 	void onHasColoredChanged(bool AHasColored);
 	void onHasGenderedChanged(bool AHasGendered);
 	void onCategorySwitched(int ACategory);
+	void onIconSelected(const QString &AIconKey);
 
 protected:
 	void updateRecentActions();
@@ -46,8 +47,6 @@ private:
 	QPointer<Menu> FGender;
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
-	static const QStringList FGenderSuffixes;
-	static const QStringList FSkinColorSuffixes;
 };
 
 #endif // SELECTICONMENU_H

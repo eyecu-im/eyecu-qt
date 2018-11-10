@@ -18,7 +18,7 @@ public:
 	~SelectIconWidget();
 	void updateLabels();
 	bool hasColored() const {return FHasColored;}
-	void invalidate() {FNotReady = true;}
+//	void invalidate() {FNotReady = true;}
 signals:
 	void iconSelected(const QString &AIconKey);
 	void hasColoredChanged(bool AHasColored);
@@ -26,16 +26,16 @@ signals:
 protected:
 	void createLabels();
 protected:
-// QObject interface
-	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);
 // QWidget interface
 	virtual void showEvent(QShowEvent *AShowEvent);
+protected slots:
+	void onActionTriggered(QAction *AAction);
+
 private:
 	IEmoji *FEmoji;
 	QLabel *FPressed;
 	QGridLayout *FLayout;
 	const QMap<uint, IEmojiData*> FEmojiMap;
-	QMap<QLabel *, QString> FKeyByLabel;
 	int	FColor;
 	bool FHasColored;
 	int	FGender;

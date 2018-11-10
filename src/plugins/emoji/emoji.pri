@@ -3,17 +3,13 @@ HEADERS = selecticonwidget.h \
           emoji.h \
           emojioptions.h \
 		  iconsizespinbox.h \
-		  iconsetdelegate.h \
-		  selectsubiconwidget.h \
-		  selectsubiconmenu.h
+		  iconsetdelegate.h
 
 SOURCES = selecticonwidget.cpp \
           selecticonmenu.cpp \
           emoji.cpp \ 
           emojioptions.cpp \
 		  iconsizespinbox.cpp \
-		  iconsetdelegate.cpp \
-		  selectsubiconwidget.cpp \
-		  selectsubiconmenu.cpp
+		  iconsetdelegate.cpp
 
 FORMS +=  emojioptions.ui

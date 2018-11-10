@@ -23,6 +23,8 @@ public:
 	virtual ~EmojiData();
 	virtual const QString &id() const override;
 	virtual const QString &name() const override;
+	virtual const QString &diversity() const override;
+	virtual const QString &gender() const override;
 	virtual const QStringList &diversities() const override;
 	virtual const QStringList &genders() const override;
 	virtual bool variation() const override;
@@ -33,11 +35,12 @@ public:
 	QString FUnicode;
 	QString FName;
 	QString FUcs4;
+	QString FDiversity;
+	QString FGender;
 	QStringList FAliases;
 	QStringList FDiversities;
 	QStringList FGenders;
 	int		FCategory;
-	bool	FVariation;
 	bool	FPresent;
 	bool	FDisplay;
 };
@@ -81,7 +84,6 @@ public:
 	virtual QList<QString> activeIconsets() const;	
 	//IEmoji
 	virtual QString fileByKey(const QString &AKey) const;
-//	virtual QString keyByFile(const QString &AName) const;
 	virtual QMap<int, QString> findTextEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QMap<int, QString> findImageEmoji(const QTextDocument *ADocument, int AStartPos=0, int ALength=-1) const;
 	virtual QStringList recentIcons(const QString &ASetName) const {Q_UNUSED(ASetName) return FRecent;}
@@ -91,12 +93,14 @@ public:
 	virtual QIcon getIcon(const QString &AEmojiCode, const QSize &ASize=QSize()) const;
 	virtual QIcon getIconForSet(const QString &AEmojiSet, const QString &AEmojiText, const QSize &ASize=QSize()) const;
 	virtual QMap<uint, IEmojiData*> emojiData(Category ACategory) const;
-	virtual const IEmojiData *findData(const QString &AEmojiId) const;
+	virtual const IEmojiData *findData(const QString &AEmojiId, SkinColor ASkinColor=SkinDefault, Gender AGender=GenderDefault) const;
 	virtual bool isColored(const QString &AEmojiId) const;
-//	virtual const QStringList &colorSuffixes() const {return FColorSuffixes;}
 	virtual unsigned categoryCount(Category ACategory) const {return FCategoryCount[ACategory];}
 	virtual QStringList emojiSets() const {return FEmojiSets.keys();}
 	virtual QList<int> availableSizes(const QString &ASetName) const {return FAvailableSizes.value(ASetName);}
+	virtual QString genderSuffix(Gender AGender) const;
+	virtual QString skinColorSuffix(SkinColor ASkinColor) const;
+
 protected:
 	void findEmojiSets();
 	void loadEmojiSet(const QString &AEmojiSet);
@@ -126,14 +130,12 @@ private:
 private:
 	EmojiTreeItem FRootTreeItem;
 	QMap<int, QHash<QString, QString> > FFileByKey;
-//	QHash<QString, QString> FKeyByFile;
 	QHash<Category, QMap<uint, IEmojiData*> > FCategories;
 	QHash<QString, EmojiData> FEmojiData;
 	QHash<QString, QString> FIdByUnicode;
 	QList<IMessageToolBarWidget *> FToolBarsWidgets;
 	QMap<SelectIconMenu *, IMessageToolBarWidget *> FToolBarWidgetByMenu;
 
-//	QStringList FColorSuffixes;
 	QStringList FRecent;
 	QHash<QString, QMap<uint, QString> > FEmojiSets;
 	QHash<QString, QList<int> >	FAvailableSizes;
@@ -143,6 +145,9 @@ private:
 	QMap<int, QIcon> FCategoryIcons;	
 	unsigned FCategoryCount[8];
 	QDir		FResourceDir;
+
+	const QStringList FGenderSuffixes;
+	const QStringList FSkinColorSuffixes;
 };
 
 #endif // EMOJI_H

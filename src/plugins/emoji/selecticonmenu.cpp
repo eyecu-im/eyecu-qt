@@ -13,13 +13,6 @@
 #define ADR_GENDER Action::DR_Parametr1
 #define ADR_EMOJI Action::DR_Parametr1
 
-const QStringList SelectIconMenu::FGenderSuffixes(QStringList() << "2642" << "2640");
-const QStringList SelectIconMenu::FSkinColorSuffixes(QStringList() << "1f3fb"
-																   << "1f3fc"
-																   << "1f3fd"
-																   << "1f3fe"
-																   << "1f3ff");
-
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
@@ -100,7 +93,7 @@ void SelectIconMenu::onAboutToShow()
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon(IEmoji::Category(c)),
 														 QString()), FEmoji->categoryName(IEmoji::Category(c)));
 			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
-			connect(widget,SIGNAL(iconSelected(QString)),SIGNAL(iconSelected(QString)));
+			connect(widget, SIGNAL(iconSelected(QString)), SLOT(onIconSelected(QString)));
 			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
 			connect(widget,SIGNAL(hasGenderedChanged(bool)), SLOT(onHasGenderedChanged(bool)));
 		}
@@ -125,27 +118,13 @@ void SelectIconMenu::onAboutToShow()
 	FSkinColor->setIcon(FEmptyIcon);
 	QActionGroup *group = new QActionGroup(FSkinColor);
 
-	Action *action = new Action(group);
-	action->setText(tr("Default"));
-	action->setData(ADR_COLOR, Emoji::SkinDefault);
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	action->setIcon(FSkinColor->icon());
-	FSkinColor->addAction(action);
-
-	if (color==0)
+	for (int i=Emoji::SkinDefault; i<=Emoji::SkinTone5; ++i)
 	{
-		action->setChecked(true);
-		FSkinColor->setIcon(action->icon());
-	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-//	QStringList colorSuffixes = FEmoji->colorSuffixes();
-	for (int i=Emoji::SkinTone1; i<=Emoji::SkinTone5; ++i)
-	{
-		action = new Action(group);
-		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale")
-						.arg(i==Emoji::SkinTone1?QString::number(i+1):tr("1 or 2")));
-		action->setIcon(FEmoji->getIcon(FSkinColorSuffixes[i-1], size));
+		Action *action = new Action(group);
+		action->setText(i==Emoji::SkinDefault?tr("Default")
+											 :tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale")
+												.arg(i==Emoji::SkinTone1?QString::number(i+1):tr("1 or 2")));
+		action->setIcon(FEmoji->getIcon(FEmoji->skinColorSuffix(IEmoji::SkinColor(i)), size));
 		action->setData(ADR_COLOR, i);
 		action->setCheckable(true);
 		action->setActionGroup(group);
@@ -163,73 +142,44 @@ void SelectIconMenu::onAboutToShow()
 	// Gender submenu
 	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
 	FGender = new Menu(toolBar);
-	FGender->setIcon(FEmptyIcon);
 	group = new QActionGroup(FGender);
 
-//	QStringList genderSuffixes = FEmoji->genderSuffixes();
+	QStringList genderNames;
+	genderNames << tr("Default") << tr("Male") << tr("Female");
 
-	action = new Action(group);
-	action->setText(tr("Default"));
-	action->setData(ADR_GENDER, Emoji::GenderDefault);
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	action->setIcon(FGender->icon());
-	FGender->addAction(action);
-	if (gender==Emoji::GenderDefault)
+	for (int i = IEmoji::GenderDefault; i <= IEmoji::GenderFemale; i++)
 	{
-		action->setChecked(true);
-		FGender->setIcon(action->icon());
+		Action *action = new Action(group);
+		action->setText(genderNames[i]);
+		action->setData(ADR_GENDER, i);
+		action->setCheckable(true);
+		action->setActionGroup(group);
+		action->setIcon(FEmoji->getIcon(FEmoji->genderSuffix(Emoji::Gender(i)), size));
+		FGender->addAction(action);
+		if (i == gender)
+		{
+			action->setChecked(true);
+			FGender->setIcon(action->icon());
+		}
+		connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
 	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
-
-	action = new Action(group);
-	action->setText(tr("Male"));
-	action->setData(ADR_GENDER, Emoji::GenderMale);
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	action->setIcon(FEmoji->getIcon(FGenderSuffixes[0], size));
-	FGender->addAction(action);
-	if (gender==Emoji::GenderMale)
-	{
-		action->setChecked(true);
-		FGender->setIcon(action->icon());
-	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
-
-	action = new Action(group);
-	action->setText(tr("Female"));
-	action->setData(ADR_GENDER, Emoji::GenderFemale);
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	action->setIcon(FEmoji->getIcon(FGenderSuffixes[1], size));
-	FGender->addAction(action);
-	if (gender==Emoji::GenderFemale)
-	{
-		action->setChecked(true);
-		FGender->setIcon(action->icon());
-	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
 
 	FToolBarChanger->insertAction(FGender->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
 	FGender->setTitle(tr("Gender"));
 
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
-	{
-		const IEmojiData *data = FEmoji->findData(*it);
-		QString id = data->id();
-		QString name = data->name();
-		if (color && data->diversities().size() >= color)
-			data = FEmoji->findData(data->diversities()[color-1]);
-		if (gender && data->genders().size() == 2)
-			data = FEmoji->findData(data->genders()[gender-1]);
+	{		
+		const IEmojiData *data = FEmoji->findData(*it, IEmoji::SkinColor(color),
+													   IEmoji::Gender(gender));
 		QIcon icon = FEmoji->getIcon(data->id(), size);
 		if (!icon.isNull())
 		{
+			const IEmojiData *basicData = FEmoji->findData(*it);
 			Action *action = new Action();
 			action->setIcon(icon);
-			action->setToolTip(name);
-			action->setData(ADR_EMOJI, id);
+			action->setToolTip(basicData->name());
+			action->setData(ADR_EMOJI, *it);
 			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
 			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
 		}
@@ -257,10 +207,10 @@ void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 		int index = ANode.value().toInt();
 
 		if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR) // Skin color
-			FSkinColor->setIcon(index?FEmoji->getIcon(FSkinColorSuffixes[index-1])
+			FSkinColor->setIcon(index?FEmoji->getIcon(FEmoji->skinColorSuffix(IEmoji::SkinColor(index)))
 									 :FEmptyIcon);
 		else // Gender
-			FGender->setIcon(index?FEmoji->getIcon(FGenderSuffixes[index-1])
+			FGender->setIcon(index?FEmoji->getIcon(FEmoji->genderSuffix(IEmoji::Gender(index)))
 								  :FEmptyIcon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
@@ -292,6 +242,12 @@ void SelectIconMenu::onCategorySwitched(int ACategory)
 	Options::node(OPV_MESSAGES_EMOJI_CATEGORY).setValue(ACategory);
 }
 
+void SelectIconMenu::onIconSelected(const QString &AIconKey)
+{
+	hide();
+	emit iconSelected(AIconKey);
+}
+
 void SelectIconMenu::updateRecentActions()
 {
 	QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
@@ -300,17 +256,10 @@ void SelectIconMenu::updateRecentActions()
 	for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
 	{
 		Action *action = FToolBarChanger->handleAction(*it);
-		QString id = action->data(ADR_EMOJI).toString();
-
-		const IEmojiData *data = FEmoji->findData(id);
-		if (color && !data->diversities().isEmpty() &&
-			color <= data->diversities().size()) // Has skin color color
-			data = FEmoji->findData(data->diversities()[color-1]);
-
-		if (gender && data->genders().size() == 2) // Has skin color color
-			data = FEmoji->findData(data->genders()[gender-1]);
-
-		action->setIcon(FEmoji->getIcon(data->id(), FToolBarChanger->toolBar()->iconSize()));
+		action->setIcon(FEmoji->getIcon(FEmoji->findData(action->data(ADR_EMOJI).toString(),
+														 IEmoji::SkinColor(color),
+														 IEmoji::Gender(gender))->id(),
+										FToolBarChanger->toolBar()->iconSize()));
 	}
 }
 
