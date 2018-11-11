@@ -107,6 +107,8 @@
 // *** <<< eyeCU <<< ***
 #define   OWO_MESSAGES_RECEIPTS_SHOW              400
 #define   OWO_MESSAGES_RECEIPTS_SEND              410
+#define   OWO_MESSAGES_CHATMARKERS_SHOW           420
+#define   OWO_MESSAGES_CHATMARKERS_SEND           430
 #define OHO_MESSAGES_INFOBAR_ICONS                450
 #define   OWO_MESSAGES_INFOBAR_CLIENTICONS        452
 #define   OWO_MESSAGES_INFOBAR_MOOD               454

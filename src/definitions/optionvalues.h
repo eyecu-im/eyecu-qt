@@ -402,6 +402,10 @@
 #define OPV_RECEIPTS_SHOW                               "receipts.show"
 #define OPV_RECEIPTS_SEND                               "receipts.send"
 
+//Chatmarkers
+#define OPV_CHATMARKERS_SHOW                            "chatmarkers.show"
+#define OPV_CHATMARKERS_SEND                            "chatmarkers.send"
+
 // POI
 #define OPV_POI_SHOW                                    "poi.show"
 #define OPV_POI_CUR_COUNTRY                             "poi.curcountry"

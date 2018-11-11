@@ -223,7 +223,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
         }
         else
         {
-            QDomElement rcvd=stanza.firstElement("received", NS_RECEIPTS);
+            QDomElement rcvd=stanza.firstElement("received", NS_CHATMARKERS);
             if(!rcvd.isNull())
             {
                 QString id=rcvd.attribute("id");
@@ -256,7 +256,7 @@ bool ChatMarkers::writeMessageHasText(int AOrder, Message &AMessage, const QStri
 {
 	Q_UNUSED(AOrder) Q_UNUSED(ALang)
 	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-			Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
+			Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
 			!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull();
 }
 
@@ -266,7 +266,7 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 	Q_UNUSED(ALang)
 
     if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-        Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
+        Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
        !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
     {
         QUrl url(QString("chatmarkers:%1/%2/%3").arg(AMessage.from())
