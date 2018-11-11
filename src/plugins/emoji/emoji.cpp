@@ -503,29 +503,21 @@ void Emoji::findEmojiSets()
 						{
 							it.next();
 							EmojiData emojiData;
-
-							emojiData.id = it.name();
-
+							emojiData.FId = it.name();
 							QScriptValue val = it.value();
-							emojiData.name = val.property("name").toString();
-
+							emojiData.FName = val.property("name").toString();
+							emojiData.FDisplay = val.property("display").toInt32() > 0; // Do not process symbols without "display" flag
 							QString category = val.property("category").toString();
-							QString emojiOrder = val.property("emoji_order").toString();
-							if (!val.property("aliases").isNull())
-							{
-								QVariantList list=val.property("aliases").toVariant().toList();
-								QList<QString> aliases;
-								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
-									aliases.append((*it).toString());
-							}
+							emojiData.FCategory = FCategoryIDs.key(category);
+							qint32 order = val.property("order").toInt32();
 
-							if (!val.property("aliases_ascii").isNull())
+							if (!val.property("ascii").isNull())
 							{
-								QVariantList list=val.property("aliases_ascii").toVariant().toList();
+								QVariantList list=val.property("ascii").toVariant().toList();
 								QList<QString> aliases;
 								for (QVariantList::ConstIterator it=list.constBegin(); it!=list.constEnd(); it++)
 									aliases.append((*it).toString());
-								emojiData.aliases = aliases;
+								emojiData.FAliases = aliases;
 							}
 
 							if (!val.property("keywords").isNull())
@@ -540,30 +532,28 @@ void Emoji::findEmojiSets()
 								}
 							}
 
-							bool ok;
-							uint ucs4[16];
-							int  i(0);
-							emojiData.ucs4alt = val.property("unicode_alternates").toString();
-							emojiData.ucs4 = val.property("unicode").toString();
-							QList<QString> splitted = (emojiData.ucs4alt.isEmpty()?emojiData.ucs4:emojiData.ucs4alt).split('-');
-							for (QList<QString>::ConstIterator it=splitted.constBegin(); it!=splitted.constEnd(); ++it, ++i)
+							emojiData.FUcs4 = val.property("code_points").property("fully_qualified").toString();
+
+
+							if (val.property("diversity").isNull()) // May have diversities
 							{
-								ucs4[i]=(*it).toInt(&ok, 16);
-								if (!ok)
-									break;
+								QVariantList diversities = val.property("diversities").toVariant().toList();
+								for (QVariantList::ConstIterator it = diversities.constBegin();
+									 it != diversities.constEnd(); ++it)
+									emojiData.FDiversities.append((*it).toString());
 							}
-							if (ok)
+							else
+								emojiData.FDiversity = val.property("diversity").toString();
+
+							if (val.property("gender").isNull()) // May have genders
 							{
-								emojiData.unicode = QString::fromUcs4(ucs4, i);
-								if (!isColored(emojiData.unicode))
-								{
-									uint order = emojiOrder.toInt();
-									FCategories[(Category)FCategoryIDs.key(category)].insert(order, emojiData);
-									FEmojiData.insert(emojiData.unicode, emojiData);
-									emojiData.colored=false;
-								}
+								QVariantList genders = val.property("genders").toVariant().toList();
+								for (QVariantList::ConstIterator it = genders.constBegin();
+									 it != genders.constEnd(); ++it)
+									emojiData.FGenders.append((*it).toString());
 							}
-						} while (it.hasNext());
+							else
+								emojiData.FGender = val.property("gender").toString();
 #else
 					QJsonDocument jsonDoc = QJsonDocument::fromJson(json);
 					if (jsonDoc.isObject())
@@ -624,7 +614,7 @@ void Emoji::findEmojiSets()
 							}
 							else
 								emojiData.FGender = object.value("gender").toString();
-
+#endif
 							uint ucs4[16];
 							bool ok(false);
 							int  i(0);
@@ -645,6 +635,8 @@ void Emoji::findEmojiSets()
 											.insert(uint(order), &FEmojiData[emojiData.FId]);
 							}
 						}
+#if QT_VERSION < 0x050000
+						while (it.hasNext());
 #endif
 // ------------------- JSON descriptor parsed -------------------
 // ----------------- Looking for category icons -----------------

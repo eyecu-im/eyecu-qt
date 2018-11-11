@@ -46,7 +46,7 @@ public:
 };
 
 
-class Emoji :
+class Emoji:
 	public QObject,
 	public IPlugin,
 	public IEmoji,
