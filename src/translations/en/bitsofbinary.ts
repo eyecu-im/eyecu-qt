@@ -4,33 +4,33 @@
  <context>
   <name>BitsOfBinary</name>
   <message>
-   <location line="40" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
-   <location line="103" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="40"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="103"/>
    <source>Bits Of Binary</source>
    <translation>Bits Of Binary</translation>
   </message>
   <message>
-   <location line="41" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="41"/>
    <source>Allows other modules to receive or send a small amount of binary data in XMPP stanza</source>
    <translation>Allows other modules to receive or send a small amount of binary data in XMPP stanza</translation>
   </message>
   <message>
-   <location line="79" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="79"/>
    <source>Invalid response</source>
    <translation>Invalid response</translation>
   </message>
   <message>
-   <location line="80" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="80"/>
    <source>Failed to load data</source>
    <translation>Failed to load data</translation>
   </message>
   <message>
-   <location line="81" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="81"/>
    <source>Failed to save data</source>
    <translation>Failed to save data</translation>
   </message>
   <message>
-   <location line="104" filename="../../plugins/bitsofbinary/bitsofbinary.cpp"/>
+   <location filename="../../plugins/bitsofbinary/bitsofbinary.cpp" line="104"/>
    <source>Supports the exchange of a small amount of binary data in XMPP stanza</source>
    <translation>Supports the exchange of a small amount of binary data in XMPP stanza</translation>
   </message>
