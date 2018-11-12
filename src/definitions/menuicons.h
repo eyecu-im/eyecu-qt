@@ -273,7 +273,8 @@
 #define MNI_RECEIPTS                    "receipts"
 
 // Chat Markers
-#define MNI_CHATMARKERS                 "chatmarkers"
+//FIXME: Use different icon for Chat Markers
+#define MNI_CHATMARKERS                 "receipts"
 
 //Poi
 #define MNI_POI                         "poi"

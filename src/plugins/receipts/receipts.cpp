@@ -76,6 +76,9 @@ bool Receipts::initConnections(IPluginManager *APluginManager, int & /*AInitOrde
     if (plugin)
         FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
 
+	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
+	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+
     return true;
 }
 
@@ -84,8 +87,6 @@ bool Receipts::initSettings()
 {
     Options::setDefaultValue(OPV_RECEIPTS_SHOW, true);
     Options::setDefaultValue(OPV_RECEIPTS_SEND, true);
-    if (FOptionsManager)
-		FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 
@@ -141,8 +142,8 @@ bool Receipts::initObjects()
     if (FMessageArchiver)
         FMessageArchiver->insertArchiveHandler(AHO_DEFAULT, this);
 
-	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
-	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
 
     return true;
 }

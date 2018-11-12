@@ -1,5 +1,5 @@
 #include "chatmarkers.h"
-
+#include "networkreplychatmarkers.h"
 #include "definitions/messageeditororders.h"
 #include "definitions/messagewriterorders.h"
 #include "definitions/messagedataroles.h"
@@ -76,6 +76,9 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
     if (plugin)
         FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
 
+	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
+	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+
     return true;
 }
 
@@ -83,8 +86,6 @@ bool ChatMarkers::initSettings()
 {
     Options::setDefaultValue(OPV_CHATMARKERS_SHOW, true);
     Options::setDefaultValue(OPV_CHATMARKERS_SEND, true);
-    if (FOptionsManager)
-		FOptionsManager->insertOptionsDialogHolder(this);
     return true;
 }
 
@@ -140,8 +141,8 @@ bool ChatMarkers::initObjects()
     if (FMessageArchiver)
         FMessageArchiver->insertArchiveHandler(AHO_DEFAULT, this);
 
-	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
-	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+	if (FOptionsManager)
+		FOptionsManager->insertOptionsDialogHolder(this);
 
     return true;
 }
@@ -184,7 +185,11 @@ void ChatMarkers::onOptionsOpened()
 void ChatMarkers::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path()==OPV_CHATMARKERS_SEND)
-		registerDiscoFeatures(ANode.value().toBool());
+		registerDiscoFeatures(ANode.value().toBool() ||
+							  Options::node(OPV_CHATMARKERS_SHOW).value().toBool());
+	else if (ANode.path()==OPV_CHATMARKERS_SHOW)
+		registerDiscoFeatures(ANode.value().toBool() ||
+							  Options::node(OPV_CHATMARKERS_SEND).value().toBool());
 }
 
 bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -270,8 +275,8 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
        !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
     {
         QUrl url(QString("chatmarkers:%1/%2/%3").arg(AMessage.from())
-                                             .arg(AMessage.to())
-                                             .arg(AMessage.id()));
+												.arg(AMessage.to())
+												.arg(AMessage.id()));
         QTextCursor cursor(ADocument);
         cursor.movePosition(QTextCursor::End);
         cursor.insertImage(url.toString());
@@ -306,13 +311,13 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 //        AMessage.detach();
 //        AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("markable", NS_CHATMARKERS));
 //    }
-    return false;
+	return false;
 }
 
-//QNetworkReply *Receipts::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
-//{
-//    return new NetworkReplyReceipts(op, ARequest, AOutgoingData, this, &FImgeData, FUrlProcessor->instance());
-//}
+QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
+{
+	return new NetworkReplyChatMarkers(op, ARequest, AOutgoingData, this, &FImgeData, FUrlProcessor->instance());
+}
 
 void ChatMarkers::setMarked(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {

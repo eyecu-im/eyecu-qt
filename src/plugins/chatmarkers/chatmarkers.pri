@@ -1,4 +1,6 @@
 HEADERS = \ 
-    chatmarkers.h
+    chatmarkers.h \
+	networkreplychatmarkers.h
 SOURCES = \ 
-    chatmarkers.cpp
+    chatmarkers.cpp \
+	networkreplychatmarkers.cpp
