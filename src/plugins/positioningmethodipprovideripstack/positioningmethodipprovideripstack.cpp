@@ -34,7 +34,7 @@ bool PositioningMethodIpProviderFreegeoip::initConnections(IPluginManager *APlug
 bool PositioningMethodIpProviderFreegeoip::request()
 {
 	QUrl url(REQUEST_URL);
-	URL_ADD_QUERY_ITEM(url, "access_key", API_KEY)
+	URL_ADD_QUERY_ITEM(url, "access_key", API_KEY);
 
 	return FHttpRequester->request(url, REQUEST_ID, this, SLOT(onResultReceived(QByteArray,QString)));
 }
