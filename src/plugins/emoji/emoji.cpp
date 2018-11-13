@@ -534,7 +534,6 @@ void Emoji::findEmojiSets()
 
 							emojiData.FUcs4 = val.property("code_points").property("fully_qualified").toString();
 
-
 							if (val.property("diversity").isNull()) // May have diversities
 							{
 								QVariantList diversities = val.property("diversities").toVariant().toList();
@@ -592,8 +591,7 @@ void Emoji::findEmojiSets()
 								}
 							}
 
-							QJsonObject codePoints = object.value("code_points").toObject();
-							emojiData.FUcs4 = codePoints.value("fully_qualified").toString();
+							emojiData.FUcs4 = object.value("code_points").toObject().value("fully_qualified").toString();
 
 							if (object.value("diversity").isNull()) // May have diversities
 							{
