@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Loader</DisplayName>
  <Description>eyeCU loader</Description>
- <Version>2.0.0.20181027</Version>
- <ReleaseDate>2018-10-27</ReleaseDate>
+ <Version>2.0.0.20181113</Version>
+ <ReleaseDate>2018-11-13</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.loader</Name>
- <UpdateText>Application revision updated. Should run on Windows'XP x64 now.</UpdateText>
+ <UpdateText>Application revision updated.</UpdateText>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>
