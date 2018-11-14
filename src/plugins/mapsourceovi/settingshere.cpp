@@ -51,9 +51,12 @@ SettingsHere::~SettingsHere()
 
 void SettingsHere::apply()
 {
-	Options::node(OPV_MAP_SOURCE_HERE_LANG_PRIMARY).setValue(ui->cmbPrimary->currentData().toString());
-	Options::node(OPV_MAP_SOURCE_HERE_LANG_SECONDARY).setValue(ui->cmbSecondary->currentData().toString());
-	Options::node(OPV_MAP_SOURCE_HERE_POLITICALVIEW).setValue(ui->cmbPView->currentData().toString());
+	Options::node(OPV_MAP_SOURCE_HERE_LANG_PRIMARY)
+			.setValue(ui->cmbPrimary->itemData(ui->cmbPrimary->currentIndex()).toString());
+	Options::node(OPV_MAP_SOURCE_HERE_LANG_SECONDARY)
+			.setValue(ui->cmbSecondary->itemData(ui->cmbSecondary->currentIndex()).toString());
+	Options::node(OPV_MAP_SOURCE_HERE_POLITICALVIEW)
+			.setValue(ui->cmbPView->itemData(ui->cmbPView->currentIndex()).toString());
 	Options::node(OPV_MAP_SOURCE_HERE_MODE_NIGHT).setValue(ui->rbNight->isChecked());
 
 	emit childApply();

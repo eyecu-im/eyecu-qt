@@ -1051,13 +1051,21 @@
   </message>
   <message>
    <source>Supported list of commands: 
+
  /ban &lt;roomnick&gt; [comment] 
+
  /invite &lt;jid&gt; [comment] 
+
  /join &lt;roomname&gt; [pass] 
+
  /kick &lt;roomnick&gt; [comment] 
+
  /msg &lt;roomnick&gt; &lt;foo&gt; 
+
  /nick &lt;newnick&gt; 
+
  /leave [comment] 
+
  /topic &lt;foo&gt;</source>
    <translation type="unfinished"/>
   </message>

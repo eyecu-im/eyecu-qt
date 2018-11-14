@@ -34,7 +34,13 @@ public:
 	static void setEnabledTypes(quint32 ATypes);
 	static void writeLog(quint32 AType, const QString &AClass, const QString &AMessage);
 // *** <<< eyeCU <<< ***
+#ifndef DEBUG_MODE
+#if (QT_VERSION < 0x050000)
+	static void writeOldLog(QtMsgType AType, const char *AMessage);
+#else
 	static void writeOldLog(QtMsgType AType, const QMessageLogContext &ALogContext, const QString &AMessage);
+#endif
+#endif
 // *** >>> eyeCU >>> ***
 public:
 	static QString startTiming(const QString &AVariable, const QString &AContext = QString::null);

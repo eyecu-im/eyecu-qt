@@ -4,12 +4,12 @@
  <context>
   <name>UrlProcessor</name>
   <message>
-   <location line="21" filename="../../plugins/urlprocessor/urlprocessor.cpp"/>
+   <location filename="../../plugins/urlprocessor/urlprocessor.cpp" line="21"/>
    <source>URL processor</source>
    <translation>URL processor</translation>
   </message>
   <message>
-   <location line="22" filename="../../plugins/urlprocessor/urlprocessor.cpp"/>
+   <location filename="../../plugins/urlprocessor/urlprocessor.cpp" line="22"/>
    <source>Allows other plugins to load data from custom types of URLs</source>
    <translation>Allows other plugins to load data from custom types of URLs</translation>
   </message>

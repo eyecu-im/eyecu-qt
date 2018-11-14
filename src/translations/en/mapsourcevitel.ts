@@ -4,12 +4,12 @@
  <context>
   <name>MapSourceViTel</name>
   <message>
-   <location line="12" filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp"/>
+   <location filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp" line="12"/>
    <source>Vi-Tel map source</source>
    <translation>Vi-Tel map source</translation>
   </message>
   <message>
-   <location line="13" filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp"/>
+   <location filename="../../plugins/mapsourcevitel/mapsourcevitel.cpp" line="13"/>
    <source>Allows Map plugin to use Vi-Tel service as map source</source>
    <translation>Allows Map plugin to use Vi-Tel service as map source</translation>
   </message>

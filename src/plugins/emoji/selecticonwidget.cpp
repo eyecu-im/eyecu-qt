@@ -6,12 +6,18 @@
 #include <definitions/optionvalues.h>
 #include <utils/qt4qt5compat.h>
 
+#define ADR_EMOJI_ID Action::DR_Parametr1
+#define ADR_EMOJI_ID_CURRENT Action::DR_Parametr2
+
 SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, uint ARows, IEmoji *AEmoji, QWidget *AParent):
 	QWidget(AParent),
 	FEmoji(AEmoji),
-	FPressed(NULL),
+	FPressed(nullptr),
 	FEmojiMap((AEmoji->emojiData(ACategory))),
+	FColor(IEmoji::SkinDefault),
 	FHasColored(false),
+	FGender(IEmoji::GenderDefault),
+	FHasGendered(false),
 	FNotReady(true),
 	FColumns(AColumns),
 	FRows(ARows)
@@ -26,27 +32,45 @@ SelectIconWidget::SelectIconWidget(IEmoji::Category ACategory, uint AColumns, ui
 SelectIconWidget::~SelectIconWidget()
 {}
 
-void SelectIconWidget::updateLabels(const QString &AColor, bool AForce)
+void SelectIconWidget::updateLabels()
 {
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize size(extent, extent);
-	for (QMap<QLabel*, QString>::Iterator it=FKeyByLabel.begin(); it!=FKeyByLabel.end(); ++it)
-	{
-		QString key(*it);
-		if (FEmoji->isColored(key))
-			key.chop(2);
-		QIcon icon = FEmoji->getIcon(key+AColor, size);
-		if (icon.isNull() && !AColor.isEmpty())
-			icon = FEmoji->getIcon(key, size);
-		else
-			key.append(AColor);
 
-		if (*it!=key || AForce)
+	QLayout *l = layout();
+	int count = l->count();
+	for (int i=0; i<count; ++i)
+	{
+		QToolButton *button = qobject_cast<QToolButton *>(l->itemAt(i)->widget());
+		if (button)
 		{
-			(*it)=key;
-			it.key()->setPixmap(icon.pixmap(size));
+			Action *action = qobject_cast<Action*>(button->defaultAction());
+			if (action)
+			{
+				QString key = FEmoji->findData(action->data(ADR_EMOJI_ID).toString(),
+															IEmoji::SkinColor(color),
+															IEmoji::Gender(gender))->id();
+
+				if (action->data(ADR_EMOJI_ID_CURRENT).toString() != key)
+				{
+					action->setData(ADR_EMOJI_ID_CURRENT, key);
+					action->setIcon(FEmoji->getIcon(key, size));
+				}
+
+			}
 		}
 	}
+
+	if (FNotReady)
+		FNotReady = false;
+
+	if (FColor != color)
+		FColor = color;
+
+	if (FGender != gender)
+		FGender = gender;
 }
 
 void SelectIconWidget::createLabels()
@@ -55,64 +79,53 @@ void SelectIconWidget::createLabels()
 	uint column = 0;
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize iconSize(extent, extent);
-	for (QMap<uint, EmojiData>::ConstIterator it=FEmojiMap.constBegin(); it!=FEmojiMap.constEnd(); ++it)
-		if ((*it).present)
+
+	for (QMap<uint, IEmojiData*>::ConstIterator it=FEmojiMap.constBegin();
+		 it!=FEmojiMap.constEnd(); ++it)
+	{
+		if ((*it)->present())
 		{
-			QLabel *label; //(NULL);
-			label = new QLabel(this);
-			label->setMargin(2);
-			label->setAlignment(Qt::AlignCenter);
-			label->setFrameShape(QFrame::Box);
-			label->setFrameShadow(QFrame::Sunken);
-			label->installEventFilter(this);
-			label->setPixmap(QPixmap(iconSize));
-			label->setToolTip((*it).name);
-			FKeyByLabel.insert(label, (*it).unicode);
-			FLayout->addWidget(label, row, column);
-			if ((*it).colored)
+			QToolButton *button; //(NULL);
+			button = new QToolButton(this);
+			button->setAutoRaise(true);
+			Action *action = new Action(button);
+			action->setIcon(QPixmap(iconSize));
+			action->setIconText((*it)->name());
+			action->setData(ADR_EMOJI_ID, (*it)->id());
+			button->setDefaultAction(action);
+			button->setPopupMode(QToolButton::DelayedPopup);
+			connect(button, SIGNAL(triggered(QAction*)), SLOT(onActionTriggered(QAction*)));
+			FLayout->addWidget(button, int(row), int(column));
+
+			if (!(*it)->diversities().isEmpty())
 				FHasColored=true;
+			if ((*it)->genders().size() == 2)
+				FHasGendered=true;
 			column = (column+1) % FColumns;
 			row += column==0 ? 1 : 0;
-			FLayout->setRowStretch(row, 0);
+			FLayout->setRowStretch(int(row), 0);
 		}
-	if (row<FRows)
-		FLayout->setRowStretch(row+1, 1);
-}
-
-bool SelectIconWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
-{
-	QLabel *label = qobject_cast<QLabel *>(AWatched);
-	if (AEvent->type() == QEvent::Enter)
-	{
-		label->setFrameShadow(QFrame::Plain);
-		QToolTip::showText(QCursor::pos(),label->toolTip());
 	}
-	else if (AEvent->type() == QEvent::Leave)
-	{
-		label->setFrameShadow(QFrame::Sunken);
-	}
-	else if (AEvent->type() == QEvent::MouseButtonPress)
-	{
-		FPressed = label;
-	}
-	else if (AEvent->type() == QEvent::MouseButtonRelease)
-	{
-		if (FPressed == label)
-			emit iconSelected(FKeyByLabel.value(label), label->toolTip());
-		FPressed = NULL;
-	}
-	return QWidget::eventFilter(AWatched,AEvent);
+	if (row < FRows)
+		FLayout->setRowStretch(int(row+1), 1);
 }
 
 void SelectIconWidget::showEvent(QShowEvent *AShowEvent)
 {
 	Q_UNUSED(AShowEvent)
-	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
-	if ((FHasColored && FColor!=color) || FNotReady)
-	{
-		updateLabels(FColor=color, FNotReady);
-		FNotReady = false;
-	}
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
+	if ((FHasColored && FColor!=color) ||
+		(FHasGendered && FGender!=gender) ||
+		FNotReady)
+		updateLabels();
 	emit hasColoredChanged(FHasColored);
+	emit hasGenderedChanged(FHasGendered);
+}
+
+void SelectIconWidget::onActionTriggered(QAction *AAction)
+{
+	Action *action = qobject_cast<Action*>(AAction);
+	if (action)
+		emit iconSelected(action->data(ADR_EMOJI_ID).toString());
 }

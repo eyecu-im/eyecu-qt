@@ -34,8 +34,8 @@ MapSearchProviderHereOptions::~MapSearchProviderHereOptions()
 
 void MapSearchProviderHereOptions::apply()
 {
-	Options::node(OPV_MAP_SEARCH_PROVIDER_HERE_POLITICALVIEW).setValue(ui->cmbPView->currentData().toString());
-
+	Options::node(OPV_MAP_SEARCH_PROVIDER_HERE_POLITICALVIEW)
+		.setValue(ui->cmbPView->itemData(ui->cmbPView->currentIndex()));
 	emit childApply();
 }
 
