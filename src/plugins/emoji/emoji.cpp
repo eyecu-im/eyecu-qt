@@ -320,7 +320,7 @@ QMap<int, QString> Emoji::findTextEmoji(const QTextDocument *ADocument, int ASta
 							if (!item->name.isEmpty())
 								key = searchText.mid(keyPos, keyLength = keyLengthCurrent);
 							if (keyPos+keyLengthCurrent<searchText.length())
-								item = item->childs.value(searchText.at(keyPos+keyLengthCurrent));
+								item = item->children.value(searchText.at(keyPos+keyLengthCurrent));
 						}
 
 						if (!key.isEmpty())
@@ -348,17 +348,15 @@ QMap<int, QString> Emoji::findImageEmoji(const QTextDocument *ADocument, int ASt
 			if (fragment.charFormat().isImageFormat())
 			{
 				QUrl url(fragment.charFormat().toImageFormat().name());
-				if (url.isValid())
+				if (url.isValid() && url.scheme()=="emoji" && FEmojiData.contains(url.path()))
 				{
-					if (FEmojiData.contains(url.path()))
-					{
-						int i = 0;
-						QString text = fragment.text();
-						for (QString::ConstIterator itc=text.constBegin();
-							 itc!=text.constEnd(); ++itc, ++i)
-							if (*itc==QChar::ObjectReplacementCharacter)
-								emoji.insert(fragment.position()+i, FEmojiData[url.path()].FUnicode);
-					}
+					int i = 0;
+					QString text = fragment.text();
+					for (QString::ConstIterator itc=text.constBegin();
+						 itc!=text.constEnd(); ++itc, ++i)
+						if (*itc==QChar::ObjectReplacementCharacter)
+							emoji.insert(fragment.position()+i,
+										 FEmojiData[url.path()].FUnicode);
 				}
 			}
 		}
@@ -626,6 +624,8 @@ void Emoji::findEmojiSets()
 							if (ok)
 							{								
 								emojiData.FUnicode = QString::fromUcs4(ucs4, i);
+								if (!emojiData.FDisplay && !emojiData.FGender.isEmpty())
+									emojiData.FDisplay = true;
 								FEmojiData.insert(emojiData.id(), emojiData);
 								FIdByUnicode.insert(emojiData.FUnicode, emojiData.FId);
 								if (emojiData.FDisplay && !emojiData.variation())
@@ -778,15 +778,15 @@ void Emoji::createTreeItem(const QString &AKey, const QString &AName)
 	for (int i=0; i<AKey.size(); i++)
 	{
 		QChar itemChar = AKey.at(i);
-		if (!item->childs.contains(itemChar))
+		if (!item->children.contains(itemChar))
 		{
 			EmojiTreeItem *childItem = new EmojiTreeItem;
-			item->childs.insert(itemChar,childItem);
+			item->children.insert(itemChar,childItem);
 			item = childItem;
 		}
 		else
 		{
-			item = item->childs.value(itemChar);
+			item = item->children.value(itemChar);
 		}
 	}
 	item->name = AName;
@@ -794,9 +794,9 @@ void Emoji::createTreeItem(const QString &AKey, const QString &AName)
 
 void Emoji::clearTreeItem(EmojiTreeItem *AItem) const
 {
-	foreach(const QChar &itemChar, AItem->childs.keys())
+	foreach(const QChar &itemChar, AItem->children.keys())
 	{
-		EmojiTreeItem *childItem = AItem->childs.take(itemChar);
+		EmojiTreeItem *childItem = AItem->children.take(itemChar);
 		clearTreeItem(childItem);
 		delete childItem;
 	}
@@ -846,20 +846,19 @@ int Emoji::replaceTextToImage(QTextDocument *ADocument, int AStartPos, int ALeng
 int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALength) const
 {
 	int posOffset = 0;
-	QMap<int,QString> emoticons = findImageEmoji(ADocument,AStartPos,ALength);
-	if (!emoticons.isEmpty())
+	QMap<int,QString> emoji = findImageEmoji(ADocument,AStartPos,ALength);
+	if (!emoji.isEmpty())
 	{
 		QTextCursor cursor(ADocument);
 		cursor.beginEditBlock();
-		for (QMap<int,QString>::const_iterator it=emoticons.constBegin(); it!=emoticons.constEnd(); ++it)
+
+		for (QMap<int,QString>::const_iterator it=emoji.constBegin(); it!=emoji.constEnd(); ++it)
 		{
 			cursor.setPosition(it.key()+posOffset);
 			cursor.deleteChar();
 			posOffset--;
-
-			if (cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor,1))
-				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor,1);
-
+			if (cursor.movePosition(QTextCursor::PreviousCharacter,QTextCursor::KeepAnchor, 1))
+				cursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor, 1);
 			cursor.insertText(it.value());
 			posOffset += it->length();
 		}
@@ -871,8 +870,8 @@ int Emoji::replaceImageToText(QTextDocument *ADocument, int AStartPos, int ALeng
 SelectIconMenu *Emoji::createSelectIconMenu(const QString &AIconSet, QWidget *AParent)
 {
 	SelectIconMenu *menu = new SelectIconMenu(AIconSet, this, AParent);
-	connect(menu, SIGNAL(iconSelected(QString)), SLOT(onSelectIconMenuSelected(QString)));
-	connect(menu, SIGNAL(destroyed(QObject *)), SLOT(onSelectIconMenuDestroyed(QObject *)));
+	connect(menu,SIGNAL(iconSelected(QString)),SLOT(onSelectIconMenuSelected(QString)));
+	connect(menu,SIGNAL(destroyed(QObject*)),SLOT(onSelectIconMenuDestroyed(QObject*)));
 	return menu;
 }
 

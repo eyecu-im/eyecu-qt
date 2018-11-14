@@ -94,9 +94,9 @@ void SelectIconMenu::onAboutToShow()
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon(IEmoji::Category(c)),
 														 QString()), FEmoji->categoryName(IEmoji::Category(c)));
 			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
-			connect(widget, SIGNAL(iconSelected(QString)), SLOT(onIconSelected(QString)));
-			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
-			connect(widget,SIGNAL(hasGenderedChanged(bool)), SLOT(onHasGenderedChanged(bool)));
+			connect(widget,SIGNAL(iconSelected(QString)),SLOT(onIconSelected(QString)));
+			connect(widget,SIGNAL(hasColoredChanged(bool)),SLOT(onHasColoredChanged(bool)));
+			connect(widget,SIGNAL(hasGenderedChanged(bool)),SLOT(onHasGenderedChanged(bool)));
 		}
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
 		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
