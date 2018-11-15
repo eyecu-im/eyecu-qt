@@ -63,7 +63,7 @@ bool InboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid, 
 	Message message(AStanza);
 
 	QString contact = message.from();
-	QString account = accountManager()->findAccountByStream(AStreamJid)->accountId();
+	QString account = accountManager()->findAccountByStream(AStreamJid)->accountId().toString();
 	QString plainBody = message.body();
 
     QString decrypted;
@@ -106,7 +106,7 @@ bool OutboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid,
 	Message message(AStanza);
 
 	QString contact = message.to();
-	QString account = accountManager()->findAccountByStream(AStreamJid)->accountId();
+	QString account = accountManager()->findAccountByStream(AStreamJid)->accountId().toString();
 
 	QString encrypted = otr()->encryptMessage(
 		account,

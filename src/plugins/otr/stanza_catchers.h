@@ -16,6 +16,7 @@ class StanzaCatcher:
     public IStanzaHandler
 {
     Q_OBJECT
+	Q_INTERFACES(IStanzaHandler)
 public:
 	static const char* SkipOtrCatcherFlag()
 	{

@@ -33,7 +33,7 @@
 #include <QCoreApplication>
 #include <QMessageBox>
 #include <QAbstractButton>
-#include <QtConcurrentRun>
+#include <QtConcurrent>
 #include <QFutureWatcher>
 #include <QString>
 #include <QByteArray>
@@ -42,6 +42,9 @@
 #include <QHash>
 #include <QDir>
 #include <QFile>
+#if QT_VERSION < 0x050000
+#include <QtConcurrentRun>
+#endif
 
 //-----------------------------------------------------------------------------
 

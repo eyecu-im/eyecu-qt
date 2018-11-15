@@ -9,9 +9,9 @@
 
 #include "psiotrclosure.h"
 
-#include <QtCore/QPair>
-#include <QtGui/QMenu>
-#include <QtGui/QToolButton>
+#include <QPair>
+#include <QMenu>
+#include <QToolButton>
 
 namespace psiotr
 {
@@ -180,7 +180,7 @@ void OtrPlugin::onStreamOpened( IXmppStream *AXmppStream )
 void OtrPlugin::onStreamClosed( IXmppStream *AXmppStream )
 {
     //Q_UNUSED(AXmppStream);
-    QString account = FAccountManager->findAccountByStream(AXmppStream->streamJid())->accountId();
+	QString account = FAccountManager->findAccountByStream(AXmppStream->streamJid())->accountId().toString();
 
     if (m_onlineUsers.contains(account))
     {
@@ -491,7 +491,7 @@ bool OtrPlugin::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &A
         if (!xml.isNull())
         {
             QString contact = AStanza.from();
-            QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId();
+			QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 
             if (AStanza.type() == PRESENCE_TYPE_AVAILABLE)
             {

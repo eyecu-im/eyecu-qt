@@ -35,14 +35,14 @@
 
 extern "C"
 {
-#include <libotr/proto.h>
-#include <libotr/message.h>
-#include <libotr/privkey.h>
+#include <proto.h>
+#include <message.h>
+#include <privkey.h>
 #ifndef OTRL_PRIVKEY_FPRINT_HUMAN_LEN
 #define OTRL_PRIVKEY_FPRINT_HUMAN_LEN 45
 #endif
 #if (OTRL_VERSION_MAJOR >= 4)
-#include <libotr/instag.h>
+#include <instag.h>
 #endif
 #include "otrlextensions.h"
 }

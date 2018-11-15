@@ -29,7 +29,7 @@
 #include <gcrypt.h>
 
 /* libotr headers */
-#include <libotr/privkey.h>
+#include <privkey.h>
 
 #include "otrlextensions.h"
 

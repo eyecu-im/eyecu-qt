@@ -23,7 +23,7 @@
 #define __OTRLEXT_H__
 
 #include <stdio.h>
-#include <libotr/userstate.h>
+#include <userstate.h>
 
 /* Store all keys of an OtrlUserState. */
 gcry_error_t otrl_privkey_write(OtrlUserState us, const char* filename);
