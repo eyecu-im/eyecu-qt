@@ -57,78 +57,77 @@ class QString;
 class OtrInternal
 {
 public:
-
-    OtrInternal(psiotr::OtrCallback* callback, psiotr::OtrPolicy& policy);
+	OtrInternal(IOtr* AOtr, IOtr::OtrPolicy& APolicy);
 
     ~OtrInternal();
 
-    QString encryptMessage(const QString& account, const QString& contact,
-                           const QString& message);
+	QString encryptMessage(const QString& AAccount, const QString& AContact,
+						   const QString& AMessage);
 
-    psiotr::OtrMessageType decryptMessage(const QString& account,
-                                          const QString& contact,
-                                          const QString& message,
-                                          QString& decrypted);
+	IOtr::OtrMessageType decryptMessage(const QString& AAccount,
+								  const QString& AContact,
+								  const QString& AMessage,
+								  QString& ADecrypted);
 
-    QList<psiotr::Fingerprint> getFingerprints();
+	QList<OtrFingerprint> getFingerprints();
 
-    void verifyFingerprint(const psiotr::Fingerprint& fingerprint, bool verified);
+	void verifyFingerprint(const OtrFingerprint& AFingerprint, bool AVerified);
 
-    void deleteFingerprint(const psiotr::Fingerprint& fingerprint);
+	void deleteFingerprint(const OtrFingerprint& AFingerprint);
 
     QHash<QString, QString> getPrivateKeys();
 
-    void deleteKey(const QString& account);
+	void deleteKey(const QString& AAccount);
 
 
-    void startSession(const QString& account, const QString& contact);
+	void startSession(const QString& AAccount, const QString& AContact);
 
-    void endSession(const QString& account, const QString& contact);
+	void endSession(const QString& AAccount, const QString& AContact);
 
-    void expireSession(const QString& account, const QString& contact);
-
-
-    void startSMP(const QString& account, const QString& contact,
-                  const QString& question, const QString& secret);
-
-    void continueSMP(const QString& account, const QString& contact,
-                     const QString& secret);
-
-    void abortSMP(const QString& account, const QString& contact);
-    void abortSMP(ConnContext* context);
+	void expireSession(const QString& AAccount, const QString& AContact);
 
 
-    psiotr::OtrMessageState getMessageState(const QString& account,
-                                            const QString& contact);
+	void startSMP(const QString& AAccount, const QString& AContact,
+				  const QString& AQuestion, const QString& ASecret);
 
-    QString getMessageStateString(const QString& account,
-                                  const QString& contact);
+	void continueSMP(const QString& AAccount, const QString& AContact,
+					 const QString& ASecret);
 
-    QString getSessionId(const QString& account, const QString& contact);
+	void abortSMP(const QString& AAccount, const QString& AContact);
+	void abortSMP(ConnContext* AContext);
 
-    psiotr::Fingerprint getActiveFingerprint(const QString& account,
-                                             const QString& contact);
 
-    bool isVerified(const QString& account, const QString& contact);
-    bool isVerified(ConnContext* context);
+	IOtr::OtrMessageState getMessageState(const QString& AAccount,
+										  const QString& AContact);
 
-    bool smpSucceeded(const QString& account, const QString& contact);
+	QString getMessageStateString(const QString& AAccount,
+								  const QString& AContact);
 
-    void generateKey(const QString& account);
+	QString getSessionId(const QString& AAccount, const QString& AContact);
 
-    static QString humanFingerprint(const unsigned char* fingerprint);
+	OtrFingerprint getActiveFingerprint(const QString& AAccount,
+										const QString& AContact);
+
+	bool isVerified(const QString& AAccount, const QString& AContact);
+	bool isVerified(ConnContext* AContext);
+
+	bool smpSucceeded(const QString& AAccount, const QString& AContact);
+
+	void generateKey(const QString& AAccount);
+
+	static QString humanFingerprint(const unsigned char* AFingerprint);
 
     /*** otr callback functions ***/
-    OtrlPolicy policy(ConnContext* context);
-    void create_privkey(const char* accountname, const char* protocol);
-    int is_logged_in(const char* accountname, const char* protocol,
-                     const char* recipient);
-    void inject_message(const char* accountname, const char* protocol,
-                        const char* recipient, const char* message);
+	OtrlPolicy policy(ConnContext* AContext);
+	void create_privkey(const char* AAccountname, const char* AProtocol);
+	int is_logged_in(const char* AAccountname, const char* AProtocol,
+					 const char* ARecipient);
+	void inject_message(const char* AAccountname, const char* AProtocol,
+						const char* ARecipient, const char* AMessage);
     void update_context_list();
-    void new_fingerprint(OtrlUserState us, const char* accountname,
-                         const char* protocol, const char* username,
-                         unsigned char fingerprint[20]);
+	void new_fingerprint(OtrlUserState AUserState, const char* AAccountName,
+						 const char* AProtocol, const char* AUsername,
+						 unsigned char AFingerprint[20]);
     void write_fingerprints();
     void gone_secure(ConnContext* context);
     void gone_insecure(ConnContext* context);
@@ -195,47 +194,47 @@ public:
 
     static const char* cb_account_name(void* opdata, const char* account, const char* protocol);
     static void cb_account_name_free(void* opdata, const char* account_name);
-private:
 
+private:
     /**
      * The userstate contains keys and known fingerprints.
      */
-    OtrlUserState m_userstate;
+	OtrlUserState FUserState;
 
     /**
      * Pointers to callback functions.
      */
-    OtrlMessageAppOps m_uiOps;
+	OtrlMessageAppOps FUiOps;
 
     /**
      * Pointer to a class for callbacks from OTR to application.
      */
-    psiotr::OtrCallback* m_callback;
+	IOtr* FOtr;
 
     /**
      * Name of the file storing dsa-keys.
      */
-    QString m_keysFile;
+	QString FKeysFile;
 
     /**
      * Name of the file storing instance tags.
      */
-    QString m_instagsFile;
+	QString FInstagsFile;
 
     /**
      * Name of the file storing known fingerprints.
      */
-    QString m_fingerprintFile;
+	QString FFingerprintFile;
 
     /**
      * Reference to the default OTR policy
      */
-    psiotr::OtrPolicy& m_otrPolicy;
+	IOtr::OtrPolicy& FOtrPolicy;
 
     /**
      * Variable used during generating of private key.
      */
-    bool is_generating;
+	bool FIsGenerating;
 };
 
 // ---------------------------------------------------------------------------

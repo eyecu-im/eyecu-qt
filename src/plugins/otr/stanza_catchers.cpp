@@ -3,10 +3,10 @@
 #include "stanza_catchers.h"
 #include <utils/logger.h>
 
-StanzaCatcher::StanzaCatcher(psiotr::OtrMessaging* otr, IAccountManager* AAccountJid, QObject *AParent):
+StanzaCatcher::StanzaCatcher(OtrMessaging* AOtr, IAccountManager* AAccountManager, QObject *AParent):
 	QObject(AParent),
-	m_otrConnection(otr),
-	m_accountJid(AAccountJid)
+	FOtrMessaging(AOtr),
+	FAccountManager(AAccountManager)
 {
 
 }
@@ -16,14 +16,14 @@ QObject * StanzaCatcher::instance()
 	return this;
 }
 
-psiotr::OtrMessaging* StanzaCatcher::otr()
+OtrMessaging* StanzaCatcher::otr()
 {
-	return m_otrConnection;
+	return FOtrMessaging;
 }
 
 IAccountManager* StanzaCatcher::accountManager()
 {
-	return m_accountJid;
+	return FAccountManager;
 }
 
 bool StanzaCatcher::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
@@ -48,8 +48,8 @@ bool StanzaCatcher::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza
 
 //------------------------------------------------
 
-InboundStanzaCatcher::InboundStanzaCatcher(psiotr::OtrMessaging* otr, IAccountManager* AAccountJid, QObject* Aparent)
-	: StanzaCatcher(otr, AAccountJid, Aparent)
+InboundStanzaCatcher::InboundStanzaCatcher(OtrMessaging* AOtr, IAccountManager* AAccountManager, QObject* AParent)
+	: StanzaCatcher(AOtr, AAccountManager, AParent)
 {
 
 }
@@ -67,17 +67,16 @@ bool InboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid, 
 	QString plainBody = message.body();
 
     QString decrypted;
-    psiotr::OtrMessageType messageType = otr()->decryptMessage(
-                                                        account, contact,
-                                                        plainBody, decrypted);
+	IOtr::OtrMessageType messageType = otr()->decryptMessage(account, contact,
+															 plainBody, decrypted);
     switch (messageType)
     {
-        case psiotr::OTR_MESSAGETYPE_NONE:
+		case IOtr::OTR_MESSAGETYPE_NONE:
             break;
-        case psiotr::OTR_MESSAGETYPE_IGNORE:
+		case IOtr::OTR_MESSAGETYPE_IGNORE:
             ignore = true;
             break;
-        case psiotr::OTR_MESSAGETYPE_OTR:
+		case IOtr::OTR_MESSAGETYPE_OTR:
             QString bodyText;
 
             bodyText = decrypted;
@@ -92,8 +91,8 @@ bool InboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid, 
 
 //------------------------------------------------
 
-OutboundStanzaCatcher::OutboundStanzaCatcher(psiotr::OtrMessaging* otr,IAccountManager* AAccountJid, QObject* Aparent)
-    : StanzaCatcher(otr, AAccountJid, Aparent)
+OutboundStanzaCatcher::OutboundStanzaCatcher(OtrMessaging* AOtr, IAccountManager* AAccountManager, QObject* AParent)
+	: StanzaCatcher(AOtr, AAccountManager, AParent)
 {
 
 }
@@ -129,7 +128,7 @@ bool OutboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid,
 	                                                        m_otrConnection);
 	}*/
 	//if (m_onlineUsers[account][contact]->encrypted()) {
-	if (otr()->getMessageState(account, contact) == psiotr::OTR_MESSAGESTATE_ENCRYPTED) {
+	if (otr()->getMessageState(account, contact) == IOtr::OTR_MESSAGESTATE_ENCRYPTED) {
 	    if (AStanza.to().contains("/")) {
 	        // if not a bare jid
 	        AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints" ,"no-copy")).toElement();

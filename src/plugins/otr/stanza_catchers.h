@@ -23,33 +23,32 @@ public:
 		return "skip_otr_processing";
 	}
 
-	//StanzaCatcher(psiotr::OtrMessaging* otr, IAccountManager* AAccountJid,QObject* Aparent);
-	StanzaCatcher(psiotr::OtrMessaging* otr, IAccountManager* AAccountJid,QObject* Aparent);
+	StanzaCatcher(OtrMessaging* AOtr, IAccountManager* AAccountManager, QObject* AParent = nullptr);
 	//virtual QObject *instance() { return this; }
 	virtual QObject *instance();
 	virtual bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 
 protected:
-	psiotr::OtrMessaging* otr();
+	OtrMessaging* otr();
 	IAccountManager* accountManager();
 	virtual bool stanzaEditImpl(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept) = 0;
 
 private:
-	psiotr::OtrMessaging* m_otrConnection;
-	IAccountManager* m_accountJid;
+	OtrMessaging* FOtrMessaging;
+	IAccountManager* FAccountManager;
 };
 
 class InboundStanzaCatcher: public StanzaCatcher
 {
 public:
-	InboundStanzaCatcher(psiotr::OtrMessaging* otr, IAccountManager* AAccountJid, QObject* Aparent);
+	InboundStanzaCatcher(OtrMessaging* AOtr, IAccountManager* AAccountManager, QObject* AParent=nullptr);
 	virtual bool stanzaEditImpl(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 };
 
 class OutboundStanzaCatcher: public StanzaCatcher
 {
 public:
-	OutboundStanzaCatcher(psiotr::OtrMessaging* otr,IAccountManager* AAccountJid, QObject* Aparent);
+	OutboundStanzaCatcher(OtrMessaging* AOtr,IAccountManager* AAccountManager, QObject* AParent=nullptr);
 	virtual bool stanzaEditImpl(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 };
 

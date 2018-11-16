@@ -28,119 +28,15 @@
 #include <QHash>
 #include <QString>
 
+#include <interfaces/iotr.h>
 #include <utils/jid.h>
 
 class OtrInternal;
 
-// ---------------------------------------------------------------------------
-
-namespace psiotr
-{
-
-// ---------------------------------------------------------------------------
-
-enum OtrPolicy
-{
-    OTR_POLICY_OFF,
-    OTR_POLICY_ENABLED,
-    OTR_POLICY_AUTO,
-    OTR_POLICY_REQUIRE
-};
-
-// ---------------------------------------------------------------------------
-
-enum OtrMessageType
-{
-    OTR_MESSAGETYPE_NONE,
-    OTR_MESSAGETYPE_IGNORE,
-    OTR_MESSAGETYPE_OTR
-};
-
-// ---------------------------------------------------------------------------
-
-enum OtrMessageState
-{
-    OTR_MESSAGESTATE_UNKNOWN,
-    OTR_MESSAGESTATE_PLAINTEXT,
-    OTR_MESSAGESTATE_ENCRYPTED,
-    OTR_MESSAGESTATE_FINISHED
-};
-
-// ---------------------------------------------------------------------------
-
-enum OtrStateChange
-{
-    OTR_STATECHANGE_GOINGSECURE,
-    OTR_STATECHANGE_GONESECURE,
-    OTR_STATECHANGE_GONEINSECURE,
-    OTR_STATECHANGE_STILLSECURE,
-    OTR_STATECHANGE_CLOSE,
-    OTR_STATECHANGE_REMOTECLOSE,
-    OTR_STATECHANGE_TRUST
-};
-
-// ---------------------------------------------------------------------------
-
-enum OtrNotifyType
-{
-    OTR_NOTIFY_INFO,
-    OTR_NOTIFY_WARNING,
-    OTR_NOTIFY_ERROR
-};
-
-// ---------------------------------------------------------------------------
-
-/**
- * Interface for callbacks from libotr to application
- */
-class OtrCallback
-{
-public:
-    virtual QObject *instance() =0;
-
-    virtual QString dataDir() = 0;
-
-    virtual OtrPolicy policy() const = 0;
-    /**
-     * Sends a message from the Account account to the user contact.
-     * The method is called from the OtrConnection to send messages
-     * during key-exchange.
-     */
-    virtual void sendMessage(const QString& account, const QString& contact,
-                             const QString& message) = 0;
-
-    virtual bool isLoggedIn(const QString& account, const QString& contact) = 0;
-
-    virtual void notifyUser(const QString& account, const QString& contact,
-                            const QString& message, const OtrNotifyType& type) = 0;
-
-    virtual bool displayOtrMessage(const QString& account, const QString& contact,
-                                   const QString& message) = 0;
-
-    virtual void stateChange(const QString& account, const QString& contact,
-                             OtrStateChange change) = 0;
-
-    virtual void receivedSMP(const QString& account, const QString& contact,
-                             const QString& question) = 0;
-
-    virtual void updateSMP(const QString& account, const QString& contact,
-                           int progress) = 0;
-
-    virtual QString humanAccount(const QString& accountId) = 0;
-    virtual QString humanAccountPublic(const QString& accountId) = 0;
-    virtual QString humanContact(const QString& accountId,
-                                 const QString& contact) = 0;
-    virtual void authenticateContact(const QString &account, const QString &contact) =0;
-protected:
-    virtual void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const =0;
-};
-
-// ---------------------------------------------------------------------------
-
 /**
  * This struct contains all data shown in the table of 'Known Fingerprints'.
  */
-struct Fingerprint
+struct OtrFingerprint
 {
     /**
      * Pointer to fingerprint in libotr struct. Binary format.
@@ -167,9 +63,9 @@ struct Fingerprint
      */
     QString trust;
 
-    Fingerprint();
-    Fingerprint(const Fingerprint &fp);
-    Fingerprint(unsigned char* fingerprint,
+	OtrFingerprint();
+	OtrFingerprint(const OtrFingerprint &fp);
+	OtrFingerprint(unsigned char* fingerprint,
                 QString account, QString username,
                 QString trust);
 };
@@ -190,7 +86,7 @@ public:
      * @param plugin Pointer to the plugin, used for sending messages.
      * @param policy The default OTR policy
      */
-    OtrMessaging(OtrCallback* callback, OtrPolicy policy);
+	OtrMessaging(IOtr* callback, IOtr::OtrPolicy policy);
 
     /**
      * Deconstructor
@@ -219,23 +115,23 @@ public:
      *                  encrypted
      * @return Type of incoming message
      */
-    OtrMessageType decryptMessage(const QString& account, const QString& contact,
+	IOtr::OtrMessageType decryptMessage(const QString& account, const QString& contact,
                                   const QString& message, QString& decrypted);
 
     /**
      * Returns a list of known fingerprints.
      */
-    QList<Fingerprint> getFingerprints();
+	QList<OtrFingerprint> getFingerprints();
 
     /**
      * Set fingerprint verified/not verified.
      */
-    void verifyFingerprint(const Fingerprint& fingerprint, bool verified);
+	void verifyFingerprint(const OtrFingerprint& AFingerprint, bool AVerified);
 
     /**
      * Delete a known fingerprint.
      */
-    void deleteFingerprint(const Fingerprint& fingerprint);
+	void deleteFingerprint(const OtrFingerprint& AFingerprint);
 
     /**
      * Get hash of fingerprints of own private keys.
@@ -246,121 +142,117 @@ public:
     /**
      * Delete a private key.
      */
-    void deleteKey(const QString& account);
+	void deleteKey(const QString& AAccount);
 
     /**
      * Send an OTR query message from account to contact.
      */
-    void startSession(const QString& account, const QString& contact);
+	void startSession(const QString& AAccount, const QString& AContact);
 
     /**
      * Send otr-finished message to user.
      */
-    void endSession(const QString& account, const QString& contact);
+	void endSession(const QString& AAccount, const QString& AContact);
 
     /**
      * Force a session to expire.
      */
-    void expireSession(const QString& account, const QString& contact);
+	void expireSession(const QString& AAccount, const QString& AContact);
 
     /**
      * Start the SMP with an optional question.
      */
-    void startSMP(const QString& account, const QString& contact,
-                  const QString& question, const QString& secret);
+	void startSMP(const QString& AAccount, const QString& AContact,
+				  const QString& AQuestion, const QString& ASecret);
 
     /**
      * Continue the SMP.
      */
-    void continueSMP(const QString& account, const QString& contact,
-                     const QString& secret);
+	void continueSMP(const QString& AAccount, const QString& AContact,
+					 const QString& ASecret);
 
     /**
      * Abort the SMP.
      */
-    void abortSMP(const QString& account, const QString& contact);
+	void abortSMP(const QString& AAccount, const QString& AContact);
 
     /**
      * Return the messageState of a context,
      * i.e. plaintext, encrypted, finished.
      */
-    OtrMessageState getMessageState(const QString& account,
-                                    const QString& contact);
+	IOtr::OtrMessageState getMessageState(const QString& AAccount,
+									const QString& AContact);
 
     /**
      * Return the messageState as human-readable string.
      */
-    QString getMessageStateString(const QString& account,
-                                  const QString& contact);
+	QString getMessageStateString(const QString& AAccount,
+								  const QString& AContact);
 
     /**
      * Return the secure session id (ssid) for a context.
      */
-    QString getSessionId(const QString& account, const QString& contact);
+	QString getSessionId(const QString& AAccount, const QString& AContact);
 
     /**
      * Return the active fingerprint for a context.
      */
-    psiotr::Fingerprint getActiveFingerprint(const QString& account,
-                                             const QString& contact);
+	OtrFingerprint getActiveFingerprint(const QString& AAccount,
+										const QString& AContact);
 
     /**
      * Return true if the active fingerprint has been verified.
      */
-    bool isVerified(const QString& account, const QString& contact);
+	bool isVerified(const QString& AAccount, const QString& AContact);
 
     /**
      * Return true if Socialist Millionaires' Protocol succeeded.
      */
-    bool smpSucceeded(const QString& account, const QString& contact);
+	bool smpSucceeded(const QString& AAccount, const QString& AContact);
 
     /**
      * Set the default OTR policy.
      */
-    void setPolicy(OtrPolicy policy);
+	void setPolicy(IOtr::OtrPolicy APolicy);
 
     /**
      * Return the default OTR policy.
      */
-    OtrPolicy getPolicy();
+	IOtr::OtrPolicy getPolicy();
 
     /**
      * Generate own keys.
      * This function blocks until keys are available.
      */
-    void generateKey(const QString& account);
+	void generateKey(const QString& AAccount);
 
     /**
      * Display OTR message.
      */
-    bool displayOtrMessage(const QString& account, const QString& contact,
-                           const QString& message);
+	bool displayOtrMessage(const QString& AAccount, const QString& AContact,
+						   const QString& AMessage);
 
     /**
      * Report a change of state.
      */
-    void stateChange(const QString& account, const QString& contact,
-                     OtrStateChange change);
+	void stateChange(const QString& AAccount, const QString& AContact,
+					 IOtr::OtrStateChange AChange);
 
     /**
      * Return a human-readable representation
      * of an account identified by accountId.
      */
-    QString humanAccount(const QString& accountId);
+	QString humanAccount(const QString& AAccountId);
 
     /**
      * Return the name of a contact.
      */
-    QString humanContact(const QString& accountId, const QString& contact);
+	QString humanContact(const QString& AAccountId, const QString& AContact);
 
 private:
-    OtrPolicy    m_otrPolicy;
-    OtrInternal* m_impl;
-    OtrCallback* m_callback;
+	IOtr::OtrPolicy FOtrPolicy;
+	OtrInternal* FOtrInternal;
+	IOtr* FOtr;
 };
-
-// ---------------------------------------------------------------------------
-
-} // namespace psiotr
 
 #endif

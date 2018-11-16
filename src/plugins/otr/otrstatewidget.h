@@ -7,16 +7,13 @@
 
 #include "otrmessaging.h"
 
-namespace psiotr
+class OtrStateWidget: public QToolButton
 {
+	Q_OBJECT
 
-class OtrStateWidget :
-	public QToolButton
-{
-	Q_OBJECT;
 public:
-	OtrStateWidget(OtrCallback* callback, OtrMessaging* otrc, IMessageWindow *AWindow,
-		         const QString &account, const QString &contact, QWidget *AParent);
+	OtrStateWidget(IOtr* AOtr, OtrMessaging* AOtrMessaging, IMessageWindow *AWindow,
+				 const QString &AAccount, const QString &AContact, QWidget *AParent);
 	~OtrStateWidget();
 protected slots:
 	void onWindowAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
@@ -28,21 +25,19 @@ protected slots:
     void sessionID(bool b);
     void fingerprint(bool b);
 private:
-    OtrCallback* m_callback;
-    OtrMessaging* m_otr;
-    QString       m_account;
-    QString       m_contact;
+	IOtr*		  FOtr;
+	OtrMessaging* FOtrMessaging;
+	QString       FAccount;
+	QString       FContact;
 	IMessageWindow *FWindow;
 private:
-	Menu *FMenu;
-    Action*       m_authenticateAction;
-    Action*       m_sessionIdAction;
-    Action*       m_fingerprintAction;
-    Action*       m_startSessionAction;
-    Action*       m_endSessionAction;
+	Menu		  *FMenu;
+	Action*       FAuthenticateAction;
+	Action*       FSessionIdAction;
+	Action*       FFingerprintAction;
+	Action*       FStartSessionAction;
+	Action*       FEndSessionAction;
 
 };
-
-} // namespace psiotr
 
 #endif // OTRSATEWIDGET_H

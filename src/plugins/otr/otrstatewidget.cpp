@@ -5,16 +5,13 @@
 #include <utils/iconstorage.h>
 #include <utils/menu.h>
 
-namespace psiotr
-{
-
-OtrStateWidget::OtrStateWidget(OtrCallback* callback, OtrMessaging* otrc, IMessageWindow *AWindow,
-                               const QString &account, const QString &contact, QWidget *AParent)
+OtrStateWidget::OtrStateWidget(IOtr* AOtr, OtrMessaging* AOtrMessaging, IMessageWindow *AWindow,
+							   const QString &AAccount, const QString &AContact, QWidget *AParent)
 	: QToolButton(AParent),
-      m_callback(callback),
-      m_otr(otrc),
-      m_account(account),
-      m_contact(contact)
+	  FOtr(AOtr),
+	  FOtrMessaging(AOtrMessaging),
+	  FAccount(AAccount),
+	  FContact(AContact)
 {
 	FWindow = AWindow;
 
@@ -22,46 +19,46 @@ OtrStateWidget::OtrStateWidget(OtrCallback* callback, OtrMessaging* otrc, IMessa
 	QActionGroup *actionGroup = new QActionGroup(FMenu);
 	setMenu(FMenu);
 
-	m_startSessionAction = new Action(FMenu);
-    connect(m_startSessionAction, SIGNAL(triggered(bool)),
+	FStartSessionAction = new Action(FMenu);
+	connect(FStartSessionAction, SIGNAL(triggered(bool)),
             this, SLOT(initiateSession(bool)));
-	m_startSessionAction->setActionGroup(actionGroup);
-	FMenu->addAction(m_startSessionAction);
+	FStartSessionAction->setActionGroup(actionGroup);
+	FMenu->addAction(FStartSessionAction);
 
-	m_endSessionAction = new Action(FMenu);
-	m_endSessionAction->setText(tr("&End private conversation"));
-    connect(m_endSessionAction, SIGNAL(triggered(bool)),
+	FEndSessionAction = new Action(FMenu);
+	FEndSessionAction->setText(tr("&End private conversation"));
+	connect(FEndSessionAction, SIGNAL(triggered(bool)),
             this, SLOT(endSession(bool)));
-	m_endSessionAction->setActionGroup(actionGroup);
-	FMenu->addAction(m_endSessionAction);
+	FEndSessionAction->setActionGroup(actionGroup);
+	FMenu->addAction(FEndSessionAction);
 
 	FMenu->insertSeparator(NULL);
 
-	m_authenticateAction = new Action(FMenu);
-	m_authenticateAction->setText(tr("&Authenticate contact"));
-    connect(m_authenticateAction, SIGNAL(triggered(bool)),
+	FAuthenticateAction = new Action(FMenu);
+	FAuthenticateAction->setText(tr("&Authenticate contact"));
+	connect(FAuthenticateAction, SIGNAL(triggered(bool)),
             this, SLOT(authenticateContact(bool)));
-	m_authenticateAction->setActionGroup(actionGroup);
-	FMenu->addAction(m_authenticateAction);
+	FAuthenticateAction->setActionGroup(actionGroup);
+	FMenu->addAction(FAuthenticateAction);
 
-	m_sessionIdAction = new Action(FMenu);
-	m_sessionIdAction->setText(tr("Show secure session &ID"));
-    connect(m_sessionIdAction, SIGNAL(triggered(bool)),
+	FSessionIdAction = new Action(FMenu);
+	FSessionIdAction->setText(tr("Show secure session &ID"));
+	connect(FSessionIdAction, SIGNAL(triggered(bool)),
             this, SLOT(sessionID(bool)));
-	m_sessionIdAction->setActionGroup(actionGroup);
-	FMenu->addAction(m_sessionIdAction);
+	FSessionIdAction->setActionGroup(actionGroup);
+	FMenu->addAction(FSessionIdAction);
 
-	m_fingerprintAction = new Action(FMenu);
-	m_fingerprintAction->setText(tr("Show own &fingerprint"));
-    connect(m_fingerprintAction, SIGNAL(triggered(bool)),
+	FFingerprintAction = new Action(FMenu);
+	FFingerprintAction->setText(tr("Show own &fingerprint"));
+	connect(FFingerprintAction, SIGNAL(triggered(bool)),
             this, SLOT(fingerprint(bool)));
-	m_fingerprintAction->setActionGroup(actionGroup);
-	FMenu->addAction(m_fingerprintAction);
+	FFingerprintAction->setActionGroup(actionGroup);
+	FMenu->addAction(FFingerprintAction);
 
     setToolTip(tr("OTR Messaging"));
 
 	connect(FWindow->address()->instance(),SIGNAL(addressChanged(const Jid &, const Jid &)),SLOT(onWindowAddressChanged(const Jid &, const Jid &)));
-    connect(m_callback->instance(),SIGNAL(otrStateChanged(const Jid &, const Jid &)),SLOT(onUpdateMessageState(const Jid &, const Jid &)));
+	connect(FOtr->instance(),SIGNAL(otrStateChanged(const Jid &, const Jid &)),SLOT(onUpdateMessageState(const Jid &, const Jid &)));
 
 	onUpdateMessageState(FWindow->streamJid(),FWindow->contactJid());
 }
@@ -82,14 +79,14 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
     if (FWindow->streamJid()==AStreamJid && FWindow->contactJid()==AContactJid.full())
     {
         QString iconKey;
-        OtrMessageState state = m_otr->getMessageState(m_account, m_contact);
+		IOtr::OtrMessageState state = FOtrMessaging->getMessageState(FAccount, FContact);
 
-        QString stateString(m_otr->getMessageStateString(m_account,
-                                                         m_contact));
+		QString stateString(FOtrMessaging->getMessageStateString(FAccount,
+														 FContact));
 
-        if (state == OTR_MESSAGESTATE_ENCRYPTED)
+		if (state == IOtr::OTR_MESSAGESTATE_ENCRYPTED)
         {
-            if (m_otr->isVerified(m_account, m_contact))
+			if (FOtrMessaging->isVerified(FAccount, FContact))
             {
             //    m_chatDlgAction->setIcon(QIcon(":/otrplugin/otr_yes.png"));
                 iconKey = MNI_OTR_ENCRYPTED;
@@ -110,34 +107,34 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
         setText(tr("OTR Messaging [%1]").arg(stateString));
         IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->insertAutoIcon(this,iconKey);
 
-        if (state == OTR_MESSAGESTATE_ENCRYPTED)
+		if (state == IOtr::OTR_MESSAGESTATE_ENCRYPTED)
         {
-            m_startSessionAction->setText(tr("Refre&sh private conversation"));
-            m_authenticateAction->setEnabled(true);
-            m_sessionIdAction->setEnabled(true);
-            m_endSessionAction->setEnabled(true);
+			FStartSessionAction->setText(tr("Refre&sh private conversation"));
+			FAuthenticateAction->setEnabled(true);
+			FSessionIdAction->setEnabled(true);
+			FEndSessionAction->setEnabled(true);
         }
         else
         {
-            m_startSessionAction->setText(tr("&Start private conversation"));
-            if (state == OTR_MESSAGESTATE_PLAINTEXT)
+			FStartSessionAction->setText(tr("&Start private conversation"));
+			if (state == IOtr::OTR_MESSAGESTATE_PLAINTEXT)
             {
-                m_authenticateAction->setEnabled(false);
-                m_sessionIdAction->setEnabled(false);
-                m_endSessionAction->setEnabled(false);
+				FAuthenticateAction->setEnabled(false);
+				FSessionIdAction->setEnabled(false);
+				FEndSessionAction->setEnabled(false);
             }
             else // finished, unknown
             {
-                m_endSessionAction->setEnabled(true);
-                m_authenticateAction->setEnabled(false);
-                m_sessionIdAction->setEnabled(false);
+				FEndSessionAction->setEnabled(true);
+				FAuthenticateAction->setEnabled(false);
+				FSessionIdAction->setEnabled(false);
             }
         }
 
-        if (m_otr->getPolicy() < OTR_POLICY_ENABLED)
+		if (FOtrMessaging->getPolicy() < IOtr::OTR_POLICY_ENABLED)
         {
-            m_startSessionAction->setEnabled(false);
-            m_endSessionAction->setEnabled(false);
+			FStartSessionAction->setEnabled(false);
+			FEndSessionAction->setEnabled(false);
         }
     }
 }
@@ -147,21 +144,21 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
 void OtrStateWidget::initiateSession(bool b)
 {
     Q_UNUSED(b);
-    m_otr->startSession(m_account, m_contact);
+	FOtrMessaging->startSession(FAccount, FContact);
 }
 
 //-----------------------------------------------------------------------------
 
 void OtrStateWidget::authenticateContact(bool)
 {
-    m_callback->authenticateContact(m_account, m_contact);
+	FOtr->authenticateContact(FAccount, FContact);
 }
 
 //-----------------------------------------------------------------------------
 
 void OtrStateWidget::sessionID(bool)
 {
-    QString sId = m_otr->getSessionId(m_account, m_contact);
+	QString sId = FOtrMessaging->getSessionId(FAccount, FContact);
     QString msg;
 
     if (sId.isEmpty())
@@ -171,12 +168,12 @@ void OtrStateWidget::sessionID(bool)
     else
     {
         msg = tr("Session ID between account \"%1\" and %2: %3")
-                .arg(m_otr->humanAccount(m_account))
-                .arg(m_contact)
+				.arg(FOtrMessaging->humanAccount(FAccount))
+				.arg(FContact)
                 .arg(sId);
     }
 
-    m_otr->displayOtrMessage(m_account, m_contact, msg);
+	FOtrMessaging->displayOtrMessage(FAccount, FContact, msg);
 }
 
 //-----------------------------------------------------------------------------
@@ -184,7 +181,7 @@ void OtrStateWidget::sessionID(bool)
 void OtrStateWidget::endSession(bool b)
 {
     Q_UNUSED(b);
-    m_otr->endSession(m_account, m_contact);
+	FOtrMessaging->endSession(FAccount, FContact);
     onUpdateMessageState(FWindow->streamJid(),FWindow->contactJid());
 }
 
@@ -192,18 +189,14 @@ void OtrStateWidget::endSession(bool b)
 
 void OtrStateWidget::fingerprint(bool)
 {
-    QString fingerprint = m_otr->getPrivateKeys()
-                                    .value(m_account,
+	QString fingerprint = FOtrMessaging->getPrivateKeys()
+									.value(FAccount,
                                            tr("No private key for account \"%1\"")
-                                             .arg(m_otr->humanAccount(m_account)));
+											 .arg(FOtrMessaging->humanAccount(FAccount)));
 
     QString msg(tr("Fingerprint for account \"%1\": %2")
-                   .arg(m_otr->humanAccount(m_account))
+				   .arg(FOtrMessaging->humanAccount(FAccount))
                    .arg(fingerprint));
 
-    m_otr->displayOtrMessage(m_account, m_contact, msg);
+	FOtrMessaging->displayOtrMessage(FAccount, FContact, msg);
 }
-
-//-----------------------------------------------------------------------------
-
-} // namespace

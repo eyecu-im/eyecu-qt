@@ -47,40 +47,23 @@
 #include <QApplication>
 #include <QPoint>
 
-//-----------------------------------------------------------------------------
-
-namespace psiotr
-{
-
-//-----------------------------------------------------------------------------
-
-/*ConfigDialog::ConfigDialog(OtrMessaging* otr, OptionAccessingHost* optionHost,
-                           AccountInfoAccessingHost* accountInfo,
-                           QWidget* parent)
-    : QWidget(parent),
-      m_otr(otr),
-      m_optionHost(optionHost),
-      m_accountInfo(accountInfo)*/
-ConfigDialog::ConfigDialog(OtrMessaging* otr, OtrCallback* optionHost,
-                           QWidget* parent)
-    : QWidget(parent),
-      m_otr(otr),
+ConfigDialog::ConfigDialog(OtrMessaging* AOtrMessaging, QWidget* AParent)
+	: QWidget(AParent),
+	  FOtrMessaging(AOtrMessaging),
       FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>()),
       FAccountManager(PluginHelper::pluginInstance<IAccountManager>())
 {
-    Q_UNUSED(optionHost);
-
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     QTabWidget* tabWidget = new QTabWidget(this);
 
-    tabWidget->addTab(new FingerprintWidget(m_otr, tabWidget),
+	tabWidget->addTab(new FingerprintWidget(FOtrMessaging, tabWidget),
                       tr("Known fingerprints"));
 
-    tabWidget->addTab(new PrivKeyWidget(m_otr, tabWidget),
+	tabWidget->addTab(new PrivKeyWidget(FOtrMessaging, tabWidget),
                       tr("My private keys"));
 
     //tabWidget->addTab(new ConfigOtrWidget(m_optionHost, m_otr, tabWidget),
-    tabWidget->addTab(new ConfigOtrWidget(m_otr, tabWidget),
+	tabWidget->addTab(new ConfigOtrWidget(FOtrMessaging, tabWidget),
                       tr("Configuration"));
 
     mainLayout->addWidget(tabWidget);
@@ -105,11 +88,10 @@ void ConfigDialog::reset()
 //=============================================================================
 
 //ConfigOtrWidget::ConfigOtrWidget(IOptionsManager* optionHost,
-ConfigOtrWidget::ConfigOtrWidget(
-                                 OtrMessaging* otr,
-                                 QWidget* parent)
-    : QWidget(parent),
-      m_otr(otr),
+ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
+								 QWidget* AParent)
+	: QWidget(AParent),
+	  FOtrMessaging(AOtrMessaging),
       FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>())
       //m_optionHost(optionHost)
 {
@@ -118,20 +100,20 @@ ConfigOtrWidget::ConfigOtrWidget(
     QGroupBox* policyGroup = new QGroupBox(tr("OTR Policy"), this);
     QVBoxLayout* policyLayout = new QVBoxLayout(policyGroup);
 
-    m_policy = new QButtonGroup(policyGroup);
+	FPolicy = new QButtonGroup(policyGroup);
 
     QRadioButton* polDisable = new QRadioButton(tr("Disable private messaging"), policyGroup);
     QRadioButton* polEnable  = new QRadioButton(tr("Manually start private messaging"), policyGroup);
     QRadioButton* polAuto    = new QRadioButton(tr("Automatically start private messaging"), policyGroup);
     QRadioButton* polRequire = new QRadioButton(tr("Require private messaging"), policyGroup);
 
-    m_endWhenOffline = new QCheckBox(tr("End session when contact goes offline"), this);
+	FEndWhenOffline = new QCheckBox(tr("End session when contact goes offline"), this);
 
 
-    m_policy->addButton(polDisable, OTR_POLICY_OFF);
-    m_policy->addButton(polEnable,  OTR_POLICY_ENABLED);
-    m_policy->addButton(polAuto,    OTR_POLICY_AUTO);
-    m_policy->addButton(polRequire, OTR_POLICY_REQUIRE);
+	FPolicy->addButton(polDisable, IOtr::OTR_POLICY_OFF);
+	FPolicy->addButton(polEnable,  IOtr::OTR_POLICY_ENABLED);
+	FPolicy->addButton(polAuto,    IOtr::OTR_POLICY_AUTO);
+	FPolicy->addButton(polRequire, IOtr::OTR_POLICY_REQUIRE);
 
     policyLayout->addWidget(polDisable);
     policyLayout->addWidget(polEnable);
@@ -140,7 +122,7 @@ ConfigOtrWidget::ConfigOtrWidget(
     policyGroup->setLayout(policyLayout);
 
     layout->addWidget(policyGroup);
-    layout->addWidget(m_endWhenOffline);
+	layout->addWidget(FEndWhenOffline);
     layout->addStretch();
 
     setLayout(layout);
@@ -150,9 +132,9 @@ ConfigOtrWidget::ConfigOtrWidget(
 //                                                     DEFAULT_POLICY).toInt();
     // xnamed!
     int policyOption = Options::node(OPTION_POLICY).value().toInt();
-    if ((policyOption < OTR_POLICY_OFF) || (policyOption > OTR_POLICY_REQUIRE))
+	if ((policyOption < IOtr::OTR_POLICY_OFF) || (policyOption > IOtr::OTR_POLICY_REQUIRE))
     {
-        policyOption = static_cast<int>(OTR_POLICY_ENABLED);
+		policyOption = static_cast<int>(IOtr::OTR_POLICY_ENABLED);
     }
 
 //    bool endWhenOfflineOption = m_optionHost->getPluginOption(OPTION_END_WHEN_OFFLINE,
@@ -160,16 +142,16 @@ ConfigOtrWidget::ConfigOtrWidget(
     // xnamed!
     bool endWhenOfflineOption = Options::node(OPTION_END_WHEN_OFFLINE).value().toBool();
 
-    m_policy->button(policyOption)->setChecked(true);
+	FPolicy->button(policyOption)->setChecked(true);
 
-    m_endWhenOffline->setChecked(endWhenOfflineOption);
+	FEndWhenOffline->setChecked(endWhenOfflineOption);
 
     updateOptions();
 
-    connect(m_policy, SIGNAL(buttonClicked(int)),
+	connect(FPolicy, SIGNAL(buttonClicked(int)),
             SLOT(updateOptions()));
 
-    connect(m_endWhenOffline, SIGNAL(stateChanged(int)),
+	connect(FEndWhenOffline, SIGNAL(stateChanged(int)),
             SLOT(updateOptions()));
 }
 
@@ -177,7 +159,7 @@ ConfigOtrWidget::ConfigOtrWidget(
 
 void ConfigOtrWidget::updateOptions()
 {
-    OtrPolicy policy = static_cast<OtrPolicy>(m_policy->checkedId());
+	IOtr::OtrPolicy policy = static_cast<IOtr::OtrPolicy>(FPolicy->checkedId());
 
 //    m_optionHost->setPluginOption(OPTION_POLICY, policy);
 //    m_optionHost->setPluginOption(OPTION_END_WHEN_OFFLINE,
@@ -186,30 +168,30 @@ void ConfigOtrWidget::updateOptions()
     // xnamed!
     Options::node(OPTION_POLICY).setValue(static_cast<int>(policy));
     Options::node(OPTION_END_WHEN_OFFLINE).setValue(
-                                    m_endWhenOffline->checkState() == Qt::Checked);
-    m_otr->setPolicy(policy);
+									FEndWhenOffline->checkState() == Qt::Checked);
+	FOtrMessaging->setPolicy(policy);
 }
 
 //=============================================================================
 
 FingerprintWidget::FingerprintWidget(OtrMessaging* otr, QWidget* parent)
     : QWidget(parent),
-      m_otr(otr),
-      m_table(new QTableView(this)),
-      m_tableModel(new QStandardItemModel(this)),
-      m_fingerprints()
+	  FOtrMessaging(otr),
+	  FTable(new QTableView(this)),
+	  FTableModel(new QStandardItemModel(this)),
+	  FFingerprints()
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    m_table->setShowGrid(true);
-    m_table->setEditTriggers(0);
-    m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_table->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_table->setSortingEnabled(true);
+	FTable->setShowGrid(true);
+	FTable->setEditTriggers(0);
+	FTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	FTable->setContextMenuPolicy(Qt::CustomContextMenu);
+	FTable->setSortingEnabled(true);
 
-    connect(m_table, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(contextMenu(const QPoint&)));
+	connect(FTable, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(contextMenu(const QPoint&)));
 
-    mainLayout->addWidget(m_table);
+	mainLayout->addWidget(FTable);
 
     QPushButton* deleteButton = new QPushButton(tr("Delete fingerprint"), this);
     QPushButton* verifyButton = new QPushButton(tr("Verify fingerprint"), this);
@@ -230,42 +212,42 @@ FingerprintWidget::FingerprintWidget(OtrMessaging* otr, QWidget* parent)
 
 void FingerprintWidget::updateData()
 {
-    int sortSection         = m_table->horizontalHeader()->sortIndicatorSection();
-    Qt::SortOrder sortOrder = m_table->horizontalHeader()->sortIndicatorOrder();
+	int sortSection         = FTable->horizontalHeader()->sortIndicatorSection();
+	Qt::SortOrder sortOrder = FTable->horizontalHeader()->sortIndicatorOrder();
 
-    m_tableModel->clear();
-    m_tableModel->setColumnCount(5);
-    m_tableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
+	FTableModel->clear();
+	FTableModel->setColumnCount(5);
+	FTableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
                                             << tr("User") << tr("Fingerprint")
                                             << tr("Verified") << tr("Status"));
 
-    m_fingerprints = m_otr->getFingerprints();
-    QListIterator<Fingerprint> fingerprintIt(m_fingerprints);
+	FFingerprints = FOtrMessaging->getFingerprints();
+	QListIterator<OtrFingerprint> fingerprintIt(FFingerprints);
     int fpIndex = 0;
     while(fingerprintIt.hasNext())
     {
         QList<QStandardItem*> row;
-        Fingerprint fp = fingerprintIt.next();
+        OtrFingerprint fp = fingerprintIt.next();
 
-        QStandardItem* item = new QStandardItem(m_otr->humanAccount(fp.account));
+		QStandardItem* item = new QStandardItem(FOtrMessaging->humanAccount(fp.account));
         item->setData(QVariant(fpIndex));
 
         row.append(item);
         row.append(new QStandardItem(fp.username));
         row.append(new QStandardItem(fp.fingerprintHuman));
         row.append(new QStandardItem(fp.trust));
-        row.append(new QStandardItem(m_otr->getMessageStateString(fp.account,
+		row.append(new QStandardItem(FOtrMessaging->getMessageStateString(fp.account,
                                                                   fp.username)));
 
-        m_tableModel->appendRow(row);
+		FTableModel->appendRow(row);
 
         fpIndex++;
     }
 
-    m_table->setModel(m_tableModel);
+	FTable->setModel(FTableModel);
 
-    m_table->sortByColumn(sortSection, sortOrder);
-    m_table->resizeColumnsToContents();
+	FTable->sortByColumn(sortSection, sortOrder);
+	FTable->resizeColumnsToContents();
 }
 
 //-----------------------------------------------------------------------------
@@ -273,18 +255,18 @@ void FingerprintWidget::updateData()
 
 void FingerprintWidget::deleteFingerprint()
 {
-    if (!m_table->selectionModel()->hasSelection())
+	if (!FTable->selectionModel()->hasSelection())
     {
         return;
     }
-    foreach(QModelIndex selectIndex, m_table->selectionModel()->selectedRows())
+	foreach(QModelIndex selectIndex, FTable->selectionModel()->selectedRows())
     {
-        int fpIndex = m_tableModel->item(selectIndex.row(), 0)->data().toInt();
+		int fpIndex = FTableModel->item(selectIndex.row(), 0)->data().toInt();
 
         QString msg(tr("Are you sure you want to delete the following fingerprint?") + "\n\n" +
-                    tr("Account: ") + m_otr->humanAccount(m_fingerprints[fpIndex].account) + "\n" +
-                    tr("User: ") + m_fingerprints[fpIndex].username + "\n" +
-                    tr("Fingerprint: ") + m_fingerprints[fpIndex].fingerprintHuman);
+					tr("Account: ") + FOtrMessaging->humanAccount(FFingerprints[fpIndex].account) + "\n" +
+					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
+					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
 
         QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
@@ -292,7 +274,7 @@ void FingerprintWidget::deleteFingerprint()
 
         if (mb.exec() == QMessageBox::Yes)
         {
-            m_otr->deleteFingerprint(m_fingerprints[fpIndex]);
+			FOtrMessaging->deleteFingerprint(FFingerprints[fpIndex]);
         }
     }
     updateData();
@@ -302,24 +284,24 @@ void FingerprintWidget::deleteFingerprint()
 
 void FingerprintWidget::verifyFingerprint()
 {
-    if (!m_table->selectionModel()->hasSelection())
+	if (!FTable->selectionModel()->hasSelection())
     {
         return;
     }
-    foreach(QModelIndex selectIndex, m_table->selectionModel()->selectedRows())
+	foreach(QModelIndex selectIndex, FTable->selectionModel()->selectedRows())
     {
-        int fpIndex = m_tableModel->item(selectIndex.row(), 0)->data().toInt();
+		int fpIndex = FTableModel->item(selectIndex.row(), 0)->data().toInt();
 
         QString msg(tr("Have you verified that this is in fact the correct fingerprint?") + "\n\n" +
-                    tr("Account: ") + m_otr->humanAccount(m_fingerprints[fpIndex].account) + "\n" +
-                    tr("User: ") + m_fingerprints[fpIndex].username + "\n" +
-                    tr("Fingerprint: ") + m_fingerprints[fpIndex].fingerprintHuman);
+					tr("Account: ") + FOtrMessaging->humanAccount(FFingerprints[fpIndex].account) + "\n" +
+					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
+					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
 
         QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
-        m_otr->verifyFingerprint(m_fingerprints[fpIndex],
+		FOtrMessaging->verifyFingerprint(FFingerprints[fpIndex],
                                  (mb.exec() == QMessageBox::Yes));
     }
     updateData();
@@ -329,20 +311,20 @@ void FingerprintWidget::verifyFingerprint()
 
 void FingerprintWidget::copyFingerprint()
 {
-    if (!m_table->selectionModel()->hasSelection())
+	if (!FTable->selectionModel()->hasSelection())
     {
         return;
     }
     QString text;
-    foreach(QModelIndex selectIndex, m_table->selectionModel()->selectedRows(1))
+	foreach(QModelIndex selectIndex, FTable->selectionModel()->selectedRows(1))
     {
-        int fpIndex = m_tableModel->item(selectIndex.row(), 0)->data().toInt();
+		int fpIndex = FTableModel->item(selectIndex.row(), 0)->data().toInt();
 
         if (!text.isEmpty())
         {
             text += "\n";
         }
-        text += m_fingerprints[fpIndex].fingerprintHuman;
+		text += FFingerprints[fpIndex].fingerprintHuman;
     }
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(text);
@@ -350,9 +332,9 @@ void FingerprintWidget::copyFingerprint()
 
 //-----------------------------------------------------------------------------
 
-void FingerprintWidget::contextMenu(const QPoint& pos)
+void FingerprintWidget::contextMenu(const QPoint& APos)
 {
-    QModelIndex index = m_table->indexAt(pos);
+	QModelIndex index = FTable->indexAt(APos);
     if (!index.isValid())
     {
         return;
@@ -371,20 +353,20 @@ void FingerprintWidget::contextMenu(const QPoint& pos)
 
 //PrivKeyWidget::PrivKeyWidget(AccountInfoAccessingHost* accountInfo,
 //                             OtrMessaging* otr, QWidget* parent)
-PrivKeyWidget::PrivKeyWidget(OtrMessaging* otr, QWidget* parent)
+PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
     : QWidget(parent),
       //m_accountInfo(accountInfo),
-      m_otr(otr),
-      m_table(new QTableView(this)),
-      m_tableModel(new QStandardItemModel(this)),
-      m_keys(),
+	  FOtrMessaging(FOtrMessaging),
+	  FTable(new QTableView(this)),
+	  FTableModel(new QStandardItemModel(this)),
+	  FKeys(),
       FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>()),
       FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
       FAccountManager(PluginHelper::pluginInstance<IAccountManager>())
 {
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 
-    m_accountBox = new QComboBox(this);
+	FAccountBox = new QComboBox(this);
 
 /*    QString id;
     int accountIndex = 0;
@@ -400,18 +382,18 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* otr, QWidget* parent)
     {
         QString id =  FAccountManager->findAccountByStream((*it)->streamJid())->accountId().toString();
         IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
-        m_accountBox->addItem(account->name(), QVariant(id));
+		FAccountBox->addItem(account->name(), QVariant(id));
     }
     // xnamed! >>
     QPushButton* generateButton = new QPushButton(tr("Generate new key"), this);
     connect(generateButton,SIGNAL(clicked()),SLOT(generateKey()));
 
     QHBoxLayout* generateLayout = new QHBoxLayout();
-    generateLayout->addWidget(m_accountBox);
+	generateLayout->addWidget(FAccountBox);
     generateLayout->addWidget(generateButton);
 
     mainLayout->addLayout(generateLayout);
-    mainLayout->addWidget(m_table);
+	mainLayout->addWidget(FTable);
 
     QPushButton* deleteButton = new QPushButton(tr("Delete key"), this);
     connect(deleteButton,SIGNAL(clicked()),SLOT(deleteKey()));
@@ -423,13 +405,13 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* otr, QWidget* parent)
 
     setLayout(mainLayout);
 
-    m_table->setShowGrid(true);
-    m_table->setEditTriggers(0);
-    m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_table->setSortingEnabled(true);
+	FTable->setShowGrid(true);
+	FTable->setEditTriggers(0);
+	FTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+	FTable->setSortingEnabled(true);
 
-    m_table->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(m_table, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(contextMenu(const QPoint&)));
+	FTable->setContextMenuPolicy(Qt::CustomContextMenu);
+	connect(FTable, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(contextMenu(const QPoint&)));
 
     updateData();
 }
@@ -438,50 +420,50 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* otr, QWidget* parent)
 
 void PrivKeyWidget::updateData()
 {
-    int sortSection         = m_table->horizontalHeader()->sortIndicatorSection();
-    Qt::SortOrder sortOrder = m_table->horizontalHeader()->sortIndicatorOrder();
+	int sortSection         = FTable->horizontalHeader()->sortIndicatorSection();
+	Qt::SortOrder sortOrder = FTable->horizontalHeader()->sortIndicatorOrder();
 
-    m_tableModel->clear();
-    m_tableModel->setColumnCount(2);
-    m_tableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
+	FTableModel->clear();
+	FTableModel->setColumnCount(2);
+	FTableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
                                                           << tr("Fingerprint"));
 
-    m_keys = m_otr->getPrivateKeys();
+	FKeys = FOtrMessaging->getPrivateKeys();
     QHash<QString, QString>::iterator keyIt;
-    for (keyIt = m_keys.begin(); keyIt != m_keys.end(); ++keyIt)
+	for (keyIt = FKeys.begin(); keyIt != FKeys.end(); ++keyIt)
     {
         QList<QStandardItem*> row;
 
-        QStandardItem* accItem = new QStandardItem(m_otr->humanAccount(keyIt.key()));
+		QStandardItem* accItem = new QStandardItem(FOtrMessaging->humanAccount(keyIt.key()));
         accItem->setData(QVariant(keyIt.key()));
 
         row.append(accItem);
         row.append(new QStandardItem(keyIt.value()));
 
-        m_tableModel->appendRow(row);
+		FTableModel->appendRow(row);
     }
 
-    m_table->setModel(m_tableModel);
+	FTable->setModel(FTableModel);
 
-    m_table->sortByColumn(sortSection, sortOrder);
-    m_table->resizeColumnsToContents();
+	FTable->sortByColumn(sortSection, sortOrder);
+	FTable->resizeColumnsToContents();
 }
 
 //-----------------------------------------------------------------------------
 
 void PrivKeyWidget::deleteKey()
 {
-    if (!m_table->selectionModel()->hasSelection())
+	if (!FTable->selectionModel()->hasSelection())
     {
         return;
     }
-    foreach(QModelIndex selectIndex, m_table->selectionModel()->selectedRows(1))
+	foreach(QModelIndex selectIndex, FTable->selectionModel()->selectedRows(1))
     {
-        QString fpr(m_tableModel->item(selectIndex.row(), 1)->text());
-        QString account(m_tableModel->item(selectIndex.row(), 0)->data().toString());
+		QString fpr(FTableModel->item(selectIndex.row(), 1)->text());
+		QString account(FTableModel->item(selectIndex.row(), 0)->data().toString());
 
         QString msg(tr("Are you sure you want to delete the following key?") + "\n\n" +
-                    tr("Account: ") + m_otr->humanAccount(account) + "\n" +
+					tr("Account: ") + FOtrMessaging->humanAccount(account) + "\n" +
                     tr("Fingerprint: ") + fpr);
 
         QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
@@ -490,7 +472,7 @@ void PrivKeyWidget::deleteKey()
 
         if (mb.exec() == QMessageBox::Yes)
         {
-            m_otr->deleteKey(account);
+			FOtrMessaging->deleteKey(account);
         }
     }
     updateData();
@@ -500,21 +482,21 @@ void PrivKeyWidget::deleteKey()
 
 void PrivKeyWidget::generateKey()
 {
-    int accountIndex = m_accountBox->currentIndex();
+	int accountIndex = FAccountBox->currentIndex();
 
     if (accountIndex == -1)
     {
         return;
     }
 
-    QString accountName(m_accountBox->currentText());
-    QString accountId(m_accountBox->itemData(accountIndex).toString());
+	QString accountName(FAccountBox->currentText());
+	QString accountId(FAccountBox->itemData(accountIndex).toString());
 
-    if (m_keys.contains(accountId))
+	if (FKeys.contains(accountId))
     {
         QString msg(tr("Are you sure you want to overwrite the following key?") + "\n\n" +
                     tr("Account: ") + accountName + "\n" +
-                    tr("Fingerprint: ") + m_keys.value(accountId));
+					tr("Fingerprint: ") + FKeys.value(accountId));
 
         QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
@@ -526,7 +508,7 @@ void PrivKeyWidget::generateKey()
         }
     }
 
-    m_otr->generateKey(accountId);
+	FOtrMessaging->generateKey(accountId);
 
     updateData();
 }
@@ -535,18 +517,18 @@ void PrivKeyWidget::generateKey()
 
 void PrivKeyWidget::copyFingerprint()
 {
-    if (!m_table->selectionModel()->hasSelection())
+	if (!FTable->selectionModel()->hasSelection())
     {
         return;
     }
     QString text;
-    foreach(QModelIndex selectIndex, m_table->selectionModel()->selectedRows(1))
+	foreach(QModelIndex selectIndex, FTable->selectionModel()->selectedRows(1))
     {
         if (!text.isEmpty())
         {
             text += "\n";
         }
-        text += m_tableModel->item(selectIndex.row(), 1)->text();
+		text += FTableModel->item(selectIndex.row(), 1)->text();
     }
     QClipboard* clipboard = QApplication::clipboard();
     clipboard->setText(text);
@@ -554,9 +536,9 @@ void PrivKeyWidget::copyFingerprint()
 
 //-----------------------------------------------------------------------------
 
-void PrivKeyWidget::contextMenu(const QPoint& pos)
+void PrivKeyWidget::contextMenu(const QPoint& APos)
 {
-    QModelIndex index = m_table->indexAt(pos);
+	QModelIndex index = FTable->indexAt(APos);
     if (!index.isValid())
     {
         return;
@@ -569,7 +551,3 @@ void PrivKeyWidget::contextMenu(const QPoint& pos)
 
     menu->exec(QCursor::pos());
 }
-
-//-----------------------------------------------------------------------------
-
-} // namespace psiotr

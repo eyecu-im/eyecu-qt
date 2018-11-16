@@ -29,8 +29,6 @@
 
 #include "otrmessaging.h"
 
-#include <QObject>
-#include <QDialog>
 #include <QMessageBox>
 
 class QAction;
@@ -40,25 +38,21 @@ class QLineEdit;
 class QProgressBar;
 class QPushButton;
 
-namespace psiotr
-{
-
 //-----------------------------------------------------------------------------
-
 class AuthenticationDialog : public QDialog
 {
     Q_OBJECT
 public:
-    AuthenticationDialog(OtrMessaging* otrc,
-                         const QString& account, const QString& contact,
-                         const QString& question, bool sender,
-                         QWidget* parent = 0);
+	AuthenticationDialog(OtrMessaging* AOtrMessaging,
+						 const QString& AAccount, const QString& AContact,
+						 const QString& AQuestion, bool ASender,
+						 QWidget* AParent = nullptr);
     ~AuthenticationDialog();
 
     void reset();
     bool finished();
-    void updateSMP(int progress);
-    void notify(const QMessageBox::Icon icon, const QString& message);
+	void updateSMP(int AProgress);
+	void notify(const QMessageBox::Icon AIcon, const QString& AMessage);
 
 public slots:
     void reject();
@@ -67,26 +61,26 @@ private:
     enum AuthState {AUTH_READY, AUTH_IN_PROGRESS, AUTH_FINISHED};
     enum Method {METHOD_QUESTION, METHOD_SHARED_SECRET, METHOD_FINGERPRINT};
 
-    OtrMessaging* m_otr;
-    Method        m_method;
-    QString       m_account;
-    QString       m_contact;
-    QString       m_contactName;
-    bool          m_isSender;
-    AuthState     m_state;
-    Fingerprint   m_fpr;
+	OtrMessaging*	FOtrMessaging;
+	Method			FMethod;
+	QString			FAccount;
+	QString			FContact;
+	QString			FContactName;
+	bool			FIsSender;
+	AuthState		FState;
+	OtrFingerprint	FFingerprint;
 
-    QWidget*      m_methodWidget[3];
-    QComboBox*    m_methodBox;
-    QLineEdit*    m_questionEdit;
-    QLineEdit*    m_answerEdit;
-    QLineEdit*    m_sharedSecretEdit;
-    QProgressBar* m_progressBar;
-    QPushButton*  m_cancelButton;
-    QPushButton*  m_startButton;
+	QWidget*		FMethodWidget[3];
+	QComboBox*		FMethodBox;
+	QLineEdit*		FQuestionEdit;
+	QLineEdit*		FAnswerEdit;
+	QLineEdit*		FSharedSecretEdit;
+	QProgressBar*	FProgressBar;
+	QPushButton*	FCancelButton;
+	QPushButton*	FStartButton;
 
 private slots:
-    void changeMethod(int index);
+	void changeMethod(int AIndex);
     void checkRequirements();
     void startAuthentication();
 };
@@ -95,34 +89,31 @@ private slots:
 
 //-----------------------------------------------------------------------------
 
-class PsiOtrClosure : public QObject
+class OtrClosure : public QObject
 {
     Q_OBJECT
 
 public:
-    PsiOtrClosure(const QString& account, const QString& contact,
-                  OtrMessaging* otrc);
-    ~PsiOtrClosure();
-    void setIsLoggedIn(bool isLoggedIn);
+	OtrClosure(const QString& AAccount, const QString& AContact,
+				  OtrMessaging* AOtrMessaging);
+	~OtrClosure();
+	void setIsLoggedIn(bool AIsLoggedIn);
     bool isLoggedIn() const;
     bool encrypted() const;
-    void receivedSMP(const QString& question);
-    void updateSMP(int progress);
+	void receivedSMP(const QString& AQuestion);
+	void updateSMP(int AProgress);
     void authenticateContact();
 
 private:
-    OtrMessaging* m_otr;
-    QString       m_account;
-    QString       m_contact;
-    bool          m_isLoggedIn;
-    AuthenticationDialog* m_authDialog;
+	OtrMessaging* FOtrMessaging;
+	QString       FAccount;
+	QString       FContact;
+	bool          FIsLoggedIn;
+	AuthenticationDialog* FAuthDialog;
 
 public slots:
     void finishAuth();
 };
-
 //-----------------------------------------------------------------------------
-
-} // namespace psiotr
 
 #endif

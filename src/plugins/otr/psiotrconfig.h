@@ -48,13 +48,8 @@ class QPoint;
 
 // ---------------------------------------------------------------------------
 
-namespace psiotr
-{
-
-// ---------------------------------------------------------------------------
-
 const QString  OPTION_POLICY            = "otr-policy";
-const QVariant DEFAULT_POLICY           = QVariant(OTR_POLICY_ENABLED);
+const QVariant DEFAULT_POLICY           = QVariant(IOtr::OTR_POLICY_ENABLED);
 const QString  OPTION_END_WHEN_OFFLINE  = "end-session-when-offline";
 const QVariant DEFAULT_END_WHEN_OFFLINE = QVariant(false);
 
@@ -66,20 +61,15 @@ const QVariant DEFAULT_END_WHEN_OFFLINE = QVariant(false);
 class ConfigDialog : public QWidget,
                      public IOptionsDialogWidget
 {
-Q_OBJECT;
-Q_INTERFACES(IOptionsDialogWidget);
+Q_OBJECT
+Q_INTERFACES(IOptionsDialogWidget)
 
 public:
-//    ConfigDialog(OtrMessaging* otr, OptionAccessingHost* optionHost,
-//                 AccountInfoAccessingHost* accountInfo,
-    ConfigDialog(OtrMessaging* otr, OtrCallback* optionHost,
-                 QWidget* parent = 0);
+	ConfigDialog(OtrMessaging* AOtrMessaging, QWidget* AParent = nullptr);
     virtual QWidget* instance() { return this; }
 
 private:
-    OtrMessaging*             m_otr;
-    //OptionAccessingHost*      m_optionHost;
-    //AccountInfoAccessingHost* m_accountInfo;
+	OtrMessaging	*FOtrMessaging;
     IOptionsManager *FOptionsManager;
     IAccountManager *FAccountManager;
 public slots:
@@ -101,17 +91,15 @@ class ConfigOtrWidget : public QWidget
 Q_OBJECT
 
 public:
-    ConfigOtrWidget(//IOptionsManager* optionHost,
-                    OtrMessaging* otr,
-                    QWidget* parent = 0);
+	ConfigOtrWidget(OtrMessaging* AOtrMessaging,
+					QWidget* AParent = nullptr);
 
 private:
-    //OptionAccessingHost* m_optionHost;
-    OtrMessaging*        m_otr;
+	OtrMessaging	*FOtrMessaging;
 
-    QButtonGroup*        m_policy;
+	QButtonGroup	*FPolicy;
 
-    QCheckBox*           m_endWhenOffline;
+	QCheckBox		*FEndWhenOffline;
 
     IOptionsManager *FOptionsManager;
 
@@ -135,16 +123,16 @@ protected:
     void updateData();
 
 private:
-    OtrMessaging*       m_otr;
-    QTableView*         m_table;
-    QStandardItemModel* m_tableModel;
-    QList<Fingerprint>  m_fingerprints;
+	OtrMessaging*       FOtrMessaging;
+	QTableView*         FTable;
+	QStandardItemModel* FTableModel;
+	QList<OtrFingerprint>  FFingerprints;
 
 private slots:
     void deleteFingerprint();
     void verifyFingerprint();
     void copyFingerprint();
-    void contextMenu(const QPoint& pos);
+	void contextMenu(const QPoint& APos);
 };
 
 // ---------------------------------------------------------------------------
@@ -157,34 +145,28 @@ class PrivKeyWidget : public QWidget
 Q_OBJECT
 
 public:
-//    PrivKeyWidget(AccountInfoAccessingHost* accountInfo,
-//                  OtrMessaging* otr, QWidget* parent);
-    PrivKeyWidget(OtrMessaging* otr, QWidget* parent);
+	PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent=nullptr);
 
 protected:
     void updateData();
 
 private:
     //AccountInfoAccessingHost* m_accountInfo;
-    OtrMessaging*             m_otr;
-    QTableView*               m_table;
-    QStandardItemModel*       m_tableModel;
-    QHash<QString, QString>   m_keys;
-    QComboBox*                m_accountBox;
+	OtrMessaging*             FOtrMessaging;
+	QTableView*               FTable;
+	QStandardItemModel*       FTableModel;
+	QHash<QString, QString>   FKeys;
+	QComboBox*                FAccountBox;
 
-    IOptionsManager *FOptionsManager;
-    IPresenceManager  *FPresenceManager;
-    IAccountManager  *FAccountManager;
+	IOptionsManager		*FOptionsManager;
+	IPresenceManager	*FPresenceManager;
+	IAccountManager		*FAccountManager;
 
 private slots:
     void deleteKey();
     void generateKey();
     void copyFingerprint();
-    void contextMenu(const QPoint& pos);
+	void contextMenu(const QPoint& APos);
 };
-
-//-----------------------------------------------------------------------------
-
-} // namespace psiotr
 
 #endif

@@ -28,16 +28,13 @@
 #include <QList>
 #include <QHash>
 
-namespace psiotr
-{
-
-Fingerprint::Fingerprint()
+OtrFingerprint::OtrFingerprint()
     : fingerprint(NULL)
 {
 
 }
 
-Fingerprint::Fingerprint(const Fingerprint &fp)
+OtrFingerprint::OtrFingerprint(const OtrFingerprint &fp)
     : fingerprint(fp.fingerprint),
       account(fp.account),
       username(fp.username),
@@ -47,7 +44,7 @@ Fingerprint::Fingerprint(const Fingerprint &fp)
 
 }
 
-Fingerprint::Fingerprint(unsigned char* fingerprint,
+OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
                          QString account, QString username,
                          QString trust)
     : fingerprint(fingerprint),
@@ -60,10 +57,10 @@ Fingerprint::Fingerprint(unsigned char* fingerprint,
 
 //-----------------------------------------------------------------------------
 
-OtrMessaging::OtrMessaging(OtrCallback* callback, OtrPolicy policy)
-    : m_otrPolicy(policy),
-      m_impl(new OtrInternal(callback, m_otrPolicy)),
-      m_callback(callback)
+OtrMessaging::OtrMessaging(IOtr* callback, IOtr::OtrPolicy policy)
+	: FOtrPolicy(policy),
+	  FOtrInternal(new OtrInternal(callback, FOtrPolicy)),
+	  FOtr(callback)
 {
 }
 
@@ -71,7 +68,7 @@ OtrMessaging::OtrMessaging(OtrCallback* callback, OtrPolicy policy)
 
 OtrMessaging::~OtrMessaging()
 {
-    delete m_impl;
+	delete FOtrInternal;
 }
 
 //-----------------------------------------------------------------------------
@@ -80,198 +77,196 @@ QString OtrMessaging::encryptMessage(const QString& account,
                                      const QString& contact,
                                      const QString& message)
 {
-    return m_impl->encryptMessage(account, contact, message);
+	return FOtrInternal->encryptMessage(account, contact, message);
 }
 
 //-----------------------------------------------------------------------------
 
-OtrMessageType OtrMessaging::decryptMessage(const QString& account,
-                                            const QString& contact,
-                                            const QString& message,
-                                            QString& decrypted)
+IOtr::OtrMessageType OtrMessaging::decryptMessage(const QString& account,
+												  const QString& contact,
+												  const QString& message,
+												  QString& decrypted)
 {
-    return m_impl->decryptMessage(account, contact, message, decrypted);
+	return FOtrInternal->decryptMessage(account, contact, message, decrypted);
 }
 
 //-----------------------------------------------------------------------------
 
-QList<Fingerprint> OtrMessaging::getFingerprints()
+QList<OtrFingerprint> OtrMessaging::getFingerprints()
 {
-    return m_impl->getFingerprints();
+	return FOtrInternal->getFingerprints();
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::verifyFingerprint(const psiotr::Fingerprint& fingerprint,
-                                     bool verified)
+void OtrMessaging::verifyFingerprint(const OtrFingerprint& AFingerprint,
+									 bool AVerified)
 {
-    m_impl->verifyFingerprint(fingerprint, verified);
+	FOtrInternal->verifyFingerprint(AFingerprint, AVerified);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::deleteFingerprint(const psiotr::Fingerprint& fingerprint)
+void OtrMessaging::deleteFingerprint(const OtrFingerprint& AFingerprint)
 {
-    m_impl->deleteFingerprint(fingerprint);
+	FOtrInternal->deleteFingerprint(AFingerprint);
 }
 
 //-----------------------------------------------------------------------------
 
 QHash<QString, QString> OtrMessaging::getPrivateKeys()
 {
-    return m_impl->getPrivateKeys();
+	return FOtrInternal->getPrivateKeys();
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::deleteKey(const QString& account)
+void OtrMessaging::deleteKey(const QString& AAccount)
 {
-    m_impl->deleteKey(account);
+	FOtrInternal->deleteKey(AAccount);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::startSession(const QString& account, const QString& contact)
+void OtrMessaging::startSession(const QString& AAccount, const QString& AContact)
 {
-    m_impl->startSession(account, contact);
+	FOtrInternal->startSession(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::endSession(const QString& account, const QString& contact)
+void OtrMessaging::endSession(const QString& AAccount, const QString& AContact)
 {
-    m_impl->endSession(account, contact);
+	FOtrInternal->endSession(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::expireSession(const QString& account, const QString& contact)
+void OtrMessaging::expireSession(const QString& AAccount, const QString& AContact)
 {
-    m_impl->expireSession(account, contact);
+	FOtrInternal->expireSession(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::startSMP(const QString& account, const QString& contact,
-                            const QString& question, const QString& secret)
+void OtrMessaging::startSMP(const QString& AAccount, const QString& AContact,
+							const QString& AQuestion, const QString& ASecret)
 {
-    m_impl->startSMP(account, contact, question, secret);
+	FOtrInternal->startSMP(AAccount, AContact, AQuestion, ASecret);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::continueSMP(const QString& account, const QString& contact,
-                               const QString& secret)
+void OtrMessaging::continueSMP(const QString& AAccount, const QString& AContact,
+							   const QString& ASecret)
 {
-    m_impl->continueSMP(account, contact, secret);
+	FOtrInternal->continueSMP(AAccount, AContact, ASecret);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::abortSMP(const QString& account, const QString& contact)
+void OtrMessaging::abortSMP(const QString& AAccount, const QString& AContact)
 {
-    m_impl->abortSMP(account, contact);
+	FOtrInternal->abortSMP(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-OtrMessageState OtrMessaging::getMessageState(const QString& account,
-                                              const QString& contact)
+IOtr::OtrMessageState OtrMessaging::getMessageState(const QString& AAccount,
+													const QString& AContact)
 {
-    return m_impl->getMessageState(account, contact);
+	return FOtrInternal->getMessageState(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-QString OtrMessaging::getMessageStateString(const QString& account,
-                                            const QString& contact)
+QString OtrMessaging::getMessageStateString(const QString& AAccount,
+											const QString& AContact)
 {
-    return m_impl->getMessageStateString(account, contact);
+	return FOtrInternal->getMessageStateString(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-QString OtrMessaging::getSessionId(const QString& account,
-                                   const QString& contact)
+QString OtrMessaging::getSessionId(const QString& AAccount,
+								   const QString& AContact)
 {
-    return m_impl->getSessionId(account, contact);
+	return FOtrInternal->getSessionId(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-psiotr::Fingerprint OtrMessaging::getActiveFingerprint(const QString& account,
-                                                       const QString& contact)
+OtrFingerprint OtrMessaging::getActiveFingerprint(const QString& AAccount,
+												  const QString& AContact)
 {
-    return m_impl->getActiveFingerprint(account, contact);
+	return FOtrInternal->getActiveFingerprint(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-bool OtrMessaging::isVerified(const QString& account, const QString& contact)
+bool OtrMessaging::isVerified(const QString& AAccount, const QString& AContact)
 {
-    return m_impl->isVerified(account, contact);
+	return FOtrInternal->isVerified(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-bool OtrMessaging::smpSucceeded(const QString& account, const QString& contact)
+bool OtrMessaging::smpSucceeded(const QString& AAccount, const QString& AContact)
 {
-    return m_impl->smpSucceeded(account, contact);
+	return FOtrInternal->smpSucceeded(AAccount, AContact);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::setPolicy(psiotr::OtrPolicy policy)
+void OtrMessaging::setPolicy(IOtr::OtrPolicy APolicy)
 {
-    m_otrPolicy = policy;
+	FOtrPolicy = APolicy;
 }
 
 //-----------------------------------------------------------------------------
 
-OtrPolicy OtrMessaging::getPolicy()
+IOtr::OtrPolicy OtrMessaging::getPolicy()
 {
-    return m_otrPolicy;
+	return FOtrPolicy;
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::generateKey(const QString& account)
+void OtrMessaging::generateKey(const QString& AAccount)
 {
-    m_impl->generateKey(account);
+	FOtrInternal->generateKey(AAccount);
 }
 
 //-----------------------------------------------------------------------------
 
-bool OtrMessaging::displayOtrMessage(const QString& account,
-                                     const QString& contact,
-                                     const QString& message)
+bool OtrMessaging::displayOtrMessage(const QString& AAccount,
+									 const QString& AContact,
+									 const QString& AMessage)
 {
-    return m_callback->displayOtrMessage(account, contact, message);
+	return FOtr->displayOtrMessage(AAccount, AContact, AMessage);
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::stateChange(const QString& account, const QString& contact,
-                               OtrStateChange change)
+void OtrMessaging::stateChange(const QString& AAccount, const QString& AContact,
+							   IOtr::OtrStateChange AChange)
 {
-    return m_callback->stateChange(account, contact, change);
+	return FOtr->stateChange(AAccount, AContact, AChange);
 }
 
 //-----------------------------------------------------------------------------
 
-QString OtrMessaging::humanAccount(const QString& accountId)
+QString OtrMessaging::humanAccount(const QString& AAccountId)
 {
-    return m_callback->humanAccount(accountId);
+	return FOtr->humanAccount(AAccountId);
 }
 
 //-----------------------------------------------------------------------------
 
-QString OtrMessaging::humanContact(const QString& accountId,
-                                   const QString& contact)
+QString OtrMessaging::humanContact(const QString& AAccountId,
+								   const QString& AContact)
 {
-    return m_callback->humanContact(accountId, contact);
+	return FOtr->humanContact(AAccountId, AContact);
 }
 
 //-----------------------------------------------------------------------------
-
-} // namespace psiotr

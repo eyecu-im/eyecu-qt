@@ -41,37 +41,34 @@
 #include <QPushButton>
 #include <QFont>
 
-namespace psiotr
-{
-
-AuthenticationDialog::AuthenticationDialog(OtrMessaging* otrc,
-                                           const QString& account,
-                                           const QString& contact,
-                                           const QString& question,
-                                           bool sender, QWidget* parent)
-    : QDialog(parent),
-      m_otr(otrc),
-      m_method(METHOD_QUESTION),
-      m_account(account),
-      m_contact(contact),
-      m_isSender(sender)
+AuthenticationDialog::AuthenticationDialog(OtrMessaging* AOtrMessaging,
+										   const QString& AAccount,
+										   const QString& AContact,
+										   const QString& AQuestion,
+										   bool ASender, QWidget* AParent)
+	: QDialog(AParent),
+	  FOtrMessaging(AOtrMessaging),
+	  FMethod(METHOD_QUESTION),
+	  FAccount(AAccount),
+	  FContact(AContact),
+	  FIsSender(ASender)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-    m_contactName = m_otr->humanContact(m_account, m_contact);
+	FContactName = FOtrMessaging->humanContact(FAccount, FContact);
 
     QString qaExplanation;
     QString ssExplanation;
     QString fprExplanation;
-    if (m_isSender)
+	if (FIsSender)
     {
-        setWindowTitle(tr("Authenticate %1").arg(m_contactName));
+		setWindowTitle(tr("Authenticate %1").arg(FContactName));
         qaExplanation = tr("To authenticate via question and answer, "
                            "ask a question whose answer is only known "
-                           "to you and %1.").arg(m_contactName);
+						   "to you and %1.").arg(FContactName);
         ssExplanation = tr("To authenticate via shared secret, "
                            "enter a secret only known "
-                           "to you and %1.").arg(m_contactName);
+						   "to you and %1.").arg(FContactName);
         fprExplanation = tr("To authenticate manually, exchange your "
                             "fingerprints over an authenticated channel and "
                             "compare each other's fingerprint with the one "
@@ -79,87 +76,87 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* otrc,
     }
     else
     {
-        setWindowTitle(tr("Authenticate to %1").arg(m_contactName));
+		setWindowTitle(tr("Authenticate to %1").arg(FContactName));
         qaExplanation = tr("%1 wants to authenticate you. To authenticate, "
                            "answer the question asked below.")
-                           .arg(m_contactName);
+						   .arg(FContactName);
         ssExplanation = tr("%1 wants to authenticate you. To authenticate, "
                            "enter your shared secret below.")
-                           .arg(m_contactName);
+						   .arg(FContactName);
     }
 
-    m_methodBox = new QComboBox(this);
-    m_methodBox->setMinimumWidth(300);
+	FMethodBox = new QComboBox(this);
+	FMethodBox->setMinimumWidth(300);
 
-    m_methodBox->addItem(tr("Question and answer"));
-    m_methodBox->addItem(tr("Shared secret"));
-    m_methodBox->addItem(tr("Fingerprint verification"));
+	FMethodBox->addItem(tr("Question and answer"));
+	FMethodBox->addItem(tr("Shared secret"));
+	FMethodBox->addItem(tr("Fingerprint verification"));
 
     QLabel* qaExplanationLabel = new QLabel(qaExplanation, this);
     qaExplanationLabel->setWordWrap(true);
     QLabel* ssExplanationLabel = new QLabel(ssExplanation, this);
     ssExplanationLabel->setWordWrap(true);
 
-    m_questionEdit     = new QLineEdit(this);
-    m_answerEdit       = new QLineEdit(this);
-    m_sharedSecretEdit = new QLineEdit(this);
+	FQuestionEdit     = new QLineEdit(this);
+	FAnswerEdit       = new QLineEdit(this);
+	FSharedSecretEdit = new QLineEdit(this);
 
     QLabel* questionLabel = new QLabel(tr("&Question:"), this);
-    questionLabel->setBuddy(m_questionEdit);
+	questionLabel->setBuddy(FQuestionEdit);
 
     QLabel* answerLabel = new QLabel(tr("A&nswer:"), this);
-    answerLabel->setBuddy(m_answerEdit);
+	answerLabel->setBuddy(FAnswerEdit);
 
     QLabel* sharedSecretLabel = new QLabel(tr("&Shared Secret:"), this);
-    sharedSecretLabel->setBuddy(m_sharedSecretEdit);
+	sharedSecretLabel->setBuddy(FSharedSecretEdit);
 
-    m_progressBar  = new QProgressBar(this);
+	FProgressBar  = new QProgressBar(this);
 
-    m_cancelButton = new QPushButton(tr("&Cancel"), this);
-    m_startButton  = new QPushButton(tr("&Authenticate"), this);
+	FCancelButton = new QPushButton(tr("&Cancel"), this);
+	FStartButton  = new QPushButton(tr("&Authenticate"), this);
 
-    m_startButton->setDefault(true);
+	FStartButton->setDefault(true);
 
-    m_methodWidget[METHOD_QUESTION] = new QWidget(this);
+	FMethodWidget[METHOD_QUESTION] = new QWidget(this);
     QVBoxLayout* qaLayout = new QVBoxLayout;
     qaLayout->setContentsMargins(0, 0, 0, 0);
     qaLayout->addWidget(qaExplanationLabel);
     qaLayout->addSpacing(20);
     qaLayout->addWidget(questionLabel);
-    qaLayout->addWidget(m_questionEdit);
+	qaLayout->addWidget(FQuestionEdit);
     qaLayout->addSpacing(10);
     qaLayout->addWidget(answerLabel);
-    qaLayout->addWidget(m_answerEdit);
+	qaLayout->addWidget(FAnswerEdit);
     qaLayout->addSpacing(20);
-    m_methodWidget[METHOD_QUESTION]->setLayout(qaLayout);
+	FMethodWidget[METHOD_QUESTION]->setLayout(qaLayout);
 
-    m_methodWidget[METHOD_SHARED_SECRET] = new QWidget(this);
+	FMethodWidget[METHOD_SHARED_SECRET] = new QWidget(this);
     QVBoxLayout* ssLayout = new QVBoxLayout;
     ssLayout->setContentsMargins(0, 0, 0, 0);
     ssLayout->addWidget(ssExplanationLabel);
     ssLayout->addSpacing(20);
     ssLayout->addWidget(sharedSecretLabel);
-    ssLayout->addWidget(m_sharedSecretEdit);
+	ssLayout->addWidget(FSharedSecretEdit);
     ssLayout->addSpacing(20);
-    m_methodWidget[METHOD_SHARED_SECRET]->setLayout(ssLayout);
+	FMethodWidget[METHOD_SHARED_SECRET]->setLayout(ssLayout);
 
-    m_methodWidget[METHOD_FINGERPRINT] = NULL;
+	FMethodWidget[METHOD_FINGERPRINT] = NULL;
     QLabel* authenticatedLabel = NULL;
-    if (m_isSender)
+	if (FIsSender)
     {
-        if (m_otr->isVerified(m_account, m_contact))
+		if (FOtrMessaging->isVerified(FAccount, FContact))
         {
             authenticatedLabel = new QLabel(QString("<b>%1</b>")
                                              .arg(tr("This contact is already "
                                                      "authenticated.")), this);
         }
 
-        QString ownFpr = m_otr->getPrivateKeys().value(
-                            m_account,
+		QString ownFpr = FOtrMessaging->getPrivateKeys().value(
+							FAccount,
                             tr("No private key for account \"%1\"")
-                              .arg(m_otr->humanAccount(m_account)));
+							  .arg(FOtrMessaging->humanAccount(FAccount)));
 
-        m_fpr = m_otr->getActiveFingerprint(m_account, m_contact);
+		FFingerprint = FOtrMessaging->getActiveFingerprint(FAccount, FContact);
 
         QLabel* fprExplanationLabel = new QLabel(fprExplanation, this);
         fprExplanationLabel->setWordWrap(true);
@@ -167,12 +164,12 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* otrc,
         QLabel* ownFprDescLabel = new QLabel(tr("Your fingerprint:"), this);
         QLabel* ownFprLabel     = new QLabel(ownFpr, this);
         QLabel* fprDescLabel    = new QLabel(tr("%1's fingerprint:")
-                                                .arg(m_contactName), this);
-        QLabel* fprLabel        = new QLabel(m_fpr.fingerprintHuman, this);
+												.arg(FContactName), this);
+		QLabel* fprLabel        = new QLabel(FFingerprint.fingerprintHuman, this);
         ownFprLabel->setFont(QFont("monospace"));
         fprLabel->setFont(QFont("monospace"));
 
-        m_methodWidget[METHOD_FINGERPRINT] = new QWidget(this);
+		FMethodWidget[METHOD_FINGERPRINT] = new QWidget(this);
         QVBoxLayout* fprLayout = new QVBoxLayout;
         fprLayout->setContentsMargins(0, 0, 0, 0);
         fprLayout->addWidget(fprExplanationLabel);
@@ -182,13 +179,13 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* otrc,
         fprLayout->addSpacing(10);
         fprLayout->addWidget(fprDescLabel);
         fprLayout->addWidget(fprLabel);
-        m_methodWidget[METHOD_FINGERPRINT]->setLayout(fprLayout);
+		FMethodWidget[METHOD_FINGERPRINT]->setLayout(fprLayout);
     }
 
     QHBoxLayout* buttonLayout = new QHBoxLayout;
     buttonLayout->setContentsMargins(0, 0, 0, 0);
-    buttonLayout->addWidget(m_cancelButton);
-    buttonLayout->addWidget(m_startButton);
+	buttonLayout->addWidget(FCancelButton);
+	buttonLayout->addWidget(FStartButton);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
     mainLayout->setContentsMargins(20, 20, 20, 20);
@@ -197,49 +194,49 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* otrc,
         mainLayout->addWidget(authenticatedLabel);
         mainLayout->addSpacing(20);
     }
-    mainLayout->addWidget(m_methodBox);
+	mainLayout->addWidget(FMethodBox);
     mainLayout->addSpacing(20);
-    mainLayout->addWidget(m_methodWidget[METHOD_QUESTION]);
-    mainLayout->addWidget(m_methodWidget[METHOD_SHARED_SECRET]);
-    if (m_methodWidget[METHOD_FINGERPRINT])
+	mainLayout->addWidget(FMethodWidget[METHOD_QUESTION]);
+	mainLayout->addWidget(FMethodWidget[METHOD_SHARED_SECRET]);
+	if (FMethodWidget[METHOD_FINGERPRINT])
     {
-        mainLayout->addWidget(m_methodWidget[METHOD_FINGERPRINT]);
+		mainLayout->addWidget(FMethodWidget[METHOD_FINGERPRINT]);
     }
-    mainLayout->addWidget(m_progressBar);
+	mainLayout->addWidget(FProgressBar);
     mainLayout->addSpacing(20);
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
 
 
-    connect(m_methodBox, SIGNAL(currentIndexChanged(int)),
+	connect(FMethodBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeMethod(int)));
-    connect(m_methodBox, SIGNAL(currentIndexChanged(int)),
+	connect(FMethodBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(checkRequirements()));
-    connect(m_questionEdit, SIGNAL(textChanged(const QString &)),
+	connect(FQuestionEdit, SIGNAL(textChanged(const QString &)),
             this, SLOT(checkRequirements()));
-    connect(m_answerEdit, SIGNAL(textChanged(const QString &)),
+	connect(FAnswerEdit, SIGNAL(textChanged(const QString &)),
             this, SLOT(checkRequirements()));
-    connect(m_sharedSecretEdit, SIGNAL(textChanged(const QString &)),
+	connect(FSharedSecretEdit, SIGNAL(textChanged(const QString &)),
             this, SLOT(checkRequirements()));
-    connect(m_cancelButton, SIGNAL(clicked()),
+	connect(FCancelButton, SIGNAL(clicked()),
             this, SLOT(reject()));
-    connect(m_startButton, SIGNAL(clicked()),
+	connect(FStartButton, SIGNAL(clicked()),
             this, SLOT(startAuthentication()));
 
-    if (!m_isSender)
+	if (!FIsSender)
     {
-        if (question.isEmpty())
+		if (AQuestion.isEmpty())
         {
-            m_method = METHOD_SHARED_SECRET;
+			FMethod = METHOD_SHARED_SECRET;
         }
         else
         {
-            m_questionEdit->setText(question);
+			FQuestionEdit->setText(AQuestion);
         }
     }
 
-    changeMethod(m_method);
-    m_methodBox->setCurrentIndex(m_method);
+	changeMethod(FMethod);
+	FMethodBox->setCurrentIndex(FMethod);
 
     reset();
 }
@@ -251,9 +248,9 @@ AuthenticationDialog::~AuthenticationDialog()
 
 void AuthenticationDialog::reject()
 {
-    if (m_state == AUTH_IN_PROGRESS)
+	if (FState == AUTH_IN_PROGRESS)
     {
-        m_otr->abortSMP(m_account, m_contact);
+		FOtrMessaging->abortSMP(FAccount, FContact);
     }
 
     QDialog::reject();
@@ -261,75 +258,75 @@ void AuthenticationDialog::reject()
 
 void AuthenticationDialog::reset()
 {
-    m_state = m_isSender? AUTH_READY : AUTH_IN_PROGRESS;
+	FState = FIsSender? AUTH_READY : AUTH_IN_PROGRESS;
 
-    m_methodBox->setEnabled(m_isSender);
-    m_questionEdit->setEnabled(m_isSender);
-    m_answerEdit->setEnabled(true);
-    m_sharedSecretEdit->setEnabled(true);
-    m_progressBar->setEnabled(false);
+	FMethodBox->setEnabled(FIsSender);
+	FQuestionEdit->setEnabled(FIsSender);
+	FAnswerEdit->setEnabled(true);
+	FSharedSecretEdit->setEnabled(true);
+	FProgressBar->setEnabled(false);
 
-    m_progressBar->setValue(0);
+	FProgressBar->setValue(0);
 
     checkRequirements();
 }
 
 bool AuthenticationDialog::finished()
 {
-    return m_state == AUTH_FINISHED;
+	return FState == AUTH_FINISHED;
 }
 
 void AuthenticationDialog::checkRequirements()
 {
-    m_startButton->setEnabled((m_method == METHOD_QUESTION &&
-                               !m_questionEdit->text().isEmpty() &&
-                               !m_answerEdit->text().isEmpty()) ||
-                              (m_method == METHOD_SHARED_SECRET &&
-                               !m_sharedSecretEdit->text().isEmpty()) ||
-                              (m_method == METHOD_FINGERPRINT));
+	FStartButton->setEnabled((FMethod == METHOD_QUESTION &&
+							   !FQuestionEdit->text().isEmpty() &&
+							   !FAnswerEdit->text().isEmpty()) ||
+							  (FMethod == METHOD_SHARED_SECRET &&
+							   !FSharedSecretEdit->text().isEmpty()) ||
+							  (FMethod == METHOD_FINGERPRINT));
 }
 
-void AuthenticationDialog::changeMethod(int index)
+void AuthenticationDialog::changeMethod(int AIndex)
 {
-    m_method = static_cast<Method>(index);
+	FMethod = static_cast<Method>(AIndex);
     for (int i=0; i<3; i++)
     {
-        if (m_methodWidget[i])
+		if (FMethodWidget[i])
         {
-            m_methodWidget[i]->setVisible(i == index);
+			FMethodWidget[i]->setVisible(i == AIndex);
         }
     }
-    m_progressBar->setVisible(m_method != METHOD_FINGERPRINT);
+	FProgressBar->setVisible(FMethod != METHOD_FINGERPRINT);
     adjustSize();
 }
 
 void AuthenticationDialog::startAuthentication()
 {
-    switch (m_method)
+	switch (FMethod)
     {
         case METHOD_QUESTION:
-            if (m_questionEdit->text().isEmpty() ||
-                m_answerEdit->text().isEmpty())
+			if (FQuestionEdit->text().isEmpty() ||
+				FAnswerEdit->text().isEmpty())
             {
                 return;
             }
 
-            m_state = AUTH_IN_PROGRESS;
+			FState = AUTH_IN_PROGRESS;
 
-            m_methodBox->setEnabled(false);
-            m_questionEdit->setEnabled(false);
-            m_answerEdit->setEnabled(false);
-            m_progressBar->setEnabled(true);
-            m_startButton->setEnabled(false);
+			FMethodBox->setEnabled(false);
+			FQuestionEdit->setEnabled(false);
+			FAnswerEdit->setEnabled(false);
+			FProgressBar->setEnabled(true);
+			FStartButton->setEnabled(false);
 
-            if (m_isSender)
+			if (FIsSender)
             {
-                m_otr->startSMP(m_account, m_contact,
-                                m_questionEdit->text(), m_answerEdit->text());
+				FOtrMessaging->startSMP(FAccount, FContact,
+								FQuestionEdit->text(), FAnswerEdit->text());
             }
             else
             {
-                m_otr->continueSMP(m_account, m_contact, m_answerEdit->text());
+				FOtrMessaging->continueSMP(FAccount, FContact, FAnswerEdit->text());
             }
 
             updateSMP(33);
@@ -337,26 +334,26 @@ void AuthenticationDialog::startAuthentication()
             break;
 
         case METHOD_SHARED_SECRET:
-            if (m_sharedSecretEdit->text().isEmpty())
+			if (FSharedSecretEdit->text().isEmpty())
             {
                 return;
             }
 
-            m_state = AUTH_IN_PROGRESS;
+			FState = AUTH_IN_PROGRESS;
 
-            m_methodBox->setEnabled(false);
-            m_sharedSecretEdit->setEnabled(false);
-            m_progressBar->setEnabled(true);
-            m_startButton->setEnabled(false);
+			FMethodBox->setEnabled(false);
+			FSharedSecretEdit->setEnabled(false);
+			FProgressBar->setEnabled(true);
+			FStartButton->setEnabled(false);
 
-            if (m_isSender)
+			if (FIsSender)
             {
-                m_otr->startSMP(m_account, m_contact,
-                                QString(), m_sharedSecretEdit->text());
+				FOtrMessaging->startSMP(FAccount, FContact,
+								QString(), FSharedSecretEdit->text());
             }
             else
             {
-                m_otr->continueSMP(m_account, m_contact, m_sharedSecretEdit->text());
+				FOtrMessaging->continueSMP(FAccount, FContact, FSharedSecretEdit->text());
             }
 
             updateSMP(33);
@@ -364,18 +361,18 @@ void AuthenticationDialog::startAuthentication()
             break;
 
         case METHOD_FINGERPRINT:
-            if (m_fpr.fingerprint)
+			if (FFingerprint.fingerprint)
             {
-                QString msg(tr("Account: ") + m_otr->humanAccount(m_account) + "\n" +
-                            tr("User: ") + m_contact + "\n" +
-                            tr("Fingerprint: ") + m_fpr.fingerprintHuman + "\n\n" +
+				QString msg(tr("Account: ") + FOtrMessaging->humanAccount(FAccount) + "\n" +
+							tr("User: ") + FContact + "\n" +
+							tr("Fingerprint: ") + FFingerprint.fingerprintHuman + "\n\n" +
                             tr("Have you verified that this is in fact the correct fingerprint?"));
 
                 QMessageBox mb(QMessageBox::Information, tr("Psi OTR"),
                                msg, QMessageBox::Yes | QMessageBox::No, this,
                                Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
-                m_otr->verifyFingerprint(m_fpr,
+				FOtrMessaging->verifyFingerprint(FFingerprint,
                                          mb.exec() == QMessageBox::Yes);
 
                 close();
@@ -385,15 +382,15 @@ void AuthenticationDialog::startAuthentication()
     }
 }
 
-void AuthenticationDialog::updateSMP(int progress)
+void AuthenticationDialog::updateSMP(int AProgress)
 {
-    if (progress<0)
+	if (AProgress<0)
     {
-        if (progress == -1)
+		if (AProgress == -1)
         {
             notify(QMessageBox::Warning,
                    tr("%1 has canceled the authentication process.")
-                     .arg(m_contactName));
+					 .arg(FContactName));
         }
         else
         {
@@ -401,7 +398,7 @@ void AuthenticationDialog::updateSMP(int progress)
                    tr("An error occurred during the authentication process."));
         }
 
-        if (m_isSender)
+		if (FIsSender)
         {
             reset();
         }
@@ -413,18 +410,18 @@ void AuthenticationDialog::updateSMP(int progress)
         return;
     }
 
-    m_progressBar->setValue(progress);
+	FProgressBar->setValue(AProgress);
 
-    if (progress == 100) {
-        if (m_isSender || m_method == METHOD_SHARED_SECRET)
+	if (AProgress == 100) {
+		if (FIsSender || FMethod == METHOD_SHARED_SECRET)
         {
-            m_otr->stateChange(m_account, m_contact,
-                               psiotr::OTR_STATECHANGE_TRUST);
+			FOtrMessaging->stateChange(FAccount, FContact,
+							   IOtr::OTR_STATECHANGE_TRUST);
         }
-        if (m_otr->smpSucceeded(m_account, m_contact))
+		if (FOtrMessaging->smpSucceeded(FAccount, FContact))
         {
-            m_state = AUTH_FINISHED;
-            if (m_otr->isVerified(m_account, m_contact))
+			FState = AUTH_FINISHED;
+			if (FOtrMessaging->isVerified(FAccount, FContact))
             {
                 notify(QMessageBox::Information,
                        tr("Authentication successful."));
@@ -435,13 +432,13 @@ void AuthenticationDialog::updateSMP(int progress)
                        tr("You have been successfully authenticated.\n\n"
                           "You should authenticate %1 as "
                           "well by asking your own question.")
-                          .arg(m_contactName));
+						  .arg(FContactName));
             }
             close();
         } else {
-            m_state = m_isSender? AUTH_READY : AUTH_FINISHED;
+			FState = FIsSender? AUTH_READY : AUTH_FINISHED;
             notify(QMessageBox::Critical, tr("Authentication failed."));
-            if (m_isSender)
+			if (FIsSender)
             {
                 reset();
             }
@@ -455,117 +452,113 @@ void AuthenticationDialog::updateSMP(int progress)
 
 //-----------------------------------------------------------------------------
 
-void AuthenticationDialog::notify(const QMessageBox::Icon icon,
-                                  const QString& message)
+void AuthenticationDialog::notify(const QMessageBox::Icon AIcon,
+								  const QString& AMessage)
 {
-    QMessageBox mb(icon, tr("Psi OTR"), message, QMessageBox::Ok, this,
+	QMessageBox mb(AIcon, tr("Psi OTR"), AMessage, QMessageBox::Ok, this,
                    Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
     mb.exec();
 }
 
 //-----------------------------------------------------------------------------
 
-PsiOtrClosure::PsiOtrClosure(const QString& account, const QString& contact,
-                             OtrMessaging* otrc)
-    : m_otr(otrc),
-      m_account(account),
-      m_contact(contact),
-      m_isLoggedIn(false),
-      m_authDialog(0)
+OtrClosure::OtrClosure(const QString& AAccount, const QString& AContact,
+							 OtrMessaging* AOtrMessaging)
+	: FOtrMessaging(AOtrMessaging),
+	  FAccount(AAccount),
+	  FContact(AContact),
+	  FIsLoggedIn(false),
+	  FAuthDialog(0)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-PsiOtrClosure::~PsiOtrClosure()
+OtrClosure::~OtrClosure()
 {
 }
 
 //-----------------------------------------------------------------------------
 
-void PsiOtrClosure::authenticateContact()
+void OtrClosure::authenticateContact()
 {
-    if (m_authDialog || !encrypted())
+	if (FAuthDialog || !encrypted())
     {
         return;
     }
 
-    m_authDialog = new AuthenticationDialog(m_otr,
-                                            m_account, m_contact,
+	FAuthDialog = new AuthenticationDialog(FOtrMessaging,
+											FAccount, FContact,
                                             QString(), true);
 
-    connect(m_authDialog, SIGNAL(destroyed()),
+	connect(FAuthDialog, SIGNAL(destroyed()),
             this, SLOT(finishAuth()));
 
-    m_authDialog->show();
+	FAuthDialog->show();
 }
 
 //-----------------------------------------------------------------------------
 
-void PsiOtrClosure::receivedSMP(const QString& question)
+void OtrClosure::receivedSMP(const QString& AQuestion)
 {
-    if ((m_authDialog && !m_authDialog->finished()) || !encrypted())
+	if ((FAuthDialog && !FAuthDialog->finished()) || !encrypted())
     {
-        m_otr->abortSMP(m_account, m_contact);
+		FOtrMessaging->abortSMP(FAccount, FContact);
         return;
     }
-    if (m_authDialog)
+	if (FAuthDialog)
     {
-        disconnect(m_authDialog, SIGNAL(destroyed()),
+		disconnect(FAuthDialog, SIGNAL(destroyed()),
                    this, SLOT(finishAuth()));
         finishAuth();
     }
 
-    m_authDialog = new AuthenticationDialog(m_otr, m_account, m_contact, question, false);
+	FAuthDialog = new AuthenticationDialog(FOtrMessaging, FAccount, FContact, AQuestion, false);
 
-    connect(m_authDialog, SIGNAL(destroyed()),
+	connect(FAuthDialog, SIGNAL(destroyed()),
             this, SLOT(finishAuth()));
 
-    m_authDialog->show();
+	FAuthDialog->show();
 }
 
 //-----------------------------------------------------------------------------
 
-void PsiOtrClosure::updateSMP(int progress)
+void OtrClosure::updateSMP(int AProgress)
 {
-    if (m_authDialog)
+	if (FAuthDialog)
     {
-        m_authDialog->updateSMP(progress);
-        m_authDialog->show();
+		FAuthDialog->updateSMP(AProgress);
+		FAuthDialog->show();
     }
 }
 
 //-----------------------------------------------------------------------------
 
-void PsiOtrClosure::finishAuth()
+void OtrClosure::finishAuth()
 {
-    m_authDialog = 0;
+	FAuthDialog = 0;
 
     //updateMessageState();
 }
 
 //-----------------------------------------------------------------------------
 
-void PsiOtrClosure::setIsLoggedIn(bool isLoggedIn)
+void OtrClosure::setIsLoggedIn(bool AIsLoggedIn)
 {
-    m_isLoggedIn = isLoggedIn;
+	FIsLoggedIn = AIsLoggedIn;
 }
 
 //-----------------------------------------------------------------------------
 
-bool PsiOtrClosure::isLoggedIn() const
+bool OtrClosure::isLoggedIn() const
 {
-    return m_isLoggedIn;
+	return FIsLoggedIn;
 }
 
 //-----------------------------------------------------------------------------
 
-bool PsiOtrClosure::encrypted() const
+bool OtrClosure::encrypted() const
 {
-    return m_otr->getMessageState(m_account, m_contact) ==
-           OTR_MESSAGESTATE_ENCRYPTED;
+	return FOtrMessaging->getMessageState(FAccount, FContact) ==
+		   IOtr::OTR_MESSAGESTATE_ENCRYPTED;
 }
-
-//-----------------------------------------------------------------------------
-
-} // namespace
