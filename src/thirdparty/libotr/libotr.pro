@@ -1,14 +1,15 @@
-TEMPLATE = lib
-TARGET = otr
-CONFIG    -= qt
-CONFIG += warn_off
+include(../../make/config.inc)
 
-DESTDIR = ../../libs
+TARGET     = otr
+TEMPLATE   = lib
+CONFIG    -= qt
+CONFIG    += staticlib warn_off
+DESTDIR    = ../../libs
 
 LIBS += -lgpg-error -lgcrypt
 
-CONFIG += staticlib
-
-INCLUDEPATH += src
+LIBGPG_ERROR_DIR = $$PWD/../libgpg-error/SMP/src
+LIBGCRYPT_DIR = $$PWD/../libgcrypt/SMP
+INCLUDEPATH += src $$LIBGPG_ERROR_DIR $$LIBGCRYPT_DIR
 
 include(libotr.pri)

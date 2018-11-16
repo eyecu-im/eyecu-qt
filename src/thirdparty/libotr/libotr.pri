@@ -1,4 +1,4 @@
-HEADERS = \
+HEADERS += \
     src/b64.h \
     src/context.h \
     src/dh.h mem.h \
@@ -21,7 +21,7 @@ HEADERS = \
     toolkit/readotr.h \
     toolkit/sha1hmac.h
 
-SOURCES = \
+SOURCES += \
     src/privkey.c \
     src/context.c \
     src/proto.c \
@@ -47,4 +47,3 @@ SOURCES = \
     toolkit/otr_readforge.c \
     toolkit/otr_modify.c \
     toolkit/otr_remac.c
-
