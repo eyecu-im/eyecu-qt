@@ -19,7 +19,7 @@
 #include <utils/message.h>
 
 #include "otrmessaging.h"
-#include "psiotrconfig.h"
+#include "otrconfig.h"
 
 #include "stanza_catchers.h"
 #include "otrstatewidget.h"
@@ -61,7 +61,7 @@ public:
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 
-	virtual OtrPolicy policy() const;
+	virtual Policy policy() const;
 	virtual void optionChanged(const QString& AOption);
 	static const char* SkipOtrCatcherFlag()
 	{
@@ -74,12 +74,12 @@ public:
 							 const QString& AMessage);
 	virtual bool isLoggedIn(const QString &AAccount, const QString &AContact);
 	virtual void notifyUser(const QString &AAccount, const QString &AContact,
-							const QString& AMessage, const OtrNotifyType& AType);
+							const QString& AMessage, const NotifyType& AType);
 
 	virtual bool displayOtrMessage(const QString &AAccount, const QString &AContact,
 								   const QString& AMessage);
 	virtual void stateChange(const QString &AAccount, const QString &AContact,
-							 OtrStateChange AChange);
+							 StateChange AChange);
 
 	virtual void receivedSMP(const QString &AAccount, const QString &AContact,
 							 const QString& AQuestion);

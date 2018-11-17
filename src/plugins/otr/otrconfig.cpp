@@ -20,22 +20,14 @@
  *
  */
 
-#include "psiotrconfig.h"
-//#include "optionaccessinghost.h"
-//#include "accountinfoaccessinghost.h"
+#include "otrconfig.h"
 #include <utils/pluginhelper.h> // xnamed!
 #include <utils/options.h>
 
-
-#include <QWidget>
-#include <QVariant>
 #include <QGroupBox>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QTableView>
 #include <QHeaderView>
 #include <QStandardItem>
-#include <QModelIndex>
 #include <QMessageBox>
 #include <QButtonGroup>
 #include <QPushButton>
@@ -62,7 +54,6 @@ ConfigDialog::ConfigDialog(OtrMessaging* AOtrMessaging, QWidget* AParent)
 	tabWidget->addTab(new PrivKeyWidget(FOtrMessaging, tabWidget),
                       tr("My private keys"));
 
-    //tabWidget->addTab(new ConfigOtrWidget(m_optionHost, m_otr, tabWidget),
 	tabWidget->addTab(new ConfigOtrWidget(FOtrMessaging, tabWidget),
                       tr("Configuration"));
 
@@ -93,7 +84,6 @@ ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
 	: QWidget(AParent),
 	  FOtrMessaging(AOtrMessaging),
       FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>())
-      //m_optionHost(optionHost)
 {
     QVBoxLayout* layout = new QVBoxLayout(this);
 
@@ -110,10 +100,10 @@ ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
 	FEndWhenOffline = new QCheckBox(tr("End session when contact goes offline"), this);
 
 
-	FPolicy->addButton(polDisable, IOtr::OTR_POLICY_OFF);
-	FPolicy->addButton(polEnable,  IOtr::OTR_POLICY_ENABLED);
-	FPolicy->addButton(polAuto,    IOtr::OTR_POLICY_AUTO);
-	FPolicy->addButton(polRequire, IOtr::OTR_POLICY_REQUIRE);
+	FPolicy->addButton(polDisable, IOtr::PolocyOff);
+	FPolicy->addButton(polEnable,  IOtr::PolicyEnabled);
+	FPolicy->addButton(polAuto,    IOtr::PolicyAuto);
+	FPolicy->addButton(polRequire, IOtr::PolicyRequire);
 
     policyLayout->addWidget(polDisable);
     policyLayout->addWidget(polEnable);
@@ -127,19 +117,12 @@ ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
 
     setLayout(layout);
 
-
-//    int policyOption = m_optionHost->getPluginOption(OPTION_POLICY,
-//                                                     DEFAULT_POLICY).toInt();
-    // xnamed!
     int policyOption = Options::node(OPTION_POLICY).value().toInt();
-	if ((policyOption < IOtr::OTR_POLICY_OFF) || (policyOption > IOtr::OTR_POLICY_REQUIRE))
+	if ((policyOption < IOtr::PolocyOff) || (policyOption > IOtr::PolicyRequire))
     {
-		policyOption = static_cast<int>(IOtr::OTR_POLICY_ENABLED);
+		policyOption = static_cast<int>(IOtr::PolicyEnabled);
     }
 
-//    bool endWhenOfflineOption = m_optionHost->getPluginOption(OPTION_END_WHEN_OFFLINE,
-//                                                              DEFAULT_END_WHEN_OFFLINE).toBool();
-    // xnamed!
     bool endWhenOfflineOption = Options::node(OPTION_END_WHEN_OFFLINE).value().toBool();
 
 	FPolicy->button(policyOption)->setChecked(true);
@@ -159,13 +142,8 @@ ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
 
 void ConfigOtrWidget::updateOptions()
 {
-	IOtr::OtrPolicy policy = static_cast<IOtr::OtrPolicy>(FPolicy->checkedId());
+	IOtr::Policy policy = static_cast<IOtr::Policy>(FPolicy->checkedId());
 
-//    m_optionHost->setPluginOption(OPTION_POLICY, policy);
-//    m_optionHost->setPluginOption(OPTION_END_WHEN_OFFLINE,
-//                                  m_endWhenOffline->checkState() == Qt::Checked);
-//    m_optionHost->savePolicy(policy);
-    // xnamed!
     Options::node(OPTION_POLICY).setValue(static_cast<int>(policy));
     Options::node(OPTION_END_WHEN_OFFLINE).setValue(
 									FEndWhenOffline->checkState() == Qt::Checked);
@@ -268,7 +246,7 @@ void FingerprintWidget::deleteFingerprint()
 					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
 					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
 
-        QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
+		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
@@ -297,7 +275,7 @@ void FingerprintWidget::verifyFingerprint()
 					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
 					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
 
-        QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
+		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
@@ -355,7 +333,6 @@ void FingerprintWidget::contextMenu(const QPoint& APos)
 //                             OtrMessaging* otr, QWidget* parent)
 PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
     : QWidget(parent),
-      //m_accountInfo(accountInfo),
 	  FOtrMessaging(FOtrMessaging),
 	  FTable(new QTableView(this)),
 	  FTableModel(new QStandardItemModel(this)),
@@ -368,15 +345,6 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
 
 	FAccountBox = new QComboBox(this);
 
-/*    QString id;
-    int accountIndex = 0;
-    while ((id = m_accountInfo->getId(accountIndex)) != "-1")
-    {
-        m_accountBox->addItem(m_accountInfo->getName(accountIndex), QVariant(id));
-        accountIndex++;
-    }
-*/
-    // xnamed! <<
     QList<IPresence*> presences = FPresenceManager->presences();
     for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
     {
@@ -384,7 +352,7 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
         IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
 		FAccountBox->addItem(account->name(), QVariant(id));
     }
-    // xnamed! >>
+
     QPushButton* generateButton = new QPushButton(tr("Generate new key"), this);
     connect(generateButton,SIGNAL(clicked()),SLOT(generateKey()));
 
@@ -411,8 +379,8 @@ PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
 	FTable->setSortingEnabled(true);
 
 	FTable->setContextMenuPolicy(Qt::CustomContextMenu);
-	connect(FTable, SIGNAL(customContextMenuRequested(const QPoint&)), SLOT(contextMenu(const QPoint&)));
-
+	connect(FTable, SIGNAL(customContextMenuRequested(const QPoint&)),
+					SLOT(contextMenu(const QPoint&)));
     updateData();
 }
 
@@ -466,7 +434,7 @@ void PrivKeyWidget::deleteKey()
 					tr("Account: ") + FOtrMessaging->humanAccount(account) + "\n" +
                     tr("Fingerprint: ") + fpr);
 
-        QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
+		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
@@ -498,7 +466,7 @@ void PrivKeyWidget::generateKey()
                     tr("Account: ") + accountName + "\n" +
 					tr("Fingerprint: ") + FKeys.value(accountId));
 
-        QMessageBox mb(QMessageBox::Question, tr("Psi OTR"), msg,
+		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
                        QMessageBox::Yes | QMessageBox::No, this,
                        Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 

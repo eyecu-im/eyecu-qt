@@ -79,12 +79,12 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
     if (FWindow->streamJid()==AStreamJid && FWindow->contactJid()==AContactJid.full())
     {
         QString iconKey;
-		IOtr::OtrMessageState state = FOtrMessaging->getMessageState(FAccount, FContact);
+		IOtr::MessageState state = FOtrMessaging->getMessageState(FAccount, FContact);
 
 		QString stateString(FOtrMessaging->getMessageStateString(FAccount,
 														 FContact));
 
-		if (state == IOtr::OTR_MESSAGESTATE_ENCRYPTED)
+		if (state == IOtr::MsgStateEncrypted)
         {
 			if (FOtrMessaging->isVerified(FAccount, FContact))
             {
@@ -107,7 +107,7 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
         setText(tr("OTR Messaging [%1]").arg(stateString));
         IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->insertAutoIcon(this,iconKey);
 
-		if (state == IOtr::OTR_MESSAGESTATE_ENCRYPTED)
+		if (state == IOtr::MsgStateEncrypted)
         {
 			FStartSessionAction->setText(tr("Refre&sh private conversation"));
 			FAuthenticateAction->setEnabled(true);
@@ -117,7 +117,7 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
         else
         {
 			FStartSessionAction->setText(tr("&Start private conversation"));
-			if (state == IOtr::OTR_MESSAGESTATE_PLAINTEXT)
+			if (state == IOtr::MsgStatePlaintext)
             {
 				FAuthenticateAction->setEnabled(false);
 				FSessionIdAction->setEnabled(false);
@@ -131,7 +131,7 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
             }
         }
 
-		if (FOtrMessaging->getPolicy() < IOtr::OTR_POLICY_ENABLED)
+		if (FOtrMessaging->getPolicy() < IOtr::PolicyEnabled)
         {
 			FStartSessionAction->setEnabled(false);
 			FEndSessionAction->setEnabled(false);

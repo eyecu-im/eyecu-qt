@@ -57,7 +57,7 @@ OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
 
 //-----------------------------------------------------------------------------
 
-OtrMessaging::OtrMessaging(IOtr* callback, IOtr::OtrPolicy policy)
+OtrMessaging::OtrMessaging(IOtr* callback, IOtr::Policy policy)
 	: FOtrPolicy(policy),
 	  FOtrInternal(new OtrInternal(callback, FOtrPolicy)),
 	  FOtr(callback)
@@ -82,7 +82,7 @@ QString OtrMessaging::encryptMessage(const QString& account,
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrMessageType OtrMessaging::decryptMessage(const QString& account,
+IOtr::MessageType OtrMessaging::decryptMessage(const QString& account,
 												  const QString& contact,
 												  const QString& message,
 												  QString& decrypted)
@@ -172,7 +172,7 @@ void OtrMessaging::abortSMP(const QString& AAccount, const QString& AContact)
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrMessageState OtrMessaging::getMessageState(const QString& AAccount,
+IOtr::MessageState OtrMessaging::getMessageState(const QString& AAccount,
 													const QString& AContact)
 {
 	return FOtrInternal->getMessageState(AAccount, AContact);
@@ -218,14 +218,14 @@ bool OtrMessaging::smpSucceeded(const QString& AAccount, const QString& AContact
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::setPolicy(IOtr::OtrPolicy APolicy)
+void OtrMessaging::setPolicy(IOtr::Policy APolicy)
 {
 	FOtrPolicy = APolicy;
 }
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrPolicy OtrMessaging::getPolicy()
+IOtr::Policy OtrMessaging::getPolicy()
 {
 	return FOtrPolicy;
 }
@@ -249,7 +249,7 @@ bool OtrMessaging::displayOtrMessage(const QString& AAccount,
 //-----------------------------------------------------------------------------
 
 void OtrMessaging::stateChange(const QString& AAccount, const QString& AContact,
-							   IOtr::OtrStateChange AChange)
+							   IOtr::StateChange AChange)
 {
 	return FOtr->stateChange(AAccount, AContact, AChange);
 }

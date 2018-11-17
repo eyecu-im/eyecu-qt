@@ -1,19 +1,19 @@
 HEADERS = \
       otrmessaging.h \
       otrinternal.h \
-      psiotrconfig.h \
       otrlextensions.h \
       stanza_catchers.h \
-      psiotrclosure.h \
       otrstatewidget.h \
-    $$PWD/otr.h
+    $$PWD/otr.h \
+    $$PWD/otrclosure.h \
+    $$PWD/otrconfig.h
 
 SOURCES = \
       otrmessaging.cpp \
       otrinternal.cpp \
-      psiotrconfig.cpp \
       otrlextensions.c \
       stanza_catchers.cpp \
-      psiotrclosure.cpp \
       otrstatewidget.cpp \
-    $$PWD/otr.cpp
+    $$PWD/otr.cpp \
+    $$PWD/otrclosure.cpp \
+    $$PWD/otrconfig.cpp

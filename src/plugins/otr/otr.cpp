@@ -7,7 +7,7 @@
 #include <interfaces/imessagewidgets.h>
 #include <utils/logger.h>
 
-#include "psiotrclosure.h"
+#include "otrclosure.h"
 
 #include <QPair>
 #include <QMenu>
@@ -133,7 +133,7 @@ bool Otr::initObjects()
 
 bool Otr::initSettings()
 {
-    Options::setDefaultValue(OPTION_POLICY, OTR_POLICY_ENABLED);
+	Options::setDefaultValue(OPTION_POLICY, PolicyEnabled);
     Options::setDefaultValue(OPTION_END_WHEN_OFFLINE, DEFAULT_END_WHEN_OFFLINE);
     if (FOptionsManager)
     {
@@ -268,10 +268,10 @@ void Otr::authenticateContact(const QString &AAccount, const QString &AContact)
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrPolicy Otr::policy() const
+IOtr::Policy Otr::policy() const
 {
     QVariant policyOption = Options::node(OPTION_POLICY).value();
-    return static_cast<OtrPolicy>(policyOption.toInt());
+	return static_cast<Policy>(policyOption.toInt());
 }
 
 //-----------------------------------------------------------------------------
@@ -279,7 +279,7 @@ IOtr::OtrPolicy Otr::policy() const
 void Otr::optionChanged(const QString &AOption)
 {
     QVariant policyOption = Options::node(OPTION_POLICY).value();
-	FOtrConnection->setPolicy(static_cast<OtrPolicy>(policyOption.toInt()));
+	FOtrConnection->setPolicy(static_cast<Policy>(policyOption.toInt()));
 }
 
 //-----------------------------------------------------------------------------
@@ -322,7 +322,7 @@ bool Otr::isLoggedIn(const QString &AAccount, const QString &AContact)
 //-----------------------------------------------------------------------------
 
 void Otr::notifyUser(const QString &AAccount, const QString &AContact,
-							  const QString& AMessage, const OtrNotifyType& AType)
+							  const QString& AMessage, const NotifyType& AType)
 {
 	Q_UNUSED(AMessage);
 	Q_UNUSED(AType);
@@ -345,7 +345,7 @@ bool Otr::displayOtrMessage(const QString &AAccount,
 //-----------------------------------------------------------------------------
 
 void Otr::stateChange(const QString &AAccount, const QString &AContact,
-							   OtrStateChange AChange)
+							   StateChange AChange)
 {
 	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR stateChange, contact=%1").arg(AContact));
 
@@ -362,37 +362,37 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
 
 	switch (AChange)
     {
-        case OTR_STATECHANGE_GOINGSECURE:
+		case StateChangeGoingSecure:
             msg = encrypted?
                       tr("Attempting to refresh the private conversation")
                     : tr("Attempting to start a private conversation");
             break;
 
-        case OTR_STATECHANGE_GONESECURE:
+		case StateChangeGoneSecure:
             msg  = verified? tr("Private conversation started")
                            : tr("Unverified conversation started");
             break;
 
-        case OTR_STATECHANGE_GONEINSECURE:
+		case StateChangeGoneInsecure:
             msg  = tr("Private conversation lost");
             break;
 
-        case OTR_STATECHANGE_CLOSE:
+		case StateChangeClose:
             msg  = tr("Private conversation closed");
             break;
 
-        case OTR_STATECHANGE_REMOTECLOSE:
+		case StateChangeRemoteClose:
             msg  = tr("%1 has ended the private conversation with you; "
                       "you should do the same.")
 					  .arg(humanContact(AAccount, AContact));
             break;
 
-        case OTR_STATECHANGE_STILLSECURE:
+		case StateChangeStillSecure:
             msg  = verified? tr("Private conversation refreshed")
                            : tr("Unverified conversation refreshed");
             break;
 
-        case OTR_STATECHANGE_TRUST:
+		case StateChangeTrust:
             msg  = verified? tr("Contact authenticated")
                            : tr("Contact not authenticated");
             break;

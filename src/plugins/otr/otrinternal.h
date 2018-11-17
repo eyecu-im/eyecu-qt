@@ -57,14 +57,14 @@ class QString;
 class OtrInternal
 {
 public:
-	OtrInternal(IOtr* AOtr, IOtr::OtrPolicy& APolicy);
+	OtrInternal(IOtr* AOtr, IOtr::Policy& APolicy);
 
     ~OtrInternal();
 
 	QString encryptMessage(const QString& AAccount, const QString& AContact,
 						   const QString& AMessage);
 
-	IOtr::OtrMessageType decryptMessage(const QString& AAccount,
+	IOtr::MessageType decryptMessage(const QString& AAccount,
 								  const QString& AContact,
 								  const QString& AMessage,
 								  QString& ADecrypted);
@@ -97,7 +97,7 @@ public:
 	void abortSMP(ConnContext* AContext);
 
 
-	IOtr::OtrMessageState getMessageState(const QString& AAccount,
+	IOtr::MessageState getMessageState(const QString& AAccount,
 										  const QString& AContact);
 
 	QString getMessageStateString(const QString& AAccount,
@@ -229,7 +229,7 @@ private:
     /**
      * Reference to the default OTR policy
      */
-	IOtr::OtrPolicy& FOtrPolicy;
+	IOtr::Policy& FOtrPolicy;
 
     /**
      * Variable used during generating of private key.

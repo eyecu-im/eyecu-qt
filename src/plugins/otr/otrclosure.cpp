@@ -25,7 +25,7 @@
  *
  */
 
-#include "psiotrclosure.h"
+#include "otrclosure.h"
 
 #include <QObject>
 #include <QDialog>
@@ -416,7 +416,7 @@ void AuthenticationDialog::updateSMP(int AProgress)
 		if (FIsSender || FMethod == METHOD_SHARED_SECRET)
         {
 			FOtrMessaging->stateChange(FAccount, FContact,
-							   IOtr::OTR_STATECHANGE_TRUST);
+							   IOtr::StateChangeTrust);
         }
 		if (FOtrMessaging->smpSucceeded(FAccount, FContact))
         {
@@ -560,5 +560,5 @@ bool OtrClosure::isLoggedIn() const
 bool OtrClosure::encrypted() const
 {
 	return FOtrMessaging->getMessageState(FAccount, FContact) ==
-		   IOtr::OTR_MESSAGESTATE_ENCRYPTED;
+		   IOtr::MsgStateEncrypted;
 }

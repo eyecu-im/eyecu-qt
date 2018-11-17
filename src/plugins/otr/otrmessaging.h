@@ -86,7 +86,7 @@ public:
      * @param plugin Pointer to the plugin, used for sending messages.
      * @param policy The default OTR policy
      */
-	OtrMessaging(IOtr* callback, IOtr::OtrPolicy policy);
+	OtrMessaging(IOtr* callback, IOtr::Policy policy);
 
     /**
      * Deconstructor
@@ -115,7 +115,7 @@ public:
      *                  encrypted
      * @return Type of incoming message
      */
-	IOtr::OtrMessageType decryptMessage(const QString& account, const QString& contact,
+	IOtr::MessageType decryptMessage(const QString& account, const QString& contact,
                                   const QString& message, QString& decrypted);
 
     /**
@@ -180,7 +180,7 @@ public:
      * Return the messageState of a context,
      * i.e. plaintext, encrypted, finished.
      */
-	IOtr::OtrMessageState getMessageState(const QString& AAccount,
+	IOtr::MessageState getMessageState(const QString& AAccount,
 									const QString& AContact);
 
     /**
@@ -213,12 +213,12 @@ public:
     /**
      * Set the default OTR policy.
      */
-	void setPolicy(IOtr::OtrPolicy APolicy);
+	void setPolicy(IOtr::Policy APolicy);
 
     /**
      * Return the default OTR policy.
      */
-	IOtr::OtrPolicy getPolicy();
+	IOtr::Policy getPolicy();
 
     /**
      * Generate own keys.
@@ -236,7 +236,7 @@ public:
      * Report a change of state.
      */
 	void stateChange(const QString& AAccount, const QString& AContact,
-					 IOtr::OtrStateChange AChange);
+					 IOtr::StateChange AChange);
 
     /**
      * Return a human-readable representation
@@ -250,7 +250,7 @@ public:
 	QString humanContact(const QString& AAccountId, const QString& AContact);
 
 private:
-	IOtr::OtrPolicy FOtrPolicy;
+	IOtr::Policy FOtrPolicy;
 	OtrInternal* FOtrInternal;
 	IOtr* FOtr;
 };

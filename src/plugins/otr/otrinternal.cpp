@@ -45,7 +45,7 @@ static const QString OTR_INSTAGS_FILE = "otr.instags";
 
 // ============================================================================
 
-OtrInternal::OtrInternal(IOtr* AOtr, IOtr::OtrPolicy& APolicy)
+OtrInternal::OtrInternal(IOtr* AOtr, IOtr::Policy& APolicy)
 	: FUserState(),
 	  FUiOps(),
 	  FOtr(AOtr),
@@ -135,7 +135,7 @@ QString OtrInternal::encryptMessage(const QString& AAccount, const QString& ACon
 										  .arg(AContact);
 		if (!FOtr->displayOtrMessage(AAccount, AContact, err_message))
         {
-			FOtr->notifyUser(AAccount, AContact, err_message, IOtr::OTR_NOTIFY_ERROR);
+			FOtr->notifyUser(AAccount, AContact, err_message, IOtr::NotifyError);
         }
         return QString();
     }
@@ -153,7 +153,7 @@ QString OtrInternal::encryptMessage(const QString& AAccount, const QString& ACon
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrMessageType OtrInternal::decryptMessage(const QString& AAccount,
+IOtr::MessageType OtrInternal::decryptMessage(const QString& AAccount,
 												 const QString& AContact,
 												 const QString& AMessage,
 												 QString& ADecrypted)
@@ -181,7 +181,7 @@ IOtr::OtrMessageType OtrInternal::decryptMessage(const QString& AAccount,
                                            NULL);
     tlv = otrl_tlv_find(tlvs, OTRL_TLV_DISCONNECTED);
     if (tlv) {
-		FOtr->stateChange(accountName, userName, IOtr::OTR_STATECHANGE_REMOTECLOSE);
+		FOtr->stateChange(accountName, userName, IOtr::StateChangeRemoteClose);
     }
 
 #if (OTRL_VERSION_MAJOR >= 4)
@@ -294,17 +294,17 @@ IOtr::OtrMessageType OtrInternal::decryptMessage(const QString& AAccount,
     {
         // Internal protocol message
 
-		return IOtr::OTR_MESSAGETYPE_IGNORE;
+		return IOtr::MsgTypeIgnore;
     }
     else if ((ignoreMessage == 0) && newMessage)
     {
         // Message has been decrypted, replace it
 		ADecrypted = QString::fromUtf8(newMessage);
         otrl_message_free(newMessage);
-		return IOtr::OTR_MESSAGETYPE_OTR;
+		return IOtr::MsgTypeOtr;
     }
 
-	return IOtr::OTR_MESSAGETYPE_NONE;
+	return IOtr::MsgTypeNone;
 }
 
 //-----------------------------------------------------------------------------
@@ -360,7 +360,7 @@ void OtrInternal::verifyFingerprint(const OtrFingerprint &AFingerprint,
             {
 				FOtr->stateChange(QString::fromUtf8(context->accountname),
 								  QString::fromUtf8(context->username),
-								  IOtr::OTR_STATECHANGE_TRUST);
+								  IOtr::StateChangeTrust);
             }
         }
     }
@@ -437,7 +437,7 @@ void OtrInternal::deleteKey(const QString& AAccount)
 
 void OtrInternal::startSession(const QString& AAccount, const QString& AContact)
 {
-	FOtr->stateChange(AAccount, AContact, IOtr::OTR_STATECHANGE_GOINGSECURE);
+	FOtr->stateChange(AAccount, AContact, IOtr::StateChangeGoingSecure);
 
 	if (!otrl_privkey_find(FUserState, AAccount.toUtf8().constData(),
                            OTR_PROTOCOL_STRING))
@@ -468,7 +468,7 @@ void OtrInternal::endSession(const QString& AAccount, const QString& AContact)
                                              false, NULL, NULL, NULL);
     if (context && (context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
     {
-		FOtr->stateChange(AAccount, AContact, IOtr::OTR_STATECHANGE_CLOSE);
+		FOtr->stateChange(AAccount, AContact, IOtr::StateChangeClose);
     }
 	otrl_message_disconnect(FUserState, &FUiOps, this,
 							AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
@@ -494,7 +494,7 @@ void OtrInternal::expireSession(const QString& AAccount, const QString& AContact
     if (context && (context->msgstate == OTRL_MSGSTATE_ENCRYPTED))
     {
         otrl_context_force_finished(context);
-		FOtr->stateChange(AAccount, AContact, IOtr::OTR_STATECHANGE_GONEINSECURE);
+		FOtr->stateChange(AAccount, AContact, IOtr::StateChangeGoneInsecure);
     }
 }
 
@@ -579,7 +579,7 @@ void OtrInternal::abortSMP(ConnContext* AContext)
 
 //-----------------------------------------------------------------------------
 
-IOtr::OtrMessageState OtrInternal::getMessageState(const QString& AAccount,
+IOtr::MessageState OtrInternal::getMessageState(const QString& AAccount,
 												   const QString& AContact)
 {
 	ConnContext* context = otrl_context_find(FUserState,
@@ -594,19 +594,19 @@ IOtr::OtrMessageState OtrInternal::getMessageState(const QString& AAccount,
     {
         if (context->msgstate == OTRL_MSGSTATE_PLAINTEXT)
         {
-			return IOtr::OTR_MESSAGESTATE_PLAINTEXT;
+			return IOtr::MsgStatePlaintext;
         }
         else if (context->msgstate == OTRL_MSGSTATE_ENCRYPTED)
         {
-			return IOtr::OTR_MESSAGESTATE_ENCRYPTED;
+			return IOtr::MsgStateEncrypted;
         }
         else if (context->msgstate == OTRL_MSGSTATE_FINISHED)
         {
-			return IOtr::OTR_MESSAGESTATE_FINISHED;
+			return IOtr::MsgStateFinished;
         }
     }
 
-	return IOtr::OTR_MESSAGESTATE_UNKNOWN;
+	return IOtr::MsgStateUnknown;
 }
 
 //-----------------------------------------------------------------------------
@@ -614,17 +614,17 @@ IOtr::OtrMessageState OtrInternal::getMessageState(const QString& AAccount,
 QString OtrInternal::getMessageStateString(const QString& AAccount,
 										   const QString& AContact)
 {
-	IOtr::OtrMessageState state = getMessageState(AAccount, AContact);
+	IOtr::MessageState state = getMessageState(AAccount, AContact);
 
-	if (state == IOtr::OTR_MESSAGESTATE_PLAINTEXT)
+	if (state == IOtr::MsgStatePlaintext)
     {
         return QObject::tr("plaintext");
     }
-	else if (state == IOtr::OTR_MESSAGESTATE_ENCRYPTED)
+	else if (state == IOtr::MsgStateEncrypted)
     {
         return QObject::tr("encrypted");
     }
-	else if (state == IOtr::OTR_MESSAGESTATE_FINISHED)
+	else if (state == IOtr::MsgStateFinished)
     {
         return QObject::tr("finished");
     }
@@ -777,19 +777,19 @@ QString OtrInternal::humanFingerprint(const unsigned char* AFingerprint)
 
 OtrlPolicy OtrInternal::policy(ConnContext*)
 {
-	if (FOtrPolicy == IOtr::OTR_POLICY_OFF)
+	if (FOtrPolicy == IOtr::PolocyOff)
     {
         return OTRL_POLICY_NEVER; // otr disabled
     }
-	else if (FOtrPolicy == IOtr::OTR_POLICY_ENABLED)
+	else if (FOtrPolicy == IOtr::PolicyEnabled)
     {
         return OTRL_POLICY_MANUAL; // otr enabled, session started manual
     }
-	else if (FOtrPolicy == IOtr::OTR_POLICY_AUTO)
+	else if (FOtrPolicy == IOtr::PolicyAuto)
     {
         return OTRL_POLICY_OPPORTUNISTIC; // automatically initiate private messaging
     }
-	else if (FOtrPolicy == IOtr::OTR_POLICY_REQUIRE)
+	else if (FOtrPolicy == IOtr::PolicyRequire)
     {
         return OTRL_POLICY_ALWAYS; // require private messaging
     }
@@ -1079,7 +1079,7 @@ void OtrInternal::new_fingerprint(OtrlUserState AUserState, const char* AAccount
 
 	if (!FOtr->displayOtrMessage(account, contact, message))
     {
-		FOtr->notifyUser(account, contact, message, IOtr::OTR_NOTIFY_INFO);
+		FOtr->notifyUser(account, contact, message, IOtr::NotifyInfo);
     }
 }
 
@@ -1097,7 +1097,7 @@ void OtrInternal::gone_secure(ConnContext* context)
 {
 	FOtr->stateChange(QString::fromUtf8(context->accountname),
 					  QString::fromUtf8(context->username),
-					  IOtr::OTR_STATECHANGE_GONESECURE);
+					  IOtr::StateChangeGoneSecure);
 }
 
 // ---------------------------------------------------------------------------
@@ -1106,7 +1106,7 @@ void OtrInternal::gone_insecure(ConnContext* context)
 {
 	FOtr->stateChange(QString::fromUtf8(context->accountname),
 					  QString::fromUtf8(context->username),
-					  IOtr::OTR_STATECHANGE_GONEINSECURE);
+					  IOtr::StateChangeGoneInsecure);
 }
 
 // ---------------------------------------------------------------------------
@@ -1116,7 +1116,7 @@ void OtrInternal::still_secure(ConnContext* context, int is_reply)
     Q_UNUSED(is_reply);
 	FOtr->stateChange(QString::fromUtf8(context->accountname),
 					  QString::fromUtf8(context->username),
-					  IOtr::OTR_STATECHANGE_STILLSECURE);
+					  IOtr::StateChangeStillSecure);
 }
 
 // ---------------------------------------------------------------------------

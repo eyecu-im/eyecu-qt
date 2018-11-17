@@ -24,52 +24,52 @@
 class IOtr
 {
 public:
-	enum OtrNotifyType
+	enum NotifyType
 	{
-		OTR_NOTIFY_INFO,
-		OTR_NOTIFY_WARNING,
-		OTR_NOTIFY_ERROR
+		NotifyInfo,
+		NotifyWarning,
+		NotifyError
 	};
 
-	enum OtrPolicy
+	enum Policy
 	{
-		OTR_POLICY_OFF,
-		OTR_POLICY_ENABLED,
-		OTR_POLICY_AUTO,
-		OTR_POLICY_REQUIRE
+		PolocyOff,
+		PolicyEnabled,
+		PolicyAuto,
+		PolicyRequire
 	};
 
-	enum OtrMessageType
+	enum MessageType
 	{
-		OTR_MESSAGETYPE_NONE,
-		OTR_MESSAGETYPE_IGNORE,
-		OTR_MESSAGETYPE_OTR
+		MsgTypeNone,
+		MsgTypeIgnore,
+		MsgTypeOtr
 	};
 
-	enum OtrMessageState
+	enum MessageState
 	{
-		OTR_MESSAGESTATE_UNKNOWN,
-		OTR_MESSAGESTATE_PLAINTEXT,
-		OTR_MESSAGESTATE_ENCRYPTED,
-		OTR_MESSAGESTATE_FINISHED
+		MsgStateUnknown,
+		MsgStatePlaintext,
+		MsgStateEncrypted,
+		MsgStateFinished
 	};
 
-	enum OtrStateChange
+	enum StateChange
 	{
-		OTR_STATECHANGE_GOINGSECURE,
-		OTR_STATECHANGE_GONESECURE,
-		OTR_STATECHANGE_GONEINSECURE,
-		OTR_STATECHANGE_STILLSECURE,
-		OTR_STATECHANGE_CLOSE,
-		OTR_STATECHANGE_REMOTECLOSE,
-		OTR_STATECHANGE_TRUST
+		StateChangeGoingSecure,
+		StateChangeGoneSecure,
+		StateChangeGoneInsecure,
+		StateChangeStillSecure,
+		StateChangeClose,
+		StateChangeRemoteClose,
+		StateChangeTrust
 	};
 
 	virtual QObject *instance() =0;
 
 	virtual QString dataDir() = 0;
 
-	virtual OtrPolicy policy() const = 0;
+	virtual Policy policy() const = 0;
 	/**
 	 * Sends a message from the Account account to the user contact.
 	 * The method is called from the OtrConnection to send messages
@@ -81,13 +81,13 @@ public:
 	virtual bool isLoggedIn(const QString& account, const QString& contact) = 0;
 
 	virtual void notifyUser(const QString& account, const QString& contact,
-							const QString& message, const OtrNotifyType& type) = 0;
+							const QString& message, const NotifyType& type) = 0;
 
 	virtual bool displayOtrMessage(const QString& account, const QString& contact,
 								   const QString& message) = 0;
 
 	virtual void stateChange(const QString& account, const QString& contact,
-							 OtrStateChange change) = 0;
+							 StateChange change) = 0;
 
 	virtual void receivedSMP(const QString& account, const QString& contact,
 							 const QString& question) = 0;

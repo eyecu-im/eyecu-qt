@@ -35,10 +35,7 @@
 #include <QVariant>
 
 //class OptionAccessingHost;
-class OtrCallback;
-//class IAccountManager;
-//class AccountInfoAccessingHost;
-//class IOptionsManager;
+// class OtrCallback;
 class QButtonGroup;
 class QComboBox;
 class QCheckBox;
@@ -49,7 +46,7 @@ class QPoint;
 // ---------------------------------------------------------------------------
 
 const QString  OPTION_POLICY            = "otr-policy";
-const QVariant DEFAULT_POLICY           = QVariant(IOtr::OTR_POLICY_ENABLED);
+const QVariant DEFAULT_POLICY           = QVariant(IOtr::PolicyEnabled);
 const QString  OPTION_END_WHEN_OFFLINE  = "end-session-when-offline";
 const QVariant DEFAULT_END_WHEN_OFFLINE = QVariant(false);
 

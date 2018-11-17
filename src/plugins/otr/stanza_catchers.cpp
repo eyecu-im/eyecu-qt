@@ -67,16 +67,16 @@ bool InboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid, 
 	QString plainBody = message.body();
 
     QString decrypted;
-	IOtr::OtrMessageType messageType = otr()->decryptMessage(account, contact,
+	IOtr::MessageType messageType = otr()->decryptMessage(account, contact,
 															 plainBody, decrypted);
     switch (messageType)
     {
-		case IOtr::OTR_MESSAGETYPE_NONE:
+		case IOtr::MsgTypeNone:
             break;
-		case IOtr::OTR_MESSAGETYPE_IGNORE:
+		case IOtr::MsgTypeIgnore:
             ignore = true;
             break;
-		case IOtr::OTR_MESSAGETYPE_OTR:
+		case IOtr::MsgTypeOtr:
             QString bodyText;
 
             bodyText = decrypted;
@@ -128,7 +128,7 @@ bool OutboundStanzaCatcher::stanzaEditImpl(int AHandleId, const Jid &AStreamJid,
 	                                                        m_otrConnection);
 	}*/
 	//if (m_onlineUsers[account][contact]->encrypted()) {
-	if (otr()->getMessageState(account, contact) == IOtr::OTR_MESSAGESTATE_ENCRYPTED) {
+	if (otr()->getMessageState(account, contact) == IOtr::MsgStateEncrypted) {
 	    if (AStanza.to().contains("/")) {
 	        // if not a bare jid
 	        AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints" ,"no-copy")).toElement();
