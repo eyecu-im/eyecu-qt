@@ -1,13 +1,15 @@
 #include "otr.h"
+#include "otrclosure.h"
+#include "otroptions.h"
+#include "otrconfig.h"
 
 #include <definitions/toolbargroups.h>
 #include <definitions/archivehandlerorders.h>
+#include <definitions/optionvalues.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagewidgets.h>
 #include <utils/logger.h>
-
-#include "otrclosure.h"
 
 #include <QPair>
 #include <QMenu>
@@ -18,7 +20,7 @@
 #define SHC_MESSAGE         "/message"
 
 Otr::Otr() :
-	FOtrConnection(NULL),
+	FOtrMessaging(new OtrMessaging(this)),
 	FOnlineUsers(),
     FOptionsManager(NULL),
     FAccountManager(NULL),
@@ -31,7 +33,7 @@ Otr::Otr() :
 
 Otr::~Otr()
 {
-	delete FOtrConnection;
+	delete FOtrMessaging;
 }
 
 void Otr::pluginInfo(IPluginInfo *APluginInfo)
@@ -51,7 +53,7 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
     Q_UNUSED(AInitOrder);
 
-	FHomePath = APluginManager->homePath();
+//	FHomePath = APluginManager->homePath();
 
     IPlugin *plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0,NULL);
     if (plugin)
@@ -122,24 +124,21 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Otr::initObjects()
 {
-    /*if (FMessageArchiver)
-    {
-    //    qDebug("archive processor registered");
-        FMessageArchiver->insertArchiveHandler(AHO_DEFAULT,this);
-    }*/
-
     return true;
 }
 
 bool Otr::initSettings()
 {
-	Options::setDefaultValue(OPTION_POLICY, PolicyEnabled);
-    Options::setDefaultValue(OPTION_END_WHEN_OFFLINE, DEFAULT_END_WHEN_OFFLINE);
+	Options::setDefaultValue(OPV_OTR_POLICY, PolicyEnabled);
+	Options::setDefaultValue(OPV_OTR_ENDWHENOFFLINE, false);
     if (FOptionsManager)
     {
         IOptionsDialogNode otrNode = { ONO_OTR, OPN_OTR, MNI_OTR_ENCRYPTED, tr("OTR Messaging") };
         FOptionsManager->insertOptionsDialogNode(otrNode);
-        FOptionsManager->insertOptionsDialogHolder(this);
+		IOptionsDialogNode otrNode1 = { ONO_OTR1, OPN_OTR1, MNI_OTR_ENCRYPTED, tr("OTR Messaging(old)") };
+		FOptionsManager->insertOptionsDialogNode(otrNode1);
+
+        FOptionsManager->insertOptionsDialogHolder(this);		
     }
     return true;
 }
@@ -149,9 +148,9 @@ QMultiMap<int, IOptionsDialogWidget *> Otr::optionsDialogWidgets(const QString &
     Q_UNUSED(AParent);
     QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_OTR)
-    {
-		widgets.insertMulti(ONO_OTR, new ConfigDialog(FOtrConnection, AParent));
-    }
+		widgets.insertMulti(ONO_OTR, new OtrOptions(AParent));
+	if (ANodeId == OPN_OTR1)
+		widgets.insertMulti(ONO_OTR, new ConfigDialog(FOtrMessaging, AParent));
     return widgets;
 }
 
@@ -178,7 +177,7 @@ void Otr::onStreamClosed( IXmppStream *AXmppStream )
     {
 		foreach(QString contact, FOnlineUsers.value(account).keys())
         {
-			FOtrConnection->endSession(account, contact);
+			FOtrMessaging->endSession(account, contact);
 			FOnlineUsers[account][contact]->setIsLoggedIn(false);
             //m_onlineUsers[account][contact]->updateMessageState();
         }
@@ -201,7 +200,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
     QString account = FAccountManager->findAccountByStream(AWindow->streamJid())->accountId().toString();
     QString contact = AWindow->contactJid().uFull();
-	OtrStateWidget *widget = new OtrStateWidget(this, FOtrConnection,AWindow, account, contact,
+	OtrStateWidget *widget = new OtrStateWidget(this, FOtrMessaging,AWindow, account, contact,
                                           AWindow->toolBarWidget()->toolBarChanger()->toolBar());
     AWindow->toolBarWidget()->toolBarChanger()->insertWidget(widget,TBG_MWTBW_CHATSTATES);
     widget->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -216,14 +215,15 @@ void Otr::onChatWindowDestroyed(IMessageChatWindow *AWindow)
 void Otr::onProfileOpened(const QString &AProfile)
 {
 	FHomePath = FOptionsManager->profilePath(AProfile);
-	FOtrConnection = new OtrMessaging(this, policy());
+	FOtrMessaging->init();
+//	FOtrMessaging = new OtrMessaging(this, Policy(Options::node(OPV_OTR_POLICY).value().toInt()));
 }
 
 void Otr::onPresenceOpened(IPresence *APresence)
 {
     Q_UNUSED(APresence)
-	FInboundCatcher = new InboundStanzaCatcher(FOtrConnection, FAccountManager, this);
-	FOutboundCatcher = new OutboundStanzaCatcher(FOtrConnection, FAccountManager, this);
+	FInboundCatcher = new InboundStanzaCatcher(FOtrMessaging, FAccountManager, this);
+	FOutboundCatcher = new OutboundStanzaCatcher(FOtrMessaging, FAccountManager, this);
 
     if (FStanzaProcessor)
     {
@@ -261,26 +261,18 @@ void Otr::authenticateContact(const QString &AAccount, const QString &AContact)
     {
 		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount,
 															AContact,
-															FOtrConnection);
+															FOtrMessaging);
     }
 	FOnlineUsers[AAccount][AContact]->authenticateContact();
 }
 
 //-----------------------------------------------------------------------------
 
-IOtr::Policy Otr::policy() const
-{
-    QVariant policyOption = Options::node(OPTION_POLICY).value();
-	return static_cast<Policy>(policyOption.toInt());
-}
-
-//-----------------------------------------------------------------------------
-
-void Otr::optionChanged(const QString &AOption)
-{
-    QVariant policyOption = Options::node(OPTION_POLICY).value();
-	FOtrConnection->setPolicy(static_cast<Policy>(policyOption.toInt()));
-}
+//void Otr::optionChanged(const QString &AOption)
+//{
+//	QVariant policyOption = Options::node(OPV_OTR_POLICY).value();
+//	FOtrMessaging->setPolicy(static_cast<Policy>(policyOption.toInt()));
+//}
 
 //-----------------------------------------------------------------------------
 
@@ -353,10 +345,10 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
     {
 		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount,
 															AContact,
-															FOtrConnection);
+															FOtrMessaging);
     }
 
-	bool verified  = FOtrConnection->isVerified(AAccount, AContact);
+	bool verified  = FOtrMessaging->isVerified(AAccount, AContact);
 	bool encrypted = FOnlineUsers[AAccount][AContact]->encrypted();
     QString msg;
 
@@ -491,7 +483,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
                 {
 					FOnlineUsers[account][contact] = new OtrClosure(account,
                                                                         contact,
-																		FOtrConnection);
+																		FOtrMessaging);
                 }
 
 				FOnlineUsers[account][contact]->setIsLoggedIn(true);
@@ -501,9 +493,9 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 				if (FOnlineUsers.contains(account) &&
 					FOnlineUsers.value(account).contains(contact))
                 {
-                    if (Options::node(OPTION_END_WHEN_OFFLINE).value().toBool())
+					if (Options::node(OPV_OTR_ENDWHENOFFLINE).value().toBool())
                     {
-						FOtrConnection->expireSession(account, contact);
+						FOtrMessaging->expireSession(account, contact);
                     }
 					FOnlineUsers[account][contact]->setIsLoggedIn(false);
                     Jid contactJid(AStanza.from());

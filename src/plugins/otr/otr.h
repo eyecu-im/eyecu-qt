@@ -19,8 +19,6 @@
 #include <utils/message.h>
 
 #include "otrmessaging.h"
-#include "otrconfig.h"
-
 #include "stanza_catchers.h"
 #include "otrstatewidget.h"
 
@@ -61,8 +59,7 @@ public:
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 
-	virtual Policy policy() const;
-	virtual void optionChanged(const QString& AOption);
+//	virtual void optionChanged(const QString& AOption);
 	static const char* SkipOtrCatcherFlag()
 	{
 		return "skip_otr_processing";
@@ -109,7 +106,7 @@ signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 private:
-	OtrMessaging* FOtrConnection;
+	OtrMessaging* FOtrMessaging;
 	QHash<QString, QHash<QString, OtrClosure*> > FOnlineUsers;
 	IOptionsManager* FOptionsManager;
 	IStanzaProcessor *FStanzaProcessor;

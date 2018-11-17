@@ -69,7 +69,6 @@ public:
 
 	virtual QString dataDir() = 0;
 
-	virtual Policy policy() const = 0;
 	/**
 	 * Sends a message from the Account account to the user contact.
 	 * The method is called from the OtrConnection to send messages

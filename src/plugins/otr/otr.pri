@@ -6,7 +6,8 @@ HEADERS = \
       otrstatewidget.h \
     $$PWD/otr.h \
     $$PWD/otrclosure.h \
-    $$PWD/otrconfig.h
+    $$PWD/otrconfig.h \
+    $$PWD/otroptions.h
 
 SOURCES = \
       otrmessaging.cpp \
@@ -16,4 +17,8 @@ SOURCES = \
       otrstatewidget.cpp \
     $$PWD/otr.cpp \
     $$PWD/otrclosure.cpp \
-    $$PWD/otrconfig.cpp
+    $$PWD/otrconfig.cpp \
+    $$PWD/otroptions.cpp
+
+FORMS += \
+    $$PWD/otroptions.ui

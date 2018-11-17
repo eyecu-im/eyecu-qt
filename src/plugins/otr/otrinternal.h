@@ -57,9 +57,11 @@ class QString;
 class OtrInternal
 {
 public:
-	OtrInternal(IOtr* AOtr, IOtr::Policy& APolicy);
+	OtrInternal(IOtr* AOtr);
 
     ~OtrInternal();
+
+	void init();
 
 	QString encryptMessage(const QString& AAccount, const QString& AContact,
 						   const QString& AMessage);
@@ -118,7 +120,7 @@ public:
 	static QString humanFingerprint(const unsigned char* AFingerprint);
 
     /*** otr callback functions ***/
-	OtrlPolicy policy(ConnContext* AContext);
+	static OtrlPolicy policy(IOtr::Policy APolicy);
 	void create_privkey(const char* AAccountname, const char* AProtocol);
 	int is_logged_in(const char* AAccountname, const char* AProtocol,
 					 const char* ARecipient);
@@ -229,7 +231,7 @@ private:
     /**
      * Reference to the default OTR policy
      */
-	IOtr::Policy& FOtrPolicy;
+//	IOtr::Policy& FOtrPolicy;
 
     /**
      * Variable used during generating of private key.

@@ -2,6 +2,8 @@
 
 #include <definitions/menuicons.h>
 #include <definitions/resources.h>
+#include <definitions/optionvalues.h>
+#include <utils/options.h>
 #include <utils/iconstorage.h>
 #include <utils/menu.h>
 
@@ -131,7 +133,7 @@ void OtrStateWidget::onUpdateMessageState(const Jid &AStreamJid, const Jid &ACon
             }
         }
 
-		if (FOtrMessaging->getPolicy() < IOtr::PolicyEnabled)
+		if (Options::node(OPV_OTR_POLICY).value().toInt() < IOtr::PolicyEnabled)
         {
 			FStartSessionAction->setEnabled(false);
 			FEndSessionAction->setEnabled(false);

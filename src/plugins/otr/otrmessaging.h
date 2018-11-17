@@ -86,12 +86,14 @@ public:
      * @param plugin Pointer to the plugin, used for sending messages.
      * @param policy The default OTR policy
      */
-	OtrMessaging(IOtr* callback, IOtr::Policy policy);
+	OtrMessaging(IOtr* AOtr);
 
     /**
      * Deconstructor
      */
     ~OtrMessaging();
+
+	void init();
 
     /**
      * Process an outgoing message.
@@ -213,12 +215,12 @@ public:
     /**
      * Set the default OTR policy.
      */
-	void setPolicy(IOtr::Policy APolicy);
+//	void setPolicy(IOtr::Policy APolicy);
 
     /**
      * Return the default OTR policy.
      */
-	IOtr::Policy getPolicy();
+//	IOtr::Policy policy() const;
 
     /**
      * Generate own keys.
@@ -250,7 +252,7 @@ public:
 	QString humanContact(const QString& AAccountId, const QString& AContact);
 
 private:
-	IOtr::Policy FOtrPolicy;
+//	IOtr::Policy FOtrPolicy;
 	OtrInternal* FOtrInternal;
 	IOtr* FOtr;
 };

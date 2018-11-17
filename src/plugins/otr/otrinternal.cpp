@@ -31,10 +31,12 @@
 #include <QFutureWatcher>
 #include <QDir>
 #include <QFile>
-#include <definitions/version.h>
 #if QT_VERSION < 0x050000
 #include <QtConcurrentRun>
 #endif
+#include <definitions/version.h>
+#include <definitions/optionvalues.h>
+#include <utils/options.h>
 #include "otrinternal.h"
 
 //-----------------------------------------------------------------------------
@@ -45,20 +47,30 @@ static const QString OTR_INSTAGS_FILE = "otr.instags";
 
 // ============================================================================
 
-OtrInternal::OtrInternal(IOtr* AOtr, IOtr::Policy& APolicy)
+OtrInternal::OtrInternal(IOtr* AOtr)
 	: FUserState(),
 	  FUiOps(),
 	  FOtr(AOtr),
-	  FOtrPolicy(APolicy),
 	  FIsGenerating(false)
 {
-	QDir profileDir(AOtr->dataDir());
+}
+
+//-----------------------------------------------------------------------------
+
+OtrInternal::~OtrInternal()
+{
+	otrl_userstate_free(FUserState);
+}
+
+void OtrInternal::init()
+{
+	QDir profileDir(FOtr->dataDir());
 
 	FKeysFile        = profileDir.filePath(OTR_KEYS_FILE);
 	FInstagsFile     = profileDir.filePath(OTR_INSTAGS_FILE);
 	FFingerprintFile = profileDir.filePath(OTR_FINGERPRINTS_FILE);
 
-    OTRL_INIT;
+	OTRL_INIT;
 	FUserState                 = otrl_userstate_create();
 	FUiOps.policy              = (*OtrInternal::cb_policy);
 	FUiOps.create_privkey      = (*OtrInternal::cb_create_privkey);
@@ -82,29 +94,22 @@ OtrInternal::OtrInternal(IOtr* AOtr, IOtr::Policy& APolicy)
 	FUiOps.handle_smp_event    = (*OtrInternal::cb_handle_smp_event);
 	FUiOps.create_instag       = (*OtrInternal::cb_create_instag);
 #else
-    m_uiOps.log_message         = (*OtrInternal::cb_log_message);
+	m_uiOps.log_message         = (*OtrInternal::cb_log_message);
 
-    m_uiOps.notify              = (*OtrInternal::cb_notify);
-    m_uiOps.display_otr_message = (*OtrInternal::cb_display_otr_message);
+	m_uiOps.notify              = (*OtrInternal::cb_notify);
+	m_uiOps.display_otr_message = (*OtrInternal::cb_display_otr_message);
 
-    m_uiOps.protocol_name       = (*OtrInternal::cb_protocol_name);
-    m_uiOps.protocol_name_free  = (*OtrInternal::cb_protocol_name_free);
+	m_uiOps.protocol_name       = (*OtrInternal::cb_protocol_name);
+	m_uiOps.protocol_name_free  = (*OtrInternal::cb_protocol_name_free);
 #endif
 
 	otrl_privkey_read(FUserState, QFile::encodeName(FKeysFile).constData());
 	otrl_privkey_read_fingerprints(FUserState,
 								   QFile::encodeName(FFingerprintFile).constData(),
-                                   NULL, NULL);
+								   NULL, NULL);
 #if (OTRL_VERSION_MAJOR >= 4)
 	otrl_instag_read(FUserState, QFile::encodeName(FInstagsFile).constData());
 #endif
-}
-
-//-----------------------------------------------------------------------------
-
-OtrInternal::~OtrInternal()
-{
-	otrl_userstate_free(FUserState);
 }
 
 //-----------------------------------------------------------------------------
@@ -775,21 +780,21 @@ QString OtrInternal::humanFingerprint(const unsigned char* AFingerprint)
 //-----------------------------------------------------------------------------
 /***  implemented callback functions for libotr ***/
 
-OtrlPolicy OtrInternal::policy(ConnContext*)
+OtrlPolicy OtrInternal::policy(IOtr::Policy APolicy)
 {
-	if (FOtrPolicy == IOtr::PolocyOff)
+	if (APolicy == IOtr::PolocyOff)
     {
         return OTRL_POLICY_NEVER; // otr disabled
     }
-	else if (FOtrPolicy == IOtr::PolicyEnabled)
+	else if (APolicy == IOtr::PolicyEnabled)
     {
         return OTRL_POLICY_MANUAL; // otr enabled, session started manual
     }
-	else if (FOtrPolicy == IOtr::PolicyAuto)
+	else if (APolicy == IOtr::PolicyAuto)
     {
         return OTRL_POLICY_OPPORTUNISTIC; // automatically initiate private messaging
     }
-	else if (FOtrPolicy == IOtr::PolicyRequire)
+	else if (APolicy == IOtr::PolicyRequire)
     {
         return OTRL_POLICY_ALWAYS; // require private messaging
     }
@@ -1149,7 +1154,10 @@ void OtrInternal::account_name_free(const char* account_name)
 /*** static wrapper functions ***/
 
 OtrlPolicy OtrInternal::cb_policy(void* opdata, ConnContext* context) {
-    return static_cast<OtrInternal*>(opdata)->policy(context);
+	Q_UNUSED(opdata);
+	Q_UNUSED(context);
+	return policy(IOtr::Policy(Options::node(OPV_OTR_POLICY).value().toInt()));
+//	return static_cast<OtrInternal*>(opdata)->policy(context);
 }
 
 void OtrInternal::cb_create_privkey(void* opdata, const char* accountname, const char* protocol) {

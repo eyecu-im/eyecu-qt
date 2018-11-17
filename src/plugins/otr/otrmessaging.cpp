@@ -28,6 +28,9 @@
 #include <QList>
 #include <QHash>
 
+#include <definitions/optionvalues.h>
+#include <utils/options.h>
+
 OtrFingerprint::OtrFingerprint()
     : fingerprint(NULL)
 {
@@ -57,10 +60,9 @@ OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
 
 //-----------------------------------------------------------------------------
 
-OtrMessaging::OtrMessaging(IOtr* callback, IOtr::Policy policy)
-	: FOtrPolicy(policy),
-	  FOtrInternal(new OtrInternal(callback, FOtrPolicy)),
-	  FOtr(callback)
+OtrMessaging::OtrMessaging(IOtr* AOtr)
+	: FOtrInternal(new OtrInternal(AOtr)),
+	  FOtr(AOtr)
 {
 }
 
@@ -69,6 +71,11 @@ OtrMessaging::OtrMessaging(IOtr* callback, IOtr::Policy policy)
 OtrMessaging::~OtrMessaging()
 {
 	delete FOtrInternal;
+}
+
+void OtrMessaging::init()
+{
+	FOtrInternal->init();
 }
 
 //-----------------------------------------------------------------------------
@@ -218,17 +225,18 @@ bool OtrMessaging::smpSucceeded(const QString& AAccount, const QString& AContact
 
 //-----------------------------------------------------------------------------
 
-void OtrMessaging::setPolicy(IOtr::Policy APolicy)
-{
-	FOtrPolicy = APolicy;
-}
+//void OtrMessaging::setPolicy(IOtr::Policy APolicy)
+//{
+//	FOtrPolicy = APolicy;
+//}
 
 //-----------------------------------------------------------------------------
 
-IOtr::Policy OtrMessaging::getPolicy()
-{
-	return FOtrPolicy;
-}
+//IOtr::Policy OtrMessaging::policy() const
+//{
+//	return FOtrPolicy;
+//	return IOtr::Policy(Options::node(OPV_OTR_POLICY).value().toInt());
+//}
 
 //-----------------------------------------------------------------------------
 

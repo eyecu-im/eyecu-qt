@@ -26,6 +26,7 @@
 #include "otrmessaging.h"
 
 // xnamed! <<
+#include <definitions/optionvalues.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/ipresencemanager.h>
@@ -42,15 +43,6 @@ class QCheckBox;
 class QStandardItemModel;
 class QTableView;
 class QPoint;
-
-// ---------------------------------------------------------------------------
-
-const QString  OPTION_POLICY            = "otr-policy";
-const QVariant DEFAULT_POLICY           = QVariant(IOtr::PolicyEnabled);
-const QString  OPTION_END_WHEN_OFFLINE  = "end-session-when-offline";
-const QVariant DEFAULT_END_WHEN_OFFLINE = QVariant(false);
-
-// ---------------------------------------------------------------------------
 
 /**
  * This dialog appears in the 'Plugins' section of the Psi configuration.
@@ -100,8 +92,8 @@ private:
 
     IOptionsManager *FOptionsManager;
 
-private slots:
-    void updateOptions();
+//private slots:
+//    void updateOptions();
 };
 
 // ---------------------------------------------------------------------------
@@ -142,22 +134,22 @@ class PrivKeyWidget : public QWidget
 Q_OBJECT
 
 public:
-	PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent=nullptr);
+	PrivKeyWidget(OtrMessaging* AOtrMessaging, QWidget* AParent=nullptr);
 
 protected:
     void updateData();
 
 private:
     //AccountInfoAccessingHost* m_accountInfo;
-	OtrMessaging*             FOtrMessaging;
-	QTableView*               FTable;
-	QStandardItemModel*       FTableModel;
-	QHash<QString, QString>   FKeys;
-	QComboBox*                FAccountBox;
+	OtrMessaging*			FOtrMessaging;
+	QTableView*				FTable;
+	QStandardItemModel*		FTableModel;
+	QHash<QString, QString>	FKeys;
+	QComboBox*				FAccountBox;
 
-	IOptionsManager		*FOptionsManager;
-	IPresenceManager	*FPresenceManager;
-	IAccountManager		*FAccountManager;
+	IOptionsManager*		FOptionsManager;
+	IPresenceManager*		FPresenceManager;
+	IAccountManager*		FAccountManager;
 
 private slots:
     void deleteKey();

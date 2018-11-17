@@ -117,38 +117,36 @@ ConfigOtrWidget::ConfigOtrWidget(OtrMessaging* AOtrMessaging,
 
     setLayout(layout);
 
-    int policyOption = Options::node(OPTION_POLICY).value().toInt();
+	int policyOption = Options::node(OPV_OTR_POLICY).value().toInt();
 	if ((policyOption < IOtr::PolocyOff) || (policyOption > IOtr::PolicyRequire))
     {
 		policyOption = static_cast<int>(IOtr::PolicyEnabled);
     }
 
-    bool endWhenOfflineOption = Options::node(OPTION_END_WHEN_OFFLINE).value().toBool();
+	bool endWhenOfflineOption = Options::node(OPV_OTR_ENDWHENOFFLINE).value().toBool();
 
 	FPolicy->button(policyOption)->setChecked(true);
 
 	FEndWhenOffline->setChecked(endWhenOfflineOption);
 
-    updateOptions();
+//    updateOptions();
 
-	connect(FPolicy, SIGNAL(buttonClicked(int)),
-            SLOT(updateOptions()));
+//	connect(FPolicy, SIGNAL(buttonClicked(int)), SLOT(updateOptions()));
 
-	connect(FEndWhenOffline, SIGNAL(stateChanged(int)),
-            SLOT(updateOptions()));
+//	connect(FEndWhenOffline, SIGNAL(stateChanged(int)), SLOT(updateOptions()));
 }
 
 // ---------------------------------------------------------------------------
 
-void ConfigOtrWidget::updateOptions()
-{
-	IOtr::Policy policy = static_cast<IOtr::Policy>(FPolicy->checkedId());
+//void ConfigOtrWidget::updateOptions()
+//{
+//	IOtr::Policy policy = static_cast<IOtr::Policy>(FPolicy->checkedId());
 
-    Options::node(OPTION_POLICY).setValue(static_cast<int>(policy));
-    Options::node(OPTION_END_WHEN_OFFLINE).setValue(
-									FEndWhenOffline->checkState() == Qt::Checked);
-	FOtrMessaging->setPolicy(policy);
-}
+//	Options::node(OPV_OTR_POLICY).setValue(static_cast<int>(policy));
+//	Options::node(OPV_OTR_ENDWHENOFFLINE).setValue(
+//									FEndWhenOffline->checkState() == Qt::Checked);
+//	FOtrMessaging->setPolicy(policy);
+//}
 
 //=============================================================================
 
@@ -331,9 +329,9 @@ void FingerprintWidget::contextMenu(const QPoint& APos)
 
 //PrivKeyWidget::PrivKeyWidget(AccountInfoAccessingHost* accountInfo,
 //                             OtrMessaging* otr, QWidget* parent)
-PrivKeyWidget::PrivKeyWidget(OtrMessaging* FOtrMessaging, QWidget* parent)
-    : QWidget(parent),
-	  FOtrMessaging(FOtrMessaging),
+PrivKeyWidget::PrivKeyWidget(OtrMessaging* AOtrMessaging, QWidget* AParent)
+	: QWidget(AParent),
+	  FOtrMessaging(AOtrMessaging),
 	  FTable(new QTableView(this)),
 	  FTableModel(new QStandardItemModel(this)),
 	  FKeys(),
@@ -394,7 +392,7 @@ void PrivKeyWidget::updateData()
 	FTableModel->clear();
 	FTableModel->setColumnCount(2);
 	FTableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
-                                                          << tr("Fingerprint"));
+														 << tr("Fingerprint"));
 
 	FKeys = FOtrMessaging->getPrivateKeys();
     QHash<QString, QString>::iterator keyIt;

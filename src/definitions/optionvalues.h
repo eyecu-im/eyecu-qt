@@ -625,6 +625,11 @@
 #define OPV_JINGLE_RTP_RINGING							"jingle.rtp.ringing"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
 
+// Entryption
+// Off-the-Record Messaging
+#define OPV_OTR_POLICY									"otr.policy"
+#define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
+
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"
 #define OPV_MUC_CLIENTICON_SHOW                         "muc.clienticon.show"
