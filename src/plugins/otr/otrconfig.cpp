@@ -194,8 +194,8 @@ void FingerprintWidget::updateData()
 	FTableModel->clear();
 	FTableModel->setColumnCount(5);
 	FTableModel->setHorizontalHeaderLabels(QStringList() << tr("Account")
-                                            << tr("User") << tr("Fingerprint")
-                                            << tr("Verified") << tr("Status"));
+										   << tr("User") << tr("Fingerprint")
+										   << tr("Verified") << tr("Status"));
 
 	FFingerprints = FOtrMessaging->getFingerprints();
 	QListIterator<OtrFingerprint> fingerprintIt(FFingerprints);
@@ -213,7 +213,7 @@ void FingerprintWidget::updateData()
         row.append(new QStandardItem(fp.fingerprintHuman));
         row.append(new QStandardItem(fp.trust));
 		row.append(new QStandardItem(FOtrMessaging->getMessageStateString(fp.account,
-                                                                  fp.username)));
+																		  fp.username)));
 
 		FTableModel->appendRow(row);
 

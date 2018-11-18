@@ -856,14 +856,11 @@ void OtrInternal::create_privkey(const char* AAccountname,
     }
 
     char fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
-	if (otrl_privkey_fingerprint(FUserState, fingerprint, AAccountname,
-								 AProtocol))
+	if (otrl_privkey_fingerprint(FUserState, fingerprint, AAccountname, AProtocol))
     {
 		QMessageBox infoMb(QMessageBox::Information, QObject::tr("Off-the-Record Messaging"),
                            QObject::tr("Keys have been generated. "
-                                       "Fingerprint for account \"%1\":\n"
-                                       "%2\n"
-                                       "\n"
+									   "Fingerprint for account \"%1\":\n%2\n\n"
                                        "Thanks for your patience.")
 								   .arg(FOtr->humanAccount(
 											QString::fromUtf8(AAccountname)))

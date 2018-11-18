@@ -79,8 +79,18 @@
      <property name="bottomMargin">
       <number>10</number>
      </property>
-     <item row="0" column="0" rowspan="8">
-      <widget class="QTableView" name="tvFingerprints"/>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="pbFingerprintDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="whatsThis">
+        <string>Delete fingerprint</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1" rowspan="5">
       <spacer name="verticalSpacer">
@@ -95,21 +105,8 @@
        </property>
       </spacer>
      </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="pbDeleteFingerprint">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Delete</string>
-       </property>
-       <property name="whatsThis">
-        <string>Delete fingerprint</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1" rowspan="2">
-      <widget class="QPushButton" name="pbVerify">
+      <widget class="QPushButton" name="pbFingerprintVerify">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -120,6 +117,16 @@
         <string>Verify fingerprint</string>
        </property>
       </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QPushButton" name="pbFingerprintCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" rowspan="9">
+      <widget class="QTableView" name="tvFingerprints"/>
      </item>
     </layout>
    </item>
@@ -148,7 +155,7 @@
       <number>10</number>
      </property>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pbDeletePrivateKey">
+      <widget class="QPushButton" name="pbPrivKeyDelete">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -160,8 +167,18 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0" rowspan="2">
-      <widget class="QTableView" name="tvPrivateKeys"/>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="pbPrivKeyGenerate">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Add</string>
+       </property>
+       <property name="whatsThis">
+        <string>Generate private key for the account</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
       <spacer name="verticalSpacer_2">
@@ -179,18 +196,15 @@
      <item row="0" column="0">
       <widget class="QComboBox" name="cmbAccount"/>
      </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="pbAdd">
+     <item row="3" column="1">
+      <widget class="QPushButton" name="pbPrivKeyCopy">
        <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="toolTip">
-        <string>Add</string>
-       </property>
-       <property name="whatsThis">
-        <string>Generate private key for the account</string>
-       </property>
       </widget>
+     </item>
+     <item row="1" column="0" rowspan="3">
+      <widget class="QTableView" name="tvPrivateKeys"/>
      </item>
     </layout>
    </item>
@@ -200,17 +214,19 @@
   <tabstop>cmbPolicy</tabstop>
   <tabstop>cbEndWhenOffline</tabstop>
   <tabstop>cmbAccount</tabstop>
-  <tabstop>pbAdd</tabstop>
+  <tabstop>pbPrivKeyGenerate</tabstop>
   <tabstop>tvPrivateKeys</tabstop>
-  <tabstop>pbDeletePrivateKey</tabstop>
+  <tabstop>pbPrivKeyDelete</tabstop>
+  <tabstop>pbPrivKeyCopy</tabstop>
   <tabstop>tvFingerprints</tabstop>
-  <tabstop>pbVerify</tabstop>
-  <tabstop>pbDeleteFingerprint</tabstop>
+  <tabstop>pbFingerprintVerify</tabstop>
+  <tabstop>pbFingerprintDelete</tabstop>
+  <tabstop>pbFingerprintCopy</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>pbDeleteFingerprint</sender>
+   <sender>pbFingerprintDelete</sender>
    <signal>clicked()</signal>
    <receiver>OtrOptions</receiver>
    <slot>onFingerprintDelete()</slot>
@@ -258,7 +274,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pbDeletePrivateKey</sender>
+   <sender>pbPrivKeyDelete</sender>
    <signal>clicked()</signal>
    <receiver>OtrOptions</receiver>
    <slot>onPrivKeyDelete()</slot>
@@ -274,7 +290,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pbAdd</sender>
+   <sender>pbPrivKeyGenerate</sender>
    <signal>clicked()</signal>
    <receiver>OtrOptions</receiver>
    <slot>onPrivKeyGenerate()</slot>
@@ -290,7 +306,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pbVerify</sender>
+   <sender>pbFingerprintVerify</sender>
    <signal>clicked()</signal>
    <receiver>OtrOptions</receiver>
    <slot>onFingerprintVerify()</slot>

@@ -21,10 +21,12 @@ OtrOptions::OtrOptions(OtrMessaging *AOtrMessaging, QWidget *AParent) :
 {
 	ui->setupUi(this);
 	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-	ui->pbDeleteFingerprint->setIcon(menuicons->getIcon(MNI_EDIT_DELETE));
-	ui->pbVerify->setIcon(menuicons->getIcon(MNI_PEPMANAGER));
-	ui->pbAdd->setIcon(menuicons->getIcon(MNI_EDIT_ADD));
-	ui->pbDeletePrivateKey->setIcon(menuicons->getIcon(MNI_EDIT_DELETE));
+	ui->pbFingerprintDelete->setIcon(menuicons->getIcon(MNI_EDIT_DELETE));
+	ui->pbFingerprintVerify->setIcon(menuicons->getIcon(MNI_PEPMANAGER));
+	ui->pbFingerprintCopy->setIcon(menuicons->getIcon(MNI_EDIT_COPY));
+	ui->pbPrivKeyGenerate->setIcon(menuicons->getIcon(MNI_EDIT_ADD));
+	ui->pbPrivKeyDelete->setIcon(menuicons->getIcon(MNI_EDIT_DELETE));
+	ui->pbPrivKeyCopy->setIcon(menuicons->getIcon(MNI_EDIT_COPY));
 
 	// Fingerprints
 	ui->tvFingerprints->setShowGrid(true);
@@ -35,18 +37,9 @@ OtrOptions::OtrOptions(OtrMessaging *AOtrMessaging, QWidget *AParent) :
 
 	FFingerprintsModel->setColumnCount(5);
 	FFingerprintsModel->setHorizontalHeaderLabels(QStringList() << tr("Account") <<
-										   tr("User") << tr("Fingerprint") <<
-										   tr("Verified") << tr("Status"));
+												  tr("User") << tr("Fingerprint") <<
+												  tr("Verified") << tr("Status"));
 	ui->tvFingerprints->setModel(FFingerprintsModel);
-
-	// Private keys
-	QList<IPresence*> presences = FPresenceManager->presences();
-	for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
-	{
-		QString id =  FAccountManager->findAccountByStream((*it)->streamJid())->accountId().toString();
-		IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
-		ui->cmbAccount->addItem(account->name(), id);
-	}
 
 	ui->tvPrivateKeys->setShowGrid(true);
 	ui->tvPrivateKeys->setEditTriggers(0);
@@ -98,6 +91,19 @@ void OtrOptions::apply()
 		if (!indexes.contains(index)) // Deleted
 			FOtrMessaging->deleteFingerprint(*it);
 
+	// Cleanup deleted indexes
+	QSet<QString> ids;
+	count = FPrivKeyModel->rowCount();
+
+	// List present indexes
+	for (int i=0; i<count; ++i)
+		ids.insert(FPrivKeyModel->index(i,0).data(Qt::UserRole+1).toString());
+
+	for (QHash<QString,QString>::ConstIterator it = FKeys.constBegin();
+		 it != FKeys.constEnd(); ++it)
+		if (!ids.contains(it.key())) // Deleted
+			FOtrMessaging->deleteKey(it.key());
+
 	emit childApply();
 }
 
@@ -136,7 +142,8 @@ void OtrOptions::reset()
 	ui->tvFingerprints->sortByColumn(sortSection, sortOrder);
 	ui->tvFingerprints->resizeColumnsToContents();
 
-	// Privat keys
+	// Private keys
+	ui->cmbAccount->clear();
 	FKeys = FOtrMessaging->getPrivateKeys();
 	QHash<QString, QString>::iterator keyIt;
 	for (keyIt = FKeys.begin(); keyIt != FKeys.end(); ++keyIt)
@@ -144,7 +151,7 @@ void OtrOptions::reset()
 		QList<QStandardItem*> row;
 
 		QStandardItem* accItem = new QStandardItem(FOtrMessaging->humanAccount(keyIt.key()));
-		accItem->setData(QVariant(keyIt.key()));
+		accItem->setData(keyIt.key());
 
 		row.append(accItem);
 		row.append(new QStandardItem(keyIt.value()));
@@ -158,6 +165,14 @@ void OtrOptions::reset()
 
 	ui->tvPrivateKeys->sortByColumn(pkSortSection, pkSortOrder);
 	ui->tvPrivateKeys->resizeColumnsToContents();
+
+	QList<IPresence*> presences = FPresenceManager->presences();
+	for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
+	{
+		QString id =  FAccountManager->findAccountByStream((*it)->streamJid())->accountId().toString();
+		IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
+		ui->cmbAccount->addItem(account->name(), id);
+	}
 
 	emit childReset();
 }
@@ -181,28 +196,10 @@ void OtrOptions::copyFingerprint(const QItemSelectionModel *AModel, int AColumn)
 void OtrOptions::onFingerprintDelete()
 {
 	if (!ui->tvFingerprints->selectionModel()->hasSelection())
-	{
 		return;
-	}
+
 	foreach(QModelIndex selectIndex, ui->tvFingerprints->selectionModel()->selectedRows())
-	{
 		FFingerprintsModel->removeRow(selectIndex.row());
-//		int fpIndex = FTableModel->item(selectIndex.row(), 0)->data().toInt();
-
-//        QString msg(tr("Are you sure you want to delete the following fingerprint?") + "\n\n" +
-//					tr("Account: ") + FOtrMessaging->humanAccount(FFingerprints[fpIndex].account) + "\n" +
-//					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
-//					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
-
-//		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
-//                       QMessageBox::Yes | QMessageBox::No, this,
-//                       Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
-//        if (mb.exec() == QMessageBox::Yes)
-//        {
-//			FOtrMessaging->deleteFingerprint(FFingerprints[fpIndex]);
-//        }
-	}
 }
 
 void OtrOptions::onFingerprintVerify()
@@ -241,8 +238,9 @@ void OtrOptions::onFingerprintSelectionChanged(const QItemSelection &ASelected, 
 	Q_UNUSED(ADeselected)
 
 	bool disabled = qobject_cast<QItemSelectionModel *>(sender())->selection().isEmpty();
-	ui->pbDeleteFingerprint->setDisabled(disabled);
-	ui->pbVerify->setDisabled(disabled);
+	ui->pbFingerprintDelete->setDisabled(disabled);
+	ui->pbFingerprintVerify->setDisabled(disabled);
+	ui->pbFingerprintCopy->setDisabled(disabled);
 }
 
 void OtrOptions::onFingerprintContextMenu(const QPoint &APos)
@@ -250,12 +248,13 @@ void OtrOptions::onFingerprintContextMenu(const QPoint &APos)
 	QModelIndex index = ui->tvFingerprints->indexAt(APos);
 	if (!index.isValid())
 		return;
+	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 //TODO: Use Menu instead of QMenu here
 	QMenu* menu = new QMenu(this);
 
-	menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this, SLOT(onFingerprintDelete()));
+	menu->addAction(menuicons->getIcon(MNI_EDIT_DELETE), tr("Delete"), this, SLOT(onFingerprintDelete()));
 	menu->addAction(QIcon(":/otrplugin/otr_unverified.png"), tr("Verify fingerprint"), this, SLOT(onFingerprintVerify()));
-	menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy fingerprint"), this, SLOT(onFingerprintCopyFingerprint()));
+	menu->addAction(menuicons->getIcon(MNI_EDIT_COPY), tr("Copy fingerprint"), this, SLOT(onFingerprintCopyFingerprint()));
 
 	menu->exec(QCursor::pos());
 }
@@ -265,55 +264,40 @@ void OtrOptions::onPrivKeyContextMenu(const QPoint &APos)
 	QModelIndex index = ui->tvPrivateKeys->indexAt(APos);
 	if (!index.isValid())
 		return;
+	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 //TODO: Use Menu instead of QMenu here
 	QMenu* menu = new QMenu(this);
 
-	menu->addAction(QIcon::fromTheme("edit-delete"), tr("Delete"), this, SLOT(onPrivKeyDelete()));
-	menu->addAction(QIcon::fromTheme("edit-copy"), tr("Copy fingerprint"), this, SLOT(onPrivKeyCopyFingerprint()));
+	menu->addAction(menuicons->getIcon(MNI_EDIT_DELETE), tr("Delete"), this, SLOT(onPrivKeyDelete()));
+	menu->addAction(menuicons->getIcon(MNI_EDIT_COPY), tr("Copy fingerprint"), this, SLOT(onPrivKeyCopyFingerprint()));
 
 	menu->exec(QCursor::pos());
 }
 
 void OtrOptions::onAccountIndexChanged(int AIndex)
 {
-	ui->pbAdd->setDisabled(AIndex==-1);
+	ui->pbPrivKeyGenerate->setDisabled(AIndex==-1);
+
+	QString accountId(ui->cmbAccount->itemData(AIndex).toString());
+	if (FKeys.contains(accountId))
+		ui->pbPrivKeyGenerate->setIcon(QApplication::style()->standardPixmap(QStyle::SP_BrowserReload));
+	else
+		ui->pbPrivKeyGenerate->setIcon(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_EDIT_ADD));
 }
 
 void OtrOptions::onPrivKeyDelete()
 {
 	if (!ui->tvPrivateKeys->selectionModel()->hasSelection())
-	{
 		return;
-	}
 	foreach(QModelIndex selectIndex, ui->tvPrivateKeys->selectionModel()->selectedRows())
-	{
 		FPrivKeyModel->removeRow(selectIndex.row());
-//		int fpIndex = FTableModel->item(selectIndex.row(), 0)->data().toInt();
-
-//        QString msg(tr("Are you sure you want to delete the following fingerprint?") + "\n\n" +
-//					tr("Account: ") + FOtrMessaging->humanAccount(FFingerprints[fpIndex].account) + "\n" +
-//					tr("User: ") + FFingerprints[fpIndex].username + "\n" +
-//					tr("Fingerprint: ") + FFingerprints[fpIndex].fingerprintHuman);
-
-//		QMessageBox mb(QMessageBox::Question, tr("Off-the-Record Messaging"), msg,
-//                       QMessageBox::Yes | QMessageBox::No, this,
-//                       Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
-//        if (mb.exec() == QMessageBox::Yes)
-//        {
-//			FOtrMessaging->deleteFingerprint(FFingerprints[fpIndex]);
-//        }
-	}
 }
 
 void OtrOptions::onPrivKeyGenerate()
 {
 	int accountIndex = ui->cmbAccount->currentIndex();
-
 	if (accountIndex == -1)
-	{
 		return;
-	}
 
 	QString accountName(ui->cmbAccount->currentText());
 	QString accountId(ui->cmbAccount->itemData(accountIndex).toString());
@@ -329,9 +313,7 @@ void OtrOptions::onPrivKeyGenerate()
 					   Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
 		if (mb.exec() == QMessageBox::No)
-		{
 			return;
-		}
 	}
 
 	FOtrMessaging->generateKey(accountId);
@@ -340,21 +322,6 @@ void OtrOptions::onPrivKeyGenerate()
 void OtrOptions::onPrivKeyCopyFingerprint()
 {
 	copyFingerprint(ui->tvPrivateKeys->selectionModel(), 1);
-//	if (!ui->tvPrivateKeys->selectionModel()->hasSelection())
-//	{
-//		return;
-//	}
-//	QString text;
-//	foreach(QModelIndex selectIndex, ui->tvPrivateKeys->selectionModel()->selectedRows(1))
-//	{
-//		if (!text.isEmpty())
-//		{
-//			text += "\n";
-//		}
-//		text += FPrivKeyModel->item(selectIndex.row(), 1)->text();
-//	}
-//	QClipboard* clipboard = QApplication::clipboard();
-//	clipboard->setText(text);
 }
 
 void OtrOptions::onPrivKeySelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected)
@@ -362,5 +329,7 @@ void OtrOptions::onPrivKeySelectionChanged(const QItemSelection &ASelected, cons
 	Q_UNUSED(ASelected)
 	Q_UNUSED(ADeselected)
 
-	ui->pbDeletePrivateKey->setDisabled(qobject_cast<QItemSelectionModel *>(sender())->selection().isEmpty());
+	bool disable = qobject_cast<QItemSelectionModel *>(sender())->selection().isEmpty();
+	ui->pbPrivKeyDelete->setDisabled(disable);
+	ui->pbPrivKeyCopy->setDisabled(disable);
 }
