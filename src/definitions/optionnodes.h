@@ -37,7 +37,6 @@
 #define OPN_WIZARD_ACC          "WizardAcc"
 #define OPN_SCHEDULER           "Scheduler"
 #define OPN_OTR                 "OtrMessaging"
-#define OPN_OTR1                "OtrMessagingOld"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONNODES_H

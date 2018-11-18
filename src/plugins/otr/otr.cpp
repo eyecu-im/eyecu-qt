@@ -1,7 +1,6 @@
 #include "otr.h"
 #include "otrclosure.h"
 #include "otroptions.h"
-#include "otrconfig.h"
 
 #include <definitions/toolbargroups.h>
 #include <definitions/archivehandlerorders.h>
@@ -135,9 +134,6 @@ bool Otr::initSettings()
     {
         IOptionsDialogNode otrNode = { ONO_OTR, OPN_OTR, MNI_OTR_ENCRYPTED, tr("OTR Messaging") };
         FOptionsManager->insertOptionsDialogNode(otrNode);
-		IOptionsDialogNode otrNode1 = { ONO_OTR1, OPN_OTR1, MNI_OTR_ENCRYPTED, tr("OTR Messaging(old)") };
-		FOptionsManager->insertOptionsDialogNode(otrNode1);
-
         FOptionsManager->insertOptionsDialogHolder(this);		
     }
     return true;
@@ -149,8 +145,6 @@ QMultiMap<int, IOptionsDialogWidget *> Otr::optionsDialogWidgets(const QString &
     QMultiMap<int, IOptionsDialogWidget *> widgets;
     if (ANodeId == OPN_OTR)
 		widgets.insertMulti(ONO_OTR, new OtrOptions(FOtrMessaging, AParent));
-	if (ANodeId == OPN_OTR1)
-		widgets.insertMulti(ONO_OTR, new ConfigDialog(FOtrMessaging, AParent));
     return widgets;
 }
 
