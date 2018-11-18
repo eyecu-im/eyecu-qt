@@ -79,19 +79,6 @@
      <property name="bottomMargin">
       <number>10</number>
      </property>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="pbFingerprintDelete">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Delete</string>
-       </property>
-       <property name="whatsThis">
-        <string>Delete fingerprint</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="1" rowspan="5">
       <spacer name="verticalSpacer">
        <property name="orientation">
@@ -105,8 +92,11 @@
        </property>
       </spacer>
      </item>
+     <item row="0" column="0" rowspan="9">
+      <widget class="QTableView" name="tvFingerprints"/>
+     </item>
      <item row="0" column="1" rowspan="2">
-      <widget class="QPushButton" name="pbFingerprintVerify">
+      <widget class="QToolButton" name="pbFingerprintVerify">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -116,17 +106,42 @@
        <property name="whatsThis">
         <string>Verify fingerprint</string>
        </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QPushButton" name="pbFingerprintCopy">
-       <property name="enabled">
-        <bool>false</bool>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="0" rowspan="9">
-      <widget class="QTableView" name="tvFingerprints"/>
+     <item row="2" column="1">
+      <widget class="QToolButton" name="pbFingerprintDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="whatsThis">
+        <string>Delete fingerprint</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QToolButton" name="pbFingerprintCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy fingerprint</string>
+       </property>
+       <property name="whatsThis">
+        <string>Copies selected fingerprint</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -154,32 +169,6 @@
      <property name="bottomMargin">
       <number>10</number>
      </property>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pbPrivKeyDelete">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Delete</string>
-       </property>
-       <property name="whatsThis">
-        <string>Delete private key</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="pbPrivKeyGenerate">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Add</string>
-       </property>
-       <property name="whatsThis">
-        <string>Generate private key for the account</string>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="1">
       <spacer name="verticalSpacer_2">
        <property name="orientation">
@@ -196,15 +185,56 @@
      <item row="0" column="0">
       <widget class="QComboBox" name="cmbAccount"/>
      </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="pbPrivKeyCopy">
+     <item row="1" column="0" rowspan="3">
+      <widget class="QTableView" name="tvPrivateKeys"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QToolButton" name="pbPrivKeyGenerate">
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Add</string>
+       </property>
+       <property name="whatsThis">
+        <string>Generate private key for the account</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
-     <item row="1" column="0" rowspan="3">
-      <widget class="QTableView" name="tvPrivateKeys"/>
+     <item row="1" column="1">
+      <widget class="QToolButton" name="pbPrivKeyDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="whatsThis">
+        <string>Delete private key</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QToolButton" name="pbPrivKeyCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy fingerprint</string>
+       </property>
+       <property name="whatsThis">
+        <string>Copies fingerprint of selected private key</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -225,22 +255,6 @@
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>pbFingerprintDelete</sender>
-   <signal>clicked()</signal>
-   <receiver>OtrOptions</receiver>
-   <slot>onFingerprintDelete()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>367</x>
-     <y>342</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>367</x>
-     <y>425</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>tvFingerprints</sender>
    <signal>customContextMenuRequested(QPoint)</signal>
@@ -274,54 +288,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>pbPrivKeyDelete</sender>
-   <signal>clicked()</signal>
-   <receiver>OtrOptions</receiver>
-   <slot>onPrivKeyDelete()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>362</x>
-     <y>131</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>394</x>
-     <y>167</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbPrivKeyGenerate</sender>
-   <signal>clicked()</signal>
-   <receiver>OtrOptions</receiver>
-   <slot>onPrivKeyGenerate()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>377</x>
-     <y>101</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>397</x>
-     <y>66</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbFingerprintVerify</sender>
-   <signal>clicked()</signal>
-   <receiver>OtrOptions</receiver>
-   <slot>onFingerprintVerify()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>367</x>
-     <y>312</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>389</x>
-     <y>260</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cmbAccount</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>OtrOptions</receiver>
@@ -337,6 +303,102 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pbPrivKeyGenerate</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onPrivKeyGenerate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPrivKeyDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onPrivKeyDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>393</x>
+     <y>127</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFingerprintVerify</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onFingerprintVerify()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>390</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFingerprintDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onFingerprintDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>361</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>337</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPrivKeyCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onPrivKeyCopyFingerprint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>365</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>395</x>
+     <y>186</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFingerprintCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrOptions</receiver>
+   <slot>onFingerprintCopyFingerprint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>364</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>391</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onFingerprintDelete()</slot>
@@ -346,5 +408,7 @@
   <slot>onPrivKeyGenerate()</slot>
   <slot>onFingerprintVerify()</slot>
   <slot>onAccountIndexChanged(int)</slot>
+  <slot>onFingerprintCopyFingerprint()</slot>
+  <slot>onPrivKeyCopyFingerprint()</slot>
  </slots>
 </ui>

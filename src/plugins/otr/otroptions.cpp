@@ -253,7 +253,7 @@ void OtrOptions::onFingerprintContextMenu(const QPoint &APos)
 	QMenu* menu = new QMenu(this);
 
 	menu->addAction(menuicons->getIcon(MNI_EDIT_DELETE), tr("Delete"), this, SLOT(onFingerprintDelete()));
-	menu->addAction(QIcon(":/otrplugin/otr_unverified.png"), tr("Verify fingerprint"), this, SLOT(onFingerprintVerify()));
+	menu->addAction(menuicons->getIcon(MNI_OTR_UNVERFIFIED), tr("Verify fingerprint"), this, SLOT(onFingerprintVerify()));
 	menu->addAction(menuicons->getIcon(MNI_EDIT_COPY), tr("Copy fingerprint"), this, SLOT(onFingerprintCopyFingerprint()));
 
 	menu->exec(QCursor::pos());
