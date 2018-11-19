@@ -19,6 +19,7 @@
 #include <definitions/resources.h>
 
 #include <utils/options.h>
+#include <utils/delayedimagenetworkreply.h>
 
 class ChatMarkers : public QObject,
                  public IPlugin,
@@ -59,11 +60,11 @@ public:
     //IUrlHandler
     virtual QNetworkReply *request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData);
     // Not exported!
-    bool isMarked(const QString &AId) const;
+    bool isDisplayed(const QString &AId) const;
 
 protected:
 //    QHash<QString, QString> getReceipts(Jid jid) const;
-    void setMarked(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+    void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
 
@@ -77,7 +78,7 @@ private:
     IMessageWidgets     *FMessageWidgets;
     IconStorage         *FIconStorage;
 
-    QSet<QString>       FMarkedHash;
+    QSet<QString>       FDisplayedHash;
     QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
 
@@ -91,7 +92,7 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
 
 signals:
-    void marked(const QString &AId);
+    void displayed(const QString &AId);
 };
 
 #endif // CHATMARKERS_H

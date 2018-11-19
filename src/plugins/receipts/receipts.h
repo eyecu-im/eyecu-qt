@@ -19,6 +19,7 @@
 #include <definitions/resources.h>
 
 #include <utils/options.h>
+#include <utils/delayedimagenetworkreply.h>
 
 #define NAME_RECEIPTS   "receipts"
 

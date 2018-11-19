@@ -1,6 +1,4 @@
 HEADERS = \ 
-    receipts.h \
-    networkreplyreceipts.h
+    receipts.h
 SOURCES = \ 
-    receipts.cpp \
-    networkreplyreceipts.cpp
+    receipts.cpp

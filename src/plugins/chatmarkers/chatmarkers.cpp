@@ -1,5 +1,4 @@
 #include "chatmarkers.h"
-#include "networkreplychatmarkers.h"
 #include "definitions/messageeditororders.h"
 #include "definitions/messagewriterorders.h"
 #include "definitions/messagedataroles.h"
@@ -228,13 +227,13 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
         }
         else
         {
-            QDomElement rcvd=stanza.firstElement("received", NS_CHATMARKERS);
-            if(!rcvd.isNull())
+            QDomElement displayed=stanza.firstElement("displayed", NS_CHATMARKERS);
+            if(!displayed.isNull())
             {
-                QString id=rcvd.attribute("id");
+                QString id=displayed.attribute("id");
                 if (id.isEmpty())
                     id=AMessage.id(); //-- Obsolete revision of XEP-0184 ---
-                setMarked(AStreamJid, AMessage.from(), id);
+                setDisplayed(AStreamJid, AMessage.from(), id);
             }
         }
     }
@@ -316,13 +315,17 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 
 QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
 {
-	return new NetworkReplyChatMarkers(op, ARequest, AOutgoingData, this, &FImgeData, FUrlProcessor->instance());
+    DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, &FImgeData, FUrlProcessor->instance());
+    connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+    if (isDisplayed(ARequest.url().path()))
+            emit displayed(ARequest.url().path());
+    return reply;
 }
 
-void ChatMarkers::setMarked(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
     QString id = AStreamJid.full()+"/"+AContactJid.full()+"/"+AMessageId;
-    FMarkedHash.insert(id);
+    FDisplayedHash.insert(id);
     if (FMessageWidgets)
     {
         IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
@@ -334,7 +337,7 @@ void ChatMarkers::setMarked(const Jid &AStreamJid, const Jid &AContactJid, const
             {
                 notify.typeId = NNT_CHATMARKERS;
                 notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_CHATMARKERS));
-                notify.data.insert(NDR_POPUP_CAPTION, tr("Message marked"));
+                notify.data.insert(NDR_POPUP_CAPTION, tr("Message displayed"));
                 notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
 
@@ -345,12 +348,12 @@ void ChatMarkers::setMarked(const Jid &AStreamJid, const Jid &AContactJid, const
         }
     }
 
-    emit marked(id);
+    emit displayed(id);
 }
 
-bool ChatMarkers::isMarked(const QString &AId) const
+bool ChatMarkers::isDisplayed(const QString &AId) const
 {
-    return FMarkedHash.contains(AId);
+    return FDisplayedHash.contains(AId);
 }
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_chatmarkers, ChatMarkers)

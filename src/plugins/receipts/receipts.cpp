@@ -1,5 +1,4 @@
 #include "receipts.h"
-#include "networkreplyreceipts.h"
 #include "definitions/messageeditororders.h"
 #include "definitions/messagewriterorders.h"
 #include "definitions/messagedataroles.h"
@@ -306,7 +305,11 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
 
 QNetworkReply *Receipts::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
 {
-    return new NetworkReplyReceipts(op, ARequest, AOutgoingData, this, &FImgeData, FUrlProcessor->instance());
+    DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, &FImgeData, FUrlProcessor->instance());
+    connect(this, SIGNAL(delivered(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+    if (isDelivered(ARequest.url().path()))
+            emit delivered(ARequest.url().path());
+    return reply;
 }
 
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
