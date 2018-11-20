@@ -11,6 +11,7 @@
 #include <interfaces/iurlprocessor.h>
 #include <interfaces/inotifications.h>
 #include <interfaces/imessagewidgets.h>
+#include <interfaces/imultiuserchat.h>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -60,11 +61,14 @@ public:
     //IUrlHandler
     virtual QNetworkReply *request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData);
     // Not exported!
+    bool isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const;
+    bool isMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
     bool isDisplayed(const QString &AId) const;
 
 protected:
 //    QHash<QString, QString> getReceipts(Jid jid) const;
     void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+    void markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
 
@@ -76,14 +80,23 @@ private:
     IOptionsManager     *FOptionsManager;
     INotifications      *FNotifications;
     IMessageWidgets     *FMessageWidgets;
+    IMultiUserChatManager *FMultiChatManager;
     IconStorage         *FIconStorage;
 
     QSet<QString>       FDisplayedHash;
     QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
+    QHash<Jid, QHash<Jid, QString> > FMarkedHash;
+    QHash<Jid, QHash<Jid, QStringList> > FMarkableHash;
 
     void registerDiscoFeatures(bool ARegister);
 
+protected slots:
+    void onChatWindowCreated(IMessageChatWindow *AWindow);
+//    void onChatWindowActivated();
+protected slots:
+    void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
+//    void onMultiChatWindowActivated();
 protected slots:
     void onWindowActivated();
     void onNotificationActivated(int ANotifyId);

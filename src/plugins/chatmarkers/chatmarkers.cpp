@@ -23,6 +23,7 @@ ChatMarkers::ChatMarkers():
         FOptionsManager(NULL),
         FNotifications(NULL),
         FMessageWidgets(NULL),
+        FMultiChatManager(NULL),
         FIconStorage(NULL)
 {}
 
@@ -73,7 +74,19 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 
     plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
     if (plugin)
+    {
         FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
+        if (FMessageWidgets)
+            connect(FMessageWidgets->instance(),SIGNAL(chatWindowCreated(IMessageChatWindow *)),SLOT(onChatWindowCreated(IMessageChatWindow *)));
+    }
+
+    plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,NULL);
+    if (plugin)
+    {
+        FMultiChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
+        if (FMultiChatManager)
+            connect(FMultiChatManager->instance(),SIGNAL(multiChatWindowCreated(IMultiUserChatWindow *)), SLOT(onMultiChatWindowCreated(IMultiUserChatWindow *)));
+    }
 
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
@@ -162,11 +175,32 @@ void ChatMarkers::registerDiscoFeatures(bool ARegister)
 		FDiscovery->removeDiscoFeature(NS_CHATMARKERS);
 }
 
+void ChatMarkers::onChatWindowCreated(IMessageChatWindow *AWindow)
+{
+    connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onChatWindowActivated()));
+}
+
+void ChatMarkers::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+{
+    connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onWindowActivated()));
+}
+
 void ChatMarkers::onWindowActivated()
 {
     IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());
     if (window)
+    {
+        QMultiMap<Jid, Jid> addresses = window->address()->availAddresses();
         removeNotifiedMessages(window);
+
+        for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
+             it != addresses.constEnd(); ++it)
+            if (isMarked(it.key(), *it))
+            {
+                QString AId = FMarkedHash[it.key()][*it];
+                markDisplayed(it.key(), *it, AId);
+            }
+    }
 }
 
 void ChatMarkers::onNotificationActivated(int ANotifyId)
@@ -224,6 +258,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
             message.addElement("received", NS_CHATMARKERS).setAttribute("id", id);
             Message msg(message);
             FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
+            markDisplayed(AStreamJid, AMessage.from(), AMessage.id());
         }
         else
         {
@@ -251,6 +286,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
             }
             AMessage.detach();
             AMessage.stanza().addElement("markable", NS_CHATMARKERS);
+//            FMarkedHash.insert(AMessage.id());
         }
     }
 	return false;
@@ -349,6 +385,34 @@ void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, co
     }
 
     emit displayed(id);
+}
+
+void ChatMarkers::markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+{
+    IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+    if (window && window->isActiveTabPage())
+    {
+        Stanza message("message");
+        message.setTo(AContactJid.bare()).setId(AMessageId);
+        message.addElement("displayed", NS_CHATMARKERS).setAttribute("id", AMessageId);
+        Message msg(message);
+        FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
+        if (isMarked(AStreamJid, AContactJid))
+            FMarkedHash[AStreamJid].remove(AContactJid);
+    }
+    else
+    {
+        FMarkedHash[AStreamJid].insert(AContactJid, AMessageId);
+    }
+}
+bool ChatMarkers::isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+    return FMarkableHash[AStreamJid].contains(AContactJid);
+}
+
+bool ChatMarkers::isMarked(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+    return FMarkedHash[AStreamJid].contains(AContactJid);
 }
 
 bool ChatMarkers::isDisplayed(const QString &AId) const
