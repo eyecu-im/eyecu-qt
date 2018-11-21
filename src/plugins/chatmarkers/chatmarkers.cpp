@@ -248,17 +248,22 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
     if (ADirection==IMessageProcessor::DirectionIn)
     {
         if (Options::node(OPV_CHATMARKERS_SEND).value().toBool() &&
-            !stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
-            !AMessage.body().isNull() &&
-            !AMessage.isDelayed())
+                isSupported(AStreamJid, AMessage.from()) &&
+                !stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
+                !AMessage.body().isNull() &&
+                !AMessage.isDelayed())
         {
             Stanza message("message");
             QString id=AMessage.id();
-            message.setTo(AMessage.from()).setId(id); //-- Obsolete revision of XEP-0184 ---
+            message.setTo(AMessage.from()).setUniqueId();
             message.addElement("received", NS_CHATMARKERS).setAttribute("id", id);
             Message msg(message);
             FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
-            markDisplayed(AStreamJid, AMessage.from(), AMessage.id());
+            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
+            if (window && window->isActiveTabPage())
+                markDisplayed(AStreamJid, AMessage.from(), AMessage.id());
+            else
+                FMarkedHash[AStreamJid].insert(AMessage.from(), AMessage.id());
         }
         else
         {
@@ -286,7 +291,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
             }
             AMessage.detach();
             AMessage.stanza().addElement("markable", NS_CHATMARKERS);
-//            FMarkedHash.insert(AMessage.id());
+            FMarkableHash[AStreamJid][AMessage.to()].append(AMessage.id());
         }
     }
 	return false;
@@ -389,22 +394,15 @@ void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, co
 
 void ChatMarkers::markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-    if (window && window->isActiveTabPage())
-    {
         Stanza message("message");
-        message.setTo(AContactJid.bare()).setId(AMessageId);
+        message.setTo(AContactJid.bare()).setUniqueId();
         message.addElement("displayed", NS_CHATMARKERS).setAttribute("id", AMessageId);
         Message msg(message);
         FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
         if (isMarked(AStreamJid, AContactJid))
             FMarkedHash[AStreamJid].remove(AContactJid);
-    }
-    else
-    {
-        FMarkedHash[AStreamJid].insert(AContactJid, AMessageId);
-    }
 }
+
 bool ChatMarkers::isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const
 {
     return FMarkableHash[AStreamJid].contains(AContactJid);
