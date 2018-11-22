@@ -3,6 +3,8 @@
 
 // *** <<< eyeCU <<< ***
 #define MHO_ATTENTION                         100
+#define MHO_CHATMARKERS                       200
+#define MHO_RECEIPTS                          300
 #define MHO_MAPMESSAGE                        700
 // *** >>> eyeCU >>> ***
 #define MHO_MULTIUSERCHAT                     600

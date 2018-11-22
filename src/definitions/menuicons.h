@@ -270,7 +270,7 @@
 #define MNI_EXCLAMATION                 "exclamation"
 
 // Message receipts
-#define MNI_RECEIPTS                    "receipts"
+#define MNI_DELIVERED                   "delivered"
 
 // Chat Markers
 #define MNI_CHATMARKERS                 "chatmarkers"

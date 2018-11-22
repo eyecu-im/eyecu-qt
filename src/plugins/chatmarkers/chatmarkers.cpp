@@ -131,14 +131,23 @@ bool ChatMarkers::initObjects()
 
     if (FNotifications)
     {
-        INotificationType notifyType;
-        notifyType.order = NTO_CHATMARKERS_NOTIFY;
+        INotificationType recievedType;
+        recievedType.order = NTO_DELIVERED_NOTIFY;
         if (FIconStorage)
-            notifyType.icon = FIconStorage->getIcon(MNI_CHATMARKERS);
-        notifyType.title = tr("When message marked with a recieved Chat Marker");
-        notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
-        notifyType.kindDefs = notifyType.kindMask;
-        FNotifications->registerNotificationType(NNT_CHATMARKERS, notifyType);
+            recievedType.icon = FIconStorage->getIcon(MNI_DELIVERED);
+        recievedType.title = tr("When message delivery notification recieved");
+        recievedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
+        recievedType.kindDefs = recievedType.kindMask;
+        FNotifications->registerNotificationType(NNT_DELIVERED, recievedType);
+
+        INotificationType displayedType;
+        displayedType.order = NTO_CHATMARKERS_NOTIFY;
+        if (FIconStorage)
+            displayedType.icon = FIconStorage->getIcon(MNI_CHATMARKERS);
+        displayedType.title = tr("When message marked with a displayed Chat Marker");
+        displayedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
+        displayedType.kindDefs = displayedType.kindMask;
+        FNotifications->registerNotificationType(NNT_CHATMARKERS, displayedType);
     }
 
     if (FUrlProcessor)
@@ -267,6 +276,14 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
         }
         else
         {
+            QDomElement received=stanza.firstElement("received", NS_CHATMARKERS);
+            if (!received.isNull())
+            {
+                QString id=received.attribute("id");
+                if (id.isEmpty())
+                    id=AMessage.id();
+                setReceived(AStreamJid, AMessage.from(), id);
+            }
             QDomElement displayed=stanza.firstElement("displayed", NS_CHATMARKERS);
             if(!displayed.isNull())
             {
@@ -314,6 +331,15 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
         Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
        !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
     {
+        if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+        {
+            QUrl url(QString("receipts:%1/%2/%3").arg(AMessage.from())
+                                                 .arg(AMessage.to())
+                                                 .arg(AMessage.id()));
+            QTextCursor cursor(ADocument);
+            cursor.movePosition(QTextCursor::End);
+            cursor.insertImage(url.toString());
+        }
         QUrl url(QString("chatmarkers:%1/%2/%3").arg(AMessage.from())
 												.arg(AMessage.to())
 												.arg(AMessage.id()));
@@ -357,10 +383,46 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
 {
     DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, &FImgeData, FUrlProcessor->instance());
-    connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
-    if (isDisplayed(ARequest.url().path()))
-            emit displayed(ARequest.url().path());
+
+    if (ARequest.url().scheme().contains("receipts"))
+            connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+    if (ARequest.url().scheme().contains("chatmarkers"))
+        connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+
+    if (isReceived(ARequest.url().path()))
+        emit received(ARequest.url().path());
+    if(isDisplayed(ARequest.url().path()))
+        emit displayed(ARequest.url().path());
     return reply;
+}
+
+void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+{
+    QString id = AStreamJid.full()+"/"+AContactJid.full()+"/"+AMessageId;
+    FReceivedHash.insert(id);
+    if (FMessageWidgets)
+    {
+        IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+        if (window && !window->isActiveTabPage())
+        {
+            INotification notify;
+            notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
+            if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+            {
+                notify.typeId = NNT_DELIVERED;
+                notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_DELIVERED));
+                notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
+                notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+//                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+
+                notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
+                FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
+                connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
+            }
+        }
+    }
+
+    emit received(id);
 }
 
 void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
@@ -411,6 +473,11 @@ bool ChatMarkers::isMarkable(const Jid &AStreamJid, const Jid &AContactJid) cons
 bool ChatMarkers::isMarked(const Jid &AStreamJid, const Jid &AContactJid) const
 {
     return FMarkedHash[AStreamJid].contains(AContactJid);
+}
+
+bool ChatMarkers::isReceived(const QString &AId) const
+{
+    return FReceivedHash.contains(AId);
 }
 
 bool ChatMarkers::isDisplayed(const QString &AId) const

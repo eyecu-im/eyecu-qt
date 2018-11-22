@@ -63,10 +63,12 @@ public:
     // Not exported!
     bool isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const;
     bool isMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
+    bool isReceived(const QString &AId) const;
     bool isDisplayed(const QString &AId) const;
 
 protected:
 //    QHash<QString, QString> getReceipts(Jid jid) const;
+    void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
@@ -83,6 +85,7 @@ private:
     IMultiUserChatManager *FMultiChatManager;
     IconStorage         *FIconStorage;
 
+    QSet<QString>       FReceivedHash;
     QSet<QString>       FDisplayedHash;
     QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
@@ -105,6 +108,7 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
 
 signals:
+    void received(const QString &AId);
     void displayed(const QString &AId);
 };
 

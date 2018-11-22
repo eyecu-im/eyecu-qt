@@ -105,7 +105,7 @@ bool Receipts::initObjects()
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
     if (FIconStorage)
     {
-        QString fileName=FIconStorage->fileFullName(MNI_RECEIPTS);
+        QString fileName=FIconStorage->fileFullName(MNI_DELIVERED);
         if (!fileName.isEmpty())
         {
             QFile file(fileName);
@@ -120,13 +120,13 @@ bool Receipts::initObjects()
     if (FNotifications)
     {
         INotificationType notifyType;
-        notifyType.order = NTO_RECEIPTS_NOTIFY;
+        notifyType.order = NTO_DELIVERED_NOTIFY;
         if (FIconStorage)
-            notifyType.icon = FIconStorage->getIcon(MNI_RECEIPTS);
+            notifyType.icon = FIconStorage->getIcon(MNI_DELIVERED);
         notifyType.title = tr("When message delivery notification recieved");
         notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
         notifyType.kindDefs = notifyType.kindMask;
-        FNotifications->registerNotificationType(NNT_RECEIPTS, notifyType);
+        FNotifications->registerNotificationType(NNT_DELIVERED, notifyType);
     }
 
     if (FUrlProcessor)
@@ -154,7 +154,7 @@ void Receipts::registerDiscoFeatures(bool ARegister)
 		IDiscoFeature dfeature;
 		dfeature.active = true;
 		dfeature.var = NS_RECEIPTS;
-		dfeature.icon = FIconStorage->getIcon(MNI_RECEIPTS);
+        dfeature.icon = FIconStorage->getIcon(MNI_DELIVERED);
 		dfeature.name = tr("Message Delivery Receipts");
 		dfeature.description = tr("Sends/receives Message Delivery Receipts");
 		FDiscovery->insertDiscoFeature(dfeature);
@@ -322,11 +322,11 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
         if (window && !window->isActiveTabPage())
         {
             INotification notify;
-            notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_RECEIPTS);
+            notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
             if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
             {
-                notify.typeId = NNT_RECEIPTS;
-                notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_RECEIPTS));
+                notify.typeId = NNT_DELIVERED;
+                notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_DELIVERED));
                 notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
                 notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
