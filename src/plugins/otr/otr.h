@@ -19,7 +19,6 @@
 #include <utils/message.h>
 
 #include "otrmessaging.h"
-#include "stanza_catchers.h"
 #include "otrstatewidget.h"
 
 class IAccountManager;
@@ -36,7 +35,7 @@ class Otr:
 	public IArchiveHandler,
 	public IStanzaHandler
 {
-	Q_OBJECT;
+    Q_OBJECT
 	Q_INTERFACES(IPlugin IOtr IOptionsDialogHolder IArchiveHandler IStanzaHandler)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOtr")
@@ -58,12 +57,6 @@ public:
 	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
-
-//	virtual void optionChanged(const QString& AOption);
-	static const char* SkipOtrCatcherFlag()
-	{
-		return "skip_otr_processing";
-	}
 
     // OtrCallback
     virtual QString dataDir();
@@ -114,9 +107,7 @@ private:
 	IAccountManager* FAccountManager;
 	IPresenceManager *FPresenceManager;
 	IMessageProcessor* FMessageProcessor;
-	InboundStanzaCatcher* FInboundCatcher;
-	OutboundStanzaCatcher* FOutboundCatcher;
-	QString FHomePath;
+    QString         FHomePath;
 	QHash<IMessageToolBarWidget*, Action*> FActions;
 	QHash<Action*, QToolButton*> FButtons;
 	IMessageWidgets *FMessageWidgets;

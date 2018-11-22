@@ -5,6 +5,7 @@
 #include <definitions/toolbargroups.h>
 #include <definitions/archivehandlerorders.h>
 #include <definitions/optionvalues.h>
+#include <definitions/stanzahandlerorders.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagewidgets.h>
@@ -14,19 +15,18 @@
 #include <QMenu>
 #include <QToolButton>
 
-#define SHO_OTR             500
 #define SHC_PRESENCE        "/presence"
 #define SHC_MESSAGE         "/message"
+
+#define SKIP_OTR_FLAG       "skip_otr_processing"
 
 Otr::Otr() :
 	FOtrMessaging(new OtrMessaging(this)),
 	FOnlineUsers(),
-    FOptionsManager(NULL),
-    FAccountManager(NULL),
-    FPresenceManager(NULL),
-    FMessageProcessor(NULL),
-	FInboundCatcher(NULL),
-	FOutboundCatcher(NULL)
+    FOptionsManager(nullptr),
+    FAccountManager(nullptr),
+    FPresenceManager(nullptr),
+    FMessageProcessor(nullptr)
 {
 }
 
@@ -54,7 +54,7 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 //	FHomePath = APluginManager->homePath();
 
-    IPlugin *plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0,NULL);
+    IPlugin *plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0,nullptr);
     if (plugin)
     {
         FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
@@ -70,7 +70,7 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
         }
     }
 
-    plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
+    plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,nullptr);
     if (plugin)
     {
         IXmppStreamManager *FXmppStreams = qobject_cast<IXmppStreamManager *>(plugin->instance());
@@ -81,7 +81,7 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
         }
     }
 
-    plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+    plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
     if (plugin)
     {
         FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
@@ -95,14 +95,14 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
     if (plugin)
         FMessageArchiver = qobject_cast<IMessageArchiver *>(plugin->instance());
 
-    plugin = APluginManager->pluginInterface("IAccountManager").value(0,NULL);
+    plugin = APluginManager->pluginInterface("IAccountManager").value(0,nullptr);
     FAccountManager = qobject_cast<IAccountManager *>(plugin->instance());
 
-    plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,NULL);
+    plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,nullptr);
     if (plugin)
         FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
 
-    plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+    plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,nullptr);
     if (plugin)
     {
         FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
@@ -117,8 +117,6 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
     }
 
     return (FStanzaProcessor != NULL);
-
-    return true;
 }
 
 bool Otr::initObjects()
@@ -154,7 +152,7 @@ bool Otr::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessag
     Q_UNUSED(AStreamJid);
     Q_UNUSED(ADirectionIn);
 
-    return AMessage.stanza().attribute(SkipOtrCatcherFlag()) != "true";
+    return AMessage.stanza().attribute(SKIP_OTR_FLAG) != "true";
 }
 
 void Otr::onStreamOpened( IXmppStream *AXmppStream )
@@ -164,7 +162,6 @@ void Otr::onStreamOpened( IXmppStream *AXmppStream )
 
 void Otr::onStreamClosed( IXmppStream *AXmppStream )
 {
-    //Q_UNUSED(AXmppStream);
 	QString account = FAccountManager->findAccountByStream(AXmppStream->streamJid())->accountId().toString();
 
 	if (FOnlineUsers.contains(account))
@@ -173,7 +170,6 @@ void Otr::onStreamClosed( IXmppStream *AXmppStream )
         {
 			FOtrMessaging->endSession(account, contact);
 			FOnlineUsers[account][contact]->setIsLoggedIn(false);
-            //m_onlineUsers[account][contact]->updateMessageState();
         }
     }
 }
@@ -210,14 +206,11 @@ void Otr::onProfileOpened(const QString &AProfile)
 {
 	FHomePath = FOptionsManager->profilePath(AProfile);
 	FOtrMessaging->init();
-//	FOtrMessaging = new OtrMessaging(this, Policy(Options::node(OPV_OTR_POLICY).value().toInt()));
 }
 
 void Otr::onPresenceOpened(IPresence *APresence)
 {
     Q_UNUSED(APresence)
-	FInboundCatcher = new InboundStanzaCatcher(FOtrMessaging, FAccountManager, this);
-	FOutboundCatcher = new OutboundStanzaCatcher(FOtrMessaging, FAccountManager, this);
 
     if (FStanzaProcessor)
     {
@@ -229,17 +222,15 @@ void Otr::onPresenceOpened(IPresence *APresence)
         FSHIPresence = FStanzaProcessor->insertStanzaHandle(shandle);
         //
         IStanzaHandle handle_in;
-		handle_in.handler = FInboundCatcher;
-        handle_in.order = -32767; // SHO
+        handle_in.handler = this;
+        handle_in.order = SHO_OTR; // SHO
         handle_in.direction = IStanzaHandle::DirectionIn;
-        //handle_in.streamJid = AXmppStream->streamJid();
         handle_in.conditions.append(SHC_MESSAGE);
 
         IStanzaHandle handle_out;
-		handle_out.handler = FOutboundCatcher;
-        handle_out.order = 32767; // SHO
+        handle_out.handler = this;
+        handle_out.order = SHO_OTR; // SHO
         handle_out.direction = IStanzaHandle::DirectionOut;
-        //handle_out.streamJid = AXmppStream->streamJid();
         handle_out.conditions.append(SHC_MESSAGE);
 
         FSHIMessage = FStanzaProcessor->insertStanzaHandle(handle_in);
@@ -262,14 +253,6 @@ void Otr::authenticateContact(const QString &AAccount, const QString &AContact)
 
 //-----------------------------------------------------------------------------
 
-//void Otr::optionChanged(const QString &AOption)
-//{
-//	QVariant policyOption = Options::node(OPV_OTR_POLICY).value();
-//	FOtrMessaging->setPolicy(static_cast<Policy>(policyOption.toInt()));
-//}
-
-//-----------------------------------------------------------------------------
-
 QString Otr::dataDir()
 {
 	return FHomePath;
@@ -280,13 +263,12 @@ QString Otr::dataDir()
 void Otr::sendMessage(const QString &account, const QString &contact, const QString& AMessage)
 {
     Message message;
-    //QString id=AMessage.id();
 	message.setType(Message::Chat).setBody(AMessage);
 
     if (!message.body().isEmpty())
     {
         message.setTo(contact);//.setId(id);
-        message.stanza().setAttribute(SkipOtrCatcherFlag(), "true");
+        message.stanza().setAttribute(SKIP_OTR_FLAG, "true");
         FMessageProcessor->sendMessage(FAccountManager->findAccountById(account)->streamJid(), message, IMessageProcessor::DirectionOut);
     }
 
@@ -298,10 +280,7 @@ bool Otr::isLoggedIn(const QString &AAccount, const QString &AContact)
 {
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))
-    {
 		return FOnlineUsers.value(AAccount).value(AContact)->isLoggedIn();
-    }
-
     return false;
 }
 
@@ -412,18 +391,13 @@ void Otr::updateSMP(const QString &AAccount, const QString &AContact,
 
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))
-    {
 		FOnlineUsers[AAccount][AContact]->updateSMP(AProgress);
-    }
 }
 
 //-----------------------------------------------------------------------------
 
 QString Otr::humanAccount(const QString& AAccountId)
 {
-    /*QString human(FAccountManager->findAccountById(accountId)->accountId());
-
-    return human.isEmpty()? accountId : human;*/
 	return FAccountManager->findAccountById(AAccountId)->streamJid().bare();
 }
 
@@ -447,7 +421,8 @@ QString Otr::humanContact(const QString& AAccountId,
 
 void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const
 {
-    IMessageChatWindow *window = FMessageWidgets!=NULL ? FMessageWidgets->findChatWindow(AStreamJid,AContactJid,true) : NULL;
+    IMessageChatWindow *window = FMessageWidgets ? FMessageWidgets->findChatWindow(AStreamJid,AContactJid,true)
+                                                 : nullptr;
     if (window)
     {
         IMessageStyleContentOptions options;
@@ -474,12 +449,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
             if (AStanza.type() == PRESENCE_TYPE_AVAILABLE)
             {
 				if (!FOnlineUsers.value(account).contains(contact))
-                {
-					FOnlineUsers[account][contact] = new OtrClosure(account,
-                                                                        contact,
-																		FOtrMessaging);
-                }
-
+                    FOnlineUsers[account][contact] = new OtrClosure(account, contact, FOtrMessaging);
 				FOnlineUsers[account][contact]->setIsLoggedIn(true);
             }
             else if (AStanza.type() == PRESENCE_TYPE_UNAVAILABLE)
@@ -498,6 +468,94 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
             }
         }
     }
+    else if (AHandlerId == FSHIMessage || AHandlerId == FSHOMessage)
+    {
+        Message message(AStanza);
+        if (message.type() != Message::Chat)
+            return false;
+
+        if (message.body().isEmpty())
+            return false;
+
+        if (message.stanza().attribute(SKIP_OTR_FLAG) != "true")
+        {
+            if (AHandlerId == FSHOMessage)
+            {
+                Q_UNUSED(AAccept);
+
+                Message message(AStanza);
+
+                QString contact = message.to();
+                QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
+
+                QString encrypted = FOtrMessaging->encryptMessage(
+                    account,
+                    contact,
+                    message.body());
+                message.setBody(encrypted);
+
+                //if there has been an error, drop the message
+                if (encrypted.isEmpty())
+                    return true;
+
+                AStanza = message.stanza();
+
+
+                /*if (!m_onlineUsers.value(account).contains(contact))
+                {
+                    m_onlineUsers[account][contact] = new PsiOtrClosure(account, contact,
+                                                                        m_otrConnection);
+                }*/
+                //if (m_onlineUsers[account][contact]->encrypted()) {
+                if (FOtrMessaging->getMessageState(account, contact) == IOtr::MsgStateEncrypted)
+                {
+                    if (AStanza.to().contains("/")) // if not a bare jid
+                        AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints" ,"no-copy")).toElement();
+                    AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints", "no-permanent-store")).toElement();
+                    AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:carbons:2", "private")).toElement();
+                }
+
+                return false;
+            }
+            else
+            {
+                Q_UNUSED(AAccept);
+
+                bool ignore = false;
+                Message message(AStanza);
+
+                QString contact = message.from();
+                QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
+                QString plainBody = message.body();
+
+                QString decrypted;
+                IOtr::MessageType messageType = FOtrMessaging->decryptMessage(account, contact,
+                                                                         plainBody, decrypted);
+                switch (messageType)
+                {
+                    case IOtr::MsgTypeNone:
+                        break;
+                    case IOtr::MsgTypeIgnore:
+                        ignore = true;
+                        break;
+                    case IOtr::MsgTypeOtr:
+                        QString bodyText;
+
+                        bodyText = decrypted;
+
+                        message.setBody(bodyText);
+                        AStanza = message.stanza();
+                        break;
+                }
+                return ignore;
+            }
+        }
+        else
+        {
+            message.stanza().element().removeAttribute("skip_otr_processing");
+        }
+    }
+
     return false;
 }
 
