@@ -333,7 +333,7 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
     {
         if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
         {
-            QUrl url(QString("receipts:%1/%2/%3").arg(AMessage.from())
+            QUrl url(QString("received:%1/%2/%3").arg(AMessage.from())
                                                  .arg(AMessage.to())
                                                  .arg(AMessage.id()));
             QTextCursor cursor(ADocument);
@@ -384,7 +384,7 @@ QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const Q
 {
     DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, &FImgeData, FUrlProcessor->instance());
 
-    if (ARequest.url().scheme().contains("receipts"))
+    if (ARequest.url().scheme().contains("received"))
             connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
     if (ARequest.url().scheme().contains("chatmarkers"))
         connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
