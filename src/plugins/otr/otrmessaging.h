@@ -104,8 +104,9 @@ public:
      *
      * @return The encrypted message
      */
-    QString encryptMessage(const QString& account, const QString& contact,
-                           const QString& message);
+    QString encryptMessage(const QString& AAccount,
+                           const QString& AContact,
+                           const QString& AMessage);
 
     /**
      * Decrypt an incoming message.
@@ -117,8 +118,8 @@ public:
      *                  encrypted
      * @return Type of incoming message
      */
-	IOtr::MessageType decryptMessage(const QString& account, const QString& contact,
-                                  const QString& message, QString& decrypted);
+    IOtr::MessageType decryptMessage(const QString& AAccount, const QString& AContact,
+                                     const QString& AMessage, QString& ADecrypted);
 
     /**
      * Returns a list of known fingerprints.

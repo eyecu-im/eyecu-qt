@@ -77,7 +77,7 @@ public:
 	virtual void sendMessage(const QString& account, const QString& contact,
 							 const QString& message) = 0;
 
-	virtual bool isLoggedIn(const QString& account, const QString& contact) = 0;
+    virtual bool isLoggedIn(const QString& account, const QString& contact) const = 0;
 
 	virtual void notifyUser(const QString& account, const QString& contact,
 							const QString& message, const NotifyType& type) = 0;

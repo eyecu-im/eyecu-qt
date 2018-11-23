@@ -80,21 +80,21 @@ void OtrMessaging::init()
 
 //-----------------------------------------------------------------------------
 
-QString OtrMessaging::encryptMessage(const QString& account,
-                                     const QString& contact,
-                                     const QString& message)
+QString OtrMessaging::encryptMessage(const QString& AAccount,
+                                     const QString& AContact,
+                                     const QString& AMessage)
 {
-	return FOtrInternal->encryptMessage(account, contact, message);
+    return FOtrInternal->encryptMessage(AAccount, AContact, AMessage);
 }
 
 //-----------------------------------------------------------------------------
 
-IOtr::MessageType OtrMessaging::decryptMessage(const QString& account,
-												  const QString& contact,
-												  const QString& message,
-												  QString& decrypted)
+IOtr::MessageType OtrMessaging::decryptMessage(const QString& AAccount,
+                                               const QString& AContact,
+                                               const QString& AMessage,
+                                               QString& ADecrypted)
 {
-	return FOtrInternal->decryptMessage(account, contact, message, decrypted);
+    return FOtrInternal->decryptMessage(AAccount, AContact, AMessage, ADecrypted);
 }
 
 //-----------------------------------------------------------------------------

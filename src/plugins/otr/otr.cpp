@@ -276,7 +276,7 @@ void Otr::sendMessage(const QString &account, const QString &contact, const QStr
 
 //-----------------------------------------------------------------------------
 
-bool Otr::isLoggedIn(const QString &AAccount, const QString &AContact)
+bool Otr::isLoggedIn(const QString &AAccount, const QString &AContact) const
 {
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))

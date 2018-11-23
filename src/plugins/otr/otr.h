@@ -62,7 +62,7 @@ public:
     virtual QString dataDir();
 	virtual void sendMessage(const QString &AAccount, const QString &AContact,
 							 const QString& AMessage);
-	virtual bool isLoggedIn(const QString &AAccount, const QString &AContact);
+    virtual bool isLoggedIn(const QString &AAccount, const QString &AContact) const;
 	virtual void notifyUser(const QString &AAccount, const QString &AContact,
 							const QString& AMessage, const NotifyType& AType);
 
