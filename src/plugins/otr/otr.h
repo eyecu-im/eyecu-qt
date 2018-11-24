@@ -19,7 +19,6 @@
 #include <utils/message.h>
 
 #include "otrmessaging.h"
-#include "otrstatewidget.h"
 
 class IAccountManager;
 class IMessageProcessor;
@@ -94,6 +93,16 @@ protected slots:
 	void onChatWindowDestroyed(IMessageChatWindow *AWindow);
 	void onPresenceOpened(IPresence *APresence);
 	void onProfileOpened(const QString &AProfile);
+
+	// OTR tool button
+	void onSessionInitiate(bool b);
+	void onSessionEnd(bool b);
+	void onContactAuthenticate(bool b);
+	void onSessionID(bool b);
+	void onFingerprint(bool b);
+
+	void onWindowAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 
 signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;

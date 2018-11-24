@@ -146,26 +146,26 @@ public:
                                 const char* AProtocol);
     static int cbIsLoggedIn(void* AOpdata, const char* AAccountName,
                             const char* AProtocol, const char* ARecipient);
-    static void cbInjectMessage(void* opdata, const char* accountname,
-                                  const char* protocol, const char* recipient,
-                                  const char* message);
+	static void cbInjectMessage(void* AOpdata, const char* AAccountname,
+								const char* AProtocol, const char* ARecipient,
+								const char* AMessage);
     static void cbUpdateContextList(void* AOpdata);
-    static void cbNewFingerprint(void* opdata, OtrlUserState us,
-                                   const char* accountname, const char* protocol,
-                                   const char* username, unsigned char fingerprint[20]);
-    static void cb_write_fingerprints(void* opdata);
-    static void cb_gone_secure(void* opdata, ConnContext* context);
-    static void cb_gone_insecure(void* opdata, ConnContext* context);
-    static void cb_still_secure(void* opdata, ConnContext* context, int is_reply);
-    static void cb_handle_msg_event(void* opdata, OtrlMessageEvent msg_event,
-                                    ConnContext* context, const char* message,
-                                    gcry_error_t err);
-    static void cb_handle_smp_event(void* opdata, OtrlSMPEvent smp_event,
-                                    ConnContext* context, unsigned short progress_percent,
-                                    char* question);
-    static void cb_create_instag(void* opdata, const char* accountname, const char* protocol);
-    static const char* cb_account_name(void* opdata, const char* account, const char* protocol);
-    static void cb_account_name_free(void* opdata, const char* accountName);
+	static void cbNewFingerprint(void* AOpdata, OtrlUserState AUserState,
+								 const char* AAccountName, const char* AProtocol,
+								 const char* AUserName, unsigned char AFingerprint[20]);
+	static void cbWriteFingerprints(void* AOpdata);
+	static void cbGoneSecure(void* AOpdata, ConnContext* AContext);
+	static void cbGoneInsecure(void* AOpdata, ConnContext* AContext);
+	static void cbStillSecure(void* AOpdata, ConnContext* AContext, int AIsReply);
+	static void cbHandleMsgEvent(void* AOpdata, OtrlMessageEvent AMsgEvent,
+								 ConnContext* AContext, const char* AMessage,
+								 gcry_error_t AError);
+	static void cbHandleSmpEvent(void* AOpdata, OtrlSMPEvent ASmpEvent,
+								 ConnContext* AContext, unsigned short AProgressPercent,
+								 char* AQuestion);
+	static void cbCreateInstag(void* AOpdata, const char* AAccountName, const char* AProtocol);
+	static const char* cbAccountName(void* AOpdata, const char* AAccount, const char* AProtocol);
+	static void cbAccountNameFree(void* AOpdata, const char* AAccountName);
 
 private:
     /**

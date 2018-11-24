@@ -32,6 +32,8 @@
 //Wessage Widgets - SelectIconMenu
 #define TBG_MWSIM_RECENT                                        1000
 #define TBG_MWSIM_SKINCOLOR                                     10100
+//Wessage Widgets - Off-the-Record messaging
+#define TBG_MWTBW_OTR											10030
 // *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
 #define TBG_MWTBW_CHATSTATES                                    10050

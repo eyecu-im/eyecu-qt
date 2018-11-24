@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "otr.h"
 #include "otrclosure.h"
 #include "otroptions.h"
@@ -6,6 +7,7 @@
 #include <definitions/archivehandlerorders.h>
 #include <definitions/optionvalues.h>
 #include <definitions/stanzahandlerorders.h>
+#include <definitions/resources.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagewidgets.h>
@@ -19,6 +21,10 @@
 #define SHC_MESSAGE         "/message"
 
 #define SKIP_OTR_FLAG       "skip_otr_processing"
+
+#define ADR_ACCOUNT Action::DR_Parametr1
+#define ADR_CONTACT_JID Action::DR_Parametr2
+#define ADR_STREAM_JID Action::DR_StreamJid
 
 Otr::Otr() :
 	FOtrMessaging(new OtrMessaging(this)),
@@ -190,11 +196,74 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
     QString account = FAccountManager->findAccountByStream(AWindow->streamJid())->accountId().toString();
     QString contact = AWindow->contactJid().uFull();
-	OtrStateWidget *widget = new OtrStateWidget(this, FOtrMessaging,AWindow, account, contact,
-                                          AWindow->toolBarWidget()->toolBarChanger()->toolBar());
-    AWindow->toolBarWidget()->toolBarChanger()->insertWidget(widget,TBG_MWTBW_CHATSTATES);
-    widget->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    widget->setPopupMode(QToolButton::InstantPopup);
+	QString stream = AWindow->streamJid().uFull();
+	Action *otrAction = new Action(AWindow->toolBarWidget()->instance());
+	otrAction->setData(ADR_ACCOUNT, account);
+	otrAction->setData(ADR_CONTACT_JID, contact);
+
+	Menu *menu = new Menu();
+	QActionGroup *actionGroup = new QActionGroup(menu);
+	otrAction->setMenu(menu);
+
+	// 0: Session initiate
+	Action *action = new Action(menu);
+	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_CONTACT_JID, contact);
+	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionInitiate(bool)));
+	action->setActionGroup(actionGroup);
+	menu->addAction(action);
+
+	// 1: End private conversation
+	action = new Action(menu);
+	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_CONTACT_JID, contact);
+	action->setData(ADR_STREAM_JID, stream);
+	action->setText(tr("&End private conversation"));
+	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionEnd(bool)));
+	action->setActionGroup(actionGroup);
+	menu->addAction(action);
+
+	// 2: Separator
+	menu->insertSeparator(NULL);
+
+	// 3: Authenticate contact
+	action = new Action(menu);
+	action->setText(tr("&Authenticate contact"));
+	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_CONTACT_JID, contact);
+	connect(action, SIGNAL(triggered(bool)), SLOT(onContactAuthenticate(bool)));
+	action->setActionGroup(actionGroup);
+	menu->addAction(action);
+
+	// 4: Show secure session ID
+	action = new Action(menu);
+	action->setText(tr("Show secure session &ID"));
+	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_CONTACT_JID, contact);
+	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionID(bool)));
+	action->setActionGroup(actionGroup);
+	menu->addAction(action);
+
+	// 5: Show own fingerprint
+	action = new Action(menu);
+	action->setText(tr("Show own &fingerprint"));
+	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_CONTACT_JID, contact);
+	connect(action, SIGNAL(triggered(bool)), SLOT(onFingerprint(bool)));
+	action->setActionGroup(actionGroup);
+	menu->addAction(action);
+
+	menu->setToolTip(tr("OTR Messaging"));
+
+	QToolButton *otrButton = AWindow->toolBarWidget()->toolBarChanger()->insertAction(otrAction, TBG_MWTBW_OTR);
+	otrButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	otrButton->setPopupMode(QToolButton::InstantPopup);
+
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
+											SLOT(onWindowAddressChanged(const Jid &, const Jid &)));
+	connect(this,SIGNAL(otrStateChanged(const Jid &, const Jid &)),SLOT(onUpdateMessageState(const Jid &, const Jid &)));
+
+	onUpdateMessageState(AWindow->streamJid(), AWindow->contactJid());
 }
 
 void Otr::onChatWindowDestroyed(IMessageChatWindow *AWindow)
@@ -206,6 +275,173 @@ void Otr::onProfileOpened(const QString &AProfile)
 {
 	FHomePath = FOptionsManager->profilePath(AProfile);
 	FOtrMessaging->init();
+}
+
+// OTR tool button slots
+void Otr::onSessionInitiate(bool b)
+{
+	Q_UNUSED(b)
+	Action *action = qobject_cast<Action *>(sender());
+	QString account = action->data(ADR_ACCOUNT).toString();
+	QString contact = action->data(ADR_CONTACT_JID).toString();
+	FOtrMessaging->startSession(account, contact);
+}
+
+void Otr::onSessionEnd(bool b)
+{
+	Q_UNUSED(b)
+	Action *action = qobject_cast<Action *>(sender());
+	QString account = action->data(ADR_ACCOUNT).toString();
+	QString contact = action->data(ADR_CONTACT_JID).toString();
+	QString streamJid = action->data(ADR_STREAM_JID).toString();
+	FOtrMessaging->endSession(account, contact);
+	onUpdateMessageState(streamJid, contact);
+}
+
+void Otr::onContactAuthenticate(bool b)
+{
+	Q_UNUSED(b)
+	Action *action = qobject_cast<Action *>(sender());
+	QString account = action->data(ADR_ACCOUNT).toString();
+	QString contact = action->data(ADR_CONTACT_JID).toString();
+	authenticateContact(account, contact);
+}
+
+void Otr::onSessionID(bool b)
+{
+	Q_UNUSED(b)
+	Action *action = qobject_cast<Action *>(sender());
+	QString account = action->data(ADR_ACCOUNT).toString();
+	QString contact = action->data(ADR_CONTACT_JID).toString();
+	QString sId = FOtrMessaging->getSessionId(account, contact);
+	QString msg;
+
+	if (sId.isEmpty())
+	{
+		msg = tr("No active encrypted session");
+	}
+	else
+	{
+		msg = tr("Session ID between account \"%1\" and %2: %3")
+				.arg(FOtrMessaging->humanAccount(account))
+				.arg(contact)
+				.arg(sId);
+	}
+
+	FOtrMessaging->displayOtrMessage(account, contact, msg);
+}
+
+void Otr::onFingerprint(bool b)
+{
+	Q_UNUSED(b)
+	Action *action = qobject_cast<Action *>(sender());
+	QString account = action->data(ADR_ACCOUNT).toString();
+	QString contact = action->data(ADR_CONTACT_JID).toString();
+	QString fingerprint = FOtrMessaging->getPrivateKeys()
+							.value(account, tr("No private key for account \"%1\"")
+								.arg(FOtrMessaging->humanAccount(account)));
+
+	QString msg(tr("Fingerprint for account \"%1\": %2")
+				   .arg(FOtrMessaging->humanAccount(account))
+				   .arg(fingerprint));
+
+	FOtrMessaging->displayOtrMessage(account, contact, msg);
+}
+
+void Otr::onWindowAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
+{
+	Q_UNUSED(AStreamBefore)
+	Q_UNUSED(AContactBefore)
+	IMessageAddress *address = qobject_cast<IMessageAddress *>(sender());
+	onUpdateMessageState(address->streamJid(), address->contactJid());
+}
+
+void Otr::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+	if (window)
+	{
+		if (window->streamJid()==AStreamJid && window->contactJid()==AContactJid.full())
+		{
+			QList<QAction*> otrActions = window->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_OTR);
+			QAction *otrActionHandle = otrActions.first();
+			Action *otrAction = window->toolBarWidget()->toolBarChanger()->handleAction(otrActionHandle);
+			if (otrAction)
+			{
+				QString contact = otrAction->data(ADR_CONTACT_JID).toString();
+				QString account = otrAction->data(ADR_ACCOUNT).toString();
+
+				QString iconKey;
+				IOtr::MessageState state = FOtrMessaging->getMessageState(account, contact);
+				QString stateString(FOtrMessaging->getMessageStateString(account, contact));
+
+				if (state == IOtr::MsgStateEncrypted)
+				{
+					if (FOtrMessaging->isVerified(account, contact))
+					{
+						iconKey = MNI_OTR_ENCRYPTED;
+						otrAction->setIcon(RSR_STORAGE_MENUICONS, MNI_OTR_ENCRYPTED);
+					}
+					else
+					{
+						iconKey = MNI_OTR_UNVERFIFIED;
+						stateString += ", " + tr("unverified");
+					}
+				}
+				else
+				{
+					iconKey = MNI_OTR_NO;
+				}
+
+				otrAction->setText(tr("OTR Messaging [%1]").arg(stateString));
+				otrAction->setIcon(RSR_STORAGE_MENUICONS, iconKey);
+
+				QList<Action *> actions = otrAction->menu()->actions();
+				if (state == IOtr::MsgStateEncrypted)
+				{
+					// Session initiate
+					actions[0]->setText(tr("Refre&sh private conversation"));
+					// End private conversation
+					actions[1]->setEnabled(true);
+					// Authenticate contact
+					actions[3]->setEnabled(true);
+					// Show session ID
+					actions[4]->setEnabled(true);
+				}
+				else
+				{
+					// Session initiate
+					actions[0]->setText(tr("&Start private conversation"));
+					if (state == IOtr::MsgStatePlaintext)
+					{
+						// End private conversation
+						actions[1]->setEnabled(false);
+						// Authenticate contact
+						actions[3]->setEnabled(false);
+						// Show session ID
+						actions[4]->setEnabled(false);
+					}
+					else // finished, unknown
+					{
+						// End private conversation
+						actions[1]->setEnabled(true);
+						// Authenticate contact
+						actions[3]->setEnabled(false);
+						// Show session ID
+						actions[4]->setEnabled(false);
+					}
+				}
+
+				if (Options::node(OPV_OTR_POLICY).value().toInt() < IOtr::PolicyEnabled)
+				{
+					// Session initiate
+					actions[0]->setEnabled(false);
+					// End private conversation
+					actions[1]->setEnabled(false);
+				}
+			}
+		}
+	}
 }
 
 void Otr::onPresenceOpened(IPresence *APresence)
@@ -481,17 +717,12 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
         {
             if (AHandlerId == FSHOMessage)
             {
-                Q_UNUSED(AAccept);
-
-                Message message(AStanza);
-
                 QString contact = message.to();
                 QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 
-                QString encrypted = FOtrMessaging->encryptMessage(
-                    account,
-                    contact,
-                    message.body());
+				qDebug() << "Encrypting message...";
+				QString encrypted = FOtrMessaging->encryptMessage(account, contact, message.body());
+				qDebug() << "Done! Encrypted message:" << encrypted;
                 message.setBody(encrypted);
 
                 //if there has been an error, drop the message
@@ -519,18 +750,19 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
             }
             else
             {
-                Q_UNUSED(AAccept);
-
                 bool ignore = false;
-                Message message(AStanza);
+				qDebug() << "AStanza=" << AStanza.toString();
 
                 QString contact = message.from();
                 QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
                 QString plainBody = message.body();
 
                 QString decrypted;
+				qDebug() << "Decrypting message...";
+				qDebug() << "Encrypted message:" << plainBody;
                 IOtr::MessageType messageType = FOtrMessaging->decryptMessage(account, contact,
                                                                          plainBody, decrypted);
+				qDebug() << "Decrypted message:" << decrypted;
                 switch (messageType)
                 {
                     case IOtr::MsgTypeNone:

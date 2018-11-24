@@ -26,6 +26,7 @@
  *
  */
 
+#include <QDebug>
 #include <QMessageBox>
 #include <QtConcurrent>
 #include <QFutureWatcher>
@@ -53,6 +54,26 @@ OtrInternal::OtrInternal(IOtr* AOtr)
 	  FOtr(AOtr),
 	  FIsGenerating(false)
 {
+	OTRL_INIT;
+	FUserState                 = otrl_userstate_create();
+	FUiOps.policy              = (*OtrInternal::cbPolicy);
+	FUiOps.create_privkey      = (*OtrInternal::cbCreatePrivkey);
+	FUiOps.is_logged_in        = (*OtrInternal::cbIsLoggedIn);
+	FUiOps.inject_message      = (*OtrInternal::cbInjectMessage);
+	FUiOps.update_context_list = (*OtrInternal::cbUpdateContextList);
+	FUiOps.new_fingerprint     = (*OtrInternal::cbNewFingerprint);
+	FUiOps.write_fingerprints  = (*OtrInternal::cbWriteFingerprints);
+	FUiOps.gone_secure         = (*OtrInternal::cbGoneSecure);
+	FUiOps.gone_insecure       = (*OtrInternal::cbGoneInsecure);
+	FUiOps.still_secure        = (*OtrInternal::cbStillSecure);
+
+	FUiOps.max_message_size    = nullptr;
+	FUiOps.account_name        = (*OtrInternal::cbAccountName);
+	FUiOps.account_name_free   = (*OtrInternal::cbAccountNameFree);
+
+	FUiOps.handle_msg_event    = (*OtrInternal::cbHandleMsgEvent);
+	FUiOps.handle_smp_event    = (*OtrInternal::cbHandleSmpEvent);
+	FUiOps.create_instag       = (*OtrInternal::cbCreateInstag);
 }
 
 //-----------------------------------------------------------------------------
@@ -69,27 +90,6 @@ void OtrInternal::init()
 	FKeysFile        = profileDir.filePath(OTR_KEYS_FILE);
 	FInstagsFile     = profileDir.filePath(OTR_INSTAGS_FILE);
 	FFingerprintFile = profileDir.filePath(OTR_FINGERPRINTS_FILE);
-
-	OTRL_INIT;
-	FUserState                 = otrl_userstate_create();
-    FUiOps.policy              = (*OtrInternal::cbPolicy);
-    FUiOps.create_privkey      = (*OtrInternal::cbCreatePrivkey);
-    FUiOps.is_logged_in        = (*OtrInternal::cbIsLoggedIn);
-    FUiOps.inject_message      = (*OtrInternal::cbInjectMessage);
-    FUiOps.update_context_list = (*OtrInternal::cbUpdateContextList);
-    FUiOps.new_fingerprint     = (*OtrInternal::cbNewFingerprint);
-	FUiOps.write_fingerprints  = (*OtrInternal::cb_write_fingerprints);
-	FUiOps.gone_secure         = (*OtrInternal::cb_gone_secure);
-	FUiOps.gone_insecure       = (*OtrInternal::cb_gone_insecure);
-	FUiOps.still_secure        = (*OtrInternal::cb_still_secure);
-
-    FUiOps.max_message_size    = nullptr;
-	FUiOps.account_name        = (*OtrInternal::cb_account_name);
-	FUiOps.account_name_free   = (*OtrInternal::cb_account_name_free);
-
-	FUiOps.handle_msg_event    = (*OtrInternal::cb_handle_msg_event);
-	FUiOps.handle_smp_event    = (*OtrInternal::cb_handle_smp_event);
-	FUiOps.create_instag       = (*OtrInternal::cb_create_instag);
 
 	otrl_privkey_read(FUserState, QFile::encodeName(FKeysFile).constData());
 	otrl_privkey_read_fingerprints(FUserState,
@@ -138,9 +138,9 @@ QString OtrInternal::encryptMessage(const QString& AAccount, const QString& ACon
 //-----------------------------------------------------------------------------
 
 IOtr::MessageType OtrInternal::decryptMessage(const QString& AAccount,
-												 const QString& AContact,
-												 const QString& AMessage,
-												 QString& ADecrypted)
+											  const QString& AContact,
+											  const QString& AMessage,
+											  QString& ADecrypted)
 {
 	QByteArray accArray  = AAccount.toUtf8();
 	QByteArray userArray = AContact.toUtf8();
@@ -152,6 +152,9 @@ IOtr::MessageType OtrInternal::decryptMessage(const QString& AAccount,
     OtrlTLV* tlvs     = nullptr;
     OtrlTLV* tlv      = nullptr;
 
+	qDebug() << "calling otrl_message_receiving(FUserState, &FUiOps, " << this
+			 << accountName << "," << OTR_PROTOCOL_STRING << "," << userName
+			 << AMessage << ", &newMessage, &tlvs, nullptr, nullptr, nullptr)";
 	ignoreMessage = otrl_message_receiving(FUserState, &FUiOps, this,
                                            accountName,
                                            OTR_PROTOCOL_STRING,
@@ -159,6 +162,7 @@ IOtr::MessageType OtrInternal::decryptMessage(const QString& AAccount,
 										   AMessage.toUtf8().constData(),
                                            &newMessage, &tlvs, nullptr,
                                            nullptr, nullptr);
+	qDebug() << "Ok!";
     tlv = otrl_tlv_find(tlvs, OTRL_TLV_DISCONNECTED);
     if (tlv) {
 		FOtr->stateChange(accountName, userName, IOtr::StateChangeRemoteClose);
@@ -914,64 +918,80 @@ void OtrInternal::accountNameFree(const char* AAccountName)
 OtrlPolicy OtrInternal::cbPolicy(void* AOpdata, ConnContext* AContext) {
     Q_UNUSED(AOpdata);
     Q_UNUSED(AContext);
+	qDebug() << "OtrInternal::cbPolicy()";
 	return policy(IOtr::Policy(Options::node(OPV_OTR_POLICY).value().toInt()));
 //	return static_cast<OtrInternal*>(opdata)->policy(context);
 }
 
 void OtrInternal::cbCreatePrivkey(void* APpdata, const char* AAccountName, const char* AProtocol) {
+	qDebug() << "OtrInternal::cbCreatePrivkey()";
     static_cast<OtrInternal*>(APpdata)->createPrivkey(AAccountName, AProtocol);
 }
 
 int OtrInternal::cbIsLoggedIn(void* AOpdata, const char* AAccountName, const char* AProtocol, const char* ARecipient) {
+	qDebug() << "OtrInternal::cbIsLoggedIn()";
     return static_cast<OtrInternal*>(AOpdata)->isLoggedIn(AAccountName, AProtocol, ARecipient);
 }
 
-void OtrInternal::cbInjectMessage(void* opdata, const char* accountname, const char* protocol, const char* recipient, const char* message) {
-    static_cast<OtrInternal*>(opdata)->injectMessage(accountname, protocol, recipient, message);
+void OtrInternal::cbInjectMessage(void* AOpdata, const char* AAccountname, const char* AProtocol, const char* ARecipient, const char* AMessage) {
+	qDebug() << "OtrInternal::cbInjectMessage()";
+    static_cast<OtrInternal*>(AOpdata)->injectMessage(AAccountname, AProtocol, ARecipient, AMessage);
 }
 
-void OtrInternal::cb_handle_msg_event(void* opdata, OtrlMessageEvent msg_event, ConnContext* context, const char* message, gcry_error_t err) {
-    static_cast<OtrInternal*>(opdata)->handleMsgEvent(msg_event, context, message, err);
+void OtrInternal::cbHandleMsgEvent(void* AOpdata, OtrlMessageEvent AMsgEvent, ConnContext* AContext, const char* AMessage, gcry_error_t AError) {
+	qDebug() << "OtrInternal::cbHandleMsgEvent()";
+    static_cast<OtrInternal*>(AOpdata)->handleMsgEvent(AMsgEvent, AContext, AMessage, AError);
 }
 
-void OtrInternal::cb_handle_smp_event(void* opdata, OtrlSMPEvent smp_event, ConnContext* context, unsigned short progress_percent, char* question) {
-    static_cast<OtrInternal*>(opdata)->handleSmpEvent(smp_event, context, progress_percent, question);
+void OtrInternal::cbHandleSmpEvent(void* AOpdata, OtrlSMPEvent ASmpEvent, ConnContext* AContext, unsigned short AProgressPercent, char* AQuestion) {
+	qDebug() << "OtrInternal::cbHandleSmpEvent()";
+    static_cast<OtrInternal*>(AOpdata)->handleSmpEvent(ASmpEvent, AContext, AProgressPercent, AQuestion);
 }
 
-void OtrInternal::cb_create_instag(void* opdata, const char* accountname, const char* protocol) {
-    static_cast<OtrInternal*>(opdata)->createInstag(accountname, protocol);
+void OtrInternal::cbCreateInstag(void* AOpdata, const char* AAccountName, const char* AProtocol) {
+	qDebug() << "OtrInternal::cbCreateInstag()";
+    static_cast<OtrInternal*>(AOpdata)->createInstag(AAccountName, AProtocol);
 }
 
 void OtrInternal::cbUpdateContextList(void* AOpdata) {
+	qDebug() << "OtrInternal::cbUpdateContextList()";
     static_cast<OtrInternal*>(AOpdata)->updateContextList();
+	qDebug() << "OtrInternal::cbUpdateContextList(): finished!";
 }
 
-void OtrInternal::cbNewFingerprint(void* opdata, OtrlUserState us, const char* accountname, const char* protocol, const char* username, unsigned char fingerprint[20]) {
-    static_cast<OtrInternal*>(opdata)->newFingerprint(us, accountname, protocol, username, fingerprint);
+void OtrInternal::cbNewFingerprint(void* AOpdata, OtrlUserState AUserState, const char* AAccountName, const char* AProtocol, const char* AUserName, unsigned char AFingerprint[20]) {
+	qDebug() << "OtrInternal::cbNewFingerprint()";
+    static_cast<OtrInternal*>(AOpdata)->newFingerprint(AUserState, AAccountName, AProtocol, AUserName, AFingerprint);
 }
 
-void OtrInternal::cb_write_fingerprints(void* opdata) {
-    static_cast<OtrInternal*>(opdata)->writeFingerprints();
+void OtrInternal::cbWriteFingerprints(void* AOpdata) {
+	qDebug() << "OtrInternal::cbWriteFingerprints()";
+    static_cast<OtrInternal*>(AOpdata)->writeFingerprints();
 }
 
-void OtrInternal::cb_gone_secure(void* opdata, ConnContext* context) {
-    static_cast<OtrInternal*>(opdata)->goneSecure(context);
+void OtrInternal::cbGoneSecure(void* AOpdata, ConnContext* AContext) {
+	qDebug() << "OtrInternal::cbGoneSecure()";
+    static_cast<OtrInternal*>(AOpdata)->goneSecure(AContext);
 }
 
-void OtrInternal::cb_gone_insecure(void* opdata, ConnContext* context) {
-    static_cast<OtrInternal*>(opdata)->goneInsecure(context);
+void OtrInternal::cbGoneInsecure(void* AOpdata, ConnContext* AContext) {
+	qDebug() << "OtrInternal::cbGoneInecure()";
+    static_cast<OtrInternal*>(AOpdata)->goneInsecure(AContext);
 }
 
-void OtrInternal::cb_still_secure(void* opdata, ConnContext* context, int is_reply) {
-    static_cast<OtrInternal*>(opdata)->stillSecure(context, is_reply);
+void OtrInternal::cbStillSecure(void* AOpdata, ConnContext* AContext, int AIsReply) {
+	qDebug() << "OtrInternal::cbStillSecure()";
+    static_cast<OtrInternal*>(AOpdata)->stillSecure(AContext, AIsReply);
 }
 
-const char* OtrInternal::cb_account_name(void* opdata, const char* account,
-                                         const char* protocol) {
-    return static_cast<OtrInternal*>(opdata)->accountName(account, protocol);
+const char* OtrInternal::cbAccountName(void* AOpdata, const char* AAccount,
+                                         const char* AProtocol) {
+	qDebug() << "OtrInternal::cbAccountName()";
+    return static_cast<OtrInternal*>(AOpdata)->accountName(AAccount, AProtocol);
 }
 
-void OtrInternal::cb_account_name_free(void* opdata, const char* account_name) {
-    static_cast<OtrInternal*>(opdata)->accountNameFree(account_name);
+void OtrInternal::cbAccountNameFree(void* AOpdata, const char* AAccountName) {
+	qDebug() << "OtrInternal::cbAccountNameFree()";
+    static_cast<OtrInternal*>(AOpdata)->accountNameFree(AAccountName);
 }
 // ---------------------------------------------------------------------------
