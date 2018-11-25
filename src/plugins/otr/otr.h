@@ -4,23 +4,23 @@
 #include <QMultiMap>
 
 #include <interfaces/ipluginmanager.h>
-#include <interfaces/ipresencemanager.h>
-#include <interfaces/istanzaprocessor.h>
-#include <interfaces/ixmppstreammanager.h>
 #include <interfaces/imessagearchiver.h>
-#include <interfaces/imessagewidgets.h>
-#include <interfaces/imessagestylemanager.h>
 #include <interfaces/ioptionsmanager.h>
+#include <interfaces/istanzaprocessor.h>
 #include <interfaces/iotr.h>
 
-#include <definitions/menuicons.h>
-#include <definitions/optionnodes.h>
-#include <definitions/optionnodeorders.h>
-
-#include <utils/message.h>
-
+class IMessageArchiver;
 class IAccountManager;
+class IPresenceManager;
 class IMessageProcessor;
+class IPresence;
+class IXmppStream;
+
+class IMessageToolBarWidget;
+class IMessageWidgets;
+class IMessageNormalWindow;
+class IMessageChatWindow;
+
 class Action;
 
 class OtrClosure;
