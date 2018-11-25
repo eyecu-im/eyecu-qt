@@ -28,7 +28,7 @@
 #define ADR_STREAM_JID Action::DR_StreamJid
 
 OtrFingerprint::OtrFingerprint():
-	fingerprint(NULL)
+	fingerprint(nullptr)
 {}
 
 OtrFingerprint::OtrFingerprint(const OtrFingerprint &fp):
@@ -52,7 +52,6 @@ OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
 
 Otr::Otr() :
 	FOtrInternal(new OtrInternal(this)),
-	FOnlineUsers(),
     FOptionsManager(nullptr),
     FAccountManager(nullptr),
     FPresenceManager(nullptr),
@@ -194,7 +193,7 @@ void Otr::onStreamClosed( IXmppStream *AXmppStream )
     {
 		foreach(QString contact, FOnlineUsers.value(account).keys())
         {
-			endSession(account, contact);
+			FOtrInternal->endSession(account, contact);
 			FOnlineUsers[account][contact]->setIsLoggedIn(false);
         }
     }
@@ -229,7 +228,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	Action *action = new Action(menu);
 	action->setData(ADR_ACCOUNT, account);
 	action->setData(ADR_CONTACT_JID, contact);
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionInitiate(bool)));
+	connect(action, SIGNAL(triggered()), SLOT(onSessionInitiate()));
 	action->setActionGroup(actionGroup);
 	menu->addAction(action);
 
@@ -239,7 +238,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	action->setData(ADR_CONTACT_JID, contact);
 	action->setData(ADR_STREAM_JID, stream);
 	action->setText(tr("&End private conversation"));
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionEnd(bool)));
+	connect(action, SIGNAL(triggered()), SLOT(onSessionEnd()));
 	action->setActionGroup(actionGroup);
 	menu->addAction(action);
 
@@ -251,7 +250,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	action->setText(tr("&Authenticate contact"));
 	action->setData(ADR_ACCOUNT, account);
 	action->setData(ADR_CONTACT_JID, contact);
-	connect(action, SIGNAL(triggered(bool)), SLOT(onContactAuthenticate(bool)));
+	connect(action, SIGNAL(triggered()), SLOT(onContactAuthenticate()));
 	action->setActionGroup(actionGroup);
 	menu->addAction(action);
 
@@ -260,7 +259,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	action->setText(tr("Show secure session &ID"));
 	action->setData(ADR_ACCOUNT, account);
 	action->setData(ADR_CONTACT_JID, contact);
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSessionID(bool)));
+	connect(action, SIGNAL(triggered()), SLOT(onSessionID()));
 	action->setActionGroup(actionGroup);
 	menu->addAction(action);
 
@@ -269,7 +268,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	action->setText(tr("Show own &fingerprint"));
 	action->setData(ADR_ACCOUNT, account);
 	action->setData(ADR_CONTACT_JID, contact);
-	connect(action, SIGNAL(triggered(bool)), SLOT(onFingerprint(bool)));
+	connect(action, SIGNAL(triggered()), SLOT(onFingerprint()));
 	action->setActionGroup(actionGroup);
 	menu->addAction(action);
 
@@ -298,42 +297,38 @@ void Otr::onProfileOpened(const QString &AProfile)
 }
 
 // OTR tool button slots
-void Otr::onSessionInitiate(bool b)
+void Otr::onSessionInitiate()
 {
-	Q_UNUSED(b)
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
-	startSession(account, contact);
+	FOtrInternal->startSession(account, contact);
 }
 
-void Otr::onSessionEnd(bool b)
+void Otr::onSessionEnd()
 {
-	Q_UNUSED(b)
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
 	QString streamJid = action->data(ADR_STREAM_JID).toString();
-	endSession(account, contact);
+	FOtrInternal->endSession(account, contact);
 	onUpdateMessageState(streamJid, contact);
 }
 
-void Otr::onContactAuthenticate(bool b)
+void Otr::onContactAuthenticate()
 {
-	Q_UNUSED(b)
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
 	authenticateContact(account, contact);
 }
 
-void Otr::onSessionID(bool b)
+void Otr::onSessionID()
 {
-	Q_UNUSED(b)
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
-	QString sId = getSessionId(account, contact);
+	QString sId = FOtrInternal->getSessionId(account, contact);
 	QString msg;
 
 	if (sId.isEmpty())
@@ -351,9 +346,8 @@ void Otr::onSessionID(bool b)
 	displayOtrMessage(account, contact, msg);
 }
 
-void Otr::onFingerprint(bool b)
+void Otr::onFingerprint()
 {
-	Q_UNUSED(b)
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
@@ -708,7 +702,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 					FOnlineUsers.value(account).contains(contact))
                 {
 					if (Options::node(OPV_OTR_ENDWHENOFFLINE).value().toBool())
-						expireSession(account, contact);
+						FOtrInternal->expireSession(account, contact);
 					FOnlineUsers[account][contact]->setIsLoggedIn(false);
                     Jid contactJid(AStanza.from());
                     emit otrStateChanged(AStreamJid,contactJid);
@@ -733,7 +727,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
                 QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 
 				qDebug() << "Encrypting message...";
-				QString encrypted = encryptMessage(account, contact, message.body());
+				QString encrypted = FOtrInternal->encryptMessage(account, contact, message.body());
 				qDebug() << "Done! Encrypted message:" << encrypted;
                 message.setBody(encrypted);
 
@@ -772,8 +766,8 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
                 QString decrypted;
 				qDebug() << "Decrypting message...";
 				qDebug() << "Encrypted message:" << plainBody;
-				IOtr::MessageType messageType = decryptMessage(account, contact, plainBody,
-															   decrypted);
+				IOtr::MessageType messageType = FOtrInternal->decryptMessage(account, contact,
+																			 plainBody, decrypted);
 				qDebug() << "Decrypted message:" << decrypted;
                 switch (messageType)
                 {
@@ -803,23 +797,6 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
     return false;
 }
 
-//
-// Former OtrMessaging class methods
-//
-QString Otr::encryptMessage(const QString& AAccount, const QString& AContact,
-							const QString& AMessage)
-{
-	return FOtrInternal->encryptMessage(AAccount, AContact, AMessage);
-}
-
-IOtr::MessageType Otr::decryptMessage(const QString& AAccount,
-									  const QString& AContact,
-									  const QString& AMessage,
-									  QString& ADecrypted)
-{
-	return FOtrInternal->decryptMessage(AAccount, AContact, AMessage, ADecrypted);
-}
-
 QList<OtrFingerprint> Otr::getFingerprints()
 {
 	return FOtrInternal->getFingerprints();
@@ -843,21 +820,6 @@ QHash<QString, QString> Otr::getPrivateKeys()
 void Otr::deleteKey(const QString& AAccount)
 {
 	FOtrInternal->deleteKey(AAccount);
-}
-
-void Otr::startSession(const QString& AAccount, const QString& AContact)
-{
-	FOtrInternal->startSession(AAccount, AContact);
-}
-
-void Otr::endSession(const QString& AAccount, const QString& AContact)
-{
-	FOtrInternal->endSession(AAccount, AContact);
-}
-
-void Otr::expireSession(const QString& AAccount, const QString& AContact)
-{
-	FOtrInternal->expireSession(AAccount, AContact);
 }
 
 void Otr::startSMP(const QString& AAccount, const QString& AContact,
@@ -885,11 +847,6 @@ IOtr::MessageState Otr::getMessageState(const QString& AAccount, const QString& 
 QString Otr::getMessageStateString(const QString& AAccount, const QString& AContact)
 {
 	return FOtrInternal->getMessageStateString(AAccount, AContact);
-}
-
-QString Otr::getSessionId(const QString& AAccount, const QString& AContact)
-{
-	return FOtrInternal->getSessionId(AAccount, AContact);
 }
 
 OtrFingerprint Otr::getActiveFingerprint(const QString& AAccount,

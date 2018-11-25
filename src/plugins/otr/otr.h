@@ -120,8 +120,7 @@ public:
 	 * Return the messageState of a context,
 	 * i.e. plaintext, encrypted, finished.
 	 */
-	IOtr::MessageState getMessageState(const QString& AAccount,
-									const QString& AContact);
+	IOtr::MessageState getMessageState(const QString& AAccount, const QString& AContact);
 
 	/**
 	 * Set fingerprint verified/not verified.
@@ -200,55 +199,6 @@ public:
 protected:
 	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const;
 
-	//
-	// Former OtrMessaging class methods
-	//
-	/**
-	 * Process an outgoing message.
-	 *
-	 * @param account Account the message is send from
-	 * @param contact Recipient of the message
-	 * @param message The message itself
-	 *
-	 * @return The encrypted message
-	 */
-	QString encryptMessage(const QString& AAccount,
-						   const QString& AContact,
-						   const QString& AMessage);
-
-	/**
-	 * Decrypt an incoming message.
-	 *
-	 * @param account Account the message is send to
-	 * @param contact Sender of the message
-	 * @param message The message itself
-	 * @param decrypted The decrypted message if the original message was
-	 *                  encrypted
-	 * @return Type of incoming message
-	 */
-	IOtr::MessageType decryptMessage(const QString& AAccount, const QString& AContact,
-									 const QString& AMessage, QString& ADecrypted);
-
-	/**
-	 * Send an OTR query message from account to contact.
-	 */
-	void startSession(const QString& AAccount, const QString& AContact);
-
-	/**
-	 * Send otr-finished message to user.
-	 */
-	void endSession(const QString& AAccount, const QString& AContact);
-
-	/**
-	 * Force a session to expire.
-	 */
-	void expireSession(const QString& AAccount, const QString& AContact);
-
-	/**
-	 * Return the secure session id (ssid) for a context.
-	 */
-	QString getSessionId(const QString& AAccount, const QString& AContact);
-
 protected slots:
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
@@ -261,11 +211,11 @@ protected slots:
 	void onProfileOpened(const QString &AProfile);
 
 	// OTR tool button
-	void onSessionInitiate(bool b);
-	void onSessionEnd(bool b);
-	void onContactAuthenticate(bool b);
-	void onSessionID(bool b);
-	void onFingerprint(bool b);
+	void onSessionInitiate();
+	void onSessionEnd();
+	void onContactAuthenticate();
+	void onSessionID();
+	void onFingerprint();
 
 	void onWindowAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
