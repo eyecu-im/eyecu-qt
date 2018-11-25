@@ -25,37 +25,30 @@
  *
  */
 
-#include "otrclosure.h"
-
-#include <QObject>
 #include <QDialog>
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QMessageBox>
-#include <QMenu>
-#include <QAction>
 #include <QLabel>
 #include <QComboBox>
 #include <QLineEdit>
 #include <QProgressBar>
 #include <QPushButton>
-#include <QFont>
 
-AuthenticationDialog::AuthenticationDialog(OtrMessaging* AOtrMessaging,
+#include "otrclosure.h"
+
+AuthenticationDialog::AuthenticationDialog(Otr *AOtr,
 										   const QString& AAccount,
 										   const QString& AContact,
 										   const QString& AQuestion,
-										   bool ASender, QWidget* AParent)
-	: QDialog(AParent),
-	  FOtrMessaging(AOtrMessaging),
-	  FMethod(METHOD_QUESTION),
-	  FAccount(AAccount),
-	  FContact(AContact),
-	  FIsSender(ASender)
+										   bool ASender, QWidget* AParent):
+	QDialog(AParent),
+	FOtr(AOtr),
+	FMethod(METHOD_QUESTION),
+	FAccount(AAccount),
+	FContact(AContact),
+	FIsSender(ASender)
 {
     setAttribute(Qt::WA_DeleteOnClose);
 
-	FContactName = FOtrMessaging->humanContact(FAccount, FContact);
+	FContactName = FOtr->humanContact(FAccount, FContact);
 
     QString qaExplanation;
     QString ssExplanation;
@@ -144,19 +137,17 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* AOtrMessaging,
     QLabel* authenticatedLabel = NULL;
 	if (FIsSender)
     {
-		if (FOtrMessaging->isVerified(FAccount, FContact))
-        {
+		if (FOtr->isVerified(FAccount, FContact))
             authenticatedLabel = new QLabel(QString("<b>%1</b>")
                                              .arg(tr("This contact is already "
                                                      "authenticated.")), this);
-        }
 
-		QString ownFpr = FOtrMessaging->getPrivateKeys().value(
+		QString ownFpr = FOtr->getPrivateKeys().value(
 							FAccount,
                             tr("No private key for account \"%1\"")
-							  .arg(FOtrMessaging->humanAccount(FAccount)));
+							  .arg(FOtr->humanAccount(FAccount)));
 
-		FFingerprint = FOtrMessaging->getActiveFingerprint(FAccount, FContact);
+		FFingerprint = FOtr->getActiveFingerprint(FAccount, FContact);
 
         QLabel* fprExplanationLabel = new QLabel(fprExplanation, this);
         fprExplanationLabel->setWordWrap(true);
@@ -243,16 +234,12 @@ AuthenticationDialog::AuthenticationDialog(OtrMessaging* AOtrMessaging,
 
 AuthenticationDialog::~AuthenticationDialog()
 {
-
 }
 
 void AuthenticationDialog::reject()
 {
 	if (FState == AUTH_IN_PROGRESS)
-    {
-		FOtrMessaging->abortSMP(FAccount, FContact);
-    }
-
+		FOtr->abortSMP(FAccount, FContact);
     QDialog::reject();
 }
 
@@ -321,12 +308,12 @@ void AuthenticationDialog::startAuthentication()
 
 			if (FIsSender)
             {
-				FOtrMessaging->startSMP(FAccount, FContact,
+				FOtr->startSMP(FAccount, FContact,
 								FQuestionEdit->text(), FAnswerEdit->text());
             }
             else
             {
-				FOtrMessaging->continueSMP(FAccount, FContact, FAnswerEdit->text());
+				FOtr->continueSMP(FAccount, FContact, FAnswerEdit->text());
             }
 
             updateSMP(33);
@@ -348,12 +335,12 @@ void AuthenticationDialog::startAuthentication()
 
 			if (FIsSender)
             {
-				FOtrMessaging->startSMP(FAccount, FContact,
+				FOtr->startSMP(FAccount, FContact,
 								QString(), FSharedSecretEdit->text());
             }
             else
             {
-				FOtrMessaging->continueSMP(FAccount, FContact, FSharedSecretEdit->text());
+				FOtr->continueSMP(FAccount, FContact, FSharedSecretEdit->text());
             }
 
             updateSMP(33);
@@ -363,7 +350,7 @@ void AuthenticationDialog::startAuthentication()
         case METHOD_FINGERPRINT:
 			if (FFingerprint.fingerprint)
             {
-				QString msg(tr("Account: ") + FOtrMessaging->humanAccount(FAccount) + "\n" +
+				QString msg(tr("Account: ") + FOtr->humanAccount(FAccount) + "\n" +
 							tr("User: ") + FContact + "\n" +
 							tr("Fingerprint: ") + FFingerprint.fingerprintHuman + "\n\n" +
                             tr("Have you verified that this is in fact the correct fingerprint?"));
@@ -372,7 +359,7 @@ void AuthenticationDialog::startAuthentication()
                                msg, QMessageBox::Yes | QMessageBox::No, this,
                                Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 
-				FOtrMessaging->verifyFingerprint(FFingerprint,
+				FOtr->verifyFingerprint(FFingerprint,
                                          mb.exec() == QMessageBox::Yes);
 
                 close();
@@ -414,14 +401,13 @@ void AuthenticationDialog::updateSMP(int AProgress)
 
 	if (AProgress == 100) {
 		if (FIsSender || FMethod == METHOD_SHARED_SECRET)
-        {
-			FOtrMessaging->stateChange(FAccount, FContact,
+			FOtr->stateChange(FAccount, FContact,
 							   IOtr::StateChangeTrust);
-        }
-		if (FOtrMessaging->smpSucceeded(FAccount, FContact))
+
+		if (FOtr->smpSucceeded(FAccount, FContact))
         {
 			FState = AUTH_FINISHED;
-			if (FOtrMessaging->isVerified(FAccount, FContact))
+			if (FOtr->isVerified(FAccount, FContact))
             {
                 notify(QMessageBox::Information,
                        tr("Authentication successful."));
@@ -435,22 +421,18 @@ void AuthenticationDialog::updateSMP(int AProgress)
 						  .arg(FContactName));
             }
             close();
-        } else {
+		}
+		else
+		{
 			FState = FIsSender? AUTH_READY : AUTH_FINISHED;
             notify(QMessageBox::Critical, tr("Authentication failed."));
 			if (FIsSender)
-            {
                 reset();
-            }
             else
-            {
                 close();
-            }
         }
     }
 }
-
-//-----------------------------------------------------------------------------
 
 void AuthenticationDialog::notify(const QMessageBox::Icon AIcon,
 								  const QString& AMessage)
@@ -460,11 +442,13 @@ void AuthenticationDialog::notify(const QMessageBox::Icon AIcon,
     mb.exec();
 }
 
+//
 //-----------------------------------------------------------------------------
+//
 
 OtrClosure::OtrClosure(const QString& AAccount, const QString& AContact,
-							 OtrMessaging* AOtrMessaging)
-	: FOtrMessaging(AOtrMessaging),
+							 Otr *AOtr)
+	: FOtr(AOtr),
 	  FAccount(AAccount),
 	  FContact(AContact),
 	  FIsLoggedIn(false),
@@ -472,13 +456,9 @@ OtrClosure::OtrClosure(const QString& AAccount, const QString& AContact,
 {
 }
 
-//-----------------------------------------------------------------------------
-
 OtrClosure::~OtrClosure()
 {
 }
-
-//-----------------------------------------------------------------------------
 
 void OtrClosure::authenticateContact()
 {
@@ -487,7 +467,7 @@ void OtrClosure::authenticateContact()
         return;
     }
 
-	FAuthDialog = new AuthenticationDialog(FOtrMessaging,
+	FAuthDialog = new AuthenticationDialog(FOtr,
 											FAccount, FContact,
                                             QString(), true);
 
@@ -503,7 +483,7 @@ void OtrClosure::receivedSMP(const QString& AQuestion)
 {
 	if ((FAuthDialog && !FAuthDialog->finished()) || !encrypted())
     {
-		FOtrMessaging->abortSMP(FAccount, FContact);
+		FOtr->abortSMP(FAccount, FContact);
         return;
     }
 	if (FAuthDialog)
@@ -513,7 +493,7 @@ void OtrClosure::receivedSMP(const QString& AQuestion)
         finishAuth();
     }
 
-	FAuthDialog = new AuthenticationDialog(FOtrMessaging, FAccount, FContact, AQuestion, false);
+	FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, AQuestion, false);
 
 	connect(FAuthDialog, SIGNAL(destroyed()),
             this, SLOT(finishAuth()));
@@ -559,6 +539,6 @@ bool OtrClosure::isLoggedIn() const
 
 bool OtrClosure::encrypted() const
 {
-	return FOtrMessaging->getMessageState(FAccount, FContact) ==
+	return FOtr->getMessageState(FAccount, FContact) ==
 		   IOtr::MsgStateEncrypted;
 }

@@ -1,5 +1,4 @@
 HEADERS = \
-      otrmessaging.h \
       otrinternal.h \
       otrlextensions.h \
     $$PWD/otr.h \
@@ -7,7 +6,6 @@ HEADERS = \
     $$PWD/otroptions.h
 
 SOURCES = \
-      otrmessaging.cpp \
       otrinternal.cpp \
       otrlextensions.c \
     $$PWD/otr.cpp \

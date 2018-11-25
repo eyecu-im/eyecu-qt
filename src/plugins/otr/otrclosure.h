@@ -27,9 +27,8 @@
 #ifndef PSIOTRCLOSURE_H_
 #define PSIOTRCLOSURE_H_
 
-#include "otrmessaging.h"
-
 #include <QMessageBox>
+#include "otr.h"
 
 class QAction;
 class QMenu;
@@ -38,15 +37,13 @@ class QLineEdit;
 class QProgressBar;
 class QPushButton;
 
-//-----------------------------------------------------------------------------
 class AuthenticationDialog : public QDialog
 {
     Q_OBJECT
 public:
-	AuthenticationDialog(OtrMessaging* AOtrMessaging,
-						 const QString& AAccount, const QString& AContact,
-						 const QString& AQuestion, bool ASender,
-						 QWidget* AParent = nullptr);
+	AuthenticationDialog(Otr* AOtr, const QString& AAccount,
+						 const QString& AContact, const QString& AQuestion,
+						 bool ASender, QWidget* AParent = nullptr);
     ~AuthenticationDialog();
 
     void reset();
@@ -61,7 +58,7 @@ private:
     enum AuthState {AUTH_READY, AUTH_IN_PROGRESS, AUTH_FINISHED};
     enum Method {METHOD_QUESTION, METHOD_SHARED_SECRET, METHOD_FINGERPRINT};
 
-	OtrMessaging*	FOtrMessaging;
+	Otr*			FOtr;
 	Method			FMethod;
 	QString			FAccount;
 	QString			FContact;
@@ -87,15 +84,12 @@ private slots:
 
 //-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-
 class OtrClosure : public QObject
 {
     Q_OBJECT
 
 public:
-	OtrClosure(const QString& AAccount, const QString& AContact,
-				  OtrMessaging* AOtrMessaging);
+	OtrClosure(const QString& AAccount, const QString& AContact, Otr* AOtr);
 	~OtrClosure();
 	void setIsLoggedIn(bool AIsLoggedIn);
     bool isLoggedIn() const;
@@ -105,15 +99,14 @@ public:
     void authenticateContact();
 
 private:
-	OtrMessaging* FOtrMessaging;
-	QString       FAccount;
-	QString       FContact;
-	bool          FIsLoggedIn;
+	Otr*	FOtr;
+	QString	FAccount;
+	QString	FContact;
+	bool	FIsLoggedIn;
 	AuthenticationDialog* FAuthDialog;
 
 public slots:
     void finishAuth();
 };
-//-----------------------------------------------------------------------------
 
 #endif

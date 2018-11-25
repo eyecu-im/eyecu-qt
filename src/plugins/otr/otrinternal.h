@@ -28,7 +28,7 @@
 #ifndef OTRINTERNAL_H_
 #define OTRINTERNAL_H_
 
-#include "otrmessaging.h"
+#include "otr.h"
 
 #include <QList>
 #include <QHash>

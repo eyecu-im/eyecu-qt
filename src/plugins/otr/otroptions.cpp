@@ -10,10 +10,10 @@
 #include "otroptions.h"
 #include "ui_otroptions.h"
 
-OtrOptions::OtrOptions(OtrMessaging *AOtrMessaging, QWidget *AParent) :
+OtrOptions::OtrOptions(Otr *AOtr, QWidget *AParent) :
 	QWidget(AParent),
 	ui(new Ui::OtrOptions),
-	FOtrMessaging(AOtrMessaging),
+	FOtrMessaging(AOtr),
 	FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
 	FAccountManager(PluginHelper::pluginInstance<IAccountManager>()),
 	FFingerprintsModel(new QStandardItemModel(this)),

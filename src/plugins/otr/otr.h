@@ -11,6 +11,7 @@
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessagestylemanager.h>
 #include <interfaces/ioptionsmanager.h>
+#include <interfaces/iotr.h>
 
 #include <definitions/menuicons.h>
 #include <definitions/optionnodes.h>
@@ -18,13 +19,49 @@
 
 #include <utils/message.h>
 
-#include "otrmessaging.h"
-
 class IAccountManager;
 class IMessageProcessor;
 class Action;
 
 class OtrClosure;
+class OtrInternal;
+
+/**
+ * This struct contains all data shown in the table of 'Known Fingerprints'.
+ */
+struct OtrFingerprint
+{
+	/**
+	 * Pointer to fingerprint in libotr struct. Binary format.
+	 */
+	unsigned char* fingerprint;
+
+	/**
+	 * own account
+	 */
+	QString account;
+
+	/**
+	 * owner of the fingerprint
+	 */
+	QString username;
+
+	/**
+	 * The fingerprint in a human-readable format
+	 */
+	QString fingerprintHuman;
+
+	/**
+	 * the level of trust
+	 */
+	QString trust;
+
+	OtrFingerprint();
+	OtrFingerprint(const OtrFingerprint &fp);
+	OtrFingerprint(unsigned char* fingerprint,
+				QString account, QString username,
+				QString trust);
+};
 
 class Otr:
     public QObject,
@@ -42,6 +79,86 @@ class Otr:
 public:
 	Otr();
 	~Otr();
+
+	//
+	// Former OtrMessaging class methods
+	//
+	/**
+	 * Return true if the active fingerprint has been verified.
+	 */
+	bool isVerified(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Get hash of fingerprints of own private keys.
+	 * Account -> KeyFingerprint
+	 */
+	QHash<QString, QString> getPrivateKeys();
+
+	/**
+	 * Return the active fingerprint for a context.
+	 */
+	OtrFingerprint getActiveFingerprint(const QString& AAccount,
+										const QString& AContact);
+	/**
+	 * Start the SMP with an optional question.
+	 */
+	void startSMP(const QString& AAccount, const QString& AContact,
+				  const QString& AQuestion, const QString& ASecret);
+
+	/**
+	 * Continue the SMP.
+	 */
+	void continueSMP(const QString& AAccount, const QString& AContact,
+					 const QString& ASecret);
+
+	/**
+	 * Abort the SMP.
+	 */
+	void abortSMP(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Return the messageState of a context,
+	 * i.e. plaintext, encrypted, finished.
+	 */
+	IOtr::MessageState getMessageState(const QString& AAccount,
+									const QString& AContact);
+
+	/**
+	 * Set fingerprint verified/not verified.
+	 */
+	void verifyFingerprint(const OtrFingerprint& AFingerprint, bool AVerified);
+
+	/**
+	 * Return true if Socialist Millionaires' Protocol succeeded.
+	 */
+	bool smpSucceeded(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Returns a list of known fingerprints.
+	 */
+	QList<OtrFingerprint> getFingerprints();
+
+	/**
+	 * Delete a known fingerprint.
+	 */
+	void deleteFingerprint(const OtrFingerprint& AFingerprint);
+
+	/**
+	 * Delete a private key.
+	 */
+	void deleteKey(const QString& AAccount);
+
+	/**
+	 * Return the messageState as human-readable string.
+	 */
+	QString getMessageStateString(const QString& AAccount,
+								  const QString& AContact);
+	/**
+	 * Generate own keys.
+	 * This function blocks until keys are available.
+	 */
+	void generateKey(const QString& AAccount);
+
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid pluginUuid() const { return OTR_UUID; }
@@ -83,6 +200,55 @@ public:
 protected:
 	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const;
 
+	//
+	// Former OtrMessaging class methods
+	//
+	/**
+	 * Process an outgoing message.
+	 *
+	 * @param account Account the message is send from
+	 * @param contact Recipient of the message
+	 * @param message The message itself
+	 *
+	 * @return The encrypted message
+	 */
+	QString encryptMessage(const QString& AAccount,
+						   const QString& AContact,
+						   const QString& AMessage);
+
+	/**
+	 * Decrypt an incoming message.
+	 *
+	 * @param account Account the message is send to
+	 * @param contact Sender of the message
+	 * @param message The message itself
+	 * @param decrypted The decrypted message if the original message was
+	 *                  encrypted
+	 * @return Type of incoming message
+	 */
+	IOtr::MessageType decryptMessage(const QString& AAccount, const QString& AContact,
+									 const QString& AMessage, QString& ADecrypted);
+
+	/**
+	 * Send an OTR query message from account to contact.
+	 */
+	void startSession(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Send otr-finished message to user.
+	 */
+	void endSession(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Force a session to expire.
+	 */
+	void expireSession(const QString& AAccount, const QString& AContact);
+
+	/**
+	 * Return the secure session id (ssid) for a context.
+	 */
+	QString getSessionId(const QString& AAccount, const QString& AContact);
+
 protected slots:
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
@@ -108,7 +274,8 @@ signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 private:
-	OtrMessaging* FOtrMessaging;
+	OtrInternal* FOtrInternal;
+
 	QHash<QString, QHash<QString, OtrClosure*> > FOnlineUsers;
 	IOptionsManager* FOptionsManager;
 	IStanzaProcessor *FStanzaProcessor;

@@ -6,7 +6,8 @@
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/iaccountmanager.h>
-#include "otrmessaging.h"
+
+#include "otr.h"
 
 namespace Ui {
 class OtrOptions;
@@ -19,7 +20,7 @@ class OtrOptions:
 	Q_OBJECT
 	Q_INTERFACES(IOptionsDialogWidget)
 public:
-	OtrOptions(OtrMessaging* AOtrMessaging, QWidget *AParent = 0);
+	OtrOptions(Otr* AOtr, QWidget *AParent = 0);
 	~OtrOptions();
 
 	// IOptionsDialogWidget interface
@@ -53,7 +54,7 @@ signals:
 
 private:
 	Ui::OtrOptions *ui;
-	OtrMessaging*       FOtrMessaging;
+	Otr*				FOtrMessaging;
 	IPresenceManager*	FPresenceManager;
 	IAccountManager*	FAccountManager;
 	QStandardItemModel* FFingerprintsModel;
