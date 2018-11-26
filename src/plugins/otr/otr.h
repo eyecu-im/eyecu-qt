@@ -23,9 +23,6 @@ class IMessageChatWindow;
 
 class Action;
 
-class OtrClosure;
-class OtrInternal;
-
 /**
  * This struct contains all data shown in the table of 'Known Fingerprints'.
  */
@@ -62,6 +59,9 @@ struct OtrFingerprint
 				QString account, QString username,
 				QString trust);
 };
+
+class OtrClosure;
+class OtrPrivate;
 
 class Otr:
     public QObject,
@@ -224,7 +224,7 @@ signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 private:
-	OtrInternal* FOtrInternal;
+    OtrPrivate * const FOtrPrivate;
 
 	QHash<QString, QHash<QString, OtrClosure*> > FOnlineUsers;
 	IOptionsManager* FOptionsManager;

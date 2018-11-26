@@ -59,10 +59,10 @@ static const QString OTR_INSTAGS_FILE = "otr.instags";
 /**
  * Handles all libotr calls and callbacks.
  */
-class OtrInternal
+class OtrPrivate
 {
 public:
-	OtrInternal(IOtr* AOtr):
+	OtrPrivate(IOtr* AOtr):
 		FUserState(),
 		FUiOps(),
 		FOtr(AOtr),
@@ -70,29 +70,29 @@ public:
 	{
 		OTRL_INIT;
 		FUserState                 = otrl_userstate_create();
-		FUiOps.policy              = (*OtrInternal::cbPolicy);
-		FUiOps.create_privkey      = (*OtrInternal::cbCreatePrivkey);
-		FUiOps.is_logged_in        = (*OtrInternal::cbIsLoggedIn);
-		FUiOps.inject_message      = (*OtrInternal::cbInjectMessage);
-		FUiOps.update_context_list = (*OtrInternal::cbUpdateContextList);
-		FUiOps.new_fingerprint     = (*OtrInternal::cbNewFingerprint);
-		FUiOps.write_fingerprints  = (*OtrInternal::cbWriteFingerprints);
-		FUiOps.gone_secure         = (*OtrInternal::cbGoneSecure);
-		FUiOps.gone_insecure       = (*OtrInternal::cbGoneInsecure);
-		FUiOps.still_secure        = (*OtrInternal::cbStillSecure);
+		FUiOps.policy              = (*OtrPrivate::cbPolicy);
+		FUiOps.create_privkey      = (*OtrPrivate::cbCreatePrivkey);
+		FUiOps.is_logged_in        = (*OtrPrivate::cbIsLoggedIn);
+		FUiOps.inject_message      = (*OtrPrivate::cbInjectMessage);
+		FUiOps.update_context_list = (*OtrPrivate::cbUpdateContextList);
+		FUiOps.new_fingerprint     = (*OtrPrivate::cbNewFingerprint);
+		FUiOps.write_fingerprints  = (*OtrPrivate::cbWriteFingerprints);
+		FUiOps.gone_secure         = (*OtrPrivate::cbGoneSecure);
+		FUiOps.gone_insecure       = (*OtrPrivate::cbGoneInsecure);
+		FUiOps.still_secure        = (*OtrPrivate::cbStillSecure);
 
 		FUiOps.max_message_size    = nullptr;
-		FUiOps.account_name        = (*OtrInternal::cbAccountName);
-		FUiOps.account_name_free   = (*OtrInternal::cbAccountNameFree);
+		FUiOps.account_name        = (*OtrPrivate::cbAccountName);
+		FUiOps.account_name_free   = (*OtrPrivate::cbAccountNameFree);
 
-		FUiOps.handle_msg_event    = (*OtrInternal::cbHandleMsgEvent);
-		FUiOps.handle_smp_event    = (*OtrInternal::cbHandleSmpEvent);
-		FUiOps.create_instag       = (*OtrInternal::cbCreateInstag);
+		FUiOps.handle_msg_event    = (*OtrPrivate::cbHandleMsgEvent);
+		FUiOps.handle_smp_event    = (*OtrPrivate::cbHandleSmpEvent);
+		FUiOps.create_instag       = (*OtrPrivate::cbCreateInstag);
 	}
 
 	//-----------------------------------------------------------------------------
 
-	~OtrInternal()
+	~OtrPrivate()
 	{
 		otrl_userstate_free(FUserState);
 	}
@@ -936,37 +936,37 @@ protected:
 
 	static void cbCreatePrivkey(void* APpdata, const char* AAccountName, const char* AProtocol) {
 		qDebug() << "OtrInternal::cbCreatePrivkey()";
-		static_cast<OtrInternal*>(APpdata)->createPrivkey(AAccountName, AProtocol);
+		static_cast<OtrPrivate*>(APpdata)->createPrivkey(AAccountName, AProtocol);
 	}
 
 	static int cbIsLoggedIn(void* AOpdata, const char* AAccountName, const char* AProtocol, const char* ARecipient) {
 		qDebug() << "OtrInternal::cbIsLoggedIn()";
-		return static_cast<OtrInternal*>(AOpdata)->isLoggedIn(AAccountName, AProtocol, ARecipient);
+		return static_cast<OtrPrivate*>(AOpdata)->isLoggedIn(AAccountName, AProtocol, ARecipient);
 	}
 
 	static void cbInjectMessage(void* AOpdata, const char* AAccountname, const char* AProtocol, const char* ARecipient, const char* AMessage) {
 		qDebug() << "OtrInternal::cbInjectMessage()";
-		static_cast<OtrInternal*>(AOpdata)->injectMessage(AAccountname, AProtocol, ARecipient, AMessage);
+		static_cast<OtrPrivate*>(AOpdata)->injectMessage(AAccountname, AProtocol, ARecipient, AMessage);
 	}
 
 	static void cbHandleMsgEvent(void* AOpdata, OtrlMessageEvent AMsgEvent, ConnContext* AContext, const char* AMessage, gcry_error_t AError) {
 		qDebug() << "OtrInternal::cbHandleMsgEvent()";
-		static_cast<OtrInternal*>(AOpdata)->handleMsgEvent(AMsgEvent, AContext, AMessage, AError);
+		static_cast<OtrPrivate*>(AOpdata)->handleMsgEvent(AMsgEvent, AContext, AMessage, AError);
 	}
 
 	static void cbHandleSmpEvent(void* AOpdata, OtrlSMPEvent ASmpEvent, ConnContext* AContext, unsigned short AProgressPercent, char* AQuestion) {
 		qDebug() << "OtrInternal::cbHandleSmpEvent()";
-		static_cast<OtrInternal*>(AOpdata)->handleSmpEvent(ASmpEvent, AContext, AProgressPercent, AQuestion);
+		static_cast<OtrPrivate*>(AOpdata)->handleSmpEvent(ASmpEvent, AContext, AProgressPercent, AQuestion);
 	}
 
 	static void cbCreateInstag(void* AOpdata, const char* AAccountName, const char* AProtocol) {
 		qDebug() << "OtrInternal::cbCreateInstag()";
-		static_cast<OtrInternal*>(AOpdata)->createInstag(AAccountName, AProtocol);
+		static_cast<OtrPrivate*>(AOpdata)->createInstag(AAccountName, AProtocol);
 	}
 
 	static void cbUpdateContextList(void* AOpdata) {
 		qDebug() << "OtrInternal::cbUpdateContextList()";
-		static_cast<OtrInternal*>(AOpdata)->updateContextList();
+		static_cast<OtrPrivate*>(AOpdata)->updateContextList();
 		qDebug() << "OtrInternal::cbUpdateContextList(): finished!";
 	}
 
@@ -974,38 +974,38 @@ protected:
 								 const char* AAccountName, const char* AProtocol,
 								 const char* AUserName, unsigned char AFingerprint[20]) {
 		qDebug() << "OtrInternal::cbNewFingerprint()";
-		static_cast<OtrInternal*>(AOpdata)->newFingerprint(AUserState, AAccountName, AProtocol, AUserName, AFingerprint);
+		static_cast<OtrPrivate*>(AOpdata)->newFingerprint(AUserState, AAccountName, AProtocol, AUserName, AFingerprint);
 	}
 
 	static void cbWriteFingerprints(void* AOpdata) {
 		qDebug() << "OtrInternal::cbWriteFingerprints()";
-		static_cast<OtrInternal*>(AOpdata)->writeFingerprints();
+		static_cast<OtrPrivate*>(AOpdata)->writeFingerprints();
 	}
 
 	static void cbGoneSecure(void* AOpdata, ConnContext* AContext) {
 		qDebug() << "OtrInternal::cbGoneSecure()";
-		static_cast<OtrInternal*>(AOpdata)->goneSecure(AContext);
+		static_cast<OtrPrivate*>(AOpdata)->goneSecure(AContext);
 	}
 
 	static void cbGoneInsecure(void* AOpdata, ConnContext* AContext) {
 		qDebug() << "OtrInternal::cbGoneInecure()";
-		static_cast<OtrInternal*>(AOpdata)->goneInsecure(AContext);
+		static_cast<OtrPrivate*>(AOpdata)->goneInsecure(AContext);
 	}
 
 	static void cbStillSecure(void* AOpdata, ConnContext* AContext, int AIsReply) {
 		qDebug() << "OtrInternal::cbStillSecure()";
-		static_cast<OtrInternal*>(AOpdata)->stillSecure(AContext, AIsReply);
+		static_cast<OtrPrivate*>(AOpdata)->stillSecure(AContext, AIsReply);
 	}
 
 	static const char* cbAccountName(void* AOpdata, const char* AAccount,
 											 const char* AProtocol) {
 		qDebug() << "OtrInternal::cbAccountName()";
-		return static_cast<OtrInternal*>(AOpdata)->accountName(AAccount, AProtocol);
+		return static_cast<OtrPrivate*>(AOpdata)->accountName(AAccount, AProtocol);
 	}
 
 	static void cbAccountNameFree(void* AOpdata, const char* AAccountName) {
 		qDebug() << "OtrInternal::cbAccountNameFree()";
-		static_cast<OtrInternal*>(AOpdata)->accountNameFree(AAccountName);
+		static_cast<OtrPrivate*>(AOpdata)->accountNameFree(AAccountName);
 	}
 	// ---------------------------------------------------------------------------
 
@@ -1075,11 +1075,11 @@ OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
 	username(username),
 	trust(trust)
 {
-	fingerprintHuman = OtrInternal::humanFingerprint(fingerprint);
+	fingerprintHuman = OtrPrivate::humanFingerprint(fingerprint);
 }
 
 Otr::Otr() :
-	FOtrInternal(new OtrInternal(this)),
+	FOtrPrivate(new OtrPrivate(this)),
     FOptionsManager(nullptr),
     FAccountManager(nullptr),
     FPresenceManager(nullptr),
@@ -1089,7 +1089,7 @@ Otr::Otr() :
 
 Otr::~Otr()
 {
-	delete FOtrInternal;
+	delete FOtrPrivate;
 }
 
 void Otr::pluginInfo(IPluginInfo *APluginInfo)
@@ -1221,7 +1221,7 @@ void Otr::onStreamClosed( IXmppStream *AXmppStream )
     {
 		foreach(QString contact, FOnlineUsers.value(account).keys())
         {
-			FOtrInternal->endSession(account, contact);
+			FOtrPrivate->endSession(account, contact);
 			FOnlineUsers[account][contact]->setIsLoggedIn(false);
         }
     }
@@ -1321,7 +1321,7 @@ void Otr::onChatWindowDestroyed(IMessageChatWindow *AWindow)
 void Otr::onProfileOpened(const QString &AProfile)
 {
 	FHomePath = FOptionsManager->profilePath(AProfile);
-	FOtrInternal->init();
+	FOtrPrivate->init();
 }
 
 // OTR tool button slots
@@ -1330,7 +1330,7 @@ void Otr::onSessionInitiate()
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
-	FOtrInternal->startSession(account, contact);
+	FOtrPrivate->startSession(account, contact);
 }
 
 void Otr::onSessionEnd()
@@ -1339,7 +1339,7 @@ void Otr::onSessionEnd()
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
 	QString streamJid = action->data(ADR_STREAM_JID).toString();
-	FOtrInternal->endSession(account, contact);
+	FOtrPrivate->endSession(account, contact);
 	onUpdateMessageState(streamJid, contact);
 }
 
@@ -1356,7 +1356,7 @@ void Otr::onSessionID()
 	Action *action = qobject_cast<Action *>(sender());
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
-	QString sId = FOtrInternal->getSessionId(account, contact);
+	QString sId = FOtrPrivate->getSessionId(account, contact);
 	QString msg;
 
 	if (sId.isEmpty())
@@ -1730,7 +1730,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 					FOnlineUsers.value(account).contains(contact))
                 {
 					if (Options::node(OPV_OTR_ENDWHENOFFLINE).value().toBool())
-						FOtrInternal->expireSession(account, contact);
+						FOtrPrivate->expireSession(account, contact);
 					FOnlineUsers[account][contact]->setIsLoggedIn(false);
                     Jid contactJid(AStanza.from());
                     emit otrStateChanged(AStreamJid,contactJid);
@@ -1755,7 +1755,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
                 QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 
 				qDebug() << "Encrypting message...";
-				QString encrypted = FOtrInternal->encryptMessage(account, contact, message.body());
+				QString encrypted = FOtrPrivate->encryptMessage(account, contact, message.body());
 				qDebug() << "Done! Encrypted message:" << encrypted;
                 message.setBody(encrypted);
 
@@ -1794,7 +1794,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
                 QString decrypted;
 				qDebug() << "Decrypting message...";
 				qDebug() << "Encrypted message:" << plainBody;
-				IOtr::MessageType messageType = FOtrInternal->decryptMessage(account, contact,
+				IOtr::MessageType messageType = FOtrPrivate->decryptMessage(account, contact,
 																			 plainBody, decrypted);
 				qDebug() << "Decrypted message:" << decrypted;
                 switch (messageType)
@@ -1827,75 +1827,75 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 
 QList<OtrFingerprint> Otr::getFingerprints()
 {
-	return FOtrInternal->getFingerprints();
+	return FOtrPrivate->getFingerprints();
 }
 
 void Otr::deleteFingerprint(const OtrFingerprint &AFingerprint)
 {
-	return FOtrInternal->deleteFingerprint(AFingerprint);
+	return FOtrPrivate->deleteFingerprint(AFingerprint);
 }
 
 void Otr::verifyFingerprint(const OtrFingerprint& AFingerprint, bool AVerified)
 {
-	FOtrInternal->verifyFingerprint(AFingerprint, AVerified);
+	FOtrPrivate->verifyFingerprint(AFingerprint, AVerified);
 }
 
 QHash<QString, QString> Otr::getPrivateKeys()
 {
-	return FOtrInternal->getPrivateKeys();
+	return FOtrPrivate->getPrivateKeys();
 }
 
 void Otr::deleteKey(const QString& AAccount)
 {
-	FOtrInternal->deleteKey(AAccount);
+	FOtrPrivate->deleteKey(AAccount);
 }
 
 void Otr::startSMP(const QString& AAccount, const QString& AContact,
 				   const QString& AQuestion, const QString& ASecret)
 {
-	FOtrInternal->startSMP(AAccount, AContact, AQuestion, ASecret);
+	FOtrPrivate->startSMP(AAccount, AContact, AQuestion, ASecret);
 }
 
 void Otr::continueSMP(const QString& AAccount, const QString& AContact,
 					  const QString& ASecret)
 {
-	FOtrInternal->continueSMP(AAccount, AContact, ASecret);
+	FOtrPrivate->continueSMP(AAccount, AContact, ASecret);
 }
 
 void Otr::abortSMP(const QString& AAccount, const QString& AContact)
 {
-	FOtrInternal->abortSMP(AAccount, AContact);
+	FOtrPrivate->abortSMP(AAccount, AContact);
 }
 
 IOtr::MessageState Otr::getMessageState(const QString& AAccount, const QString& AContact)
 {
-	return FOtrInternal->getMessageState(AAccount, AContact);
+	return FOtrPrivate->getMessageState(AAccount, AContact);
 }
 
 QString Otr::getMessageStateString(const QString& AAccount, const QString& AContact)
 {
-	return FOtrInternal->getMessageStateString(AAccount, AContact);
+	return FOtrPrivate->getMessageStateString(AAccount, AContact);
 }
 
 OtrFingerprint Otr::getActiveFingerprint(const QString& AAccount,
 										 const QString& AContact)
 {
-	return FOtrInternal->getActiveFingerprint(AAccount, AContact);
+	return FOtrPrivate->getActiveFingerprint(AAccount, AContact);
 }
 
 bool Otr::isVerified(const QString& AAccount, const QString& AContact)
 {
-	return FOtrInternal->isVerified(AAccount, AContact);
+	return FOtrPrivate->isVerified(AAccount, AContact);
 }
 
 bool Otr::smpSucceeded(const QString& AAccount, const QString& AContact)
 {
-	return FOtrInternal->smpSucceeded(AAccount, AContact);
+	return FOtrPrivate->smpSucceeded(AAccount, AContact);
 }
 
 void Otr::generateKey(const QString& AAccount)
 {
-	FOtrInternal->generateKey(AAccount);
+	FOtrPrivate->generateKey(AAccount);
 }
 
 #if QT_VERSION < 0x050000
