@@ -274,6 +274,9 @@
 
 // Chat Markers
 #define MNI_CHATMARKERS                 "chatmarkers"
+//#define MNI_CHATMARKERS_RECEIVED        "chatmarkersReceived"
+#define MNI_CHATMARKERS_DISPLAYED       "chatmarkersDisplayed"
+#define MNI_CHATMARKERS_ACKNOWLEDGED    "chatmarkersAcknowledged"
 
 //Poi
 #define MNI_POI                         "poi"

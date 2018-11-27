@@ -20,6 +20,7 @@
 #include <definitions/resources.h>
 
 #include <utils/options.h>
+#include <utils/logger.h>
 #include <utils/delayedimagenetworkreply.h>
 
 class ChatMarkers : public QObject,
@@ -63,16 +64,21 @@ public:
     // Not exported!
     bool isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const;
     bool isMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
+    bool isLastMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
     bool isReceived(const QString &AId) const;
     bool isDisplayed(const QString &AId) const;
+    bool isAcknowledged(const QString &AId) const;
 
 protected:
 //    QHash<QString, QString> getReceipts(Jid jid) const;
     void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+    void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+    void markAcknowledged(const Jid &AStreamJid, const Jid &AContactJid);
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
+    void updateToolBarAction(IMessageToolBarWidget *AWidget);
 
 private:
     IMessageProcessor   *FMessageProcessor;
@@ -87,10 +93,13 @@ private:
 
     QSet<QString>       FReceivedHash;
     QSet<QString>       FDisplayedHash;
+    QSet<QString>       FAcknowledgedHash;
     QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
-    QHash<Jid, QHash<Jid, QString> > FMarkedHash;
+    QHash<Jid, QHash<Jid, QString> > FLsatMarkedHash;
+    QHash<Jid, QHash<Jid, QStringList> > FMarkedHash;
     QHash<Jid, QHash<Jid, QStringList> > FMarkableHash;
+    QMap<IMessageToolBarWidget *, Action *> FToolBarActions;
 
     void registerDiscoFeatures(bool ARegister);
 
@@ -101,15 +110,23 @@ protected slots:
     void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
 //    void onMultiChatWindowActivated();
 protected slots:
+    void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
+    void onToolBarWidgetDestroyed(QObject *AObject);
+protected slots:
     void onWindowActivated();
     void onNotificationActivated(int ANotifyId);
 	//Options
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
+protected slots:
+    void onMarkable(const Jid &AStreamJid, const Jid &AContactJid);
+    void onAcknowledgedByAction(bool);
 
 signals:
+    void markable(const Jid &AStreamJid, const Jid &AContactJid);
     void received(const QString &AId);
     void displayed(const QString &AId);
+    void acknowledged(const QString &AId);
 };
 
 #endif // CHATMARKERS_H

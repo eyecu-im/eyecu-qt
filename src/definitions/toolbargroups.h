@@ -29,6 +29,7 @@
 #define TBG_MWTBW_OOB_VIEW                                      1250
 #define TBG_MWTBW_JINGLE_RTP                                    1280
 #define TBG_MWTBW_MOOD_VIEW                                     1290
+#define TBG_MWTBW_ACKNOWLEDGEMENT                               1300
 //Wessage Widgets - SelectIconMenu
 #define TBG_MWSIM_RECENT                                        1000
 #define TBG_MWSIM_SKINCOLOR                                     10100
