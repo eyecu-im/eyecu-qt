@@ -23,14 +23,15 @@
 #include <utils/logger.h>
 #include <utils/delayedimagenetworkreply.h>
 
-class ChatMarkers : public QObject,
-                 public IPlugin,
-                 public IChatMarkers,
-				 public IOptionsDialogHolder,
-                 public IMessageEditor,
-                 public IMessageWriter,
-                 public IArchiveHandler,
-                 public IUrlHandler
+class ChatMarkers:
+		public QObject,
+		public IPlugin,
+		public IChatMarkers,
+		public IOptionsDialogHolder,
+		public IMessageEditor,
+		public IMessageWriter,
+		public IArchiveHandler,
+		public IUrlHandler
  {
     Q_OBJECT
 	Q_INTERFACES(IPlugin IChatMarkers IOptionsDialogHolder IMessageEditor IMessageWriter IArchiveHandler IUrlHandler)
@@ -38,6 +39,12 @@ class ChatMarkers : public QObject,
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IChatMarkers")
 #endif
 public:
+	enum Type {
+		Unknown,
+		Received,
+		Displayed,
+		Acknowledged
+	};
     ChatMarkers();
     ~ChatMarkers();
 
@@ -69,8 +76,7 @@ public:
     bool isDisplayed(const QString &AId) const;
     bool isAcknowledged(const QString &AId) const;
 
-protected:
-//    QHash<QString, QString> getReceipts(Jid jid) const;
+protected:	
     void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
@@ -94,7 +100,7 @@ private:
     QSet<QString>       FReceivedHash;
     QSet<QString>       FDisplayedHash;
     QSet<QString>       FAcknowledgedHash;
-    QByteArray          FImgeData;
+	QByteArray          FImageData[3];
     QHash<IMessageChatWindow *, int>   FNotifies;
     QHash<Jid, QHash<Jid, QString> > FLsatMarkedHash;
     QHash<Jid, QHash<Jid, QStringList> > FMarkedHash;

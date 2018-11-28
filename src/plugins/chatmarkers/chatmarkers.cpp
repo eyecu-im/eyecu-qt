@@ -121,16 +121,26 @@ bool ChatMarkers::initObjects()
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
     if (FIconStorage)
     {
-        QString fileName=FIconStorage->fileFullName(MNI_CHATMARKERS);
-        if (!fileName.isEmpty())
-        {
-            QFile file(fileName);
-            if (file.open(QFile::ReadOnly))
-            {
-                FImgeData=file.readAll();
-                file.close();
-            }
-        }
+		QStringList names;
+		names << MNI_MESSAGE_RECEIVED
+			  << MNI_MESSAGE_DISPLAYED
+			  << MNI_MESSAGE_ACKNOWLEDGED;
+
+		int i = 0;
+		for (QStringList::ConstIterator it = names.constBegin();
+			 it != names.constEnd(); ++it, ++i)
+		{
+			QString fileName=FIconStorage->fileFullName(*it);
+			if (!fileName.isEmpty())
+			{
+				QFile file(fileName);
+				if (file.open(QFile::ReadOnly))
+				{
+					FImageData[i] = file.readAll();
+					file.close();
+				}
+			}
+		}
     }
 
     if (FNotifications)
@@ -138,7 +148,7 @@ bool ChatMarkers::initObjects()
         INotificationType recievedType;
         recievedType.order = NTO_DELIVERED_NOTIFY;
         if (FIconStorage)
-            recievedType.icon = FIconStorage->getIcon(MNI_DELIVERED);
+			recievedType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
         recievedType.title = tr("When message delivery notification recieved");
         recievedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
         recievedType.kindDefs = recievedType.kindMask;
@@ -147,7 +157,7 @@ bool ChatMarkers::initObjects()
         INotificationType displayedType;
         displayedType.order = NTO_CHATMARKERS_NOTIFY;
         if (FIconStorage)
-            displayedType.icon = FIconStorage->getIcon(MNI_CHATMARKERS);
+			displayedType.icon = FIconStorage->getIcon(MNI_MESSAGE_DISPLAYED);
         displayedType.title = tr("When message marked with a displayed Chat Marker");
         displayedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
         displayedType.kindDefs = displayedType.kindMask;
@@ -183,7 +193,7 @@ void ChatMarkers::registerDiscoFeatures(bool ARegister)
 		IDiscoFeature dfeature;
 		dfeature.active = true;
 		dfeature.var = NS_CHATMARKERS;
-		dfeature.icon = FIconStorage->getIcon(MNI_CHATMARKERS);
+		dfeature.icon = FIconStorage->getIcon(MNI_MESSAGE_ACKNOWLEDGED);
 		dfeature.name = tr("Chat Markers");
 		dfeature.description = tr("Supports marking the last received, displayed and acknowledged message in a chat");
 		FDiscovery->insertDiscoFeature(dfeature);
@@ -313,7 +323,7 @@ void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
         if (acknowledgedAction == NULL)
         {
             acknowledgedAction = new Action(AWidget->toolBarChanger()->toolBar());
-            acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_CHATMARKERS_ACKNOWLEDGED);
+			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
             acknowledgedAction->setText(tr("Acknowledgement"));
             //acknowledgedAction->setShortcutId();
             connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
@@ -476,10 +486,19 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 
 QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
 {
-    DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, FImgeData, FUrlProcessor->instance());
+	Type type = ARequest.url().scheme() == "chatmarkers-received"	  ?	Received:
+				ARequest.url().scheme() == "chatmarkers-displayed"	  ?	Displayed:
+				ARequest.url().scheme() == "chatmarkers-acknowledged" ?	Acknowledged:
+																		Unknown;
+
+	Q_ASSERT(type != Unknown);
+	if (type == Unknown)
+		return nullptr;
+
+	DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, FImageData[type-1], FUrlProcessor->instance());
 
     if (ARequest.url().scheme().contains("chatmarkers-received"))
-            connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+		connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
     if (ARequest.url().scheme().contains("chatmarkers-displayed"))
         connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
     if (ARequest.url().scheme().contains("chatmarkers-acknowledged"))
@@ -510,7 +529,7 @@ void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, con
             if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
             {
                 notify.typeId = NNT_DELIVERED;
-                notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_DELIVERED));
+				notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
                 notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
                 notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
@@ -541,7 +560,7 @@ void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, co
             if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
             {
                 notify.typeId = NNT_CHATMARKERS;
-                notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_CHATMARKERS_DISPLAYED));
+				notify.data.insert(NDR_ICON, FIconStorage->getIcon(MNI_MESSAGE_DISPLAYED));
                 notify.data.insert(NDR_POPUP_CAPTION, tr("Message displayed"));
                 notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));

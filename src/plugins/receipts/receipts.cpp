@@ -105,7 +105,7 @@ bool Receipts::initObjects()
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	if (FIconStorage)
 	{
-		QString fileName=FIconStorage->fileFullName(MNI_DELIVERED);
+		QString fileName=FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED);
 		if (!fileName.isEmpty())
 		{
 			QFile file(fileName);
@@ -122,7 +122,7 @@ bool Receipts::initObjects()
 		INotificationType notifyType;
 		notifyType.order = NTO_DELIVERED_NOTIFY;
 		if (FIconStorage)
-			notifyType.icon = FIconStorage->getIcon(MNI_DELIVERED);
+			notifyType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
 		notifyType.title = tr("When message delivery notification recieved");
 		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		notifyType.kindDefs = notifyType.kindMask;
@@ -154,7 +154,7 @@ void Receipts::registerDiscoFeatures(bool ARegister)
 		IDiscoFeature dfeature;
 		dfeature.active = true;
 		dfeature.var = NS_RECEIPTS;
-		dfeature.icon = FIconStorage->getIcon(MNI_DELIVERED);
+		dfeature.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
 		dfeature.name = tr("Message Delivery Receipts");
 		dfeature.description = tr("Sends/receives Message Delivery Receipts");
 		FDiscovery->insertDiscoFeature(dfeature);
@@ -328,7 +328,7 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 			if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
 			{
 				notify.typeId = NNT_DELIVERED;
-				notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_DELIVERED));
+				notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
 				notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
 				notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));

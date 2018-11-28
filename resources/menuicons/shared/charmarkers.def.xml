@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
- <icon><key>chatmarkers</key><object mime="image/png">chatmarkers.png</object></icon>
- <icon><key>chatmarkersReceived</key><object mime="image/png">chatmarkersreceived.png</object></icon>
- <icon><key>chatmarkersDisplayed</key><object mime="image/png">chatmarkersdisplayed.png</object></icon>
- <icon><key>chatmarkersAcknowledged</key><object mime="image/png">chatmarkersacknowledged.png</object></icon>
+ <icon><key>messageReceived</key><object mime="image/png">messagereceived.png</object></icon>
+ <icon><key>messageDisplayed</key><object mime="image/png">messagedisplayed.png</object></icon>
+ <icon><key>messageAcknowledged</key><object mime="image/png">messageacknowledged.png</object></icon>
 </icondef>

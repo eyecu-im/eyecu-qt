@@ -7,7 +7,6 @@
 #define CHATMARKERS_UUID "{}"
                      
 class IChatMarkers {
-
 public:
     virtual QObject *instance() =0;
 };
