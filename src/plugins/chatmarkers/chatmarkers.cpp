@@ -369,28 +369,13 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
         {
             QDomElement received=stanza.firstElement("received", NS_CHATMARKERS);
             if (!received.isNull())
-            {
-                QString id=received.attribute("id");
-                if (id.isEmpty())
-                    id=AMessage.id();
-                setReceived(AStreamJid, AMessage.from(), id);
-            }
+				setReceived(AStreamJid, AMessage.from(), received.attribute("id"));
             QDomElement displayed=stanza.firstElement("displayed", NS_CHATMARKERS);
             if(!displayed.isNull())
-            {
-                QString id=displayed.attribute("id");
-                if (id.isEmpty())
-                    id=AMessage.id(); //-- Obsolete revision of XEP-0184 ---
-                setDisplayed(AStreamJid, AMessage.from(), id);
-            }
+				setDisplayed(AStreamJid, AMessage.from(), displayed.attribute("id"));
             QDomElement acknowledged=stanza.firstElement("acknowledged", NS_CHATMARKERS);
             if (!acknowledged.isNull())
-            {
-                QString id=acknowledged.attribute("id");
-                if (id.isEmpty())
-                    id=AMessage.id();
-               setAcknowledged(AStreamJid, AMessage.from(), id);
-            }
+			   setAcknowledged(AStreamJid, AMessage.from(), acknowledged.attribute("id"));
         }
     }
     else
@@ -432,23 +417,26 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
     {
         if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
         {
-            QUrl rUrl(QString("chatmarkers-received:%1/%2/%3").arg(AMessage.from())
-                                                 .arg(AMessage.to())
-                                                 .arg(AMessage.id()));
+			QUrl rUrl(QString("chatmarkers-received:{%1}{%2}{%3}")
+					  .arg(AMessage.from().toLower())
+					  .arg(AMessage.to().toLower())
+					  .arg(AMessage.id()));
             QTextCursor rCursor(ADocument);
             rCursor.movePosition(QTextCursor::End);
             rCursor.insertImage(rUrl.toString());
         }
-        QUrl dUrl(QString("chatmarkers-displayed:%1/%2/%3").arg(AMessage.from())
-                                                .arg(AMessage.to())
-                                                .arg(AMessage.id()));
+		QUrl dUrl(QString("chatmarkers-displayed:{%1}{%2}{%3}")
+				  .arg(AMessage.from().toLower())
+				  .arg(AMessage.to().toLower())
+				  .arg(AMessage.id()));
         QTextCursor dCursor(ADocument);
         dCursor.movePosition(QTextCursor::End);
         dCursor.insertImage(dUrl.toString());
 
-        QUrl aUrl(QString("chatmarkers-acknowledged:%1/%2/%3").arg(AMessage.from())
-                                                .arg(AMessage.to())
-                                                .arg(AMessage.id()));
+		QUrl aUrl(QString("chatmarkers-acknowledged:{%1}{%2}{%3}")
+				  .arg(AMessage.from().toLower())
+				  .arg(AMessage.to().toLower())
+				  .arg(AMessage.id()));
         QTextCursor aCursor(ADocument);
         aCursor.movePosition(QTextCursor::End);
         aCursor.insertImage(aUrl.toString());
@@ -488,7 +476,7 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 
 QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
 {
-    DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, &FImgeData, FUrlProcessor->instance());
+    DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, FImgeData, FUrlProcessor->instance());
 
     if (ARequest.url().scheme().contains("chatmarkers-received"))
             connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
@@ -508,7 +496,9 @@ QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const Q
 
 void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    QString id = AStreamJid.full()+"/"+AContactJid.full()+"/"+AMessageId;
+	QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
+										.arg(AContactJid.full().toLower())
+										.arg(AMessageId);
     FReceivedHash.insert(id);
     if (FMessageWidgets)
     {
@@ -537,7 +527,9 @@ void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, con
 
 void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    QString id = AStreamJid.full()+"/"+AContactJid.full()+"/"+AMessageId;
+	QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
+										.arg(AContactJid.full().toLower())
+										.arg(AMessageId);
     FDisplayedHash.insert(id);
     if (FMessageWidgets)
     {
@@ -566,7 +558,9 @@ void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, co
 
 void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    QString id = AStreamJid.full()+"/"+AContactJid.full()+"/"+AMessageId;
+	QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
+										.arg(AContactJid.full().toLower())
+										.arg(AMessageId);
     FAcknowledgedHash.insert(id);
     emit acknowledged(id);
 }
