@@ -67,7 +67,7 @@ public:
 
 	virtual QObject *instance() =0;
 
-	virtual QString dataDir() = 0;
+//	virtual QString dataDir() = 0;
 
 	/**
 	 * Sends a message from the Account account to the user contact.

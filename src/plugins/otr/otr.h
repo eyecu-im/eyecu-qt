@@ -55,9 +55,8 @@ struct OtrFingerprint
 
 	OtrFingerprint();
 	OtrFingerprint(const OtrFingerprint &fp);
-	OtrFingerprint(unsigned char* fingerprint,
-				QString account, QString username,
-				QString trust);
+	OtrFingerprint(unsigned char* fingerprint, QString account,
+				   QString username, QString trust);
 };
 
 class OtrClosure;
@@ -158,6 +157,8 @@ public:
 	 */
 	void generateKey(const QString& AAccount);
 
+	QString dataDir();	// To be used by OtrPrivate class
+
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid pluginUuid() const { return OTR_UUID; }
@@ -174,7 +175,6 @@ public:
 	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
 
     // OtrCallback
-    virtual QString dataDir();
 	virtual void sendMessage(const QString &AAccount, const QString &AContact,
 							 const QString& AMessage);
     virtual bool isLoggedIn(const QString &AAccount, const QString &AContact) const;
@@ -202,12 +202,9 @@ protected:
 protected slots:
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
-	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
-	void onMessageWindowCreated(IMessageNormalWindow *AWindow);
-	void onMessageWindowDestroyed(IMessageNormalWindow *AWindow);
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onChatWindowDestroyed(IMessageChatWindow *AWindow);
-	void onPresenceOpened(IPresence *APresence);
+//	void onPresenceOpened(IPresence *APresence);
 	void onProfileOpened(const QString &AProfile);
 
 	// OTR tool button
@@ -224,23 +221,22 @@ signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 private:
-    OtrPrivate * const FOtrPrivate;
-
+	OtrPrivate * const	FOtrPrivate;
 	QHash<QString, QHash<QString, OtrClosure*> > FOnlineUsers;
-	IOptionsManager* FOptionsManager;
-	IStanzaProcessor *FStanzaProcessor;
-	IMessageArchiver *FMessageArchiver;
-	IAccountManager* FAccountManager;
-	IPresenceManager *FPresenceManager;
-	IMessageProcessor* FMessageProcessor;
-    QString         FHomePath;
-	QHash<IMessageToolBarWidget*, Action*> FActions;
-	QHash<Action*, QToolButton*> FButtons;
-	IMessageWidgets *FMessageWidgets;
-	int				FSHIMessage;
-	int				FSHIPresence;
-	int				FSHOMessage;
-	int				FSHOPresence;
+	IOptionsManager		*FOptionsManager;
+	IStanzaProcessor	*FStanzaProcessor;
+	IMessageArchiver	*FMessageArchiver;
+	IAccountManager		*FAccountManager;
+//	IPresenceManager	*FPresenceManager;
+	IMessageProcessor	*FMessageProcessor;
+	QString				FHomePath;
+//	QHash<IMessageToolBarWidget*, Action*> FActions;
+//	QHash<Action*, QToolButton*> FButtons;
+	IMessageWidgets		*FMessageWidgets;
+	int					FSHIMessage;
+	int					FSHIPresence;
+	int					FSHOMessage;
+	int					FSHOPresence;
 };
 
 #endif //OTRPLUGIN_H
