@@ -14,7 +14,7 @@
 struct EmojiTreeItem {
 //TODO: Find out what do we need it for
 	QString name;
-	QMap<QChar, EmojiTreeItem *> childs;
+	QMap<QChar, EmojiTreeItem *> children;
 };
 
 class EmojiData : public IEmojiData {

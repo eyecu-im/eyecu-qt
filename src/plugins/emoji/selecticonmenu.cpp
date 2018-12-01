@@ -7,6 +7,7 @@
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 #include <utils/action.h>
+#include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 
 #define ADR_COLOR Action::DR_Parametr1
@@ -93,9 +94,9 @@ void SelectIconMenu::onAboutToShow()
 			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon(IEmoji::Category(c)),
 														 QString()), FEmoji->categoryName(IEmoji::Category(c)));
 			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
-			connect(widget, SIGNAL(iconSelected(QString)), SLOT(onIconSelected(QString)));
-			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
-			connect(widget,SIGNAL(hasGenderedChanged(bool)), SLOT(onHasGenderedChanged(bool)));
+			connect(widget,SIGNAL(iconSelected(QString)),SLOT(onIconSelected(QString)));
+			connect(widget,SIGNAL(hasColoredChanged(bool)),SLOT(onHasColoredChanged(bool)));
+			connect(widget,SIGNAL(hasGenderedChanged(bool)),SLOT(onHasGenderedChanged(bool)));
 		}
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
 		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
@@ -169,20 +170,25 @@ void SelectIconMenu::onAboutToShow()
 
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
-	{		
+	{
 		const IEmojiData *data = FEmoji->findData(*it, IEmoji::SkinColor(color),
 													   IEmoji::Gender(gender));
-		QIcon icon = FEmoji->getIcon(data->id(), size);
-		if (!icon.isNull())
+		if (data)
 		{
-			const IEmojiData *basicData = FEmoji->findData(*it);
-			Action *action = new Action();
-			action->setIcon(icon);
-			action->setToolTip(basicData->name());
-			action->setData(ADR_EMOJI, *it);
-			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
-			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
+			QIcon icon = FEmoji->getIcon(data->id(), size);
+			if (!icon.isNull())
+			{
+				const IEmojiData *basicData = FEmoji->findData(*it);
+				Action *action = new Action();
+				action->setIcon(icon);
+				action->setToolTip(basicData->name());
+				action->setData(ADR_EMOJI, *it);
+				FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
+				connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
+			}
 		}
+		else
+			LOG_WARNING("No data found for recent emoji");
 	}
 }
 
