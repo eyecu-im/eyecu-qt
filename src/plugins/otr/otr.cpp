@@ -304,9 +304,7 @@ public:
 		OtrlPrivKey* privKey = otrl_privkey_find(FUserState,
 												 AAccount.toUtf8().constData(),
 												 OTR_PROTOCOL_STRING);
-
 		otrl_privkey_forget(privKey);
-
 		otrl_privkey_write(FUserState, QFile::encodeName(FKeysFile).constData());
 	}
 
@@ -645,14 +643,16 @@ protected:
 		char fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
 		if (otrl_privkey_fingerprint(FUserState, fingerprint, AAccountname, AProtocol))
 		{
+			QString fp(fingerprint);
 			QMessageBox infoMb(QMessageBox::Information, QObject::tr("Off-the-Record Messaging"),
 							   QObject::tr("Keys have been generated. "
 										   "Fingerprint for account \"%1\":\n%2\n\n"
 										   "Thanks for your patience.")
 									   .arg(FOtr->humanAccount(
 												QString::fromUtf8(AAccountname)))
-									   .arg(QString(fingerprint)));
+									   .arg(fp));
 			infoMb.exec();
+			emit FOtr->privKeyGenerated(AAccountname, fp);
 		}
 		else
 		{
@@ -663,6 +663,7 @@ protected:
 													QString::fromUtf8(AAccountname))),
 							   QMessageBox::Ok);
 			failMb.exec();
+			emit FOtr->privKeyGenerationFailed(AAccountname);
 		}
 	}
 
@@ -786,6 +787,7 @@ protected:
 	{
 		otrl_privkey_write_fingerprints(FUserState,
 										QFile::encodeName(FFingerprintFile).constData());
+		emit FOtr->fingerprintsUpdated();
 	}
 
 	void goneSecure(ConnContext* AContext)
@@ -1193,7 +1195,8 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
 											SLOT(onWindowAddressChanged(const Jid &, const Jid &)));
-	connect(this,SIGNAL(otrStateChanged(const Jid &, const Jid &)),SLOT(onUpdateMessageState(const Jid &, const Jid &)));
+	connect(this, SIGNAL(otrStateChanged(const Jid &, const Jid &)),
+				  SLOT(onUpdateMessageState(const Jid &, const Jid &)));
 
 	onUpdateMessageState(AWindow->streamJid(), AWindow->contactJid());
 }
@@ -1421,7 +1424,8 @@ void Otr::notifyUser(const QString &AAccount, const QString &AContact,
 	Q_UNUSED(AMessage);
 	Q_UNUSED(AType);
 
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR notifyUser, contact=%1").arg(AContact));
+	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),
+				  QString("OTR notifyUser, contact=%1").arg(AContact));
 }
 
 //-----------------------------------------------------------------------------
@@ -1440,7 +1444,8 @@ bool Otr::displayOtrMessage(const QString &AAccount, const QString &AContact,
 void Otr::stateChange(const QString &AAccount, const QString &AContact,
 					  StateChange AChange)
 {
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR stateChange, contact=%1").arg(AContact));
+	qDebug() << "Otr::stateChange(" << AAccount << "," << AContact << "," << AChange << ")";
+	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR stateChange, contact=%1").arg(AContact));	
 
 	if (!FOnlineUsers.value(AAccount).contains(AContact))
 	{
@@ -1490,8 +1495,8 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
 	}
 
 	Jid contactJid(AContact);
-	notifyInChatWindow(FAccountManager->findAccountById(AAccount)->streamJid(),contactJid, msg);
-	emit otrStateChanged(FAccountManager->findAccountById(AAccount)->streamJid(),contactJid);
+	notifyInChatWindow(FAccountManager->findAccountById(AAccount)->streamJid(), contactJid, msg);
+	emit otrStateChanged(FAccountManager->findAccountById(AAccount)->streamJid(), contactJid);
 }
 
 //-----------------------------------------------------------------------------
@@ -1524,7 +1529,7 @@ void Otr::updateSMP(const QString &AAccount, const QString &AContact,
 
 QString Otr::humanAccount(const QString& AAccountId)
 {
-	return FAccountManager->findAccountById(AAccountId)->streamJid().bare();
+	return FAccountManager->findAccountById(AAccountId)->name();
 }
 
 //-----------------------------------------------------------------------------
@@ -1704,6 +1709,7 @@ QHash<QString, QString> Otr::getPrivateKeys()
 
 void Otr::deleteKey(const QString& AAccount)
 {
+	qDebug() << "Otr::deleteKey(" << AAccount << ")";
 	FOtrPrivate->deleteKey(AAccount);
 }
 

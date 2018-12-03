@@ -219,6 +219,9 @@ protected slots:
 
 signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
+	void fingerprintsUpdated() const;
+	void privKeyGenerated(const QString &AAccountName, const QString &Fingerprint);
+	void privKeyGenerationFailed(const QString &AAccountName);
 
 private:
 	OtrPrivate * const	FOtrPrivate;

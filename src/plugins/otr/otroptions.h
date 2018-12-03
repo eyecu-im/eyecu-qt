@@ -32,8 +32,11 @@ public slots:
 
 protected:
 	void copyFingerprint(const QItemSelectionModel *AModel, int AColumn);
+	void updatePrivKeys();
+	void updatePrivKeyGenerateButton(int AIndex);
 
 protected slots:
+	void updateFingerprints();
 	void onFingerprintDelete();
 	void onFingerprintVerify();
 	void onFingerprintCopyFingerprint();
@@ -47,20 +50,22 @@ protected slots:
 									   const QItemSelection &ADeselected);
 	void onPrivKeyContextMenu(const QPoint& APos);
 	void onAccountIndexChanged(int AIndex);
+
+	void onPrivKeyGenerated(const QString &AAccount, const QString &AFingerprint);
+	void onPrivKeyGenerationFailed(const QString &AAccount);
+
 signals:
 	void modified();
 	void childApply();
 	void childReset();
 
 private:
-	Ui::OtrOptions *ui;
-	Otr*				FOtrMessaging;
+	Ui::OtrOptions*		ui;
+	Otr*				FOtr;
 	IPresenceManager*	FPresenceManager;
 	IAccountManager*	FAccountManager;
 	QStandardItemModel* FFingerprintsModel;
 	QStandardItemModel* FPrivKeyModel;
-	QList<OtrFingerprint>  FFingerprints;
-	QHash<QString, QString>	FKeys;
 };
 
 #endif // OTROPTIONS_H
