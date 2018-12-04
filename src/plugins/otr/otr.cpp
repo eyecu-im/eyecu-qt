@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include <QFutureWatcher>
 #include <QDir>
 #include <QFile>
@@ -173,7 +171,7 @@ public:
 											   userName, AMessage.toUtf8().constData(),
 											   &newMessage, &tlvs, nullptr,
 											   nullptr, nullptr);
-		qDebug() << "Ok!";
+
 		tlv = otrl_tlv_find(tlvs, OTRL_TLV_DISCONNECTED);
 		if (tlv)
 			FOtr->stateChange(accountName, userName, IOtr::StateChangeRemoteClose);
@@ -1073,6 +1071,9 @@ bool Otr::initObjects()
 		FSHOMessage = FStanzaProcessor->insertStanzaHandle(handle_out);
 	}
 
+	if (FMessageArchiver)
+		FMessageArchiver->insertArchiveHandler(AHO_DEFAULT, this);
+
 	return true;
 }
 
@@ -1104,7 +1105,7 @@ bool Otr::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessag
 	Q_UNUSED(AStreamJid);
 	Q_UNUSED(ADirectionIn);
 
-	return AMessage.stanza().attribute(SKIP_OTR_FLAG) != "true";
+	return AMessage.body().startsWith("?OTR");
 }
 
 void Otr::onStreamOpened( IXmppStream *AXmppStream )
@@ -1403,7 +1404,6 @@ void Otr::sendMessage(const QString &account, const QString &contact, const QStr
 		FStanzaProcessor->sendStanzaOut(FAccountManager->findAccountById(account)->streamJid(),
 										message.stanza());
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -1444,13 +1444,10 @@ bool Otr::displayOtrMessage(const QString &AAccount, const QString &AContact,
 void Otr::stateChange(const QString &AAccount, const QString &AContact,
 					  StateChange AChange)
 {
-	qDebug() << "Otr::stateChange(" << AAccount << "," << AContact << "," << AChange << ")";
 	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR stateChange, contact=%1").arg(AContact));	
 
 	if (!FOnlineUsers.value(AAccount).contains(AContact))
-	{
 		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount, AContact, this);
-	}
 
 	bool verified  = isVerified(AAccount, AContact);
 	bool encrypted = FOnlineUsers[AAccount][AContact]->encrypted();
@@ -1599,7 +1596,6 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 	}
 	else if (AHandlerId == FSHIMessage || AHandlerId == FSHOMessage)
 	{
-		qDebug() << "Otr::stanzaReadWrite(" << AHandlerId << "," << AStreamJid.full() << "," << AStanza.toString() << "," << AAccept << ")";
 		Message message(AStanza);
 		if (message.type() != Message::Chat)
 			return false;
@@ -1614,26 +1610,18 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 				QString contact = message.to();
 				QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 
-				qDebug() << "Encrypting message...";
 				QString encrypted = FOtrPrivate->encryptMessage(account, contact, message.body());
-				qDebug() << "Done! Encrypted message:" << encrypted;
 				message.setBody(encrypted);
 
 				//if there has been an error, drop the message
 				if (encrypted.isEmpty())
 				{
-					qDebug() << "Failed to encrypt";
+					LOG_WARNING("Failed to encrypt");
 					return true;
 				}
 
 				AStanza = message.stanza();
 
-				/*if (!m_onlineUsers.value(account).contains(contact))
-				{
-					m_onlineUsers[account][contact] = new PsiOtrClosure(account, contact,
-																		m_otrConnection);
-				}*/
-				//if (m_onlineUsers[account][contact]->encrypted()) {
 				if (getMessageState(account, contact) == IOtr::MsgStateEncrypted)
 				{
 					if (AStanza.to().contains("/")) // if not a bare jid
@@ -1647,18 +1635,14 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 			else
 			{
 				bool ignore = false;
-				qDebug() << "AStanza=" << AStanza.toString();
 
 				QString contact = message.from();
 				QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
 				QString plainBody = message.body();
 
 				QString decrypted;
-				qDebug() << "Decrypting message...";
-				qDebug() << "Encrypted message:" << plainBody;
 				IOtr::MessageType messageType = FOtrPrivate->decryptMessage(account, contact,
 																			 plainBody, decrypted);
-				qDebug() << "Decrypted message:" << decrypted;
 				switch (messageType)
 				{
 					case IOtr::MsgTypeNone:
@@ -1709,7 +1693,6 @@ QHash<QString, QString> Otr::getPrivateKeys()
 
 void Otr::deleteKey(const QString& AAccount)
 {
-	qDebug() << "Otr::deleteKey(" << AAccount << ")";
 	FOtrPrivate->deleteKey(AAccount);
 }
 
