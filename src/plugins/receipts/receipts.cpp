@@ -276,7 +276,10 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 												 .arg(AMessage.id()));
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
-		cursor.insertImage(url.toString());
+		QTextImageFormat image;
+		image.setName(url.toString());
+		image.setToolTip(tr("Displayed"));
+		cursor.insertImage(image);
 		return true;
 	}
 	return false;

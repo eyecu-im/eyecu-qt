@@ -333,7 +333,7 @@ void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
         {
             acknowledgedAction = new Action(AWidget->toolBarChanger()->toolBar());
 			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
-            acknowledgedAction->setText(tr("Acknowledgement"));
+			acknowledgedAction->setText(tr("Acknowledge"));
             //acknowledgedAction->setShortcutId();
             connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
             AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
@@ -436,31 +436,32 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
         Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
        !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
     {
-        if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-        {
-			QUrl rUrl(QString("chatmarkers-received:{%1}{%2}{%3}")
-					  .arg(AMessage.from().toLower())
-					  .arg(AMessage.to().toLower())
-					  .arg(AMessage.id()));
-            QTextCursor rCursor(ADocument);
-            rCursor.movePosition(QTextCursor::End);
-            rCursor.insertImage(rUrl.toString());
-        }
-		QUrl dUrl(QString("chatmarkers-displayed:{%1}{%2}{%3}")
+		QUrl url(QString("scheme:{%1}{%2}{%3}")
 				  .arg(AMessage.from().toLower())
 				  .arg(AMessage.to().toLower())
 				  .arg(AMessage.id()));
-        QTextCursor dCursor(ADocument);
-        dCursor.movePosition(QTextCursor::End);
-        dCursor.insertImage(dUrl.toString());
 
-		QUrl aUrl(QString("chatmarkers-acknowledged:{%1}{%2}{%3}")
-				  .arg(AMessage.from().toLower())
-				  .arg(AMessage.to().toLower())
-				  .arg(AMessage.id()));
-        QTextCursor aCursor(ADocument);
-        aCursor.movePosition(QTextCursor::End);
-        aCursor.insertImage(aUrl.toString());
+		QTextCursor cursor(ADocument);
+		cursor.movePosition(QTextCursor::End);
+
+		QTextImageFormat image;
+        if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+		{
+			url.setScheme("chatmarkers-received");
+			image.setName(url.toString());
+			image.setToolTip(tr("Received"));
+			cursor.insertImage(image);
+        }
+		url.setScheme("chatmarkers-displayed");
+		image.setName(url.toString());
+		image.setToolTip(tr("Displayed"));
+		cursor.insertImage(image);
+
+		url.setScheme("chatmarkers-acknowledged");
+		image.setName(url.toString());
+		image.setToolTip(tr("Acknowledged"));
+		cursor.insertImage(image);
+
 		return true;
     }
 	return false;
