@@ -69,12 +69,12 @@ public:
     //IUrlHandler
     virtual QNetworkReply *request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData);
     // Not exported!
-    bool isMarkable(const Jid &AStreamJid, const Jid &AContactJid) const;
-    bool isMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
-    bool isLastMarked(const Jid &AStreamJid, const Jid &AContactJid) const;
     bool isReceived(const QString &AId) const;
     bool isDisplayed(const QString &AId) const;
     bool isAcknowledged(const QString &AId) const;
+    // Incomming
+    bool isLastMarkableDisplay(const Jid &AStreamJid, const Jid &AContactJid) const;
+    bool isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 protected:	
     void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
@@ -102,10 +102,14 @@ private:
     QSet<QString>       FAcknowledgedHash;
 	QByteArray          FImageData[3];
     QHash<IMessageChatWindow *, int>   FNotifies;
-    QHash<Jid, QHash<Jid, QString> > FLsatMarkedHash;
-    QHash<Jid, QHash<Jid, QStringList> > FMarkedHash;
-    QHash<Jid, QHash<Jid, QStringList> > FMarkableHash;
     QMap<IMessageToolBarWidget *, Action *> FToolBarActions;
+    // Outgoing
+    QHash<Jid, QHash<Jid, QStringList> > FReceivedRequestHash;
+    QHash<Jid, QHash<Jid, QStringList> > FDisplayedRequestHash;
+    QHash<Jid, QHash<Jid, QStringList> > FAcknowledgedRequestHash;
+    // Incomming
+    QHash<Jid, QHash<Jid, QString> > FLastMarkableDisplayHash;
+    QHash<Jid, QHash<Jid, QString> > FLastMarkableAcknowledgeHash;
 
     void registerDiscoFeatures(bool ARegister);
 

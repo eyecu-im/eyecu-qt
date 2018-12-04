@@ -83,6 +83,7 @@ private:
     QSet<QString>       FDeliveryHash;
     QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
+    QHash<Jid, QHash<Jid, QStringList> > FDeliveryRequestHash;
 
     void registerDiscoFeatures(bool ARegister);
 

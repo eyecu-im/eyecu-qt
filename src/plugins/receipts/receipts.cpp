@@ -120,7 +120,7 @@ bool Receipts::initObjects()
 	if (FNotifications)
 	{
 		INotificationType notifyType;
-		notifyType.order = NTO_DELIVERED_NOTIFY;
+        notifyType.order = NTO_DELIVERED_NOTIFY;
 		if (FIconStorage)
 			notifyType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
 		notifyType.title = tr("When message delivery notification recieved");
@@ -248,6 +248,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			}
 			AMessage.detach();
 			AMessage.stanza().addElement("request", NS_RECEIPTS);
+            FDeliveryRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
 		}
 	}
 	return false;
@@ -314,33 +315,40 @@ QNetworkReply *Receipts::request(QNetworkAccessManager::Operation op, const QNet
 
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-	QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
-										.arg(AContactJid.full().toLower())
-										.arg(AMessageId);
-	FDeliveryHash.insert(id);
-	if (FMessageWidgets)
-	{
-		IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-		if (window && !window->isActiveTabPage())
-		{
-			INotification notify;
-			notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
-			if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
-			{
-				notify.typeId = NNT_DELIVERED;
-				notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
-				notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
-				notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-//                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+    if (FDeliveryRequestHash.contains(AStreamJid) &&
+            FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
+            FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+    {
+        QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
+                                            .arg(AContactJid.full().toLower())
+                                            .arg(AMessageId);
+        FDeliveryHash.insert(id);
+        QStringList Ids = FDeliveryRequestHash[AStreamJid][AContactJid];
+        FDeliveryRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
+        if (FMessageWidgets)
+        {
+            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+            if (window && !window->isActiveTabPage())
+            {
+                INotification notify;
+                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
+                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+                {
+                    notify.typeId = NNT_DELIVERED;
+                    notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
+                    notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
+                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+    //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
 
-				notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
-				FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-				connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
-			}
-		}
-	}
+                    notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
+                    FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
+                    connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
+                }
+            }
+        }
 
-	emit delivered(id);
+        emit delivered(id);
+    }
 }
 
 bool Receipts::isDelivered(const QString &AId) const
