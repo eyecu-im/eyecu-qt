@@ -67,15 +67,13 @@ public:
 
 	virtual QObject *instance() =0;
 
-//	virtual QString dataDir() = 0;
-
 	/**
 	 * Sends a message from the Account account to the user contact.
 	 * The method is called from the OtrConnection to send messages
 	 * during key-exchange.
 	 */
-	virtual void sendMessage(const QString& account, const QString& contact,
-							 const QString& message) = 0;
+	virtual void sendMessage(const QString& AAccount, const QString& AContact,
+							 const QString& AMessage, const QString &AHtml=QString()) = 0;
 
     virtual bool isLoggedIn(const QString& account, const QString& contact) const = 0;
 

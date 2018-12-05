@@ -40,6 +40,7 @@ extern "C"
 #include <definitions/resources.h>
 #include <definitions/stanzahandlerorders.h>
 #include <definitions/toolbargroups.h>
+#include <definitions/namespaces.h>
 #include <definitions/version.h>
 
 #include <utils/message.h>
@@ -51,6 +52,8 @@ static const char*   OTR_PROTOCOL_STRING = "prpl-jabber";
 static const QString OTR_FINGERPRINTS_FILE = "otr.fingerprints";
 static const QString OTR_KEYS_FILE = "otr.keys";
 static const QString OTR_INSTAGS_FILE = "otr.instags";
+
+#define OTR_WEB "https://otr.cypherpunks.ca/"
 
 // ============================================================================
 
@@ -320,7 +323,26 @@ public:
 		char* msg = otrl_proto_default_query_msg(FOtr->humanAccountPublic(AAccount).toUtf8().constData(),
 												 OTRL_POLICY_DEFAULT);
 
-		FOtr->sendMessage(AAccount, AContact, QString::fromUtf8(msg));
+		QString otrMsg(QString::fromUtf8(msg));
+
+		QString otr("Off-the-Record private conversation");
+
+		QString msgTmpl("%1 has requested an %2. "
+						"However, you do not have a plugin to support that.\n"
+						"See %3 for more information.");
+
+		QString tmpl("%1\n%2");
+
+		otrMsg = tmpl.arg(otrMsg.split('\n').first())
+					 .arg(msgTmpl.arg(FOtr->humanAccountPublic(AAccount))
+								 .arg(otr)
+								 .arg(OTR_WEB));
+
+		QString html = msgTmpl.arg(QString("<b>%1</b>").arg(FOtr->humanAccountPublic(AAccount)))
+							  .arg(QString("<a href=\"%1\">%2</a>").arg(OTR_WEB).arg(otr))
+							  .arg(QString("<a href=\"%1\">%1</a>").arg(OTR_WEB));
+
+		FOtr->sendMessage(AAccount, AContact, otrMsg, html);
 
 		free(msg);
 	}
@@ -975,8 +997,8 @@ Otr::~Otr()
 
 void Otr::pluginInfo(IPluginInfo *APluginInfo)
 {
-	APluginInfo->name = tr("Off-the-Record Messaging Plugin");
-	APluginInfo->description = tr("Off-the-Record (OTR) Messaging allows you to have private conversations over instant messaging");
+	APluginInfo->name = tr("Off-the-Record Messaging");
+	APluginInfo->description = tr("Allows you to have private conversations over instant messaging");
 	APluginInfo->version = "1.0.3";
 	APluginInfo->author = "John Smith";
 	APluginInfo->homePage = "https://github.com/xnamed";
@@ -1394,13 +1416,22 @@ QString Otr::dataDir()
 
 //-----------------------------------------------------------------------------
 
-void Otr::sendMessage(const QString &account, const QString &contact, const QString& AMessage)
+void Otr::sendMessage(const QString &account, const QString &contact, const QString& AMessage, const QString &AHtml)
 {
 	if (!AMessage.isEmpty())
 	{
 		Message message;
 		message.setType(Message::Chat).setBody(AMessage).setTo(contact);
 		message.stanza().setAttribute(SKIP_OTR_FLAG, "true");
+
+		if (!AHtml.isEmpty())
+		{
+			QDomDocument doc;
+			doc.setContent(QString("<html xmlns=\'" NS_XHTML_IM "\'>"
+								   "<body xmlns=\'" NS_XHTML "\'>"
+								   "%1</body></html>").arg(AHtml));
+			message.stanza().element().appendChild(message.stanza().document().importNode(doc.documentElement(), true));
+		}
 		FStanzaProcessor->sendStanzaOut(FAccountManager->findAccountById(account)->streamJid(),
 										message.stanza());
 	}

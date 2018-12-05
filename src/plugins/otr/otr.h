@@ -176,7 +176,7 @@ public:
 
     // OtrCallback
 	virtual void sendMessage(const QString &AAccount, const QString &AContact,
-							 const QString& AMessage);
+							 const QString& AMessage, const QString &AHtml=QString());
     virtual bool isLoggedIn(const QString &AAccount, const QString &AContact) const;
 	virtual void notifyUser(const QString &AAccount, const QString &AContact,
 							const QString& AMessage, const NotifyType& AType);
