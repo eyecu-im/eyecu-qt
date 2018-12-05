@@ -260,7 +260,7 @@ void ChatMarkers::onWindowActivated()
             if (isLastMarkableDisplay(it.key(), *it))
             {
                 QString AId = FLastMarkableDisplayHash[it.key()][*it];
-                markDisplayed(it.key(), *it, AId);
+                sendMessageMarked(it.key(), *it, Displayed, AId);
             }
     }
 }
@@ -285,7 +285,10 @@ void ChatMarkers::onAcknowledgedByAction(bool)
         for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
              it != addresses.constEnd(); ++it)
             if (isLastMarkableAcknowledge(it.key(), *it))
-                markAcknowledged(it.key(), *it);
+            {
+                QString AId = FLastMarkableAcknowledgeHash[it.key()][*it];
+                sendMessageMarked(it.key(), *it, Acknowledged, AId);
+            }
 
         foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
             if (widget->messageWindow()->instance() == chatWindow->instance())
@@ -368,16 +371,12 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
                 !AMessage.body().isNull() &&
                 !AMessage.isDelayed())
         {
-            Stanza message("message");
-            QString id=AMessage.id();
-            message.setTo(AMessage.from()).setUniqueId();
-            message.addElement("received", NS_CHATMARKERS).setAttribute("id", id);
-            Message msg(message);
-            FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
+            sendMessageMarked(AStreamJid, AMessage.from(), Received, AMessage.id());
+
             IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
             bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
             if (window && window->isActiveTabPage())
-                markDisplayed(AStreamJid, AMessage.from(), AMessage.id());
+                sendMessageMarked(AStreamJid, AMessage.from(), Displayed, AMessage.id());
             else
                 FLastMarkableDisplayHash[AStreamJid].insert(AMessage.from(), AMessage.id());
             FLastMarkableAcknowledgeHash[AStreamJid].insert(AMessage.from(), AMessage.id());
@@ -527,9 +526,9 @@ QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const Q
 
 void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    if (FDisplayedRequestHash.contains(AStreamJid) &&
-            FDisplayedRequestHash[AStreamJid].contains(AContactJid) &&
-            FDisplayedRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+    if (FReceivedRequestHash.contains(AStreamJid) &&
+            FReceivedRequestHash[AStreamJid].contains(AContactJid) &&
+            FReceivedRequestHash[AStreamJid][AContactJid].contains(AMessageId))
     {
         int IdsNum = 0;
         QStringList Ids = FReceivedRequestHash[AStreamJid][AContactJid];
@@ -544,28 +543,7 @@ void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, con
         }
 
         FReceivedRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
-
-        if (FMessageWidgets)
-        {
-            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-            if (window && !window->isActiveTabPage())
-            {
-                INotification notify;
-                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
-                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
-                {
-                    notify.typeId = NNT_DELIVERED;
-                    notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
-                    notify.data.insert(NDR_POPUP_CAPTION, tr("%n message(s) delivered", "", IdsNum));
-                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-    //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
-
-                    notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
-                    FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-                    connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
-                }
-            }
-        }
+        showNotification(AStreamJid, AContactJid, Received, IdsNum);
     }
 }
 
@@ -588,28 +566,7 @@ void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, co
         }
 
         FDisplayedRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
-
-        if (FMessageWidgets)
-        {
-            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-            if (window && !window->isActiveTabPage())
-            {
-                INotification notify;
-                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DISPLAYED);
-                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
-                {
-                    notify.typeId = NNT_DISPLAYED;
-                    notify.data.insert(NDR_ICON, FIconStorage->getIcon(MNI_MESSAGE_DISPLAYED));
-                    notify.data.insert(NDR_POPUP_CAPTION, tr("%n message(s) displayed", "", IdsNum));
-                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-    //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
-
-                    notify.data.insert(NDR_SOUND_FILE, SDF_CHATMARKERS_MARKED);
-                    FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-                    connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
-                }
-            }
-        }
+        showNotification(AStreamJid, AContactJid, Displayed, IdsNum);
     }
 }
 
@@ -633,13 +590,40 @@ void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid,
         }
 
         FAcknowledgedRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
+        showNotification(AStreamJid, AContactJid, Acknowledged, IdsNum);
+    }
+}
 
-        if (FMessageWidgets)
+void ChatMarkers::showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum)
+{
+    if (FMessageWidgets)
+    {
+        IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+        if (window && !window->isActiveTabPage())
         {
-            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-            if (window && !window->isActiveTabPage())
-            {
-                INotification notify;
+            INotification notify;
+            switch (AType) {
+            case Received:
+                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
+                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+                {
+                    notify.typeId = NNT_DELIVERED;
+                    notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
+                    notify.data.insert(NDR_POPUP_CAPTION, tr("%n message(s) delivered", "", IdsNum));
+                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+                }
+                break;
+            case Displayed:
+                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DISPLAYED);
+                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+                {
+                    notify.typeId = NNT_DISPLAYED;
+                    notify.data.insert(NDR_ICON, FIconStorage->getIcon(MNI_MESSAGE_DISPLAYED));
+                    notify.data.insert(NDR_POPUP_CAPTION, tr("%n message(s) displayed", "", IdsNum));
+                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+                }
+                break;
+            case Acknowledged:
                 notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_ACKNOWLEDGED);
                 if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
                 {
@@ -647,37 +631,45 @@ void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid,
                     notify.data.insert(NDR_ICON, FIconStorage->getIcon(MNI_MESSAGE_ACKNOWLEDGED));
                     notify.data.insert(NDR_POPUP_CAPTION, tr("User acknowledged %n message(s) are read", "", IdsNum));
                     notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-    //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
-
-                    notify.data.insert(NDR_SOUND_FILE, SDF_CHATMARKERS_MARKED);
-                    FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-                    connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
                 }
+                break;
+            default:
+                notify.kinds = 0;
+                break;
+            }
+
+            if (notify.kinds > 0)
+            {
+//                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+                notify.data.insert(NDR_SOUND_FILE, SDF_CHATMARKERS_MARKED);
+                FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
+                connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
             }
         }
     }
 }
 
-void ChatMarkers::markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+void ChatMarkers::sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId)
 {
     Stanza message("message");
     message.setTo(AContactJid.bare()).setUniqueId();
-    message.addElement("displayed", NS_CHATMARKERS).setAttribute("id", AMessageId);
+    switch (AType) {
+    case Received:
+        message.addElement("received", NS_CHATMARKERS).setAttribute("id", AMessageId);
+        break;
+    case Displayed:
+        message.addElement("displayed", NS_CHATMARKERS).setAttribute("id", AMessageId);
+        FLastMarkableDisplayHash[AStreamJid].remove(AContactJid);
+        break;
+    case Acknowledged:
+        message.addElement("acknowledged", NS_CHATMARKERS).setAttribute("id", AMessageId);
+        FLastMarkableAcknowledgeHash[AStreamJid].remove(AContactJid);
+        break;
+    default:
+        break;
+    }
     Message msg(message);
     FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
-    FLastMarkableDisplayHash[AStreamJid].remove(AContactJid);
-}
-
-void ChatMarkers::markAcknowledged(const Jid &AStreamJid, const Jid &AContactJid)
-{
-    LOG_STRM_INFO(AStreamJid,QString("ChatMarkers Acknowledged, contact=%1").arg(AContactJid.bare()));
-    QString Id = FLastMarkableAcknowledgeHash[AStreamJid][AContactJid];
-    Stanza message("message");
-    message.setTo(AContactJid.bare()).setUniqueId();
-    message.addElement("acknowledged", NS_CHATMARKERS).setAttribute("id", Id);
-    Message msg(message);
-    FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
-    FLastMarkableAcknowledgeHash[AStreamJid].remove(AContactJid);
 }
 
 bool ChatMarkers::isLastMarkableDisplay(const Jid &AStreamJid, const Jid &AContactJid) const

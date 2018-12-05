@@ -80,8 +80,8 @@ protected:
     void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
     void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-    void markDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-    void markAcknowledged(const Jid &AStreamJid, const Jid &AContactJid);
+    void showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum);
+    void sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
     void updateToolBarAction(IMessageToolBarWidget *AWidget);
