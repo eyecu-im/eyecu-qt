@@ -31,6 +31,8 @@ extern "C"
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagewidgets.h>
+#include <interfaces/inotifications.h>
+#include <interfaces/irostersview.h>
 
 #include <definitions/archivehandlerorders.h>
 #include <definitions/menuicons.h>
@@ -40,6 +42,12 @@ extern "C"
 #include <definitions/resources.h>
 #include <definitions/stanzahandlerorders.h>
 #include <definitions/toolbargroups.h>
+#include <definitions/tabpagenotifypriorities.h>
+#include "definitions/notificationdataroles.h"
+#include "definitions/notificationtypeorders.h"
+#include "definitions/notificationtypes.h"
+#include "definitions/rosternotifyorders.h"
+#include "definitions/soundfiles.h"
 #include <definitions/namespaces.h>
 #include <definitions/version.h>
 
@@ -559,11 +567,9 @@ public:
 		return false;
 	}
 
-	bool smpSucceeded(const QString& AAccount,
-								   const QString& AContact)
+	bool smpSucceeded(const QString& AAccount, const QString& AContact)
 	{
-		ConnContext* context;
-		context = otrl_context_find(FUserState, AContact.toUtf8().constData(),
+		ConnContext *context = otrl_context_find(FUserState, AContact.toUtf8().constData(),
 									AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
 									OTRL_INSTAG_BEST, false,
 									nullptr, nullptr, nullptr);
@@ -754,7 +760,7 @@ protected:
 	}
 
 	void handleSmpEvent(OtrlSMPEvent ASmpEvent, ConnContext* AContext,
-									   unsigned short AProgressPercent, char* AQuestion)
+						unsigned short AProgressPercent, char* AQuestion)
 	{
 		if (ASmpEvent == OTRL_SMPEVENT_CHEATED || ASmpEvent == OTRL_SMPEVENT_ERROR) {
 			abortSMP(AContext);
@@ -765,13 +771,13 @@ protected:
 		else if (ASmpEvent == OTRL_SMPEVENT_ASK_FOR_SECRET ||
 				 ASmpEvent == OTRL_SMPEVENT_ASK_FOR_ANSWER) {
 			FOtr->receivedSMP(QString::fromUtf8(AContext->accountname),
-									QString::fromUtf8(AContext->username),
-									QString::fromUtf8(AQuestion));
+							  QString::fromUtf8(AContext->username),
+							  QString::fromUtf8(AQuestion));
 		}
 		else {
 			FOtr->updateSMP(QString::fromUtf8(AContext->accountname),
-								  QString::fromUtf8(AContext->username),
-								  AProgressPercent);
+							QString::fromUtf8(AContext->username),
+							AProgressPercent);
 		}
 	}
 
@@ -986,7 +992,8 @@ Otr::Otr() :
 	FOptionsManager(nullptr),
 	FAccountManager(nullptr),
 //	FPresenceManager(nullptr),
-	FMessageProcessor(nullptr)
+	FMessageProcessor(nullptr),
+	FNotifications(nullptr)
 {
 }
 
@@ -1046,11 +1053,21 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		FMessageArchiver = qobject_cast<IMessageArchiver *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IAccountManager").value(0,nullptr);
-	FAccountManager = qobject_cast<IAccountManager *>(plugin->instance());
+	if (plugin)
+		FAccountManager = qobject_cast<IAccountManager *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,nullptr);
 	if (plugin)
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
+
+	plugin = APluginManager->pluginInterface("INotifications").value(0,nullptr);
+	if (plugin)
+	{
+		FNotifications = qobject_cast<INotifications *>(plugin->instance());
+		if (FNotifications)
+			connect(FNotifications->instance(), SIGNAL(notificationActivated(int)),
+												SLOT(onNotificationActivated(int)));
+	}
 
 	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,nullptr);
 	if (plugin)
@@ -1095,6 +1112,31 @@ bool Otr::initObjects()
 
 	if (FMessageArchiver)
 		FMessageArchiver->insertArchiveHandler(AHO_DEFAULT, this);
+
+	if (FNotifications)
+	{
+		INotificationType notifyType;
+		notifyType.order = NTO_OTR_ESTABLISHED;
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_ENCRYPTED);
+		notifyType.title = tr("When OTR private conversation established");
+		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay|
+							  INotification::TrayNotify|INotification::TrayAction|
+							  INotification::ShowMinimized;
+		notifyType.kindDefs = notifyType.kindMask;
+		FNotifications->registerNotificationType(NNT_OTR_ESTABLISHED, notifyType);
+
+		notifyType.order = NTO_OTR_TERMINATED;
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_NO);
+		notifyType.title = tr("When OTR private conversation terminated");
+		notifyType.kindDefs = notifyType.kindMask;
+		FNotifications->registerNotificationType(NNT_OTR_TERMINATED, notifyType);
+
+		notifyType.order = NTO_OTR_VERIFY;
+		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_UNVERFIFIED);
+		notifyType.title = tr("When OTR fingerprint verification initiated");
+		notifyType.kindDefs = notifyType.kindMask;
+		FNotifications->registerNotificationType(NNT_OTR_VERIFY, notifyType);
+	}
 
 	return true;
 }
@@ -1216,6 +1258,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	otrButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	otrButton->setPopupMode(QToolButton::InstantPopup);
 
+	connect(AWindow->instance(), SIGNAL(tabPageActivated()), SLOT(onChatWindowActivated()));
 	connect(AWindow->address()->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
 											SLOT(onWindowAddressChanged(const Jid &, const Jid &)));
 	connect(this, SIGNAL(otrStateChanged(const Jid &, const Jid &)),
@@ -1229,10 +1272,39 @@ void Otr::onChatWindowDestroyed(IMessageChatWindow *AWindow)
 	Q_UNUSED(AWindow)
 }
 
+void Otr::onChatWindowActivated()
+{
+	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());
+	if (window)
+		removeNotifications(window);
+}
+
 void Otr::onProfileOpened(const QString &AProfile)
 {
 	FHomePath = FOptionsManager->profilePath(AProfile);
 	FOtrPrivate->init();
+}
+
+void Otr::onNotificationActivated(int ANotifyId)
+{
+	for (QHash<Jid, QHash<Jid, int> >::const_iterator its=FNotifies.constBegin(); its!=FNotifies.constEnd(); its++)
+		for (QHash<Jid, int>::const_iterator itc=(*its).constBegin(); itc!=(*its).constEnd(); itc++)
+			if (itc.value()==ANotifyId) // Notification found! Activate window!
+			{
+				Jid contactJid=itc.key().full();
+
+				IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
+				if (!window)
+				{
+					FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
+					window = FMessageWidgets->findChatWindow(its.key(), contactJid);
+				}
+				if (window)
+				{
+					window->showTabPage();
+					return;
+				}
+			}
 }
 
 // OTR tool button slots
@@ -1475,7 +1547,12 @@ bool Otr::displayOtrMessage(const QString &AAccount, const QString &AContact,
 void Otr::stateChange(const QString &AAccount, const QString &AContact,
 					  StateChange AChange)
 {
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR stateChange, contact=%1").arg(AContact));	
+	qDebug() << "Otr::stateChange(" << AAccount << "," << AContact << "," << AChange << ")";
+
+	Jid streamJid = FAccountManager->findAccountById(AAccount)->streamJid();
+	Jid contactJid(AContact);
+
+	LOG_STRM_INFO(streamJid, QString("OTR stateChange, contact=%1").arg(AContact));
 
 	if (!FOnlineUsers.value(AAccount).contains(AContact))
 		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount, AContact, this);
@@ -1495,20 +1572,25 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
 		case StateChangeGoneSecure:
 			msg  = verified? tr("Private conversation started")
 						   : tr("Unverified conversation started");
+
+			eventNotify(NNT_OTR_ESTABLISHED, msg, streamJid, contactJid);
 			break;
 
 		case StateChangeGoneInsecure:
 			msg  = tr("Private conversation lost");
+			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
 			break;
 
 		case StateChangeClose:
 			msg  = tr("Private conversation closed");
+			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
 			break;
 
 		case StateChangeRemoteClose:
 			msg  = tr("%1 has ended the private conversation with you; "
 					  "you should do the same.")
 					  .arg(humanContact(AAccount, AContact));
+			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
 			break;
 
 		case StateChangeStillSecure:
@@ -1522,23 +1604,20 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
 			break;
 	}
 
-	Jid contactJid(AContact);
-	notifyInChatWindow(FAccountManager->findAccountById(AAccount)->streamJid(), contactJid, msg);
-	emit otrStateChanged(FAccountManager->findAccountById(AAccount)->streamJid(), contactJid);
+	notifyInChatWindow(streamJid, contactJid, msg);
+	emit otrStateChanged(streamJid, contactJid);
 }
 
 //-----------------------------------------------------------------------------
 
 void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
-					  const QString& AQuestion)
+					  const QString& AQuestion, QWidget *AParent)
 {
 	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR receivedSMP, contact=%1").arg(AContact));
 
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))
-	{
-		FOnlineUsers[AAccount][AContact]->receivedSMP(AQuestion);
-	}
+		FOnlineUsers[AAccount][AContact]->receivedSMP(AQuestion, AParent);
 }
 
 //-----------------------------------------------------------------------------
@@ -1590,6 +1669,78 @@ void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, cons
 		options.direction = IMessageStyleContentOptions::DirectionIn;
 		options.time = QDateTime::currentDateTime();
 		window->viewWidget()->appendText(AMessage,options);
+	}
+}
+
+INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessageText,
+							   const Jid &AStreamJid, const Jid &AContactJid)
+{
+	INotification notify;
+
+	QString tooltip, caption;
+	QIcon icon;
+
+	if (ATypeId == NNT_OTR_ESTABLISHED)
+	{
+		tooltip = tr("Private communication with %1");
+		caption = tr("Private communication started");
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_ENCRYPTED);
+	}
+	else if (ATypeId == NNT_OTR_TERMINATED)
+	{
+		tooltip = tr("Finished private communication with %1");
+		caption = tr("Private communication finished");
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_NO);
+	}
+	else if (ATypeId == NNT_OTR_VERIFY)
+	{
+		tooltip = tr("Fingerprint verification from %1");
+		caption = tr("Fingerprint verification from received");
+		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_UNVERFIFIED);
+	}
+	else // Invalid notification type id
+		return notify;
+
+	notify.kinds = FNotifications->enabledTypeNotificationKinds(ATypeId);
+
+	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+	if (window && window->isActiveTabPage())    // The window is existing and is an active tab page!
+		notify.kinds = 0;                       // So, do not notify!
+
+	if (notify.kinds)
+	{
+		notify.typeId = ATypeId;
+		notify.data.insert(NDR_STREAM_JID, AStreamJid.full());
+		notify.data.insert(NDR_CONTACT_JID, AContactJid.full());
+		notify.data.insert(NDR_ICON, icon);
+		notify.data.insert(NDR_POPUP_HTML, AMessageText);
+		notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+		notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+		notify.data.insert(NDR_POPUP_CAPTION, caption);
+
+		notify.data.insert(NDR_TOOLTIP, tooltip.arg(FNotifications->contactName(AStreamJid, AContactJid)));
+		notify.data.insert(NDR_ROSTER_ORDER, RNO_OTR);
+		notify.data.insert(NDR_ROSTER_FLAGS,IRostersNotify::Blink|IRostersNotify::AllwaysVisible|IRostersNotify::HookClicks);
+		notify.data.insert(NDR_ROSTER_CREATE_INDEX, true);
+		notify.data.insert(NDR_SOUND_FILE, SDF_OTR_EVENT);
+
+		if (FNotifies.contains(AStreamJid) && FNotifies[AStreamJid].contains(AContactJid))
+			FNotifications->removeNotification(FNotifies[AStreamJid].value(AContactJid));
+		FNotifies[AStreamJid].insert(AContactJid, FNotifications->appendNotification(notify));
+	}
+
+	return notify;
+}
+
+void Otr::removeNotifications(IMessageChatWindow *AWindow)
+{
+	if (FNotifies.contains(AWindow->streamJid()) &&
+		FNotifies[AWindow->streamJid()].contains(AWindow->contactJid()))
+	{
+		FNotifications->removeNotification(FNotifies[AWindow->streamJid()][AWindow->contactJid()]);
+		FNotifies[AWindow->streamJid()].remove(AWindow->contactJid());
+		if (FNotifies[AWindow->streamJid()].isEmpty())
+			FNotifies.remove(AWindow->streamJid());
 	}
 }
 

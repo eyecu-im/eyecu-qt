@@ -479,7 +479,7 @@ void OtrClosure::authenticateContact()
 
 //-----------------------------------------------------------------------------
 
-void OtrClosure::receivedSMP(const QString& AQuestion)
+void OtrClosure::receivedSMP(const QString& AQuestion, QWidget *AParent)
 {
 	if ((FAuthDialog && !FAuthDialog->finished()) || !encrypted())
     {
@@ -493,7 +493,7 @@ void OtrClosure::receivedSMP(const QString& AQuestion)
         finishAuth();
     }
 
-	FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, AQuestion, false);
+	FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, AQuestion, false, AParent);
 
 	connect(FAuthDialog, SIGNAL(destroyed()),
             this, SLOT(finishAuth()));

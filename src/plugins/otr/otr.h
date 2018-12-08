@@ -7,6 +7,7 @@
 #include <interfaces/imessagearchiver.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/istanzaprocessor.h>
+#include <interfaces/inotifications.h>
 #include <interfaces/iotr.h>
 
 class IMessageArchiver;
@@ -187,7 +188,7 @@ public:
 							 StateChange AChange);
 
 	virtual void receivedSMP(const QString &AAccount, const QString &AContact,
-							 const QString& AQuestion);
+							 const QString& AQuestion, QWidget *AParent = nullptr);
 	virtual void updateSMP(const QString &AAccount, const QString &AContact,
 						   int AProgress);
 
@@ -197,15 +198,23 @@ public:
 	virtual void authenticateContact(const QString &AAccount, const QString &AContact);
 
 protected:
-	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const;
+	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid,
+							const QString &AMessage) const;
+	INotification eventNotify(const QString &ATypeId, const QString &AMessageText,
+							  const Jid &AStreamJid, const Jid &AContactJid);
+	void removeNotifications(IMessageChatWindow *AWindow);
 
 protected slots:
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onChatWindowDestroyed(IMessageChatWindow *AWindow);
+	void onChatWindowActivated();
 //	void onPresenceOpened(IPresence *APresence);
 	void onProfileOpened(const QString &AProfile);
+
+	// Notifications
+	void onNotificationActivated(int ANotifyId);
 
 	// OTR tool button
 	void onSessionInitiate();
@@ -233,9 +242,10 @@ private:
 //	IPresenceManager	*FPresenceManager;
 	IMessageProcessor	*FMessageProcessor;
 	QString				FHomePath;
-//	QHash<IMessageToolBarWidget*, Action*> FActions;
-//	QHash<Action*, QToolButton*> FButtons;
 	IMessageWidgets		*FMessageWidgets;
+	INotifications      *FNotifications;
+//	QHash<IMessageChatWindow *, int>   FNotifies;
+	QHash<Jid, QHash<Jid, int> > FNotifies;
 	int					FSHIMessage;
 	int					FSHIPresence;
 	int					FSHOMessage;

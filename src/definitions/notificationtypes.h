@@ -30,6 +30,8 @@
 #define NNT_JINGLE_RTP_REJECTED       "JingleRtpRejected"
 #define NNT_JINGLE_RTP_FINISHED       "JingleRtpFinished"
 #define NNT_JINGLE_RTP_ERROR          "JingleRtpError"
-#define NNT_OTR                       "OTR"
+#define NNT_OTR_ESTABLISHED           "OtrEstablished"
+#define NNT_OTR_TERMINATED            "OtrTerminated"
+#define NNT_OTR_VERIFY                "OtrVerify"
 // *** >>> eyeCU >>> ***
 #endif // DEF_NOTIFICATIONTYPES_H

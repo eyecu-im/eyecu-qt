@@ -94,7 +94,7 @@ public:
 	void setIsLoggedIn(bool AIsLoggedIn);
     bool isLoggedIn() const;
     bool encrypted() const;
-	void receivedSMP(const QString& AQuestion);
+	void receivedSMP(const QString& AQuestion, QWidget *AParent=nullptr);
 	void updateSMP(int AProgress);
     void authenticateContact();
 
