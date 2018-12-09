@@ -146,3 +146,4 @@ CONFIG(debug, debug|release): SUBDIRS += weatherprovideropenweather
 SUBDIRS += wizardaccount
 SUBDIRS += wizardtransport
 SUBDIRS += scheduler 
+SUBDIRS += omemo 

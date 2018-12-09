@@ -105,6 +105,10 @@
 #define NS_PEP_TUNE                             "http://jabber.org/protocol/tune"
 #define NS_PEP_NICK                             "http://jabber.org/protocol/nick"
 
+//OMEMO
+#define NS_OMEMO								"eu.siacs.conversations.axolotl"
+#define NS_PEP_OMEMO							NS_OMEMO".devicelist"
+
 #define NS_RECEIPTS                         	"urn:xmpp:receipts"
 #define NS_ATTENTION                         	"urn:xmpp:attention:0"
 #define NS_XHTML								"http://www.w3.org/1999/xhtml"
@@ -120,6 +124,7 @@
 
 #define NS_JINGLE_TRANSPORTS_RAW_UDP            "urn:xmpp:jingle:transports:raw-udp:1"
 #define NS_JINGLE_TRANSPORTS_ICE_UDP            "urn:xmpp:jingle:transports:ice-udp:1"
+
 //Other
 #define NS_XMPP_STANZAS                         "urn:ietf:params:xml:ns:xmpp-stanzas"
 // *** >>> eyeCU >>> ***

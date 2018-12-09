@@ -276,7 +276,7 @@ void Nickname::registerDiscoFeatures()
 bool Nickname::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
     return FDiscovery==NULL||!FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)||
-            FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_PEP_ACTIVITY);
+			FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_PEP_NICK);
 }
 
 void Nickname::sendNick(const QString &ANickname, const Jid &AStreamJid)

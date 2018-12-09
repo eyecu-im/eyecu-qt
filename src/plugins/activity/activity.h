@@ -20,7 +20,7 @@
 class ActivityData
 {
 public:
-	explicit ActivityData(QString ANameBasic, QString ANameDetailed=QString(), QString AText=QString());
+	ActivityData(const QString &ANameBasic, const QString &ANameDetailed=QString(), const QString &AText=QString());
 	ActivityData();
 	QString nameBasic;
 	QString nameDetailed;
@@ -101,7 +101,7 @@ public slots:
 
 protected:
 	QString getIconFileName(const ActivityData &AActivity) const;
-	void	setActivityForAccount(Jid AStreamJid);
+	void	setActivityForAccount(const Jid &AStreamJid);
 	void	registerDiscoFeatures();
 	void	updateChatWindows(bool AInfoBar);
 	void	updateChatWindows(const Jid &AContactJid, const Jid &AStreamJid);
@@ -149,7 +149,7 @@ signals:
 private:
 	IOptionsManager		*FOptionsManager;
 	IMessageProcessor	*FMessageProcessor;
-	IPEPManager			*FPEPManager;
+	IPEPManager			*FPepManager;
 	IServiceDiscovery	*FDiscovery;
 	IRostersViewPlugin	*FRostersViewPlugin;
 	IPresenceManager	*FPresenceManager;
