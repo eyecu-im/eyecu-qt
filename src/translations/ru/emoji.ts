@@ -1,60 +1,60 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="ru_RU" version="2.1">
+<TS version="2.1" language="ru_RU">
   <context>
     <name>Emoji</name>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="110"/>
       <source>Emoji</source>
       <translation>Эмодзи</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="111"/>
       <source>Allows to use emoji in messages</source>
       <translation>Позволяет использовать эмодзи в сообщениях</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="146"/>
       <source>Smileys &amp; People</source>
       <translation>Смайлики и Люди</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="147"/>
       <source>Animals &amp; Nature</source>
       <translation>Животные и Природа</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="148"/>
       <source>Food &amp; Drink</source>
       <translation>Еда и Напитки</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="149"/>
       <source>Travel &amp; Places</source>
       <translation>Путешествие и Места</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="150"/>
       <source>Symbols</source>
       <translation>Символы</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="151"/>
       <source>Activities</source>
       <translation>Виды деятельности</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="94"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="153"/>
       <source>Flags</source>
       <translation>Флаги</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="152"/>
       <source>Objects</source>
       <translation>Предметы</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
+      <location filename="../../plugins/emoji/emoji.cpp" line="234"/>
       <source>Message windows</source>
       <translation>Окна сообщений</translation>
     </message>
@@ -101,23 +101,39 @@
   <context>
     <name>SelectIconMenu</name>
     <message>
-      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="125"/>
       <source>Fitzpatrick type %1</source>
       <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
       <translation>Тип %1 по шкале Фицпатрика</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="140"/>
       <source>Skin color</source>
       <translation>Цвет кожи</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
+      <source>Male</source>
+      <translation>Мужской</translation>
+    </message>
+    <message>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
+      <source>Female</source>
+      <translation>Женский</translation>
+    </message>
+    <message>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="168"/>
+      <source>Gender</source>
+      <translation>Пол</translation>
+    </message>
+    <message>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="124"/>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
       <source>Default</source>
       <translation>По умолчанию</translation>
     </message>
     <message>
-      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
+      <location filename="../../plugins/emoji/selecticonmenu.cpp" line="126"/>
       <source>1 or 2</source>
       <translation>1 или 2</translation>
     </message>

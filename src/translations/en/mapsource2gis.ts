@@ -4,12 +4,12 @@
  <context>
   <name>MapSource2Gis</name>
   <message>
-   <location line="6" filename="../../plugins/mapsource2gis/mapsource2gis.cpp"/>
+   <location filename="../../plugins/mapsource2gis/mapsource2gis.cpp" line="6"/>
    <source>2GIS map source</source>
    <translation>2GIS map source</translation>
   </message>
   <message>
-   <location line="7" filename="../../plugins/mapsource2gis/mapsource2gis.cpp"/>
+   <location filename="../../plugins/mapsource2gis/mapsource2gis.cpp" line="7"/>
    <source>Allows Map plugin to use 2GIS service as map source</source>
    <translation>Allows Map plugin to use 2GIS service as map source</translation>
   </message>

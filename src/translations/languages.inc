@@ -1,9 +1,9 @@
-# Translations to build and install
-TRANS_LANGS  = en ru pl de uk ja nl es ar
-
 # Translation file name
 isEmpty(TARGET_SHORT): TRANS_TARGET = $$member(TARGET, 0)
 else: TRANS_TARGET = $$member(TARGET_SHORT, 0)
+
+# Translations to build and install
+TRANS_LANGS  = en ru pl de uk ja nl es ar
 
 # Translations to update from source
 TRANS_SOURCE = $$member(TARGET,0)

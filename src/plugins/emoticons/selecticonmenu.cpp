@@ -10,7 +10,7 @@
 
 SelectIconMenu::SelectIconMenu(const QString &AIconset, IEmoticons *AEmoticons, QWidget *AParent) : Menu(AParent)
 {
-	FEmoji = AEmoticons;
+	FEmoticons = AEmoticons;
 	FStorage = NULL;
 	setIconset(AIconset);
 
@@ -52,7 +52,7 @@ void SelectIconMenu::onAboutToShow()
 	connect(this,SIGNAL(aboutToHide()),widget,SLOT(deleteLater()));
 	connect(widget,SIGNAL(iconSelected(const QString &, const QString &)),SIGNAL(iconSelected(const QString &, const QString &)));
 // *** <<< eyeCU <<< ***
-	QStringList recent = FEmoji->recentIcons(FStorage->subStorage());
+	QStringList recent = FEmoticons->recentIcons(FStorage->subStorage());
 	if (!recent.isEmpty())
 	{
 		QToolBar *toolBar = new QToolBar(this);
