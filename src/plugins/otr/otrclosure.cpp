@@ -25,6 +25,7 @@
  *
  */
 
+#include <QDebug>
 #include <QDialog>
 #include <QLabel>
 #include <QComboBox>
@@ -133,8 +134,8 @@ AuthenticationDialog::AuthenticationDialog(Otr *AOtr,
     ssLayout->addSpacing(20);
 	FMethodWidget[METHOD_SHARED_SECRET]->setLayout(ssLayout);
 
-	FMethodWidget[METHOD_FINGERPRINT] = NULL;
-    QLabel* authenticatedLabel = NULL;
+	FMethodWidget[METHOD_FINGERPRINT] = nullptr;
+	QLabel* authenticatedLabel = nullptr;
 	if (FIsSender)
     {
 		if (FOtr->isVerified(FAccount, FContact))
@@ -217,13 +218,9 @@ AuthenticationDialog::AuthenticationDialog(Otr *AOtr,
 	if (!FIsSender)
     {
 		if (AQuestion.isEmpty())
-        {
 			FMethod = METHOD_SHARED_SECRET;
-        }
         else
-        {
 			FQuestionEdit->setText(AQuestion);
-        }
     }
 
 	changeMethod(FMethod);
@@ -266,10 +263,10 @@ bool AuthenticationDialog::finished()
 void AuthenticationDialog::checkRequirements()
 {
 	FStartButton->setEnabled((FMethod == METHOD_QUESTION &&
-							   !FQuestionEdit->text().isEmpty() &&
-							   !FAnswerEdit->text().isEmpty()) ||
-							  (FMethod == METHOD_SHARED_SECRET &&
-							   !FSharedSecretEdit->text().isEmpty()) ||
+							  !FQuestionEdit->text().isEmpty() &&
+							  !FAnswerEdit->text().isEmpty()) ||
+							 (FMethod == METHOD_SHARED_SECRET &&
+							  !FSharedSecretEdit->text().isEmpty()) ||
 							  (FMethod == METHOD_FINGERPRINT));
 }
 
@@ -277,12 +274,8 @@ void AuthenticationDialog::changeMethod(int AIndex)
 {
 	FMethod = static_cast<Method>(AIndex);
     for (int i=0; i<3; i++)
-    {
 		if (FMethodWidget[i])
-        {
 			FMethodWidget[i]->setVisible(i == AIndex);
-        }
-    }
 	FProgressBar->setVisible(FMethod != METHOD_FINGERPRINT);
     adjustSize();
 }
@@ -294,9 +287,7 @@ void AuthenticationDialog::startAuthentication()
         case METHOD_QUESTION:
 			if (FQuestionEdit->text().isEmpty() ||
 				FAnswerEdit->text().isEmpty())
-            {
                 return;
-            }
 
 			FState = AUTH_IN_PROGRESS;
 
@@ -307,24 +298,15 @@ void AuthenticationDialog::startAuthentication()
 			FStartButton->setEnabled(false);
 
 			if (FIsSender)
-            {
-				FOtr->startSMP(FAccount, FContact,
-								FQuestionEdit->text(), FAnswerEdit->text());
-            }
+				FOtr->startSMP(FAccount, FContact, FQuestionEdit->text(), FAnswerEdit->text());
             else
-            {
 				FOtr->continueSMP(FAccount, FContact, FAnswerEdit->text());
-            }
-
             updateSMP(33);
-
             break;
 
         case METHOD_SHARED_SECRET:
 			if (FSharedSecretEdit->text().isEmpty())
-            {
                 return;
-            }
 
 			FState = AUTH_IN_PROGRESS;
 
@@ -334,17 +316,10 @@ void AuthenticationDialog::startAuthentication()
 			FStartButton->setEnabled(false);
 
 			if (FIsSender)
-            {
-				FOtr->startSMP(FAccount, FContact,
-								QString(), FSharedSecretEdit->text());
-            }
+				FOtr->startSMP(FAccount, FContact, QString(), FSharedSecretEdit->text());
             else
-            {
 				FOtr->continueSMP(FAccount, FContact, FSharedSecretEdit->text());
-            }
-
             updateSMP(33);
-
             break;
 
         case METHOD_FINGERPRINT:
@@ -361,10 +336,8 @@ void AuthenticationDialog::startAuthentication()
 
 				FOtr->verifyFingerprint(FFingerprint,
                                          mb.exec() == QMessageBox::Yes);
-
                 close();
             }
-
             break;
     }
 }
@@ -374,25 +347,17 @@ void AuthenticationDialog::updateSMP(int AProgress)
 	if (AProgress<0)
     {
 		if (AProgress == -1)
-        {
             notify(QMessageBox::Warning,
                    tr("%1 has canceled the authentication process.")
 					 .arg(FContactName));
-        }
         else
-        {
             notify(QMessageBox::Warning,
                    tr("An error occurred during the authentication process."));
-        }
 
 		if (FIsSender)
-        {
             reset();
-        }
         else
-        {
             close();
-        }
 
         return;
     }
@@ -408,18 +373,14 @@ void AuthenticationDialog::updateSMP(int AProgress)
         {
 			FState = AUTH_FINISHED;
 			if (FOtr->isVerified(FAccount, FContact))
-            {
                 notify(QMessageBox::Information,
                        tr("Authentication successful."));
-            }
             else
-            {
                 notify(QMessageBox::Information,
                        tr("You have been successfully authenticated.\n\n"
                           "You should authenticate %1 as "
                           "well by asking your own question.")
 						  .arg(FContactName));
-            }
             close();
 		}
 		else
@@ -437,7 +398,8 @@ void AuthenticationDialog::updateSMP(int AProgress)
 void AuthenticationDialog::notify(const QMessageBox::Icon AIcon,
 								  const QString& AMessage)
 {
-	QMessageBox mb(AIcon, tr("Psi OTR"), AMessage, QMessageBox::Ok, this,
+	QMessageBox mb(AIcon, tr("Off-the-Record messaging"),
+				   AMessage, QMessageBox::Ok, this,
                    Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
     mb.exec();
 }
@@ -447,12 +409,11 @@ void AuthenticationDialog::notify(const QMessageBox::Icon AIcon,
 //
 
 OtrClosure::OtrClosure(const QString& AAccount, const QString& AContact,
-							 Otr *AOtr)
-	: FOtr(AOtr),
-	  FAccount(AAccount),
-	  FContact(AContact),
-	  FIsLoggedIn(false),
-	  FAuthDialog(0)
+							 Otr *AOtr):
+	FOtr(AOtr),
+	FAccount(AAccount),
+	FContact(AContact),
+	FIsLoggedIn(false)
 {
 }
 
@@ -463,62 +424,47 @@ OtrClosure::~OtrClosure()
 void OtrClosure::authenticateContact()
 {
 	if (FAuthDialog || !encrypted())
-    {
         return;
-    }
 
-	FAuthDialog = new AuthenticationDialog(FOtr,
-											FAccount, FContact,
-                                            QString(), true);
-
-	connect(FAuthDialog, SIGNAL(destroyed()),
-            this, SLOT(finishAuth()));
-
+	FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, QString(), true);
 	FAuthDialog->show();
+}
+
+bool OtrClosure::isRunning() const
+{
+	return FAuthDialog;
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrClosure::receivedSMP(const QString& AQuestion, QWidget *AParent)
+void OtrClosure::receivedSmp(const QString& AQuestion)
 {
 	if ((FAuthDialog && !FAuthDialog->finished()) || !encrypted())
     {
 		FOtr->abortSMP(FAccount, FContact);
         return;
     }
-	if (FAuthDialog)
-    {
-		disconnect(FAuthDialog, SIGNAL(destroyed()),
-                   this, SLOT(finishAuth()));
-        finishAuth();
-    }
 
-	FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, AQuestion, false, AParent);
+	if (!FAuthDialog)
+		FAuthDialog = new AuthenticationDialog(FOtr, FAccount, FContact, AQuestion, false);
+}
 
-	connect(FAuthDialog, SIGNAL(destroyed()),
-            this, SLOT(finishAuth()));
-
-	FAuthDialog->show();
+int OtrClosure::showSmpDialog()
+{
+	return FAuthDialog->exec();
 }
 
 //-----------------------------------------------------------------------------
 
-void OtrClosure::updateSMP(int AProgress)
+void OtrClosure::updateSmpDialog(int AProgress)
 {
 	if (FAuthDialog)
-    {
-		FAuthDialog->updateSMP(AProgress);
+    {		
 		FAuthDialog->show();
+		FAuthDialog->raise();
+		FAuthDialog->activateWindow();
+		FAuthDialog->updateSMP(AProgress);
     }
-}
-
-//-----------------------------------------------------------------------------
-
-void OtrClosure::finishAuth()
-{
-	FAuthDialog = 0;
-
-    //updateMessageState();
 }
 
 //-----------------------------------------------------------------------------

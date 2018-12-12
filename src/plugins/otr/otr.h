@@ -188,7 +188,7 @@ public:
 							 StateChange AChange);
 
 	virtual void receivedSMP(const QString &AAccount, const QString &AContact,
-							 const QString& AQuestion, QWidget *AParent = nullptr);
+							 const QString& AQuestion);
 	virtual void updateSMP(const QString &AAccount, const QString &AContact,
 						   int AProgress);
 

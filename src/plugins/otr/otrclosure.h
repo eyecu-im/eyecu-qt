@@ -28,6 +28,7 @@
 #define PSIOTRCLOSURE_H_
 
 #include <QMessageBox>
+#include <QPointer>
 #include "otr.h"
 
 class QAction;
@@ -89,24 +90,23 @@ class OtrClosure : public QObject
     Q_OBJECT
 
 public:
-	OtrClosure(const QString& AAccount, const QString& AContact, Otr* AOtr);
+	OtrClosure(const QString &AAccount, const QString &AContact, Otr *AOtr);
 	~OtrClosure();
 	void setIsLoggedIn(bool AIsLoggedIn);
     bool isLoggedIn() const;
     bool encrypted() const;
-	void receivedSMP(const QString& AQuestion, QWidget *AParent=nullptr);
-	void updateSMP(int AProgress);
+	void receivedSmp(const QString& AQuestion);
+	int showSmpDialog();
+	void updateSmpDialog(int AProgress);
     void authenticateContact();
+	bool isRunning() const;
 
 private:
 	Otr*	FOtr;
 	QString	FAccount;
 	QString	FContact;
 	bool	FIsLoggedIn;
-	AuthenticationDialog* FAuthDialog;
-
-public slots:
-    void finishAuth();
+	QPointer<AuthenticationDialog> FAuthDialog;
 };
 
 #endif

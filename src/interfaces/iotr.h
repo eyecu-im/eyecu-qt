@@ -87,7 +87,7 @@ public:
 							 StateChange change) = 0;
 
 	virtual void receivedSMP(const QString& AAccount, const QString& AContact,
-							 const QString& AQuestion, QWidget *AParent) = 0;
+							 const QString& AQuestion) = 0;
 
 	virtual void updateSMP(const QString& account, const QString& contact,
 						   int progress) = 0;

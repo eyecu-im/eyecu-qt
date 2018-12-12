@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include <QFutureWatcher>
 #include <QDir>
 #include <QFile>
@@ -765,8 +767,8 @@ protected:
 		if (ASmpEvent == OTRL_SMPEVENT_CHEATED || ASmpEvent == OTRL_SMPEVENT_ERROR) {
 			abortSMP(AContext);
 			FOtr->updateSMP(QString::fromUtf8(AContext->accountname),
-								  QString::fromUtf8(AContext->username),
-								  -2);
+							QString::fromUtf8(AContext->username),
+							-2);
 		}
 		else if (ASmpEvent == OTRL_SMPEVENT_ASK_FOR_SECRET ||
 				 ASmpEvent == OTRL_SMPEVENT_ASK_FOR_ANSWER) {
@@ -1276,7 +1278,16 @@ void Otr::onChatWindowActivated()
 {
 	IMessageChatWindow *window = qobject_cast<IMessageChatWindow *>(sender());
 	if (window)
+	{
 		removeNotifications(window);
+//TODO: Check all window addresses
+		QString account = FAccountManager->findAccountByStream(window->streamJid())->accountId().toString();
+
+		if (FOnlineUsers.contains(account) &&
+			FOnlineUsers[account].contains(window->contactJid().full()) &&
+			FOnlineUsers[account][window->contactJid().full()]->isRunning())
+			FOnlineUsers[account][window->contactJid().full()]->showSmpDialog();
+	}
 }
 
 void Otr::onProfileOpened(const QString &AProfile)
@@ -1288,17 +1299,19 @@ void Otr::onProfileOpened(const QString &AProfile)
 void Otr::onNotificationActivated(int ANotifyId)
 {
 	for (QHash<Jid, QHash<Jid, int> >::const_iterator its=FNotifies.constBegin(); its!=FNotifies.constEnd(); its++)
-		for (QHash<Jid, int>::const_iterator itc=(*its).constBegin(); itc!=(*its).constEnd(); itc++)
+		for (QHash<Jid, int>::ConstIterator itc=(*its).constBegin(); itc!=(*its).constEnd(); itc++)
 			if (itc.value()==ANotifyId) // Notification found! Activate window!
-			{
-				Jid contactJid=itc.key().full();
+			{				
+				Jid streamJid=its.key();
+				Jid contactJid=itc.key();
 
-				IMessageChatWindow *window=FMessageWidgets->findChatWindow(its.key(), contactJid);
+				IMessageChatWindow *window=FMessageWidgets->findChatWindow(streamJid, contactJid);
 				if (!window)
 				{
-					FMessageProcessor->getMessageWindow(its.key(), contactJid, Message::Chat, IMessageProcessor::ActionAssign);
-					window = FMessageWidgets->findChatWindow(its.key(), contactJid);
+					FMessageProcessor->getMessageWindow(streamJid, contactJid, Message::Chat, IMessageProcessor::ActionAssign);
+					window = FMessageWidgets->findChatWindow(streamJid, contactJid);
 				}
+
 				if (window)
 				{
 					window->showTabPage();
@@ -1340,19 +1353,12 @@ void Otr::onSessionID()
 	QString account = action->data(ADR_ACCOUNT).toString();
 	QString contact = action->data(ADR_CONTACT_JID).toString();
 	QString sId = FOtrPrivate->getSessionId(account, contact);
-	QString msg;
 
-	if (sId.isEmpty())
-	{
-		msg = tr("No active encrypted session");
-	}
-	else
-	{
-		msg = tr("Session ID between account \"%1\" and %2: %3")
-				.arg(humanAccount(account))
-				.arg(contact)
-				.arg(sId);
-	}
+	QString msg = sId.isEmpty() ? tr("No active encrypted session")
+								: tr("Session ID between account \"%1\" and %2: %3")
+									.arg(humanAccount(account))
+									.arg(contact)
+									.arg(sId);
 
 	displayOtrMessage(account, contact, msg);
 }
@@ -1544,11 +1550,8 @@ bool Otr::displayOtrMessage(const QString &AAccount, const QString &AContact,
 
 //-----------------------------------------------------------------------------
 
-void Otr::stateChange(const QString &AAccount, const QString &AContact,
-					  StateChange AChange)
+void Otr::stateChange(const QString &AAccount, const QString &AContact, StateChange AChange)
 {
-	qDebug() << "Otr::stateChange(" << AAccount << "," << AContact << "," << AChange << ")";
-
 	Jid streamJid = FAccountManager->findAccountById(AAccount)->streamJid();
 	Jid contactJid(AContact);
 
@@ -1611,13 +1614,24 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact,
 //-----------------------------------------------------------------------------
 
 void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
-					  const QString& AQuestion, QWidget *AParent)
+					  const QString& AQuestion)
 {
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR receivedSMP, contact=%1").arg(AContact));
+	Jid streamJid = FAccountManager->findAccountById(AAccount)->streamJid();
+	LOG_STRM_INFO(streamJid, QString("OTR receivedSMP, contact=%1").arg(AContact));
 
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))
-		FOnlineUsers[AAccount][AContact]->receivedSMP(AQuestion, AParent);
+	{
+		FOnlineUsers[AAccount][AContact]->receivedSmp(AQuestion);
+
+		IMessageChatWindow *window = FMessageWidgets->findChatWindow(streamJid, AContact);
+		if (window && window->isActiveTabPage())
+//TODO: Check currently selected address
+			FOnlineUsers[AAccount][AContact]->showSmpDialog();
+		else
+			eventNotify(NNT_OTR_VERIFY, tr("Received fingerprint verification"),
+						streamJid, AContact);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1629,7 +1643,7 @@ void Otr::updateSMP(const QString &AAccount, const QString &AContact,
 
 	if (FOnlineUsers.contains(AAccount) &&
 		FOnlineUsers.value(AAccount).contains(AContact))
-		FOnlineUsers[AAccount][AContact]->updateSMP(AProgress);
+		FOnlineUsers[AAccount][AContact]->updateSmpDialog(AProgress);
 }
 
 //-----------------------------------------------------------------------------
@@ -1677,25 +1691,22 @@ INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessageTe
 {
 	INotification notify;
 
-	QString tooltip, caption;
+	QString tooltip;
 	QIcon icon;
 
 	if (ATypeId == NNT_OTR_ESTABLISHED)
 	{
 		tooltip = tr("Private communication with %1");
-		caption = tr("Private communication started");
 		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_ENCRYPTED);
 	}
 	else if (ATypeId == NNT_OTR_TERMINATED)
 	{
 		tooltip = tr("Finished private communication with %1");
-		caption = tr("Private communication finished");
 		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_NO);
 	}
 	else if (ATypeId == NNT_OTR_VERIFY)
 	{
 		tooltip = tr("Fingerprint verification from %1");
-		caption = tr("Fingerprint verification from received");
 		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_UNVERFIFIED);
 	}
 	else // Invalid notification type id
@@ -1716,7 +1727,7 @@ INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessageTe
 		notify.data.insert(NDR_POPUP_HTML, AMessageText);
 		notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 		notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
-		notify.data.insert(NDR_POPUP_CAPTION, caption);
+		notify.data.insert(NDR_POPUP_CAPTION, tr("Off-the-Record messaging"));
 
 		notify.data.insert(NDR_TOOLTIP, tooltip.arg(FNotifications->contactName(AStreamJid, AContactJid)));
 		notify.data.insert(NDR_ROSTER_ORDER, RNO_OTR);
