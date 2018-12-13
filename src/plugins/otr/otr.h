@@ -200,7 +200,8 @@ public:
 protected:
 	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid,
 							const QString &AMessage) const;
-	INotification eventNotify(const QString &ATypeId, const QString &AMessageText,
+	INotification eventNotify(const QString &ATypeId, const QString &AMessagePopup,
+							  const QString &AMessageTooltip,
 							  const Jid &AStreamJid, const Jid &AContactJid);
 	void removeNotifications(IMessageChatWindow *AWindow);
 
@@ -244,7 +245,6 @@ private:
 	QString				FHomePath;
 	IMessageWidgets		*FMessageWidgets;
 	INotifications      *FNotifications;
-//	QHash<IMessageChatWindow *, int>   FNotifies;
 	QHash<Jid, QHash<Jid, int> > FNotifies;
 	int					FSHIMessage;
 	int					FSHIPresence;

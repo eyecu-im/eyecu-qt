@@ -1562,52 +1562,64 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 
 	bool verified  = isVerified(AAccount, AContact);
 	bool encrypted = FOnlineUsers[AAccount][AContact]->encrypted();
-	QString msg;
+	QString message, tooltip;
 
 	switch (AChange)
 	{
 		case StateChangeGoingSecure:
-			msg = encrypted?
+			message = encrypted?
 					  tr("Attempting to refresh the private conversation")
 					: tr("Attempting to start a private conversation");
 			break;
 
 		case StateChangeGoneSecure:
-			msg  = verified? tr("Private conversation started")
-						   : tr("Unverified conversation started");
+			message  = verified ? tr("Private conversation started")
+								: tr("Unverified conversation started");
 
-			eventNotify(NNT_OTR_ESTABLISHED, msg, streamJid, contactJid);
+			tooltip  = verified ? tr("Private conversation with %1 started")
+								: tr("Unverified conversation with %1 started");
+
+			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, streamJid, contactJid);
 			break;
 
 		case StateChangeGoneInsecure:
-			msg  = tr("Private conversation lost");
-			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
+			message  = tr("Private conversation lost");
+			tooltip  = tr("Private conversation with %1 lost");
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
 			break;
 
 		case StateChangeClose:
-			msg  = tr("Private conversation closed");
-			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
+			message  = tr("Private conversation closed");
+			tooltip  = tr("Private conversation with %1 closed");
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
 			break;
 
 		case StateChangeRemoteClose:
-			msg  = tr("%1 has ended the private conversation with you; "
-					  "you should do the same.")
-					  .arg(humanContact(AAccount, AContact));
-			eventNotify(NNT_OTR_TERMINATED, msg, streamJid, contactJid);
+			message  = tr("Has ended the private conversation with you; "
+						  "you should do the same.");
+			tooltip  = tr("%1 has ended the private conversation with you; "
+						  "you should do the same.");
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
 			break;
 
 		case StateChangeStillSecure:
-			msg  = verified? tr("Private conversation refreshed")
-						   : tr("Unverified conversation refreshed");
+			message  = verified ? tr("Private conversation refreshed")
+								: tr("Unverified conversation refreshed");
+			tooltip  = verified ? tr("Private conversation with %1 refreshed")
+								: tr("Unverified conversation with %1 refreshed");
+			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, streamJid, contactJid);
 			break;
 
 		case StateChangeTrust:
-			msg  = verified? tr("Contact authenticated")
-						   : tr("Contact not authenticated");
+			message  = verified ? tr("Contact authenticated")
+								: tr("Contact not authenticated");
+			tooltip  = verified ? tr("%1 authenticated")
+								: tr("%1 not authenticated");
+			eventNotify(NNT_OTR_VERIFY, message, tooltip, streamJid, contactJid);
 			break;
 	}
 
-	notifyInChatWindow(streamJid, contactJid, msg);
+	notifyInChatWindow(streamJid, contactJid, message);
 	emit otrStateChanged(streamJid, contactJid);
 }
 
@@ -1630,7 +1642,7 @@ void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
 			FOnlineUsers[AAccount][AContact]->showSmpDialog();
 		else
 			eventNotify(NNT_OTR_VERIFY, tr("Received fingerprint verification"),
-						streamJid, AContact);
+						tr("Fingerprint verification from %1"), streamJid, AContact);
 	}
 }
 
@@ -1686,7 +1698,9 @@ void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, cons
 	}
 }
 
-INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessageText,
+INotification Otr::eventNotify(const QString &ATypeId,
+							   const QString &AMessagePopup,
+							   const QString &AMessageTooltip,
 							   const Jid &AStreamJid, const Jid &AContactJid)
 {
 	INotification notify;
@@ -1724,12 +1738,12 @@ INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessageTe
 		notify.data.insert(NDR_STREAM_JID, AStreamJid.full());
 		notify.data.insert(NDR_CONTACT_JID, AContactJid.full());
 		notify.data.insert(NDR_ICON, icon);
-		notify.data.insert(NDR_POPUP_HTML, AMessageText);
+		notify.data.insert(NDR_POPUP_HTML, AMessagePopup);
 		notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 		notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
 		notify.data.insert(NDR_POPUP_CAPTION, tr("Off-the-Record messaging"));
 
-		notify.data.insert(NDR_TOOLTIP, tooltip.arg(FNotifications->contactName(AStreamJid, AContactJid)));
+		notify.data.insert(NDR_TOOLTIP, AMessageTooltip.arg(FNotifications->contactName(AStreamJid, AContactJid)));
 		notify.data.insert(NDR_ROSTER_ORDER, RNO_OTR);
 		notify.data.insert(NDR_ROSTER_FLAGS,IRostersNotify::Blink|IRostersNotify::AllwaysVisible|IRostersNotify::HookClicks);
 		notify.data.insert(NDR_ROSTER_CREATE_INDEX, true);
