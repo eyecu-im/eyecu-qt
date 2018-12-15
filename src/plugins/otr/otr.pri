@@ -1,14 +1,17 @@
 HEADERS = \
-      otrlextensions.h \
-    $$PWD/otr.h \
-    $$PWD/otrclosure.h \
-    $$PWD/otroptions.h
+    otrlextensions.h \
+    otr.h \
+    otrclosure.h \
+    otroptions.h \
+    otrauthdialog.h
 
 SOURCES = \
-      otrlextensions.c \
-    $$PWD/otr.cpp \
-    $$PWD/otrclosure.cpp \
-    $$PWD/otroptions.cpp
+    otrlextensions.c \
+    otr.cpp \
+    otrclosure.cpp \
+    otroptions.cpp \
+    otrauthdialog.cpp
 
 FORMS += \
-    $$PWD/otroptions.ui
+    otroptions.ui \
+    otrauthdialog.ui

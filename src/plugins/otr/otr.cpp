@@ -1623,8 +1623,6 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 	emit otrStateChanged(streamJid, contactJid);
 }
 
-//-----------------------------------------------------------------------------
-
 void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
 					  const QString& AQuestion)
 {
@@ -1646,8 +1644,6 @@ void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
 	}
 }
 
-//-----------------------------------------------------------------------------
-
 void Otr::updateSMP(const QString &AAccount, const QString &AContact,
 							 int AProgress)
 {
@@ -1658,21 +1654,15 @@ void Otr::updateSMP(const QString &AAccount, const QString &AContact,
 		FOnlineUsers[AAccount][AContact]->updateSmpDialog(AProgress);
 }
 
-//-----------------------------------------------------------------------------
-
 QString Otr::humanAccount(const QString& AAccountId)
 {
 	return FAccountManager->findAccountById(AAccountId)->name();
 }
 
-//-----------------------------------------------------------------------------
-
 QString Otr::humanAccountPublic(const QString& AAccountId)
 {
 	return FAccountManager->findAccountById(AAccountId)->streamJid().bare();
 }
-
-//-----------------------------------------------------------------------------
 
 QString Otr::humanContact(const QString& AAccountId,
 								   const QString &AContactJid)
@@ -1680,8 +1670,6 @@ QString Otr::humanContact(const QString& AAccountId,
 	Q_UNUSED(AAccountId)
 	return AContactJid;
 }
-
-//-----------------------------------------------------------------------------
 
 void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const
 {

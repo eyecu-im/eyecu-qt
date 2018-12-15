@@ -29,7 +29,8 @@
 
 #include <QMessageBox>
 #include <QPointer>
-#include "otr.h"
+// #include "otr.h"
+#include "otrauthdialog.h"
 
 class QAction;
 class QMenu;
@@ -37,51 +38,6 @@ class QComboBox;
 class QLineEdit;
 class QProgressBar;
 class QPushButton;
-
-class AuthenticationDialog : public QDialog
-{
-    Q_OBJECT
-public:
-	AuthenticationDialog(Otr* AOtr, const QString& AAccount,
-						 const QString& AContact, const QString& AQuestion,
-						 bool ASender, QWidget* AParent = nullptr);
-    ~AuthenticationDialog();
-
-    void reset();
-    bool finished();
-	void updateSMP(int AProgress);
-	void notify(const QMessageBox::Icon AIcon, const QString& AMessage);
-
-public slots:
-    void reject();
-
-private:
-    enum AuthState {AUTH_READY, AUTH_IN_PROGRESS, AUTH_FINISHED};
-    enum Method {METHOD_QUESTION, METHOD_SHARED_SECRET, METHOD_FINGERPRINT};
-
-	Otr*			FOtr;
-	Method			FMethod;
-	QString			FAccount;
-	QString			FContact;
-	QString			FContactName;
-	bool			FIsSender;
-	AuthState		FState;
-	OtrFingerprint	FFingerprint;
-
-	QWidget*		FMethodWidget[3];
-	QComboBox*		FMethodBox;
-	QLineEdit*		FQuestionEdit;
-	QLineEdit*		FAnswerEdit;
-	QLineEdit*		FSharedSecretEdit;
-	QProgressBar*	FProgressBar;
-	QPushButton*	FCancelButton;
-	QPushButton*	FStartButton;
-
-private slots:
-	void changeMethod(int AIndex);
-    void checkRequirements();
-    void startAuthentication();
-};
 
 //-----------------------------------------------------------------------------
 
@@ -96,7 +52,7 @@ public:
     bool isLoggedIn() const;
     bool encrypted() const;
 	void receivedSmp(const QString& AQuestion);
-	int showSmpDialog();
+	void showSmpDialog();
 	void updateSmpDialog(int AProgress);
     void authenticateContact();
 	bool isRunning() const;
@@ -106,7 +62,7 @@ private:
 	QString	FAccount;
 	QString	FContact;
 	bool	FIsLoggedIn;
-	QPointer<AuthenticationDialog> FAuthDialog;
+	QPointer<OtrAuthDialog> FAuthDialog;
 };
 
 #endif

@@ -179,6 +179,5 @@ unix {
 
 # equals(QT_ARCH, "i386") | equals(QT_ARCH, "x86_64") {
 equals(QMAKE_HOST.arch, "i386") | equals(QMAKE_HOST.arch, x86) {
-    message (HOST:$$QMAKE_HOST.arch)
     SOURCES += src/hwf-x86.c
 }
