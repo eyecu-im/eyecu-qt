@@ -167,33 +167,37 @@ bool Nickname::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &ASt
 {
 	Q_UNUSED(AAccept)
 
-	OptionsNode node = FAccountManager->findAccountByStream(AStreamJid)->optionsNode();
-    if (AHandleId==FSHIMessage || AHandleId==FSHIPresence)
-    {
-        QDomElement nick = AStanza.firstElement(TAG_NAME, NS_PEP_NICK);
-        if (!nick.isNull())
-        {            
-            QString nickName = nick.text();
-            Jid contactJid(AStanza.from());
-            if (nickName!=(FNicknameHash.value(contactJid.bare())))
-            {
-                if (nickName.isEmpty())
-                    FNicknameHash.remove(contactJid.bare());
-                else
-                    FNicknameHash.insert(contactJid.bare(), nickName);
-                updateDataHolder(contactJid);
+	IAccount *account = FAccountManager->findAccountByStream(AStreamJid);
+	if (account)
+	{
+		OptionsNode node = account->optionsNode();
+		if (AHandleId==FSHIMessage || AHandleId==FSHIPresence)
+		{
+			QDomElement nick = AStanza.firstElement(TAG_NAME, NS_PEP_NICK);
+			if (!nick.isNull())
+			{
+				QString nickName = nick.text();
+				Jid contactJid(AStanza.from());
+				if (nickName!=(FNicknameHash.value(contactJid.bare())))
+				{
+					if (nickName.isEmpty())
+						FNicknameHash.remove(contactJid.bare());
+					else
+						FNicknameHash.insert(contactJid.bare(), nickName);
+					updateDataHolder(contactJid);
 
-                if(contactJid.bare() == AStreamJid.bare() && node.value(OPV_NICKNAMECHANGE).toBool())  // My resource
-                    node.setValue(nickName, OPV_NICKNAME);
-            }
-        }
-    }
-    else if ((node.value(OPV_NICKNAMEBROADCAST).toBool() && AHandleId==FSHOPresence && AStanza.to().isEmpty()) ||
-			(!node.value(OPV_NICKNAME).toString().isEmpty() && ((!FNotifiedContacts.value(AStreamJid.bare()).contains(AStanza.to()) && AHandleId==FSHOMessage) || AStanza.type()=="subscribe")))
-    {        
-        AStanza.addElement(TAG_NAME, NS_PEP_NICK).appendChild(AStanza.createTextNode(node.value(OPV_NICKNAME).toString()));
-        FNotifiedContacts[AStreamJid.bare()].append(AStanza.to());
-    }
+					if(contactJid.bare() == AStreamJid.bare() && node.value(OPV_NICKNAMECHANGE).toBool())  // My resource
+						node.setValue(nickName, OPV_NICKNAME);
+				}
+			}
+		}
+		else if ((node.value(OPV_NICKNAMEBROADCAST).toBool() && AHandleId==FSHOPresence && AStanza.to().isEmpty()) ||
+				(!node.value(OPV_NICKNAME).toString().isEmpty() && ((!FNotifiedContacts.value(AStreamJid.bare()).contains(AStanza.to()) && AHandleId==FSHOMessage) || AStanza.type()=="subscribe")))
+		{
+			AStanza.addElement(TAG_NAME, NS_PEP_NICK).appendChild(AStanza.createTextNode(node.value(OPV_NICKNAME).toString()));
+			FNotifiedContacts[AStreamJid.bare()].append(AStanza.to());
+		}
+	}
     return false;
 }
 
