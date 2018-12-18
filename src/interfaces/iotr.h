@@ -72,31 +72,30 @@ public:
 	 * The method is called from the OtrConnection to send messages
 	 * during key-exchange.
 	 */
-	virtual void sendMessage(const QString& AAccount, const QString& AContact,
+	virtual void sendMessage(const Jid& AStreamJid, const Jid& AContactJid,
 							 const QString& AMessage, const QString &AHtml=QString()) = 0;
 
-    virtual bool isLoggedIn(const QString& account, const QString& contact) const = 0;
+	virtual bool isLoggedIn(const Jid& AStreamJid, const Jid& AContactJid) const = 0;
 
-	virtual void notifyUser(const QString& account, const QString& contact,
-							const QString& message, const NotifyType& type) = 0;
+	virtual void notifyUser(const Jid& AStreamJid, const Jid& AContactJid,
+							const QString& AMessage, const NotifyType& AType) = 0;
 
-	virtual bool displayOtrMessage(const QString& account, const QString& contact,
-								   const QString& message) = 0;
+	virtual bool displayOtrMessage(const Jid &AStreamJid, const Jid &AContactJid,
+								   const QString& AMessage) = 0;
 
-	virtual void stateChange(const QString& account, const QString& contact,
-							 StateChange change) = 0;
+	virtual void stateChange(const Jid& AStreamJid, const Jid& AContactJid,
+							 StateChange AChange) = 0;
 
-	virtual void receivedSMP(const QString& AAccount, const QString& AContact,
+	virtual void receivedSMP(const Jid& AStreamJid, const Jid& AContactJid,
 							 const QString& AQuestion) = 0;
 
-	virtual void updateSMP(const QString& account, const QString& contact,
-						   int progress) = 0;
+	virtual void updateSMP(const Jid& AStreamJid, const Jid& AContactJid,
+						   int AProgress) = 0;
 
-	virtual QString humanAccount(const QString& accountId) = 0;
-	virtual QString humanAccountPublic(const QString& accountId) = 0;
-	virtual QString humanContact(const QString& accountId,
-								 const QString& contact) = 0;
-	virtual void authenticateContact(const QString &account, const QString &contact) =0;
+	virtual QString humanAccount(const Jid& AStreamJid) = 0;
+	virtual QString humanAccountPublic(const Jid& AStreamJid) = 0;
+	virtual QString humanContact(const Jid& AStreamJid, const Jid& AContactJid) = 0;
+	virtual void authenticateContact(const Jid& AStreamJid, const Jid& AContactJid) =0;
 protected:
 	virtual void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const =0;
 };

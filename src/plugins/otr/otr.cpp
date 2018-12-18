@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include <QFutureWatcher>
 #include <QDir>
 #include <QFile>
@@ -130,17 +128,16 @@ public:
 		otrl_instag_read(FUserState, QFile::encodeName(FInstagsFile).constData());
 	}
 
-	QString encryptMessage(const QString& AAccount, const QString& AContact,
-										const QString& AMessage)
+	QString encryptMessage(const Jid& AStreamJid, const Jid& AContactJid, const QString& AMessage)
 	{
 		char* encMessage = nullptr;
 		gcry_error_t err;
 
 		err = otrl_message_sending(FUserState, &FUiOps, this,
-								   AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
-								   AContact.toUtf8().constData(),
-								   OTRL_INSTAG_BEST,
-								   AMessage.toUtf8().constData(),
+								   AStreamJid.full().toUtf8().constData(),
+								   OTR_PROTOCOL_STRING,
+								   AContactJid.full().toUtf8().constData(),
+								   OTRL_INSTAG_BEST, AMessage.toUtf8().constData(),
 								   nullptr, &encMessage,
 								   OTRL_FRAGMENT_SEND_SKIP,
 								   nullptr, nullptr, nullptr);
@@ -148,9 +145,9 @@ public:
 		{
 			QString err_message = QObject::tr("Encrypting message to %1 "
 											  "failed.\nThe message was not sent.")
-											  .arg(AContact);
-			if (!FOtr->displayOtrMessage(AAccount, AContact, err_message))
-				FOtr->notifyUser(AAccount, AContact, err_message, IOtr::NotifyError);
+											  .arg(AContactJid.full());
+			if (!FOtr->displayOtrMessage(AStreamJid, AContactJid, err_message))
+				FOtr->notifyUser(AStreamJid, AContactJid, err_message, IOtr::NotifyError);
 			return QString();
 		}
 
@@ -164,30 +161,27 @@ public:
 		return AMessage;
 	}
 
-	IOtr::MessageType decryptMessage(const QString& AAccount,
-									 const QString& AContact,
+	IOtr::MessageType decryptMessage(const Jid& AStreamJid,
+									 const Jid& AContactJid,
 									 const QString& AMessage,
 									 QString& ADecrypted)
 	{
-		QByteArray accArray  = AAccount.toUtf8();
-		QByteArray userArray = AContact.toUtf8();
-		const char* accountName = accArray.constData();
-		const char* userName    = userArray.constData();
-
 		int ignoreMessage = 0;
 		char* newMessage  = nullptr;
 		OtrlTLV* tlvs     = nullptr;
 		OtrlTLV* tlv      = nullptr;
 
 		ignoreMessage = otrl_message_receiving(FUserState, &FUiOps, this,
-											   accountName, OTR_PROTOCOL_STRING,
-											   userName, AMessage.toUtf8().constData(),
+											   AStreamJid.full().toUtf8().constData(),
+											   OTR_PROTOCOL_STRING,
+											   AContactJid.full().toUtf8().constData(),
+											   AMessage.toUtf8().constData(),
 											   &newMessage, &tlvs, nullptr,
 											   nullptr, nullptr);
 
 		tlv = otrl_tlv_find(tlvs, OTRL_TLV_DISCONNECTED);
 		if (tlv)
-			FOtr->stateChange(accountName, userName, IOtr::StateChangeRemoteClose);
+			FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeRemoteClose);
 
 		// Magic hack to force it work similar to libotr < 4.0.0.
 		// If user received unencrypted message he (she) should be notified.
@@ -237,15 +231,15 @@ public:
 										bool AVerified)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AFingerprint.username.toUtf8().constData(),
-												 AFingerprint.account.toUtf8().constData(),
+												 AFingerprint.FContactJid.full().toUtf8().constData(),
+												 AFingerprint.FStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST,
 												 false, nullptr, nullptr, nullptr);
 		if (context)
 		{
 			::Fingerprint* fp = otrl_context_find_fingerprint(context,
-															  AFingerprint.fingerprint,
+															  AFingerprint.FFingerprint,
 															  0, nullptr);
 			if (fp)
 			{
@@ -265,15 +259,15 @@ public:
 	void deleteFingerprint(const OtrFingerprint &AFingerprint)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AFingerprint.username.toUtf8().constData(),
-												 AFingerprint.account.toUtf8().constData(),
+												 AFingerprint.FContactJid.full().toUtf8().constData(),
+												 AFingerprint.FStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST,
 												 false, nullptr, nullptr, nullptr);
 		if (context)
 		{
 			::Fingerprint* fp = otrl_context_find_fingerprint(context,
-															  AFingerprint.fingerprint,
+															  AFingerprint.FFingerprint,
 															  0, nullptr);
 			if (fp)
 			{
@@ -287,9 +281,9 @@ public:
 
 	//-----------------------------------------------------------------------------
 
-	QHash<QString, QString> getPrivateKeys()
+	QHash<Jid, QString> getPrivateKeys()
 	{
-		QHash<QString, QString> privKeyList;
+		QHash<Jid, QString> privKeyList;
 		OtrlPrivKey* privKey;
 
 		for (privKey = FUserState->privkey_root; privKey != nullptr;
@@ -310,10 +304,10 @@ public:
 
 	//-----------------------------------------------------------------------------
 
-	void deleteKey(const QString& AAccount)
+	void deleteKey(const Jid& AStreamJid)
 	{
 		OtrlPrivKey* privKey = otrl_privkey_find(FUserState,
-												 AAccount.toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING);
 		otrl_privkey_forget(privKey);
 		otrl_privkey_write(FUserState, QFile::encodeName(FKeysFile).constData());
@@ -321,18 +315,17 @@ public:
 
 	//-----------------------------------------------------------------------------
 
-	void startSession(const QString& AAccount, const QString& AContact)
+	void startSession(const Jid& AStreamJid, const Jid& AContactJid)
 	{
-		FOtr->stateChange(AAccount, AContact, IOtr::StateChangeGoingSecure);
+		FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeGoingSecure);
 
-		if (!otrl_privkey_find(FUserState, AAccount.toUtf8().constData(),
+		if (!otrl_privkey_find(FUserState, AStreamJid.full().toUtf8().constData(),
 							   OTR_PROTOCOL_STRING))
-			createPrivkey(AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING);
+			createPrivkey(AStreamJid.full().toUtf8().constData(), OTR_PROTOCOL_STRING);
 
 		//TODO: make allowed otr versions configureable
-		char* msg = otrl_proto_default_query_msg(FOtr->humanAccountPublic(AAccount).toUtf8().constData(),
+		char* msg = otrl_proto_default_query_msg(FOtr->humanAccountPublic(AStreamJid).toUtf8().constData(),
 												 OTRL_POLICY_DEFAULT);
-
 		QString otrMsg(QString::fromUtf8(msg));
 
 		QString otr("Off-the-Record private conversation");
@@ -344,61 +337,63 @@ public:
 		QString tmpl("%1\n%2");
 
 		otrMsg = tmpl.arg(otrMsg.split('\n').first())
-					 .arg(msgTmpl.arg(FOtr->humanAccountPublic(AAccount))
+					 .arg(msgTmpl.arg(FOtr->humanAccountPublic(AStreamJid))
 								 .arg(otr)
 								 .arg(OTR_WEB));
 
-		QString html = msgTmpl.arg(QString("<b>%1</b>").arg(FOtr->humanAccountPublic(AAccount)))
+		QString html = msgTmpl.arg(QString("<b>%1</b>").arg(FOtr->humanAccountPublic(AStreamJid)))
 							  .arg(QString("<a href=\"%1\">%2</a>").arg(OTR_WEB).arg(otr))
 							  .arg(QString("<a href=\"%1\">%1</a>").arg(OTR_WEB));
 
-		FOtr->sendMessage(AAccount, AContact, otrMsg, html);
+		FOtr->sendMessage(AStreamJid, AContactJid, otrMsg, html);
 
 		free(msg);
 	}
 
 	//-----------------------------------------------------------------------------
 
-	void endSession(const QString& AAccount, const QString& AContact)
+	void endSession(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 AAccount.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST,
 												 false, nullptr, nullptr, nullptr);
 
 		if (context && (context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
-			FOtr->stateChange(AAccount, AContact, IOtr::StateChangeClose);
+			FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeClose);
 
 		otrl_message_disconnect(FUserState, &FUiOps, this,
-								AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
-								AContact.toUtf8().constData(), OTRL_INSTAG_BEST);
+								AStreamJid.full().toUtf8().constData(),
+								OTR_PROTOCOL_STRING,
+								AContactJid.full().toUtf8().constData(),
+								OTRL_INSTAG_BEST);
 	}
 
-	void expireSession(const QString& AAccount, const QString& AContact)
+	void expireSession(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 AAccount.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
 		if (context && (context->msgstate == OTRL_MSGSTATE_ENCRYPTED))
 		{
 			otrl_context_force_finished(context);
-			FOtr->stateChange(AAccount, AContact, IOtr::StateChangeGoneInsecure);
+			FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeGoneInsecure);
 		}
 	}
 
 	//-----------------------------------------------------------------------------
 
-	void startSMP(const QString& AAccount, const QString& AContact,
-							   const QString& AQuestion, const QString& ASecret)
+	void startSMP(const Jid& AStreamJid, const Jid& AContactJid,
+				  const QString& AQuestion, const QString& ASecret)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 AAccount.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
@@ -410,22 +405,23 @@ public:
 
 			if (AQuestion.isEmpty())
 				otrl_message_initiate_smp(FUserState, &FUiOps, this, context,
-										  reinterpret_cast<const unsigned char*>(const_cast<char*>(secretPointer)),
+										  reinterpret_cast<const unsigned char*>
+											(const_cast<char*>(secretPointer)),
 										  secretLength);
 			else
 				otrl_message_initiate_smp_q(FUserState, &FUiOps, this, context,
 											AQuestion.toUtf8().constData(),
-											reinterpret_cast<const unsigned char*>(const_cast<char*>(secretPointer)),
+											reinterpret_cast<const unsigned char*>
+												(const_cast<char*>(secretPointer)),
 											secretLength);
 		}
 	}
 
-	void continueSMP(const QString& AAccount, const QString& AContact,
-								  const QString& ASecret)
+	void continueSMP(const Jid& AStreamJid, const Jid& AContactJid, const QString& ASecret)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 AAccount.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
@@ -441,11 +437,11 @@ public:
 		}
 	}
 
-	void abortSMP(const QString& account, const QString& AContact)
+	void abortSMP(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 account.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
@@ -460,12 +456,11 @@ public:
 
 	//-----------------------------------------------------------------------------
 
-	IOtr::MessageState getMessageState(const QString& AAccount,
-													   const QString& AContact)
+	IOtr::MessageState getMessageState(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context = otrl_context_find(FUserState,
-												 AContact.toUtf8().constData(),
-												 AAccount.toUtf8().constData(),
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
@@ -482,10 +477,9 @@ public:
 		return IOtr::MsgStateUnknown;
 	}
 
-	QString getMessageStateString(const QString& AAccount,
-											   const QString& AContact)
+	QString getMessageStateString(const Jid& AStreamJid, const Jid& AContactJid)
 	{
-		IOtr::MessageState state = getMessageState(AAccount, AContact);
+		IOtr::MessageState state = getMessageState(AStreamJid, AContactJid);
 
 		if (state == IOtr::MsgStatePlaintext)
 			return QObject::tr("plaintext");
@@ -497,11 +491,11 @@ public:
 		return QObject::tr("unknown");
 	}
 
-	QString getSessionId(const QString& AAccount, const QString& AContact)
+	QString getSessionId(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context;
-		context = otrl_context_find(FUserState, AContact.toUtf8().constData(),
-									AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
+		context = otrl_context_find(FUserState, AContactJid.full().toUtf8().constData(),
+									AStreamJid.full().toUtf8().constData(), OTR_PROTOCOL_STRING,
 									OTRL_INSTAG_BEST, false,
 									nullptr, nullptr, nullptr);
 		if (context && (context->sessionid_len > 0))
@@ -532,12 +526,11 @@ public:
 		return QString();
 	}
 
-	OtrFingerprint getActiveFingerprint(const QString& AAccount,
-													 const QString& AContact)
+	OtrFingerprint getActiveFingerprint(const Jid& AStreamJid, const Jid& AContactJid)
 	{
 		ConnContext* context = otrl_context_find(
-					FUserState, AContact.toUtf8().constData(),
-					AAccount.toUtf8().constData(),
+					FUserState, AContactJid.full().toUtf8().constData(),
+					AStreamJid.full().toUtf8().constData(),
 					OTR_PROTOCOL_STRING, OTRL_INSTAG_BEST,
 					false, nullptr, nullptr, nullptr);
 
@@ -550,11 +543,11 @@ public:
 		return OtrFingerprint();
 	}
 
-	bool isVerified(const QString& AAccount,
-								 const QString& AContact)
+	bool isVerified(const Jid& AStreamJid, const Jid& AContactJid)
 	{
-		return isVerified(otrl_context_find(FUserState, AContact.toUtf8().constData(),
-											AAccount.toUtf8().constData(),
+		return isVerified(otrl_context_find(FUserState,
+											AContactJid.full().toUtf8().constData(),
+											AStreamJid.full().toUtf8().constData(),
 											OTR_PROTOCOL_STRING, OTRL_INSTAG_BEST,
 											false, nullptr, nullptr, nullptr));
 	}
@@ -569,21 +562,22 @@ public:
 		return false;
 	}
 
-	bool smpSucceeded(const QString& AAccount, const QString& AContact)
+	bool smpSucceeded(const Jid& AStreamJid, const Jid& AContactJid)
 	{
-		ConnContext *context = otrl_context_find(FUserState, AContact.toUtf8().constData(),
-									AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING,
-									OTRL_INSTAG_BEST, false,
-									nullptr, nullptr, nullptr);
+		ConnContext *context = otrl_context_find(FUserState,
+												 AContactJid.full().toUtf8().constData(),
+												 AStreamJid.full().toUtf8().constData(),
+												 OTR_PROTOCOL_STRING, OTRL_INSTAG_BEST,
+												 false, nullptr, nullptr, nullptr);
 		if (context)
 			return context->smstate->sm_prog_state == OTRL_SMP_PROG_SUCCEEDED;
 
 		return false;
 	}
 
-	void generateKey(const QString& AAccount)
+	void generateKey(const Jid& AStreamJid)
 	{
-		createPrivkey(AAccount.toUtf8().constData(), OTR_PROTOCOL_STRING);
+		createPrivkey(AStreamJid.full().toUtf8().constData(), OTR_PROTOCOL_STRING);
 	}
 
 	static QString humanFingerprint(const unsigned char* AFingerprint)
@@ -597,33 +591,34 @@ protected:
 	//  implemented callback functions for libotr
 	static OtrlPolicy policy(IOtr::Policy APolicy)
 	{
-		if (APolicy == IOtr::PolocyOff)
+		switch (APolicy)
 		{
-			return OTRL_POLICY_NEVER; // otr disabled
-		}
-		else if (APolicy == IOtr::PolicyEnabled)
-		{
-			return OTRL_POLICY_MANUAL; // otr enabled, session started manual
-		}
-		else if (APolicy == IOtr::PolicyAuto)
-		{
-			return OTRL_POLICY_OPPORTUNISTIC; // automatically initiate private messaging
-		}
-		else if (APolicy == IOtr::PolicyRequire)
-		{
-			return OTRL_POLICY_ALWAYS; // require private messaging
-		}
+//			case IOtr::PolocyOff:
+//				return OTRL_POLICY_NEVER; // otr disabled
 
-		return OTRL_POLICY_NEVER;
+			case IOtr::PolicyEnabled:
+				return OTRL_POLICY_MANUAL;	// otr enabled, session started manual
+
+			case IOtr::PolicyAuto:
+				return OTRL_POLICY_OPPORTUNISTIC; // automatically initiate private messaging
+
+			case IOtr::PolicyRequire:
+				return OTRL_POLICY_ALWAYS;	// require private messaging
+
+			default:
+				return OTRL_POLICY_NEVER;	// otr disabled
+		}
 	}
 
 	// ---------------------------------------------------------------------------
 
-	void createPrivkey(const char* AAccountname,
-									 const char* AProtocol)
+	void createPrivkey(const char* AAccountName, const char* AProtocol)
 	{
 		if (FIsGenerating)
 			return;
+
+		Jid streamJid(QString::fromUtf8(AAccountName));
+		QString accountName(FOtr->humanAccount(streamJid));
 
 		QMessageBox qMB(QMessageBox::Question, QObject::tr("Off-the-Record Messaging"),
 						QObject::tr("Private keys for account \"%1\" need to be generated. "
@@ -634,18 +629,15 @@ protected:
 									"this process finishes.\n"
 									"\n"
 									"Do you want to generate keys now?")
-									.arg(FOtr->humanAccount(
-												QString::fromUtf8(AAccountname)))
+									.arg(accountName)
 									.arg(CLIENT_NAME),
 						   QMessageBox::Yes | QMessageBox::No);
 
 		if (qMB.exec() != QMessageBox::Yes)
-		{
 			return;
-		}
 
 		void *newkeyp;
-		if (otrl_privkey_generate_start(FUserState, AAccountname, AProtocol, &newkeyp) == gcry_error(GPG_ERR_EEXIST)) {
+		if (otrl_privkey_generate_start(FUserState, AAccountName, AProtocol, &newkeyp) == gcry_error(GPG_ERR_EEXIST)) {
 			qWarning("libotr reports it's still generating a previous key while it shouldn't be");
 			return;
 		}
@@ -664,34 +656,31 @@ protected:
 
 		FIsGenerating = false;
 
-		if (future.result() == gcry_error(GPG_ERR_NO_ERROR)) {
+		if (future.result() == gcry_error(GPG_ERR_NO_ERROR))
 			otrl_privkey_generate_finish(FUserState, newkeyp, QFile::encodeName(FKeysFile));
-		}
 
 		char fingerprint[OTRL_PRIVKEY_FPRINT_HUMAN_LEN];
-		if (otrl_privkey_fingerprint(FUserState, fingerprint, AAccountname, AProtocol))
+		if (otrl_privkey_fingerprint(FUserState, fingerprint, AAccountName, AProtocol))
 		{
 			QString fp(fingerprint);
 			QMessageBox infoMb(QMessageBox::Information, QObject::tr("Off-the-Record Messaging"),
 							   QObject::tr("Keys have been generated. "
 										   "Fingerprint for account \"%1\":\n%2\n\n"
 										   "Thanks for your patience.")
-									   .arg(FOtr->humanAccount(
-												QString::fromUtf8(AAccountname)))
+									   .arg(accountName)
 									   .arg(fp));
 			infoMb.exec();
-			emit FOtr->privKeyGenerated(AAccountname, fp);
+			emit FOtr->privKeyGenerated(streamJid, fp);
 		}
 		else
 		{
 			QMessageBox failMb(QMessageBox::Critical, QObject::tr("Off-the-Record Messaging"),
 							   QObject::tr("Failed to generate keys for account \"%1\"."
 										   "\nThe OTR Plugin will not work.")
-										   .arg(FOtr->humanAccount(
-													QString::fromUtf8(AAccountname))),
+										   .arg(accountName),
 							   QMessageBox::Ok);
 			failMb.exec();
-			emit FOtr->privKeyGenerationFailed(AAccountname);
+			emit FOtr->privKeyGenerationFailed(streamJid);
 		}
 	}
 
@@ -704,10 +693,8 @@ protected:
 								QString::fromUtf8(ARecipient));
 	}
 
-	void injectMessage(const char* AAccountName,
-					   const char* AProtocol,
-					   const char* ARecipient,
-					   const char* AMessage)
+	void injectMessage(const char* AAccountName, const char* AProtocol,
+					   const char* ARecipient, const char* AMessage)
 	{
 		Q_UNUSED(AProtocol);
 
@@ -717,13 +704,13 @@ protected:
 	}
 
 	void handleMsgEvent(OtrlMessageEvent AMsgEvent, ConnContext* AContext,
-									 const char* AMessage, gcry_error_t AError)
+						const char* AMessage, gcry_error_t AError)
 	{
 		Q_UNUSED(AError);
 		Q_UNUSED(AMessage);
 
-		QString account = QString::fromUtf8(AContext->accountname);
-		QString contact = QString::fromUtf8(AContext->username);
+		Jid streamJid(QString::fromUtf8(AContext->accountname));
+		Jid contactJid(QString::fromUtf8(AContext->username));
 
 		QString errorString;
 		switch (AMsgEvent)
@@ -731,7 +718,7 @@ protected:
 			case OTRL_MSGEVENT_RCVDMSG_UNENCRYPTED:
 				errorString = QObject::tr("<b>The following message received "
 										"from %1 was <i>not</i> encrypted:</b>")
-										.arg(FOtr->humanContact(account, contact));
+										.arg(FOtr->humanContact(streamJid, contactJid));
 				break;
 			case OTRL_MSGEVENT_CONNECTION_ENDED:
 				errorString = QObject::tr("Your message was not sent. Either end your "
@@ -754,33 +741,25 @@ protected:
 			default: ;
 		}
 
-		if (!errorString.isEmpty()) {
-			FOtr->displayOtrMessage(QString::fromUtf8(AContext->accountname),
-										  QString::fromUtf8(AContext->username),
-										  errorString);
-		}
+		if (!errorString.isEmpty())
+			FOtr->displayOtrMessage(streamJid, contactJid, errorString);
 	}
 
 	void handleSmpEvent(OtrlSMPEvent ASmpEvent, ConnContext* AContext,
 						unsigned short AProgressPercent, char* AQuestion)
 	{
+		Jid streamJid(QString::fromUtf8(AContext->accountname));
+		Jid contactJid(QString::fromUtf8(AContext->username));
+
 		if (ASmpEvent == OTRL_SMPEVENT_CHEATED || ASmpEvent == OTRL_SMPEVENT_ERROR) {
 			abortSMP(AContext);
-			FOtr->updateSMP(QString::fromUtf8(AContext->accountname),
-							QString::fromUtf8(AContext->username),
-							-2);
+			FOtr->updateSMP(streamJid, contactJid, -2);
 		}
 		else if (ASmpEvent == OTRL_SMPEVENT_ASK_FOR_SECRET ||
-				 ASmpEvent == OTRL_SMPEVENT_ASK_FOR_ANSWER) {
-			FOtr->receivedSMP(QString::fromUtf8(AContext->accountname),
-							  QString::fromUtf8(AContext->username),
-							  QString::fromUtf8(AQuestion));
-		}
-		else {
-			FOtr->updateSMP(QString::fromUtf8(AContext->accountname),
-							QString::fromUtf8(AContext->username),
-							AProgressPercent);
-		}
+				 ASmpEvent == OTRL_SMPEVENT_ASK_FOR_ANSWER)
+			FOtr->receivedSMP(streamJid, contactJid, QString::fromUtf8(AQuestion));
+		else
+			FOtr->updateSMP(streamJid, contactJid, AProgressPercent);
 	}
 
 	void createInstag(const char* AAccountName, const char* AProtocol)
@@ -800,15 +779,15 @@ protected:
 		Q_UNUSED(AUserState);
 		Q_UNUSED(AProtocol);
 
-		QString account = QString::fromUtf8(AAccountName);
-		QString contact = QString::fromUtf8(AUsername);
+		Jid streamJid(QString::fromUtf8(AAccountName));
+		Jid contactJid(QString::fromUtf8(AUsername));
 		QString message = QObject::tr("You have received a new "
 									  "fingerprint from %1:\n%2")
-									.arg(FOtr->humanContact(account, contact))
+									.arg(FOtr->humanContact(streamJid, contactJid))
 									.arg(humanFingerprint(AFingerprint));
 
-		if (!FOtr->displayOtrMessage(account, contact, message))
-			FOtr->notifyUser(account, contact, message, IOtr::NotifyInfo);
+		if (!FOtr->displayOtrMessage(streamJid, contactJid, message))
+			FOtr->notifyUser(streamJid, contactJid, message, IOtr::NotifyInfo);
 	}
 
 	void writeFingerprints()
@@ -962,31 +941,30 @@ private:
 
 #define SKIP_OTR_FLAG       "skip_otr_processing"
 
-#define ADR_ACCOUNT Action::DR_Parametr1
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
 
 OtrFingerprint::OtrFingerprint():
-	fingerprint(nullptr)
+	FFingerprint(nullptr)
 {}
 
-OtrFingerprint::OtrFingerprint(const OtrFingerprint &fp):
-	fingerprint(fp.fingerprint),
-	account(fp.account),
-	username(fp.username),
-	fingerprintHuman(fp.fingerprintHuman),
-	trust(fp.trust)
+OtrFingerprint::OtrFingerprint(const OtrFingerprint &AOther):
+	FFingerprint(AOther.FFingerprint),
+	FStreamJid(AOther.FStreamJid),
+	FContactJid(AOther.FContactJid),
+	FFingerprintHuman(AOther.FFingerprintHuman),
+	FTrust(AOther.FTrust)
 {}
 
-OtrFingerprint::OtrFingerprint(unsigned char* fingerprint,
-						 QString account, QString username,
-						 QString trust):
-	fingerprint(fingerprint),
-	account(account),
-	username(username),
-	trust(trust)
+OtrFingerprint::OtrFingerprint(unsigned char* AFingerprint,
+						 QString AStreamJid, QString AContactJid,
+						 QString ATrust):
+	FFingerprint(AFingerprint),
+	FStreamJid(AStreamJid),
+	FContactJid(AContactJid),
+	FTrust(ATrust)
 {
-	fingerprintHuman = OtrPrivate::humanFingerprint(fingerprint);
+	FFingerprintHuman = OtrPrivate::humanFingerprint(AFingerprint);
 }
 
 Otr::Otr() :
@@ -1087,6 +1065,8 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Otr::initObjects()
 {
+	FMenuIcons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
+
 	if (FStanzaProcessor)
 	{
 		IStanzaHandle shandle;
@@ -1119,7 +1099,7 @@ bool Otr::initObjects()
 	{
 		INotificationType notifyType;
 		notifyType.order = NTO_OTR_ESTABLISHED;
-		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_ENCRYPTED);
+		notifyType.icon = FMenuIcons->getIcon(MNI_OTR_ENCRYPTED);
 		notifyType.title = tr("When OTR private conversation established");
 		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay|
 							  INotification::TrayNotify|INotification::TrayAction|
@@ -1128,13 +1108,13 @@ bool Otr::initObjects()
 		FNotifications->registerNotificationType(NNT_OTR_ESTABLISHED, notifyType);
 
 		notifyType.order = NTO_OTR_TERMINATED;
-		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_NO);
+		notifyType.icon = FMenuIcons->getIcon(MNI_OTR_NO);
 		notifyType.title = tr("When OTR private conversation terminated");
 		notifyType.kindDefs = notifyType.kindMask;
 		FNotifications->registerNotificationType(NNT_OTR_TERMINATED, notifyType);
 
 		notifyType.order = NTO_OTR_VERIFY;
-		notifyType.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_UNVERFIFIED);
+		notifyType.icon = FMenuIcons->getIcon(MNI_OTR_UNVERFIFIED);
 		notifyType.title = tr("When OTR fingerprint verification initiated");
 		notifyType.kindDefs = notifyType.kindMask;
 		FNotifications->registerNotificationType(NNT_OTR_VERIFY, notifyType);
@@ -1181,25 +1161,25 @@ void Otr::onStreamOpened( IXmppStream *AXmppStream )
 
 void Otr::onStreamClosed( IXmppStream *AXmppStream )
 {
-	QString account = FAccountManager->findAccountByStream(AXmppStream->streamJid())->accountId().toString();
-
-	if (FOnlineUsers.contains(account))
+	Jid streamJid = AXmppStream->streamJid();
+	if (FOnlineUsers.contains(streamJid))
 	{
-		foreach(QString contact, FOnlineUsers.value(account).keys())
+		QHash<Jid, OtrClosure*> &contacts = FOnlineUsers[streamJid];
+		for (QHash<Jid, OtrClosure*>::ConstIterator it = contacts.constBegin();
+			 it != contacts.constEnd(); ++it)
 		{
-			FOtrPrivate->endSession(account, contact);
-			FOnlineUsers[account][contact]->setIsLoggedIn(false);
+			FOtrPrivate->endSession(streamJid.full(), it.key().full());
+			(*it)->setIsLoggedIn(false);
 		}
 	}
 }
 
 void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
-	QString account = FAccountManager->findAccountByStream(AWindow->streamJid())->accountId().toString();
 	QString contact = AWindow->contactJid().uFull();
 	QString stream = AWindow->streamJid().uFull();
 	Action *otrAction = new Action(AWindow->toolBarWidget()->instance());
-	otrAction->setData(ADR_ACCOUNT, account);
+	otrAction->setData(ADR_STREAM_JID, stream);
 	otrAction->setData(ADR_CONTACT_JID, contact);
 
 	Menu *menu = new Menu();
@@ -1208,7 +1188,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 
 	// 0: Session initiate
 	Action *action = new Action(menu);
-	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_STREAM_JID, stream);
 	action->setData(ADR_CONTACT_JID, contact);
 	connect(action, SIGNAL(triggered()), SLOT(onSessionInitiate()));
 	action->setActionGroup(actionGroup);
@@ -1216,7 +1196,6 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 
 	// 1: End private conversation
 	action = new Action(menu);
-	action->setData(ADR_ACCOUNT, account);
 	action->setData(ADR_CONTACT_JID, contact);
 	action->setData(ADR_STREAM_JID, stream);
 	action->setText(tr("&End private conversation"));
@@ -1230,7 +1209,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	// 3: Authenticate contact
 	action = new Action(menu);
 	action->setText(tr("&Authenticate contact"));
-	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_STREAM_JID, stream);
 	action->setData(ADR_CONTACT_JID, contact);
 	connect(action, SIGNAL(triggered()), SLOT(onContactAuthenticate()));
 	action->setActionGroup(actionGroup);
@@ -1239,7 +1218,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	// 4: Show secure session ID
 	action = new Action(menu);
 	action->setText(tr("Show secure session &ID"));
-	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_STREAM_JID, stream);
 	action->setData(ADR_CONTACT_JID, contact);
 	connect(action, SIGNAL(triggered()), SLOT(onSessionID()));
 	action->setActionGroup(actionGroup);
@@ -1248,7 +1227,7 @@ void Otr::onChatWindowCreated(IMessageChatWindow *AWindow)
 	// 5: Show own fingerprint
 	action = new Action(menu);
 	action->setText(tr("Show own &fingerprint"));
-	action->setData(ADR_ACCOUNT, account);
+	action->setData(ADR_STREAM_JID, stream);
 	action->setData(ADR_CONTACT_JID, contact);
 	connect(action, SIGNAL(triggered()), SLOT(onFingerprint()));
 	action->setActionGroup(actionGroup);
@@ -1281,12 +1260,10 @@ void Otr::onChatWindowActivated()
 	{
 		removeNotifications(window);
 //TODO: Check all window addresses
-		QString account = FAccountManager->findAccountByStream(window->streamJid())->accountId().toString();
-
-		if (FOnlineUsers.contains(account) &&
-			FOnlineUsers[account].contains(window->contactJid().full()) &&
-			FOnlineUsers[account][window->contactJid().full()]->isRunning())
-			FOnlineUsers[account][window->contactJid().full()]->showSmpDialog();
+		if (FOnlineUsers.contains(window->streamJid()) &&
+			FOnlineUsers[window->streamJid()].contains(window->contactJid()) &&
+			FOnlineUsers[window->streamJid()][window->contactJid()]->isRunning())
+			FOnlineUsers[window->streamJid()][window->contactJid()]->showSmpDialog();
 	}
 }
 
@@ -1324,59 +1301,57 @@ void Otr::onNotificationActivated(int ANotifyId)
 void Otr::onSessionInitiate()
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QString account = action->data(ADR_ACCOUNT).toString();
-	QString contact = action->data(ADR_CONTACT_JID).toString();
-	FOtrPrivate->startSession(account, contact);
+	FOtrPrivate->startSession(action->data(ADR_STREAM_JID).toString(),
+							  action->data(ADR_CONTACT_JID).toString());
 }
 
 void Otr::onSessionEnd()
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QString account = action->data(ADR_ACCOUNT).toString();
-	QString contact = action->data(ADR_CONTACT_JID).toString();
-	QString streamJid = action->data(ADR_STREAM_JID).toString();
-	FOtrPrivate->endSession(account, contact);
-	onUpdateMessageState(streamJid, contact);
+	Jid contactJid(action->data(ADR_CONTACT_JID).toString());
+	Jid streamJid(action->data(ADR_STREAM_JID).toString());
+	FOtrPrivate->endSession(streamJid, contactJid);
+	onUpdateMessageState(streamJid, contactJid);
 }
 
 void Otr::onContactAuthenticate()
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QString account = action->data(ADR_ACCOUNT).toString();
-	QString contact = action->data(ADR_CONTACT_JID).toString();
-	authenticateContact(account, contact);
+	Jid streamJid(action->data(ADR_STREAM_JID).toString());
+	Jid contactJid(action->data(ADR_CONTACT_JID).toString());
+	authenticateContact(streamJid, contactJid);
 }
 
 void Otr::onSessionID()
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QString account = action->data(ADR_ACCOUNT).toString();
-	QString contact = action->data(ADR_CONTACT_JID).toString();
-	QString sId = FOtrPrivate->getSessionId(account, contact);
+	Jid streamJid(action->data(ADR_STREAM_JID).toString());
+	Jid contactJid(action->data(ADR_CONTACT_JID).toString());
+	QString sId = FOtrPrivate->getSessionId(streamJid, contactJid);
 
 	QString msg = sId.isEmpty() ? tr("No active encrypted session")
 								: tr("Session ID between account \"%1\" and %2: %3")
-									.arg(humanAccount(account))
-									.arg(contact)
+									.arg(humanAccount(streamJid))
+									.arg(contactJid.full())
 									.arg(sId);
 
-	displayOtrMessage(account, contact, msg);
+	displayOtrMessage(streamJid, contactJid, msg);
 }
 
 void Otr::onFingerprint()
 {
 	Action *action = qobject_cast<Action *>(sender());
-	QString account = action->data(ADR_ACCOUNT).toString();
-	QString contact = action->data(ADR_CONTACT_JID).toString();
+	Jid streamJid(action->data(ADR_STREAM_JID).toString());
+	Jid contactJid(action->data(ADR_CONTACT_JID).toString());
 	QString fingerprint = getPrivateKeys()
-							.value(account, tr("No private key for account \"%1\"")
-								.arg(humanAccount(account)));
+							.value(streamJid, tr("No private key for account \"%1\"")
+								.arg(humanAccount(streamJid)));
 
 	QString msg(tr("Fingerprint for account \"%1\": %2")
-				   .arg(humanAccount(account))
+				   .arg(humanAccount(streamJid))
 				   .arg(fingerprint));
 
-	displayOtrMessage(account, contact, msg);
+	displayOtrMessage(streamJid, contactJid, msg);
 }
 
 void Otr::onWindowAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
@@ -1399,16 +1374,16 @@ void Otr::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 			Action *otrAction = window->toolBarWidget()->toolBarChanger()->handleAction(otrActionHandle);
 			if (otrAction)
 			{
-				QString contact = otrAction->data(ADR_CONTACT_JID).toString();
-				QString account = otrAction->data(ADR_ACCOUNT).toString();
+				Jid contactJid(otrAction->data(ADR_CONTACT_JID).toString());
+				Jid streamJid(otrAction->data(ADR_STREAM_JID).toString());
 
 				QString iconKey;
-				IOtr::MessageState state = getMessageState(account, contact);
-				QString stateString(getMessageStateString(account, contact));
+				IOtr::MessageState state = getMessageState(streamJid, contactJid);
+				QString stateString(getMessageStateString(streamJid, contactJid));
 
 				if (state == IOtr::MsgStateEncrypted)
 				{
-					if (isVerified(account, contact))
+					if (isVerified(streamJid, contactJid))
 					{
 						iconKey = MNI_OTR_ENCRYPTED;
 						otrAction->setIcon(RSR_STORAGE_MENUICONS, MNI_OTR_ENCRYPTED);
@@ -1477,12 +1452,12 @@ void Otr::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 
 //-----------------------------------------------------------------------------
 
-void Otr::authenticateContact(const QString &AAccount, const QString &AContact)
+void Otr::authenticateContact(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	if (!FOnlineUsers.value(AAccount).contains(AContact))
-		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount, AContact, this);
+	if (!FOnlineUsers.value(AStreamJid).contains(AContactJid))
+		FOnlineUsers[AStreamJid][AContactJid] = new OtrClosure(AStreamJid, AContactJid, this);
 
-	FOnlineUsers[AAccount][AContact]->authenticateContact();
+	FOnlineUsers[AStreamJid][AContactJid]->authenticateContact();
 }
 
 //-----------------------------------------------------------------------------
@@ -1494,12 +1469,13 @@ QString Otr::dataDir()
 
 //-----------------------------------------------------------------------------
 
-void Otr::sendMessage(const QString &account, const QString &contact, const QString& AMessage, const QString &AHtml)
+void Otr::sendMessage(const Jid &AStreamJid, const Jid &AContactJid,
+					  const QString& AMessage, const QString &AHtml)
 {
 	if (!AMessage.isEmpty())
 	{
 		Message message;
-		message.setType(Message::Chat).setBody(AMessage).setTo(contact);
+		message.setType(Message::Chat).setBody(AMessage).setTo(AContactJid.full());
 		message.stanza().setAttribute(SKIP_OTR_FLAG, "true");
 
 		if (!AHtml.isEmpty())
@@ -1508,61 +1484,61 @@ void Otr::sendMessage(const QString &account, const QString &contact, const QStr
 			doc.setContent(QString("<html xmlns=\'" NS_XHTML_IM "\'>"
 								   "<body xmlns=\'" NS_XHTML "\'>"
 								   "%1</body></html>").arg(AHtml));
-			message.stanza().element().appendChild(message.stanza().document().importNode(doc.documentElement(), true));
+			message.stanza().element().appendChild(message.stanza().document()
+												   .importNode(doc.documentElement(),
+															   true));
 		}
-		FStanzaProcessor->sendStanzaOut(FAccountManager->findAccountById(account)->streamJid(),
-										message.stanza());
+		FStanzaProcessor->sendStanzaOut(AStreamJid, message.stanza());
 	}
 }
 
 //-----------------------------------------------------------------------------
 
-bool Otr::isLoggedIn(const QString &AAccount, const QString &AContact) const
+bool Otr::isLoggedIn(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	if (FOnlineUsers.contains(AAccount) &&
-		FOnlineUsers.value(AAccount).contains(AContact))
-		return FOnlineUsers.value(AAccount).value(AContact)->isLoggedIn();
+	if (FOnlineUsers.contains(AStreamJid) &&
+		FOnlineUsers.value(AStreamJid).contains(AContactJid))
+		return FOnlineUsers.value(AStreamJid).value(AContactJid)->isLoggedIn();
 	return false;
 }
 
 //-----------------------------------------------------------------------------
 
-void Otr::notifyUser(const QString &AAccount, const QString &AContact,
+void Otr::notifyUser(const Jid &AStreamJid, const Jid &AContactJid,
 					 const QString& AMessage, const NotifyType& AType)
 {
 	Q_UNUSED(AMessage);
 	Q_UNUSED(AType);
 
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),
-				  QString("OTR notifyUser, contact=%1").arg(AContact));
+	LOG_STRM_INFO(AStreamJid, QString("OTR notifyUser, contact=%1")
+								.arg(AContactJid.full()));
+
+//FIXME: Implement
 }
 
 //-----------------------------------------------------------------------------
 
-bool Otr::displayOtrMessage(const QString &AAccount, const QString &AContact,
+bool Otr::displayOtrMessage(const Jid &AStreamJid, const Jid &AContactJid,
 							const QString& AMessage)
 {
-	Jid contactJid(AContact);
-	notifyInChatWindow(FAccountManager->findAccountById(AAccount)->streamJid(),contactJid, AMessage);
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR displayOtrMessage, contact=%1").arg(AContact));
+	notifyInChatWindow(AStreamJid, AContactJid, AMessage);
+	LOG_STRM_INFO(AStreamJid, QString("OTR displayOtrMessage, contact=%1")
+								.arg(AContactJid.full()));
 	return true;
 }
 
 //-----------------------------------------------------------------------------
 
-void Otr::stateChange(const QString &AAccount, const QString &AContact, StateChange AChange)
+void Otr::stateChange(const Jid &AStreamJid, const Jid &AContactJid, StateChange AChange)
 {
-	Jid streamJid = FAccountManager->findAccountById(AAccount)->streamJid();
-	Jid contactJid(AContact);
+	LOG_STRM_INFO(AStreamJid, QString("OTR stateChange, contact=%1").arg(AContactJid.full()));
 
-	LOG_STRM_INFO(streamJid, QString("OTR stateChange, contact=%1").arg(AContact));
+	if (!FOnlineUsers.value(AStreamJid).contains(AContactJid))
+		FOnlineUsers[AStreamJid][AContactJid] = new OtrClosure(AStreamJid, AContactJid, this);
 
-	if (!FOnlineUsers.value(AAccount).contains(AContact))
-		FOnlineUsers[AAccount][AContact] = new OtrClosure(AAccount, AContact, this);
-
-	bool verified  = isVerified(AAccount, AContact);
-	bool encrypted = FOnlineUsers[AAccount][AContact]->encrypted();
-	QString message, tooltip;
+	bool verified  = isVerified(AStreamJid, AContactJid);
+	bool encrypted = FOnlineUsers[AStreamJid][AContactJid]->encrypted();
+	QString message, tooltip, icon;
 
 	switch (AChange)
 	{
@@ -1578,20 +1554,20 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 
 			tooltip  = verified ? tr("Private conversation with %1 started")
 								: tr("Unverified conversation with %1 started");
-
-			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, streamJid, contactJid);
+			icon = verified ? MNI_OTR_ENCRYPTED : MNI_OTR_UNVERFIFIED;
+			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, icon, AStreamJid, AContactJid);
 			break;
 
 		case StateChangeGoneInsecure:
 			message  = tr("Private conversation lost");
 			tooltip  = tr("Private conversation with %1 lost");
-			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, MNI_OTR_NO, AStreamJid, AContactJid);
 			break;
 
 		case StateChangeClose:
 			message  = tr("Private conversation closed");
 			tooltip  = tr("Private conversation with %1 closed");
-			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, MNI_OTR_NO, AStreamJid, AContactJid);
 			break;
 
 		case StateChangeRemoteClose:
@@ -1599,7 +1575,7 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 						  "you should do the same.");
 			tooltip  = tr("%1 has ended the private conversation with you; "
 						  "you should do the same.");
-			eventNotify(NNT_OTR_TERMINATED, message, tooltip, streamJid, contactJid);
+			eventNotify(NNT_OTR_TERMINATED, message, tooltip, MNI_OTR_NO, AStreamJid, AContactJid);
 			break;
 
 		case StateChangeStillSecure:
@@ -1607,7 +1583,8 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 								: tr("Unverified conversation refreshed");
 			tooltip  = verified ? tr("Private conversation with %1 refreshed")
 								: tr("Unverified conversation with %1 refreshed");
-			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, streamJid, contactJid);
+			icon = verified ? MNI_OTR_ENCRYPTED : MNI_OTR_UNVERFIFIED;
+			eventNotify(NNT_OTR_ESTABLISHED, message, tooltip, icon, AStreamJid, AContactJid);
 			break;
 
 		case StateChangeTrust:
@@ -1615,60 +1592,64 @@ void Otr::stateChange(const QString &AAccount, const QString &AContact, StateCha
 								: tr("Contact not authenticated");
 			tooltip  = verified ? tr("%1 authenticated")
 								: tr("%1 not authenticated");
-			eventNotify(NNT_OTR_VERIFY, message, tooltip, streamJid, contactJid);
+			icon = verified ? MNI_OTR_ENCRYPTED : MNI_OTR_UNVERFIFIED;
+			eventNotify(NNT_OTR_VERIFY, message, tooltip, icon, AStreamJid, AContactJid);
 			break;
 	}
 
-	notifyInChatWindow(streamJid, contactJid, message);
-	emit otrStateChanged(streamJid, contactJid);
+	notifyInChatWindow(AStreamJid, AContactJid, message);
+	emit otrStateChanged(AStreamJid, AContactJid);
 }
 
-void Otr::receivedSMP(const QString &AAccount, const QString &AContact,
+void Otr::receivedSMP(const Jid &AStreamJid, const Jid &AContactJid,
 					  const QString& AQuestion)
 {
-	Jid streamJid = FAccountManager->findAccountById(AAccount)->streamJid();
-	LOG_STRM_INFO(streamJid, QString("OTR receivedSMP, contact=%1").arg(AContact));
+	LOG_STRM_INFO(AStreamJid, QString("OTR receivedSMP, contact=%1")
+				  .arg(AContactJid.full()));
 
-	if (FOnlineUsers.contains(AAccount) &&
-		FOnlineUsers.value(AAccount).contains(AContact))
+	if (FOnlineUsers.contains(AStreamJid) &&
+		FOnlineUsers.value(AStreamJid).contains(AContactJid))
 	{
-		FOnlineUsers[AAccount][AContact]->receivedSmp(AQuestion);
+		FOnlineUsers[AStreamJid][AContactJid]->receivedSmp(AQuestion);
 
-		IMessageChatWindow *window = FMessageWidgets->findChatWindow(streamJid, AContact);
+		IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 		if (window && window->isActiveTabPage())
 //TODO: Check currently selected address
-			FOnlineUsers[AAccount][AContact]->showSmpDialog();
+			FOnlineUsers[AStreamJid][AContactJid]->showSmpDialog();
 		else
-			eventNotify(NNT_OTR_VERIFY, tr("Received fingerprint verification"),
-						tr("Fingerprint verification from %1"), streamJid, AContact);
+			eventNotify(NNT_OTR_VERIFY,
+						tr("Received fingerprint verification"),
+						tr("Fingerprint verification from %1"),
+						MNI_OTR_UNVERFIFIED, AStreamJid, AContactJid);
 	}
 }
 
-void Otr::updateSMP(const QString &AAccount, const QString &AContact,
-							 int AProgress)
+void Otr::updateSMP(const Jid &AStreamJid, const Jid &AContactJid, int AProgress)
 {
-	LOG_STRM_INFO(FAccountManager->findAccountById(AAccount)->streamJid(),QString("OTR updateSMP, contact=%1").arg(AContact));
+	LOG_STRM_INFO(AStreamJid, QString("OTR updateSMP, contact=%1")
+								.arg(AContactJid.full()));
 
-	if (FOnlineUsers.contains(AAccount) &&
-		FOnlineUsers.value(AAccount).contains(AContact))
-		FOnlineUsers[AAccount][AContact]->updateSmpDialog(AProgress);
+	if (FOnlineUsers.contains(AStreamJid) &&
+		FOnlineUsers.value(AStreamJid).contains(AContactJid))
+		FOnlineUsers[AStreamJid][AContactJid]->updateSmpDialog(AProgress);
 }
 
-QString Otr::humanAccount(const QString& AAccountId)
+QString Otr::humanAccount(const Jid &AStreamJid)
 {
-	return FAccountManager->findAccountById(AAccountId)->name();
+	IAccount *account = FAccountManager->findAccountByStream(AStreamJid);
+	return account ? account->name() : AStreamJid.uFull();
 }
 
-QString Otr::humanAccountPublic(const QString& AAccountId)
+QString Otr::humanAccountPublic(const Jid &AStreamJid)
 {
-	return FAccountManager->findAccountById(AAccountId)->streamJid().bare();
+	return AStreamJid.bare();
 }
 
-QString Otr::humanContact(const QString& AAccountId,
-								   const QString &AContactJid)
+QString Otr::humanContact(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	Q_UNUSED(AAccountId)
-	return AContactJid;
+	Q_UNUSED(AStreamJid)
+//FIXME: Return correct contact name
+	return AContactJid.uFull();
 }
 
 void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage) const
@@ -1686,38 +1667,16 @@ void Otr::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, cons
 	}
 }
 
-INotification Otr::eventNotify(const QString &ATypeId,
-							   const QString &AMessagePopup,
-							   const QString &AMessageTooltip,
+INotification Otr::eventNotify(const QString &ATypeId, const QString &AMessagePopup,
+							   const QString &AMessageTooltip, const QString &AIcon,
 							   const Jid &AStreamJid, const Jid &AContactJid)
 {
 	INotification notify;
 
-	QString tooltip;
-	QIcon icon;
-
-	if (ATypeId == NNT_OTR_ESTABLISHED)
-	{
-		tooltip = tr("Private communication with %1");
-		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_ENCRYPTED);
-	}
-	else if (ATypeId == NNT_OTR_TERMINATED)
-	{
-		tooltip = tr("Finished private communication with %1");
-		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_NO);
-	}
-	else if (ATypeId == NNT_OTR_VERIFY)
-	{
-		tooltip = tr("Fingerprint verification from %1");
-		icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_OTR_UNVERFIFIED);
-	}
-	else // Invalid notification type id
-		return notify;
-
 	notify.kinds = FNotifications->enabledTypeNotificationKinds(ATypeId);
 
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-	if (window && window->isActiveTabPage())    // The window is existing and is an active tab page!
+	if (window && window->isActiveTabPage())	// The window is existing and is an active tab page!
 		notify.kinds = 0;                       // So, do not notify!
 
 	if (notify.kinds)
@@ -1725,7 +1684,7 @@ INotification Otr::eventNotify(const QString &ATypeId,
 		notify.typeId = ATypeId;
 		notify.data.insert(NDR_STREAM_JID, AStreamJid.full());
 		notify.data.insert(NDR_CONTACT_JID, AContactJid.full());
-		notify.data.insert(NDR_ICON, icon);
+		notify.data.insert(NDR_ICON, FMenuIcons->getIcon(AIcon));
 		notify.data.insert(NDR_POPUP_HTML, AMessagePopup);
 		notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
 		notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
@@ -1766,23 +1725,22 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 		QDomElement xml = AStanza.document().firstChildElement("presence");
 		if (!xml.isNull())
 		{
-			QString contact = AStanza.from();
-			QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
+			Jid contactJid(AStanza.from());
 
 			if (AStanza.type() == PRESENCE_TYPE_AVAILABLE)
 			{
-				if (!FOnlineUsers.value(account).contains(contact))
-					FOnlineUsers[account][contact] = new OtrClosure(account, contact, this);
-				FOnlineUsers[account][contact]->setIsLoggedIn(true);
+				if (!FOnlineUsers.value(AStreamJid).contains(contactJid))
+					FOnlineUsers[AStreamJid][contactJid] = new OtrClosure(AStreamJid, contactJid, this);
+				FOnlineUsers[AStreamJid][contactJid]->setIsLoggedIn(true);
 			}
 			else if (AStanza.type() == PRESENCE_TYPE_UNAVAILABLE)
 			{
-				if (FOnlineUsers.contains(account) &&
-					FOnlineUsers.value(account).contains(contact))
+				if (FOnlineUsers.contains(AStreamJid) &&
+					FOnlineUsers.value(AStreamJid).contains(contactJid))
 				{
 					if (Options::node(OPV_OTR_ENDWHENOFFLINE).value().toBool())
-						FOtrPrivate->expireSession(account, contact);
-					FOnlineUsers[account][contact]->setIsLoggedIn(false);
+						FOtrPrivate->expireSession(AStreamJid, contactJid);
+					FOnlineUsers[AStreamJid][contactJid]->setIsLoggedIn(false);
 					Jid contactJid(AStanza.from());
 					emit otrStateChanged(AStreamJid,contactJid);
 				}
@@ -1802,12 +1760,9 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 		{
 			if (AHandlerId == FSHOMessage)
 			{
-				QString contact = message.to();
-				QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
-
-				QString encrypted = FOtrPrivate->encryptMessage(account, contact, message.body());
-				message.setBody(encrypted);
-
+				Jid contactJid(message.to());
+				QString encrypted = FOtrPrivate->encryptMessage(AStreamJid, contactJid,
+																message.body());
 				//if there has been an error, drop the message
 				if (encrypted.isEmpty())
 				{
@@ -1815,9 +1770,10 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 					return true;
 				}
 
+				message.setBody(encrypted);
 				AStanza = message.stanza();
 
-				if (getMessageState(account, contact) == IOtr::MsgStateEncrypted)
+				if (getMessageState(AStreamJid, contactJid) == IOtr::MsgStateEncrypted)
 				{
 					if (AStanza.to().contains("/")) // if not a bare jid
 						AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints" ,"no-copy")).toElement();
@@ -1831,13 +1787,9 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 			{
 				bool ignore = false;
 
-				QString contact = message.from();
-				QString account = FAccountManager->findAccountByStream(AStreamJid)->accountId().toString();
-				QString plainBody = message.body();
-
 				QString decrypted;
-				IOtr::MessageType messageType = FOtrPrivate->decryptMessage(account, contact,
-																			 plainBody, decrypted);
+				IOtr::MessageType messageType = FOtrPrivate->decryptMessage(AStreamJid, message.from(),
+																			message.body(), decrypted);
 				switch (messageType)
 				{
 					case IOtr::MsgTypeNone:
@@ -1846,11 +1798,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 						ignore = true;
 						break;
 					case IOtr::MsgTypeOtr:
-						QString bodyText;
-
-						bodyText = decrypted;
-
-						message.setBody(bodyText);
+						message.setBody(decrypted);
 						AStanza = message.stanza();
 						break;
 				}
@@ -1858,9 +1806,7 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 			}
 		}
 		else
-		{
 			message.stanza().element().removeAttribute("skip_otr_processing");
-		}
 	}
 
 	return false;
@@ -1881,62 +1827,61 @@ void Otr::verifyFingerprint(const OtrFingerprint& AFingerprint, bool AVerified)
 	FOtrPrivate->verifyFingerprint(AFingerprint, AVerified);
 }
 
-QHash<QString, QString> Otr::getPrivateKeys()
+QHash<Jid, QString> Otr::getPrivateKeys()
 {
 	return FOtrPrivate->getPrivateKeys();
 }
 
-void Otr::deleteKey(const QString& AAccount)
+void Otr::deleteKey(const Jid &AStreamJid)
 {
-	FOtrPrivate->deleteKey(AAccount);
+	FOtrPrivate->deleteKey(AStreamJid);
 }
 
-void Otr::startSMP(const QString& AAccount, const QString& AContact,
+void Otr::startSMP(const Jid &AStreamJid, const Jid &AContactJid,
 				   const QString& AQuestion, const QString& ASecret)
 {
-	FOtrPrivate->startSMP(AAccount, AContact, AQuestion, ASecret);
+	FOtrPrivate->startSMP(AStreamJid, AContactJid, AQuestion, ASecret);
 }
 
-void Otr::continueSMP(const QString& AAccount, const QString& AContact,
+void Otr::continueSMP(const Jid &AStreamJid, const Jid &AContactJid,
 					  const QString& ASecret)
 {
-	FOtrPrivate->continueSMP(AAccount, AContact, ASecret);
+	FOtrPrivate->continueSMP(AStreamJid, AContactJid, ASecret);
 }
 
-void Otr::abortSMP(const QString& AAccount, const QString& AContact)
+void Otr::abortSMP(const Jid& AStreamJid, const Jid& AContactJid)
 {
-	FOtrPrivate->abortSMP(AAccount, AContact);
+	FOtrPrivate->abortSMP(AStreamJid, AContactJid);
 }
 
-IOtr::MessageState Otr::getMessageState(const QString& AAccount, const QString& AContact)
+IOtr::MessageState Otr::getMessageState(const Jid& AStreamJid, const Jid& AContactJid)
 {
-	return FOtrPrivate->getMessageState(AAccount, AContact);
+	return FOtrPrivate->getMessageState(AStreamJid, AContactJid);
 }
 
-QString Otr::getMessageStateString(const QString& AAccount, const QString& AContact)
+QString Otr::getMessageStateString(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	return FOtrPrivate->getMessageStateString(AAccount, AContact);
+	return FOtrPrivate->getMessageStateString(AStreamJid, AContactJid);
 }
 
-OtrFingerprint Otr::getActiveFingerprint(const QString& AAccount,
-										 const QString& AContact)
+OtrFingerprint Otr::getActiveFingerprint(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	return FOtrPrivate->getActiveFingerprint(AAccount, AContact);
+	return FOtrPrivate->getActiveFingerprint(AStreamJid, AContactJid);
 }
 
-bool Otr::isVerified(const QString& AAccount, const QString& AContact)
+bool Otr::isVerified(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	return FOtrPrivate->isVerified(AAccount, AContact);
+	return FOtrPrivate->isVerified(AStreamJid, AContactJid);
 }
 
-bool Otr::smpSucceeded(const QString& AAccount, const QString& AContact)
+bool Otr::smpSucceeded(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	return FOtrPrivate->smpSucceeded(AAccount, AContact);
+	return FOtrPrivate->smpSucceeded(AStreamJid, AContactJid);
 }
 
-void Otr::generateKey(const QString& AAccount)
+void Otr::generateKey(const Jid& AStreamJid)
 {
-	FOtrPrivate->generateKey(AAccount);
+	FOtrPrivate->generateKey(AStreamJid);
 }
 
 #if QT_VERSION < 0x050000

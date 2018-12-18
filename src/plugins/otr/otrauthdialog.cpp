@@ -2,14 +2,14 @@
 #include "ui_otrauthdialog.h"
 #include <QPushButton>
 
-OtrAuthDialog::OtrAuthDialog(Otr *AOtr, const QString& AAccount,
-							 const QString& AContact,
+OtrAuthDialog::OtrAuthDialog(Otr *AOtr, const Jid &AStreamJid,
+							 const Jid &AContactJid,
 							 const QString& AQuestion,
 							 bool ASender, QWidget* AParent):
 	QDialog(AParent),	
 	FOtr(AOtr),
-	FAccount(AAccount),
-	FContact(AContact),
+	FAccount(AStreamJid),
+	FContact(AContactJid),
 	FIsSender(ASender),
 	ui(new Ui::OtrAuthDialog)
 {
@@ -57,7 +57,7 @@ OtrAuthDialog::OtrAuthDialog(Otr *AOtr, const QString& AAccount,
 
 		ui->lblFingerprintLocal->setText(ownFpr);
 		ui->lblContactsFingerprint->setText(tr("%1's fingerprint:").arg(FContactName));
-		ui->lblFingerprintRemote->setText(FFingerprint.fingerprintHuman);
+		ui->lblFingerprintRemote->setText(FFingerprint.FFingerprintHuman);
 		QFont font;
 		font.setStyleHint(QFont::Monospace);
 		ui->lblFingerprintLocal->setFont(font);
@@ -174,11 +174,12 @@ void OtrAuthDialog::accept()
 			break;
 
 		case METHOD_FINGERPRINT:
-			if (FFingerprint.fingerprint)
+			if (FFingerprint.FFingerprint)
 			{
 				QString msg(tr("Account: ") + FOtr->humanAccount(FAccount) + "\n" +
-							tr("User: ") + FContact + "\n" +
-							tr("Fingerprint: ") + FFingerprint.fingerprintHuman + "\n\n" +
+//FIXME: Show correct contact name here
+							tr("User: ") + FContact.full() + "\n" +
+							tr("Fingerprint: ") + FFingerprint.FFingerprintHuman + "\n\n" +
 							tr("Have you verified that this is in fact the correct fingerprint?"));
 
 				QMessageBox mb(QMessageBox::Information, tr("Psi OTR"),

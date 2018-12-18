@@ -32,32 +32,32 @@ struct OtrFingerprint
 	/**
 	 * Pointer to fingerprint in libotr struct. Binary format.
 	 */
-	unsigned char* fingerprint;
+	unsigned char* FFingerprint;
 
 	/**
 	 * own account
 	 */
-	QString account;
+	Jid FStreamJid;
 
 	/**
 	 * owner of the fingerprint
 	 */
-	QString username;
+	Jid FContactJid;
 
 	/**
 	 * The fingerprint in a human-readable format
 	 */
-	QString fingerprintHuman;
+	QString FFingerprintHuman;
 
 	/**
 	 * the level of trust
 	 */
-	QString trust;
+	QString FTrust;
 
 	OtrFingerprint();
-	OtrFingerprint(const OtrFingerprint &fp);
-	OtrFingerprint(unsigned char* fingerprint, QString account,
-				   QString username, QString trust);
+	OtrFingerprint(const OtrFingerprint &AOther);
+	OtrFingerprint(unsigned char* AFingerprint, QString AStreamJid,
+				   QString AContactJid, QString ATrust);
 };
 
 class OtrClosure;
@@ -86,41 +86,40 @@ public:
 	/**
 	 * Return true if the active fingerprint has been verified.
 	 */
-	bool isVerified(const QString& AAccount, const QString& AContact);
+	bool isVerified(const Jid& AStreamJid, const Jid& AContactJid);
 
 	/**
 	 * Get hash of fingerprints of own private keys.
 	 * Account -> KeyFingerprint
 	 */
-	QHash<QString, QString> getPrivateKeys();
+	QHash<Jid, QString> getPrivateKeys();
 
 	/**
 	 * Return the active fingerprint for a context.
 	 */
-	OtrFingerprint getActiveFingerprint(const QString& AAccount,
-										const QString& AContact);
+	OtrFingerprint getActiveFingerprint(const Jid& AStreamJid, const Jid& AContactJid);
 	/**
 	 * Start the SMP with an optional question.
 	 */
-	void startSMP(const QString& AAccount, const QString& AContact,
+	void startSMP(const Jid& AStreamJid, const Jid& AContactJid,
 				  const QString& AQuestion, const QString& ASecret);
 
 	/**
 	 * Continue the SMP.
 	 */
-	void continueSMP(const QString& AAccount, const QString& AContact,
+	void continueSMP(const Jid& AStreamJid, const Jid& AContactJid,
 					 const QString& ASecret);
 
 	/**
 	 * Abort the SMP.
 	 */
-	void abortSMP(const QString& AAccount, const QString& AContact);
+	void abortSMP(const Jid &AStreamJid, const Jid &AContactJid);
 
 	/**
 	 * Return the messageState of a context,
 	 * i.e. plaintext, encrypted, finished.
 	 */
-	IOtr::MessageState getMessageState(const QString& AAccount, const QString& AContact);
+	IOtr::MessageState getMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 
 	/**
 	 * Set fingerprint verified/not verified.
@@ -130,7 +129,7 @@ public:
 	/**
 	 * Return true if Socialist Millionaires' Protocol succeeded.
 	 */
-	bool smpSucceeded(const QString& AAccount, const QString& AContact);
+	bool smpSucceeded(const Jid& AStreamJid, const Jid& AContactJid);
 
 	/**
 	 * Returns a list of known fingerprints.
@@ -145,18 +144,17 @@ public:
 	/**
 	 * Delete a private key.
 	 */
-	void deleteKey(const QString& AAccount);
+	void deleteKey(const Jid& AStreamJid);
 
 	/**
 	 * Return the messageState as human-readable string.
 	 */
-	QString getMessageStateString(const QString& AAccount,
-								  const QString& AContact);
+	QString getMessageStateString(const Jid& AStreamJid, const Jid& AContactJid);
 	/**
 	 * Generate own keys.
 	 * This function blocks until keys are available.
 	 */
-	void generateKey(const QString& AAccount);
+	void generateKey(const Jid &AStreamJid);
 
 	QString dataDir();	// To be used by OtrPrivate class
 
@@ -169,39 +167,42 @@ public:
 	virtual bool initSettings();
 	virtual bool startPlugin() { return true; }
     //IOptionsHolder
-	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId,
+																		QWidget *AParent);
 	//IArchiveHandler
-	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
+	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage,
+									bool ADirectionIn);
 	//IStanzaHandler
-	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept);
+	virtual bool stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza,
+								 bool &AAccept);
 
     // OtrCallback
-	virtual void sendMessage(const QString &AAccount, const QString &AContact,
+	virtual void sendMessage(const Jid& AStreamJid, const Jid& AContactJid,
 							 const QString& AMessage, const QString &AHtml=QString());
-    virtual bool isLoggedIn(const QString &AAccount, const QString &AContact) const;
-	virtual void notifyUser(const QString &AAccount, const QString &AContact,
+	virtual bool isLoggedIn(const Jid& AStreamJid, const Jid& AContactJid) const;
+	virtual void notifyUser(const Jid& AStreamJid, const Jid& AContactJid,
 							const QString& AMessage, const NotifyType& AType);
 
-	virtual bool displayOtrMessage(const QString &AAccount, const QString &AContact,
+	virtual bool displayOtrMessage(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString& AMessage);
-	virtual void stateChange(const QString &AAccount, const QString &AContact,
+	virtual void stateChange(const Jid &AStreamJid, const Jid &AContactJid,
 							 StateChange AChange);
 
-	virtual void receivedSMP(const QString &AAccount, const QString &AContact,
+	virtual void receivedSMP(const Jid &AStreamJid, const Jid &AContactJid,
 							 const QString& AQuestion);
-	virtual void updateSMP(const QString &AAccount, const QString &AContact,
+	virtual void updateSMP(const Jid &AStreamJid, const Jid &AContactJid,
 						   int AProgress);
 
-	virtual QString humanAccount(const QString& AAccountId);
-	virtual QString humanAccountPublic(const QString& AAccountId);
-	virtual QString humanContact(const QString& AAccountId, const QString &AContactJid);
-	virtual void authenticateContact(const QString &AAccount, const QString &AContact);
+	virtual QString humanAccount(const Jid& AStreamJid);
+	virtual QString humanAccountPublic(const Jid& AStreamJid);
+	virtual QString humanContact(const Jid& AStreamJid, const Jid &AContactJid);
+	virtual void authenticateContact(const Jid& AStreamJid, const Jid& AContactJid);
 
 protected:
 	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid,
 							const QString &AMessage) const;
 	INotification eventNotify(const QString &ATypeId, const QString &AMessagePopup,
-							  const QString &AMessageTooltip,
+							  const QString &AMessageTooltip, const QString &AIcon,
 							  const Jid &AStreamJid, const Jid &AContactJid);
 	void removeNotifications(IMessageChatWindow *AWindow);
 
@@ -230,12 +231,12 @@ protected slots:
 signals:
 	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void fingerprintsUpdated() const;
-	void privKeyGenerated(const QString &AAccountName, const QString &Fingerprint);
-	void privKeyGenerationFailed(const QString &AAccountName);
+	void privKeyGenerated(const Jid &AStreamJid, const QString &Fingerprint);
+	void privKeyGenerationFailed(const Jid &AStreamJid);
 
 private:
 	OtrPrivate * const	FOtrPrivate;
-	QHash<QString, QHash<QString, OtrClosure*> > FOnlineUsers;
+	QHash<Jid, QHash<Jid, OtrClosure*> > FOnlineUsers;
 	IOptionsManager		*FOptionsManager;
 	IStanzaProcessor	*FStanzaProcessor;
 	IMessageArchiver	*FMessageArchiver;
@@ -246,6 +247,7 @@ private:
 	IMessageWidgets		*FMessageWidgets;
 	INotifications      *FNotifications;
 	QHash<Jid, QHash<Jid, int> > FNotifies;
+	IconStorage			*FMenuIcons;
 	int					FSHIMessage;
 	int					FSHIPresence;
 	int					FSHOMessage;

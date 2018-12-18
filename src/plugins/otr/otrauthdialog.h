@@ -13,9 +13,9 @@ class OtrAuthDialog : public QDialog
 {
 	Q_OBJECT
 public:
-	OtrAuthDialog(Otr* AOtr, const QString& AAccount,
-				  const QString& AContact, const QString& AQuestion,
-				  bool ASender, QWidget* AParent = nullptr);
+	OtrAuthDialog(Otr* AOtr, const Jid& AStreamJid, const Jid& AContactJid,
+				  const QString& AQuestion, bool ASender,
+				  QWidget* AParent = nullptr);
 	~OtrAuthDialog();
 
 	void reset();
@@ -35,8 +35,8 @@ private:
 	enum Method {METHOD_QUESTION, METHOD_SHARED_SECRET, METHOD_FINGERPRINT};
 
 	Otr*			FOtr;
-	QString			FAccount;
-	QString			FContact;
+	Jid				FAccount;
+	Jid				FContact;
 	QString			FContactName;
 	bool			FIsSender;
 	AuthState		FState;

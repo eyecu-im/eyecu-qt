@@ -22,10 +22,10 @@
 #include "otrclosure.h"
 #include "otrauthdialog.h"
 
-OtrClosure::OtrClosure(const QString& AAccount, const QString& AContact, Otr *AOtr):
+OtrClosure::OtrClosure(const Jid &AStreamJid, const Jid &AContactJid, Otr *AOtr):
 	FOtr(AOtr),
-	FAccount(AAccount),
-	FContact(AContact),
+	FAccount(AStreamJid),
+	FContact(AContactJid),
 	FIsLoggedIn(false)
 {
 }

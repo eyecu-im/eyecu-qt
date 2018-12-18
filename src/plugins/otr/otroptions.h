@@ -20,7 +20,7 @@ class OtrOptions:
 	Q_OBJECT
 	Q_INTERFACES(IOptionsDialogWidget)
 public:
-	OtrOptions(Otr* AOtr, QWidget *AParent = 0);
+	OtrOptions(Otr* AOtr, QWidget *AParent = nullptr);
 	~OtrOptions();
 
 	// IOptionsDialogWidget interface
@@ -47,12 +47,12 @@ protected slots:
 	void onPrivKeyGenerate();
 	void onPrivKeyCopyFingerprint();
 	void onPrivKeySelectionChanged(const QItemSelection &ASelected,
-									   const QItemSelection &ADeselected);
+								   const QItemSelection &ADeselected);
 	void onPrivKeyContextMenu(const QPoint& APos);
 	void onAccountIndexChanged(int AIndex);
 
-	void onPrivKeyGenerated(const QString &AAccount, const QString &AFingerprint);
-	void onPrivKeyGenerationFailed(const QString &AAccount);
+	void onPrivKeyGenerated(const Jid &AStreamJid, const QString &AFingerprint);
+//	void onPrivKeyGenerationFailed(const Jid &AStreamJid);
 
 signals:
 	void modified();

@@ -46,7 +46,7 @@ class OtrClosure : public QObject
     Q_OBJECT
 
 public:
-	OtrClosure(const QString &AAccount, const QString &AContact, Otr *AOtr);
+	OtrClosure(const Jid& AStreamJid, const Jid& AContactJid, Otr *AOtr);
 	~OtrClosure();
 	void setIsLoggedIn(bool AIsLoggedIn);
     bool isLoggedIn() const;
@@ -58,9 +58,9 @@ public:
 	bool isRunning() const;
 
 private:
-	Otr*	FOtr;
-	QString	FAccount;
-	QString	FContact;
+	Otr		*FOtr;
+	Jid		FAccount;
+	Jid		FContact;
 	bool	FIsLoggedIn;
 	QPointer<OtrAuthDialog> FAuthDialog;
 };
