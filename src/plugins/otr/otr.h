@@ -180,8 +180,6 @@ public:
 	virtual void sendMessage(const Jid& AStreamJid, const Jid& AContactJid,
 							 const QString& AMessage, const QString &AHtml=QString());
 	virtual bool isLoggedIn(const Jid& AStreamJid, const Jid& AContactJid) const;
-	virtual void notifyUser(const Jid& AStreamJid, const Jid& AContactJid,
-							const QString& AMessage, const NotifyType& AType);
 
 	virtual bool displayOtrMessage(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString& AMessage);

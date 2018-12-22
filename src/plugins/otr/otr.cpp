@@ -146,8 +146,7 @@ public:
 			QString err_message = QObject::tr("Encrypting message to %1 "
 											  "failed.\nThe message was not sent.")
 											  .arg(AContactJid.full());
-			if (!FOtr->displayOtrMessage(AStreamJid, AContactJid, err_message))
-				FOtr->notifyUser(AStreamJid, AContactJid, err_message, IOtr::NotifyError);
+			FOtr->displayOtrMessage(AStreamJid, AContactJid, err_message);
 			return QString();
 		}
 
@@ -181,7 +180,10 @@ public:
 
 		tlv = otrl_tlv_find(tlvs, OTRL_TLV_DISCONNECTED);
 		if (tlv)
+		{
 			FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeRemoteClose);
+			endSession(AStreamJid, AContactJid);
+		}
 
 		// Magic hack to force it work similar to libotr < 4.0.0.
 		// If user received unencrypted message he (she) should be notified.
@@ -361,7 +363,7 @@ public:
 												 OTRL_INSTAG_BEST,
 												 false, nullptr, nullptr, nullptr);
 
-		if (context && (context->msgstate != OTRL_MSGSTATE_PLAINTEXT))
+		if (context && (context->msgstate == OTRL_MSGSTATE_ENCRYPTED))
 			FOtr->stateChange(AStreamJid, AContactJid, IOtr::StateChangeClose);
 
 		otrl_message_disconnect(FUserState, &FUiOps, this,
@@ -786,8 +788,7 @@ protected:
 									.arg(FOtr->humanContact(streamJid, contactJid))
 									.arg(humanFingerprint(AFingerprint));
 
-		if (!FOtr->displayOtrMessage(streamJid, contactJid, message))
-			FOtr->notifyUser(streamJid, contactJid, message, IOtr::NotifyInfo);
+		FOtr->displayOtrMessage(streamJid, contactJid, message);
 	}
 
 	void writeFingerprints()
@@ -1500,20 +1501,6 @@ bool Otr::isLoggedIn(const Jid &AStreamJid, const Jid &AContactJid) const
 		FOnlineUsers.value(AStreamJid).contains(AContactJid))
 		return FOnlineUsers.value(AStreamJid).value(AContactJid)->isLoggedIn();
 	return false;
-}
-
-//-----------------------------------------------------------------------------
-
-void Otr::notifyUser(const Jid &AStreamJid, const Jid &AContactJid,
-					 const QString& AMessage, const NotifyType& AType)
-{
-	Q_UNUSED(AMessage);
-	Q_UNUSED(AType);
-
-	LOG_STRM_INFO(AStreamJid, QString("OTR notifyUser, contact=%1")
-								.arg(AContactJid.full()));
-
-//FIXME: Implement
 }
 
 //-----------------------------------------------------------------------------

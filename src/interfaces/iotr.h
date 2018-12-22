@@ -77,9 +77,6 @@ public:
 
 	virtual bool isLoggedIn(const Jid& AStreamJid, const Jid& AContactJid) const = 0;
 
-	virtual void notifyUser(const Jid& AStreamJid, const Jid& AContactJid,
-							const QString& AMessage, const NotifyType& AType) = 0;
-
 	virtual bool displayOtrMessage(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString& AMessage) = 0;
 
