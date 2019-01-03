@@ -68,7 +68,7 @@ SOURCES += $$PWD/curve25519-donna.c \
     $$PWD/ed25519/additions/xeddsa.c \
     $$PWD/ed25519/additions/zeroize.c \
     $$PWD/ed25519/nacl_sha512/blocks.c \
-    $$PWD/ed25519/nacl_sha512/hash.c
-#    $$PWD/ed25519/tests/internal_fast_tests.c
+	$$PWD/ed25519/nacl_sha512/hash.c \
+	$$PWD/ed25519/tests/internal_fast_tests.c
 
 HEADERS += $$PWD/curve25519-donna.h
