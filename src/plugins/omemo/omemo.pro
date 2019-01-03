@@ -1,3 +1,6 @@
-TARGET = omemo 
-include(omemo.pri) 
-include(../plugins.inc) 
+TARGET = omemo
+include(omemo.pri)
+include(../plugins.inc)
+
+LIBS          += -L../../libs
+LIBS          += -lsignal

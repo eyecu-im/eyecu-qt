@@ -14,7 +14,9 @@
 #include <definitions/shortcuts.h>
 
 #include <utils/options.h>
+
 #include "omemo.h"
+#include "signalprotocol.h"
 
 #define TAG_NAME_ROOT	"list"
 #define TAG_NAME_ITEM	"device"
@@ -27,7 +29,8 @@ Omemo::Omemo(): FPepManager(nullptr),
 				FMessageStyleManager(nullptr),
 				FIconStorage(nullptr),
 				FOmemoHandlerIn(0),
-				FOmemoHandlerOut(0)
+				FOmemoHandlerOut(0),
+				FSignalProtocol(nullptr)
 {}
 
 Omemo::~Omemo()
@@ -110,6 +113,8 @@ bool Omemo::initObjects()
 //	}
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
+
+	FSignalProtocol = SignalProtocol::instance();
 
 	return true;
 }
@@ -197,6 +202,7 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 
 void Omemo::registerDiscoFeatures()
 {
+	qDebug() << "Omemo::registerDiscoFeatures()";
 	IDiscoFeature dfeature;
 	dfeature.active = true;
 	dfeature.var = NS_PEP_OMEMO;
@@ -204,11 +210,13 @@ void Omemo::registerDiscoFeatures()
 	dfeature.name = tr("OMEMO");
 	dfeature.description = tr("XEP-0384: OMEMO Encryption");
 	FDiscovery->insertDiscoFeature(dfeature);
+	qDebug() << "feature inserted:" << dfeature.var;
 
 	dfeature.var.append(NODE_NOTIFY_SUFFIX);
 	dfeature.name = tr("OMEMO Notification");
 	dfeature.description = tr("Receives notifications about devices, which support OMEMO");
 	FDiscovery->insertDiscoFeature(dfeature);
+	qDebug() << "feature inserted:" << dfeature.var;
 }
 
 bool Omemo::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -248,24 +256,6 @@ void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore
 		updateChatWindowActions(window);
 }
 
-//OmemoLinkList *Omemo::findLinkList(const Jid &AStreamJid, const Jid &AContactJid, int AMessageType)
-//{
-//	if (AMessageType==Message::Chat)
-//		return getLinkList(FMessageWidgets->findChatWindow(AStreamJid, AContactJid));
-//	else
-//		return getLinkList(FMessageWidgets->findNormalWindow(AStreamJid, AContactJid));
-//}
-
-//OmemoLinkList *Omemo::getLinkList(const IMessageChatWindow *AWindow) const
-//{
-//	return AWindow?qobject_cast<OmemoLinkList *>(AWindow->messageWidgetsBox()->widgetByOrder(MCWW_OOBLINKLISTWIDGET)):NULL;
-//}
-
-//OmemoLinkList *Omemo::getLinkList(const IMessageNormalWindow *AWindow) const
-//{
-//	return AWindow?qobject_cast<OmemoLinkList *>(AWindow->messageWidgetsBox()->widgetByOrder(MNWW_OOBLINKLISTWIDGET)):NULL;
-//}
-
 void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 {
 	QList<QAction *> actions = AChatWindow->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_OOB_VIEW);
@@ -295,42 +285,6 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 		}
 	}
 }
-
-//void Omemo::onInsertLink(bool)
-//{
-//	Action *action = qobject_cast<Action *>(sender());
-//	if (action)
-//	{
-//		NewLink *newLink = new NewLink(tr("Add a new link"),
-//									   FIconStorage->getIcon(MNI_LINK), QString(), QString(),
-//									   action->parentWidget()->parentWidget());
-//		if(newLink->exec()== QDialog::Accepted)
-//		{
-//			OmemoLinkList *list=qobject_cast<OmemoLinkList *>(action->parent());
-//			if (list)
-//				list->addLink(newLink->getUrl(), newLink->getDescription());
-//		}
-//		newLink->deleteLater();
-//	}
-//}
-
-//void Omemo::appendLinks(Message &AMessage, OmemoLinkList *ALinkList)
-//{
-//	QDomDocument doc;
-//	int count=ALinkList->topLevelItemCount();
-//	for (int i=0; i<count; i++)
-//	{
-//		QTreeWidgetItem *item=ALinkList->topLevelItem(i);
-//		QDomElement oob=doc.createElementNS(NS_JABBER_OOB_X, "x");
-//		QDomElement url=doc.createElementNS(NS_JABBER_OOB_X, "url");
-//		url.appendChild(doc.createTextNode(item->data(1, OmemoLinkList::IDR_URL).toUrl().toEncoded()));
-//		QDomElement desc=doc.createElementNS(NS_JABBER_OOB_X, "desc");
-//		desc.appendChild(doc.createTextNode(item->data(1, OmemoLinkList::IDR_DESCRIPTION).toString()));
-//		oob.appendChild(url);
-//		oob.appendChild(desc);
-//		AMessage.stanza().element().appendChild(oob);
-//	}
-//}
 
 void Omemo::onStreamOpened(IXmppStream *AXmppStream)
 {

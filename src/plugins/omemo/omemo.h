@@ -11,6 +11,8 @@
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagestylemanager.h>
 
+class SignalProtocol;
+
 class Omemo: public QObject,
 			 public IPlugin,
 			 public IOmemo,
@@ -49,27 +51,6 @@ public:
 protected:
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void registerDiscoFeatures();
-//	void appendLinks(Message &AMessage, OobLinkList *ALinkList);
-
-private:
-	IPEPManager			*FPepManager;
-	IXmppStreamManager	*FXmppStreamManager;
-//	IMessageProcessor	*FMessageProcessor;
-	IServiceDiscovery	*FDiscovery;
-	IMessageWidgets		*FMessageWidgets;
-	IMessageStyleManager *FMessageStyleManager;
-
-	IconStorage			*FIconStorage;
-	int					FOmemoHandlerIn;
-	int					FOmemoHandlerOut;
-
-	QMap <Jid, QString> FStreamOmemo;
-
-protected:
-//	OobLinkList *findLinkList(const Jid &AStreamJid, const Jid &AContactJid, int AMessageType);
-//	OobLinkList *getLinkList(const IMessageChatWindow *AWindow) const;
-//	OobLinkList *getLinkList(const IMessageNormalWindow *AWindow)const;
-
 	void updateChatWindowActions(IMessageChatWindow *AChatWindow);
 
 protected slots:
@@ -80,6 +61,22 @@ protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+
+private:
+	IPEPManager*		FPepManager;
+	IXmppStreamManager*	FXmppStreamManager;
+//	IMessageProcessor*	FMessageProcessor;
+	IServiceDiscovery*	FDiscovery;
+	IMessageWidgets*	FMessageWidgets;
+	IMessageStyleManager* FMessageStyleManager;
+
+	IconStorage*		FIconStorage;
+	int					FOmemoHandlerIn;
+	int					FOmemoHandlerOut;
+
+	SignalProtocol*		FSignalProtocol;
+
+	QMap <Jid, QString> FStreamOmemo;
 };
 
 #endif // OMEMO_H
