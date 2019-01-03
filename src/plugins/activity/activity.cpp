@@ -587,7 +587,7 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 {
 	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId) && FRosterIndexKinds.contains(AIndex->kind()))
 	{
-		 QString label=getLabel(AIndex->data(RDR_FULL_JID).toString());
+		 QString label=getLabel(Jid(AIndex->data(RDR_FULL_JID).toString()));
 		 if (!label.isEmpty())
 			 AToolTips.insert(RTTO_ROSTERSVIEW_ACTIVITY, label);
 	}
