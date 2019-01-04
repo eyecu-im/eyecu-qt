@@ -1,8 +1,11 @@
 #ifndef LIBSIGNALPROTOCOL_H
 #define LIBSIGNALPROTOCOL_H
 
-extern "C" {
 #include <thirdparty/libsignal-protocol-c/signal_protocol.h>
+
+extern "C" {
+#include "sha2.h"
+#include "hmac_sha2.h"
 }
 
 class SignalProtocol
@@ -25,9 +28,9 @@ protected:
 	 * Callback for an HMAC-SHA256 implementation.
 	 * This function shall initialize an HMAC context with the provided key.
 	 *
-	 * @param hmac_context private HMAC context pointer
-	 * @param key pointer to the key
-	 * @param key_len length of the key
+	 * @param AHmacContext private HMAC context pointer
+	 * @param AKey pointer to the key
+	 * @param AKeyLen length of the key
 	 * @return 0 on success, negative on failure
 	 */
 	static int hmacSha256InitFunc(void **AHmacContext, const uint8_t *AKey, size_t AKeyLen, void *AUserData);
@@ -48,8 +51,8 @@ protected:
 	 * This function shall finalize an HMAC calculation and populate the output
 	 * buffer with the result.
 	 *
-	 * @param hmac_context private HMAC context pointer
-	 * @param output buffer to be allocated and populated with the result
+	 * @param AHmacContext private HMAC context pointer
+	 * @param AOutput buffer to be allocated and populated with the result
 	 * @return 0 on success, negative on failure
 	 */
 	static int hmacSha256FinalFunc(void *AHmacContext, signal_buffer **AOutput, void *AUserData);
@@ -116,8 +119,7 @@ protected:
 	 * @param plaintext_len length of the plaintext
 	 * @return 0 on success, negative on failure
 	 */
-	static int encryptFunc(signal_buffer **AOutput,
-						   int ACipher,
+	static int encryptFunc(signal_buffer **AOutput, int ACipher,
 						   const uint8_t *AKey, size_t AKeyLen,
 						   const uint8_t *AIv, size_t AIvLen,
 						   const uint8_t *APlaintext, size_t APlaintextLen,
@@ -149,7 +151,10 @@ private:
 	// signal-protocol
 	signal_context		*FGlobalContext;
 
-	static SignalProtocol *FInstance;
+	//SHA2
+	unsigned char digest[32];
+
+	static SignalProtocol *FInstance;	
 };
 
 #endif // LIBSIGNALPROTOCOL_H
