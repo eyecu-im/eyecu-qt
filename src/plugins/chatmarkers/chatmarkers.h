@@ -90,6 +90,9 @@ protected:
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
 	void registerDiscoFeatures(bool ARegister);
 
+	static QStringList *requestsIds(QHash<Jid, QHash<Jid, QStringList> > ARequestHash,
+									const Jid &AStreamJid, const Jid &AContactJid, const QString &AId, Jid &AJid);
+
 protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 //	void onChatWindowActivated();
