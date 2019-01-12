@@ -269,9 +269,6 @@
 #define MNI_ATTENTION                   "attention"
 #define MNI_EXCLAMATION                 "exclamation"
 
-// Message receipts
-#define MNI_DELIVERED                   "delivered"
-
 // Chat Markers
 #define MNI_MESSAGE_RECEIVED            "messageReceived"
 #define MNI_MESSAGE_DISPLAYED			"messageDisplayed"
