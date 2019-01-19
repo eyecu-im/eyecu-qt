@@ -84,8 +84,8 @@ bool Receipts::initConnections(IPluginManager *APluginManager, int & /*AInitOrde
 //---------------------
 bool Receipts::initSettings()
 {
-	Options::setDefaultValue(OPV_RECEIPTS_SHOW, true);
-	Options::setDefaultValue(OPV_RECEIPTS_SEND, true);
+	Options::setDefaultValue(OPV_MARKERS_DISPLAY_RECEIVED, true);
+	Options::setDefaultValue(OPV_MARKERS_SEND_RECEIVED, true);
 	return true;
 }
 
@@ -94,8 +94,17 @@ QMultiMap<int, IOptionsDialogWidget *> Receipts::optionsDialogWidgets(const QStr
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MESSAGES && Options::node(OPV_COMMON_ADVANCED).value().toBool())
 	{
-		widgets.insertMulti(OWO_MESSAGES_RECEIPTS_SHOW, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_RECEIPTS_SHOW),tr("Show delivery notifications"), AParent));
-		widgets.insertMulti(OWO_MESSAGES_RECEIPTS_SEND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_RECEIPTS_SEND),tr("Send delivery notifications"), AParent));
+		widgets.insert(OHO_MESSAGES_MARKERS,
+					   FOptionsManager->newOptionsDialogHeader(tr("Chat markers"),
+															   AParent));
+		widgets.insert(OWO_MESSAGES_MARKERS_DISPLAY_RECEIVED,
+					   FOptionsManager->newOptionsDialogWidget
+						(Options::node(OPV_MARKERS_DISPLAY_RECEIVED),
+					   tr("Display message received"), AParent));
+		widgets.insert(OWO_MESSAGES_MARKERS_SEND_RECEIVED,
+					   FOptionsManager->newOptionsDialogWidget
+						(Options::node(OPV_MARKERS_SEND_RECEIVED),
+					   tr("Send message received"), AParent));
 	}
 	return widgets;
 }
@@ -179,12 +188,12 @@ void Receipts::onNotificationActivated(int ANotifyId)
 
 void Receipts::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_RECEIPTS_SEND));
+	onOptionsChanged(Options::node(OPV_MARKERS_SEND_RECEIVED));
 }
 
 void Receipts::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path()==OPV_RECEIPTS_SEND)
+	if (ANode.path()==OPV_MARKERS_SEND_RECEIVED)
 		registerDiscoFeatures(ANode.value().toBool());
 }
 
@@ -210,7 +219,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	Stanza stanza=AMessage.stanza();
 	if (ADirection==IMessageProcessor::DirectionIn)
 	{
-		if (Options::node(OPV_RECEIPTS_SEND).value().toBool() &&
+		if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() &&
 			!stanza.firstElement("request", NS_RECEIPTS).isNull() &&
 			!AMessage.body().isNull() &&
 			!AMessage.isDelayed())
@@ -236,7 +245,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	}
 	else
 	{
-		if (Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
+		if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
 			isSupported(AStreamJid, AMessage.to()) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&
 			!AMessage.body().isNull())
@@ -258,8 +267,8 @@ bool Receipts::writeMessageHasText(int AOrder, Message &AMessage, const QString 
 {
 	Q_UNUSED(AOrder) Q_UNUSED(ALang)
 	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-			Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
-			!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull();
+						 Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+						 !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull();
 }
 
 bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
@@ -268,7 +277,7 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 	Q_UNUSED(ALang)
 
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-		Options::node(OPV_RECEIPTS_SHOW).value().toBool() &&
+		Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
 	{
 		QUrl url(QString("receipts:{%1}{%2}{%3}").arg(AMessage.from().toLower())

@@ -13,6 +13,7 @@
 #include <interfaces/inotifications.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imultiuserchat.h>
+#include <interfaces/ireceipts.h>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -78,6 +79,9 @@ public:
 	bool isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 protected:
+	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId,
+						  QHash<Jid, QHash<Jid, QStringList> > ARequestHash, QSet<QString> AMarkerHash,
+						  Type AType);
 	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
@@ -89,9 +93,6 @@ protected:
 	void removeNotifiedMessages(IMessageChatWindow *AWindow);
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
 	void registerDiscoFeatures(bool ARegister);
-
-	static QStringList *requestsIds(QHash<Jid, QHash<Jid, QStringList> > ARequestHash,
-									const Jid &AStreamJid, const Jid &AContactJid, const QString &AId, Jid &AJid);
 
 protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
@@ -127,6 +128,7 @@ private:
 	IMessageWidgets     *FMessageWidgets;
 	IMultiUserChatManager *FMultiChatManager;
 	IPresenceManager    *FPresenceManager;
+	IReceipts			*FReceipts;
 	IconStorage         *FIconStorage;
 
 	QSet<QString>       FReceivedHash;
@@ -134,7 +136,7 @@ private:
 	QSet<QString>       FAcknowledgedHash;
 	QByteArray          FImageData[3];
 	QHash<IMessageChatWindow *, int>   FNotifies;
-	QMap<IMessageToolBarWidget *, Action *> FToolBarActions;
+//	QMap<IMessageToolBarWidget *, Action *> FToolBarActions;
 
 	// Outgoing
 	QHash<Jid, QHash<Jid, QStringList> > FReceivedRequestHash;

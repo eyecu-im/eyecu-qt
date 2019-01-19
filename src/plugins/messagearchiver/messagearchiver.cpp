@@ -31,7 +31,7 @@
 #define SESSIONS_FILE_NAME         "sessions.xml"
 #define ARCHIVE_REQUEST_TIMEOUT    30000
 
-#define SHC_MESSAGE_BODY           "/message/body"
+#define SHC_MESSAGE_BODY           "/message"
 #define SHC_PREFS                  "/iq[@type='set']/pref[@xmlns=" NS_ARCHIVE "]"
 #define SHC_PREFS_OLD              "/iq[@type='set']/pref[@xmlns=" NS_ARCHIVE_OLD "]"
 
@@ -1047,7 +1047,7 @@ QString MessageArchiver::removeArchiveSessionPrefs(const Jid &AStreamJid, const 
 }
 
 bool MessageArchiver::saveMessage(const Jid &AStreamJid, const Jid &AItemJid, const Message &AMessage)
-{
+{	
 	if (!isArchiveAutoSave(AStreamJid) || isArchiveDuplicationEnabled(AStreamJid))
 	{
 		if (isArchivingAllowed(AStreamJid,AItemJid,AMessage.threadId()))
@@ -1758,8 +1758,11 @@ void MessageArchiver::processPendingMessages(const Jid &AStreamJid)
 
 bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, bool ADirectionIn)
 {
-	if (AMessage.body().isEmpty())
-		return false;
+	qDebug() << "MessageArchiver::prepareMessage(" << AStreamJid.full()
+			 << "," << AMessage.stanza().toString()
+			 << "," << ADirectionIn << ")";
+//	if (AMessage.body().isEmpty())
+//		return false;
 	if (AMessage.type()==Message::Error)
 		return false;
 	if (AMessage.type()==Message::GroupChat && !ADirectionIn)
@@ -1772,12 +1775,16 @@ bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, b
 	else if (!ADirectionIn && AMessage.to().isEmpty())
 		AMessage.setTo(AStreamJid.domain());
 
+	qDebug() << "HERE!";
+
 	for (QMultiMap<int,IArchiveHandler *>::const_iterator it = FArchiveHandlers.constBegin(); it!=FArchiveHandlers.constEnd(); ++it)
 	{
 		IArchiveHandler *handler = it.value();
 		if (handler->archiveMessageEdit(it.key(),AStreamJid,AMessage,ADirectionIn))
 			return false;
 	}
+
+	qDebug() << "HERE!!!";
 
 	if (AMessage.type()==Message::Chat || AMessage.type()==Message::GroupChat)
 	{
@@ -1790,6 +1797,10 @@ bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, b
 
 bool MessageArchiver::processMessage(const Jid &AStreamJid, const Message &AMessage, bool ADirectionIn)
 {
+	qDebug() << "MessageArchiver::processMessage(" << AStreamJid.full()
+			 << "," << AMessage.stanza().toString()
+			 << "," << ADirectionIn << ")";
+
 	Jid itemJid = ADirectionIn ? (!AMessage.from().isEmpty() ? AMessage.from() : AStreamJid.domain()) : AMessage.to();
 	if (!isReady(AStreamJid))
 	{

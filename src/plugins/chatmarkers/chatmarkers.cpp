@@ -1,20 +1,23 @@
 #include "chatmarkers.h"
-#include "definitions/toolbargroups.h"
-#include "definitions/messageeditororders.h"
-#include "definitions/messagewriterorders.h"
-#include "definitions/messagedataroles.h"
-#include "definitions/archivehandlerorders.h"
-#include "definitions/optionvalues.h"
-#include "definitions/optionwidgetorders.h"
-#include "definitions/optionnodes.h"
-#include "definitions/notificationdataroles.h"
-#include "definitions/notificationtypeorders.h"
-#include "definitions/notificationtypes.h"
-#include "definitions/soundfiles.h"
-#include "definitions/tabpagenotifypriorities.h"
+#include <definitions/toolbargroups.h>
+#include <definitions/messageeditororders.h>
+#include <definitions/messagewriterorders.h>
+#include <definitions/messagedataroles.h>
+#include <definitions/archivehandlerorders.h>
+#include <definitions/optionvalues.h>
+#include <definitions/optionwidgetorders.h>
+#include <definitions/optionnodes.h>
+#include <definitions/notificationdataroles.h>
+#include <definitions/notificationtypeorders.h>
+#include <definitions/notificationtypes.h>
+#include <definitions/soundfiles.h>
+#include <definitions/tabpagenotifypriorities.h>
+#include <utils/action.h>
 
 #include <QDateTime>
 #include <QFile>
+
+#define ADR_WINDOW Action::DR_Parametr1
 
 ChatMarkers::ChatMarkers():
 		FMessageProcessor(nullptr),
@@ -25,6 +28,7 @@ ChatMarkers::ChatMarkers():
 		FNotifications(nullptr),
 		FMessageWidgets(nullptr),
 		FMultiChatManager(nullptr),
+		FReceipts(nullptr),
 		FIconStorage(nullptr)
 {}
 
@@ -65,6 +69,10 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
+	plugin = APluginManager->pluginInterface("IReceipts").value(0,nullptr);
+	if (plugin)
+		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+
 	plugin = APluginManager->pluginInterface("INotifications").value(0,nullptr);
 	if (plugin)
 	{
@@ -103,7 +111,6 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 											  SLOT(onPresenceOpened(IPresence*)));
 		connect(FPresenceManager->instance(), SIGNAL(contactStateChanged(Jid,Jid,bool)),
 											  SLOT(onContactStateChanged(Jid,Jid,bool)));
-
 	}
 
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
@@ -114,8 +121,13 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 
 bool ChatMarkers::initSettings()
 {
-	Options::setDefaultValue(OPV_CHATMARKERS_SHOW, true);
-	Options::setDefaultValue(OPV_CHATMARKERS_SEND, true);
+	Options::setDefaultValue(OPV_MARKERS_DISPLAY_RECEIVED, true);
+	Options::setDefaultValue(OPV_MARKERS_DISPLAY_DISPLAYED, true);
+	Options::setDefaultValue(OPV_MARKERS_DISPLAY_ACKNOWLEDGED, true);
+	Options::setDefaultValue(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN, true);
+	Options::setDefaultValue(OPV_MARKERS_SEND_RECEIVED, true);
+	Options::setDefaultValue(OPV_MARKERS_SEND_DISPLAYED, true);
+	Options::setDefaultValue(OPV_MARKERS_SEND_ACKNOWLEDGED, true);
 	return true;
 }
 
@@ -124,8 +136,41 @@ QMultiMap<int, IOptionsDialogWidget *> ChatMarkers::optionsDialogWidgets(const Q
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MESSAGES && Options::node(OPV_COMMON_ADVANCED).value().toBool())
 	{
-		widgets.insertMulti(OWO_MESSAGES_CHATMARKERS_SHOW, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_CHATMARKERS_SHOW),tr("Show Chat Marker notifications"), AParent));
-		widgets.insertMulti(OWO_MESSAGES_CHATMARKERS_SEND, FOptionsManager->newOptionsDialogWidget(Options::node(OPV_CHATMARKERS_SEND),tr("Send Chat Marker notifications"), AParent));
+		widgets.insert(OHO_MESSAGES_MARKERS,
+					   FOptionsManager->newOptionsDialogHeader(tr("Chat markers"),
+																	AParent));
+		if (!FReceipts)
+		{
+			widgets.insert(OWO_MESSAGES_MARKERS_DISPLAY_RECEIVED,
+						   FOptionsManager->newOptionsDialogWidget
+							(Options::node(OPV_MARKERS_DISPLAY_RECEIVED),
+						   tr("Display message received"), AParent));
+			widgets.insert(OWO_MESSAGES_MARKERS_SEND_RECEIVED,
+						   FOptionsManager->newOptionsDialogWidget
+							(Options::node(OPV_MARKERS_SEND_RECEIVED),
+						   tr("Send message received"), AParent));
+		}
+		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_DISPLAYED,
+							FOptionsManager->newOptionsDialogWidget
+							 (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED),
+							tr("Display message displayed"), AParent));
+		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_ACK,
+							FOptionsManager->newOptionsDialogWidget
+							 (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED),
+							tr("Display message read acknowledged"), AParent));
+		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_ACK_OWN,
+							FOptionsManager->newOptionsDialogWidget
+							 (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN),
+							tr("Display own message read acknowledged"), AParent));
+
+		widgets.insertMulti(OWO_MESSAGES_MARKERS_SEND_DISPLAYED,
+							FOptionsManager->newOptionsDialogWidget
+							 (Options::node(OPV_MARKERS_SEND_DISPLAYED),
+							tr("Send message displayed"), AParent));
+		widgets.insertMulti(OWO_MESSAGES_MARKERS_SEND_ACKNOWLEDGED,
+							FOptionsManager->newOptionsDialogWidget
+							 (Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED),
+							tr("Acknowledge message read"), AParent));
 	}
 	return widgets;
 }
@@ -225,28 +270,6 @@ void ChatMarkers::registerDiscoFeatures(bool ARegister)
 		FDiscovery->removeDiscoFeature(NS_CHATMARKERS);
 }
 
-QStringList *ChatMarkers::requestsIds(QHash<Jid, QHash<Jid, QStringList> > ARequestHash,
-									  const Jid &AStreamJid, const Jid &AContactJid,
-									  const QString &AId, Jid &AJid)
-{
-	if (ARequestHash.contains(AStreamJid))
-	{
-		if (ARequestHash[AStreamJid].contains(AContactJid) &&
-			ARequestHash[AStreamJid][AContactJid].contains(AId))
-		{
-			AJid = AContactJid;
-			return &ARequestHash[AStreamJid][AContactJid];
-		}
-		else if (ARequestHash[AStreamJid].contains(AContactJid.bare()) &&
-				 ARequestHash[AStreamJid][AContactJid.bare()].contains(AId))
-		{
-			AJid = AContactJid.bare();
-			return &ARequestHash[AStreamJid][AContactJid.bare()];
-		}
-	}
-	return nullptr;
-}
-
 void ChatMarkers::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onWindowActivated()));
@@ -271,16 +294,16 @@ void ChatMarkers::onMarkable(const Jid &AStreamJid, const Jid &AContactJid)
 {
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 
-	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-		if (widget->messageWindow()->instance() == window->instance())
-			updateToolBarAction(widget);
+//	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
+//		if (widget->messageWindow()->instance() == window->instance())
+			updateToolBarAction(window->toolBarWidget());
 }
 
 void ChatMarkers::onToolBarWidgetDestroyed(QObject *AObject)
 {
-	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-		if (qobject_cast<QObject *>(widget->instance()) == AObject)
-			FToolBarActions.remove(widget);
+//	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
+//		if (qobject_cast<QObject *>(widget->instance()) == AObject)
+//			FToolBarActions.remove(widget);
 }
 
 void ChatMarkers::onWindowActivated()
@@ -331,8 +354,9 @@ void ChatMarkers::onAcknowledgedByAction(bool)
 	Action *action = qobject_cast<Action *>(sender());
 	if (action!=nullptr)
 	{
-		IMessageToolBarWidget *widget = FToolBarActions.key(action);
-		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(widget->messageWindow()->instance());
+//		IMessageToolBarWidget *widget = FToolBarActions.key(action);
+//		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(widget->messageWindow()->instance());
+		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(action->data(ADR_WINDOW).value<QObject*>());
 
 		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
 
@@ -362,9 +386,9 @@ void ChatMarkers::onAcknowledgedByAction(bool)
 					FLastMarkableAcknowledgeHash.remove(it.key());
 			}
 
-		foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-			if (widget->messageWindow()->instance() == chatWindow->instance())
-				updateToolBarAction(widget);
+//		foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
+//			if (widget->messageWindow()->instance() == chatWindow->instance())
+				updateToolBarAction(chatWindow->toolBarWidget());
 	}
 }
 
@@ -426,17 +450,25 @@ void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AConta
 
 void ChatMarkers::onOptionsOpened()
 {
-	onOptionsChanged(Options::node(OPV_CHATMARKERS_SEND));
+	onOptionsChanged(Options::node(OPV_MARKERS_SEND_RECEIVED));
+	onOptionsChanged(Options::node(OPV_MARKERS_SEND_DISPLAYED));
+	onOptionsChanged(Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED));
 }
 
 void ChatMarkers::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (ANode.path()==OPV_CHATMARKERS_SEND)
+	if (ANode.path()==OPV_MARKERS_SEND_RECEIVED)
 		registerDiscoFeatures(ANode.value().toBool() ||
-							  Options::node(OPV_CHATMARKERS_SHOW).value().toBool());
-	else if (ANode.path()==OPV_CHATMARKERS_SHOW)
+							  Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool() ||
+							  Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool());
+	else if (ANode.path()==OPV_MARKERS_SEND_DISPLAYED)
 		registerDiscoFeatures(ANode.value().toBool() ||
-							  Options::node(OPV_CHATMARKERS_SEND).value().toBool());
+							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
+							  Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool());
+	else if (ANode.path()==OPV_MARKERS_SEND_ACKNOWLEDGED)
+		registerDiscoFeatures(ANode.value().toBool() ||
+							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
+							  Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool());
 }
 
 bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -460,19 +492,23 @@ void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
 
 void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 {
-	Action *acknowledgedAction = FToolBarActions.value(AWidget);
+//	Action *acknowledgedAction = FToolBarActions.value(AWidget);
 	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(AWidget->messageWindow()->instance());
 	if (chatWindow != nullptr)
 	{
-		if (acknowledgedAction == nullptr)
+		ToolBarChanger *changer = chatWindow->toolBarWidget()->toolBarChanger();
+		Action *acknowledgedAction = changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).isEmpty() ?
+					nullptr : changer->handleAction(changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).first());
+		if (!acknowledgedAction)
 		{
 			acknowledgedAction = new Action(AWidget->toolBarChanger()->toolBar());
 			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
 			acknowledgedAction->setText(tr("Acknowledge"));
+			acknowledgedAction->setData(ADR_WINDOW, QVariant::fromValue(chatWindow->instance()));
 			//acknowledgedAction->setShortcutId();
 			connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
 			AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
-			FToolBarActions.insert(AWidget,acknowledgedAction);
+//			FToolBarActions.insert(AWidget,acknowledgedAction);
 		}
 
 		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
@@ -494,34 +530,47 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 {
 	Q_UNUSED(AOrder)
 
+	qDebug() << "ChatMarkers::messageReadWrite(" << AOrder
+			 << "," << AStreamJid.full()
+			 << "," << AMessage.stanza().toString()
+			 << "," << ADirection << ")";
+
 	Stanza stanza=AMessage.stanza();
 	if (ADirection==IMessageProcessor::DirectionIn)
 	{
-		if (Options::node(OPV_CHATMARKERS_SEND).value().toBool() &&
-				isSupported(AStreamJid, AMessage.from()) &&
-				!stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
-				!AMessage.body().isNull())
+		if (isSupported(AStreamJid, AMessage.from()) &&
+			!stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
+			!AMessage.body().isNull())
 		{
-			markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
+			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool())
+				markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
 
-			IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
-			bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
-			if (window && window->isActiveTabPage())
-				markMessage(AStreamJid, AMessage.from(), Displayed, AMessage.id());
-			else
+			if (Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool())
 			{
-				if (FLastMarkableDisplayHash[AStreamJid][AMessage.from()].isEmpty())
-					FLastMarkableDisplayHash[AStreamJid][AMessage.from()].append(AMessage.id());
+				IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
+				if (window && window->isActiveTabPage())
+					markMessage(AStreamJid, AMessage.from(), Displayed, AMessage.id());
 				else
-					FLastMarkableDisplayHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+				{
+					if (FLastMarkableDisplayHash[AStreamJid][AMessage.from()].isEmpty())
+						FLastMarkableDisplayHash[AStreamJid][AMessage.from()].append(AMessage.id());
+					else
+						FLastMarkableDisplayHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+				}
 			}
-			if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
-				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
-			else
-				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
 
-			if (!isMarkedBefore)
-				emit markable(AStreamJid, AMessage.from());
+			if (Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool())
+			{
+				bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
+
+				if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
+					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
+				else
+					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+
+				if (!isMarkedBefore)
+					emit markable(AStreamJid, AMessage.from());
+			}
 		}
 		else
 		{
@@ -538,7 +587,9 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 	}
 	else
 	{
-		if (Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
+		if ((Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
+			 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
+			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
 			isSupported(AStreamJid, AMessage.to()) &&
 			AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
 			!AMessage.body().isNull())
@@ -550,9 +601,12 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 			}
 			AMessage.detach();
 			AMessage.stanza().addElement("markable", NS_CHATMARKERS);
-			FReceivedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
-			FDisplayedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
-			FAcknowledgedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
+			if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool())
+				FReceivedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
+			if (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool())
+				FDisplayedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
+			if (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())
+				FAcknowledgedRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
 		}
 	}
 	return false;
@@ -562,7 +616,9 @@ bool ChatMarkers::writeMessageHasText(int AOrder, Message &AMessage, const QStri
 {
 	Q_UNUSED(AOrder) Q_UNUSED(ALang)
 	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-			Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
+			(Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
+			 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
+			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
 			!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull();
 }
 
@@ -572,7 +628,9 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 	Q_UNUSED(ALang)
 
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-		Options::node(OPV_CHATMARKERS_SHOW).value().toBool() &&
+		(Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
+		 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
+		 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool() ) &&
 	   !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
 	{
 		QUrl url(QString("scheme:{%1}{%2}{%3}")
@@ -584,23 +642,30 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 		cursor.movePosition(QTextCursor::End);
 
 		QTextImageFormat image;
-		if (AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+		if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+			AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
 		{
 			url.setScheme("chatmarkers-received");
 			image.setName(url.toString());
 			image.setToolTip(tr("Received"));
 			cursor.insertImage(image);
 		}
-		url.setScheme("chatmarkers-displayed");
-		image.setName(url.toString());
-		image.setToolTip(tr("Displayed"));
-		cursor.insertImage(image);
 
-		url.setScheme("chatmarkers-acknowledged");
-		image.setName(url.toString());
-		image.setToolTip(tr("Acknowledged"));
-		cursor.insertImage(image);
+		if (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool())
+		{
+			url.setScheme("chatmarkers-displayed");
+			image.setName(url.toString());
+			image.setToolTip(tr("Displayed"));
+			cursor.insertImage(image);
+		}
 
+		if (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())
+		{
+			url.setScheme("chatmarkers-acknowledged");
+			image.setName(url.toString());
+			image.setToolTip(tr("Acknowledged"));
+			cursor.insertImage(image);
+		}
 		return true;
 	}
 	return false;
@@ -620,6 +685,11 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 	Q_UNUSED(AOrder)
 	Q_UNUSED(AStreamJid)
 	Q_UNUSED(ADirectionIn)
+
+	qDebug() << "ChatMarkers::archiveMessageEdit(" << AOrder
+			 << "," << AStreamJid.full()
+			 << "," << AMessage.stanza().toString()
+			 << "," << ADirectionIn << ")";
 
 //    if (!AMessage.stanza().firstElement("received", NS_CHATMARKERS).isNull())
 //        return true;
@@ -649,30 +719,57 @@ QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const Q
 	DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, FImageData[type-1], FUrlProcessor->instance());
 
 	if (type == Received)
+	{
 		connect(this, SIGNAL(received(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+		if (isReceived(ARequest.url().path()))
+			emit received(ARequest.url().path());
+		else if (isDisplayed(ARequest.url().path()))
+			emit received(ARequest.url().path());
+		else if (isAcknowledged(ARequest.url().path()))
+			emit received(ARequest.url().path());
+	}
 	if (type == Displayed)
+	{
 		connect(this, SIGNAL(displayed(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
+		if (isDisplayed(ARequest.url().path()))
+			emit displayed(ARequest.url().path());
+		else if (isAcknowledged(ARequest.url().path()))
+			emit displayed(ARequest.url().path());
+	}
 	if (type == Acknowledged)
+	{
 		connect(this, SIGNAL(acknowledged(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
-
-	if (isReceived(ARequest.url().path()))
-		emit received(ARequest.url().path());
-	if (isDisplayed(ARequest.url().path()))
-		emit displayed(ARequest.url().path());
-	if (isAcknowledged(ARequest.url().path()))
-		emit acknowledged(ARequest.url().path());
+		if (isAcknowledged(ARequest.url().path()))
+			emit acknowledged(ARequest.url().path());
+	}
 
 	return reply;
 }
 
-void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
+								   const QString &AMessageId,
+								   QHash<Jid, QHash<Jid, QStringList> > ARequestHash,
+								   QSet<QString> AMarkerHash, ChatMarkers::Type AType)
 {
-	Jid contactJid;
-	QStringList *ids = requestsIds(FReceivedRequestHash, AStreamJid,
-								   AContactJid, AMessageId, contactJid);
-
-	if (ids)
+	if (ARequestHash.contains(AStreamJid))
 	{
+		Jid contactJid;
+		QStringList *ids;
+		if (ARequestHash[AStreamJid].contains(AContactJid) &&
+			ARequestHash[AStreamJid][AContactJid].contains(AMessageId))
+		{
+			contactJid = AContactJid;
+			ids = &ARequestHash[AStreamJid][AContactJid];
+		}
+		else if (ARequestHash[AStreamJid].contains(AContactJid.bare()) &&
+				 ARequestHash[AStreamJid][AContactJid.bare()].contains(AMessageId))
+		{
+			contactJid = AContactJid.bare();
+			ids = &ARequestHash[AStreamJid][AContactJid.bare()];
+		}
+		else
+			return;
+
 		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
 
 		for (; i>=0 && !ids->at(i).isEmpty(); --i)
@@ -681,8 +778,20 @@ void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, con
 												.arg(contactJid.full())
 												.arg(ids->at(i));
 			idsNum++;
-			FReceivedHash.insert(id);
-			emit received(id);
+			AMarkerHash.insert(id);
+			switch (AType)
+			{
+				case Received:
+					emit received(id);
+					break;
+				case Displayed:
+					emit displayed(id);
+					break;
+				case Acknowledged:
+					emit acknowledged(id);
+				default:
+					break;
+			}
 		}
 
 		QStringList newList;
@@ -699,100 +808,35 @@ void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, con
 
 		if (newList.isEmpty())
 		{
-			FReceivedRequestHash[AStreamJid].remove(contactJid);
-			if (FReceivedRequestHash[AStreamJid].isEmpty())
-				FReceivedRequestHash.remove(AStreamJid);
+			ARequestHash[AStreamJid].remove(contactJid);
+			if (ARequestHash[AStreamJid].isEmpty())
+				ARequestHash.remove(AStreamJid);
 		}
 		else
 			*ids = newList;
-		showNotification(AStreamJid, AContactJid, Received, idsNum);
+		showNotification(AStreamJid, AContactJid, AType, idsNum);
 	}
+}
+
+
+void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+{
+	setMessageMarker(AStreamJid, AContactJid, AMessageId,
+					 FReceivedRequestHash, FReceivedHash, Received);
 }
 
 void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-	Jid contactJid;
-	QStringList *ids = requestsIds(FDisplayedRequestHash, AStreamJid,
-								   AContactJid, AMessageId, contactJid);
-	if (ids)
-	{
-		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
-
-		for (; i>=0 && !ids->at(i).isEmpty(); --i)
-		{
-			QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full())
-												.arg(contactJid.full())
-												.arg(ids->at(i));
-			idsNum++;
-			FDisplayedHash.insert(id);
-			emit displayed(id);
-		}
-
-		QStringList newList;
-		if (i>=0)
-			newList = ids->mid(0, i+1);
-
-		if (index < ids->size()-1)
-		{
-			if (ids->at(index+1).isEmpty())
-				index++;
-			if (index < ids->size()-1)
-				newList.append(ids->mid(index+1));
-		}
-
-		if (newList.isEmpty())
-		{
-			FDisplayedRequestHash[AStreamJid].remove(contactJid);
-			if (FDisplayedRequestHash[AStreamJid].isEmpty())
-				FDisplayedRequestHash.remove(AStreamJid);
-		}
-		else
-			*ids = newList;
-		showNotification(AStreamJid, AContactJid, Displayed, idsNum);
-	}
+	setReceived(AStreamJid, AContactJid, AMessageId);
+	setMessageMarker(AStreamJid, AContactJid, AMessageId,
+					 FDisplayedRequestHash, FDisplayedHash, Displayed);
 }
 
 void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-	Jid contactJid;
-	QStringList *ids = requestsIds(FAcknowledgedRequestHash, AStreamJid,
-								   AContactJid, AMessageId, contactJid);
-	if (ids)
-	{
-		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
-
-		for (; i>=0 && !ids->at(i).isEmpty(); --i)
-		{
-			QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full())
-												.arg(contactJid.full())
-												.arg(ids->at(i));
-			idsNum++;
-			FAcknowledgedHash.insert(id);
-			emit acknowledged(id);
-		}
-
-		QStringList newList;
-		if (i>=0)
-			newList = ids->mid(0, i+1);
-
-		if (index < ids->size()-1)
-		{
-			if (ids->at(index+1).isEmpty())
-				index++;
-			if (index < ids->size()-1)
-				newList.append(ids->mid(index+1));
-		}
-
-		if (newList.isEmpty())
-		{
-			FAcknowledgedRequestHash[AStreamJid].remove(contactJid);
-			if (FAcknowledgedRequestHash[AStreamJid].isEmpty())
-				FAcknowledgedRequestHash.remove(AStreamJid);
-		}
-		else
-			*ids = newList;
-		showNotification(AStreamJid, AContactJid, Acknowledged, idsNum);
-	}
+	setDisplayed(AStreamJid, AContactJid, AMessageId);
+	setMessageMarker(AStreamJid, AContactJid, AMessageId,
+					 FAcknowledgedRequestHash, FAcknowledgedHash, Acknowledged);
 }
 
 void ChatMarkers::showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum)

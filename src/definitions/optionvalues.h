@@ -399,13 +399,15 @@
 #define OPV_MESSAGES_GEOLOC_DISPLAY                     "messages.geoloc.display"
 #define OPV_GEOLOC_EXTSENDER                            "geoloc.extsender"
 
-//Receipts
-#define OPV_RECEIPTS_SHOW                               "receipts.show"
-#define OPV_RECEIPTS_SEND                               "receipts.send"
+//Message Delivery Receipts / Chat Markers
+#define OPV_MARKERS_SEND_RECEIVED                      "markers.send.received"
+#define OPV_MARKERS_SEND_DISPLAYED                     "markers.send.dsiplayed"
+#define OPV_MARKERS_SEND_ACKNOWLEDGED                  "markers.send.acknowledged"
 
-//Chatmarkers
-#define OPV_CHATMARKERS_SHOW                            "chatmarkers.show"
-#define OPV_CHATMARKERS_SEND                            "chatmarkers.send"
+#define OPV_MARKERS_DISPLAY_RECEIVED                   "markers.display.received"
+#define OPV_MARKERS_DISPLAY_DISPLAYED                  "markers.display.dsiplayed"
+#define OPV_MARKERS_DISPLAY_ACKNOWLEDGED               "markers.display.acknowledged"
+#define OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN           "markers.display.acknowledged.own"
 
 // POI
 #define OPV_POI_SHOW                                    "poi.show"
