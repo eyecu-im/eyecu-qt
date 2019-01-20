@@ -291,10 +291,8 @@ void ChatMarkers::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 void ChatMarkers::onMarkable(const Jid &AStreamJid, const Jid &AContactJid)
 {
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-
-//	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-//		if (widget->messageWindow()->instance() == window->instance())
-			updateToolBarAction(window->toolBarWidget());
+	if (window)
+		updateToolBarAction(window->toolBarWidget());
 }
 
 void ChatMarkers::onToolBarWidgetDestroyed(QObject *AObject)
@@ -548,11 +546,6 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 {
 	Q_UNUSED(AOrder)
 
-	qDebug() << "ChatMarkers::messageReadWrite(" << AOrder
-			 << "," << AStreamJid.full()
-			 << "," << AMessage.stanza().toString()
-			 << "," << ADirection << ")";
-
 	Stanza stanza=AMessage.stanza();
 	if (ADirection==IMessageProcessor::DirectionIn)
 	{
@@ -589,6 +582,12 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 				if (!isMarkedBefore)
 					emit markable(AStreamJid, AMessage.from());
 			}
+
+			if (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool() &&
+				isSupported(AStreamJid, AMessage.from()) &&
+				!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
+				!AMessage.body().isNull())
+				FAcknowledgedRequestHash[AMessage.from()][AMessage.to()].append(AMessage.id());
 		}
 		else
 		{
@@ -645,11 +644,15 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
 
-	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-		(Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
-		 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
-		 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool() ) &&
-	   !AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
+	int direction = AMessage.data(MDR_MESSAGE_DIRECTION).toInt();
+
+	if (((direction == IMessageProcessor::DirectionOut &&
+		  (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
+		   Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
+		   Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())) ||
+		 (direction == IMessageProcessor::DirectionIn &&
+		  Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())) &&
+		!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
 	{
 		QUrl url(QString("scheme:{%1}{%2}{%3}")
 				  .arg(AMessage.from())
@@ -677,11 +680,14 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 			cursor.insertImage(image);
 		}
 
-		if (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())
-		{
+		if ((direction == IMessageProcessor::DirectionOut &&
+			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) ||
+			(direction == IMessageProcessor::DirectionIn &&
+			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool()))
+		{			
 			url.setScheme("chatmarkers-acknowledged");
 			image.setName(url.toString());
-			image.setToolTip(tr("Acknowledged"));
+			image.setToolTip(tr("Acknowledged"));						
 			cursor.insertImage(image);
 		}
 		return true;
@@ -927,6 +933,11 @@ void ChatMarkers::markMessage(const Jid &AStreamJid, const Jid &AContactJid, con
 		sendMessageMarked(AStreamJid, AContactJid, AType, AMessageId);
 	else
 		FPendingMarkers[AStreamJid][AContactJid].insertMulti(AMessageId, AType);
+
+	if (AType == Acknowledged &&
+		Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())
+		setMessageMarker(AContactJid, AStreamJid, AMessageId,
+						 FAcknowledgedRequestHash, FAcknowledgedHash, Acknowledged);
 }
 
 void ChatMarkers::sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const ChatMarkers::Type &AType, const QString &AMessageId)
