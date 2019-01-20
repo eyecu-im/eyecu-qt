@@ -91,6 +91,7 @@ protected:
 	void sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void removeNotifiedMessages(IMessageChatWindow *AWindow);
+	void updateToolBarAction();
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
 	void registerDiscoFeatures(bool ARegister);
 

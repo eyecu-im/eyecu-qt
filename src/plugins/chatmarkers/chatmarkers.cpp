@@ -462,9 +462,12 @@ void ChatMarkers::onOptionsChanged(const OptionsNode &ANode)
 							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool());
 	else if (ANode.path()==OPV_MARKERS_SEND_ACKNOWLEDGED)
+	{
 		registerDiscoFeatures(ANode.value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool());
+		updateToolBarAction();
+	}
 }
 
 bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
@@ -486,38 +489,59 @@ void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
 	}
 }
 
+void ChatMarkers::updateToolBarAction()
+{
+	QList<IMessageChatWindow*> windows = FMessageWidgets->chatWindows();
+	for (QList<IMessageChatWindow*>::ConstIterator it = windows.constBegin();
+		 it != windows.constEnd(); ++it)
+		updateToolBarAction((*it)->toolBarWidget());
+}
+
 void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 {
+	bool acknowledge = Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool();
+
 	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(
 				AWidget->messageWindow()->instance());
 
 	ToolBarChanger *changer = AWidget->toolBarChanger();
 
-	Action *acknowledgedAction = changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).isEmpty() ?
-				nullptr : changer->handleAction(changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).first());
+	QList<QAction*> actions = changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT);
 
-	if (!acknowledgedAction)
+	if (acknowledge)
 	{
-		acknowledgedAction = new Action(changer->toolBar());
-		acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
-		acknowledgedAction->setText(tr("Acknowledge"));
-		//acknowledgedAction->setShortcutId();
-		connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
-		AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
-	}
-
-	QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
-	bool mrkd = false;
-
-	for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
-		 it != addresses.constEnd(); ++it)
-		if (isLastMarkableAcknowledge(it.key(), *it))
+		Action *acknowledgedAction =  actions.isEmpty()?
+					nullptr : changer->handleAction(actions.first());
+		if (!acknowledgedAction)
 		{
-			mrkd = true;
-			break;
+			acknowledgedAction = new Action(changer->toolBar());
+			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
+			acknowledgedAction->setText(tr("Acknowledge"));
+			//acknowledgedAction->setShortcutId();
+			connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
+			AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
 		}
 
-	acknowledgedAction->setEnabled(mrkd);
+		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
+		bool mrkd = false;
+
+		for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
+			 it != addresses.constEnd(); ++it)
+			if (isLastMarkableAcknowledge(it.key(), *it))
+			{
+				mrkd = true;
+				break;
+			}
+
+		acknowledgedAction->setEnabled(mrkd);
+	}
+	else
+	{
+		if (!actions.isEmpty())
+			changer->removeItem(actions.first());
+	}
+
+
 }
 
 bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
