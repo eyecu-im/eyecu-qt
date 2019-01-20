@@ -17,8 +17,6 @@
 #include <QDateTime>
 #include <QFile>
 
-#define ADR_WINDOW Action::DR_Parametr1
-
 ChatMarkers::ChatMarkers():
 		FMessageProcessor(nullptr),
 		FMessageArchiver(nullptr),
@@ -354,9 +352,9 @@ void ChatMarkers::onAcknowledgedByAction(bool)
 	Action *action = qobject_cast<Action *>(sender());
 	if (action!=nullptr)
 	{
-//		IMessageToolBarWidget *widget = FToolBarActions.key(action);
-//		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(widget->messageWindow()->instance());
-		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(action->data(ADR_WINDOW).value<QObject*>());
+		IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(
+					qobject_cast<IMessageToolBarWidget *>(action->parent())
+						->messageWindow()->instance());
 
 		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
 
@@ -386,9 +384,7 @@ void ChatMarkers::onAcknowledgedByAction(bool)
 					FLastMarkableAcknowledgeHash.remove(it.key());
 			}
 
-//		foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-//			if (widget->messageWindow()->instance() == chatWindow->instance())
-				updateToolBarAction(chatWindow->toolBarWidget());
+			updateToolBarAction(chatWindow->toolBarWidget());
 	}
 }
 
@@ -492,38 +488,36 @@ void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
 
 void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 {
-//	Action *acknowledgedAction = FToolBarActions.value(AWidget);
-	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(AWidget->messageWindow()->instance());
-	if (chatWindow != nullptr)
+	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(
+				AWidget->messageWindow()->instance());
+
+	ToolBarChanger *changer = AWidget->toolBarChanger();
+
+	Action *acknowledgedAction = changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).isEmpty() ?
+				nullptr : changer->handleAction(changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).first());
+
+	if (!acknowledgedAction)
 	{
-		ToolBarChanger *changer = chatWindow->toolBarWidget()->toolBarChanger();
-		Action *acknowledgedAction = changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).isEmpty() ?
-					nullptr : changer->handleAction(changer->groupItems(TBG_MWTBW_ACKNOWLEDGEMENT).first());
-		if (!acknowledgedAction)
+		acknowledgedAction = new Action(changer->toolBar());
+		acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
+		acknowledgedAction->setText(tr("Acknowledge"));
+		//acknowledgedAction->setShortcutId();
+		connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
+		AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
+	}
+
+	QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
+	bool mrkd = false;
+
+	for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
+		 it != addresses.constEnd(); ++it)
+		if (isLastMarkableAcknowledge(it.key(), *it))
 		{
-			acknowledgedAction = new Action(AWidget->toolBarChanger()->toolBar());
-			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
-			acknowledgedAction->setText(tr("Acknowledge"));
-			acknowledgedAction->setData(ADR_WINDOW, QVariant::fromValue(chatWindow->instance()));
-			//acknowledgedAction->setShortcutId();
-			connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
-			AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
-//			FToolBarActions.insert(AWidget,acknowledgedAction);
+			mrkd = true;
+			break;
 		}
 
-		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
-		bool mrkd = false;
-
-		for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
-			 it != addresses.constEnd(); ++it)
-			if (isLastMarkableAcknowledge(it.key(), *it))
-			{
-				mrkd = true;
-				break;
-			}
-
-		acknowledgedAction->setEnabled(mrkd);
-	}
+	acknowledgedAction->setEnabled(mrkd);
 }
 
 bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)

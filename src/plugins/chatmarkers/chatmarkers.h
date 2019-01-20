@@ -136,7 +136,6 @@ private:
 	QSet<QString>       FAcknowledgedHash;
 	QByteArray          FImageData[3];
 	QHash<IMessageChatWindow *, int>   FNotifies;
-//	QMap<IMessageToolBarWidget *, Action *> FToolBarActions;
 
 	// Outgoing
 	QHash<Jid, QHash<Jid, QStringList> > FReceivedRequestHash;
