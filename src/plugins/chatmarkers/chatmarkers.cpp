@@ -742,8 +742,8 @@ QNetworkReply *ChatMarkers::request(QNetworkAccessManager::Operation op, const Q
 
 void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString &AMessageId,
-								   QHash<Jid, QHash<Jid, QStringList> > ARequestHash,
-								   QSet<QString> AMarkerHash, ChatMarkers::Type AType)
+								   QHash<Jid, QHash<Jid, QStringList> > &ARequestHash,
+								   QSet<QString> &AMarkerHash, ChatMarkers::Type AType)
 {
 	if (ARequestHash.contains(AStreamJid))
 	{
@@ -808,6 +808,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		}
 		else
 			*ids = newList;
+
 		showNotification(AStreamJid, AContactJid, AType, idsNum);
 	}
 }

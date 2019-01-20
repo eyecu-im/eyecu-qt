@@ -80,7 +80,7 @@ public:
 
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId,
-						  QHash<Jid, QHash<Jid, QStringList> > ARequestHash, QSet<QString> AMarkerHash,
+						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash, QSet<QString> &AMarkerHash,
 						  Type AType);
 	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
