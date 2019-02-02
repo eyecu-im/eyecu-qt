@@ -661,23 +661,26 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
-
 		QTextImageFormat image;
-		if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
-			AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-		{
-			url.setScheme("chatmarkers-received");
-			image.setName(url.toString());
-			image.setToolTip(tr("Received"));
-			cursor.insertImage(image);
-		}
 
-		if (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool())
+		if (direction == IMessageProcessor::DirectionOut)
 		{
-			url.setScheme("chatmarkers-displayed");
-			image.setName(url.toString());
-			image.setToolTip(tr("Displayed"));
-			cursor.insertImage(image);
+			if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+				AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+			{
+				url.setScheme("chatmarkers-received");
+				image.setName(url.toString());
+				image.setToolTip(tr("Received"));
+				cursor.insertImage(image);
+			}
+
+			if (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool())
+			{
+				url.setScheme("chatmarkers-displayed");
+				image.setName(url.toString());
+				image.setToolTip(tr("Displayed"));
+				cursor.insertImage(image);
+			}
 		}
 
 		if ((direction == IMessageProcessor::DirectionOut &&
