@@ -14,16 +14,17 @@
 
 #include <QDateTime>
 #include <QFile>
+#include <QpXhtml>
+#include <QCryptographicHash>
 
 Receipts::Receipts():
-		FMessageProcessor(NULL),
-		FMessageArchiver(NULL),
-		FDiscovery(NULL),
-		FUrlProcessor(NULL),
-		FOptionsManager(NULL),
-		FNotifications(NULL),
-		FMessageWidgets(NULL),
-		FIconStorage(NULL)
+		FMessageProcessor(nullptr),
+		FMessageArchiver(nullptr),
+		FDiscovery(nullptr),
+		FOptionsManager(nullptr),
+		FNotifications(nullptr),
+		FMessageWidgets(nullptr),
+		FIconStorage(nullptr)
 {}
 
 Receipts::~Receipts()
@@ -51,27 +52,24 @@ bool Receipts::initConnections(IPluginManager *APluginManager, int & /*AInitOrde
 	if (plugin)
 		FMessageArchiver = qobject_cast<IMessageArchiver *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IUrlProcessor").value(0,NULL);
-	if (plugin)
-		FUrlProcessor = qobject_cast<IUrlProcessor *>(plugin->instance());
-
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0);
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("INotifications").value(0,NULL);
+	plugin = APluginManager->pluginInterface("INotifications").value(0);
 	if (plugin)
 	{
 		FNotifications = qobject_cast<INotifications *>(plugin->instance());
 		if (FNotifications)
-			connect(FNotifications->instance(), SIGNAL(notificationActivated(int)), SLOT(onNotificationActivated(int)));
+			connect(FNotifications->instance(), SIGNAL(notificationActivated(int)),
+												SLOT(onNotificationActivated(int)));
 	}
 
-	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0);
 	if (plugin)
 		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
 
@@ -112,24 +110,11 @@ QMultiMap<int, IOptionsDialogWidget *> Receipts::optionsDialogWidgets(const QStr
 bool Receipts::initObjects()
 {
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-	if (FIconStorage)
-	{
-		QString fileName=FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED);
-		if (!fileName.isEmpty())
-		{
-			QFile file(fileName);
-			if (file.open(QFile::ReadOnly))
-			{
-				FImgeData=file.readAll();
-				file.close();
-			}
-		}
-	}
 
 	if (FNotifications)
 	{
 		INotificationType notifyType;
-        notifyType.order = NTO_DELIVERED_NOTIFY;
+		notifyType.order = NTO_DELIVERED_NOTIFY;
 		if (FIconStorage)
 			notifyType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
 		notifyType.title = tr("When message delivery notification recieved");
@@ -137,9 +122,6 @@ bool Receipts::initObjects()
 		notifyType.kindDefs = notifyType.kindMask;
 		FNotifications->registerNotificationType(NNT_DELIVERED, notifyType);
 	}
-
-	if (FUrlProcessor)
-		FUrlProcessor->registerUrlHandler("receipts", this);
 
 	if (FMessageProcessor)
 	{
@@ -257,7 +239,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			}
 			AMessage.detach();
 			AMessage.stanza().addElement("request", NS_RECEIPTS);
-            FDeliveryRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
+			FDeliveryRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
 		}
 	}
 	return false;
@@ -280,14 +262,20 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 		Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
 	{
-		QUrl url(QString("receipts:{%1}{%2}{%3}").arg(AMessage.from().toLower())
-												 .arg(AMessage.to().toLower())
-												 .arg(AMessage.id()));
+		QString id = QString("%1|%2|%3").arg(AMessage.from().toLower())
+										.arg(AMessage.to().toLower())
+										.arg(AMessage.id());
+
+		QString hash = QString::fromLatin1(
+					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
+
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
-		image.setName(url.toString());
-        image.setToolTip(tr("Received"));
+		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
+		image.setName(name);
+		image.setToolTip(tr("Received"));
+		image.setProperty(QpXhtml::ObjectId, hash);
 		cursor.insertImage(image);
 		return true;
 	}
@@ -316,57 +304,46 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
 	return false;
 }
 
-QNetworkReply *Receipts::request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData)
-{
-	DelayedImageNetworkReply *reply = new DelayedImageNetworkReply(op, ARequest, AOutgoingData, FImgeData, FUrlProcessor->instance());
-	connect(this, SIGNAL(delivered(QString)), reply, SLOT(onReady(QString)), Qt::QueuedConnection);
-	if (isDelivered(ARequest.url().path()))
-		emit delivered(ARequest.url().path());
-	return reply;
-}
-
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-    if (FDeliveryRequestHash.contains(AStreamJid) &&
-            FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
-            FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
-    {
-        QString id = QString("{%1}{%2}{%3}").arg(AStreamJid.full().toLower())
-                                            .arg(AContactJid.full().toLower())
-                                            .arg(AMessageId);
-        FDeliveryHash.insert(id);
-        QStringList Ids = FDeliveryRequestHash[AStreamJid][AContactJid];
-        FDeliveryRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
-        if (FMessageWidgets)
-        {
-            IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-            if (window && !window->isActiveTabPage())
-            {
-                INotification notify;
-                notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
-                if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
-                {
-                    notify.typeId = NNT_DELIVERED;
-                    notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
-                    notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
-                    notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-    //                notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+	if (FDeliveryRequestHash.contains(AStreamJid) &&
+			FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
+			FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+	{
+		QString id = QString("%1|%2|%3").arg(AStreamJid.full().toLower())
+										.arg(AContactJid.full().toLower())
+										.arg(AMessageId);
 
-                    notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
-                    FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-                    connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
-                }
-            }
-        }
+		QString hash = QString::fromLatin1(
+					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
 
-        emit delivered(id);
-    }
+		QStringList Ids = FDeliveryRequestHash[AStreamJid][AContactJid];
+		FDeliveryRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
+		if (FMessageWidgets)
+		{
+			IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+			if (window && !window->isActiveTabPage())
+			{
+				INotification notify;
+				notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
+				if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+				{
+					notify.typeId = NNT_DELIVERED;
+					notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
+					notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
+					notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+//					notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+
+					notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
+					FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
+					connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
+				}
+			}
+			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED)).toString());
+		}
+	}
 }
 
-bool Receipts::isDelivered(const QString &AId) const
-{
-	return FDeliveryHash.contains(AId);
-}
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_receipts, Receipts)
 #endif

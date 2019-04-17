@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <icondef>
+ <icon><key>emptyBox</key><object mime="image/png">emptybox.png</object></icon>
  <icon><key>messageReceived</key><object mime="image/png">messagereceived.png</object></icon>
  <icon><key>messageDisplayed</key><object mime="image/png">messagedisplayed.png</object></icon>
  <icon><key>messageAcknowledged</key><object mime="image/png">messageacknowledged.png</object></icon>

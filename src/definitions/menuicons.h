@@ -270,6 +270,7 @@
 #define MNI_EXCLAMATION                 "exclamation"
 
 // Chat Markers
+#define MNI_EMPTY_BOX					"emptyBox"
 #define MNI_MESSAGE_RECEIVED            "messageReceived"
 #define MNI_MESSAGE_DISPLAYED			"messageDisplayed"
 #define MNI_MESSAGE_ACKNOWLEDGED		"messageAcknowledged"
