@@ -179,7 +179,14 @@ QImage ViewWidget::imageAt(const QPoint &APosition) const
 {
     if (FMessageStyle && FStyleWidget)
         return FMessageStyle->imageAt(FStyleWidget,FStyleWidget->mapFromGlobal(mapToGlobal(APosition)));
-    return QImage();
+	return QImage();
+}
+
+bool ViewWidget::setImageUrl(const QString &AId, const QString &AUrl)
+{
+	if (FMessageStyle && FStyleWidget)
+		return FMessageStyle->setImageUrl(FStyleWidget, AId, AUrl);
+	return false;
 }
 // *** >>> eyeCU >>> ***
 void ViewWidget::initialize()

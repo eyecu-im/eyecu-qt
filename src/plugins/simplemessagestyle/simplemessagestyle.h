@@ -92,6 +92,7 @@ public:
     virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const; // *** <<< eyeCU >>> ***
 	virtual bool changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear = true);
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions);
+	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl);
 	//ISimpleMessageStyle
 	virtual QMap<QString, QVariant> infoValues() const;
 	virtual QList<QString> variants() const;

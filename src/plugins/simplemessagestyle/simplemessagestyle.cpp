@@ -260,6 +260,40 @@ bool SimpleMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, c
 	return false;
 }
 
+bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QTextDocument *doc = view->document();
+		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
+			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
+			{
+				QTextFragment fragment = it.fragment();
+				QTextCharFormat format = fragment.charFormat();
+				if (format.isImageFormat() &&
+					format.hasProperty(QpXhtml::ObjectId) &&
+					format.property(QpXhtml::ObjectId) == AObjectId)
+				{
+					QTextImageFormat image = format.toImageFormat();
+					QTextCursor cursor(doc);
+					cursor.setPosition(fragment.position());
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor,
+										fragment.length());
+					image.setName(AUrl);
+					cursor.setCharFormat(image);
+					return true;
+				}
+			}
+		REPORT_ERROR("Failed to set image URL: Image with spwcified ID not found!");
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set image URL: Invalid view");
+	}
+	return false;
+}
+
 QMap<QString, QVariant> SimpleMessageStyle::infoValues() const
 {
 	return FInfo;

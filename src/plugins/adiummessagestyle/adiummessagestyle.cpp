@@ -253,6 +253,37 @@ bool AdiumMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, co
 	return false;
 }
 
+bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QWebFrame *frame = view->page()->currentFrame();
+		if (frame)
+		{
+			QWebElement img = frame->findFirstElement(QString("img#%1").arg(AObjectId));
+			if (!img.isNull())
+			{
+				img.setAttribute("src", AUrl);
+				return true;
+			}
+			else
+			{
+				REPORT_ERROR("Failed to set image name: Image with specified ID not found!");
+			}
+		}
+		else
+		{
+			REPORT_ERROR("Failed to set image name: No current frame");
+		}
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set image name: Invalid view");
+	}
+	return false;
+}
+
 int AdiumMessageStyle::version() const
 {
 	return FInfo.value(MSIV_VERSION,0).toInt();
