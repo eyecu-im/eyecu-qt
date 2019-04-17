@@ -9,7 +9,6 @@
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/imainwindow.h>
 #include <interfaces/iservicediscovery.h>
-#include <interfaces/iurlprocessor.h>
 #include <interfaces/inotifications.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imultiuserchat.h>
@@ -32,11 +31,10 @@ class ChatMarkers:
 		public IOptionsDialogHolder,
 		public IMessageEditor,
 		public IMessageWriter,
-		public IArchiveHandler,
-		public IUrlHandler
+		public IArchiveHandler
  {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IChatMarkers IOptionsDialogHolder IMessageEditor IMessageWriter IArchiveHandler IUrlHandler)
+	Q_INTERFACES(IPlugin IChatMarkers IOptionsDialogHolder IMessageEditor IMessageWriter IArchiveHandler)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IChatMarkers")
 #endif
@@ -68,13 +66,8 @@ public:
 	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
 	//IArchiveHandler
 	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
-	//IUrlHandler
-	virtual QNetworkReply *request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData);
-	// Not exported!
-	bool isReceived(const QString &AId) const;
-	bool isDisplayed(const QString &AId) const;
-	bool isAcknowledged(const QString &AId) const;
-	// Incomming
+
+	//Incomming
 	bool isLastMarkableDisplay(const Jid &AStreamJid, const Jid &AContactJid) const;
 	bool isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const;
 
@@ -97,9 +90,7 @@ protected:
 
 protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
-//	void onChatWindowActivated();
 	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
-//	void onMultiChatWindowActivated();
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
 	void onToolBarWidgetDestroyed(QObject *AObject);
 	void onWindowActivated();
@@ -115,15 +106,11 @@ protected slots:
 
 signals:
 	void markable(const Jid &AStreamJid, const Jid &AContactJid);
-	void received(const QString &AId);
-	void displayed(const QString &AId);
-	void acknowledged(const QString &AId);
 
 private:
 	IMessageProcessor   *FMessageProcessor;
 	IMessageArchiver    *FMessageArchiver;
 	IServiceDiscovery   *FDiscovery;
-	IUrlProcessor       *FUrlProcessor;
 	IOptionsManager     *FOptionsManager;
 	INotifications      *FNotifications;
 	IMessageWidgets     *FMessageWidgets;
@@ -135,7 +122,6 @@ private:
 	QSet<QString>       FReceivedHash;
 	QSet<QString>       FDisplayedHash;
 	QSet<QString>       FAcknowledgedHash;
-	QByteArray          FImageData[3];
 	QHash<IMessageChatWindow *, int>   FNotifies;
 
 	// Outgoing
