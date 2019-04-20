@@ -479,7 +479,7 @@ void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 		if (!acknowledgedAction)
 		{
 			acknowledgedAction = new Action(changer->toolBar());
-			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGED);
+			acknowledgedAction->setIcon(RSR_STORAGE_MENUICONS, MNI_MESSAGE_ACKNOWLEDGE);
 			acknowledgedAction->setText(tr("Acknowledge"));
 			//acknowledgedAction->setShortcutId();
 			connect(acknowledgedAction,SIGNAL(triggered(bool)),SLOT(onAcknowledgedByAction(bool)));
@@ -604,7 +604,7 @@ bool ChatMarkers::writeMessageHasText(int AOrder, Message &AMessage, const QStri
 }
 
 bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
-{
+{		
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
 
@@ -623,14 +623,13 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 										.arg(AMessage.id());
 
 		QString hash = QString::fromLatin1(
-					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
+					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
 
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-//		image.setToolTip(tr("Received"));
 		image.setProperty(QpXhtml::ObjectId, hash);
 		cursor.insertImage(image);
 
@@ -654,10 +653,10 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 	Q_UNUSED(AStreamJid)
 	Q_UNUSED(ADirectionIn)
 
-	qDebug() << "ChatMarkers::archiveMessageEdit(" << AOrder
-			 << "," << AStreamJid.full()
-			 << "," << AMessage.stanza().toString()
-			 << "," << ADirectionIn << ")";
+//	qDebug() << "ChatMarkers::archiveMessageEdit(" << AOrder
+//			 << "," << AStreamJid.full()
+//			 << "," << AMessage.stanza().toString()
+//			 << "," << ADirectionIn << ")";
 
 //    if (!AMessage.stanza().firstElement("received", NS_CHATMARKERS).isNull())
 //        return true;
@@ -702,10 +701,9 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 
 		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
 
-		IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-
-		if (!window)
-			window = FMessageWidgets->findChatWindow(AContactJid, AStreamJid);
+		IMessageChatWindow *window = AType==Acknowledge?
+					FMessageWidgets->findChatWindow(AContactJid, AStreamJid):
+					FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 
 		if (!window)
 		{
@@ -714,36 +712,43 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		}
 
 		for (; i>=0 && !ids->at(i).isEmpty(); --i)
-		{
+		{			
 			QString id = QString("%1|%2|%3").arg(AStreamJid.full().toLower())
 											.arg(AContactJid.full().toLower())
-											.arg(AMessageId);
+											.arg(ids->at(i));
 
 			QString hash = QString::fromLatin1(
-						QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
-
+						QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
 			idsNum++;
 			AMarkerHash.insert(id);
 
-			QString image;
+			QString image, title;
 
 			switch (AType)
 			{
 				case Received:
 					image = MNI_MESSAGE_RECEIVED;
+					title = tr("Received");
 					break;
 				case Displayed:
 					image = MNI_MESSAGE_DISPLAYED;
+					title = tr("Displayed");
 					break;
 				case Acknowledged:
 					image = MNI_MESSAGE_ACKNOWLEDGED;
+					title = tr("Acknowledged");
+					break;
+				case Acknowledge:
+					qDebug() << "Acknowledge:";
+					image = MNI_MESSAGE_ACKNOWLEDGE;
+					title = tr("Acknowledged");
+					break;
 				default:
 					break;
 			}
 
-			bool ok = window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
-			if (!ok)
-				LOG_WARNING("Setting image URL for id failed!");
+			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
+			window->viewWidget()->setObjectTitle(hash, title);
 		}
 
 		QStringList newList;
@@ -864,7 +869,7 @@ void ChatMarkers::markMessage(const Jid &AStreamJid, const Jid &AContactJid, con
 	if (AType == Acknowledged &&
 		Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())
 		setMessageMarker(AContactJid, AStreamJid, AMessageId,
-						 FAcknowledgedRequestHash, FAcknowledgedHash, Acknowledged);
+						 FAcknowledgedRequestHash, FAcknowledgedHash, Acknowledge);
 }
 
 void ChatMarkers::sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const ChatMarkers::Type &AType, const QString &AMessageId)

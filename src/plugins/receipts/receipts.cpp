@@ -274,7 +274,7 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-		image.setToolTip(tr("Received"));
+//		image.setToolTip(tr("Received"));
 		image.setProperty(QpXhtml::ObjectId, hash);
 		cursor.insertImage(image);
 		return true;
@@ -340,6 +340,7 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 				}
 			}
 			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED)).toString());
+			window->viewWidget()->setObjectTitle(hash, tr("Received"));
 		}
 	}
 }

@@ -1758,9 +1758,9 @@ void MessageArchiver::processPendingMessages(const Jid &AStreamJid)
 
 bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, bool ADirectionIn)
 {
-	qDebug() << "MessageArchiver::prepareMessage(" << AStreamJid.full()
-			 << "," << AMessage.stanza().toString()
-			 << "," << ADirectionIn << ")";
+//	qDebug() << "MessageArchiver::prepareMessage(" << AStreamJid.full()
+//			 << "," << AMessage.stanza().toString()
+//			 << "," << ADirectionIn << ")";
 //	if (AMessage.body().isEmpty())
 //		return false;
 	if (AMessage.type()==Message::Error)
@@ -1775,7 +1775,7 @@ bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, b
 	else if (!ADirectionIn && AMessage.to().isEmpty())
 		AMessage.setTo(AStreamJid.domain());
 
-	qDebug() << "HERE!";
+//	qDebug() << "HERE!";
 
 	for (QMultiMap<int,IArchiveHandler *>::const_iterator it = FArchiveHandlers.constBegin(); it!=FArchiveHandlers.constEnd(); ++it)
 	{
@@ -1784,7 +1784,7 @@ bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, b
 			return false;
 	}
 
-	qDebug() << "HERE!!!";
+//	qDebug() << "HERE!!!";
 
 	if (AMessage.type()==Message::Chat || AMessage.type()==Message::GroupChat)
 	{
@@ -1797,9 +1797,9 @@ bool MessageArchiver::prepareMessage(const Jid &AStreamJid, Message &AMessage, b
 
 bool MessageArchiver::processMessage(const Jid &AStreamJid, const Message &AMessage, bool ADirectionIn)
 {
-	qDebug() << "MessageArchiver::processMessage(" << AStreamJid.full()
-			 << "," << AMessage.stanza().toString()
-			 << "," << ADirectionIn << ")";
+//	qDebug() << "MessageArchiver::processMessage(" << AStreamJid.full()
+//			 << "," << AMessage.stanza().toString()
+//			 << "," << ADirectionIn << ")";
 
 	Jid itemJid = ADirectionIn ? (!AMessage.from().isEmpty() ? AMessage.from() : AStreamJid.domain()) : AMessage.to();
 	if (!isReady(AStreamJid))

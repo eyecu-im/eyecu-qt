@@ -188,6 +188,13 @@ bool ViewWidget::setImageUrl(const QString &AId, const QString &AUrl)
 		return FMessageStyle->setImageUrl(FStyleWidget, AId, AUrl);
 	return false;
 }
+
+bool ViewWidget::setObjectTitle(const QString &AId, const QString &ATitle)
+{
+	if (FMessageStyle && FStyleWidget)
+		return FMessageStyle->setObjectTitle(FStyleWidget, AId, ATitle);
+	return false;
+}
 // *** >>> eyeCU >>> ***
 void ViewWidget::initialize()
 {

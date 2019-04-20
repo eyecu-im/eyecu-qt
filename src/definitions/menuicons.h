@@ -274,6 +274,7 @@
 #define MNI_MESSAGE_RECEIVED            "messageReceived"
 #define MNI_MESSAGE_DISPLAYED			"messageDisplayed"
 #define MNI_MESSAGE_ACKNOWLEDGED		"messageAcknowledged"
+#define MNI_MESSAGE_ACKNOWLEDGE			"messageAcknowledge"
 
 //Poi
 #define MNI_POI                         "poi"

@@ -43,7 +43,8 @@ public:
 		Unknown,
 		Received,
 		Displayed,
-		Acknowledged
+		Acknowledged,
+		Acknowledge
 	};
 	ChatMarkers();
 	~ChatMarkers();

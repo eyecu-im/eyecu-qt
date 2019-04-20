@@ -147,21 +147,6 @@ QTextDocumentFragment AdiumMessageStyle::textFragmentAt(QWidget *AWidget, const 
 	}
 	return QTextDocumentFragment();
 }
-// *** <<< eyeCU <<< ***
-QImage AdiumMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
-{
-	QWebElement element(hitTest(AWidget, APosition).element());
-	if (element.tagName().toUpper()=="IMG")
-	{
-		QImage image(element.geometry().width(), element.geometry().height(), QImage::Format_ARGB32);
-		QPainter painter(&image);
-		element.render(&painter);
-		painter.end();
-		return image;
-	}
-	return QImage();
-}
-// *** >>> eyeCU >>> ***
 
 bool AdiumMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear)
 {
@@ -253,6 +238,39 @@ bool AdiumMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, co
 	return false;
 }
 
+// *** <<< eyeCU <<< ***
+QImage AdiumMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
+{
+	QWebElement element(hitTest(AWidget, APosition).element());
+	if (element.tagName().toUpper()=="IMG")
+	{
+		QImage image(element.geometry().width(), element.geometry().height(), QImage::Format_ARGB32);
+		QPainter painter(&image);
+		element.render(&painter);
+		painter.end();
+		return image;
+	}
+	return QImage();
+}
+
+static QWebElement findRecursively(const QWebElement &AParent, const QString &AId, const QString &ATagName=QString())
+{
+	for (QWebElement e = AParent.firstChild(); !e.isNull(); e=e.nextSibling())
+	{
+		if ((AId.isEmpty() || e.attribute("id") == AId) &&
+			(ATagName.isEmpty() || e.tagName() == ATagName))
+			return e;
+		else
+		{
+			QWebElement e1 = findRecursively(e, AId, ATagName);
+			if (!e1.isNull())
+				return e1;
+		}
+	}
+
+	return QWebElement();
+}
+
 bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
@@ -261,15 +279,13 @@ bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, 
 		QWebFrame *frame = view->page()->currentFrame();
 		if (frame)
 		{
-			QWebElement img = frame->findFirstElement(QString("img#%1").arg(AObjectId));
-			if (!img.isNull())
+			QWebElement img = findRecursively(frame->documentElement(), AObjectId, "IMG");
+			if (img.isNull())
+				REPORT_ERROR(QString("Failed to set image name: Image with ID:%1 not found!").arg(AObjectId));
+			else
 			{
 				img.setAttribute("src", AUrl);
 				return true;
-			}
-			else
-			{
-				REPORT_ERROR("Failed to set image name: Image with specified ID not found!");
 			}
 		}
 		else
@@ -283,6 +299,38 @@ bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, 
 	}
 	return false;
 }
+
+bool AdiumMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QWebFrame *frame = view->page()->currentFrame();
+		if (frame)
+		{
+			QWebElement e = findRecursively(frame->documentElement(), AObjectId);
+			if (!e.isNull())
+			{
+				e.setAttribute("title", ATitle);
+				return true;
+			}
+			else
+			{
+				REPORT_ERROR("Failed to set object title: Element with specified ID not found!");
+			}
+		}
+		else
+		{
+			REPORT_ERROR("Failed to set object title: No current frame");
+		}
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set object title: Invalid view");
+	}
+	return false;
+}
+// *** >>> eyeCU >>> ***
 
 int AdiumMessageStyle::version() const
 {

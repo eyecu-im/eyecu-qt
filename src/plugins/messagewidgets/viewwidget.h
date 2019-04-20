@@ -37,6 +37,7 @@ public:
 // *** <<< eyeCU <<< ***
 	virtual QImage imageAt(const QPoint &APosition) const;
 	virtual bool setImageUrl(const QString &AId, const QString &AUrl);
+	virtual bool setObjectTitle(const QString &AId, const QString &ATitle);
 // *** >>> eyeCU >>> ***
 signals:
 	void urlClicked(const QUrl &AUrl);
