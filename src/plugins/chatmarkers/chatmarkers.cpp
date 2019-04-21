@@ -613,7 +613,8 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 	if (((direction == IMessageProcessor::DirectionOut &&
 		  (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
 		   Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
-		   Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())) ||
+		   Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
+		  AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull()) ||
 		 (direction == IMessageProcessor::DirectionIn &&
 		  Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())) &&
 		!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
