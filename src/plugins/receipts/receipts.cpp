@@ -194,6 +194,15 @@ void Receipts::removeNotifiedMessages(IMessageChatWindow *AWindow)
 	}
 }
 
+static QString calcId(const Jid &AFrom, const Jid &ATo, const QString &AMessageId)
+{
+	return QString::fromLatin1(QCryptographicHash::hash(QString("%1|%2|%3").arg(AFrom.full())
+																		   .arg(ATo.full())
+																		   .arg(AMessageId)
+																		   .toUtf8(),
+														QCryptographicHash::Md4).toHex());
+}
+
 bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
 {
 	Q_UNUSED(AOrder)
@@ -261,20 +270,13 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
 		Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-	{
-		QString id = QString("%1|%2|%3").arg(AMessage.from().toLower())
-										.arg(AMessage.to().toLower())
-										.arg(AMessage.id());
-
-		QString hash = QString::fromLatin1(
-					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
-
+	{	
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-		image.setProperty(QpXhtml::ObjectId, hash);
+		image.setProperty(QpXhtml::ObjectId, calcId(AMessage.from(), AMessage.to(), AMessage.id()));
 		cursor.insertImage(image);
 		return true;
 	}
@@ -308,16 +310,9 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 	if (FDeliveryRequestHash.contains(AStreamJid) &&
 			FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
 			FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
-	{		
-		QString id = QString("%1|%2|%3").arg(AStreamJid.full().toLower())
-										.arg(AContactJid.full().toLower())
-										.arg(AMessageId);
-
-		QString hash = QString::fromLatin1(
-					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
-
-		QStringList Ids = FDeliveryRequestHash[AStreamJid][AContactJid];
-		FDeliveryRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
+	{
+		QStringList ids = FDeliveryRequestHash[AStreamJid][AContactJid];
+		FDeliveryRequestHash[AStreamJid][AContactJid] = ids.mid(ids.indexOf(AMessageId)+1);
 		if (FMessageWidgets)
 		{
 			IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
@@ -338,6 +333,8 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 					connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
 				}
 			}
+
+			QString hash = calcId(AStreamJid, AContactJid, AMessageId);
 			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED)).toString());
 			window->viewWidget()->setObjectTitle(hash, tr("Received"));
 		}

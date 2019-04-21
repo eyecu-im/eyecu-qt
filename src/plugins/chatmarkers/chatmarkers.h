@@ -74,8 +74,7 @@ public:
 
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId,
-						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash, QSet<QString> &AMarkerHash,
-						  Type AType);
+						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash, Type AType);
 	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
@@ -120,9 +119,6 @@ private:
 	IReceipts			*FReceipts;
 	IconStorage         *FIconStorage;
 
-	QSet<QString>       FReceivedHash;
-	QSet<QString>       FDisplayedHash;
-	QSet<QString>       FAcknowledgedHash;
 	QHash<IMessageChatWindow *, int>   FNotifies;
 
 	// Outgoing
