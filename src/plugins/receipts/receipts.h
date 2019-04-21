@@ -63,6 +63,9 @@ protected:
     bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
 
+signals:
+	void messageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+
 private:
     IMessageProcessor   *FMessageProcessor;
     IMessageArchiver    *FMessageArchiver;

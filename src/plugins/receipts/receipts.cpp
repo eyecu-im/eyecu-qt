@@ -267,14 +267,13 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 										.arg(AMessage.id());
 
 		QString hash = QString::fromLatin1(
-					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
+					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
 
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-//		image.setToolTip(tr("Received"));
 		image.setProperty(QpXhtml::ObjectId, hash);
 		cursor.insertImage(image);
 		return true;
@@ -309,13 +308,13 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 	if (FDeliveryRequestHash.contains(AStreamJid) &&
 			FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
 			FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
-	{
+	{		
 		QString id = QString("%1|%2|%3").arg(AStreamJid.full().toLower())
 										.arg(AContactJid.full().toLower())
 										.arg(AMessageId);
 
 		QString hash = QString::fromLatin1(
-					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Sha1).toHex());
+					QCryptographicHash::hash(id.toUtf8(), QCryptographicHash::Md4).toHex());
 
 		QStringList Ids = FDeliveryRequestHash[AStreamJid][AContactJid];
 		FDeliveryRequestHash[AStreamJid][AContactJid] = Ids.mid(Ids.indexOf(AMessageId)+1);
@@ -343,6 +342,8 @@ void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const
 			window->viewWidget()->setObjectTitle(hash, tr("Received"));
 		}
 	}
+
+	emit messageDelivered(AStreamJid, AContactJid, AMessageId);
 }
 
 #if QT_VERSION < 0x050000
