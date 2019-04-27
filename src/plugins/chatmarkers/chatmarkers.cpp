@@ -452,6 +452,13 @@ bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) con
 		return true;
 }
 
+bool ChatMarkers::isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+	if (FReceipts)
+		return FReceipts->isSupported(AStreamJid, AContactJid);
+	return false;
+}
+
 void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
 {
 	if (FNotifies.contains(AWindow))
@@ -697,6 +704,8 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		}
 		else
 			return;
+
+		bool receptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
 
 		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
 

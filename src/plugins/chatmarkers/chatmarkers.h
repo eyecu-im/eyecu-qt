@@ -83,6 +83,7 @@ protected:
 	void markMessages(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QStringList &AMessageIds);
 	void sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	bool isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void removeNotifiedMessages(IMessageChatWindow *AWindow);
 	void updateToolBarAction();
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
