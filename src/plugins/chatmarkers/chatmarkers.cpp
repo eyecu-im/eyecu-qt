@@ -65,7 +65,11 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 
 	plugin = APluginManager->pluginInterface("IReceipts").value(0,nullptr);
 	if (plugin)
+	{
 		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+		connect(FReceipts->instance(), SIGNAL(messageDelivered(Jid,Jid,QString)),
+									   SLOT(onMessageDelivered(Jid,Jid,QString)));
+	}
 
 	plugin = APluginManager->pluginInterface("INotifications").value(0,nullptr);
 	if (plugin)
@@ -108,7 +112,8 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 	}
 
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
-	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
+	connect(Options::instance(),SIGNAL(optionsChanged(OptionsNode)),
+								SLOT(onOptionsChanged(OptionsNode)));
 
 	return true;
 }
@@ -377,7 +382,7 @@ void ChatMarkers::onPresenceOpened(IPresence *APresence)
 
 void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)
 {
-	if (AStateOnline)
+	if (AStateOnline || isReceiptsSupported(AStreamJid, AContactJid))
 		return;
 
 	if (FLastMarkableDisplayHash.contains(AStreamJid) &&
@@ -415,6 +420,15 @@ void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AConta
 		!FAcknowledgedRequestHash[AStreamJid][AContactJid].isEmpty() &&
 		!FAcknowledgedRequestHash[AStreamJid][AContactJid].last().isEmpty())
 		FAcknowledgedRequestHash[AStreamJid][AContactJid].append(QString());
+}
+
+void ChatMarkers::onMessageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+{
+	qDebug() << "ChatMarkers::onMessageDelivered("
+			 << AStreamJid.full() << ","
+			 << AContactJid.full() << ","
+			 << AMessageId << ")";
+	FDeliveredHash[AStreamJid][AContactJid].insert(AMessageId);
 }
 
 void ChatMarkers::onOptionsOpened()
@@ -463,7 +477,8 @@ void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
 {
 	if (FNotifies.contains(AWindow))
 	{
-		for(QHash<IMessageChatWindow *, int>::const_iterator it=FNotifies.constBegin(); it!=FNotifies.constEnd(); it++)
+		for(QHash<IMessageChatWindow *, int>::const_iterator it=FNotifies.constBegin();
+			it!=FNotifies.constEnd(); it++)
 			FNotifications->removeNotification(*it);
 		FNotifies.remove(AWindow);
 	}
@@ -684,8 +699,16 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 
 void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString &AMessageId,
-								   QHash<Jid, QHash<Jid, QStringList> > &ARequestHash, ChatMarkers::Type AType)
+								   QHash<Jid, QHash<Jid, QStringList> > &ARequestHash,
+								   ChatMarkers::Type AType, bool ADummy)
 {
+	qDebug() << "ChatMarkers::setMessageMarker("
+			 << AStreamJid.full() << ","
+			 << AContactJid.full() << ","
+			 << AMessageId << ","
+			 << AType
+			 << "," << ADummy << ")";
+
 	if (ARequestHash.contains(AStreamJid))
 	{
 		Jid contactJid;
@@ -705,93 +728,103 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		else
 			return;
 
-		bool receptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
+		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
+
+		qDebug() << "receiptsSupported=" << receiptsSupported;
+
+		if (receiptsSupported && (
+			!FDeliveredHash.contains(AStreamJid) ||
+			!FDeliveredHash[AStreamJid].contains(AContactJid)))
+			return;
 
 		int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
 
-		IMessageChatWindow *window = AType==Acknowledge?
-					FMessageWidgets->findChatWindow(AContactJid, AStreamJid):
-					FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+		QStringList newList = *ids;
 
-		if (!window)
+		IMessageChatWindow *window = nullptr;
+
+		if (!ADummy)
 		{
-			REPORT_ERROR("No chat window found for specified Stream JID/Contact JID pair!");
-			return;
+			window = AType==Acknowledge?
+						FMessageWidgets->findChatWindow(AContactJid, AStreamJid):
+						FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+
+			if (!window)
+			{
+				REPORT_ERROR("No chat window found for specified Stream JID/Contact JID pair!");
+				return;
+			}
 		}
 
 		for (; i>=0 && !ids->at(i).isEmpty(); --i)
-		{						
-			idsNum++;
+		{
+			if (receiptsSupported &&
+				!FDeliveredHash[AStreamJid][AContactJid].contains(AMessageId))
+				continue;
 
-			QString image, title;
-
-			switch (AType)
+			if (!ADummy)
 			{
-				case Received:
-					image = MNI_MESSAGE_RECEIVED;
-					title = tr("Received");
-					break;
-				case Displayed:
-					image = MNI_MESSAGE_DISPLAYED;
-					title = tr("Displayed");
-					break;
-				case Acknowledged:
-					image = MNI_MESSAGE_ACKNOWLEDGED;
-					title = tr("Acknowledged");
-					break;
-				case Acknowledge:
-					qDebug() << "Acknowledge:";
-					image = MNI_MESSAGE_ACKNOWLEDGE;
-					title = tr("Acknowledged");
-					break;
-				default:
-					break;
+				idsNum++;
+
+				QString image, title;
+
+				switch (AType)
+				{
+					case Received:
+						image = MNI_MESSAGE_RECEIVED;
+						title = tr("Received");
+						break;
+					case Displayed:
+						image = MNI_MESSAGE_DISPLAYED;
+						title = tr("Displayed");
+						break;
+					case Acknowledged:
+						image = MNI_MESSAGE_ACKNOWLEDGED;
+						title = tr("Acknowledged");
+						break;
+					case Acknowledge:
+						qDebug() << "Acknowledge:";
+						image = MNI_MESSAGE_ACKNOWLEDGE;
+						title = tr("Acknowledged");
+						break;
+					default:
+						break;
+				}
+
+				QString hash = calcId(AStreamJid, AContactJid, ids->at(i));
+				window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
+				window->viewWidget()->setObjectTitle(hash, title);
 			}
 
-			QString hash = calcId(AStreamJid, AContactJid, ids->at(i));
-			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
-			window->viewWidget()->setObjectTitle(hash, title);
+			ids->removeAt(i);
 		}
 
-		QStringList newList;
-		if (i>=0)
-			newList = ids->mid(0, i+1);
-
-		if (index < ids->size()-1)
-		{
-			if (ids->at(index+1).isEmpty())
-				index++;
-			if (index < ids->size()-1)
-				newList.append(ids->mid(index+1));
-		}
-
-		if (newList.isEmpty())
+		if (ids->isEmpty())
 		{
 			ARequestHash[AStreamJid].remove(contactJid);
 			if (ARequestHash[AStreamJid].isEmpty())
 				ARequestHash.remove(AStreamJid);
 		}
-		else
-			*ids = newList;
 
-		showNotification(AStreamJid, AContactJid, AType, idsNum);
+		if (idsNum)
+			showNotification(AStreamJid, AContactJid, AType, idsNum);
 	}
 }
 
-void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy)
 {
-	setMessageMarker(AStreamJid, AContactJid, AMessageId, FReceivedRequestHash, Received);
+	setMessageMarker(AStreamJid, AContactJid, AMessageId, FReceivedRequestHash, Received, ADummy);
 }
 
-void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
+void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy)
 {
-	setReceived(AStreamJid, AContactJid, AMessageId);
-	setMessageMarker(AStreamJid, AContactJid, AMessageId, FDisplayedRequestHash, Displayed);
+	setReceived(AStreamJid, AContactJid, AMessageId, true);
+	setMessageMarker(AStreamJid, AContactJid, AMessageId, FDisplayedRequestHash, Displayed, ADummy);
 }
 
 void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-	setDisplayed(AStreamJid, AContactJid, AMessageId);
+	setDisplayed(AStreamJid, AContactJid, AMessageId, true);
 	setMessageMarker(AStreamJid, AContactJid, AMessageId, FAcknowledgedRequestHash, Acknowledged);
 }
 

@@ -73,10 +73,12 @@ public:
 	bool isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const;
 
 protected:
-	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId,
-						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash, Type AType);
-	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
+						  const QString &AMessageId,
+						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash,
+						  Type AType, bool ADummy=false);
+	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy = false);
+	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy = false);
 	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum);
 	void markMessage(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
@@ -104,6 +106,8 @@ protected slots:
 	//Presence
 	void onPresenceOpened(IPresence *APresence);
 	void onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline);
+	//IReceipts
+	void onMessageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 
 signals:
 	void markable(const Jid &AStreamJid, const Jid &AContactJid);
@@ -126,6 +130,8 @@ private:
 	QHash<Jid, QHash<Jid, QStringList> > FReceivedRequestHash;
 	QHash<Jid, QHash<Jid, QStringList> > FDisplayedRequestHash;
 	QHash<Jid, QHash<Jid, QStringList> > FAcknowledgedRequestHash;
+
+	QHash<Jid, QHash<Jid, QSet<QString> > > FDeliveredHash;
 
 	// Incomming
 	QHash<Jid, QHash<Jid, QStringList> > FLastMarkableDisplayHash;
