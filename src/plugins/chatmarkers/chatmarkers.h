@@ -75,6 +75,8 @@ public:
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
 						  const QString &AMessageId, Type AType);
+	void setAcknowledgedMarker(const Jid &AStreamJid, const Jid &AContactJid,
+							   const QString &AMessageId);
 	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
@@ -136,6 +138,7 @@ private:
 	// Incomming
 	QHash<Jid, QHash<Jid, QStringList> > FLastMarkableDisplayHash;
 	QHash<Jid, QHash<Jid, QStringList> > FLastMarkableAcknowledgeHash;
+	QHash<Jid, QHash<Jid, QStringList> > FAcknowledgeHash;
 
 	// Pending
 	QHash<Jid, QHash<Jid, QHash<QString, int> > > FPendingMarkers;
