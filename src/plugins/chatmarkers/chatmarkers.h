@@ -74,11 +74,9 @@ public:
 
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
-						  const QString &AMessageId,
-						  QHash<Jid, QHash<Jid, QStringList> > &ARequestHash,
-						  Type AType, bool ADummy=false);
-	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy = false);
-	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, bool ADummy = false);
+						  const QString &AMessageId, Type AType);
+	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
+	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum);
 	void markMessage(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
@@ -127,9 +125,11 @@ private:
 	QHash<IMessageChatWindow *, int>   FNotifies;
 
 	// Outgoing
-	QHash<Jid, QHash<Jid, QStringList> > FReceivedRequestHash;
-	QHash<Jid, QHash<Jid, QStringList> > FDisplayedRequestHash;
-	QHash<Jid, QHash<Jid, QStringList> > FAcknowledgedRequestHash;
+	QHash<Jid, QHash<Jid, QStringList> > FRequestHash;
+
+	QHash<Jid, QHash<Jid, QString> > FLastReceived;
+	QHash<Jid, QHash<Jid, QString> > FLastDisplayed;
+	QHash<Jid, QHash<Jid, QString> > FLastAcknowledged;
 
 	QHash<Jid, QHash<Jid, QSet<QString> > > FDeliveredHash;
 
