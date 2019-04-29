@@ -408,6 +408,63 @@ void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AConta
 void ChatMarkers::onMessageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
 	FDeliveredHash[AStreamJid][AContactJid].insert(AMessageId);
+
+	// Not sure he code below is necessary
+	Jid contactJid;
+	QStringList *ids;
+	if (FRequestHash[AStreamJid].contains(AContactJid) &&
+		FRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+	{
+		contactJid = AContactJid;
+		ids = &FRequestHash[AStreamJid][AContactJid];
+	}
+	else if (FRequestHash[AStreamJid].contains(AContactJid.bare()) &&
+			 FRequestHash[AStreamJid][AContactJid.bare()].contains(AMessageId))
+	{
+		contactJid = AContactJid.bare();
+		ids = &FRequestHash[AStreamJid][AContactJid.bare()];
+	}
+	else
+		return;
+
+	QString lastDisplayed = FLastDisplayed[AStreamJid][AContactJid];
+	QString lastAcknowledged = FLastAcknowledged[AStreamJid][AContactJid];
+
+	QStringListIterator it(*ids);
+
+	bool isDisplayed=false;
+	bool isAcknowledged=false;
+
+	for (it.toBack(); it.hasPrevious();)
+	{
+		QString id = it.previous();
+		if (id == lastAcknowledged)
+			isAcknowledged = true;
+		if (id == lastDisplayed)
+			isDisplayed = true;
+		if (id == AMessageId)
+			break;
+	}
+
+	QString image, title;
+	if (isAcknowledged)
+	{
+		image = MNI_MESSAGE_ACKNOWLEDGED;
+		title = tr("Acknowledged");
+	}
+	else if (isDisplayed)
+	{
+		image = MNI_MESSAGE_DISPLAYED;
+		title = tr("Displayed");
+	}
+	else
+		return;
+
+	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+
+	QString hash = calcId(AStreamJid, AContactJid, AMessageId);
+	window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
+	window->viewWidget()->setObjectTitle(hash, title);
 }
 
 void ChatMarkers::onOptionsOpened()
@@ -745,7 +802,6 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 						title = tr("Acknowledged");
 						break;
 					case Acknowledge:
-						qDebug() << "Acknowledge:";
 						image = MNI_MESSAGE_ACKNOWLEDGE;
 						title = tr("Acknowledged");
 						break;
