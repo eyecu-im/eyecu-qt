@@ -9,12 +9,12 @@ ChatMarkersOptions::ChatMarkersOptions(QWidget *AParent) :
 {
 	ui->setupUi(this);
 
-	connect(ui->chkShowReceived, SIGNAL(toggled()), SIGNAL(modified()));
-	connect(ui->chkShowAckOwn, SIGNAL(toggled()), SIGNAL(modified()));
+	connect(ui->chkShowReceived, SIGNAL(toggled(bool)), SIGNAL(modified()));
+	connect(ui->chkShowAckOwn, SIGNAL(toggled(bool)), SIGNAL(modified()));
 
-	connect(ui->chkSendReceived, SIGNAL(toggled()), SIGNAL(modified()));
-	connect(ui->chkSendDisplayed, SIGNAL(toggled()), SIGNAL(modified()));
-	connect(ui->chkSendAck, SIGNAL(toggled()), SIGNAL(modified()));
+	connect(ui->chkSendReceived, SIGNAL(toggled(bool)), SIGNAL(modified()));
+	connect(ui->chkSendDisplayed, SIGNAL(toggled(bool)), SIGNAL(modified()));
+	connect(ui->chkSendAck, SIGNAL(toggled(bool)), SIGNAL(modified()));
 
 	reset();
 }
