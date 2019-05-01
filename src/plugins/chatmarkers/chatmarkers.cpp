@@ -1,4 +1,5 @@
 #include "chatmarkers.h"
+#include "chatmarkersoptions.h"
 #include <definitions/toolbargroups.h>
 #include <definitions/messageeditororders.h>
 #include <definitions/messagewriterorders.h>
@@ -121,13 +122,11 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 
 bool ChatMarkers::initSettings()
 {
-	Options::setDefaultValue(OPV_MARKERS_DISPLAY_RECEIVED, true);
-	Options::setDefaultValue(OPV_MARKERS_DISPLAY_DISPLAYED, true);
-	Options::setDefaultValue(OPV_MARKERS_DISPLAY_ACKNOWLEDGED, true);
-	Options::setDefaultValue(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN, true);
+	Options::setDefaultValue(OPV_MARKERS_SHOW_LEVEL, 3);
+	Options::setDefaultValue(OPV_MARKERS_SHOW_ACKOWN, true);
 	Options::setDefaultValue(OPV_MARKERS_SEND_RECEIVED, true);
 	Options::setDefaultValue(OPV_MARKERS_SEND_DISPLAYED, true);
-	Options::setDefaultValue(OPV_MARKERS_SEND_ACKNOWLEDGED, true);
+	Options::setDefaultValue(OPV_MARKERS_SEND_ACK, true);
 	return true;
 }
 
@@ -136,41 +135,11 @@ QMultiMap<int, IOptionsDialogWidget *> ChatMarkers::optionsDialogWidgets(const Q
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
 	if (ANodeId == OPN_MESSAGES && Options::node(OPV_COMMON_ADVANCED).value().toBool())
 	{
-		widgets.insert(OHO_MESSAGES_MARKERS,
-					   FOptionsManager->newOptionsDialogHeader(tr("Chat markers"),
+		widgets.insertMulti(OHO_MESSAGES_MARKERS,
+							FOptionsManager->newOptionsDialogHeader(tr("Chat markers"),
 																	AParent));
-		if (!FReceipts)
-		{
-			widgets.insert(OWO_MESSAGES_MARKERS_DISPLAY_RECEIVED,
-						   FOptionsManager->newOptionsDialogWidget
-							(Options::node(OPV_MARKERS_DISPLAY_RECEIVED),
-						   tr("Display message received"), AParent));
-			widgets.insert(OWO_MESSAGES_MARKERS_SEND_RECEIVED,
-						   FOptionsManager->newOptionsDialogWidget
-							(Options::node(OPV_MARKERS_SEND_RECEIVED),
-						   tr("Send message received"), AParent));
-		}
-		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_DISPLAYED,
-							FOptionsManager->newOptionsDialogWidget
-							 (Options::node(OPV_MARKERS_DISPLAY_DISPLAYED),
-							tr("Display message displayed"), AParent));
-		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_ACK,
-							FOptionsManager->newOptionsDialogWidget
-							 (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED),
-							tr("Display message read acknowledged"), AParent));
-		widgets.insertMulti(OWO_MESSAGES_MARKERS_DISPLAY_ACK_OWN,
-							FOptionsManager->newOptionsDialogWidget
-							 (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN),
-							tr("Display own message read acknowledged"), AParent));
-
-		widgets.insertMulti(OWO_MESSAGES_MARKERS_SEND_DISPLAYED,
-							FOptionsManager->newOptionsDialogWidget
-							 (Options::node(OPV_MARKERS_SEND_DISPLAYED),
-							tr("Send message displayed"), AParent));
-		widgets.insertMulti(OWO_MESSAGES_MARKERS_SEND_ACKNOWLEDGED,
-							FOptionsManager->newOptionsDialogWidget
-							 (Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED),
-							tr("Acknowledge message read"), AParent));
+		widgets.insertMulti(OWO_MESSAGES_MARKERS,
+							new ChatMarkersOptions(AParent));
 	}
 	return widgets;
 }
@@ -471,7 +440,7 @@ void ChatMarkers::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_MARKERS_SEND_RECEIVED));
 	onOptionsChanged(Options::node(OPV_MARKERS_SEND_DISPLAYED));
-	onOptionsChanged(Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED));
+	onOptionsChanged(Options::node(OPV_MARKERS_SEND_ACK));
 }
 
 void ChatMarkers::onOptionsChanged(const OptionsNode &ANode)
@@ -479,12 +448,12 @@ void ChatMarkers::onOptionsChanged(const OptionsNode &ANode)
 	if (ANode.path()==OPV_MARKERS_SEND_RECEIVED)
 		registerDiscoFeatures(ANode.value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool() ||
-							  Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool());
+							  Options::node(OPV_MARKERS_SEND_ACK).value().toBool());
 	else if (ANode.path()==OPV_MARKERS_SEND_DISPLAYED)
 		registerDiscoFeatures(ANode.value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
-							  Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool());
-	else if (ANode.path()==OPV_MARKERS_SEND_ACKNOWLEDGED)
+							  Options::node(OPV_MARKERS_SEND_ACK).value().toBool());
+	else if (ANode.path()==OPV_MARKERS_SEND_ACK)
 	{
 		registerDiscoFeatures(ANode.value().toBool() ||
 							  Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() ||
@@ -530,7 +499,7 @@ void ChatMarkers::updateToolBarAction()
 
 void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 {
-	bool acknowledge = Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool();
+	bool acknowledge = Options::node(OPV_MARKERS_SEND_ACK).value().toBool();
 
 	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(
 				AWidget->messageWindow()->instance());
@@ -601,7 +570,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 				}
 			}
 
-			if (Options::node(OPV_MARKERS_SEND_ACKNOWLEDGED).value().toBool())
+			if (Options::node(OPV_MARKERS_SEND_ACK).value().toBool())
 			{
 				bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
 
@@ -614,7 +583,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 					emit markable(AStreamJid, AMessage.from());
 			}
 
-			if (Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool() &&
+			if (Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool() &&
 				isSupported(AStreamJid, AMessage.from()) &&
 				!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
 				!AMessage.body().isNull())
@@ -635,9 +604,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 	}
 	else
 	{
-		if ((Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
-			 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
-			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
+		if ((Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt()) &&
 			isSupported(AStreamJid, AMessage.to()) &&
 			AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
 			!AMessage.body().isNull())
@@ -649,9 +616,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 			}
 			AMessage.detach();
 			AMessage.stanza().addElement("markable", NS_CHATMARKERS);
-			if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
-				Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() &&
-				Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool())
+			if (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt())
 				FRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
 		}
 	}
@@ -662,9 +627,7 @@ bool ChatMarkers::writeMessageHasText(int AOrder, Message &AMessage, const QStri
 {
 	Q_UNUSED(AOrder) Q_UNUSED(ALang)
 	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-			(Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
-			 Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
-			 Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
+			(Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt()) &&
 			!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull();
 }
 
@@ -676,12 +639,10 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 	int direction = AMessage.data(MDR_MESSAGE_DIRECTION).toInt();
 
 	if (((direction == IMessageProcessor::DirectionOut &&
-		  (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() ||
-		   Options::node(OPV_MARKERS_DISPLAY_DISPLAYED).value().toBool() ||
-		   Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED).value().toBool()) &&
+		  (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt()) &&
 		  AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull()) ||
 		 (direction == IMessageProcessor::DirectionIn &&
-		  Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())) &&
+		  Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool())) &&
 		!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
 	{
 		QTextCursor cursor(ADocument);
@@ -950,7 +911,7 @@ void ChatMarkers::markMessage(const Jid &AStreamJid, const Jid &AContactJid, con
 		FPendingMarkers[AStreamJid][AContactJid].insertMulti(AMessageId, AType);
 
 	if (AType == Acknowledged &&
-		Options::node(OPV_MARKERS_DISPLAY_ACKNOWLEDGED_OWN).value().toBool())
+		Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool())
 		setAcknowledgedMarker(AContactJid, AStreamJid, AMessageId);
 }
 

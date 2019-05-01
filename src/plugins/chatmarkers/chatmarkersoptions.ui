@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ChatMarkersOptions</class>
+ <widget class="QWidget" name="ChatMarkersOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>169</width>
+    <height>70</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Chat Markers options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1,1" columnstretch="1,0,0,0" rowminimumheight="0,0,0,0" columnminimumwidth="0,0,0,0">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="1">
+    <widget class="QLabel" name="lblSend">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Send</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblShow">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Show</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="lblDisplayOwn">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Own</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblMarker">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Marker</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lblReceived">
+     <property name="text">
+      <string>Received</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblDisplayed">
+     <property name="text">
+      <string>Displayed</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblAcknowledged">
+     <property name="text">
+      <string>Acknowledged</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QCheckBox" name="chkSendReceived"/>
+   </item>
+   <item row="1" column="2">
+    <widget class="QCheckBox" name="chkShowReceived"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="chkSendDisplayed"/>
+   </item>
+   <item row="2" column="2">
+    <widget class="QCheckBox" name="chkShowDisplayed"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="chkSendAck"/>
+   </item>
+   <item row="3" column="2">
+    <widget class="QCheckBox" name="chkShowAck"/>
+   </item>
+   <item row="3" column="3">
+    <widget class="QCheckBox" name="chkShowAckOwn"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>chkShowAck</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ChatMarkersOptions</receiver>
+   <slot>onShowAckToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>chkShowDisplayed</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>ChatMarkersOptions</receiver>
+   <slot>onShowDisplayedToggled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>345</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onShowDisplayedToggled(bool)</slot>
+  <slot>onShowAckToggled(bool)</slot>
+ </slots>
+</ui>

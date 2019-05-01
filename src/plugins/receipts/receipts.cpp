@@ -1,4 +1,6 @@
 #include "receipts.h"
+#include "receiptsoptions.h"
+
 #include "definitions/messageeditororders.h"
 #include "definitions/messagewriterorders.h"
 #include "definitions/messagedataroles.h"
@@ -16,6 +18,7 @@
 #include <QFile>
 #include <QpXhtml>
 #include <QCryptographicHash>
+#include <QCheckBox>
 
 Receipts::Receipts():
 		FMessageProcessor(nullptr),
@@ -24,6 +27,7 @@ Receipts::Receipts():
 		FOptionsManager(nullptr),
 		FNotifications(nullptr),
 		FMessageWidgets(nullptr),
+		FChatMarkers(nullptr),
 		FIconStorage(nullptr)
 {}
 
@@ -60,6 +64,10 @@ bool Receipts::initConnections(IPluginManager *APluginManager, int & /*AInitOrde
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
+	plugin = APluginManager->pluginInterface("IChatMarkers").value(0);
+	if (plugin)
+		FChatMarkers = qobject_cast<IChatMarkers *>(plugin->instance());
+
 	plugin = APluginManager->pluginInterface("INotifications").value(0);
 	if (plugin)
 	{
@@ -82,7 +90,8 @@ bool Receipts::initConnections(IPluginManager *APluginManager, int & /*AInitOrde
 //---------------------
 bool Receipts::initSettings()
 {
-	Options::setDefaultValue(OPV_MARKERS_DISPLAY_RECEIVED, true);
+	if (!FChatMarkers)
+		Options::setDefaultValue(OPV_MARKERS_SHOW_LEVEL, 1);
 	Options::setDefaultValue(OPV_MARKERS_SEND_RECEIVED, true);
 	return true;
 }
@@ -90,19 +99,15 @@ bool Receipts::initSettings()
 QMultiMap<int, IOptionsDialogWidget *> Receipts::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
 {
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (ANodeId == OPN_MESSAGES && Options::node(OPV_COMMON_ADVANCED).value().toBool())
+	if (ANodeId == OPN_MESSAGES &&
+		Options::node(OPV_COMMON_ADVANCED).value().toBool() &&
+		!FChatMarkers)
 	{
 		widgets.insert(OHO_MESSAGES_MARKERS,
-					   FOptionsManager->newOptionsDialogHeader(tr("Chat markers"),
+					   FOptionsManager->newOptionsDialogHeader(tr("Message delivery receipts"),
 															   AParent));
-		widgets.insert(OWO_MESSAGES_MARKERS_DISPLAY_RECEIVED,
-					   FOptionsManager->newOptionsDialogWidget
-						(Options::node(OPV_MARKERS_DISPLAY_RECEIVED),
-					   tr("Display message received"), AParent));
-		widgets.insert(OWO_MESSAGES_MARKERS_SEND_RECEIVED,
-					   FOptionsManager->newOptionsDialogWidget
-						(Options::node(OPV_MARKERS_SEND_RECEIVED),
-					   tr("Send message received"), AParent));
+		widgets.insertMulti(OWO_MESSAGES_MARKERS,
+							new ReceiptsOptions(AParent));
 	}
 	return widgets;
 }
@@ -236,7 +241,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	}
 	else
 	{
-		if (Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+		if (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt() &&
 			isSupported(AStreamJid, AMessage.to()) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&
 			!AMessage.body().isNull())
@@ -258,7 +263,7 @@ bool Receipts::writeMessageHasText(int AOrder, Message &AMessage, const QString 
 {
 	Q_UNUSED(AOrder) Q_UNUSED(ALang)
 	return AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-						 Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+						 Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt() &&
 						 !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull();
 }
 
@@ -268,7 +273,7 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 	Q_UNUSED(ALang)
 
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
-		Options::node(OPV_MARKERS_DISPLAY_RECEIVED).value().toBool() &&
+		Options::node(OPV_MARKERS_SHOW_LEVEL).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
 	{	
 		QTextCursor cursor(ADocument);

@@ -10,6 +10,7 @@
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/inotifications.h>
 #include <interfaces/imessagewidgets.h>
+#include <interfaces/ichatmarkers.h>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -73,6 +74,7 @@ private:
     IOptionsManager     *FOptionsManager;
     INotifications      *FNotifications;
     IMessageWidgets     *FMessageWidgets;
+	IChatMarkers		*FChatMarkers;
     IconStorage         *FIconStorage;
 
     QHash<IMessageChatWindow *, int>   FNotifies;

@@ -1,11 +1,11 @@
 HEADERS = avatars.h \
     avataroptionswidget.h \
-    $$PWD/avatarsizeoptionswidget.h
+    avatarsizeoptionswidget.h
 
 SOURCES = avatars.cpp \
     avataroptionswidget.cpp \
-    $$PWD/avatarsizeoptionswidget.cpp
+    avatarsizeoptionswidget.cpp
 
 FORMS += \
     avataroptionswidget.ui \
-    $$PWD/avatarsizeoptionswidget.ui
+    avatarsizeoptionswidget.ui
