@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Chat Markers options</string>
+   <string notr="true">Chat Markers options widget</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1,1" columnstretch="1,0,0,0" rowminimumheight="0,0,0,0" columnminimumwidth="0,0,0,0">
    <property name="leftMargin">

@@ -163,7 +163,7 @@ bool ChatMarkers::initObjects()
 		displayedType.order = NTO_DISPLAYED_NOTIFY;
 		if (FIconStorage)
 			displayedType.icon = FIconStorage->getIcon(MNI_MESSAGE_DISPLAYED);
-		displayedType.title = tr("When message marked with a displayed Chat Marker");
+		displayedType.title = tr("When message marked as displayed");
 		displayedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		displayedType.kindDefs = displayedType.kindMask;
 		FNotifications->registerNotificationType(NNT_DISPLAYED, displayedType);
@@ -172,7 +172,7 @@ bool ChatMarkers::initObjects()
 		acknowledgedType.order = NTO_ACKNOWLEDGED_NOTIFY;
 		if (FIconStorage)
 			acknowledgedType.icon = FIconStorage->getIcon(MNI_MESSAGE_ACKNOWLEDGED);
-		acknowledgedType.title = tr("When message marked with a acknowledged Chat Marker");
+		acknowledgedType.title = tr("When message marked as acknowledged");
 		acknowledgedType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		acknowledgedType.kindDefs = acknowledgedType.kindMask;
 		FNotifications->registerNotificationType(NNT_ACKNOWLEDGED, acknowledgedType);

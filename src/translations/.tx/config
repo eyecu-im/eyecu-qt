@@ -573,6 +573,10 @@ source_lang = en
 file_filter = <lang>/filemessagearchive.ts
 source_lang = en
 
+[eyecu-qt.chatmarkersts]
+file_filter = <lang>/chatmarkers.ts
+source_lang = en
+
 [eyecu-qt.schedulerts]
 file_filter = <lang>/scheduler.ts
 source_lang = en
