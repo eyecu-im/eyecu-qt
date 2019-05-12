@@ -26,7 +26,6 @@ ChatMarkers::ChatMarkers():
 		FOptionsManager(nullptr),
 		FNotifications(nullptr),
 		FMessageWidgets(nullptr),
-		FMultiChatManager(nullptr),
 		FReceipts(nullptr),
 		FIconStorage(nullptr)
 {}
@@ -91,15 +90,6 @@ bool ChatMarkers::initConnections(IPluginManager *APluginManager, int & /*AInitO
 			connect(FMessageWidgets->instance(), SIGNAL(toolBarWidgetCreated(IMessageToolBarWidget *)),
 												 SLOT(onToolBarWidgetCreated(IMessageToolBarWidget *)));
 		}
-	}
-
-	plugin = APluginManager->pluginInterface("IMultiUserChatManager").value(0,nullptr);
-	if (plugin)
-	{
-		FMultiChatManager = qobject_cast<IMultiUserChatManager *>(plugin->instance());
-		if (FMultiChatManager)
-			connect(FMultiChatManager->instance(),SIGNAL(multiChatWindowCreated(IMultiUserChatWindow *)),
-												  SLOT(onMultiChatWindowCreated(IMultiUserChatWindow *)));
 	}
 
 	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,nullptr);
@@ -218,12 +208,16 @@ static QString calcId(const Jid &AFrom, const Jid &ATo, const QString &AMessageI
 														QCryptographicHash::Md4).toHex());
 }
 
-void ChatMarkers::onChatWindowCreated(IMessageChatWindow *AWindow)
+void ChatMarkers::setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
+						   const Jid &AContactJid, const QString &AMessageId,
+						   const QString &AImage, const QString &ATitle)
 {
-	connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onWindowActivated()));
+	QString hash = calcId(AStreamJid, AContactJid, AMessageId);
+	AWindow->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(AImage)).toString());
+	AWindow->viewWidget()->setObjectTitle(hash, ATitle);
 }
 
-void ChatMarkers::onMultiChatWindowCreated(IMultiUserChatWindow *AWindow)
+void ChatMarkers::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
 	connect(AWindow->instance(),SIGNAL(tabPageActivated()),SLOT(onWindowActivated()));
 }
@@ -232,10 +226,10 @@ void ChatMarkers::onToolBarWidgetCreated(IMessageToolBarWidget *AWidget)
 {
 	IMessageChatWindow *chatWindow = qobject_cast<IMessageChatWindow *>(AWidget->messageWindow()->instance());
 	if (chatWindow)
+	{
 		connect(this,SIGNAL(markable(const Jid &,const Jid &)),SLOT(onMarkable(const Jid &,const Jid &)));
-	connect(AWidget->instance(),SIGNAL(destroyed(QObject *)),SLOT(onToolBarWidgetDestroyed(QObject *)));
-
-	updateToolBarAction(AWidget);
+		updateToolBarAction(AWidget);
+	}
 }
 
 void ChatMarkers::onMarkable(const Jid &AStreamJid, const Jid &AContactJid)
@@ -243,13 +237,6 @@ void ChatMarkers::onMarkable(const Jid &AStreamJid, const Jid &AContactJid)
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 	if (window)
 		updateToolBarAction(window->toolBarWidget());
-}
-
-void ChatMarkers::onToolBarWidgetDestroyed(QObject *AObject)
-{
-//	foreach(IMessageToolBarWidget *widget, FToolBarActions.keys())
-//		if (qobject_cast<QObject *>(widget->instance()) == AObject)
-//			FToolBarActions.remove(widget);
 }
 
 void ChatMarkers::onWindowActivated()
@@ -352,7 +339,7 @@ void ChatMarkers::onPresenceOpened(IPresence *APresence)
 
 void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)
 {
-	if (AStateOnline || isReceiptsSupported(AStreamJid, AContactJid))
+	if (AStateOnline || isReceiptsSupported(AStreamJid, AContactJid)==IReceipts::Supported)
 		return;
 
 	if (FLastMarkableDisplayHash.contains(AStreamJid) &&
@@ -415,13 +402,15 @@ void ChatMarkers::onMessageDelivered(const Jid &AStreamJid, const Jid &AContactJ
 			break;
 	}
 
+	int level = Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt();
+
 	QString image, title;
-	if (isAcknowledged)
+	if (isAcknowledged && level >= Acknowledged)
 	{
 		image = MNI_MESSAGE_ACKNOWLEDGED;
 		title = tr("Acknowledged");
 	}
-	else if (isDisplayed)
+	else if (isDisplayed && level >= Displayed)
 	{
 		image = MNI_MESSAGE_DISPLAYED;
 		title = tr("Displayed");
@@ -430,10 +419,7 @@ void ChatMarkers::onMessageDelivered(const Jid &AStreamJid, const Jid &AContactJ
 		return;
 
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-
-	QString hash = calcId(AStreamJid, AContactJid, AMessageId);
-	window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
-	window->viewWidget()->setObjectTitle(hash, title);
+	setImage(window, AStreamJid, AContactJid, AMessageId, image, title);
 }
 
 void ChatMarkers::onOptionsOpened()
@@ -471,11 +457,11 @@ bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) con
 		return true;
 }
 
-bool ChatMarkers::isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const
+IReceipts::Support ChatMarkers::isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
 	if (FReceipts)
 		return FReceipts->isSupported(AStreamJid, AContactJid);
-	return false;
+	return IReceipts::NotSupported;
 }
 
 void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
@@ -570,18 +556,15 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 				}
 			}
 
-			if (Options::node(OPV_MARKERS_SEND_ACK).value().toBool())
-			{
-				bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
+			bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
 
-				if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
-					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
-				else
-					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+			if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
+				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
+			else
+				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
 
-				if (!isMarkedBefore)
-					emit markable(AStreamJid, AMessage.from());
-			}
+			if (Options::node(OPV_MARKERS_SEND_ACK).value().toBool() && !isMarkedBefore)
+				emit markable(AStreamJid, AMessage.from());
 
 			if (Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool() &&
 				isSupported(AStreamJid, AMessage.from()) &&
@@ -715,7 +698,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		else
 			return;
 
-		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
+		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid)==IReceipts::Supported;
 
 		if (receiptsSupported && (
 			!FDeliveredHash.contains(AStreamJid) ||
@@ -732,6 +715,18 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 			{
 				REPORT_ERROR("No chat window found for specified Stream JID/Contact JID pair!");
 				return;
+			}
+
+			if (AType == Acknowledge)
+			{
+				if (!Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool())
+					return;
+			}
+			else
+			{
+				int level = Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt();
+				if (AType > level)
+					AType = Type(level);
 			}
 
 			QString lastId = AType == Received  ? FLastReceived[AStreamJid][contactJid]
@@ -770,9 +765,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 						break;
 				}
 
-				QString hash = calcId(AStreamJid, AContactJid, ids->at(i));
-				window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
-				window->viewWidget()->setObjectTitle(hash, title);
+				setImage(window, AStreamJid, AContactJid, ids->at(i), image, title);
 			}
 
 			if (idsNum)
@@ -815,9 +808,7 @@ void ChatMarkers::setAcknowledgedMarker(const Jid &AStreamJid, const Jid &AConta
 				QString image = MNI_MESSAGE_ACKNOWLEDGE;
 				QString title = tr("Acknowledged");
 
-				QString hash = calcId(AStreamJid, AContactJid, ids.at(i));
-				window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(image)).toString());
-				window->viewWidget()->setObjectTitle(hash, title);
+				setImage(window, AStreamJid, AContactJid, ids.at(i), image, title);
 
 				ids.removeAt(i);
 			}

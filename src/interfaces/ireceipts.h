@@ -8,8 +8,15 @@
 class IReceipts {
 
 public:
+	enum Support
+	{
+		NotSupported,
+		Supported,
+		Unknown
+	};
+
     virtual QObject *instance() =0;
-	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const =0;
+	virtual Support isSupported(const Jid &AStreamJid, const Jid &AContactJid) const =0;
 
 protected:
 	void messageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);

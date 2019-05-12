@@ -85,17 +85,16 @@ protected:
 	void markMessages(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QStringList &AMessageIds);
 	void sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
-	bool isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	IReceipts::Support isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void removeNotifiedMessages(IMessageChatWindow *AWindow);
 	void updateToolBarAction();
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
 	void registerDiscoFeatures(bool ARegister);
+	void setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, const QString &AImage, const QString &ATitle);
 
 protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
-	void onMultiChatWindowCreated(IMultiUserChatWindow *AWindow);
 	void onToolBarWidgetCreated(IMessageToolBarWidget *AWidget);
-	void onToolBarWidgetDestroyed(QObject *AObject);
 	void onWindowActivated();
 	void onNotificationActivated(int ANotifyId);
 	//Options
@@ -119,7 +118,6 @@ private:
 	IOptionsManager     *FOptionsManager;
 	INotifications      *FNotifications;
 	IMessageWidgets     *FMessageWidgets;
-	IMultiUserChatManager *FMultiChatManager;
 	IPresenceManager    *FPresenceManager;
 	IReceipts			*FReceipts;
 	IconStorage         *FIconStorage;

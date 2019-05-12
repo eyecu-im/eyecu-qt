@@ -47,6 +47,8 @@ public:
     virtual bool initObjects();
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
+	//IReceipts
+	Support isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
     //IMessageEditor
@@ -60,8 +62,7 @@ public:
 
 protected:
     QHash<QString, QString> getReceipts(Jid jid) const;
-    void setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-    bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+    void setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);    
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
 
 signals:
@@ -79,6 +80,7 @@ private:
 
     QHash<IMessageChatWindow *, int>   FNotifies;
     QHash<Jid, QHash<Jid, QStringList> > FDeliveryRequestHash;
+	QHash<Jid, QSet<Jid> > FSupported;
 
     void registerDiscoFeatures(bool ARegister);
 
