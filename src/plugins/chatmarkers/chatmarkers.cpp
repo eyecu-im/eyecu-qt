@@ -1,5 +1,6 @@
 #include "chatmarkers.h"
 #include "chatmarkersoptions.h"
+
 #include <definitions/toolbargroups.h>
 #include <definitions/messageeditororders.h>
 #include <definitions/messagewriterorders.h>
@@ -13,8 +14,11 @@
 #include <definitions/notificationtypes.h>
 #include <definitions/soundfiles.h>
 #include <definitions/tabpagenotifypriorities.h>
-#include <utils/action.h>
 
+#include <utils/action.h>
+#include <utils/logger.h>
+
+#include <QCryptographicHash>
 #include <QDateTime>
 #include <QFile>
 #include <QpXhtml>

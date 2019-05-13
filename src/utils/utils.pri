@@ -33,9 +33,8 @@ HEADERS  = utilsexport.h \
            logger.h \
            pluginhelper.h \
            passworddialog.h \
-		   microtime.h \
-		   qt4qt5compat.h \
-    $$PWD/delayedimagenetworkreply.h
+           microtime.h \
+           qt4qt5compat.h
 
 SOURCES  = jid.cpp \
            versionparser.cpp \
@@ -71,8 +70,7 @@ SOURCES  = jid.cpp \
            logger.cpp \
            pluginhelper.cpp \
            passworddialog.cpp \
-		   microtime.cpp \
-    $$PWD/delayedimagenetworkreply.cpp
+           microtime.cpp
 
 greaterThan(QT_MAJOR_VERSION, 4):unix:!mac:!haiku {
 HEADERS += x11info.h

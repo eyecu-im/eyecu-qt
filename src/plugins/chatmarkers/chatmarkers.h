@@ -21,8 +21,6 @@
 #include <definitions/resources.h>
 
 #include <utils/options.h>
-#include <utils/logger.h>
-#include <utils/delayedimagenetworkreply.h>
 
 class ChatMarkers:
 		public QObject,
