@@ -15,12 +15,8 @@
 #include "definitions/tabpagenotifypriorities.h"
 
 #include <QDateTime>
-#include <QFile>
 #include <QpXhtml>
 #include <QCryptographicHash>
-#include <QCheckBox>
-
-#include <QDebug>
 
 Receipts::Receipts():
 		FMessageProcessor(nullptr),
@@ -186,14 +182,22 @@ void Receipts::onOptionsChanged(const OptionsNode &ANode)
 		registerDiscoFeatures(ANode.value().toBool());
 }
 
-IReceipts::Support Receipts::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
+bool Receipts::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
 	if (FDiscovery && FDiscovery->hasDiscoInfo(AStreamJid, AContactJid))
-		return FDiscovery->discoInfo(AStreamJid, AContactJid).features.contains(NS_RECEIPTS)?
-			Supported:NotSupported;
+		return FDiscovery->discoInfo(AStreamJid, AContactJid).features.contains(NS_RECEIPTS);
 	else
-		return FSupported.contains(AStreamJid) && FSupported[AStreamJid].contains(AContactJid)?
-			Supported:Unknown;
+		return FSupported.contains(AStreamJid) && FSupported[AStreamJid].contains(AContactJid);
+}
+
+bool Receipts::isSupportUnknown(const Jid &AStreamJid, const Jid &AContactJid) const
+{
+	if (FDiscovery && FDiscovery->hasDiscoInfo(AStreamJid, AContactJid))
+		return false;
+	else
+		return !(FSupported.contains(AStreamJid) && FSupported[AStreamJid].contains(AContactJid));
+
+
 }
 
 void Receipts::removeNotifiedMessages(IMessageChatWindow *AWindow)
@@ -233,7 +237,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			message.addElement("received", NS_RECEIPTS).setAttribute("id", id);
 			Message msg(message);
 			FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
-			if (isSupported(AStreamJid, AMessage.fromJid())==Unknown)
+			if (isSupportUnknown(AStreamJid, AMessage.fromJid()))
 				FSupported[AStreamJid].insert(AMessage.fromJid());
 		}
 		else
@@ -245,14 +249,13 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 				if (id.isEmpty())
 					id=AMessage.id(); //-- Obsolete revision of XEP-0184 ---
 				setDelivered(AStreamJid, AMessage.from(), id);
-				if (isSupported(AStreamJid, AMessage.fromJid())==Unknown)
+				if (isSupportUnknown(AStreamJid, AMessage.fromJid()))
 					FSupported[AStreamJid].insert(AMessage.fromJid());
 			}
 		}
 	}
 	else
 	{
-		qDebug() << "Outgoing message!";
 		if (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt() &&
 			isSupported(AStreamJid, AMessage.toJid()) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&

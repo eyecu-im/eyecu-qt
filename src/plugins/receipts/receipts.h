@@ -48,7 +48,8 @@ public:
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
 	//IReceipts
-	Support isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	virtual bool isSupportUnknown(const Jid &AStreamJid, const Jid &AContactJid) const;
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
     //IMessageEditor

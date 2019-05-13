@@ -339,7 +339,7 @@ void ChatMarkers::onPresenceOpened(IPresence *APresence)
 
 void ChatMarkers::onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline)
 {
-	if (AStateOnline || isReceiptsSupported(AStreamJid, AContactJid)==IReceipts::Supported)
+	if (AStateOnline || isReceiptsSupported(AStreamJid, AContactJid))
 		return;
 
 	if (FLastMarkableDisplayHash.contains(AStreamJid) &&
@@ -457,11 +457,9 @@ bool ChatMarkers::isSupported(const Jid &AStreamJid, const Jid &AContactJid) con
 		return true;
 }
 
-IReceipts::Support ChatMarkers::isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const
+bool ChatMarkers::isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	if (FReceipts)
-		return FReceipts->isSupported(AStreamJid, AContactJid);
-	return IReceipts::NotSupported;
+	return FReceipts && FReceipts->isSupported(AStreamJid, AContactJid);
 }
 
 void ChatMarkers::removeNotifiedMessages(IMessageChatWindow *AWindow)
@@ -698,7 +696,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 		else
 			return;
 
-		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid)==IReceipts::Supported;
+		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
 
 		if (receiptsSupported && (
 			!FDeliveredHash.contains(AStreamJid) ||
