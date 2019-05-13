@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>Show delivery notifications</source>
-        <translation>Отображать уведомления о доставке</translation>
+        <translation type="vanished">Отображать уведомления о доставке</translation>
     </message>
     <message>
         <source>Send delivery notifications</source>
-        <translation>Посылать уведомления о достваке</translation>
+        <translation type="vanished">Посылать уведомления о достваке</translation>
     </message>
     <message>
         <source>When message delivery notification recieved</source>
@@ -30,6 +30,25 @@
     <message>
         <source>Sends, receives and displays message delivery receipts</source>
         <translation>Отправляет, получает и отображает уведомления о доставке сообщений</translation>
+    </message>
+    <message>
+        <source>Message delivery receipts</source>
+        <translation>Уведомления о доставке сообщений</translation>
+    </message>
+    <message>
+        <source>Received</source>
+        <translation>Получено</translation>
+    </message>
+</context>
+<context>
+    <name>ReceiptsOptions</name>
+    <message>
+        <source>Send</source>
+        <translation>Отправляь</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Показывать</translation>
     </message>
 </context>
 </TS>

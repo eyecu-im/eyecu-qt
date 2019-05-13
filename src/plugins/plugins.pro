@@ -110,6 +110,7 @@ SUBDIRS += mapsourcewiki
 #SUBDIRS += mapsourceyahoo
 SUBDIRS += mapsourceyandex
 SUBDIRS += receipts 
+SUBDIRS += chatmarkers
 SUBDIRS += attention 
 CONFIG(debug, debug|release): SUBDIRS += eyecubot
 SUBDIRS += positioning 

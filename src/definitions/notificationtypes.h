@@ -18,7 +18,9 @@
 
 // *** <<< eyeCU <<< ***
 #define NNT_ATTENTION                 "Attention"
-#define NNT_RECEIPTS                  "Receipts"
+#define NNT_DELIVERED                 "Delivery"
+#define NNT_DISPLAYED                 "Displayed"
+#define NNT_ACKNOWLEDGED              "Acknowledged"
 #define NNT_ACTIVITY                  "Activity"
 #define NNT_CONTACTPROXIMITY          "ContactProximity"
 #define NNT_MOOD                      "Mood"

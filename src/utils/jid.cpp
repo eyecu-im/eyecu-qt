@@ -428,7 +428,7 @@ Jid &Jid::parseFromString(const QString &AJidStr)
 			if (slash-at-1 > 0)
 			{
 				int nodeSize = dd->FFull.size();
-				dd->FFull += AJidStr.mid(at+1,slash-at-1);
+				dd->FFull += AJidStr.mid(at+1,slash-at-1).toLower();
 				dd->FDomain = QStringRef(&dd->FFull,nodeSize,dd->FFull.size()-nodeSize);
 			}
 			else

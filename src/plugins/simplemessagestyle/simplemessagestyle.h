@@ -89,9 +89,13 @@ public:
 	virtual QTextDocumentFragment selection(QWidget *AWidget) const;
 	virtual QTextCharFormat textFormatAt(QWidget *AWidget, const QPoint &APosition) const;
 	virtual QTextDocumentFragment textFragmentAt(QWidget *AWidget, const QPoint &APosition) const;
-    virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const; // *** <<< eyeCU >>> ***
 	virtual bool changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear = true);
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions);
+// *** <<< eyeCU <<< ***
+	virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const;
+	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl);
+	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle);
+// *** >>> eyeCU >>> ***
 	//ISimpleMessageStyle
 	virtual QMap<QString, QVariant> infoValues() const;
 	virtual QList<QString> variants() const;
