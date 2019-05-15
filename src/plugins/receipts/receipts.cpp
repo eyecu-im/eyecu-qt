@@ -257,7 +257,8 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	else
 	{
 		if (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt() &&
-			isSupported(AStreamJid, AMessage.toJid()) &&
+			(isSupported(AStreamJid, AMessage.toJid()) ||
+			 isSupportUnknown(AStreamJid, AMessage.toJid())) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&
 			!AMessage.body().isNull())
 		{
