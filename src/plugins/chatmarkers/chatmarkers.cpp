@@ -776,13 +776,13 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 
 		switch (AType)
 		{
-						case Acknowledged:
-							FLastAcknowledged[AStreamJid][contactJid] = AMessageId;
-[[clang::fallthrough]]; case Displayed:
-							FLastDisplayed[AStreamJid][contactJid] = AMessageId;
-[[clang::fallthrough]]; case Received:
-							FLastReceived[AStreamJid][contactJid] = AMessageId;
-[[clang::fallthrough]]; default:;
+			case Acknowledged:
+				FLastAcknowledged[AStreamJid][contactJid] = AMessageId;
+			case Displayed:
+				FLastDisplayed[AStreamJid][contactJid] = AMessageId;
+			case Received:
+				FLastReceived[AStreamJid][contactJid] = AMessageId;
+			default:;
 		}
 	}
 }
