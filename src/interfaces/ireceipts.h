@@ -16,6 +16,6 @@ protected:
 	void messageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 };
 
-Q_DECLARE_INTERFACE(IReceipts, "RWS.Plugin.IReceipts/1.0")
+Q_DECLARE_INTERFACE(IReceipts, "RWS.Plugin.IReceipts/1.1")
 
 #endif	//IRECEIPTS_H
