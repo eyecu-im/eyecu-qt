@@ -1,14 +1,14 @@
 # Japanese messages for GnuPG libgpg-error
-# Copyright (C) 2010, 2012, 2014, 2015 Free Software Foundation, Inc.
+# Copyright (C) 2010, 2012, 2014, 2015, 2016 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 # Yasuaki Taniguchi <yasuakit@gmail.com>, 2010.
 # Takeshi Hamasaki <hmatrjp@users.sourceforge.jp>, 2012.
-# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016.
+# NIIBE Yutaka <gniibe@fsij.org>, 2014, 2015, 2016, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: libgpg-error 1.19\n"
+"Project-Id-Version: libgpg-error 1.27\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-02-26 09:42+0900\n"
+"PO-Revision-Date: 2018-09-06 09:58+0900\n"
 "Last-Translator: NIIBE Yutaka <gniibe@fsij.org>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -125,8 +125,8 @@ msgstr "誤ったパスフレーズです"
 msgid "Invalid cipher algorithm"
 msgstr "無効な暗号アルゴリズムです"
 
-msgid "Keyring open"
-msgstr "鍵リングオープン"
+msgid "Cannot open keyring"
+msgstr "鍵リングが開けません"
 
 msgid "Invalid packet"
 msgstr "無効なパケットです"
@@ -728,6 +728,9 @@ msgstr "S式におかしな16進キャラクタがあります"
 msgid "Bad octal character in S-expression"
 msgstr "S式に間違った8進キャラクタがあります"
 
+msgid "All subkeys are expired or revoked"
+msgstr "すべての副鍵が期限切れか失効しています"
+
 msgid "Database is corrupted"
 msgstr "データベースがおかしくなってます"
 
@@ -803,7 +806,7 @@ msgstr "ハンドシェークで誤った証明書要求メッセージです"
 msgid "Bad certificate verify message in handshake"
 msgstr "ハンドシェークで誤った証明書検証メッセージです"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "ハンドシェークで誤った暗号変更メッセージです"
 
 msgid "Bad client hello message in handshake"
@@ -812,7 +815,7 @@ msgstr "ハンドシェークで誤ったクライアントハローメッセー
 msgid "Bad server hello message in handshake"
 msgstr "ハンドシェークで誤ったサーバハローメッセージです"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "ハンドシェークで誤ったサーバハロー了解メッセージです"
 
 msgid "Bad finished message in handshake"
@@ -916,6 +919,85 @@ msgstr "IPCパラメータエラーです"
 
 msgid "Unknown IPC inquire"
 msgstr "不明なIPC問い合わせです"
+
+msgid "Crypto engine too old"
+msgstr "暗号エンジンが古すぎます"
+
+msgid "Screen or window too small"
+msgstr "スクリーンまたはウィンドウが小さすぎます"
+
+msgid "Screen or window too large"
+msgstr "スクリーンまたはウィンドウが大きすぎます"
+
+msgid "Required environment variable not set"
+msgstr "必要な環境変数が設定されていません"
+
+msgid "User ID already exists"
+msgstr "User IDが既に存在します"
+
+msgid "Name already exists"
+msgstr "名前が既に存在します"
+
+msgid "Duplicated name"
+msgstr "重複した名前です"
+
+msgid "Object is too young"
+msgstr "オブジェクトが若すぎます"
+
+msgid "Object is too old"
+msgstr "オブジェクトが古すぎます"
+
+msgid "Unknown flag"
+msgstr "不明なフラグです"
+
+msgid "Invalid execution order"
+msgstr "無効な実効順です"
+
+msgid "Already fetched"
+msgstr "すでにフェッチされてます"
+
+msgid "Try again later"
+msgstr "後で再度試してください"
+
+msgid "Wrong name"
+msgstr "間違った名前です"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "有効となってません"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "不適切なLDAP認証です"
+
+msgid "System bug detected"
+msgstr "システムのバグが検出されました"
+
+msgid "Unknown DNS error"
+msgstr "不明なDNSエラー"
+
+msgid "Invalid DNS section"
+msgstr "無効な DNS セクションです"
+
+msgid "Invalid textual address form"
+msgstr "無効なテクストのアドレス形式です"
+
+msgid "Missing DNS query packet"
+msgstr "DNSクエリのパケットがありません"
+
+msgid "Missing DNS answer packet"
+msgstr "DNSの返答パケットが欠如しています"
+
+msgid "Connection closed in DNS"
+msgstr "DNSの接続が閉じられました"
+
+msgid "Verification failed in DNS"
+msgstr "DNSで検証に失敗しました"
+
+msgid "DNS Timeout"
+msgstr "DNSタイムアウトです"
 
 msgid "General LDAP error"
 msgstr "一般LDAPエラーです"
@@ -1220,10 +1302,73 @@ msgstr "ファイル終端"
 msgid "Unknown error code"
 msgstr "不明なエラーコード"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "使用法: %s GPG-ERROR [...]\n"
+msgid "argument not expected"
+msgstr "引数は期待されていません"
+
+msgid "read error"
+msgstr "読み込みエラー"
+
+msgid "keyword too long"
+msgstr "キーワードが長すぎます"
+
+msgid "missing argument"
+msgstr "引数がありません"
+
+msgid "invalid argument"
+msgstr "無効な引数"
+
+msgid "invalid command"
+msgstr "無効なコマンド"
+
+msgid "invalid alias definition"
+msgstr "無効なエイリアス定義です"
+
+msgid "out of core"
+msgstr "メモリがありません"
+
+msgid "invalid option"
+msgstr "無効なオプション"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: 警告: %s を認識できませんでした\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "オプション\"%.50s\"に引数がありません\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "オプション\"%.50s\"には無効な引数です\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "オプション\"%.50s\"は引数をとりません\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "無効なコマンド \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "オプション\"%.50s\"はあいまいです\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "コマンド\"%.50s\"はあいまいです\n"
+
+msgid "out of core\n"
+msgstr "メモリがありません\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "無効なオプション \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr "バグは<https://bugs.gnupg.org>に報告してください。\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "警告: %s を認識できませんでした\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "使用法: %s GPG-ERROR [...]\n"
+
+#~ msgid "Keyring open"
+#~ msgstr "鍵リングオープン"

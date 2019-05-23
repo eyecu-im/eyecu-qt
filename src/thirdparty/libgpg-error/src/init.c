@@ -61,6 +61,20 @@ static void drop_locale_dir (char *locale_dir);
 #endif /*!HAVE_W32_SYSTEM*/
 
 
+/* The list of emergency cleanup functions; see _gpgrt_abort and
+ * _gpgrt_add_emergency_cleanup.  */
+struct emergency_cleanup_item_s;
+typedef struct emergency_cleanup_item_s *emergency_cleanup_item_t;
+struct emergency_cleanup_item_s
+{
+  emergency_cleanup_item_t next;
+  void (*func) (void);
+};
+static emergency_cleanup_item_t emergency_cleanup_list;
+
+
+
+
 /* The realloc function as set by gpgrt_set_alloc_func.  */
 static void *(*custom_realloc)(void *a, size_t n);
 
@@ -80,7 +94,7 @@ real_init (void)
       drop_locale_dir (locale_dir);
     }
 #endif
-  _gpgrt_es_init ();
+  _gpgrt_estream_init ();
 }
 
 /* Initialize the library.  This function should be run early.  */
@@ -106,7 +120,7 @@ _gpg_err_init (void)
       if (tls_index == TLS_OUT_OF_INDEXES)
         {
           /* No way to continue - commit suicide.  */
-          abort ();
+          _gpgrt_abort ();
         }
       _gpg_w32__init_gettext_module ();
       real_init ();
@@ -151,6 +165,67 @@ _gpg_err_deinit (int mode)
 }
 
 
+/* Add the emergency cleanup function F to the list of those function.
+ * If the a function with that address has already been registered, it
+ * is not added a second time.  These emergency functions are called
+ * whenever gpgrt_abort is called and at no other place.  Like signal
+ * handles the emergency cleanup functions shall not call any
+ * non-trivial functions and return as soon as possible.  They allow
+ * to cleanup internal states which should not go into a core dumps or
+ * similar.  This is independent of any atexit functions.  We don't
+ * use locks here because in an emergency case we can't use them
+ * anyway.  */
+void
+_gpgrt_add_emergency_cleanup (void (*f)(void))
+{
+  emergency_cleanup_item_t item;
+
+  for (item = emergency_cleanup_list; item; item = item->next)
+    if (item->func == f)
+      return; /* Function has already been registered.  */
+
+  /* We use a standard malloc here.  */
+  item = malloc (sizeof *item);
+  if (item)
+    {
+      item->func = f;
+      item->next = emergency_cleanup_list;
+      emergency_cleanup_list = item;
+    }
+  else
+    _gpgrt_log_fatal ("out of core in gpgrt_add_emergency_cleanup\n");
+}
+
+
+/* Run the emergency handlers.  No locks are used because we are anyway
+ * in an emergency state.  We also can't release any memory.  */
+static void
+run_emergency_cleanup (void)
+{
+  emergency_cleanup_item_t next;
+  void (*f)(void);
+
+  while (emergency_cleanup_list)
+    {
+      next = emergency_cleanup_list->next;
+      f = emergency_cleanup_list->func;
+      emergency_cleanup_list->func = NULL;
+      emergency_cleanup_list = next;
+      if (f)
+        f ();
+    }
+}
+
+
+/* Wrapper around abort to be able to run all emergency cleanup
+ * functions.  */
+void
+_gpgrt_abort (void)
+{
+  run_emergency_cleanup ();
+  abort ();
+}
+
 
 
 /* Register F as allocation function.  This function is used for all
@@ -194,6 +269,91 @@ _gpgrt_malloc (size_t n)
 }
 
 
+void *
+_gpgrt_calloc (size_t n, size_t m)
+{
+  size_t bytes;
+  void *p;
+
+  bytes = n * m; /* size_t is unsigned so the behavior on overflow is
+                    defined. */
+  if (m && bytes / m != n)
+    {
+      _gpg_err_set_errno (ENOMEM);
+      return NULL;
+    }
+
+  p = _gpgrt_realloc (NULL, bytes);
+  if (p)
+    memset (p, 0, bytes);
+  return p;
+}
+
+
+char *
+_gpgrt_strdup (const char *string)
+{
+  size_t len = strlen (string);
+  char *p;
+
+  p = _gpgrt_realloc (NULL, len + 1);
+  if (p)
+    strcpy (p, string);
+  return p;
+}
+
+
+/* Helper for _gpgrt_strconcat and gpgrt_strconcat.  */
+char *
+_gpgrt_strconcat_core (const char *s1, va_list arg_ptr)
+{
+  const char *argv[48];
+  size_t argc;
+  size_t needed;
+  char *buffer, *p;
+
+  argc = 0;
+  argv[argc++] = s1;
+  needed = strlen (s1);
+  while (((argv[argc] = va_arg (arg_ptr, const char *))))
+    {
+      needed += strlen (argv[argc]);
+      if (argc >= DIM (argv)-1)
+        {
+          _gpg_err_set_errno (EINVAL);
+          return NULL;
+        }
+      argc++;
+    }
+  needed++;
+  buffer = _gpgrt_malloc (needed);
+  if (buffer)
+    {
+      for (p = buffer, argc=0; argv[argc]; argc++)
+        p = stpcpy (p, argv[argc]);
+    }
+  return buffer;
+}
+
+
+char *
+_gpgrt_strconcat (const char *s1, ...)
+{
+  va_list arg_ptr;
+  char *result;
+
+  if (!s1)
+    result = _gpgrt_strdup ("");
+  else
+    {
+      va_start (arg_ptr, s1);
+      result = _gpgrt_strconcat_core (s1, arg_ptr);
+      va_end (arg_ptr);
+    }
+  return result;
+}
+
+
 /* The free to be used for data returned by the public API.  */
 void
 _gpgrt_free (void *a)
@@ -210,6 +370,111 @@ _gpg_err_set_errno (int err)
 #else /*!HAVE_W32CE_SYSTEM*/
   errno = err;
 #endif /*!HAVE_W32CE_SYSTEM*/
+}
+
+
+
+/* Internal tracing functions.  Except for TRACE_FP we use flockfile
+ * and funlockfile to protect their use.
+ *
+ * Warning: Take care with the trace functions - they may not use any
+ * of our services, in particular not the syscall clamp mechanism for
+ * reasons explained in w32-stream.c:create_reader.  */
+static FILE *trace_fp;
+static int trace_save_errno;
+static int trace_with_errno;
+static const char *trace_arg_module;
+static const char *trace_arg_file;
+static int trace_arg_line;
+static int trace_missing_lf;
+static int trace_prefix_done;
+
+void
+_gpgrt_internal_trace_begin (const char *module, const char *file, int line,
+                             int with_errno)
+{
+  int save_errno = errno;
+
+  if (!trace_fp)
+    {
+      FILE *fp;
+      const char *s = getenv ("GPGRT_TRACE_FILE");
+
+      if (!s || !(fp = fopen (s, "wb")))
+        fp = stderr;
+      trace_fp = fp;
+    }
+
+#ifdef HAVE_FLOCKFILE
+  flockfile (trace_fp);
+#endif
+  trace_save_errno = save_errno;
+  trace_with_errno = with_errno;
+  trace_arg_module = module;
+  trace_arg_file = file;
+  trace_arg_line = line;
+  trace_missing_lf = 0;
+  trace_prefix_done = 0;
+}
+
+static void
+print_internal_trace_prefix (void)
+{
+  if (!trace_prefix_done)
+    {
+      trace_prefix_done = 1;
+      fprintf (trace_fp, "%s:%s:%d: ",
+               trace_arg_module,/* npth_is_protected ()?"":"^",*/
+               trace_arg_file, trace_arg_line);
+    }
+}
+
+static void
+do_internal_trace (const char *format, va_list arg_ptr)
+{
+  print_internal_trace_prefix ();
+  vfprintf (trace_fp, format, arg_ptr);
+  if (trace_with_errno)
+    fprintf (trace_fp, " errno=%s", strerror (trace_save_errno));
+  if (*format && format[strlen(format)-1] != '\n')
+    fputc ('\n', trace_fp);
+}
+
+void
+_gpgrt_internal_trace_printf (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  print_internal_trace_prefix ();
+  va_start (arg_ptr, format) ;
+  vfprintf (trace_fp, format, arg_ptr);
+  va_end (arg_ptr);
+  trace_missing_lf = (*format && format[strlen(format)-1] != '\n');
+}
+
+
+void
+_gpgrt_internal_trace (const char *format, ...)
+{
+  va_list arg_ptr;
+
+  va_start (arg_ptr, format) ;
+  do_internal_trace (format, arg_ptr);
+  va_end (arg_ptr);
+}
+
+
+void
+_gpgrt_internal_trace_end (void)
+{
+  int save_errno = trace_save_errno;
+
+  if (trace_missing_lf)
+    fputc ('\n', trace_fp);
+#ifdef HAVE_FLOCKFILE
+  funlockfile (trace_fp);
+#endif
+  errno = save_errno;
 }
 
 
@@ -313,7 +578,7 @@ get_tls (void)
       if (!tls)
         {
           /* No way to continue - commit suicide.  */
-          abort ();
+          _gpgrt_abort ();
         }
       tls->gt_use_utf8 = 0;
       TlsSetValue (tls_index, tls);
@@ -390,7 +655,7 @@ DllMain (HINSTANCE hinst, DWORD reason, LPVOID reserved)
       /* If we have not constructors (e.g. MSC) we call it here.  */
       _gpg_w32__init_gettext_module ();
 #endif
-      /* falltru.  */
+      /* fallthru.  */
     case DLL_THREAD_ATTACH:
       tls = LocalAlloc (LPTR, sizeof *tls);
       if (!tls)

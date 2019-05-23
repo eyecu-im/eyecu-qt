@@ -1,8 +1,8 @@
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.7.0"
+#define PACKAGE_VERSION "1.9.0"
 
 /* Version of this package */
-#define VERSION "1.7.0"
+#define VERSION "1.9.0"
 
 /* GIT commit id revision used to build this package */
 #define BUILD_REVISION "795f9cb"

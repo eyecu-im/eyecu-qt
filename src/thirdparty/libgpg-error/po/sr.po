@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-03 11:42+0200\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Мирослав Николић <miroslavnikolic@rocketmail.com>\n"
 "Language-Team: Serbian <(nothing)>\n"
 "Language: sr\n"
@@ -124,7 +124,7 @@ msgstr "Лоша пропусна реч"
 msgid "Invalid cipher algorithm"
 msgstr "Неисправан алгоритам шифровања"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Привезак кључева је отворен"
 
 msgid "Invalid packet"
@@ -761,6 +761,9 @@ msgstr "Непарни хексадецимални бројеви у С-изр�
 msgid "Bad octal character in S-expression"
 msgstr "Лош октадецимални знак у С-изразу"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -868,7 +871,7 @@ msgstr ""
 msgid "Bad certificate verify message in handshake"
 msgstr ""
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr ""
 
 msgid "Bad client hello message in handshake"
@@ -877,7 +880,7 @@ msgstr ""
 msgid "Bad server hello message in handshake"
 msgstr ""
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 
 msgid "Bad finished message in handshake"
@@ -985,6 +988,111 @@ msgstr "Грешка параметра ИПЦ-а"
 
 msgid "Unknown IPC inquire"
 msgstr "Непознато распитивање ИПЦ-а"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Crypto engine too old"
+msgstr "Неисправан погон шифровања"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Удвостручена вредност"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Уверење је превише ново"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Достављени предмет је прекратак"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Непознат назив"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Неисправна шифра радње"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Непознат назив"
+
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not authenticated"
+msgstr "Није закључано"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Неподржана заштита"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Непозната грешка система"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Неисправна ОИД ниска"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Неисправан С-израз"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing DNS query packet"
+msgstr "Недостаје уверење"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Дешифровање није успело"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Време је истекло"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1399,13 +1507,90 @@ msgstr "Крај датотеке"
 msgid "Unknown error code"
 msgstr "Непознат код грешке"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Употреба: %s GPG-ERROR [...]\n"
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "argument not expected"
+msgstr "Подаци нису шифровани"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "read error"
+msgstr "Грешка читања ИПЦ-а"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "keyword too long"
+msgstr "Ред је предуг"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "missing argument"
+msgstr "Недостаје вредност"
+
+#, fuzzy
+#| msgid "Invalid argument"
+msgid "invalid argument"
+msgstr "Неисправан аргумент"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "invalid command"
+msgstr "Неисправна картица"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "invalid alias definition"
+msgstr "Неисправна ОИД ниска"
+
+msgid "out of core"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "invalid option"
+msgstr "Неисправна шифра радње"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: упозорење: не могу да препознам „%s“\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+msgid "out of core\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Invalid operation code"
+msgid "invalid option \"%.50s\"\n"
+msgstr "Неисправна шифра радње"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "упозорење: не могу да препознам „%s“\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Употреба: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1416,11 +1601,6 @@ msgstr "%s: упозорење: не могу да препознам „%s“\n
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Неисправни подаци"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Дешифровање није успело"
 
 #, fuzzy
 #~| msgid "General error"

@@ -1,5 +1,5 @@
 /* gpg-error.c - Determining gpg-error error codes.
-   Copyright (C) 2004 g10 Code GmbH
+   Copyright (C) 2004, 2016 g10 Code GmbH
 
    This file is part of libgpg-error.
 
@@ -370,61 +370,198 @@ get_err_from_str (char *str, gpg_error_t *err)
 }
 
 
+static void
+print_desc (const char *symbol)
+{
+  static int initialized;
+  static FILE *fp;
+  char line[512];
+  char *p;
+  int indesc = 0;
+  int blanklines = 0;
+  int last_was_keyword = 0;
+
+  if (!symbol)
+    return;
+
+  if (!initialized)
+    {
+      initialized = 1;
+      fp = fopen (PKGDATADIR "/errorref.txt", "r");
+    }
+  if (!fp)
+    return;
+  rewind (fp);
+  while (fgets (line, sizeof line, fp))
+    {
+      if (*line == '#')
+        continue;
+      if (*line && line[strlen(line)-1] == '\n')
+        line[strlen(line)-1] = 0;
+
+      if (!strncmp (line, "GPG_ERR_", 8))
+        {
+          if (indesc == 1 && last_was_keyword)
+            continue; /* Skip keywords immediately following a matched
+                       * keyword.  */
+          last_was_keyword = 1;
+
+          indesc = 0;
+          p = strchr (line, ' ');
+          if (!p)
+            continue;
+          *p = 0;
+          if (!strcmp (line, symbol))
+            {
+              indesc = 1;
+              continue; /* Skip this line.  */
+            }
+        }
+      else
+        last_was_keyword = 0;
+      if (!indesc)
+        continue;
+      if (indesc == 1 && !*line)
+        continue; /* Skip leading empty lines in a description.  */
+      if (indesc == 1)
+        putchar ('\n'); /* One leading empty line.  */
+      indesc = 2;
+      if (!*line)
+        {
+          blanklines++;
+          continue;
+        }
+      for (; blanklines; blanklines--)
+        putchar ('\n');
+      printf ("%s\n", line);
+    }
+  putchar ('\n'); /* One trailing blank line.  */
+}
+
+
+
 
+
+static const char *
+my_strusage (int level)
+{
+  const char *p;
+
+  switch (level)
+    {
+    case  9: p = "LGPL-2.1-or-later"; break;
+
+    case 11: p = "gpg-error"; break;
+    case 12: p = PACKAGE_NAME; break;
+    case 13: p = PACKAGE_VERSION; break;
+    case 14: p = "Copyright (C) 2019 g10 Code GmbH"; break;
+    case 19: p = _("Please report bugs to <https://bugs.gnupg.org>.\n"); break;
+
+    case 1:
+    case 40:
+      p = ("Usage: gpg-error [options] error-numbers");
+      break;
+    case 41:
+      p = ("Map error numbers to strings and vice versa.\n");
+      break;
+
+    case 42:
+      p = "1"; /* Flag: print 40 as part of 41. */
+      break;
+
+    default: p = NULL; break;
+    }
+  return p;
+}
+
+
+
 int
 main (int argc, char *argv[])
 {
-  int i = 1;
+  enum { CMD_DEFAULT     = 0,
+         CMD_LIB_VERSION = 501,
+         CMD_LIST,
+         CMD_DEFINES,
+         CMD_LOCALE,
+         OPT_DESC
+  };
+  static gpgrt_opt_t opts[] = {
+    ARGPARSE_c (CMD_LIB_VERSION, "lib-version",
+                "Print library version"),
+    ARGPARSE_c (CMD_LIST, "list",
+                "Print all error codes"),
+    ARGPARSE_c (CMD_DEFINES, "defines",
+                "Print all error codes as #define lines"),
+    ARGPARSE_c (CMD_LOCALE, "locale",
+#if HAVE_W32_SYSTEM
+                "Return the locale used for gettext"
+#else
+                "@"
+#endif
+                ),
+    ARGPARSE_s_n (OPT_DESC, "desc",
+                  "Print with error description"),
+    ARGPARSE_end()
+  };
+  gpgrt_argparse_t pargs = { &argc, &argv };
+
+  int i;
   int listmode = 0;
+  int localemode = 0;
+  int desc = 0;
   const char *source_sym;
   const char *error_sym;
   gpg_error_t err;
 
   gpgrt_init ();
   i18n_init ();
-
-  if (argc == 1)
-    {
-      fprintf (stderr, _("Usage: %s GPG-ERROR [...]\n"),
-               strrchr (argv[0],'/')? (strrchr (argv[0], '/')+1): argv[0]);
-      exit (1);
-    }
-  else if (argc == 2 && !strcmp (argv[1], "--version"))
-    {
-      fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
-      exit (0);
-    }
-  else if (argc == 2 && !strcmp (argv[1], "--help"))
-    {
-      fputs ("gpg-error (" PACKAGE_NAME ") " PACKAGE_VERSION "\n", stdout);
-      fputs ("Options:\n"
-             "  --version      Print version\n"
-             "  --lib-version  Print library version\n"
-             "  --help         Print this help\n"
-             "  --list         Print all error codes\n"
-             "  --defines      Print all error codes as #define lines\n"
-             , stdout);
-      exit (0);
-    }
-  else if (argc == 2 && !strcmp (argv[1], "--lib-version"))
-    {
-      printf ("Version from header: %s (0x%06x)\n",
-              GPG_ERROR_VERSION, GPG_ERROR_VERSION_NUMBER);
-      printf ("Version from binary: %s\n", gpg_error_check_version (NULL));
-      printf ("Copyright blurb ...:%s\n", gpg_error_check_version ("\x01\x01"));
-      exit (0);
-    }
-  else if (argc == 2 && !strcmp (argv[1], "--list"))
-    {
-      listmode = 1;
-    }
-  else if (argc == 2 && !strcmp (argv[1], "--defines"))
-    {
-      listmode = 2;
-    }
+  gpgrt_set_strusage (my_strusage);
+  gpgrt_log_set_prefix (gpgrt_strusage (11), GPGRT_LOG_WITH_PREFIX);
 
 
-  if (listmode == 1)
+  while (gpgrt_argparse (NULL, &pargs, opts))
+    {
+      switch (pargs.r_opt)
+        {
+        case CMD_LIB_VERSION: break;
+        case CMD_LIST:       listmode = 1; break;
+        case CMD_DEFINES:    listmode = 2; break;
+        case CMD_LOCALE:     localemode = 1; break;
+        case OPT_DESC:       desc = 1; break;
+        default: pargs.err = ARGPARSE_PRINT_WARNING; break;
+        }
+    }
+  gpgrt_argparse (NULL, &pargs, NULL);  /* Free internal memory.  */
+
+  if (localemode)
+    {
+      if (argc > 1)
+        gpgrt_usage (1);
+    }
+  else if ((argc && listmode) || (!argc && !listmode))
+    gpgrt_usage (1);
+
+  if (localemode)
+    {
+#if HAVE_W32_SYSTEM
+      if (argc)
+        {
+          /* Warning: What we do here is not allowed because
+           * gpgrt_w32_override_locale needs to be called as early as
+           * possible.  However for this very purpose it is okay.  */
+          if (**argv >= '0' && **argv <= '9')
+            gpgrt_w32_override_locale (NULL, strtoul (*argv, NULL, 0));
+          else
+            gpgrt_w32_override_locale (*argv, 0);
+        }
+
+      printf ("%s\n", gettext_localename ());
+#else
+      log_info ("this command is only useful on Windows\n");
+#endif
+    }
+  else if (listmode == 1)
     {
       for (i=0; i <  GPG_ERR_SOURCE_DIM; i++)
         {
@@ -434,18 +571,26 @@ main (int argc, char *argv[])
           err -= 1;
 	  source_sym = gpg_strsource_sym (err);
           if (source_sym)
-            printf ("%u = (%u, -) = (%s, -) = (%s, -)\n",
-                    err, gpg_err_source (err),
-                    source_sym, gpg_strsource (err));
+            {
+              printf ("%u = (%u, -) = (%s, -) = (%s, -)\n",
+                      err, gpg_err_source (err),
+                      source_sym, gpg_strsource (err));
+              if (desc)
+                print_desc (source_sym);
+            }
         }
       for (i=0; i <  GPG_ERR_CODE_DIM; i++)
         {
           err = gpg_err_make (GPG_ERR_SOURCE_UNKNOWN, i);
 	  error_sym = gpg_strerror_sym (err);
           if (error_sym)
-            printf ("%u = (-, %u) = (-, %s) = (-, %s)\n",
-                    err, gpg_err_code (err),
-                    error_sym, gpg_strerror (err));
+            {
+              printf ("%u = (-, %u) = (-, %s) = (-, %s)\n",
+                      err, gpg_err_code (err),
+                      error_sym, gpg_strerror (err));
+              if (desc)
+                print_desc (error_sym);
+            }
         }
     }
   else if (listmode == 2)
@@ -493,7 +638,7 @@ main (int argc, char *argv[])
     }
   else /* Standard mode.  */
     {
-      while (i < argc)
+      for (i=0; i < argc; i++)
         {
           if (get_err_from_number (argv[i], &err)
               || get_err_from_symbol (argv[i], &err)
@@ -506,11 +651,11 @@ main (int argc, char *argv[])
                       err, gpg_err_source (err), gpg_err_code (err),
                       source_sym ? source_sym : "-", error_sym ? error_sym:"-",
                       gpg_strsource (err), gpg_strerror (err));
+              if (desc)
+                print_desc (error_sym);
             }
           else
-            fprintf (stderr, _("%s: warning: could not recognize %s\n"),
-                     argv[0], argv[i]);
-          i++;
+            log_error (_("warning: could not recognize %s\n"), argv[i]);
         }
     }
 

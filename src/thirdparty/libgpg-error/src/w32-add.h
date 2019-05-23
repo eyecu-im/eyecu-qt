@@ -37,6 +37,10 @@ int _gpg_w32_gettext_use_utf8 (int value);
 # define gettext_use_utf8(a) _gpg_w32_gettext_use_utf8 (a)
 #endif /*GPG_ERR_ENABLE_GETTEXT_MACROS*/
 
+/* Force the use of the locale NAME or if NAME is NULL the one derived
+ * from LANGID.  This function must be used early and is not thread-safe. */
+void gpgrt_w32_override_locale (const char *name, unsigned short langid);
+
 
 /* A simple iconv implementation w/o the need for an extra DLL.  */
 struct _gpgrt_w32_iconv_s;
@@ -56,3 +60,8 @@ size_t  gpgrt_w32_iconv (gpgrt_w32_iconv_t cd,
 # define iconv_close(a)   gpgrt_w32_iconv_close ((a))
 # define iconv(a,b,c,d,e) gpgrt_w32_iconv ((a),(b),(c),(d),(e))
 #endif /*GPGRT_ENABLE_W32_ICONV_MACROS*/
+
+/* Query a string in the registry.  */
+char *gpgrt_w32_reg_query_string (const char *root,
+                                  const char *dir,
+                                  const char *name);

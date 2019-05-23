@@ -1,5 +1,5 @@
 # configure.ac for libgpg-error
-# Copyright (C) 2003, 2004, 2006, 2010, 2013, 2014, 2015, 2016 g10 Code GmbH
+# Copyright (C) 2003, 2004, 2006, 2010, 2013-2017 g10 Code GmbH
 #
 # This file is part of libgpg-error.
 #
@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 
 # (Process this file with autoconf to produce a configure script.)
 # The following lines are used by ./autogen.sh.
@@ -26,33 +27,30 @@ min_automake_version="1.14"
 # Please bump the version number immediately after the release, do
 # another commit, and a push so that the git magic is able to work.
 # See below for the LT versions.
-m4_define([mym4_version_major], [1])
-m4_define([mym4_version_minor], [22])
+m4_define([mym4_package],[libgpg-error])
+m4_define([mym4_major], [1])
+m4_define([mym4_minor], [37])
 
 # Below is m4 magic to extract and compute the revision number, the
 # decimalized short revision number, a beta version string, and a flag
 # indicating a development version (mym4_isgit). Note that the m4
 # processing is done by autoconf and not during the configure run.
-m4_define([mym4_version], [mym4_version_major.mym4_version_minor])
-m4_define([mym4_revision],
-          m4_esyscmd([git rev-parse --short HEAD | tr -d '\n\r']))
-m4_define([mym4_revision_dec],
-          m4_esyscmd_s([echo $((0x$(echo ]mym4_revision[|head -c 4)))]))
-m4_define([mym4_betastring],
-       m4_esyscmd_s([git describe --match 'libgpg-error-[0-9].*[0-9]' --long|\
-                        awk -F- '$4!=0{print"-beta"$4}']))
-m4_define([mym4_isgit],m4_if(mym4_betastring,[],[no],[yes]))
-m4_define([mym4_full_version],[mym4_version[]mym4_betastring])
-
-AC_INIT([libgpg-error],[mym4_full_version],[https://bugs.gnupg.org])
+m4_define([mym4_verslist], m4_split(m4_esyscmd([./autogen.sh --find-version] \
+                           mym4_package mym4_major mym4_minor),[:]))
+m4_define([mym4_isbeta],       m4_argn(2, mym4_verslist))
+m4_define([mym4_version],      m4_argn(4, mym4_verslist))
+m4_define([mym4_revision],     m4_argn(7, mym4_verslist))
+m4_define([mym4_revision_dec], m4_argn(8, mym4_verslist))
+m4_esyscmd([echo ]mym4_version[>VERSION])
+AC_INIT([mym4_package],[mym4_version], [https://bugs.gnupg.org])
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:			REVISION++)
 #   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
 #   (Interfaces added:			AGE++)
 #   (Interfaces removed:		AGE=0)
 # Note that added error codes don't constitute an interface change.
-LIBGPG_ERROR_LT_CURRENT=18
-LIBGPG_ERROR_LT_AGE=18
+LIBGPG_ERROR_LT_CURRENT=27
+LIBGPG_ERROR_LT_AGE=27
 LIBGPG_ERROR_LT_REVISION=0
 ################################################
 
@@ -60,8 +58,7 @@ AC_SUBST(LIBGPG_ERROR_LT_CURRENT)
 AC_SUBST(LIBGPG_ERROR_LT_AGE)
 AC_SUBST(LIBGPG_ERROR_LT_REVISION)
 
-VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_version_major \
-                          mym4_version_minor)
+VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x00" mym4_major mym4_minor)
 AC_SUBST(VERSION_NUMBER)
 
 AC_CONFIG_AUX_DIR([build-aux])
@@ -85,7 +82,42 @@ AC_PROG_AWK
 AC_CHECK_TOOL(AR, ar, :)
 AC_GNU_SOURCE
 
-# Set some internal variables depending on the platform for later use.
+# Taken from mpfr-4.0.1, then modified for LDADD_FOR_TESTS_KLUDGE
+dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
+dnl is defined. The issue is that with the new dtags, LD_LIBRARY_PATH has
+dnl the precedence over the run path, so that if a compatible MPFR library
+dnl is installed in some directory from $LD_LIBRARY_PATH, then the tested
+dnl MPFR library will be this library instead of the MPFR library from the
+dnl build tree. Other OS with the same issue might be added later.
+dnl
+dnl References:
+dnl   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=859732
+dnl   http://lists.gnu.org/archive/html/libtool/2017-05/msg00000.html
+dnl
+dnl We need to check whether --disable-new-dtags is supported as alternate
+dnl linkers may be used (e.g., with tcc: CC=tcc LD=tcc).
+dnl
+case $host in
+  *-*-linux*)
+    if test -n "$LD_LIBRARY_PATH"; then
+      saved_LDFLAGS="$LDFLAGS"
+      LDADD_FOR_TESTS_KLUDGE="-Wl,--disable-new-dtags"
+      LDFLAGS="$LDFLAGS $LDADD_FOR_TESTS_KLUDGE"
+      AC_MSG_CHECKING(whether --disable-new-dtags is supported by the linker)
+      AC_LINK_IFELSE([AC_LANG_SOURCE([[
+int main (void) { return 0; }
+      ]])],
+      [AC_MSG_RESULT(yes (use it since LD_LIBRARY_PATH is set))],
+      [AC_MSG_RESULT(no)
+       LDADD_FOR_TESTS_KLUDGE=""
+      ])
+      LDFLAGS="$saved_LDFLAGS"
+    fi
+    ;;
+esac
+AC_SUBST([LDADD_FOR_TESTS_KLUDGE])
+
+# Set some variables depending on the platform for later use.
 have_w32_system=no
 have_w64_system=no
 have_w32ce_system=no
@@ -100,6 +132,12 @@ case "${host}" in
         ;;
     *-mingw32*)
         have_w32_system=yes
+        ;;
+    *-apple-darwin*)
+        # This is the equivalent of the _GNU_SOURCE feature-test-macro
+        # on GNU libc systems.
+        AC_DEFINE(_DARWIN_C_SOURCE, 900000L,
+                  Expose all libc features (__DARWIN_C_FULL).)
         ;;
     *)
        ;;
@@ -123,18 +161,7 @@ LT_LANG([Windows Resource])
 
 
 # We need to compile and run a program on the build machine.
-dnl The AC_PROG_CC_FOR_BUILD macro in the AC archive is broken for
-dnl autoconf 2.57.
-dnl AC_PROG_CC_FOR_BUILD
-AC_MSG_CHECKING(for cc for build)
-if test "$cross_compiling" = "yes"; then
-  CC_FOR_BUILD="${CC_FOR_BUILD-cc}"
-else
-  CC_FOR_BUILD="${CC_FOR_BUILD-$CC}"
-fi
-AC_MSG_RESULT($CC_FOR_BUILD)
-AC_ARG_VAR(CC_FOR_BUILD,[build system C compiler])
-
+AX_CC_FOR_BUILD
 
 AH_BOTTOM([
 /* Force using of NLS for W32 even if no libintl has been found.  This is
@@ -151,6 +178,8 @@ AH_BOTTOM([
 #define GPG_ERR_ENABLE_GETTEXT_MACROS 1
 #define GPG_ERR_ENABLE_ERRNO_MACROS 1
 #define GPGRT_ENABLE_ES_MACROS 1
+#define GPGRT_ENABLE_LOG_MACROS 1
+#define GPGRT_ENABLE_ARGPARSE_MACROS 1
 ])
 
 
@@ -160,7 +189,9 @@ AM_GNU_GETTEXT([external])
 
 # Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h])
+AC_CHECK_HEADERS([stdlib.h locale.h stdint.h sys/select.h sys/time.h \
+                  signal.h])
+
 AC_FUNC_STRERROR_R
 case "${host_os}" in
      solaris*)
@@ -173,7 +204,9 @@ AC_MSG_WARN([[Without strerror_r, gpg_strerror_r might not be thread-safe]]))
      ;;
 esac
 
-AC_CHECK_FUNCS([flockfile vasprintf])
+AC_FUNC_FORK
+AC_CHECK_FUNCS([flockfile vasprintf mmap rand strlwr stpcpy setenv stat \
+                getrlimit ])
 
 
 #
@@ -184,6 +217,23 @@ AC_C_CONST
 AC_CHECK_SIZEOF(int)
 AC_CHECK_SIZEOF(long)
 AC_CHECK_SIZEOF(long long)
+AC_HEADER_TIME
+AC_CHECK_SIZEOF(time_t,,[[
+#include <stdio.h>
+#if TIME_WITH_SYS_TIME
+# include <sys/time.h>
+# include <time.h>
+#else
+# if HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# else
+#  include <time.h>
+# endif
+#endif
+]])
+
+GNUPG_FUNC_MKDIR_TAKES_ONE_ARG
+
 
 # Find a 64 bit integer type to be used instead of off_t.  We prefer
 # the standard integer types over int64_t and finally try long long.
@@ -205,7 +255,6 @@ AC_DEFINE_UNQUOTED(REPLACEMENT_FOR_OFF_T, "$replacement_for_off_t",
                    [Used by mkheader to insert the replacement type.])
 
 
-
 #
 # Setup gcc specific options
 #
@@ -224,8 +273,8 @@ if test "$GCC" = yes; then
     # warning options and the user should have a chance of overriding
     # them.
     if test "$USE_MAINTAINER_MODE" = "yes"; then
-        CFLAGS="$CFLAGS -O3 -Wall -Wcast-align -Wshadow -Wstrict-prototypes"
-        CFLAGS="$CFLAGS -Wformat -Wno-format-y2k -Wformat-security"
+        M_CFLAGS="-O3 -Wall -Wcast-align -Wshadow -Wstrict-prototypes"
+        M_CFLAGS="$M_CFLAGS -Wformat -Wno-format-y2k -Wformat-security"
         if test x"$_gcc_silent_wno" = xyes ; then
           _gcc_wopt=yes
         else
@@ -238,7 +287,7 @@ if test "$GCC" = yes; then
           CFLAGS=$_gcc_cflags_save;
         fi
         if test x"$_gcc_wopt" = xyes ; then
-          CFLAGS="$CFLAGS -W -Wno-sign-compare -Wno-missing-field-initializers"
+          M_CFLAGS="$M_CFLAGS -W -Wno-sign-compare -Wno-missing-field-initializers"
         fi
 
         AC_MSG_CHECKING([if gcc supports -Wdeclaration-after-statement])
@@ -248,8 +297,12 @@ if test "$GCC" = yes; then
         AC_MSG_RESULT($_gcc_wopt)
         CFLAGS=$_gcc_cflags_save;
         if test x"$_gcc_wopt" = xyes ; then
-          CFLAGS="$CFLAGS -Wdeclaration-after-statement"
+          M_CFLAGS="$M_CFLAGS -Wdeclaration-after-statement"
         fi
+
+	# Prepend the maintainer-cflags so that the user can override
+	# them, e.g. to override the optimization flags for debugging.
+	CFLAGS="$M_CFLAGS $CFLAGS"
     else
         CFLAGS="$CFLAGS -Wall"
     fi
@@ -420,7 +473,7 @@ fi
 config_libs="-lgpg-error"
 
 #
-# Check for other libraries (now only for -lrt).
+# Check for other libraries
 #
 LIB_SCHED_YIELD=
 AC_SUBST([LIB_SCHED_YIELD])
@@ -429,6 +482,24 @@ AC_SEARCH_LIBS([sched_yield], [rt posix4],
                   LIB_SCHED_YIELD=$ac_cv_search_sched_yield
                   config_libs="$config_libs $LIB_SCHED_YIELD"
                 fi])
+
+LIB_NETWORK=
+AC_SUBST([LIB_NETWORK])
+AC_SEARCH_LIBS([inet_addr], [nsl],
+               [if test "$ac_cv_search_inet_addr" != "none required"; then
+                  LIB_NETWORK=$ac_cv_search_inet_addr
+                fi])
+AC_SEARCH_LIBS([socket], [socket],
+               [if test "$ac_cv_search_socket" != "none required"; then
+                  LIB_NETWORK="$ac_cv_search_socket $LIB_NETWORK"
+                fi], [], [$LIB_NETWORK])
+if test "x$LIB_NETWORK" != x; then
+  config_libs="$config_libs $LIB_NETWORK"
+fi
+
+# Check for optional readline support
+GNUPG_CHECK_READLINE
+
 
 #
 # Prepare building of estream
@@ -447,19 +518,55 @@ if test "x$LIBMULTITHREAD" != x; then
 else
   GPG_ERROR_CONFIG_MT_LIBS=""
 fi
-GPG_ERROR_CONFIG_CFLAGS=""
+if test "$have_w32ce_system" = yes; then
+  GPG_ERROR_CONFIG_CFLAGS="-idirafter \${includedir}/gpg-extra"
+else
+  GPG_ERROR_CONFIG_CFLAGS=""
+fi
 if test "x$THREADLIB_CPPFLAGS" != x; then
   GPG_ERROR_CONFIG_MT_CFLAGS="${THREADLIB_CPPFLAGS}"
 else
   GPG_ERROR_CONFIG_MT_CFLAGS=""
 fi
-GPG_ERROR_CONFIG_ISUBDIRAFTER=""
 GPG_ERROR_CONFIG_HOST="$host"
+
+case "$includedir" in
+  /usr/include|/include) ;;
+  '${prefix}/include')
+    if test "$prefix" != / -a "$prefix" != /usr; then
+      if test -z "$GPG_ERROR_CONFIG_CFLAGS"; then
+        GPG_ERROR_CONFIG_CFLAGS="-I$includedir"
+      else
+        GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS"
+      fi
+    fi
+    ;;
+  *)
+    if test -z "$GPG_ERROR_CONFIG_CFLAGS"; then
+      GPG_ERROR_CONFIG_CFLAGS="-I$includedir"
+    else
+      GPG_ERROR_CONFIG_CFLAGS="-I$includedir $GPG_ERROR_CONFIG_CFLAGS"
+    fi
+    ;;
+esac
+case "$libdir" in
+  /usr/lib|/usr/lib64|/lib|/lib64) ;;
+  '${exec_prefix}/lib')
+    if test "$exec_prefix" = "NONE"; then
+      if test "$prefix" != / -a "$prefix" != /usr; then
+        GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS"
+      fi
+    elif test "$exec_prefix" != / -a "$exec_prefix" != /usr; then
+      GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS"
+    fi
+    ;;
+  *) GPG_ERROR_CONFIG_LIBS="-L$libdir $GPG_ERROR_CONFIG_LIBS" ;;
+esac
+
 AC_SUBST(GPG_ERROR_CONFIG_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_CFLAGS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_LIBS)
 AC_SUBST(GPG_ERROR_CONFIG_MT_CFLAGS)
-AC_SUBST(GPG_ERROR_CONFIG_ISUBDIRAFTER)
 AC_SUBST(GPG_ERROR_CONFIG_HOST)
 
 
@@ -474,7 +581,6 @@ if test "$have_w32_system" = yes; then
     fi
     if test "$have_w32ce_system" = yes; then
       AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
-      GPG_ERROR_CONFIG_ISUBDIRAFTER="gpg-extra"
     fi
     force_use_syscfg=yes
 fi
@@ -489,6 +595,47 @@ AM_CONDITIONAL(CROSS_COMPILING, test x$cross_compiling = xyes)
 AM_CONDITIONAL(FORCE_USE_SYSCFG, test x$force_use_syscfg = xyes)
 
 AC_DEFINE_UNQUOTED(HOST_TRIPLET_STRING, "$host", [The host triplet])
+
+
+#
+# gpgrt_log_clock may require linking with extra libaries.  As long as
+# we don't have a good test for this we require the use of this
+# configure option to enabling printing of a timestamp.
+#
+AC_MSG_CHECKING([whether to enable log_clock])
+AC_ARG_ENABLE(log_clock,
+              AC_HELP_STRING([--enable-log-clock],
+                             [enable log_clock timestamps]),
+              enable_log_clock=$enableval, enable_log_clock=no)
+AC_MSG_RESULT($enable_log_clock)
+if test "$enable_log_clock" = yes ; then
+  AC_DEFINE(ENABLE_LOG_CLOCK,1,[Defined to use log_clock timestamps])
+fi
+
+#
+# For now we do not build gpgscm by default.
+# Eventually we will reverse the meaning of that option.
+#
+build_gpgscm=no
+#AC_MSG_CHECKING([whether to build gpgscm])
+#AC_ARG_ENABLE(gpgscm,
+#              AC_HELP_STRING([--enable-gpgscm],
+#                             [build the gpgscm tool]),
+#              build_gpgscm=$enableval, build_gpgscm=no)
+#AC_MSG_RESULT($build_gpgscm)
+AM_CONDITIONAL([BUILD_GPGSCM], [test "x$build_gpgscm" != xno])
+
+
+#
+# Add -Werror to CFLAGS.  This hack can be used to avoid problems with
+# misbehaving autoconf tests in case the user supplied -Werror.
+#
+AC_ARG_ENABLE(werror,
+   AC_HELP_STRING([--enable-werror],
+                  [append -Werror to CFLAGS]),
+                  [if test $enableval = yes ; then
+                      CFLAGS="$CFLAGS -Werror"
+                   fi])
 
 
 #
@@ -533,6 +680,11 @@ AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],
                      build_doc=$enableval, build_doc=yes)
 AM_CONDITIONAL([BUILD_DOC], [test "x$build_doc" != xno])
 
+build_tests=yes
+AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
+                                    [do not build the tests]),
+                     build_tests=$enableval, build_tests=yes)
+AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 
 #
 # Substitution
@@ -542,7 +694,8 @@ AC_CONFIG_FILES([doc/Makefile po/Makefile.in m4/Makefile])
 AC_CONFIG_FILES([src/Makefile tests/Makefile])
 AC_CONFIG_FILES([lang/Makefile lang/cl/Makefile lang/cl/gpg-error.asd])
 AC_CONFIG_FILES([src/versioninfo.rc src/gpg-error.w32-manifest])
-AC_CONFIG_FILES([src/gpg-error-config], [chmod +x src/gpg-error-config])
+AC_CONFIG_FILES([src/gpg-error.pc])
+AC_CONFIG_FILES([src/gpg-error-config-old:src/gpg-error-config.in], [chmod +x src/gpg-error-config-old])
 
 AC_OUTPUT
 
@@ -553,7 +706,7 @@ if test "$have_w32_system" != yes; then
    fi
 fi
 echo "
-        $PACKAGE_NAME-$PACKAGE_VERSION prepared for make
+        $PACKAGE_NAME v$PACKAGE_VERSION has been configured as follows:
 
         Revision: mym4_revision  (mym4_revision_dec)
         Platform: $host$tmp

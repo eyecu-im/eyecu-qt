@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.18\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-27 19:31+0100\n"
+"PO-Revision-Date: 2018-03-21 18:59+0100\n"
 "Last-Translator: Petr Pisar <petr.pisar@atlas.cz>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "Language: cs\n"
@@ -131,7 +131,7 @@ msgstr "Chybné heslo"
 msgid "Invalid cipher algorithm"
 msgstr "Neplatný šifrovací algoritmus"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Klíčenka otevřena"
 
 msgid "Invalid packet"
@@ -736,6 +736,9 @@ msgstr "Lichá šestnáctková čísla v S-výrazu"
 msgid "Bad octal character in S-expression"
 msgstr "Chybný osmičkový znak v S-výrazu"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -821,7 +824,7 @@ msgstr "Chybná zpráva s požadavkem na certifikát v zahájení"
 msgid "Bad certificate verify message in handshake"
 msgstr "Chybná zpráva o ověření certifikátu v zahájení"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Chybná zpráva se změnou šifry v zahájení"
 
 msgid "Bad client hello message in handshake"
@@ -830,7 +833,7 @@ msgstr "Chybná zpráva s pozdravem klienta v zahájení"
 msgid "Bad server hello message in handshake"
 msgstr "Chybná zpráva s pozdravem serveru v zahájení"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Chybná zpráva o dokončení pozdravu serveru v zahájení"
 
 msgid "Bad finished message in handshake"
@@ -934,6 +937,111 @@ msgstr "Chyba parametru IPC"
 
 msgid "Unknown IPC inquire"
 msgstr "Neznámý dotaz IPC"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Chybí kryptografická jednotka"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Zdvojená hodnota"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certifikát je příliš mladý"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Dodaný objekt je příliš krátký"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Neznámé jméno"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Neplatný kód operace"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Neznámé jméno"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Nezapnuto"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Nepodporovaná ochrana"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Neznámá chyba systému"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Neplatný řetězec OID"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Neplatný S-výraz"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Chybí certifikát vydavatele"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Dešifrování selhalo"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Čas vypršel"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1353,13 +1461,74 @@ msgstr "Konec souboru"
 msgid "Unknown error code"
 msgstr "Neznámý kód chyby"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Použití: %s CHYBA_GPG […]\n"
+msgid "argument not expected"
+msgstr "argument nebyl očekáván"
+
+msgid "read error"
+msgstr "chyba při čtení"
+
+msgid "keyword too long"
+msgstr "klíčové slovo je příliš dlouhé"
+
+msgid "missing argument"
+msgstr "postrádám argument"
+
+msgid "invalid argument"
+msgstr "neplatný argument"
+
+msgid "invalid command"
+msgstr "neplatný příkaz"
+
+msgid "invalid alias definition"
+msgstr "neplatný definice aliasu"
+
+msgid "out of core"
+msgstr "nedostatek paměti"
+
+msgid "invalid option"
+msgstr "neplatný parametr"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: pozor: %s nebylo možné rozpoznat\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "postrádám argument u volby „%.50s“\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "neplatný argument u volby „%.50s“\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "volba „%.50s“ nečeká argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "neplatný příkaz „%.50s“\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "volba „%.50s“ není jednoznačná\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "příkaz „%.50s“ není jednoznačný\n"
+
+# Yet another expression for `not enough memory' :)
+msgid "out of core\n"
+msgstr "nedostatek paměti\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "neplatný parametr „%.50s“\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "pozor: %s nebylo možné rozpoznat\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Použití: %s CHYBA_GPG […]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1370,11 +1539,6 @@ msgstr "%s: pozor: %s nebylo možné rozpoznat\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Neplatná data"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Dešifrování selhalo"
 
 #, fuzzy
 #~| msgid "General error"

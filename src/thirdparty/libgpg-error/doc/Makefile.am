@@ -17,11 +17,14 @@
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 
-EXTRA_DIST = HACKING errorref.txt \
-	     yat2m.c
+EXTRA_DIST = HACKING errorref.txt
+
+bin_PROGRAMS = yat2m
+yat2m_SOURCES = yat2m.c
+yat2m_CFLAGS= -DPACKAGE_VERSION="\"$(PACKAGE_VERSION)\""
 
 DISTCLEANFILES = gpgrt.cps yat2m-stamp.tmp yat2m-stamp $(myman_pages)
-CLEANFILES = yat2m
+CLEANFILES = errorref.txt.x
 
 info_TEXINFOS = gpgrt.texi
 gpgrt_TEXINFOS = lgpl.texi gpl.texi
@@ -30,23 +33,31 @@ YAT2M_OPTIONS = -I $(srcdir) \
 	--release "Libgpg-error @PACKAGE_VERSION@" --source "GnuPG"
 
 myman_sources = gpgrt.texi
-myman_pages   = gpg-error-config.1
+myman_pages   = gpgrt-config.1
 
 man_MANS = $(myman_pages)
 
-yat2m: yat2m.c
-	$(CC_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
+if CROSS_COMPILING
+YAT2M_CMD = ./yat2m-for-build$(EXEEXT_FOR_BUILD)
+YAT2M_DEP = yat2m-for-build$(EXEEXT_FOR_BUILD)
+CLEANFILES += yat2m-for-build$(EXEEXT_FOR_BUILD)
 
+yat2m-for-build$(EXEEXT_FOR_BUILD): yat2m.c
+	$(CC_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) -o $@ $(srcdir)/yat2m.c
+else
+YAT2M_CMD = ./yat2m$(EXEEXT)
+YAT2M_DEP = yat2m$(EXEEXT)
+endif
 
-yat2m-stamp: $(myman_sources)
+yat2m-stamp: $(myman_sources) $(srcdir)/version.texi
 	@rm -f yat2m-stamp.tmp
 	@touch yat2m-stamp.tmp
 	for file in $(myman_sources) ; do \
-              ./yat2m $(YAT2M_OPTIONS) --store \
+              $(YAT2M_CMD) $(YAT2M_OPTIONS) --store \
 	          `test -f '$$file' || echo '$(srcdir)/'`$$file ; done
 	@mv -f yat2m-stamp.tmp $@
 
-yat2m-stamp: yat2m
+yat2m-stamp: $(YAT2M_DEP)
 
 $(myman_pages) : yat2m-stamp
 	@if test -f $@; then :; else \
@@ -65,4 +76,15 @@ $(myman_pages) : yat2m-stamp
 # been modified.  This is required so that the version.texi magic
 # updates the release date.
 gpgrt.texi : $(gpgrt_TEXINFOS)
-	touch $(srcdir)/gcrypt.texi
+	touch $(srcdir)/gpgrt.texi
+
+errorref.txt.x : errorref.txt
+	sed '/^##/ d' $(srcdir)/errorref.txt >$@
+	echo "# Installed by $(PACKAGE_NAME) $(PACKAGE_VERSION)" >>$@
+
+install-data-local: errorref.txt.x
+	$(mkinstalldirs) $(DESTDIR)$(pkgdatadir)
+	$(INSTALL_DATA) errorref.txt.x $(DESTDIR)$(pkgdatadir)/errorref.txt
+
+uninstall-local:
+	-@rm $(DESTDIR)$(pkgdatadir)/errorref.txt

@@ -2,12 +2,12 @@
 # Copyright (C) 2012 Free Software Foundation, Inc.
 # This file is distributed under the same license as the libgpg-error package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015.
+# Yuri Chornoivan <yurchor@ukr.net>, 2012, 2014, 2015, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-07-12 16:21+0300\n"
+"PO-Revision-Date: 2018-04-14 21:07+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <translation-team-uk@lists.sourceforge.net>\n"
 "Language: uk\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 1.5\n"
+"X-Generator: Lokalize 2.0\n"
 
 msgid "Unspecified source"
 msgstr "Невказане джерело"
@@ -125,7 +125,7 @@ msgstr "Помилковий пароль"
 msgid "Invalid cipher algorithm"
 msgstr "Некоректний алгоритм шифрування"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Відкриття сховища ключів"
 
 msgid "Invalid packet"
@@ -728,23 +728,20 @@ msgstr "Дивні шістнадцяткові числа у S-виразі"
 msgid "Bad octal character in S-expression"
 msgstr "Помилковий вісімковий символ у S-виразі"
 
-#, fuzzy
-#| msgid "Data not encrypted"
+msgid "All subkeys are expired or revoked"
+msgstr "Строк дії усіх підключів вичерпано або їх відкликано"
+
 msgid "Database is corrupted"
-msgstr "Дані не зашифровано"
+msgstr "Базу даних пошкоджено"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Сервер сигналізує про помилку"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Невідома назва"
+msgstr "Немає назви"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Немає відкритого ключа"
+msgstr "Немає ключа"
 
 msgid "Legacy key"
 msgstr "Застарілий ключ"
@@ -812,7 +809,7 @@ msgstr ""
 "Помилкове повідомлення щодо перевірки сертифікації під час підтвердження "
 "зв’язку"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Помилкове повідомлення щодо зміни шифру під час підтвердження зв’язку"
 
 msgid "Bad client hello message in handshake"
@@ -821,7 +818,7 @@ msgstr "Помилкове вітальне повідомлення клієн�
 msgid "Bad server hello message in handshake"
 msgstr "Помилкове вітальне повідомлення сервера під час підтвердження зв’язку"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 "Помилкове повідомлення про завершення вітання від сервера під час "
 "підтвердження зв’язку"
@@ -855,10 +852,10 @@ msgid "Invalid lock object"
 msgstr "Некоректний об’єкт блокування"
 
 msgid "True"
-msgstr ""
+msgstr "Так"
 
 msgid "False"
-msgstr ""
+msgstr "Ні"
 
 msgid "General IPC error"
 msgstr "Загальна помилка IPC"
@@ -931,6 +928,85 @@ msgstr "Помилка у параметрі IPC"
 
 msgid "Unknown IPC inquire"
 msgstr "Невідомий запит IPC"
+
+msgid "Crypto engine too old"
+msgstr "Рушій шифрування є надто старим"
+
+msgid "Screen or window too small"
+msgstr "Екран або вікно є надто малим"
+
+msgid "Screen or window too large"
+msgstr "Екран або вікно є надто великим"
+
+msgid "Required environment variable not set"
+msgstr "Не встановлено обов'язкової змінної середовища"
+
+msgid "User ID already exists"
+msgstr "Ідентифікатор користувача вже існує"
+
+msgid "Name already exists"
+msgstr "Назва вже існує"
+
+msgid "Duplicated name"
+msgstr "Дублювання назви"
+
+msgid "Object is too young"
+msgstr "Об'єкт є надто новим"
+
+msgid "Object is too old"
+msgstr "Об'єкт є надто старим"
+
+msgid "Unknown flag"
+msgstr "Невідомий прапорець"
+
+msgid "Invalid execution order"
+msgstr "Некоректна послідовність виконання"
+
+msgid "Already fetched"
+msgstr "Вже отримано"
+
+msgid "Try again later"
+msgstr "Повторіть спробу пізніше"
+
+msgid "Wrong name"
+msgstr "Помилкова назва"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Не увімкнено"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Неприйнятне розпізнавання LDAP"
+
+msgid "System bug detected"
+msgstr "Виявлено ваду у системі"
+
+msgid "Unknown DNS error"
+msgstr "Невідома помилка DNS"
+
+msgid "Invalid DNS section"
+msgstr "Некоректний розділ DNS"
+
+msgid "Invalid textual address form"
+msgstr "Некоректний текстовий формат адреси"
+
+msgid "Missing DNS query packet"
+msgstr "Не вистачає пакета запиту до DNS"
+
+msgid "Missing DNS answer packet"
+msgstr "Не вистачає пакета із відповіддю DNS"
+
+msgid "Connection closed in DNS"
+msgstr "З'єднання закрито у DNS"
+
+msgid "Verification failed in DNS"
+msgstr "Не пройдено перевірку на DNS"
+
+msgid "DNS Timeout"
+msgstr "Перевищено час очікування на DNS"
 
 msgid "General LDAP error"
 msgstr "Загальна помилка LDAP"
@@ -1235,35 +1311,67 @@ msgstr "Кінець файла"
 msgid "Unknown error code"
 msgstr "Помилка з невідомим кодом"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Користування: %s ПОМИЛКА-GPG [...]\n"
+msgid "argument not expected"
+msgstr "неочікуваний аргумент"
+
+msgid "read error"
+msgstr "помилка читання"
+
+msgid "keyword too long"
+msgstr "занадто довге ключове слово"
+
+msgid "missing argument"
+msgstr "не вистачає аргументу"
+
+msgid "invalid argument"
+msgstr "некоректний аргумент"
+
+msgid "invalid command"
+msgstr "некоректна команда"
+
+msgid "invalid alias definition"
+msgstr "некоректне визначення замінника"
+
+msgid "out of core"
+msgstr "вихід за межі області пам’яті"
+
+msgid "invalid option"
+msgstr "некоректний параметр"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: попередження: не вдалося розпізнати %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "не вказано аргументу до параметра «%.50s»\n"
 
-#, fuzzy
-#~| msgid "Resources exhausted"
-#~ msgid "LCUP Resources exhausted"
-#~ msgstr "Вичерпано ресурси"
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "некоректний аргумент параметра «%.50s»\n"
 
-#, fuzzy
-#~| msgid "Invalid data"
-#~ msgid "LCUP Invalid data"
-#~ msgstr "Некоректні дані"
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "для параметра «%.50s» аргументи не потрібно вказувати\n"
 
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Спроба розшифрування зазнала невдачі"
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "некоректна команда «%.50s»\n"
 
-#, fuzzy
-#~| msgid "General error"
-#~ msgid "LDAP Other general error"
-#~ msgstr "Загальна помилка"
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "параметр «%.50s» є неоднозначним\n"
 
-#, fuzzy
-#~| msgid "dirmngr error"
-#~ msgid "Encoding error"
-#~ msgstr "Помилка dirmngr"
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "команда «%.50s» є неоднозначною\n"
+
+msgid "out of core\n"
+msgstr "вихід за межі області пам’яті\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "некоректний параметр «%.50s»\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr "Будь ласка, повідомляйте про помилки тут: <https://bugs.gnupg.org>.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "попередження: не вдалося розпізнати %s\n"

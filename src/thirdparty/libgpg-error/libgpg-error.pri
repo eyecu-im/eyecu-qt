@@ -13,6 +13,14 @@ HEADERS += \
     SMP/version.h 
 
 SOURCES += \
+    src/argparse.c \
+    src/b64dec.c \
+    src/b64enc.c \
+    src/logging.c \
+    src/syscall-clamp.c \
+    src/sysutils.c \
+    src/w32-estream.c \
+    src/w32-reg.c \
     src/code-from-errno.c \
     src/code-to-errno.c \
     src/estream-printf.c \
@@ -36,12 +44,20 @@ win32 {
         src/w32-gettext.c \
         src/w32-iconv.c \
         src/w32-lock.c \
-        src/w32-thread.c
+        src/w32-thread.c \
+        src/spawn-w32.c
 } else {
     HEADERS += \
         src/posix-lock-obj.h
 
     SOURCES += \
         src/posix-lock.c \
-        src/posix-thread.c
+        src/posix-thread.c \
+        src/spawn-posix.c
 }
+
+DISTFILES += \
+    src/gpg-error-config-test.sh \
+    src/gpg-error.pc.in \
+    src/gpgrt-config \
+    src/gpgrt.m4

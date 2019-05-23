@@ -1,13 +1,13 @@
 # Russian translation for libgpg-error.
-# Copyright (C) 2015 Free Software Foundation, Inc.
+# Copyright (C) 2018 Free Software Foundation, Inc.
 # This file is distributed under the same license as the original package.
-# Ineiev <ineiev@gnu.org>, 2014, 2015
+# Ineiev <ineiev@gnu.org>, 2014, 2015, 2018
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-09-27 12:04+0000\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Ineiev <ineiev@gnu.org>\n"
 "Language-Team: Russian <gnupg-ru@gnupg.org>\n"
 "Language: ru\n"
@@ -123,7 +123,7 @@ msgstr "Плохая фраза-пароль"
 msgid "Invalid cipher algorithm"
 msgstr "Недопустимый алгоритм симметричного шифрования"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Таблица ключей открыта"
 
 msgid "Invalid packet"
@@ -726,23 +726,20 @@ msgstr "Шестнадцатеричные числа нечетной длин�
 msgid "Bad octal character in S-expression"
 msgstr "Плохой восьмеричный символ в S-выражении"
 
-#, fuzzy
-#| msgid "Data not encrypted"
+msgid "All subkeys are expired or revoked"
+msgstr "Все подключи просрочены или отозваны"
+
 msgid "Database is corrupted"
-msgstr "Данные не зашифрованы"
+msgstr "База данных повреждена"
 
 msgid "Server indicated a failure"
-msgstr ""
+msgstr "Сервер указал на сбой"
 
-#, fuzzy
-#| msgid "Unknown name"
 msgid "No name"
-msgstr "Неизвестное имя"
+msgstr "Нет имени"
 
-#, fuzzy
-#| msgid "No public key"
 msgid "No key"
-msgstr "Нет открытого ключа"
+msgstr "Нет ключа"
 
 msgid "Legacy key"
 msgstr "Старый ключ"
@@ -807,7 +804,7 @@ msgstr "Плохое сообщение-запрос сертификата пр
 msgid "Bad certificate verify message in handshake"
 msgstr "Плохое сообщение-проверка сертификата при установлении связи"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Плохое сообщение смены шифра при установлении связи"
 
 msgid "Bad client hello message in handshake"
@@ -816,7 +813,7 @@ msgstr "Плохое начальное сообщение клиента при
 msgid "Bad server hello message in handshake"
 msgstr "Плохое начальное сообщение сервера при установлении связи"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Плохая квитанция сервера на начальное сообщение при установлении связи"
 
 msgid "Bad finished message in handshake"
@@ -844,10 +841,10 @@ msgid "Invalid lock object"
 msgstr "Недопустимый объект блокировки"
 
 msgid "True"
-msgstr ""
+msgstr "Истина"
 
 msgid "False"
-msgstr ""
+msgstr "Ложь"
 
 msgid "General IPC error"
 msgstr "Общая ошибка IPC"
@@ -920,6 +917,85 @@ msgstr "Ошибка в параметре IPC"
 
 msgid "Unknown IPC inquire"
 msgstr "Неизвестный запрос IPC"
+
+msgid "Crypto engine too old"
+msgstr "Криптомеханизм слишком стар"
+
+msgid "Screen or window too small"
+msgstr "Экран или окно слишком мало"
+
+msgid "Screen or window too large"
+msgstr "Экран или окно слишком велико"
+
+msgid "Required environment variable not set"
+msgstr "Требуемая переменная среды не установлена"
+
+msgid "User ID already exists"
+msgstr "Идентификатор пользователя уже существует"
+
+msgid "Name already exists"
+msgstr "Имя уже существует"
+
+msgid "Duplicated name"
+msgstr "Имя продублировано"
+
+msgid "Object is too young"
+msgstr "Объект слишком нов"
+
+msgid "Object is too old"
+msgstr "Объект слишком стар"
+
+msgid "Unknown flag"
+msgstr "Неизвестный признак"
+
+msgid "Invalid execution order"
+msgstr "Недопустимый порядок выполнения"
+
+msgid "Already fetched"
+msgstr "Уже доставлено"
+
+msgid "Try again later"
+msgstr "Повторите попытку позднее"
+
+msgid "Wrong name"
+msgstr "Неверное имя"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Отключено"
+
+#, fuzzy
+#| msgid "Inappropriate LDAP authentication"
+msgid "Bad authentication"
+msgstr "Неподходящая аутентификация LDAP"
+
+msgid "System bug detected"
+msgstr "Обнаружена ошибка в системе"
+
+msgid "Unknown DNS error"
+msgstr "Неизвестная ошибка DNS"
+
+msgid "Invalid DNS section"
+msgstr "Недопустимый раздел DNS"
+
+msgid "Invalid textual address form"
+msgstr "Недопустимая текстуальная форма адреса"
+
+msgid "Missing DNS query packet"
+msgstr "Не хватает пакета запроса DNS"
+
+msgid "Missing DNS answer packet"
+msgstr "Не хватает ответного пакета DNS"
+
+msgid "Connection closed in DNS"
+msgstr "В DNS прервано соединение"
+
+msgid "Verification failed in DNS"
+msgstr "Сбой проверки в DNS"
+
+msgid "DNS Timeout"
+msgstr "Лимит времени DNS"
 
 msgid "General LDAP error"
 msgstr "Общая ошибка LDAP"
@@ -1224,10 +1300,70 @@ msgstr "Конец файла"
 msgid "Unknown error code"
 msgstr "Неизвестный код ошибки"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Вызов: %s GPG-ERROR [...]\n"
+msgid "argument not expected"
+msgstr "неожиданный параметр"
+
+msgid "read error"
+msgstr "ошибка чтения"
+
+msgid "keyword too long"
+msgstr "слишком длинное ключевое слово"
+
+msgid "missing argument"
+msgstr "пропущен аргумент"
+
+msgid "invalid argument"
+msgstr "недопустимый аргумент"
+
+msgid "invalid command"
+msgstr "недопустимая команда"
+
+msgid "invalid alias definition"
+msgstr "недопустимое определение синонима"
+
+msgid "out of core"
+msgstr "нехватка выделенной памяти"
+
+msgid "invalid option"
+msgstr "недопустимый параметр"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: внимание: не распознано %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "не хватает аргумента для параметра \"%.50s\"\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "недопустимый аргумент для параметра \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "у параметра \"%.50s\" не должно быть аргумента\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "недопустимая команда \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "параметр \"%.50s\" неоднозначен\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "команда \"%.50s\" неоднозначна\n"
+
+msgid "out of core\n"
+msgstr "нехватка выделенной памяти\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "недопустимый параметр \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr "Об ошибках сообщайте по адресу <https://bugs.gnupg.org>.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "внимание: не распознано %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Вызов: %s GPG-ERROR [...]\n"

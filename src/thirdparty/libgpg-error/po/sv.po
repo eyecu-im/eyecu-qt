@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"PO-Revision-Date: 2018-03-21 19:03+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -123,7 +123,7 @@ msgstr "Felaktig lösenfras"
 msgid "Invalid cipher algorithm"
 msgstr "Ogiltig chifferalgoritm"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Nyckelring är öppnad"
 
 msgid "Invalid packet"
@@ -752,6 +752,9 @@ msgstr "Udda hexadecimala tal i S-uttryck"
 msgid "Bad octal character in S-expression"
 msgstr "Felaktigt oktadecimalt tecken i S-uttryck"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -858,7 +861,7 @@ msgstr ""
 msgid "Bad certificate verify message in handshake"
 msgstr ""
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr ""
 
 msgid "Bad client hello message in handshake"
@@ -867,7 +870,7 @@ msgstr ""
 msgid "Bad server hello message in handshake"
 msgstr ""
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 
 msgid "Bad finished message in handshake"
@@ -975,6 +978,108 @@ msgstr "IPC-parameterfel"
 
 msgid "Unknown IPC inquire"
 msgstr "Okänd IPC-fråga"
+
+#, fuzzy
+msgid "Crypto engine too old"
+msgstr "Ogiltig krypteringsmotor"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Dubblettvärde"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certifikatet är för ungt"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Tillhandahållet objekt är för kort"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Okänt namn"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Ogiltig åtgärdskod"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Okänt namn"
+
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Inte låst"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Skyddet stöds inte"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Okänt systemfel"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Ogiltig OID-sträng"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Ogiltigt S-uttryck"
+
+#, fuzzy
+msgid "Missing DNS query packet"
+msgstr "Saknar certifikat"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Dekryptering misslyckades"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tidsgräns"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1389,13 +1494,76 @@ msgstr "Slut på fil"
 msgid "Unknown error code"
 msgstr "Okänd felkod"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Användning: %s GPG-ERROR [...]\n"
+msgid "argument not expected"
+msgstr "argument förväntades inte"
+
+msgid "read error"
+msgstr "läsfel"
+
+msgid "keyword too long"
+msgstr "nyckelordet är för långt"
+
+msgid "missing argument"
+msgstr "argument saknas"
+
+#, fuzzy
+#| msgid "invalid value\n"
+msgid "invalid argument"
+msgstr "ogiltigt värde\n"
+
+msgid "invalid command"
+msgstr "ogiltigt kommando"
+
+msgid "invalid alias definition"
+msgstr "ogiltig aliasdefinition"
+
+msgid "out of core"
+msgstr "slut på minne"
+
+msgid "invalid option"
+msgstr "ogiltig flagga"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: varning: kände inte igen %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "argument för flaggan \"%.50s\" saknas\n"
+
+#, fuzzy, c-format
+#| msgid "missing argument for option \"%.50s\"\n"
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "argument för flaggan \"%.50s\" saknas\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "flaggan \"%.50s\" förväntar sig inte ett argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "ogiltigt kommando \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "flagga \"%.50s\" är tvetydig\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "kommandot \"%.50s\" är tvetydigt\n"
+
+msgid "out of core\n"
+msgstr "slut på minne\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "ogiltig flagga \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "varning: kände inte igen %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Användning: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1406,11 +1574,6 @@ msgstr "%s: varning: kände inte igen %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Ogiltig data"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Dekryptering misslyckades"
 
 #, fuzzy
 #~| msgid "General error"

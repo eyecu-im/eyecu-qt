@@ -15,6 +15,7 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 #
 # NOTE: When adding new functions, please make sure to add them to
 #       visibility.h and gpg-error.def.in as well.
@@ -39,6 +40,7 @@ GPG_ERROR_1.0 {
     gpgrt_lock_trylock;
 
     gpgrt_set_syscall_clamp;
+    gpgrt_get_syscall_clamp;
 
     gpgrt_fopen;
     gpgrt_mopen;
@@ -124,6 +126,78 @@ GPG_ERROR_1.0 {
     gpg_err_init;
     gpg_err_deinit;
     gpgrt_set_alloc_func;
+
+    gpgrt_b64dec_start;
+    gpgrt_b64dec_proc;
+    gpgrt_b64dec_finish;
+
+    gpgrt_get_errorcount;
+    gpgrt_inc_errorcount;
+    gpgrt_log_set_sink;
+    gpgrt_log_set_socket_dir_cb;
+    gpgrt_log_set_pid_suffix_cb;
+    gpgrt_log_set_prefix;
+    gpgrt_log_get_prefix;
+    gpgrt_log_test_fd;
+    gpgrt_log_get_fd;
+    gpgrt_log_get_stream;
+    gpgrt_log;
+    gpgrt_logv;
+    gpgrt_logv_prefix;
+    gpgrt_log_string;
+    gpgrt_log_bug;
+    gpgrt_log_fatal;
+    gpgrt_log_error;
+    gpgrt_log_info;
+    gpgrt_log_debug;
+    gpgrt_log_debug_string;
+    gpgrt_log_printf;
+    gpgrt_log_printhex;
+    gpgrt_log_clock;
+    gpgrt_log_flush;
+    _gpgrt_log_assert;
+
+    gpgrt_realloc;
+    gpgrt_malloc;
+    gpgrt_calloc;
+    gpgrt_strdup;
+    gpgrt_strconcat;
+
+    gpgrt_getenv;
+    gpgrt_setenv;
+    gpgrt_mkdir;
+    gpgrt_chdir;
+    gpgrt_getcwd;
+
+## API not yet finished for:
+#    gpgrt_make_pipe;
+#    gpgrt_spawn_process;
+#    gpgrt_spawn_process_fd;
+#    gpgrt_spawn_process_detached;
+#    gpgrt_wait_process;
+#    gpgrt_wait_processes;
+#    gpgrt_kill_process;
+#    gpgrt_release_process;
+
+    gpgrt_argparse;
+    gpgrt_usage;
+    gpgrt_strusage;
+    gpgrt_set_strusage;
+    gpgrt_set_usage_outfnc;
+    gpgrt_set_fixed_string_mapper;
+
+    gpgrt_b64enc_start;
+    gpgrt_b64enc_write;
+    gpgrt_b64enc_finish;
+
+    gpgrt_cmp_version;
+
+    gpgrt_ftruncate;
+    gpgrt_fprintf_sf;
+    gpgrt_fprintf_sf_unlocked;
+
+    gpgrt_add_emergency_cleanup;
+    gpgrt_abort;
 
   local:
     *;

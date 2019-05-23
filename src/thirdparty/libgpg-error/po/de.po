@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.19\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2016-04-25 10:33+0200\n"
+"PO-Revision-Date: 2019-03-19 09:54+0100\n"
 "Last-Translator: Werner Koch <wk@gnupg.org>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -123,7 +123,7 @@ msgstr "Falsche Passphrase"
 msgid "Invalid cipher algorithm"
 msgstr "Ungültiges Verschlüsselungsverfahren"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Schlüsselbund kann nicht geöffnet werden"
 
 msgid "Invalid packet"
@@ -301,7 +301,7 @@ msgid "Invalid cipher mode"
 msgstr "Ungültiger Verschlüsselungsmodus"
 
 msgid "Invalid flag"
-msgstr "Ungültiges Flag"
+msgstr "Ungültige Flagge"
 
 msgid "Invalid handle"
 msgstr "Ungültiger Handle"
@@ -729,6 +729,9 @@ msgstr "Ungerade Anzahl von Hex-Zeichen in S-expression"
 msgid "Bad octal character in S-expression"
 msgstr "Falsches Oktal-Zeichen in S-expression"
 
+msgid "All subkeys are expired or revoked"
+msgstr "Alle Unterschlüssel sind abgelaufen oder widerrufen"
+
 msgid "Database is corrupted"
 msgstr "Beschädigte Datenbank"
 
@@ -807,7 +810,7 @@ msgstr "Fehlerhafte Zertifikatsanforderungsnachricht im Handshake"
 msgid "Bad certificate verify message in handshake"
 msgstr "Fehlerhafte Zertifikatsüberprüfungsnachricht im Handshake"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Fehlerhafte Verschlüsselungsalgorithmuswechselnachricht im Handshake"
 
 msgid "Bad client hello message in handshake"
@@ -816,7 +819,7 @@ msgstr "Fehlerhafte \"Client Hello\" Nachricht im Handshake"
 msgid "Bad server hello message in handshake"
 msgstr "Fehlerhafte \"Server Hello\" Nachricht im Handshake"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Fehlerhafte \"Server Hello Done\" Nachricht im Handshake"
 
 msgid "Bad finished message in handshake"
@@ -920,6 +923,84 @@ msgstr "IPC Parameterfehler"
 
 msgid "Unknown IPC inquire"
 msgstr "Unbekanntes IPC \"Inquire\""
+
+msgid "Crypto engine too old"
+msgstr "Die Krypto-Engine ist zu alt"
+
+msgid "Screen or window too small"
+msgstr "Bildschirmfenster ist zu klein"
+
+msgid "Screen or window too large"
+msgstr "Bildschirmfenster ist zu groß"
+
+msgid "Required environment variable not set"
+msgstr "Eine notwendige Umgebungsvariable ist nicht gesetzt"
+
+msgid "User ID already exists"
+msgstr "Die User-ID existiert bereits"
+
+msgid "Name already exists"
+msgstr "Der Name existiert bereits"
+
+msgid "Duplicated name"
+msgstr "Doppelter Name"
+
+msgid "Object is too young"
+msgstr "Objekt zu jung"
+
+msgid "Object is too old"
+msgstr "Objekt zu alt"
+
+msgid "Unknown flag"
+msgstr "Unbekannte Flagge"
+
+msgid "Invalid execution order"
+msgstr "Ungültige Verarbeitungsreihenfolge"
+
+msgid "Already fetched"
+msgstr "Bereits geholt"
+
+msgid "Try again later"
+msgstr "Später erneut versuchen"
+
+msgid "Wrong name"
+msgstr "Falscher Name"
+
+msgid "Not authenticated"
+msgstr "Nicht authentifiziert"
+
+msgid "Bad authentication"
+msgstr "Falsche Authentifizierung"
+
+msgid "System bug detected"
+msgstr "Fehler im System entdeckt"
+
+msgid "Unknown DNS error"
+msgstr "Unbekannter DNS Fehler"
+
+msgid "Invalid DNS section"
+msgstr "Ungültige DNS \"Section\""
+
+msgid "Invalid textual address form"
+msgstr "Ungültige Textadressenformat"
+
+# "in der Kette" ist part of the message because many users know about
+# certificate chains and thus that keyword might give them a good hint
+# what might be wrong.
+msgid "Missing DNS query packet"
+msgstr "Fehlendes DNS Anfragepaket"
+
+msgid "Missing DNS answer packet"
+msgstr "Fehlendes DNS Antwortpaket"
+
+msgid "Connection closed in DNS"
+msgstr "Verbindung im DNS geschlossen"
+
+msgid "Verification failed in DNS"
+msgstr "Prüfung im DNS fehlgeschlagen"
+
+msgid "DNS Timeout"
+msgstr "DNS Zeitüberschreitung"
 
 msgid "General LDAP error"
 msgstr "Allgemeiner LDAP Fehler"
@@ -1224,13 +1305,74 @@ msgstr "Dateiende"
 msgid "Unknown error code"
 msgstr "Unbekannter Fehlercode"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Aufruf: %s GPG-FEHLER [...]\n"
+msgid "argument not expected"
+msgstr "Argument nicht erwartet"
+
+msgid "read error"
+msgstr "Lesefehler"
+
+msgid "keyword too long"
+msgstr "Schlüsselwort ist zu lang"
+
+msgid "missing argument"
+msgstr "Fehlendes Argument"
+
+msgid "invalid argument"
+msgstr "Ungültiges Argument"
+
+msgid "invalid command"
+msgstr "Ungültiger Befehl"
+
+msgid "invalid alias definition"
+msgstr "Ungültige Alias-Definition"
+
+msgid "out of core"
+msgstr "Nicht genügend Speicher"
+
+msgid "invalid option"
+msgstr "Ungültige Option"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "Fehlendes Argument für Option \"%.50s\"\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "Ungültiges Argument für Option \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "Option \"%.50s\" erwartet kein Argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Ungültiger Befehl \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "Option \"%.50s\" ist mehrdeutig\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "Befehl \"%.50s\" ist mehrdeutig\n"
+
+msgid "out of core\n"
+msgstr "Nicht genügend Speicher\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "Ungültige Option \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+"Berichte über Programmfehler bitte in englisch an <https://bugs.gnupg.org>.\n"
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "Warnung: %s konnte nicht erkannt werden\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Aufruf: %s GPG-FEHLER [...]\n"
 
 #~ msgid "LCUP Resources exhausted"
 #~ msgstr "LCUP Ressourcen erschöpft"
@@ -1238,13 +1380,8 @@ msgstr "%s: Warnung: %s konnte nicht erkannt werden\n"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "LCUP Ungültige Daten"
 
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "\"Assertion\" in LDAP fehlgeschlagen"
-
 #~ msgid "LDAP Other general error"
 #~ msgstr "Sonstiger allgemeiner LDAP Fehler"
 
-#, fuzzy
-#~| msgid "dirmngr error"
 #~ msgid "Encoding error"
-#~ msgstr "Fehler im Dirmngr"
+#~ msgstr "Kodierungsfehler"

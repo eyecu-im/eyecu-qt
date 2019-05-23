@@ -1,5 +1,5 @@
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.22"
+#define PACKAGE_VERSION "1.37"
 
 /* GIT commit id revision used to build this package */
 #define BUILD_REVISION "0adf9e1"

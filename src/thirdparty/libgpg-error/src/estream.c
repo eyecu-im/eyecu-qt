@@ -1,6 +1,6 @@
 /* estream.c - Extended Stream I/O Library
  * Copyright (C) 2004, 2005, 2006, 2007, 2009, 2010, 2011,
- *               2014, 2015, 2016 g10 Code GmbH
+ *               2014, 2015, 2016, 2017 g10 Code GmbH
  *
  * This file is part of Libestream.
  *
@@ -84,7 +84,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stddef.h>
-#include <assert.h>
 #ifdef HAVE_W32_SYSTEM
 # ifdef HAVE_WINSOCK2_H
 #  include <winsock2.h>
@@ -92,9 +91,13 @@
 # include <windows.h>
 #endif
 
+/* Enable tracing.  The value is the module name to be printed.  */
+/*#define ENABLE_TRACING "estream"*/
 
 #include "gpgrt-int.h"
 #include "estream-printf.h"
+#include "thread.h"
+#include "lock.h"
 
 
 #ifndef O_BINARY
@@ -108,13 +111,29 @@
 
 
 #ifdef HAVE_W32_SYSTEM
-# define S_IRGRP S_IRUSR
-# define S_IROTH S_IRUSR
-# define S_IWGRP S_IWUSR
-# define S_IWOTH S_IWUSR
-# define S_IXGRP S_IXUSR
-# define S_IXOTH S_IXUSR
-# define O_NONBLOCK  0  /* FIXME: Not yet supported.  */
+# ifndef  S_IRGRP
+#  define S_IRGRP S_IRUSR
+# endif
+# ifndef  S_IROTH
+#  define S_IROTH S_IRUSR
+# endif
+# ifndef  S_IWGRP
+#  define S_IWGRP S_IWUSR
+# endif
+# ifndef  S_IWOTH
+#  define S_IWOTH S_IWUSR
+# endif
+# ifndef  S_IXGRP
+#  define S_IXGRP S_IXUSR
+# endif
+# ifndef  S_IXOTH
+#  define S_IXOTH S_IXUSR
+# endif
+#endif
+
+#if !defined (EWOULDBLOCK) && defined (HAVE_W32_SYSTEM)
+/* Compatibility with errno.h from mingw-2.0 */
+# define EWOULDBLOCK 140
 #endif
 
 #ifndef EAGAIN
@@ -155,75 +174,6 @@ typedef void (*func_free_t) (void *mem);
 
 
 /*
- * Buffer management layer.
- */
-
-#define BUFFER_BLOCK_SIZE  BUFSIZ
-#define BUFFER_UNREAD_SIZE 16
-
-
-/*
- * A type to hold notification functions.
- */
-struct notify_list_s
-{
-  struct notify_list_s *next;
-  void (*fnc) (estream_t, void*); /* The notification function.  */
-  void *fnc_value;                /* The value to be passed to FNC.  */
-};
-typedef struct notify_list_s *notify_list_t;
-
-
-/*
- * A private cookie function to implement an internal IOCTL service.
- * and ist IOCTL numbers.
- */
-typedef int (*cookie_ioctl_function_t) (void *cookie, int cmd,
-					void *ptr, size_t *len);
-#define COOKIE_IOCTL_SNATCH_BUFFER 1
-#define COOKIE_IOCTL_NONBLOCK      2
-
-
-/*
- * The private object describing a stream.
- */
-struct _gpgrt_stream_internal
-{
-  unsigned char buffer[BUFFER_BLOCK_SIZE];
-  unsigned char unread_buffer[BUFFER_UNREAD_SIZE];
-
-  gpgrt_lock_t lock;		 /* Lock.  Used by *_stream_lock(). */
-
-  void *cookie;			 /* Cookie.                */
-  void *opaque;			 /* Opaque data.           */
-  unsigned int modeflags;	 /* Flags for the backend. */
-  char *printable_fname;         /* Malloced filename for es_fname_get.  */
-  gpgrt_off_t offset;
-  gpgrt_cookie_read_function_t  func_read;
-  gpgrt_cookie_write_function_t func_write;
-  gpgrt_cookie_seek_function_t  func_seek;
-  gpgrt_cookie_close_function_t func_close;
-  cookie_ioctl_function_t func_ioctl;
-  int strategy;
-  es_syshd_t syshd;              /* A copy of the system handle.  */
-  struct
-  {
-    unsigned int err: 1;
-    unsigned int eof: 1;
-    unsigned int hup: 1;
-  } indicators;
-  unsigned int deallocate_buffer: 1;
-  unsigned int is_stdstream:1;   /* This is a standard stream.  */
-  unsigned int stdstream_fd:2;   /* 0, 1 or 2 for a standard stream.  */
-  unsigned int printable_fname_inuse: 1;  /* es_fname_get has been used.  */
-  unsigned int samethread: 1;    /* The "samethread" mode keyword.  */
-  size_t print_ntotal;           /* Bytes written from in print_writer. */
-  notify_list_t onclose;         /* On close notify function list.  */
-};
-typedef struct _gpgrt_stream_internal *estream_internal_t;
-
-
-/*
  * A linked list to hold active stream objects.
  * Protected by ESTREAM_LIST_LOCK.
  */
@@ -247,14 +197,6 @@ static unsigned char custom_std_fds_valid[3];
  * CUSTOM_STD_FDS_VALID.  Used by lock_list() and unlock_list().
  */
 GPGRT_LOCK_DEFINE (estream_list_lock);
-
-
-/*
- * Functions called before and after blocking syscalls.
- * gpgrt_set_syscall_clamp is used to set them.
- */
-static void (*pre_syscall_func)(void);
-static void (*post_syscall_func)(void);
 
 
 /*
@@ -508,17 +450,30 @@ do_list_add (estream_t stream, int with_locked_list)
 static void
 do_list_remove (estream_t stream, int with_locked_list)
 {
-  estream_list_t item;
+  estream_list_t item, item_prev = NULL;
 
   if (!with_locked_list)
     lock_list ();
 
   for (item = estream_list; item; item = item->next)
     if (item->stream == stream)
-      {
-        item->stream = NULL;
-        break;
-      }
+      break;
+    else
+      item_prev = item;
+
+  if (item_prev)
+    {
+      item_prev->next = item->next;
+      mem_free (item);
+    }
+  else
+    {
+      if (item)
+        {
+          estream_list = item->next;
+          mem_free (item);
+        }
+    }
 
   if (!with_locked_list)
     unlock_list ();
@@ -527,7 +482,7 @@ do_list_remove (estream_t stream, int with_locked_list)
 
 
 /*
- * The atexit handler for this estream module.
+ * The atexit handler for the entire gpgrt.
  */
 static void
 do_deinit (void)
@@ -544,8 +499,7 @@ do_deinit (void)
      we keep the list and let the OS clean it up at process end.  */
 
   /* Reset the syscall clamp.  */
-  pre_syscall_func = NULL;
-  post_syscall_func = NULL;
+  _gpgrt_set_syscall_clamp (NULL, NULL);
 }
 
 
@@ -553,7 +507,7 @@ do_deinit (void)
  * Initialization of the estream module.
  */
 int
-_gpgrt_es_init (void)
+_gpgrt_estream_init (void)
 {
   static int initialized;
 
@@ -564,24 +518,6 @@ _gpgrt_es_init (void)
     }
   return 0;
 }
-
-/*
- * Register the syscall clamp.  These two functions are called
- * immediately before and after a possible blocking system call.  This
- * should be used before any I/O happens.  The function is commonly
- * used with the nPth library:
- *
- *    gpgrt_set_syscall_clamp (npth_unprotect, npth_protect);
- *
- * These functions may not modify ERRNO.
- */
-void
-_gpgrt_set_syscall_clamp (void (*pre)(void), void (*post)(void))
-{
-  pre_syscall_func = pre;
-  post_syscall_func = post;
-}
-
 
 
 /*
@@ -637,6 +573,14 @@ func_mem_create (void *_GPGRT__RESTRICT *_GPGRT__RESTRICT cookie,
     {
       _set_errno (EINVAL);
       return -1;
+    }
+
+  /* Round a memory limit up to the next block length.  */
+  if (memory_limit && block_size)
+    {
+      memory_limit += block_size - 1;
+      memory_limit /= block_size;
+      memory_limit *= block_size;
     }
 
   mem_cookie = mem_alloc (sizeof (*mem_cookie));
@@ -708,7 +652,7 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
       mem_cookie->offset = mem_cookie->data_len;
     }
 
-  assert (mem_cookie->memory_size >= mem_cookie->offset);
+  gpgrt_assert (mem_cookie->memory_size >= mem_cookie->offset);
   nleft = mem_cookie->memory_size - mem_cookie->offset;
 
   /* If we are not allowed to grow the buffer, limit the size to the
@@ -753,7 +697,7 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
           return -1;
         }
 
-      assert (mem_cookie->func_realloc);
+      gpgrt_assert (mem_cookie->func_realloc);
       newbuf = mem_cookie->func_realloc (mem_cookie->memory, newsize);
       if (!newbuf)
         return -1;
@@ -761,10 +705,10 @@ func_mem_write (void *cookie, const void *buffer, size_t size)
       mem_cookie->memory = newbuf;
       mem_cookie->memory_size = newsize;
 
-      assert (mem_cookie->memory_size >= mem_cookie->offset);
+      gpgrt_assert (mem_cookie->memory_size >= mem_cookie->offset);
       nleft = mem_cookie->memory_size - mem_cookie->offset;
 
-      assert (size <= nleft);
+      gpgrt_assert (size <= nleft);
     }
 
   memcpy (mem_cookie->memory + mem_cookie->offset, buffer, size);
@@ -831,7 +775,7 @@ func_mem_seek (void *cookie, gpgrt_off_t *offset, int whence)
           return -1;
         }
 
-      assert (mem_cookie->func_realloc);
+      gpgrt_assert (mem_cookie->func_realloc);
       newbuf = mem_cookie->func_realloc (mem_cookie->memory, newsize);
       if (!newbuf)
         return -1;
@@ -869,11 +813,19 @@ func_mem_ioctl (void *cookie, int cmd, void *ptr, size_t *len)
       /* Return the internal buffer of the stream to the caller and
          invalidate it for the stream.  */
       *(void**)ptr = mem_cookie->memory;
-      *len = mem_cookie->offset;
+      *len = mem_cookie->data_len;
       mem_cookie->memory = NULL;
       mem_cookie->memory_size = 0;
       mem_cookie->offset = 0;
       ret = 0;
+    }
+  else if (cmd == COOKIE_IOCTL_TRUNCATE)
+    {
+      gpgrt_off_t length = *(gpgrt_off_t *)ptr;
+
+      ret = func_mem_seek (cookie, &length, SEEK_SET);
+      if (ret != -1)
+        mem_cookie->data_len = mem_cookie->offset;
     }
   else
     {
@@ -904,12 +856,15 @@ func_mem_destroy (void *cookie)
 /*
  * Access object for the memory functions.
  */
-static gpgrt_cookie_io_functions_t estream_functions_mem =
+static struct cookie_io_functions_s estream_functions_mem =
   {
-    func_mem_read,
-    func_mem_write,
-    func_mem_seek,
-    func_mem_destroy
+    {
+      func_mem_read,
+      func_mem_write,
+      func_mem_seek,
+      func_mem_destroy,
+    },
+    func_mem_ioctl,
   };
 
 
@@ -936,6 +891,8 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
   estream_cookie_fd_t fd_cookie;
   int err;
 
+  trace (("enter: fd=%d mf=%x nc=%d", fd, modeflags, no_close));
+
   fd_cookie = mem_alloc (sizeof (*fd_cookie));
   if (! fd_cookie)
     err = -1;
@@ -953,6 +910,7 @@ func_fd_create (void **cookie, int fd, unsigned int modeflags, int no_close)
       err = 0;
     }
 
+  trace_errno (err, ("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
@@ -967,6 +925,8 @@ func_fd_read (void *cookie, void *buffer, size_t size)
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_read;
 
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
+
   if (!size)
     bytes_read = -1; /* We don't know whether anything is pending.  */
   else if (IS_INVALID_FD (file_cookie->fd))
@@ -976,17 +936,16 @@ func_fd_read (void *cookie, void *buffer, size_t size)
     }
   else
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      _gpgrt_pre_syscall ();
       do
         {
           bytes_read = read (file_cookie->fd, buffer, size);
         }
       while (bytes_read == -1 && errno == EINTR);
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
     }
 
+  trace_errno (bytes_read == -1, ("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
@@ -1000,6 +959,8 @@ func_fd_write (void *cookie, const void *buffer, size_t size)
   estream_cookie_fd_t file_cookie = cookie;
   gpgrt_ssize_t bytes_written;
 
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
+
   if (IS_INVALID_FD (file_cookie->fd))
     {
       _gpgrt_yield ();
@@ -1007,19 +968,19 @@ func_fd_write (void *cookie, const void *buffer, size_t size)
     }
   else if (buffer)
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      _gpgrt_pre_syscall ();
       do
         {
           bytes_written = write (file_cookie->fd, buffer, size);
         }
       while (bytes_written == -1 && errno == EINTR);
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
     }
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
+  trace_errno (bytes_written == -1,
+               ("leave: bytes_written=%d", (int)bytes_written));
   return bytes_written;
 }
 
@@ -1041,11 +1002,9 @@ func_fd_seek (void *cookie, gpgrt_off_t *offset, int whence)
     }
   else
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      _gpgrt_pre_syscall ();
       offset_new = lseek (file_cookie->fd, *offset, whence);
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
       if (offset_new == -1)
         err = -1;
       else
@@ -1111,6 +1070,8 @@ func_fd_destroy (void *cookie)
   estream_cookie_fd_t fd_cookie = cookie;
   int err;
 
+  trace (("enter: cookie=%p", cookie));
+
   if (fd_cookie)
     {
       if (IS_INVALID_FD (fd_cookie->fd))
@@ -1122,6 +1083,7 @@ func_fd_destroy (void *cookie)
   else
     err = 0;
 
+  trace_errno (err,("leave: err=%d", err));
   return err;
 }
 
@@ -1129,12 +1091,15 @@ func_fd_destroy (void *cookie)
 /*
  * Access object for the fd functions.
  */
-static gpgrt_cookie_io_functions_t estream_functions_fd =
+static struct cookie_io_functions_s estream_functions_fd =
   {
-    func_fd_read,
-    func_fd_write,
-    func_fd_seek,
-    func_fd_destroy
+    {
+      func_fd_read,
+      func_fd_write,
+      func_fd_seek,
+      func_fd_destroy,
+    },
+    func_fd_ioctl,
   };
 
 
@@ -1150,6 +1115,7 @@ typedef struct estream_cookie_w32
 {
   HANDLE hd;     /* The handle we are using for actual output.  */
   int no_close;  /* If set we won't close the handle.  */
+  int no_syscall_clamp; /* Do not use the syscall clamp. */
 } *estream_cookie_w32_t;
 
 
@@ -1158,11 +1124,13 @@ typedef struct estream_cookie_w32
  */
 static int
 func_w32_create (void **cookie, HANDLE hd,
-                    unsigned int modeflags, int no_close)
+                 unsigned int modeflags, int no_close, int no_syscall_clamp)
 {
   estream_cookie_w32_t w32_cookie;
   int err;
 
+  trace (("enter: hd=%p mf=%x nc=%d nsc=%d",
+          hd, modeflags, no_close, no_syscall_clamp));
   w32_cookie = mem_alloc (sizeof (*w32_cookie));
   if (!w32_cookie)
     err = -1;
@@ -1175,21 +1143,28 @@ func_w32_create (void **cookie, HANDLE hd,
 
       w32_cookie->hd = hd;
       w32_cookie->no_close = no_close;
+      w32_cookie->no_syscall_clamp = no_syscall_clamp;
       *cookie = w32_cookie;
       err = 0;
     }
 
+  trace_errno (err, ("leave: cookie=%p err=%d", *cookie, err));
   return err;
 }
 
 /*
  * Read function for W32 handle objects.
+ *
+ * Note that this function may also be used by the reader thread of
+ * w32-stream.  In that case the NO_SYSCALL_CLAMP is set.
  */
 static gpgrt_ssize_t
 func_w32_read (void *cookie, void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_read;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (!size)
     bytes_read = -1; /* We don't know whether anything is pending.  */
@@ -1200,15 +1175,17 @@ func_w32_read (void *cookie, void *buffer, size_t size)
     }
   else
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      if (!w32_cookie->no_syscall_clamp)
+        _gpgrt_pre_syscall ();
       do
         {
           DWORD nread, ec;
 
+          trace (("cookie=%p calling ReadFile", cookie));
           if (!ReadFile (w32_cookie->hd, buffer, size, &nread, NULL))
             {
               ec = GetLastError ();
+              trace (("cookie=%p ReadFile failed: ec=%ld", cookie,ec));
               if (ec == ERROR_BROKEN_PIPE)
                 bytes_read = 0; /* Like our pth_read we handle this as EOF.  */
               else
@@ -1221,22 +1198,28 @@ func_w32_read (void *cookie, void *buffer, size_t size)
             bytes_read = (int)nread;
         }
       while (bytes_read == -1 && errno == EINTR);
-      if (post_syscall_func)
-        post_syscall_func ();
+      if (!w32_cookie->no_syscall_clamp)
+        _gpgrt_post_syscall ();
     }
 
+  trace_errno (bytes_read==-1,("leave: bytes_read=%d", (int)bytes_read));
   return bytes_read;
 }
 
 
 /*
  * Write function for W32 handle objects.
+ *
+ * Note that this function may also be used by the writer thread of
+ * w32-stream.  In that case the NO_SYSCALL_CLAMP is set.
  */
 static gpgrt_ssize_t
 func_w32_write (void *cookie, const void *buffer, size_t size)
 {
   estream_cookie_w32_t w32_cookie = cookie;
   gpgrt_ssize_t bytes_written;
+
+  trace (("enter: cookie=%p buffer=%p size=%d", cookie, buffer, (int)size));
 
   if (w32_cookie->hd == INVALID_HANDLE_VALUE)
     {
@@ -1245,27 +1228,32 @@ func_w32_write (void *cookie, const void *buffer, size_t size)
     }
   else if (buffer)
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      if (!w32_cookie->no_syscall_clamp)
+        _gpgrt_pre_syscall ();
       do
         {
           DWORD nwritten;
 
+          trace (("cookie=%p calling WriteFile", cookie));
 	  if (!WriteFile (w32_cookie->hd, buffer, size, &nwritten, NULL))
 	    {
-	      _set_errno (map_w32_to_errno (GetLastError ()));
+              DWORD ec = GetLastError ();
+              trace (("cookie=%p WriteFile failed: ec=%ld", cookie, ec));
+	      _set_errno (map_w32_to_errno (ec));
 	      bytes_written = -1;
 	    }
 	  else
 	    bytes_written = (int)nwritten;
         }
       while (bytes_written == -1 && errno == EINTR);
-      if (post_syscall_func)
-        post_syscall_func ();
+      if (!w32_cookie->no_syscall_clamp)
+        _gpgrt_post_syscall ();
     }
   else
     bytes_written = size; /* Note that for a flush SIZE should be 0.  */
 
+  trace_errno (bytes_written==-1,
+               ("leave: bytes_written=%d", (int)bytes_written));
   return bytes_written;
 }
 
@@ -1309,17 +1297,16 @@ func_w32_seek (void *cookie, gpgrt_off_t *offset, int whence)
 #ifdef HAVE_W32CE_SYSTEM
 # warning need to use SetFilePointer
 #else
-  if (pre_syscall_func)
-    pre_syscall_func ();
+  if (!w32_cookie->no_syscall_clamp)
+    _gpgrt_pre_syscall ();
   if (!SetFilePointerEx (w32_cookie->hd, distance, &newoff, method))
     {
       _set_errno (map_w32_to_errno (GetLastError ()));
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
       return -1;
     }
-  if (post_syscall_func)
-    post_syscall_func ();
+  if (!w32_cookie->no_syscall_clamp)
+    _gpgrt_post_syscall ();
 #endif
   /* Note that gpgrt_off_t is always 64 bit.  */
   *offset = (gpgrt_off_t)newoff.QuadPart;
@@ -1336,6 +1323,8 @@ func_w32_destroy (void *cookie)
   estream_cookie_w32_t w32_cookie = cookie;
   int err;
 
+  trace (("enter: cookie=%p", cookie));
+
   if (w32_cookie)
     {
       if (w32_cookie->hd == INVALID_HANDLE_VALUE)
@@ -1344,9 +1333,12 @@ func_w32_destroy (void *cookie)
         err = 0;
       else
         {
+          trace (("cookie=%p closing handle %p", cookie, w32_cookie->hd));
           if (!CloseHandle (w32_cookie->hd))
             {
-	      _set_errno (map_w32_to_errno (GetLastError ()));
+              DWORD ec = GetLastError ();
+              trace (("cookie=%p CloseHandle failed: ec=%ld", cookie,ec));
+	      _set_errno (map_w32_to_errno (ec));
               err = -1;
             }
           else
@@ -1357,6 +1349,7 @@ func_w32_destroy (void *cookie)
   else
     err = 0;
 
+  trace_errno (err, ("leave: err=%d", err));
   return err;
 }
 
@@ -1364,12 +1357,15 @@ func_w32_destroy (void *cookie)
 /*
  * Access object for the W32 handle based objects.
  */
-static gpgrt_cookie_io_functions_t estream_functions_w32 =
+static struct cookie_io_functions_s estream_functions_w32 =
   {
-    func_w32_read,
-    func_w32_write,
-    func_w32_seek,
-    func_w32_destroy
+    {
+      func_w32_read,
+      func_w32_write,
+      func_w32_seek,
+      func_w32_destroy,
+    },
+    NULL,
   };
 #endif /*HAVE_W32_SYSTEM*/
 
@@ -1435,11 +1431,9 @@ func_fp_read (void *cookie, void *buffer, size_t size)
 
   if (file_cookie->fp)
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      _gpgrt_pre_syscall ();
       bytes_read = fread (buffer, 1, size, file_cookie->fp);
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
     }
   else
     bytes_read = 0;
@@ -1460,8 +1454,7 @@ func_fp_write (void *cookie, const void *buffer, size_t size)
 
   if (file_cookie->fp)
     {
-      if (pre_syscall_func)
-        pre_syscall_func ();
+      _gpgrt_pre_syscall ();
       if (buffer)
         {
 #ifdef HAVE_W32_SYSTEM
@@ -1489,8 +1482,7 @@ func_fp_write (void *cookie, const void *buffer, size_t size)
         bytes_written = size;
 
       fflush (file_cookie->fp);
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
     }
   else
     bytes_written = size; /* Successfully written to the bit bucket.  */
@@ -1516,20 +1508,17 @@ func_fp_seek (void *cookie, gpgrt_off_t *offset, int whence)
       return -1;
     }
 
-  if (pre_syscall_func)
-    pre_syscall_func ();
+  _gpgrt_pre_syscall ();
   if ( fseek (file_cookie->fp, (long int)*offset, whence) )
     {
       /* fprintf (stderr, "\nfseek failed: errno=%d (%s)\n", */
       /*          errno,strerror (errno)); */
-      if (post_syscall_func)
-        post_syscall_func ();
+      _gpgrt_post_syscall ();
       return -1;
     }
 
   offset_new = ftell (file_cookie->fp);
-  if (post_syscall_func)
-    post_syscall_func ();
+  _gpgrt_post_syscall ();
   if (offset_new == -1)
     {
       /* fprintf (stderr, "\nftell failed: errno=%d (%s)\n",  */
@@ -1554,11 +1543,9 @@ func_fp_destroy (void *cookie)
     {
       if (fp_cookie->fp)
         {
-          if (pre_syscall_func)
-            pre_syscall_func ();
+          _gpgrt_pre_syscall ();
           fflush (fp_cookie->fp);
-          if (post_syscall_func)
-            post_syscall_func ();
+          _gpgrt_post_syscall ();
           err = fp_cookie->no_close? 0 : fclose (fp_cookie->fp);
         }
       else
@@ -1575,12 +1562,15 @@ func_fp_destroy (void *cookie)
 /*
  * Access object for stdio based objects.
  */
-static gpgrt_cookie_io_functions_t estream_functions_fp =
+static struct cookie_io_functions_s estream_functions_fp =
   {
-    func_fp_read,
-    func_fp_write,
-    func_fp_seek,
-    func_fp_destroy
+    {
+      func_fp_read,
+      func_fp_write,
+      func_fp_seek,
+      func_fp_destroy,
+    },
+    NULL,
   };
 
 
@@ -1603,7 +1593,6 @@ func_file_create (void **cookie, int *filedes,
   int fd;
 
   err = 0;
-  fd = -1;
 
   file_cookie = mem_alloc (sizeof (*file_cookie));
   if (! file_cookie)
@@ -1639,6 +1628,11 @@ func_file_create (void **cookie, int *filedes,
 
 
 
+/* Flags used by parse_mode and friends.  */
+#define X_SAMETHREAD	(1 << 0)
+#define X_SYSOPEN	(1 << 1)
+#define X_POLLABLE	(1 << 2)
+
 /* Parse the mode flags of fopen et al.  In addition to the POSIX
  * defined mode flags keyword parameters are supported.  These are
  * key/value pairs delimited by comma and optional white spaces.
@@ -1654,7 +1648,7 @@ func_file_create (void **cookie, int *filedes,
  *    allowed to leave out trailing dashes.  If this keyword parameter
  *    is not given the default mode for creating files is "-rw-rw-r--"
  *    (664).  Note that the system still applies the current umask to
- *    the mode when crating a file.  Example:
+ *    the mode when creating a file.  Example:
  *
  *       "wb,mode=-rw-r--"
  *
@@ -1674,21 +1668,28 @@ func_file_create (void **cookie, int *filedes,
  *    The object is opened in sysmode.  On POSIX this is a NOP but
  *    under Windows the direct W32 API functions (HANDLE) are used
  *    instead of their libc counterparts (fd).
+ *    FIXME: The functionality is not yet implemented.
+ *
+ * pollable
+ *
+ *    The object is opened in a way suitable for use with es_poll.  On
+ *    POSIX this is a NOP but under Windows we create up to two
+ *    threads, one for reading and one for writing, do any I/O there,
+ *    and synchronize with them in order to support es_poll.
  *
  * Note: R_CMODE is optional because is only required by functions
  * which are able to creat a file.
  */
 static int
 parse_mode (const char *modestr,
-            unsigned int *modeflags, int *samethread, int *sysopen,
+            unsigned int *modeflags,
+            unsigned int *r_xmode,
             unsigned int *r_cmode)
 {
   unsigned int omode, oflags, cmode;
   int got_cmode = 0;
 
-  *samethread = 0;
-  if (sysopen)
-    *sysopen = 0;
+  *r_xmode = 0;
 
   switch (*modestr)
     {
@@ -1770,7 +1771,7 @@ parse_mode (const char *modestr,
               _set_errno (EINVAL);
               return -1;
             }
-          *samethread = 1;
+          *r_xmode |= X_SAMETHREAD;
         }
       else if (!strncmp (modestr, "nonblock", 8))
         {
@@ -1781,8 +1782,22 @@ parse_mode (const char *modestr,
               return -1;
             }
           oflags |= O_NONBLOCK;
+#if HAVE_W32_SYSTEM
+          /* Currently, nonblock implies pollable on Windows.  */
+          *r_xmode |= X_POLLABLE;
+#endif
         }
       else if (!strncmp (modestr, "sysopen", 7))
+        {
+          modestr += 7;
+          if (*modestr && !strchr (" \t,", *modestr))
+            {
+              _set_errno (EINVAL);
+              return -1;
+            }
+          *r_xmode |= X_SYSOPEN;
+        }
+      else if (!strncmp (modestr, "pollable", 8))
         {
           modestr += 8;
           if (*modestr && !strchr (" \t,", *modestr))
@@ -1790,8 +1805,7 @@ parse_mode (const char *modestr,
               _set_errno (EINVAL);
               return -1;
             }
-          if (sysopen)
-            *sysopen = 1;
+          *r_xmode |= X_POLLABLE;
         }
     }
   if (!got_cmode)
@@ -1810,7 +1824,7 @@ parse_mode (const char *modestr,
  */
 
 static int
-es_fill (estream_t stream)
+fill_stream (estream_t stream)
 {
   size_t bytes_read = 0;
   int err;
@@ -1865,12 +1879,12 @@ es_fill (estream_t stream)
 }
 
 static int
-es_flush (estream_t stream)
+flush_stream (estream_t stream)
 {
   gpgrt_cookie_write_function_t func_write = stream->intern->func_write;
   int err;
 
-  assert (stream->flags.writing);
+  gpgrt_assert (stream->flags.writing);
 
   if (stream->data_offset)
     {
@@ -1880,7 +1894,8 @@ es_flush (estream_t stream)
 
       if (! func_write)
 	{
-	  err = EOPNOTSUPP;
+          _set_errno (EOPNOTSUPP);
+          err = -1;
 	  goto out;
 	}
 
@@ -1922,13 +1937,14 @@ es_flush (estream_t stream)
 	  stream->intern->offset += stream->data_offset;
 	  stream->data_offset = 0;
 	  stream->data_flushed = 0;
-
-	  /* Propagate flush event.  */
-	  (*func_write) (stream->intern->cookie, NULL, 0);
 	}
     }
   else
     err = 0;
+
+  /* Always propagate flush event in case gpgrt_fflush was called
+   * explictly to do flush buffers in caller's cookie functions.  */
+  (*func_write) (stream->intern->cookie, NULL, 0);
 
  out:
 
@@ -1949,7 +1965,7 @@ es_flush (estream_t stream)
 static void
 es_empty (estream_t stream)
 {
-  assert (!stream->flags.writing);
+  gpgrt_assert (!stream->flags.writing);
   stream->data_len = 0;
   stream->data_offset = 0;
   stream->unread_data_len = 0;
@@ -1962,17 +1978,19 @@ es_empty (estream_t stream)
 static void
 init_stream_obj (estream_t stream,
                  void *cookie, es_syshd_t *syshd,
-                 gpgrt_cookie_io_functions_t functions,
-                 unsigned int modeflags, int samethread)
+                 gpgrt_stream_backend_kind_t kind,
+                 struct cookie_io_functions_s functions,
+                 unsigned int modeflags, unsigned int xmode)
 {
+  stream->intern->kind = kind;
   stream->intern->cookie = cookie;
   stream->intern->opaque = NULL;
   stream->intern->offset = 0;
-  stream->intern->func_read = functions.func_read;
-  stream->intern->func_write = functions.func_write;
-  stream->intern->func_seek = functions.func_seek;
-  stream->intern->func_ioctl = NULL;
-  stream->intern->func_close = functions.func_close;
+  stream->intern->func_read = functions.public.func_read;
+  stream->intern->func_write = functions.public.func_write;
+  stream->intern->func_seek = functions.public.func_seek;
+  stream->intern->func_ioctl = functions.func_ioctl;
+  stream->intern->func_close = functions.public.func_close;
   stream->intern->strategy = _IOFBF;
   stream->intern->syshd = *syshd;
   stream->intern->print_ntotal = 0;
@@ -1984,7 +2002,7 @@ init_stream_obj (estream_t stream,
   stream->intern->deallocate_buffer = 0;
   stream->intern->printable_fname = NULL;
   stream->intern->printable_fname_inuse = 0;
-  stream->intern->samethread = !!samethread;
+  stream->intern->samethread = !! (xmode & X_SAMETHREAD);
   stream->intern->onclose = NULL;
 
   stream->data_len = 0;
@@ -2004,25 +2022,28 @@ init_stream_obj (estream_t stream,
 
 
 /*
- * Deinitialize STREAM.
+ * Deinitialize the STREAM object.  This does _not_ free the memory,
+ * destroys the lock, or closes the underlying descriptor.
  */
 static int
-es_deinitialize (estream_t stream)
+deinit_stream_obj (estream_t stream)
 {
   gpgrt_cookie_close_function_t func_close;
   int err, tmp_err;
 
+  trace (("enter: stream %p", stream));
   func_close = stream->intern->func_close;
 
   err = 0;
   if (stream->flags.writing)
     {
-      tmp_err = es_flush (stream);
+      tmp_err = flush_stream (stream);
       if (!err)
         err = tmp_err;
     }
   if (func_close)
     {
+      trace (("stream %p calling func_close", stream));
       tmp_err = func_close (stream->intern->cookie);
       if (!err)
         err = tmp_err;
@@ -2038,24 +2059,44 @@ es_deinitialize (estream_t stream)
       stream->intern->onclose = tmp;
     }
 
+  trace_errno (err, ("leave: stream %p err=%d", stream, err));
   return err;
 }
 
 
 /*
- * Create a new stream object and initialize it.
+ * Create a new stream and initialize it.  On success the new stream
+ * handle is tsored at R_STREAM.  On failure NULL is stored at
+ * R_STREAM.
  */
 static int
-es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
-	   gpgrt_cookie_io_functions_t functions, unsigned int modeflags,
-           int samethread, int with_locked_list)
+create_stream (estream_t *r_stream, void *cookie, es_syshd_t *syshd,
+               gpgrt_stream_backend_kind_t kind,
+               struct cookie_io_functions_s functions, unsigned int modeflags,
+               unsigned int xmode, int with_locked_list)
 {
   estream_internal_t stream_internal_new;
   estream_t stream_new;
   int err;
+#if HAVE_W32_SYSTEM
+  void *old_cookie = NULL;
+#endif
 
   stream_new = NULL;
   stream_internal_new = NULL;
+
+#if HAVE_W32_SYSTEM
+  if ((xmode & X_POLLABLE) && kind != BACKEND_W32)
+    {
+      /* We require the W32 backend, because only that allows us to
+       * write directly using the native W32 API and to disable the
+       * system clamp.  Note that func_w32_create has already been
+       * called with the flag to disable the system call clamp.  */
+      _set_errno (EINVAL);
+      err = -1;
+      goto out;
+    }
+#endif /*HAVE_W32_SYSTEM*/
 
   stream_new = mem_alloc (sizeof (*stream_new));
   if (! stream_new)
@@ -2077,27 +2118,54 @@ es_create (estream_t *stream, void *cookie, es_syshd_t *syshd,
   stream_new->unread_buffer_size = sizeof (stream_internal_new->unread_buffer);
   stream_new->intern = stream_internal_new;
 
-  init_stream_obj (stream_new, cookie, syshd, functions, modeflags, samethread);
+#if HAVE_W32_SYSTEM
+  if ((xmode & X_POLLABLE))
+    {
+      void *new_cookie;
+
+      err = _gpgrt_w32_pollable_create (&new_cookie, modeflags,
+                                        functions, cookie);
+      if (err)
+        goto out;
+
+      modeflags &= ~O_NONBLOCK;
+      old_cookie = cookie;
+      cookie = new_cookie;
+      kind = BACKEND_W32_POLLABLE;
+      functions = _gpgrt_functions_w32_pollable;
+    }
+#endif /*HAVE_W32_SYSTEM*/
+
+  init_stream_obj (stream_new, cookie, syshd, kind, functions, modeflags,
+                   xmode);
   init_stream_lock (stream_new);
 
   err = do_list_add (stream_new, with_locked_list);
   if (err)
     goto out;
 
-  *stream = stream_new;
+  *r_stream = stream_new;
 
  out:
 
   if (err)
     {
+      trace_errno (err, ("leave: err=%d", err));
       if (stream_new)
 	{
-	  es_deinitialize (stream_new);
+	  deinit_stream_obj (stream_new);
           destroy_stream_lock (stream_new);
 	  mem_free (stream_new->intern);
 	  mem_free (stream_new);
 	}
     }
+#if HAVE_W32_SYSTEM
+  else if (old_cookie)
+    trace (("leave: success stream=%p cookie=%p,%p",
+            *r_stream, old_cookie, cookie));
+#endif
+  else
+    trace (("leave: success stream=%p cookie=%p", *r_stream, cookie));
 
   return err;
 }
@@ -2110,6 +2178,8 @@ static int
 do_close (estream_t stream, int with_locked_list)
 {
   int err;
+
+  trace (("stream %p %s", stream, with_locked_list? "(with locked list)":""));
 
   if (stream)
     {
@@ -2124,14 +2194,17 @@ do_close (estream_t stream, int with_locked_list)
           mem_free (stream->intern->onclose);
           stream->intern->onclose = tmp;
         }
-      err = es_deinitialize (stream);
+      err = deinit_stream_obj (stream);
       destroy_stream_lock (stream);
+      if (stream->intern->deallocate_buffer)
+        mem_free (stream->buffer);
       mem_free (stream->intern);
       mem_free (stream);
     }
   else
     err = 0;
 
+  trace_errno (err, ("stream %p err=%d", stream, err));
   return err;
 }
 
@@ -2171,7 +2244,7 @@ do_onclose (estream_t stream, int mode,
  * unbuffered-mode, storing the amount of bytes read at BYTES_READ.
  */
 static int
-es_read_nbf (estream_t _GPGRT__RESTRICT stream,
+do_read_nbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
@@ -2230,7 +2303,7 @@ check_pending_nbf (estream_t _GPGRT__RESTRICT stream)
  * BYTES_READ.
  */
 static int
-es_read_fbf (estream_t _GPGRT__RESTRICT stream,
+do_read_fbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
@@ -2248,7 +2321,7 @@ es_read_fbf (estream_t _GPGRT__RESTRICT stream,
 	{
 	  /* Nothing more to read in current container, try to
 	     fill container with new data.  */
-	  err = es_fill (stream);
+	  err = fill_stream (stream);
 	  if (! err)
 	    if (! stream->data_len)
 	      /* Filling did not result in any data read.  */
@@ -2304,13 +2377,13 @@ check_pending_fbf (estream_t _GPGRT__RESTRICT stream)
  * line-buffered-mode, storing the amount of bytes read at BYTES_READ.
  */
 static int
-es_read_lbf (estream_t _GPGRT__RESTRICT stream,
+do_read_lbf (estream_t _GPGRT__RESTRICT stream,
 	     unsigned char *_GPGRT__RESTRICT buffer,
 	     size_t bytes_to_read, size_t *_GPGRT__RESTRICT bytes_read)
 {
   int err;
 
-  err = es_read_fbf (stream, buffer, bytes_to_read, bytes_read);
+  err = do_read_fbf (stream, buffer, bytes_to_read, bytes_read);
 
   return err;
 }
@@ -2336,7 +2409,7 @@ es_readn (estream_t _GPGRT__RESTRICT stream,
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2354,17 +2427,17 @@ es_readn (estream_t _GPGRT__RESTRICT stream,
   switch (stream->intern->strategy)
     {
     case _IONBF:
-      err = es_read_nbf (stream,
+      err = do_read_nbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
     case _IOLBF:
-      err = es_read_lbf (stream,
+      err = do_read_lbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
     case _IOFBF:
-      err = es_read_fbf (stream,
+      err = do_read_fbf (stream,
 			 buffer + data_read_unread,
 			 bytes_to_read - data_read_unread, &data_read);
       break;
@@ -2391,7 +2464,7 @@ check_pending (estream_t _GPGRT__RESTRICT stream)
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      if (es_flush (stream))
+      if (flush_stream (stream))
 	return 0; /* Better return 0 on error.  */
       stream->flags.writing = 0;
     }
@@ -2465,7 +2538,7 @@ es_seek (estream_t _GPGRT__RESTRICT stream, gpgrt_off_t offset, int whence,
     {
       /* Flush data first in order to prevent flushing it to the wrong
 	 offset.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2528,7 +2601,8 @@ es_write_nbf (estream_t _GPGRT__RESTRICT stream,
 
   if (bytes_to_write && (! func_write))
     {
-      err = EOPNOTSUPP;
+      _set_errno (EOPNOTSUPP);
+      err = -1;
       goto out;
     }
 
@@ -2584,7 +2658,7 @@ es_write_fbf (estream_t _GPGRT__RESTRICT stream,
     {
       if (stream->data_offset == stream->buffer_size)
 	/* Container full, flush buffer.  */
-	err = es_flush (stream);
+	err = flush_stream (stream);
 
       if (! err)
 	{
@@ -2626,7 +2700,7 @@ es_write_lbf (estream_t _GPGRT__RESTRICT stream,
     {
       /* Found a newline, directly write up to (including) this
 	 character.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (!err)
 	err = es_write_nbf (stream, buffer, nlp - buffer + 1, &data_flushed);
     }
@@ -2671,6 +2745,7 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
               else
                 goto out;
             }
+          stream->flags.writing = 1;
         }
     }
 
@@ -2693,25 +2768,22 @@ es_writen (estream_t _GPGRT__RESTRICT stream,
 
   if (bytes_written)
     *bytes_written = data_written;
-  if (data_written)
-    if (!stream->flags.writing)
-      stream->flags.writing = 1;
 
   return err;
 }
 
 
 static int
-es_peek (estream_t _GPGRT__RESTRICT stream,
-         unsigned char **_GPGRT__RESTRICT data,
-	 size_t *_GPGRT__RESTRICT data_len)
+peek_stream (estream_t _GPGRT__RESTRICT stream,
+             unsigned char **_GPGRT__RESTRICT data,
+             size_t *_GPGRT__RESTRICT data_len)
 {
   int err;
 
   if (stream->flags.writing)
     {
       /* Switching to reading mode -> flush output.  */
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
       stream->flags.writing = 0;
@@ -2720,7 +2792,7 @@ es_peek (estream_t _GPGRT__RESTRICT stream,
   if (stream->data_offset == stream->data_len)
     {
       /* Refill container.  */
-      err = es_fill (stream);
+      err = fill_stream (stream);
       if (err)
 	goto out;
     }
@@ -2739,7 +2811,7 @@ es_peek (estream_t _GPGRT__RESTRICT stream,
 
 /* Skip SIZE bytes of input data contained in buffer.  */
 static int
-es_skip (estream_t stream, size_t size)
+skip_stream (estream_t stream, size_t size)
 {
   int err;
 
@@ -2763,7 +2835,6 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
             char *_GPGRT__RESTRICT *_GPGRT__RESTRICT line,
             size_t *_GPGRT__RESTRICT line_length)
 {
-  size_t space_left;
   size_t line_size;
   estream_t line_stream;
   char *line_new;
@@ -2787,51 +2858,55 @@ doreadline (estream_t _GPGRT__RESTRICT stream, size_t max_length,
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
-  err = es_create (&line_stream, line_stream_cookie, &syshd,
-		   estream_functions_mem, O_RDWR, 1, 0);
+  err = create_stream (&line_stream, line_stream_cookie,
+                       &syshd, BACKEND_MEM,
+                       estream_functions_mem, O_RDWR, 1, 0);
   if (err)
     goto out;
 
-  space_left = max_length;
-  line_size = 0;
-  while (1)
-    {
-      if (max_length && (space_left == 1))
-	break;
+  {
+    size_t space_left = max_length;
 
-      err = es_peek (stream, &data, &data_len);
-      if (err || (! data_len))
-	break;
+    line_size = 0;
+    for (;;)
+      {
+        if (max_length && (space_left == 1))
+          break;
 
-      if (data_len > (space_left - 1))
-	data_len = space_left - 1;
+        err = peek_stream (stream, &data, &data_len);
+        if (err || (! data_len))
+          break;
 
-      newline = memchr (data, '\n', data_len);
-      if (newline)
-	{
-	  data_len = (newline - (char *) data) + 1;
-	  err = _gpgrt_write (line_stream, data, data_len, NULL);
-	  if (! err)
-	    {
-	      space_left -= data_len;
-	      line_size += data_len;
-	      es_skip (stream, data_len);
-	      break;
-	    }
-	}
-      else
-	{
-	  err = _gpgrt_write (line_stream, data, data_len, NULL);
-	  if (! err)
-	    {
-	      space_left -= data_len;
-	      line_size += data_len;
-	      es_skip (stream, data_len);
-	    }
-	}
-      if (err)
-	break;
-    }
+        if (data_len > (space_left - 1))
+          data_len = space_left - 1;
+
+        newline = memchr (data, '\n', data_len);
+        if (newline)
+          {
+            data_len = (newline - (char *) data) + 1;
+            err = _gpgrt_write (line_stream, data, data_len, NULL);
+            if (! err)
+              {
+                /* Not needed: space_left -= data_len */
+                line_size += data_len;
+                skip_stream (stream, data_len);
+                break; /* endless loop */
+              }
+          }
+        else
+          {
+            err = _gpgrt_write (line_stream, data, data_len, NULL);
+            if (! err)
+              {
+                space_left -= data_len;
+                line_size += data_len;
+                skip_stream (stream, data_len);
+              }
+          }
+        if (err)
+          break;
+      }
+  }
   if (err)
     goto out;
 
@@ -2905,13 +2980,14 @@ print_writer (void *outfncarg, const char *buf, size_t buflen)
 
 /* The core of our printf function.  This is called in locked state. */
 static int
-es_print (estream_t _GPGRT__RESTRICT stream,
-	  const char *_GPGRT__RESTRICT format, va_list ap)
+do_print_stream (estream_t _GPGRT__RESTRICT stream,
+                 gpgrt_string_filter_t sf, void *sfvalue,
+                 const char *_GPGRT__RESTRICT format, va_list ap)
 {
   int rc;
 
   stream->intern->print_ntotal = 0;
-  rc = _gpgrt_estream_format (print_writer, stream, format, ap);
+  rc = _gpgrt_estream_format (print_writer, stream, sf, sfvalue, format, ap);
   if (rc)
     return -1;
   return (int)stream->intern->print_ntotal;
@@ -2927,7 +3003,7 @@ es_set_buffering (estream_t _GPGRT__RESTRICT stream,
   /* Flush or empty buffer depending on mode.  */
   if (stream->flags.writing)
     {
-      err = es_flush (stream);
+      err = flush_stream (stream);
       if (err)
 	goto out;
     }
@@ -3012,8 +3088,8 @@ estream_t
 _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
               const char *_GPGRT__RESTRICT mode)
 {
-  unsigned int modeflags, cmode;
-  int samethread, sysopen, create_called;
+  unsigned int modeflags, cmode, xmode;
+  int create_called;
   estream_t stream;
   void *cookie;
   int err;
@@ -3024,7 +3100,7 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
   cookie = NULL;
   create_called = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto out;
 
@@ -3035,8 +3111,8 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, estream_functions_fd, modeflags,
-                   samethread, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_FD,
+                       estream_functions_fd, modeflags, xmode, 0);
   if (err)
     goto out;
 
@@ -3046,7 +3122,7 @@ _gpgrt_fopen (const char *_GPGRT__RESTRICT path,
  out:
 
   if (err && create_called)
-    (*estream_functions_fd.func_close) (cookie);
+    (*estream_functions_fd.public.func_close) (cookie);
 
   return stream;
 }
@@ -3076,12 +3152,11 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
   int create_called = 0;
   estream_t stream = NULL;
   void *cookie = NULL;
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   int err;
   es_syshd_t syshd;
 
-  err = parse_mode (mode, &modeflags, &samethread, NULL, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
 
@@ -3093,13 +3168,13 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
 
   memset (&syshd, 0, sizeof syshd);
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd,
-                   estream_functions_mem, modeflags, samethread, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_MEM,
+                       estream_functions_mem, modeflags, xmode, 0);
 
  out:
 
   if (err && create_called)
-    (*estream_functions_mem.func_close) (cookie);
+    (*estream_functions_mem.public.func_close) (cookie);
 
   return stream;
 }
@@ -3109,15 +3184,14 @@ _gpgrt_mopen (void *_GPGRT__RESTRICT data, size_t data_n, size_t data_len,
 estream_t
 _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
 {
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   estream_t stream = NULL;
   void *cookie = NULL;
   es_syshd_t syshd;
 
   /* Memory streams are always read/write.  We use MODE only to get
      the append flag.  */
-  if (parse_mode (mode, &modeflags, &samethread, NULL, NULL))
+  if (parse_mode (mode, &modeflags, &xmode, NULL))
     return NULL;
   modeflags |= O_RDWR;
 
@@ -3128,12 +3202,9 @@ _gpgrt_fopenmem (size_t memlimit, const char *_GPGRT__RESTRICT mode)
     return NULL;
 
   memset (&syshd, 0, sizeof syshd);
-  if (es_create (&stream, cookie, &syshd, estream_functions_mem, modeflags,
-                 samethread, 0))
-    (*estream_functions_mem.func_close) (cookie);
-
-  if (stream)
-    stream->intern->func_ioctl = func_mem_ioctl;
+  if (create_stream (&stream, cookie, &syshd, BACKEND_MEM,
+                     estream_functions_mem, modeflags, xmode, 0))
+    (*estream_functions_mem.public.func_close) (cookie);
 
   return stream;
 }
@@ -3179,22 +3250,22 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
                     const char *_GPGRT__RESTRICT mode,
                     gpgrt_cookie_io_functions_t functions)
 {
-  unsigned int modeflags;
-  int samethread;
+  unsigned int modeflags, xmode;
   estream_t stream;
   int err;
   es_syshd_t syshd;
+  struct cookie_io_functions_s io_functions = { functions, NULL, };
 
   stream = NULL;
   modeflags = 0;
 
-  err = parse_mode (mode, &modeflags, &samethread, NULL, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
 
   memset (&syshd, 0, sizeof syshd);
-  err = es_create (&stream, cookie, &syshd, functions, modeflags,
-                   samethread, 0);
+  err = create_stream (&stream, cookie, &syshd, BACKEND_USER, io_functions,
+                       modeflags, xmode, 0);
   if (err)
     goto out;
 
@@ -3207,21 +3278,17 @@ _gpgrt_fopencookie (void *_GPGRT__RESTRICT cookie,
 static estream_t
 do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
 {
-  unsigned int modeflags;
-  int samethread, sysopen, create_called;
-  estream_t stream;
-  void *cookie;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
+  unsigned int modeflags, xmode;
   int err;
   es_syshd_t syshd;
 
-  stream = NULL;
-  cookie = NULL;
-  create_called = 0;
-
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, NULL);
+  err = parse_mode (mode, &modeflags, &xmode, NULL);
   if (err)
     goto out;
-  if (sysopen)
+  if ((xmode & X_SYSOPEN))
     {
       /* Not allowed for fdopen.  */
       _set_errno (EINVAL);
@@ -3236,19 +3303,20 @@ do_fdopen (int filedes, const char *mode, int no_close, int with_locked_list)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = filedes;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, estream_functions_fd,
-                   modeflags, samethread, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FD, estream_functions_fd,
+                       modeflags, xmode, with_locked_list);
 
   if (!err && stream)
     {
-      stream->intern->func_ioctl = func_fd_ioctl;
       if ((modeflags & O_NONBLOCK))
-        err = func_fd_ioctl (cookie, COOKIE_IOCTL_NONBLOCK, "", NULL);
+        err = stream->intern->func_ioctl (cookie, COOKIE_IOCTL_NONBLOCK,
+                                          "", NULL);
     }
 
  out:
   if (err && create_called)
-    (*estream_functions_fd.func_close) (cookie);
+    (*estream_functions_fd.public.func_close) (cookie);
 
   return stream;
 }
@@ -3271,21 +3339,17 @@ _gpgrt_fdopen_nc (int filedes, const char *mode)
 static estream_t
 do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
 {
-  unsigned int modeflags, cmode;
-  int samethread, sysopen, create_called;
-  estream_t stream;
-  void *cookie;
+  unsigned int modeflags, cmode, xmode;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   int err;
   es_syshd_t syshd;
 
-  stream = NULL;
-  cookie = NULL;
-  create_called = 0;
-
-  err = parse_mode (mode, &modeflags, &samethread, &sysopen, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto out;
-  if (sysopen)
+  if ((xmode & X_SYSOPEN))
     {
       /* Not allowed for fpopen.  */
       _set_errno (EINVAL);
@@ -3302,13 +3366,13 @@ do_fpopen (FILE *fp, const char *mode, int no_close, int with_locked_list)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fp? fileno (fp): -1;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, estream_functions_fp,
-                   modeflags, samethread, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FP, estream_functions_fp,
+                       modeflags, xmode, with_locked_list);
 
  out:
-
   if (err && create_called)
-    (*estream_functions_fp.func_close) (cookie);
+    (*estream_functions_fp.public.func_close) (cookie);
 
   return stream;
 }
@@ -3343,8 +3407,7 @@ estream_t
 do_w32open (HANDLE hd, const char *mode,
             int no_close, int with_locked_list)
 {
-  unsigned int modeflags, cmode;
-  int samethread;
+  unsigned int modeflags, cmode, xmode;
   int create_called = 0;
   estream_t stream = NULL;
   void *cookie = NULL;
@@ -3352,23 +3415,28 @@ do_w32open (HANDLE hd, const char *mode,
   es_syshd_t syshd;
 
   /* For obvious reasons we ignore sysmode here.  */
-  err = parse_mode (mode, &modeflags, &samethread, NULL, &cmode);
+  err = parse_mode (mode, &modeflags, &xmode, &cmode);
   if (err)
     goto leave;
 
-  err = func_w32_create (&cookie, hd, modeflags, no_close);
+  /* If we are pollable we create the function cookie with syscall
+   * clamp disabled.  This is because functions are called from
+   * separatre reader and writer threads in w32-stream.  */
+  err = func_w32_create (&cookie, hd, modeflags,
+                         no_close, !!(xmode & X_POLLABLE));
   if (err)
     goto leave;
 
   syshd.type = ES_SYSHD_HANDLE;
   syshd.u.handle = hd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, estream_functions_w32,
-                   modeflags, samethread, with_locked_list);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_W32, estream_functions_w32,
+                       modeflags, xmode, with_locked_list);
 
  leave:
   if (err && create_called)
-    (*estream_functions_w32.func_close) (cookie);
+    (*estream_functions_w32.public.func_close) (cookie);
 
   return stream;
 }
@@ -3487,7 +3555,7 @@ _gpgrt__get_std_stream (int fd)
             {
               fprintf (stderr, "fatal: error creating a dummy estream"
                        " for %d: %s\n", fd, strerror (errno));
-              abort();
+              _gpgrt_abort();
             }
         }
 
@@ -3505,7 +3573,9 @@ _gpgrt__get_std_stream (int fd)
 }
 
 /* Note: A "samethread" keyword given in "mode" is ignored and the
-   value used by STREAM is used instead. */
+ * value used by STREAM is used instead.  Note that this function is
+ * the reasons why some of the init and deinit code is split up into
+ * several functions.  */
 estream_t
 _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
                 const char *_GPGRT__RESTRICT mode,
@@ -3515,8 +3585,8 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
 
   if (path)
     {
-      unsigned int modeflags, cmode;
-      int dummy, samethread, create_called;
+      unsigned int modeflags, cmode, xmode, dummy;
+      int create_called;
       void *cookie;
       int fd;
       es_syshd_t syshd;
@@ -3524,13 +3594,13 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       cookie = NULL;
       create_called = 0;
 
-      samethread = stream->intern->samethread;
+      xmode = stream->intern->samethread ? X_SAMETHREAD : 0;
 
       lock_stream (stream);
 
-      es_deinitialize (stream);
+      deinit_stream_obj (stream);
 
-      err = parse_mode (mode, &modeflags, &dummy, NULL, &cmode);
+      err = parse_mode (mode, &modeflags, &dummy, &cmode);
       if (err)
 	goto leave;
       (void)dummy;
@@ -3542,8 +3612,8 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
       syshd.type = ES_SYSHD_FD;
       syshd.u.fd = fd;
       create_called = 1;
-      init_stream_obj (stream, cookie, &syshd, estream_functions_fd,
-                       modeflags, samethread);
+      init_stream_obj (stream, cookie, &syshd, BACKEND_FD,
+                       estream_functions_fd, modeflags, xmode);
 
     leave:
 
@@ -3566,7 +3636,7 @@ _gpgrt_freopen (const char *_GPGRT__RESTRICT path,
     {
       /* FIXME?  We don't support re-opening at the moment.  */
       _set_errno (EINVAL);
-      es_deinitialize (stream);
+      deinit_stream_obj (stream);
       do_close (stream, 0);
       stream = NULL;
     }
@@ -3619,7 +3689,7 @@ _gpgrt_fclose_snatch (estream_t stream, void **r_buffer, size_t *r_buflen)
 
       if (stream->flags.writing)
         {
-          err = es_flush (stream);
+          err = flush_stream (stream);
           if (err)
             goto leave;
           stream->flags.writing = 0;
@@ -3860,7 +3930,7 @@ do_fflush (estream_t stream)
   int err;
 
   if (stream->flags.writing)
-    err = es_flush (stream);
+    err = flush_stream (stream);
   else
     {
       es_empty (stream);
@@ -3961,6 +4031,29 @@ _gpgrt_rewind (estream_t stream)
   /* Note that es_seek already cleared the EOF flag.  */
   stream->intern->indicators.err = 0;
   unlock_stream (stream);
+}
+
+
+int
+_gpgrt_ftruncate (estream_t stream, gpgrt_off_t length)
+{
+  cookie_ioctl_function_t func_ioctl;
+  int ret;
+
+  lock_stream (stream);
+  func_ioctl = stream->intern->func_ioctl;
+  if (!func_ioctl)
+    {
+      _set_errno (EOPNOTSUPP);
+      ret = -1;
+    }
+  else
+    {
+      ret = func_ioctl (stream->intern->cookie, COOKIE_IOCTL_TRUNCATE,
+                        &length, NULL);
+    }
+  unlock_stream (stream);
+  return ret;
 }
 
 
@@ -4075,7 +4168,7 @@ _gpgrt_fread (void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 {
   size_t ret, bytes;
 
-  if (size * nitems)
+  if (size && nitems)
     {
       lock_stream (stream);
       es_readn (stream, ptr, size * nitems, &bytes);
@@ -4096,7 +4189,7 @@ _gpgrt_fwrite (const void *_GPGRT__RESTRICT ptr, size_t size, size_t nitems,
 {
   size_t ret, bytes;
 
-  if (size * nitems)
+  if (size && nitems)
     {
       lock_stream (stream);
       es_writen (stream, ptr, size * nitems, &bytes);
@@ -4234,7 +4327,7 @@ _gpgrt_getline (char *_GPGRT__RESTRICT *_GPGRT__RESTRICT lineptr,
    Returns the length of the line. EOF is indicated by a line of
    length zero. A truncated line is indicated my setting the value at
    MAX_LENGTH to 0.  If the returned value is less then 0 not enough
-   memory was enable or another error occurred; ERRNO is then set
+   memory was available or another error occurred; ERRNO is then set
    accordingly.
 
    If a line has been truncated, the file pointer is moved forward to
@@ -4351,22 +4444,24 @@ _gpgrt_read_line (estream_t stream,
 
 int
 _gpgrt_vfprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
+                          gpgrt_string_filter_t sf, void *sfvalue,
                           const char *_GPGRT__RESTRICT format,
                           va_list ap)
 {
-  return es_print (stream, format, ap);
+  return do_print_stream (stream, sf, sfvalue, format, ap);
 }
 
 
 int
 _gpgrt_vfprintf (estream_t _GPGRT__RESTRICT stream,
+                 gpgrt_string_filter_t sf, void *sfvalue,
                  const char *_GPGRT__RESTRICT format,
                  va_list ap)
 {
   int ret;
 
   lock_stream (stream);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, sf, sfvalue, format, ap);
   unlock_stream (stream);
 
   return ret;
@@ -4381,7 +4476,7 @@ _gpgrt_fprintf_unlocked (estream_t _GPGRT__RESTRICT stream,
 
   va_list ap;
   va_start (ap, format);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, NULL, NULL, format, ap);
   va_end (ap);
 
   return ret;
@@ -4397,7 +4492,7 @@ _gpgrt_fprintf (estream_t _GPGRT__RESTRICT stream,
   va_list ap;
   va_start (ap, format);
   lock_stream (stream);
-  ret = es_print (stream, format, ap);
+  ret = do_print_stream (stream, NULL, NULL, format, ap);
   unlock_stream (stream);
   va_end (ap);
 
@@ -4510,17 +4605,14 @@ estream_t
 _gpgrt_tmpfile (void)
 {
   unsigned int modeflags;
-  int create_called;
-  estream_t stream;
-  void *cookie;
+  int create_called = 0;
+  estream_t stream = NULL;
+  void *cookie = NULL;
   int err;
   int fd;
   es_syshd_t syshd;
 
-  create_called = 0;
-  stream = NULL;
   modeflags = O_RDWR | O_TRUNC | O_CREAT;
-  cookie = NULL;
 
   fd = tmpfd ();
   if (fd == -1)
@@ -4536,8 +4628,9 @@ _gpgrt_tmpfile (void)
   syshd.type = ES_SYSHD_FD;
   syshd.u.fd = fd;
   create_called = 1;
-  err = es_create (&stream, cookie, &syshd, estream_functions_fd, modeflags,
-                   0, 0);
+  err = create_stream (&stream, cookie, &syshd,
+                       BACKEND_FD, estream_functions_fd,
+                       modeflags, 0, 0);
 
  out:
   if (err)
@@ -4687,16 +4780,21 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
 {
   gpgrt_poll_t *item;
   int count = 0;
+  int idx;
+#ifndef HAVE_W32_SYSTEM
   fd_set readfds, writefds, exceptfds;
   int any_readfd, any_writefd, any_exceptfd;
-  int idx;
   int max_fd;
   int fd, ret, any;
+#endif /*HAVE_W32_SYSTEM*/
+
+  trace (("enter: nfds=%u timeout=%d", nfds, timeout));
 
   if (!fds)
     {
       _set_errno (EINVAL);
-      return -1;
+      count = -1;
+      goto leave;
     }
 
   /* Clear all response fields (even for ignored items).  */
@@ -4735,10 +4833,15 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
       /* FIXME */
     }
 
-  if (count)
-    return count;  /* Early return without waiting.  */
-
   /* Now do the real select.  */
+#ifdef HAVE_W32_SYSTEM
+
+  _gpgrt_pre_syscall ();
+  count = _gpgrt_w32_poll (fds, nfds, timeout);
+  _gpgrt_post_syscall ();
+
+#else /*!HAVE_W32_SYSTEM*/
+
   any_readfd = any_writefd = any_exceptfd = 0;
   max_fd = 0;
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
@@ -4784,13 +4887,7 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
         }
     }
 
-#ifdef _WIN32
-  (void)timeout;
-  ret = -1;
-  _set_errno (EOPNOTSUPP);
-#else
-  if (pre_syscall_func)
-    pre_syscall_func ();
+  _gpgrt_pre_syscall ();
   do
     {
       struct timeval timeout_val;
@@ -4804,15 +4901,21 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
                     timeout == -1 ? NULL : &timeout_val);
     }
   while (ret == -1 && errno == EINTR);
-  if (post_syscall_func)
-    post_syscall_func ();
-#endif
+  _gpgrt_post_syscall ();
 
   if (ret == -1)
-    return -1;
+    {
+      trace_errno (1, ("select failed: "));
+      count = -1;
+      goto leave;
+    }
   if (!ret)
-    return 0; /* Timeout.  Note that in this case we can't return
-                 got_err for an invalid stream.  */
+    {
+      /* Timeout.  Note that in this case we can't return got_err for
+       * an invalid stream.  */
+      count = 0;
+      goto leave;
+    }
 
   for (item = fds, idx = 0; idx < nfds; item++, idx++)
     {
@@ -4832,9 +4935,6 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_hup = 1;
           any = 1;
         }
-#ifndef _WIN32
-      /* NB.: We can't use FD_ISSET under windows - but we don't have
-       * support for it anyway.  */
       if (item->want_read && FD_ISSET (fd, &readfds))
         {
           item->got_read = 1;
@@ -4850,12 +4950,37 @@ _gpgrt_poll (gpgrt_poll_t *fds, unsigned int nfds, int timeout)
           item->got_oob = 1;
           any = 1;
         }
-#endif /*!_WIN32*/
 
       if (any)
         count++;
     }
+#endif /*!HAVE_W32_SYSTEM*/
 
+ leave:
+#ifdef ENABLE_TRACING
+  trace (("leave: count=%d", count));
+  if (count > 0)
+    {
+      for (item = fds, idx = 0; idx < nfds; item++, idx++)
+        {
+          trace (("     %3d  %c%c%c%c%c  %c%c%c%c%c%c%c",
+                  idx,
+                  fds[idx].want_read?  'r':'-',
+                  fds[idx].want_write? 'w':'-',
+                  fds[idx].want_oob?   'o':'-',
+                  fds[idx].want_rdhup? 'h':'-',
+                  fds[idx].ignore?     'i':'-',
+                  fds[idx].got_read?   'r':'-',
+                  fds[idx].got_write?  'w':'-',
+                  fds[idx].got_oob?    'o':'-',
+                  fds[idx].got_rdhup?  'h':'-',
+                  fds[idx].got_hup?    'H':'-',
+                  fds[idx].got_err?    'e':'-',
+                  fds[idx].got_nval?   'n':'-'
+                  ));
+        }
+    }
+#endif /*ENABLE_TRACING*/
   return count;
 }
 

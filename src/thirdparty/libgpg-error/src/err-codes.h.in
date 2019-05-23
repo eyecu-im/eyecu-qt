@@ -42,7 +42,7 @@
 10	GPG_ERR_CHECKSUM		Checksum error
 11	GPG_ERR_BAD_PASSPHRASE		Bad passphrase
 12	GPG_ERR_CIPHER_ALGO		Invalid cipher algorithm
-13	GPG_ERR_KEYRING_OPEN		Keyring open
+13	GPG_ERR_KEYRING_OPEN		Cannot open keyring
 14	GPG_ERR_INV_PACKET		Invalid packet
 15	GPG_ERR_INV_ARMOR		Invalid armor
 16	GPG_ERR_NO_USER_ID		No user ID
@@ -247,7 +247,8 @@
 212	GPG_ERR_SEXP_ODD_HEX_NUMBERS	Odd hexadecimal numbers in S-expression
 213	GPG_ERR_SEXP_BAD_OCT_CHAR	Bad octal character in S-expression
 
-# 214 to 217 are free to be used.
+# 214 to 216 are free to be used.
+217	GPG_ERR_SUBKEYS_EXP_OR_REV	All subkeys are expired or revoked
 218	GPG_ERR_DB_CORRUPTED		Database is corrupted
 219	GPG_ERR_SERVER_FAILED		Server indicated a failure
 220	GPG_ERR_NO_NAME			No name
@@ -273,10 +274,10 @@
 240	GPG_ERR_BAD_HS_CERT		Bad certificate message in handshake
 241	GPG_ERR_BAD_HS_CERT_REQ		Bad certificate request message in handshake
 242	GPG_ERR_BAD_HS_CERT_VER		Bad certificate verify message in handshake
-243	GPG_ERR_BAD_HS_CHANGE_CIPHER	Bad change cipher messsage in handshake
+243	GPG_ERR_BAD_HS_CHANGE_CIPHER	Bad change cipher message in handshake
 244	GPG_ERR_BAD_HS_CLIENT_HELLO	Bad client hello message in handshake
 245	GPG_ERR_BAD_HS_SERVER_HELLO	Bad server hello message in handshake
-246	GPG_ERR_BAD_HS_SERVER_HELLO_DONE	Bad server hello done message in hanshake
+246	GPG_ERR_BAD_HS_SERVER_HELLO_DONE	Bad server hello done message in handshake
 247	GPG_ERR_BAD_HS_FINISHED		Bad finished message in handshake
 248	GPG_ERR_BAD_HS_SERVER_KEX	Bad server key exchange message in handshake
 249	GPG_ERR_BAD_HS_CLIENT_KEX	Bad client key exchange message in handshake
@@ -318,7 +319,37 @@
 
 # 282 to 299 are reserved for future assuan codes.
 
-# 300 to 720 are free to be used.
+300	GPG_ERR_ENGINE_TOO_OLD		Crypto engine too old
+301	GPG_ERR_WINDOW_TOO_SMALL	Screen or window too small
+302	GPG_ERR_WINDOW_TOO_LARGE	Screen or window too large
+303	GPG_ERR_MISSING_ENVVAR		Required environment variable not set
+304	GPG_ERR_USER_ID_EXISTS		User ID already exists
+305	GPG_ERR_NAME_EXISTS		Name already exists
+306	GPG_ERR_DUP_NAME		Duplicated name
+307	GPG_ERR_TOO_YOUNG		Object is too young
+308	GPG_ERR_TOO_OLD			Object is too old
+309	GPG_ERR_UNKNOWN_FLAG		Unknown flag
+310	GPG_ERR_INV_ORDER		Invalid execution order
+311	GPG_ERR_ALREADY_FETCHED		Already fetched
+312	GPG_ERR_TRY_LATER		Try again later
+313	GPG_ERR_WRONG_NAME		Wrong name
+314	GPG_ERR_NO_AUTH			Not authenticated
+315	GPG_ERR_BAD_AUTH		Bad authentication
+# This range is free for use.
+
+666	GPG_ERR_SYSTEM_BUG		System bug detected
+
+#
+# Mapping of some error codes from libdns and other DNS specific error codes
+#
+711	GPG_ERR_DNS_UNKNOWN		Unknown DNS error
+712	GPG_ERR_DNS_SECTION		Invalid DNS section
+713	GPG_ERR_DNS_ADDRESS		Invalid textual address form
+714	GPG_ERR_DNS_NO_QUERY		Missing DNS query packet
+715	GPG_ERR_DNS_NO_ANSWER		Missing DNS answer packet
+716	GPG_ERR_DNS_CLOSED		Connection closed in DNS
+717	GPG_ERR_DNS_VERIFY		Verification failed in DNS
+718	GPG_ERR_DNS_TIMEOUT		DNS Timeout
 
 #
 # Mapping of LDAP error codes

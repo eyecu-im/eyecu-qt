@@ -1,4 +1,294 @@
-Noteworthy changes in version 1.22 (2016-04-25) [C18/A18/R0)
+Noteworthy changes in version 1.37 (unreleased) [C27/A27/R_]
+-----------------------------------------------
+
+
+Noteworthy changes in version 1.36 (2019-03-19) [C27/A27/R0]
+-----------------------------------------------
+
+ * Two new error codes to better support PIV cards.
+
+ * Support armv7a-unknown-linux-gnueabihf.
+
+ * Increased estream buffer sizes for Windows.
+
+ * Interface changes relative to the 1.34 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_NO_AUTH                  NEW.
+ GPG_ERR_BAD_AUTH                 NEW.
+
+ Release-info: https://dev.gnupg.org/T4413
+
+
+Noteworthy changes in version 1.35 (2019-01-28) [C26/A26/R1]
+-----------------------------------------------
+
+ * Distribute the correct gpgrt-config.
+
+
+Noteworthy changes in version 1.34 (2019-01-16) [C26/A26/R0]
+-----------------------------------------------
+
+ * Support for riscv32.
+
+ * New API to allow emergency cleanup after internal fatal errors.
+
+ * Minor bug and portability fixes. [#4286,#4298
+
+ * Interface changes relative to the 1.33 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_abort                     NEW.
+ gpgrt_add_emergency_cleanup     NEW.
+
+ Release-info: https://dev.gnupg.org/T4296
+
+
+Noteworthy changes in version 1.33 (2018-12-07) [C25/A25/R0]
+-----------------------------------------------
+
+ * New unified config script gpgrt-config which can now be used by all
+   GnuPG related packages.
+
+ * Support for ARC and arm64ilp32.
+
+ * The log functions now sanitize strings printed with the "%s" format
+   specifier.  All control characters are C-escaped in the output.
+   Users of that function may want to remove their own escaping to
+   avoid doubling of backslashes.
+
+ * New fprintf style function to apply a custom filter for string
+   arguments.
+
+ * New function to compare version strings.
+
+ * Interface changes relative to the 1.28 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_cmp_version               New.
+ gpgrt_string_filter_t           New.
+ gpgrt_fprintf_sf                New.
+ gpgrt_fprintf_sf_unlocked       New.
+ gpgrt_ftruncate                 New but limited functionality.
+ gpgrt_w32_override_locale       New.
+
+ Release-info: https://dev.gnupg.org/T4205
+
+
+Noteworthy changes in version 1.32 (2018-07-12) [C24/A24/R3]
+-----------------------------------------------
+
+ * Fixes a problem with gpgrt_fflush and gpgrt_fopencookie.  [#4069]
+
+ * Fixes a problem with the C11 header stdnoreturn.h.  [#4002]
+
+ * The yat2m tool can now also be build on Windows.
+
+ * Updates translations for Spanish, Russian and Ukrainian.
+
+
+Noteworthy changes in version 1.31 (2018-05-02) [C24/A24/R2]
+-----------------------------------------------
+
+ * Fixes another problem with gpgrt_poll under Windows.  [#3937]
+
+ * New translation for Spanish.
+
+
+Noteworthy changes in version 1.30 (2018-04-30) [C24/A24/R1]
+-----------------------------------------------
+
+ * Fixes a hang on Windows when using gpgrt_poll under nPth.
+
+ * Build fix for Solaris.  [#3869]
+
+
+Noteworthy changes in version 1.29 (2018-04-11) [C24/A24/R0]
+-----------------------------------------------
+
+ * The yat2m tool is during cross-compile now also installed on the
+   host platform.
+
+ * New option parser and associated functions similar to the one used
+   by GnuPG.
+
+ * New Base-64 encoder.
+
+ * Fixes regression in 1.28 for arm64 and w64 builds.
+
+ * Interface changes relative to the 1.28 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_argparse                  New.
+ gpgrt_usage                     New.
+ gpgrt_strusage                  New.
+ gpgrt_set_strusage              New.
+ gpgrt_set_usage_outfnc          New.
+ gpgrt_set_fixed_string_mapper   New.
+ GPGRT_ENABLE_ARGPARSE_MACROS    New macro.
+ gpgrt_b64enc_start              New.
+ gpgrt_b64enc_write              New.
+ gpgrt_b64enc_finish             New.
+
+
+Noteworthy changes in version 1.28 (2018-03-13) [C23/A23/R0]
+-----------------------------------------------
+
+ * The formerly internal yat2m tool is now installed for a native
+   build.
+
+ * The new files gpgrt.m4 and gpgrt-config are now installed.  They
+   can be used instead of gpg-error.m4 and gpg-error-config.
+
+ * New logging functions similar to those used by GnuPG.
+
+ * New helper functions for platform abstraction.
+
+ * Interface changes relative to the 1.27 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_get_errorcount            New API.
+ gpgrt_inc_errorcount            New API.
+ gpgrt_log_set_sink              New API.
+ gpgrt_log_set_socket_dir_cb     New API.
+ gpgrt_log_set_pid_suffix_cb     New API.
+ gpgrt_log_set_prefix            New API.
+ gpgrt_log_get_prefix            New API.
+ gpgrt_log_test_fd               New API.
+ gpgrt_log_get_fd                New API.
+ gpgrt_log_get_stream            New API.
+ gpgrt_log                       New API.
+ gpgrt_logv                      New API.
+ gpgrt_logv_prefix               New API.
+ gpgrt_log_string                New API.
+ gpgrt_log_info                  New API.
+ gpgrt_log_error                 New API.
+ gpgrt_log_fatal                 New API.
+ gpgrt_log_bug                   New API.
+ gpgrt_log_debug                 New API.
+ gpgrt_log_debug_string          New API.
+ gpgrt_log_printf                New API.
+ gpgrt_log_flush                 New API.
+ gpgrt_log_printhex              New API.
+ gpgrt_log_clock                 New API.
+ gpgrt_assert                    New macro.
+ _gpgrt_log_assert               New internal API.
+ GPGRT_LOGLVL_BEGIN              New const.
+ GPGRT_LOGLVL_CONT               New const.
+ GPGRT_LOGLVL_INFO               New const.
+ GPGRT_LOGLVL_WARN               New const.
+ GPGRT_LOGLVL_ERROR              New const.
+ GPGRT_LOGLVL_FATAL              New const.
+ GPGRT_LOGLVL_BUG                New const.
+ GPGRT_LOGLVL_DEBUG              New const.
+ gpgrt_realloc                   New API.
+ gpgrt_malloc                    New API.
+ gpgrt_calloc                    New API.
+ gpgrt_strdup                    New API.
+ gpgrt_strconcat                 New API.
+ gpgrt_w32_reg_query_string      New API.
+ gpgrt_getenv                    New API.
+ gpgrt_setenv                    New API.
+ gpgrt_mkdir                     New API.
+ gpgrt_chdir                     New API.
+ gpgrt_getcwd                    New API.
+
+
+Noteworthy changes in version 1.27 (2017-02-28) [C22/A22/R0]
+-----------------------------------------------
+
+ * Added a Base64 decoder.
+
+ * Added support for the sh3 architecture.
+
+ * Added header gpgrt.h as an alias for gpg-error.h.
+
+ * Fixed macro GPGRT_GCC_VERSION.
+
+ * Fixed a race in non-blocking I/O on Windows.
+
+ * Interface changes relative to the 1.26 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_b64state_t                 NEW type.
+ gpgrt_b64dec_start               NEW.
+ gpgrt_b64dec_proc                NEW.
+ gpgrt_b64dec_finish              NEW.
+ GPG_ERR_WRONG_NAME               NEW.
+ gpgrt.h                          NEW header.
+
+
+Noteworthy changes in version 1.26 (2016-12-21) [C21/A21/R0]
+-----------------------------------------------
+
+ * New option --desc for gpg-error.
+
+ * Interface changes relative to the 1.25 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_UNKNOWN_FLAG             NEW.
+ GPG_ERR_INV_ORDER                NEW.
+ GPG_ERR_ALREADY_FETCHED          NEW.
+ GPG_ERR_TRY_LATER                NEW.
+ GPG_ERR_SYSTEM_BUG               NEW.
+ GPG_ERR_DNS_UNKNOWN	          NEW.
+ GPG_ERR_DNS_SECTION	          NEW.
+ GPG_ERR_DNS_ADDRESS	          NEW.
+ GPG_ERR_DNS_NO_QUERY	          NEW.
+ GPG_ERR_DNS_NO_ANSWER	          NEW.
+ GPG_ERR_DNS_CLOSED	          NEW.
+ GPG_ERR_DNS_VERIFY	          NEW.
+ GPG_ERR_DNS_TIMEOUT	          NEW.
+
+
+Noteworthy changes in version 1.25 (2016-11-14) [C20/A20/R0]
+-----------------------------------------------
+
+ * New interface gpgrt_get_syscall_clamp to allow libaries to make use
+   of Libgpg-error's system call wrapper functions.
+
+ * gpgrt_poll does now work under Windows.
+
+ * Fixed bug in the locking code when used with the nPth threading
+   library.
+
+ * Added support for {i686,x86_64}-apple-darwin.
+
+ * Added new error codes.
+
+ * Interface changes relative to the 1.23 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ gpgrt_get_syscall_clamp          NEW.
+ GPG_ERR_ENGINE_TOO_OLD	          NEW.
+ GPG_ERR_WINDOW_TOO_SMALL         NEW.
+ GPG_ERR_WINDOW_TOO_LARGE         NEW.
+ GPG_ERR_MISSING_ENVVAR	          NEW.
+ GPG_ERR_USER_ID_EXISTS           NEW.
+ GPG_ERR_NAME_EXISTS              NEW.
+ GPG_ERR_DUP_NAME                 NEW.
+ GPG_ERR_TOO_OLD                  NEW.
+ GPG_ERR_TOO_YOUNG                NEW.
+
+
+Noteworthy changes in version 1.24 (2016-07-14) [C19/A19/R1]
+-----------------------------------------------
+
+ * Fixes a bug in es_fclose_snatch when used used after es_fseek.
+
+ * Fixes building without thread support.
+
+ * New configure option --disable-tests.
+
+
+Noteworthy changes in version 1.23 (2016-06-15) [C19/A19/R0]
+-----------------------------------------------
+
+ * Fixes an assertion failure due to es_flush on read/write streams.
+
+ * Fixes a bug with a too short memory limit is es_fopenmen.
+
+ * Cross-build support for powerpc-unknown-linux-gnuspe and
+   tilegx-unknown-linux-gnu architectures.
+
+ * Interface changes relative to the 1.22 release:
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ GPG_ERR_SUBKEYS_EXP_OR_REV       NEW.
+
+
+Noteworthy changes in version 1.22 (2016-04-25) [C18/A18/R0]
 -----------------------------------------------
 
  * New functions and macros to to provide iconv(3) on Windows.
@@ -420,8 +710,8 @@ Noteworthy changes in version 1.4 (2006-09-14)
  * New error codes for the Assuan IPC library.
 
  * New error code GPG_ERR_MISSING_ERRNO to be used in cases when a
-   system accidently does not set errno but a system error definitely
-   occured.
+   system accidentally does not set errno but a system error
+   definitely occurred.
 
  * New error source GPG_ERR_SOURCE_ANY to allow proper use of
    libgpg-error even if a specific source is not available.

@@ -389,7 +389,7 @@ static struct {
 
     /*
      * Code Page Identifiers
-     * http://msdn2.microsoft.com/en-us/library/ms776446.aspx
+     * https://msdn.microsoft.com/en-us/library/dd317756.aspx
      */
     {37, "IBM037"}, /* IBM EBCDIC US-Canada */
     {437, "IBM437"}, /* OEM United States */
@@ -968,7 +968,7 @@ name_to_codepage(const char *name)
 }
 
 /*
- * http://www.faqs.org/rfcs/rfc2781.html
+ * https://tools.ietf.org/html/rfc2781
  */
 static uint
 utf16_to_ucs4(const ushort *wbuf)
@@ -1475,6 +1475,7 @@ utf32_wctomb(csconv_t *cv, ushort *wbuf, int wbufsize, uchar *buf, int bufsize)
 #define ISO2022_SI  0
 #define ISO2022_SO  1
 
+#if USE_MLANG_DLL
 /* shift in */
 static const char iso2022_SI_seq[] = "\x0F";
 /* shift out */
@@ -1487,6 +1488,7 @@ struct iso2022_esc_t {
     int len;
     int cs;
 };
+#endif
 
 #define ISO2022JP_CS_ASCII            0
 #define ISO2022JP_CS_JISX0201_ROMAN   1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 00:16+0100\n"
+"PO-Revision-Date: 2018-03-21 19:02+0100\n"
 "Last-Translator: Freek de Kruijf <f.de.kruijf@gmail.com>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "Language: nl\n"
@@ -125,7 +125,7 @@ msgstr "Ongeldige wachtwoordzin"
 msgid "Invalid cipher algorithm"
 msgstr "Ongeldig versleutelingsalgoritme"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Sleutelring open"
 
 msgid "Invalid packet"
@@ -728,6 +728,9 @@ msgstr "Vreemde hexadecimale getallen in S-expressie"
 msgid "Bad octal character in S-expression"
 msgstr "Fout octaal teken in S-expressie"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -813,7 +816,7 @@ msgstr "Slecht verzoek om certificaatbericht in uitwisseling"
 msgid "Bad certificate verify message in handshake"
 msgstr "Slecht certificaatbericht over verificatie in uitwisseling"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Slecht wijzigingsbericht over vercijfering in uitwisseling"
 
 msgid "Bad client hello message in handshake"
@@ -822,7 +825,7 @@ msgstr "Slecht hello-bericht van client in uitwisseling"
 msgid "Bad server hello message in handshake"
 msgstr "Slecht hello-bericht van server in uitwisseling"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Slecht hello-gedaan-bericht van server in uitwisseling"
 
 msgid "Bad finished message in handshake"
@@ -926,6 +929,111 @@ msgstr "IPC-parameterfout"
 
 msgid "Unknown IPC inquire"
 msgstr "Onbekende IPC-afvraging"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Geen crypto-engine"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Gedupliceerde waarde"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certificaat te jong"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Geleverd object is te kort"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Onbekende naam"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Ongeldige bewerkingscode"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Onbekende naam"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Niet ingeschakeld"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Niet ondersteunde bescherming"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Onbekende systeemfout"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Ongeldige OID-tekenreeks"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Ongeldige S-expressie"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Ontbrekend certificaat van uitgever"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Ontcijfering is mislukt"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tijdslimiet"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1344,13 +1452,90 @@ msgstr "Einde van bestand"
 msgid "Unknown error code"
 msgstr "Onbekende foutcode"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Gebruik: %s GPG-ERROR [...]\n"
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "argument not expected"
+msgstr "Gegevens niet versleuteld"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "read error"
+msgstr "IPC-leesfout"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "keyword too long"
+msgstr "Regel te lang"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "missing argument"
+msgstr "Ontbrekende waarde"
+
+#, fuzzy
+#| msgid "Invalid argument"
+msgid "invalid argument"
+msgstr "Ongeldig argument"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "invalid command"
+msgstr "Ongeldige kaart"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "invalid alias definition"
+msgstr "Ongeldige OID-tekenreeks"
+
+msgid "out of core"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "invalid option"
+msgstr "Ongeldige bewerkingscode"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: waarschuwing: kon %s niet herkennen\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+msgid "out of core\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Invalid operation code"
+msgid "invalid option \"%.50s\"\n"
+msgstr "Ongeldige bewerkingscode"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "waarschuwing: kon %s niet herkennen\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Gebruik: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1361,11 +1546,6 @@ msgstr "%s: waarschuwing: kon %s niet herkennen\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Ongeldige gegevens"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Ontcijfering is mislukt"
 
 #, fuzzy
 #~| msgid "General error"

@@ -39,9 +39,10 @@
 # include <thread.h>
 #endif
 
-#include "gpg-error.h"
+#include "gpgrt-int.h"
 
 #include "thread.h"
+
 
 
 gpg_err_code_t
@@ -49,12 +50,16 @@ _gpgrt_yield (void)
 {
 #if USE_POSIX_THREADS
 # ifdef _POSIX_PRIORITY_SCHEDULING
-   sched_yield ();
+  _gpgrt_pre_syscall ();
+  sched_yield ();
+  _gpgrt_post_syscall ();
 # else
-   return GPG_ERR_NOT_SUPPORTED;
+  return GPG_ERR_NOT_SUPPORTED;
 # endif
 #elif USE_SOLARIS_THREADS
+  _gpgrt_pre_syscall ();
   thr_yield ();
+  _gpgrt_post_syscall ();
 #else
   return GPG_ERR_NOT_SUPPORTED;
 #endif

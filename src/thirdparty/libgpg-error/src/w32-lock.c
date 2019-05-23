@@ -29,12 +29,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <gpg-error.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "gpgrt-int.h"
 #include "lock.h"
 #include "w32-lock-obj.h"
+
 
 
 static _gpgrt_lock_t *
@@ -43,7 +44,7 @@ get_lock_object (gpgrt_lock_t *lockhd)
   _gpgrt_lock_t *lock = (_gpgrt_lock_t*)lockhd;
 
   if (lock->vers != LOCK_ABI_VERSION)
-    abort ();
+    _gpgrt_abort ();
 
   return lock;
 }
@@ -60,14 +61,14 @@ _gpgrt_lock_init (gpgrt_lock_t *lockhd)
   if (!lock->vers)
     {
       if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-        abort ();
+        _gpgrt_abort ();
       lock->vers = LOCK_ABI_VERSION;
     }
   else /* Run the usual check.  */
     {
       lock = get_lock_object (lockhd);
       if (sizeof (gpgrt_lock_t) < sizeof (_gpgrt_lock_t))
-        abort ();
+        _gpgrt_abort ();
     }
 
   InitializeCriticalSection (&lock->csec);
@@ -92,7 +93,7 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
              and thus fall into the wait loop below.  We ignore that
              STARTED may in theory overflow if this thread starves for
              too long.  */
-          gpgrt_lock_init (lockhd);
+          _gpgrt_lock_init (lockhd);
         }
       else
         {
@@ -101,7 +102,9 @@ _gpgrt_lock_lock (gpgrt_lock_t *lockhd)
         }
     }
 
+  _gpgrt_pre_syscall ();
   EnterCriticalSection (&lock->csec);
+  _gpgrt_post_syscall ();
   return 0;
 }
 
@@ -115,7 +118,7 @@ _gpgrt_lock_trylock (gpgrt_lock_t *lockhd)
     {
       if (!InterlockedIncrement (&lock->started))
         {
-          gpgrt_lock_init (lockhd);
+          _gpgrt_lock_init (lockhd);
         }
       else
         {

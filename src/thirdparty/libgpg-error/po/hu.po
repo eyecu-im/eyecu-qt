@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error-1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2015-01-09 10:00+0100\n"
+"PO-Revision-Date: 2018-03-21 19:01+0100\n"
 "Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "Language: hu\n"
@@ -125,7 +125,7 @@ msgstr "Rossz jelmondat"
 msgid "Invalid cipher algorithm"
 msgstr "Érvénytelen titkosító algoritmus"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Kulcstartó nyitva"
 
 msgid "Invalid packet"
@@ -762,6 +762,9 @@ msgstr "Páratlan hexadecimális számok az S-kifejezésben"
 msgid "Bad octal character in S-expression"
 msgstr "Rossz oktadecimális karakter az S-kifejezésben"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -869,7 +872,7 @@ msgstr ""
 msgid "Bad certificate verify message in handshake"
 msgstr ""
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr ""
 
 msgid "Bad client hello message in handshake"
@@ -878,7 +881,7 @@ msgstr ""
 msgid "Bad server hello message in handshake"
 msgstr ""
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 
 msgid "Bad finished message in handshake"
@@ -986,6 +989,111 @@ msgstr "IPC paraméterhiba"
 
 msgid "Unknown IPC inquire"
 msgstr "Ismeretlen IPC érdeklődés"
+
+#, fuzzy
+#| msgid "Invalid crypto engine"
+msgid "Crypto engine too old"
+msgstr "Érvénytelen titkosítási motor"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Kettőzött érték"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Túl fiatal tanúsítvány"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "A megadott objektum túl kicsi"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Ismeretlen név"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Érvénytelen műveletkód"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Ismeretlen név"
+
+#, fuzzy
+#| msgid "Not locked"
+msgid "Not authenticated"
+msgstr "Nincs zárolva"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Nem támogatott védelem"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Ismeretlen rendszerhiba"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Érvénytelen OID karakterlánc"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Érvénytelen S-kifejezés"
+
+#, fuzzy
+#| msgid "Missing certificate"
+msgid "Missing DNS query packet"
+msgstr "Hiányzó tanúsítvány"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Visszafejtés sikertelen"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Időtúllépés"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1400,13 +1508,84 @@ msgstr "Fájl vége"
 msgid "Unknown error code"
 msgstr "Ismeretlen hibakód"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Használat: %s GPG-ERROR […]\n"
+#, fuzzy
+msgid "argument not expected"
+msgstr "Írom a titkos kulcsot a %s állományba.\n"
+
+#, fuzzy
+msgid "read error"
+msgstr "állományolvasási hiba"
+
+#, fuzzy
+msgid "keyword too long"
+msgstr "A sor túl hosszú!\n"
+
+#, fuzzy
+msgid "missing argument"
+msgstr "érvénytelen argumentum"
+
+#, fuzzy
+#| msgid "invalid armor"
+msgid "invalid argument"
+msgstr "érvénytelen páncél"
+
+#, fuzzy
+msgid "invalid command"
+msgstr "Egymásnak ellentmondó parancsok!\n"
+
+#, fuzzy
+msgid "invalid alias definition"
+msgstr "Érvénytelen import opciók!\n"
+
+#, fuzzy
+msgid "out of core"
+msgstr "nem feldolgozott"
+
+#, fuzzy
+msgid "invalid option"
+msgstr "Érvénytelen import opciók!\n"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "Érvénytelen import opciók!\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "Érvénytelen parancs! (Próbálja a súgót: \"help\".)\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, fuzzy
+msgid "out of core\n"
+msgstr "nem feldolgozott"
+
+#, fuzzy, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "Érvénytelen import opciók!\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "figyelmeztetés: nem sikerült felismerni: %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Használat: %s GPG-ERROR […]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1417,11 +1596,6 @@ msgstr "%s: figyelmeztetés: nem sikerült felismerni: %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Érvénytelen adatok"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Visszafejtés sikertelen"
 
 #, fuzzy
 #~| msgid "General error"

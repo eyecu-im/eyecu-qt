@@ -34,10 +34,12 @@
 # include <windows.h>
 # include <time.h>
 #else
-# include <pthread.h>
+# ifdef USE_POSIX_THREADS
+#  include <pthread.h>
+# endif
 #endif
 
-#define PGM "t-lock"
+#define PGM "t-poll"
 
 #include "t-common.h"
 
@@ -122,19 +124,22 @@ consumer_thread (void *argaddr)
 static void
 launch_thread (THREAD_RET_TYPE (*fnc)(void *), struct thread_arg *th)
 {
+  int fd;
+
+  th->stop_me = 0;
+  fd = es_fileno (th->stream);
 #ifdef _WIN32
 
   th->thread = CreateThread (NULL, 0, fnc, th, 0, NULL);
   if (!th->thread)
     die ("creating thread '%s' failed: rc=%d", th->name, (int)GetLastError ());
-  show ("thread '%s' launched (fd=%d)\n", th->name, es_fileno (th->stream));
+  show ("thread '%s' launched (fd=%d)\n", th->name, fd);
 
 #elif USE_POSIX_THREADS
 
-  th->stop_me = 0;
   if (pthread_create (&th->thread, NULL, fnc, th))
     die ("creating thread '%s' failed: %s\n", th->name, strerror (errno));
-  show ("thread '%s' launched (fd=%d)\n", th->name, es_fileno (th->stream));
+  show ("thread '%s' launched (fd=%d)\n", th->name, fd);
 
 # else /* no thread support */
 
@@ -186,14 +191,14 @@ create_pipe (estream_t *r_in, estream_t *r_out)
 
   show ("created pipe [%d, %d]\n", filedes[0], filedes[1]);
 
-  *r_in = es_fdopen (filedes[0], "r");
+  *r_in = es_fdopen (filedes[0], "r,pollable");
   if (!*r_in)
     {
       err = gpg_error_from_syserror ();
       die ("error creating a stream for a pipe: %s\n", gpg_strerror (err));
     }
 
-  *r_out = es_fdopen (filedes[1], "w");
+  *r_out = es_fdopen (filedes[1], "w,pollable");
   if (!*r_out)
     {
       err = gpg_error_from_syserror ();
@@ -236,7 +241,57 @@ test_poll (void)
           fail ("gpgrt_poll unexpectedly timed out\n");
           continue;
         }
+
       show ("gpgrt_poll detected %d events\n", ret);
+      if (debug)
+        show ("gpgrt_poll: r=%d"
+              " 0:%c%c%c%c%c%c%c%c%c%c%c%c"
+              " 1:%c%c%c%c%c%c%c%c%c%c%c%c"
+              " 2:%c%c%c%c%c%c%c%c%c%c%c%c"
+              "\n",
+              ret,
+              fds[0].want_read?  'r':'-',
+              fds[0].want_write? 'w':'-',
+              fds[0].want_oob?   'o':'-',
+              fds[0].want_rdhup? 'h':'-',
+              fds[0].ignore?     '!':'=',
+              fds[0].got_read?   'r':'-',
+              fds[0].got_write?  'w':'-',
+              fds[0].got_oob?    'o':'-',
+              fds[0].got_rdhup?  'h':'-',
+              fds[0].got_hup?    'H':' ',
+              fds[0].got_err?    'e':' ',
+              fds[0].got_nval?   'n':' ',
+
+              fds[1].want_read?  'r':'-',
+              fds[1].want_write? 'w':'-',
+              fds[1].want_oob?   'o':'-',
+              fds[1].want_rdhup? 'h':'-',
+              fds[1].ignore?     '!':'=',
+              fds[1].got_read?   'r':'-',
+              fds[1].got_write?  'w':'-',
+              fds[1].got_oob?    'o':'-',
+              fds[1].got_rdhup?  'h':'-',
+              fds[1].got_hup?    'H':' ',
+              fds[1].got_err?    'e':' ',
+              fds[1].got_nval?   'n':' ',
+
+              fds[2].want_read?  'r':'-',
+              fds[2].want_write? 'w':'-',
+              fds[2].want_oob?   'o':'-',
+              fds[2].want_rdhup? 'h':'-',
+              fds[2].ignore?     '!':'=',
+              fds[2].got_read?   'r':'-',
+              fds[2].got_write?  'w':'-',
+              fds[2].got_oob?    'o':'-',
+              fds[2].got_rdhup?  'h':'-',
+              fds[2].got_hup?    'H':' ',
+              fds[2].got_err?    'e':' ',
+              fds[2].got_nval?   'n':' '
+              );
+      else
+        show ("gpgrt_poll detected %d events\n", ret);
+
       if (fds[0].got_read)
         {
           /* Read from the producer.  */

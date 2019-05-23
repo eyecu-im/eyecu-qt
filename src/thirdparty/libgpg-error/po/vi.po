@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.7\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2013-02-23 20:10+0100\n"
+"PO-Revision-Date: 2018-03-21 19:04+0100\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <vi-VN@googlegroups.com>\n"
 "Language: vi\n"
@@ -125,7 +125,7 @@ msgstr "Cụm từ mật khẩu sai"
 msgid "Invalid cipher algorithm"
 msgstr "Thuật toán mật mã không hợp lệ"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Vòng khoá đã mở"
 
 msgid "Invalid packet"
@@ -754,6 +754,9 @@ msgstr "Có số thập lục lẻ trong biểu thức S"
 msgid "Bad octal character in S-expression"
 msgstr "Ký tự bát phân sai trong biểu thức S"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -860,7 +863,7 @@ msgstr ""
 msgid "Bad certificate verify message in handshake"
 msgstr ""
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr ""
 
 msgid "Bad client hello message in handshake"
@@ -869,7 +872,7 @@ msgstr ""
 msgid "Bad server hello message in handshake"
 msgstr ""
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr ""
 
 msgid "Bad finished message in handshake"
@@ -977,6 +980,108 @@ msgstr "Lỗi tham số IPC"
 
 msgid "Unknown IPC inquire"
 msgstr "Yêu cầu IPC không rõ"
+
+#, fuzzy
+msgid "Crypto engine too old"
+msgstr "Cơ chế mật mã không hợp lệ"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Giá trị trùng"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Chứng nhận quá mới"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Đã cung cấp một đối tượng quá ngắn"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Tên không rõ"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Mã thao tác không hợp lệ"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Tên không rõ"
+
+#, fuzzy
+msgid "Not authenticated"
+msgstr "Không phải bị khoá"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Sự bảo vệ không được hỗ trợ"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Gặp lỗi hệ thống không rõ"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Chuỗi OID không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Biểu thức S không hợp lệ"
+
+#, fuzzy
+msgid "Missing DNS query packet"
+msgstr "Chứng nhận còn thiếu"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Lỗi giải mật mã"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Quá giờ"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1391,13 +1496,90 @@ msgstr "Kết thúc tập tin"
 msgid "Unknown error code"
 msgstr "Mã lỗi không rõ"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Sử dụng: %s GPG-ERROR [...]\n"
+#, fuzzy
+#| msgid "Data not encrypted"
+msgid "argument not expected"
+msgstr "Chưa mật mã dữ liệu"
+
+#, fuzzy
+#| msgid "IPC read error"
+msgid "read error"
+msgstr "Lỗi đọc IPC"
+
+#, fuzzy
+#| msgid "Line too long"
+msgid "keyword too long"
+msgstr "Dòng quá dài"
+
+#, fuzzy
+#| msgid "Missing value"
+msgid "missing argument"
+msgstr "Thiếu giá trị"
+
+#, fuzzy
+#| msgid "Invalid argument"
+msgid "invalid argument"
+msgstr "Đối số không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid card"
+msgid "invalid command"
+msgstr "Thẻ không hợp lệ"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "invalid alias definition"
+msgstr "Chuỗi OID không hợp lệ"
+
+msgid "out of core"
+msgstr ""
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "invalid option"
+msgstr "Mã thao tác không hợp lệ"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: cảnh báo : không thể nhận ra %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr ""
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr ""
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr ""
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr ""
+
+msgid "out of core\n"
+msgstr ""
+
+#, fuzzy, c-format
+#| msgid "Invalid operation code"
+msgid "invalid option \"%.50s\"\n"
+msgstr "Mã thao tác không hợp lệ"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "cảnh báo : không thể nhận ra %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Sử dụng: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1408,11 +1590,6 @@ msgstr "%s: cảnh báo : không thể nhận ra %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Dữ liệu không hợp lệ"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Lỗi giải mật mã"
 
 #, fuzzy
 #~| msgid "General error"

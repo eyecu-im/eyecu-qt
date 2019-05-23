@@ -15,6 +15,7 @@
  *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program; if not, see <https://www.gnu.org/licenses/>.
+ * SPDX-License-Identifier: LGPL-2.1+
  *
  * Note: This file should be updated manually and the ordinals shall
  * never be changed.  Also check gpg-error.vers and visibility.h.
@@ -149,5 +150,83 @@ EXPORTS
  gpgrt_w32_iconv_close        @110
  gpgrt_w32_iconv              @111
 #endif
+
+ gpgrt_get_syscall_clamp      @112
+
+ gpgrt_b64dec_start           @113
+ gpgrt_b64dec_proc            @114
+ gpgrt_b64dec_finish          @115
+
+ gpgrt_get_errorcount         @116
+ gpgrt_inc_errorcount         @117
+ gpgrt_log_set_sink           @118
+ gpgrt_log_set_socket_dir_cb  @119
+ gpgrt_log_set_pid_suffix_cb  @120
+ gpgrt_log_set_prefix         @121
+ gpgrt_log_get_prefix         @122
+ gpgrt_log_test_fd            @123
+ gpgrt_log_get_fd             @124
+ gpgrt_log_get_stream         @125
+ gpgrt_log                    @126
+ gpgrt_logv                   @127
+ gpgrt_logv_prefix            @128
+ gpgrt_log_string             @129
+ gpgrt_log_bug                @130
+ gpgrt_log_fatal              @131
+ gpgrt_log_error              @132
+ gpgrt_log_info               @133
+ gpgrt_log_debug              @134
+ gpgrt_log_debug_string       @135
+ gpgrt_log_printf             @136
+ gpgrt_log_printhex           @137
+ gpgrt_log_clock              @138
+ gpgrt_log_flush              @139
+ _gpgrt_log_assert            @140
+
+ gpgrt_realloc                @141
+ gpgrt_malloc                 @142
+ gpgrt_calloc                 @143
+ gpgrt_strdup                 @144
+ gpgrt_strconcat              @145
+
+ gpgrt_w32_reg_query_string   @146
+
+ gpgrt_getenv                 @147
+ gpgrt_setenv                 @148
+ gpgrt_mkdir                  @149
+ gpgrt_chdir                  @150
+ gpgrt_getcwd                 @151
+
+;; API not yet finished for:
+;; gpgrt_make_pipe              @152
+;; gpgrt_spawn_process          @153
+;; gpgrt_spawn_process_fd       @154
+;; gpgrt_spawn_process_detached @155
+;; gpgrt_wait_process           @156
+;; gpgrt_wait_processes         @157
+;; gpgrt_kill_process           @158
+;; gpgrt_release_process        @159
+
+ gpgrt_argparse               @160
+ gpgrt_usage                  @161
+ gpgrt_strusage               @162
+ gpgrt_set_strusage           @163
+ gpgrt_set_usage_outfnc       @164
+ gpgrt_set_fixed_string_mapper  @165
+
+ gpgrt_b64enc_start           @166
+ gpgrt_b64enc_write           @167
+ gpgrt_b64enc_finish          @168
+
+ gpgrt_cmp_version            @169
+
+ gpgrt_ftruncate              @170
+ gpgrt_fprintf_sf             @171
+ gpgrt_fprintf_sf_unlocked    @172
+
+ gpgrt_w32_override_locale    @173
+
+ gpgrt_add_emergency_cleanup  @174
+ gpgrt_abort                  @175
 
 ;; end of file with public symbols for Windows.

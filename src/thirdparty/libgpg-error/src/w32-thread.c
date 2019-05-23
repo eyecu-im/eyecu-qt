@@ -29,16 +29,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include <gpg-error.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "gpgrt-int.h"
 #include "thread.h"
 
 
 gpg_err_code_t
 _gpgrt_yield (void)
 {
+  _gpgrt_pre_syscall ();
   Sleep (0);
+  _gpgrt_post_syscall ();
   return 0;
 }

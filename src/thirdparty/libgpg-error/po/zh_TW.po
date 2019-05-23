@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.17\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 21:25+0800\n"
+"PO-Revision-Date: 2018-03-21 19:04+0100\n"
 "Last-Translator: Jedi Lin <Jedi@Jedi.org>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "Language: zh_TW\n"
@@ -127,7 +127,7 @@ msgstr "不良的密語"
 msgid "Invalid cipher algorithm"
 msgstr "無效的編密演算法"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "金鑰鏈開啟"
 
 msgid "Invalid packet"
@@ -730,6 +730,9 @@ msgstr "S-表示式中有奇怪的十六進制數字"
 msgid "Bad octal character in S-expression"
 msgstr "S-表示式中有不良的八進制字符"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -815,7 +818,7 @@ msgstr "交握中的不良憑證請求訊息"
 msgid "Bad certificate verify message in handshake"
 msgstr "交握中的不良憑證驗證訊息"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "交握中的不良變更密碼法訊息"
 
 msgid "Bad client hello message in handshake"
@@ -824,7 +827,7 @@ msgstr "交握中的不良用戶端問候訊息"
 msgid "Bad server hello message in handshake"
 msgstr "交握中的不良伺服器問候訊息"
 
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "交握中的不良伺服器問候完成訊息"
 
 msgid "Bad finished message in handshake"
@@ -928,6 +931,111 @@ msgstr "IPC 參數錯誤"
 
 msgid "Unknown IPC inquire"
 msgstr "未知的 IPC 查詢"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "沒有密碼法引擎"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "重複的值"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "憑證太年輕"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "提供的物件太短"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "無效的名稱"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "無效的操作碼"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "無效的名稱"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "未啟用"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "未支援的保護"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "未知的系統錯誤"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "無效的 OID 字串"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "無效的 S-表示式"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "遺失發行者憑證"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "解密失敗"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "逾時"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1346,13 +1454,73 @@ msgstr "檔案結尾"
 msgid "Unknown error code"
 msgstr "未知的錯誤代碼"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "用法: %s GPG-ERROR [...]\n"
+msgid "argument not expected"
+msgstr "沒料到有引數"
+
+msgid "read error"
+msgstr "讀取錯誤"
+
+msgid "keyword too long"
+msgstr "關鍵字太長"
+
+msgid "missing argument"
+msgstr "無效的引數"
+
+msgid "invalid argument"
+msgstr "無效的引數"
+
+msgid "invalid command"
+msgstr "無效的指令"
+
+msgid "invalid alias definition"
+msgstr "無效的別名定義"
+
+msgid "out of core"
+msgstr "超出核心"
+
+msgid "invalid option"
+msgstr "無效的選項"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: 警告: 無法辨識 %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "\"%.50s\" 選項遺失了引數\n"
+
+#, c-format
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "選項 \"%.50s\" 的引數無效\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "\"%.50s\" 選項沒料到會有引數\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "無效的指令 \"%.50s\"\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" 選項不明確\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "\"%.50s\" 指令不明確\n"
+
+msgid "out of core\n"
+msgstr "超出核心\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "無效的選項 \"%.50s\"\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "警告: 無法辨識 %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "用法: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1363,11 +1531,6 @@ msgstr "%s: 警告: 無法辨識 %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "無效的資料"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "解密失敗"
 
 #, fuzzy
 #~| msgid "General error"

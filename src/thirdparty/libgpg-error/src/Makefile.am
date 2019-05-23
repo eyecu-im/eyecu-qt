@@ -15,11 +15,14 @@
 #
 # You should have received a copy of the GNU Lesser General Public
 # License along with this program; if not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-2.1+
 
+
+#
 # We distribute the generated sources err-sources.h and err-codes.h,
 # because they are needed to build the po directory, and they don't
 # depend on the configuration anyway.
-
+#
 
 if HAVE_W32CE_SYSTEM
 gpg_extra_headers = gpg-extra/errno.h
@@ -42,18 +45,17 @@ endif
 # Distributed lock object definitions for cross compilation.
 lock_obj_pub = \
         syscfg/lock-obj-pub.aarch64-unknown-linux-gnu.h     \
+        syscfg/lock-obj-pub.aarch64-unknown-linux-gnu_ilp32.h \
 	syscfg/lock-obj-pub.aarch64-apple-darwin.h          \
         syscfg/lock-obj-pub.alpha-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h \
         syscfg/lock-obj-pub.arm-unknown-linux-gnueabi.h     \
-        syscfg/lock-obj-pub.arm-unknown-linux-gnueabihf.h   \
 	syscfg/lock-obj-pub.arm-apple-darwin.h              \
-        syscfg/lock-obj-pub.armv5-unknown-linux-musleabi.h  \
-        syscfg/lock-obj-pub.armv6-unknown-linux-musleabihf.h \
         syscfg/lock-obj-pub.hppa-unknown-linux-gnu.h        \
-        syscfg/lock-obj-pub.i686-pc-gnu.h                   \
-        syscfg/lock-obj-pub.i686-pc-kfreebsd-gnu.h          \
-        syscfg/lock-obj-pub.i686-pc-linux-gnu.h             \
+	syscfg/lock-obj-pub.i386-apple-darwin.h             \
+        syscfg/lock-obj-pub.i686-unknown-gnu.h              \
+        syscfg/lock-obj-pub.i686-unknown-kfreebsd-gnu.h     \
+        syscfg/lock-obj-pub.i686-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.m68k-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips-unknown-linux-gnu.h        \
         syscfg/lock-obj-pub.mips64el-unknown-linux-gnuabi64.h \
@@ -63,49 +65,69 @@ lock_obj_pub = \
         syscfg/lock-obj-pub.powerpc-unknown-linux-gnu.h     \
         syscfg/lock-obj-pub.powerpc64-unknown-linux-gnu.h   \
 	syscfg/lock-obj-pub.powerpc64le-unknown-linux-gnu.h \
-        syscfg/lock-obj-pub.s390x-ibm-linux-gnu.h           \
+	syscfg/lock-obj-pub.powerpc-unknown-linux-gnuspe.h  \
+	syscfg/lock-obj-pub.riscv64-unknown-linux-gnu.h     \
+	syscfg/lock-obj-pub.riscv32-unknown-linux-gnu.h     \
+        syscfg/lock-obj-pub.s390x-unknown-linux-gnu.h       \
+        syscfg/lock-obj-pub.sh3-unknown-linux-gnu.h         \
         syscfg/lock-obj-pub.sh4-unknown-linux-gnu.h         \
         syscfg/lock-obj-pub.sparc-unknown-linux-gnu.h       \
         syscfg/lock-obj-pub.sparc64-unknown-linux-gnu.h     \
-        syscfg/lock-obj-pub.x86_64-pc-kfreebsd-gnu.h        \
-        syscfg/lock-obj-pub.x86_64-pc-linux-gnu.h           \
-        syscfg/lock-obj-pub.x86_64-pc-linux-gnux32.h        \
-        syscfg/lock-obj-pub.x86_64-pc-linux-musl.h          \
+	syscfg/lock-obj-pub.x86_64-apple-darwin.h           \
+        syscfg/lock-obj-pub.x86_64-unknown-kfreebsd-gnu.h   \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-gnu.h      \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-gnux32.h   \
+        syscfg/lock-obj-pub.x86_64-unknown-linux-musl.h     \
+	syscfg/lock-obj-pub.tilegx-unknown-linux-gnu.h      \
+	syscfg/lock-obj-pub.ia64-unknown-linux-gnu.h        \
 	syscfg/lock-obj-pub.mingw32.h
 
 
 lib_LTLIBRARIES = libgpg-error.la
-nodist_include_HEADERS = gpg-error.h
+nodist_include_HEADERS = gpg-error.h gpgrt.h
+dist_bin_SCRIPTS = gpgrt-config
 bin_SCRIPTS = gpg-error-config
 m4datadir = $(datadir)/aclocal
-m4data_DATA = gpg-error.m4
+m4data_DATA = gpg-error.m4 gpgrt.m4
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = gpg-error.pc
 
 EXTRA_DIST = mkstrtable.awk err-sources.h.in err-codes.h.in \
 	mkerrnos.awk errnos.in README \
 	mkerrcodes.awk mkerrcodes1.awk mkerrcodes2.awk mkerrcodes.c \
 	mkheader.c gpg-error.h.in mkw32errmap.c w32-add.h w32ce-add.h \
-	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 \
+	err-sources.h err-codes.h gpg-error-config.in gpg-error.m4 gpgrt.m4 \
 	gpg-error.vers gpg-error.def.in \
         versioninfo.rc.in gpg-error.w32-manifest.in \
+	gpg-error-config-test.sh gpg-error.pc.in \
 	$(lock_obj_pub)
 
-BUILT_SOURCES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
-	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h \
+BUILT_SOURCES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h \
+	code-to-errno.h code-from-errno.h \
+	err-sources-sym.h err-codes-sym.h errnos-sym.h gpg-error.h gpgrt.h \
 	gpg-error.def mkw32errmap.map.c
 
 tmp_files = _mkerrcodes.h _gpg-error.def.h mkw32errmap.tab.h mkw32errmap.map.c
 
-CLEANFILES = err-sources.h err-codes.h code-to-errno.h code-from-errno.h \
-	gpg-error.h mkerrcodes mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
+CLEANFILES = code-to-errno.h code-from-errno.h \
+	gpg-error.h gpgrt.h \
+        mkerrcodes$(EXEEXT_FOR_BUILD) mkerrcodes.h gpg-error.def mkw32errmap.tab.h \
 	mkw32errmap.map.c err-sources-sym.h err-codes-sym.h errnos-sym.h \
-	gpg-extra/errno.h mkheader $(tmp_files) lock-obj-pub.native.h
+	gpg-extra/errno.h mkheader$(EXEEXT_FOR_BUILD) \
+	gpg-error-config gpg-error-config-test.log \
+	$(tmp_files) lock-obj-pub.native.h
 
+MAINTAINERCLEANFILES = $(srcdir)/err-sources.h $(srcdir)/err-codes.h
+
+TESTS = gpg-error-config-test.sh
 
 #
 # {{{ Begin Windows part
 #
 if HAVE_W32_SYSTEM
-arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c w32-iconv.c
+arch_sources = w32-gettext.c w32-lock.c w32-lock-obj.h w32-thread.c \
+	       w32-iconv.c w32-estream.c w32-reg.c spawn-w32.c
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
             -DLOCALEDIR=\"$(localedir)\" $(AM_CPPFLAGS) $(CPPFLAGS)
 LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)
@@ -135,6 +157,7 @@ uninstall-def-file:
 
 libgpg_error_la_DEPENDENCIES = $(gpg_error_res) gpg-error.def
 intllibs =
+socklibs = -lws2_32
 
 #
 # }}} End Windows part
@@ -143,7 +166,7 @@ else
 #
 # {{{ Begin Unix part
 #
-arch_sources = posix-lock.c posix-lock-obj.h posix-thread.c
+arch_sources = posix-lock.c posix-lock-obj.h posix-thread.c spawn-posix.c
 gpg_error_res =
 no_undefined =
 export_symbols =
@@ -153,6 +176,7 @@ install-def-file:
 uninstall-def-file:
 
 intllibs = @LTLIBINTL@
+socklibs =
 
 endif
 #
@@ -174,7 +198,14 @@ libgpg_error_la_SOURCES = gettext.h $(arch_sources) \
 	gpgrt-int.h init.c init.h version.c lock.h thread.h \
 	estream.c estream-printf.c estream-printf.h \
 	strsource.c strerror.c code-to-errno.c code-from-errno.c \
-	visibility.c visibility.h
+	visibility.c visibility.h \
+	sysutils.c \
+	syscall-clamp.c \
+	logging.c \
+	b64dec.c b64enc.c \
+	argparse.c
+
+
 nodist_libgpg_error_la_SOURCES = gpg-error.h
 
 # libgpg_error_la_DEPENDENCIES = \
@@ -184,11 +215,12 @@ nodist_libgpg_error_la_SOURCES = gpg-error.h
 # without the extra_cppflags because they may include am -idirafter
 # which is not supported by the RC compiler.
 libgpg_error_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(LIBTHREAD)
+libgpg_error_la_LIBADD = $(gpg_error_res) $(intllibs) $(socklibs) $(LIBTHREAD)
 
 gpg_error_SOURCES = strsource-sym.c strerror-sym.c gpg-error.c
-gpg_error_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
-gpg_error_LDADD = ./libgpg-error.la @LTLIBINTL@
+gpg_error_CPPFLAGS = -DPKGDATADIR=\"$(pkgdatadir)\" \
+                     -DLOCALEDIR=\"$(localedir)\" $(extra_cppflags)
+gpg_error_LDADD = libgpg-error.la $(LTLIBINTL)
 
 # We build err-sources.h and err-codes.h in the source directory.
 # This is needed because gettext does only look into the source
@@ -226,11 +258,11 @@ if HAVE_W32CE_SYSTEM
 mkw32errmap.tab.h: Makefile mkw32errmap.c
 	$(CPP) -DRESOLVE_MACROS $(srcdir)/mkw32errmap.c | \
 	      grep '{&mkw32errmap_marker' >$@
-mkw32errmap.map.c: mkw32errmap
-	./mkw32errmap --map > $@
-gpg-extra/errno.h: mkw32errmap
+mkw32errmap.map.c: mkw32errmap$(EXEEXT_FOR_BUILD)
+	./mkw32errmap$(EXEEXT_FOR_BUILD) --map > $@
+gpg-extra/errno.h: mkw32errmap$(EXEEXT_FOR_BUILD)
 	-$(MKDIR_P) gpg-extra
-	./mkw32errmap > $@
+	./mkw32errmap$(EXEEXT_FOR_BUILD) > $@
 else
 mkw32errmap.map.c:
 	echo "/*dummy*/" > $@
@@ -246,26 +278,26 @@ gpg-error.def: Makefile gpg-error.def.in
 
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.
-mkerrcodes: mkerrcodes.c mkerrcodes.h Makefile
+mkerrcodes$(EXEEXT_FOR_BUILD): mkerrcodes.c mkerrcodes.h Makefile
 	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkerrcodes.c
 
 if HAVE_W32CE_SYSTEM
 # It is correct to use $(CC_FOR_BUILD) here.  We want to run the
 # program at build time.
-mkw32errmap: mkw32errmap.c mkw32errmap.tab.h Makefile
+mkw32errmap$(EXEEXT_FOR_BUILD): mkw32errmap.c mkw32errmap.tab.h Makefile
 	$(CC_FOR_BUILD) -I. -I$(srcdir) -o $@ $(srcdir)/mkw32errmap.c
 endif
 
-code-from-errno.h: mkerrcodes Makefile
-	./mkerrcodes | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
+code-from-errno.h: mkerrcodes$(EXEEXT_FOR_BUILD) Makefile
+	./mkerrcodes$(EXEEXT_FOR_BUILD) | $(AWK) -f $(srcdir)/mkerrcodes2.awk >$@
 
 errnos-sym.h: Makefile mkstrtable.awk errnos.in
 	$(AWK) -f $(srcdir)/mkstrtable.awk -v textidx=2 -v nogettext=1 \
-		-v prefix=GPG_ERR_ -v namespace=errnos_ \
+		-v prefix=GPG_ERR_ -v pkg_namespace=errnos_ \
 		$(srcdir)/errnos.in >$@
 
 
-mkheader: mkheader.c Makefile
+mkheader$(EXEEXT_FOR_BUILD): mkheader.c Makefile
 	$(CC_FOR_BUILD) -g -O0 -I. -I$(srcdir) -o $@ $(srcdir)/mkheader.c
 
 parts_of_gpg_error_h = 	 	\
@@ -282,26 +314,37 @@ parts_of_gpg_error_h = 	 	\
 if FORCE_USE_SYSCFG
 pre_mkheader_cmds = if test -f lock-obj-pub.native.h; \
                     then rm lock-obj-pub.native.h; fi
-else
-if HAVE_W32_SYSTEM
-pre_mkheader_cmds = -rm lock-obj-pub.native.h 2>/dev/null
+mkheader_opts = --cross
 else
 pre_mkheader_cmds = :
+mkheader_opts =
 parts_of_gpg_error_h += ./lock-obj-pub.native.h
 
-./lock-obj-pub.native.h: Makefile gen-posix-lock-obj posix-lock-obj.h
+./lock-obj-pub.native.h: Makefile gen-posix-lock-obj$(EXEEXT) posix-lock-obj.h
 	./gen-posix-lock-obj >$@
-endif
 endif
 
 # We also depend on versioninfo.rc because that is build by
 # config.status and thus has up-to-date version numbers.
-gpg-error.h: Makefile mkheader $(parts_of_gpg_error_h) \
+gpg-error.h: Makefile mkheader$(EXEEXT_FOR_BUILD) $(parts_of_gpg_error_h) \
              versioninfo.rc ../config.h
 	$(pre_mkheader_cmds)
-	./mkheader $(host_os) $(host_triplet)  $(srcdir)/gpg-error.h.in \
+	./mkheader$(EXEEXT_FOR_BUILD) $(mkheader_opts)       \
+                   $(host_triplet)  $(srcdir)/gpg-error.h.in \
                    ../config.h $(PACKAGE_VERSION) $(VERSION_NUMBER) >$@
 
+gpgrt.h: gpg-error.h
+	cp gpg-error.h gpgrt.h
+
+gpg-error-config: gpgrt-config gpg-error-config-old
+	@echo $(ECHO_N) "Confirm gpg-error-config works... $(ECHO_C)"
+	@if $(srcdir)/gpg-error-config-test.sh --old-new; then \
+	  echo "good";                                         \
+	else                                                   \
+	  echo "no";                                           \
+	  echo "***  Please report to <https://bugs.gnupg.org> with gpg-error-config-test.log"; \
+	fi
+	cp gpg-error-config-old $@
 
 install-data-local:
 if HAVE_W32CE_SYSTEM

@@ -1,9 +1,7 @@
 *.lo
 *.o
-.DS_Store
 .deps/
 .libs/
-build-*/
 po/*.gmo
 po/messages.mo
 Makefile.in
@@ -50,3 +48,4 @@ src/err-sources.h
 /doc/gpgrt.info
 /doc/stamp-vti
 /doc/version.texi
+/VERSION

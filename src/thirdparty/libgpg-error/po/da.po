@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgpg-error 1.10\n"
 "Report-Msgid-Bugs-To: translations@gnupg.org\n"
-"PO-Revision-Date: 2014-11-17 20:08+0100\n"
+"PO-Revision-Date: 2018-03-21 19:01+0100\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
 "Language: da\n"
@@ -127,7 +127,7 @@ msgstr "Ødelagt adgangsfrase"
 msgid "Invalid cipher algorithm"
 msgstr "Ugyldig chifferalgoritme"
 
-msgid "Keyring open"
+msgid "Cannot open keyring"
 msgstr "Nøglering åben"
 
 msgid "Invalid packet"
@@ -731,6 +731,9 @@ msgstr "Ulige hexadecimalt tal i S-udtryk"
 msgid "Bad octal character in S-expression"
 msgstr "Ødelagt oktalt tegn i S-udtryk"
 
+msgid "All subkeys are expired or revoked"
+msgstr ""
+
 #, fuzzy
 #| msgid "Data not encrypted"
 msgid "Database is corrupted"
@@ -816,7 +819,7 @@ msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 msgid "Bad certificate verify message in handshake"
 msgstr "Besked om ødelagt certifikatforespørgsel i håndtrykket"
 
-msgid "Bad change cipher messsage in handshake"
+msgid "Bad change cipher message in handshake"
 msgstr "Ødelagt »ændr chiffer«-besked i håndtrykket"
 
 msgid "Bad client hello message in handshake"
@@ -826,7 +829,7 @@ msgid "Bad server hello message in handshake"
 msgstr "Besked om ødelagt serverhilsen i håndtrykket"
 
 # engelsk fejl
-msgid "Bad server hello done message in hanshake"
+msgid "Bad server hello done message in handshake"
 msgstr "Ødelagt »afsluttet serverhilsen«-besked i håndtrykket"
 
 msgid "Bad finished message in handshake"
@@ -930,6 +933,111 @@ msgstr "IPC-parameterfejl"
 
 msgid "Unknown IPC inquire"
 msgstr "Ukendt IPC-inquire"
+
+#, fuzzy
+#| msgid "No crypto engine"
+msgid "Crypto engine too old"
+msgstr "Ingen cryptomotor"
+
+msgid "Screen or window too small"
+msgstr ""
+
+msgid "Screen or window too large"
+msgstr ""
+
+msgid "Required environment variable not set"
+msgstr ""
+
+msgid "User ID already exists"
+msgstr ""
+
+msgid "Name already exists"
+msgstr ""
+
+#, fuzzy
+#| msgid "Duplicated value"
+msgid "Duplicated name"
+msgstr "Duplikeret værdi"
+
+#, fuzzy
+#| msgid "Certificate too young"
+msgid "Object is too young"
+msgstr "Certifikat for ungt"
+
+#, fuzzy
+#| msgid "Provided object is too short"
+msgid "Object is too old"
+msgstr "Angivet objekt er for kort"
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Unknown flag"
+msgstr "Ukendt navn"
+
+#, fuzzy
+#| msgid "Invalid operation code"
+msgid "Invalid execution order"
+msgstr "Ugyldig handlingskode"
+
+msgid "Already fetched"
+msgstr ""
+
+msgid "Try again later"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown name"
+msgid "Wrong name"
+msgstr "Ukendt navn"
+
+#, fuzzy
+#| msgid "Not enabled"
+msgid "Not authenticated"
+msgstr "Ikke aktiveret"
+
+#, fuzzy
+#| msgid "Unsupported protection"
+msgid "Bad authentication"
+msgstr "Ej understøttet beskyttelse"
+
+msgid "System bug detected"
+msgstr ""
+
+#, fuzzy
+#| msgid "Unknown system error"
+msgid "Unknown DNS error"
+msgstr "Ukendt systemfejl"
+
+#, fuzzy
+#| msgid "Invalid OID string"
+msgid "Invalid DNS section"
+msgstr "Ugyldig OID-streng"
+
+#, fuzzy
+#| msgid "Invalid S-expression"
+msgid "Invalid textual address form"
+msgstr "Ugyldigt S-udtryk"
+
+#, fuzzy
+#| msgid "Missing issuer certificate"
+msgid "Missing DNS query packet"
+msgstr "Manglende udstedercertfikat"
+
+msgid "Missing DNS answer packet"
+msgstr ""
+
+msgid "Connection closed in DNS"
+msgstr ""
+
+#, fuzzy
+#| msgid "Decryption failed"
+msgid "Verification failed in DNS"
+msgstr "Afkryptering mislykkedes"
+
+#, fuzzy
+#| msgid "Timeout"
+msgid "DNS Timeout"
+msgstr "Tidsudløb"
 
 #, fuzzy
 #| msgid "General IPC error"
@@ -1348,13 +1456,76 @@ msgstr "Slutning på fil"
 msgid "Unknown error code"
 msgstr "Ukendt fejlkode"
 
-#, c-format
-msgid "Usage: %s GPG-ERROR [...]\n"
-msgstr "Brug: %s GPG-ERROR [...]\n"
+msgid "argument not expected"
+msgstr "parameter var ikke forventet"
+
+msgid "read error"
+msgstr "læsefejl"
+
+msgid "keyword too long"
+msgstr "nøgleord er for langt"
+
+msgid "missing argument"
+msgstr "manglende parameter"
+
+#, fuzzy
+#| msgid "invalid value\n"
+msgid "invalid argument"
+msgstr "ugyldig værdi\n"
+
+msgid "invalid command"
+msgstr "ugyldig kommando"
+
+msgid "invalid alias definition"
+msgstr "ugyldig aliasdefinition"
+
+msgid "out of core"
+msgstr "ikke nok kerne"
+
+msgid "invalid option"
+msgstr "ugyldig indstilling"
 
 #, c-format
-msgid "%s: warning: could not recognize %s\n"
-msgstr "%s: advarsel: kunne ikke genkende %s\n"
+msgid "missing argument for option \"%.50s\"\n"
+msgstr "manglende parameter for indstilling »%.50s«\n"
+
+#, fuzzy, c-format
+#| msgid "missing argument for option \"%.50s\"\n"
+msgid "invalid argument for option \"%.50s\"\n"
+msgstr "manglende parameter for indstilling »%.50s«\n"
+
+#, c-format
+msgid "option \"%.50s\" does not expect an argument\n"
+msgstr "tilvalg »%.50s« forventer ikke et argument\n"
+
+#, c-format
+msgid "invalid command \"%.50s\"\n"
+msgstr "ugyldig kommando »%.50s«\n"
+
+#, c-format
+msgid "option \"%.50s\" is ambiguous\n"
+msgstr "tilvalg »%.50s« er tvetydigt\n"
+
+#, c-format
+msgid "command \"%.50s\" is ambiguous\n"
+msgstr "kommando »%.50s« er tvetydig\n"
+
+msgid "out of core\n"
+msgstr "uden for kerne\n"
+
+#, c-format
+msgid "invalid option \"%.50s\"\n"
+msgstr "ugyldigt tilvalg »%.50s«\n"
+
+msgid "Please report bugs to <https://bugs.gnupg.org>.\n"
+msgstr ""
+
+#, c-format
+msgid "warning: could not recognize %s\n"
+msgstr "advarsel: kunne ikke genkende %s\n"
+
+#~ msgid "Usage: %s GPG-ERROR [...]\n"
+#~ msgstr "Brug: %s GPG-ERROR [...]\n"
 
 #, fuzzy
 #~| msgid "Resources exhausted"
@@ -1365,11 +1536,6 @@ msgstr "%s: advarsel: kunne ikke genkende %s\n"
 #~| msgid "Invalid data"
 #~ msgid "LCUP Invalid data"
 #~ msgstr "Ugyldige data"
-
-#, fuzzy
-#~| msgid "Decryption failed"
-#~ msgid "Assertion failed in lDAP"
-#~ msgstr "Afkryptering mislykkedes"
 
 #, fuzzy
 #~| msgid "General error"
