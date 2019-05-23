@@ -198,6 +198,7 @@ void RosterSearch::startSearch()
 			{
 				if (FRostersViewPlugin->rostersView()->rostersModel())
 				{
+					FRostersViewPlugin->setExpandStateActive(false);
 					FSelectedIndexes = FRostersViewPlugin->rostersView()->selectedRosterIndexes();
 					connect(FRostersViewPlugin->rostersView()->rostersModel()->instance(),SIGNAL(indexDestroyed(IRosterIndex *)),SLOT(onRosterIndexDestroyed(IRosterIndex *)));
 				}
@@ -221,9 +222,8 @@ void RosterSearch::startSearch()
 	{
 		if (FSearchStarted)
 		{
+			FRostersViewPlugin->rostersView()->instance()->expandAll();
 			FRostersViewPlugin->rostersView()->setSelectedRosterIndexes(FSelectedIndexes);
-			FRostersViewPlugin->rostersView()->instance()->expandAll();
-			FRostersViewPlugin->rostersView()->instance()->expandAll();
 		}
 
 		if (!isSearchEnabled() || pattern.isEmpty())
@@ -239,6 +239,7 @@ void RosterSearch::startSearch()
 				Options::node(OPV_ROSTER_SHOWOFFLINE).setValue(FLastShowOffline);
 
 				FRostersViewPlugin->startRestoreExpandState();
+				FRostersViewPlugin->setExpandStateActive(true);
 			}
 			FSearchStarted = false;
 

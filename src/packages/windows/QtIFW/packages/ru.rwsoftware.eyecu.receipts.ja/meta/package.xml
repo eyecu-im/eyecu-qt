@@ -1,11 +1,18 @@
 <?xml version='1.0'?>
+
 <Package>
+
  <DisplayName>Message Delivery Receipts Japanese Translation</DisplayName>
+
  <Description>Message Delivery Receipts Japanese translation</Description>
- <Version>1.3.0</Version>
- <ReleaseDate>2015-02-24</ReleaseDate>
+
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.receipts.ja</Name>
+
  <AutoDependOn>ru.rwsoftware.eyecu.receipts,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+
  <Virtual>true</Virtual>
  <RequiresAdminRights>true</RequiresAdminRights>
+
 </Package>

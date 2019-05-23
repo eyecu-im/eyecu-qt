@@ -18,7 +18,9 @@
 
 // *** <<< eyeCU <<< ***
 #define NTO_ATTENTION_NOTIFY                   50
-#define NTO_RECEIPTS_NOTIFY                    800
+#define NTO_DELIVERED_NOTIFY                   800
+#define NTO_DISPLAYED_NOTIFY                   810
+#define NTO_ACKNOWLEDGED_NOTIFY                820
 #define NTO_ACTIVITY_CHANGE                    900
 #define NTO_MOOD_CHANGE                        910
 #define NTO_TUNE_CHANGE                        920

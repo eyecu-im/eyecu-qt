@@ -5,12 +5,12 @@ anonymous:  FORMS += aboutbox_anonymous.ui
 
 HEADERS = pluginmanager.h \
           aboutbox.h \
-		  setuppluginsdialog.h \
-		  splash.h
+          setuppluginsdialog.h \
+          splash.h
 
 SOURCES = main.cpp \
           pluginmanager.cpp \
           aboutbox.cpp \
-		  setuppluginsdialog.cpp \
-		  splash.cpp
+          setuppluginsdialog.cpp \
+          splash.cpp
 

@@ -2,9 +2,9 @@
 <Package>
  <DisplayName>Message Delivery Receipts</DisplayName>
  <Description>Allows to send and receive message delivery receipts</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Improved to be used with Chat Markers. Get rid of memry leak.</UpdateText>
  <Name>ru.rwsoftware.eyecu.receipts</Name>
  <SortingPriority>45</SortingPriority>
  <Default>true</Default>

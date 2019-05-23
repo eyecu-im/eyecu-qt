@@ -110,6 +110,7 @@ bool MessageWidgets::initSettings()
 	Options::setDefaultValue(OPV_MESSAGES_COMBINEWITHROSTER,true);
 	Options::setDefaultValue(OPV_MESSAGES_EDITORAUTORESIZE,true);
 	Options::setDefaultValue(OPV_MESSAGES_EDITORMINIMUMLINES,1);
+	Options::setDefaultValue(OPV_MESSAGES_EDITORBASEFONTSIZE,0.0);
 	Options::setDefaultValue(OPV_MESSAGES_CLEANCHATTIMEOUT,30);
 
 	Options::setDefaultValue(OPV_MESSAGES_SHOWSTATUS,true);

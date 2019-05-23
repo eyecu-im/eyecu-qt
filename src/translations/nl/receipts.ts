@@ -2,40 +2,61 @@
  <context>
   <name>Receipts</name>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="35"/>
-   <location filename="../../plugins/receipts/receipts.cpp" line="158"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="39"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="154"/>
    <source>Message Delivery Receipts</source>
    <translation>Ontvangt Bericht bezorging</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="36"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="40"/>
    <source>Sends, receives and displays message delivery receipts</source>
    <translation>Verzend, Ontvangt  en toont ontvangstbevestigingen</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="97"/>
    <source>Show delivery notifications</source>
-   <translation>Toon Bezorg bevestiging</translation>
+   <translation type="vanished">Toon Bezorg bevestiging</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="98"/>
    <source>Send delivery notifications</source>
-   <translation>Stuur Bezorg bevestiging</translation>
+   <translation type="vanished">Stuur Bezorg bevestiging</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="126"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="107"/>
+   <source>Message delivery receipts</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/receipts/receipts.cpp" line="125"/>
    <source>When message delivery notification recieved</source>
    <translation>Wanneer bericht van bezorg bevestiging aankomt</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="159"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="155"/>
    <source>Sends/receives Message Delivery Receipts</source>
    <translation>Stuurt/Ontvangt Bericht bezorging</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="326"/>
+   <location filename="../../plugins/receipts/receipts.cpp" line="332"/>
    <source>Message delivered</source>
    <translation>Bericht afgeleverd</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/receipts/receipts.cpp" line="344"/>
+   <source>Received</source>
+   <translation type="unfinished"/>
+  </message>
+ </context>
+ <context>
+  <name>ReceiptsOptions</name>
+  <message>
+   <location filename="../../plugins/receipts/receiptsoptions.ui" line="35"/>
+   <source>Send</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../plugins/receipts/receiptsoptions.ui" line="42"/>
+   <source>Show</source>
+   <translation type="unfinished"/>
   </message>
  </context>
 </TS>

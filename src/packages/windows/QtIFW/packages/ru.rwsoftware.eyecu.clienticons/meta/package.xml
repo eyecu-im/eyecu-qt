@@ -2,9 +2,9 @@
 <Package>
  <DisplayName>Client Icons</DisplayName>
  <Description>Displays icon of a contact client application</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Alias for Jimm for android added. More aliases for Poezio, Xabber and Vacuum-IM added. Icons for Movim, Dino, Pix-Art, Profanity and Yaxim added.</UpdateText>
+<Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.clienticons</Name>
  <SortingPriority>60</SortingPriority>
  <Default>true</Default>
