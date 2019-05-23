@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Annotations</DisplayName>
  <Description>Allows to add comments to the contacts in the roster</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.annotations</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.privatestorage</Dependencies>
  <SortingPriority>87</SortingPriority>
  <Default>true</Default>

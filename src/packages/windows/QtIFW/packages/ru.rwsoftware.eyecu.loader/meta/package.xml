@@ -1,12 +1,23 @@
 <?xml version='1.0'?>
+
 <Package>
+
  <DisplayName>Loader</DisplayName>
+
  <Description>eyeCU loader</Description>
- <Version>2.0.0.20181113</Version>
- <ReleaseDate>2018-11-13</ReleaseDate>
+
+ <Version>2.0.0.20190515</Version>
+
+ <ReleaseDate>2019-05-15</ReleaseDate>
+
  <Name>ru.rwsoftware.eyecu.loader</Name>
+
  <UpdateText>Application revision updated.</UpdateText>
+
  <Virtual>true</Virtual>
+
  <Script>installscript.js</Script>
+
  <RequiresAdminRights>true</RequiresAdminRights>
+
 </Package>
