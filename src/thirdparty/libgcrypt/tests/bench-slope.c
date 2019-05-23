@@ -39,14 +39,19 @@
 #endif
 
 #define PGM "bench-slope"
+#include "t-common.h"
 
 static int verbose;
 static int csv_mode;
+static int unaligned_mode;
 static int num_measurement_repetitions;
 
 /* CPU Ghz value provided by user, allows constructing cycles/byte and other
    results.  */
 static double cpu_ghz = -1;
+
+/* Attempt to autodetect CPU Ghz. */
+static int auto_ghz;
 
 /* Whether we are running as part of the regression test suite.  */
 static int in_regression_test;
@@ -57,6 +62,13 @@ static char *current_section_name;
 static char *current_algo_name;
 /* The name of the currently printed mode.  */
 static char *current_mode_name;
+
+
+/* Currently used CPU Ghz (either user input or auto-detected. */
+static double bench_ghz;
+
+/* Current accuracy of auto-detected CPU Ghz. */
+static double bench_ghz_diff;
 
 
 /*************************************** Default parameters for measurements. */
@@ -76,6 +88,9 @@ static char *current_mode_name;
 /* Number of repeated measurements at each data point. The median of these
  * measurements is selected as data point further analysis. */
 #define NUM_MEASUREMENT_REPETITIONS	64
+
+/* Target accuracy for auto-detected CPU Ghz. */
+#define AUTO_GHZ_TARGET_DIFF		(5e-5)
 
 /**************************************************** High-resolution timers. */
 
@@ -218,6 +233,7 @@ struct bench_obj
   unsigned int step_size;
 
   void *priv;
+  void *hd;
 };
 
 typedef int (*const bench_initialize_t) (struct bench_obj * obj);
@@ -381,7 +397,7 @@ adjust_loop_iterations_to_timer_accuracy (struct bench_obj *obj, void *buffer,
 
 /* Benchmark and return linear regression slope in nanoseconds per byte.  */
 double
-do_slope_benchmark (struct bench_obj *obj)
+slope_benchmark (struct bench_obj *obj)
 {
   unsigned int num_measurements;
   double *measurements = NULL;
@@ -411,12 +427,14 @@ do_slope_benchmark (struct bench_obj *obj)
       obj->max_bufsize < 1 || obj->min_bufsize > obj->max_bufsize)
     goto err_free;
 
-  real_buffer = malloc (obj->max_bufsize + 128);
+  real_buffer = malloc (obj->max_bufsize + 128 + unaligned_mode);
   if (!real_buffer)
     goto err_free;
   /* Get aligned buffer */
   buffer = real_buffer;
   buffer += 128 - ((real_buffer - (unsigned char *) 0) & (128 - 1));
+  if (unaligned_mode)
+    buffer += unaligned_mode; /* Make buffer unaligned */
 
   for (i = 0; i < obj->max_bufsize; i++)
     buffer[i] = 0x55 ^ (-i);
@@ -460,6 +478,135 @@ err_free:
   return -1;
 }
 
+/********************************************* CPU frequency auto-detection. */
+
+static int
+auto_ghz_init (struct bench_obj *obj)
+{
+  obj->min_bufsize = 16;
+  obj->max_bufsize = 64 + obj->min_bufsize;
+  obj->step_size = 8;
+  obj->num_measure_repetitions = 16;
+
+  return 0;
+}
+
+static void
+auto_ghz_free (struct bench_obj *obj)
+{
+  (void)obj;
+}
+
+static void
+auto_ghz_bench (struct bench_obj *obj, void *buf, size_t buflen)
+{
+  (void)obj;
+  (void)buf;
+
+  buflen *= 1024;
+
+  /* Turbo frequency detection benchmark. Without CPU turbo-boost, this
+   * function will give cycles/iteration result 1024.0 on high-end CPUs.
+   * With turbo, result will be less and can be used detect turbo-clock. */
+
+  do
+    {
+#ifdef HAVE_GCC_ASM_VOLATILE_MEMORY
+      /* Use memory barrier to prevent compiler from optimizing this loop
+       * away. */
+
+      asm volatile ("":::"memory");
+#else
+      /* TODO: Needs alternative way. */
+#endif
+    }
+  while (--buflen);
+}
+
+static struct bench_ops auto_ghz_detect_ops = {
+  &auto_ghz_init,
+  &auto_ghz_free,
+  &auto_ghz_bench
+};
+
+
+double
+get_auto_ghz (void)
+{
+  struct bench_obj obj = { 0 };
+  double nsecs_per_iteration;
+  double cycles_per_iteration;
+
+  obj.ops = &auto_ghz_detect_ops;
+
+  nsecs_per_iteration = slope_benchmark (&obj);
+
+  cycles_per_iteration = nsecs_per_iteration * cpu_ghz;
+
+  /* Adjust CPU Ghz so that cycles per iteration would give '1024.0'. */
+
+  return cpu_ghz * 1024 / cycles_per_iteration;
+}
+
+
+double
+do_slope_benchmark (struct bench_obj *obj)
+{
+  double ret;
+
+  if (!auto_ghz)
+    {
+      /* Perform measurement without autodetection of CPU frequency. */
+
+      ret = slope_benchmark (obj);
+
+      bench_ghz = cpu_ghz;
+      bench_ghz_diff = 0;
+    }
+  else
+    {
+      double target_diff = AUTO_GHZ_TARGET_DIFF;
+      double cpu_auto_ghz_before;
+      double cpu_auto_ghz_after;
+      double nsecs_per_iteration;
+      double diff;
+      unsigned int try_count = 0;
+
+      /* Perform measurement with CPU frequency autodetection. */
+
+      do
+        {
+          /* Repeat measurement until CPU turbo frequency has stabilized. */
+
+	  if (try_count++ > 4)
+	    {
+	      /* Too much frequency instability on the system, relax target
+	       * accuracy. */
+
+	      try_count = 0;
+	      target_diff *= 2;
+	    }
+
+          cpu_auto_ghz_before = get_auto_ghz ();
+
+          nsecs_per_iteration = slope_benchmark (obj);
+
+          cpu_auto_ghz_after = get_auto_ghz ();
+
+          diff = 1.0 - (cpu_auto_ghz_before / cpu_auto_ghz_after);
+          diff = diff < 0 ? -diff : diff;
+        }
+      while (diff > target_diff);
+
+      ret = nsecs_per_iteration;
+
+      bench_ghz = (cpu_auto_ghz_before + cpu_auto_ghz_after) / 2;
+      bench_ghz_diff = diff;
+    }
+
+  return ret;
+}
+
 
 /********************************************************** Printing results. */
 
@@ -472,8 +619,10 @@ double_to_str (char *out, size_t outlen, double value)
     fmt = "%.3f";
   else if (value < 100.0)
     fmt = "%.2f";
-  else
+  else if (value < 1000.0)
     fmt = "%.1f";
+  else
+    fmt = "%.0f";
 
   snprintf (out, outlen, fmt, value);
 }
@@ -485,16 +634,26 @@ bench_print_result_csv (double nsecs_per_byte)
   char nsecpbyte_buf[16];
   char mbpsec_buf[16];
   char cpbyte_buf[16];
+  char mhz_buf[16];
+  char mhz_diff_buf[32];
 
+  strcpy (mhz_diff_buf, "");
   *cpbyte_buf = 0;
+  *mhz_buf = 0;
 
   double_to_str (nsecpbyte_buf, sizeof (nsecpbyte_buf), nsecs_per_byte);
 
   /* If user didn't provide CPU speed, we cannot show cycles/byte results.  */
-  if (cpu_ghz > 0.0)
+  if (bench_ghz > 0.0)
     {
-      cycles_per_byte = nsecs_per_byte * cpu_ghz;
+      cycles_per_byte = nsecs_per_byte * bench_ghz;
       double_to_str (cpbyte_buf, sizeof (cpbyte_buf), cycles_per_byte);
+      double_to_str (mhz_buf, sizeof (mhz_buf), bench_ghz * 1000);
+      if (auto_ghz && bench_ghz_diff * 1000 >= 1)
+	{
+	  snprintf(mhz_diff_buf, sizeof(mhz_diff_buf), ",%.0f,Mhz-diff",
+		   bench_ghz_diff * 1000);
+	}
     }
 
   mbytes_per_sec =
@@ -502,14 +661,28 @@ bench_print_result_csv (double nsecs_per_byte)
   double_to_str (mbpsec_buf, sizeof (mbpsec_buf), mbytes_per_sec);
 
   /* We print two empty fields to allow for future enhancements.  */
-  printf ("%s,%s,%s,,,%s,ns/B,%s,MiB/s,%s,c/B\n",
-          current_section_name,
-          current_algo_name? current_algo_name : "",
-          current_mode_name? current_mode_name : "",
-          nsecpbyte_buf,
-          mbpsec_buf,
-          cpbyte_buf);
-
+  if (auto_ghz)
+    {
+      printf ("%s,%s,%s,,,%s,ns/B,%s,MiB/s,%s,c/B,%s,Mhz%s\n",
+              current_section_name,
+              current_algo_name? current_algo_name : "",
+              current_mode_name? current_mode_name : "",
+              nsecpbyte_buf,
+              mbpsec_buf,
+              cpbyte_buf,
+              mhz_buf,
+              mhz_diff_buf);
+    }
+  else
+    {
+      printf ("%s,%s,%s,,,%s,ns/B,%s,MiB/s,%s,c/B\n",
+              current_section_name,
+              current_algo_name? current_algo_name : "",
+              current_mode_name? current_mode_name : "",
+              nsecpbyte_buf,
+              mbpsec_buf,
+              cpbyte_buf);
+    }
 }
 
 static void
@@ -519,24 +692,45 @@ bench_print_result_std (double nsecs_per_byte)
   char nsecpbyte_buf[16];
   char mbpsec_buf[16];
   char cpbyte_buf[16];
+  char mhz_buf[16];
+  char mhz_diff_buf[32];
+
+  strcpy (mhz_diff_buf, "");
 
   double_to_str (nsecpbyte_buf, sizeof (nsecpbyte_buf), nsecs_per_byte);
 
   /* If user didn't provide CPU speed, we cannot show cycles/byte results.  */
-  if (cpu_ghz > 0.0)
+  if (bench_ghz > 0.0)
     {
-      cycles_per_byte = nsecs_per_byte * cpu_ghz;
+      cycles_per_byte = nsecs_per_byte * bench_ghz;
       double_to_str (cpbyte_buf, sizeof (cpbyte_buf), cycles_per_byte);
+      double_to_str (mhz_buf, sizeof (mhz_buf), bench_ghz * 1000);
+      if (auto_ghz && bench_ghz_diff * 1000 >= 0.5)
+	{
+	  snprintf(mhz_diff_buf, sizeof(mhz_diff_buf), "±%.0f",
+		   bench_ghz_diff * 1000);
+	}
     }
   else
-    strcpy (cpbyte_buf, "-");
+    {
+      strcpy (cpbyte_buf, "-");
+      strcpy (mhz_buf, "-");
+    }
 
   mbytes_per_sec =
     (1000.0 * 1000.0 * 1000.0) / (nsecs_per_byte * 1024 * 1024);
   double_to_str (mbpsec_buf, sizeof (mbpsec_buf), mbytes_per_sec);
 
-  printf ("%9s ns/B %9s MiB/s %9s c/B\n",
-          nsecpbyte_buf, mbpsec_buf, cpbyte_buf);
+  if (auto_ghz)
+    {
+      printf ("%9s ns/B %9s MiB/s %9s c/B %9s%s\n",
+              nsecpbyte_buf, mbpsec_buf, cpbyte_buf, mhz_buf, mhz_diff_buf);
+    }
+  else
+    {
+      printf ("%9s ns/B %9s MiB/s %9s c/B\n",
+              nsecpbyte_buf, mbpsec_buf, cpbyte_buf);
+    }
 }
 
 static void
@@ -574,8 +768,13 @@ bench_print_header (int algo_width, const char *algo_name)
         printf (" %-*s | ", -algo_width, algo_name);
       else
         printf (" %-*s | ", algo_width, algo_name);
-      printf ("%14s %15s %13s\n", "nanosecs/byte", "mebibytes/sec",
-              "cycles/byte");
+
+      if (auto_ghz)
+        printf ("%14s %15s %13s %9s\n", "nanosecs/byte", "mebibytes/sec",
+                "cycles/byte", "auto Mhz");
+      else
+        printf ("%14s %15s %13s\n", "nanosecs/byte", "mebibytes/sec",
+                "cycles/byte");
     }
 }
 
@@ -680,7 +879,7 @@ bench_encrypt_init (struct bench_obj *obj)
       exit (1);
     }
 
-  obj->priv = hd;
+  obj->hd = hd;
 
   return 0;
 }
@@ -688,7 +887,7 @@ bench_encrypt_init (struct bench_obj *obj)
 static void
 bench_encrypt_free (struct bench_obj *obj)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
 
   gcry_cipher_close (hd);
 }
@@ -696,10 +895,12 @@ bench_encrypt_free (struct bench_obj *obj)
 static void
 bench_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
 
-  err = gcry_cipher_encrypt (hd, buf, buflen, buf, buflen);
+  err = gcry_cipher_reset (hd);
+  if (!err)
+    err = gcry_cipher_encrypt (hd, buf, buflen, buf, buflen);
   if (err)
     {
       fprintf (stderr, PGM ": gcry_cipher_encrypt failed: %s\n",
@@ -712,10 +913,12 @@ bench_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 static void
 bench_decrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
 
-  err = gcry_cipher_decrypt (hd, buf, buflen, buf, buflen);
+  err = gcry_cipher_reset (hd);
+  if (!err)
+    err = gcry_cipher_decrypt (hd, buf, buflen, buf, buflen);
   if (err)
     {
       fprintf (stderr, PGM ": gcry_cipher_encrypt failed: %s\n",
@@ -738,10 +941,130 @@ static struct bench_ops decrypt_ops = {
 };
 
 
+static int
+bench_xts_encrypt_init (struct bench_obj *obj)
+{
+  struct bench_cipher_mode *mode = obj->priv;
+  gcry_cipher_hd_t hd;
+  int err, keylen;
+
+  /* For XTS, benchmark with typical data-unit size (512 byte sectors). */
+  obj->min_bufsize = 512;
+  obj->max_bufsize = 16 * obj->min_bufsize;
+  obj->step_size = obj->min_bufsize;
+  obj->num_measure_repetitions = num_measurement_repetitions;
+
+  err = gcry_cipher_open (&hd, mode->algo, mode->mode, 0);
+  if (err)
+    {
+      fprintf (stderr, PGM ": error opening cipher `%s'\n",
+	       gcry_cipher_algo_name (mode->algo));
+      exit (1);
+    }
+
+  /* Double key-length for XTS. */
+  keylen = gcry_cipher_get_algo_keylen (mode->algo) * 2;
+  if (keylen)
+    {
+      char key[keylen];
+      int i;
+
+      for (i = 0; i < keylen; i++)
+	key[i] = 0x33 ^ (11 - i);
+
+      err = gcry_cipher_setkey (hd, key, keylen);
+      if (err)
+	{
+	  fprintf (stderr, PGM ": gcry_cipher_setkey failed: %s\n",
+		   gpg_strerror (err));
+	  gcry_cipher_close (hd);
+	  exit (1);
+	}
+    }
+  else
+    {
+      fprintf (stderr, PGM ": failed to get key length for algorithm `%s'\n",
+	       gcry_cipher_algo_name (mode->algo));
+      gcry_cipher_close (hd);
+      exit (1);
+    }
+
+  obj->hd = hd;
+
+  return 0;
+}
+
+static void
+bench_xts_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
+{
+  gcry_cipher_hd_t hd = obj->hd;
+  unsigned int pos;
+  static const char tweak[16] = { 0xff, 0xff, 0xfe, };
+  size_t sectorlen = obj->step_size;
+  char *cbuf = buf;
+  int err;
+
+  gcry_cipher_setiv (hd, tweak, sizeof (tweak));
+
+  /* Process each sector separately. */
+
+  for (pos = 0; pos < buflen; pos += sectorlen, cbuf += sectorlen)
+    {
+      err = gcry_cipher_encrypt (hd, cbuf, sectorlen, cbuf, sectorlen);
+      if (err)
+	{
+	  fprintf (stderr, PGM ": gcry_cipher_encrypt failed: %s\n",
+		  gpg_strerror (err));
+	  gcry_cipher_close (hd);
+	  exit (1);
+	}
+    }
+}
+
+static void
+bench_xts_decrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
+{
+  gcry_cipher_hd_t hd = obj->hd;
+  unsigned int pos;
+  static const char tweak[16] = { 0xff, 0xff, 0xfe, };
+  size_t sectorlen = obj->step_size;
+  char *cbuf = buf;
+  int err;
+
+  gcry_cipher_setiv (hd, tweak, sizeof (tweak));
+
+  /* Process each sector separately. */
+
+  for (pos = 0; pos < buflen; pos += sectorlen, cbuf += sectorlen)
+    {
+      err = gcry_cipher_decrypt (hd, cbuf, sectorlen, cbuf, sectorlen);
+      if (err)
+	{
+	  fprintf (stderr, PGM ": gcry_cipher_encrypt failed: %s\n",
+		  gpg_strerror (err));
+	  gcry_cipher_close (hd);
+	  exit (1);
+	}
+    }
+}
+
+static struct bench_ops xts_encrypt_ops = {
+  &bench_xts_encrypt_init,
+  &bench_encrypt_free,
+  &bench_xts_encrypt_do_bench
+};
+
+static struct bench_ops xts_decrypt_ops = {
+  &bench_xts_encrypt_init,
+  &bench_encrypt_free,
+  &bench_xts_decrypt_do_bench
+};
+
+
 static void
 bench_ccm_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[8];
   char nonce[11] = { 0x80, 0x01, };
@@ -785,7 +1108,7 @@ bench_ccm_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 static void
 bench_ccm_decrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[8] = { 0, };
   char nonce[11] = { 0x80, 0x01, };
@@ -832,7 +1155,7 @@ static void
 bench_ccm_authenticate_do_bench (struct bench_obj *obj, void *buf,
 				 size_t buflen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[8] = { 0, };
   char nonce[11] = { 0x80, 0x01, };
@@ -906,7 +1229,7 @@ static void
 bench_aead_encrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen,
 			     const char *nonce, size_t noncelen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[16];
 
@@ -936,7 +1259,7 @@ static void
 bench_aead_decrypt_do_bench (struct bench_obj *obj, void *buf, size_t buflen,
 			     const char *nonce, size_t noncelen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[16] = { 0, };
 
@@ -969,7 +1292,7 @@ bench_aead_authenticate_do_bench (struct bench_obj *obj, void *buf,
 				  size_t buflen, const char *nonce,
 				  size_t noncelen)
 {
-  gcry_cipher_hd_t hd = obj->priv;
+  gcry_cipher_hd_t hd = obj->hd;
   int err;
   char tag[16] = { 0, };
   char data = 0xff;
@@ -1107,6 +1430,53 @@ static struct bench_ops ocb_authenticate_ops = {
   &bench_ocb_authenticate_do_bench
 };
 
+static void
+bench_eax_encrypt_do_bench (struct bench_obj *obj, void *buf,
+			    size_t buflen)
+{
+  char nonce[16] = { 0xca, 0xfe, 0xba, 0xbe, 0xfa, 0xce,
+                     0xdb, 0xad, 0xde, 0xca, 0xf8, 0x88,
+                     0x00, 0x00, 0x01, 0x00 };
+  bench_aead_encrypt_do_bench (obj, buf, buflen, nonce, sizeof(nonce));
+}
+
+static void
+bench_eax_decrypt_do_bench (struct bench_obj *obj, void *buf,
+			    size_t buflen)
+{
+  char nonce[16] = { 0xca, 0xfe, 0xba, 0xbe, 0xfa, 0xce,
+                     0xdb, 0xad, 0xde, 0xca, 0xf8, 0x88,
+                     0x00, 0x00, 0x01, 0x00 };
+  bench_aead_decrypt_do_bench (obj, buf, buflen, nonce, sizeof(nonce));
+}
+
+static void
+bench_eax_authenticate_do_bench (struct bench_obj *obj, void *buf,
+				 size_t buflen)
+{
+  char nonce[16] = { 0xca, 0xfe, 0xba, 0xbe, 0xfa, 0xce,
+                     0xdb, 0xad, 0xde, 0xca, 0xf8, 0x88,
+                     0x00, 0x00, 0x01, 0x00 };
+  bench_aead_authenticate_do_bench (obj, buf, buflen, nonce, sizeof(nonce));
+}
+
+static struct bench_ops eax_encrypt_ops = {
+  &bench_encrypt_init,
+  &bench_encrypt_free,
+  &bench_eax_encrypt_do_bench
+};
+
+static struct bench_ops eax_decrypt_ops = {
+  &bench_encrypt_init,
+  &bench_encrypt_free,
+  &bench_eax_decrypt_do_bench
+};
+
+static struct bench_ops eax_authenticate_ops = {
+  &bench_encrypt_init,
+  &bench_encrypt_free,
+  &bench_eax_authenticate_do_bench
+};
 
 static void
 bench_poly1305_encrypt_do_bench (struct bench_obj *obj, void *buf,
@@ -1162,9 +1532,14 @@ static struct bench_cipher_mode cipher_modes[] = {
   {GCRY_CIPHER_MODE_OFB, "OFB dec", &decrypt_ops},
   {GCRY_CIPHER_MODE_CTR, "CTR enc", &encrypt_ops},
   {GCRY_CIPHER_MODE_CTR, "CTR dec", &decrypt_ops},
+  {GCRY_CIPHER_MODE_XTS, "XTS enc", &xts_encrypt_ops},
+  {GCRY_CIPHER_MODE_XTS, "XTS dec", &xts_decrypt_ops},
   {GCRY_CIPHER_MODE_CCM, "CCM enc", &ccm_encrypt_ops},
   {GCRY_CIPHER_MODE_CCM, "CCM dec", &ccm_decrypt_ops},
   {GCRY_CIPHER_MODE_CCM, "CCM auth", &ccm_authenticate_ops},
+  {GCRY_CIPHER_MODE_EAX, "EAX enc",  &eax_encrypt_ops},
+  {GCRY_CIPHER_MODE_EAX, "EAX dec",  &eax_decrypt_ops},
+  {GCRY_CIPHER_MODE_EAX, "EAX auth", &eax_authenticate_ops},
   {GCRY_CIPHER_MODE_GCM, "GCM enc", &gcm_encrypt_ops},
   {GCRY_CIPHER_MODE_GCM, "GCM dec", &gcm_decrypt_ops},
   {GCRY_CIPHER_MODE_GCM, "GCM auth", &gcm_authenticate_ops},
@@ -1215,8 +1590,12 @@ cipher_bench_one (int algo, struct bench_cipher_mode *pmode)
   if (mode.mode == GCRY_CIPHER_MODE_GCM && blklen != GCRY_GCM_BLOCK_LEN)
     return;
 
-  /* Our OCB implementaion has restrictions for block-size.  */
-  if (mode.mode == GCRY_CIPHER_MODE_OCB && blklen != 16)
+  /* XTS has restrictions for block-size */
+  if (mode.mode == GCRY_CIPHER_MODE_XTS && blklen != GCRY_XTS_BLOCK_LEN)
+    return;
+
+  /* Our OCB implementation has restrictions for block-size.  */
+  if (mode.mode == GCRY_CIPHER_MODE_OCB && blklen != GCRY_OCB_BLOCK_LEN)
     return;
 
   bench_print_mode (14, mode.name);
@@ -1303,7 +1682,7 @@ bench_hash_init (struct bench_obj *obj)
       exit (1);
     }
 
-  obj->priv = hd;
+  obj->hd = hd;
 
   return 0;
 }
@@ -1311,7 +1690,7 @@ bench_hash_init (struct bench_obj *obj)
 static void
 bench_hash_free (struct bench_obj *obj)
 {
-  gcry_md_hd_t hd = obj->priv;
+  gcry_md_hd_t hd = obj->hd;
 
   gcry_md_close (hd);
 }
@@ -1319,7 +1698,7 @@ bench_hash_free (struct bench_obj *obj)
 static void
 bench_hash_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_md_hd_t hd = obj->priv;
+  gcry_md_hd_t hd = obj->hd;
 
   gcry_md_reset (hd);
   gcry_md_write (hd, buf, buflen);
@@ -1465,7 +1844,7 @@ bench_mac_init (struct bench_obj *obj)
       break;
     }
 
-  obj->priv = hd;
+  obj->hd = hd;
 
   free (key);
   return 0;
@@ -1474,7 +1853,7 @@ bench_mac_init (struct bench_obj *obj)
 static void
 bench_mac_free (struct bench_obj *obj)
 {
-  gcry_mac_hd_t hd = obj->priv;
+  gcry_mac_hd_t hd = obj->hd;
 
   gcry_mac_close (hd);
 }
@@ -1482,7 +1861,7 @@ bench_mac_free (struct bench_obj *obj)
 static void
 bench_mac_do_bench (struct bench_obj *obj, void *buf, size_t buflen)
 {
-  gcry_mac_hd_t hd = obj->priv;
+  gcry_mac_hd_t hd = obj->hd;
   size_t bs;
   char b;
 
@@ -1630,6 +2009,7 @@ kdf_bench_one (int algo, int subalgo)
   char algo_name[32];
   char nsecpiter_buf[16];
   char cpiter_buf[16];
+  char mhz_buf[16];
 
   mode.algo = algo;
   mode.subalgo = subalgo;
@@ -1666,28 +2046,42 @@ kdf_bench_one (int algo, int subalgo)
   nsecs_per_iteration = do_slope_benchmark (&obj);
 
   strcpy(cpiter_buf, csv_mode ? "" : "-");
+  strcpy(mhz_buf, csv_mode ? "" : "-");
 
   double_to_str (nsecpiter_buf, sizeof (nsecpiter_buf), nsecs_per_iteration);
 
   /* If user didn't provide CPU speed, we cannot show cycles/iter results.  */
-  if (cpu_ghz > 0.0)
+  if (bench_ghz > 0.0)
     {
-      cycles_per_iteration = nsecs_per_iteration * cpu_ghz;
+      cycles_per_iteration = nsecs_per_iteration * bench_ghz;
       double_to_str (cpiter_buf, sizeof (cpiter_buf), cycles_per_iteration);
+      double_to_str (mhz_buf, sizeof (mhz_buf), bench_ghz * 1000);
     }
 
   if (csv_mode)
     {
-      printf ("%s,%s,%s,,,,,,,,,%s,ns/iter,%s,c/iter\n",
-	      current_section_name,
-	      current_algo_name ? current_algo_name : "",
-	      current_mode_name ? current_mode_name : "",
-	      nsecpiter_buf,
-	      cpiter_buf);
+      if (auto_ghz)
+        printf ("%s,%s,%s,,,,,,,,,%s,ns/iter,%s,c/iter,%s,Mhz\n",
+                current_section_name,
+                current_algo_name ? current_algo_name : "",
+                current_mode_name ? current_mode_name : "",
+                nsecpiter_buf,
+                cpiter_buf,
+                mhz_buf);
+      else
+        printf ("%s,%s,%s,,,,,,,,,%s,ns/iter,%s,c/iter\n",
+                current_section_name,
+                current_algo_name ? current_algo_name : "",
+                current_mode_name ? current_mode_name : "",
+                nsecpiter_buf,
+                cpiter_buf);
     }
   else
     {
-      printf ("%14s %13s\n", nsecpiter_buf, cpiter_buf);
+      if (auto_ghz)
+        printf ("%14s %13s %9s\n", nsecpiter_buf, cpiter_buf, mhz_buf);
+      else
+        printf ("%14s %13s\n", nsecpiter_buf, cpiter_buf);
     }
 }
 
@@ -1702,7 +2096,10 @@ kdf_bench (char **argv, int argc)
   if (!csv_mode)
     {
       printf (" %-*s | ", 24, "");
-      printf ("%14s %13s\n", "nanosecs/iter", "cycles/iter");
+      if (auto_ghz)
+        printf ("%14s %13s %9s\n", "nanosecs/iter", "cycles/iter", "auto Mhz");
+      else
+        printf ("%14s %13s\n", "nanosecs/iter", "cycles/iter");
     }
 
   if (argv && argc)
@@ -1743,11 +2140,13 @@ print_help (void)
     "",
     " options:",
     "   --cpu-mhz <mhz>           Set CPU speed for calculating cycles",
-    "                             per bytes results.",
+    "                             per bytes results.  Set as \"auto\"",
+    "                             for auto-detection of CPU speed.",
     "   --disable-hwf <features>  Disable hardware acceleration feature(s)",
     "                             for benchmarking.",
     "   --repetitions <n>         Use N repetitions (default "
                                      STR2(NUM_MEASUREMENT_REPETITIONS) ")",
+    "   --unaligned               Use unaligned input buffers.",
     "   --csv                     Use CSV output format",
     NULL
   };
@@ -1777,7 +2176,6 @@ int
 main (int argc, char **argv)
 {
   int last_argc = -1;
-  int debug = 0;
 
   if (argc)
     {
@@ -1832,6 +2230,12 @@ main (int argc, char **argv)
 	  argc--;
 	  argv++;
 	}
+      else if (!strcmp (*argv, "--unaligned"))
+	{
+	  unaligned_mode = 1;
+	  argc--;
+	  argv++;
+	}
       else if (!strcmp (*argv, "--disable-hwf"))
 	{
 	  argc--;
@@ -1853,8 +2257,15 @@ main (int argc, char **argv)
 	  argv++;
 	  if (argc)
 	    {
-	      cpu_ghz = atof (*argv);
-	      cpu_ghz /= 1000;	/* Mhz => Ghz */
+              if (!strcmp (*argv, "auto"))
+                {
+                  auto_ghz = 1;
+                }
+              else
+                {
+                  cpu_ghz = atof (*argv);
+                  cpu_ghz /= 1000;	/* Mhz => Ghz */
+                }
 
 	      argc--;
 	      argv++;
@@ -1881,7 +2292,7 @@ main (int argc, char **argv)
 	}
     }
 
-  gcry_control (GCRYCTL_SET_VERBOSITY, (int) verbose);
+  xgcry_control ((GCRYCTL_SET_VERBOSITY, (int) verbose));
 
   if (!gcry_check_version (GCRYPT_VERSION))
     {
@@ -1891,11 +2302,11 @@ main (int argc, char **argv)
     }
 
   if (debug)
-    gcry_control (GCRYCTL_SET_DEBUG_FLAGS, 1u, 0);
+    xgcry_control ((GCRYCTL_SET_DEBUG_FLAGS, 1u, 0));
 
-  gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-  gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
-  gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+  xgcry_control ((GCRYCTL_DISABLE_SECMEM, 0));
+  xgcry_control ((GCRYCTL_INITIALIZATION_FINISHED, 0));
+  xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
 
   if (in_regression_test)
     fputs ("Note: " PGM " running in quick regression test mode.\n", stdout);

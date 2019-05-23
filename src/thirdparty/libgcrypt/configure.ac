@@ -1,7 +1,7 @@
 # Configure.ac script for Libgcrypt
 # Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2006,
 #               2007, 2008, 2009, 2011 Free Software Foundation, Inc.
-# Copyright (C) 2012, 2013, 2014, 2015, 2016  g10 Code GmbH
+# Copyright (C) 2012-2017  g10 Code GmbH
 #
 # This file is part of Libgcrypt.
 #
@@ -28,36 +28,41 @@ min_automake_version="1.14"
 # bump the version number immediately after the release and do another
 # commit and push so that the git magic is able to work.  See below
 # for the LT versions.
-m4_define(mym4_version_major, [1])
-m4_define(mym4_version_minor, [7])
-m4_define(mym4_version_micro, [0])
+m4_define([mym4_package],[libgcrypt])
+m4_define([mym4_major], [1])
+m4_define([mym4_minor], [9])
+m4_define([mym4_micro], [0])
 
-# Below is m4 magic to extract and compute the revision number, the
-# decimalized short revision number, a beta version string, and a flag
-# indicating a development version (mym4_isgit). Note that the m4
-# processing is done by autoconf and not during the configure run.
-m4_define(mym4_version,
-          [mym4_version_major.mym4_version_minor.mym4_version_micro])
-m4_define([mym4_revision],
-          m4_esyscmd([git rev-parse --short HEAD | tr -d '\n\r']))
-m4_define([mym4_revision_dec],
-          m4_esyscmd_s([echo $((0x$(echo ]mym4_revision[|head -c 4)))]))
-m4_define([mym4_betastring],
-          m4_esyscmd_s([git describe --match 'libgcrypt-[0-9].*[0-9]' --long|\
-                        awk -F- '$3!=0{print"-beta"$3}']))
-m4_define([mym4_isgit],m4_if(mym4_betastring,[],[no],[yes]))
-m4_define([mym4_full_version],[mym4_version[]mym4_betastring])
-
-AC_INIT([libgcrypt],[mym4_full_version],[http://bugs.gnupg.org])
+# Below is m4 magic to extract and compute the git revision number,
+# the decimalized short revision number, a beta version string and a
+# flag indicating a development version (mym4_isbeta).  Note that the
+# m4 processing is done by autoconf and not during the configure run.
+m4_define([mym4_verslist], m4_split(m4_esyscmd([./autogen.sh --find-version] \
+                           mym4_package mym4_major mym4_minor mym4_micro),[:]))
+m4_define([mym4_isbeta],       m4_argn(2, mym4_verslist))
+m4_define([mym4_version],      m4_argn(4, mym4_verslist))
+m4_define([mym4_revision],     m4_argn(7, mym4_verslist))
+m4_define([mym4_revision_dec], m4_argn(8, mym4_verslist))
+m4_esyscmd([echo ]mym4_version[>VERSION])
+AC_INIT([mym4_package],[mym4_version], [https://bugs.gnupg.org])
 
 # LT Version numbers, remember to change them just *before* a release.
+#   (Code changed:			REVISION++)
+#   (Interfaces added/removed/changed:	CURRENT++, REVISION=0)
+#   (Interfaces added:			AGE++)
+#   (Interfaces removed:		AGE=0)
+#
 #   (Interfaces removed:    CURRENT++, AGE=0, REVISION=0)
 #   (Interfaces added:      CURRENT++, AGE++, REVISION=0)
 #   (No interfaces changed:                   REVISION++)
-LIBGCRYPT_LT_CURRENT=21
-LIBGCRYPT_LT_AGE=1
+LIBGCRYPT_LT_CURRENT=23
+LIBGCRYPT_LT_AGE=3
 LIBGCRYPT_LT_REVISION=0
+################################################
 
+AC_SUBST(LIBGCRYPT_LT_CURRENT)
+AC_SUBST(LIBGCRYPT_LT_AGE)
+AC_SUBST(LIBGCRYPT_LT_REVISION)
 
 # If the API is changed in an incompatible way: increment the next counter.
 #
@@ -67,10 +72,7 @@ LIBGCRYPT_CONFIG_API_VERSION=1
 
 # If you change the required gpg-error version, please remove
 # unnecessary error code defines in src/gcrypt-int.h.
-NEED_GPG_ERROR_VERSION=1.13
-
-PACKAGE=$PACKAGE_NAME
-VERSION=$PACKAGE_VERSION
+NEED_GPG_ERROR_VERSION=1.25
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_SRCDIR([src/libgcrypt.vers])
@@ -123,18 +125,6 @@ AH_VERBATIM([_REENTRANT],
 ])
 
 
-AC_SUBST(LIBGCRYPT_LT_CURRENT)
-AC_SUBST(LIBGCRYPT_LT_AGE)
-AC_SUBST(LIBGCRYPT_LT_REVISION)
-AC_SUBST(PACKAGE)
-AC_SUBST(VERSION)
-AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of this package])
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version of this package])
-VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x%02x" mym4_version_major \
-                          mym4_version_minor mym4_version_micro)
-AC_SUBST(VERSION_NUMBER)
-
-
 ######################
 ##  Basic checks.  ### (we need some results later on (e.g. $GCC)
 ######################
@@ -155,6 +145,45 @@ AC_PROG_INSTALL
 AC_PROG_AWK
 
 AC_GNU_SOURCE
+
+# Taken from mpfr-4.0.1, then modified for LDADD_FOR_TESTS_KLUDGE
+dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
+dnl is defined. The issue is that with the new dtags, LD_LIBRARY_PATH has
+dnl the precedence over the run path, so that if a compatible MPFR library
+dnl is installed in some directory from $LD_LIBRARY_PATH, then the tested
+dnl MPFR library will be this library instead of the MPFR library from the
+dnl build tree. Other OS with the same issue might be added later.
+dnl
+dnl References:
+dnl   https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=859732
+dnl   http://lists.gnu.org/archive/html/libtool/2017-05/msg00000.html
+dnl
+dnl We need to check whether --disable-new-dtags is supported as alternate
+dnl linkers may be used (e.g., with tcc: CC=tcc LD=tcc).
+dnl
+case $host in
+  *-*-linux*)
+    if test -n "$LD_LIBRARY_PATH"; then
+      saved_LDFLAGS="$LDFLAGS"
+      LDADD_FOR_TESTS_KLUDGE="-Wl,--disable-new-dtags"
+      LDFLAGS="$LDFLAGS $LDADD_FOR_TESTS_KLUDGE"
+      AC_MSG_CHECKING(whether --disable-new-dtags is supported by the linker)
+      AC_LINK_IFELSE([AC_LANG_SOURCE([[
+int main (void) { return 0; }
+      ]])],
+      [AC_MSG_RESULT(yes (use it since LD_LIBRARY_PATH is set))],
+      [AC_MSG_RESULT(no)
+       LDADD_FOR_TESTS_KLUDGE=""
+      ])
+      LDFLAGS="$saved_LDFLAGS"
+    fi
+    ;;
+esac
+AC_SUBST([LDADD_FOR_TESTS_KLUDGE])
+
+VERSION_NUMBER=m4_esyscmd(printf "0x%02x%02x%02x" mym4_major \
+                          mym4_minor mym4_micro)
+AC_SUBST(VERSION_NUMBER)
 
 # We need to compile and run a program on the build machine.  A
 # comment in libgpg-error says that the AC_PROG_CC_FOR_BUILD macro in
@@ -196,8 +225,9 @@ available_pubkey_ciphers="dsa elgamal rsa ecc"
 enabled_pubkey_ciphers=""
 
 # Definitions for message digests.
-available_digests="crc gostr3411-94 md2 md4 md5 rmd160 sha1 sha256"
-available_digests="$available_digests sha512 sha3 tiger whirlpool stribog"
+available_digests="crc gostr3411-94 md2 md4 md5 rmd160 sha1 sha256 sha512"
+available_digests="$available_digests sha3 tiger whirlpool stribog blake2"
+available_digests="$available_digests sm3"
 enabled_digests=""
 
 # Definitions for kdfs (optional ones)
@@ -212,7 +242,6 @@ auto_random_modules="$available_random_modules"
 LIBGCRYPT_THREAD_MODULES=""
 
 # Other definitions.
-print_egd_notice=no
 have_w32_system=no
 have_w32ce_system=no
 have_pthread=no
@@ -270,6 +299,10 @@ case "${host}" in
         ;;
     m68k-atari-mint)
         ;;
+    *-apple-darwin*)
+        AC_DEFINE(_DARWIN_C_SOURCE, 900000L,
+                  Expose all libc features (__DARWIN_C_FULL).)
+        ;;
     *)
       ;;
 esac
@@ -312,21 +345,8 @@ case "${host}" in
         ;;
 esac
 
-#
-# Figure out the name of the random device
-#
-case "${host}" in
-    *-openbsd*)
-        NAME_OF_DEV_RANDOM="/dev/srandom"
-        NAME_OF_DEV_URANDOM="/dev/urandom"
-        ;;
-
-    *)
-        NAME_OF_DEV_RANDOM="/dev/random"
-        NAME_OF_DEV_URANDOM="/dev/urandom"
-        ;;
-esac
-
+NAME_OF_DEV_RANDOM="/dev/random"
+NAME_OF_DEV_URANDOM="/dev/urandom"
 
 AC_ARG_ENABLE(endian-check,
               AC_HELP_STRING([--disable-endian-check],
@@ -335,7 +355,7 @@ AC_ARG_ENABLE(endian-check,
 if test x"$endiancheck" = xyes ; then
   AC_C_BIGENDIAN
 else
-  AC_DEFINE(DISABLED_ENDIAN_CHECK,1,[configure did not test for endianess])
+  AC_DEFINE(DISABLED_ENDIAN_CHECK,1,[configure did not test for endianness])
 fi
 
 AC_CHECK_SIZEOF(unsigned short, 2)
@@ -454,7 +474,7 @@ AC_MSG_RESULT([$enabled_digests])
 
 # Implementation of the --enable-kdfs switch.
 AC_ARG_ENABLE(kdfs,
-      AC_HELP_STRING([--enable-kdfs=kdfs],
+      AC_HELP_STRING([--enable-kfds=kdfs],
 		     [select the KDFs to include]),
       [enabled_kdfs=`echo $enableval | tr ',:' '  ' | tr '[A-Z]' '[a-z]'`],
       [enabled_kdfs=""])
@@ -573,6 +593,14 @@ if test "$use_hmac_binary_check" = yes ; then
 fi
 
 
+# Implementation of the --disable-jent-support switch.
+AC_MSG_CHECKING([whether jitter entropy support is requested])
+AC_ARG_ENABLE(jent-support,
+              AC_HELP_STRING([--disable-jent-support],
+                        [Disable support for the Jitter entropy collector]),
+	      jentsupport=$enableval,jentsupport=yes)
+AC_MSG_RESULT($jentsupport)
+
 # Implementation of the --disable-padlock-support switch.
 AC_MSG_CHECKING([whether padlock support is requested])
 AC_ARG_ENABLE(padlock-support,
@@ -589,6 +617,14 @@ AC_ARG_ENABLE(aesni-support,
 	      aesnisupport=$enableval,aesnisupport=yes)
 AC_MSG_RESULT($aesnisupport)
 
+# Implementation of the --disable-shaext-support switch.
+AC_MSG_CHECKING([whether SHAEXT support is requested])
+AC_ARG_ENABLE(shaext-support,
+              AC_HELP_STRING([--disable-shaext-support],
+                 [Disable support for the Intel SHAEXT instructions]),
+              shaextsupport=$enableval,shaextsupport=yes)
+AC_MSG_RESULT($shaextsupport)
+
 # Implementation of the --disable-pclmul-support switch.
 AC_MSG_CHECKING([whether PCLMUL support is requested])
 AC_ARG_ENABLE(pclmul-support,
@@ -596,6 +632,14 @@ AC_ARG_ENABLE(pclmul-support,
                  [Disable support for the Intel PCLMUL instructions]),
 	      pclmulsupport=$enableval,pclmulsupport=yes)
 AC_MSG_RESULT($pclmulsupport)
+
+# Implementation of the --disable-sse41-support switch.
+AC_MSG_CHECKING([whether SSE4.1 support is requested])
+AC_ARG_ENABLE(sse41-support,
+              AC_HELP_STRING([--disable-sse41-support],
+                 [Disable support for the Intel SSE4.1 instructions]),
+	      sse41support=$enableval,sse41support=yes)
+AC_MSG_RESULT($sse41support)
 
 # Implementation of the --disable-drng-support switch.
 AC_MSG_CHECKING([whether DRNG support is requested])
@@ -629,6 +673,14 @@ AC_ARG_ENABLE(neon-support,
 	      neonsupport=$enableval,neonsupport=yes)
 AC_MSG_RESULT($neonsupport)
 
+# Implementation of the --disable-arm-crypto-support switch.
+AC_MSG_CHECKING([whether ARMv8 Crypto Extension support is requested])
+AC_ARG_ENABLE(arm-crypto-support,
+              AC_HELP_STRING([--disable-arm-crypto-support],
+                 [Disable support for the ARMv8 Crypto Extension instructions]),
+	      armcryptosupport=$enableval,armcryptosupport=yes)
+AC_MSG_RESULT($armcryptosupport)
+
 # Implementation of the --disable-O-flag-munging switch.
 AC_MSG_CHECKING([whether a -O flag munging is requested])
 AC_ARG_ENABLE([O-flag-munging],
@@ -638,6 +690,17 @@ AC_ARG_ENABLE([O-flag-munging],
               [enable_o_flag_munging=yes])
 AC_MSG_RESULT($enable_o_flag_munging)
 AM_CONDITIONAL(ENABLE_O_FLAG_MUNGING, test "$enable_o_flag_munging" = "yes")
+
+# Implementation of the --disable-instrumentation-munging switch.
+AC_MSG_CHECKING([whether a instrumentation (-fprofile, -fsanitize) munging is requested])
+AC_ARG_ENABLE([instrumentation-munging],
+              AC_HELP_STRING([--disable-instrumentation-munging],
+                 [Disable modification of the cc instrumentation options]),
+              [enable_instrumentation_munging=$enableval],
+              [enable_instrumentation_munging=yes])
+AC_MSG_RESULT($enable_instrumentation_munging)
+AM_CONDITIONAL(ENABLE_INSTRUMENTATION_MUNGING,
+	       test "$enable_instrumentation_munging" = "yes")
 
 # Implementation of the --disable-amd64-as-feature-detection switch.
 AC_MSG_CHECKING([whether to enable AMD64 as(1) feature detection])
@@ -753,7 +816,7 @@ AC_SEARCH_LIBS(setsockopt, [nsl])
 ##################################
 
 AC_HEADER_STDC
-AC_CHECK_HEADERS(unistd.h sys/select.h sys/msg.h)
+AC_CHECK_HEADERS(unistd.h sys/select.h sys/msg.h sys/auxv.h)
 INSERT_SYS_SELECT_H=
 if test x"$ac_cv_header_sys_select_h" = xyes; then
   INSERT_SYS_SELECT_H=" include <sys/select.h>"
@@ -838,6 +901,21 @@ AC_CACHE_CHECK(for __builtin_ctz,
 if test "$gcry_cv_have_builtin_ctz" = "yes" ; then
    AC_DEFINE(HAVE_BUILTIN_CTZ, 1,
              [Defined if compiler has '__builtin_ctz' intrinsic])
+fi
+
+
+#
+# Check for __sync_synchronize intrinsic.
+#
+AC_CACHE_CHECK(for __sync_synchronize,
+       [gcry_cv_have_sync_synchronize],
+       [gcry_cv_have_sync_synchronize=no
+        AC_LINK_IFELSE([AC_LANG_PROGRAM([],
+          [__sync_synchronize(); return 0;])],
+          [gcry_cv_have_sync_synchronize=yes])])
+if test "$gcry_cv_have_sync_synchronize" = "yes" ; then
+   AC_DEFINE(HAVE_SYNC_SYNCHRONIZE, 1,
+             [Defined if compiler has '__sync_synchronize' intrinsic])
 fi
 
 
@@ -942,6 +1020,12 @@ if test "$gcry_cv_visibility_attribute" = "yes" \
 fi
 
 
+# Following attribute tests depend on warnings to cause compile to fail,
+# so set -Werror temporarily.
+_gcc_cflags_save=$CFLAGS
+CFLAGS="$CFLAGS -Werror"
+
+
 #
 # Check whether the compiler supports the GCC style aligned attribute
 #
@@ -975,6 +1059,26 @@ if test "$gcry_cv_gcc_attribute_packed" = "yes" ; then
    AC_DEFINE(HAVE_GCC_ATTRIBUTE_PACKED,1,
      [Defined if a GCC style "__attribute__ ((packed))" is supported])
 fi
+
+
+#
+# Check whether the compiler supports the GCC style may_alias attribute
+#
+AC_CACHE_CHECK([whether the GCC style may_alias attribute is supported],
+       [gcry_cv_gcc_attribute_may_alias],
+       [gcry_cv_gcc_attribute_may_alias=no
+        AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[typedef struct foo_s { int a; }
+            __attribute__ ((may_alias)) foo_t;]])],
+          [gcry_cv_gcc_attribute_may_alias=yes])])
+if test "$gcry_cv_gcc_attribute_may_alias" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_ATTRIBUTE_MAY_ALIAS,1,
+     [Defined if a GCC style "__attribute__ ((may_alias))" is supported])
+fi
+
+
+# Restore flags.
+CFLAGS=$_gcc_cflags_save;
 
 
 #
@@ -1057,6 +1161,56 @@ fi
 
 
 #
+# Check whether GCC assembler supports features needed for our ARMv8/Aarch64
+# implementations.  This needs to be done before setting up the
+# assembler stuff.
+#
+AC_CACHE_CHECK([whether GCC assembler is compatible for ARMv8/Aarch64 assembly implementations],
+       [gcry_cv_gcc_aarch64_platform_as_ok],
+       [gcry_cv_gcc_aarch64_platform_as_ok=no
+        AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[__asm__(
+                "asmfunc:\n\t"
+                "eor x0, x0, x30, ror #12;\n\t"
+                "add x0, x0, x30, asr #12;\n\t"
+                "eor v0.16b, v0.16b, v31.16b;\n\t"
+            );]])],
+          [gcry_cv_gcc_aarch64_platform_as_ok=yes])])
+if test "$gcry_cv_gcc_aarch64_platform_as_ok" = "yes" ; then
+   AC_DEFINE(HAVE_COMPATIBLE_GCC_AARCH64_PLATFORM_AS,1,
+     [Defined if underlying assembler is compatible with ARMv8/Aarch64 assembly implementations])
+fi
+
+#
+# Check whether GCC assembler supports for CFI directives.
+#
+AC_CACHE_CHECK([whether GCC assembler supports for CFI directives],
+       [gcry_cv_gcc_asm_cfi_directives],
+       [gcry_cv_gcc_asm_cfi_directives=no
+        AC_LINK_IFELSE([AC_LANG_PROGRAM(
+          [[__asm__(
+                ".text\n\t"
+                "ac_test:\n\t"
+                ".cfi_startproc\n\t"
+                ".cfi_remember_state\n\t"
+                ".cfi_adjust_cfa_offset 8\n\t"
+                ".cfi_rel_offset 0, 8\n\t"
+                ".cfi_def_cfa_register 1\n\t"
+                ".cfi_register 2, 3\n\t"
+                ".cfi_restore 2\n\t"
+                ".cfi_escape 0x0f, 0x02, 0x11, 0x00\n\t"
+                ".cfi_restore_state\n\t"
+                ".long 0\n\t"
+                ".cfi_endproc\n\t"
+            );]])],
+          [gcry_cv_gcc_asm_cfi_directives=yes])])
+if test "$gcry_cv_gcc_asm_cfi_directives" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_ASM_CFI_DIRECTIVES,1,
+             [Defined if underlying assembler supports for CFI directives])
+fi
+
+
+#
 # Check whether underscores in symbols are required.  This needs to be
 # done before setting up the assembler stuff.
 #
@@ -1108,15 +1262,21 @@ AM_CONDITIONAL(MPI_MOD_C_UDIV_QRNND, test "$mpi_mod_c_udiv_qrnnd" = yes)
 # Reset non applicable feature flags.
 if test "$mpi_cpu_arch" != "x86" ; then
    aesnisupport="n/a"
+   shaextsupport="n/a"
    pclmulsupport="n/a"
+   sse41support="n/a"
    avxsupport="n/a"
    avx2support="n/a"
    padlocksupport="n/a"
+   jentsupport="n/a"
    drngsupport="n/a"
 fi
 
 if test "$mpi_cpu_arch" != "arm" ; then
-   neonsupport="n/a"
+   if test "$mpi_cpu_arch" != "aarch64" ; then
+     neonsupport="n/a"
+     armcryptosupport="n/a"
+   fi
 fi
 
 
@@ -1259,6 +1419,55 @@ fi
 
 
 #
+# Check whether GCC inline assembler supports SHA Extensions instructions.
+#
+AC_CACHE_CHECK([whether GCC inline assembler supports SHA Extensions instructions],
+       [gcry_cv_gcc_inline_asm_shaext],
+       [if test "$mpi_cpu_arch" != "x86" ; then
+          gcry_cv_gcc_inline_asm_shaext="n/a"
+        else
+          gcry_cv_gcc_inline_asm_shaext=no
+          AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[void a(void) {
+              __asm__("sha1rnds4 \$0, %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha1nexte %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha1msg1 %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha1msg2 %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha256rnds2 %%xmm0, %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha256msg1 %%xmm1, %%xmm3\n\t":::"cc");
+              __asm__("sha256msg2 %%xmm1, %%xmm3\n\t":::"cc");
+            }]])],
+          [gcry_cv_gcc_inline_asm_shaext=yes])
+        fi])
+if test "$gcry_cv_gcc_inline_asm_shaext" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_INLINE_ASM_SHAEXT,1,
+     [Defined if inline assembler supports SHA Extensions instructions])
+fi
+
+
+#
+# Check whether GCC inline assembler supports SSE4.1 instructions.
+#
+AC_CACHE_CHECK([whether GCC inline assembler supports SSE4.1 instructions],
+       [gcry_cv_gcc_inline_asm_sse41],
+       [if test "$mpi_cpu_arch" != "x86" ; then
+          gcry_cv_gcc_inline_asm_sse41="n/a"
+        else
+          gcry_cv_gcc_inline_asm_sse41=no
+          AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[void a(void) {
+              int i;
+              __asm__("pextrd \$2, %%xmm0, %[out]\n\t" : [out] "=m" (i));
+            }]])],
+          [gcry_cv_gcc_inline_asm_sse41=yes])
+        fi])
+if test "$gcry_cv_gcc_inline_asm_sse41" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_INLINE_ASM_SSE41,1,
+     [Defined if inline assembler supports SSE4.1 instructions])
+fi
+
+
+#
 # Check whether GCC inline assembler supports AVX instructions
 #
 AC_CACHE_CHECK([whether GCC inline assembler supports AVX instructions],
@@ -1310,8 +1519,15 @@ AC_CACHE_CHECK([whether GCC inline assembler supports BMI2 instructions],
         else
           gcry_cv_gcc_inline_asm_bmi2=no
           AC_COMPILE_IFELSE([AC_LANG_SOURCE(
-          [[void a(void) {
-              __asm__("rorxl \$23, %%eax, %%edx\\n\\t":::"memory");
+          [[unsigned int a(unsigned int x, unsigned int y) {
+              unsigned int tmp1, tmp2;
+              asm ("rorxl %2, %1, %0"
+                   : "=r" (tmp1)
+                   : "rm0" (x), "J" (32 - ((23) & 31)));
+              asm ("andnl %2, %1, %0"
+                   : "=r" (tmp2)
+                   : "r0" (x), "rm" (y));
+              return tmp1 + tmp2;
             }]])],
           [gcry_cv_gcc_inline_asm_bmi2=yes])
         fi])
@@ -1440,7 +1656,6 @@ if test "$gcry_cv_gcc_platform_as_ok_for_intel_syntax" = "yes" ; then
             [Defined if underlying assembler is compatible with Intel syntax assembly implementations])
 fi
 
-
 #
 # Check whether compiler is configured for ARMv6 or newer architecture
 #
@@ -1502,6 +1717,121 @@ if test "$gcry_cv_gcc_inline_asm_neon" = "yes" ; then
 fi
 
 
+#
+# Check whether GCC inline assembler supports AArch32 Crypto Extension instructions
+#
+AC_CACHE_CHECK([whether GCC inline assembler supports AArch32 Crypto Extension instructions],
+       [gcry_cv_gcc_inline_asm_aarch32_crypto],
+       [if test "$mpi_cpu_arch" != "arm" ; then
+          gcry_cv_gcc_inline_asm_aarch32_crypto="n/a"
+        else
+          gcry_cv_gcc_inline_asm_aarch32_crypto=no
+          AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[__asm__(
+                ".syntax unified\n\t"
+                ".arch armv8-a\n\t"
+                ".arm\n\t"
+                ".fpu crypto-neon-fp-armv8\n\t"
+
+                "sha1h.32 q0, q0;\n\t"
+                "sha1c.32 q0, q0, q0;\n\t"
+                "sha1p.32 q0, q0, q0;\n\t"
+                "sha1su0.32 q0, q0, q0;\n\t"
+                "sha1su1.32 q0, q0;\n\t"
+
+                "sha256h.32 q0, q0, q0;\n\t"
+                "sha256h2.32 q0, q0, q0;\n\t"
+                "sha1p.32 q0, q0, q0;\n\t"
+                "sha256su0.32 q0, q0;\n\t"
+                "sha256su1.32 q0, q0, q15;\n\t"
+
+                "aese.8 q0, q0;\n\t"
+                "aesd.8 q0, q0;\n\t"
+                "aesmc.8 q0, q0;\n\t"
+                "aesimc.8 q0, q0;\n\t"
+
+                "vmull.p64 q0, d0, d0;\n\t"
+                );
+            ]])],
+          [gcry_cv_gcc_inline_asm_aarch32_crypto=yes])
+        fi])
+if test "$gcry_cv_gcc_inline_asm_aarch32_crypto" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_INLINE_ASM_AARCH32_CRYPTO,1,
+     [Defined if inline assembler supports AArch32 Crypto Extension instructions])
+fi
+
+
+#
+# Check whether GCC inline assembler supports AArch64 NEON instructions
+#
+AC_CACHE_CHECK([whether GCC inline assembler supports AArch64 NEON instructions],
+       [gcry_cv_gcc_inline_asm_aarch64_neon],
+       [if test "$mpi_cpu_arch" != "aarch64" ; then
+          gcry_cv_gcc_inline_asm_aarch64_neon="n/a"
+        else
+          gcry_cv_gcc_inline_asm_aarch64_neon=no
+          AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[__asm__(
+                ".cpu generic+simd\n\t"
+                "mov w0, \#42;\n\t"
+                "dup v0.8b, w0;\n\t"
+                "ld4 {v0.8b,v1.8b,v2.8b,v3.8b},[x0],\#32;\n\t"
+                );
+            ]])],
+          [gcry_cv_gcc_inline_asm_aarch64_neon=yes])
+        fi])
+if test "$gcry_cv_gcc_inline_asm_aarch64_neon" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_INLINE_ASM_AARCH64_NEON,1,
+     [Defined if inline assembler supports AArch64 NEON instructions])
+fi
+
+
+#
+# Check whether GCC inline assembler supports AArch64 Crypto Extension instructions
+#
+AC_CACHE_CHECK([whether GCC inline assembler supports AArch64 Crypto Extension instructions],
+       [gcry_cv_gcc_inline_asm_aarch64_crypto],
+       [if test "$mpi_cpu_arch" != "aarch64" ; then
+          gcry_cv_gcc_inline_asm_aarch64_crypto="n/a"
+        else
+          gcry_cv_gcc_inline_asm_aarch64_crypto=no
+          AC_COMPILE_IFELSE([AC_LANG_SOURCE(
+          [[__asm__(
+                ".cpu generic+simd+crypto\n\t"
+
+                "mov w0, \#42;\n\t"
+                "dup v0.8b, w0;\n\t"
+                "ld4 {v0.8b,v1.8b,v2.8b,v3.8b},[x0],\#32;\n\t"
+
+                "sha1h s0, s0;\n\t"
+                "sha1c q0, s0, v0.4s;\n\t"
+                "sha1p q0, s0, v0.4s;\n\t"
+                "sha1su0 v0.4s, v0.4s, v0.4s;\n\t"
+                "sha1su1 v0.4s, v0.4s;\n\t"
+
+                "sha256h q0, q0, v0.4s;\n\t"
+                "sha256h2 q0, q0, v0.4s;\n\t"
+                "sha1p q0, s0, v0.4s;\n\t"
+                "sha256su0 v0.4s, v0.4s;\n\t"
+                "sha256su1 v0.4s, v0.4s, v31.4s;\n\t"
+
+                "aese v0.16b, v0.16b;\n\t"
+                "aesd v0.16b, v0.16b;\n\t"
+                "aesmc v0.16b, v0.16b;\n\t"
+                "aesimc v0.16b, v0.16b;\n\t"
+
+                "pmull v0.1q, v0.1d, v31.1d;\n\t"
+                "pmull2 v0.1q, v0.2d, v31.2d;\n\t"
+                );
+            ]])],
+          [gcry_cv_gcc_inline_asm_aarch64_crypto=yes])
+        fi])
+if test "$gcry_cv_gcc_inline_asm_aarch64_crypto" = "yes" ; then
+   AC_DEFINE(HAVE_GCC_INLINE_ASM_AARCH64_CRYPTO,1,
+     [Defined if inline assembler supports AArch64 Crypto Extension instructions])
+fi
+
+
 #######################################
 #### Checks for library functions. ####
 #######################################
@@ -1514,7 +1844,8 @@ AC_CHECK_FUNCS(strtoul memmove stricmp atexit raise)
 # Other checks
 AC_CHECK_FUNCS(strerror rand mmap getpagesize sysconf waitpid wait4)
 AC_CHECK_FUNCS(gettimeofday getrusage gethrtime clock_gettime syslog)
-AC_CHECK_FUNCS(fcntl ftruncate flockfile)
+AC_CHECK_FUNCS(syscall fcntl ftruncate flockfile getauxval elf_aux_info)
+AC_CHECK_FUNCS(explicit_bzero explicit_memset getentropy)
 
 GNUPG_CHECK_MLOCK
 
@@ -1525,7 +1856,7 @@ AC_REPLACE_FUNCS([getpid clock])
 
 
 #
-# Check wether it is necessary to link against libdl.
+# Check whether it is necessary to link against libdl.
 #
 DL_LIBS=""
 if test "$use_hmac_binary_check" = yes ; then
@@ -1537,18 +1868,6 @@ if test "$use_hmac_binary_check" = yes ; then
   LIBGCRYPT_CONFIG_LIBS="${LIBGCRYPT_CONFIG_LIBS} ${DL_LIBS}"
 fi
 AC_SUBST(DL_LIBS)
-
-#
-# Find fig2dev
-#
-AC_PATH_PROG([FIG2DEV], [fig2dev], [false])
-
-#
-# Check whether we need to link with a pthreads library.
-#
-if test "x$LIBTHREAD" != x; then
-  LIBGCRYPT_CONFIG_LIBS="${LIBGCRYPT_CONFIG_LIBS} ${LIBTHREAD}"
-fi
 
 
 #
@@ -1649,8 +1968,19 @@ AC_ARG_ENABLE(optimization,
                          CFLAGS=`echo $CFLAGS | sed 's/-O[[0-9]]//'`
                        fi])
 
+AC_MSG_NOTICE([checking for cc features])
 # CFLAGS mangling when using gcc.
 if test "$GCC" = yes; then
+    AC_MSG_CHECKING([if gcc supports -fno-delete-null-pointer-checks])
+    _gcc_cflags_save=$CFLAGS
+    CFLAGS="-fno-delete-null-pointer-checks"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([],[])],_gcc_wopt=yes,_gcc_wopt=no)
+    AC_MSG_RESULT($_gcc_wopt)
+    CFLAGS=$_gcc_cflags_save;
+    if test x"$_gcc_wopt" = xyes ; then
+       CFLAGS="$CFLAGS -fno-delete-null-pointer-checks"
+    fi
+
     CFLAGS="$CFLAGS -Wall"
     if test "$USE_MAINTAINER_MODE" = "yes"; then
         CFLAGS="$CFLAGS -Wcast-align -Wshadow -Wstrict-prototypes"
@@ -1682,7 +2012,6 @@ if test "$GCC" = yes; then
           CFLAGS="$CFLAGS -Wpointer-arith"
         fi
     fi
-
 fi
 
 # Check whether as(1) supports a noeexecstack feature.  This test
@@ -1718,9 +2047,19 @@ if test x"$aesnisupport" = xyes ; then
     aesnisupport="no (unsupported by compiler)"
   fi
 fi
+if test x"$shaextsupport" = xyes ; then
+  if test "$gcry_cv_gcc_inline_asm_shaext" != "yes" ; then
+    shaextsupport="no (unsupported by compiler)"
+  fi
+fi
 if test x"$pclmulsupport" = xyes ; then
   if test "$gcry_cv_gcc_inline_asm_pclmul" != "yes" ; then
     pclmulsupport="no (unsupported by compiler)"
+  fi
+fi
+if test x"$sse41support" = xyes ; then
+  if test "$gcry_cv_gcc_inline_asm_sse41" != "yes" ; then
+    sse41support="no (unsupported by compiler)"
   fi
 fi
 if test x"$avxsupport" = xyes ; then
@@ -1735,7 +2074,16 @@ if test x"$avx2support" = xyes ; then
 fi
 if test x"$neonsupport" = xyes ; then
   if test "$gcry_cv_gcc_inline_asm_neon" != "yes" ; then
-    neonsupport="no (unsupported by compiler)"
+    if test "$gcry_cv_gcc_inline_asm_aarch64_neon" != "yes" ; then
+      neonsupport="no (unsupported by compiler)"
+    fi
+  fi
+fi
+if test x"$armcryptosupport" = xyes ; then
+  if test "$gcry_cv_gcc_inline_asm_aarch32_crypto" != "yes" ; then
+    if test "$gcry_cv_gcc_inline_asm_aarch64_crypto" != "yes" ; then
+      neonsupport="no (unsupported by compiler)"
+    fi
   fi
 fi
 
@@ -1743,9 +2091,17 @@ if test x"$aesnisupport" = xyes ; then
   AC_DEFINE(ENABLE_AESNI_SUPPORT, 1,
             [Enable support for Intel AES-NI instructions.])
 fi
+if test x"$shaextsupport" = xyes ; then
+  AC_DEFINE(ENABLE_SHAEXT_SUPPORT, 1,
+            [Enable support for Intel SHAEXT instructions.])
+fi
 if test x"$pclmulsupport" = xyes ; then
   AC_DEFINE(ENABLE_PCLMUL_SUPPORT, 1,
             [Enable support for Intel PCLMUL instructions.])
+fi
+if test x"$sse41support" = xyes ; then
+  AC_DEFINE(ENABLE_SSE41_SUPPORT, 1,
+            [Enable support for Intel SSE4.1 instructions.])
 fi
 if test x"$avxsupport" = xyes ; then
   AC_DEFINE(ENABLE_AVX_SUPPORT,1,
@@ -1758,6 +2114,14 @@ fi
 if test x"$neonsupport" = xyes ; then
   AC_DEFINE(ENABLE_NEON_SUPPORT,1,
             [Enable support for ARM NEON instructions.])
+fi
+if test x"$armcryptosupport" = xyes ; then
+  AC_DEFINE(ENABLE_ARM_CRYPTO_SUPPORT,1,
+            [Enable support for ARMv8 Crypto Extension instructions.])
+fi
+if test x"$jentsupport" = xyes ; then
+  AC_DEFINE(ENABLE_JENT_SUPPORT, 1,
+            [Enable support for the jitter entropy collector.])
 fi
 if test x"$padlocksupport" = xyes ; then
   AC_DEFINE(ENABLE_PADLOCK_SUPPORT, 1,
@@ -1844,10 +2208,23 @@ if test "$found" = "1" ; then
 
          # Build with the SSSE3 implementation
          GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-ssse3-amd64.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-ssse3-amd64-asm.lo"
       ;;
       arm*-*-*)
          # Build with the assembly implementation
          GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-arm.lo"
+
+         # Build with the ARMv8/AArch32 CE implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-armv8-ce.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-armv8-aarch32-ce.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-aarch64.lo"
+
+         # Build with the ARMv8/AArch64 CE implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-armv8-ce.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS rijndael-armv8-aarch64-ce.lo"
       ;;
    esac
 
@@ -1871,10 +2248,19 @@ if test "$found" = "1" ; then
       x86_64-*-*)
          # Build with the assembly implementation
          GCRYPT_CIPHERS="$GCRYPT_CIPHERS twofish-amd64.lo"
+
+         if test x"$avx2support" = xyes ; then
+            # Build with the AVX2 implementation
+            GCRYPT_CIPHERS="$GCRYPT_CIPHERS twofish-avx2-amd64.lo"
+         fi
       ;;
       arm*-*-*)
          # Build with the assembly implementation
          GCRYPT_CIPHERS="$GCRYPT_CIPHERS twofish-arm.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS twofish-aarch64.lo"
       ;;
    esac
 fi
@@ -1923,6 +2309,10 @@ if test "$found" = "1" ; then
       arm*-*-*)
          # Build with the assembly implementation
          GCRYPT_CIPHERS="$GCRYPT_CIPHERS camellia-arm.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS camellia-aarch64.lo"
       ;;
    esac
 
@@ -1979,9 +2369,12 @@ if test "$found" = "1" ; then
    case "${host}" in
       x86_64-*-*)
          # Build with the assembly implementation
-         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-sse2-amd64.lo"
-         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-ssse3-amd64.lo"
-         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-avx2-amd64.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-amd64-ssse3.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-amd64-avx2.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-aarch64.lo"
       ;;
    esac
 
@@ -1989,19 +2382,6 @@ if test "$found" = "1" ; then
      # Build with the NEON implementation
      GCRYPT_CIPHERS="$GCRYPT_CIPHERS chacha20-armv7-neon.lo"
    fi
-fi
-
-case "${host}" in
-   x86_64-*-*)
-      # Build with the assembly implementation
-      GCRYPT_CIPHERS="$GCRYPT_CIPHERS poly1305-sse2-amd64.lo"
-      GCRYPT_CIPHERS="$GCRYPT_CIPHERS poly1305-avx2-amd64.lo"
-   ;;
-esac
-
-if test x"$neonsupport" = xyes ; then
-   # Build with the NEON implementation
-   GCRYPT_CIPHERS="$GCRYPT_CIPHERS poly1305-armv7-neon.lo"
 fi
 
 LIST_MEMBER(dsa, $enabled_pubkey_ciphers)
@@ -2039,6 +2419,11 @@ if test "$found" = "1" ; then
       i?86-*-* | x86_64-*-*)
          # Build with the assembly implementation
          GCRYPT_DIGESTS="$GCRYPT_DIGESTS crc-intel-pclmul.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS crc-armv8-ce.lo"
+         GCRYPT_CIPHERS="$GCRYPT_CIPHERS crc-armv8-aarch64-ce.lo"
       ;;
    esac
 fi
@@ -2095,6 +2480,21 @@ if test "$found" = "1" ; then
          GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha256-avx-amd64.lo"
          GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha256-avx2-bmi2-amd64.lo"
       ;;
+      arm*-*-*)
+         # Build with the assembly implementation
+         GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha256-armv8-aarch32-ce.lo"
+      ;;
+      aarch64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha256-armv8-aarch64-ce.lo"
+      ;;
+   esac
+
+   case "$mpi_cpu_arch" in
+     x86)
+       # Build with the SHAEXT implementation
+       GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha256-intel-shaext.lo"
+     ;;
    esac
 fi
 
@@ -2159,6 +2559,20 @@ if test "$found" = "1" ; then
    esac
 fi
 
+LIST_MEMBER(blake2, $enabled_digests)
+if test "$found" = "1" ; then
+   GCRYPT_DIGESTS="$GCRYPT_DIGESTS blake2.lo"
+   AC_DEFINE(USE_BLAKE2, 1, [Defined if this module should be included])
+
+   case "${host}" in
+      x86_64-*-*)
+         # Build with the assembly implementation
+         GCRYPT_DIGESTS="$GCRYPT_DIGESTS blake2b-amd64-avx2.lo"
+         GCRYPT_DIGESTS="$GCRYPT_DIGESTS blake2s-amd64-avx.lo"
+      ;;
+   esac
+fi
+
 # SHA-1 needs to be included always for example because it is used by
 # random-csprng.c.
 GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1.lo"
@@ -2170,12 +2584,31 @@ case "${host}" in
     GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-ssse3-amd64.lo"
     GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-avx-amd64.lo"
     GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-avx-bmi2-amd64.lo"
+    GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-avx2-bmi2-amd64.lo"
   ;;
   arm*-*-*)
     # Build with the assembly implementation
     GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-armv7-neon.lo"
+    GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-armv8-aarch32-ce.lo"
+  ;;
+  aarch64-*-*)
+    # Build with the assembly implementation
+    GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-armv8-aarch64-ce.lo"
   ;;
 esac
+
+case "$mpi_cpu_arch" in
+  x86)
+    # Build with the SHAEXT implementation
+    GCRYPT_DIGESTS="$GCRYPT_DIGESTS sha1-intel-shaext.lo"
+  ;;
+esac
+
+LIST_MEMBER(sm3, $enabled_digests)
+if test "$found" = "1" ; then
+   GCRYPT_DIGESTS="$GCRYPT_DIGESTS sm3.lo"
+   AC_DEFINE(USE_SM3, 1, [Defined if this module should be included])
+fi
 
 LIST_MEMBER(scrypt, $enabled_kdfs)
 if test "$found" = "1" ; then
@@ -2193,7 +2626,6 @@ LIST_MEMBER(unix, $random_modules)
 if test "$found" = "1" ; then
    GCRYPT_RANDOM="$GCRYPT_RANDOM rndunix.lo"
    AC_DEFINE(USE_RNDUNIX, 1, [Defined if the default Unix RNG should be used.])
-   print_egd_notice=yes
 fi
 
 LIST_MEMBER(egd, $random_modules)
@@ -2251,7 +2683,7 @@ GCRYPT_HWF_MODULES=
 case "$mpi_cpu_arch" in
      x86)
         AC_DEFINE(HAVE_CPU_ARCH_X86, 1,   [Defined for the x86 platforms])
-        GCRYPT_HWF_MODULES="hwf-x86.lo"
+        GCRYPT_HWF_MODULES="libgcrypt_la-hwf-x86.lo"
         ;;
      alpha)
         AC_DEFINE(HAVE_CPU_ARCH_ALPHA, 1, [Defined for Alpha platforms])
@@ -2270,7 +2702,11 @@ case "$mpi_cpu_arch" in
         ;;
      arm)
         AC_DEFINE(HAVE_CPU_ARCH_ARM, 1,   [Defined for ARM platforms])
-        GCRYPT_HWF_MODULES="hwf-arm.lo"
+        GCRYPT_HWF_MODULES="libgcrypt_la-hwf-arm.lo"
+        ;;
+     aarch64)
+        AC_DEFINE(HAVE_CPU_ARCH_ARM, 1,   [Defined for ARM AArch64 platforms])
+        GCRYPT_HWF_MODULES="libgcrypt_la-hwf-arm.lo"
         ;;
 esac
 AC_SUBST([GCRYPT_HWF_MODULES])
@@ -2287,16 +2723,6 @@ AM_CONDITIONAL([BUILD_DOC], [test "x$build_doc" != xno])
 
 
 #
-# Option to disable building of test programs
-#
-build_tests=yes
-AC_ARG_ENABLE([tests], AC_HELP_STRING([--disable-tests],
-                                    [do not build the tests]),
-                     build_tests=$enableval, build_tests=yes)
-AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
-
-
-#
 # Provide information about the build.
 #
 BUILD_REVISION="mym4_revision"
@@ -2305,9 +2731,11 @@ AC_DEFINE_UNQUOTED(BUILD_REVISION, "$BUILD_REVISION",
                    [GIT commit id revision used to build this package])
 
 changequote(,)dnl
-BUILD_FILEVERSION=`echo "$VERSION" | sed 's/\([0-9.]*\).*/\1./;s/\./,/g'`
+BUILD_VERSION=`echo "$PACKAGE_VERSION" | sed 's/\([0-9.]*\).*/\1./'`
 changequote([,])dnl
-BUILD_FILEVERSION="${BUILD_FILEVERSION}mym4_revision_dec"
+BUILD_VERSION="${BUILD_VERSION}mym4_revision_dec"
+BUILD_FILEVERSION=`echo "${BUILD_VERSION}" | tr . ,`
+AC_SUBST(BUILD_VERSION)
 AC_SUBST(BUILD_FILEVERSION)
 
 AC_ARG_ENABLE([build-timestamp],
@@ -2337,10 +2765,12 @@ doc/Makefile
 src/Makefile
 src/gcrypt.h
 src/libgcrypt-config
+src/libgcrypt.pc
 src/versioninfo.rc
 tests/Makefile
 ])
 AC_CONFIG_FILES([tests/hashtest-256g], [chmod +x tests/hashtest-256g])
+AC_CONFIG_FILES([tests/basic-disable-all-hwf], [chmod +x tests/basic-disable-all-hwf])
 AC_OUTPUT
 
 
@@ -2358,14 +2788,18 @@ GCRY_MSG_WRAP([Enabled digest algorithms:],[$enabled_digests])
 GCRY_MSG_WRAP([Enabled kdf algorithms:   ],[$enabled_kdfs])
 GCRY_MSG_WRAP([Enabled pubkey algorithms:],[$enabled_pubkey_ciphers])
 GCRY_MSG_SHOW([Random number generator:  ],[$random])
+GCRY_MSG_SHOW([Try using jitter entropy: ],[$jentsupport])
 GCRY_MSG_SHOW([Using linux capabilities: ],[$use_capabilities])
 GCRY_MSG_SHOW([Try using Padlock crypto: ],[$padlocksupport])
 GCRY_MSG_SHOW([Try using AES-NI crypto:  ],[$aesnisupport])
+GCRY_MSG_SHOW([Try using Intel SHAEXT:   ],[$shaextsupport])
 GCRY_MSG_SHOW([Try using Intel PCLMUL:   ],[$pclmulsupport])
+GCRY_MSG_SHOW([Try using Intel SSE4.1:   ],[$sse41support])
 GCRY_MSG_SHOW([Try using DRNG (RDRAND):  ],[$drngsupport])
 GCRY_MSG_SHOW([Try using Intel AVX:      ],[$avxsupport])
 GCRY_MSG_SHOW([Try using Intel AVX2:     ],[$avx2support])
 GCRY_MSG_SHOW([Try using ARM NEON:       ],[$neonsupport])
+GCRY_MSG_SHOW([Try using ARMv8 crypto:   ],[$armcryptosupport])
 GCRY_MSG_SHOW([],[])
 
 if test "x${gpg_config_script_warn}" != x; then
@@ -2374,23 +2808,6 @@ cat <<G10EOF
         be used libraries have been been detected for:
          ${gpg_config_script_warn}
         Please check above for warning messages.
-
-G10EOF
-fi
-if test "$print_egd_notice" = "yes"; then
-cat <<G10EOF
-   The performance of the Unix random gatherer module (rndunix) is not
-   very good and it does not keep the entropy pool over multiple
-   invocations of Libgcrypt base applications.  The suggested way to
-   overcome this problem is to use the
-
-                 Entropy Gathering Daemon (EGD)
-
-   which provides a entropy source for the whole system.  It is written
-   in Perl and available at the GnuPG FTP servers.  For more information
-   consult the GnuPG site:
-
-          https://gnupg.org/related_software/swlist.html#egd
 
 G10EOF
 fi

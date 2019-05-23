@@ -23,17 +23,7 @@
 #if (defined(HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS) || \
      defined(HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS)) && defined(USE_CAST5)
 
-#if defined(HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS) || !defined(__PIC__)
-#  define GET_EXTERN_POINTER(name, reg) leaq name, reg
-#else
-#  define GET_EXTERN_POINTER(name, reg) movq name@GOTPCREL(%rip), reg
-#endif
-
-#ifdef HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS
-# define ELF(...) __VA_ARGS__
-#else
-# define ELF(...) /*_*/
-#endif
+#include "asm-common-amd64.h"
 
 .text
 
@@ -193,8 +183,13 @@ _gcry_cast5_amd64_encrypt_block:
 	 *	%rsi: dst
 	 *	%rdx: src
 	 */
+	CFI_STARTPROC();
+	ENTER_SYSV_FUNC_PARAMS_0_4
+
 	pushq %rbp;
+	CFI_PUSH(%rbp);
 	pushq %rbx;
+	CFI_PUSH(%rbx);
 
 	movq %rsi, %r10;
 
@@ -219,8 +214,13 @@ _gcry_cast5_amd64_encrypt_block:
 	write_block();
 
 	popq %rbx;
+	CFI_POP(%rbx);
 	popq %rbp;
+	CFI_POP(%rbp);
+
+	EXIT_SYSV_FUNC
 	ret;
+	CFI_ENDPROC();
 ELF(.size _gcry_cast5_amd64_encrypt_block,.-_gcry_cast5_amd64_encrypt_block;)
 
 .align 8
@@ -233,8 +233,13 @@ _gcry_cast5_amd64_decrypt_block:
 	 *	%rsi: dst
 	 *	%rdx: src
 	 */
+	CFI_STARTPROC();
+	ENTER_SYSV_FUNC_PARAMS_0_4
+
 	pushq %rbp;
+	CFI_PUSH(%rbp);
 	pushq %rbx;
+	CFI_PUSH(%rbx);
 
 	movq %rsi, %r10;
 
@@ -259,8 +264,13 @@ _gcry_cast5_amd64_decrypt_block:
 	write_block();
 
 	popq %rbx;
+	CFI_POP(%rbx);
 	popq %rbp;
+	CFI_POP(%rbp);
+
+	EXIT_SYSV_FUNC
 	ret;
+	CFI_ENDPROC();
 ELF(.size _gcry_cast5_amd64_decrypt_block,.-_gcry_cast5_amd64_decrypt_block;)
 
 /**********************************************************************
@@ -373,6 +383,7 @@ __cast5_enc_blk4:
 	 * output:
 	 *	RLR0,RLR1,RLR2,RLR3: four output ciphertext blocks
 	 */
+	CFI_STARTPROC();
 	GET_EXTERN_POINTER(_gcry_cast5_s1to4, RTAB);
 
 	get_round_km(0, RKM0d);
@@ -389,6 +400,7 @@ __cast5_enc_blk4:
 
 	outbswap_block4(RLR0, RLR1, RLR2, RLR3);
 	ret;
+	CFI_ENDPROC();
 ELF(.size __cast5_enc_blk4,.-__cast5_enc_blk4;)
 
 .align 8
@@ -401,6 +413,7 @@ __cast5_dec_blk4:
 	 * output:
 	 *	RLR0,RLR1,RLR2,RLR3: four output plaintext blocks
 	 */
+	CFI_STARTPROC();
 	GET_EXTERN_POINTER(_gcry_cast5_s1to4, RTAB);
 
 	inbswap_block4(RLR0, RLR1, RLR2, RLR3);
@@ -418,6 +431,7 @@ __cast5_dec_blk4:
 	round_dec_last4(1, F4_2, F4_1);
 
 	outbswap_block4(RLR0, RLR1, RLR2, RLR3);
+	CFI_ENDPROC();
 	ret;
 ELF(.size __cast5_dec_blk4,.-__cast5_dec_blk4;)
 
@@ -427,19 +441,28 @@ ELF(.type   _gcry_cast5_amd64_ctr_enc,@function;)
 _gcry_cast5_amd64_ctr_enc:
 	/* input:
 	 *	%rdi: ctx, CTX
-	 *	%rsi: dst (8 blocks)
-	 *	%rdx: src (8 blocks)
+	 *	%rsi: dst (4 blocks)
+	 *	%rdx: src (4 blocks)
 	 *	%rcx: iv (big endian, 64bit)
 	 */
+	CFI_STARTPROC();
+	ENTER_SYSV_FUNC_PARAMS_0_4
 
 	pushq %rbp;
+	CFI_PUSH(%rbp);
 	pushq %rbx;
+	CFI_PUSH(%rbx);
 	pushq %r12;
+	CFI_PUSH(%r12);
 	pushq %r13;
+	CFI_PUSH(%r13);
 	pushq %r14;
+	CFI_PUSH(%r14);
 
 	pushq %rsi;
+	CFI_PUSH(%rsi);
 	pushq %rdx;
+	CFI_PUSH(%rdx);
 
 	/* load IV and byteswap */
 	movq (%rcx), RX0;
@@ -459,7 +482,9 @@ _gcry_cast5_amd64_ctr_enc:
 	call __cast5_enc_blk4;
 
 	popq %r14; /*src*/
+	CFI_POP_TMP_REG();
 	popq %r13; /*dst*/
+	CFI_POP_TMP_REG();
 
 	/* XOR key-stream with plaintext */
 	xorq 0 * 8(%r14), RLR0;
@@ -472,11 +497,19 @@ _gcry_cast5_amd64_ctr_enc:
 	movq RLR3, 3 * 8(%r13);
 
 	popq %r14;
+	CFI_POP(%r14);
 	popq %r13;
+	CFI_POP(%r13);
 	popq %r12;
+	CFI_POP(%r12);
 	popq %rbx;
+	CFI_POP(%rbx);
 	popq %rbp;
+	CFI_POP(%rbp);
+
+	EXIT_SYSV_FUNC
 	ret
+	CFI_ENDPROC();
 ELF(.size _gcry_cast5_amd64_ctr_enc,.-_gcry_cast5_amd64_ctr_enc;)
 
 .align 8
@@ -485,20 +518,30 @@ ELF(.type   _gcry_cast5_amd64_cbc_dec,@function;)
 _gcry_cast5_amd64_cbc_dec:
 	/* input:
 	 *	%rdi: ctx, CTX
-	 *	%rsi: dst (8 blocks)
-	 *	%rdx: src (8 blocks)
+	 *	%rsi: dst (4 blocks)
+	 *	%rdx: src (4 blocks)
 	 *	%rcx: iv (64bit)
 	 */
+	CFI_STARTPROC();
+	ENTER_SYSV_FUNC_PARAMS_0_4
 
 	pushq %rbp;
+	CFI_PUSH(%rbp);
 	pushq %rbx;
+	CFI_PUSH(%rbx);
 	pushq %r12;
+	CFI_PUSH(%r12);
 	pushq %r13;
+	CFI_PUSH(%r13);
 	pushq %r14;
+	CFI_PUSH(%r14);
 
 	pushq %rcx;
+	CFI_PUSH(%rcx);
 	pushq %rsi;
+	CFI_PUSH(%rsi);
 	pushq %rdx;
+	CFI_PUSH(%rdx);
 
 	/* load input */
 	movq 0 * 8(%rdx), RLR0;
@@ -509,8 +552,11 @@ _gcry_cast5_amd64_cbc_dec:
 	call __cast5_dec_blk4;
 
 	popq RX0; /*src*/
+	CFI_POP_TMP_REG();
 	popq RX1; /*dst*/
+	CFI_POP_TMP_REG();
 	popq RX2; /*iv*/
+	CFI_POP_TMP_REG();
 
 	movq 3 * 8(RX0), %r14;
 	xorq      (RX2), RLR0;
@@ -525,12 +571,19 @@ _gcry_cast5_amd64_cbc_dec:
 	movq RLR3, 3 * 8(RX1);
 
 	popq %r14;
+	CFI_POP(%r14);
 	popq %r13;
+	CFI_POP(%r13);
 	popq %r12;
+	CFI_POP(%r12);
 	popq %rbx;
+	CFI_POP(%rbx);
 	popq %rbp;
-	ret;
+	CFI_POP(%rbp);
 
+	EXIT_SYSV_FUNC
+	ret;
+	CFI_ENDPROC();
 ELF(.size _gcry_cast5_amd64_cbc_dec,.-_gcry_cast5_amd64_cbc_dec;)
 
 .align 8
@@ -539,19 +592,28 @@ ELF(.type   _gcry_cast5_amd64_cfb_dec,@function;)
 _gcry_cast5_amd64_cfb_dec:
 	/* input:
 	 *	%rdi: ctx, CTX
-	 *	%rsi: dst (8 blocks)
-	 *	%rdx: src (8 blocks)
+	 *	%rsi: dst (4 blocks)
+	 *	%rdx: src (4 blocks)
 	 *	%rcx: iv (64bit)
 	 */
+	CFI_STARTPROC();
+	ENTER_SYSV_FUNC_PARAMS_0_4
 
 	pushq %rbp;
+	CFI_PUSH(%rbp);
 	pushq %rbx;
+	CFI_PUSH(%rbx);
 	pushq %r12;
+	CFI_PUSH(%r12);
 	pushq %r13;
+	CFI_PUSH(%r13);
 	pushq %r14;
+	CFI_PUSH(%r14);
 
 	pushq %rsi;
+	CFI_PUSH(%rsi);
 	pushq %rdx;
+	CFI_PUSH(%rdx);
 
 	/* Load input */
 	movq (%rcx), RLR0;
@@ -568,7 +630,9 @@ _gcry_cast5_amd64_cfb_dec:
 	call __cast5_enc_blk4;
 
 	popq %rdx; /*src*/
+	CFI_POP_TMP_REG();
 	popq %rcx; /*dst*/
+	CFI_POP_TMP_REG();
 
 	xorq 0 * 8(%rdx), RLR0;
 	xorq 1 * 8(%rdx), RLR1;
@@ -580,12 +644,19 @@ _gcry_cast5_amd64_cfb_dec:
 	movq RLR3, 3 * 8(%rcx);
 
 	popq %r14;
+	CFI_POP(%r14);
 	popq %r13;
+	CFI_POP(%r13);
 	popq %r12;
+	CFI_POP(%r12);
 	popq %rbx;
+	CFI_POP(%rbx);
 	popq %rbp;
-	ret;
+	CFI_POP(%rbp);
 
+	EXIT_SYSV_FUNC
+	ret;
+	CFI_ENDPROC();
 ELF(.size _gcry_cast5_amd64_cfb_dec,.-_gcry_cast5_amd64_cfb_dec;)
 
 #endif /*defined(USE_CAST5)*/

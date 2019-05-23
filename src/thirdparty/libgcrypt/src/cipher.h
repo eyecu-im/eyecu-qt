@@ -115,11 +115,35 @@ gcry_err_code_t _gcry_cipher_cmac_set_subkeys
 /*-- rmd160.c --*/
 void _gcry_rmd160_hash_buffer (void *outbuf,
                                const void *buffer, size_t length);
+
 /*-- sha1.c --*/
 void _gcry_sha1_hash_buffer (void *outbuf,
                              const void *buffer, size_t length);
 void _gcry_sha1_hash_buffers (void *outbuf,
                               const gcry_buffer_t *iov, int iovcnt);
+
+/*-- sha256.c --*/
+void _gcry_sha256_hash_buffer (void *outbuf,
+                               const void *buffer, size_t length);
+void _gcry_sha256_hash_buffers (void *outbuf,
+                                const gcry_buffer_t *iov, int iovcnt);
+
+/*-- sha512.c --*/
+void _gcry_sha512_hash_buffer (void *outbuf,
+                               const void *buffer, size_t length);
+void _gcry_sha512_hash_buffers (void *outbuf,
+                                const gcry_buffer_t *iov, int iovcnt);
+
+/*-- sm3.c --*/
+void _gcry_sm3_hash_buffer (void *outbuf,
+                            const void *buffer, size_t length);
+void _gcry_sm3_hash_buffers (void *outbuf,
+                             const gcry_buffer_t *iov, int iovcnt);
+
+/*-- blake2.c --*/
+gcry_err_code_t _gcry_blake2_init_with_key(void *ctx, unsigned int flags,
+					   const unsigned char *key,
+					   size_t keylen, int algo);
 
 /*-- rijndael.c --*/
 void _gcry_aes_cfb_enc (void *context, unsigned char *iv,
@@ -141,6 +165,9 @@ size_t _gcry_aes_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 			    const void *inbuf_arg, size_t nblocks, int encrypt);
 size_t _gcry_aes_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 			   size_t nblocks);
+void _gcry_aes_xts_crypt (void *context, unsigned char *tweak,
+			  void *outbuf_arg, const void *inbuf_arg,
+			  size_t nblocks, int encrypt);
 
 /*-- blowfish.c --*/
 void _gcry_blowfish_cfb_dec (void *context, unsigned char *iv,
@@ -291,6 +318,8 @@ extern gcry_md_spec_t _gcry_digest_spec_sha224;
 extern gcry_md_spec_t _gcry_digest_spec_sha256;
 extern gcry_md_spec_t _gcry_digest_spec_sha384;
 extern gcry_md_spec_t _gcry_digest_spec_sha512;
+extern gcry_md_spec_t _gcry_digest_spec_sha512_224;
+extern gcry_md_spec_t _gcry_digest_spec_sha512_256;
 extern gcry_md_spec_t _gcry_digest_spec_sha3_224;
 extern gcry_md_spec_t _gcry_digest_spec_sha3_256;
 extern gcry_md_spec_t _gcry_digest_spec_sha3_512;
@@ -301,6 +330,15 @@ extern gcry_md_spec_t _gcry_digest_spec_tiger;
 extern gcry_md_spec_t _gcry_digest_spec_tiger1;
 extern gcry_md_spec_t _gcry_digest_spec_tiger2;
 extern gcry_md_spec_t _gcry_digest_spec_whirlpool;
+extern gcry_md_spec_t _gcry_digest_spec_blake2b_512;
+extern gcry_md_spec_t _gcry_digest_spec_blake2b_384;
+extern gcry_md_spec_t _gcry_digest_spec_blake2b_256;
+extern gcry_md_spec_t _gcry_digest_spec_blake2b_160;
+extern gcry_md_spec_t _gcry_digest_spec_blake2s_256;
+extern gcry_md_spec_t _gcry_digest_spec_blake2s_224;
+extern gcry_md_spec_t _gcry_digest_spec_blake2s_160;
+extern gcry_md_spec_t _gcry_digest_spec_blake2s_128;
+extern gcry_md_spec_t _gcry_digest_spec_sm3;
 
 /* Declarations for the pubkey cipher specifications.  */
 extern gcry_pk_spec_t _gcry_pubkey_spec_rsa;

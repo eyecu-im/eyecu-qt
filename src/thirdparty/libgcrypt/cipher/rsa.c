@@ -306,7 +306,7 @@ generate_std (RSA_secret_key *sk, unsigned int nbits, unsigned long use_e,
       mpi_add_ui (e, e, 2);
     }
 
-  /* calculate the secret key d = e^1 mod phi */
+  /* calculate the secret key d = e^-1 mod phi */
   d = mpi_snew ( nbits );
   mpi_invm (d, e, f );
   /* calculate the inverse of p and q (used for chinese remainder theorem)*/
@@ -710,7 +710,7 @@ generate_x931 (RSA_secret_key *sk, unsigned int nbits, unsigned long e_value,
   if (e_value < 3)
     return GPG_ERR_INV_VALUE;
 
-  /* Our implementaion requires E to be odd.  */
+  /* Our implementation requires E to be odd.  */
   if (!(e_value & 1))
     return GPG_ERR_INV_VALUE;
 
@@ -991,20 +991,85 @@ stronger_key_check ( RSA_secret_key *skey )
 #endif
 
 
-
-/****************
- * Secret key operation. Encrypt INPUT with SKEY and put result into OUTPUT.
+
+/* Secret key operation - standard version.
  *
  *	m = c^d mod n
- *
- * Or faster:
+ */
+static void
+secret_core_std (gcry_mpi_t M, gcry_mpi_t C,
+                 gcry_mpi_t D, gcry_mpi_t N)
+{
+  mpi_powm (M, C, D, N);
+}
+
+
+/* Secret key operation - using the CRT.
  *
  *      m1 = c ^ (d mod (p-1)) mod p
  *      m2 = c ^ (d mod (q-1)) mod q
  *      h = u * (m2 - m1) mod q
  *      m = m1 + h * p
- *
- * Where m is OUTPUT, c is INPUT and d,n,p,q,u are elements of SKEY.
+ */
+static void
+secret_core_crt (gcry_mpi_t M, gcry_mpi_t C,
+                 gcry_mpi_t D, unsigned int Nlimbs,
+                 gcry_mpi_t P, gcry_mpi_t Q, gcry_mpi_t U)
+{
+  gcry_mpi_t m1 = mpi_alloc_secure ( Nlimbs + 1 );
+  gcry_mpi_t m2 = mpi_alloc_secure ( Nlimbs + 1 );
+  gcry_mpi_t h  = mpi_alloc_secure ( Nlimbs + 1 );
+  gcry_mpi_t D_blind = mpi_alloc_secure ( Nlimbs + 1 );
+  gcry_mpi_t r;
+  unsigned int r_nbits;
+
+  r_nbits = mpi_get_nbits (P) / 4;
+  if (r_nbits < 96)
+    r_nbits = 96;
+  r = mpi_secure_new (r_nbits);
+
+  /* d_blind = (d mod (p-1)) + (p-1) * r            */
+  /* m1 = c ^ d_blind mod p */
+  _gcry_mpi_randomize (r, r_nbits, GCRY_WEAK_RANDOM);
+  mpi_set_highbit (r, r_nbits - 1);
+  mpi_sub_ui ( h, P, 1 );
+  mpi_mul ( D_blind, h, r );
+  mpi_fdiv_r ( h, D, h );
+  mpi_add ( D_blind, D_blind, h );
+  mpi_powm ( m1, C, D_blind, P );
+
+  /* d_blind = (d mod (q-1)) + (q-1) * r            */
+  /* m2 = c ^ d_blind mod q */
+  _gcry_mpi_randomize (r, r_nbits, GCRY_WEAK_RANDOM);
+  mpi_set_highbit (r, r_nbits - 1);
+  mpi_sub_ui ( h, Q, 1  );
+  mpi_mul ( D_blind, h, r );
+  mpi_fdiv_r ( h, D, h );
+  mpi_add ( D_blind, D_blind, h );
+  mpi_powm ( m2, C, D_blind, Q );
+
+  mpi_free ( r );
+  mpi_free ( D_blind );
+
+  /* h = u * ( m2 - m1 ) mod q */
+  mpi_sub ( h, m2, m1 );
+  if ( mpi_has_sign ( h ) )
+    mpi_add ( h, h, Q );
+  mpi_mulm ( h, U, h, Q );
+
+  /* m = m1 + h * p */
+  mpi_mul ( h, h, P );
+  mpi_add ( M, m1, h );
+
+  mpi_free ( h );
+  mpi_free ( m1 );
+  mpi_free ( m2 );
+}
+
+
+/* Secret key operation.
+ * Encrypt INPUT with SKEY and put result into
+ * OUTPUT.  SKEY has the secret key parameters.
  */
 static void
 secret (gcry_mpi_t output, gcry_mpi_t input, RSA_secret_key *skey )
@@ -1014,39 +1079,60 @@ secret (gcry_mpi_t output, gcry_mpi_t input, RSA_secret_key *skey )
 
   if (!skey->p || !skey->q || !skey->u)
     {
-      mpi_powm (output, input, skey->d, skey->n);
+      secret_core_std (output, input, skey->d, skey->n);
     }
   else
     {
-      gcry_mpi_t m1 = mpi_alloc_secure( mpi_get_nlimbs(skey->n)+1 );
-      gcry_mpi_t m2 = mpi_alloc_secure( mpi_get_nlimbs(skey->n)+1 );
-      gcry_mpi_t h  = mpi_alloc_secure( mpi_get_nlimbs(skey->n)+1 );
-
-      /* m1 = c ^ (d mod (p-1)) mod p */
-      mpi_sub_ui( h, skey->p, 1  );
-      mpi_fdiv_r( h, skey->d, h );
-      mpi_powm( m1, input, h, skey->p );
-      /* m2 = c ^ (d mod (q-1)) mod q */
-      mpi_sub_ui( h, skey->q, 1  );
-      mpi_fdiv_r( h, skey->d, h );
-      mpi_powm( m2, input, h, skey->q );
-      /* h = u * ( m2 - m1 ) mod q */
-      mpi_sub( h, m2, m1 );
-      if ( mpi_has_sign ( h ) )
-        mpi_add ( h, h, skey->q );
-      mpi_mulm( h, skey->u, h, skey->q );
-      /* m = m1 + h * p */
-      mpi_mul ( h, h, skey->p );
-      mpi_add ( output, m1, h );
-
-      mpi_free ( h );
-      mpi_free ( m1 );
-      mpi_free ( m2 );
+      secret_core_crt (output, input, skey->d, mpi_get_nlimbs (skey->n),
+                       skey->p, skey->q, skey->u);
     }
 }
 
 
+static void
+secret_blinded (gcry_mpi_t output, gcry_mpi_t input,
+                RSA_secret_key *sk, unsigned int nbits)
+{
+  gcry_mpi_t r;	           /* Random number needed for blinding.  */
+  gcry_mpi_t ri;	   /* Modular multiplicative inverse of r.  */
+  gcry_mpi_t bldata;       /* Blinded data to decrypt.  */
 
+  /* First, we need a random number r between 0 and n - 1, which is
+   * relatively prime to n (i.e. it is neither p nor q).  The random
+   * number needs to be only unpredictable, thus we employ the
+   * gcry_create_nonce function by using GCRY_WEAK_RANDOM with
+   * gcry_mpi_randomize.  */
+  r  = mpi_snew (nbits);
+  ri = mpi_snew (nbits);
+  bldata = mpi_snew (nbits);
+
+  do
+    {
+      _gcry_mpi_randomize (r, nbits, GCRY_WEAK_RANDOM);
+      mpi_mod (r, r, sk->n);
+    }
+  while (!mpi_invm (ri, r, sk->n));
+
+  /* Do blinding.  We calculate: y = (x * r^e) mod n, where r is the
+   * random number, e is the public exponent, x is the non-blinded
+   * input data and n is the RSA modulus.  */
+  mpi_powm (bldata, r, sk->e, sk->n);
+  mpi_mulm (bldata, bldata, input, sk->n);
+
+  /* Perform decryption.  */
+  secret (output, bldata, sk);
+  _gcry_mpi_release (bldata);
+
+  /* Undo blinding.  Here we calculate: y = (x * r^-1) mod n, where x
+   * is the blinded decrypted data, ri is the modular multiplicative
+   * inverse of r and n is the RSA modulus.  */
+  mpi_mulm (output, output, ri, sk->n);
+
+  _gcry_mpi_release (r);
+  _gcry_mpi_release (ri);
+}
+
+
 /*********************************************
  **************  interface  ******************
  *********************************************/
@@ -1206,7 +1292,7 @@ rsa_encrypt (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
     goto leave;
   if (DBG_CIPHER)
     log_mpidump ("rsa_encrypt data", data);
-  if (mpi_is_opaque (data))
+  if (!data || mpi_is_opaque (data))
     {
       rc = GPG_ERR_INV_DATA;
       goto leave;
@@ -1266,9 +1352,6 @@ rsa_decrypt (gcry_sexp_t *r_plain, gcry_sexp_t s_data, gcry_sexp_t keyparms)
   gcry_mpi_t data = NULL;
   RSA_secret_key sk = {NULL, NULL, NULL, NULL, NULL, NULL};
   gcry_mpi_t plain = NULL;
-  gcry_mpi_t r = NULL;	   /* Random number needed for blinding.  */
-  gcry_mpi_t ri = NULL;	   /* Modular multiplicative inverse of r.  */
-  gcry_mpi_t bldata = NULL;/* Blinded data to decrypt.  */
   unsigned char *unpad = NULL;
   size_t unpadlen = 0;
 
@@ -1321,44 +1404,10 @@ rsa_decrypt (gcry_sexp_t *r_plain, gcry_sexp_t s_data, gcry_sexp_t keyparms)
   /* We use blinding by default to mitigate timing attacks which can
      be practically mounted over the network as shown by Brumley and
      Boney in 2003.  */
-  if (!(ctx.flags & PUBKEY_FLAG_NO_BLINDING))
-    {
-      /* First, we need a random number r between 0 and n - 1, which
-	 is relatively prime to n (i.e. it is neither p nor q).  The
-	 random number needs to be only unpredictable, thus we employ
-	 the gcry_create_nonce function by using GCRY_WEAK_RANDOM with
-	 gcry_mpi_randomize.  */
-      r  = mpi_snew (ctx.nbits);
-      ri = mpi_snew (ctx.nbits);
-      bldata = mpi_snew (ctx.nbits);
-
-      do
-        {
-          _gcry_mpi_randomize (r, ctx.nbits, GCRY_WEAK_RANDOM);
-          mpi_mod (r, r, sk.n);
-        }
-      while (!mpi_invm (ri, r, sk.n));
-
-      /* Do blinding.  We calculate: y = (x * r^e) mod n, where r is
-         the random number, e is the public exponent, x is the
-         non-blinded data and n is the RSA modulus.  */
-      mpi_powm (bldata, r, sk.e, sk.n);
-      mpi_mulm (bldata, bldata, data, sk.n);
-
-      /* Perform decryption.  */
-      secret (plain, bldata, &sk);
-      _gcry_mpi_release (bldata); bldata = NULL;
-
-      /* Undo blinding.  Here we calculate: y = (x * r^-1) mod n,
-         where x is the blinded decrypted data, ri is the modular
-         multiplicative inverse of r and n is the RSA modulus.  */
-      mpi_mulm (plain, plain, ri, sk.n);
-
-      _gcry_mpi_release (r); r = NULL;
-      _gcry_mpi_release (ri); ri = NULL;
-    }
-  else
+  if ((ctx.flags & PUBKEY_FLAG_NO_BLINDING))
     secret (plain, data, &sk);
+  else
+    secret_blinded (plain, data, &sk, ctx.nbits);
 
   if (DBG_CIPHER)
     log_printmpi ("rsa_decrypt  res", plain);
@@ -1403,9 +1452,6 @@ rsa_decrypt (gcry_sexp_t *r_plain, gcry_sexp_t s_data, gcry_sexp_t keyparms)
   _gcry_mpi_release (sk.q);
   _gcry_mpi_release (sk.u);
   _gcry_mpi_release (data);
-  _gcry_mpi_release (r);
-  _gcry_mpi_release (ri);
-  _gcry_mpi_release (bldata);
   sexp_release (l1);
   _gcry_pk_util_free_encoding_ctx (&ctx);
   if (DBG_CIPHER)
@@ -1461,7 +1507,10 @@ rsa_sign (gcry_sexp_t *r_sig, gcry_sexp_t s_data, gcry_sexp_t keyparms)
 
   /* Do RSA computation.  */
   sig = mpi_new (0);
-  secret (sig, data, &sk);
+  if ((ctx.flags & PUBKEY_FLAG_NO_BLINDING))
+    secret (sig, data, &sk);
+  else
+    secret_blinded (sig, data, &sk, ctx.nbits);
   if (DBG_CIPHER)
     log_printmpi ("rsa_sign    res", sig);
 

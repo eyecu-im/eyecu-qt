@@ -758,7 +758,8 @@ gen_prime (unsigned int nbits, int secret, int randomlevel,
   if (nbits < 16)
     log_fatal ("can't generate a prime with less than %d bits\n", 16);
 
-  mods = xmalloc (no_of_small_prime_numbers * sizeof *mods);
+  mods = (secret? xmalloc_secure (no_of_small_prime_numbers * sizeof *mods)
+          /* */ : xmalloc (no_of_small_prime_numbers * sizeof *mods));
   /* Make nbits fit into gcry_mpi_t implementation. */
   val_2  = mpi_alloc_set_ui( 2 );
   val_3 = mpi_alloc_set_ui( 3);
@@ -935,20 +936,25 @@ is_prime (gcry_mpi_t n, int steps, unsigned int *count)
         }
       else
         {
-          _gcry_mpi_randomize( x, nbits, GCRY_WEAK_RANDOM );
+          /* We need to loop to avoid an X with value 0 or 1.  */
+          do
+            {
+              _gcry_mpi_randomize (x, nbits, GCRY_WEAK_RANDOM);
 
-          /* Make sure that the number is smaller than the prime and
-             keep the randomness of the high bit. */
-          if ( mpi_test_bit ( x, nbits-2) )
-            {
-              mpi_set_highbit ( x, nbits-2); /* Clear all higher bits. */
+              /* Make sure that the number is smaller than the prime
+               * and keep the randomness of the high bit. */
+              if (mpi_test_bit (x, nbits-2))
+                {
+                  mpi_set_highbit (x, nbits-2); /* Clear all higher bits. */
+                }
+              else
+                {
+                  mpi_set_highbit (x, nbits-2);
+                  mpi_clear_bit (x, nbits-2);
+                }
             }
-          else
-            {
-              mpi_set_highbit( x, nbits-2 );
-              mpi_clear_bit( x, nbits-2 );
-            }
-          gcry_assert (mpi_cmp (x, nminus1) < 0 && mpi_cmp_ui (x, 1) > 0);
+          while (mpi_cmp_ui (x, 1) <= 0);
+          gcry_assert (mpi_cmp (x, nminus1) < 0);
 	}
       mpi_powm ( y, x, q, n);
       if ( mpi_cmp_ui(y, 1) && mpi_cmp( y, nminus1 ) )
@@ -1301,7 +1307,7 @@ find_x931_prime (const gcry_mpi_t pfirst)
   mpi_set_bit (prime, 0);
 
   /* We use 64 Rabin-Miller rounds which is better and thus
-     sufficient.  We do not have a Lucas test implementaion thus we
+     sufficient.  We do not have a Lucas test implementation thus we
      can't do it in the X9.31 preferred way of running a few
      Rabin-Miller followed by one Lucas test.  */
   while ( !check_prime (prime, val_2, 64, NULL, NULL) )

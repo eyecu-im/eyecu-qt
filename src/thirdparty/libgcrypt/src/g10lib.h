@@ -75,6 +75,16 @@
 #define GCC_ATTR_UNUSED
 #endif
 
+#if __GNUC__ >= 3
+#define LIKELY(expr)      __builtin_expect( !!(expr), 1 )
+#define UNLIKELY(expr)    __builtin_expect( !!(expr), 0 )
+#define CONSTANT_P(expr)  __builtin_constant_p( expr )
+#else
+#define LIKELY(expr)      (!!(expr))
+#define UNLIKELY(expr)    (!!(expr))
+#define CONSTANT_P(expr)  (0)
+#endif
+
 /* Gettext macros.  */
 
 #define _(a)  _gcry_gettext(a)
@@ -88,13 +98,21 @@
 #define DIM(v) (sizeof(v)/sizeof((v)[0]))
 #define DIMof(type,member)   DIM(((type *)0)->member)
 
+#define my_isascii(c) (!((c) & 0x80))
+
+
 
 
 /*-- src/global.c -*/
+extern int _gcry_global_any_init_done;
 int _gcry_global_is_operational (void);
 gcry_err_code_t _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr);
-void  _gcry_check_heap (const void *a);
+void _gcry_check_heap (const void *a);
+void _gcry_pre_syscall (void);
+void _gcry_post_syscall (void);
 int _gcry_get_debug_flag (unsigned int mask);
+
+char *_gcry_get_config (int mode, const char *what);
 
 /* Malloc functions and common wrapper macros.  */
 void *_gcry_malloc (size_t n) _GCRY_GCC_ATTR_MALLOC;
@@ -150,8 +168,6 @@ void _gcry_log_bug( const char *fmt, ... )   JNLIB_GCC_A_NR_PRINTF(1,2);
 void _gcry_log_fatal( const char *fmt, ... ) JNLIB_GCC_A_NR_PRINTF(1,2);
 void _gcry_log_error( const char *fmt, ... ) JNLIB_GCC_A_PRINTF(1,2);
 void _gcry_log_info( const char *fmt, ... )  JNLIB_GCC_A_PRINTF(1,2);
-int  _gcry_log_info_with_dummy_fp (FILE *fp, const char *fmt, ... )
-                                             JNLIB_GCC_A_PRINTF(2,3);
 void _gcry_log_debug( const char *fmt, ... ) JNLIB_GCC_A_PRINTF(1,2);
 void _gcry_log_printf ( const char *fmt, ... ) JNLIB_GCC_A_PRINTF(1,2);
 void _gcry_log_printhex (const char *text, const void *buffer, size_t length);
@@ -161,17 +177,18 @@ void _gcry_log_printsxp (const char *text, gcry_sexp_t sexp);
 void _gcry_set_log_verbosity( int level );
 int _gcry_log_verbosity( int level );
 
+
 #ifdef JNLIB_GCC_M_FUNCTION
 #define BUG() _gcry_bug( __FILE__ , __LINE__, __FUNCTION__ )
-#define gcry_assert(expr) ((expr)? (void)0 \
+#define gcry_assert(expr) (LIKELY(expr)? (void)0 \
          : _gcry_assert_failed (STR(expr), __FILE__, __LINE__, __FUNCTION__))
 #elif __STDC_VERSION__ >= 199901L
 #define BUG() _gcry_bug( __FILE__ , __LINE__, __func__ )
-#define gcry_assert(expr) ((expr)? (void)0 \
+#define gcry_assert(expr) (LIKELY(expr)? (void)0 \
          : _gcry_assert_failed (STR(expr), __FILE__, __LINE__, __func__))
 #else
 #define BUG() _gcry_bug( __FILE__ , __LINE__ )
-#define gcry_assert(expr) ((expr)? (void)0 \
+#define gcry_assert(expr) (LIKELY(expr)? (void)0 \
          : _gcry_assert_failed (STR(expr), __FILE__, __LINE__))
 #endif
 
@@ -194,23 +211,31 @@ char **_gcry_strtokenize (const char *string, const char *delim);
 
 
 /*-- src/hwfeatures.c --*/
-#define HWF_PADLOCK_RNG     (1 << 0)
-#define HWF_PADLOCK_AES     (1 << 1)
-#define HWF_PADLOCK_SHA     (1 << 2)
-#define HWF_PADLOCK_MMUL    (1 << 3)
+#define HWF_PADLOCK_RNG         (1 << 0)
+#define HWF_PADLOCK_AES         (1 << 1)
+#define HWF_PADLOCK_SHA         (1 << 2)
+#define HWF_PADLOCK_MMUL        (1 << 3)
 
-#define HWF_INTEL_CPU       (1 << 4)
-#define HWF_INTEL_FAST_SHLD (1 << 5)
-#define HWF_INTEL_BMI2      (1 << 6)
-#define HWF_INTEL_SSSE3     (1 << 7)
-#define HWF_INTEL_SSE4_1    (1 << 8)
-#define HWF_INTEL_PCLMUL    (1 << 9)
-#define HWF_INTEL_AESNI     (1 << 10)
-#define HWF_INTEL_RDRAND    (1 << 11)
-#define HWF_INTEL_AVX       (1 << 12)
-#define HWF_INTEL_AVX2      (1 << 13)
+#define HWF_INTEL_CPU           (1 << 4)
+#define HWF_INTEL_FAST_SHLD     (1 << 5)
+#define HWF_INTEL_BMI2          (1 << 6)
+#define HWF_INTEL_SSSE3         (1 << 7)
+#define HWF_INTEL_SSE4_1        (1 << 8)
+#define HWF_INTEL_PCLMUL        (1 << 9)
+#define HWF_INTEL_AESNI         (1 << 10)
+#define HWF_INTEL_RDRAND        (1 << 11)
+#define HWF_INTEL_AVX           (1 << 12)
+#define HWF_INTEL_AVX2          (1 << 13)
+#define HWF_INTEL_FAST_VPGATHER (1 << 14)
+#define HWF_INTEL_RDTSC         (1 << 15)
+#define HWF_INTEL_SHAEXT        (1 << 16)
 
-#define HWF_ARM_NEON        (1 << 14)
+#define HWF_ARM_NEON            (1 << 17)
+#define HWF_ARM_AES             (1 << 18)
+#define HWF_ARM_SHA1            (1 << 19)
+#define HWF_ARM_SHA2            (1 << 20)
+#define HWF_ARM_PMULL           (1 << 21)
+
 
 
 gpg_err_code_t _gcry_disable_hw_feature (const char *name);
@@ -309,60 +334,55 @@ void __gcry_burn_stack (unsigned int bytes);
 	do { __gcry_burn_stack (bytes); \
 	     __gcry_burn_stack_dummy (); } while(0)
 
-
 /* To avoid that a compiler optimizes certain memset calls away, these
-   macros may be used instead. */
+   macros may be used instead.  For small constant length buffers,
+   memory wiping is inlined.  For non-constant or large length buffers,
+   memory is wiped with memset through _gcry_fast_wipememory. */
 #define wipememory2(_ptr,_set,_len) do { \
-              volatile char *_vptr=(volatile char *)(_ptr); \
-              size_t _vlen=(_len); \
-              unsigned char _vset=(_set); \
-              fast_wipememory2(_vptr,_vset,_vlen); \
-              while(_vlen) { *_vptr=(_vset); _vptr++; _vlen--; } \
-                  } while(0)
+	      if (!CONSTANT_P(_len) || _len > 64) { \
+		if (CONSTANT_P(_set) && (_set) == 0) \
+		  _gcry_fast_wipememory((void *)_ptr, _len); \
+		else \
+		  _gcry_fast_wipememory2((void *)_ptr, _set, _len); \
+	      } else {\
+		volatile char *_vptr = (volatile char *)(_ptr); \
+		size_t _vlen = (_len); \
+		const unsigned char _vset = (_set); \
+		fast_wipememory2(_vptr, _vset, _vlen); \
+		while(_vlen) { *_vptr = (_vset); _vptr++; _vlen--; } \
+	      } \
+	    } while(0)
 #define wipememory(_ptr,_len) wipememory2(_ptr,0,_len)
 
-#define FASTWIPE_T u64
-#define FASTWIPE_MULT (U64_C(0x0101010101010101))
+void _gcry_fast_wipememory(void *ptr, size_t len);
+void _gcry_fast_wipememory2(void *ptr, int set, size_t len);
 
-/* Following architectures can handle unaligned accesses fast.  */
 #if defined(HAVE_GCC_ATTRIBUTE_PACKED) && \
     defined(HAVE_GCC_ATTRIBUTE_ALIGNED) && \
-    (defined(__i386__) || defined(__x86_64__) || \
-     defined(__powerpc__) || defined(__powerpc64__) || \
-     (defined(__arm__) && defined(__ARM_FEATURE_UNALIGNED)) || \
-     defined(__aarch64__))
-#define fast_wipememory2_unaligned_head(_ptr,_set,_len) /*do nothing*/
+    defined(HAVE_GCC_ATTRIBUTE_MAY_ALIAS)
 typedef struct fast_wipememory_s
 {
-  FASTWIPE_T a;
-} __attribute__((packed, aligned(1))) fast_wipememory_t;
+  u64 a;
+} __attribute__((packed, aligned(1), may_alias)) fast_wipememory_t;
+/* fast_wipememory may leave tail bytes unhandled, in which case tail bytes
+   are handled by wipememory. */
+# define fast_wipememory2(_vptr,_vset,_vlen) do { \
+	      fast_wipememory_t _vset_long; \
+	      if (_vlen < sizeof(fast_wipememory_t)) \
+		break; \
+	      _vset_long.a = (_vset); \
+	      _vset_long.a *= U64_C(0x0101010101010101); \
+	      do { \
+		volatile fast_wipememory_t *_vptr_long = \
+		  (volatile void *)_vptr; \
+		_vptr_long->a = _vset_long.a; \
+		_vlen -= sizeof(fast_wipememory_t); \
+		_vptr += sizeof(fast_wipememory_t); \
+	      } while (_vlen >= sizeof(fast_wipememory_t)); \
+	    } while (0)
 #else
-#define fast_wipememory2_unaligned_head(_vptr,_vset,_vlen) do { \
-              while((size_t)(_vptr)&(sizeof(FASTWIPE_T)-1) && _vlen) \
-                { *_vptr=(_vset); _vptr++; _vlen--; } \
-                  } while(0)
-typedef struct fast_wipememory_s
-{
-  FASTWIPE_T a;
-} fast_wipememory_t;
+# define fast_wipememory2(_vptr,_vset,_vlen)
 #endif
-
-/* fast_wipememory2 may leave tail bytes unhandled, in which case tail bytes
-   are handled by wipememory2. */
-#define fast_wipememory2(_vptr,_vset,_vlen) do { \
-              FASTWIPE_T _vset_long = _vset; \
-              fast_wipememory2_unaligned_head(_vptr,_vset,_vlen); \
-              if (_vlen < sizeof(FASTWIPE_T)) \
-                break; \
-              _vset_long *= FASTWIPE_MULT; \
-              do { \
-                volatile fast_wipememory_t *_vptr_long = \
-                  (volatile void *)_vptr; \
-                _vptr_long->a = _vset_long; \
-                _vlen -= sizeof(FASTWIPE_T); \
-                _vptr += sizeof(FASTWIPE_T); \
-              } while (_vlen >= sizeof(FASTWIPE_T)); \
-                  } while (0)
 
 
 /* Digit predicates.  */
@@ -386,6 +406,7 @@ gcry_err_code_t _gcry_mpi_init (void);
 
 /* Memory management.  */
 #define GCRY_ALLOC_FLAG_SECURE (1 << 0)
+#define GCRY_ALLOC_FLAG_XHINT  (1 << 1)  /* Called from xmalloc.  */
 
 
 /*-- sexp.c --*/
@@ -398,10 +419,18 @@ gpg_err_code_t _gcry_sexp_vextract_param (gcry_sexp_t sexp, const char *path,
 
 /*-- fips.c --*/
 
+extern int _gcry_no_fips_mode_required;
+
 void _gcry_initialize_fips_mode (int force);
 
-int _gcry_fips_mode (void);
-#define fips_mode() _gcry_fips_mode ()
+/* This macro returns true if fips mode is enabled.  This is
+   independent of the fips required finite state machine and only used
+   to enable fips specific code.
+
+   No locking is required because we have the requirement that this
+   variable is only initialized once with no other threads
+   existing.  */
+#define fips_mode() (!_gcry_no_fips_mode_required)
 
 int _gcry_enforced_fips_mode (void);
 
@@ -429,7 +458,13 @@ void _gcry_fips_signal_error (const char *srcfile,
 #endif
 
 int _gcry_fips_is_operational (void);
-#define fips_is_operational()   (_gcry_global_is_operational ())
+
+/* Return true if the library is in the operational state.  */
+#define fips_is_operational()   \
+        (!_gcry_global_any_init_done ? \
+                _gcry_global_is_operational() : \
+                (!fips_mode () || _gcry_global_is_operational ()))
+
 #define fips_not_operational()  (GPG_ERR_NOT_OPERATIONAL)
 
 int _gcry_fips_test_operational (void);

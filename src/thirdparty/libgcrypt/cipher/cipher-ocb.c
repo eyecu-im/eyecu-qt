@@ -48,86 +48,100 @@
 
 /* Double the OCB_BLOCK_LEN sized block B in-place.  */
 static inline void
-double_block (unsigned char *b)
+double_block (u64 b[2])
 {
-#if OCB_BLOCK_LEN != 16
-  unsigned char b_0 = b[0];
-  int i;
-
-  for (i=0; i < OCB_BLOCK_LEN - 1; i++)
-    b[i] = (b[i] << 1) | (b[i+1] >> 7);
-
-  b[OCB_BLOCK_LEN-1] = (b[OCB_BLOCK_LEN-1] << 1) ^ ((b_0 >> 7) * 135);
-#else
-  /* This is the generic code for 16 byte blocks.  However it is not
-     faster than the straight byte by byte implementation.  */
   u64 l_0, l, r;
 
-  l = buf_get_be64 (b);
-  r = buf_get_be64 (b + 8);
+  l = b[1];
+  r = b[0];
 
-  l_0 = (int64_t)l >> 63;
+  l_0 = -(l >> 63);
   l = (l + l) ^ (r >> 63);
   r = (r + r) ^ (l_0 & 135);
 
-  buf_put_be64 (b, l);
-  buf_put_be64 (b+8, r);
-#endif
+  b[1] = l;
+  b[0] = r;
 }
 
 
-/* Double the OCB_BLOCK_LEN sized block S and store it at D.  S and D
-   may point to the same memory location but they may not overlap.  */
+/* Copy OCB_BLOCK_LEN from buffer S starting at bit offset BITOFF to
+ * buffer D.  */
 static void
-double_block_cpy (unsigned char *d, const unsigned char *s)
+bit_copy (unsigned char *d, const unsigned char *s, unsigned int bitoff)
 {
-  if (d != s)
-    buf_cpy (d, s, OCB_BLOCK_LEN);
-  double_block (d);
-}
-
-
-/* Copy NBYTES from buffer S starting at bit offset BITOFF to buffer D.  */
-static void
-bit_copy (unsigned char *d, const unsigned char *s,
-          unsigned int bitoff, unsigned int nbytes)
-{
+  u64 s0l, s1l, s1r, s2r;
   unsigned int shift;
 
   s += bitoff / 8;
   shift = bitoff % 8;
-  if (shift)
-    {
-      for (; nbytes; nbytes--, d++, s++)
-        *d = (s[0] << shift) | (s[1] >> (8 - shift));
-    }
-  else
-    {
-      for (; nbytes; nbytes--, d++, s++)
-        *d = *s;
-    }
+
+  s0l = buf_get_be64 (s + 0);
+  s1l = buf_get_be64 (s + 8);
+  s1r = shift ? s1l : 0;
+  s2r = shift ? buf_get_be64 (s + 16) : 0;
+
+  buf_put_be64 (d + 0, (s0l << shift) | (s1r >> ((64 - shift) & 63)));
+  buf_put_be64 (d + 8, (s1l << shift) | (s2r >> ((64 - shift) & 63)));
 }
 
 
-/* Return the L-value for block N.  In most cases we use the table;
-   only if the lower OCB_L_TABLE_SIZE bits of N are zero we need to
-   compute it.  With a table size of 16 we need to this this only
-   every 65536-th block.  L_TMP is a helper buffer of size
-   OCB_BLOCK_LEN which is used to hold the computation if not taken
-   from the table.  */
-const unsigned char *
-_gcry_cipher_ocb_get_l (gcry_cipher_hd_t c, unsigned char *l_tmp, u64 n)
+/* Get L_big value for block N, where N is multiple of 65536. */
+static void
+ocb_get_L_big (gcry_cipher_hd_t c, u64 n, unsigned char *l_buf)
 {
   int ntz = _gcry_ctz64 (n);
+  u64 L[2];
 
-  if (ntz < OCB_L_TABLE_SIZE)
-    return c->u_mode.ocb.L[ntz];
+  gcry_assert(ntz >= OCB_L_TABLE_SIZE);
 
-  double_block_cpy (l_tmp, c->u_mode.ocb.L[OCB_L_TABLE_SIZE - 1]);
-  for (ntz -= OCB_L_TABLE_SIZE; ntz; ntz--)
-    double_block (l_tmp);
+  L[1] = buf_get_be64 (c->u_mode.ocb.L[OCB_L_TABLE_SIZE - 1]);
+  L[0] = buf_get_be64 (c->u_mode.ocb.L[OCB_L_TABLE_SIZE - 1] + 8);
 
-  return l_tmp;
+  for (ntz -= OCB_L_TABLE_SIZE - 1; ntz; ntz--)
+    double_block (L);
+
+  buf_put_be64 (l_buf + 0, L[1]);
+  buf_put_be64 (l_buf + 8, L[0]);
+}
+
+
+/* Called after key has been set. Sets up L table. */
+void _gcry_cipher_ocb_setkey (gcry_cipher_hd_t c)
+{
+  unsigned char ktop[OCB_BLOCK_LEN];
+  unsigned int burn = 0;
+  unsigned int nburn;
+  u64 L[2];
+  int i;
+
+  /* L_star = E(zero_128) */
+  memset (ktop, 0, OCB_BLOCK_LEN);
+  nburn = c->spec->encrypt (&c->context.c, c->u_mode.ocb.L_star, ktop);
+  burn = nburn > burn ? nburn : burn;
+  /* L_dollar = double(L_star)  */
+  L[1] = buf_get_be64 (c->u_mode.ocb.L_star);
+  L[0] = buf_get_be64 (c->u_mode.ocb.L_star + 8);
+  double_block (L);
+  buf_put_be64 (c->u_mode.ocb.L_dollar + 0, L[1]);
+  buf_put_be64 (c->u_mode.ocb.L_dollar + 8, L[0]);
+  /* L_0 = double(L_dollar), ...  */
+  double_block (L);
+  buf_put_be64 (c->u_mode.ocb.L[0] + 0, L[1]);
+  buf_put_be64 (c->u_mode.ocb.L[0] + 8, L[0]);
+  for (i = 1; i < OCB_L_TABLE_SIZE; i++)
+    {
+      double_block (L);
+      buf_put_be64 (c->u_mode.ocb.L[i] + 0, L[1]);
+      buf_put_be64 (c->u_mode.ocb.L[i] + 8, L[0]);
+    }
+  /* Precalculated offset L0+L1 */
+  cipher_block_xor (c->u_mode.ocb.L0L1,
+		    c->u_mode.ocb.L[0], c->u_mode.ocb.L[1], OCB_BLOCK_LEN);
+
+  /* Cleanup */
+  wipememory (ktop, sizeof ktop);
+  if (burn > 0)
+    _gcry_burn_stack (burn + 4*sizeof(void*));
 }
 
 
@@ -141,7 +155,6 @@ _gcry_cipher_ocb_set_nonce (gcry_cipher_hd_t c, const unsigned char *nonce,
   unsigned char ktop[OCB_BLOCK_LEN];
   unsigned char stretch[OCB_BLOCK_LEN + 8];
   unsigned int bottom;
-  int i;
   unsigned int burn = 0;
   unsigned int nburn;
 
@@ -167,20 +180,8 @@ _gcry_cipher_ocb_set_nonce (gcry_cipher_hd_t c, const unsigned char *nonce,
   if (noncelen > (120/8) || noncelen < (64/8) || noncelen >= OCB_BLOCK_LEN)
     return GPG_ERR_INV_LENGTH;
 
-  /* Set up the L table.  */
-  /* L_star = E(zero_128) */
-  memset (ktop, 0, OCB_BLOCK_LEN);
-  nburn = c->spec->encrypt (&c->context.c, c->u_mode.ocb.L_star, ktop);
-  burn = nburn > burn ? nburn : burn;
-  /* L_dollar = double(L_star)  */
-  double_block_cpy (c->u_mode.ocb.L_dollar, c->u_mode.ocb.L_star);
-  /* L_0 = double(L_dollar), ...  */
-  double_block_cpy (c->u_mode.ocb.L[0], c->u_mode.ocb.L_dollar);
-  for (i = 1; i < OCB_L_TABLE_SIZE; i++)
-    double_block_cpy (c->u_mode.ocb.L[i], c->u_mode.ocb.L[i-1]);
-
   /* Prepare the nonce.  */
-  memset (ktop, 0, (OCB_BLOCK_LEN - noncelen));
+  memset (ktop, 0, OCB_BLOCK_LEN);
   buf_cpy (ktop + (OCB_BLOCK_LEN - noncelen), nonce, noncelen);
   ktop[0] = ((c->u_mode.ocb.taglen * 8) % 128) << 1;
   ktop[OCB_BLOCK_LEN - noncelen - 1] |= 1;
@@ -189,11 +190,11 @@ _gcry_cipher_ocb_set_nonce (gcry_cipher_hd_t c, const unsigned char *nonce,
   nburn = c->spec->encrypt (&c->context.c, ktop, ktop);
   burn = nburn > burn ? nburn : burn;
   /* Stretch = Ktop || (Ktop[1..64] xor Ktop[9..72]) */
-  buf_cpy (stretch, ktop, OCB_BLOCK_LEN);
-  buf_xor (stretch + OCB_BLOCK_LEN, ktop, ktop + 1, 8);
+  cipher_block_cpy (stretch, ktop, OCB_BLOCK_LEN);
+  cipher_block_xor (stretch + OCB_BLOCK_LEN, ktop, ktop + 1, 8);
   /* Offset_0 = Stretch[1+bottom..128+bottom]
      (We use the IV field to store the offset) */
-  bit_copy (c->u_iv.iv, stretch, bottom, OCB_BLOCK_LEN);
+  bit_copy (c->u_iv.iv, stretch, bottom);
   c->marks.iv = 1;
 
   /* Checksum_0 = zeros(128)
@@ -241,7 +242,12 @@ gcry_err_code_t
 _gcry_cipher_ocb_authenticate (gcry_cipher_hd_t c, const unsigned char *abuf,
                                size_t abuflen)
 {
+  const size_t table_maxblks = 1 << OCB_L_TABLE_SIZE;
+  const u32 table_size_mask = ((1 << OCB_L_TABLE_SIZE) - 1);
   unsigned char l_tmp[OCB_BLOCK_LEN];
+  unsigned int burn = 0;
+  unsigned int nburn;
+  size_t n;
 
   /* Check that a nonce and thus a key has been set and that we have
      not yet computed the tag.  We also return an error if the aad has
@@ -256,70 +262,144 @@ _gcry_cipher_ocb_authenticate (gcry_cipher_hd_t c, const unsigned char *abuf,
   /* Process remaining data from the last call first.  */
   if (c->u_mode.ocb.aad_nleftover)
     {
-      for (; abuflen && c->u_mode.ocb.aad_nleftover < OCB_BLOCK_LEN;
-           abuf++, abuflen--)
-        c->u_mode.ocb.aad_leftover[c->u_mode.ocb.aad_nleftover++] = *abuf;
+      n = abuflen;
+      if (n > OCB_BLOCK_LEN - c->u_mode.ocb.aad_nleftover)
+	n = OCB_BLOCK_LEN - c->u_mode.ocb.aad_nleftover;
+
+      buf_cpy (&c->u_mode.ocb.aad_leftover[c->u_mode.ocb.aad_nleftover],
+	       abuf, n);
+      c->u_mode.ocb.aad_nleftover += n;
+      abuf += n;
+      abuflen -= n;
 
       if (c->u_mode.ocb.aad_nleftover == OCB_BLOCK_LEN)
         {
           c->u_mode.ocb.aad_nblocks++;
 
+          if ((c->u_mode.ocb.aad_nblocks % table_maxblks) == 0)
+            {
+              /* Table overflow, L needs to be generated. */
+              ocb_get_L_big(c, c->u_mode.ocb.aad_nblocks + 1, l_tmp);
+            }
+          else
+            {
+              cipher_block_cpy (l_tmp, ocb_get_l (c, c->u_mode.ocb.aad_nblocks),
+                                OCB_BLOCK_LEN);
+            }
+
           /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
-          buf_xor_1 (c->u_mode.ocb.aad_offset,
-                     ocb_get_l (c, l_tmp, c->u_mode.ocb.aad_nblocks),
-                     OCB_BLOCK_LEN);
+          cipher_block_xor_1 (c->u_mode.ocb.aad_offset, l_tmp, OCB_BLOCK_LEN);
           /* Sum_i = Sum_{i-1} xor ENCIPHER(K, A_i xor Offset_i)  */
-          buf_xor (l_tmp, c->u_mode.ocb.aad_offset,
-                   c->u_mode.ocb.aad_leftover, OCB_BLOCK_LEN);
-          c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
-          buf_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
+          cipher_block_xor (l_tmp, c->u_mode.ocb.aad_offset,
+                            c->u_mode.ocb.aad_leftover, OCB_BLOCK_LEN);
+          nburn = c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
+          burn = nburn > burn ? nburn : burn;
+          cipher_block_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
 
           c->u_mode.ocb.aad_nleftover = 0;
         }
     }
 
   if (!abuflen)
-    return 0;
-
-  /* Use a bulk method if available.  */
-  if (abuflen >= OCB_BLOCK_LEN && c->bulk.ocb_auth)
     {
-      size_t nblks;
-      size_t nleft;
-      size_t ndone;
+      if (burn > 0)
+        _gcry_burn_stack (burn + 4*sizeof(void*));
 
-      nblks = abuflen / OCB_BLOCK_LEN;
-      nleft = c->bulk.ocb_auth (c, abuf, nblks);
-      ndone = nblks - nleft;
-
-      abuf += ndone * OCB_BLOCK_LEN;
-      abuflen -= ndone * OCB_BLOCK_LEN;
-      nblks = nleft;
+      return 0;
     }
 
-  /* Hash all full blocks.  */
+  /* Full blocks handling. */
   while (abuflen >= OCB_BLOCK_LEN)
     {
-      c->u_mode.ocb.aad_nblocks++;
+      size_t nblks = abuflen / OCB_BLOCK_LEN;
+      size_t nmaxblks;
 
-      /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
-      buf_xor_1 (c->u_mode.ocb.aad_offset,
-                 ocb_get_l (c, l_tmp, c->u_mode.ocb.aad_nblocks),
-                 OCB_BLOCK_LEN);
-      /* Sum_i = Sum_{i-1} xor ENCIPHER(K, A_i xor Offset_i)  */
-      buf_xor (l_tmp, c->u_mode.ocb.aad_offset, abuf, OCB_BLOCK_LEN);
-      c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
-      buf_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
+      /* Check how many blocks to process till table overflow. */
+      nmaxblks = (c->u_mode.ocb.aad_nblocks + 1) % table_maxblks;
+      nmaxblks = (table_maxblks - nmaxblks) % table_maxblks;
 
-      abuf += OCB_BLOCK_LEN;
-      abuflen -= OCB_BLOCK_LEN;
+      if (nmaxblks == 0)
+        {
+          /* Table overflow, generate L and process one block. */
+          c->u_mode.ocb.aad_nblocks++;
+          ocb_get_L_big(c, c->u_mode.ocb.aad_nblocks, l_tmp);
+
+          /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
+          cipher_block_xor_1 (c->u_mode.ocb.aad_offset, l_tmp, OCB_BLOCK_LEN);
+          /* Sum_i = Sum_{i-1} xor ENCIPHER(K, A_i xor Offset_i)  */
+          cipher_block_xor (l_tmp, c->u_mode.ocb.aad_offset, abuf,
+                            OCB_BLOCK_LEN);
+          nburn = c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
+          burn = nburn > burn ? nburn : burn;
+          cipher_block_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
+
+          abuf += OCB_BLOCK_LEN;
+          abuflen -= OCB_BLOCK_LEN;
+          nblks--;
+
+          /* With overflow handled, retry loop again. Next overflow will
+           * happen after 65535 blocks. */
+          continue;
+        }
+
+      nblks = nblks < nmaxblks ? nblks : nmaxblks;
+
+      /* Use a bulk method if available.  */
+      if (nblks && c->bulk.ocb_auth)
+        {
+          size_t nleft;
+          size_t ndone;
+
+          nleft = c->bulk.ocb_auth (c, abuf, nblks);
+          ndone = nblks - nleft;
+
+          abuf += ndone * OCB_BLOCK_LEN;
+          abuflen -= ndone * OCB_BLOCK_LEN;
+          nblks = nleft;
+        }
+
+      /* Hash all full blocks.  */
+      while (nblks)
+        {
+          c->u_mode.ocb.aad_nblocks++;
+
+          gcry_assert(c->u_mode.ocb.aad_nblocks & table_size_mask);
+
+          /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
+          cipher_block_xor_1 (c->u_mode.ocb.aad_offset,
+                              ocb_get_l (c, c->u_mode.ocb.aad_nblocks),
+                              OCB_BLOCK_LEN);
+          /* Sum_i = Sum_{i-1} xor ENCIPHER(K, A_i xor Offset_i)  */
+          cipher_block_xor (l_tmp, c->u_mode.ocb.aad_offset, abuf,
+                            OCB_BLOCK_LEN);
+          nburn = c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
+          burn = nburn > burn ? nburn : burn;
+          cipher_block_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
+
+          abuf += OCB_BLOCK_LEN;
+          abuflen -= OCB_BLOCK_LEN;
+          nblks--;
+        }
     }
 
   /* Store away the remaining data.  */
-  for (; abuflen && c->u_mode.ocb.aad_nleftover < OCB_BLOCK_LEN;
-       abuf++, abuflen--)
-    c->u_mode.ocb.aad_leftover[c->u_mode.ocb.aad_nleftover++] = *abuf;
+  if (abuflen)
+    {
+      n = abuflen;
+      if (n > OCB_BLOCK_LEN - c->u_mode.ocb.aad_nleftover)
+	n = OCB_BLOCK_LEN - c->u_mode.ocb.aad_nleftover;
+
+      buf_cpy (&c->u_mode.ocb.aad_leftover[c->u_mode.ocb.aad_nleftover],
+	       abuf, n);
+      c->u_mode.ocb.aad_nleftover += n;
+      abuf += n;
+      abuflen -= n;
+    }
+
   gcry_assert (!abuflen);
+
+  if (burn > 0)
+    _gcry_burn_stack (burn + 4*sizeof(void*));
 
   return 0;
 }
@@ -330,6 +410,8 @@ static void
 ocb_aad_finalize (gcry_cipher_hd_t c)
 {
   unsigned char l_tmp[OCB_BLOCK_LEN];
+  unsigned int burn = 0;
+  unsigned int nburn;
 
   /* Check that a nonce and thus a key has been set and that we have
      not yet computed the tag.  We also skip this if the aad has been
@@ -343,17 +425,18 @@ ocb_aad_finalize (gcry_cipher_hd_t c)
   if (c->u_mode.ocb.aad_nleftover)
     {
       /* Offset_* = Offset_m xor L_*  */
-      buf_xor_1 (c->u_mode.ocb.aad_offset,
-                 c->u_mode.ocb.L_star, OCB_BLOCK_LEN);
+      cipher_block_xor_1 (c->u_mode.ocb.aad_offset,
+                          c->u_mode.ocb.L_star, OCB_BLOCK_LEN);
       /* CipherInput = (A_* || 1 || zeros(127-bitlen(A_*))) xor Offset_*  */
       buf_cpy (l_tmp, c->u_mode.ocb.aad_leftover, c->u_mode.ocb.aad_nleftover);
       memset (l_tmp + c->u_mode.ocb.aad_nleftover, 0,
               OCB_BLOCK_LEN - c->u_mode.ocb.aad_nleftover);
       l_tmp[c->u_mode.ocb.aad_nleftover] = 0x80;
-      buf_xor_1 (l_tmp, c->u_mode.ocb.aad_offset, OCB_BLOCK_LEN);
+      cipher_block_xor_1 (l_tmp, c->u_mode.ocb.aad_offset, OCB_BLOCK_LEN);
       /* Sum = Sum_m xor ENCIPHER(K, CipherInput)  */
-      c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
-      buf_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
+      nburn = c->spec->encrypt (&c->context.c, l_tmp, l_tmp);
+      burn = nburn > burn ? nburn : burn;
+      cipher_block_xor_1 (c->u_mode.ocb.aad_sum, l_tmp, OCB_BLOCK_LEN);
 
       c->u_mode.ocb.aad_nleftover = 0;
     }
@@ -361,6 +444,9 @@ ocb_aad_finalize (gcry_cipher_hd_t c)
   /* Mark AAD as finalized so that gcry_cipher_ocb_authenticate can
    * return an erro when called again.  */
   c->u_mode.ocb.aad_finalized = 1;
+
+  if (burn > 0)
+    _gcry_burn_stack (burn + 4*sizeof(void*));
 }
 
 
@@ -373,7 +459,7 @@ ocb_checksum (unsigned char *chksum, const unsigned char *plainbuf,
   while (nblks > 0)
     {
       /* Checksum_i = Checksum_{i-1} xor P_i  */
-      buf_xor_1(chksum, plainbuf, OCB_BLOCK_LEN);
+      cipher_block_xor_1(chksum, plainbuf, OCB_BLOCK_LEN);
 
       plainbuf += OCB_BLOCK_LEN;
       nblks--;
@@ -387,10 +473,13 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
            unsigned char *outbuf, size_t outbuflen,
            const unsigned char *inbuf, size_t inbuflen)
 {
+  const size_t table_maxblks = 1 << OCB_L_TABLE_SIZE;
+  const u32 table_size_mask = ((1 << OCB_L_TABLE_SIZE) - 1);
   unsigned char l_tmp[OCB_BLOCK_LEN];
   unsigned int burn = 0;
   unsigned int nburn;
-  size_t nblks = inbuflen / OCB_BLOCK_LEN;
+  gcry_cipher_encrypt_t crypt_fn =
+      encrypt ? c->spec->encrypt : c->spec->decrypt;
 
   /* Check that a nonce and thus a key has been set and that we are
      not yet in end of data state. */
@@ -407,58 +496,118 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
   else if ((inbuflen % OCB_BLOCK_LEN))
     return GPG_ERR_INV_LENGTH;  /* We support only full blocks for now.  */
 
-  /* Use a bulk method if available.  */
-  if (nblks && c->bulk.ocb_crypt)
+  /* Full blocks handling. */
+  while (inbuflen >= OCB_BLOCK_LEN)
     {
-      size_t nleft;
-      size_t ndone;
+      size_t nblks = inbuflen / OCB_BLOCK_LEN;
+      size_t nmaxblks;
 
-      nleft = c->bulk.ocb_crypt (c, outbuf, inbuf, nblks, encrypt);
-      ndone = nblks - nleft;
+      /* Check how many blocks to process till table overflow. */
+      nmaxblks = (c->u_mode.ocb.data_nblocks + 1) % table_maxblks;
+      nmaxblks = (table_maxblks - nmaxblks) % table_maxblks;
 
-      inbuf += ndone * OCB_BLOCK_LEN;
-      outbuf += ndone * OCB_BLOCK_LEN;
-      inbuflen -= ndone * OCB_BLOCK_LEN;
-      outbuflen -= ndone * OCB_BLOCK_LEN;
-      nblks = nleft;
-    }
-
-  if (nblks)
-    {
-      gcry_cipher_encrypt_t crypt_fn =
-          encrypt ? c->spec->encrypt : c->spec->decrypt;
-
-      if (encrypt)
+      if (nmaxblks == 0)
         {
-          /* Checksum_i = Checksum_{i-1} xor P_i  */
-          ocb_checksum (c->u_ctr.ctr, inbuf, nblks);
-        }
-
-      /* Encrypt all full blocks.  */
-      while (inbuflen >= OCB_BLOCK_LEN)
-        {
+          /* Table overflow, generate L and process one block. */
           c->u_mode.ocb.data_nblocks++;
+          ocb_get_L_big(c, c->u_mode.ocb.data_nblocks, l_tmp);
+
+          if (encrypt)
+            {
+              /* Checksum_i = Checksum_{i-1} xor P_i  */
+              ocb_checksum (c->u_ctr.ctr, inbuf, 1);
+            }
 
           /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
-          buf_xor_1 (c->u_iv.iv,
-                     ocb_get_l (c, l_tmp, c->u_mode.ocb.data_nblocks),
-                     OCB_BLOCK_LEN);
+          cipher_block_xor_1 (c->u_iv.iv, l_tmp, OCB_BLOCK_LEN);
           /* C_i = Offset_i xor ENCIPHER(K, P_i xor Offset_i)  */
-          buf_xor (outbuf, c->u_iv.iv, inbuf, OCB_BLOCK_LEN);
+          cipher_block_xor (outbuf, c->u_iv.iv, inbuf, OCB_BLOCK_LEN);
           nburn = crypt_fn (&c->context.c, outbuf, outbuf);
           burn = nburn > burn ? nburn : burn;
-          buf_xor_1 (outbuf, c->u_iv.iv, OCB_BLOCK_LEN);
+          cipher_block_xor_1 (outbuf, c->u_iv.iv, OCB_BLOCK_LEN);
+
+          if (!encrypt)
+            {
+              /* Checksum_i = Checksum_{i-1} xor P_i  */
+              ocb_checksum (c->u_ctr.ctr, outbuf, 1);
+            }
 
           inbuf += OCB_BLOCK_LEN;
           inbuflen -= OCB_BLOCK_LEN;
           outbuf += OCB_BLOCK_LEN;
           outbuflen =- OCB_BLOCK_LEN;
+          nblks--;
+
+          /* With overflow handled, retry loop again. Next overflow will
+           * happen after 65535 blocks. */
+          continue;
         }
 
-      if (!encrypt)
+      nblks = nblks < nmaxblks ? nblks : nmaxblks;
+
+      /* Since checksum xoring is done before/after encryption/decryption,
+	process input in 24KiB chunks to keep data loaded in L1 cache for
+	checksumming. */
+      if (nblks > 24 * 1024 / OCB_BLOCK_LEN)
+	nblks = 24 * 1024 / OCB_BLOCK_LEN;
+
+      /* Use a bulk method if available.  */
+      if (nblks && c->bulk.ocb_crypt)
         {
-          /* Checksum_i = Checksum_{i-1} xor P_i  */
-          ocb_checksum (c->u_ctr.ctr, outbuf - nblks * OCB_BLOCK_LEN, nblks);
+          size_t nleft;
+          size_t ndone;
+
+          nleft = c->bulk.ocb_crypt (c, outbuf, inbuf, nblks, encrypt);
+          ndone = nblks - nleft;
+
+          inbuf += ndone * OCB_BLOCK_LEN;
+          outbuf += ndone * OCB_BLOCK_LEN;
+          inbuflen -= ndone * OCB_BLOCK_LEN;
+          outbuflen -= ndone * OCB_BLOCK_LEN;
+          nblks = nleft;
+        }
+
+      if (nblks)
+        {
+          size_t nblks_chksum = nblks;
+
+          if (encrypt)
+            {
+              /* Checksum_i = Checksum_{i-1} xor P_i  */
+              ocb_checksum (c->u_ctr.ctr, inbuf, nblks_chksum);
+            }
+
+          /* Encrypt all full blocks.  */
+          while (nblks)
+            {
+              c->u_mode.ocb.data_nblocks++;
+
+              gcry_assert(c->u_mode.ocb.data_nblocks & table_size_mask);
+
+              /* Offset_i = Offset_{i-1} xor L_{ntz(i)} */
+              cipher_block_xor_1 (c->u_iv.iv,
+                                  ocb_get_l (c, c->u_mode.ocb.data_nblocks),
+                                  OCB_BLOCK_LEN);
+              /* C_i = Offset_i xor ENCIPHER(K, P_i xor Offset_i)  */
+              cipher_block_xor (outbuf, c->u_iv.iv, inbuf, OCB_BLOCK_LEN);
+              nburn = crypt_fn (&c->context.c, outbuf, outbuf);
+              burn = nburn > burn ? nburn : burn;
+              cipher_block_xor_1 (outbuf, c->u_iv.iv, OCB_BLOCK_LEN);
+
+              inbuf += OCB_BLOCK_LEN;
+              inbuflen -= OCB_BLOCK_LEN;
+              outbuf += OCB_BLOCK_LEN;
+              outbuflen =- OCB_BLOCK_LEN;
+              nblks--;
+            }
+
+          if (!encrypt)
+            {
+              /* Checksum_i = Checksum_{i-1} xor P_i  */
+              ocb_checksum (c->u_ctr.ctr,
+                            outbuf - nblks_chksum * OCB_BLOCK_LEN,
+                            nblks_chksum);
+            }
         }
     }
 
@@ -469,7 +618,7 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
       unsigned char pad[OCB_BLOCK_LEN];
 
       /* Offset_* = Offset_m xor L_*  */
-      buf_xor_1 (c->u_iv.iv, c->u_mode.ocb.L_star, OCB_BLOCK_LEN);
+      cipher_block_xor_1 (c->u_iv.iv, c->u_mode.ocb.L_star, OCB_BLOCK_LEN);
       /* Pad = ENCIPHER(K, Offset_*) */
       nburn = c->spec->encrypt (&c->context.c, pad, c->u_iv.iv);
       burn = nburn > burn ? nburn : burn;
@@ -481,7 +630,7 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
           buf_cpy (l_tmp, inbuf, inbuflen);
           memset (l_tmp + inbuflen, 0, OCB_BLOCK_LEN - inbuflen);
           l_tmp[inbuflen] = 0x80;
-          buf_xor_1 (c->u_ctr.ctr, l_tmp, OCB_BLOCK_LEN);
+          cipher_block_xor_1 (c->u_ctr.ctr, l_tmp, OCB_BLOCK_LEN);
           /* C_* = P_* xor Pad[1..bitlen(P_*)] */
           buf_xor (outbuf, inbuf, pad, inbuflen);
         }
@@ -489,13 +638,13 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
         {
           /* P_* = C_* xor Pad[1..bitlen(C_*)] */
           /* Checksum_* = Checksum_m xor (P_* || 1 || zeros(127-bitlen(P_*))) */
-          buf_cpy (l_tmp, pad, OCB_BLOCK_LEN);
+          cipher_block_cpy (l_tmp, pad, OCB_BLOCK_LEN);
           buf_cpy (l_tmp, inbuf, inbuflen);
-          buf_xor_1 (l_tmp, pad, OCB_BLOCK_LEN);
+          cipher_block_xor_1 (l_tmp, pad, OCB_BLOCK_LEN);
           l_tmp[inbuflen] = 0x80;
           buf_cpy (outbuf, l_tmp, inbuflen);
 
-          buf_xor_1 (c->u_ctr.ctr, l_tmp, OCB_BLOCK_LEN);
+          cipher_block_xor_1 (c->u_ctr.ctr, l_tmp, OCB_BLOCK_LEN);
         }
     }
 
@@ -503,8 +652,10 @@ ocb_crypt (gcry_cipher_hd_t c, int encrypt,
   if (c->marks.finalize)
     {
       /* Tag = ENCIPHER(K, Checksum xor Offset xor L_$) xor HASH(K,A) */
-      buf_xor (c->u_mode.ocb.tag, c->u_ctr.ctr, c->u_iv.iv, OCB_BLOCK_LEN);
-      buf_xor_1 (c->u_mode.ocb.tag, c->u_mode.ocb.L_dollar, OCB_BLOCK_LEN);
+      cipher_block_xor (c->u_mode.ocb.tag, c->u_ctr.ctr, c->u_iv.iv,
+                        OCB_BLOCK_LEN);
+      cipher_block_xor_1 (c->u_mode.ocb.tag, c->u_mode.ocb.L_dollar,
+                          OCB_BLOCK_LEN);
       nburn = c->spec->encrypt (&c->context.c,
                                 c->u_mode.ocb.tag, c->u_mode.ocb.tag);
       burn = nburn > burn ? nburn : burn;
@@ -557,7 +708,8 @@ compute_tag_if_needed (gcry_cipher_hd_t c)
   if (!c->marks.tag)
     {
       ocb_aad_finalize (c);
-      buf_xor_1 (c->u_mode.ocb.tag, c->u_mode.ocb.aad_sum, OCB_BLOCK_LEN);
+      cipher_block_xor_1 (c->u_mode.ocb.tag, c->u_mode.ocb.aad_sum,
+                          OCB_BLOCK_LEN);
       c->marks.tag = 1;
     }
 }

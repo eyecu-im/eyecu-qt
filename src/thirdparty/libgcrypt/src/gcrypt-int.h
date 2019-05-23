@@ -28,19 +28,8 @@
 #include "types.h"
 
 /* These error codes are used but not defined in the required
-   libgpg-error 1.11.  Define them here. */
-#if GPG_ERROR_VERSION_NUMBER < 0x010c00  /* 1.12 */
-# define GPG_ERR_NO_CRYPT_CTX	    191
-# define GPG_ERR_WRONG_CRYPT_CTX    192
-# define GPG_ERR_BAD_CRYPT_CTX	    193
-# define GPG_ERR_CRYPT_CTX_CONFLICT 194
-# define GPG_ERR_BROKEN_PUBKEY      195
-# define GPG_ERR_BROKEN_SECKEY      196
-#endif
+ * libgpg-error N.MM.  Define them here.  [None right now.] */
 
-#if GPG_ERROR_VERSION_NUMBER < 0x010d00  /* 1.13 */
-# define GPG_ERR_MAC_ALGO           197
-#endif
 
 
 /* Context used with elliptic curve functions.  */
@@ -50,7 +39,7 @@ typedef struct mpi_ec_ctx_s *mpi_ec_t;
 
 
 /* Underscore prefixed internal versions of the public functions.
-   They return gpg_err_code and not gpg_error_t.  Some macros also
+   They return gpg_err_code_t and not gpg_error_t.  Some macros also
    need an underscore prefixed internal version.
 
    Note that the memory allocation functions and macros (xmalloc etc.)
@@ -88,6 +77,8 @@ gpg_err_code_t _gcry_cipher_checktag (gcry_cipher_hd_t hd, const void *intag,
                                       size_t taglen);
 gpg_err_code_t _gcry_cipher_setctr (gcry_cipher_hd_t hd,
                                     const void *ctr, size_t ctrlen);
+gpg_err_code_t _gcry_cipher_getctr (gcry_cipher_hd_t hd,
+                                    void *ctr, size_t ctrlen);
 size_t _gcry_cipher_get_algo_keylen (int algo);
 size_t _gcry_cipher_get_algo_blklen (int algo);
 
@@ -129,8 +120,8 @@ gpg_err_code_t _gcry_md_ctl (gcry_md_hd_t hd, int cmd,
                           void *buffer, size_t buflen);
 void _gcry_md_write (gcry_md_hd_t hd, const void *buffer, size_t length);
 unsigned char *_gcry_md_read (gcry_md_hd_t hd, int algo);
-gpg_error_t _gcry_md_extract (gcry_md_hd_t hd, int algo, void *buffer,
-                              size_t length);
+gpg_err_code_t _gcry_md_extract (gcry_md_hd_t hd, int algo, void *buffer,
+                                 size_t length);
 void _gcry_md_hash_buffer (int algo, void *digest,
                            const void *buffer, size_t length);
 gpg_err_code_t _gcry_md_hash_buffers (int algo, unsigned int flags,
@@ -371,12 +362,13 @@ gcry_mpi_t _gcry_mpi_copy (const gcry_mpi_t a);
 void _gcry_mpi_snatch (gcry_mpi_t w, gcry_mpi_t u);
 gcry_mpi_t _gcry_mpi_set (gcry_mpi_t w, const gcry_mpi_t u);
 gcry_mpi_t _gcry_mpi_set_ui (gcry_mpi_t w, unsigned long u);
-gcry_err_code_t _gcry_mpi_get_ui (gcry_mpi_t w, ulong *u);
+gcry_err_code_t _gcry_mpi_get_ui (unsigned int *w, gcry_mpi_t u);
 void _gcry_mpi_swap (gcry_mpi_t a, gcry_mpi_t b);
 int _gcry_mpi_is_neg (gcry_mpi_t a);
 void _gcry_mpi_neg (gcry_mpi_t w, gcry_mpi_t u);
 void _gcry_mpi_abs (gcry_mpi_t w);
 int _gcry_mpi_cmp (const gcry_mpi_t u, const gcry_mpi_t v);
+int _gcry_mpi_cmpabs (const gcry_mpi_t u, const gcry_mpi_t v);
 int _gcry_mpi_cmp_ui (const gcry_mpi_t u, unsigned long v);
 gpg_err_code_t _gcry_mpi_scan (gcry_mpi_t *ret_mpi, enum gcry_mpi_format format,
                               const void *buffer, size_t buflen,
@@ -409,6 +401,7 @@ int _gcry_mpi_gcd (gcry_mpi_t g, gcry_mpi_t a, gcry_mpi_t b);
 int _gcry_mpi_invm (gcry_mpi_t x, gcry_mpi_t a, gcry_mpi_t m);
 gcry_mpi_point_t _gcry_mpi_point_new (unsigned int nbits);
 void _gcry_mpi_point_release (gcry_mpi_point_t point);
+gcry_mpi_point_t _gcry_mpi_point_copy (gcry_mpi_point_t point);
 void _gcry_mpi_point_get (gcry_mpi_t x, gcry_mpi_t y, gcry_mpi_t z,
                          gcry_mpi_point_t point);
 void _gcry_mpi_point_snatch_get (gcry_mpi_t x, gcry_mpi_t y, gcry_mpi_t z,
@@ -472,11 +465,12 @@ int _gcry_mpi_get_flag (gcry_mpi_t a, enum gcry_mpi_flag flag);
 #define mpi_snatch( w, u)      _gcry_mpi_snatch( (w), (u) )
 #define mpi_set( w, u)         _gcry_mpi_set( (w), (u) )
 #define mpi_set_ui( w, u)      _gcry_mpi_set_ui( (w), (u) )
-#define mpi_get_ui(a,b)        _gcry_mpi_get_ui( (a), (b) )
+#define mpi_get_ui(w,u)        _gcry_mpi_get_ui( (w), (u) )
 #define mpi_swap(a,b)          _gcry_mpi_swap ((a),(b))
 #define mpi_abs( w )           _gcry_mpi_abs( (w) )
 #define mpi_neg( w, u)         _gcry_mpi_neg( (w), (u) )
 #define mpi_cmp( u, v )        _gcry_mpi_cmp( (u), (v) )
+#define mpi_cmpabs( u, v )     _gcry_mpi_cmpabs( (u), (v) )
 #define mpi_cmp_ui( u, v )     _gcry_mpi_cmp_ui( (u), (v) )
 #define mpi_is_neg( a )        _gcry_mpi_is_neg ((a))
 
@@ -506,6 +500,8 @@ int _gcry_mpi_get_flag (gcry_mpi_t a, enum gcry_mpi_flag flag);
       (p) = NULL;                                \
     }                                            \
   while (0)
+
+#define mpi_point_copy(p)      _gcry_mpi_point_copy((p))
 
 #define mpi_point_get(x,y,z,p)        _gcry_mpi_point_get((x),(y),(z),(p))
 #define mpi_point_snatch_get(x,y,z,p) _gcry_mpi_point_snatch_get((x),(y), \

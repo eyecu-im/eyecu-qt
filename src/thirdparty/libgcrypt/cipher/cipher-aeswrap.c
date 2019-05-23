@@ -70,15 +70,15 @@ _gcry_cipher_aeswrap_encrypt (gcry_cipher_hd_t c,
   a = outbuf;  /* We store A directly in OUTBUF.  */
   b = c->u_ctr.ctr;  /* B is also used to concatenate stuff.  */
 
+  /* Copy the inbuf to the outbuf. */
+  memmove (r+8, inbuf, inbuflen);
+
   /* If an IV has been set we use that IV as the Alternative Initial
      Value; if it has not been set we use the standard value.  */
   if (c->marks.iv)
     memcpy (a, c->u_iv.iv, 8);
   else
     memset (a, 0xa6, 8);
-
-  /* Copy the inbuf to the outbuf. */
-  memmove (r+8, inbuf, inbuflen);
 
   memset (t, 0, sizeof t); /* t := 0.  */
 
@@ -99,7 +99,7 @@ _gcry_cipher_aeswrap_encrypt (gcry_cipher_hd_t c,
 		break;
 	    }
           /* A := MSB_64(B) ^ t */
-	  buf_xor(a, b, t, 8);
+	  cipher_block_xor(a, b, t, 8);
           /* R[i] := LSB_64(B) */
           memcpy (r+i*8, b+8, 8);
         }
@@ -170,7 +170,7 @@ _gcry_cipher_aeswrap_decrypt (gcry_cipher_hd_t c,
       for (i = n; i >= 1; i--)
         {
           /* B := AES_k^1( (A ^ t)| R[i] ) */
-	  buf_xor(b, a, t, 8);
+	  cipher_block_xor(b, a, t, 8);
           memcpy (b+8, r+(i-1)*8, 8);
           nburn = c->spec->decrypt (&c->context.c, b, b);
           burn = nburn > burn ? nburn : burn;

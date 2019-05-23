@@ -98,7 +98,7 @@ MA 02111-1307, USA. */
 #ifdef __riscos__
 #pragma continue_after_hash_error
 #else /* !__riscos__ */
-#if ( defined (__GNUC__) || defined(__INTEL_COMPILER) ) && !defined (NO_ASM)
+#if defined (__GNUC__) && !defined (NO_ASM)
 
 /* We sometimes need to clobber "cc" with gcc2, but that would not be
    understood by gcc1.	Use cpp to avoid major code duplication.  */
@@ -890,7 +890,8 @@ extern USItype __udiv_qrnnd ();
  **************  MIPS/64  **************
  ***************************************/
 #if (defined (__mips) && __mips >= 3) && W_TYPE_SIZE == 64
-# if (__GNUC__ >= 5) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
+# if defined (__clang__) || (__GNUC__ >= 5) || (__GNUC__ == 4 && \
+                                               __GNUC_MINOR__ >= 4)
 typedef unsigned int UTItype __attribute__ ((mode (TI)));
 #  define umul_ppmm(w1, w0, u, v) \
   do {                                                                 \
@@ -1087,7 +1088,6 @@ typedef unsigned int UTItype __attribute__ ((mode (TI)));
 /* Powerpc 64 bit support taken from gmp-4.1.2. */
 /* We should test _IBMR2 here when we add assembly support for the system
    vendor compilers.  */
-#if 0 /* Not yet enabled because we don't have hardware for a test. */
 #if (defined (_ARCH_PPC) || defined (__powerpc__)) && W_TYPE_SIZE == 64
 #define add_ssaaaa(sh, sl, ah, al, bh, bl) \
   do {									\
@@ -1140,7 +1140,6 @@ typedef unsigned int UTItype __attribute__ ((mode (TI)));
 #define SMUL_TIME 14  /* ??? */
 #define UDIV_TIME 120 /* ??? */
 #endif /* 64-bit PowerPC.  */
-#endif /* if 0 */
 
 /***************************************
  **************  PYR  ******************
@@ -1293,7 +1292,7 @@ typedef unsigned int UTItype __attribute__ ((mode (TI)));
 	     "rJ" ((USItype)(al)),                                      \
 	     "rI" ((USItype)(bl))                                       \
 	   __CLOBBER_CC)
-# if defined (__sparc_v8__)
+# if defined (__sparc_v8__) || defined(__sparcv8)
 /* Don't match immediate range because, 1) it is not often useful,
    2) the 'I' flag thinks of the range as a 13 bit signed interval,
    while we want to match a 13 bit interval, sign extended to 32 bits,

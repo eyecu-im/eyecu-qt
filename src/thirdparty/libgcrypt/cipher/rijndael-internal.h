@@ -58,6 +58,11 @@
 #  define USE_ARM_ASM 1
 # endif
 #endif
+#if defined(__AARCH64EL__)
+# ifdef HAVE_COMPATIBLE_GCC_AARCH64_PLATFORM_AS
+#  define USE_ARM_ASM 1
+# endif
+#endif
 
 /* USE_PADLOCK indicates whether to compile the padlock specific
    code.  */
@@ -81,6 +86,21 @@
 #  endif
 # endif
 #endif /* ENABLE_AESNI_SUPPORT */
+
+/* USE_ARM_CE indicates whether to enable ARMv8 Crypto Extension assembly
+ * code. */
+#undef USE_ARM_CE
+#ifdef ENABLE_ARM_CRYPTO_SUPPORT
+# if defined(HAVE_ARM_ARCH_V6) && defined(__ARMEL__) \
+     && defined(HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS) \
+     && defined(HAVE_GCC_INLINE_ASM_AARCH32_CRYPTO)
+#  define USE_ARM_CE 1
+# elif defined(__AARCH64EL__) \
+       && defined(HAVE_COMPATIBLE_GCC_AARCH64_PLATFORM_AS) \
+       && defined(HAVE_GCC_INLINE_ASM_AARCH64_CRYPTO)
+#  define USE_ARM_CE 1
+# endif
+#endif /* ENABLE_ARM_CRYPTO_SUPPORT */
 
 struct RIJNDAEL_context_s;
 
@@ -123,10 +143,15 @@ typedef struct RIJNDAEL_context_s
 #endif /*USE_PADLOCK*/
 #ifdef USE_AESNI
   unsigned int use_aesni:1;           /* AES-NI shall be used.  */
+  unsigned int use_avx:1;             /* AVX shall be used. */
+  unsigned int use_avx2:1;            /* AVX2 shall be used. */
 #endif /*USE_AESNI*/
 #ifdef USE_SSSE3
   unsigned int use_ssse3:1;           /* SSSE3 shall be used.  */
 #endif /*USE_SSSE3*/
+#ifdef USE_ARM_CE
+  unsigned int use_arm_ce:1;          /* ARMv8 CE shall be used.  */
+#endif /*USE_ARM_CE*/
   rijndael_cryptfn_t encrypt_fn;
   rijndael_cryptfn_t decrypt_fn;
   rijndael_prefetchfn_t prefetch_enc_fn;

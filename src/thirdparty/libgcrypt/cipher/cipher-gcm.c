@@ -1,6 +1,6 @@
 /* cipher-gcm.c  - Generic Galois Counter Mode implementation
  * Copyright (C) 2013 Dmitry Eremin-Solenikov
- * Copyright (C) 2013 Jussi Kivilinna <jussi.kivilinna@iki.fi>
+ * Copyright (C) 2013, 2018-2019 Jussi Kivilinna <jussi.kivilinna@iki.fi>
  *
  * This file is part of Libgcrypt.
  *
@@ -36,6 +36,50 @@ extern void _gcry_ghash_setup_intel_pclmul (gcry_cipher_hd_t c);
 extern unsigned int _gcry_ghash_intel_pclmul (gcry_cipher_hd_t c, byte *result,
                                               const byte *buf, size_t nblocks);
 #endif
+
+#ifdef GCM_USE_ARM_PMULL
+extern void _gcry_ghash_setup_armv8_ce_pmull (void *gcm_key, void *gcm_table);
+
+extern unsigned int _gcry_ghash_armv8_ce_pmull (void *gcm_key, byte *result,
+                                                const byte *buf, size_t nblocks,
+                                                void *gcm_table);
+
+static void
+ghash_setup_armv8_ce_pmull (gcry_cipher_hd_t c)
+{
+  _gcry_ghash_setup_armv8_ce_pmull(c->u_mode.gcm.u_ghash_key.key,
+                                   c->u_mode.gcm.gcm_table);
+}
+
+static unsigned int
+ghash_armv8_ce_pmull (gcry_cipher_hd_t c, byte *result, const byte *buf,
+                      size_t nblocks)
+{
+  return _gcry_ghash_armv8_ce_pmull(c->u_mode.gcm.u_ghash_key.key, result, buf,
+                                    nblocks, c->u_mode.gcm.gcm_table);
+}
+#endif /* GCM_USE_ARM_PMULL */
+
+#ifdef GCM_USE_ARM_NEON
+extern void _gcry_ghash_setup_armv7_neon (void *gcm_key);
+
+extern unsigned int _gcry_ghash_armv7_neon (void *gcm_key, byte *result,
+					    const byte *buf, size_t nblocks);
+
+static void
+ghash_setup_armv7_neon (gcry_cipher_hd_t c)
+{
+  _gcry_ghash_setup_armv7_neon(c->u_mode.gcm.u_ghash_key.key);
+}
+
+static unsigned int
+ghash_armv7_neon (gcry_cipher_hd_t c, byte *result, const byte *buf,
+		  size_t nblocks)
+{
+  return _gcry_ghash_armv7_neon(c->u_mode.gcm.u_ghash_key.key, result, buf,
+				nblocks);
+}
+#endif /* GCM_USE_ARM_NEON */
 
 
 #ifdef GCM_USE_TABLES
@@ -74,6 +118,34 @@ static const u16 gcmR[256] = {
   0xbbf0, 0xba32, 0xb874, 0xb9b6, 0xbcf8, 0xbd3a, 0xbf7c, 0xbebe,
 };
 
+static inline
+void prefetch_table(const void *tab, size_t len)
+{
+  const volatile byte *vtab = tab;
+  size_t i;
+
+  for (i = 0; i < len; i += 8 * 32)
+    {
+      (void)vtab[i + 0 * 32];
+      (void)vtab[i + 1 * 32];
+      (void)vtab[i + 2 * 32];
+      (void)vtab[i + 3 * 32];
+      (void)vtab[i + 4 * 32];
+      (void)vtab[i + 5 * 32];
+      (void)vtab[i + 6 * 32];
+      (void)vtab[i + 7 * 32];
+    }
+
+  (void)vtab[len - 1];
+}
+
+static inline void
+do_prefetch_tables (const void *gcmM, size_t gcmM_size)
+{
+  prefetch_table(gcmM, gcmM_size);
+  prefetch_table(gcmR, sizeof(gcmR));
+}
+
 #ifdef GCM_TABLES_USE_U64
 static void
 bshift (u64 * b0, u64 * b1)
@@ -82,7 +154,7 @@ bshift (u64 * b0, u64 * b1)
 
   t[0] = *b0;
   t[1] = *b1;
-  mask = t[1] & 1 ? 0xe1 : 0;
+  mask = -(t[1] & 1) & 0xe1;
   mask <<= 56;
 
   *b1 = (t[1] >> 1) ^ (t[0] << 63);
@@ -114,6 +186,12 @@ do_fillM (unsigned char *h, u64 *M)
         M[(i + j) + 0] = M[i + 0] ^ M[j + 0];
         M[(i + j) + 16] = M[i + 16] ^ M[j + 16];
       }
+
+  for (i = 0; i < 16; i++)
+    {
+      M[i + 32] = (M[i + 0] >> 4) ^ ((u64) gcmR[(M[i + 16] & 0xf) << 4] << 48);
+      M[i + 48] = (M[i + 16] >> 4) ^ (M[i + 0] << 60);
+    }
 }
 
 static inline unsigned int
@@ -126,25 +204,23 @@ do_ghash (unsigned char *result, const unsigned char *buf, const u64 *gcmM)
   u32 A;
   int i;
 
-  buf_xor (V, result, buf, 16);
+  cipher_block_xor (V, result, buf, 16);
   V[0] = be_bswap64 (V[0]);
   V[1] = be_bswap64 (V[1]);
 
   /* First round can be manually tweaked based on fact that 'tmp' is zero. */
-  i = 15;
-
-  M = &gcmM[(V[1] & 0xf)];
+  M = &gcmM[(V[1] & 0xf) + 32];
   V[1] >>= 4;
-  tmp[0] = (M[0] >> 4) ^ ((u64) gcmR[(M[16] & 0xf) << 4] << 48);
-  tmp[1] = (M[16] >> 4) ^ (M[0] << 60);
+  tmp[0] = M[0];
+  tmp[1] = M[16];
   tmp[0] ^= gcmM[(V[1] & 0xf) + 0];
   tmp[1] ^= gcmM[(V[1] & 0xf) + 16];
   V[1] >>= 4;
 
-  --i;
+  i = 6;
   while (1)
     {
-      M = &gcmM[(V[1] & 0xf)];
+      M = &gcmM[(V[1] & 0xf) + 32];
       V[1] >>= 4;
 
       A = tmp[1] & 0xff;
@@ -152,15 +228,34 @@ do_ghash (unsigned char *result, const unsigned char *buf, const u64 *gcmM)
       tmp[0] = (T >> 8) ^ ((u64) gcmR[A] << 48) ^ gcmM[(V[1] & 0xf) + 0];
       tmp[1] = (T << 56) ^ (tmp[1] >> 8) ^ gcmM[(V[1] & 0xf) + 16];
 
-      tmp[0] ^= (M[0] >> 4) ^ ((u64) gcmR[(M[16] & 0xf) << 4] << 48);
-      tmp[1] ^= (M[16] >> 4) ^ (M[0] << 60);
+      tmp[0] ^= M[0];
+      tmp[1] ^= M[16];
 
       if (i == 0)
         break;
-      else if (i == 8)
-        V[1] = V[0];
-      else
-        V[1] >>= 4;
+
+      V[1] >>= 4;
+      --i;
+    }
+
+  i = 7;
+  while (1)
+    {
+      M = &gcmM[(V[0] & 0xf) + 32];
+      V[0] >>= 4;
+
+      A = tmp[1] & 0xff;
+      T = tmp[0];
+      tmp[0] = (T >> 8) ^ ((u64) gcmR[A] << 48) ^ gcmM[(V[0] & 0xf) + 0];
+      tmp[1] = (T << 56) ^ (tmp[1] >> 8) ^ gcmM[(V[0] & 0xf) + 16];
+
+      tmp[0] ^= M[0];
+      tmp[1] ^= M[16];
+
+      if (i == 0)
+        break;
+
+      V[0] >>= 4;
       --i;
     }
 
@@ -182,7 +277,7 @@ bshift (u32 * M, int i)
   t[1] = M[i * 4 + 1];
   t[2] = M[i * 4 + 2];
   t[3] = M[i * 4 + 3];
-  mask = t[3] & 1 ? 0xe1 : 0;
+  mask = -(t[3] & 1) & 0xe1;
 
   M[i * 4 + 3] = (t[3] >> 1) ^ (t[2] << 31);
   M[i * 4 + 2] = (t[2] >> 1) ^ (t[1] << 31);
@@ -223,6 +318,15 @@ do_fillM (unsigned char *h, u32 *M)
         M[(i + j) * 4 + 2] = M[i * 4 + 2] ^ M[j * 4 + 2];
         M[(i + j) * 4 + 3] = M[i * 4 + 3] ^ M[j * 4 + 3];
       }
+
+  for (i = 0; i < 4 * 16; i += 4)
+    {
+      M[i + 0 + 64] = (M[i + 0] >> 4)
+                      ^ ((u64) gcmR[(M[i + 3] << 4) & 0xf0] << 16);
+      M[i + 1 + 64] = (M[i + 1] >> 4) ^ (M[i + 0] << 28);
+      M[i + 2 + 64] = (M[i + 2] >> 4) ^ (M[i + 1] << 28);
+      M[i + 3 + 64] = (M[i + 3] >> 4) ^ (M[i + 2] << 28);
+    }
 }
 
 static inline unsigned int
@@ -235,25 +339,25 @@ do_ghash (unsigned char *result, const unsigned char *buf, const u32 *gcmM)
   u32 T[3];
   int i;
 
-  buf_xor (V, result, buf, 16); /* V is big-endian */
+  cipher_block_xor (V, result, buf, 16); /* V is big-endian */
 
   /* First round can be manually tweaked based on fact that 'tmp' is zero. */
   i = 15;
 
   v = V[i];
-  M = &gcmM[(v & 0xf) * 4];
+  M = &gcmM[(v & 0xf) * 4 + 64];
   v = (v & 0xf0) >> 4;
   m = &gcmM[v * 4];
   v = V[--i];
 
-  tmp[0] = (M[0] >> 4) ^ ((u64) gcmR[(M[3] << 4) & 0xf0] << 16) ^ m[0];
-  tmp[1] = (M[1] >> 4) ^ (M[0] << 28) ^ m[1];
-  tmp[2] = (M[2] >> 4) ^ (M[1] << 28) ^ m[2];
-  tmp[3] = (M[3] >> 4) ^ (M[2] << 28) ^ m[3];
+  tmp[0] = M[0] ^ m[0];
+  tmp[1] = M[1] ^ m[1];
+  tmp[2] = M[2] ^ m[2];
+  tmp[3] = M[3] ^ m[3];
 
   while (1)
     {
-      M = &gcmM[(v & 0xf) * 4];
+      M = &gcmM[(v & 0xf) * 4 + 64];
       v = (v & 0xf0) >> 4;
       m = &gcmM[v * 4];
 
@@ -265,10 +369,10 @@ do_ghash (unsigned char *result, const unsigned char *buf, const u32 *gcmM)
       tmp[2] = (T[1] << 24) ^ (tmp[2] >> 8) ^ m[2];
       tmp[3] = (T[2] << 24) ^ (tmp[3] >> 8) ^ m[3];
 
-      tmp[0] ^= (M[0] >> 4) ^ ((u64) gcmR[(M[3] << 4) & 0xf0] << 16);
-      tmp[1] ^= (M[1] >> 4) ^ (M[0] << 28);
-      tmp[2] ^= (M[2] >> 4) ^ (M[1] << 28);
-      tmp[3] ^= (M[3] >> 4) ^ (M[2] << 28);
+      tmp[0] ^= M[0];
+      tmp[1] ^= M[1];
+      tmp[2] ^= M[2];
+      tmp[3] ^= M[3];
 
       if (i == 0)
         break;
@@ -289,6 +393,8 @@ do_ghash (unsigned char *result, const unsigned char *buf, const u32 *gcmM)
 #define fillM(c) \
   do_fillM (c->u_mode.gcm.u_ghash_key.key, c->u_mode.gcm.gcm_table)
 #define GHASH(c, result, buf) do_ghash (result, buf, c->u_mode.gcm.gcm_table)
+#define prefetch_tables(c) \
+  do_prefetch_tables(c->u_mode.gcm.gcm_table, sizeof(c->u_mode.gcm.gcm_table))
 
 #else
 
@@ -318,7 +424,7 @@ do_ghash (unsigned char *hsub, unsigned char *result, const unsigned char *buf)
 #else
   unsigned long T[4];
 
-  buf_xor (V, result, buf, 16);
+  cipher_block_xor (V, result, buf, 16);
   for (i = 0; i < 4; i++)
     {
       V[i] = (V[i] & 0x00ff00ff) << 8 | (V[i] & 0xff00ff00) >> 8;
@@ -334,7 +440,7 @@ do_ghash (unsigned char *hsub, unsigned char *result, const unsigned char *buf)
       for (j = 0x80; j; j >>= 1)
         {
           if (hsub[i] & j)
-            buf_xor (p, p, V, 16);
+            cipher_block_xor (p, p, V, 16);
           if (bshift (V))
             V[0] ^= 0xe1000000;
         }
@@ -354,6 +460,7 @@ do_ghash (unsigned char *hsub, unsigned char *result, const unsigned char *buf)
 
 #define fillM(c) do { } while (0)
 #define GHASH(c, result, buf) do_ghash (c->u_mode.gcm.u_ghash_key.key, result, buf)
+#define prefetch_tables(c) do {} while (0)
 
 #endif /* !GCM_USE_TABLES */
 
@@ -364,6 +471,8 @@ ghash_internal (gcry_cipher_hd_t c, byte *result, const byte *buf,
 {
   const unsigned int blocksize = GCRY_GCM_BLOCK_LEN;
   unsigned int burn = 0;
+
+  prefetch_tables (c);
 
   while (nblocks)
     {
@@ -379,13 +488,31 @@ ghash_internal (gcry_cipher_hd_t c, byte *result, const byte *buf,
 static void
 setupM (gcry_cipher_hd_t c)
 {
+#if defined(GCM_USE_INTEL_PCLMUL) || defined(GCM_USE_ARM_PMULL)
+  unsigned int features = _gcry_get_hw_features ();
+#endif
+
   if (0)
     ;
 #ifdef GCM_USE_INTEL_PCLMUL
-  else if (_gcry_get_hw_features () & HWF_INTEL_PCLMUL)
+  else if (features & HWF_INTEL_PCLMUL)
     {
       c->u_mode.gcm.ghash_fn = _gcry_ghash_intel_pclmul;
       _gcry_ghash_setup_intel_pclmul (c);
+    }
+#endif
+#ifdef GCM_USE_ARM_PMULL
+  else if (features & HWF_ARM_PMULL)
+    {
+      c->u_mode.gcm.ghash_fn = ghash_armv8_ce_pmull;
+      ghash_setup_armv8_ce_pmull (c);
+    }
+#endif
+#ifdef GCM_USE_ARM_NEON
+  else if (features & HWF_ARM_NEON)
+    {
+      c->u_mode.gcm.ghash_fn = ghash_armv7_neon;
+      ghash_setup_armv7_neon (c);
     }
 #endif
   else
@@ -490,8 +617,12 @@ do_ghash_buf(gcry_cipher_hd_t c, byte *hash, const byte *buf,
           if (!do_padding)
             break;
 
-          while (unused < blocksize)
-            c->u_mode.gcm.macbuf[unused++] = 0;
+	  n = blocksize - unused;
+	  if (n > 0)
+	    {
+	      memset (&c->u_mode.gcm.macbuf[unused], 0, n);
+	      unused = blocksize;
+	    }
         }
 
       if (unused > 0)
@@ -518,6 +649,77 @@ do_ghash_buf(gcry_cipher_hd_t c, byte *hash, const byte *buf,
 
   if (burn)
     _gcry_burn_stack (burn);
+}
+
+
+static gcry_err_code_t
+gcm_ctr_encrypt (gcry_cipher_hd_t c, byte *outbuf, size_t outbuflen,
+                 const byte *inbuf, size_t inbuflen)
+{
+  gcry_err_code_t err = 0;
+
+  while (inbuflen)
+    {
+      u32 nblocks_to_overflow;
+      u32 num_ctr_increments;
+      u32 curr_ctr_low;
+      size_t currlen = inbuflen;
+      byte ctr_copy[GCRY_GCM_BLOCK_LEN];
+      int fix_ctr = 0;
+
+      /* GCM CTR increments only least significant 32-bits, without carry
+       * to upper 96-bits of counter.  Using generic CTR implementation
+       * directly would carry 32-bit overflow to upper 96-bit.  Detect
+       * if input length is long enough to cause overflow, and limit
+       * input length so that CTR overflow happen but updated CTR value is
+       * not used to encrypt further input.  After overflow, upper 96 bits
+       * of CTR are restored to cancel out modification done by generic CTR
+       * encryption. */
+
+      if (inbuflen > c->unused)
+        {
+          curr_ctr_low = gcm_add32_be128 (c->u_ctr.ctr, 0);
+
+          /* Number of CTR increments this inbuflen would cause. */
+          num_ctr_increments = (inbuflen - c->unused) / GCRY_GCM_BLOCK_LEN +
+                               !!((inbuflen - c->unused) % GCRY_GCM_BLOCK_LEN);
+
+          if ((u32)(num_ctr_increments + curr_ctr_low) < curr_ctr_low)
+            {
+              nblocks_to_overflow = 0xffffffffU - curr_ctr_low + 1;
+              currlen = nblocks_to_overflow * GCRY_GCM_BLOCK_LEN + c->unused;
+              if (currlen > inbuflen)
+                {
+                  currlen = inbuflen;
+                }
+
+              fix_ctr = 1;
+              cipher_block_cpy(ctr_copy, c->u_ctr.ctr, GCRY_GCM_BLOCK_LEN);
+            }
+        }
+
+      err = _gcry_cipher_ctr_encrypt(c, outbuf, outbuflen, inbuf, currlen);
+      if (err != 0)
+        return err;
+
+      if (fix_ctr)
+        {
+          /* Lower 32-bits of CTR should now be zero. */
+          gcry_assert(gcm_add32_be128 (c->u_ctr.ctr, 0) == 0);
+
+          /* Restore upper part of CTR. */
+          buf_cpy(c->u_ctr.ctr, ctr_copy, GCRY_GCM_BLOCK_LEN - sizeof(u32));
+
+          wipememory(ctr_copy, sizeof(ctr_copy));
+        }
+
+      inbuflen -= currlen;
+      inbuf += currlen;
+      outbuflen -= currlen;
+      outbuf += currlen;
+    }
+
+  return err;
 }
 
 
@@ -560,11 +762,26 @@ _gcry_cipher_gcm_encrypt (gcry_cipher_hd_t c,
       return GPG_ERR_INV_LENGTH;
     }
 
-  err = _gcry_cipher_ctr_encrypt(c, outbuf, outbuflen, inbuf, inbuflen);
-  if (err != 0)
-    return err;
+  while (inbuflen)
+    {
+      size_t currlen = inbuflen;
 
-  do_ghash_buf(c, c->u_mode.gcm.u_tag.tag, outbuf, inbuflen, 0);
+      /* Since checksumming is done after encryption, process input in 24KiB
+       * chunks to keep data loaded in L1 cache for checksumming. */
+      if (currlen > 24 * 1024)
+	currlen = 24 * 1024;
+
+      err = gcm_ctr_encrypt(c, outbuf, outbuflen, inbuf, currlen);
+      if (err != 0)
+	return err;
+
+      do_ghash_buf(c, c->u_mode.gcm.u_tag.tag, outbuf, currlen, 0);
+
+      outbuf += currlen;
+      inbuf += currlen;
+      outbuflen -= currlen;
+      inbuflen -= currlen;
+    }
 
   return 0;
 }
@@ -576,6 +793,7 @@ _gcry_cipher_gcm_decrypt (gcry_cipher_hd_t c,
                           const byte *inbuf, size_t inbuflen)
 {
   static const unsigned char zerobuf[MAX_BLOCKSIZE];
+  gcry_err_code_t err;
 
   if (c->spec->blocksize != GCRY_GCM_BLOCK_LEN)
     return GPG_ERR_CIPHER_ALGO;
@@ -605,9 +823,28 @@ _gcry_cipher_gcm_decrypt (gcry_cipher_hd_t c,
       return GPG_ERR_INV_LENGTH;
     }
 
-  do_ghash_buf(c, c->u_mode.gcm.u_tag.tag, inbuf, inbuflen, 0);
+  while (inbuflen)
+    {
+      size_t currlen = inbuflen;
 
-  return _gcry_cipher_ctr_encrypt(c, outbuf, outbuflen, inbuf, inbuflen);
+      /* Since checksumming is done before decryption, process input in
+       * 24KiB chunks to keep data loaded in L1 cache for decryption. */
+      if (currlen > 24 * 1024)
+	currlen = 24 * 1024;
+
+      do_ghash_buf(c, c->u_mode.gcm.u_tag.tag, inbuf, currlen, 0);
+
+      err = gcm_ctr_encrypt(c, outbuf, outbuflen, inbuf, currlen);
+      if (err)
+	return err;
+
+      outbuf += currlen;
+      inbuf += currlen;
+      outbuflen -= currlen;
+      inbuflen -= currlen;
+    }
+
+  return 0;
 }
 
 
@@ -822,8 +1059,8 @@ _gcry_cipher_gcm_tag (gcry_cipher_hd_t c,
       /* Add bitlengths to tag. */
       do_ghash_buf(c, c->u_mode.gcm.u_tag.tag, (byte*)bitlengths,
                    GCRY_GCM_BLOCK_LEN, 1);
-      buf_xor (c->u_mode.gcm.u_tag.tag, c->u_mode.gcm.tagiv,
-               c->u_mode.gcm.u_tag.tag, GCRY_GCM_BLOCK_LEN);
+      cipher_block_xor (c->u_mode.gcm.u_tag.tag, c->u_mode.gcm.tagiv,
+                        c->u_mode.gcm.u_tag.tag, GCRY_GCM_BLOCK_LEN);
       c->marks.tag = 1;
 
       wipememory (bitlengths, sizeof (bitlengths));

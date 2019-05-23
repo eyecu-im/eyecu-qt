@@ -24,47 +24,38 @@
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 #ifndef HAVE_W32_SYSTEM
 # include <signal.h>
-# include <unistd.h>
 # include <sys/wait.h>
 #endif
 
-#include "../src/gcrypt-int.h"
+#include "stopwatch.h"
+
 
 #define PGM "random"
+#define NEED_EXTRA_TEST_SUPPORT 1
+#include "t-common.h"
 
-#ifndef DIM
-# define DIM(v)		     (sizeof(v)/sizeof((v)[0]))
-#endif
-
-
-static int verbose;
-static int debug;
 static int with_progress;
 
-static void
-die (const char *format, ...)
+
+/* Prepend FNAME with the srcdir environment variable's value and
+ * return an allocated filename.  */
+static char *
+prepend_srcdir (const char *fname)
 {
-  va_list arg_ptr;
+  static const char *srcdir;
+  char *result;
 
-  va_start (arg_ptr, format);
-  fputs ( PGM ": ", stderr);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  exit (1);
-}
+  if (!srcdir && !(srcdir = getenv ("srcdir")))
+    srcdir = ".";
 
-
-static void
-inf (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  fputs ( PGM ": ", stderr);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
+  result = xmalloc (strlen (srcdir) + 1 + strlen (fname) + 1);
+  strcpy (result, srcdir);
+  strcat (result, "/");
+  strcat (result, fname);
+  return result;
 }
 
 
@@ -73,7 +64,7 @@ print_hex (const char *text, const void *buf, size_t n)
 {
   const unsigned char *p = buf;
 
-  inf ("%s", text);
+  info ("%s", text);
   for (; n; n--, p++)
     fprintf (stderr, "%02X", *p);
   putc ('\n', stderr);
@@ -86,7 +77,7 @@ progress_cb (void *cb_data, const char *what, int printchar,
 {
   (void)cb_data;
 
-  inf ("progress (%s %c %d %d)\n", what, printchar, current, total);
+  info ("progress (%s %c %d %d)\n", what, printchar, current, total);
   fflush (stderr);
 }
 
@@ -152,7 +143,7 @@ check_forking (void)
 {
 #ifdef HAVE_W32_SYSTEM
   if (verbose)
-    inf ("check_forking skipped: not applicable on Windows\n");
+    info ("check_forking skipped: not applicable on Windows\n");
 #else /*!HAVE_W32_SYSTEM*/
   pid_t pid;
   int rp[2];
@@ -161,7 +152,7 @@ check_forking (void)
   char tmp1[16], tmp1c[16], tmp1p[16];
 
   if (verbose)
-    inf ("checking that a fork won't cause the same random output\n");
+    info ("checking that a fork won't cause the same random output\n");
 
   /* We better make sure that the RNG has been initialzied. */
   gcry_randomize (tmp1, sizeof tmp1, GCRY_STRONG_RANDOM);
@@ -217,7 +208,7 @@ check_nonce_forking (void)
 {
 #ifdef HAVE_W32_SYSTEM
   if (verbose)
-    inf ("check_nonce_forking skipped: not applicable on Windows\n");
+    info ("check_nonce_forking skipped: not applicable on Windows\n");
 #else /*!HAVE_W32_SYSTEM*/
   pid_t pid;
   int rp[2];
@@ -226,7 +217,7 @@ check_nonce_forking (void)
   char nonce1[10], nonce1c[10], nonce1p[10];
 
   if (verbose)
-    inf ("checking that a fork won't cause the same nonce output\n");
+    info ("checking that a fork won't cause the same nonce output\n");
 
   /* We won't get the same nonce back if we never initialized the
      nonce subsystem, thus we get one nonce here and forget about
@@ -283,14 +274,14 @@ check_close_random_device (void)
 {
 #ifdef HAVE_W32_SYSTEM
   if (verbose)
-    inf ("check_close_random_device skipped: not applicable on Windows\n");
+    info ("check_close_random_device skipped: not applicable on Windows\n");
 #else /*!HAVE_W32_SYSTEM*/
   pid_t pid;
   int i, status;
   char buf[4];
 
   if (verbose)
-    inf ("checking that close_random_device works\n");
+    info ("checking that close_random_device works\n");
 
   gcry_randomize (buf, sizeof buf, GCRY_STRONG_RANDOM);
   if (verbose)
@@ -301,7 +292,7 @@ check_close_random_device (void)
     die ("fork failed: %s\n", strerror (errno));
   if (!pid)
     {
-      gcry_control (GCRYCTL_CLOSE_RANDOM_DEVICE, 0);
+      xgcry_control ((GCRYCTL_CLOSE_RANDOM_DEVICE, 0));
 
       /* The next call will re-open the device.  */
       gcry_randomize (buf, sizeof buf, GCRY_STRONG_RANDOM);
@@ -342,11 +333,11 @@ check_rng_type_switching (void)
   char tmp1[4];
 
   if (verbose)
-    inf ("checking whether RNG type switching works\n");
+    info ("checking whether RNG type switching works\n");
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   initial = rngtype;
   gcry_randomize (tmp1, sizeof tmp1, GCRY_STRONG_RANDOM);
   if (debug)
@@ -354,11 +345,11 @@ check_rng_type_switching (void)
   if (rngtype != rng_type ())
     die ("RNG type unexpectedly changed\n");
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (rngtype != initial)
     die ("switching to System RNG unexpectedly succeeded\n");
   gcry_randomize (tmp1, sizeof tmp1, GCRY_STRONG_RANDOM);
@@ -367,11 +358,11 @@ check_rng_type_switching (void)
   if (rngtype != rng_type ())
     die ("RNG type unexpectedly changed\n");
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (rngtype != initial)
     die ("switching to FIPS RNG unexpectedly succeeded\n");
   gcry_randomize (tmp1, sizeof tmp1, GCRY_STRONG_RANDOM);
@@ -380,11 +371,11 @@ check_rng_type_switching (void)
   if (rngtype != rng_type ())
     die ("RNG type unexpectedly changed\n");
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (rngtype != GCRY_RNG_TYPE_STANDARD)
     die ("switching to standard RNG failed\n");
   gcry_randomize (tmp1, sizeof tmp1, GCRY_STRONG_RANDOM);
@@ -401,34 +392,34 @@ check_early_rng_type_switching (void)
   int rngtype, initial;
 
   if (verbose)
-    inf ("checking whether RNG type switching works in the early stage\n");
+    info ("checking whether RNG type switching works in the early stage\n");
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   initial = rngtype;
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (initial >= GCRY_RNG_TYPE_SYSTEM && rngtype != GCRY_RNG_TYPE_SYSTEM)
     die ("switching to System RNG failed\n");
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (initial >= GCRY_RNG_TYPE_FIPS && rngtype != GCRY_RNG_TYPE_FIPS)
     die ("switching to FIPS RNG failed\n");
 
-  gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD);
+  xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD));
 
   rngtype = rng_type ();
   if (debug)
-    inf ("rng type: %d\n", rngtype);
+    info ("rng type: %d\n", rngtype);
   if (rngtype != GCRY_RNG_TYPE_STANDARD)
     die ("switching to standard RNG failed\n");
 }
@@ -465,7 +456,7 @@ check_drbg_reinit (void)
   gcry_buffer_t pers[1];
 
   if (verbose)
-    inf ("checking DRBG_REINIT\n");
+    info ("checking DRBG_REINIT\n");
 
   memset (pers, 0, sizeof pers);
   pers[0].data = pers_string;
@@ -551,7 +542,7 @@ run_all_rng_tests (const char *program)
   for (idx=0; options[idx]; idx++)
     {
       if (verbose)
-        inf ("now running with options '%s'\n", options[idx]);
+        info ("now running with options '%s'\n", options[idx]);
       strcpy (cmdline, program);
       strcat (cmdline, " --in-recursion");
       if (verbose)
@@ -569,12 +560,43 @@ run_all_rng_tests (const char *program)
   free (cmdline);
 }
 
+
+static void
+run_benchmark (void)
+{
+  char rndbuf[32];
+  int i, j;
+
+  if (verbose)
+    info ("benchmarking GCRY_STRONG_RANDOM (/dev/urandom)\n");
+
+  start_timer ();
+  gcry_randomize (rndbuf, sizeof rndbuf, GCRY_STRONG_RANDOM);
+  stop_timer ();
+
+  info ("getting first 256 bits: %s", elapsed_time (1));
+
+  for (j=0; j < 5; j++)
+    {
+      start_timer ();
+      for (i=0; i < 100; i++)
+        gcry_randomize (rndbuf, sizeof rndbuf, GCRY_STRONG_RANDOM);
+      stop_timer ();
+
+      info ("100 calls of 256 bits each: %s", elapsed_time (100));
+    }
+
+}
+
+
 int
 main (int argc, char **argv)
 {
   int last_argc = -1;
   int early_rng = 0;
   int in_recursion = 0;
+  int benchmark = 0;
+  int with_seed_file = 0;
   const char *program = NULL;
 
   if (argc)
@@ -618,33 +640,59 @@ main (int argc, char **argv)
           in_recursion = 1;
           argc--; argv++;
         }
+      else if (!strcmp (*argv, "--benchmark"))
+        {
+          benchmark = 1;
+          argc--; argv++;
+        }
       else if (!strcmp (*argv, "--early-rng-check"))
         {
           early_rng = 1;
+          argc--; argv++;
+        }
+      else if (!strcmp (*argv, "--with-seed-file"))
+        {
+          with_seed_file = 1;
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--prefer-standard-rng"))
         {
           /* This is anyway the default, but we may want to use it for
              debugging. */
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE,
+                          GCRY_RNG_TYPE_STANDARD));
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--prefer-fips-rng"))
         {
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS));
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--prefer-system-rng"))
         {
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM));
           argc--; argv++;
+        }
+      else if (!strcmp (*argv, "--disable-hwf"))
+        {
+          argc--;
+          argv++;
+          if (argc)
+            {
+              if (gcry_control (GCRYCTL_DISABLE_HWF, *argv, NULL))
+                die ("unknown hardware feature `%s'\n", *argv);
+              argc--;
+              argv++;
+            }
         }
     }
 
 #ifndef HAVE_W32_SYSTEM
   signal (SIGPIPE, SIG_IGN);
 #endif
+
+  if (benchmark && !verbose)
+    verbose = 1;
 
   if (early_rng)
     {
@@ -653,18 +701,32 @@ main (int argc, char **argv)
         check_early_rng_type_switching ();
     }
 
-  gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+  xgcry_control ((GCRYCTL_DISABLE_SECMEM, 0));
   if (!gcry_check_version (GCRYPT_VERSION))
     die ("version mismatch\n");
 
   if (with_progress)
     gcry_set_progress_handler (progress_cb, NULL);
 
-  gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
-  if (debug)
-    gcry_control (GCRYCTL_SET_DEBUG_FLAGS, 1u, 0);
+  if (with_seed_file)
+    {
+      char *fname = prepend_srcdir ("random.seed");
 
-  if (!in_recursion)
+      if (access (fname, F_OK))
+        info ("random seed file '%s' not found\n", fname);
+      gcry_control (GCRYCTL_SET_RANDOM_SEED_FILE, fname);
+      xfree (fname);
+    }
+
+  xgcry_control ((GCRYCTL_INITIALIZATION_FINISHED, 0));
+  if (debug)
+    xgcry_control ((GCRYCTL_SET_DEBUG_FLAGS, 1u, 0));
+
+  if (benchmark)
+    {
+      run_benchmark ();
+    }
+  else if (!in_recursion)
     {
       check_forking ();
       check_nonce_forking ();
@@ -672,15 +734,33 @@ main (int argc, char **argv)
     }
   /* For now we do not run the drgb_reinit check from "make check" due
      to its high requirement for entropy.  */
-  if (!getenv ("GCRYPT_IN_REGRESSION_TEST"))
+  if (!benchmark && !getenv ("GCRYPT_IN_REGRESSION_TEST"))
     check_drbg_reinit ();
 
   /* Don't switch RNG in fips mode.  */
-  if (!gcry_fips_mode_active())
+  if (!benchmark && !gcry_fips_mode_active())
     check_rng_type_switching ();
 
-  if (!in_recursion)
+  if (!in_recursion && !benchmark)
     run_all_rng_tests (program);
+
+  /* Print this info last so that it does not influence the
+   * initialization and thus the benchmarking.  */
+  if (!in_recursion && verbose)
+    {
+      char *buf;
+      char *fields[5];
+
+      buf = gcry_get_config (0, "rng-type");
+      if (buf
+          && split_fields_colon (buf, fields, DIM (fields)) >= 5
+          && atoi (fields[4]) > 0)
+        info ("The JENT RNG was active\n");
+      gcry_free (buf);
+    }
+
+  if (debug)
+    xgcry_control ((GCRYCTL_DUMP_RANDOM_STATS));
 
   return 0;
 }

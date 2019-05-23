@@ -119,6 +119,7 @@
 #include "g10lib.h"
 #include "cipher.h"
 #include "bufhelp.h"
+#include "cipher-internal.h"
 #include "cipher-selftest.h"
 
 
@@ -139,7 +140,7 @@
 # define ATTR_ALIGNED_16
 #endif
 
-#if ( defined(__GNUC__) && defined(__GNU_LIBRARY__) ) || defined(_MSC_VER)
+#if defined(__GNUC__) && defined(__GNU_LIBRARY__)
 # define working_memcmp memcmp
 #else
 /*
@@ -197,7 +198,8 @@ static unsigned int do_tripledes_encrypt(void *context, byte *outbuf,
 static unsigned int do_tripledes_decrypt(void *context, byte *outbuf,
 					 const byte *inbuf );
 static gcry_err_code_t do_tripledes_setkey(void *context, const byte *key,
-                                           unsigned keylen);
+                                           unsigned keylen,
+                                           gcry_cipher_hd_t hd);
 
 static int initialized;
 
@@ -772,23 +774,6 @@ extern void _gcry_3des_amd64_cfb_dec(const void *keys, byte *out,
 
 #define TRIPLEDES_ECB_BURN_STACK (8 * sizeof(void *))
 
-#ifdef HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS
-static inline void
-call_sysv_fn (const void *fn, const void *arg1, const void *arg2,
-              const void *arg3, const void *arg4)
-{
-  /* Call SystemV ABI function without storing non-volatile XMM registers,
-   * as target function does not use vector instruction sets. */
-  asm volatile ("callq *%0\n\t"
-                : "+a" (fn),
-                  "+D" (arg1),
-                  "+S" (arg2),
-                  "+d" (arg3),
-                  "+c" (arg4)
-                :
-                : "cc", "memory", "r8", "r9", "r10", "r11");
-}
-#endif
 
 /*
  * Electronic Codebook Mode Triple-DES encryption/decryption of data
@@ -803,11 +788,7 @@ tripledes_ecb_crypt (struct _tripledes_ctx *ctx, const byte * from,
 
   keys = mode ? ctx->decrypt_subkeys : ctx->encrypt_subkeys;
 
-#ifdef HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS
-  call_sysv_fn (_gcry_3des_amd64_crypt_block, keys, to, from, NULL);
-#else
   _gcry_3des_amd64_crypt_block(keys, to, from);
-#endif
 
   return 0;
 }
@@ -815,31 +796,19 @@ tripledes_ecb_crypt (struct _tripledes_ctx *ctx, const byte * from,
 static inline void
 tripledes_amd64_ctr_enc(const void *keys, byte *out, const byte *in, byte *ctr)
 {
-#ifdef HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS
-  call_sysv_fn (_gcry_3des_amd64_ctr_enc, keys, out, in, ctr);
-#else
   _gcry_3des_amd64_ctr_enc(keys, out, in, ctr);
-#endif
 }
 
 static inline void
 tripledes_amd64_cbc_dec(const void *keys, byte *out, const byte *in, byte *iv)
 {
-#ifdef HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS
-  call_sysv_fn (_gcry_3des_amd64_cbc_dec, keys, out, in, iv);
-#else
   _gcry_3des_amd64_cbc_dec(keys, out, in, iv);
-#endif
 }
 
 static inline void
 tripledes_amd64_cfb_dec(const void *keys, byte *out, const byte *in, byte *iv)
 {
-#ifdef HAVE_COMPATIBLE_GCC_WIN64_PLATFORM_AS
-  call_sysv_fn (_gcry_3des_amd64_cfb_dec, keys, out, in, iv);
-#else
   _gcry_3des_amd64_cfb_dec(keys, out, in, iv);
-#endif
 }
 
 #else /*USE_AMD64_ASM*/
@@ -912,7 +881,6 @@ _gcry_3des_ctr_enc(void *context, unsigned char *ctr, void *outbuf_arg,
   const unsigned char *inbuf = inbuf_arg;
   unsigned char tmpbuf[DES_BLOCKSIZE];
   int burn_stack_depth = TRIPLEDES_ECB_BURN_STACK;
-  int i;
 
 #ifdef USE_AMD64_ASM
   {
@@ -940,16 +908,11 @@ _gcry_3des_ctr_enc(void *context, unsigned char *ctr, void *outbuf_arg,
       /* Encrypt the counter. */
       tripledes_ecb_encrypt (ctx, ctr, tmpbuf);
       /* XOR the input with the encrypted counter and store in output.  */
-      buf_xor(outbuf, tmpbuf, inbuf, DES_BLOCKSIZE);
+      cipher_block_xor(outbuf, tmpbuf, inbuf, DES_BLOCKSIZE);
       outbuf += DES_BLOCKSIZE;
       inbuf  += DES_BLOCKSIZE;
       /* Increment the counter.  */
-      for (i = DES_BLOCKSIZE; i > 0; i--)
-        {
-          ctr[i-1]++;
-          if (ctr[i-1])
-            break;
-        }
+      cipher_block_add(ctr, 1, DES_BLOCKSIZE);
     }
 
   wipememory(tmpbuf, sizeof(tmpbuf));
@@ -996,7 +959,7 @@ _gcry_3des_cbc_dec(void *context, unsigned char *iv, void *outbuf_arg,
          the intermediate result to SAVEBUF.  */
       tripledes_ecb_decrypt (ctx, inbuf, savebuf);
 
-      buf_xor_n_copy_2(outbuf, savebuf, iv, inbuf, DES_BLOCKSIZE);
+      cipher_block_xor_n_copy_2(outbuf, savebuf, iv, inbuf, DES_BLOCKSIZE);
       inbuf += DES_BLOCKSIZE;
       outbuf += DES_BLOCKSIZE;
     }
@@ -1041,7 +1004,7 @@ _gcry_3des_cfb_dec(void *context, unsigned char *iv, void *outbuf_arg,
   for ( ;nblocks; nblocks-- )
     {
       tripledes_ecb_encrypt (ctx, iv, iv);
-      buf_xor_n_copy(outbuf, iv, inbuf, DES_BLOCKSIZE);
+      cipher_block_xor_n_copy(outbuf, iv, inbuf, DES_BLOCKSIZE);
       outbuf += DES_BLOCKSIZE;
       inbuf  += DES_BLOCKSIZE;
     }
@@ -1086,7 +1049,8 @@ is_weak_key ( const byte *key )
 
 /* Alternative setkey for selftests; need larger key than default. */
 static gcry_err_code_t
-bulk_selftest_setkey (void *context, const byte *__key, unsigned __keylen)
+bulk_selftest_setkey (void *context, const byte *__key, unsigned __keylen,
+                      gcry_cipher_hd_t hd)
 {
   static const unsigned char key[24] ATTR_ALIGNED_16 = {
       0x66,0x9A,0x00,0x7F,0xC7,0x6A,0x45,0x9F,
@@ -1094,10 +1058,11 @@ bulk_selftest_setkey (void *context, const byte *__key, unsigned __keylen)
       0x18,0x2A,0x39,0x47,0x5E,0x6F,0x75,0x82
     };
 
+  (void)hd;
   (void)__key;
   (void)__keylen;
 
-  return do_tripledes_setkey(context, key, sizeof(key));
+  return do_tripledes_setkey(context, key, sizeof(key), NULL);
 }
 
 
@@ -1349,9 +1314,12 @@ selftest (void)
 
 
 static gcry_err_code_t
-do_tripledes_setkey ( void *context, const byte *key, unsigned keylen )
+do_tripledes_setkey ( void *context, const byte *key, unsigned keylen,
+                      gcry_cipher_hd_t hd )
 {
   struct _tripledes_ctx *ctx = (struct _tripledes_ctx *) context;
+
+  (void)hd;
 
   if( keylen != 24 )
     return GPG_ERR_INV_KEYLEN;
@@ -1413,9 +1381,12 @@ do_tripledes_decrypt( void *context, byte *outbuf, const byte *inbuf )
 }
 
 static gcry_err_code_t
-do_des_setkey (void *context, const byte *key, unsigned keylen)
+do_des_setkey (void *context, const byte *key, unsigned keylen,
+               gcry_cipher_hd_t hd)
 {
   struct _des_ctx *ctx = (struct _des_ctx *) context;
+
+  (void)hd;
 
   if (keylen != 8)
     return GPG_ERR_INV_KEYLEN;
@@ -1452,7 +1423,7 @@ do_des_decrypt( void *context, byte *outbuf, const byte *inbuf )
 
 
 
-
+
 /*
      Self-test section.
  */
@@ -1507,7 +1478,7 @@ run_selftests (int algo, int extended, selftest_report_func_t report)
 }
 
 
-
+
 gcry_cipher_spec_t _gcry_cipher_spec_des =
   {
     GCRY_CIPHER_DES, {0, 0},

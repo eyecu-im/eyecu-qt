@@ -603,7 +603,7 @@ _gcry_ecc_eddsa_sign (gcry_mpi_t input, ECC_secret_key *skey,
   a = mpi_snew (0);
   x = mpi_new (0);
   y = mpi_new (0);
-  r = mpi_new (0);
+  r = mpi_snew (0);
   ctx = _gcry_mpi_ec_p_internal_new (skey->E.model, skey->E.dialect, 0,
                                      skey->E.p, skey->E.a, skey->E.b);
   b = (ctx->nbits+7)/8;
@@ -760,7 +760,10 @@ _gcry_ecc_eddsa_verify (gcry_mpi_t input, ECC_public_key *pkey,
                                      pkey->E.p, pkey->E.a, pkey->E.b);
   b = ctx->nbits/8;
   if (b != 256/8)
-    return GPG_ERR_INTERNAL; /* We only support 256 bit. */
+    {
+      rc = GPG_ERR_INTERNAL; /* We only support 256 bit. */
+      goto leave;
+    }
 
   /* Decode and check the public key.  */
   rc = _gcry_ecc_eddsa_decodepoint (pk, ctx, &Q, &encpk, &encpklen);

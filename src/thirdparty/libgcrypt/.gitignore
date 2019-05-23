@@ -1,9 +1,7 @@
 *.lo
 *.o
-.DS_Store
 .deps/
 .libs/
-build-*/
 po/*.gmo
 po/messages.mo
 /aclocal.m4
@@ -16,6 +14,7 @@ po/messages.mo
 /libtool
 /stamp-h1
 /Makefile.in
+/VERSION
 cipher/Makefile.in
 cipher/gost-s-box
 cipher/gost-sb.h
@@ -75,6 +74,7 @@ tests/ac-data
 tests/ac-schemes
 tests/aeswrap
 tests/basic
+tests/basic-disable-all-hwf
 tests/bench-slope
 tests/benchmark
 tests/curves

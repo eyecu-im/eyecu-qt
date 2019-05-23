@@ -66,12 +66,35 @@
 #undef GCM_USE_INTEL_PCLMUL
 #if defined(ENABLE_PCLMUL_SUPPORT) && defined(GCM_USE_TABLES)
 # if ((defined(__i386__) && SIZEOF_UNSIGNED_LONG == 4) || defined(__x86_64__))
-#  if (__GNUC__ >= 4) || defined(__INTEL_COMPILER)
+#  if __GNUC__ >= 4
 #   define GCM_USE_INTEL_PCLMUL 1
 #  endif
 # endif
 #endif /* GCM_USE_INTEL_PCLMUL */
 
+/* GCM_USE_ARM_PMULL indicates whether to compile GCM with ARMv8 PMULL code. */
+#undef GCM_USE_ARM_PMULL
+#if defined(ENABLE_ARM_CRYPTO_SUPPORT) && defined(GCM_USE_TABLES)
+# if defined(HAVE_ARM_ARCH_V6) && defined(__ARMEL__) \
+     && defined(HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS) \
+     && defined(HAVE_GCC_INLINE_ASM_AARCH32_CRYPTO)
+#  define GCM_USE_ARM_PMULL 1
+# elif defined(__AARCH64EL__) && \
+    defined(HAVE_COMPATIBLE_GCC_AARCH64_PLATFORM_AS) && \
+    defined(HAVE_GCC_INLINE_ASM_AARCH64_CRYPTO)
+#  define GCM_USE_ARM_PMULL 1
+# endif
+#endif /* GCM_USE_ARM_PMULL */
+
+/* GCM_USE_ARM_NEON indicates whether to compile GCM with ARMv7 NEON code. */
+#undef GCM_USE_ARM_NEON
+#if defined(GCM_USE_TABLES)
+#if defined(HAVE_ARM_ARCH_V6) && defined(__ARMEL__) && \
+    defined(HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS) && \
+    defined(HAVE_GCC_INLINE_ASM_NEON)
+#  define GCM_USE_ARM_NEON 1
+#endif
+#endif /* GCM_USE_ARM_NEON */
 
 typedef unsigned int (*ghash_fn_t) (gcry_cipher_hd_t c, byte *result,
                                     const byte *buf, size_t nblocks);
@@ -95,6 +118,25 @@ typedef union
 } cipher_context_alignment_t;
 
 
+/* Storage structure for CMAC, for CMAC and EAX modes. */
+typedef struct {
+  /* The initialization vector. Also contains tag after finalization. */
+  union {
+    cipher_context_alignment_t iv_align;
+    unsigned char iv[MAX_BLOCKSIZE];
+  } u_iv;
+
+  /* Subkeys for tag creation, not cleared by gcry_cipher_reset. */
+  unsigned char subkeys[2][MAX_BLOCKSIZE];
+
+  /* Space to save partial input lengths for MAC. */
+  unsigned char macbuf[MAX_BLOCKSIZE];
+
+  int mac_unused;  /* Number of unprocessed bytes in MACBUF. */
+  unsigned int tag:1; /* Set to 1 if tag has been finalized.  */
+} gcry_cmac_context_t;
+
+
 /* The handle structure.  */
 struct gcry_cipher_handle
 {
@@ -107,10 +149,29 @@ struct gcry_cipher_handle
      interface does not easily allow to retrieve this value. */
   int algo;
 
+  /* A structure with function pointers for mode operations. */
+  struct {
+    gcry_err_code_t (*encrypt)(gcry_cipher_hd_t c,
+                               unsigned char *outbuf, size_t outbuflen,
+                               const unsigned char *inbuf, size_t inbuflen);
+    gcry_err_code_t (*decrypt)(gcry_cipher_hd_t c,
+                               unsigned char *outbuf, size_t outbuflen,
+                               const unsigned char *inbuf, size_t inbuflen);
+    gcry_err_code_t (*setiv)(gcry_cipher_hd_t c, const unsigned char *iv,
+                             size_t ivlen);
+
+    gcry_err_code_t (*authenticate)(gcry_cipher_hd_t c,
+                                    const unsigned char *abuf, size_t abuflen);
+    gcry_err_code_t (*get_tag)(gcry_cipher_hd_t c, unsigned char *outtag,
+                               size_t taglen);
+    gcry_err_code_t (*check_tag)(gcry_cipher_hd_t c, const unsigned char *intag,
+                                 size_t taglen);
+  } mode_ops;
+
   /* A structure with function pointers for bulk operations.  Due to
      limitations of the module system (we don't want to change the
      API) we need to keep these function pointers here.  The cipher
-     open function intializes them and the actual encryption routines
+     open function initializes them and the actual encryption routines
      use them if they are not NULL.  */
   struct {
     void (*cfb_enc)(void *context, unsigned char *iv,
@@ -132,6 +193,9 @@ struct gcry_cipher_handle
 			const void *inbuf_arg, size_t nblocks, int encrypt);
     size_t (*ocb_auth)(gcry_cipher_hd_t c, const void *abuf_arg,
 		       size_t nblocks);
+    void (*xts_crypt)(void *context, unsigned char *tweak,
+		      void *outbuf_arg, const void *inbuf_arg,
+		      size_t nblocks, int encrypt);
   } bulk;
 
 
@@ -180,7 +244,7 @@ struct gcry_cipher_handle
 
       unsigned char s0[GCRY_CCM_BLOCK_LEN];
 
-      unsigned int nonce:1;/* Set to 1 if nonce has been set.  */
+      unsigned int nonce:1; /* Set to 1 if nonce has been set.  */
       unsigned int lengths:1; /* Set to 1 if CCM length parameters has been
                                  processed.  */
     } ccm;
@@ -200,12 +264,16 @@ struct gcry_cipher_handle
     } poly1305;
 
     /* Mode specific storage for CMAC mode. */
-    struct {
-      unsigned int tag:1; /* Set to 1 if tag has been finalized.  */
+    gcry_cmac_context_t cmac;
 
-      /* Subkeys for tag creation, not cleared by gcry_cipher_reset. */
-      unsigned char subkeys[2][MAX_BLOCKSIZE];
-    } cmac;
+    /* Mode specific storage for EAX mode. */
+    struct {
+      /* CMAC for header (AAD). */
+      gcry_cmac_context_t cmac_header;
+
+      /* CMAC for ciphertext. */
+      gcry_cmac_context_t cmac_ciphertext;
+    } eax;
 
     /* Mode specific storage for GCM mode. */
     struct {
@@ -218,7 +286,6 @@ struct gcry_cipher_handle
       /* Space to save partial input lengths for MAC. */
       unsigned char macbuf[GCRY_CCM_BLOCK_LEN];
       int mac_unused;  /* Number of unprocessed bytes in MACBUF. */
-
 
       /* byte counters for GCM */
       u32 aadlen[2];
@@ -248,20 +315,25 @@ struct gcry_cipher_handle
 #ifdef GCM_USE_TABLES
  #if (SIZEOF_UNSIGNED_LONG == 8 || defined(__x86_64__))
       #define GCM_TABLES_USE_U64 1
-      u64 gcm_table[2 * 16];
+      u64 gcm_table[4 * 16];
  #else
       #undef GCM_TABLES_USE_U64
-      u32 gcm_table[4 * 16];
+      u32 gcm_table[8 * 16];
  #endif
 #endif
     } gcm;
 
     /* Mode specific storage for OCB mode. */
     struct {
+      /* --- Following members are not cleared in gcry_cipher_reset --- */
+
       /* Helper variables and pre-computed table of L values.  */
       unsigned char L_star[OCB_BLOCK_LEN];
       unsigned char L_dollar[OCB_BLOCK_LEN];
-      unsigned char L[OCB_BLOCK_LEN][OCB_L_TABLE_SIZE];
+      unsigned char L0L1[OCB_BLOCK_LEN];
+      unsigned char L[OCB_L_TABLE_SIZE][OCB_BLOCK_LEN];
+
+      /* --- Following members are cleared in gcry_cipher_reset --- */
 
       /* The tag is valid if marks.tag has been set.  */
       unsigned char tag[OCB_BLOCK_LEN];
@@ -292,9 +364,14 @@ struct gcry_cipher_handle
          processed.  */
       unsigned int data_finalized:1;
       unsigned int aad_finalized:1;
-
     } ocb;
 
+    /* Mode specific storage for XTS mode. */
+    struct {
+      /* Pointer to tweak cipher context, allocated after actual
+       * cipher context. */
+      char *tweak_context;
+    } xts;
   } u_mode;
 
   /* What follows are two contexts of the cipher in use.  The first
@@ -315,6 +392,14 @@ gcry_err_code_t _gcry_cipher_cbc_decrypt
 /*           */ (gcry_cipher_hd_t c,
                  unsigned char *outbuf, size_t outbuflen,
                  const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_cbc_cts_encrypt
+/*           */ (gcry_cipher_hd_t c,
+                 unsigned char *outbuf, size_t outbuflen,
+                 const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_cbc_cts_decrypt
+/*           */ (gcry_cipher_hd_t c,
+                 unsigned char *outbuf, size_t outbuflen,
+                 const unsigned char *inbuf, size_t inbuflen);
 
 /*-- cipher-cfb.c --*/
 gcry_err_code_t _gcry_cipher_cfb_encrypt
@@ -322,6 +407,14 @@ gcry_err_code_t _gcry_cipher_cfb_encrypt
                  unsigned char *outbuf, size_t outbuflen,
                  const unsigned char *inbuf, size_t inbuflen);
 gcry_err_code_t _gcry_cipher_cfb_decrypt
+/*           */ (gcry_cipher_hd_t c,
+                 unsigned char *outbuf, size_t outbuflen,
+                 const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_cfb8_encrypt
+/*           */ (gcry_cipher_hd_t c,
+                 unsigned char *outbuf, size_t outbuflen,
+                 const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_cfb8_decrypt
 /*           */ (gcry_cipher_hd_t c,
                  unsigned char *outbuf, size_t outbuflen,
                  const unsigned char *inbuf, size_t inbuflen);
@@ -375,6 +468,42 @@ gcry_err_code_t _gcry_cipher_ccm_check_tag
                  const unsigned char *intag, size_t taglen);
 
 
+/*-- cipher-cmac.c --*/
+gcry_err_code_t _gcry_cmac_generate_subkeys
+/*           */ (gcry_cipher_hd_t c, gcry_cmac_context_t *ctx);
+gcry_err_code_t _gcry_cmac_write
+/*           */ (gcry_cipher_hd_t c, gcry_cmac_context_t *ctx,
+		 const byte * inbuf, size_t inlen);
+gcry_err_code_t _gcry_cmac_final
+/*           */ (gcry_cipher_hd_t c, gcry_cmac_context_t *ctx);
+void _gcry_cmac_reset (gcry_cmac_context_t *ctx);
+
+
+/*-- cipher-eax.c --*/
+gcry_err_code_t _gcry_cipher_eax_encrypt
+/*           */   (gcry_cipher_hd_t c,
+                   unsigned char *outbuf, size_t outbuflen,
+                   const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_eax_decrypt
+/*           */   (gcry_cipher_hd_t c,
+                   unsigned char *outbuf, size_t outbuflen,
+                   const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_eax_set_nonce
+/*           */   (gcry_cipher_hd_t c,
+                   const unsigned char *nonce, size_t noncelen);
+gcry_err_code_t _gcry_cipher_eax_authenticate
+/*           */   (gcry_cipher_hd_t c,
+                   const unsigned char *aadbuf, size_t aadbuflen);
+gcry_err_code_t _gcry_cipher_eax_get_tag
+/*           */   (gcry_cipher_hd_t c,
+                   unsigned char *outtag, size_t taglen);
+gcry_err_code_t _gcry_cipher_eax_check_tag
+/*           */   (gcry_cipher_hd_t c,
+                   const unsigned char *intag, size_t taglen);
+gcry_err_code_t _gcry_cipher_eax_setkey
+/*           */   (gcry_cipher_hd_t c);
+
+
 /*-- cipher-gcm.c --*/
 gcry_err_code_t _gcry_cipher_gcm_encrypt
 /*           */   (gcry_cipher_hd_t c,
@@ -425,6 +554,15 @@ void _gcry_cipher_poly1305_setkey
 /*           */   (gcry_cipher_hd_t c);
 
 
+/*-- chacha20.c --*/
+gcry_err_code_t _gcry_chacha20_poly1305_encrypt
+/*           */   (gcry_cipher_hd_t c, byte *outbuf, const byte *inbuf,
+		   size_t length);
+gcry_err_code_t _gcry_chacha20_poly1305_decrypt
+/*           */   (gcry_cipher_hd_t c, byte *outbuf, const byte *inbuf,
+		   size_t length);
+
+
 /*-- cipher-ocb.c --*/
 gcry_err_code_t _gcry_cipher_ocb_encrypt
 /*           */ (gcry_cipher_hd_t c,
@@ -445,28 +583,213 @@ gcry_err_code_t _gcry_cipher_ocb_get_tag
 gcry_err_code_t _gcry_cipher_ocb_check_tag
 /*           */ (gcry_cipher_hd_t c,
                  const unsigned char *intag, size_t taglen);
-const unsigned char *_gcry_cipher_ocb_get_l
-/*           */ (gcry_cipher_hd_t c, unsigned char *l_tmp, u64 n);
+void _gcry_cipher_ocb_setkey
+/*           */ (gcry_cipher_hd_t c);
 
 
-/* Inline version of _gcry_cipher_ocb_get_l, with hard-coded fast paths for
-   most common cases.  */
+/*-- cipher-xts.c --*/
+gcry_err_code_t _gcry_cipher_xts_encrypt
+/*           */ (gcry_cipher_hd_t c, unsigned char *outbuf, size_t outbuflen,
+		 const unsigned char *inbuf, size_t inbuflen);
+gcry_err_code_t _gcry_cipher_xts_decrypt
+/*           */ (gcry_cipher_hd_t c, unsigned char *outbuf, size_t outbuflen,
+		 const unsigned char *inbuf, size_t inbuflen);
+
+
+/* Return the L-value for block N.  Note: 'cipher_ocb.c' ensures that N
+ * will never be multiple of 65536 (1 << OCB_L_TABLE_SIZE), thus N can
+ * be directly passed to _gcry_ctz() function and resulting index will
+ * never overflow the table.  */
 static inline const unsigned char *
-ocb_get_l (gcry_cipher_hd_t c, unsigned char *l_tmp, u64 n)
+ocb_get_l (gcry_cipher_hd_t c, u64 n)
 {
-  if (n & 1)
-    return c->u_mode.ocb.L[0];
-  else if (n & 2)
-    return c->u_mode.ocb.L[1];
-  else
-    {
-      unsigned int ntz = _gcry_ctz64 (n);
+  unsigned long ntz;
 
-      if (ntz < OCB_L_TABLE_SIZE)
-	return c->u_mode.ocb.L[ntz];
-      else
-	return _gcry_cipher_ocb_get_l (c, l_tmp, n);
+#if ((defined(__i386__) || defined(__x86_64__)) && __GNUC__ >= 4)
+  /* Assumes that N != 0. */
+  asm ("rep;bsfl %k[low], %k[ntz]\n\t"
+        : [ntz] "=r" (ntz)
+        : [low] "r" ((unsigned long)n)
+        : "cc");
+#else
+  ntz = _gcry_ctz (n);
+#endif
+
+  return c->u_mode.ocb.L[ntz];
+}
+
+
+/* Return bit-shift of blocksize. */
+static inline unsigned int _gcry_blocksize_shift(gcry_cipher_hd_t c)
+{
+  /* Only blocksizes 8 and 16 are used. Return value in such way
+   * that compiler can optimize calling functions based on this.  */
+  return c->spec->blocksize == 8 ? 3 : 4;
+}
+
+
+/* Optimized function for adding value to cipher block. */
+static inline void
+cipher_block_add(void *_dstsrc, unsigned int add, size_t blocksize)
+{
+  byte *dstsrc = _dstsrc;
+  u64 s[2];
+
+  if (blocksize == 8)
+    {
+      buf_put_be64(dstsrc + 0, buf_get_be64(dstsrc + 0) + add);
+    }
+  else /* blocksize == 16 */
+    {
+      s[0] = buf_get_be64(dstsrc + 8);
+      s[1] = buf_get_be64(dstsrc + 0);
+      s[0] += add;
+      s[1] += (s[0] < add);
+      buf_put_be64(dstsrc + 8, s[0]);
+      buf_put_be64(dstsrc + 0, s[1]);
     }
 }
+
+
+/* Optimized function for cipher block copying */
+static inline void
+cipher_block_cpy(void *_dst, const void *_src, size_t blocksize)
+{
+  byte *dst = _dst;
+  const byte *src = _src;
+  u64 s[2];
+
+  if (blocksize == 8)
+    {
+      buf_put_he64(dst + 0, buf_get_he64(src + 0));
+    }
+  else /* blocksize == 16 */
+    {
+      s[0] = buf_get_he64(src + 0);
+      s[1] = buf_get_he64(src + 8);
+      buf_put_he64(dst + 0, s[0]);
+      buf_put_he64(dst + 8, s[1]);
+    }
+}
+
+
+/* Optimized function for cipher block xoring */
+static inline void
+cipher_block_xor(void *_dst, const void *_src1, const void *_src2,
+                 size_t blocksize)
+{
+  byte *dst = _dst;
+  const byte *src1 = _src1;
+  const byte *src2 = _src2;
+  u64 s1[2];
+  u64 s2[2];
+
+  if (blocksize == 8)
+    {
+      buf_put_he64(dst + 0, buf_get_he64(src1 + 0) ^ buf_get_he64(src2 + 0));
+    }
+  else /* blocksize == 16 */
+    {
+      s1[0] = buf_get_he64(src1 + 0);
+      s1[1] = buf_get_he64(src1 + 8);
+      s2[0] = buf_get_he64(src2 + 0);
+      s2[1] = buf_get_he64(src2 + 8);
+      buf_put_he64(dst + 0, s1[0] ^ s2[0]);
+      buf_put_he64(dst + 8, s1[1] ^ s2[1]);
+    }
+}
+
+
+/* Optimized function for in-place cipher block xoring */
+static inline void
+cipher_block_xor_1(void *_dst, const void *_src, size_t blocksize)
+{
+  cipher_block_xor (_dst, _dst, _src, blocksize);
+}
+
+
+/* Optimized function for cipher block xoring with two destination cipher
+   blocks.  Used mainly by CFB mode encryption.  */
+static inline void
+cipher_block_xor_2dst(void *_dst1, void *_dst2, const void *_src,
+                      size_t blocksize)
+{
+  byte *dst1 = _dst1;
+  byte *dst2 = _dst2;
+  const byte *src = _src;
+  u64 d2[2];
+  u64 s[2];
+
+  if (blocksize == 8)
+    {
+      d2[0] = buf_get_he64(dst2 + 0) ^ buf_get_he64(src + 0);
+      buf_put_he64(dst2 + 0, d2[0]);
+      buf_put_he64(dst1 + 0, d2[0]);
+    }
+  else /* blocksize == 16 */
+    {
+      s[0] = buf_get_he64(src + 0);
+      s[1] = buf_get_he64(src + 8);
+      d2[0] = buf_get_he64(dst2 + 0);
+      d2[1] = buf_get_he64(dst2 + 8);
+      d2[0] = d2[0] ^ s[0];
+      d2[1] = d2[1] ^ s[1];
+      buf_put_he64(dst2 + 0, d2[0]);
+      buf_put_he64(dst2 + 8, d2[1]);
+      buf_put_he64(dst1 + 0, d2[0]);
+      buf_put_he64(dst1 + 8, d2[1]);
+    }
+}
+
+
+/* Optimized function for combined cipher block xoring and copying.
+   Used by mainly CBC mode decryption.  */
+static inline void
+cipher_block_xor_n_copy_2(void *_dst_xor, const void *_src_xor,
+                          void *_srcdst_cpy, const void *_src_cpy,
+                          size_t blocksize)
+{
+  byte *dst_xor = _dst_xor;
+  byte *srcdst_cpy = _srcdst_cpy;
+  const byte *src_xor = _src_xor;
+  const byte *src_cpy = _src_cpy;
+  u64 sc[2];
+  u64 sx[2];
+  u64 sdc[2];
+
+  if (blocksize == 8)
+    {
+      sc[0] = buf_get_he64(src_cpy + 0);
+      buf_put_he64(dst_xor + 0,
+                   buf_get_he64(srcdst_cpy + 0) ^ buf_get_he64(src_xor + 0));
+      buf_put_he64(srcdst_cpy + 0, sc[0]);
+    }
+  else /* blocksize == 16 */
+    {
+      sc[0] = buf_get_he64(src_cpy + 0);
+      sc[1] = buf_get_he64(src_cpy + 8);
+      sx[0] = buf_get_he64(src_xor + 0);
+      sx[1] = buf_get_he64(src_xor + 8);
+      sdc[0] = buf_get_he64(srcdst_cpy + 0);
+      sdc[1] = buf_get_he64(srcdst_cpy + 8);
+      sx[0] ^= sdc[0];
+      sx[1] ^= sdc[1];
+      buf_put_he64(dst_xor + 0, sx[0]);
+      buf_put_he64(dst_xor + 8, sx[1]);
+      buf_put_he64(srcdst_cpy + 0, sc[0]);
+      buf_put_he64(srcdst_cpy + 8, sc[1]);
+    }
+}
+
+
+/* Optimized function for combined cipher block xoring and copying.
+   Used by mainly CFB mode decryption.  */
+static inline void
+cipher_block_xor_n_copy(void *_dst_xor, void *_srcdst_cpy, const void *_src,
+                        size_t blocksize)
+{
+  cipher_block_xor_n_copy_2(_dst_xor, _src, _srcdst_cpy, _src, blocksize);
+}
+
 
 #endif /*G10_CIPHER_INTERNAL_H*/

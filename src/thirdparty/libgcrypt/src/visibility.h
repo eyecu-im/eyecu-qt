@@ -246,6 +246,7 @@ MARK_VISIBLEX (gcry_mpi_new)
 MARK_VISIBLEX (gcry_mpi_point_get)
 MARK_VISIBLEX (gcry_mpi_point_new)
 MARK_VISIBLEX (gcry_mpi_point_release)
+MARK_VISIBLEX (gcry_mpi_point_copy)
 MARK_VISIBLEX (gcry_mpi_point_set)
 MARK_VISIBLEX (gcry_mpi_point_snatch_get)
 MARK_VISIBLEX (gcry_mpi_point_snatch_set)
@@ -264,6 +265,7 @@ MARK_VISIBLEX (gcry_mpi_set_highbit)
 MARK_VISIBLEX (gcry_mpi_set_opaque)
 MARK_VISIBLEX (gcry_mpi_set_opaque_copy)
 MARK_VISIBLEX (gcry_mpi_set_ui)
+MARK_VISIBLEX (gcry_mpi_get_ui)
 MARK_VISIBLEX (gcry_mpi_snew)
 MARK_VISIBLEX (gcry_mpi_sub)
 MARK_VISIBLEX (gcry_mpi_sub_ui)
@@ -278,6 +280,8 @@ MARK_VISIBLEX (gcry_log_debughex)
 MARK_VISIBLEX (gcry_log_debugmpi)
 MARK_VISIBLEX (gcry_log_debugpnt)
 MARK_VISIBLEX (gcry_log_debugsxp)
+
+MARK_VISIBLEX (gcry_get_config)
 
 /* Functions used to implement macros.  */
 MARK_VISIBLEX (_gcry_mpi_get_const)
@@ -464,6 +468,7 @@ MARK_VISIBLEX (_gcry_mpi_get_const)
 #define gcry_mpi_point_get          _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_point_new          _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_point_release      _gcry_USE_THE_UNDERSCORED_FUNCTION
+#define gcry_mpi_point_copy         _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_point_set          _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_point_snatch_get   _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_point_snatch_set   _gcry_USE_THE_UNDERSCORED_FUNCTION
@@ -480,6 +485,7 @@ MARK_VISIBLEX (_gcry_mpi_get_const)
 #define gcry_mpi_set_highbit        _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_set_opaque         _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_set_ui             _gcry_USE_THE_UNDERSCORED_FUNCTION
+#define gcry_mpi_get_ui             _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_snatch             _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_snew               _gcry_USE_THE_UNDERSCORED_FUNCTION
 #define gcry_mpi_sub                _gcry_USE_THE_UNDERSCORED_FUNCTION

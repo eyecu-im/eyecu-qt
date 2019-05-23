@@ -36,10 +36,17 @@
    features.  */
 #undef HAS_X86_CPUID
 
-#if defined (__i386__) && SIZEOF_UNSIGNED_LONG == 4 && ( defined (__GNUC__) || defined(__INTEL_COMPILER) )
+#if defined (__i386__) && SIZEOF_UNSIGNED_LONG == 4 && defined (__GNUC__)
 # define HAS_X86_CPUID 1
 
-static int
+#if _GCRY_GCC_VERSION >= 40700 /* 4.7 */
+# define FORCE_FUNC_FRAME_POINTER \
+	__attribute__ ((optimize("no-omit-frame-pointer")))
+#else
+# define FORCE_FUNC_FRAME_POINTER
+#endif
+
+static FORCE_FUNC_FRAME_POINTER int
 is_cpuid_available(void)
 {
   int has_cpuid = 0;
@@ -58,12 +65,12 @@ is_cpuid_available(void)
      "pushl %%ecx\n\t"           /* Restore flags from ECX.  */
      "popf\n\t"
      "xorl %%eax, %%ecx\n\t"     /* Compare flags against saved flags.  */
-     "jz 1f\n\t"       /* Toggling did not work, thus no CPUID.  */
+     "jz .Lno_cpuid%=\n\t"       /* Toggling did not work, thus no CPUID.  */
      "movl $1, %0\n"             /* Worked. true -> HAS_CPUID.  */
-     "1:\n\t"
+     ".Lno_cpuid%=:\n\t"
      : "+r" (has_cpuid)
      :
-     : "%eax", "%ecx", "cc"
+     : "%eax", "%ecx", "cc", "memory"
      );
 
   return has_cpuid;
@@ -76,14 +83,14 @@ get_cpuid(unsigned int in, unsigned int *eax, unsigned int *ebx,
   unsigned int regs[4];
 
   asm volatile
-    ("pushl %%ebx\n\t"           /* Save GOT register.  */
-     "movl %1, %%ebx\n\t"
+    ("movl %%ebx, %%edi\n\t"     /* Save GOT register.  */
+     "xorl %%ebx, %%ebx\n\t"
      "cpuid\n\t"
      "movl %%ebx, %1\n\t"
-     "popl %%ebx\n\t"            /* Restore GOT register. */
-     : "=a" (regs[0]), "=D" (regs[1]), "=c" (regs[2]), "=d" (regs[3])
-     : "0" (in), "1" (0), "2" (0), "3" (0)
-     : "cc"
+     "movl %%edi, %%ebx\n\t"     /* Restore GOT register. */
+     : "=a" (regs[0]), "=g" (regs[1]), "=c" (regs[2]), "=d" (regs[3])
+     : "0" (in), "2" (0), "3" (0)
+     : "cc", "edi"
      );
 
   if (eax)
@@ -115,7 +122,7 @@ get_xgetbv(void)
 #endif /* i386 && GNUC */
 
 
-#if defined (__x86_64__) && ( defined (__GNUC__) || defined(__INTEL_COMPILER) )
+#if defined (__x86_64__) && defined (__GNUC__)
 # define HAS_X86_CPUID 1
 
 static int
@@ -170,28 +177,31 @@ get_xgetbv(void)
 static unsigned int
 detect_x86_gnuc (void)
 {
-  char vendor_id[12+1];
-  unsigned int features;
+  union
+  {
+    char c[12+1];
+    unsigned int ui[3];
+  } vendor_id;
+  unsigned int features, features2;
   unsigned int os_supports_avx_avx2_registers = 0;
   unsigned int max_cpuid_level;
   unsigned int fms, family, model;
   unsigned int result = 0;
+  unsigned int avoid_vpgather = 0;
 
   (void)os_supports_avx_avx2_registers;
 
   if (!is_cpuid_available())
     return 0;
 
-  get_cpuid(0, &max_cpuid_level,
-            (unsigned int *)&vendor_id[0],
-            (unsigned int *)&vendor_id[8],
-            (unsigned int *)&vendor_id[4]);
-  vendor_id[12] = 0;
+  get_cpuid(0, &max_cpuid_level, &vendor_id.ui[0], &vendor_id.ui[2],
+            &vendor_id.ui[1]);
+  vendor_id.c[12] = 0;
 
   if (0)
     ; /* Just to make "else if" and ifdef macros look pretty.  */
 #ifdef ENABLE_PADLOCK_SUPPORT
-  else if (!strcmp (vendor_id, "CentaurHauls"))
+  else if (!strcmp (vendor_id.c, "CentaurHauls"))
     {
       /* This is a VIA CPU.  Check what PadLock features we have.  */
 
@@ -224,12 +234,12 @@ detect_x86_gnuc (void)
         }
     }
 #endif /*ENABLE_PADLOCK_SUPPORT*/
-  else if (!strcmp (vendor_id, "GenuineIntel"))
+  else if (!strcmp (vendor_id.c, "GenuineIntel"))
     {
       /* This is an Intel CPU.  */
       result |= HWF_INTEL_CPU;
     }
-  else if (!strcmp (vendor_id, "AuthenticAMD"))
+  else if (!strcmp (vendor_id.c, "AuthenticAMD"))
     {
       /* This is an AMD CPU.  */
     }
@@ -237,8 +247,8 @@ detect_x86_gnuc (void)
   /* Detect Intel features, that might also be supported by other
      vendors.  */
 
-  /* Get CPU family/model/stepping (EAX) and Intel feature flags (ECX).  */
-  get_cpuid(1, &fms, NULL, &features, NULL);
+  /* Get CPU family/model/stepping (EAX) and Intel feature flags (ECX, EDX).  */
+  get_cpuid(1, &fms, NULL, &features, &features2);
 
   family = ((fms & 0xf00) >> 8) + ((fms & 0xff00000) >> 20);
   model = ((fms & 0xf0) >> 4) + ((fms & 0xf0000) >> 12);
@@ -262,11 +272,33 @@ detect_x86_gnuc (void)
 	case 0x47:
 	case 0x4E:
 	case 0x5E:
+	case 0x8E:
+	case 0x9E:
 	case 0x55:
 	case 0x66:
 	  result |= HWF_INTEL_FAST_SHLD;
 	  break;
 	}
+
+      /* These Intel Core processors that have AVX2 have slow VPGATHER and
+       * should be avoided for table-lookup use. */
+      switch (model)
+	{
+	case 0x3C:
+	case 0x3F:
+	case 0x45:
+	case 0x46:
+	  /* Haswell */
+	  avoid_vpgather |= 1;
+	  break;
+	}
+    }
+  else
+    {
+      /* Avoid VPGATHER for non-Intel CPUs as testing is needed to
+       * make sure it is fast enough. */
+
+      avoid_vpgather |= 1;
     }
 
 #ifdef ENABLE_PCLMUL_SUPPORT
@@ -306,6 +338,10 @@ detect_x86_gnuc (void)
      result |= HWF_INTEL_RDRAND;
 #endif /*ENABLE_DRNG_SUPPORT*/
 
+  /* Test bit 4 of EDX for TSC.  */
+  if (features2 & 0x00000010)
+    result |= HWF_INTEL_RDTSC;
+
   /* Check additional Intel feature flags.  Early Intel P5 processors report
    * too high max_cpuid_level, so don't check level 7 if processor does not
    * support SSE3 (as cpuid:7 contains only features for newer processors).
@@ -324,7 +360,14 @@ detect_x86_gnuc (void)
       if (features & 0x00000020)
         if (os_supports_avx_avx2_registers)
           result |= HWF_INTEL_AVX2;
+
+      if ((result & HWF_INTEL_AVX2) && !avoid_vpgather)
+        result |= HWF_INTEL_FAST_VPGATHER;
 #endif /*ENABLE_AVX_SUPPORT*/
+
+      /* Test bit 29 for SHA Extensions. */
+      if (features & (1 << 29))
+          result |= HWF_INTEL_SHAEXT;
     }
 
   return result;

@@ -26,40 +26,16 @@
 #include <string.h>
 #include <stdarg.h>
 
-#include "../src/gcrypt-int.h"
-
-static int verbose;
-static int error_count;
-
-static void
-fail (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  error_count++;
-}
-
-static void
-die (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  exit (1);
-}
-
+#define PGM "aeswrap"
+#include "t-common.h"
 
 
 static void
-check (int algo,
-       const void *kek, size_t keklen,
-       const void *data, size_t datalen,
-       const void *expected, size_t expectedlen)
+check_one (int algo,
+           const void *kek, size_t keklen,
+           const void *data, size_t datalen,
+           const void *expected, size_t expectedlen,
+           int inplace)
 {
   gcry_error_t err;
   gcry_cipher_hd_t hd;
@@ -82,9 +58,19 @@ check (int algo,
 
   outbuflen = datalen + 8;
   if (outbuflen > sizeof outbuf)
-    err = gpg_error (GPG_ERR_INTERNAL);
+    {
+      err = gpg_error (GPG_ERR_INTERNAL);
+    }
+  else if (inplace)
+    {
+      memcpy (outbuf, data, datalen);
+      err = gcry_cipher_encrypt (hd, outbuf, outbuflen, outbuf, datalen);
+    }
   else
-    err = gcry_cipher_encrypt (hd, outbuf, outbuflen, data, datalen);
+    {
+      err = gcry_cipher_encrypt (hd, outbuf, outbuflen, data, datalen);
+    }
+
   if (err)
     {
       fail ("gcry_cipher_encrypt failed: %s\n", gpg_strerror (err));
@@ -96,7 +82,7 @@ check (int algo,
       const unsigned char *s;
       int i;
 
-      fail ("mismatch at encryption!\n");
+      fail ("mismatch at encryption!%s\n", inplace ? " (inplace)" : "");
       fprintf (stderr, "computed: ");
       for (i = 0; i < outbuflen; i++)
 	fprintf (stderr, "%02x ", outbuf[i]);
@@ -109,9 +95,19 @@ check (int algo,
 
   outbuflen = expectedlen - 8;
   if (outbuflen > sizeof outbuf)
-    err = gpg_error (GPG_ERR_INTERNAL);
+    {
+      err = gpg_error (GPG_ERR_INTERNAL);
+    }
+  else if (inplace)
+    {
+      memcpy (outbuf, expected, expectedlen);
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, outbuf, expectedlen);
+    }
   else
-    err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    {
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    }
+
   if (err)
     {
       fail ("gcry_cipher_decrypt failed: %s\n", gpg_strerror (err));
@@ -123,7 +119,7 @@ check (int algo,
       const unsigned char *s;
       int i;
 
-      fail ("mismatch at decryption!\n");
+      fail ("mismatch at decryption!%s\n", inplace ? " (inplace)" : "");
       fprintf (stderr, "computed: ");
       for (i = 0; i < outbuflen; i++)
 	fprintf (stderr, "%02x ", outbuf[i]);
@@ -138,9 +134,19 @@ check (int algo,
 
   outbuflen = expectedlen - 8;
   if (outbuflen > sizeof outbuf)
-    err = gpg_error (GPG_ERR_INTERNAL);
+    {
+      err = gpg_error (GPG_ERR_INTERNAL);
+    }
+  else if (inplace)
+    {
+      memcpy (outbuf, expected, expectedlen);
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, outbuf, expectedlen);
+    }
   else
-    err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    {
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    }
+
   if (err)
     {
       fail ("gcry_cipher_decrypt(2) failed: %s\n", gpg_strerror (err));
@@ -148,14 +154,24 @@ check (int algo,
     }
 
   if (outbuflen != datalen || memcmp (outbuf, data, datalen))
-    fail ("mismatch at decryption(2)!\n");
+    fail ("mismatch at decryption(2)!%s\n", inplace ? " (inplace)" : "");
 
-  /* And once ore without a key reset. */
+  /* And once more without a key reset. */
   outbuflen = expectedlen - 8;
   if (outbuflen > sizeof outbuf)
-    err = gpg_error (GPG_ERR_INTERNAL);
+    {
+      err = gpg_error (GPG_ERR_INTERNAL);
+    }
+  else if (inplace)
+    {
+      memcpy (outbuf, expected, expectedlen);
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, outbuf, expectedlen);
+    }
   else
-    err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    {
+      err = gcry_cipher_decrypt (hd, outbuf, outbuflen, expected, expectedlen);
+    }
+
   if (err)
     {
       fail ("gcry_cipher_decrypt(3) failed: %s\n", gpg_strerror (err));
@@ -163,9 +179,20 @@ check (int algo,
     }
 
   if (outbuflen != datalen || memcmp (outbuf, data, datalen))
-    fail ("mismatch at decryption(3)!\n");
+    fail ("mismatch at decryption(3)!%s\n", inplace ? " (inplace)" : "");
 
   gcry_cipher_close (hd);
+}
+
+
+static void
+check (int algo,
+       const void *kek, size_t keklen,
+       const void *data, size_t datalen,
+       const void *expected, size_t expectedlen)
+{
+  check_one (algo, kek, keklen, data, datalen, expected, expectedlen, 0);
+  check_one (algo, kek, keklen, data, datalen, expected, expectedlen, 1);
 }
 
 
@@ -239,8 +266,6 @@ check_all (void)
 int
 main (int argc, char **argv)
 {
-  int debug = 0;
-
   if (argc > 1 && !strcmp (argv[1], "--verbose"))
     verbose = 1;
   else if (argc > 1 && !strcmp (argv[1], "--debug"))
@@ -249,10 +274,10 @@ main (int argc, char **argv)
   if (!gcry_check_version (GCRYPT_VERSION))
     die ("version mismatch\n");
 
-  gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-  gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+  xgcry_control ((GCRYCTL_DISABLE_SECMEM, 0));
+  xgcry_control ((GCRYCTL_INITIALIZATION_FINISHED, 0));
   if (debug)
-    gcry_control (GCRYCTL_SET_DEBUG_FLAGS, 1u, 0);
+    xgcry_control ((GCRYCTL_SET_DEBUG_FLAGS, 1u, 0));
   check_all ();
 
   return error_count ? 1 : 0;

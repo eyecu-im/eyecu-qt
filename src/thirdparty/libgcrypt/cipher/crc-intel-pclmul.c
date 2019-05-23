@@ -30,7 +30,8 @@
 #include "bufhelp.h"
 
 
-#if defined(ENABLE_PCLMUL_SUPPORT) && __GNUC__ >= 4 && \
+#if defined(ENABLE_PCLMUL_SUPPORT) && defined(ENABLE_SSE41_SUPPORT) && \
+    __GNUC__ >= 4 &&                                                   \
     ((defined(__i386__) && SIZEOF_UNSIGNED_LONG == 4) || defined(__x86_64__))
 
 
@@ -38,9 +39,25 @@
 /* Prevent compiler from issuing SSE instructions between asm blocks. */
 #  pragma GCC target("no-sse")
 #endif
+#if __clang__
+#  pragma clang attribute push (__attribute__((target("no-sse"))), apply_to = function)
+#endif
+
+
+#define ALWAYS_INLINE inline __attribute__((always_inline))
+#define NO_INSTRUMENT_FUNCTION __attribute__((no_instrument_function))
+
+#define ASM_FUNC_ATTR        NO_INSTRUMENT_FUNCTION
+#define ASM_FUNC_ATTR_INLINE ASM_FUNC_ATTR ALWAYS_INLINE
 
 
 #define ALIGNED_16 __attribute__ ((aligned (16)))
+
+
+struct u16_unaligned_s
+{
+  u16 a;
+} __attribute__((packed, aligned (1), may_alias));
 
 
 /* Constants structure for generic reflected/non-reflected CRC32 CLMUL
@@ -125,7 +142,7 @@ static const u64 crc32_merge5to7_shuf[7 - 5 + 1][2] ALIGNED_16 =
   };
 
 /* PCLMUL functions for reflected CRC32. */
-static inline void
+static ASM_FUNC_ATTR_INLINE void
 crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      const struct crc32_consts_s *consts)
 {
@@ -143,7 +160,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [inbuf_2] "m" (inbuf[2 * 16]),
 		      [inbuf_3] "m" (inbuf[3 * 16]),
 		      [crc] "m" (*pcrc)
-		    : );
+		    );
 
       inbuf += 4 * 16;
       inlen -= 4 * 16;
@@ -151,7 +168,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
       asm volatile ("movdqa %[k1k2], %%xmm4\n\t"
 		    :
 		    : [k1k2] "m" (consts->k[1 - 1])
-		    : );
+		    );
 
       /* Fold by 4. */
       while (inlen >= 4 * 16)
@@ -188,7 +205,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 			  [inbuf_1] "m" (inbuf[1 * 16]),
 			  [inbuf_2] "m" (inbuf[2 * 16]),
 			  [inbuf_3] "m" (inbuf[3 * 16])
-			: );
+			);
 
 	  inbuf += 4 * 16;
 	  inlen -= 4 * 16;
@@ -199,7 +216,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    :
 		    : [k3k4] "m" (consts->k[3 - 1]),
 		      [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       /* Fold 4 to 1. */
 
@@ -222,7 +239,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    "pxor %%xmm4, %%xmm0\n\t"
 		    :
 		    :
-		    : );
+		    );
     }
   else
     {
@@ -236,7 +253,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [crc] "m" (*pcrc),
 		      [k3k4] "m" (consts->k[3 - 1]),
 		      [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       inbuf += 16;
       inlen -= 16;
@@ -256,7 +273,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 			"pxor %%xmm1, %%xmm0\n\t"
 			:
 			: [inbuf] "m" (*inbuf)
-			: );
+			);
 
 	  inbuf += 16;
 	  inlen -= 16;
@@ -288,7 +305,7 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [mask] "m" (crc32_partial_fold_input_mask[inlen]),
 		      [shl_shuf] "m" (crc32_refl_shuf_shift[inlen]),
 		      [shr_shuf] "m" (crc32_refl_shuf_shift[inlen + 16])
-		    : );
+		    );
 
       inbuf += inlen;
       inlen -= inlen;
@@ -318,10 +335,10 @@ crc32_reflected_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		"pextrd $2, %%xmm0, %[out]\n\t"
 		: [out] "=m" (*pcrc)
 		: [k5] "m" (consts->k[5 - 1])
-	        : );
+	        );
 }
 
-static inline void
+static ASM_FUNC_ATTR_INLINE void
 crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 			      const struct crc32_consts_s *consts)
 {
@@ -333,7 +350,7 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
       asm volatile ("movdqa %[my_p], %%xmm5\n\t"
 		    :
 		    : [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       if (inlen == 1)
 	{
@@ -344,14 +361,14 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 	}
       else if (inlen == 2)
 	{
-	  data = *((const u16 *)inbuf);
+	  data = ((const struct u16_unaligned_s *)inbuf)->a;
 	  data ^= crc;
 	  data <<= 16;
 	  crc >>= 16;
 	}
       else
 	{
-	  data = *((const u16 *)inbuf);
+	  data = ((const struct u16_unaligned_s *)inbuf)->a;
 	  data |= inbuf[2] << 16;
 	  data ^= crc;
 	  data <<= 8;
@@ -372,7 +389,7 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    : [out] "=m" (*pcrc)
 		    : [in] "rm" (data),
 		      [crc] "rm" (crc)
-		    : );
+		    );
     }
   else if (inlen == 4)
     {
@@ -391,7 +408,7 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    : [in] "m" (*inbuf),
 		      [crc] "m" (*pcrc),
 		      [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
     }
   else
     {
@@ -404,14 +421,14 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [crc] "m" (*pcrc),
 		      [my_p] "m" (consts->my_p[0]),
 		      [k3k4] "m" (consts->k[3 - 1])
-		    : );
+		    );
 
       if (inlen >= 8)
 	{
 	  asm volatile ("movq %[inbuf], %%xmm0\n\t"
 			:
 			: [inbuf] "m" (*inbuf)
-			: );
+			);
 	  if (inlen > 8)
 	    {
 	      asm volatile (/*"pinsrq $1, %[inbuf_tail], %%xmm0\n\t"*/
@@ -422,7 +439,7 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 			    : [inbuf_tail] "m" (inbuf[inlen - 8]),
 			      [merge_shuf] "m"
 				(*crc32_merge9to15_shuf[inlen - 9])
-			    : );
+			    );
 	    }
 	}
       else
@@ -435,7 +452,7 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 			  [inbuf_tail] "m" (inbuf[inlen - 4]),
 			  [merge_shuf] "m"
 			    (*crc32_merge5to7_shuf[inlen - 5])
-			: );
+			);
 	}
 
       /* Final fold. */
@@ -465,19 +482,19 @@ crc32_reflected_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    "pextrd $2, %%xmm0, %[out]\n\t"
 		    : [out] "=m" (*pcrc)
 		    : [k5] "m" (consts->k[5 - 1])
-		    : );
+		    );
     }
 }
 
 /* PCLMUL functions for non-reflected CRC32. */
-static inline void
+static ASM_FUNC_ATTR_INLINE void
 crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 	    const struct crc32_consts_s *consts)
 {
   asm volatile ("movdqa %[bswap], %%xmm7\n\t"
 		:
 		: [bswap] "m" (*crc32_bswap_shuf)
-		: );
+		);
 
   if (inlen >= 8 * 16)
     {
@@ -497,7 +514,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [inbuf_2] "m" (inbuf[2 * 16]),
 		      [inbuf_3] "m" (inbuf[3 * 16]),
 		      [crc] "m" (*pcrc)
-		    : );
+		    );
 
       inbuf += 4 * 16;
       inlen -= 4 * 16;
@@ -505,7 +522,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
       asm volatile ("movdqa %[k1k2], %%xmm4\n\t"
 		    :
 		    : [k1k2] "m" (consts->k[1 - 1])
-		    : );
+		    );
 
       /* Fold by 4. */
       while (inlen >= 4 * 16)
@@ -546,7 +563,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 			  [inbuf_1] "m" (inbuf[1 * 16]),
 			  [inbuf_2] "m" (inbuf[2 * 16]),
 			  [inbuf_3] "m" (inbuf[3 * 16])
-			: );
+			);
 
 	  inbuf += 4 * 16;
 	  inlen -= 4 * 16;
@@ -557,7 +574,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    :
 		    : [k3k4] "m" (consts->k[3 - 1]),
 		      [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       /* Fold 4 to 1. */
 
@@ -580,7 +597,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    "pxor %%xmm4, %%xmm0\n\t"
 		    :
 		    :
-		    : );
+		    );
     }
   else
     {
@@ -595,7 +612,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [crc] "m" (*pcrc),
 		      [k3k4] "m" (consts->k[3 - 1]),
 		      [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       inbuf += 16;
       inlen -= 16;
@@ -616,7 +633,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 			"pxor %%xmm1, %%xmm0\n\t"
 			:
 			: [inbuf] "m" (*inbuf)
-			: );
+			);
 
 	  inbuf += 16;
 	  inlen -= 16;
@@ -650,7 +667,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [mask] "m" (crc32_partial_fold_input_mask[inlen]),
 		      [shl_shuf] "m" (crc32_refl_shuf_shift[32 - inlen]),
 		      [shr_shuf] "m" (crc32_shuf_shift[inlen + 16])
-		    : );
+		    );
 
       inbuf += inlen;
       inlen -= inlen;
@@ -685,7 +702,7 @@ crc32_bulk (u32 *pcrc, const byte *inbuf, size_t inlen,
 		: "eax" );
 }
 
-static inline void
+static ASM_FUNC_ATTR_INLINE void
 crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		    const struct crc32_consts_s *consts)
 {
@@ -697,7 +714,7 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
       asm volatile ("movdqa %[my_p], %%xmm5\n\t"
 		    :
 		    : [my_p] "m" (consts->my_p[0])
-		    : );
+		    );
 
       if (inlen == 1)
 	{
@@ -708,14 +725,14 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 	}
       else if (inlen == 2)
 	{
-	  data = *((const u16 *)inbuf);
+	  data = ((const struct u16_unaligned_s *)inbuf)->a;
 	  data ^= crc;
 	  data = _gcry_bswap32(data << 16);
 	  crc = _gcry_bswap32(crc >> 16);
 	}
       else
 	{
-	  data = *((const u16 *)inbuf);
+	  data = ((const struct u16_unaligned_s *)inbuf)->a;
 	  data |= inbuf[2] << 16;
 	  data ^= crc;
 	  data = _gcry_bswap32(data << 8);
@@ -746,22 +763,28 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
       asm volatile ("movd %[crc], %%xmm0\n\t"
 		    "movd %[in], %%xmm1\n\t"
 		    "movdqa %[my_p], %%xmm5\n\t"
-		    "pxor %%xmm1, %%xmm0\n\t"
+		    :
+		    : [in] "m" (*inbuf),
+		      [crc] "m" (*pcrc),
+		      [my_p] "m" (consts->my_p[0])
+		    : "cc" );
+
+      asm volatile ("pxor %%xmm1, %%xmm0\n\t"
 		    "pshufb %[bswap], %%xmm0\n\t" /* [xx][00][00][00] */
 
 		    "pclmulqdq $0x01, %%xmm5, %%xmm0\n\t" /* [00][xx][xx][00] */
 		    "pclmulqdq $0x11, %%xmm5, %%xmm0\n\t" /* [00][00][xx][xx] */
+		    :
+		    : [bswap] "m" (*crc32_bswap_shuf)
+		    : "cc" );
 
-		    /* store CRC in input endian */
+      asm volatile (/* store CRC in input endian */
 		    "movd %%xmm0, %%eax\n\t"
 		    "bswapl %%eax\n\t"
 		    "movl %%eax, %[out]\n\t"
 		    : [out] "=m" (*pcrc)
-		    : [in] "m" (*inbuf),
-		      [crc] "m" (*pcrc),
-		      [my_p] "m" (consts->my_p[0]),
-		      [bswap] "m" (*crc32_bswap_shuf)
-		    : "eax" );
+		    :
+		    : "eax", "cc" );
     }
   else
     {
@@ -774,14 +797,14 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 		      [crc] "m" (*pcrc),
 		      [my_p] "m" (consts->my_p[0]),
 		      [k3k4] "m" (consts->k[3 - 1])
-		    : );
+		    );
 
       if (inlen >= 8)
 	{
 	  asm volatile ("movq %[inbuf], %%xmm0\n\t"
 			:
 			: [inbuf] "m" (*inbuf)
-			: );
+			);
 	  if (inlen > 8)
 	    {
 	      asm volatile (/*"pinsrq $1, %[inbuf_tail], %%xmm0\n\t"*/
@@ -792,7 +815,7 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 			    : [inbuf_tail] "m" (inbuf[inlen - 8]),
 			      [merge_shuf] "m"
 				(*crc32_merge9to15_shuf[inlen - 9])
-			    : );
+			    );
 	    }
 	}
       else
@@ -805,7 +828,7 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
 			  [inbuf_tail] "m" (inbuf[inlen - 4]),
 			  [merge_shuf] "m"
 			    (*crc32_merge5to7_shuf[inlen - 5])
-			: );
+			);
 	}
 
       /* Final fold. */
@@ -841,7 +864,7 @@ crc32_less_than_16 (u32 *pcrc, const byte *inbuf, size_t inlen,
     }
 }
 
-void
+void ASM_FUNC_ATTR
 _gcry_crc32_intel_pclmul (u32 *pcrc, const byte *inbuf, size_t inlen)
 {
   const struct crc32_consts_s *consts = &crc32_consts;
@@ -874,7 +897,7 @@ _gcry_crc32_intel_pclmul (u32 *pcrc, const byte *inbuf, size_t inlen)
 #endif
 }
 
-void
+void ASM_FUNC_ATTR
 _gcry_crc24rfc2440_intel_pclmul (u32 *pcrc, const byte *inbuf, size_t inlen)
 {
   const struct crc32_consts_s *consts = &crc24rfc2440_consts;
@@ -908,5 +931,9 @@ _gcry_crc24rfc2440_intel_pclmul (u32 *pcrc, const byte *inbuf, size_t inlen)
                : "memory");
 #endif
 }
+
+#if __clang__
+#  pragma clang attribute pop
+#endif
 
 #endif /* USE_INTEL_PCLMUL */

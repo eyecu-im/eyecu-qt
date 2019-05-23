@@ -32,6 +32,15 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#if defined(__linux__) || !defined(HAVE_GETENTROPY)
+#ifdef HAVE_SYSCALL
+# include <sys/syscall.h>
+# ifdef __NR_getrandom
+# define getentropy(buf,buflen) syscall (__NR_getrandom, buf, buflen, 0)
+# endif
+#endif
+#endif
+
 #include "types.h"
 #include "g10lib.h"
 #include "rand-internal.h"
@@ -100,9 +109,10 @@ open_device (const char *name, int retry)
 
 
 /* Note that the caller needs to make sure that this function is only
-   called by one thread at a time.  The function returns 0 on success
-   or true on failure (in which case the caller will signal a fatal
-   error).  */
+ * called by one thread at a time.  The function returns 0 on success
+ * or true on failure (in which case the caller will signal a fatal
+ * error).  This function should be entered only by one thread at a
+ * time. */
 int
 _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
                                           enum random_origins),
@@ -111,7 +121,13 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
 {
   static int fd_urandom = -1;
   static int fd_random = -1;
+  static int only_urandom = -1;
   static unsigned char ever_opened;
+  static volatile pid_t my_pid; /* The volatile is there to make sure
+                                 * the compiler does not optimize the
+                                 * code away in case the getpid
+                                 * function is badly attributed. */
+  volatile pid_t apid;
   int fd;
   int n;
   byte buffer[768];
@@ -120,6 +136,17 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
   size_t last_so_far = 0;
   int any_need_entropy = 0;
   int delay;
+
+  /* On the first call read the conf file to check whether we want to
+   * use only urandom.  */
+  if (only_urandom == -1)
+    {
+      my_pid = getpid ();
+      if ((_gcry_random_read_conf () & RANDOM_CONF_ONLY_URANDOM))
+        only_urandom = 1;
+      else
+        only_urandom = 0;
+    }
 
   if (!add)
     {
@@ -134,7 +161,28 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
           close (fd_urandom);
           fd_urandom = -1;
         }
+
+      _gcry_rndjent_fini ();
       return 0;
+    }
+
+  /* Detect a fork and close the devices so that we don't use the old
+   * file descriptors.  Note that open_device will be called in retry
+   * mode if the devices was opened by the parent process.  */
+  apid = getpid ();
+  if (my_pid != apid)
+    {
+      if (fd_random != -1)
+        {
+          close (fd_random);
+          fd_random = -1;
+        }
+      if (fd_urandom != -1)
+        {
+          close (fd_urandom);
+          fd_urandom = -1;
+        }
+      my_pid = apid;
     }
 
 
@@ -154,6 +202,19 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
   if (length > 1)
     length -= n_hw;
 
+  /* When using a blocking random generator try to get some entropy
+   * from the jitter based RNG.  In this case we take up to 50% of the
+   * remaining requested bytes.  */
+  if (level >= GCRY_VERY_STRONG_RANDOM)
+    {
+      n_hw = _gcry_rndjent_poll (add, origin, length/2);
+      if (n_hw > length/2)
+        n_hw = length/2;
+      if (length > 1)
+        length -= n_hw;
+    }
+
+
   /* Open the requested device.  The first time a device is to be
      opened we fail with a fatal error if the device does not exists.
      In case the device has ever been closed, further open requests
@@ -161,7 +222,7 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
      that we always require the device to be existent but want a more
      graceful behaviour if the rarely needed close operation has been
      used and the device needs to be re-opened later. */
-  if (level >= 2)
+  if (level >= GCRY_VERY_STRONG_RANDOM && !only_urandom)
     {
       if (fd_random == -1)
         {
@@ -191,6 +252,48 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
       struct timeval tv;
       int rc;
 
+      /* If we have a modern operating system, we first try to use the new
+       * getentropy function.  That call guarantees that the kernel's
+       * RNG has been properly seeded before returning any data.  This
+       * is different from /dev/urandom which may, due to its
+       * non-blocking semantics, return data even if the kernel has
+       * not been properly seeded.  And it differs from /dev/random by never
+       * blocking once the kernel is seeded.  */
+#if defined(HAVE_GETENTROPY) || defined(__NR_getrandom)
+        {
+          long ret;
+          size_t nbytes;
+
+          do
+            {
+              nbytes = length < sizeof(buffer)? length : sizeof(buffer);
+              if (nbytes > 256)
+                nbytes = 256;
+              _gcry_pre_syscall ();
+              ret = getentropy (buffer, nbytes);
+              _gcry_post_syscall ();
+            }
+          while (ret == -1 && errno == EINTR);
+          if (ret == -1 && errno == ENOSYS)
+            ; /* getentropy is not supported - fallback to pulling from fd.  */
+          else
+            { /* getentropy is supported.  Some sanity checks.  */
+              if (ret == -1)
+                log_fatal ("unexpected error from getentropy: %s\n",
+                           strerror (errno));
+#ifdef __NR_getrandom
+              else if (ret != nbytes)
+                log_fatal ("getentropy returned only"
+                           " %ld of %zu requested bytes\n", ret, nbytes);
+#endif
+
+              (*add)(buffer, nbytes, origin);
+              length -= nbytes;
+              continue; /* until LENGTH is zero.  */
+            }
+        }
+#endif
+
       /* If we collected some bytes update the progress indicator.  We
          do this always and not just if the select timed out because
          often just a few bytes are gathered within the timeout
@@ -216,7 +319,10 @@ _gcry_rndlinux_gather_random (void (*add)(const void*, size_t,
           FD_SET(fd, &rfds);
           tv.tv_sec = delay;
           tv.tv_usec = delay? 0 : 100000;
-          if ( !(rc=select(fd+1, &rfds, NULL, NULL, &tv)) )
+          _gcry_pre_syscall ();
+          rc = select (fd+1, &rfds, NULL, NULL, &tv);
+          _gcry_post_syscall ();
+          if (!rc)
             {
               any_need_entropy = 1;
               delay = 3; /* Use 3 seconds henceforth.  */

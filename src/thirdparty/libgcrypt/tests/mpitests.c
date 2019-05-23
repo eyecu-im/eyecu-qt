@@ -33,43 +33,7 @@
 #endif
 
 #define PGM "mpitests"
-
-static int verbose;
-static int debug;
-static int error_count;
-
-
-static void
-die (const char *format, ...)
-{
-  va_list arg_ptr ;
-
-  fflush (stdout);
-  fprintf (stderr, "%s: ", PGM);
-  va_start (arg_ptr, format) ;
-  vfprintf (stderr, format, arg_ptr );
-  va_end(arg_ptr);
-  if (*format && format[strlen(format)-1] != '\n')
-    putc ('\n', stderr);
-  exit (1);
-}
-
-static void
-fail (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  fflush (stdout);
-  fprintf (stderr, "%s: ", PGM);
-  va_start (arg_ptr, format);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  if (*format && format[strlen(format)-1] != '\n')
-    putc ('\n', stderr);
-  error_count++;
-  if (error_count >= 50)
-    die ("stopped after 50 errors.");
-}
+#include "t-common.h"
 
 
 /* Set up some test patterns */
@@ -241,6 +205,7 @@ test_maxsize (void)
 {
   gpg_error_t err;
   gcry_mpi_t a;
+  unsigned int val;
   char buffer[2+2048]; /* For PGP: 2 length bytes and 16384 bits.  */
 
   memset (buffer, 0x55, sizeof buffer);
@@ -268,7 +233,36 @@ test_maxsize (void)
   err = gcry_mpi_scan (&a, GCRYMPI_FMT_PGP, buffer, sizeof buffer, NULL);
   if (err)
     die ("gcry_mpi_scan did not parse a large PGP: %s\n", gpg_strerror (err));
+
+  /* Let's also test get_ui.  */
+  gcry_mpi_set_ui (a, 0);
+  val = 4711;
+  err = gcry_mpi_get_ui (&val, a);
+  if (err || val != 0)
+    die ("gcry_mpi_get_ui failed at %d: %s\n", __LINE__, gpg_strerror (err));
+
+  gcry_mpi_sub_ui (a, a, 1);
+  val = 4711;
+  err = gcry_mpi_get_ui (&val, a);
+  if (gpg_err_code (err) != GPG_ERR_ERANGE || val != 4711)
+    die ("gcry_mpi_get_ui failed at %d: %s\n", __LINE__, gpg_strerror (err));
+
+  gcry_mpi_set_ui (a, 0xffffffff);
+  val = 4711;
+  err = gcry_mpi_get_ui (&val, a);
+  if (err || val != 0xffffffff)
+    die ("gcry_mpi_get_ui failed at %d: %s\n", __LINE__, gpg_strerror (err));
+
+  if (sizeof (val) == 4)
+    {
+      gcry_mpi_add_ui (a, a, 1);
+      err = gcry_mpi_get_ui (&val, a);
+      if (gpg_err_code (err) != GPG_ERR_ERANGE)
+        die ("gcry_mpi_get_ui failed at %d: %s\n", __LINE__,gpg_strerror (err));
+    }
+
   gcry_mpi_release (a);
+
 }
 
 
@@ -601,7 +595,7 @@ main (int argc, char* argv[])
       fputs ("version mismatch\n", stderr);
       exit (1);
     }
-  gcry_control(GCRYCTL_DISABLE_SECMEM);
+  xgcry_control ((GCRYCTL_DISABLE_SECMEM));
 
   test_const_and_immutable ();
   test_opaque ();

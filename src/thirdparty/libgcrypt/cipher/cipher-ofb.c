@@ -37,7 +37,8 @@ _gcry_cipher_ofb_encrypt (gcry_cipher_hd_t c,
 {
   unsigned char *ivp;
   gcry_cipher_encrypt_t enc_fn = c->spec->encrypt;
-  size_t blocksize = c->spec->blocksize;
+  size_t blocksize_shift = _gcry_blocksize_shift(c);
+  size_t blocksize = 1 << blocksize_shift;
   unsigned int burn, nburn;
 
   if (outbuflen < inbuflen)
@@ -71,7 +72,7 @@ _gcry_cipher_ofb_encrypt (gcry_cipher_hd_t c,
       /* Encrypt the IV (and save the current one). */
       nburn = enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv );
       burn = nburn > burn ? nburn : burn;
-      buf_xor(outbuf, c->u_iv.iv, inbuf, blocksize);
+      cipher_block_xor(outbuf, c->u_iv.iv, inbuf, blocksize);
       outbuf += blocksize;
       inbuf += blocksize;
       inbuflen -= blocksize;

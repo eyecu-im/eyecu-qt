@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003
  *               2004, 2005, 2006, 2008, 2011,
  *               2012  Free Software Foundation, Inc.
- * Copyright (C) 2013, 2014 g10 Code GmbH
+ * Copyright (C) 2013, 2014, 2017 g10 Code GmbH
  *
  * This file is part of Libgcrypt.
  *
@@ -54,7 +54,16 @@ static unsigned int debug_flags;
 static int force_fips_mode;
 
 /* Controlled by global_init().  */
-static int any_init_done;
+int _gcry_global_any_init_done;
+
+/*
+ * Functions called before and after blocking syscalls.
+ * Initialized by global_init and used via
+ * _gcry_pre_syscall and _gcry_post_syscall.
+ */
+static void (*pre_syscall_func)(void);
+static void (*post_syscall_func)(void);
+
 
 /* Memory management. */
 
@@ -82,12 +91,16 @@ global_init (void)
 {
   gcry_error_t err = 0;
 
-  if (any_init_done)
+  if (_gcry_global_any_init_done)
     return;
-  any_init_done = 1;
+  _gcry_global_any_init_done = 1;
 
   /* Tell the random module that we have seen an init call.  */
   _gcry_set_preferred_rng_type (0);
+
+  /* Get the system call clamp functions.  */
+  if (!pre_syscall_func)
+    gpgrt_get_syscall_clamp (&pre_syscall_func, &post_syscall_func);
 
   /* See whether the system is in FIPS mode.  This needs to come as
      early as possible but after ATH has been initialized.  */
@@ -148,7 +161,7 @@ global_init (void)
 int
 _gcry_global_is_operational (void)
 {
-  if (!any_init_done)
+  if (!_gcry_global_any_init_done)
     {
 #ifdef HAVE_SYSLOG
       syslog (LOG_USER|LOG_WARNING, "Libgcrypt warning: "
@@ -260,73 +273,181 @@ _gcry_check_version (const char *req_version)
 
 
 static void
-print_config ( int (*fnc)(FILE *fp, const char *format, ...), FILE *fp)
+print_config (const char *what, gpgrt_stream_t fp)
 {
-  unsigned int hwfeatures, afeature;
   int i;
   const char *s;
 
-  fnc (fp, "version:%s:\n", VERSION);
-  fnc (fp, "ciphers:%s:\n", LIBGCRYPT_CIPHERS);
-  fnc (fp, "pubkeys:%s:\n", LIBGCRYPT_PUBKEY_CIPHERS);
-  fnc (fp, "digests:%s:\n", LIBGCRYPT_DIGESTS);
-  fnc (fp, "rnd-mod:"
+  if (!what || !strcmp (what, "version"))
+    {
+      gpgrt_fprintf (fp, "version:%s:%x:%s:%x:\n",
+                     VERSION, GCRYPT_VERSION_NUMBER,
+                     GPGRT_VERSION, GPGRT_VERSION_NUMBER);
+    }
+  if (!what || !strcmp (what, "cc"))
+    {
+      gpgrt_fprintf (fp, "cc:%d:%s:\n",
+#if GPGRT_VERSION_NUMBER >= 0x011b00 /* 1.27 */
+                     GPGRT_GCC_VERSION
+#else
+                     _GPG_ERR_GCC_VERSION /* Due to a bug in gpg-error.h.  */
+#endif
+                     ,
+#ifdef __clang__
+                     "clang:" __VERSION__
+#elif __GNUC__
+                     "gcc:" __VERSION__
+#else
+                     ":"
+#endif
+                     );
+    }
+
+  if (!what || !strcmp (what, "ciphers"))
+    gpgrt_fprintf (fp, "ciphers:%s:\n", LIBGCRYPT_CIPHERS);
+  if (!what || !strcmp (what, "pubkeys"))
+    gpgrt_fprintf (fp, "pubkeys:%s:\n", LIBGCRYPT_PUBKEY_CIPHERS);
+  if (!what || !strcmp (what, "digests"))
+    gpgrt_fprintf (fp, "digests:%s:\n", LIBGCRYPT_DIGESTS);
+
+  if (!what || !strcmp (what, "rnd-mod"))
+    {
+      gpgrt_fprintf (fp, "rnd-mod:"
 #if USE_RNDEGD
-                "egd:"
+                     "egd:"
 #endif
 #if USE_RNDLINUX
-                "linux:"
+                     "linux:"
 #endif
 #if USE_RNDUNIX
-                "unix:"
+                     "unix:"
 #endif
 #if USE_RNDW32
-                "w32:"
+                     "w32:"
 #endif
-       "\n");
-  fnc (fp, "cpu-arch:"
-#if defined(HAVE_CPU_ARCH_X86)
-       "x86"
-#elif defined(HAVE_CPU_ARCH_ALPHA)
-       "alpha"
-#elif defined(HAVE_CPU_ARCH_SPARC)
-       "sparc"
-#elif defined(HAVE_CPU_ARCH_MIPS)
-       "mips"
-#elif defined(HAVE_CPU_ARCH_M68K)
-       "m68k"
-#elif defined(HAVE_CPU_ARCH_PPC)
-       "ppc"
-#elif defined(HAVE_CPU_ARCH_ARM)
-       "arm"
-#endif
-       ":\n");
-  fnc (fp, "mpi-asm:%s:\n", _gcry_mpi_get_hw_config ());
-  hwfeatures = _gcry_get_hw_features ();
-  fnc (fp, "hwflist:");
-  for (i=0; (s = _gcry_enum_hw_features (i, &afeature)); i++)
-    if ((hwfeatures & afeature))
-      fnc (fp, "%s:", s);
-  fnc (fp, "\n");
-  /* We use y/n instead of 1/0 for the simple reason that Emacsen's
-     compile error parser would accidentally flag that line when printed
-     during "make check" as an error.  */
-  fnc (fp, "fips-mode:%c:%c:\n",
-       fips_mode ()? 'y':'n',
-       _gcry_enforced_fips_mode ()? 'y':'n' );
-  /* The currently used RNG type.  */
-  {
-    i = _gcry_get_rng_type (0);
-    switch (i)
-      {
-      case GCRY_RNG_TYPE_STANDARD: s = "standard"; break;
-      case GCRY_RNG_TYPE_FIPS:     s = "fips"; break;
-      case GCRY_RNG_TYPE_SYSTEM:   s = "system"; break;
-      default: BUG ();
-      }
-    fnc (fp, "rng-type:%s:%d:\n", s, i);
-  }
+                     "\n");
+    }
 
+  if (!what || !strcmp (what, "cpu-arch"))
+    {
+      gpgrt_fprintf (fp, "cpu-arch:"
+#if defined(HAVE_CPU_ARCH_X86)
+                     "x86"
+#elif defined(HAVE_CPU_ARCH_ALPHA)
+                     "alpha"
+#elif defined(HAVE_CPU_ARCH_SPARC)
+                     "sparc"
+#elif defined(HAVE_CPU_ARCH_MIPS)
+                     "mips"
+#elif defined(HAVE_CPU_ARCH_M68K)
+                     "m68k"
+#elif defined(HAVE_CPU_ARCH_PPC)
+                     "ppc"
+#elif defined(HAVE_CPU_ARCH_ARM)
+                     "arm"
+#endif
+                     ":\n");
+    }
+
+  if (!what || !strcmp (what, "mpi-asm"))
+    gpgrt_fprintf (fp, "mpi-asm:%s:\n", _gcry_mpi_get_hw_config ());
+
+  if (!what || !strcmp (what, "hwflist"))
+    {
+      unsigned int hwfeatures, afeature;
+
+      hwfeatures = _gcry_get_hw_features ();
+      gpgrt_fprintf (fp, "hwflist:");
+      for (i=0; (s = _gcry_enum_hw_features (i, &afeature)); i++)
+        if ((hwfeatures & afeature))
+          gpgrt_fprintf (fp, "%s:", s);
+      gpgrt_fprintf (fp, "\n");
+    }
+
+  if (!what || !strcmp (what, "fips-mode"))
+    {
+      /* We use y/n instead of 1/0 for the stupid reason that
+       * Emacsen's compile error parser would accidentally flag that
+       * line when printed during "make check" as an error.  */
+      gpgrt_fprintf (fp, "fips-mode:%c:%c:\n",
+                     fips_mode ()? 'y':'n',
+                     _gcry_enforced_fips_mode ()? 'y':'n' );
+    }
+
+  if (!what || !strcmp (what, "rng-type"))
+    {
+      /* The currently used RNG type.  */
+      unsigned int jver;
+      int active;
+
+      i = _gcry_get_rng_type (0);
+      switch (i)
+        {
+        case GCRY_RNG_TYPE_STANDARD: s = "standard"; break;
+        case GCRY_RNG_TYPE_FIPS:     s = "fips"; break;
+        case GCRY_RNG_TYPE_SYSTEM:   s = "system"; break;
+        default: BUG ();
+        }
+      jver = _gcry_rndjent_get_version (&active);
+      gpgrt_fprintf (fp, "rng-type:%s:%d:%u:%d:\n", s, i, jver, active);
+    }
+}
+
+
+/* With a MODE of 0 return a malloced string with configured features.
+ * In that case a WHAT of NULL returns everything in the same way
+ * GCRYCTL_PRINT_CONFIG would do.  With a specific WHAT string only
+ * the requested feature is returned (w/o the trailing LF.  On error
+ * NULL is returned.  */
+char *
+_gcry_get_config (int mode, const char *what)
+{
+  gpgrt_stream_t fp;
+  int save_errno;
+  void *data;
+  char *p;
+
+  if (mode)
+    {
+      gpg_err_set_errno (EINVAL);
+      return NULL;
+    }
+
+  fp = gpgrt_fopenmem (0, "w+b,samethread");
+  if (!fp)
+    return NULL;
+
+  print_config (what, fp);
+  if (gpgrt_ferror (fp))
+    {
+      save_errno = errno;
+      gpgrt_fclose (fp);
+      gpg_err_set_errno (save_errno);
+      return NULL;
+    }
+
+  gpgrt_rewind (fp);
+  if (gpgrt_fclose_snatch (fp, &data, NULL))
+    {
+      save_errno = errno;
+      gpgrt_fclose (fp);
+      gpg_err_set_errno (save_errno);
+      return NULL;
+    }
+
+  if (!data)
+    {
+      /* Nothing was printed (unknown value for WHAT).  This is okay,
+       * so clear ERRNO to indicate this. */
+      gpg_err_set_errno (0);
+      return NULL;
+    }
+
+  /* Strip trailing LF.  */
+  if (what && (p = strchr (data, '\n')))
+    *p = 0;
+
+  return data;
 }
 
 
@@ -367,7 +488,7 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       break;
 
     case GCRYCTL_DUMP_SECMEM_STATS:
-      _gcry_secmem_dump_stats ();
+      _gcry_secmem_dump_stats (0);
       break;
 
     case GCRYCTL_DROP_PRIVS:
@@ -410,6 +531,10 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
 			       & ~GCRY_SECMEM_FLAG_SUSPEND_WARNING));
       break;
 
+    case GCRYCTL_AUTO_EXPAND_SECMEM:
+      _gcry_secmem_set_auto_expand (va_arg (arg_ptr, unsigned int));
+      break;
+
     case GCRYCTL_USE_SECURE_RNDPOOL:
       global_init ();
       _gcry_secure_random_alloc (); /* Put random number into secure memory. */
@@ -445,7 +570,7 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       break;
 
     case GCRYCTL_ANY_INITIALIZATION_P:
-      if (any_init_done)
+      if (_gcry_global_any_init_done)
 	rc = GPG_ERR_GENERAL;
       break;
 
@@ -518,12 +643,21 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       /* This command dumps information pertaining to the
          configuration of libgcrypt to the given stream.  It may be
          used before the initialization has been finished but not
-         before a gcry_version_check. */
+         before a gcry_version_check.  See also gcry_get_config.  */
     case GCRYCTL_PRINT_CONFIG:
       {
         FILE *fp = va_arg (arg_ptr, FILE *);
+        char *tmpstr;
         _gcry_set_preferred_rng_type (0);
-        print_config (fp?fprintf:_gcry_log_info_with_dummy_fp, fp);
+        tmpstr = _gcry_get_config (0, NULL);
+        if (tmpstr)
+          {
+            if (fp)
+              fputs (tmpstr, fp);
+            else
+              log_info ("%s", tmpstr);
+            xfree (tmpstr);
+          }
       }
       break;
 
@@ -548,9 +682,9 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
          selftest is triggered.  It is not possible to put the libraty
          into fips mode after having passed the initialization. */
       _gcry_set_preferred_rng_type (0);
-      if (!any_init_done)
+      if (!_gcry_global_any_init_done)
         {
-          /* Not yet intialized at all.  Set a flag so that we are put
+          /* Not yet initialized at all.  Set a flag so that we are put
              into fips mode during initialization.  */
           force_fips_mode = 1;
         }
@@ -575,7 +709,7 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       rc = _gcry_fips_run_selftests (1);
       break;
 
-#if _GCRY_GCC_VERSION >= 40600
+#if _GCRY_GCC_VERSION >= 40200
 # pragma GCC diagnostic push
 # pragma GCC diagnostic ignored "-Wswitch"
 #endif
@@ -600,9 +734,10 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
     case PRIV_CTL_EXTERNAL_LOCK_TEST:  /* Run external lock test */
       rc = external_lock_test (va_arg (arg_ptr, int));
       break;
-    case 62:  /* RFU */
+    case PRIV_CTL_DUMP_SECMEM_STATS:
+      _gcry_secmem_dump_stats (1);
       break;
-#if _GCRY_GCC_VERSION >= 40600
+#if _GCRY_GCC_VERSION >= 40200
 # pragma GCC diagnostic pop
 #endif
 
@@ -614,7 +749,7 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       break;
 
     case GCRYCTL_SET_ENFORCED_FIPS_FLAG:
-      if (!any_init_done)
+      if (!_gcry_global_any_init_done)
         {
           /* Not yet initialized at all.  Set the enforced fips mode flag */
           _gcry_set_preferred_rng_type (0);
@@ -638,7 +773,7 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
       {
         int *ip = va_arg (arg_ptr, int*);
         if (ip)
-          *ip = _gcry_get_rng_type (!any_init_done);
+          *ip = _gcry_get_rng_type (!_gcry_global_any_init_done);
       }
       break;
 
@@ -666,11 +801,17 @@ _gcry_vcontrol (enum gcry_ctl_cmds cmd, va_list arg_ptr)
         int npers = va_arg (arg_ptr, int);
         if (va_arg (arg_ptr, void *) || npers < 0)
           rc = GPG_ERR_INV_ARG;
-        else if (_gcry_get_rng_type (!any_init_done) != GCRY_RNG_TYPE_FIPS)
+        else if (_gcry_get_rng_type (!_gcry_global_any_init_done)
+                 != GCRY_RNG_TYPE_FIPS)
           rc = GPG_ERR_NOT_SUPPORTED;
         else
           rc = _gcry_rngdrbg_reinit (flagstr, pers, npers);
       }
+      break;
+
+    case GCRYCTL_REINIT_SYSCALL_CLAMP:
+      if (!pre_syscall_func)
+        gpgrt_get_syscall_clamp (&pre_syscall_func, &post_syscall_func);
       break;
 
     default:
@@ -768,7 +909,7 @@ do_malloc (size_t n, unsigned int flags, void **mem)
       if (alloc_secure_func)
 	m = (*alloc_secure_func) (n);
       else
-	m = _gcry_private_malloc_secure (n);
+	m = _gcry_private_malloc_secure (n, !!(flags & GCRY_ALLOC_FLAG_XHINT));
     }
   else
     {
@@ -802,14 +943,21 @@ _gcry_malloc (size_t n)
   return mem;
 }
 
-void *
-_gcry_malloc_secure (size_t n)
+static void *
+_gcry_malloc_secure_core (size_t n, int xhint)
 {
   void *mem = NULL;
 
-  do_malloc (n, GCRY_ALLOC_FLAG_SECURE, &mem);
+  do_malloc (n, (GCRY_ALLOC_FLAG_SECURE | (xhint? GCRY_ALLOC_FLAG_XHINT:0)),
+             &mem);
 
   return mem;
+}
+
+void *
+_gcry_malloc_secure (size_t n)
+{
+  return _gcry_malloc_secure_core (n, 0);
 }
 
 int
@@ -836,8 +984,8 @@ _gcry_check_heap( const void *a )
 #endif
 }
 
-void *
-_gcry_realloc (void *a, size_t n)
+static void *
+_gcry_realloc_core (void *a, size_t n, int xhint)
 {
   void *p;
 
@@ -854,11 +1002,19 @@ _gcry_realloc (void *a, size_t n)
   if (realloc_func)
     p = realloc_func (a, n);
   else
-    p =  _gcry_private_realloc (a, n);
+    p =  _gcry_private_realloc (a, n, xhint);
   if (!p && !errno)
     gpg_err_set_errno (ENOMEM);
   return p;
 }
+
+
+void *
+_gcry_realloc (void *a, size_t n)
+{
+  return _gcry_realloc_core (a, n, 0);
+}
+
 
 void
 _gcry_free (void *p)
@@ -922,12 +1078,8 @@ _gcry_calloc_secure (size_t n, size_t m)
 }
 
 
-/* Create and return a copy of the null-terminated string STRING.  If
-   it is contained in secure memory, the copy will be contained in
-   secure memory as well.  In an out-of-memory condition, NULL is
-   returned.  */
-char *
-_gcry_strdup (const char *string)
+static char *
+_gcry_strdup_core (const char *string, int xhint)
 {
   char *string_cp = NULL;
   size_t string_n = 0;
@@ -935,7 +1087,7 @@ _gcry_strdup (const char *string)
   string_n = strlen (string);
 
   if (_gcry_is_secure (string))
-    string_cp = _gcry_malloc_secure (string_n + 1);
+    string_cp = _gcry_malloc_secure_core (string_n + 1, xhint);
   else
     string_cp = _gcry_malloc (string_n + 1);
 
@@ -945,6 +1097,15 @@ _gcry_strdup (const char *string)
   return string_cp;
 }
 
+/* Create and return a copy of the null-terminated string STRING.  If
+ * it is contained in secure memory, the copy will be contained in
+ * secure memory as well.  In an out-of-memory condition, NULL is
+ * returned.  */
+char *
+_gcry_strdup (const char *string)
+{
+  return _gcry_strdup_core (string, 0);
+}
 
 void *
 _gcry_xmalloc( size_t n )
@@ -968,7 +1129,7 @@ _gcry_xrealloc( void *a, size_t n )
 {
   void *p;
 
-  while ( !(p = _gcry_realloc( a, n )) )
+  while (!(p = _gcry_realloc_core (a, n, 1)))
     {
       if ( fips_mode ()
            || !outofcore_handler
@@ -986,7 +1147,7 @@ _gcry_xmalloc_secure( size_t n )
 {
   void *p;
 
-  while ( !(p = _gcry_malloc_secure( n )) )
+  while (!(p = _gcry_malloc_secure_core (n, 1)))
     {
       if ( fips_mode ()
            || !outofcore_handler
@@ -1041,7 +1202,7 @@ _gcry_xstrdup (const char *string)
 {
   char *p;
 
-  while ( !(p = _gcry_strdup (string)) )
+  while ( !(p = _gcry_strdup_core (string, 1)) )
     {
       size_t n = strlen (string);
       int is_sec = !!_gcry_is_secure (string);
@@ -1056,6 +1217,24 @@ _gcry_xstrdup (const char *string)
     }
 
   return p;
+}
+
+
+/* Used before blocking system calls.  */
+void
+_gcry_pre_syscall (void)
+{
+  if (pre_syscall_func)
+    pre_syscall_func ();
+}
+
+
+/* Used after blocking system calls.  */
+void
+_gcry_post_syscall (void)
+{
+  if (post_syscall_func)
+    post_syscall_func ();
 }
 
 

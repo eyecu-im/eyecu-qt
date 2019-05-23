@@ -790,7 +790,8 @@ ecc_check_secret_key (gcry_sexp_t keyparms)
     }
   if (mpi_g)
     {
-      point_init (&sk.E.G);
+      if (!sk.E.G.x)
+        point_init (&sk.E.G);
       rc = _gcry_ecc_os2ec (&sk.E.G, mpi_g);
       if (rc)
         goto leave;
@@ -806,23 +807,25 @@ ecc_check_secret_key (gcry_sexp_t keyparms)
       sk.E.dialect = ((flags & PUBKEY_FLAG_EDDSA)
                       ? ECC_DIALECT_ED25519
                       : ECC_DIALECT_STANDARD);
+      if (!sk.E.h)
+	sk.E.h = mpi_const (MPI_C_ONE);
     }
   if (DBG_CIPHER)
     {
-      log_debug ("ecc_testkey inf: %s/%s\n",
+      log_debug ("ecc_testkey info: %s/%s\n",
                  _gcry_ecc_model2str (sk.E.model),
                  _gcry_ecc_dialect2str (sk.E.dialect));
       if (sk.E.name)
-        log_debug  ("ecc_testkey nam: %s\n", sk.E.name);
-      log_printmpi ("ecc_testkey   p", sk.E.p);
-      log_printmpi ("ecc_testkey   a", sk.E.a);
-      log_printmpi ("ecc_testkey   b", sk.E.b);
-      log_printpnt ("ecc_testkey g",   &sk.E.G, NULL);
-      log_printmpi ("ecc_testkey   n", sk.E.n);
-      log_printmpi ("ecc_testkey   h", sk.E.h);
-      log_printmpi ("ecc_testkey   q", mpi_q);
+        log_debug  ("ecc_testkey name: %s\n", sk.E.name);
+      log_printmpi ("ecc_testkey    p", sk.E.p);
+      log_printmpi ("ecc_testkey    a", sk.E.a);
+      log_printmpi ("ecc_testkey    b", sk.E.b);
+      log_printpnt ("ecc_testkey  g",   &sk.E.G, NULL);
+      log_printmpi ("ecc_testkey    n", sk.E.n);
+      log_printmpi ("ecc_testkey    h", sk.E.h);
+      log_printmpi ("ecc_testkey    q", mpi_q);
       if (!fips_mode ())
-        log_printmpi ("ecc_testkey   d", sk.d);
+        log_printmpi ("ecc_testkey    d", sk.d);
     }
   if (!sk.E.p || !sk.E.a || !sk.E.b || !sk.E.G.x || !sk.E.n || !sk.E.h || !sk.d)
     {
@@ -870,7 +873,7 @@ ecc_check_secret_key (gcry_sexp_t keyparms)
   xfree (curvename);
   sexp_release (l1);
   if (DBG_CIPHER)
-    log_debug ("ecc_testkey   => %s\n", gpg_strerror (rc));
+    log_debug ("ecc_testkey    => %s\n", gpg_strerror (rc));
   return rc;
 }
 
@@ -941,6 +944,8 @@ ecc_sign (gcry_sexp_t *r_sig, gcry_sexp_t s_data, gcry_sexp_t keyparms)
       sk.E.dialect = ((ctx.flags & PUBKEY_FLAG_EDDSA)
                       ? ECC_DIALECT_ED25519
                       : ECC_DIALECT_STANDARD);
+      if (!sk.E.h)
+	sk.E.h = mpi_const (MPI_C_ONE);
     }
   if (DBG_CIPHER)
     {
@@ -1071,7 +1076,7 @@ ecc_verify (gcry_sexp_t s_sig, gcry_sexp_t s_data, gcry_sexp_t s_keyparms)
   if ((ctx.flags & PUBKEY_FLAG_PARAM))
     rc = sexp_extract_param (s_keyparms, NULL, "-p?a?b?g?n?h?/q",
                              &pk.E.p, &pk.E.a, &pk.E.b, &mpi_g, &pk.E.n,
-                             &pk.E.n, &mpi_q, NULL);
+                             &pk.E.h, &mpi_q, NULL);
   else
     rc = sexp_extract_param (s_keyparms, NULL, "/q",
                              &mpi_q, NULL);
@@ -1107,6 +1112,8 @@ ecc_verify (gcry_sexp_t s_sig, gcry_sexp_t s_data, gcry_sexp_t s_keyparms)
       pk.E.dialect = ((sigflags & PUBKEY_FLAG_EDDSA)
                       ? ECC_DIALECT_ED25519
                       : ECC_DIALECT_STANDARD);
+      if (!pk.E.h)
+	pk.E.h = mpi_const (MPI_C_ONE);
     }
 
   if (DBG_CIPHER)
@@ -1322,6 +1329,8 @@ ecc_encrypt_raw (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
     {
       pk.E.model = MPI_EC_WEIERSTRASS;
       pk.E.dialect = ECC_DIALECT_STANDARD;
+      if (!pk.E.h)
+	pk.E.h = mpi_const (MPI_C_ONE);
     }
 
   /*
@@ -1383,6 +1392,7 @@ ecc_encrypt_raw (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
     unsigned char *rawmpi;
     unsigned int rawmpilen;
 
+    rc = 0;
     x = mpi_new (0);
     if (ec->model == MPI_EC_MONTGOMERY)
       y = NULL;
@@ -1409,7 +1419,7 @@ ecc_encrypt_raw (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
         if (!(flags & PUBKEY_FLAG_DJB_TWEAK))
           { /* It's not for X25519, then, the input data was simply wrong.  */
             rc = GPG_ERR_INV_DATA;
-            goto leave;
+            goto leave_main;
           }
       }
     if (y)
@@ -1434,7 +1444,7 @@ ecc_encrypt_raw (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
     if (_gcry_mpi_ec_get_affine (x, y, &R, ec))
       {
         rc = GPG_ERR_INV_DATA;
-        goto leave;
+        goto leave_main;
       }
     if (y)
       mpi_e = _gcry_ecc_ec2os (x, y, pk.E.p);
@@ -1452,11 +1462,12 @@ ecc_encrypt_raw (gcry_sexp_t *r_ciph, gcry_sexp_t s_data, gcry_sexp_t keyparms)
           }
       }
 
-
+  leave_main:
     mpi_free (x);
     mpi_free (y);
-
     point_free (&R);
+    if (rc)
+      goto leave;
   }
 
   if (!rc)
@@ -1577,6 +1588,8 @@ ecc_decrypt_raw (gcry_sexp_t *r_plain, gcry_sexp_t s_data, gcry_sexp_t keyparms)
     {
       sk.E.model = MPI_EC_WEIERSTRASS;
       sk.E.dialect = ECC_DIALECT_STANDARD;
+      if (!sk.E.h)
+	sk.E.h = mpi_const (MPI_C_ONE);
     }
   if (DBG_CIPHER)
     {
@@ -1617,9 +1630,22 @@ ecc_decrypt_raw (gcry_sexp_t *r_plain, gcry_sexp_t s_data, gcry_sexp_t keyparms)
   if (DBG_CIPHER)
     log_printpnt ("ecc_decrypt    kG", &kG, NULL);
 
-  if (!(flags & PUBKEY_FLAG_DJB_TWEAK)
+  if ((flags & PUBKEY_FLAG_DJB_TWEAK))
+    {
       /* For X25519, by its definition, validation should not be done.  */
-      && !_gcry_mpi_ec_curve_point (&kG, ec))
+      /* (Instead, we do output check.)
+       *
+       * However, to mitigate secret key leak from our implementation,
+       * we also do input validation here.  For constant-time
+       * implementation, we can remove this input validation.
+       */
+      if (_gcry_mpi_ec_bad_point (&kG, ec))
+        {
+          rc = GPG_ERR_INV_DATA;
+          goto leave;
+        }
+    }
+  else if (!_gcry_mpi_ec_curve_point (&kG, ec))
     {
       rc = GPG_ERR_INV_DATA;
       goto leave;
@@ -1859,6 +1885,8 @@ compute_keygrip (gcry_md_hd_t md, gcry_sexp_t keyparms)
       dialect = ((flags & PUBKEY_FLAG_EDDSA)
                  ? ECC_DIALECT_ED25519
                  : ECC_DIALECT_STANDARD);
+      if (!values[5])
+	values[5] = mpi_const (MPI_C_ONE);
     }
 
   /* Check that all parameters are known and normalize all MPIs (that

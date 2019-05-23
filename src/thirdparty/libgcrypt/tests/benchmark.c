@@ -35,11 +35,13 @@
 
 
 #define PGM "benchmark"
+#include "t-common.h"
 
-static int verbose;
-
-/* Do encryption tests with large buffers.  */
+/* Do encryption tests with large buffers (100 KiB).  */
 static int large_buffers;
+
+/* Do encryption tests with huge buffers (256 MiB). */
+static int huge_buffers;
 
 /* Number of cipher repetitions.  */
 static int cipher_repetitions;
@@ -392,24 +394,8 @@ static const char sample_private_elg_key_3072[] =
 "  ))";
 
 
-#define DIM(v)		     (sizeof(v)/sizeof((v)[0]))
-#define DIMof(type,member)   DIM(((type *)0)->member)
 #define BUG() do {fprintf ( stderr, "Ooops at %s:%d\n", __FILE__ , __LINE__ );\
 		  exit(2);} while(0)
-
-
-static void
-die (const char *format, ...)
-{
-  va_list arg_ptr ;
-
-  va_start( arg_ptr, format ) ;
-  putchar ('\n');
-  fputs ( PGM ": ", stderr);
-  vfprintf (stderr, format, arg_ptr );
-  va_end(arg_ptr);
-  exit (1);
-}
 
 
 static void
@@ -475,7 +461,7 @@ random_bench (int very_strong)
 
   putchar ('\n');
   if (verbose)
-    gcry_control (GCRYCTL_DUMP_RANDOM_STATS);
+    xgcry_control ((GCRYCTL_DUMP_RANDOM_STATS));
 }
 
 
@@ -572,21 +558,24 @@ md_bench ( const char *algoname )
   if (gcry_md_get_algo_dlen (algo) > sizeof digest)
     die ("digest buffer too short\n");
 
-  largebuf_base = malloc (10000+15);
-  if (!largebuf_base)
-    die ("out of core\n");
-  largebuf = (largebuf_base
-              + ((16 - ((size_t)largebuf_base & 0x0f)) % buffer_alignment));
+  if (gcry_md_get_algo_dlen (algo))
+    {
+      largebuf_base = malloc (10000+15);
+      if (!largebuf_base)
+        die ("out of core\n");
+      largebuf = (largebuf_base
+                  + ((16 - ((size_t)largebuf_base & 0x0f)) % buffer_alignment));
 
-  for (i=0; i < 10000; i++)
-    largebuf[i] = i;
-  start_timer ();
-  for (repcount=0; repcount < hash_repetitions; repcount++)
-    for (i=0; i < 100; i++)
-      gcry_md_hash_buffer (algo, digest, largebuf, 10000);
-  stop_timer ();
-  printf (" %s", elapsed_time (1));
-  free (largebuf_base);
+      for (i=0; i < 10000; i++)
+        largebuf[i] = i;
+      start_timer ();
+      for (repcount=0; repcount < hash_repetitions; repcount++)
+        for (i=0; i < 100; i++)
+          gcry_md_hash_buffer (algo, digest, largebuf, 10000);
+      stop_timer ();
+      printf (" %s", elapsed_time (1));
+      free (largebuf_base);
+    }
 
   putchar ('\n');
   fflush (stdout);
@@ -757,6 +746,60 @@ static void ccm_aead_init(gcry_cipher_hd_t hd, size_t buflen, int authlen)
 }
 
 
+static gcry_error_t
+cipher_encrypt (gcry_cipher_hd_t h, char *out, size_t outsize,
+		const char *in, size_t inlen, size_t max_inlen)
+{
+  gcry_error_t ret;
+
+  while (inlen)
+    {
+      size_t currlen = inlen;
+
+      if (currlen > max_inlen)
+	currlen = max_inlen;
+
+      ret = gcry_cipher_encrypt(h, out, outsize, in, currlen);
+      if (ret)
+	return ret;
+
+      out += currlen;
+      in += currlen;
+      outsize -= currlen;
+      inlen -= currlen;
+    }
+
+  return 0;
+}
+
+
+static gcry_error_t
+cipher_decrypt (gcry_cipher_hd_t h, char *out, size_t outsize,
+		const char *in, size_t inlen, size_t max_inlen)
+{
+  gcry_error_t ret;
+
+  while (inlen)
+    {
+      size_t currlen = inlen;
+
+      if (currlen > max_inlen)
+	currlen = max_inlen;
+
+      ret = gcry_cipher_decrypt(h, out, outsize, in, currlen);
+      if (ret)
+	return ret;
+
+      out += currlen;
+      in += currlen;
+      outsize -= currlen;
+      inlen -= currlen;
+    }
+
+  return 0;
+}
+
+
 static void
 cipher_bench ( const char *algoname )
 {
@@ -774,28 +817,35 @@ cipher_bench ( const char *algoname )
     int mode;
     const char *name;
     int blocked;
+    unsigned int max_inlen;
     void (* const aead_init)(gcry_cipher_hd_t hd, size_t buflen, int authlen);
     int req_blocksize;
     int authlen;
     int noncelen;
+    int doublekey;
   } modes[] = {
-    { GCRY_CIPHER_MODE_ECB, "   ECB/Stream", 1 },
-    { GCRY_CIPHER_MODE_CBC, "      CBC", 1 },
-    { GCRY_CIPHER_MODE_CFB, "      CFB", 0 },
-    { GCRY_CIPHER_MODE_OFB, "      OFB", 0 },
-    { GCRY_CIPHER_MODE_CTR, "      CTR", 0 },
-    { GCRY_CIPHER_MODE_CCM, "      CCM", 0,
-      ccm_aead_init, GCRY_CCM_BLOCK_LEN, 8 },
-    { GCRY_CIPHER_MODE_GCM, "      GCM", 0,
+    { GCRY_CIPHER_MODE_ECB, "   ECB/Stream", 1, 0xffffffffU },
+    { GCRY_CIPHER_MODE_CBC, " CBC/Poly1305", 1, 0xffffffffU },
+    { GCRY_CIPHER_MODE_CFB, "      CFB", 0, 0xffffffffU },
+    { GCRY_CIPHER_MODE_OFB, "      OFB", 0, 0xffffffffU },
+    { GCRY_CIPHER_MODE_CTR, "      CTR", 0, 0xffffffffU },
+    { GCRY_CIPHER_MODE_XTS, "      XTS", 0, 16 << 20,
+      NULL, GCRY_XTS_BLOCK_LEN, 0, 0, 1 },
+    { GCRY_CIPHER_MODE_CCM, "      CCM", 0, 0xffffffffU,
+      ccm_aead_init, GCRY_CCM_BLOCK_LEN, 8, },
+    { GCRY_CIPHER_MODE_GCM, "      GCM", 0, 0xffffffffU,
       NULL, GCRY_GCM_BLOCK_LEN, GCRY_GCM_BLOCK_LEN },
-    { GCRY_CIPHER_MODE_OCB, "      OCB", 1,
+    { GCRY_CIPHER_MODE_OCB, "      OCB", 1, 0xffffffffU,
       NULL, 16, 16, 15 },
-    { GCRY_CIPHER_MODE_STREAM, "", 0 },
+    { GCRY_CIPHER_MODE_EAX, "      EAX", 0, 0xffffffffU,
+      NULL, 0, 8, 8 },
+    { GCRY_CIPHER_MODE_STREAM, "", 0, 0xffffffffU },
+    { GCRY_CIPHER_MODE_POLY1305, "", 0, 0xffffffffU,
+      NULL, 1, 16, 12 },
     {0}
   };
   int modeidx;
   gcry_error_t err = GPG_ERR_NO_ERROR;
-
 
   if (!algoname)
     {
@@ -805,7 +855,12 @@ cipher_bench ( const char *algoname )
       return;
     }
 
-  if (large_buffers)
+  if (huge_buffers)
+    {
+      allocated_buflen = 256 * 1024 * 1024;
+      repetitions = 4;
+    }
+  else if (large_buffers)
     {
       allocated_buflen = 1024 * 100;
       repetitions = 10;
@@ -855,13 +910,13 @@ cipher_bench ( const char *algoname )
 	       algoname);
       exit (1);
     }
-  if ( keylen > sizeof key )
+  if ( keylen * 2 > sizeof key )
     {
         fprintf (stderr, PGM ": algo %d, keylength problem (%d)\n",
                  algo, keylen );
         exit (1);
     }
-  for (i=0; i < keylen; i++)
+  for (i=0; i < keylen * 2; i++)
     key[i] = i + (clock () & 0xff);
 
   blklen = gcry_cipher_get_algo_blklen (algo);
@@ -877,8 +932,15 @@ cipher_bench ( const char *algoname )
 
   for (modeidx=0; modes[modeidx].mode; modeidx++)
     {
-      if ((blklen > 1 && modes[modeidx].mode == GCRY_CIPHER_MODE_STREAM)
-          || (blklen == 1 && modes[modeidx].mode != GCRY_CIPHER_MODE_STREAM))
+      size_t modekeylen = keylen * (!!modes[modeidx].doublekey + 1);
+      int is_stream = modes[modeidx].mode == GCRY_CIPHER_MODE_STREAM
+                      || modes[modeidx].mode == GCRY_CIPHER_MODE_POLY1305;
+
+      if ((blklen > 1 && is_stream) || (blklen == 1 && !is_stream))
+        continue;
+
+      if (modes[modeidx].mode == GCRY_CIPHER_MODE_POLY1305
+          && algo != GCRY_CIPHER_CHACHA20)
         continue;
 
       if (modes[modeidx].req_blocksize > 0
@@ -900,7 +962,7 @@ cipher_bench ( const char *algoname )
 
       if (!cipher_with_keysetup)
         {
-          err = gcry_cipher_setkey (hd, key, keylen);
+          err = gcry_cipher_setkey (hd, key, modekeylen);
           if (err)
             {
               fprintf (stderr, "gcry_cipher_setkey failed: %s\n",
@@ -919,7 +981,7 @@ cipher_bench ( const char *algoname )
         {
           if (cipher_with_keysetup)
             {
-              err = gcry_cipher_setkey (hd, key, keylen);
+              err = gcry_cipher_setkey (hd, key, modekeylen);
               if (err)
                 {
                   fprintf (stderr, "gcry_cipher_setkey failed: %s\n",
@@ -952,14 +1014,16 @@ cipher_bench ( const char *algoname )
             {
               (*modes[modeidx].aead_init) (hd, buflen, modes[modeidx].authlen);
               gcry_cipher_final (hd);
-              err = gcry_cipher_encrypt (hd, outbuf, buflen, buf, buflen);
+              err = cipher_encrypt (hd, outbuf, buflen, buf, buflen,
+				    modes[modeidx].max_inlen);
               if (err)
                 break;
               err = gcry_cipher_gettag (hd, outbuf, modes[modeidx].authlen);
             }
           else
             {
-              err = gcry_cipher_encrypt (hd, outbuf, buflen, buf, buflen);
+              err = cipher_encrypt (hd, outbuf, buflen, buf, buflen,
+				    modes[modeidx].max_inlen);
             }
         }
       stop_timer ();
@@ -983,7 +1047,7 @@ cipher_bench ( const char *algoname )
 
       if (!cipher_with_keysetup)
         {
-          err = gcry_cipher_setkey (hd, key, keylen);
+          err = gcry_cipher_setkey (hd, key, modekeylen);
           if (err)
             {
               fprintf (stderr, "gcry_cipher_setkey failed: %s\n",
@@ -998,7 +1062,7 @@ cipher_bench ( const char *algoname )
         {
           if (cipher_with_keysetup)
             {
-              err = gcry_cipher_setkey (hd, key, keylen);
+              err = gcry_cipher_setkey (hd, key, modekeylen);
               if (err)
                 {
                   fprintf (stderr, "gcry_cipher_setkey failed: %s\n",
@@ -1031,7 +1095,8 @@ cipher_bench ( const char *algoname )
             {
               (*modes[modeidx].aead_init) (hd, buflen, modes[modeidx].authlen);
               gcry_cipher_final (hd);
-              err = gcry_cipher_decrypt (hd, outbuf, buflen, buf, buflen);
+              err = cipher_decrypt (hd, outbuf, buflen, buf, buflen,
+				    modes[modeidx].max_inlen);
               if (err)
                 break;
               err = gcry_cipher_checktag (hd, outbuf, modes[modeidx].authlen);
@@ -1041,7 +1106,8 @@ cipher_bench ( const char *algoname )
           else
             {
               gcry_cipher_final (hd);
-              err = gcry_cipher_decrypt (hd, outbuf, buflen, buf, buflen);
+              err = cipher_decrypt (hd, outbuf, buflen, buf, buflen,
+				    modes[modeidx].max_inlen);
             }
         }
       stop_timer ();
@@ -1667,7 +1733,6 @@ main( int argc, char **argv )
   int no_blinding = 0;
   int use_random_daemon = 0;
   int use_secmem = 0;
-  int debug = 0;
   int pk_count = 100;
 
   buffer_alignment = 1;
@@ -1726,17 +1791,17 @@ main( int argc, char **argv )
         {
           /* This is anyway the default, but we may want to use it for
              debugging. */
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_STANDARD));
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--prefer-fips-rng"))
         {
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_FIPS));
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--prefer-system-rng"))
         {
-          gcry_control (GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM);
+          xgcry_control ((GCRYCTL_SET_PREFERRED_RNG_TYPE, GCRY_RNG_TYPE_SYSTEM));
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--no-blinding"))
@@ -1747,6 +1812,11 @@ main( int argc, char **argv )
       else if (!strcmp (*argv, "--large-buffers"))
         {
           large_buffers = 1;
+          argc--; argv++;
+        }
+      else if (!strcmp (*argv, "--huge-buffers"))
+        {
+          huge_buffers = 1;
           argc--; argv++;
         }
       else if (!strcmp (*argv, "--cipher-repetitions"))
@@ -1814,7 +1884,7 @@ main( int argc, char **argv )
         {
           argc--; argv++;
           /* This command needs to be called before gcry_check_version.  */
-          gcry_control (GCRYCTL_FORCE_FIPS_MODE, 0);
+          xgcry_control ((GCRYCTL_FORCE_FIPS_MODE, 0));
         }
       else if (!strcmp (*argv, "--progress"))
         {
@@ -1826,7 +1896,7 @@ main( int argc, char **argv )
   if (buffer_alignment < 1 || buffer_alignment > 16)
     die ("value for --alignment must be in the range 1 to 16\n");
 
-  gcry_control (GCRYCTL_SET_VERBOSITY, (int)verbose);
+  xgcry_control ((GCRYCTL_SET_VERBOSITY, (int)verbose));
 
   if (!gcry_check_version (GCRYPT_VERSION))
     {
@@ -1836,20 +1906,20 @@ main( int argc, char **argv )
     }
 
   if (debug)
-    gcry_control (GCRYCTL_SET_DEBUG_FLAGS, 1u , 0);
+    xgcry_control ((GCRYCTL_SET_DEBUG_FLAGS, 1u , 0));
 
   if (gcry_fips_mode_active ())
     in_fips_mode = 1;
   else if (!use_secmem)
-    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+    xgcry_control ((GCRYCTL_DISABLE_SECMEM, 0));
 
   if (use_random_daemon)
-    gcry_control (GCRYCTL_USE_RANDOM_DAEMON, 1);
+    xgcry_control ((GCRYCTL_USE_RANDOM_DAEMON, 1));
 
   if (with_progress)
     gcry_set_progress_handler (progress_cb, NULL);
 
-  gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+  xgcry_control ((GCRYCTL_INITIALIZATION_FINISHED, 0));
 
   if (cipher_repetitions < 1)
     cipher_repetitions = 1;
@@ -1863,7 +1933,7 @@ main( int argc, char **argv )
 
   if ( !argc )
     {
-      gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+      xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
       md_bench (NULL);
       putchar ('\n');
       mac_bench (NULL);
@@ -1885,9 +1955,9 @@ main( int argc, char **argv )
         random_bench ((**argv == 's'));
       else if (argc == 2)
         {
-          gcry_control (GCRYCTL_SET_RANDOM_SEED_FILE, argv[1]);
+          xgcry_control ((GCRYCTL_SET_RANDOM_SEED_FILE, argv[1]));
           random_bench ((**argv == 's'));
-          gcry_control (GCRYCTL_UPDATE_RANDOM_SEED_FILE);
+          xgcry_control ((GCRYCTL_UPDATE_RANDOM_SEED_FILE));
         }
       else
         fputs ("usage: benchmark [strong]random [seedfile]\n", stdout);
@@ -1922,7 +1992,7 @@ main( int argc, char **argv )
     }
   else if ( !strcmp (*argv, "pubkey"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         rsa_bench (pk_count, 1, no_blinding);
         elg_bench (pk_count, 0);
         dsa_bench (pk_count, 0);
@@ -1930,27 +2000,27 @@ main( int argc, char **argv )
     }
   else if ( !strcmp (*argv, "rsa"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         rsa_bench (pk_count, 1, no_blinding);
     }
   else if ( !strcmp (*argv, "elg"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         elg_bench (pk_count, 1);
     }
   else if ( !strcmp (*argv, "dsa"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         dsa_bench (pk_count, 1);
     }
   else if ( !strcmp (*argv, "ecc"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         ecc_bench (pk_count, 1);
     }
   else if ( !strcmp (*argv, "prime"))
     {
-        gcry_control (GCRYCTL_ENABLE_QUICK_RANDOM, 0);
+        xgcry_control ((GCRYCTL_ENABLE_QUICK_RANDOM, 0));
         prime_bench ();
     }
   else

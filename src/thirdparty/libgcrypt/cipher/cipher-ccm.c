@@ -38,12 +38,13 @@ static unsigned int
 do_cbc_mac (gcry_cipher_hd_t c, const unsigned char *inbuf, size_t inlen,
             int do_padding)
 {
-#define blocksize 16
+  const unsigned int blocksize = 16;
   gcry_cipher_encrypt_t enc_fn = c->spec->encrypt;
   unsigned char tmp[blocksize];
   unsigned int burn = 0;
   unsigned int unused = c->u_mode.ccm.mac_unused;
   size_t nblocks;
+  size_t n;
 
   if (inlen == 0 && (unused == 0 || !do_padding))
     return 0;
@@ -52,22 +53,31 @@ do_cbc_mac (gcry_cipher_hd_t c, const unsigned char *inbuf, size_t inlen,
     {
       if (inlen + unused < blocksize || unused > 0)
         {
-          for (; inlen && unused < blocksize; inlen--)
-            c->u_mode.ccm.macbuf[unused++] = *inbuf++;
+	  n = (inlen > blocksize - unused) ? blocksize - unused : inlen;
+
+	  buf_cpy (&c->u_mode.ccm.macbuf[unused], inbuf, n);
+	  unused += n;
+	  inlen -= n;
+	  inbuf += n;
         }
       if (!inlen)
         {
           if (!do_padding)
             break;
 
-          while (unused < blocksize)
-            c->u_mode.ccm.macbuf[unused++] = 0;
+	  n = blocksize - unused;
+	  if (n > 0)
+	    {
+	      memset (&c->u_mode.ccm.macbuf[unused], 0, n);
+	      unused = blocksize;
+	    }
         }
 
       if (unused > 0)
         {
           /* Process one block from macbuf.  */
-          buf_xor(c->u_iv.iv, c->u_iv.iv, c->u_mode.ccm.macbuf, blocksize);
+          cipher_block_xor(c->u_iv.iv, c->u_iv.iv, c->u_mode.ccm.macbuf,
+                           blocksize);
           set_burn (burn, enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv ));
 
           unused = 0;
@@ -86,7 +96,7 @@ do_cbc_mac (gcry_cipher_hd_t c, const unsigned char *inbuf, size_t inlen,
         {
           while (inlen >= blocksize)
             {
-              buf_xor(c->u_iv.iv, c->u_iv.iv, inbuf, blocksize);
+              cipher_block_xor(c->u_iv.iv, c->u_iv.iv, inbuf, blocksize);
 
               set_burn (burn, enc_fn ( &c->context.c, c->u_iv.iv, c->u_iv.iv ));
 
@@ -110,6 +120,7 @@ gcry_err_code_t
 _gcry_cipher_ccm_set_nonce (gcry_cipher_hd_t c, const unsigned char *nonce,
                             size_t noncelen)
 {
+  unsigned int marks_key;
   size_t L = 15 - noncelen;
   size_t L_;
 
@@ -122,12 +133,14 @@ _gcry_cipher_ccm_set_nonce (gcry_cipher_hd_t c, const unsigned char *nonce,
     return GPG_ERR_INV_LENGTH;
 
   /* Reset state */
+  marks_key = c->marks.key;
   memset (&c->u_mode, 0, sizeof(c->u_mode));
   memset (&c->marks, 0, sizeof(c->marks));
   memset (&c->u_iv, 0, sizeof(c->u_iv));
   memset (&c->u_ctr, 0, sizeof(c->u_ctr));
   memset (c->lastiv, 0, sizeof(c->lastiv));
   c->unused = 0;
+  c->marks.key = marks_key;
 
   /* Setup CTR */
   c->u_ctr.ctr[0] = L_;
@@ -269,7 +282,7 @@ _gcry_cipher_ccm_tag (gcry_cipher_hd_t c, unsigned char *outbuf,
       burn = do_cbc_mac (c, NULL, 0, 1); /* Perform final padding.  */
 
       /* Add S_0 */
-      buf_xor (c->u_iv.iv, c->u_iv.iv, c->u_mode.ccm.s0, 16);
+      cipher_block_xor (c->u_iv.iv, c->u_iv.iv, c->u_mode.ccm.s0, 16);
 
       wipememory (c->u_ctr.ctr, 16);
       wipememory (c->u_mode.ccm.s0, 16);
@@ -315,7 +328,9 @@ _gcry_cipher_ccm_encrypt (gcry_cipher_hd_t c, unsigned char *outbuf,
                           size_t outbuflen, const unsigned char *inbuf,
                           size_t inbuflen)
 {
-  unsigned int burn;
+  gcry_err_code_t err = 0;
+  unsigned int burn = 0;
+  unsigned int nburn;
 
   if (outbuflen < inbuflen)
     return GPG_ERR_BUFFER_TOO_SHORT;
@@ -325,12 +340,32 @@ _gcry_cipher_ccm_encrypt (gcry_cipher_hd_t c, unsigned char *outbuf,
   if (inbuflen > c->u_mode.ccm.encryptlen)
     return GPG_ERR_INV_LENGTH;
 
-  c->u_mode.ccm.encryptlen -= inbuflen;
-  burn = do_cbc_mac (c, inbuf, inbuflen, 0);
+  while (inbuflen)
+    {
+      size_t currlen = inbuflen;
+
+      /* Since checksumming is done before encryption, process input in 24KiB
+       * chunks to keep data loaded in L1 cache for encryption. */
+      if (currlen > 24 * 1024)
+	currlen = 24 * 1024;
+
+      c->u_mode.ccm.encryptlen -= currlen;
+      nburn = do_cbc_mac (c, inbuf, currlen, 0);
+      burn = nburn > burn ? nburn : burn;
+
+      err = _gcry_cipher_ctr_encrypt (c, outbuf, outbuflen, inbuf, currlen);
+      if (err)
+	break;
+
+      outbuf += currlen;
+      inbuf += currlen;
+      outbuflen -= currlen;
+      inbuflen -= currlen;
+    }
+
   if (burn)
     _gcry_burn_stack (burn + sizeof(void *) * 5);
-
-  return _gcry_cipher_ctr_encrypt (c, outbuf, outbuflen, inbuf, inbuflen);
+  return err;
 }
 
 
@@ -339,8 +374,9 @@ _gcry_cipher_ccm_decrypt (gcry_cipher_hd_t c, unsigned char *outbuf,
                           size_t outbuflen, const unsigned char *inbuf,
                           size_t inbuflen)
 {
-  gcry_err_code_t err;
-  unsigned int burn;
+  gcry_err_code_t err = 0;
+  unsigned int burn = 0;
+  unsigned int nburn;
 
   if (outbuflen < inbuflen)
     return GPG_ERR_BUFFER_TOO_SHORT;
@@ -350,14 +386,30 @@ _gcry_cipher_ccm_decrypt (gcry_cipher_hd_t c, unsigned char *outbuf,
   if (inbuflen > c->u_mode.ccm.encryptlen)
     return GPG_ERR_INV_LENGTH;
 
-  err = _gcry_cipher_ctr_encrypt (c, outbuf, outbuflen, inbuf, inbuflen);
-  if (err)
-    return err;
+  while (inbuflen)
+    {
+      size_t currlen = inbuflen;
 
-  c->u_mode.ccm.encryptlen -= inbuflen;
-  burn = do_cbc_mac (c, outbuf, inbuflen, 0);
+      /* Since checksumming is done after decryption, process input in 24KiB
+       * chunks to keep data loaded in L1 cache for checksumming. */
+      if (currlen > 24 * 1024)
+	currlen = 24 * 1024;
+
+      err = _gcry_cipher_ctr_encrypt (c, outbuf, outbuflen, inbuf, currlen);
+      if (err)
+	break;
+
+      c->u_mode.ccm.encryptlen -= currlen;
+      nburn = do_cbc_mac (c, outbuf, currlen, 0);
+      burn = nburn > burn ? nburn : burn;
+
+      outbuf += currlen;
+      inbuf += currlen;
+      outbuflen -= currlen;
+      inbuflen -= currlen;
+    }
+
   if (burn)
     _gcry_burn_stack (burn + sizeof(void *) * 5);
-
   return err;
 }

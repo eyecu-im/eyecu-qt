@@ -204,7 +204,8 @@ extern void _gcry_camellia_aesni_avx2_ocb_auth(CAMELLIA_context *ctx,
 static const char *selftest(void);
 
 static gcry_err_code_t
-camellia_setkey(void *c, const byte *key, unsigned keylen)
+camellia_setkey(void *c, const byte *key, unsigned keylen,
+                gcry_cipher_hd_t hd)
 {
   CAMELLIA_context *ctx=c;
   static int initialized=0;
@@ -212,6 +213,8 @@ camellia_setkey(void *c, const byte *key, unsigned keylen)
 #if defined(USE_AESNI_AVX) || defined(USE_AESNI_AVX2)
   unsigned int hwf = _gcry_get_hw_features ();
 #endif
+
+  (void)hd;
 
   if(keylen!=16 && keylen!=24 && keylen!=32)
     return GPG_ERR_INV_KEYLEN;
@@ -285,12 +288,19 @@ static void Camellia_DecryptBlock(const int keyBitLength,
 				     keyBitLength);
 }
 
+#ifdef __aarch64__
+#  define CAMELLIA_encrypt_stack_burn_size (0)
+#  define CAMELLIA_decrypt_stack_burn_size (0)
+#else
+#  define CAMELLIA_encrypt_stack_burn_size (15*4)
+#  define CAMELLIA_decrypt_stack_burn_size (15*4)
+#endif
+
 static unsigned int
 camellia_encrypt(void *c, byte *outbuf, const byte *inbuf)
 {
   CAMELLIA_context *ctx = c;
   Camellia_EncryptBlock(ctx->keybitlength,inbuf,ctx->keytable,outbuf);
-#define CAMELLIA_encrypt_stack_burn_size (15*4)
   return /*burn_stack*/ (CAMELLIA_encrypt_stack_burn_size);
 }
 
@@ -299,7 +309,6 @@ camellia_decrypt(void *c, byte *outbuf, const byte *inbuf)
 {
   CAMELLIA_context *ctx=c;
   Camellia_DecryptBlock(ctx->keybitlength,inbuf,ctx->keytable,outbuf);
-#define CAMELLIA_decrypt_stack_burn_size (15*4)
   return /*burn_stack*/ (CAMELLIA_decrypt_stack_burn_size);
 }
 
@@ -354,7 +363,6 @@ _gcry_camellia_ctr_enc(void *context, unsigned char *ctr,
   const unsigned char *inbuf = inbuf_arg;
   unsigned char tmpbuf[CAMELLIA_BLOCK_SIZE];
   int burn_stack_depth = CAMELLIA_encrypt_stack_burn_size;
-  int i;
 
 #ifdef USE_AESNI_AVX2
   if (ctx->use_aesni_avx2)
@@ -421,16 +429,11 @@ _gcry_camellia_ctr_enc(void *context, unsigned char *ctr,
       /* Encrypt the counter. */
       Camellia_EncryptBlock(ctx->keybitlength, ctr, ctx->keytable, tmpbuf);
       /* XOR the input with the encrypted counter and store in output.  */
-      buf_xor(outbuf, tmpbuf, inbuf, CAMELLIA_BLOCK_SIZE);
+      cipher_block_xor(outbuf, tmpbuf, inbuf, CAMELLIA_BLOCK_SIZE);
       outbuf += CAMELLIA_BLOCK_SIZE;
       inbuf  += CAMELLIA_BLOCK_SIZE;
       /* Increment the counter.  */
-      for (i = CAMELLIA_BLOCK_SIZE; i > 0; i--)
-        {
-          ctr[i-1]++;
-          if (ctr[i-1])
-            break;
-        }
+      cipher_block_add(ctr, 1, CAMELLIA_BLOCK_SIZE);
     }
 
   wipememory(tmpbuf, sizeof(tmpbuf));
@@ -514,7 +517,8 @@ _gcry_camellia_cbc_dec(void *context, unsigned char *iv,
          the intermediate result to SAVEBUF.  */
       Camellia_DecryptBlock(ctx->keybitlength, inbuf, ctx->keytable, savebuf);
 
-      buf_xor_n_copy_2(outbuf, savebuf, iv, inbuf, CAMELLIA_BLOCK_SIZE);
+      cipher_block_xor_n_copy_2(outbuf, savebuf, iv, inbuf,
+                                CAMELLIA_BLOCK_SIZE);
       inbuf += CAMELLIA_BLOCK_SIZE;
       outbuf += CAMELLIA_BLOCK_SIZE;
     }
@@ -596,7 +600,7 @@ _gcry_camellia_cfb_dec(void *context, unsigned char *iv,
   for ( ;nblocks; nblocks-- )
     {
       Camellia_EncryptBlock(ctx->keybitlength, iv, ctx->keytable, iv);
-      buf_xor_n_copy(outbuf, iv, inbuf, CAMELLIA_BLOCK_SIZE);
+      cipher_block_xor_n_copy(outbuf, iv, inbuf, CAMELLIA_BLOCK_SIZE);
       outbuf += CAMELLIA_BLOCK_SIZE;
       inbuf  += CAMELLIA_BLOCK_SIZE;
     }
@@ -613,7 +617,6 @@ _gcry_camellia_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
   CAMELLIA_context *ctx = (void *)&c->context.c;
   unsigned char *outbuf = outbuf_arg;
   const unsigned char *inbuf = inbuf_arg;
-  unsigned char l_tmp[CAMELLIA_BLOCK_SIZE];
   int burn_stack_depth;
   u64 blkn = c->u_mode.ocb.data_nblocks;
 
@@ -658,9 +661,8 @@ _gcry_camellia_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 	  /* Process data in 32 block chunks. */
 	  while (nblocks >= 32)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 32;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 32);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 32);
 
 	      if (encrypt)
 		_gcry_camellia_aesni_avx2_ocb_enc(ctx, outbuf, inbuf, c->u_iv.iv,
@@ -719,9 +721,8 @@ _gcry_camellia_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 	  /* Process data in 16 block chunks. */
 	  while (nblocks >= 16)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 16;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 16);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 16);
 
 	      if (encrypt)
 		_gcry_camellia_aesni_avx_ocb_enc(ctx, outbuf, inbuf, c->u_iv.iv,
@@ -753,8 +754,6 @@ _gcry_camellia_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 #if defined(USE_AESNI_AVX) || defined(USE_AESNI_AVX2)
   c->u_mode.ocb.data_nblocks = blkn;
 
-  wipememory(&l_tmp, sizeof(l_tmp));
-
   if (burn_stack_depth)
     _gcry_burn_stack (burn_stack_depth + 4 * sizeof(void *));
 #endif
@@ -770,7 +769,6 @@ _gcry_camellia_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 #if defined(USE_AESNI_AVX) || defined(USE_AESNI_AVX2)
   CAMELLIA_context *ctx = (void *)&c->context.c;
   const unsigned char *abuf = abuf_arg;
-  unsigned char l_tmp[CAMELLIA_BLOCK_SIZE];
   int burn_stack_depth;
   u64 blkn = c->u_mode.ocb.aad_nblocks;
 
@@ -812,9 +810,8 @@ _gcry_camellia_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 	  /* Process data in 32 block chunks. */
 	  while (nblocks >= 32)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 32;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 32);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 32);
 
 	      _gcry_camellia_aesni_avx2_ocb_auth(ctx, abuf,
 						 c->u_mode.ocb.aad_offset,
@@ -869,9 +866,8 @@ _gcry_camellia_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 	  /* Process data in 16 block chunks. */
 	  while (nblocks >= 16)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 16;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 16);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 16);
 
 	      _gcry_camellia_aesni_avx_ocb_auth(ctx, abuf,
 						c->u_mode.ocb.aad_offset,
@@ -898,8 +894,6 @@ _gcry_camellia_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 
 #if defined(USE_AESNI_AVX) || defined(USE_AESNI_AVX2)
   c->u_mode.ocb.aad_nblocks = blkn;
-
-  wipememory(&l_tmp, sizeof(l_tmp));
 
   if (burn_stack_depth)
     _gcry_burn_stack (burn_stack_depth + 4 * sizeof(void *));
@@ -995,7 +989,7 @@ selftest(void)
       0x20,0xef,0x7c,0x91,0x9e,0x3a,0x75,0x09
     };
 
-  camellia_setkey(&ctx,key_128,sizeof(key_128));
+  camellia_setkey(&ctx,key_128,sizeof(key_128),NULL);
   camellia_encrypt(&ctx,scratch,plaintext);
   if(memcmp(scratch,ciphertext_128,sizeof(ciphertext_128))!=0)
     return "CAMELLIA-128 test encryption failed.";
@@ -1003,7 +997,7 @@ selftest(void)
   if(memcmp(scratch,plaintext,sizeof(plaintext))!=0)
     return "CAMELLIA-128 test decryption failed.";
 
-  camellia_setkey(&ctx,key_192,sizeof(key_192));
+  camellia_setkey(&ctx,key_192,sizeof(key_192),NULL);
   camellia_encrypt(&ctx,scratch,plaintext);
   if(memcmp(scratch,ciphertext_192,sizeof(ciphertext_192))!=0)
     return "CAMELLIA-192 test encryption failed.";
@@ -1011,7 +1005,7 @@ selftest(void)
   if(memcmp(scratch,plaintext,sizeof(plaintext))!=0)
     return "CAMELLIA-192 test decryption failed.";
 
-  camellia_setkey(&ctx,key_256,sizeof(key_256));
+  camellia_setkey(&ctx,key_256,sizeof(key_256),NULL);
   camellia_encrypt(&ctx,scratch,plaintext);
   if(memcmp(scratch,ciphertext_256,sizeof(ciphertext_256))!=0)
     return "CAMELLIA-256 test encryption failed.";

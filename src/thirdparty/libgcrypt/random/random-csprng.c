@@ -115,7 +115,7 @@ static size_t pool_writepos;
 static size_t pool_readpos;
 
 /* This flag is set to true as soon as the pool has been completely
-   filled the first time.  This may happen either by rereading a seed
+   filled the first time.  This may happen either by reading a seed
    file or by adding enough entropy.  */
 static int pool_filled;
 
@@ -249,7 +249,7 @@ static void read_random_source (enum random_origins origin,
 static void
 initialize_basics(void)
 {
-  static int initialized = 0;
+  static int initialized;
 
   if (!initialized)
     {
@@ -264,10 +264,6 @@ initialize_basics(void)
       gcry_assert (GCRY_WEAK_RANDOM == 0
                    && GCRY_STRONG_RANDOM == 1
                    && GCRY_VERY_STRONG_RANDOM == 2);
-
-      int err =  gpgrt_lock_init(&pool_lock);
-      if (err)
-        log_fatal ("failed to initialize the pool lock: %s\n", gpg_strerror (err));
     }
 }
 
@@ -552,41 +548,46 @@ _gcry_rngcsprng_randomize (void *buffer, size_t length,
 
 
 /*
-   Mix the pool:
-
-   |........blocks*20byte........|20byte|..44byte..|
-   <..44byte..>           <20byte>
-        |                    |
-        |                    +------+
-        +---------------------------|----------+
-                                    v          v
-   |........blocks*20byte........|20byte|..44byte..|
-                                 <.....64bytes.....>
-                                         |
-      +----------------------------------+
-     Hash
-      v
-   |.............................|20byte|..44byte..|
-   <20byte><20byte><..44byte..>
-      |                |
-      |                +---------------------+
-      +-----------------------------+        |
-                                    v        v
-   |.............................|20byte|..44byte..|
-                                 <.....64byte......>
-                                        |
-              +-------------------------+
-             Hash
-              v
-   |.............................|20byte|..44byte..|
-   <20byte><20byte><..44byte..>
-
-   and so on until we did this for all blocks.
-
-   To better protect against implementation errors in this code, we
-   xor a digest of the entire pool into the pool before mixing.
-
-   Note: this function must only be called with a locked pool.
+ * Mix the 600 byte pool.  Note that the 64 byte scratch area directly
+ * follows the pool.  The numbers in the diagram give the number of
+ * bytes.
+ *         <................600...............>   <.64.>
+ * pool   |------------------------------------| |------|
+ *         <20><.24.>                      <20>
+ *          |     |                         +-----+
+ *          +-----|-------------------------------|-+
+ *                +-------------------------------|-|-+
+ *                                                v v v
+ *                                               |------|
+ *                                                <hash>
+ *          +---------------------------------------+
+ *          v
+ *         <20>
+ * pool'  |------------------------------------|
+ *         <20><20><.24.>
+ *          +---|-----|---------------------------+
+ *              +-----|---------------------------|-+
+ *                    +---------------------------|-|-+
+ *                                                v v v
+ *                                               |------|
+ *                                                <hash>
+ *                                                  |
+ *              +-----------------------------------+
+ *              v
+ *             <20>
+ * pool'' |------------------------------------|
+ *         <20><20><20><.24.>
+ *              +---|-----|-----------------------+
+ *                  +-----|-----------------------|-+
+ *                        +-----------------------|-|-+
+ *                                                v v v
+ *
+ * and so on until we did this for all 30 blocks.
+ *
+ * To better protect against implementation errors in this code, we
+ * xor a digest of the entire pool into the pool before mixing.
+ *
+ * Note: this function must only be called with a locked pool.
  */
 static void
 mix_pool(unsigned char *pool)
@@ -607,32 +608,30 @@ mix_pool(unsigned char *pool)
   gcry_assert (pool_is_locked);
   _gcry_sha1_mixblock_init (&md);
 
-  /* Loop over the pool.  */
+  /* pool_0 -> pool'.  */
   pend = pool + POOLSIZE;
-  memcpy(hashbuf, pend - DIGESTLEN, DIGESTLEN );
-  memcpy(hashbuf+DIGESTLEN, pool, BLOCKLEN-DIGESTLEN);
+  memcpy (hashbuf, pend - DIGESTLEN, DIGESTLEN);
+  memcpy (hashbuf+DIGESTLEN, pool, BLOCKLEN-DIGESTLEN);
   nburn = _gcry_sha1_mixblock (&md, hashbuf);
-  memcpy(pool, hashbuf, 20 );
+  memcpy (pool, hashbuf, DIGESTLEN);
 
   if (failsafe_digest_valid && pool == rndpool)
     {
-      for (i=0; i < 20; i++)
+      for (i=0; i < DIGESTLEN; i++)
         pool[i] ^= failsafe_digest[i];
     }
 
+  /* Loop for the remaining iterations.  */
   p = pool;
   for (n=1; n < POOLBLOCKS; n++)
     {
-      memcpy (hashbuf, p, DIGESTLEN);
-
-      p += DIGESTLEN;
-      if (p+DIGESTLEN+BLOCKLEN < pend)
-        memcpy (hashbuf+DIGESTLEN, p+DIGESTLEN, BLOCKLEN-DIGESTLEN);
+      if (p + BLOCKLEN < pend)
+        memcpy (hashbuf, p, BLOCKLEN);
       else
         {
-          unsigned char *pp = p + DIGESTLEN;
+          unsigned char *pp = p;
 
-          for (i=DIGESTLEN; i < BLOCKLEN; i++ )
+          for (i=0; i < BLOCKLEN; i++ )
             {
               if ( pp >= pend )
                 pp = pool;
@@ -641,7 +640,8 @@ mix_pool(unsigned char *pool)
 	}
 
       _gcry_sha1_mixblock (&md, hashbuf);
-      memcpy(p, hashbuf, 20 );
+      p += DIGESTLEN;
+      memcpy (p, hashbuf, DIGESTLEN);
     }
 
   /* Our hash implementation does only leave small parts (64 bytes)
@@ -704,6 +704,10 @@ lock_seed_file (int fd, const char *fname, int for_write)
       if (backoff < 10)
         backoff++ ;
     }
+#else
+  (void)fd;
+  (void)fname;
+  (void)for_write;
 #endif /*!LOCK_SEED_FILE*/
   return 0;
 }
@@ -717,12 +721,12 @@ lock_seed_file (int fd, const char *fname, int for_write)
    out the same pool and then race for updating it (the last update
    overwrites earlier updates).  They will differentiate only by the
    weak entropy that is added in read_seed_file based on the PID and
-   clock, and up to 16 bytes of weak random non-blockingly.  The
+   clock, and up to 32 bytes from a non-blocking entropy source.  The
    consequence is that the output of these different instances is
    correlated to some extent.  In the perfect scenario, the attacker
    can control (or at least guess) the PID and clock of the
    application, and drain the system's entropy pool to reduce the "up
-   to 16 bytes" above to 0.  Then the dependencies of the initial
+   to 32 bytes" above to 0.  Then the dependencies of the initial
    states of the pools are completely known.  */
 static int
 read_seed_file (void)
@@ -814,12 +818,16 @@ read_seed_file (void)
     add_randomness( &x, sizeof(x), RANDOM_ORIGIN_INIT );
   }
 
-  /* And read a few bytes from our entropy source.  By using a level
-   * of 0 this will not block and might not return anything with some
-   * entropy drivers, however the rndlinux driver will use
-   * /dev/urandom and return some stuff - Do not read too much as we
-   * want to be friendly to the scare system entropy resource. */
-  read_random_source ( RANDOM_ORIGIN_INIT, 16, GCRY_WEAK_RANDOM );
+  /* And read a few bytes from our entropy source.  If we have the
+   * Jitter RNG we can fast get a lot of entropy.  Thus we read 1024
+   * bits from that source.
+   *
+   * Without the Jitter RNG we keep the old method of reading only a
+   * few bytes usually from /dev/urandom which won't block.  */
+  if (_gcry_rndjent_get_version (NULL))
+    read_random_source (RANDOM_ORIGIN_INIT, 128, GCRY_STRONG_RANDOM);
+  else
+    read_random_source (RANDOM_ORIGIN_INIT, 32, GCRY_STRONG_RANDOM);
 
   allow_seed_file_update = 1;
   return 1;

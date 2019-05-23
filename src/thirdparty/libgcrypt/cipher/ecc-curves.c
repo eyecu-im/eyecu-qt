@@ -26,6 +26,7 @@
 
 #include "g10lib.h"
 #include "mpi.h"
+#include "mpi-internal.h"
 #include "cipher.h"
 #include "context.h"
 #include "ec-context.h"
@@ -40,8 +41,22 @@ static const struct
   const char *other; /* Other name. */
 } curve_aliases[] =
   {
-    { "Curve25519", "1.3.6.1.4.1.3029.1.5.1" },
-    { "Ed25519",    "1.3.6.1.4.1.11591.15.1" },
+    { "Curve25519", "1.3.6.1.4.1.3029.1.5.1" }, /* OpenPGP */
+
+    { "Ed25519",    "1.3.6.1.4.1.11591.15.1" }, /* OpenPGP */
+
+#if 0
+    /* FIXME: We have a naming issue here.  RFC-8032 says that its
+     * Ed25519 is the pureEdDSA, that is w.o. the SHA512 prehasing we
+     * use in OpenPGP.  */
+    { "Ed25519",    "1.3.101.112" },         /* rfc8410 */
+
+    { "Ed448",      "1.3.101.113" },         /* rfc8410 */
+
+    { "X22519",     "1.3.101.110" },         /* rfc8410 */
+
+    { "X448",       "1.3.101.111" },         /* rfc8410 */
+#endif
 
     { "NIST P-192", "1.2.840.10045.3.1.1" }, /* X9.62 OID  */
     { "NIST P-192", "prime192v1" },          /* X9.62 name.  */
@@ -563,13 +578,25 @@ _gcry_ecc_fill_in_curve (unsigned int nbits, const char *name,
         {
           curve->a = scanval (domain_parms[idx].a);
           if (curve->a->sign)
-            mpi_add (curve->a, curve->p, curve->a);
+            {
+              mpi_resize (curve->a, curve->p->nlimbs);
+              _gcry_mpih_sub_n (curve->a->d, curve->p->d,
+                                curve->a->d, curve->p->nlimbs);
+              curve->a->nlimbs = curve->p->nlimbs;
+              curve->a->sign = 0;
+            }
         }
       if (!curve->b)
         {
           curve->b = scanval (domain_parms[idx].b);
           if (curve->b->sign)
-            mpi_add (curve->b, curve->p, curve->b);
+            {
+              mpi_resize (curve->b, curve->p->nlimbs);
+              _gcry_mpih_sub_n (curve->b->d, curve->p->d,
+                                curve->b->d, curve->p->nlimbs);
+              curve->b->nlimbs = curve->p->nlimbs;
+              curve->b->sign = 0;
+            }
         }
       if (!curve->n)
         curve->n = scanval (domain_parms[idx].n);
@@ -1193,7 +1220,7 @@ _gcry_ecc_get_mpi (const char *name, mpi_ec_t ec, int copy)
   if (!strcmp (name, "q.x") && ec->Q && ec->Q->x)
     return mpi_is_const (ec->Q->x) && !copy? ec->Q->x : mpi_copy (ec->Q->x);
   if (!strcmp (name, "q.y") && ec->Q && ec->Q->y)
-    return mpi_is_const (ec->G->y) && !copy? ec->Q->y : mpi_copy (ec->Q->y);
+    return mpi_is_const (ec->Q->y) && !copy? ec->Q->y : mpi_copy (ec->Q->y);
 
   /* If the base point has been requested, return it in standard
      encoding.  */

@@ -1,6 +1,6 @@
 /* gcrypt.h -  GNU Cryptographic Library Interface              -*- c -*-
- * Copyright (C) 1998-2016 Free Software Foundation, Inc.
- * Copyright (C) 2012-2016 g10 Code GmbH
+ * Copyright (C) 1998-2018 Free Software Foundation, Inc.
+ * Copyright (C) 2012-2018 g10 Code GmbH
  *
  * This file is part of Libgcrypt.
  *
@@ -36,13 +36,13 @@
 # include <ws2tcpip.h>
 # include <time.h>
 # ifndef __GNUC__
-  typedef SSIZE_T ssize_t;
+  typedef long ssize_t;
   typedef int  pid_t;
 # endif /*!__GNUC__*/
 #else
 # include <sys/socket.h>
 # include <sys/time.h>
-
+// #@INSERT_SYS_SELECT_H@
 #endif /*!_WIN32*/
 
 typedef int gcry_socklen_t;
@@ -62,11 +62,11 @@ extern "C" {
    return the same version.  The purpose of this macro is to let
    autoconf (using the AM_PATH_GCRYPT macro) check that this header
    matches the installed library.  */
-#define GCRYPT_VERSION "1.7.0"
+#define GCRYPT_VERSION "1.9.0"
 
 /* The version number of this header.  It may be used to handle minor
    API incompatibilities.  */
-#define GCRYPT_VERSION_NUMBER 0x010700
+#define GCRYPT_VERSION_NUMBER 0x010900
 
 
 /* Internal: We can't use the convenience macros for the multi
@@ -189,7 +189,7 @@ int gcry_err_code_to_errno (gcry_err_code_t code);
 gcry_error_t gcry_err_make_from_errno (gcry_err_source_t source, int err);
 
 /* Return an error value with the system error ERR.  */
-gcry_err_code_t gcry_error_from_errno (int err);
+gcry_error_t gcry_error_from_errno (int err);
 
 
 /* NOTE: Since Libgcrypt 1.6 the thread callbacks are not anymore
@@ -331,7 +331,9 @@ enum gcry_ctl_cmds
     GCRYCTL_SET_SBOX = 73,
     GCRYCTL_DRBG_REINIT = 74,
     GCRYCTL_SET_TAGLEN = 75,
-    GCRYCTL_GET_TAGLEN = 76
+    GCRYCTL_GET_TAGLEN = 76,
+    GCRYCTL_REINIT_SYSCALL_CLAMP = 77,
+    GCRYCTL_AUTO_EXPAND_SECMEM = 78
   };
 
 /* Perform various operations defined by CMD. */
@@ -390,7 +392,7 @@ gcry_error_t gcry_sexp_build_array (gcry_sexp_t *retsexp, size_t *erroff,
 /* Release the S-expression object SEXP */
 void gcry_sexp_release (gcry_sexp_t sexp);
 
-/* Calculate the length of an canonized S-expresion in BUFFER and
+/* Calculate the length of an canonized S-expression in BUFFER and
    check for a valid encoding. */
 size_t gcry_sexp_canon_len (const unsigned char *buffer, size_t length,
                             size_t *erroff, gcry_error_t *errcode);
@@ -586,6 +588,9 @@ gcry_mpi_t gcry_mpi_set (gcry_mpi_t w, const gcry_mpi_t u);
 /* Store the unsigned integer value U in W. */
 gcry_mpi_t gcry_mpi_set_ui (gcry_mpi_t w, unsigned long u);
 
+/* Store U as an unsigned int at W or return GPG_ERR_ERANGE. */
+gpg_error_t gcry_mpi_get_ui (unsigned int *w, gcry_mpi_t u);
+
 /* Swap the values of A and B. */
 void gcry_mpi_swap (gcry_mpi_t a, gcry_mpi_t b);
 
@@ -696,6 +701,9 @@ gcry_mpi_point_t gcry_mpi_point_new (unsigned int nbits);
 
 /* Release the object POINT.  POINT may be NULL. */
 void gcry_mpi_point_release (gcry_mpi_point_t point);
+
+/* Return a copy of POINT. */
+gcry_mpi_point_t gcry_mpi_point_copy (gcry_mpi_point_t point);
 
 /* Store the projective coordinates from POINT into X, Y, and Z.  */
 void gcry_mpi_point_get (gcry_mpi_t x, gcry_mpi_t y, gcry_mpi_t z,
@@ -836,6 +844,7 @@ gcry_mpi_t _gcry_mpi_get_const (int no);
 #define mpi_snatch( w, u)      gcry_mpi_snatch( (w), (u) )
 #define mpi_set( w, u)         gcry_mpi_set( (w), (u) )
 #define mpi_set_ui( w, u)      gcry_mpi_set_ui( (w), (u) )
+#define mpi_get_ui( w, u)      gcry_mpi_get_ui( (w), (u) )
 #define mpi_abs( w )           gcry_mpi_abs( (w) )
 #define mpi_neg( w, u)         gcry_mpi_neg( (w), (u) )
 #define mpi_cmp( u, v )        gcry_mpi_cmp( (u), (v) )
@@ -867,6 +876,7 @@ gcry_mpi_t _gcry_mpi_get_const (int no);
       (p) = NULL;                               \
     }                                           \
   while (0)
+#define mpi_point_copy(p)             gcry_mpi_point_copy((p))
 #define mpi_point_get(x,y,z,p)        gcry_mpi_point_get((x),(y),(z),(p))
 #define mpi_point_snatch_get(x,y,z,p) gcry_mpi_point_snatch_get((x),(y),(z),(p))
 #define mpi_point_set(p,x,y,z)        gcry_mpi_point_set((p),(x),(y),(z))
@@ -960,7 +970,9 @@ enum gcry_cipher_modes
     GCRY_CIPHER_MODE_GCM      = 9,   /* Galois Counter Mode. */
     GCRY_CIPHER_MODE_POLY1305 = 10,  /* Poly1305 based AEAD mode. */
     GCRY_CIPHER_MODE_OCB      = 11,  /* OCB3 mode.  */
-    GCRY_CIPHER_MODE_CFB8     = 12   /* Cipher feedback (8 bit mode). */
+    GCRY_CIPHER_MODE_CFB8     = 12,  /* Cipher feedback (8 bit mode). */
+    GCRY_CIPHER_MODE_XTS      = 13,  /* XTS mode.  */
+    GCRY_CIPHER_MODE_EAX      = 14   /* EAX mode.  */
   };
 
 /* Flags used with the open function. */
@@ -980,6 +992,9 @@ enum gcry_cipher_flags
 
 /* OCB works only with blocks of 128 bits.  */
 #define GCRY_OCB_BLOCK_LEN  (128 / 8)
+
+/* XTS works only with blocks of 128 bits.  */
+#define GCRY_XTS_BLOCK_LEN  (128 / 8)
 
 /* Create a handle for algorithm ALGO to be used in MODE.  FLAGS may
    be given as an bitwise OR of the gcry_cipher_flags values. */
@@ -1061,7 +1076,7 @@ gcry_error_t gcry_cipher_checktag (gcry_cipher_hd_t hd, const void *intag,
                                                                    NULL, on )
 
 #define gcry_cipher_set_sbox(h,oid) gcry_cipher_ctl( (h), GCRYCTL_SET_SBOX, \
-                                                     (oid), 0);
+                                                     (void *) oid, 0);
 
 /* Indicate to the encrypt and decrypt functions that the next call
    provides the final data.  Only used with some modes.  */
@@ -1223,7 +1238,18 @@ enum gcry_md_algos
     GCRY_MD_SHA3_384      = 314,
     GCRY_MD_SHA3_512      = 315,
     GCRY_MD_SHAKE128      = 316,
-    GCRY_MD_SHAKE256      = 317
+    GCRY_MD_SHAKE256      = 317,
+    GCRY_MD_BLAKE2B_512   = 318,
+    GCRY_MD_BLAKE2B_384   = 319,
+    GCRY_MD_BLAKE2B_256   = 320,
+    GCRY_MD_BLAKE2B_160   = 321,
+    GCRY_MD_BLAKE2S_256   = 322,
+    GCRY_MD_BLAKE2S_224   = 323,
+    GCRY_MD_BLAKE2S_160   = 324,
+    GCRY_MD_BLAKE2S_128   = 325,
+    GCRY_MD_SM3           = 326,
+    GCRY_MD_SHA512_256    = 327,
+    GCRY_MD_SHA512_224    = 328,
   };
 
 /* Flags used with the open function.  */
@@ -1294,7 +1320,7 @@ gpg_error_t gcry_md_extract (gcry_md_hd_t hd, int algo, void *buffer,
                              size_t length);
 
 /* Convenience function to calculate the hash from the data in BUFFER
-   of size LENGTH using the algorithm ALGO avoiding the creating of a
+   of size LENGTH using the algorithm ALGO avoiding the creation of a
    hash object.  The hash is returned in the caller provided buffer
    DIGEST which must be large enough to hold the digest of the given
    algorithm. */
@@ -1320,9 +1346,9 @@ int gcry_md_is_enabled (gcry_md_hd_t a, int algo);
 /* Return true if the digest object A is allocated in "secure" memory. */
 int gcry_md_is_secure (gcry_md_hd_t a);
 
-/* Retrieve various information about the object H.  */
+/* Deprecated: Use gcry_md_is_enabled or gcry_md_is_secure.  */
 gcry_error_t gcry_md_info (gcry_md_hd_t h, int what, void *buffer,
-                          size_t *nbytes);
+                          size_t *nbytes) _GCRY_ATTR_INTERNAL;
 
 /* Retrieve various information about the algorithm ALGO.  */
 gcry_error_t gcry_md_algo_info (int algo, int what, void *buffer,
@@ -1409,6 +1435,18 @@ enum gcry_mac_algos
     GCRY_MAC_HMAC_SHA3_256      = 116,
     GCRY_MAC_HMAC_SHA3_384      = 117,
     GCRY_MAC_HMAC_SHA3_512      = 118,
+    GCRY_MAC_HMAC_GOSTR3411_CP  = 119,
+    GCRY_MAC_HMAC_BLAKE2B_512   = 120,
+    GCRY_MAC_HMAC_BLAKE2B_384   = 121,
+    GCRY_MAC_HMAC_BLAKE2B_256   = 122,
+    GCRY_MAC_HMAC_BLAKE2B_160   = 123,
+    GCRY_MAC_HMAC_BLAKE2S_256   = 124,
+    GCRY_MAC_HMAC_BLAKE2S_224   = 125,
+    GCRY_MAC_HMAC_BLAKE2S_160   = 126,
+    GCRY_MAC_HMAC_BLAKE2S_128   = 127,
+    GCRY_MAC_HMAC_SM3           = 128,
+    GCRY_MAC_HMAC_SHA512_256    = 129,
+    GCRY_MAC_HMAC_SHA512_224    = 130,
 
     GCRY_MAC_CMAC_AES           = 201,
     GCRY_MAC_CMAC_3DES          = 202,
@@ -1656,7 +1694,7 @@ gcry_error_t gcry_prime_group_generator (gcry_mpi_t *r_g,
 void gcry_prime_release_factors (gcry_mpi_t *factors);
 
 
-/* Check wether the number X is prime.  */
+/* Check whether the number X is prime.  */
 gcry_error_t gcry_prime_check (gcry_mpi_t x, unsigned int flags);
 
 
@@ -1678,6 +1716,7 @@ void gcry_log_debugpnt (const char *text,
                         gcry_mpi_point_t point, gcry_ctx_t ctx);
 void gcry_log_debugsxp (const char *text, gcry_sexp_t sexp);
 
+char *gcry_get_config (int mode, const char *what);
 
 /* Log levels used by the internal logging facility. */
 enum gcry_log_levels
@@ -1774,7 +1813,7 @@ int gcry_is_secure (const void *a) _GCRY_GCC_ATTR_PURE;
 #endif
 #endif /* _GCRYPT_H */
 /*
-
-
-
+// @emacs_local_vars_begin@
+// @emacs_local_vars_read_only@
+// @emacs_local_vars_end@
 */

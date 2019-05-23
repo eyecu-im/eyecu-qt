@@ -117,11 +117,9 @@
 #include <sys/select.h>
 #endif				/* _AIX */
 #ifndef __QNX__
-#include <signal.h>
-#if !defined(ANDROID)
 #include <sys/shm.h>
+#include <signal.h>
 #include <sys/signal.h>
-#endif
 #endif				/* __QNX__ */
 #include <sys/stat.h>
 #include <sys/types.h>		/* Verschiedene komische Typen */
@@ -321,7 +319,7 @@ static struct RI {
     {	"/usr/bin/lpstat", "-t", SC(0.1), NULL, 0, 0, 0, 1 },
     {	"/usr/ucb/lpstat", "-t", SC(0.1), NULL, 0, 0, 0, 0 },
     {	"/usr/bin/tcpdump", "-c 5 -efvvx", SC(1), NULL, 0, 0, 0, 0 },
-    /* This is very environment-dependant.  If network traffic is low, it'll
+    /* This is very environment-dependent.  If network traffic is low, it'll
      * probably time out before delivering 5 packets, which is OK because
      * it'll probably be fixed stuff like ARP anyway */
     {	"/usr/sbin/advfsstat", "-b usr_domain",
@@ -716,7 +714,7 @@ start_gatherer( int pipefd )
     int dbgall;
 
     {
-	const char *s = getenv("GNUPG_RNDUNIX_DBG");
+	const char *s = getenv("GCRYPT_RNDUNIX_DBG");
 	if( s ) {
 	    dbgfp = (*s=='-' && !s[1])? stdout : fopen(s, "a");
 	    if( !dbgfp )
@@ -725,7 +723,7 @@ start_gatherer( int pipefd )
 	    else
 		fprintf(dbgfp,"\nSTART RNDUNIX DEBUG pid=%d\n", (int)getpid());
 	}
-	dbgall = !!getenv("GNUPG_RNDUNIX_DBGALL");
+	dbgall = !!getenv("GCRYPT_RNDUNIX_DBGALL");
     }
     /* close all files but the ones we need */
     {	int nmax, n1, n2, i;

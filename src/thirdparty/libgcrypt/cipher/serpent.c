@@ -748,12 +748,15 @@ serpent_setkey_internal (serpent_context_t *context,
 /* Initialize CTX with the key KEY of KEY_LENGTH bytes.  */
 static gcry_err_code_t
 serpent_setkey (void *ctx,
-		const byte *key, unsigned int key_length)
+		const byte *key, unsigned int key_length,
+                gcry_cipher_hd_t hd)
 {
   serpent_context_t *context = ctx;
   static const char *serpent_test_ret;
   static int serpent_init_done;
   gcry_err_code_t ret = GPG_ERR_NO_ERROR;
+
+  (void)hd;
 
   if (! serpent_init_done)
     {
@@ -909,7 +912,6 @@ _gcry_serpent_ctr_enc(void *context, unsigned char *ctr,
   const unsigned char *inbuf = inbuf_arg;
   unsigned char tmpbuf[sizeof(serpent_block_t)];
   int burn_stack_depth = 2 * sizeof (serpent_block_t);
-  int i;
 
 #ifdef USE_AVX2
   if (ctx->use_avx2)
@@ -999,16 +1001,11 @@ _gcry_serpent_ctr_enc(void *context, unsigned char *ctr,
       /* Encrypt the counter. */
       serpent_encrypt_internal(ctx, ctr, tmpbuf);
       /* XOR the input with the encrypted counter and store in output.  */
-      buf_xor(outbuf, tmpbuf, inbuf, sizeof(serpent_block_t));
+      cipher_block_xor(outbuf, tmpbuf, inbuf, sizeof(serpent_block_t));
       outbuf += sizeof(serpent_block_t);
       inbuf  += sizeof(serpent_block_t);
       /* Increment the counter.  */
-      for (i = sizeof(serpent_block_t); i > 0; i--)
-        {
-          ctr[i-1]++;
-          if (ctr[i-1])
-            break;
-        }
+      cipher_block_add(ctr, 1, sizeof(serpent_block_t));
     }
 
   wipememory(tmpbuf, sizeof(tmpbuf));
@@ -1114,7 +1111,8 @@ _gcry_serpent_cbc_dec(void *context, unsigned char *iv,
          the intermediate result to SAVEBUF.  */
       serpent_decrypt_internal (ctx, inbuf, savebuf);
 
-      buf_xor_n_copy_2(outbuf, savebuf, iv, inbuf, sizeof(serpent_block_t));
+      cipher_block_xor_n_copy_2(outbuf, savebuf, iv, inbuf,
+                                sizeof(serpent_block_t));
       inbuf += sizeof(serpent_block_t);
       outbuf += sizeof(serpent_block_t);
     }
@@ -1218,7 +1216,7 @@ _gcry_serpent_cfb_dec(void *context, unsigned char *iv,
   for ( ;nblocks; nblocks-- )
     {
       serpent_encrypt_internal(ctx, iv, iv);
-      buf_xor_n_copy(outbuf, iv, inbuf, sizeof(serpent_block_t));
+      cipher_block_xor_n_copy(outbuf, iv, inbuf, sizeof(serpent_block_t));
       outbuf += sizeof(serpent_block_t);
       inbuf  += sizeof(serpent_block_t);
     }
@@ -1235,7 +1233,6 @@ _gcry_serpent_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
   serpent_context_t *ctx = (void *)&c->context.c;
   unsigned char *outbuf = outbuf_arg;
   const unsigned char *inbuf = inbuf_arg;
-  unsigned char l_tmp[sizeof(serpent_block_t)];
   int burn_stack_depth = 2 * sizeof (serpent_block_t);
   u64 blkn = c->u_mode.ocb.data_nblocks;
 #else
@@ -1275,9 +1272,8 @@ _gcry_serpent_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 	  /* Process data in 16 block chunks. */
 	  while (nblocks >= 16)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 16;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 16);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 16);
 
 	      if (encrypt)
 		_gcry_serpent_avx2_ocb_enc(ctx, outbuf, inbuf, c->u_iv.iv,
@@ -1327,9 +1323,8 @@ _gcry_serpent_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 	/* Process data in 8 block chunks. */
 	while (nblocks >= 8)
 	  {
-	    /* l_tmp will be used only every 65536-th block. */
 	    blkn += 8;
-	    *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 8);
+	    *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 8);
 
 	    if (encrypt)
 	      _gcry_serpent_sse2_ocb_enc(ctx, outbuf, inbuf, c->u_iv.iv,
@@ -1378,9 +1373,8 @@ _gcry_serpent_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 	  /* Process data in 8 block chunks. */
 	  while (nblocks >= 8)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 8;
-	      *l = ocb_get_l(c, l_tmp, blkn - blkn % 8);
+	      *l = ocb_get_l(c,  blkn - blkn % 8);
 
 	      if (encrypt)
 		_gcry_serpent_neon_ocb_enc(ctx, outbuf, inbuf, c->u_iv.iv,
@@ -1410,8 +1404,6 @@ _gcry_serpent_ocb_crypt (gcry_cipher_hd_t c, void *outbuf_arg,
 #if defined(USE_AVX2) || defined(USE_SSE2) || defined(USE_NEON)
   c->u_mode.ocb.data_nblocks = blkn;
 
-  wipememory(&l_tmp, sizeof(l_tmp));
-
   if (burn_stack_depth)
     _gcry_burn_stack (burn_stack_depth + 4 * sizeof(void *));
 #endif
@@ -1427,7 +1419,6 @@ _gcry_serpent_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 #if defined(USE_AVX2) || defined(USE_SSE2) || defined(USE_NEON)
   serpent_context_t *ctx = (void *)&c->context.c;
   const unsigned char *abuf = abuf_arg;
-  unsigned char l_tmp[sizeof(serpent_block_t)];
   int burn_stack_depth = 2 * sizeof(serpent_block_t);
   u64 blkn = c->u_mode.ocb.aad_nblocks;
 #else
@@ -1465,9 +1456,8 @@ _gcry_serpent_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 	  /* Process data in 16 block chunks. */
 	  while (nblocks >= 16)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 16;
-	      *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 16);
+	      *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 16);
 
 	      _gcry_serpent_avx2_ocb_auth(ctx, abuf, c->u_mode.ocb.aad_offset,
 					  c->u_mode.ocb.aad_sum, Ls);
@@ -1512,9 +1502,8 @@ _gcry_serpent_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 	/* Process data in 8 block chunks. */
 	while (nblocks >= 8)
 	  {
-	    /* l_tmp will be used only every 65536-th block. */
 	    blkn += 8;
-	    *l = (uintptr_t)(void *)ocb_get_l(c, l_tmp, blkn - blkn % 8);
+	    *l = (uintptr_t)(void *)ocb_get_l(c, blkn - blkn % 8);
 
 	    _gcry_serpent_sse2_ocb_auth(ctx, abuf, c->u_mode.ocb.aad_offset,
 					c->u_mode.ocb.aad_sum, Ls);
@@ -1558,9 +1547,8 @@ _gcry_serpent_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 	  /* Process data in 8 block chunks. */
 	  while (nblocks >= 8)
 	    {
-	      /* l_tmp will be used only every 65536-th block. */
 	      blkn += 8;
-	      *l = ocb_get_l(c, l_tmp, blkn - blkn % 8);
+	      *l = ocb_get_l(c, blkn - blkn % 8);
 
 	      _gcry_serpent_neon_ocb_auth(ctx, abuf, c->u_mode.ocb.aad_offset,
 					  c->u_mode.ocb.aad_sum, Ls);
@@ -1584,8 +1572,6 @@ _gcry_serpent_ocb_auth (gcry_cipher_hd_t c, const void *abuf_arg,
 
 #if defined(USE_AVX2) || defined(USE_SSE2) || defined(USE_NEON)
   c->u_mode.ocb.aad_nblocks = blkn;
-
-  wipememory(&l_tmp, sizeof(l_tmp));
 
   if (burn_stack_depth)
     _gcry_burn_stack (burn_stack_depth + 4 * sizeof(void *));
@@ -1734,18 +1720,54 @@ serpent_test (void)
 }
 
 
+static gcry_cipher_oid_spec_t serpent128_oids[] =
+  {
+    {"1.3.6.1.4.1.11591.13.2.1", GCRY_CIPHER_MODE_ECB },
+    {"1.3.6.1.4.1.11591.13.2.2", GCRY_CIPHER_MODE_CBC },
+    {"1.3.6.1.4.1.11591.13.2.3", GCRY_CIPHER_MODE_OFB },
+    {"1.3.6.1.4.1.11591.13.2.4", GCRY_CIPHER_MODE_CFB },
+    { NULL }
+  };
 
-/* "SERPENT" is an alias for "SERPENT128".  */
-static const char *cipher_spec_serpent128_aliases[] =
+static gcry_cipher_oid_spec_t serpent192_oids[] =
+  {
+    {"1.3.6.1.4.1.11591.13.2.21", GCRY_CIPHER_MODE_ECB },
+    {"1.3.6.1.4.1.11591.13.2.22", GCRY_CIPHER_MODE_CBC },
+    {"1.3.6.1.4.1.11591.13.2.23", GCRY_CIPHER_MODE_OFB },
+    {"1.3.6.1.4.1.11591.13.2.24", GCRY_CIPHER_MODE_CFB },
+    { NULL }
+  };
+
+static gcry_cipher_oid_spec_t serpent256_oids[] =
+  {
+    {"1.3.6.1.4.1.11591.13.2.41", GCRY_CIPHER_MODE_ECB },
+    {"1.3.6.1.4.1.11591.13.2.42", GCRY_CIPHER_MODE_CBC },
+    {"1.3.6.1.4.1.11591.13.2.43", GCRY_CIPHER_MODE_OFB },
+    {"1.3.6.1.4.1.11591.13.2.44", GCRY_CIPHER_MODE_CFB },
+    { NULL }
+  };
+
+static const char *serpent128_aliases[] =
   {
     "SERPENT",
+    "SERPENT-128",
+    NULL
+  };
+static const char *serpent192_aliases[] =
+  {
+    "SERPENT-192",
+    NULL
+  };
+static const char *serpent256_aliases[] =
+  {
+    "SERPENT-256",
     NULL
   };
 
 gcry_cipher_spec_t _gcry_cipher_spec_serpent128 =
   {
     GCRY_CIPHER_SERPENT128, {0, 0},
-    "SERPENT128", cipher_spec_serpent128_aliases, NULL, 16, 128,
+    "SERPENT128", serpent128_aliases, serpent128_oids, 16, 128,
     sizeof (serpent_context_t),
     serpent_setkey, serpent_encrypt, serpent_decrypt
   };
@@ -1753,7 +1775,7 @@ gcry_cipher_spec_t _gcry_cipher_spec_serpent128 =
 gcry_cipher_spec_t _gcry_cipher_spec_serpent192 =
   {
     GCRY_CIPHER_SERPENT192, {0, 0},
-    "SERPENT192", NULL, NULL, 16, 192,
+    "SERPENT192", serpent192_aliases, serpent192_oids, 16, 192,
     sizeof (serpent_context_t),
     serpent_setkey, serpent_encrypt, serpent_decrypt
   };
@@ -1761,7 +1783,7 @@ gcry_cipher_spec_t _gcry_cipher_spec_serpent192 =
 gcry_cipher_spec_t _gcry_cipher_spec_serpent256 =
   {
     GCRY_CIPHER_SERPENT256, {0, 0},
-    "SERPENT256", NULL, NULL, 16, 256,
+    "SERPENT256", serpent256_aliases, serpent256_oids, 16, 256,
     sizeof (serpent_context_t),
     serpent_setkey, serpent_encrypt, serpent_decrypt
   };

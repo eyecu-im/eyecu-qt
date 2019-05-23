@@ -1,3 +1,249 @@
+Noteworthy changes in version 1.9.0 (unreleased)  [C22/A3/R0]
+------------------------------------------------
+
+ * Bug fixes
+
+   - Fix infinite loop due to applications using fork the wrong
+     way.  [#3491][also in 1.8.4]
+
+   - Fix possible leak of a few bits of secret primes to pageable
+     memory.  [#3848][also in 1.8.4]
+
+   - Fix possible hang in the RNG (1.8.3 only).  [#4034][also in 1.8.4]
+
+   - Several minor fixes.  [#4102,#4208,#4209,#4210,#4211,#4212]
+     [also in 1.8.4]
+
+   - On Linux always make use of getrandom if possible and then use
+     its /dev/urandom behaviour.  [#3894][also in 1.8.4]
+
+   - Use blinding for ECDSA signing to mitigate a novel side-channel
+     attack.  [#4011,CVE-2018-0495] [also in 1.8.3, 1.7.10]
+
+   - Fix incorrect counter overflow handling for GCM when using an IV
+     size other than 96 bit.  [#3764] [also in 1.8.3, 1.7.10]
+
+   - Fix incorrect output of AES-keywrap mode for in-place encryption
+     on some platforms.  [also in 1.8.3, 1.7.10]
+
+   - Fix the gcry_mpi_ec_curve_point point validation function.
+     [also in 1.8.3, 1.7.10]
+
+   - Fix rare assertion failure in gcry_prime_check.  [also in 1.8.3]
+
+   - Do not use /dev/srandom on OpenBSD.  [also in 1.8.2]
+
+   - Fix test suite failure on systems with large pages. [#3351]
+     [also in 1.8.2]
+
+   - Fix test suite to not use mmap on Windows.  [also in 1.8.2]
+
+   - Fix fatal out of secure memory status in the s-expression parser
+     on heavy loaded systems.  [also in 1.8.2]
+
+ * Interface changes relative to the 1.8.0 release:
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   gcry_mpi_get_ui                 NEW function.
+   GCRYCTL_AUTO_EXPAND_SECMEM      NEW control code.
+
+ * Release dates of 1.8.x versions:
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Version 1.8.2 (2017-12-13)
+   Version 1.8.3 (2018-06-13)
+   Version 1.8.4 (2018-10-26)
+
+
+Noteworthy changes in version 1.8.1 (2017-08-27)  [C22/A2/R1]
+------------------------------------------------
+
+ * Bug fixes:
+
+   - Mitigate a local side-channel attack on Curve25519 dubbed "May
+     the Fourth be With You".  [CVE-2017-0379] [also in 1.7.9]
+
+   - Add more extra bytes to the pool after reading a seed file.
+
+   - Add the OID SHA384WithECDSA from RFC-7427 to SHA-384.
+
+   - Fix build problems with the Jitter RNG
+
+   - Fix assembler code build problems on Rasbian (ARMv8/AArch32-CE).
+
+
+Noteworthy changes in version 1.8.0 (2017-07-18)  [C22/A2/R0]
+------------------------------------------------
+
+ * New interfaces:
+
+   - New cipher mode XTS
+
+   - New hash function Blake-2
+
+   - New function gcry_mpi_point_copy.
+
+   - New function gcry_get_config.
+
+   - GCRYCTL_REINIT_SYSCALL_CLAMP allows to init nPth after Libgcrypt.
+
+   - New global configuration file /etc/gcrypt/random.conf.
+
+ * Extended interfaces:
+
+   - GCRYCTL_PRINT_CONFIG does now also print build information for
+     libgpg-error and the used compiler version.
+
+   - GCRY_CIPHER_MODE_CFB8 is now supported.
+
+   - Add Stribog OIDs.  [also in 1.7.4]
+
+ * Performance:
+
+   - A jitter based entropy collector is now used in addition to the
+     other entropy collectors.
+
+   - Optimized gcry_md_hash_buffers for SHA-256 and SHA-512.
+
+   - More ARMv8/AArch32 improvements for AES, GCM, SHA-256, and SHA-1.
+     [also in 1.7.4]
+
+   - Add ARMv8/AArch32 assembly implementation for Twofish and
+     Camellia.  [also in 1.7.4]
+
+   - Add bulk processing implementation for ARMv8/AArch32.
+     [also in 1.7.4]
+
+   - Improve the DRBG performance and sync the code with the Linux
+     version.  [also in 1.7.4]
+
+ * Internal changes:
+
+   - Libgpg-error 1.25 is now required.  This avoids stalling of nPth
+     threads due to contention on internal Libgcrypt locks (e.g. the
+     random pool lock).
+
+   - The system call clamp of libgpg-error is now used to wrap the
+     blocking read of /dev/random.  This allows other nPth threads to
+     run while Libgcrypt is gathering entropy.
+
+   - When secure memory is requested by the MPI functions or by
+     gcry_xmalloc_secure, they do not anymore lead to a fatal error if
+     the secure memory pool is used up.  Instead new pools are
+     allocated as needed.  These new pools are not protected against
+     being swapped out (mlock can't be used).  However, these days
+     this is considered a minor issue and can easily be mitigated by
+     using encrypted swap space.  [also in 1.7.4]
+
+ * Bug fixes:
+
+   - Fix AES CTR self-check detected failure in the SSSE3 based
+     implementation.  [also in 1.7.6]
+
+   - Remove gratuitous select before the getrandom syscall.
+     [also in 1.7.6]
+
+   - Fix regression in mlock detection.  [bug#2870] [also in 1.7.5]
+
+   - Fix GOST 28147 CryptoPro-B S-box.   [also in 1.7.4]
+
+   - Fix error code handling of mlock calls.  [also in 1.7.4]
+
+   - Fix possible timing attack on EdDSA session key. [also in 1.7.7]
+
+   - Fix long standing bug in secure memory implementation which could
+     lead to a segv on free. [bug#3027] [also in 1.7.7]
+
+   - Mitigate a flush+reload side-channel attack on RSA secret keys
+     dubbed "Sliding right into disaster".  For details see
+     <https://eprint.iacr.org/2017/627>.  [CVE-2017-7526] [also in 1.7.8]
+
+ * Interface changes relative to the 1.7.0 release:
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   gcry_get_config                 NEW function.
+   gcry_mpi_point_copy             NEW function.
+   GCRYCTL_REINIT_SYSCALL_CLAMP    NEW macro.
+   GCRY_MD_BLAKE2B_512             NEW constant.
+   GCRY_MD_BLAKE2B_384             NEW constant.
+   GCRY_MD_BLAKE2B_256             NEW constant.
+   GCRY_MD_BLAKE2B_160             NEW constant.
+   GCRY_MD_BLAKE2S_256             NEW constant.
+   GCRY_MD_BLAKE2S_224             NEW constant.
+   GCRY_MD_BLAKE2S_160             NEW constant.
+   GCRY_MD_BLAKE2S_128             NEW constant.
+   GCRY_CIPHER_MODE_XTS            NEW constant.
+   gcry_md_info                    DEPRECATED.
+
+ * Release dates of 1.7.x versions:
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Version 1.7.10 (2018-06-13) [C21/A1/R10]
+   Version 1.7.9  (2017-08-27) [C21/A1/R9]
+   Version 1.7.8  (2017-06-29) [C21/A1/R8]
+   Version 1.7.7  (2017-06-02) [C21/A1/R7]
+   Version 1.7.6  (2017-01-18) [C21/A1/R6]
+   Version 1.7.5  (2016-12-15) [C21/A1/R5]
+   Version 1.7.4  (2016-12-09) [C21/A1/R4]
+
+
+Noteworthy changes in version 1.7.3 (2016-08-17)  [C21/A1/R3]
+------------------------------------------------
+
+ * Bug fixes:
+
+   - Fix critical security bug in the RNG [CVE-2016-6313].  An
+     attacker who obtains 580 bytes from the standard RNG can
+     trivially predict the next 20 bytes of output.  Problem
+     detected by Felix Dörre and Vladimir Klebanov, KIT.
+
+   - Fix building of some asm modules with older compilers and CPUs.
+
+ * Performance:
+
+   - ARMv8/AArch32 improvements for AES, GCM, SHA-256, and SHA-1.
+
+
+Noteworthy changes in version 1.7.2 (2016-07-14)  [C21/A1/R2]
+------------------------------------------------
+
+ * Bug fixes:
+
+   - Fix setting of the ECC cofactor if parameters are specified.
+
+   - Fix memory leak in the ECC code.
+
+   - Remove debug message about unsupported getrandom syscall.
+
+   - Fix build problems related to AVX use.
+
+   - Fix bus errors on ARM for Poly1305, ChaCha20, AES, and SHA-512.
+
+ * Internal changes:
+
+   - Improved fatal error message for wrong use of gcry_md_read.
+
+   - Disallow symmetric encryption/decryption if key is not set.
+
+
+Noteworthy changes in version 1.7.1 (2016-06-15)  [C21/A1/R1]
+------------------------------------------------
+
+ * Bug fixes:
+
+   - Fix ecc_verify for cofactor support.
+
+   - Fix portability bug when using gcc with Solaris 9 SPARC.
+
+   - Build fix for OpenBSD/amd64
+
+   - Add OIDs to the Serpent ciphers.
+
+ * Internal changes:
+
+   - Use getrandom system call on Linux if available.
+
+   - Blinding is now also used for RSA signature creation.
+
+   - Changed names of debug envvars
+
+
 Noteworthy changes in version 1.7.0 (2016-04-15)  [C21/A1/R0]
 ------------------------------------------------
 
@@ -970,7 +1216,7 @@ Noteworthy changes in version 1.1.3 (2001-05-31)
 
 Copyright 2001, 2002, 2003, 2004, 2007, 2008,
           2009, 2011 Free Software Foundation, Inc.
-Copyright 2013-2016 g10 Code GmbH
+Copyright 2013 g10 Code GmbH
 
 This file is free software; as a special exception the author gives
 unlimited permission to copy and/or distribute it, with or without

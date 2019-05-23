@@ -29,7 +29,7 @@ define([GCRY_MSG_SHOW],
 
 dnl GCRY_MSG_WRAP(PREFIX, ALGOLIST)
 dnl Print a nicely formatted list of algorithms
-dnl with an approriate line wrap.
+dnl with an appropriate line wrap.
 dnl
 define([GCRY_MSG_WRAP],
   [
@@ -111,14 +111,10 @@ case "${host}" in
         ac_cv_sys_symbol_underscore=yes
         ;;
     *)
-      if test "$cross_compiling" = yes; then
-        if test "x$ac_cv_sys_symbol_underscore" = x ; then
-           ac_cv_sys_symbol_underscore=yes
-        fi
-      else
+      if test "$cross_compiling" != yes; then
          tmp_do_check="yes"
       fi
-       ;;
+      ;;
 esac
 if test "$tmp_do_check" = "yes"; then
   AC_REQUIRE([AC_LIBTOOL_SYS_GLOBAL_SYMBOL_PIPE])
@@ -242,7 +238,7 @@ int main()
     pool += (pgsize - ((long int)pool % pgsize));
 
     err = mlock( pool, 4096 );
-    if( !err || errno == EPERM )
+    if( !err || errno == EPERM || errno == EAGAIN)
         return 0; /* okay */
 
     return 1;  /* hmmm */
@@ -275,7 +271,7 @@ AC_CHECK_TOOL(AS, as, false)
 ])
 
 dnl LIST_MEMBER()
-dnl Check wether an element ist contained in a list.  Set `found' to
+dnl Check whether an element ist contained in a list.  Set `found' to
 dnl `1' if the element is found in the list, to `0' otherwise.
 AC_DEFUN([LIST_MEMBER],
 [

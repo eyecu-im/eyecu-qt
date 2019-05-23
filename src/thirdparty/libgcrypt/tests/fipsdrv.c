@@ -34,9 +34,7 @@
 #include <assert.h>
 #include <unistd.h>
 
-#ifdef _GCRYPT_IN_LIBGCRYPT
-# include "../src/gcrypt-int.h"
-#else
+#ifndef _GCRYPT_IN_LIBGCRYPT
 # include <gcrypt.h>
 # define PACKAGE_BUGREPORT "devnull@example.org"
 # define PACKAGE_VERSION "[build on " __DATE__ " " __TIME__ "]"
@@ -44,22 +42,8 @@
 #include "../src/gcrypt-testapi.h"
 
 #define PGM "fipsdrv"
+#include "t-common.h"
 
-#define my_isascii(c) (!((c) & 0x80))
-#define digitp(p)   (*(p) >= '0' && *(p) <= '9')
-#define hexdigitp(a) (digitp (a)                     \
-                      || (*(a) >= 'A' && *(a) <= 'F')  \
-                      || (*(a) >= 'a' && *(a) <= 'f'))
-#define xtoi_1(p)   (*(p) <= '9'? (*(p)- '0'): \
-                     *(p) <= 'F'? (*(p)-'A'+10):(*(p)-'a'+10))
-#define xtoi_2(p)   ((xtoi_1(p) * 16) + xtoi_1((p)+1))
-#define DIM(v)               (sizeof(v)/sizeof((v)[0]))
-#define DIMof(type,member)   DIM(((type *)0)->member)
-
-
-
-/* Verbose mode flag.  */
-static int verbose;
 
 /* Binary input flag.  */
 static int binary_input;
@@ -132,21 +116,6 @@ struct tag_info
   unsigned int ndef:1;   /* The object has an indefinite length.  */
   unsigned int cons:1;   /* This is a constructed object.  */
 };
-
-
-
-/* Print a error message and exit the process with an error code.  */
-static void
-die (const char *format, ...)
-{
-  va_list arg_ptr;
-
-  va_start (arg_ptr, format);
-  fputs (PGM ": ", stderr);
-  vfprintf (stderr, format, arg_ptr);
-  va_end (arg_ptr);
-  exit (1);
-}
 
 
 static void
@@ -960,7 +929,7 @@ run_external_rng_test (void *context, void *buffer, size_t buflen)
 static void
 deinit_external_rng_test (void *context)
 {
-  gcry_control (PRIV_CTL_DEINIT_EXTRNG_TEST, context);
+  xgcry_control ((PRIV_CTL_DEINIT_EXTRNG_TEST, context));
 }
 
 
@@ -1150,7 +1119,7 @@ run_cipher_mct_loop (int encrypt_mode, int cipher_algo, int cipher_mode,
 
   blocklen = gcry_cipher_get_algo_blklen (cipher_algo);
   if (!blocklen || blocklen > sizeof output)
-    die ("invalid block length %d\n", blocklen);
+    die ("invalid block length %d\n", (int)blocklen);
 
 
   gcry_cipher_ctl (hd, PRIV_CIPHERCTL_DISABLE_WEAK_KEY, NULL, 0);
@@ -1866,7 +1835,7 @@ print_dsa_domain_parameters (gcry_sexp_t key)
   /* Extract the parameters from the S-expression and print them to stdout.  */
   for (idx=0; "pqg"[idx]; idx++)
     {
-      l2 = gcry_sexp_find_token (l1, "pqg"+idx, 1);
+      l2 = gcry_sexp_find_token (l1, &"pqg"[idx], 1);
       if (!l2)
         die ("no %c parameter in returned public key\n", "pqg"[idx]);
       mpi = gcry_sexp_nth_mpi (l2, 1, GCRYMPI_FMT_USG);
@@ -1954,7 +1923,7 @@ print_ecdsa_dq (gcry_sexp_t key)
   /* Extract the parameters from the S-expression and print them to stdout.  */
   for (idx=0; "dq"[idx]; idx++)
     {
-      l2 = gcry_sexp_find_token (l1, "dq"+idx, 1);
+      l2 = gcry_sexp_find_token (l1, &"dq"[idx], 1);
       if (!l2)
         die ("no %c parameter in returned public key\n", "dq"[idx]);
       mpi = gcry_sexp_nth_mpi (l2, 1, GCRYMPI_FMT_USG);
@@ -2507,16 +2476,16 @@ main (int argc, char **argv)
   if (verbose)
     fprintf (stderr, PGM ": started (mode=%s)\n", mode_string);
 
-  gcry_control (GCRYCTL_SET_VERBOSITY, (int)verbose);
+  xgcry_control ((GCRYCTL_SET_VERBOSITY, (int)verbose));
   if (!no_fips)
-    gcry_control (GCRYCTL_FORCE_FIPS_MODE, 0);
+    xgcry_control ((GCRYCTL_FORCE_FIPS_MODE, 0));
   if (!gcry_check_version ("1.4.3"))
     die ("Libgcrypt is not sufficient enough\n");
   if (verbose)
     fprintf (stderr, PGM ": using Libgcrypt %s\n", gcry_check_version (NULL));
   if (no_fips)
-    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-  gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
+    xgcry_control ((GCRYCTL_DISABLE_SECMEM, 0));
+  xgcry_control ((GCRYCTL_INITIALIZATION_FINISHED, 0));
 
   /* Most operations need some input data.  */
   if (!chunksize
@@ -2570,7 +2539,8 @@ main (int argc, char **argv)
                   die ("no version info in input\n");
                 }
               if (atoi (key_buffer) != 1)
-                die ("unsupported input version %s\n", key_buffer);
+                die ("unsupported input version %s\n",
+                     (const char*)key_buffer);
               gcry_free (key_buffer);
               if (!(key_buffer = read_textline (input)))
                 die ("no iteration count in input\n");
@@ -2644,11 +2614,11 @@ main (int argc, char **argv)
       unsigned char buffer[16];
       size_t count = 0;
 
-      if (hex2bin (key_string, key, 16) < 0 )
+      if (!key_string || hex2bin (key_string, key, 16) < 0 )
         die ("value for --key are not 32 hex digits\n");
-      if (hex2bin (iv_string, seed, 16) < 0 )
+      if (!iv_string || hex2bin (iv_string, seed, 16) < 0 )
         die ("value for --iv are not 32 hex digits\n");
-      if (hex2bin (dt_string, dt, 16) < 0 )
+      if (!dt_string || hex2bin (dt_string, dt, 16) < 0 )
         die ("value for --dt are not 32 hex digits\n");
 
       /* The flag value 1 disables the dup check, so that the RNG

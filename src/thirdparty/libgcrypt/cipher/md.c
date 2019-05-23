@@ -31,7 +31,7 @@
 
 /* This is the list of the digest implementations included in
    libgcrypt.  */
-static gcry_md_spec_t *digest_list[] =
+static gcry_md_spec_t * const digest_list[] =
   {
 #if USE_CRC
      &_gcry_digest_spec_crc32,
@@ -48,6 +48,8 @@ static gcry_md_spec_t *digest_list[] =
 #if USE_SHA512
      &_gcry_digest_spec_sha512,
      &_gcry_digest_spec_sha384,
+     &_gcry_digest_spec_sha512_256,
+     &_gcry_digest_spec_sha512_224,
 #endif
 #if USE_SHA3
      &_gcry_digest_spec_sha3_224,
@@ -57,11 +59,11 @@ static gcry_md_spec_t *digest_list[] =
      &_gcry_digest_spec_shake128,
      &_gcry_digest_spec_shake256,
 #endif
-#ifdef USE_GOST_R_3411_94
+#if USE_GOST_R_3411_94
      &_gcry_digest_spec_gost3411_94,
      &_gcry_digest_spec_gost3411_cp,
 #endif
-#ifdef USE_GOST_R_3411_12
+#if USE_GOST_R_3411_12
      &_gcry_digest_spec_stribog_256,
      &_gcry_digest_spec_stribog_512,
 #endif
@@ -85,7 +87,164 @@ static gcry_md_spec_t *digest_list[] =
 #if USE_MD2
      &_gcry_digest_spec_md2,
 #endif
+#if USE_BLAKE2
+     &_gcry_digest_spec_blake2b_512,
+     &_gcry_digest_spec_blake2b_384,
+     &_gcry_digest_spec_blake2b_256,
+     &_gcry_digest_spec_blake2b_160,
+     &_gcry_digest_spec_blake2s_256,
+     &_gcry_digest_spec_blake2s_224,
+     &_gcry_digest_spec_blake2s_160,
+     &_gcry_digest_spec_blake2s_128,
+#endif
+#if USE_SM3
+     &_gcry_digest_spec_sm3,
+#endif
+     NULL
+  };
+
+/* Digest implementations starting with index 0 (enum gcry_md_algos) */
+static gcry_md_spec_t * const digest_list_algo0[] =
+  {
+    NULL, /* GCRY_MD_NONE */
+#if USE_MD5
+    &_gcry_digest_spec_md5,
+#else
+    NULL,
+#endif
+#if USE_SHA1
+    &_gcry_digest_spec_sha1,
+#else
+    NULL,
+#endif
+#if USE_RMD160
+    &_gcry_digest_spec_rmd160,
+#else
+    NULL,
+#endif
+    NULL, /* Unused index 4 */
+#if USE_MD2
+    &_gcry_digest_spec_md2,
+#else
+    NULL,
+#endif
+#if USE_TIGER
+    &_gcry_digest_spec_tiger,
+#else
+    NULL,
+#endif
+    NULL, /* GCRY_MD_HAVAL */
+#if USE_SHA256
+    &_gcry_digest_spec_sha256,
+#else
+    NULL,
+#endif
+#if USE_SHA512
+    &_gcry_digest_spec_sha384,
+    &_gcry_digest_spec_sha512,
+#else
+    NULL,
+    NULL,
+#endif
+#if USE_SHA256
+    &_gcry_digest_spec_sha224
+#else
     NULL
+#endif
+  };
+
+/* Digest implementations starting with index 301 (enum gcry_md_algos) */
+static gcry_md_spec_t * const digest_list_algo301[] =
+  {
+#if USE_MD4
+    &_gcry_digest_spec_md4,
+#else
+    NULL,
+#endif
+#if USE_CRC
+    &_gcry_digest_spec_crc32,
+    &_gcry_digest_spec_crc32_rfc1510,
+    &_gcry_digest_spec_crc24_rfc2440,
+#else
+    NULL,
+    NULL,
+    NULL,
+#endif
+#if USE_WHIRLPOOL
+    &_gcry_digest_spec_whirlpool,
+#else
+    NULL,
+#endif
+#if USE_TIGER
+    &_gcry_digest_spec_tiger1,
+    &_gcry_digest_spec_tiger2,
+#else
+    NULL,
+    NULL,
+#endif
+#if USE_GOST_R_3411_94
+    &_gcry_digest_spec_gost3411_94,
+#else
+    NULL,
+#endif
+#if USE_GOST_R_3411_12
+    &_gcry_digest_spec_stribog_256,
+    &_gcry_digest_spec_stribog_512,
+#else
+    NULL,
+    NULL,
+#endif
+#if USE_GOST_R_3411_94
+    &_gcry_digest_spec_gost3411_cp,
+#else
+    NULL,
+#endif
+#if USE_SHA3
+    &_gcry_digest_spec_sha3_224,
+    &_gcry_digest_spec_sha3_256,
+    &_gcry_digest_spec_sha3_384,
+    &_gcry_digest_spec_sha3_512,
+    &_gcry_digest_spec_shake128,
+    &_gcry_digest_spec_shake256,
+#else
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+#endif
+#if USE_BLAKE2
+    &_gcry_digest_spec_blake2b_512,
+    &_gcry_digest_spec_blake2b_384,
+    &_gcry_digest_spec_blake2b_256,
+    &_gcry_digest_spec_blake2b_160,
+    &_gcry_digest_spec_blake2s_256,
+    &_gcry_digest_spec_blake2s_224,
+    &_gcry_digest_spec_blake2s_160,
+    &_gcry_digest_spec_blake2s_128,
+#else
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+#endif
+#if USE_SM3
+    &_gcry_digest_spec_sm3,
+#else
+    NULL,
+#endif
+#if USE_SHA512
+    &_gcry_digest_spec_sha512_256,
+    &_gcry_digest_spec_sha512_224,
+#else
+    NULL,
+    NULL,
+#endif
   };
 
 
@@ -94,7 +253,7 @@ typedef struct gcry_md_list
   gcry_md_spec_t *spec;
   struct gcry_md_list *next;
   size_t actual_struct_size;     /* Allocated size of this structure. */
-  PROPERLY_ALIGNED_TYPE context;
+  PROPERLY_ALIGNED_TYPE context[1];
 } GcryDigestEntry;
 
 /* This structure is put right after the gcry_md_hd_t buffer, so that
@@ -105,7 +264,7 @@ struct gcry_md_context
   size_t actual_handle_size;     /* Allocated size of this handle. */
   FILE  *debug;
   struct {
-    unsigned int secure: 1;
+    unsigned int secure:1;
     unsigned int finalized:1;
     unsigned int bugemu1:1;
     unsigned int hmac:1;
@@ -140,15 +299,19 @@ map_algo (int algo)
 static gcry_md_spec_t *
 spec_from_algo (int algo)
 {
-  int idx;
-  gcry_md_spec_t *spec;
+  gcry_md_spec_t *spec = NULL;
 
   algo = map_algo (algo);
 
-  for (idx = 0; (spec = digest_list[idx]); idx++)
-    if (algo == spec->algo)
-      return spec;
-  return NULL;
+  if (algo >= 0 && algo < DIM(digest_list_algo0))
+    spec = digest_list_algo0[algo];
+  else if (algo >= 301 && algo < 301 + DIM(digest_list_algo301))
+    spec = digest_list_algo301[algo - 301];
+
+  if (spec)
+    gcry_assert (spec->algo == algo);
+
+  return spec;
 }
 
 
@@ -198,8 +361,10 @@ search_oid (const char *oid, gcry_md_oid_spec_t *oid_spec)
   gcry_md_spec_t *spec;
   int i;
 
-  if (oid && ((! strncmp (oid, "oid.", 4))
-	      || (! strncmp (oid, "OID.", 4))))
+  if (!oid)
+    return NULL;
+
+  if (!strncmp (oid, "oid.", 4) || !strncmp (oid, "OID.", 4))
     oid += 4;
 
   spec = spec_from_oid (oid);
@@ -436,7 +601,7 @@ md_enable (gcry_md_hd_t hd, int algorithm)
 	  h->list = entry;
 
 	  /* And init this instance. */
-	  entry->spec->init (&entry->context.c,
+	  entry->spec->init (entry->context,
                              h->flags.bugemu1? GCRY_MD_FLAG_BUGEMU1:0);
 	}
     }
@@ -471,51 +636,48 @@ md_copy (gcry_md_hd_t ahd, gcry_md_hd_t *b_hd)
   else
     bhd = xtrymalloc (n + sizeof (struct gcry_md_context));
 
-  if (! bhd)
-    err = gpg_err_code_from_errno (errno);
-
-  if (! err)
+  if (!bhd)
     {
-      bhd->ctx = b = (void *) ((char *) bhd + n);
-      /* No need to copy the buffer due to the write above. */
-      gcry_assert (ahd->bufsize == (n - sizeof (struct gcry_md_handle) + 1));
-      bhd->bufsize = ahd->bufsize;
-      bhd->bufpos = 0;
-      gcry_assert (! ahd->bufpos);
-      memcpy (b, a, sizeof *a);
-      b->list = NULL;
-      b->debug = NULL;
+      err = gpg_err_code_from_syserror ();
+      goto leave;
     }
+
+  bhd->ctx = b = (void *) ((char *) bhd + n);
+  /* No need to copy the buffer due to the write above. */
+  gcry_assert (ahd->bufsize == (n - sizeof (struct gcry_md_handle) + 1));
+  bhd->bufsize = ahd->bufsize;
+  bhd->bufpos = 0;
+  gcry_assert (! ahd->bufpos);
+  memcpy (b, a, sizeof *a);
+  b->list = NULL;
+  b->debug = NULL;
 
   /* Copy the complete list of algorithms.  The copied list is
      reversed, but that doesn't matter. */
-  if (!err)
+  for (ar = a->list; ar; ar = ar->next)
     {
-      for (ar = a->list; ar; ar = ar->next)
+      if (a->flags.secure)
+        br = xtrymalloc_secure (ar->actual_struct_size);
+      else
+        br = xtrymalloc (ar->actual_struct_size);
+      if (!br)
         {
-          if (a->flags.secure)
-            br = xtrymalloc_secure (ar->actual_struct_size);
-          else
-            br = xtrymalloc (ar->actual_struct_size);
-          if (!br)
-            {
-	      err = gpg_err_code_from_errno (errno);
-              md_close (bhd);
-              break;
-            }
-
-          memcpy (br, ar, ar->actual_struct_size);
-          br->next = b->list;
-          b->list = br;
+          err = gpg_err_code_from_syserror ();
+          md_close (bhd);
+          goto leave;
         }
+
+      memcpy (br, ar, ar->actual_struct_size);
+      br->next = b->list;
+      b->list = br;
     }
 
-  if (a->debug && !err)
+  if (a->debug)
     md_start_debug (bhd, "unknown");
 
-  if (!err)
-    *b_hd = bhd;
+  *b_hd = bhd;
 
+ leave:
   return err;
 }
 
@@ -548,14 +710,14 @@ _gcry_md_reset (gcry_md_hd_t a)
   if (a->ctx->flags.hmac)
     for (r = a->ctx->list; r; r = r->next)
       {
-        memcpy (r->context.c, r->context.c + r->spec->contextsize,
+        memcpy (r->context, (char *)r->context + r->spec->contextsize,
                 r->spec->contextsize);
       }
   else
     for (r = a->ctx->list; r; r = r->next)
       {
-        memset (r->context.c, 0, r->spec->contextsize);
-        (*r->spec->init) (&r->context.c,
+        memset (r->context, 0, r->spec->contextsize);
+        (*r->spec->init) (r->context,
                           a->ctx->flags.bugemu1? GCRY_MD_FLAG_BUGEMU1:0);
       }
 }
@@ -606,8 +768,8 @@ md_write (gcry_md_hd_t a, const void *inbuf, size_t inlen)
   for (r = a->ctx->list; r; r = r->next)
     {
       if (a->bufpos)
-	(*r->spec->write) (&r->context.c, a->buf, a->bufpos);
-      (*r->spec->write) (&r->context.c, inbuf, inlen);
+	(*r->spec->write) (r->context, a->buf, a->bufpos);
+      (*r->spec->write) (r->context, inbuf, inlen);
     }
   a->bufpos = 0;
 }
@@ -635,7 +797,7 @@ md_final (gcry_md_hd_t a)
     md_write (a, NULL, 0);
 
   for (r = a->ctx->list; r; r = r->next)
-    (*r->spec->final) (&r->context.c);
+    (*r->spec->final) (r->context);
 
   a->ctx->flags.finalized = 1;
 
@@ -652,7 +814,7 @@ md_final (gcry_md_hd_t a)
       if (r->spec->read == NULL)
         continue;
 
-      p = r->spec->read (&r->context.c);
+      p = r->spec->read (r->context);
 
       if (a->ctx->flags.secure)
         hash = xtrymalloc_secure (dlen);
@@ -665,12 +827,77 @@ md_final (gcry_md_hd_t a)
         }
 
       memcpy (hash, p, dlen);
-      memcpy (r->context.c, r->context.c + r->spec->contextsize * 2,
+      memcpy (r->context, (char *)r->context + r->spec->contextsize * 2,
               r->spec->contextsize);
-      (*r->spec->write) (&r->context.c, hash, dlen);
-      (*r->spec->final) (&r->context.c);
+      (*r->spec->write) (r->context, hash, dlen);
+      (*r->spec->final) (r->context);
       xfree (hash);
     }
+}
+
+
+static gcry_err_code_t
+md_setkey (gcry_md_hd_t h, const unsigned char *key, size_t keylen)
+{
+  gcry_err_code_t rc = 0;
+  GcryDigestEntry *r;
+  int algo_had_setkey = 0;
+
+  if (!h->ctx->list)
+    return GPG_ERR_DIGEST_ALGO; /* Might happen if no algo is enabled.  */
+
+  if (h->ctx->flags.hmac)
+    return GPG_ERR_DIGEST_ALGO; /* Tried md_setkey for HMAC md. */
+
+  for (r = h->ctx->list; r; r = r->next)
+    {
+      switch (r->spec->algo)
+	{
+#if USE_BLAKE2
+	/* TODO? add spec->init_with_key? */
+	case GCRY_MD_BLAKE2B_512:
+	case GCRY_MD_BLAKE2B_384:
+	case GCRY_MD_BLAKE2B_256:
+	case GCRY_MD_BLAKE2B_160:
+	case GCRY_MD_BLAKE2S_256:
+	case GCRY_MD_BLAKE2S_224:
+	case GCRY_MD_BLAKE2S_160:
+	case GCRY_MD_BLAKE2S_128:
+	  algo_had_setkey = 1;
+	  memset (r->context, 0, r->spec->contextsize);
+	  rc = _gcry_blake2_init_with_key (r->context,
+					   h->ctx->flags.bugemu1
+					     ? GCRY_MD_FLAG_BUGEMU1:0,
+					   key, keylen, r->spec->algo);
+	  break;
+#endif
+	default:
+	  rc = GPG_ERR_DIGEST_ALGO;
+	  break;
+	}
+
+      if (rc)
+	break;
+    }
+
+  if (rc && !algo_had_setkey)
+    {
+      /* None of algorithms had setkey implementation, so contexts were not
+       * modified. Just return error. */
+      return rc;
+    }
+  else if (rc && algo_had_setkey)
+    {
+      /* Some of the contexts have been modified, but got error. Reset
+       * all contexts. */
+      _gcry_md_reset (h);
+      return rc;
+    }
+
+  /* Successful md_setkey implies reset. */
+  h->bufpos = h->ctx->flags.finalized = 0;
+
+  return 0;
 }
 
 
@@ -683,7 +910,7 @@ prepare_macpads (gcry_md_hd_t a, const unsigned char *key, size_t keylen)
     return GPG_ERR_DIGEST_ALGO; /* Might happen if no algo is enabled.  */
 
   if (!a->ctx->flags.hmac)
-    return GPG_ERR_DIGEST_ALGO; /* Tried setkey for non-HMAC md. */
+    return GPG_ERR_DIGEST_ALGO; /* Tried prepare_macpads for non-HMAC md. */
 
   for (r = a->ctx->list; r; r = r->next)
     {
@@ -695,6 +922,7 @@ prepare_macpads (gcry_md_hd_t a, const unsigned char *key, size_t keylen)
 
       switch (r->spec->algo)
         {
+	/* TODO: add spec->blocksize */
         case GCRY_MD_SHA3_224:
           macpad_Bsize = 1152 / 8;
           break;
@@ -709,6 +937,12 @@ prepare_macpads (gcry_md_hd_t a, const unsigned char *key, size_t keylen)
           break;
         case GCRY_MD_SHA384:
         case GCRY_MD_SHA512:
+        case GCRY_MD_SHA512_256:
+        case GCRY_MD_SHA512_224:
+        case GCRY_MD_BLAKE2B_512:
+        case GCRY_MD_BLAKE2B_384:
+        case GCRY_MD_BLAKE2B_256:
+        case GCRY_MD_BLAKE2B_160:
           macpad_Bsize = 128;
           break;
         case GCRY_MD_GOSTR3411_94:
@@ -735,26 +969,26 @@ prepare_macpads (gcry_md_hd_t a, const unsigned char *key, size_t keylen)
           k_len = keylen;
         }
 
-      (*r->spec->init) (&r->context.c,
+      (*r->spec->init) (r->context,
                         a->ctx->flags.bugemu1? GCRY_MD_FLAG_BUGEMU1:0);
       a->bufpos = 0;
       for (i=0; i < k_len; i++ )
         _gcry_md_putc (a, k[i] ^ 0x36);
       for (; i < macpad_Bsize; i++ )
         _gcry_md_putc (a, 0x36);
-      (*r->spec->write) (&r->context.c, a->buf, a->bufpos);
-      memcpy (r->context.c + r->spec->contextsize, r->context.c,
+      (*r->spec->write) (r->context, a->buf, a->bufpos);
+      memcpy ((char *)r->context + r->spec->contextsize, r->context,
               r->spec->contextsize);
 
-      (*r->spec->init) (&r->context.c,
+      (*r->spec->init) (r->context,
                         a->ctx->flags.bugemu1? GCRY_MD_FLAG_BUGEMU1:0);
       a->bufpos = 0;
       for (i=0; i < k_len; i++ )
         _gcry_md_putc (a, k[i] ^ 0x5c);
       for (; i < macpad_Bsize; i++ )
         _gcry_md_putc (a, 0x5c);
-      (*r->spec->write) (&r->context.c, a->buf, a->bufpos);
-      memcpy (r->context.c + r->spec->contextsize*2, r->context.c,
+      (*r->spec->write) (r->context, a->buf, a->bufpos);
+      memcpy ((char *)r->context + r->spec->contextsize*2, r->context,
               r->spec->contextsize);
 
       xfree (key_allocated);
@@ -795,9 +1029,16 @@ _gcry_md_setkey (gcry_md_hd_t hd, const void *key, size_t keylen)
 {
   gcry_err_code_t rc;
 
-  rc = prepare_macpads (hd, key, keylen);
-  if (!rc)
-    _gcry_md_reset (hd);
+  if (hd->ctx->flags.hmac)
+    {
+      rc = prepare_macpads (hd, key, keylen);
+      if (!rc)
+	_gcry_md_reset (hd);
+    }
+  else
+    {
+      rc = md_setkey (hd, key, keylen);
+    }
 
   return rc;
 }
@@ -832,9 +1073,8 @@ md_read( gcry_md_hd_t a, int algo )
         {
           if (r->next)
             log_debug ("more than one algorithm in md_read(0)\n");
-          if (r->spec->read == NULL)
-            return NULL;
-          return r->spec->read (&r->context.c);
+          if (r->spec->read)
+            return r->spec->read (r->context);
         }
     }
   else
@@ -842,12 +1082,17 @@ md_read( gcry_md_hd_t a, int algo )
       for (r = a->ctx->list; r; r = r->next)
 	if (r->spec->algo == algo)
 	  {
-	    if (r->spec->read == NULL)
-	      return NULL;
-	    return r->spec->read (&r->context.c);
+	    if (r->spec->read)
+              return r->spec->read (r->context);
+            break;
 	  }
     }
-  BUG();
+
+  if (r && !r->spec->read)
+    _gcry_fatal_error (GPG_ERR_DIGEST_ALGO,
+                       "requested algo has no fixed digest length");
+  else
+    _gcry_fatal_error (GPG_ERR_DIGEST_ALGO, "requested algo not in md context");
   return NULL;
 }
 
@@ -883,7 +1128,7 @@ md_extract(gcry_md_hd_t a, int algo, void *out, size_t outlen)
 	{
 	  if (r->next)
 	    log_debug ("more than one algorithm in md_extract(0)\n");
-	  r->spec->extract (&r->context.c, out, outlen);
+	  r->spec->extract (r->context, out, outlen);
 	  return 0;
 	}
     }
@@ -892,7 +1137,7 @@ md_extract(gcry_md_hd_t a, int algo, void *out, size_t outlen)
       for (r = a->ctx->list; r; r = r->next)
 	if (r->spec->algo == algo && r->spec->extract)
 	  {
-	    r->spec->extract (&r->context.c, out, outlen);
+	    r->spec->extract (r->context, out, outlen);
 	    return 0;
 	  }
     }
@@ -940,32 +1185,52 @@ void
 _gcry_md_hash_buffer (int algo, void *digest,
                       const void *buffer, size_t length)
 {
-  if (algo == GCRY_MD_SHA1)
-    _gcry_sha1_hash_buffer (digest, buffer, length);
-  else if (algo == GCRY_MD_RMD160 && !fips_mode () )
-    _gcry_rmd160_hash_buffer (digest, buffer, length);
+  gcry_md_spec_t *spec;
+
+  spec = spec_from_algo (algo);
+  if (!spec)
+    {
+      log_debug ("md_hash_buffer: algorithm %d not available\n", algo);
+      return;
+    }
+
+  if (algo == GCRY_MD_MD5 && fips_mode ())
+    {
+      _gcry_inactivate_fips_mode ("MD5 used");
+      if (_gcry_enforced_fips_mode () )
+        {
+          /* We should never get to here because we do not register
+             MD5 in enforced fips mode.  */
+          _gcry_fips_noreturn ();
+        }
+    }
+
+  if (spec->hash_buffer != NULL)
+    {
+      spec->hash_buffer (digest, buffer, length);
+    }
+  else if (spec->hash_buffers != NULL)
+    {
+      gcry_buffer_t iov;
+
+      iov.size = 0;
+      iov.data = (void *)buffer;
+      iov.off = 0;
+      iov.len = length;
+
+      spec->hash_buffers (digest, &iov, 1);
+    }
   else
     {
       /* For the others we do not have a fast function, so we use the
-	 normal functions. */
+         normal functions. */
       gcry_md_hd_t h;
       gpg_err_code_t err;
 
-      if (algo == GCRY_MD_MD5 && fips_mode ())
-        {
-          _gcry_inactivate_fips_mode ("MD5 used");
-          if (_gcry_enforced_fips_mode () )
-            {
-              /* We should never get to here because we do not register
-                 MD5 in enforced fips mode.  */
-              _gcry_fips_noreturn ();
-            }
-        }
-
       err = md_open (&h, algo, 0);
       if (err)
-	log_bug ("gcry_md_open failed for algo %d: %s",
-                 algo, gpg_strerror (gcry_error(err)));
+        log_bug ("gcry_md_open failed for algo %d: %s",
+                algo, gpg_strerror (gcry_error(err)));
       md_write (h, (byte *) buffer, length);
       md_final (h);
       memcpy (digest, md_read (h, algo), md_digest_length (algo));
@@ -992,6 +1257,7 @@ gpg_err_code_t
 _gcry_md_hash_buffers (int algo, unsigned int flags, void *digest,
                        const gcry_buffer_t *iov, int iovcnt)
 {
+  gcry_md_spec_t *spec;
   int hmac;
 
   if (!iov || iovcnt < 0)
@@ -1003,25 +1269,41 @@ _gcry_md_hash_buffers (int algo, unsigned int flags, void *digest,
   if (hmac && iovcnt < 1)
     return GPG_ERR_INV_ARG;
 
-  if (algo == GCRY_MD_SHA1 && !hmac)
-    _gcry_sha1_hash_buffers (digest, iov, iovcnt);
+  spec = spec_from_algo (algo);
+  if (!spec)
+    {
+      log_debug ("md_hash_buffers: algorithm %d not available\n", algo);
+      return GPG_ERR_DIGEST_ALGO;
+    }
+
+  if (algo == GCRY_MD_MD5 && fips_mode ())
+    {
+      _gcry_inactivate_fips_mode ("MD5 used");
+      if (_gcry_enforced_fips_mode () )
+        {
+          /* We should never get to here because we do not register
+             MD5 in enforced fips mode.  */
+          _gcry_fips_noreturn ();
+        }
+    }
+
+  if (!hmac && spec->hash_buffers)
+    {
+      spec->hash_buffers (digest, iov, iovcnt);
+    }
   else
     {
       /* For the others we do not have a fast function, so we use the
-	 normal functions. */
+         normal functions.  */
       gcry_md_hd_t h;
       gpg_err_code_t rc;
+      int dlen;
 
-      if (algo == GCRY_MD_MD5 && fips_mode ())
-        {
-          _gcry_inactivate_fips_mode ("MD5 used");
-          if (_gcry_enforced_fips_mode () )
-            {
-              /* We should never get to here because we do not register
-                 MD5 in enforced fips mode.  */
-              _gcry_fips_noreturn ();
-            }
-        }
+      /* Detect SHAKE128 like algorithms which we can't use because
+       * our API does not allow for a variable length digest.  */
+      dlen = md_digest_length (algo);
+      if (!dlen)
+        return GPG_ERR_DIGEST_ALGO;
 
       rc = md_open (&h, algo, (hmac? GCRY_MD_FLAG_HMAC:0));
       if (rc)
@@ -1042,7 +1324,7 @@ _gcry_md_hash_buffers (int algo, unsigned int flags, void *digest,
       for (;iovcnt; iov++, iovcnt--)
         md_write (h, (const char*)iov[0].data + iov[0].off, iov[0].len);
       md_final (h);
-      memcpy (digest, md_read (h, algo), md_digest_length (algo));
+      memcpy (digest, md_read (h, algo), dlen);
       md_close (h);
     }
 

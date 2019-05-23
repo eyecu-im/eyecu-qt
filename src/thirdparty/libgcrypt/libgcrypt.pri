@@ -1,4 +1,9 @@
 HEADERS += \
+    random/jitterentropy-base-user.h \
+    random/jitterentropy.h \
+    cipher/asm-common-aarch64.h \
+    cipher/asm-common-amd64.h \
+    cipher/asm-poly1305-amd64.h \
     cipher/bithelp.h \
     cipher/bufhelp.h \
     cipher/camellia.h \
@@ -47,6 +52,16 @@ HEADERS += \
     SMP/compat.h
 
 SOURCES += \
+    random/jitterentropy-base.c \
+    random/rndjent.c \
+    cipher/blake2.c \
+    cipher/cipher-eax.c \
+    cipher/cipher-xts.c \
+    cipher/crc-armv8-ce.c \
+    cipher/rijndael-armv8-ce.c \
+    cipher/sha1-intel-shaext.c \
+    cipher/sha256-intel-shaext.c \
+    cipher/sm3.c \
     cipher/arcfour.c \
     cipher/blowfish.c \
     cipher/camellia-glue.c \

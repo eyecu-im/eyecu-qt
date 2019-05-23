@@ -55,7 +55,7 @@
 /* Number of rounds.  */
 #define R 10
 
-
+
 
 /* Types.  */
 typedef u64 whirlpool_block_t[BLOCK_SIZE / 8];
@@ -1494,12 +1494,16 @@ whirlpool_final (void *ctx)
   if (context->bctx.count > 32)
     {
       /* An extra block is necessary.  */
-      while (context->bctx.count < 64)
-	context->bctx.buf[context->bctx.count++] = 0;
+      if (context->bctx.count < 64)
+	memset (&context->bctx.buf[context->bctx.count], 0,
+	        64 - context->bctx.count);
+      context->bctx.count = 64;
       whirlpool_write (context, NULL, 0);
     }
-  while (context->bctx.count < 32)
-    context->bctx.buf[context->bctx.count++] = 0;
+  if (context->bctx.count < 32)
+    memset (&context->bctx.buf[context->bctx.count], 0,
+	    32 - context->bctx.count);
+  context->bctx.count = 32;
 
   /* Add length of message.  */
   length = context->bctx.buf + context->bctx.count;
@@ -1526,5 +1530,6 @@ gcry_md_spec_t _gcry_digest_spec_whirlpool =
     GCRY_MD_WHIRLPOOL, {0, 0},
     "WHIRLPOOL", NULL, 0, NULL, 64,
     whirlpool_init, whirlpool_write, whirlpool_final, whirlpool_read, NULL,
+    NULL, NULL,
     sizeof (whirlpool_context_t)
   };

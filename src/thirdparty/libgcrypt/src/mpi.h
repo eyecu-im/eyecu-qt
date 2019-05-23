@@ -109,8 +109,8 @@ struct gcry_mpi
 void _gcry_mpi_immutable_failed (void);
 #define mpi_immutable_failed() _gcry_mpi_immutable_failed ()
 
-#define mpi_is_const(a)       ((a) && ((a)->flags&32))
-#define mpi_is_immutable(a)   ((a) && ((a)->flags&16))
+#define mpi_is_const(a)       ((a)->flags&32)
+#define mpi_is_immutable(a)   ((a)->flags&16)
 #define mpi_is_opaque(a)      ((a) && ((a)->flags&4))
 #define mpi_is_secure(a)      ((a) && ((a)->flags&1))
 #define mpi_clear(a)          _gcry_mpi_clear ((a))
@@ -296,6 +296,7 @@ void _gcry_mpi_ec_mul_point (mpi_point_t result,
                              gcry_mpi_t scalar, mpi_point_t point,
                              mpi_ec_t ctx);
 int  _gcry_mpi_ec_curve_point (gcry_mpi_point_t point, mpi_ec_t ctx);
+int _gcry_mpi_ec_bad_point (gcry_mpi_point_t point, mpi_ec_t ctx);
 
 gcry_mpi_t _gcry_mpi_ec_ec2os (gcry_mpi_point_t point, mpi_ec_t ectx);
 
