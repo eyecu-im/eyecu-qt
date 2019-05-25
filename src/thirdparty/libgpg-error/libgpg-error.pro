@@ -8,6 +8,8 @@ DESTDIR    = ../../libs
 
 INCLUDEPATH += SMP SMP/src
 DEFINES += HAVE_CONFIG_H \
-           PKGDATADIR
+           PKGDATADIR=""
+
+!unix: DEFINES += MKDIR_TAKES_ONE_ARG
 
 include(libgpg-error.pri)
