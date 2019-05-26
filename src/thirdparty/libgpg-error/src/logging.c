@@ -1327,14 +1327,13 @@ _gpgrt_log_clock (const char *fmt, ...)
 }
 
 
-void
-_gpgrt__log_assert (const char *expr, const char *file,
-                   int line, const char *func)
-{
+void  _gpgrt__log_assert (const char *expr, const char *file, int line
 #ifdef GPGRT_HAVE_MACRO_FUNCTION
+						  , const char *func) {
   _gpgrt_log (GPGRT_LOGLVL_BUG, "Assertion \"%s\" in %s failed (%s:%d)\n",
               expr, func, file, line);
 #else /*!GPGRT_HAVE_MACRO_FUNCTION*/
+					   ) {
   _gpgrt_log (GPGRT_LOGLVL_BUG, "Assertion \"%s\" failed (%s:%d)\n",
            expr, file, line);
 #endif /*!GPGRT_HAVE_MACRO_FUNCTION*/

@@ -24,6 +24,11 @@
 #include "gpg-error.h"
 #include "visibility.h"
 
+#if defined(_MSC_VER)
+#include <basetsd.h>
+typedef SSIZE_T ssize_t;
+#endif
+
 /*
  * Internal i18n macros.
  */
@@ -562,8 +567,11 @@ void _gpgrt_log_printhex (const void *buffer, size_t length,
 void _gpgrt_logv_clock (const char *fmt, va_list arg_ptr);
 void _gpgrt_log_clock (const char *fmt, ...) GPGRT_ATTR_PRINTF(1,2);
 
-void _gpgrt__log_assert (const char *expr, const char *file, int line,
-                         const char *func) GPGRT_ATTR_NORETURN;
+void _gpgrt__log_assert (const char *expr, const char *file, int line
+#ifdef GPGRT_HAVE_MACRO_FUNCTION
+						 , const char *func
+#endif
+						 ) GPGRT_ATTR_NORETURN;
 
 /* Redefine the assert macro to use our internal function.  */
 #undef gpgrt_assert

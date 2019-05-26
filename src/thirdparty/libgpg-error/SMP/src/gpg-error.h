@@ -986,7 +986,7 @@ typedef int	pid_t;
 typedef long long gpgrt_ssize_t;
 typedef long long gpgrt_off_t;
 
-#ifdef __WIN32__
+#ifdef _WIN32
 /* Decide whether to use the format_arg attribute.  */
 #if _GPG_ERR_GCC_VERSION > 20800
 # define _GPG_ERR_ATTR_FORMAT_ARG(a)  __attribute__ ((__format_arg__ (a)))

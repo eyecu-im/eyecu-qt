@@ -1286,7 +1286,7 @@ static void
 stribog_final (void *context)
 {
   STRIBOG_CONTEXT *hd = context;
-  u64 Z[8] = {};
+  u64 Z[8] = {0,0,0,0,0,0,0,0};
   int i;
 
   /* PAD. It does not count towards message length */
