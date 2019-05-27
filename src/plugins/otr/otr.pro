@@ -1,7 +1,7 @@
 TARGET = otr
 include(../plugins.inc)
 LIBS += -lotr -lgcrypt -lgpg-error
-win32: LIBS    += -lWs2_32
+win32: LIBS    += -lWs2_32 -lAdvapi32 -luser32
 INCLUDEPATH += ../../thirdparty/libotr/src \
                ../../thirdparty/libgcrypt/SMP \
                ../../thirdparty/libgpg-error/SMP/src

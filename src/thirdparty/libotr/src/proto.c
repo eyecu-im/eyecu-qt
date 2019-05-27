@@ -27,6 +27,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
+/* MSVS prior to 2013 compatibility */
+#if defined(_MSC_VER) && _MSC_VER < 1900
+#define snprintf _snprintf
+#endif
+
 /* libgcrypt headers */
 #include <gcrypt.h>
 
