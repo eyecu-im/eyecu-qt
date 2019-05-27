@@ -32,11 +32,10 @@
 #include <sys/types.h>
 
 #if defined _WIN32 || defined __WIN32__
-# include <winsock2.h>
-# include <ws2tcpip.h>
+# include <WinSock2.h>
+# include <WS2tcpip.h>
 # include <time.h>
 # ifndef __GNUC__
-  typedef long ssize_t;
   typedef int  pid_t;
 # endif /*!__GNUC__*/
 #else

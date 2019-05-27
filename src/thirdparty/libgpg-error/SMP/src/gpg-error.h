@@ -693,7 +693,7 @@ typedef unsigned int gpg_error_t;
 /*
  * GCC feature test.
  */
-#if __GNUC__
+#ifdef __GNUC__
 # define _GPG_ERR_GCC_VERSION (__GNUC__ * 10000 \
 							   + __GNUC_MINOR__ * 100 \
 							   + __GNUC_PATCHLEVEL__)
@@ -1140,10 +1140,11 @@ typedef struct
 #define GPGRT_LOCK_INITIALIZER {{1,0,0,0,0,0,0,0,255,255,255,255, \
 								 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, \
 								 0,0,0,0,0,0,0,0}}
+#endif
 
 #define GPGRT_LOCK_DEFINE(name) \
   static gpgrt_lock_t name  = GPGRT_LOCK_INITIALIZER
-#endif
+
 
 /* NB: If GPGRT_LOCK_DEFINE is not used, zero out the lock variable
    before passing it to gpgrt_lock_init.  */
