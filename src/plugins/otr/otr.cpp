@@ -595,7 +595,7 @@ protected:
 	{
 		switch (APolicy)
 		{
-//			case IOtr::PolocyOff:
+//			case IOtr::PolicyOff:
 //				return OTRL_POLICY_NEVER; // otr disabled
 
 			case IOtr::PolicyEnabled:
@@ -1558,10 +1558,8 @@ void Otr::stateChange(const Jid &AStreamJid, const Jid &AContactJid, StateChange
 			break;
 
 		case StateChangeRemoteClose:
-			message  = tr("Has ended the private conversation with you; "
-						  "you should do the same.");
-			tooltip  = tr("%1 has ended the private conversation with you; "
-						  "you should do the same.");
+			message  = tr("Has ended the private conversation with you");
+			tooltip  = tr("%1 has ended the private conversation with you");
 			eventNotify(NNT_OTR_TERMINATED, message, tooltip, MNI_OTR_NO, AStreamJid, AContactJid);
 			break;
 

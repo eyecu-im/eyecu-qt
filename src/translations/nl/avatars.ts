@@ -39,22 +39,22 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="35"/>
    <source>Avatar shape</source>
-   <translation type="unfinished"/>
+   <translation>Vorm van gebruikersafbeelding</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="46"/>
    <source>Square</source>
-   <translation type="unfinished"/>
+   <translation>Vierkant</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="51"/>
    <source>Rounded</source>
-   <translation type="unfinished"/>
+   <translation>Afgerond</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="56"/>
    <source>Round</source>
-   <translation type="unfinished"/>
+   <translation>Rond</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="83"/>
@@ -77,7 +77,7 @@
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="42"/>
    <source>Crop to keep aspect ratio</source>
-   <translation type="unfinished"/>
+   <translation>Bijsnijden naar beeldverhouding</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="49"/>

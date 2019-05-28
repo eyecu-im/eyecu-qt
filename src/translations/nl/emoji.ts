@@ -107,17 +107,17 @@
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
    <source>Male</source>
-   <translation type="unfinished"/>
+   <translation>Man</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
    <source>Female</source>
-   <translation type="unfinished"/>
+   <translation>Vrouw</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="168"/>
    <source>Gender</source>
-   <translation type="unfinished"/>
+   <translation>Geslacht</translation>
   </message>
   <message>
    <location filename="../../plugins/emoji/selecticonmenu.cpp" line="124"/>

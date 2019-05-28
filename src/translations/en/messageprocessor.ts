@@ -4,12 +4,12 @@
  <context>
   <name>MessageProcessor</name>
   <message>
-   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="31"/>
+   <location line="31" filename="../../plugins/messageprocessor/messageprocessor.cpp"/>
    <source>Message Manager</source>
    <translation>Message Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/messageprocessor/messageprocessor.cpp" line="32"/>
+   <location line="32" filename="../../plugins/messageprocessor/messageprocessor.cpp"/>
    <source>Allows other modules to send and receive messages</source>
    <translation>Allows other modules to send and receive messages</translation>
   </message>

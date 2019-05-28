@@ -4,17 +4,17 @@
  <context>
   <name>MapSearchProviderNavitel</name>
   <message>
-   <location filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp" line="25"/>
+   <location line="25" filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp"/>
    <source>Map Search Provider Navitel</source>
    <translation>Map Search Provider Navitel</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp" line="26"/>
+   <location line="26" filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp"/>
    <source>Allows to use Navitel as a map search provider</source>
    <translation>Allows to use Navitel as a map search provider</translation>
   </message>
   <message>
-   <location filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp" line="67"/>
+   <location line="67" filename="../../plugins/mapsearchprovidernavitel/mapsearchprovidernavitel.cpp"/>
    <source>Navitel</source>
    <translation>Navitel</translation>
   </message>

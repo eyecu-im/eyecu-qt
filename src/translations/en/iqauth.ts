@@ -4,12 +4,12 @@
  <context>
   <name>IqAuthFeatureFactory</name>
   <message>
-   <location filename="../../plugins/iqauth/iqauthfeaturefactory.cpp" line="20"/>
+   <location line="20" filename="../../plugins/iqauth/iqauthfeaturefactory.cpp"/>
    <source>Query Authentication</source>
    <translation>Query Authentication</translation>
   </message>
   <message>
-   <location filename="../../plugins/iqauth/iqauthfeaturefactory.cpp" line="21"/>
+   <location line="21" filename="../../plugins/iqauth/iqauthfeaturefactory.cpp"/>
    <source>Allow you to log on the Jabber server without support SASL authentication</source>
    <translation>Allow you to log on the Jabber server without support SASL authentication</translation>
   </message>

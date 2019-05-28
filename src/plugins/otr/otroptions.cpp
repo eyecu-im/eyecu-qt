@@ -95,11 +95,8 @@ void OtrOptions::reset()
 	ui->cmbAccount->clear();
 	QList<IPresence*> presences = FPresenceManager->presences();
 	for (QList<IPresence*>::ConstIterator it=presences.constBegin(); it!=presences.constEnd(); ++it)
-	{
-//		QString id =  FAccountManager->findAccountByStream((*it)->streamJid())->accountId().toString();
-		IAccount *account = FAccountManager->findAccountByStream((*it)->streamJid());
-		ui->cmbAccount->addItem(account->name(), (*it)->streamJid().full());
-	}
+		ui->cmbAccount->addItem(FAccountManager->findAccountByStream((*it)->streamJid())->name(),
+								(*it)->streamJid().full());
 
 	// Private keys
 	updatePrivKeys();
@@ -286,8 +283,6 @@ void OtrOptions::onAccountIndexChanged(int AIndex)
 
 void OtrOptions::onPrivKeyGenerated(const Jid &AStreamJid, const QString &AFingerprint)
 {
-//	QList<QStandardItem *> items = FPrivKeyModel->findItems(AAccount);
-
 	int rowCount = FPrivKeyModel->rowCount();
 	int row;
 	for (row = 0; row < rowCount; ++row)
@@ -300,11 +295,6 @@ void OtrOptions::onPrivKeyGenerated(const Jid &AStreamJid, const QString &AFinge
 	if (row==rowCount) // Not found
 		updatePrivKeys();
 }
-
-//void OtrOptions::onPrivKeyGenerationFailed(const Jid &AStreamJid)
-//{
-//	Q_UNUSED(AStreamJid)
-//}
 
 void OtrOptions::onPrivKeyDelete()
 {

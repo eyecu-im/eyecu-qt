@@ -1,2 +1,2 @@
-txprepare.exe en en 2
+txprepare.exe ru ru 4
 pause

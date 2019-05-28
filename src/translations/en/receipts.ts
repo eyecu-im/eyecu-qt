@@ -4,13 +4,13 @@
  <context>
   <name>Receipts</name>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="39"/>
-   <location filename="../../plugins/receipts/receipts.cpp" line="154"/>
+   <location line="39" filename="../../plugins/receipts/receipts.cpp"/>
+   <location line="154" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message Delivery Receipts</source>
    <translation>Message Delivery Receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="40"/>
+   <location line="40" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Sends, receives and displays message delivery receipts</source>
    <translation>Sends, receives and displays message delivery receipts</translation>
   </message>
@@ -23,27 +23,27 @@
    <translation type="vanished">Send delivery notifications</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="107"/>
+   <location line="107" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message delivery receipts</source>
    <translation>Message delivery receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="125"/>
+   <location line="125" filename="../../plugins/receipts/receipts.cpp"/>
    <source>When message delivery notification recieved</source>
    <translation>When message delivery notification recieved</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="155"/>
+   <location line="155" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Sends/receives Message Delivery Receipts</source>
    <translation>Sends/receives Message Delivery Receipts</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="332"/>
+   <location line="332" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Message delivered</source>
    <translation>Message delivered</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receipts.cpp" line="344"/>
+   <location line="344" filename="../../plugins/receipts/receipts.cpp"/>
    <source>Received</source>
    <translation>Received</translation>
   </message>
@@ -51,12 +51,12 @@
  <context>
   <name>ReceiptsOptions</name>
   <message>
-   <location filename="../../plugins/receipts/receiptsoptions.ui" line="35"/>
+   <location line="35" filename="../../plugins/receipts/receiptsoptions.ui"/>
    <source>Send</source>
    <translation>Send</translation>
   </message>
   <message>
-   <location filename="../../plugins/receipts/receiptsoptions.ui" line="42"/>
+   <location line="42" filename="../../plugins/receipts/receiptsoptions.ui"/>
    <source>Show</source>
    <translation>Show</translation>
   </message>

@@ -577,6 +577,10 @@ source_lang = en
 file_filter = <lang>/chatmarkers.ts
 source_lang = en
 
+[eyecu-qt.otrts]
+file_filter = <lang>/otr.ts
+source_lang = en
+
 [eyecu-qt.schedulerts]
 file_filter = <lang>/scheduler.ts
 source_lang = en

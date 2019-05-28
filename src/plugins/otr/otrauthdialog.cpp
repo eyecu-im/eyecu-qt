@@ -182,7 +182,7 @@ void OtrAuthDialog::accept()
 							tr("Fingerprint: ") + FFingerprint.FFingerprintHuman + "\n\n" +
 							tr("Have you verified that this is in fact the correct fingerprint?"));
 
-				QMessageBox mb(QMessageBox::Information, tr("Psi OTR"),
+				QMessageBox mb(QMessageBox::Information, tr("OTR Messaging"),
 							   msg, QMessageBox::Yes | QMessageBox::No, this,
 							   Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 

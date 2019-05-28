@@ -33,7 +33,7 @@ public:
 
 	enum Policy
 	{
-		PolocyOff,
+		PolicyOff,
 		PolicyEnabled,
 		PolicyAuto,
 		PolicyRequire
