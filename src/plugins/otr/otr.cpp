@@ -466,6 +466,7 @@ public:
 												 OTR_PROTOCOL_STRING,
 												 OTRL_INSTAG_BEST, false,
 												 nullptr, nullptr, nullptr);
+
 		if (context)
 		{
 			if (context->msgstate == OTRL_MSGSTATE_PLAINTEXT)
@@ -972,7 +973,6 @@ Otr::Otr() :
 	FOtrPrivate(new OtrPrivate(this)),
 	FOptionsManager(nullptr),
 	FAccountManager(nullptr),
-//	FPresenceManager(nullptr),
 	FMessageProcessor(nullptr),
 	FNotifications(nullptr)
 {
@@ -1003,10 +1003,6 @@ bool Otr::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	IPlugin *plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0,nullptr);
 	if (plugin)
 		FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
-
-//	plugin = APluginManager->pluginInterface("IPresenceManager").value(0);
-//	if (plugin)
-//		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,nullptr);
 	if (plugin)
@@ -1760,10 +1756,10 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 
 				if (getMessageState(AStreamJid, contactJid) == IOtr::MsgStateEncrypted)
 				{
-					if (AStanza.to().contains("/")) // if not a bare jid
-						AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints" ,"no-copy")).toElement();
-					AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:hints", "no-permanent-store")).toElement();
-					AStanza.document().appendChild(AStanza.document().createElementNS("urn:xmpp:carbons:2", "private")).toElement();
+					AStanza.addElement("no-copy", NS_HINTS);
+					AStanza.addElement("no-permanent-store", NS_HINTS);
+					AStanza.addElement("private", NS_MESSAGE_CARBONS);
+					AStanza.addElement("encryption", NS_EME).setAttribute("namespace", NS_OTR);
 				}
 
 				return false;

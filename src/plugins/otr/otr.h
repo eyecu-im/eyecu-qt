@@ -166,6 +166,7 @@ public:
 	virtual bool initObjects();
 	virtual bool initSettings();
 	virtual bool startPlugin() { return true; }
+
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId,
 																		QWidget *AParent);
@@ -239,7 +240,6 @@ private:
 	IStanzaProcessor	*FStanzaProcessor;
 	IMessageArchiver	*FMessageArchiver;
 	IAccountManager		*FAccountManager;
-//	IPresenceManager	*FPresenceManager;
 	IMessageProcessor	*FMessageProcessor;
 	QString				FHomePath;
 	IMessageWidgets		*FMessageWidgets;

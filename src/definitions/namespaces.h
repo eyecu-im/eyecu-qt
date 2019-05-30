@@ -107,10 +107,13 @@
 
 #define NS_RECEIPTS                         	"urn:xmpp:receipts"
 #define NS_ATTENTION                         	"urn:xmpp:attention:0"
+#define NS_CHATMARKERS                          "urn:xmpp:chat-markers:0"
+#define NS_HINTS								"urn:xmpp:hints"
+#define NS_EME									"urn:xmpp:eme:0"
+#define NS_OTR									"urn:xmpp:otr:0"
 #define NS_XHTML								"http://www.w3.org/1999/xhtml"
 #define NS_XHTML_IM								"http://jabber.org/protocol/xhtml-im"
 #define NS_X_POI                                "jabber:x:poi"
-#define NS_CHATMARKERS                          "urn:xmpp:chat-markers:0"
 
 //Jingle
 #define NS_JINGLE                               "urn:xmpp:jingle:1"
