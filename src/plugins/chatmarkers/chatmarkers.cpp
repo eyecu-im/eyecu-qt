@@ -251,31 +251,32 @@ void ChatMarkers::onWindowActivated()
 		QMultiMap<Jid, Jid> addresses = window->address()->availAddresses();
 		removeNotifiedMessages(window);
 
-		for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
-			 it != addresses.constEnd(); ++it)
-			if (isLastMarkableDisplay(it.key(), *it))
-			{
-				if ((*it).resource().isEmpty())
-				{
-					for (QHash<Jid, QStringList>::Iterator it1 = FLastMarkableDisplayHash[it.key()].begin();
-						 it1 != FLastMarkableDisplayHash[it.key()].end(); )
-						if (it1.key().bare() == (*it).bare())
-						{
-							markMessages(it.key(), it1.key(), Displayed, *it1);
-							it1 = FLastMarkableDisplayHash[it.key()].erase(it1);
-						}
-						else
-							++it1;
-				}
-				else
-				{
-					markMessages(it.key(), *it, Displayed, FLastMarkableDisplayHash[it.key()][*it]);
-					FLastMarkableDisplayHash[it.key()].remove(*it);
-				}
+		QList<Jid> streamJids = addresses.keys();
 
-				if (FLastMarkableDisplayHash[it.key()].isEmpty())
-					FLastMarkableDisplayHash.remove(it.key());
+		for (QList<Jid>::ConstIterator it = streamJids.constBegin();
+			 it != streamJids.constEnd(); ++it)
+		{
+			QList<Jid> jids = addresses.values(*it);
+			QSet<QString> bareJids;
+			for (QList<Jid>::ConstIterator it1=jids.constBegin();
+				 it1!=jids.constEnd(); ++it1)
+				bareJids.insert(it1->bare());
+
+			for (QSet<QString>::ConstIterator it1 = bareJids.constBegin();
+				 it1 != bareJids.constEnd(); ++it1)
+			{
+				QList<Jid> contactJids = getLastMarkableDisplay(*it, *it1);
+				for (QList<Jid>::ConstIterator it2 = contactJids.constBegin();
+					 it2 != contactJids.constEnd(); ++it2)
+				{
+					markMessages(*it, *it2, Displayed, FLastMarkableDisplayHash[*it][*it2]);
+					FLastMarkableDisplayHash[*it].remove(*it2);
+				}
 			}
+
+			if (FLastMarkableDisplayHash[*it].isEmpty())
+				FLastMarkableDisplayHash.remove(*it);
+		}
 	}
 }
 
@@ -297,33 +298,34 @@ void ChatMarkers::onAcknowledgedByAction(bool)
 
 		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
 
-		for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
-			 it != addresses.constEnd(); ++it)
-			if (isLastMarkableAcknowledge(it.key(), *it))
-			{
-				if ((*it).resource().isEmpty())
-				{
-					for (QHash<Jid, QStringList>::Iterator it1 = FLastMarkableAcknowledgeHash[it.key()].begin();
-						 it1 != FLastMarkableAcknowledgeHash[it.key()].end(); )
-						if (it1.key().bare() == (*it).bare())
-						{
-							markMessages(it.key(), it1.key(), Acknowledged, *it1);
-							it1 = FLastMarkableAcknowledgeHash[it.key()].erase(it1);
-						}
-						else
-							++it1;
-				}
-				else
-				{
-					markMessages(it.key(), *it, Acknowledged, FLastMarkableAcknowledgeHash[it.key()][*it]);
-					FLastMarkableAcknowledgeHash[it.key()].remove(*it);
-				}
+		QList<Jid> streamJids = addresses.keys();
 
-				if (FLastMarkableAcknowledgeHash[it.key()].isEmpty())
-					FLastMarkableAcknowledgeHash.remove(it.key());
+		for (QList<Jid>::ConstIterator it = streamJids.constBegin();
+			 it != streamJids.constEnd(); ++it)
+		{
+			QList<Jid> jids = addresses.values(*it);
+			QSet<QString> bareJids;
+			for (QList<Jid>::ConstIterator it1=jids.constBegin();
+				 it1!=jids.constEnd(); ++it1)
+				bareJids.insert(it1->bare());
+
+			for (QSet<QString>::ConstIterator it1 = bareJids.constBegin();
+				 it1 != bareJids.constEnd(); ++it1)
+			{
+				QList<Jid> contactJids = getLastMarkableAcknowledge(*it, *it1);
+				for (QList<Jid>::ConstIterator it2 = contactJids.constBegin();
+					 it2 != contactJids.constEnd(); ++it2)
+				{
+					markMessages(*it, *it2, Acknowledged, FLastMarkableAcknowledgeHash[*it][*it2]);
+					FLastMarkableAcknowledgeHash[*it].remove(*it2);
+				}
 			}
 
-			updateToolBarAction(chatWindow->toolBarWidget());
+			if (FLastMarkableAcknowledgeHash[*it].isEmpty())
+				FLastMarkableAcknowledgeHash.remove(*it);
+		}
+
+		updateToolBarAction(chatWindow->toolBarWidget());
 	}
 }
 
@@ -510,16 +512,31 @@ void ChatMarkers::updateToolBarAction(IMessageToolBarWidget *AWidget)
 			AWidget->toolBarChanger()->insertAction(acknowledgedAction,TBG_MWTBW_ACKNOWLEDGEMENT);
 		}
 
-		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();
+		QMultiMap<Jid, Jid> addresses = chatWindow->address()->availAddresses();		
 		bool mrkd = false;
 
-		for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
-			 it != addresses.constEnd(); ++it)
-			if (isLastMarkableAcknowledge(it.key(), *it))
-			{
-				mrkd = true;
+		QList<Jid> streamJids = addresses.keys();
+
+		for (QList<Jid>::ConstIterator it = streamJids.constBegin();
+			 it != streamJids.constEnd(); ++it)
+		{
+			QList<Jid> jids = addresses.values(*it);
+			QSet<QString> bareJids;
+			for (QList<Jid>::ConstIterator it1=jids.constBegin();
+				 it1!=jids.constEnd(); ++it1)
+				bareJids.insert(it1->bare());
+
+			for (QSet<QString>::ConstIterator it1 = bareJids.constBegin();
+				 it1 != bareJids.constEnd(); ++it1)
+				if (!getLastMarkableAcknowledge(*it, *it1).isEmpty())
+				{
+					mrkd = true;
+					break;
+				}
+
+			if (mrkd)
 				break;
-			}
+		}
 
 		acknowledgedAction->setEnabled(mrkd);
 	}
@@ -558,7 +575,8 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 				}
 			}
 
-			bool isMarkedBefore = isLastMarkableAcknowledge(AStreamJid, AMessage.from());
+			bool isMarkedBefore = !getLastMarkableAcknowledge(AStreamJid,
+															  AMessage.fromJid().bare()).isEmpty();
 
 			if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
 				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
@@ -929,32 +947,26 @@ void ChatMarkers::sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJi
 	FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
 }
 
-bool ChatMarkers::isLastMarkableDisplay(const Jid &AStreamJid, const Jid &AContactJid) const
+QList<Jid> ChatMarkers::getLastMarkableDisplay(const Jid &AStreamJid, const QString &AContactBareJid) const
 {
-	if (FLastMarkableDisplayHash[AStreamJid].contains(AContactJid))
-		return true;
-
-	if (AContactJid.resource().isEmpty()) // Bare JID
+	QList<Jid> result;
+	if (FLastMarkableDisplayHash.contains(AStreamJid))
 		for (QHash<Jid, QStringList>::ConstIterator it = FLastMarkableDisplayHash[AStreamJid].constBegin();
 			 it != FLastMarkableDisplayHash[AStreamJid].constEnd(); ++it)
-			if (it.key().bare() == AContactJid.bare())
-				return true;
-
-	return false;
+			if (it.key().bare() == AContactBareJid)
+				result.append(it.key());
+	return result;
 }
 
-bool ChatMarkers::isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const
+QList<Jid> ChatMarkers::getLastMarkableAcknowledge(const Jid &AStreamJid, const QString &AContactBareJid) const
 {
-	if (FLastMarkableAcknowledgeHash[AStreamJid].contains(AContactJid))
-		return true;
-
-	if (AContactJid.resource().isEmpty()) // Bare JID
+	QList<Jid> result;
+	if (FLastMarkableAcknowledgeHash.contains(AStreamJid))
 		for (QHash<Jid, QStringList>::ConstIterator it = FLastMarkableAcknowledgeHash[AStreamJid].constBegin();
 			 it != FLastMarkableAcknowledgeHash[AStreamJid].constEnd(); ++it)
-			if (it.key().bare() == AContactJid.bare())
-				return true;
-
-	return false;
+			if (it.key().bare() == AContactBareJid)
+				result.append(it.key());
+	return result;
 }
 
 #if QT_VERSION < 0x050000

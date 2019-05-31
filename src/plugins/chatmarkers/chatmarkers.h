@@ -67,8 +67,8 @@ public:
 	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
 
 	//Incomming
-	bool isLastMarkableDisplay(const Jid &AStreamJid, const Jid &AContactJid) const;
-	bool isLastMarkableAcknowledge(const Jid &AStreamJid, const Jid &AContactJid) const;
+	QList<Jid> getLastMarkableDisplay(const Jid &AStreamJid, const QString &AContactBareJid) const;
+	QList<Jid>  getLastMarkableAcknowledge(const Jid &AStreamJid, const QString &AContactBareJid) const;
 
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
