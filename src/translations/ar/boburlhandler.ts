@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/boburlhandler/boburlhandler.cpp" line="11"/>
    <source>Allows URL processor plugin to handle Bits of Binary links (cid: scheme)</source>
-   <translation>يتيح للمكون الإضافي لمعالجة الروابط بمعالجة الروابط الثنائية (cid: scheme)</translation>
+   <translation>يتيح للمكون الإضافي معالج الروابط معالجة بتات الروابط الثنائية (cid: scheme)</translation>
   </message>
  </context>
 </TS>

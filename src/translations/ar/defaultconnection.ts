@@ -62,7 +62,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="25"/>
    <source>Host:</source>
-   <translation type="unfinished"/>
+   <translation>المضيف:</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/connectionoptionswidget.ui" line="41"/>
@@ -101,7 +101,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="61"/>
    <source>Host certificate is not in trusted list</source>
-   <translation>شهادة المضيف ليست في القائمة الموثوق بها.</translation>
+   <translation>شهادة المضيف ليست في القائمة الموثوق بها</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="180"/>
@@ -161,7 +161,7 @@
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="218"/>
    <source>Serial number: %1</source>
-   <translation type="unfinished"/>
+   <translation>الرقم التسلسلي: %1</translation>
   </message>
   <message>
    <location filename="../../plugins/defaultconnection/defaultconnectionengine.cpp" line="222"/>

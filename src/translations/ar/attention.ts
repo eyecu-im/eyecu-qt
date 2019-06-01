@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="148"/>
    <source>When contact attempts to attract user&apos;s attention</source>
-   <translation type="unfinished"/>
+   <translation>عندما تحاول جهة اتصال لفت انتباه المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="156"/>
@@ -50,12 +50,12 @@
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="274"/>
    <source>ATTENTION!!!</source>
-   <translation type="unfinished"/>
+   <translation>انتباه!!!</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attention.cpp" line="411"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>المحادثة - %1</translation>
   </message>
  </context>
  <context>
@@ -63,7 +63,7 @@
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="170"/>
    <source>ATTENTION</source>
-   <translation type="unfinished"/>
+   <translation>انتباه</translation>
   </message>
   <message>
    <location filename="../../plugins/attention/attentiondialog.ui" line="295"/>

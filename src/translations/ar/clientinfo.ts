@@ -52,7 +52,7 @@
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="615"/>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="661"/>
    <source>Last Activity</source>
-   <translation type="unfinished"/>
+   <translation>آخر نشاط</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfo.cpp" line="617"/>
@@ -139,7 +139,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="94"/>
    <source>Last Activity</source>
-   <translation type="unfinished"/>
+   <translation>آخر نشاط</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="96"/>
@@ -164,7 +164,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="113"/>
    <source>Idle:</source>
-   <translation type="unfinished"/>
+   <translation>خامل:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="130"/>
@@ -179,7 +179,7 @@
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="134"/>
    <source>Delta:</source>
-   <translation type="unfinished"/>
+   <translation>دلتا:</translation>
   </message>
   <message>
    <location filename="../../plugins/clientinfo/clientinfodialog.cpp" line="135"/>

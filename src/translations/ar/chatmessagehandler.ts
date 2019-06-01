@@ -36,7 +36,7 @@
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="353"/>
    <source>Message received</source>
-   <translation type="unfinished"/>
+   <translation>تم استلام الرسالة</translation>
   </message>
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="372"/>
@@ -61,7 +61,7 @@
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="552"/>
    <source>%1 - Chat</source>
-   <translation type="unfinished"/>
+   <translation>الدردشة - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="642"/>
@@ -76,7 +76,7 @@
   <message>
    <location filename="../../plugins/chatmessagehandler/chatmessagehandler.cpp" line="1102"/>
    <source>Failed to load history: %1</source>
-   <translation>فشل تحميل السجل: %1</translation>
+   <translation>فشل في تحميل السجل: %1</translation>
   </message>
  </context>
 </TS>

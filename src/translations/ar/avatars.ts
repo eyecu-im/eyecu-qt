@@ -29,7 +29,7 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="136"/>
    <source>Display avatars for offline contacts grayscaled</source>
-   <translation type="unfinished"/>
+   <translation>عرض الصور الرمزية أحادية اللون لجهات الاتصال الغير المتصلة</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="78"/>
@@ -39,22 +39,22 @@
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="35"/>
    <source>Avatar shape</source>
-   <translation type="unfinished"/>
+   <translation>شكل الصورة</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="46"/>
    <source>Square</source>
-   <translation type="unfinished"/>
+   <translation>مربعة</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="51"/>
    <source>Rounded</source>
-   <translation type="unfinished"/>
+   <translation>مدورة</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="56"/>
    <source>Round</source>
-   <translation type="unfinished"/>
+   <translation>مستديرة</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avataroptionswidget.ui" line="83"/>
@@ -77,7 +77,7 @@
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="42"/>
    <source>Crop to keep aspect ratio</source>
-   <translation type="unfinished"/>
+   <translation>اقتصاص للحفاظ على نسبة الارتفاع</translation>
   </message>
   <message>
    <location filename="../../plugins/avatars/avatarsizeoptionswidget.ui" line="49"/>

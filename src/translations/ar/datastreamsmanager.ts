@@ -3,7 +3,7 @@
   <name>DataStreamsManger</name>
   <message>
    <source>Data Streams Manager</source>
-   <translation type="unfinished"/>
+   <translation>مدير تدفق البيانات</translation>
   </message>
   <message>
    <source>None of the available streams are acceptable</source>
@@ -11,7 +11,7 @@
   </message>
   <message>
    <source>The profile is not understood or invalid</source>
-   <translation type="unfinished"/>
+   <translation>لم يتم التعرف على الملف الشخصي أو تالف</translation>
   </message>
   <message>
    <source>Data Streams Initiation</source>
@@ -23,7 +23,7 @@
   </message>
   <message>
    <source>&lt;Default Profile&gt;</source>
-   <translation type="unfinished"/>
+   <translation>&lt;الملف الافتراضي&gt;</translation>
   </message>
   <message>
    <source>Allows to initiate a custom stream of data between two XMPP entities</source>
@@ -39,11 +39,11 @@
   </message>
   <message>
    <source>Data Transfer</source>
-   <translation type="unfinished"/>
+   <translation>نقل البيانات</translation>
   </message>
   <message>
    <source>Transfer method %1</source>
-   <translation type="unfinished"/>
+   <translation>طريقة النقل %1</translation>
   </message>
   <message>
    <source>Unsupported stream initiation request</source>

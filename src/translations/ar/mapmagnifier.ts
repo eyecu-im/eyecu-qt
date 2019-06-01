@@ -4,12 +4,12 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="26"/>
    <source>Magnifier</source>
-   <translation type="unfinished"/>
+   <translation>المكبر</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="99"/>
    <source>Size</source>
-   <translation type="unfinished"/>
+   <translation>الحجم</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="106"/>
@@ -19,7 +19,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="113"/>
    <source>High precision</source>
-   <translation type="unfinished"/>
+   <translation>دقة عالية</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="120"/>
@@ -34,18 +34,18 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="134"/>
    <source>Enable scale</source>
-   <translation type="unfinished"/>
+   <translation>تمكين النطاق</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="144"/>
    <source>Shadow</source>
-   <translation type="unfinished"/>
+   <translation>الظل</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="150"/>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="326"/>
    <source>Color</source>
-   <translation type="unfinished"/>
+   <translation>اللون</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="183"/>
@@ -70,7 +70,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="333"/>
    <source>Font</source>
-   <translation type="unfinished"/>
+   <translation>الخط</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.ui" line="340"/>
@@ -85,7 +85,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.cpp" line="104"/>
    <source>Choose shadow color</source>
-   <translation type="unfinished"/>
+   <translation>اختيار لون الظل</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/magnifieroptions.cpp" line="120"/>
@@ -103,23 +103,23 @@
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="74"/>
    <source>Map Magnifier</source>
-   <translation type="unfinished"/>
+   <translation>مكبر الخريطة</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="75"/>
    <source>Allows to see part of the map magnified</source>
-   <translation type="unfinished"/>
+   <translation>يتيح رؤية جزء من الخريطة مكبرة</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="102"/>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="111"/>
    <source>Magnifier</source>
-   <translation type="unfinished"/>
+   <translation>المكبر</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
    <source>On/off</source>
-   <translation type="unfinished"/>
+   <translation>تشغيل/ايقاف</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="103"/>
@@ -130,7 +130,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
    <source>Zoom in</source>
-   <translation type="unfinished"/>
+   <translation>تكبير</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="104"/>
@@ -141,7 +141,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
    <source>Zoom out</source>
-   <translation type="unfinished"/>
+   <translation>تصغير</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="105"/>
@@ -152,7 +152,7 @@
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="139"/>
    <source>Map magnifier</source>
-   <translation type="unfinished"/>
+   <translation>مكبر الخريطة</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="244"/>
@@ -163,12 +163,12 @@
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 m</source>
-   <translation type="unfinished"/>
+   <translation>%1 م</translation>
   </message>
   <message>
    <location filename="../../plugins/mapmagnifier/mapmagnifier.cpp" line="261"/>
    <source>%1 km</source>
-   <translation type="unfinished"/>
+   <translation>%1 كم</translation>
   </message>
  </context>
 </TS>
