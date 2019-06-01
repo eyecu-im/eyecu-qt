@@ -6,7 +6,7 @@
  <ReleaseDate>2019-05-15</ReleaseDate>
  <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.clienticons</Name>
- <SortingPriority>60</SortingPriority>
+ <SortingPriority>13</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
  <Essential>false</Essential>

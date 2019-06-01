@@ -1,15 +1,15 @@
 echo off
 
-set qtdir=h:\qt\5.5\msvc2013
+set qtdir=h:\qt\5.5\msvc2013_64
 set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
 set OPENSSLDIR=h:\openssl
-set FFMPEGDIR=h:\ffmpeg
+set FFMPEGDIR=h:\ffmpeg.x64
 
-set platform=x86
+set platform=x64
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=2.0.0.20190515
+set version=2.0.0.20190601
 set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
@@ -428,6 +428,10 @@ call copyresources2 ru.rwsoftware.eyecu.attention menuicons\shared
 call copyplugins ru.rwsoftware.eyecu.receipts receipts
 call copyplugins ru.rwsoftware.eyecu.chatmarkers chatmarkers
 set files=chatmarkers.def.xml emptybox.png messagereceived.png messagedisplayed.png messageacknowledged.png messageacknowledge.png
+call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.otr otr
+set files=otr.def.xml otr_unverified.png otr_yes.png otr_no.png
 call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer

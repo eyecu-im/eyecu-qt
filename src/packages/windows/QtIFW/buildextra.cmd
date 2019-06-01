@@ -1,8 +1,8 @@
 echo on
 
-set platform=x86
+set platform=x64
 set packagename=eyecu-win-extra
-set version=2.0.0.20190515
+set version=2.0.0.20190601
 set packagefilename=%packagename%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages-extra

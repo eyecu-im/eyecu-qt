@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-15</ReleaseDate>
  <UpdateText>Minor update</UpdateText>
  <Name>ru.rwsoftware.eyecu.statistics</Name>
- <SortingPriority>66</SortingPriority>
+ <SortingPriority>68</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
  <Essential>false</Essential>

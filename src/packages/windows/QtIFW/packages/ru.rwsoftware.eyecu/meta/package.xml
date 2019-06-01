@@ -3,9 +3,9 @@
 <Package>
  <DisplayName>eyeCU</DisplayName>
  <Description>XMPP-based IM client with positioning</Description>
- <Version>2.1.0</Version>
- <ReleaseDate>2019-05-15</ReleaseDate>
- <UpdateText>Synchronize with Vacuum-IM</UpdateText>
+ <Version>2.1.1</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <UpdateText>Update resources</UpdateText>
  <Name>ru.rwsoftware.eyecu</Name>
  <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util->=2.1.0,org.openssl.shared->=1.0.2.16</Dependencies>
  <Licenses>

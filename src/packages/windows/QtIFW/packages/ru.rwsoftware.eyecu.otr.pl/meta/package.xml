@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Off-the-Record Messaging Polish Translation</DisplayName>
+ <Description>Off-the-Record Messaging Polish translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.otr.pl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.otr,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>
