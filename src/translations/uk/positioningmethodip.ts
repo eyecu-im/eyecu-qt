@@ -4,23 +4,23 @@
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="23"/>
    <source>Positioning Method IP</source>
-   <translation type="unfinished"/>
+   <translation>Метод позиціонування IP</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="24"/>
    <source>Positioning method, which determines position based on your IP address</source>
-   <translation type="unfinished"/>
+   <translation>Метод позиціонування, який визначає позицію на основі вашої IP-адреси</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="75"/>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.h" line="43"/>
    <source>IP-based</source>
-   <translation type="unfinished"/>
+   <translation>на основі IP</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="108"/>
    <source>General</source>
-   <translation type="unfinished"/>
+   <translation>Загальні</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodip.cpp" line="110"/>
@@ -33,22 +33,22 @@
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="38"/>
    <source>Update rate</source>
-   <translation type="unfinished"/>
+   <translation>Швидкість оновлення</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="64"/>
    <source>Do not update</source>
-   <translation type="unfinished"/>
+   <translation>Не оновлювати</translation>
   </message>
   <message>
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.ui" line="89"/>
    <source>Geo IP provider</source>
-   <translation type="unfinished"/>
+   <translation>Гео IP провайдер</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/positioningmethodip/positioningmethodipoptions.cpp" line="35"/>
    <source>second(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>секунда</numerusform><numerusform>секунд</numerusform><numerusform>секунд</numerusform><numerusform>секунди</numerusform></translation>
   </message>
  </context>
 </TS>

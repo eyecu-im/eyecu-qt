@@ -9,7 +9,7 @@ set platform=x64
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=2.0.0.20181114
+set version=2.0.0.20190601
 set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
@@ -82,8 +82,8 @@ xcopy %qtdir%\bin\QtSerialPort.dll %packages%\org.digia.qt4.serialport\data\ /Y
 xcopy %qtdir%\bin\QpFFMpeg2.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
 xcopy %qtdir%\bin\QpGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
 xcopy %qtdir%\bin\QpUtil2.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.ice\data\ /Y
+xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.dns\data\ /Y
 
 set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
 set targetqt=qt4
@@ -130,8 +130,8 @@ xcopy %qtdir%\bin\Qt5SerialPort.dll %packages%\org.digia.qt5.serialport\data\ /Y
 xcopy %qtdir%\bin\QpFFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
 xcopy %qtdir%\bin\QpGeo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
 xcopy %qtdir%\bin\QpUtil.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.ice\data\ /Y
+xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.dns\data\ /Y
 
 set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
 set targetqt=qt5
@@ -322,7 +322,6 @@ call copyplugins ru.rwsoftware.eyecu.commands commands
 set files=commands.def.xml commands.png
 call copyresources2 ru.rwsoftware.eyecu.commands menuicons\shared
 
-
 call copyplugins ru.rwsoftware.eyecu.remotecontrol remotecontrol
 
 set pluginlist=filetransfer filestreamsmanager datastreamsmanager
@@ -427,7 +426,12 @@ set files=attention.def.xml attention.png bell.gif exclamation.gif
 call copyresources2 ru.rwsoftware.eyecu.attention menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.receipts receipts
-set files=receipts.def.xml receipts.png
+call copyplugins ru.rwsoftware.eyecu.chatmarkers chatmarkers
+set files=chatmarkers.def.xml emptybox.png messagereceived.png messagedisplayed.png messageacknowledged.png messageacknowledge.png
+call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+
+call copyplugins ru.rwsoftware.eyecu.otr otr
+set files=otr.def.xml otr_unverified.png otr_yes.png otr_no.png
 call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer

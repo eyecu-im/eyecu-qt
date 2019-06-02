@@ -29,9 +29,12 @@
 #define TBG_MWTBW_OOB_VIEW                                      1250
 #define TBG_MWTBW_JINGLE_RTP                                    1280
 #define TBG_MWTBW_MOOD_VIEW                                     1290
+#define TBG_MWTBW_ACKNOWLEDGEMENT                               10800
 //Wessage Widgets - SelectIconMenu
 #define TBG_MWSIM_RECENT                                        1000
 #define TBG_MWSIM_SKINCOLOR                                     10100
+//Wessage Widgets - Off-the-Record messaging
+#define TBG_MWTBW_OTR											10030
 // *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
 #define TBG_MWTBW_CHATSTATES                                    10050

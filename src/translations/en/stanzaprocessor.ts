@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>StanzaProcessor</name>
   <message>
-   <location filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp" line="22"/>
+   <location line="22" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
    <source>Stanza Manager</source>
    <translation>Stanza Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp" line="23"/>
+   <location line="23" filename="../../plugins/stanzaprocessor/stanzaprocessor.cpp"/>
    <source>Allows other modules to send and receive XMPP stanzas</source>
    <translation>Allows other modules to send and receive XMPP stanzas</translation>
   </message>

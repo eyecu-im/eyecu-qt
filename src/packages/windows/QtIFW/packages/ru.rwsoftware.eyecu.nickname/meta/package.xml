@@ -2,9 +2,9 @@
 <Package>
  <DisplayName>User Nickname</DisplayName>
  <Description>Allows to exchane with nickname information</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.nickname</Name>
  <SortingPriority>61</SortingPriority>
  <Default>true</Default>

@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>TuneListenerAimp</name>
   <message>
-   <location filename="../../plugins/tunelisteneraimp/tunelisteneraimp.cpp" line="20"/>
+   <location line="20" filename="../../plugins/tunelisteneraimp/tunelisteneraimp.cpp"/>
    <source>Tune Listener AIMP</source>
    <translation>Tune Listener AIMP</translation>
   </message>
   <message>
-   <location filename="../../plugins/tunelisteneraimp/tunelisteneraimp.cpp" line="21"/>
+   <location line="21" filename="../../plugins/tunelisteneraimp/tunelisteneraimp.cpp"/>
    <source>Allow User Tune plugin to obtain currently playing tune information from AIMP</source>
    <translation>Allow User Tune plugin to obtain currently playing tune information from AIMP</translation>
   </message>

@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>Presence</name>
   <message>
-   <location filename="../../plugins/presence/presence.cpp" line="425"/>
+   <location line="425" filename="../../plugins/presence/presence.cpp"/>
    <source>XMPP stream closed unexpectedly</source>
    <translation>XMPP stream closed unexpectedly</translation>
   </message>
@@ -12,12 +12,12 @@
  <context>
   <name>PresenceManager</name>
   <message>
-   <location filename="../../plugins/presence/presencemanager.cpp" line="36"/>
+   <location line="36" filename="../../plugins/presence/presencemanager.cpp"/>
    <source>Presence Manager</source>
    <translation>Presence Manager</translation>
   </message>
   <message>
-   <location filename="../../plugins/presence/presencemanager.cpp" line="37"/>
+   <location line="37" filename="../../plugins/presence/presencemanager.cpp"/>
    <source>Allows other modules to obtain information about the status of contacts in the roster</source>
    <translation>Allows other modules to obtain information about the status of contacts in the roster</translation>
   </message>

@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>StreetViewProviderGoogle</name>
   <message>
-   <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="13"/>
+   <location line="13" filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp"/>
    <source>Street View Provider Google</source>
    <translation>Street View Provider Google</translation>
   </message>
   <message>
-   <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="14"/>
+   <location line="14" filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp"/>
    <source>Allows to use Google as a Street View provider</source>
    <translation>Allows to use Google as a Street View provider</translation>
   </message>
   <message>
-   <location filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp" line="33"/>
+   <location line="33" filename="../../plugins/streetviewprovidergoogle/streetviewprovidergoogle.cpp"/>
    <source>Google</source>
    <translation>Google</translation>
   </message>

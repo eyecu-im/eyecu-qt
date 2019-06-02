@@ -6,7 +6,7 @@
  <ReleaseDate>2018-10-27</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
  <UpdateText>Correctly terminate play once input dewvice is closed. Some other fixes and imrovements.</UpdateText>
- <Dependencies>ru.purplesoft.qtpurple,org.digia.qt5.multimedia->=5.5.1,org.ffmpeg.library-=58.25.100</Dependencies>
+ <Dependencies>ru.purplesoft.qtpurple,org.digia.qt5.multimedia->=5.5.1,org.ffmpeg.library->=58.25.100</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>

@@ -1,11 +1,19 @@
 <?xml version='1.0'?>
+
 <Package>
+
  <DisplayName>Message Delivery Receipts Dutch Translation</DisplayName>
+
  <Description>Message Delivery Receipts Dutch translation</Description>
- <Version>1.3.0</Version>
- <ReleaseDate>2015-02-24</ReleaseDate>
+
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.receipts.nl</Name>
+
  <AutoDependOn>ru.rwsoftware.eyecu.receipts,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+
  <Virtual>true</Virtual>
+
  <RequiresAdminRights>true</RequiresAdminRights>
+
 </Package>

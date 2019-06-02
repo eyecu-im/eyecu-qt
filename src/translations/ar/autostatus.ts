@@ -9,7 +9,7 @@
   <message>
    <location filename="../../plugins/autostatus/autorulesoptionsdialog.cpp" line="196"/>
    <source>Time</source>
-   <translation>المدة</translation>
+   <translation>الوقت</translation>
   </message>
   <message>
    <location filename="../../plugins/autostatus/autorulesoptionsdialog.cpp" line="196"/>

@@ -1,30 +1,30 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>StartTLSFeatureFactory</name>
   <message>
-   <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="22"/>
+   <location line="22" filename="../../plugins/starttls/starttlsfeaturefactory.cpp"/>
    <source>StartTLS</source>
    <translation>StartTLS</translation>
   </message>
   <message>
-   <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="23"/>
+   <location line="23" filename="../../plugins/starttls/starttlsfeaturefactory.cpp"/>
    <source>Allows to establish a secure connection to the server after connecting</source>
    <translation>Allows to establish a secure connection to the server after connecting</translation>
   </message>
   <message>
-   <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="45"/>
+   <location line="45" filename="../../plugins/starttls/starttlsfeaturefactory.cpp"/>
    <source>Failed to begin StartTLS handshake</source>
    <translation>Failed to begin StartTLS handshake</translation>
   </message>
   <message>
-   <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="46"/>
+   <location line="46" filename="../../plugins/starttls/starttlsfeaturefactory.cpp"/>
    <source>Wrong StartTLS negotiation response</source>
    <translation>Wrong StartTLS negotiation response</translation>
   </message>
   <message>
-   <location filename="../../plugins/starttls/starttlsfeaturefactory.cpp" line="47"/>
+   <location line="47" filename="../../plugins/starttls/starttlsfeaturefactory.cpp"/>
    <source>StartTLS negotiation failed</source>
    <translation>StartTLS negotiation failed</translation>
   </message>

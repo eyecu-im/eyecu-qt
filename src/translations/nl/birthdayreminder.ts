@@ -31,7 +31,9 @@
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
  %1</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Verjaardag over %n dag,
+%1</numerusform><numerusform>Verjaardag over %n dagen,
+%1</numerusform></translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="351"/>

@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Bookmarks Arabic Translation</DisplayName>
  <Description>Bookmarks Arabic translation</Description>
- <Version>1.3.1</Version>
- <ReleaseDate>2016-04-04</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.bookmarks.ar</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.bookmarks,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
  <Virtual>true</Virtual>

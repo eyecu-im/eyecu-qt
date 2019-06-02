@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>otr_yes</key>
+    <object mime="image/png">otr_yes.png</object>
+  </icon>
+  <icon>
+    <key>otr_unverified</key>
+    <object mime="image/png">otr_unverified.png</object>
+  </icon>
+  <icon>
+    <key>otr_no</key>
+    <object mime="image/png">otr_no.png</object>
+  </icon>
+</icondef>

@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Message Delivery Receipts Arabic Translation</DisplayName>
  <Description>Message Delivery Receipts Arabic translation</Description>
- <Version>1.3.0</Version>
- <ReleaseDate>2015-02-24</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.receipts.ar</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.receipts,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
  <Virtual>true</Virtual>

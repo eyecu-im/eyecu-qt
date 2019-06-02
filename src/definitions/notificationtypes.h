@@ -18,7 +18,9 @@
 
 // *** <<< eyeCU <<< ***
 #define NNT_ATTENTION                 "Attention"
-#define NNT_RECEIPTS                  "Receipts"
+#define NNT_DELIVERED                 "Delivery"
+#define NNT_DISPLAYED                 "Displayed"
+#define NNT_ACKNOWLEDGED              "Acknowledged"
 #define NNT_ACTIVITY                  "Activity"
 #define NNT_CONTACTPROXIMITY          "ContactProximity"
 #define NNT_MOOD                      "Mood"
@@ -30,5 +32,8 @@
 #define NNT_JINGLE_RTP_REJECTED       "JingleRtpRejected"
 #define NNT_JINGLE_RTP_FINISHED       "JingleRtpFinished"
 #define NNT_JINGLE_RTP_ERROR          "JingleRtpError"
+#define NNT_OTR_ESTABLISHED           "OtrEstablished"
+#define NNT_OTR_TERMINATED            "OtrTerminated"
+#define NNT_OTR_VERIFY                "OtrVerify"
 // *** >>> eyeCU >>> ***
 #endif // DEF_NOTIFICATIONTYPES_H

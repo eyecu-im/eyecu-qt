@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>FileArchiveOptionsClass</name>
   <message>
-   <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui" line="20"/>
+   <location line="20" filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui"/>
    <source>Synchronize archive database at startup</source>
    <translation>Synchronize archive database at startup</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui" line="29"/>
+   <location line="29" filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui"/>
    <source>Move history to:</source>
    <translation>Move history to:</translation>
   </message>
@@ -17,7 +17,7 @@
  <context>
   <name>FileArchiveOptionsWidget</name>
   <message>
-   <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.cpp" line="49"/>
+   <location line="49" filename="../../plugins/filemessagearchive/filearchiveoptionswidget.cpp"/>
    <source>Select the location for the file archive</source>
    <translation>Select the location for the file archive</translation>
   </message>
@@ -25,42 +25,42 @@
  <context>
   <name>FileMessageArchive</name>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="63"/>
+   <location line="63" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>File Message Archive</source>
    <translation>File Message Archive</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="64"/>
+   <location line="64" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Allows to save the history of conversations in to local files</source>
    <translation>Allows to save the history of conversations in to local files</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="114"/>
+   <location line="114" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Failed to create database</source>
    <translation>Failed to create database</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="115"/>
+   <location line="115" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Failed to open database</source>
    <translation>Failed to open database</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="116"/>
+   <location line="116" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Database format is not compatible</source>
    <translation>Database format is not compatible</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="117"/>
+   <location line="117" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Failed to to execute SQL query</source>
    <translation>Failed to to execute SQL query</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="150"/>
+   <location line="150" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>Local File Archive</source>
    <translation>Local File Archive</translation>
   </message>
   <message>
-   <location filename="../../plugins/filemessagearchive/filemessagearchive.cpp" line="155"/>
+   <location line="155" filename="../../plugins/filemessagearchive/filemessagearchive.cpp"/>
    <source>History of conversations is stored in local files</source>
    <translation>History of conversations is stored in local files</translation>
   </message>

@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Arabic</DisplayName>
  <Description>Arabic language pack</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-09-14</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.translations.ar</Name>
  <SortingPriority>12</SortingPriority>
  <Default>true</Default>

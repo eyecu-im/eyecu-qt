@@ -1,76 +1,76 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>CaptchaForms</name>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="50"/>
+   <location line="50" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>CAPTCHA Forms</source>
    <translation>CAPTCHA Forms</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="51"/>
+   <location line="51" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Allows to undergo tests on humanity without the use of browser</source>
    <translation>Allows to undergo tests on humanity without the use of browser</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="111"/>
+   <location line="111" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>When receiving a CAPTCHA challenge</source>
    <translation>When receiving a CAPTCHA challenge</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="155"/>
+   <location line="155" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>CAPTCHA Challenge - %1</source>
    <translation>CAPTCHA Challenge - %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="208"/>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="401"/>
+   <location line="208" filename="../../plugins/captchaforms/captchaforms.cpp"/>
+   <location line="401" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>CAPTCHA Challenge</source>
    <translation>CAPTCHA Challenge</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="209"/>
+   <location line="209" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Describe the sound you hear</source>
    <translation>Describe the sound you hear</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="210"/>
+   <location line="210" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Enter the text you see</source>
    <translation>Enter the text you see</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="211"/>
+   <location line="211" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Answer the question you see</source>
    <translation>Answer the question you see</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="212"/>
+   <location line="212" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Identify the picture</source>
    <translation>Identify the picture</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="213"/>
+   <location line="213" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Answer the question you hear</source>
    <translation>Answer the question you hear</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="214"/>
+   <location line="214" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Enter the words you hear</source>
    <translation>Enter the words you hear</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="215"/>
+   <location line="215" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Answer the question in the video</source>
    <translation>Answer the question in the video</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="216"/>
+   <location line="216" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>Identify the video</source>
    <translation>Identify the video</translation>
   </message>
   <message>
-   <location filename="../../plugins/captchaforms/captchaforms.cpp" line="402"/>
+   <location line="402" filename="../../plugins/captchaforms/captchaforms.cpp"/>
    <source>You have received the CAPTCHA challenge</source>
    <translation>You have received the CAPTCHA challenge</translation>
   </message>

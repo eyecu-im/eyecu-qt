@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>User Tune</DisplayName>
  <Description>Allows users to exchage information about Tunes they are listening</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.pepmanager.tune</Name>
- <UpdateText>Fix icon display in chat</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>8</SortingPriority>
  <Default>true</Default>

@@ -30,6 +30,9 @@
 //Iq Message Presence Out
 #define SHO_IMPO_CAPTCHAFORMS         100
 
+//Off-the-Record Messaging
+#define SHO_OTR                       500
+
 //Default
 #define SHO_DEFAULT                   1000
 

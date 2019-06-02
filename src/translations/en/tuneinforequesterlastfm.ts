@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>TuneInfoRequesterLastFm</name>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.cpp" line="22"/>
+   <location line="22" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.cpp"/>
    <source>Tune Data Requester last.fm</source>
    <translation>Tune Data Requester last.fm</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.cpp" line="23"/>
+   <location line="23" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.cpp"/>
    <source>Allows Tune plugin to request tune data from last.fm service</source>
    <translation>Allows Tune plugin to request tune data from last.fm service</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.h" line="50"/>
+   <location line="50" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfm.h"/>
    <source>last.fm</source>
    <translation>last.fm</translation>
   </message>
@@ -22,42 +22,42 @@
  <context>
   <name>TuneInfoRequesterLastFmOptions</name>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="35"/>
+   <location line="35" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>last.fm</source>
    <translation>last.fm</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="63"/>
+   <location line="63" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Small</source>
    <translation>Small</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="68"/>
+   <location line="68" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Medium</source>
    <translation>Medium</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="73"/>
+   <location line="73" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Large</source>
    <translation>Large</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="78"/>
+   <location line="78" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Extra large</source>
    <translation>Extra large</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="83"/>
+   <location line="83" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Mega</source>
    <translation>Mega</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="97"/>
+   <location line="97" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Image size</source>
    <translation>Image size</translation>
   </message>
   <message>
-   <location filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui" line="104"/>
+   <location line="104" filename="../../plugins/tuneinforequesterlastfm/tuneinforequesterlastfmoptions.ui"/>
    <source>Automatically correct misspelled requests</source>
    <translation>Automatically correct misspelled requests</translation>
   </message>
