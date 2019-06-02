@@ -1,6 +1,5 @@
 TARGET = otr
-LIBS += -lotr -lgcrypt -lgpg-error
-win32: LIBS    += -lWs2_32 -lAdvapi32 -luser32
+LIBS += -lotr -lgcrypt
 INCLUDEPATH += ../../thirdparty/libotr/src \
                ../../thirdparty/libgcrypt/SMP \
                ../../thirdparty/libgpg-error/SMP/src
