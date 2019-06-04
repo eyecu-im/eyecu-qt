@@ -1,11 +1,11 @@
 echo off
 
-set qtdir=h:\qt\5.5\msvc2013_64
+set qtdir=h:\qt\5.5\msvc2013
 set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
 set OPENSSLDIR=h:\openssl
-set FFMPEGDIR=h:\ffmpeg.x64
+set FFMPEGDIR=h:\ffmpeg
 
-set platform=x64
+set platform=x86
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
@@ -425,14 +425,16 @@ call copyplugins ru.rwsoftware.eyecu.attention attention
 set files=attention.def.xml attention.png bell.gif exclamation.gif
 call copyresources2 ru.rwsoftware.eyecu.attention menuicons\shared
 
-call copyplugins ru.rwsoftware.eyecu.receipts receipts
-call copyplugins ru.rwsoftware.eyecu.chatmarkers chatmarkers
-set files=chatmarkers.def.xml emptybox.png messagereceived.png messagedisplayed.png messageacknowledged.png messageacknowledge.png
-call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+set files=chatmarkers.def.xml emptybox.png messagereceived.png
+call copyresources2 ru.rwsoftware.eyecu.messagemarkers menuicons\shared
+call copyplugins ru.rwsoftware.eyecu.messagemarkers.receipts receipts
+set files=messagedisplayed.png messageacknowledged.png messageacknowledge.png
+call copyresources2 ru.rwsoftware.eyecu.messagemarkers.chat menuicons\shared
+call copyplugins ru.rwsoftware.eyecu.messagemarkers.chat chatmarkers
 
-call copyplugins ru.rwsoftware.eyecu.otr otr
+call copyplugins ru.rwsoftware.eyecu.p2p.otr otr
 set files=otr.def.xml otr_unverified.png otr_yes.png otr_no.png
-call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+call copyresources2 ru.rwsoftware.eyecu.p2p.otr menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer
 set files=mmplayer.def.xml mmplayer.png mmplayereject.png

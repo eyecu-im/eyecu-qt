@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Off-the-Record Messaging Ukrainian Translation</DisplayName>
+ <Description>Off-the-Record Messaging Ukrainian translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.p2p.otr.uk</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.p2p.otr,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>
