@@ -1,17 +1,22 @@
 #ifndef LIBSIGNALPROTOCOL_H
 #define LIBSIGNALPROTOCOL_H
 
-#include <thirdparty/libsignal-protocol-c/signal_protocol.h>
+#include <QString>
+#include <signal_protocol.h>
 
-extern "C" {
-#include "sha2.h"
-#include "hmac_sha2.h"
-}
+class QMutex;
 
 class SignalProtocol
 {
 public:
 	static SignalProtocol *instance();
+
+	static void init();
+
+	void generateKeys();
+
+	QString dbFileName() const;
+	void setDbFileName(const QString &AFileName);
 
 protected:
 	/**
@@ -145,16 +150,32 @@ protected:
 						   const uint8_t *ACiphertext, size_t ACiphertextLen,
 						   void *AUserData);
 
+	static void recursiveMutexLock(void *AUserData);
+	static void recursiveMutexUnlock(void *AUserData);
+
+	void recursiveMutexLock();
+	void recursiveMutexUnlock();
+
 private:
 	SignalProtocol();
 
 	// signal-protocol
 	signal_context		*FGlobalContext;
 
-	//SHA2
-	unsigned char digest[32];
+	ratchet_identity_key_pair *FIdentityKeyPair;
+	uint32_t FRegistrationId;
+	signal_protocol_key_helper_pre_key_list_node *FPreKeysHead;
+	session_signed_pre_key *FSignedPreKey;
 
-	static SignalProtocol *FInstance;	
+	QString FFileName;
+
+	// Mutex
+	QMutex	*FMutex;
+
+	// Error code
+	int FError;
+
+	static SignalProtocol *FInstance;
 };
 
 #endif // LIBSIGNALPROTOCOL_H
