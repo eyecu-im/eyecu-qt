@@ -604,6 +604,17 @@ SignalProtocol::SignalProtocol():
 
 	// init store context
 
+	signal_protocol_session_store session_store = {
+		  .load_session_func = &axc_db_session_load,
+		  .get_sub_device_sessions_func = &axc_db_session_get_sub_device_sessions,
+		  .store_session_func = &axc_db_session_store,
+		  .contains_session_func = &axc_db_session_contains,
+		  .delete_session_func = &axc_db_session_delete,
+		  .delete_all_sessions_func = &axc_db_session_delete_all,
+		  .destroy_func = &axc_db_session_destroy_store_ctx,
+		  .user_data = ctx_p
+	  };
+
 //	if (signal_protocol_store_context_create(&store_context_p, FGlobalContext)) {
 //	  err_msg = "failed to create store context";
 //	  FError = -1;
