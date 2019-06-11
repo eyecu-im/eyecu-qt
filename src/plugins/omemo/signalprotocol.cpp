@@ -2,6 +2,7 @@
 #include <QDateTime>
 #include <key_helper.h>
 #include "signalprotocol.h"
+#include "omemostore.h"
 
 extern "C" {
 #include <gcrypt.h>
@@ -48,6 +49,11 @@ QString SignalProtocol::dbFileName() const
 void SignalProtocol::setDbFileName(const QString &AFileName)
 {
 	FFileName = AFileName;
+}
+
+signal_context *SignalProtocol::globalContext()
+{
+	return FGlobalContext;
 }
 
 static int choose_aes(int cipher, size_t key_len, int * algo_p, int * mode_p) {
@@ -562,7 +568,7 @@ SignalProtocol::SignalProtocol():
 	FMutex(new QMutex(QMutex::Recursive))
 {
 	char *err_msg = nullptr;
-//	signal_protocol_store_context * store_context_p = nullptr;
+	signal_protocol_store_context * store_context_p = nullptr;
 
 	// 1. create global context
 	if (signal_context_create(&FGlobalContext, this)) {
@@ -604,30 +610,37 @@ SignalProtocol::SignalProtocol():
 
 	// init store context
 
-	signal_protocol_session_store session_store = {
-		  .load_session_func = &axc_db_session_load,
-		  .get_sub_device_sessions_func = &axc_db_session_get_sub_device_sessions,
-		  .store_session_func = &axc_db_session_store,
-		  .contains_session_func = &axc_db_session_contains,
-		  .delete_session_func = &axc_db_session_delete,
-		  .delete_all_sessions_func = &axc_db_session_delete_all,
-		  .destroy_func = &axc_db_session_destroy_store_ctx,
-		  .user_data = ctx_p
-	  };
+	if (signal_protocol_store_context_create(&store_context_p, FGlobalContext)) {
+	  err_msg = "failed to create store context";
+	  FError = -1;
+	  goto cleanup;
+	}
 
-//	if (signal_protocol_store_context_create(&store_context_p, FGlobalContext)) {
-//	  err_msg = "failed to create store context";
-//	  FError = -1;
-//	  goto cleanup;
-//	}
+	qDebug("%s: created store context", __func__);
 
-//	qDebug("%s: created store context", __func__);
+	signal_protocol_session_store session_store;
+	session_store.load_session_func = &OmemoStore::axc_db_session_load;
+	session_store.get_sub_device_sessions_func = &OmemoStore::axc_db_session_get_sub_device_sessions;
+	session_store.store_session_func = &OmemoStore::axc_db_session_store;
+	session_store.contains_session_func = &OmemoStore::axc_db_session_contains;
+	session_store.delete_session_func = &OmemoStore::axc_db_session_delete;
+	session_store.delete_all_sessions_func = &OmemoStore::axc_db_session_delete_all;
+	session_store.destroy_func = &OmemoStore::axc_db_session_destroy_store_ctx;
+	session_store.user_data = this;
 
-//	if (signal_protocol_store_context_set_session_store(store_context_p, &session_store)) {
-//	  err_msg = "failed to create session store";
-//	  FError = -1;
-//	  goto cleanup;
-//	}
+	if (signal_protocol_store_context_set_session_store(store_context_p, &session_store)) {
+	  err_msg = "failed to create session store";
+	  FError = -1;
+	  goto cleanup;
+	}
+
+//	signal_protocol_pre_key_store pre_key_store;
+//	pre_key_store.load_pre_key = &OmemoStore::axc_db_pre_key_load;
+//	pre_key_store.store_pre_key = &OmemoStore::axc_db_pre_key_store;
+//	pre_key_store.contains_pre_key = &OmemoStore::axc_db_pre_key_contains;
+//	pre_key_store.remove_pre_key = &OmemoStore::axc_db_pre_key_remove;
+//	pre_key_store.destroy_func = &OmemoStore::axc_db_pre_key_destroy_ctx;
+//	pre_key_store.user_data = this;
 
 //	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
 //	  err_msg = "failed to set pre key store";
@@ -656,6 +669,16 @@ SignalProtocol::SignalProtocol():
 //	  axc_cleanup(ctx_p);
 	  qCritical("%s: %s", __func__, err_msg);
 	} else {
-	  qInfo("%s: done initializing axc", __func__);
+		OmemoStore::init("OMEMO");
+		qInfo("%s: done initializing axc", __func__);
 	}
 }
+
+SignalProtocol::~SignalProtocol()
+{
+	OmemoStore::uninit();
+}
+
+axc_buf_list_item::axc_buf_list_item(uint32_t AId, signal_buffer *ABuf_p):
+	id(AId), buf_p(ABuf_p)
+{}

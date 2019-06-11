@@ -6,6 +6,12 @@
 
 class QMutex;
 
+struct axc_buf_list_item {
+	axc_buf_list_item(uint32_t AId, signal_buffer *ABuf_p);
+	uint32_t id;
+	signal_buffer *buf_p;
+};
+
 class SignalProtocol
 {
 public:
@@ -17,6 +23,8 @@ public:
 
 	QString dbFileName() const;
 	void setDbFileName(const QString &AFileName);
+
+	signal_context *globalContext();
 
 protected:
 	/**
@@ -158,6 +166,7 @@ protected:
 
 private:
 	SignalProtocol();
+	~SignalProtocol();
 
 	// signal-protocol
 	signal_context		*FGlobalContext;
