@@ -450,7 +450,7 @@ int SignalProtocol::decryptFunc(signal_buffer **AOutput, int ACipher, const uint
 
 	int ret_val = SG_SUCCESS;
 	char * err_msg = nullptr;
-	SignalProtocol *axc_ctx_p = (SignalProtocol *)AUserData;
+//	SignalProtocol *axc_ctx_p = reinterpret_cast<SignalProtocol *>(AUserData);
 
 	int algo = 0;
 	int mode = 0;
@@ -634,25 +634,33 @@ SignalProtocol::SignalProtocol():
 	  goto cleanup;
 	}
 
-//	signal_protocol_pre_key_store pre_key_store;
-//	pre_key_store.load_pre_key = &OmemoStore::axc_db_pre_key_load;
-//	pre_key_store.store_pre_key = &OmemoStore::axc_db_pre_key_store;
-//	pre_key_store.contains_pre_key = &OmemoStore::axc_db_pre_key_contains;
-//	pre_key_store.remove_pre_key = &OmemoStore::axc_db_pre_key_remove;
-//	pre_key_store.destroy_func = &OmemoStore::axc_db_pre_key_destroy_ctx;
-//	pre_key_store.user_data = this;
+	signal_protocol_pre_key_store pre_key_store;
+	pre_key_store.load_pre_key = &OmemoStore::axc_db_pre_key_load;
+	pre_key_store.store_pre_key = &OmemoStore::axc_db_pre_key_store;
+	pre_key_store.contains_pre_key = &OmemoStore::axc_db_pre_key_contains;
+	pre_key_store.remove_pre_key = &OmemoStore::axc_db_pre_key_remove;
+	pre_key_store.destroy_func = &OmemoStore::axc_db_pre_key_destroy_ctx;
+	pre_key_store.user_data = this;
 
-//	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
-//	  err_msg = "failed to set pre key store";
-//	  FError = -1;
-//	  goto cleanup;
-//	}
+	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
+	  err_msg = "failed to set pre key store";
+	  FError = -1;
+	  goto cleanup;
+	}
 
-//	if (signal_protocol_store_context_set_signed_pre_key_store(store_context_p, &signed_pre_key_store)) {
-//	  err_msg = "failed to set signed pre key store";
-//	  FError = -1;
-//	  goto cleanup;
-//	}
+	signal_protocol_signed_pre_key_store signed_pre_key_store;
+	signed_pre_key_store.load_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_load;
+	signed_pre_key_store.store_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_store;
+	signed_pre_key_store.contains_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_contains;
+	signed_pre_key_store.remove_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_remove;
+	signed_pre_key_store.destroy_func = &OmemoStore::axc_db_signed_pre_key_destroy_ctx;
+	signed_pre_key_store.user_data = this;
+
+	if (signal_protocol_store_context_set_signed_pre_key_store(store_context_p, &signed_pre_key_store)) {
+	  err_msg = "failed to set signed pre key store";
+	  FError = -1;
+	  goto cleanup;
+	}
 
 //	if (signal_protocol_store_context_set_identity_key_store(store_context_p, &identity_key_store)) {
 //	  err_msg = "failed to set identity key store";
@@ -665,8 +673,8 @@ SignalProtocol::SignalProtocol():
 
   cleanup:
 	if (FError < 0) {
-	  //FIXME: this frees inited context, make this more fine-grained
-//	  axc_cleanup(ctx_p);
+		//FIXME: this frees inited context, make this more fine-grained
+//		axc_cleanup(ctx_p);
 	  qCritical("%s: %s", __func__, err_msg);
 	} else {
 		OmemoStore::init("OMEMO");
