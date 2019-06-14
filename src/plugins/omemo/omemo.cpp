@@ -21,12 +21,16 @@
 #define TAG_NAME_ROOT	"list"
 #define TAG_NAME_ITEM	"device"
 
+#define DIR_OMEMO       "omemo"
+#define DBFN_OMEMO      "omemo.db"
+
 Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
 //				FMessageProcessor(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
 				FMessageStyleManager(nullptr),
+				FPluginManager(nullptr),
 				FIconStorage(nullptr),
 				FOmemoHandlerIn(0),
 				FOmemoHandlerOut(0),
@@ -50,6 +54,8 @@ void Omemo::pluginInfo(IPluginInfo *APluginInfo)
 bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
 	Q_UNUSED(AInitOrder);
+
+	FPluginManager = APluginManager;
 
 	IPlugin *plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
 	if (plugin)
@@ -114,7 +120,17 @@ bool Omemo::initObjects()
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
 
-	FSignalProtocol = SignalProtocol::instance();
+	FOmemoDir.setPath(FPluginManager->homePath());
+	if (!FOmemoDir.exists(DIR_OMEMO))
+		FOmemoDir.mkdir(DIR_OMEMO);
+	FOmemoDir.cd(DIR_OMEMO);
+
+	SignalProtocol::init();
+	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO));
+
+	qDebug() << "SQLite DB file name:" << FSignalProtocol->dbFileName();
+
+	FSignalProtocol->generateKeys(1000);
 
 	return true;
 }

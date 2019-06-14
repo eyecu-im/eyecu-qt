@@ -45,6 +45,12 @@ namespace OmemoStore
 	int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void * user_data);
 	void axc_db_signed_pre_key_destroy_ctx(void * user_data);
 
+	// Identity key store implementation
+	int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data);
+	int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * registration_id);
+	int axc_db_identity_save(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data);
+	int axc_db_identity_always_trusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data);
+	void axc_db_identity_destroy_ctx(void * user_data);
 };
 
 #endif // OMEMOSTORE_H

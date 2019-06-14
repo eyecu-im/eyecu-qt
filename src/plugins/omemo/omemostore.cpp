@@ -109,16 +109,9 @@ int axc_db_property_set(const char * name, const int val) {
 int axc_db_property_get(const char * name, int * val_p) {
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE name IS ?1;");
 
-//	sqlite3 * db_p = (void *) 0;
-//	sqlite3_stmt * pstmt_p = (void *) 0;
 	QSqlQuery pstmt_p(stmt, db());
-//	if (db_conn_open(&db_p, &pstmt_p, stmt, axc_ctx_p)) return -1;
 
 	pstmt_p.bindValue(1, name);
-//	if (sqlite3_bind_text(pstmt_p, 1, name, -1, SQLITE_STATIC)) {
-//		db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-//		return -21;
-//	}
 
 	if (pstmt_p.exec())	{
 		if (pstmt_p.next()) {
@@ -126,13 +119,11 @@ int axc_db_property_get(const char * name, int * val_p) {
 			return 1;
 		} else {
 			const int temp = pstmt_p.value(1).toInt();
-
 			// exactly one result
 			if (pstmt_p.next()) {
 				qCritical("Too many results");
 				return -3;
 			}
-
 			*val_p = temp;
 			return 0;
 		}
@@ -729,35 +720,26 @@ void axc_db_signed_pre_key_destroy_ctx(void * user_data)
 /**
  * saves the public and private key by using the api serialization calls, as this format (and not the higher-level key type) is needed by the getter.
  */
-int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p, axc_context * axc_ctx_p) {
+int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
 	// 1 - name ("public" or "private")
 	// 2 - key blob
 	// 3 - length of the key
 	// 4 - trusted (1 for true, 0 for false)
 	const QString stmt("INSERT INTO " IDENTITY_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3, ?4);");
 
-//  sqlite3 * db_p = (void *) 0;
-//  sqlite3_stmt * pstmt_p = (void *) 0;
+	char * err_msg = nullptr;
+	int ret_val = 0;
+	signal_buffer * pubkey_buf_p = nullptr;
+	signal_buffer * privkey_buf_p = nullptr;
+	size_t pubkey_buf_len = 0;
+	uint8_t * pubkey_buf_data_p = nullptr;
+	size_t privkey_buf_len = 0;
+	uint8_t * privkey_buf_data_p = nullptr;
 
-  char * err_msg = nullptr;
-  int ret_val = 0;
-  signal_buffer * pubkey_buf_p = nullptr;
-  signal_buffer * privkey_buf_p = nullptr;
-  size_t pubkey_buf_len = 0;
-  uint8_t * pubkey_buf_data_p = nullptr;
-  size_t privkey_buf_len = 0;
-  uint8_t * privkey_buf_data_p = nullptr;
-
-  QSqlQuery pstmt_p(stmt, db());
-//	if (db_conn_open(&db_p, &pstmt_p, stmt, axc_ctx_p)) return -1;
+	QSqlQuery pstmt_p(stmt, db());
 
 	// public key
 	pstmt_p.bindValue(1, OWN_PUBLIC_KEY_NAME);
-//	if (sqlite3_bind_text(pstmt_p, 1, OWN_PUBLIC_KEY_NAME, -1, SQLITE_STATIC)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -21;
-//		goto cleanup;
-//	}
 
 	if (ec_public_key_serialize(&pubkey_buf_p, ratchet_identity_key_pair_get_public(key_pair_p))) {
 		err_msg = "Failed to allocate memory to serialize the public key";
@@ -769,32 +751,14 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p, a
 
 	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(pubkey_buf_data_p),
 									int(pubkey_buf_len)));
-//	if (sqlite3_bind_blob(pstmt_p, 2, pubkey_buf_data_p, pubkey_buf_len, SQLITE_TRANSIENT)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -22;
-//		goto cleanup;
-//	}
 	pstmt_p.bindValue(3, pubkey_buf_len);
-//	if(sqlite3_bind_int(pstmt_p, 3, pubkey_buf_len)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -23;
-//		goto cleanup;
-//	}
-
 	pstmt_p.bindValue(4, OWN_KEY);
-//	if (sqlite3_bind_int(pstmt_p, 4, OWN_KEY)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -24;
-//		goto cleanup;
-//	}
 	if (pstmt_p.exec()) {
-//	if (sqlite3_step(pstmt_p) != SQLITE_DONE) {
 		err_msg = "Failed to execute statement";
 		ret_val = -3;
 		goto cleanup;
 	}
 	if (pstmt_p.numRowsAffected() != 1) {
-//	if (sqlite3_changes(db_p) != 1) {
 		err_msg = "Failed to insert";
 		ret_val = -3;
 		goto cleanup;
@@ -802,22 +766,11 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p, a
 
 	// private key
 //TODO: Check, if we really need this
-		pstmt_p.finish();
-//	if (sqlite3_reset(pstmt_p)) {
-//		err_msg = "Failed to reset prepared statement";
-//		ret_val = -2;
-//		goto cleanup;
-//	}
+	pstmt_p.finish();
 //TODO: Check, if we really need this
-		pstmt_p.clear();
-//		sqlite3_clear_bindings(pstmt_p);
+	pstmt_p.clear();
 
-		pstmt_p.bindValue(1, OWN_PRIVATE_KEY_NAME);
-//	if (sqlite3_bind_text(pstmt_p, 1, OWN_PRIVATE_KEY_NAME, -1, SQLITE_STATIC)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -21;
-//		goto cleanup;
-//	}
+	pstmt_p.bindValue(1, OWN_PRIVATE_KEY_NAME);
 
 	if (ec_private_key_serialize(&privkey_buf_p, ratchet_identity_key_pair_get_private(key_pair_p))) {
 		err_msg = "Failed to allocate memory to serialize the private key";
@@ -829,35 +782,17 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p, a
 
 	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(privkey_buf_data_p),
 									int(privkey_buf_len)));
-//	if (sqlite3_bind_blob(pstmt_p, 2, privkey_buf_data_p, privkey_buf_len, SQLITE_TRANSIENT)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -22;
-//		goto cleanup;
-//	}
-
 	pstmt_p.bindValue(3, privkey_buf_len);
-//	if(sqlite3_bind_int(pstmt_p, 3, privkey_buf_len)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -23;
-//		goto cleanup;
-//	}
 
 //TODO: Check, if we really need this
 	pstmt_p.bindValue(4, OWN_KEY);
-//	if (sqlite3_bind_int(pstmt_p, 4, OWN_KEY)) {
-//		err_msg = "Failed to bind";
-//		ret_val = -24;
-//		goto cleanup;
-//	}
 	if (pstmt_p.exec()) {
-//	if (sqlite3_step(pstmt_p) != SQLITE_DONE) {
 		err_msg = "Failed to execute statement";
 		ret_val = -3;
 		goto cleanup;
 	}
 
 	if (pstmt_p.numRowsAffected() != 1) {
-//	if (sqlite3_changes(db_p) != 1) {
 		err_msg = "Failed to insert";
 		ret_val = -3;
 		goto cleanup;
@@ -872,39 +807,29 @@ cleanup:
 		signal_buffer_bzero_free(privkey_buf_p);
 	}
 
-	qCritical(err_msg);
-//	db_conn_cleanup(db_p, pstmt_p, err_msg, __func__, axc_ctx_p);
+	if (err_msg)
+		qCritical(err_msg);
+
 	return ret_val;
 }
-
 
 int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data)
 {
 	Q_UNUSED(user_data);
 
 	const QString stmt("SELECT * FROM " IDENTITY_KEY_STORE_TABLE_NAME " WHERE " IDENTITY_KEY_STORE_NAME_NAME " IS ?1;");
-//	axc_context * axc_ctx_p = (axc_context *) user_data;
-//	sqlite3 * db_p = (void *) 0;
-//	sqlite3_stmt * pstmt_p = (void *) 0;
+
 	QSqlQuery pstmt_p(stmt, db());
-//	if (db_conn_open(&db_p, &pstmt_p, stmt, user_data)) return -1;
 
 	char * err_msg = nullptr;
 	int ret_val = 0;
+	size_t pubkey_len = 0;
+	size_t privkey_len = 0;
 	signal_buffer * pubkey_buf_p = nullptr;
 	signal_buffer * privkey_buf_p = nullptr;
 
   // public key
 	pstmt_p.bindValue(1, OWN_PUBLIC_KEY_NAME);
-//	if (sqlite3_bind_text(pstmt_p, 1, OWN_PUBLIC_KEY_NAME, -1, SQLITE_STATIC)) {
-//		err_msg = "Failed to bind public key name when trying to get the identity key pair";
-//		ret_val = -21;
-//		goto cleanup;
-//	}
-
-	size_t pubkey_len = 0;
-	size_t privkey_len = 0;
-//	int step_result = sqlite3_step(pstmt_p);
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
 			pubkey_len = pstmt_p.value(2).toUInt();
@@ -923,20 +848,6 @@ int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** 
 			ret_val = SG_ERR_INVALID_KEY_ID;
 			goto cleanup;
 		}
-//	if (step_result == SQLITE_DONE) {
-		// public key not found
-//		err_msg = "Own public key not found";
-//		ret_val = SG_ERR_INVALID_KEY_ID;
-//		goto cleanup;
-//	} else if (step_result == SQLITE_ROW) {
-//		pubkey_len = sqlite3_column_int(pstmt_p, 2);
-//		pubkey_buf_p = signal_buffer_create(sqlite3_column_blob(pstmt_p, 1), pubkey_len);
-
-//		if (pubkey_buf_p == 0) {
-//			err_msg = "Buffer could not be initialised";
-//			ret_val = -3;
-//			goto cleanup;
-//		}
 	} else {
 		err_msg = "Failed executing SQL statement";
 		ret_val = -3;
@@ -944,17 +855,10 @@ int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** 
 	}
 
 	pstmt_p.finish();
-//	sqlite3_reset(pstmt_p);
 	pstmt_p.clear();
-//	sqlite3_clear_bindings(pstmt_p);
 
 	// private key
 	pstmt_p.bindValue(1, OWN_PRIVATE_KEY_NAME);
-//	if (sqlite3_bind_text(pstmt_p, 1, OWN_PRIVATE_KEY_NAME, -1, SQLITE_STATIC)) {
-//		err_msg = "Failed to bind private key name when trying to get the identity key pair";
-//		ret_val = -21;
-//		goto cleanup;
-//	}
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -975,21 +879,6 @@ int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** 
 			ret_val = SG_ERR_INVALID_KEY_ID;
 			goto cleanup;
 		}
-//	step_result = sqlite3_step(pstmt_p);
-//	if (step_result == SQLITE_DONE) {
-//		// private key not found
-//		err_msg = "Own private key not found";
-//		ret_val = SG_ERR_INVALID_KEY_ID;
-//		goto cleanup;
-//	} else if (step_result == SQLITE_ROW) {
-//		privkey_len = sqlite3_column_int(pstmt_p, 2);
-//		privkey_buf_p = signal_buffer_create(sqlite3_column_blob(pstmt_p, 1), privkey_len);
-
-//		if (privkey_buf_p == 0) {
-//			err_msg = "Buffer could not be initialised";
-//			ret_val = -3;
-//			goto cleanup;
-//		}
 	} else {
 		err_msg = "Failed executing SQL statement";
 		ret_val = -3;
@@ -1009,8 +898,8 @@ cleanup:
 		}
 	}
 
-	qCritical(err_msg);
-//	db_conn_cleanup(db_p, pstmt_p, err_msg, __func__, axc_ctx_p);
+	if (err_msg)
+		qCritical(err_msg);
 	return ret_val;
 }
 
@@ -1019,21 +908,14 @@ int axc_db_identity_set_local_registration_id(const uint32_t reg_id, SignalProto
 	return (axc_db_property_set(REG_ID_NAME, int(reg_id))) ? -1 : 0;
 }
 
-int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * registration_id) {
+int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * registration_id)
+{
+	Q_UNUSED(user_data);
+
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE " SETTINGS_STORE_NAME_NAME " IS ?1;");
-
-//	axc_context * axc_ctx_p = (axc_context *) user_data;
-//	sqlite3 * db_p = (void *) 0;
-//	sqlite3_stmt * pstmt_p = (void *) 0;
 	QSqlQuery pstmt_p(stmt, db());
-//	if (db_conn_open(&db_p, &pstmt_p, stmt, user_data)) return -1;
-	pstmt_p.bindValue(1, REG_ID_NAME);
-//	if (sqlite3_bind_text(pstmt_p, 1, REG_ID_NAME, -1, SQLITE_STATIC)) {
-//		db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-//		return -21;
-//	}
 
-//	const int step_result = sqlite3_step(pstmt_p);
+	pstmt_p.bindValue(1, REG_ID_NAME);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -1047,134 +929,102 @@ int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * regis
 		return -32;
 	}
 
-//	if (step_result == SQLITE_DONE) {
-//		// registration ID not found
-//		db_conn_cleanup(db_p, pstmt_p, "Own registration ID not found", __func__, axc_ctx_p);
-//		return -31;
-//	} else if (step_result == SQLITE_ROW) {
-//		*registration_id = sqlite3_column_int(pstmt_p, 1);
-//	} else {
-//		db_conn_cleanup(db_p, pstmt_p, "Failed executing SQL statement", __func__, axc_ctx_p);
-//		return -32;
-//	}
-
-//	db_conn_cleanup(db_p, pstmt_p, (void *) 0, __func__, axc_ctx_p);
 	return 0;
 }
 
-int axc_db_identity_save(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data) {
-  // 1 - name ("public" or "private" for own keys, name for contacts)
-  // 2 - key blob
-  // 3 - length of the key
-  // 4 - trusted (1 for true, 0 for false)
-  char save_stmt[] = "INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3, ?4);";
-  char del_stmt[] = "DELETE FROM " IDENTITY_KEY_STORE_TABLE_NAME " WHERE " IDENTITY_KEY_STORE_NAME_NAME " IS ?1;";
-  char * stmt = (void *) 0;
+int axc_db_identity_save(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
+{
+	Q_UNUSED(user_data);
 
-  if (key_data) {
-	stmt = save_stmt;
-  } else {
-	stmt = del_stmt;
-  }
+	// 1 - name ("public" or "private" for own keys, name for contacts)
+	// 2 - key blob
+	// 3 - length of the key
+	// 4 - trusted (1 for true, 0 for false)
+	const QString save_stmt("INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3, ?4);");
+	const QString del_stmt("DELETE FROM " IDENTITY_KEY_STORE_TABLE_NAME " WHERE " IDENTITY_KEY_STORE_NAME_NAME " IS ?1;");
+	const QString &stmt = key_data?save_stmt:del_stmt;
 
-  axc_context * axc_ctx_p = (axc_context *) user_data;
-  sqlite3 * db_p = (void *) 0;
-  sqlite3_stmt * pstmt_p = (void *) 0;
-  if (db_conn_open(&db_p, &pstmt_p, stmt, user_data)) return -1;
+	QSqlQuery pstmt_p(stmt, db());
 
-  if (sqlite3_bind_text(pstmt_p, 1, addr_p->name, -1, SQLITE_TRANSIENT)) {
-	db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-	return -21;
-  }
+	pstmt_p.bindValue(1, QString(addr_p->name));
 
-  if (key_data) {
-	if (sqlite3_bind_blob(pstmt_p, 2, key_data, key_len, SQLITE_TRANSIENT)) {
-	  db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-	  return -22;
+	if (key_data) {
+		pstmt_p.bindValue(2, QByteArray(
+							  reinterpret_cast<char*>(key_data),
+							  int(key_len)));
+		pstmt_p.bindValue(3, key_len);
+		pstmt_p.bindValue(4, IDENTITY_KEY_TRUSTED);
 	}
-	if(sqlite3_bind_int(pstmt_p, 3, key_len)) {
-	  db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-	  return -23;
-	}
-	if(sqlite3_bind_int(pstmt_p, 4, IDENTITY_KEY_TRUSTED)) {
-	  db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-	  return -24;
-	}
-  }
 
-  if (db_exec_single_change(db_p, pstmt_p, axc_ctx_p)) return -3;
+	if (!pstmt_p.exec()) return -3;
 
-  db_conn_cleanup(db_p, pstmt_p, (void *) 0, __func__, axc_ctx_p);
-  return 0;
+	return 0;
 }
 
-int axc_db_identity_is_trusted(const char * name, size_t name_len, uint8_t * key_data, size_t key_len, void * user_data) {
+int axc_db_identity_is_trusted(const char * name, size_t name_len, uint8_t * key_data, size_t key_len, void * user_data)
+{
+	Q_UNUSED(name_len);
+	Q_UNUSED(user_data);
+
 	const QString stmt("SELECT * FROM " IDENTITY_KEY_STORE_TABLE_NAME " WHERE " IDENTITY_KEY_STORE_NAME_NAME " IS ?1;");
 
-//	axc_context * axc_ctx_p = (axc_context *) user_data;
-//	sqlite3 * db_p = (void *) 0;
-//	sqlite3_stmt * pstmt_p = (void *) 0;
 	signal_buffer * key_record = nullptr;
-	int step_result = 0;
 	size_t record_len = 0;
 
-	if (db_conn_open(&db_p, &pstmt_p, stmt, user_data)) return -1;
+	QSqlQuery pstmt_p(stmt, db());
 
-	if (sqlite3_bind_text(pstmt_p, 1, name, -1, SQLITE_TRANSIENT)) {
-	db_conn_cleanup(db_p, pstmt_p, "Failed to bind", __func__, axc_ctx_p);
-	return -21;
-	}
+	pstmt_p.bindValue(1, QString(name));
 
-	step_result = sqlite3_step(pstmt_p);
-	if (step_result == SQLITE_DONE) {
-	// no entry = trusted, according to docs
-	db_conn_cleanup(db_p, pstmt_p, (void *) 0, __func__, axc_ctx_p);
-	return 1;
-	} else if (step_result == SQLITE_ROW) {
-	// theoretically could be checked if trusted or not but it's TOFU
+	if (pstmt_p.exec()) {
+		if (pstmt_p.next()) {
+			// no entry = trusted, according to docs
+			return 1;
+		} else {
+			// theoretically could be checked if trusted or not but it's TOFU
+			record_len = pstmt_p.value(2).toUInt();
+			if (record_len != key_len) {
+				qCritical("Key length does not match");
+				return 0;
+			}
 
-	record_len = sqlite3_column_int(pstmt_p, 2);
-	if (record_len != key_len) {
-	  db_conn_cleanup(db_p, pstmt_p, "Key length does not match", __func__, axc_ctx_p);
-	  return 0;
-	}
+			key_record = signal_buffer_create(
+						reinterpret_cast<quint8*>(
+							pstmt_p.value(1).toByteArray().data()),
+						record_len);
+			if (!key_record) {
+				qCritical("Buffer could not be initialised");
+				return -3;
+			}
 
-	key_record = signal_buffer_create(sqlite3_column_blob(pstmt_p, 1), record_len);
-	if (key_record == 0) {
-	  db_conn_cleanup(db_p, pstmt_p, "Buffer could not be initialised", __func__, axc_ctx_p);
-	  return -3;
-	}
+			if (memcmp(key_data, signal_buffer_data(key_record), key_len)) {
+				qCritical("Key data does not match");
+			}
 
-	if (memcmp(key_data, signal_buffer_data(key_record), key_len)) {
-	  db_conn_cleanup(db_p, pstmt_p, "Key data does not match", __func__, axc_ctx_p);
-	}
-
-	db_conn_cleanup(db_p, pstmt_p, (void *) 0, __func__, axc_ctx_p);
-	signal_buffer_bzero_free(key_record);
-	return 1;
+			signal_buffer_bzero_free(key_record);
+			return 1;
+		}
 	} else {
-	db_conn_cleanup(db_p, pstmt_p, "Failed executing SQL statement", __func__, axc_ctx_p);
-	return -32;
+		qCritical("Failed executing SQL statement");
+		return -32;
 	}
-
-	(void)name_len;
 }
 
-int axc_db_identity_always_trusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data) {
-  (void) addr_p;
-  (void) key_data;
-  (void) key_len;
-  (void) user_data;
+int axc_db_identity_always_trusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
+{
+  Q_UNUSED(addr_p);
+  Q_UNUSED(key_data);
+  Q_UNUSED(key_len);
+  Q_UNUSED(user_data);
 
   return 1;
 }
 
-void axc_db_identity_destroy_ctx(void * user_data) {
-  (void) user_data;
+void axc_db_identity_destroy_ctx(void * user_data)
+{
+  Q_UNUSED(user_data);
   //const char stmt[] = "DELETE FROM identity_key_store; VACUUM;";
 
   //db_exec_quick(stmt, user_data);
 }
-
 
 }

@@ -1,6 +1,7 @@
 #ifndef OMEMO_H
 #define OMEMO_H
 
+#include <QDir>
 #include <interfaces/iomemo.h>
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/ipluginmanager.h>
@@ -69,6 +70,7 @@ private:
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
 	IMessageStyleManager* FMessageStyleManager;
+	IPluginManager*		FPluginManager;
 
 	IconStorage*		FIconStorage;
 	int					FOmemoHandlerIn;
@@ -77,6 +79,8 @@ private:
 	SignalProtocol*		FSignalProtocol;
 
 	QMap <Jid, QString> FStreamOmemo;
+	QDir				FOmemoDir;
+
 };
 
 #endif // OMEMO_H

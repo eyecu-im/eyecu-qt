@@ -12,21 +12,30 @@ struct axc_buf_list_item {
 	signal_buffer *buf_p;
 };
 
+struct session_builder;
+
 class SignalProtocol
 {
 public:
-	static SignalProtocol *instance();
+	static SignalProtocol *instance(const QString &AFileName);
 
 	static void init();
 
-	void generateKeys();
+	int generateKeys(uint AStartId);
+
+	int buildSession();
 
 	QString dbFileName() const;
-	void setDbFileName(const QString &AFileName);
 
 	signal_context *globalContext();
+	int error() const;
 
 protected:
+	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
+	int generateRegistrationId(quint32 *ARegistrationId, int AExtendedRange);
+	int generatePreKeys(signal_protocol_key_helper_pre_key_list_node **APreKeyList, uint AStart, uint ACount);
+	int generateSignedPreKey(session_signed_pre_key **ASignedPreKey, const ratchet_identity_key_pair *AIdentityKeyPair, uint32_t ASignedPreKeyId, uint64_t ATimestamp);
+
 	/**
 	 * Callback for a secure random number generator.
 	 * This function shall fill the provided buffer with random bytes.
@@ -165,7 +174,7 @@ protected:
 	void recursiveMutexUnlock();
 
 private:
-	SignalProtocol();
+	SignalProtocol(const QString &AFileName);
 	~SignalProtocol();
 
 	// signal-protocol
@@ -175,6 +184,8 @@ private:
 	uint32_t FRegistrationId;
 	signal_protocol_key_helper_pre_key_list_node *FPreKeysHead;
 	session_signed_pre_key *FSignedPreKey;
+	signal_protocol_store_context * FStoreContext;
+	session_builder *FBuilder;
 
 	QString FFileName;
 
