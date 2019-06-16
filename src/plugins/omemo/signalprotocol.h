@@ -21,14 +21,19 @@ public:
 
 	static void init();
 
-	int generateKeys(uint AStartId);
+//	int generateKeys(uint AStartId);
 
-	int buildSession();
+//	int buildSession();
 
 	QString dbFileName() const;
 
 	signal_context *globalContext();
+
 	int error() const;
+
+	bool install();
+
+	int getDeviceId(quint32 &AId);
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
@@ -185,7 +190,7 @@ private:
 	signal_protocol_key_helper_pre_key_list_node *FPreKeysHead;
 	session_signed_pre_key *FSignedPreKey;
 	signal_protocol_store_context * FStoreContext;
-	session_builder *FBuilder;
+	session_builder *FSessionBuilder;
 
 	QString FFileName;
 

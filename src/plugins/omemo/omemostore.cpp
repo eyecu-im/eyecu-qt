@@ -1,5 +1,7 @@
+#include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QSqlError>
 #include <QVariant>
 #include <key_helper.h>
 #include "signalprotocol.h"
@@ -98,8 +100,8 @@ int axc_db_property_set(const char * name, const int val) {
 	const QString stmt("INSERT OR REPLACE INTO " SETTINGS_STORE_TABLE_NAME " VALUES (?1, ?2);");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, name);
-	pstmt_p.bindValue(2, val);
+	pstmt_p.bindValue(0, name);
+	pstmt_p.bindValue(1, val);
 
 	if (!pstmt_p.exec()) return -3;
 
@@ -107,11 +109,13 @@ int axc_db_property_set(const char * name, const int val) {
 }
 
 int axc_db_property_get(const char * name, int * val_p) {
+	qDebug() << "axc_db_property_get(" << name << ", val_p)";
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE name IS ?1;");
 
 	QSqlQuery pstmt_p(stmt, db());
+	pstmt_p.bindValue(0, name);
 
-	pstmt_p.bindValue(1, name);
+	qDebug() << "query:" << pstmt_p.lastQuery();
 
 	if (pstmt_p.exec())	{
 		if (pstmt_p.next()) {
@@ -128,7 +132,10 @@ int axc_db_property_get(const char * name, int * val_p) {
 			return 0;
 		}
 	} else {
-		qCritical("Failed to execute statement");
+		qCritical() << "Failed to execute statement:"
+					<< pstmt_p.lastError()
+					<< pstmt_p.lastError().number()
+					<< pstmt_p.lastError().type();
 		return -3;
 	}
 }
@@ -149,8 +156,8 @@ int axc_db_session_load(signal_buffer ** record,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(QString(1), QString(address->name));
-	pstmt_p.bindValue(QString(2), address->device_id);
+	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.isActive()) {
@@ -193,7 +200,7 @@ int axc_db_session_get_sub_device_sessions(signal_int_list ** sessions,
 	signal_int_list * session_list_p = nullptr;
 	int ret_val = 0;
 
-	pstmt_p.bindValue(1, name);
+	pstmt_p.bindValue(0, name);
 	if (!pstmt_p.isValid()) {
 		qCritical("Failed to bind name when trying to find sub device sessions");
 		ret_val = -21;
@@ -242,9 +249,11 @@ int axc_db_session_store(const signal_protocol_address *address,
 
 	pstmt_p.bindValue(":name", QString(address->name));
 	pstmt_p.bindValue(":name_len", address->name_len);
-	pstmt_p.bindValue(3, address->device_id);
-	pstmt_p.bindValue(4, QByteArray(reinterpret_cast<char *>(record), int(record_len)));
-	pstmt_p.bindValue(5, record_len);
+	pstmt_p.bindValue(":device_id", address->device_id);
+	pstmt_p.bindValue(":session_record",
+						QByteArray(reinterpret_cast<char *>(record),
+								   int(record_len)));
+	pstmt_p.bindValue(":record_len", record_len);
 
 	if (!pstmt_p.exec()) return -3;
 
@@ -261,8 +270,8 @@ int axc_db_session_contains(const signal_protocol_address *address, void *user_d
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, QString(address->name));
-	pstmt_p.bindValue(2, address->device_id);
+	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next())
@@ -285,8 +294,8 @@ int axc_db_session_delete(const signal_protocol_address *address, void *user_dat
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, QString(address->name));
-	pstmt_p.bindValue(2, address->device_id);
+	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.numRowsAffected())
@@ -308,7 +317,7 @@ int axc_db_session_delete_all(const char *name, size_t name_len, void *user_data
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, QString(name));
+	pstmt_p.bindValue(0, QString(name));
 
 	if (pstmt_p.exec())
 		return pstmt_p.numRowsAffected();
@@ -331,7 +340,7 @@ int axc_db_pre_key_load(signal_buffer ** record, uint32_t pre_key_id, void * use
 	const QString stmt("SELECT * FROM " PRE_KEY_STORE_TABLE_NAME " WHERE " PRE_KEY_STORE_ID_NAME " IS ?1;");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, pre_key_id);
+	pstmt_p.bindValue(0, pre_key_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -363,9 +372,10 @@ int axc_db_pre_key_store(uint32_t pre_key_id, uint8_t * record, size_t record_le
 	const QString stmt("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3);");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, pre_key_id);
-	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(record), int(record_len)));
-	pstmt_p.bindValue(3, record_len);
+	pstmt_p.bindValue(0, pre_key_id);
+	pstmt_p.bindValue(1, QByteArray(reinterpret_cast<char*>(record),
+									int(record_len)));
+	pstmt_p.bindValue(2, record_len);
 
 	if (!pstmt_p.exec()) return -3;
 
@@ -405,10 +415,10 @@ int axc_db_pre_key_store_list(signal_protocol_key_helper_pre_key_list_node * pre
 			return -1;
 		}
 
-		pstmt_p.bindValue(1, session_pre_key_get_id(pre_key_p));
-		pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(signal_buffer_data(key_buf_p)),
+		pstmt_p.bindValue(0, session_pre_key_get_id(pre_key_p));
+		pstmt_p.bindValue(1, QByteArray(reinterpret_cast<char*>(signal_buffer_data(key_buf_p)),
 										int(signal_buffer_len(key_buf_p))));
-		pstmt_p.bindValue(3, signal_buffer_len(key_buf_p));
+		pstmt_p.bindValue(2, signal_buffer_len(key_buf_p));
 		if (!pstmt_p.exec()) {
 			qCritical("Failed to execute statement");
 			return -3;
@@ -444,7 +454,7 @@ int axc_db_pre_key_get_list(size_t amount, SignalProtocol * axc_ctx_p,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, amount);
+	pstmt_p.bindValue(0, amount);
 
 	if (pstmt_p.exec())
 	{
@@ -516,7 +526,7 @@ int axc_db_pre_key_contains(uint32_t pre_key_id, void * user_data)
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, pre_key_id);
+	pstmt_p.bindValue(0, pre_key_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next())
@@ -595,7 +605,7 @@ int axc_db_pre_key_remove(uint32_t pre_key_id, void * user_data)
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, pre_key_id);
+	pstmt_p.bindValue(0, pre_key_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.numRowsAffected()) {
@@ -626,7 +636,7 @@ int axc_db_signed_pre_key_load(signal_buffer ** record, uint32_t signed_pre_key_
 	const QString stmt("SELECT * FROM " SIGNED_PRE_KEY_STORE_TABLE_NAME " WHERE " SIGNED_PRE_KEY_STORE_ID_NAME " IS ?1;");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, signed_pre_key_id);
+	pstmt_p.bindValue(0, signed_pre_key_id);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -656,9 +666,9 @@ int axc_db_signed_pre_key_store(uint32_t signed_pre_key_id, uint8_t * record, si
 	const QString stmt("INSERT OR REPLACE INTO " SIGNED_PRE_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3);");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, signed_pre_key_id);
-	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(record), int(record_len)));
-	pstmt_p.bindValue(3, record_len);
+	pstmt_p.bindValue(0, signed_pre_key_id);
+	pstmt_p.bindValue(1, QByteArray(reinterpret_cast<char*>(record), int(record_len)));
+	pstmt_p.bindValue(2, record_len);
 
 	if (!pstmt_p.exec()) return -3;
 
@@ -672,7 +682,7 @@ int axc_db_signed_pre_key_contains(uint32_t signed_pre_key_id, void * user_data)
 	const QString stmt("SELECT * FROM " SIGNED_PRE_KEY_STORE_TABLE_NAME " WHERE " SIGNED_PRE_KEY_STORE_ID_NAME " IS ?1;");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, signed_pre_key_id);
+	pstmt_p.bindValue(0, signed_pre_key_id);
 
 	if (pstmt_p.exec())	{
 		if (pstmt_p.next()) // result exists
@@ -692,7 +702,7 @@ int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void * user_data)
 	const QString stmt("DELETE FROM " SIGNED_PRE_KEY_STORE_TABLE_NAME " WHERE " SIGNED_PRE_KEY_STORE_ID_NAME " IS ?1;");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, signed_pre_key_id);
+	pstmt_p.bindValue(0, signed_pre_key_id);
 
 	if (pstmt_p.exec())	{
 		if (pstmt_p.numRowsAffected())
@@ -739,7 +749,7 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
 	QSqlQuery pstmt_p(stmt, db());
 
 	// public key
-	pstmt_p.bindValue(1, OWN_PUBLIC_KEY_NAME);
+	pstmt_p.bindValue(0, OWN_PUBLIC_KEY_NAME);
 
 	if (ec_public_key_serialize(&pubkey_buf_p, ratchet_identity_key_pair_get_public(key_pair_p))) {
 		err_msg = "Failed to allocate memory to serialize the public key";
@@ -749,10 +759,10 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
 	pubkey_buf_len = signal_buffer_len(pubkey_buf_p);
 	pubkey_buf_data_p = signal_buffer_data(pubkey_buf_p);
 
-	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(pubkey_buf_data_p),
+	pstmt_p.bindValue(1, QByteArray(reinterpret_cast<char*>(pubkey_buf_data_p),
 									int(pubkey_buf_len)));
-	pstmt_p.bindValue(3, pubkey_buf_len);
-	pstmt_p.bindValue(4, OWN_KEY);
+	pstmt_p.bindValue(2, pubkey_buf_len);
+	pstmt_p.bindValue(3, OWN_KEY);
 	if (pstmt_p.exec()) {
 		err_msg = "Failed to execute statement";
 		ret_val = -3;
@@ -770,7 +780,7 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
 //TODO: Check, if we really need this
 	pstmt_p.clear();
 
-	pstmt_p.bindValue(1, OWN_PRIVATE_KEY_NAME);
+	pstmt_p.bindValue(0, OWN_PRIVATE_KEY_NAME);
 
 	if (ec_private_key_serialize(&privkey_buf_p, ratchet_identity_key_pair_get_private(key_pair_p))) {
 		err_msg = "Failed to allocate memory to serialize the private key";
@@ -780,12 +790,12 @@ int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
 	privkey_buf_len = signal_buffer_len(privkey_buf_p);
 	privkey_buf_data_p = signal_buffer_data(privkey_buf_p);
 
-	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char*>(privkey_buf_data_p),
+	pstmt_p.bindValue(1, QByteArray(reinterpret_cast<char*>(privkey_buf_data_p),
 									int(privkey_buf_len)));
-	pstmt_p.bindValue(3, privkey_buf_len);
+	pstmt_p.bindValue(2, privkey_buf_len);
 
 //TODO: Check, if we really need this
-	pstmt_p.bindValue(4, OWN_KEY);
+	pstmt_p.bindValue(3, OWN_KEY);
 	if (pstmt_p.exec()) {
 		err_msg = "Failed to execute statement";
 		ret_val = -3;
@@ -829,7 +839,7 @@ int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** 
 	signal_buffer * privkey_buf_p = nullptr;
 
   // public key
-	pstmt_p.bindValue(1, OWN_PUBLIC_KEY_NAME);
+	pstmt_p.bindValue(0, OWN_PUBLIC_KEY_NAME);
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
 			pubkey_len = pstmt_p.value(2).toUInt();
@@ -858,7 +868,7 @@ int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** 
 	pstmt_p.clear();
 
 	// private key
-	pstmt_p.bindValue(1, OWN_PRIVATE_KEY_NAME);
+	pstmt_p.bindValue(0, OWN_PRIVATE_KEY_NAME);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -915,7 +925,7 @@ int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * regis
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE " SETTINGS_STORE_NAME_NAME " IS ?1;");
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, REG_ID_NAME);
+	pstmt_p.bindValue(0, REG_ID_NAME);
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -946,14 +956,14 @@ int axc_db_identity_save(const signal_protocol_address * addr_p, uint8_t * key_d
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, QString(addr_p->name));
+	pstmt_p.bindValue(0, QString(addr_p->name));
 
 	if (key_data) {
-		pstmt_p.bindValue(2, QByteArray(
+		pstmt_p.bindValue(1, QByteArray(
 							  reinterpret_cast<char*>(key_data),
 							  int(key_len)));
-		pstmt_p.bindValue(3, key_len);
-		pstmt_p.bindValue(4, IDENTITY_KEY_TRUSTED);
+		pstmt_p.bindValue(2, key_len);
+		pstmt_p.bindValue(3, IDENTITY_KEY_TRUSTED);
 	}
 
 	if (!pstmt_p.exec()) return -3;
@@ -973,7 +983,7 @@ int axc_db_identity_is_trusted(const char * name, size_t name_len, uint8_t * key
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(1, QString(name));
+	pstmt_p.bindValue(0, QString(name));
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next()) {
@@ -1024,7 +1034,172 @@ void axc_db_identity_destroy_ctx(void * user_data)
   Q_UNUSED(user_data);
   //const char stmt[] = "DELETE FROM identity_key_store; VACUUM;";
 
-  //db_exec_quick(stmt, user_data);
+	//db_exec_quick(stmt, user_data);
+}
+
+int axc_db_create()
+{
+	qDebug("axc_db_create()");
+	const QStringList stmts(
+		QStringList() << "CREATE TABLE IF NOT EXISTS " SESSION_STORE_TABLE_NAME "("
+							 SESSION_STORE_NAME_NAME " TEXT NOT NULL, "
+							 SESSION_STORE_NAME_LEN_NAME " INTEGER NOT NULL, "
+							 SESSION_STORE_DEVICE_ID_NAME " INTEGER NOT NULL, "
+							 SESSION_STORE_RECORD_NAME " BLOB NOT NULL, "
+							 SESSION_STORE_RECORD_LEN_NAME " INTEGER NOT NULL, "
+						 "  PRIMARY KEY(" SESSION_STORE_NAME_NAME ", " SESSION_STORE_DEVICE_ID_NAME "))"
+					  << "CREATE TABLE IF NOT EXISTS " PRE_KEY_STORE_TABLE_NAME "("
+							 PRE_KEY_STORE_ID_NAME " INTEGER NOT NULL PRIMARY KEY, "
+							 PRE_KEY_STORE_RECORD_NAME " BLOB NOT NULL, "
+							 PRE_KEY_STORE_RECORD_LEN_NAME " INTEGER NOT NULL)"
+					  << "CREATE TABLE IF NOT EXISTS " SIGNED_PRE_KEY_STORE_TABLE_NAME "("
+							 SIGNED_PRE_KEY_STORE_ID_NAME " INTEGER NOT NULL PRIMARY KEY, "
+							 SIGNED_PRE_KEY_STORE_RECORD_NAME " BLOB NOT NULL, "
+							 SIGNED_PRE_KEY_STORE_RECORD_LEN_NAME " INTEGER NOT NULL)"
+					  << "CREATE TABLE IF NOT EXISTS " IDENTITY_KEY_STORE_TABLE_NAME "("
+							 IDENTITY_KEY_STORE_NAME_NAME " TEXT NOT NULL PRIMARY KEY, "
+							 IDENTITY_KEY_STORE_KEY_NAME " BLOB NOT NULL, "
+							 IDENTITY_KEY_STORE_KEY_LEN_NAME " INTEGER NOT NULL, "
+							 IDENTITY_KEY_STORE_TRUSTED_NAME " INTEGER NOT NULL)"
+					  << "CREATE TABLE IF NOT EXISTS " SETTINGS_STORE_TABLE_NAME "("
+							 SETTINGS_STORE_NAME_NAME " TEXT NOT NULL PRIMARY KEY, "
+							 SETTINGS_STORE_PROPERTY_NAME " INTEGER NOT NULL)");
+
+	qDebug() << "db():" << db();
+	if (!db().transaction())
+	{
+		qCritical() << "Failed to start transaction" << db().lastError();
+		return -3;
+	}
+
+	qDebug() << "DB is valid:" << db().isValid();
+	qDebug() << "DB is open:" << db().isOpen();
+
+	QSqlQuery pstmt_p(db());
+	for (QStringList::ConstIterator it = stmts.cbegin();
+		 it != stmts.constEnd(); ++it) {
+		pstmt_p.prepare(*it);
+		qDebug() << "lastQuery:" << pstmt_p.lastQuery();
+		if (!pstmt_p.exec()) {
+			qCritical() << "Failed to execute statement:" << pstmt_p.lastError() << pstmt_p.lastError().type();
+			db().rollback();
+			return -1;
+		}
+	}
+
+	if (db().commit())
+		return 0;
+	else {
+		qCritical() << "Failed to commit transaction: " << db().lastError();
+		return -2;
+	}
+}
+
+/**
+ * Drops all tables.
+ *
+ * @param axc_ctx_p Pointer to the axc context.
+ */
+int axc_db_destroy() {
+	qDebug("axc_db_destroy()");
+	const QStringList stmts(
+		QStringList() << "DROP TABLE IF EXISTS " SESSION_STORE_TABLE_NAME
+					  << "DROP TABLE IF EXISTS " PRE_KEY_STORE_TABLE_NAME
+					  << "DROP TABLE IF EXISTS " SIGNED_PRE_KEY_STORE_TABLE_NAME
+					  << "DROP TABLE IF EXISTS " IDENTITY_KEY_STORE_TABLE_NAME
+					  << "DROP TABLE IF EXISTS " SETTINGS_STORE_TABLE_NAME);
+
+	qDebug() << "db():" << db();
+	if (!db().transaction())
+	{
+		qCritical() << "Failed to start transaction" << db().lastError();
+		return -3;
+	}
+
+	QSqlQuery pstmt_p(db());
+	for (QStringList::ConstIterator it = stmts.cbegin();
+		 it != stmts.constEnd(); ++it) {
+		pstmt_p.prepare(*it);
+		qDebug() << "lastQuery:" << pstmt_p.lastQuery();
+		if (!pstmt_p.exec()) {
+			qCritical() << "Failed to execute statement:" << pstmt_p.lastError() << pstmt_p.lastError().type();
+			db().rollback();
+			return -1;
+		}
+	}
+
+	if (db().commit())
+		return 0;
+	else {
+		qCritical() << "Failed to commit transaction: " << db().lastError();
+		return -2;
+	}
+}
+
+int axc_db_init_status_set(const int status) {
+	return axc_db_property_set(INIT_STATUS_NAME, status);
+}
+
+int axc_db_init_status_get(int *init_status_p)
+{
+	return axc_db_property_get(INIT_STATUS_NAME, init_status_p);
+}
+
+int axc_db_identity_set_local_registration_id(const uint32_t reg_id)
+{
+	return axc_db_property_set(REG_ID_NAME, int(reg_id)) ? -1 : 0;
+}
+
+int axc_db_pre_key_store_list(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
+{
+	const QString stmt("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3);");
+	signal_buffer * key_buf_p = nullptr;
+	signal_protocol_key_helper_pre_key_list_node * pre_keys_curr_p = nullptr;
+	session_pre_key * pre_key_p = nullptr;
+
+	if (!db().transaction()) {
+		qCritical("Failed to start transaction");
+		return -3;
+	}
+
+	QSqlQuery pstmt_p(stmt, db());
+
+	pre_keys_curr_p = pre_keys_head;
+	while (pre_keys_curr_p) {
+		pre_key_p = signal_protocol_key_helper_key_list_element(pre_keys_curr_p);
+		if (session_pre_key_serialize(&key_buf_p, pre_key_p)) {
+			qCritical("failed to serialize pre key");
+			db().rollback();
+			return -1;
+		}
+
+		pstmt_p.bindValue(0, session_pre_key_get_id(pre_key_p));
+		pstmt_p.bindValue(1,
+						  QByteArray(reinterpret_cast<char*>(signal_buffer_data(key_buf_p)),
+									 int(signal_buffer_len(key_buf_p))));
+		pstmt_p.bindValue(2, signal_buffer_len(key_buf_p));
+
+		if (!pstmt_p.exec()) {
+			qCritical("Failed to execute statement");
+			db().rollback();
+			return -3;
+		}
+
+		signal_buffer_bzero_free(key_buf_p);
+		pstmt_p.finish();
+		pstmt_p.clear();
+
+		pre_keys_curr_p = signal_protocol_key_helper_key_list_next(pre_keys_curr_p);
+	}
+	pstmt_p.finish();
+
+	if (pstmt_p.exec()) {
+		db().commit();
+		return 0;
+	} else {
+		db().rollback();
+		return -1;
+	}
 }
 
 }

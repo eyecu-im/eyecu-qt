@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QTimer>
 
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
@@ -26,6 +27,7 @@
 
 Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
+				FPresenceManager(nullptr),
 //				FMessageProcessor(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
@@ -57,21 +59,35 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	FPluginManager = APluginManager;
 
-	IPlugin *plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0,NULL);
+	IPlugin *plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0, nullptr);
 	if (plugin)
 	{
 		FXmppStreamManager = qobject_cast<IXmppStreamManager *>(plugin->instance());
 		if (FXmppStreamManager)
 		{
-			connect(FXmppStreamManager->instance(),SIGNAL(streamOpened(IXmppStream *)),SLOT(onStreamOpened(IXmppStream *)));
-			connect(FXmppStreamManager->instance(),SIGNAL(streamClosed(IXmppStream *)),SLOT(onStreamClosed(IXmppStream *)));
+			connect(FXmppStreamManager->instance(),SIGNAL(streamOpened(IXmppStream *)),
+												   SLOT(onStreamOpened(IXmppStream *)));
+			connect(FXmppStreamManager->instance(),SIGNAL(streamClosed(IXmppStream *)),
+												   SLOT(onStreamClosed(IXmppStream *)));
+		}
+	}
+
+	plugin = APluginManager->pluginInterface("IPresenceManager").value(0, nullptr);
+	if (plugin) {
+		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
+		if (FPresenceManager) {
+			connect(FPresenceManager->instance(),SIGNAL(presenceOpened(IPresence *)),
+												 SLOT(onPresenceOpened(IPresence *)));
+			connect(FPresenceManager->instance(),SIGNAL(presenceClosed(IPresence *)),
+												 SLOT(onPresenceClosed(IPresence *)));
 		}
 	}
 
 	plugin = APluginManager->pluginInterface("IPEPManager").value(0);
 	if (plugin)
 		FPepManager = qobject_cast<IPEPManager *>(plugin->instance());
-	else return false;
+	else
+		return false;
 
 //	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0);
 //	if (plugin)
@@ -130,7 +146,11 @@ bool Omemo::initObjects()
 
 	qDebug() << "SQLite DB file name:" << FSignalProtocol->dbFileName();
 
-	FSignalProtocol->generateKeys(1000);
+//	FSignalProtocol->generateKeys(1000);
+	if (!FSignalProtocol->install()) {
+		qCritical() << "SignalProtocol::install() failed!";
+		return false;
+	}
 
 	return true;
 }
@@ -142,6 +162,7 @@ bool Omemo::initSettings()
 
 bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 {
+	qDebug() << "Omemo::processPEPEvent(" << AStreamJid.full() << "," << AStanza.toString() << ")";
 	if (AStanza.type()!="error")
 	{
 		Jid contactJid = AStanza.from();
@@ -149,49 +170,56 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 		QDomElement items  = event.firstChildElement("items");
 		if(!items.isNull())
 		{
-			bool stop=false;
+//			bool stop=false;
 			QDomElement item  = items.firstChildElement("item");
 			if(!item.isNull())
 			{
 				QDomElement list = item.firstChildElement(TAG_NAME_ROOT);
 				if(!list.isNull())
 				{
+					QList<quint32> ids;
 					for (QDomElement device = list.firstChildElement(TAG_NAME_ITEM);
 						   !device.isNull(); device = device.nextSiblingElement(TAG_NAME_ITEM))
 					{
-						QString id = device.attribute("id");
-						qDebug() << "id=" << id;
+						QString ida = device.attribute("id");
+						qDebug() << "ida=" << ida;
+						bool ok;
+						quint32 id = ida.toUInt(&ok);
+						if (ok)
+							ids.append(id);
+						else
+							qCritical() << "Invalid id attribute value:" << ida;
 					}
-//					if(contactJid.bare() == AStreamJid.bare())
-//						FIdHash.insert("AStreamJid.bare()", item.attribute("id"));
-
-//					ActivityData activityData;
-//					for (QDomElement e = list.firstChildElement(); !e.isNull(); e=e.nextSiblingElement())
-//						if (e.tagName() == "text")
-//							activityData.text = e.text();
-//						else
-//						{
-//							activityData.nameBasic = e.tagName();
-//							QDomElement detailed = e.firstChildElement();
-//							if (!detailed.isNull())
-//								activityData.nameDetailed = detailed.tagName();
-//						}
-
-//					if (activityData.isEmpty())
-//						stop=true;
-//					else
-//					{
-//						if (activityData!=(FActivityHash.value(contactJid.bare())))
-//						{
-//							FActivityHash.insert(contactJid.bare(), activityData);
-//							updateChatWindows(contactJid, AStreamJid);
-//							updateDataHolder(contactJid);
-//							displayNotification(AStreamJid, contactJid);
-//							if(contactJid.bare() == AStreamJid.bare())
-//								FCurrentActivity = activityData;
-//						}
-//						return true;
-//					}
+					if (!ids.isEmpty())
+					{
+						if (contactJid.bare() == AStreamJid.bare()) // Own ID list
+						{
+							IXmppStream *stream = FXmppStreamManager->findXmppStream(AStreamJid);
+							if (FPepDelay.contains(stream))
+							{
+								QTimer *timer = FPepDelay.take(stream);
+								timer->stop();
+								timer->deleteLater();
+							}
+//							quint32 ownId = Options::node(OPV_OMEMO_DEVICEID).value().toUInt();
+							quint32 ownId;
+							if (FSignalProtocol->getDeviceId(ownId)==0) {
+								qDebug() << "own device ID:" << ownId;
+								if (!ids.contains(ownId))
+								{
+									ids.append(ownId);
+									FDeviceIds.insert(contactJid.bare(), ids);
+									publishOwnDeviceIds(AStreamJid);
+								}
+							} else {
+								qCritical() << "SignalProtocol::getDeviceId() failed!";
+							}
+						}
+						else
+							FDeviceIds.insert(contactJid.bare(), ids);
+					}
+					else
+						qCritical() << "No valid IDs found in OMEMO stanza!";
 				}
 			}
 
@@ -221,24 +249,27 @@ void Omemo::registerDiscoFeatures()
 	qDebug() << "Omemo::registerDiscoFeatures()";
 	IDiscoFeature dfeature;
 	dfeature.active = true;
-	dfeature.var = NS_PEP_OMEMO;
+	dfeature.var = NS_PEP_OMEMO_NOTIFY;
 //	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK);
 	dfeature.name = tr("OMEMO");
-	dfeature.description = tr("XEP-0384: OMEMO Encryption");
-	FDiscovery->insertDiscoFeature(dfeature);
-	qDebug() << "feature inserted:" << dfeature.var;
+	dfeature.description = tr("P2P Encryption using OMEMO");
+//	FDiscovery->insertDiscoFeature(dfeature);
+//	qDebug() << "feature inserted:" << dfeature.var;
 
-	dfeature.var.append(NODE_NOTIFY_SUFFIX);
-	dfeature.name = tr("OMEMO Notification");
-	dfeature.description = tr("Receives notifications about devices, which support OMEMO");
+//	dfeature.var.append(NODE_NOTIFY_SUFFIX);
+//	dfeature.name = tr("OMEMO Notification");
+//	dfeature.description = tr("Receives notifications about devices, which support OMEMO");
 	FDiscovery->insertDiscoFeature(dfeature);
 	qDebug() << "feature inserted:" << dfeature.var;
 }
 
 bool Omemo::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	return FDiscovery==NULL || !FDiscovery->hasDiscoInfo(AStreamJid,AContactJid)
-							|| FDiscovery->discoInfo(AStreamJid,AContactJid).features.contains(NS_JABBER_OOB_X);
+	return (!FDiscovery ||
+			!FDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
+			 FDiscovery->discoInfo(AStreamJid,AContactJid)
+			.features.contains(NS_PEP_OMEMO_NOTIFY)) &&
+			FDeviceIds.contains(AContactJid.bare());
 }
 
 void Omemo::onNormalWindowCreated(IMessageNormalWindow *AWindow)
@@ -275,7 +306,7 @@ void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore
 void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 {
 	QList<QAction *> actions = AChatWindow->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_OOB_VIEW);
-	QAction *handle=actions.value(0, NULL);
+	QAction *handle=actions.value(0, nullptr);
 	if (isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
 	{
 		if (!handle)
@@ -302,14 +333,88 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 	}
 }
 
+bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
+{
+	qDebug() << "Omemo::publishOwnDeviceIds(" << AStreamJid.full() << ")";
+	if (!FDeviceIds.contains(AStreamJid.bare()))
+	{
+		qWarning() << "No device ID list for the stream:" << AStreamJid.bare();
+		return false;
+	}
+	QList<quint32> ids = FDeviceIds.value(AStreamJid.bare());
+	if (ids.isEmpty())
+	{
+		qWarning() << "Own device ID list is empty!";
+		return false;
+	}
+	QDomDocument doc;
+	QDomElement item=doc.createElement("item");
+	item.setAttribute("id", "current");
+
+	QDomElement list=doc.createElementNS(NS_OMEMO, TAG_NAME_ROOT);
+	item.appendChild(list);
+	for (QList<quint32>::ConstIterator it = ids.constBegin();
+		 it != ids.constEnd(); ++it)
+	{
+		QDomElement device=doc.createElement(TAG_NAME_ITEM);
+		device.setAttribute("id", QString::number(*it));
+		list.appendChild(device);
+	}
+
+	return FPepManager->publishItem(AStreamJid, NS_PEP_OMEMO, item);
+}
+
 void Omemo::onStreamOpened(IXmppStream *AXmppStream)
 {
+	qDebug() << "Omemo::onStreamOpened(" << AXmppStream->streamJid().full() << ")";
 	FStreamOmemo.insert(AXmppStream->streamJid(), NULL);
 }
 
 void Omemo::onStreamClosed(IXmppStream *AXmppStream)
 {
+	qDebug() << "Omemo::onStreamClosed(" << AXmppStream->streamJid().full() << ")";
 	FStreamOmemo.remove(AXmppStream->streamJid());
+}
+
+void Omemo::onPresenceOpened(IPresence *APresence)
+{
+	qDebug() << "Omemo::onPresenceOpened(" << APresence->streamJid().full() << ")";
+	IXmppStream *stream = FXmppStreamManager->findXmppStream(APresence->streamJid());
+	QTimer *timer = new QTimer(this);
+	FPepDelay.insert(stream, timer);
+	connect(timer, SIGNAL(timeout()), SLOT(onPepTimeout()));
+	timer->start(5000);
+}
+
+void Omemo::onPresenceClosed(IPresence *APresence)
+{
+	qDebug() << "Omemo::onPresenceClosed(" << APresence->streamJid().full() << ")";
+}
+
+void Omemo::onPepTimeout()
+{
+	qDebug() << "Omemo::onPepTimeout()";
+	QTimer *timer = qobject_cast<QTimer*>(sender());
+	for (QHash<IXmppStream*, QTimer*>::Iterator it = FPepDelay.begin();
+		 it != FPepDelay.end();)
+		if (*it == timer) {
+			IXmppStream *stream = it.key();
+			it = FPepDelay.erase(it);
+			qDebug() << "stream JID:" << stream->streamJid().full();
+			QList<quint32> ids;
+			quint32 id;
+			if (FSignalProtocol->getDeviceId(id)==0) {
+				qDebug() << "Publishing device ID:" << id;
+				ids.append(id);
+				FDeviceIds.insert(stream->streamJid().bare(), ids);
+				publishOwnDeviceIds(stream->streamJid());
+			} else {
+				qCritical() << "SignalProtocol::getDeviceId(id) failed!";
+			}
+		}
+		else
+			++it;
+	timer->deleteLater();
 }
 
 //bool Omemo::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)

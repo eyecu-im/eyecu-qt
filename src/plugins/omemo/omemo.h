@@ -4,6 +4,7 @@
 #include <QDir>
 #include <interfaces/iomemo.h>
 #include <interfaces/ixmppstreammanager.h>
+#include <interfaces/ipresencemanager.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/iservicediscovery.h>
@@ -53,11 +54,14 @@ protected:
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void registerDiscoFeatures();
 	void updateChatWindowActions(IMessageChatWindow *AChatWindow);
+	bool publishOwnDeviceIds(const Jid &AStreamJid);
 
 protected slots:
 	void onStreamOpened(IXmppStream *AXmppStream);
-	void onStreamClosed(IXmppStream *AXmppStream);
-//	void onInsertLink(bool);
+	void onStreamClosed(IXmppStream *AXmppStream);	
+	void onPresenceOpened(IPresence *APresence);
+	void onPresenceClosed(IPresence *APresence);
+	void onPepTimeout();
 
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
@@ -66,6 +70,7 @@ protected slots:
 private:
 	IPEPManager*		FPepManager;
 	IXmppStreamManager*	FXmppStreamManager;
+	IPresenceManager*	FPresenceManager;
 //	IMessageProcessor*	FMessageProcessor;
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
@@ -81,6 +86,8 @@ private:
 	QMap <Jid, QString> FStreamOmemo;
 	QDir				FOmemoDir;
 
+	QHash<IXmppStream *, QTimer*> FPepDelay;
+	QHash<QString, QList<quint32> > FDeviceIds;
 };
 
 #endif // OMEMO_H

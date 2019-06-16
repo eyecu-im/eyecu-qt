@@ -108,6 +108,7 @@
 //OMEMO
 #define NS_OMEMO								"eu.siacs.conversations.axolotl"
 #define NS_PEP_OMEMO							NS_OMEMO".devicelist"
+#define NS_PEP_OMEMO_NOTIFY						NS_PEP_OMEMO"+notify"
 
 #define NS_RECEIPTS                         	"urn:xmpp:receipts"
 #define NS_ATTENTION                         	"urn:xmpp:attention:0"
