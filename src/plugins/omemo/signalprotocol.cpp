@@ -3,16 +3,15 @@
 
 #include <QMutex>
 #include <QDateTime>
-#include <QDebug>
 
 extern "C" {
 #include <gcrypt.h>
+}
 #include <key_helper.h>
 #include <session_builder.h>
 #include <session_cipher.h>
-}
 
-#define AXC_PRE_KEYS_AMOUNT 100
+using namespace OmemoStore;
 
 SignalProtocol* SignalProtocol::FInstance(nullptr);
 
@@ -31,69 +30,6 @@ void SignalProtocol::init()
 	gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
-//int SignalProtocol::generateKeys(uint AStartId)
-//{
-//	uint64_t timestamp = QDateTime::currentDateTime().toMSecsSinceEpoch();
-//	int rc = generateIdentityKeyPair(&FIdentityKeyPair);
-//	if (rc) {
-//		qDebug() << "generateIdentityKeyPair() failed!";
-//		return rc;
-//	}
-//	rc = generateRegistrationId(&FRegistrationId, 0);
-//	if (rc) {
-//		qDebug() << "generateRegistrationId() failed!";
-//		return rc;
-//	}
-//	rc = generatePreKeys(&FPreKeysHead, AStartId, 100);
-//	if (rc) {
-//		qDebug() << "generatePreKeys() failed!";
-//		return rc;
-//	}
-//	rc = generateSignedPreKey(&FSignedPreKey, FIdentityKeyPair, 5, timestamp);
-//	if (rc) {
-//		qDebug() << "generateSignedPreKey() failed!";
-//		return rc;
-//	}
-
-//	/* Store identity_key_pair somewhere durable and safe. */
-//	/* Store registration_id somewhere durable and safe. */
-
-//	/* Store pre keys in the pre key store. */
-//	/* Store signed pre key in the signed pre key store. */
-
-//	return 0;
-//}
-
-//int SignalProtocol::buildSession()
-//{
-//	/* Instantiate a session_builder for a recipient address. */
-//	signal_protocol_address address = {
-//		"+14159998888", 12, 1
-//	};
-
-//	session_builder_create(&FSessionBuilder, FStoreContext, &address, FGlobalContext);
-
-//	/* Build a session with a pre key retrieved from the server. */
-////	session_builder_process_pre_key_bundle(FSessionBuilder, retrieved_pre_key);
-
-//	/* Create the session cipher and encrypt the message */
-//	session_cipher *cipher;
-//	session_cipher_create(&cipher, FStoreContext, &address, FGlobalContext);
-
-//	ciphertext_message *encrypted_message;
-////	session_cipher_encrypt(cipher, message, message_len, &encrypted_message);
-
-//	/* Get the serialized content and deliver it */
-////	signal_buffer *serialized = ciphertext_message_get_serialized(encrypted_message);
-
-////	deliver(signal_buffer_data(serialized), signal_buffer_len(serialized));
-
-//	/* Cleanup */
-//	SIGNAL_UNREF(encrypted_message);
-//	session_cipher_free(cipher);
-//	session_builder_free(FSessionBuilder);
-//}
-
 QString SignalProtocol::dbFileName() const
 {
 	return FFileName;
@@ -109,24 +45,23 @@ int SignalProtocol::error() const
 	return FError;
 }
 
-bool SignalProtocol::install()
+int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint APreKeyAmount)
 {
 	char * err_msg = "";
 	int ret_val = 0;
-	int db_needs_init = 0;
+	bool db_needs_init = false;
+	bool db_needs_reset = false;
 
-//	signal_context * global_context_p = ctx_p->axolotl_global_context_p;
 	ratchet_identity_key_pair * identity_key_pair_p = nullptr;
 	signal_protocol_key_helper_pre_key_list_node * pre_keys_head_p = nullptr;
 	session_signed_pre_key * signed_pre_key_p = nullptr;
 	signal_buffer * signed_pre_key_data_p = nullptr;
 	uint32_t registration_id;
 	int init_status = AXC_DB_NOT_INITIALIZED;
-	int db_needs_reset = 0;
 
 	qInfo("%s: calling install-time functions", __func__);
 
-	ret_val = OmemoStore::axc_db_create();
+	ret_val = axc_db_create();
 	if (ret_val){
 		err_msg = "failed to create db";
 		goto cleanup;
@@ -134,46 +69,45 @@ bool SignalProtocol::install()
 
 	qDebug("%s: created db if it did not exist already", __func__);
 
-	ret_val = OmemoStore::axc_db_init_status_get(&init_status);
+	ret_val = axc_db_init_status_get(&init_status);
 	switch (ret_val) {
 		case -1:
 		default:
 			err_msg = "failed to read init status";
 			goto cleanup;
-//			break;
 		case 0:
 			// there is a value
 			switch (init_status) {
 				case AXC_DB_NOT_INITIALIZED:
-				// init needed
-				db_needs_init = 1;
-				break;
-			case AXC_DB_NEEDS_ROLLBACK:
-				// reset and init needed
-				db_needs_reset = 1;
-				db_needs_init = 1;
-				break;
-			case AXC_DB_INITIALIZED:
-			default:
-				// the db is already initialised
-				break;
+					// init needed
+					db_needs_init = true;
+					break;
+				case AXC_DB_NEEDS_ROLLBACK:
+					// reset and init needed
+					db_needs_reset = true;
+					db_needs_init = true;
+					break;
+				case AXC_DB_INITIALIZED:
+				default:
+					// the db is already initialised
+					break;
 			}
 			break;
 		case 1:
 			// no value = not initialised -> init needed
-			db_needs_init = 1;
+			db_needs_init = true;
 			break;
 	}
 
 	if (db_needs_reset) {
 		qDebug("%s: db needs reset", __func__ );
-		ret_val = OmemoStore::axc_db_destroy();
+		ret_val = axc_db_destroy();
 		if (ret_val) {
 			err_msg = "failed to reset db";
 			goto cleanup;
 		}
 
-		ret_val = OmemoStore::axc_db_create();
+		ret_val = axc_db_create();
 		if (ret_val) {
 			err_msg = "failed to create db after reset";
 			goto cleanup;
@@ -186,7 +120,7 @@ bool SignalProtocol::install()
 		qDebug("%s: db needs init", __func__ );
 		qDebug("%s: setting init status to AXC_DB_NEEDS_ROLLBACK (%i)", __func__, AXC_DB_NEEDS_ROLLBACK );
 
-		ret_val = OmemoStore::axc_db_init_status_set(AXC_DB_NEEDS_ROLLBACK);
+		ret_val = axc_db_init_status_set(AXC_DB_NEEDS_ROLLBACK);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
 			goto cleanup;
@@ -206,7 +140,10 @@ bool SignalProtocol::install()
 		}
 		qDebug("%s: generated registration id: %i", __func__, registration_id);
 
-		ret_val = signal_protocol_key_helper_generate_pre_keys(&pre_keys_head_p, 1, AXC_PRE_KEYS_AMOUNT, FGlobalContext);
+		ret_val = signal_protocol_key_helper_generate_pre_keys(&pre_keys_head_p,
+															   APreKeyStartId,
+															   APreKeyAmount,
+															   FGlobalContext);
 		if(ret_val) {
 			err_msg = "failed to generate pre keys";
 			goto cleanup;
@@ -214,7 +151,7 @@ bool SignalProtocol::install()
 		qDebug("%s: generated pre keys", __func__ );
 
 		ret_val = signal_protocol_key_helper_generate_signed_pre_key(
-					&signed_pre_key_p, identity_key_pair_p, 0,
+					&signed_pre_key_p, identity_key_pair_p, ASignedPreKeyId,
 					quint64(QDateTime::currentMSecsSinceEpoch()),
 					FGlobalContext);
 		if (ret_val) {
@@ -223,21 +160,21 @@ bool SignalProtocol::install()
 		}
 		qDebug("%s: generated signed pre key", __func__ );
 
-		ret_val = OmemoStore::axc_db_identity_set_key_pair(identity_key_pair_p);
+		ret_val = axc_db_identity_set_key_pair(identity_key_pair_p);
 		if (ret_val) {
 			err_msg = "failed to set identity key pair";
 			goto cleanup;
 		}
 		qDebug("%s: saved identity key pair", __func__ );
 
-		ret_val = OmemoStore::axc_db_identity_set_local_registration_id(registration_id);
+		ret_val = axc_db_identity_set_local_registration_id(registration_id);
 		if (ret_val) {
 			err_msg = "failed to set registration id";
 			goto cleanup;
 		}
 		qDebug("%s: saved registration id", __func__ );
 
-		ret_val = OmemoStore::axc_db_pre_key_store_list(pre_keys_head_p);
+		ret_val = axc_db_pre_key_store_list(pre_keys_head_p);
 		if (ret_val) {
 			err_msg = "failed to save pre key list";
 			goto cleanup;
@@ -250,17 +187,17 @@ bool SignalProtocol::install()
 			goto cleanup;
 		}
 
-		ret_val = OmemoStore::axc_db_signed_pre_key_store(session_signed_pre_key_get_id(signed_pre_key_p),
-														  signal_buffer_data(signed_pre_key_data_p),
-														  signal_buffer_len(signed_pre_key_data_p),
-														  this);
+		ret_val = axc_db_signed_pre_key_store(session_signed_pre_key_get_id(signed_pre_key_p),
+											  signal_buffer_data(signed_pre_key_data_p),
+											  signal_buffer_len(signed_pre_key_data_p),
+											  this);
 		if (ret_val) {
 			err_msg = "failed to save signed pre key";
 			goto cleanup;
 		}
 		qDebug("%s: saved signed pre key", __func__ );
 
-		ret_val = OmemoStore::axc_db_init_status_set(AXC_DB_INITIALIZED);
+		ret_val = axc_db_init_status_set(AXC_DB_INITIALIZED);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_INITIALIZED";
 			goto cleanup;
@@ -288,8 +225,215 @@ cleanup:
 
 int SignalProtocol::getDeviceId(quint32 &AId)
 {
-	  return signal_protocol_identity_get_local_registration_id(FStoreContext, &AId);
+	return signal_protocol_identity_get_local_registration_id(FStoreContext, &AId);
 }
+
+static QByteArray signalBufferToByteArray(signal_buffer *ABuffer)
+{
+	size_t len = signal_buffer_len(ABuffer);
+	if (len>0)
+	{
+		const uint8_t *data = signal_buffer_const_data(ABuffer);
+		if (data)
+			return QByteArray(reinterpret_cast<const char *>(data), int(len));
+		else
+			qCritical("signal_buffer_const_data() returned NULL!");
+	}
+	else
+		qCritical("signal_buffer_len() returned: %d", len);
+	return QByteArray();
+}
+
+QByteArray SignalProtocol::getIdentityKeyPublic() const
+{
+	ratchet_identity_key_pair *keyPair;
+	QByteArray retVal;
+	int rc = signal_protocol_identity_get_key_pair(FStoreContext, &keyPair);
+	if (rc == SG_SUCCESS)
+	{
+		ec_public_key *key = ratchet_identity_key_pair_get_public(keyPair);
+		if (key)
+		{
+			signal_buffer *buffer;
+			rc = ec_public_key_serialize(&buffer, key);
+			if (rc ==SG_SUCCESS)
+			{
+				retVal = signalBufferToByteArray(buffer);
+				signal_buffer_free(buffer);
+			}
+			else
+				qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+		}
+		else
+			qCritical("ratchet_identity_key_pair_get_public() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_identity_get_key_pair() failed! rc=%d", rc);
+
+	return retVal;
+}
+
+QByteArray SignalProtocol::getIdentityKeyPrivate() const
+{
+	ratchet_identity_key_pair *keyPair = nullptr;
+	QByteArray retVal;
+	int rc = signal_protocol_identity_get_key_pair(FStoreContext, &keyPair);
+	if (rc == SG_SUCCESS)
+	{
+		ec_private_key *key = ratchet_identity_key_pair_get_private(keyPair);
+		if (key)
+		{
+			signal_buffer *buffer;
+			rc = ec_private_key_serialize(&buffer, key);
+			if (rc ==SG_SUCCESS)
+			{
+				retVal = signalBufferToByteArray(buffer);
+				signal_buffer_free(buffer);
+			}
+			else
+				qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+		}
+		else
+			qCritical("ratchet_identity_key_pair_get_public() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_identity_get_key_pair() failed! rc=%d", rc);
+
+	return retVal;
+}
+
+QByteArray SignalProtocol::getSignedPreKeyPublic(quint32 AKeyId) const
+{
+	QByteArray retVal;
+	session_signed_pre_key *preKey;
+	int rc = signal_protocol_signed_pre_key_load_key(FStoreContext, &preKey, AKeyId);
+	if (rc == SG_SUCCESS)
+	{
+		ec_key_pair *keyPair = session_signed_pre_key_get_key_pair(preKey);
+		if (keyPair)
+		{
+			ec_public_key *key = ec_key_pair_get_public(keyPair);
+			if (key)
+			{
+				signal_buffer *buffer;
+				rc = ec_public_key_serialize(&buffer, key);
+				if (rc == SG_SUCCESS)
+				{
+					retVal = signalBufferToByteArray(buffer);
+					signal_buffer_free(buffer);
+				}
+				else
+					qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+			}
+			else
+				qCritical("ec_key_pair_get_public() returned NULL!");
+		}
+		else
+			qCritical("session_signed_pre_key_get_key_pair() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_signed_pre_key_load_key() failed! rc=%d", rc);
+
+	return retVal;
+}
+
+QByteArray SignalProtocol::getSignedPreKeySignature(quint32 AKeyId) const
+{
+	QByteArray retVal;
+	session_signed_pre_key *preKey;
+	int rc = signal_protocol_signed_pre_key_load_key(FStoreContext, &preKey, AKeyId);
+	if (rc == SG_SUCCESS)
+	{
+		const size_t sigLen = session_signed_pre_key_get_signature_len(preKey);
+		if (sigLen>0)
+		{
+			const quint8 *signature = session_signed_pre_key_get_signature(preKey);
+			if (signature)
+			{
+				retVal = QByteArray(reinterpret_cast<const char *>(signature), int(sigLen));
+			}
+			else
+				qCritical("session_signed_pre_key_get_signature() returned NULL!");
+		}
+		else
+			qCritical("session_signed_pre_key_get_signature_len() returned: %d!", sigLen);
+	}
+	else
+		qCritical("signal_protocol_signed_pre_key_load_key() failed! rc=%d", rc);
+
+	return retVal;
+}
+
+QByteArray SignalProtocol::getPreKeyPublic(quint32 AKeyId) const
+{
+	QByteArray retVal;
+	session_pre_key *preKey;
+	int rc = signal_protocol_pre_key_load_key(FStoreContext, &preKey, AKeyId);
+	if (rc == SG_SUCCESS)
+	{
+		ec_key_pair *keyPair = session_pre_key_get_key_pair(preKey);
+		if (keyPair)
+		{
+			ec_public_key *key = ec_key_pair_get_public(keyPair);
+			if (key)
+			{
+				signal_buffer *buffer;
+				rc = ec_public_key_serialize(&buffer, key);
+				if (rc == SG_SUCCESS)
+				{
+					retVal = signalBufferToByteArray(buffer);
+					signal_buffer_free(buffer);
+				}
+				else
+					qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+			}
+			else
+				qCritical("ec_key_pair_get_public() returned NULL!");
+		}
+		else
+			qCritical("session_pre_key_get_key_pair() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_pre_key_load_key() failed! rc=%d", rc);
+
+	return retVal;
+}
+
+QByteArray SignalProtocol::getPreKeyPrivate(quint32 AKeyId) const
+{
+	QByteArray retVal;
+	session_pre_key *preKey;
+	int rc = signal_protocol_pre_key_load_key(FStoreContext, &preKey, AKeyId);
+	if (rc == SG_SUCCESS)
+	{
+		ec_key_pair *keyPair = session_pre_key_get_key_pair(preKey);
+		if (keyPair)
+		{
+			ec_private_key *key = ec_key_pair_get_private(keyPair);
+			if (key)
+			{
+				signal_buffer *buffer;
+				rc = ec_private_key_serialize(&buffer, key);
+				if (rc == SG_SUCCESS)
+				{
+					retVal = signalBufferToByteArray(buffer);
+					signal_buffer_free(buffer);
+				}
+				else
+					qCritical("ec_private_key_serialize() failed! rc=%d", rc);
+			}
+			else
+				qCritical("ec_key_pair_get_private() returned NULL!");
+		}
+		else
+			qCritical("session_pre_key_get_key_pair() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_pre_key_load_key() failed! rc=%d", rc);
+
+	return retVal;
+}
+
 
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
 {
@@ -880,13 +1024,13 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	qDebug("%s: created store context", __func__);
 
 	signal_protocol_session_store session_store;
-	session_store.load_session_func = &OmemoStore::axc_db_session_load;
-	session_store.get_sub_device_sessions_func = &OmemoStore::axc_db_session_get_sub_device_sessions;
-	session_store.store_session_func = &OmemoStore::axc_db_session_store;
-	session_store.contains_session_func = &OmemoStore::axc_db_session_contains;
-	session_store.delete_session_func = &OmemoStore::axc_db_session_delete;
-	session_store.delete_all_sessions_func = &OmemoStore::axc_db_session_delete_all;
-	session_store.destroy_func = &OmemoStore::axc_db_session_destroy_store_ctx;
+	session_store.load_session_func = &axc_db_session_load;
+	session_store.get_sub_device_sessions_func = &axc_db_session_get_sub_device_sessions;
+	session_store.store_session_func = &axc_db_session_store;
+	session_store.contains_session_func = &axc_db_session_contains;
+	session_store.delete_session_func = &axc_db_session_delete;
+	session_store.delete_all_sessions_func = &axc_db_session_delete_all;
+	session_store.destroy_func = &axc_db_session_destroy_store_ctx;
 	session_store.user_data = this;
 
 	if (signal_protocol_store_context_set_session_store(store_context_p, &session_store)) {
@@ -896,11 +1040,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_pre_key_store pre_key_store;
-	pre_key_store.load_pre_key = &OmemoStore::axc_db_pre_key_load;
-	pre_key_store.store_pre_key = &OmemoStore::axc_db_pre_key_store;
-	pre_key_store.contains_pre_key = &OmemoStore::axc_db_pre_key_contains;
-	pre_key_store.remove_pre_key = &OmemoStore::axc_db_pre_key_remove;
-	pre_key_store.destroy_func = &OmemoStore::axc_db_pre_key_destroy_ctx;
+	pre_key_store.load_pre_key = &axc_db_pre_key_load;
+	pre_key_store.store_pre_key = &axc_db_pre_key_store;
+	pre_key_store.contains_pre_key = &axc_db_pre_key_contains;
+	pre_key_store.remove_pre_key = &axc_db_pre_key_remove;
+	pre_key_store.destroy_func = &axc_db_pre_key_destroy_ctx;
 	pre_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
@@ -910,11 +1054,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_signed_pre_key_store signed_pre_key_store;
-	signed_pre_key_store.load_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_load;
-	signed_pre_key_store.store_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_store;
-	signed_pre_key_store.contains_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_contains;
-	signed_pre_key_store.remove_signed_pre_key = &OmemoStore::axc_db_signed_pre_key_remove;
-	signed_pre_key_store.destroy_func = &OmemoStore::axc_db_signed_pre_key_destroy_ctx;
+	signed_pre_key_store.load_signed_pre_key = &axc_db_signed_pre_key_load;
+	signed_pre_key_store.store_signed_pre_key = &axc_db_signed_pre_key_store;
+	signed_pre_key_store.contains_signed_pre_key = &axc_db_signed_pre_key_contains;
+	signed_pre_key_store.remove_signed_pre_key = &axc_db_signed_pre_key_remove;
+	signed_pre_key_store.destroy_func = &axc_db_signed_pre_key_destroy_ctx;
 	signed_pre_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_signed_pre_key_store(store_context_p, &signed_pre_key_store)) {
@@ -924,11 +1068,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_identity_key_store identity_key_store;
-	identity_key_store.get_identity_key_pair = &OmemoStore::axc_db_identity_get_key_pair;
-	identity_key_store.get_local_registration_id = &OmemoStore::axc_db_identity_get_local_registration_id;
-	identity_key_store.save_identity = &OmemoStore::axc_db_identity_save;
-	identity_key_store.is_trusted_identity = &OmemoStore::axc_db_identity_always_trusted;
-	identity_key_store.destroy_func = &OmemoStore::axc_db_identity_destroy_ctx;
+	identity_key_store.get_identity_key_pair = &axc_db_identity_get_key_pair;
+	identity_key_store.get_local_registration_id = &axc_db_identity_get_local_registration_id;
+	identity_key_store.save_identity = &axc_db_identity_save;
+	identity_key_store.is_trusted_identity = &axc_db_identity_always_trusted;
+	identity_key_store.destroy_func = &axc_db_identity_destroy_ctx;
 	identity_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_identity_key_store(store_context_p, &identity_key_store)) {
@@ -951,7 +1095,7 @@ cleanup:
 
 SignalProtocol::~SignalProtocol()
 {
-	OmemoStore::uninit();
+	uninit();
 	// Uninit store context
 	signal_protocol_store_context_destroy(FStoreContext);
 }

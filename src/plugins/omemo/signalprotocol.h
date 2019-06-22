@@ -14,6 +14,10 @@ struct axc_buf_list_item {
 
 struct session_builder;
 
+#define SIGNED_PRE_KEY_ID	1
+#define PRE_KEYS_START		1
+#define PRE_KEYS_AMOUNT		100
+
 class SignalProtocol
 {
 public:
@@ -21,19 +25,24 @@ public:
 
 	static void init();
 
-//	int generateKeys(uint AStartId);
-
-//	int buildSession();
-
 	QString dbFileName() const;
 
 	signal_context *globalContext();
 
 	int error() const;
 
-	bool install();
+	int install(quint32 ASignedPreKeyId=SIGNED_PRE_KEY_ID, uint APreKeyStartId=PRE_KEYS_START, uint APreKeyAmount=PRE_KEYS_AMOUNT);
 
 	int getDeviceId(quint32 &AId);
+
+	QByteArray getIdentityKeyPublic() const;
+	QByteArray getIdentityKeyPrivate() const;
+
+	QByteArray getSignedPreKeyPublic(quint32 AKeyId=SIGNED_PRE_KEY_ID) const;
+	QByteArray getSignedPreKeySignature(quint32 AKeyId=SIGNED_PRE_KEY_ID) const;
+
+	QByteArray getPreKeyPublic(quint32 AKeyId) const;
+	QByteArray getPreKeyPrivate(quint32 AKeyId) const;
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);

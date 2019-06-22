@@ -55,8 +55,10 @@ protected:
 	void registerDiscoFeatures();
 	void updateChatWindowActions(IMessageChatWindow *AChatWindow);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
+	bool publishOwnKeys(const Jid &AStreamJid);
 
 protected slots:
+	void onProfileOpened(const QString &AProfile);
 	void onStreamOpened(IXmppStream *AXmppStream);
 	void onStreamClosed(IXmppStream *AXmppStream);	
 	void onPresenceOpened(IPresence *APresence);
@@ -71,10 +73,10 @@ private:
 	IPEPManager*		FPepManager;
 	IXmppStreamManager*	FXmppStreamManager;
 	IPresenceManager*	FPresenceManager;
+	IOptionsManager*	FOptionsManager;
 //	IMessageProcessor*	FMessageProcessor;
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
-	IMessageStyleManager* FMessageStyleManager;
 	IPluginManager*		FPluginManager;
 
 	IconStorage*		FIconStorage;

@@ -19,19 +19,20 @@
 #include "omemo.h"
 #include "signalprotocol.h"
 
-#define TAG_NAME_ROOT	"list"
-#define TAG_NAME_ITEM	"device"
+#define TAG_NAME_LIST	"list"
+#define TAG_NAME_DEVICE	"device"
+#define TAG_NAME_BUNDLE	"bundle"
 
-#define DIR_OMEMO       "omemo"
+//#define DIR_OMEMO       "omemo"
 #define DBFN_OMEMO      "omemo.db"
 
 Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
 				FPresenceManager(nullptr),
+				FOptionsManager(nullptr),
 //				FMessageProcessor(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
-				FMessageStyleManager(nullptr),
 				FPluginManager(nullptr),
 				FIconStorage(nullptr),
 				FOmemoHandlerIn(0),
@@ -83,6 +84,14 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		}
 	}
 
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
+	if (plugin) {
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+		if (FOptionsManager)
+			connect(FOptionsManager->instance(),SIGNAL(profileOpened(QString)),
+												 SLOT(onProfileOpened(QString)));
+	}
+
 	plugin = APluginManager->pluginInterface("IPEPManager").value(0);
 	if (plugin)
 		FPepManager = qobject_cast<IPEPManager *>(plugin->instance());
@@ -97,6 +106,8 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
+	else
+		return false;
 
 	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
 	if (plugin)
@@ -109,24 +120,16 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 		}
 	}
 
-	plugin = APluginManager->pluginInterface("IMessageStyleManager").value(0,NULL);
-	if (plugin)
-		FMessageStyleManager = qobject_cast<IMessageStyleManager *>(plugin->instance());
-
 	//AInitOrder = 100;   // This one should be initialized AFTER ....!
 	return true;
 }
 
 bool Omemo::initObjects()
 {
-//	Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS_LINKDIALOG, tr("\"Add link\" dialog"), SGO_MESSAGEWINDOWS_LINKDIALOG);
-//	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_LINKDIALOG_OK, tr("Ok"), tr("Ctrl+Return", "Ok"), Shortcuts::WidgetShortcut);
-//	Shortcuts::declareGroup(SCTG_MESSAGEWINDOWS_OOB, tr("Out-of-Band data"), SGO_MESSAGEWINDOWS_OOB);
-//	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_INSERTLINK, tr("Add link"), tr("Alt+O", "Add and OOB link"), Shortcuts::WindowShortcut);
-//	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_DELETELINK, tr("Delete link"), tr("Delete", "Delete OOB link"), Shortcuts::WidgetShortcut);
-//	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_OOB_EDITLINK, tr("Edit link"), tr("Return", "Edit OOB link"), Shortcuts::WidgetShortcut);
+	SignalProtocol::init();
 //	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-	if (FDiscovery) registerDiscoFeatures();
+	if (FDiscovery)
+		registerDiscoFeatures();
 
 //	if (FMessageProcessor)
 //	{
@@ -135,22 +138,6 @@ bool Omemo::initObjects()
 //	}
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
-
-	FOmemoDir.setPath(FPluginManager->homePath());
-	if (!FOmemoDir.exists(DIR_OMEMO))
-		FOmemoDir.mkdir(DIR_OMEMO);
-	FOmemoDir.cd(DIR_OMEMO);
-
-	SignalProtocol::init();
-	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO));
-
-	qDebug() << "SQLite DB file name:" << FSignalProtocol->dbFileName();
-
-//	FSignalProtocol->generateKeys(1000);
-	if (!FSignalProtocol->install()) {
-		qCritical() << "SignalProtocol::install() failed!";
-		return false;
-	}
 
 	return true;
 }
@@ -174,12 +161,12 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 			QDomElement item  = items.firstChildElement("item");
 			if(!item.isNull())
 			{
-				QDomElement list = item.firstChildElement(TAG_NAME_ROOT);
+				QDomElement list = item.firstChildElement(TAG_NAME_LIST);
 				if(!list.isNull())
 				{
 					QList<quint32> ids;
-					for (QDomElement device = list.firstChildElement(TAG_NAME_ITEM);
-						   !device.isNull(); device = device.nextSiblingElement(TAG_NAME_ITEM))
+					for (QDomElement device = list.firstChildElement(TAG_NAME_DEVICE);
+						   !device.isNull(); device = device.nextSiblingElement(TAG_NAME_DEVICE))
 					{
 						QString ida = device.attribute("id");
 						qDebug() << "ida=" << ida;
@@ -201,7 +188,7 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 								timer->stop();
 								timer->deleteLater();
 							}
-//							quint32 ownId = Options::node(OPV_OMEMO_DEVICEID).value().toUInt();
+
 							quint32 ownId;
 							if (FSignalProtocol->getDeviceId(ownId)==0) {
 								qDebug() << "own device ID:" << ownId;
@@ -336,6 +323,7 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 {
 	qDebug() << "Omemo::publishOwnDeviceIds(" << AStreamJid.full() << ")";
+
 	if (!FDeviceIds.contains(AStreamJid.bare()))
 	{
 		qWarning() << "No device ID list for the stream:" << AStreamJid.bare();
@@ -347,21 +335,100 @@ bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 		qWarning() << "Own device ID list is empty!";
 		return false;
 	}
+
 	QDomDocument doc;
 	QDomElement item=doc.createElement("item");
 	item.setAttribute("id", "current");
 
-	QDomElement list=doc.createElementNS(NS_OMEMO, TAG_NAME_ROOT);
+	QDomElement list=doc.createElementNS(NS_OMEMO, TAG_NAME_LIST);
 	item.appendChild(list);
 	for (QList<quint32>::ConstIterator it = ids.constBegin();
 		 it != ids.constEnd(); ++it)
 	{
-		QDomElement device=doc.createElement(TAG_NAME_ITEM);
+		QDomElement device=doc.createElement(TAG_NAME_DEVICE);
 		device.setAttribute("id", QString::number(*it));
 		list.appendChild(device);
 	}
 
 	return FPepManager->publishItem(AStreamJid, NS_PEP_OMEMO, item);
+}
+
+bool Omemo::publishOwnKeys(const Jid &AStreamJid)
+{
+	quint32 deviceId;
+	if (FSignalProtocol->getDeviceId(deviceId)!=SG_SUCCESS)
+	{
+		qCritical() << "Failed to get own device ID!";
+		return false;
+	}
+
+	QDomDocument doc;
+	QDomElement item=doc.createElement("item");
+	item.setAttribute("id", "current");
+
+	QDomElement bundle=doc.createElementNS(NS_OMEMO, TAG_NAME_BUNDLE);
+	item.appendChild(bundle);
+
+	QByteArray signedPublic = FSignalProtocol->getSignedPreKeyPublic();
+	if (signedPublic.isNull())
+	{
+		qCritical() << "Failed to get Signed Pre Key";
+		return false;
+	}
+	QDomElement signedPreKeyPublic=doc.createElement("signedPreKeyPublic");
+	signedPreKeyPublic.setAttribute("signedPreKeyId", QString::number(SIGNED_PRE_KEY_ID));
+	signedPreKeyPublic.appendChild(doc.createTextNode(signedPublic.toBase64()));
+	bundle.appendChild(signedPreKeyPublic);
+
+	QByteArray signature = FSignalProtocol->getSignedPreKeySignature();
+	if (signature.isNull())
+	{
+		qCritical() << "Failed to get Signed Pre Key signature";
+		return false;
+	}
+	QDomElement signedPreKeySignature=doc.createElement("signedPreKeySignature");
+	signedPreKeySignature.appendChild(doc.createTextNode(signature.toBase64()));
+	bundle.appendChild(signedPreKeySignature);
+
+	QByteArray identityKeyPublic = FSignalProtocol->getIdentityKeyPublic();
+	if (identityKeyPublic.isNull())
+	{
+		qCritical() << "Failed to get Signed Pre Key";
+		return false;
+	}
+	QDomElement identityKey=doc.createElement("identityKey");
+	identityKey.appendChild(doc.createTextNode(identityKeyPublic.toBase64()));
+	bundle.appendChild(identityKey);
+
+	QDomElement prekeys=doc.createElement("prekeys");
+	for (quint32 i=PRE_KEYS_START; i<PRE_KEYS_START+PRE_KEYS_AMOUNT; ++i)
+	{
+		QByteArray key = FSignalProtocol->getPreKeyPublic(i);
+		if (key.isNull())
+		{
+			qCritical() << "Pre Key id=" << i << "is NULL!";
+			return false;
+		}
+		QDomElement preKeyPublic=doc.createElement("preKeyPublic");
+		preKeyPublic.setAttribute("id", QString::number(i));
+		preKeyPublic.appendChild(doc.createTextNode(key.toBase64()));
+		prekeys.appendChild(preKeyPublic);
+	}
+	bundle.appendChild(prekeys);
+
+	return FPepManager->publishItem(AStreamJid, QString("%1:%2").arg(NS_PEP_OMEMO_BUNDLES)
+																.arg(deviceId), item);
+}
+
+void Omemo::onProfileOpened(const QString &AProfile)
+{
+	FOmemoDir.setPath(FOptionsManager->profilePath(AProfile));
+	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO));
+
+	if (FSignalProtocol->install() != SG_SUCCESS) {
+		qCritical() << "SignalProtocol::install() failed!";
+		return;
+	}
 }
 
 void Omemo::onStreamOpened(IXmppStream *AXmppStream)
@@ -383,7 +450,9 @@ void Omemo::onPresenceOpened(IPresence *APresence)
 	QTimer *timer = new QTimer(this);
 	FPepDelay.insert(stream, timer);
 	connect(timer, SIGNAL(timeout()), SLOT(onPepTimeout()));
-	timer->start(5000);
+	timer->start(10000);
+
+	publishOwnKeys(APresence->streamJid());
 }
 
 void Omemo::onPresenceClosed(IPresence *APresence)
@@ -407,7 +476,7 @@ void Omemo::onPepTimeout()
 				qDebug() << "Publishing device ID:" << id;
 				ids.append(id);
 				FDeviceIds.insert(stream->streamJid().bare(), ids);
-				publishOwnDeviceIds(stream->streamJid());
+				publishOwnDeviceIds(stream->streamJid());				
 			} else {
 				qCritical() << "SignalProtocol::getDeviceId(id) failed!";
 			}

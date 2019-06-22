@@ -18,13 +18,6 @@ namespace OmemoStore
 	void init(const QString &ADatabaseFileName);
 	void uninit();
 
-	// signed pre key store
-	int axc_db_signed_pre_key_load(signal_buffer **record, uint32_t signed_pre_key_id, void *user_data);
-	int axc_db_signed_pre_key_store(uint32_t signed_pre_key_id, uint8_t *record, size_t record_len, void *user_data);
-	int axc_db_signed_pre_key_contains(uint32_t signed_pre_key_id, void *user_data);
-	int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void *user_data);
-	void axc_db_signed_pre_key_destroy_ctx(void *user_data);
-
 	/**
 	 * Creates the necessary tables. Safe to call if they already exist.
 	 *
@@ -96,10 +89,8 @@ namespace OmemoStore
 	 */
 	int axc_db_pre_key_store_list(signal_protocol_key_helper_pre_key_list_node * pre_keys_head);
 
-
-
-
 	// Session store methods
+
 	int axc_db_session_load(signal_buffer ** record,
 							signal_buffer ** user_record,
 							const signal_protocol_address * address,
@@ -130,7 +121,7 @@ namespace OmemoStore
 	int axc_db_signed_pre_key_store(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * user_data);
 	int axc_db_signed_pre_key_contains(uint32_t signed_pre_key_id, void * user_data);
 	int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void * user_data);
-	void axc_db_signed_pre_key_destroy_ctx(void * user_data);
+	void axc_db_signed_pre_key_destroy_ctx(void * user_data);	
 
 	// Identity key store implementation
 	int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data);
