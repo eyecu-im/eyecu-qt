@@ -1273,9 +1273,13 @@ void ServiceDiscovery::onXmppStreamOpened(IXmppStream *AXmppStream)
 	myCaps.ver = calcCapsHash(selfDiscoInfo(myCaps.streamJid),myCaps.hash);
 
 	Jid server = AXmppStream->streamJid().domain();
-	requestDiscoInfo(AXmppStream->streamJid(),server);
-	requestDiscoItems(AXmppStream->streamJid(),server);
-
+	requestDiscoInfo(AXmppStream->streamJid(), server);
+	requestDiscoItems(AXmppStream->streamJid(), server);
+// *** <<< eyeCU <<< ***
+	Jid bare = AXmppStream->streamJid().bare();
+	requestDiscoInfo(AXmppStream->streamJid(), bare);
+	requestDiscoItems(AXmppStream->streamJid(), bare);
+// *** >>> eyeCU >>> ***
 	IRoster *roster = FRosterManager!=NULL ? FRosterManager->findRoster(AXmppStream->streamJid()) : NULL;
 	QList<IRosterItem> ritems = roster!=NULL ? roster->items() : QList<IRosterItem>();
 	foreach(const IRosterItem &ritem, ritems)
