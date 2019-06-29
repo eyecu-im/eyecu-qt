@@ -44,6 +44,20 @@ public:
 	QByteArray getPreKeyPublic(quint32 AKeyId) const;
 	QByteArray getPreKeyPrivate(quint32 AKeyId) const;
 
+	session_pre_key_bundle *createPreKeyBundle(uint32_t ARegistrationId,
+											   int ADeviceId, uint32_t APreKeyId,
+											   const QByteArray &APreKeyPublic,
+											   uint32_t ASignedPreKeyId,
+											   const QByteArray &ASignedPreKeyPublic,
+											   const QByteArray &ASignedPreKeySignature,
+											   const QByteArray &AIdentityKey) const;
+
+	static QByteArray encryptMessage(const QString &AMessageText, const QByteArray &AKey, const QByteArray &AIv, QByteArray &AAuthTag);
+	static QString decryptMessage(const QByteArray &AEncryptedText, const QByteArray &AKey, const QByteArray &AIv, const QByteArray &AAuthTag);
+
+	static void getKeyPair(QByteArray &AKey, QByteArray &AIv);
+	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
+
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
 	int generateRegistrationId(quint32 *ARegistrationId, int AExtendedRange);

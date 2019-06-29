@@ -228,7 +228,7 @@ int SignalProtocol::getDeviceId(quint32 &AId)
 	return signal_protocol_identity_get_local_registration_id(FStoreContext, &AId);
 }
 
-static QByteArray signalBufferToByteArray(signal_buffer *ABuffer)
+QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
 {
 	size_t len = signal_buffer_len(ABuffer);
 	if (len>0)
@@ -288,7 +288,7 @@ QByteArray SignalProtocol::getIdentityKeyPrivate() const
 			if (rc ==SG_SUCCESS)
 			{
 				retVal = signalBufferToByteArray(buffer);
-				signal_buffer_free(buffer);
+				signal_buffer_bzero_free(buffer);
 			}
 			else
 				qCritical("ec_public_key_serialize() failed! rc=%d", rc);
@@ -417,7 +417,7 @@ QByteArray SignalProtocol::getPreKeyPrivate(quint32 AKeyId) const
 				if (rc == SG_SUCCESS)
 				{
 					retVal = signalBufferToByteArray(buffer);
-					signal_buffer_free(buffer);
+					signal_buffer_bzero_free(buffer);
 				}
 				else
 					qCritical("ec_private_key_serialize() failed! rc=%d", rc);
@@ -432,6 +432,208 @@ QByteArray SignalProtocol::getPreKeyPrivate(quint32 AKeyId) const
 		qCritical("signal_protocol_pre_key_load_key() failed! rc=%d", rc);
 
 	return retVal;
+}
+
+session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistrationId,
+														   int ADeviceId, uint32_t APreKeyId,
+														   const QByteArray &APreKeyPublic,
+														   uint32_t ASignedPreKeyId,
+														   const QByteArray &ASignedPreKeyPublic,
+														   const QByteArray &ASignedPreKeySignature,
+														   const QByteArray &AIdentityKey) const
+{
+	char *err_msg(nullptr);
+	session_pre_key_bundle *bundle(nullptr);
+	ec_public_key *preKeyPublic(nullptr),
+				  *signedPreKeyPublic(nullptr),
+				  *identityKey(nullptr);
+
+	int rc = curve_decode_point(&preKeyPublic,
+								reinterpret_cast<const quint8*>(
+								APreKeyPublic.data()),
+								size_t(APreKeyPublic.size()),
+								FGlobalContext);
+	if (rc != SG_SUCCESS) {
+		err_msg = "curve_decode_point() failed!";
+		goto cleanup;
+	}
+
+	rc = curve_decode_point(&signedPreKeyPublic,
+							reinterpret_cast<const quint8*>(
+							ASignedPreKeyPublic.data()),
+							size_t(ASignedPreKeyPublic.size()),
+							FGlobalContext);
+	if (rc != SG_SUCCESS) {
+		err_msg = "curve_decode_point() failed!";
+		goto cleanup;
+	}
+
+	rc = curve_decode_point(&identityKey,
+							reinterpret_cast<const quint8*>(
+							AIdentityKey.data()),
+							size_t(AIdentityKey.size()),
+							FGlobalContext);
+	if (rc != SG_SUCCESS) {
+		err_msg = "curve_decode_point() failed!";
+		goto cleanup;
+	}
+
+	rc = session_pre_key_bundle_create(&bundle, ARegistrationId, ADeviceId,
+									   APreKeyId, preKeyPublic,
+									   ASignedPreKeyId,
+									   signedPreKeyPublic,
+									   reinterpret_cast<const quint8*>(
+										   ASignedPreKeySignature.data()),
+									   size_t(ASignedPreKeySignature.size()),
+									   identityKey);
+	if (rc != SG_SUCCESS) {
+		err_msg = "session_pre_key_bundle_create() failed!";
+		goto cleanup;
+	}
+
+cleanup:
+	if (err_msg)
+		qCritical("%s: rc=%d", err_msg, rc);
+
+	SIGNAL_UNREF(identityKey);
+	SIGNAL_UNREF(signedPreKeyPublic);
+	SIGNAL_UNREF(preKeyPublic);
+
+	return bundle;
+}
+
+QByteArray SignalProtocol::encryptMessage(const QString &AMessageText,
+										  const QByteArray &AKey,
+										  const QByteArray &AIv,
+										  QByteArray &AAuthTag)
+{
+	int rc = SG_SUCCESS;
+	char * err_msg = nullptr;
+
+	int algo = GCRY_CIPHER_AES128;
+	int mode = GCRY_CIPHER_MODE_GCM;
+	gcry_cipher_hd_t cipher_hd = {nullptr};
+	QByteArray outBuf;
+	QByteArray inBuf(AMessageText.toUtf8());
+
+	if(AIv.size() != 16) {
+		err_msg = "invalid AES IV size (must be not less than 8)";
+		rc = SG_ERR_UNKNOWN;
+		goto cleanup;
+	}
+
+	rc = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
+	if (rc) {
+		err_msg = "failed to init cipher";
+		goto cleanup;
+	}
+
+	rc = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
+	if (rc) {
+		err_msg = "failed to set key";
+		goto cleanup;
+	}
+
+	outBuf.resize(inBuf.size());
+	rc = int(gcry_cipher_encrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
+											inBuf.data(), size_t(inBuf.size())));
+	if (rc) {
+		err_msg = "failed to encrypt";
+		goto cleanup;
+	}
+
+	AAuthTag.resize(8);
+	rc = int(gcry_cipher_gettag (cipher_hd, AAuthTag.data(), size_t(AAuthTag.size())));
+	if (rc) {
+		err_msg = "failed get authentication tag";
+	} else {
+		qDebug("Authentication tag: %s", AAuthTag.toHex().data());
+	}
+
+cleanup:
+	if (rc) {
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
+			rc = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, err_msg);
+		}
+	}
+
+	gcry_cipher_close(cipher_hd);
+
+	return outBuf;
+}
+
+QString SignalProtocol::decryptMessage(const QByteArray &AEncryptedText,
+									   const QByteArray &AKey,
+									   const QByteArray &AIv,
+									   const QByteArray &AAuthTag)
+{
+	int ret_val = SG_SUCCESS;
+	char * err_msg = nullptr;
+
+	int algo = GCRY_CIPHER_AES128;
+	int mode = GCRY_CIPHER_MODE_GCM;
+
+	gcry_cipher_hd_t cipher_hd = {nullptr};
+	QByteArray outBuf;
+
+	if(AIv.size() != 16) {
+	  err_msg = "invalid AES IV size (must be not less than 8)";
+	  ret_val = SG_ERR_UNKNOWN;
+	  goto cleanup;
+	}
+
+	ret_val = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
+	if (ret_val) {
+	  err_msg = "failed to init cipher";
+	  goto cleanup;
+	}
+
+	ret_val = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
+	if (ret_val) {
+	  err_msg = "failed to set key";
+	  goto cleanup;
+	}
+
+	outBuf.resize(AEncryptedText.size());
+	ret_val = int(gcry_cipher_decrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
+									  AEncryptedText.data(), size_t(AEncryptedText.size())));
+	if (ret_val) {
+		err_msg = "failed to decrypt";
+		goto cleanup;
+	}
+
+	ret_val = int(gcry_cipher_checktag (cipher_hd, AAuthTag.data(),
+										size_t(AAuthTag.size())));
+	if (ret_val) {
+		err_msg = "failed check authentication tag";
+	} else {
+		qDebug("Authentication tag checked successfuly!");
+	}
+
+  cleanup:
+	if (ret_val) {
+		if (ret_val > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
+			ret_val = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, err_msg);
+		}
+	}
+
+	gcry_cipher_close(cipher_hd);
+
+	return QString::fromUtf8(outBuf);
+}
+
+void SignalProtocol::getKeyPair(QByteArray &AKey, QByteArray &AIv)
+{
+	AKey.resize(16);
+	gcry_randomize(AKey.data(), size_t(AKey.size()), GCRY_STRONG_RANDOM);
+	AIv.resize(16);
+	gcry_randomize(AIv.data(), size_t(AIv.size()), GCRY_STRONG_RANDOM);
 }
 
 

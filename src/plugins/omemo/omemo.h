@@ -89,7 +89,7 @@ private:
 	QDir				FOmemoDir;
 
 	QHash<IXmppStream *, QTimer*> FPepDelay;
-	QHash<QString, QList<quint32> > FDeviceIds;
+	QHash<QString, QList<quint32> > FDeviceIds;	
 };
 
 #endif // OMEMO_H

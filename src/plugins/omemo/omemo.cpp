@@ -139,6 +139,20 @@ bool Omemo::initObjects()
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
 
+	QByteArray key, iv;
+	SignalProtocol::getKeyPair(key, iv);
+	qDebug() << "key=" << key.toBase64() << "; iv=" << iv.toBase64();
+
+	const QString message("Test message");
+	qDebug() << "message=" << message;
+
+	QByteArray authTag;
+	QByteArray encrypted = SignalProtocol::encryptMessage(message, key, iv, authTag);
+	qDebug() << "encrypted=" << encrypted.toBase64();
+
+	QString decrypted = SignalProtocol::decryptMessage(encrypted, key, iv, authTag);
+	qDebug() << "decrypted=" << decrypted;
+
 	return true;
 }
 
