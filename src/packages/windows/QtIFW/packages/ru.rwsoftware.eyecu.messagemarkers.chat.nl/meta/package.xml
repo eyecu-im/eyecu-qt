@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Chat Markers Dutch Translation</DisplayName>
+ <Description>Chat Markers Dutch translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.messagemarkers.chat.nl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.messagemarkers.chat,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>
