@@ -30,7 +30,7 @@ Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
 				FPresenceManager(nullptr),
 				FOptionsManager(nullptr),
-//				FMessageProcessor(nullptr),
+				FMessageProcessor(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
 				FPluginManager(nullptr),
@@ -98,18 +98,18 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	else
 		return false;
 
-//	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0);
-//	if (plugin)
-//		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
-//	else return false;
+	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0);
+	if (plugin)
+		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
+	else return false;
 
-	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0, nullptr);
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageWidgets").value(0, nullptr);
 	if (plugin)
 	{
 		FMessageWidgets = qobject_cast<IMessageWidgets *>(plugin->instance());
@@ -131,11 +131,11 @@ bool Omemo::initObjects()
 	if (FDiscovery)
 		registerDiscoFeatures();
 
-//	if (FMessageProcessor)
-//	{
-//		FMessageProcessor->insertMessageWriter(MWO_OOB, this);
-//		FMessageProcessor->insertMessageEditor(MEO_OOB, this);
-//	}
+	if (FMessageProcessor)
+	{
+//		FMessageProcessor->insertMessageWriter(MWO_OMEMO, this);
+		FMessageProcessor->insertMessageEditor(MEO_OMEMO, this);
+	}
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
 
@@ -288,9 +288,11 @@ void Omemo::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 
 void Omemo::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
+	qDebug() << "Omemo::onChatWindowCreated(" << AWindow << ")";
 //	new OmemoLinkList(FIconStorage, AWindow->instance());
-//	updateChatWindowActions(AWindow);
-//	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)), SLOT(onAddressChanged(Jid,Jid)));
+	updateChatWindowActions(AWindow);
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
+											SLOT(onAddressChanged(Jid,Jid)));
 }
 
 void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
@@ -568,9 +570,12 @@ void Omemo::onPepTimeout()
 //	return false;
 //}
 
-//bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
-//{
-//	Q_UNUSED(AOrder)
+bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
+{
+	Q_UNUSED(AOrder)
+
+	qDebug() << "Omemo::messageReadWrite(" << AOrder << "," << AStreamJid.full()
+			 << "," << AMessage.stanza().toString() << "," << ADirection << ")";
 
 //	if (ADirection==IMessageProcessor::DirectionOut)
 //	{
@@ -585,8 +590,8 @@ void Omemo::onPepTimeout()
 //			list->clear();
 //		}
 //	}
-//	return false;
-//}
+	return false;
+}
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_omemo, Omemo)

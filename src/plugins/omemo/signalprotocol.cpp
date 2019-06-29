@@ -10,6 +10,8 @@ extern "C" {
 #include <key_helper.h>
 #include <session_builder.h>
 #include <session_cipher.h>
+#include <session_state.h>
+#include <protocol.h>
 
 using namespace OmemoStore;
 
@@ -226,6 +228,139 @@ cleanup:
 int SignalProtocol::getDeviceId(quint32 &AId)
 {
 	return signal_protocol_identity_get_local_registration_id(FStoreContext, &AId);
+}
+
+int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId)
+{
+	signal_protocol_address address = {ABareJid.toUtf8(),
+									   size_t(ABareJid.size()),
+									   ADeviceId};
+	int ret_val = 0;
+	char * err_msg = nullptr;
+
+	session_record * sessionRecord = nullptr;
+	session_state * sessionState = nullptr;
+
+	//TODO: if there was no response yet, even though it is an established session it keeps sending prekeymsgs
+	//      maybe that is "uninitiated" too?
+	if(!signal_protocol_session_contains_session(FStoreContext, &address)) {
+		return 0;
+	}
+
+	ret_val = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
+	if (ret_val){
+		err_msg = "database error when trying to retrieve session";
+		goto cleanup;
+	} else {
+		sessionState = session_record_get_state(sessionRecord);
+		if (session_state_has_pending_key_exchange(sessionState)) {
+			err_msg = "session exists but has pending synchronous key exchange";
+			ret_val = 0;
+			goto cleanup;
+		}
+		ret_val = 1;
+	}
+
+cleanup:
+	if (ret_val < 1)
+	  qCritical("%s: %s", __func__, err_msg);
+
+	SIGNAL_UNREF(sessionRecord);
+	return ret_val;
+}
+
+session_cipher *SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
+{
+	signal_protocol_address AAddress = {ABareJid.toUtf8(),
+										size_t(ABareJid.size()),
+										ADeviceId};
+	// Create the session cipher
+	session_cipher	*cipher(nullptr);
+	int rc = session_cipher_create(&cipher, FStoreContext, &AAddress, FGlobalContext);
+	if (rc != SG_SUCCESS)
+		qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
+	return cipher;
+}
+
+QByteArray SignalProtocol::encrypt(session_cipher *ACipher, const QByteArray &AUnencrypted)
+{
+	QByteArray result;
+	ciphertext_message *message;
+	int rc = session_cipher_encrypt(ACipher,
+									reinterpret_cast<const quint8*>(
+										AUnencrypted.data()),
+									size_t(AUnencrypted.size()),
+									&message);
+	if (rc == SG_SUCCESS)
+	{
+		// Get the serialized content
+		signal_buffer *serialized = ciphertext_message_get_serialized(message);
+		result = SignalProtocol::signalBufferToByteArray(serialized);
+		signal_buffer_free(serialized);
+	}
+
+	SIGNAL_UNREF(message);
+
+	return result;
+}
+
+QByteArray SignalProtocol::decrypt(session_cipher *ACipher, const QByteArray &AEncrypted)
+{
+	signal_message *ciphertext;
+	QByteArray result;
+
+	int rc = signal_message_deserialize(&ciphertext,
+										reinterpret_cast<const quint8*>(
+											AEncrypted.data()),
+										size_t(AEncrypted.size()),
+										FGlobalContext);
+	if (rc == SG_SUCCESS)
+	{
+		signal_buffer *buffer(nullptr);
+
+		rc = session_cipher_decrypt_signal_message(ACipher, ciphertext,
+												   nullptr, &buffer);
+		if (rc == SG_SUCCESS)
+			result = SignalProtocol::signalBufferToByteArray(buffer);
+		else
+			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
+
+		signal_buffer_bzero_free(buffer);
+	}
+	else
+		qCritical("signal_message_deserialize() failed! rc=%d", rc);
+
+	return result;
+}
+
+QByteArray SignalProtocol::decryptPre(session_cipher *ACipher, const QByteArray &AEncrypted)
+{
+	pre_key_signal_message *ciphertext(nullptr);
+	QByteArray result;
+	int rc = pre_key_signal_message_deserialize(&ciphertext,
+												reinterpret_cast<const quint8*>(
+													AEncrypted.data()),
+												size_t(AEncrypted.size()),
+												FGlobalContext);
+	if (rc == SG_SUCCESS)
+	{
+		signal_buffer *plaintext(nullptr);
+
+		rc = session_cipher_decrypt_pre_key_signal_message(ACipher, ciphertext,
+														   nullptr, &plaintext);
+		if (rc == SG_SUCCESS)
+		{
+			result = SignalProtocol::signalBufferToByteArray(plaintext);
+		}
+		else
+			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
+
+		signal_buffer_bzero_free(plaintext);
+	}
+	else
+		qCritical("pre_key_signal_message_deserialize() failed! rc=%d", rc);
+
+	return result;
 }
 
 QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
@@ -1305,3 +1440,35 @@ SignalProtocol::~SignalProtocol()
 axc_buf_list_item::axc_buf_list_item(uint32_t AId, signal_buffer *ABuf_p):
 	id(AId), buf_p(ABuf_p)
 {}
+
+signal_context *				SessionBuilder::FGlobalContext(nullptr);
+signal_protocol_store_context *	SessionBuilder::FStoreContext(nullptr);
+
+SessionBuilder::SessionBuilder(const QString &ABareJid, int ADeviceId):
+	ABuilder(nullptr)
+{
+	signal_protocol_address AAddress = {ABareJid.toUtf8(),
+										size_t(ABareJid.size()),
+										ADeviceId};
+	// Instantiate a session_builder for a recipient address.
+	int rc = session_builder_create(&ABuilder, FStoreContext, &AAddress, FGlobalContext);
+	if (rc != SG_SUCCESS)
+		qCritical("session_builder_create() failed! rc=%d", rc);
+}
+
+SessionBuilder::~SessionBuilder()
+{
+	if (ABuilder)
+		session_builder_free(ABuilder);
+}
+
+bool SessionBuilder::isOk() const
+{
+	return ABuilder != nullptr;
+}
+
+void SessionBuilder::init(signal_context *AGlobalContext, signal_protocol_store_context *AStoreContext)
+{
+	FGlobalContext = AGlobalContext;
+	FStoreContext = AStoreContext;
+}

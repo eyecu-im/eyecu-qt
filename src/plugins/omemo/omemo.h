@@ -18,12 +18,12 @@ class SignalProtocol;
 class Omemo: public QObject,
 			 public IPlugin,
 			 public IOmemo,
-			 public IPEPHandler
-//			 public IMessageEditor,
+			 public IPEPHandler,
+			 public IMessageEditor
 //			 public IMessageWriter
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IOmemo IPEPHandler) // IMessageEditor IMessageWriter)
+	Q_INTERFACES(IPlugin IOmemo IPEPHandler IMessageEditor) // IMessageWriter)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
@@ -43,7 +43,7 @@ public:
 	virtual bool processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza) override;
 
 	//IMessageEditor
-//	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
+	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
 
 	//IMessageWriter
 //	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
@@ -74,7 +74,7 @@ private:
 	IXmppStreamManager*	FXmppStreamManager;
 	IPresenceManager*	FPresenceManager;
 	IOptionsManager*	FOptionsManager;
-//	IMessageProcessor*	FMessageProcessor;
+	IMessageProcessor*	FMessageProcessor;
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
 	IPluginManager*		FPluginManager;

@@ -18,6 +18,24 @@ struct session_builder;
 #define PRE_KEYS_START		1
 #define PRE_KEYS_AMOUNT		100
 
+class SessionBuilder
+{
+public:
+	SessionBuilder(const QString &ABareJid, int ADeviceId);
+	~SessionBuilder();
+
+	bool processPreKeyBundle(session_pre_key_bundle *APreKey);
+	bool isOk() const;
+
+	static void init(signal_context *AGlobalContext,
+					 signal_protocol_store_context *AStoreContext);
+private:
+	session_builder	*ABuilder;
+
+	static signal_context *					FGlobalContext;
+	static signal_protocol_store_context *	FStoreContext;
+};
+
 class SignalProtocol
 {
 public:
@@ -34,6 +52,12 @@ public:
 	int install(quint32 ASignedPreKeyId=SIGNED_PRE_KEY_ID, uint APreKeyStartId=PRE_KEYS_START, uint APreKeyAmount=PRE_KEYS_AMOUNT);
 
 	int getDeviceId(quint32 &AId);
+
+	int isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId);
+	session_cipher *sessionCipherCreate(const QString &ABareJid, int ADeviceId);
+	QByteArray encrypt(session_cipher *ACipher, const QByteArray &AUnencrypted);
+	QByteArray decrypt(session_cipher *ACipher, const QByteArray &AEncrypted);
+	QByteArray decryptPre(session_cipher *ACipher, const QByteArray &AEncrypted);
 
 	QByteArray getIdentityKeyPublic() const;
 	QByteArray getIdentityKeyPrivate() const;
