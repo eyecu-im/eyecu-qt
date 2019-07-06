@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<icondef>
+  <icon>
+    <key>crypto_off</key>
+    <object mime="image/png">cryptooff.png</object>
+  </icon>
+  <icon>
+    <key>crypto_on</key>
+    <object mime="image/png">cryptoon.png</object>
+  </icon>
+  <icon>
+    <key>crypto_full</key>
+    <object mime="image/png">cryptofull.png</object>
+  </icon>
+</icondef>

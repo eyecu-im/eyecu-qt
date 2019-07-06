@@ -35,6 +35,8 @@
 #define TBG_MWSIM_SKINCOLOR                                     10100
 //Wessage Widgets - Off-the-Record messaging
 #define TBG_MWTBW_OTR											10030
+//Wessage Widgets - OMEMO
+#define TBG_MWTBW_OMEMO											10020
 // *** >>> eyeCU >>> ***
 #define TBG_MWTBW_CLEAR_WINDOW                                  1800
 #define TBG_MWTBW_CHATSTATES                                    10050

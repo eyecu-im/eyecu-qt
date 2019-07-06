@@ -367,5 +367,10 @@
 #define MNI_OTR_ENCRYPTED               "otr_yes"
 #define MNI_OTR_UNVERFIFIED             "otr_unverified"
 #define MNI_OTR_NO                      "otr_no"
+
+#define MNI_CRYPTO_OFF                  "crypto_off"
+#define MNI_CRYPTO_ON					"crypto_on"
+#define MNI_CRYPTO_FULL                 "crypto_full"
+
 // >>> eyeCU >>>
 #endif // DEF_MENUICONS_H

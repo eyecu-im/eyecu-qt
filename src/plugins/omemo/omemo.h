@@ -51,9 +51,14 @@ public:
 //	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang) override;
 
 protected:
+	bool isSupported(const QString &ABareJid) const;
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	int isSupported(const IMessageAddress *AAddresses) const;
+	bool setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive=true);
+	bool isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const;
+	bool isActiveSession(const IMessageAddress *AAddresses) const;
 	void registerDiscoFeatures();
-	void updateChatWindowActions(IMessageChatWindow *AChatWindow);
+	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
 
@@ -68,6 +73,10 @@ protected slots:
 	void onChatWindowCreated(IMessageChatWindow *AWindow);
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
+
+	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
+
+	void onOmemoActionTriggered();
 
 private:
 	IPEPManager*		FPepManager;
@@ -89,7 +98,8 @@ private:
 	QDir				FOmemoDir;
 
 	QHash<IXmppStream *, QTimer*> FPepDelay;
-	QHash<QString, QList<quint32> > FDeviceIds;	
+	QHash<QString, QList<quint32> > FDeviceIds;
+	QHash<Jid, QStringList> FActiveSessions;
 };
 
 #endif // OMEMO_H

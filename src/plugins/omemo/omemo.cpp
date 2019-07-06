@@ -26,6 +26,9 @@
 //#define DIR_OMEMO       "omemo"
 #define DBFN_OMEMO      "omemo.db"
 
+#define ADR_CONTACT_JID Action::DR_Parametr2
+#define ADR_STREAM_JID Action::DR_StreamJid
+
 Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
 				FPresenceManager(nullptr),
@@ -264,13 +267,75 @@ void Omemo::registerDiscoFeatures()
 	qDebug() << "feature inserted:" << dfeature.var;
 }
 
+bool Omemo::isSupported(const QString &ABareJid) const
+{
+	return FDeviceIds.contains(ABareJid);
+}
+
 bool Omemo::isSupported(const Jid &AStreamJid, const Jid &AContactJid) const
 {
-	return (!FDiscovery ||
-			!FDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
+	return isSupported(AContactJid.bare()) &&
+		   (!FDiscovery->hasDiscoInfo(AStreamJid,AContactJid) ||
 			 FDiscovery->discoInfo(AStreamJid,AContactJid)
-			.features.contains(NS_PEP_OMEMO_NOTIFY)) &&
-			FDeviceIds.contains(AContactJid.bare());
+			.features.contains(NS_PEP_OMEMO_NOTIFY));
+}
+
+int Omemo::isSupported(const IMessageAddress *AAddresses) const
+{
+	if ((!AAddresses->contactJid().hasResource() &&
+		 isSupported(AAddresses->contactJid().bare())) ||
+		isSupported(AAddresses->streamJid(), AAddresses->contactJid()))
+		return 2;
+	QMultiMap<Jid,Jid> addresses = AAddresses->availAddresses(true);
+	for (QMultiMap<Jid,Jid>::ConstIterator it = addresses.constBegin();
+		 it != addresses.constEnd(); ++it) {
+		if (isSupported(it->bare()))
+			return 1;
+	}
+	return 0;
+}
+
+bool Omemo::setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive)
+{
+	if (AActive)
+	{
+		if (!FActiveSessions[AStreamJid].contains(ABareJid))
+		{
+			FActiveSessions[AStreamJid].append(ABareJid);
+			return true;
+		}
+	}
+	else
+	{
+		if (FActiveSessions.contains(AStreamJid))
+		{
+			if (FActiveSessions[AStreamJid].contains(ABareJid))
+			{
+				FActiveSessions[AStreamJid].removeAll(ABareJid);
+				if (FActiveSessions[AStreamJid].isEmpty())
+					FActiveSessions.remove(AStreamJid);
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+bool Omemo::isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const
+{
+	return FActiveSessions.contains(AStreamJid) &&
+		   FActiveSessions[AStreamJid].contains(ABareJid);
+}
+
+bool Omemo::isActiveSession(const IMessageAddress *AAddresses) const
+{
+	QMultiMap<Jid, Jid> addresses = AAddresses->availAddresses(true);
+	for (QMultiMap<Jid, Jid>::ConstIterator it = addresses.constBegin();
+		 it != addresses.constEnd(); ++it)
+		if (isActiveSession(it.key(), it->bare()))
+			return true;
+	return false;
 }
 
 void Omemo::onNormalWindowCreated(IMessageNormalWindow *AWindow)
@@ -288,53 +353,89 @@ void Omemo::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 
 void Omemo::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
-	qDebug() << "Omemo::onChatWindowCreated(" << AWindow << ")";
-//	new OmemoLinkList(FIconStorage, AWindow->instance());
+	connect(AWindow->address()->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
+											SLOT(onAddressChanged(const Jid &, const Jid &)));
 	updateChatWindowActions(AWindow);
-	connect(AWindow->address()->instance(), SIGNAL(addressChanged(Jid, Jid)),
-											SLOT(onAddressChanged(Jid,Jid)));
+}
+
+void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
+{
+	qDebug() << "Omemo::updateChatWindowActions()";
+	QString contact = AWindow->contactJid().uFull();
+	QString stream = AWindow->streamJid().uFull();
+
+	QList<QAction*> omemoActions = AWindow->toolBarWidget()->toolBarChanger()
+										->groupItems(TBG_MWTBW_OMEMO);
+	Action *omemoAction = omemoActions.isEmpty()?nullptr:AWindow->toolBarWidget()
+							->toolBarChanger()->handleAction(omemoActions.first());
+	int supported = isSupported(AWindow->address());
+	qDebug() << "supported=" << supported;
+	if (supported)
+	{
+		if (!omemoAction)
+		{
+			omemoAction = new Action(AWindow->toolBarWidget()->instance());
+			omemoAction->setToolTip(tr("OMEMO encryption"));
+
+			QToolButton *omemoButton = AWindow->toolBarWidget()->
+					toolBarChanger()->insertAction(omemoAction, TBG_MWTBW_OMEMO);
+			omemoButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
+			connect(omemoAction, SIGNAL(triggered()), SLOT(onOmemoActionTriggered()));
+		}
+		omemoAction->setData(ADR_STREAM_JID, stream);
+		omemoAction->setData(ADR_CONTACT_JID, contact);
+		omemoAction->setEnabled(supported==2);
+		QString iconKey = isActiveSession(AWindow->address())?MNI_CRYPTO_ON
+															 :MNI_CRYPTO_OFF;
+		omemoAction->setIcon(RSR_STORAGE_MENUICONS, iconKey);
+	}
+	else
+	{
+		if (omemoAction)
+		{
+			AWindow->toolBarWidget()->toolBarChanger()->removeItem(omemoAction);
+		}
+	}
 }
 
 void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore)
 {
 	Q_UNUSED(AStreamBefore)
 	Q_UNUSED(AContactBefore)
-
-	IMessageAddress *address=qobject_cast<IMessageAddress *>(sender());
-	IMessageChatWindow *window=FMessageWidgets->findChatWindow(address->streamJid(), address->contactJid());
-	if (window)
-		updateChatWindowActions(window);
+	IMessageAddress *address = qobject_cast<IMessageAddress *>(sender());
+	onUpdateMessageState(address->streamJid(), address->contactJid());
 }
 
-void Omemo::updateChatWindowActions(IMessageChatWindow *AChatWindow)
+void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 {
-	QList<QAction *> actions = AChatWindow->toolBarWidget()->toolBarChanger()->groupItems(TBG_MWTBW_OOB_VIEW);
-	QAction *handle=actions.value(0, nullptr);
-	if (isSupported(AChatWindow->streamJid(), AChatWindow->contactJid()))
+	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+	if (window)
 	{
-		if (!handle)
-		{
-//			OmemoLinkList *linkList=getLinkList(AChatWindow);
-//			if (linkList->topLevelItemCount())
-//				linkList->show();
-//			Action *action = new Action(linkList);
-//			action->setText(tr("Add link"));
-//			action->setIcon(RSR_STORAGE_MENUICONS, MNI_LINK_ADD);
-//			action->setShortcutId(SCT_MESSAGEWINDOWS_OOB_INSERTLINK);
-//			connect(action, SIGNAL(triggered(bool)), SLOT(onInsertLink(bool)));
-//			AChatWindow->toolBarWidget()->toolBarChanger()->insertAction(action, TBG_MWTBW_OOB_VIEW);
-		}
+		updateChatWindowActions(window);
 	}
-	else
+}
+
+void Omemo::onOmemoActionTriggered()
+{
+	qDebug() << "Omemo::onOmemoActionTriggered()";
+	Action *action = qobject_cast<Action*>(sender());
+	if (action)
 	{
-		if (handle)
+		Jid streamJid(action->data(ADR_STREAM_JID).toString());
+		Jid contactJid(action->data(ADR_CONTACT_JID).toString());
+
+		bool active = isActiveSession(streamJid, contactJid.bare());
+
+		if (setActiveSession(streamJid, contactJid.bare(), !active))
 		{
-//			AChatWindow->toolBarWidget()->toolBarChanger()->removeItem(handle);
-//			handle->deleteLater();
-//			getLinkList(AChatWindow)->hide();
+			IMessageChatWindow *window = FMessageWidgets
+									->findChatWindow(streamJid, contactJid);
+			if (window)
+				updateChatWindowActions(window);
 		}
 	}
 }
+
 
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 {
@@ -450,7 +551,7 @@ void Omemo::onProfileOpened(const QString &AProfile)
 void Omemo::onStreamOpened(IXmppStream *AXmppStream)
 {
 	qDebug() << "Omemo::onStreamOpened(" << AXmppStream->streamJid().full() << ")";
-	FStreamOmemo.insert(AXmppStream->streamJid(), NULL);
+	FStreamOmemo.insert(AXmppStream->streamJid(), nullptr);
 }
 
 void Omemo::onStreamClosed(IXmppStream *AXmppStream)
@@ -577,19 +678,26 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 	qDebug() << "Omemo::messageReadWrite(" << AOrder << "," << AStreamJid.full()
 			 << "," << AMessage.stanza().toString() << "," << ADirection << ")";
 
-//	if (ADirection==IMessageProcessor::DirectionOut)
-//	{
-//		OmemoLinkList *list=findLinkList(AStreamJid, AMessage.to(), AMessage.type());
-//		if (list)
-//		{
-//			if (!list->isHidden())
-//			{
-//				appendLinks(AMessage, list);
-//				list->hide();
-//			}
-//			list->clear();
-//		}
-//	}
+	if (ADirection==IMessageProcessor::DirectionOut)
+	{
+		qDebug() << "Outgoing message!";
+		if (AMessage.stanza().firstElement("encrypted", NS_OMEMO).isNull())
+		{
+			qDebug() << "No <encrypted/> element found! Will process...";
+			if (isActiveSession(AStreamJid, AMessage.toJid().bare()))
+			{
+				qDebug() << "Have active session!";
+				if (isSupported(AStreamJid, AMessage.toJid()))
+					qDebug() << "The contact supports OMEMO!";
+			}
+			else
+				qDebug() << "No active session!";
+		}
+	}
+	else
+	{
+		// Nothing to do right now
+	}
 	return false;
 }
 
