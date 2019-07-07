@@ -93,7 +93,7 @@ QSqlDatabase db()
 }
 
 
-int axc_db_property_set(const char * name, const int val) {
+int propertySet(const char * name, const int val) {
 	// 1 - name of property
 	// 2 - value
 	const QString stmt("INSERT OR REPLACE INTO " SETTINGS_STORE_TABLE_NAME " VALUES (?1, ?2);");
@@ -107,7 +107,7 @@ int axc_db_property_set(const char * name, const int val) {
 	return 0;
 }
 
-int axc_db_property_get(const char * name, int * val_p) {
+int propertyGet(const char * name, int * val_p) {
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE name IS ?1;");
 
 	QSqlQuery pstmt_p(stmt, db());
@@ -133,7 +133,7 @@ int axc_db_property_get(const char * name, int * val_p) {
 
 
 
-int axc_db_session_load(signal_buffer ** record,
+int sessionLoad(signal_buffer ** record,
 						signal_buffer ** user_record,
 						const signal_protocol_address * address,
 						void * user_data)
@@ -173,7 +173,7 @@ int axc_db_session_load(signal_buffer ** record,
 	return 1;
 }
 
-int axc_db_session_get_sub_device_sessions(signal_int_list ** sessions,
+int sessionGetSubDeviceSessions(signal_int_list ** sessions,
 													   const char * name, size_t name_len,
 													   void * user_data)
 {
@@ -220,7 +220,7 @@ cleanup:
 	return ret_val;
 }
 
-int axc_db_session_store(const signal_protocol_address *address,
+int sessionStore(const signal_protocol_address *address,
 						 uint8_t *record, size_t record_len,
 						 uint8_t *user_record, size_t user_record_len,
 						 void *user_data)
@@ -246,7 +246,7 @@ int axc_db_session_store(const signal_protocol_address *address,
 	return 0;
 }
 
-int axc_db_session_contains(const signal_protocol_address *address, void *user_data)
+int sessionContains(const signal_protocol_address *address, void *user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -270,7 +270,7 @@ int axc_db_session_contains(const signal_protocol_address *address, void *user_d
 	}
 }
 
-int axc_db_session_delete(const signal_protocol_address *address, void *user_data)
+int sessionDelete(const signal_protocol_address *address, void *user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -294,7 +294,7 @@ int axc_db_session_delete(const signal_protocol_address *address, void *user_dat
 	}
 }
 
-int axc_db_session_delete_all(const char *name, size_t name_len, void *user_data)
+int sessionDeleteAll(const char *name, size_t name_len, void *user_data)
 {
 	Q_UNUSED(user_data);
 	Q_UNUSED(name_len);
@@ -313,13 +313,13 @@ int axc_db_session_delete_all(const char *name, size_t name_len, void *user_data
 	}
 }
 
-void axc_db_session_destroy_store_ctx(void *user_data)
+void sessionDestroyStoreCtx(void *user_data)
 {
 	Q_UNUSED(user_data);
 }
 
 // pre key store impl
-int axc_db_pre_key_load(signal_buffer ** record, uint32_t pre_key_id, void * user_data)
+int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -351,7 +351,7 @@ int axc_db_pre_key_load(signal_buffer ** record, uint32_t pre_key_id, void * use
 	return SG_SUCCESS;
 }
 
-int axc_db_pre_key_store(uint32_t pre_key_id, uint8_t * record, size_t record_len, void * user_data)
+int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -368,7 +368,7 @@ int axc_db_pre_key_store(uint32_t pre_key_id, uint8_t * record, size_t record_le
 	return 0;
 }
 
-int axc_db_pre_key_store_list(signal_protocol_key_helper_pre_key_list_node * pre_keys_head,
+int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * pre_keys_head,
 							  SignalProtocol * sp_ctx_p)
 {
 	Q_UNUSED(sp_ctx_p);
@@ -503,7 +503,7 @@ cleanup:
 	return ret_val;
 }
 
-int axc_db_pre_key_contains(uint32_t pre_key_id, void * user_data)
+int preKeyContains(uint32_t pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -582,7 +582,7 @@ int axc_db_pre_key_get_count(size_t * count_p) {
 	}
 }
 
-int axc_db_pre_key_remove(uint32_t pre_key_id, void * user_data)
+int preKeyRemove(uint32_t pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -605,7 +605,7 @@ int axc_db_pre_key_remove(uint32_t pre_key_id, void * user_data)
 	}
 }
 
-void axc_db_pre_key_destroy_ctx(void * user_data)
+void preKeyDestroyCtx(void * user_data)
 {
   Q_UNUSED(user_data);
   //const char stmt[] = "DELETE FROM pre_key_store; VACUUM;";
@@ -614,7 +614,7 @@ void axc_db_pre_key_destroy_ctx(void * user_data)
 }
 
 // signed pre key store impl
-int axc_db_signed_pre_key_load(signal_buffer ** record, uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -644,7 +644,7 @@ int axc_db_signed_pre_key_load(signal_buffer ** record, uint32_t signed_pre_key_
 	return SG_SUCCESS;
 }
 
-int axc_db_signed_pre_key_store(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * user_data)
+int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -660,7 +660,7 @@ int axc_db_signed_pre_key_store(uint32_t signed_pre_key_id, uint8_t * record, si
 	return 0;
 }
 
-int axc_db_signed_pre_key_contains(uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyContains(uint32_t signed_pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -680,7 +680,7 @@ int axc_db_signed_pre_key_contains(uint32_t signed_pre_key_id, void * user_data)
 	}
 }
 
-int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyRemove(uint32_t signed_pre_key_id, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -702,7 +702,7 @@ int axc_db_signed_pre_key_remove(uint32_t signed_pre_key_id, void * user_data)
 	}
 }
 
-void axc_db_signed_pre_key_destroy_ctx(void * user_data)
+void signedPreKeyDestroyCtx(void * user_data)
 {
 	Q_UNUSED(user_data);
 //	const char stmt[] = "DELETE FROM signed_pre_key_store; VACUUM;";
@@ -715,7 +715,7 @@ void axc_db_signed_pre_key_destroy_ctx(void * user_data)
 /**
  * saves the public and private key by using the api serialization calls, as this format (and not the higher-level key type) is needed by the getter.
  */
-int axc_db_identity_set_key_pair(const ratchet_identity_key_pair * key_pair_p) {
+int identitySetKeyPair(const ratchet_identity_key_pair * key_pair_p) {
 	// 1 - name ("public" or "private")
 	// 2 - key blob
 	// 3 - length of the key
@@ -809,7 +809,7 @@ cleanup:
 	return ret_val;
 }
 
-int axc_db_identity_get_key_pair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data)
+int identityGetKeyPair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -899,12 +899,12 @@ cleanup:
 	return ret_val;
 }
 
-int axc_db_identity_set_local_registration_id(const uint32_t reg_id, SignalProtocol * axc_ctx_p)
+int identitySetLocalRegistrationId(const uint32_t reg_id, SignalProtocol * axc_ctx_p)
 {
-	return (axc_db_property_set(REG_ID_NAME, int(reg_id))) ? -1 : 0;
+	return (propertySet(REG_ID_NAME, int(reg_id))) ? -1 : 0;
 }
 
-int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * registration_id)
+int identityGetLocalRegistrationId(void * user_data, uint32_t * registration_id)
 {
 	Q_UNUSED(user_data);
 
@@ -928,7 +928,7 @@ int axc_db_identity_get_local_registration_id(void * user_data, uint32_t * regis
 	return 0;
 }
 
-int axc_db_identity_save(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
+int identitySave(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
 {
 	Q_UNUSED(user_data);
 
@@ -1005,7 +1005,7 @@ int axc_db_identity_is_trusted(const char * name, size_t name_len, uint8_t * key
 	}
 }
 
-int axc_db_identity_always_trusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
+int identityAlwaysTrusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data)
 {
   Q_UNUSED(addr_p);
   Q_UNUSED(key_data);
@@ -1015,7 +1015,7 @@ int axc_db_identity_always_trusted(const signal_protocol_address * addr_p, uint8
   return 1;
 }
 
-void axc_db_identity_destroy_ctx(void * user_data)
+void identityDestroyCtx(void * user_data)
 {
   Q_UNUSED(user_data);
   //const char stmt[] = "DELETE FROM identity_key_store; VACUUM;";
@@ -1023,7 +1023,7 @@ void axc_db_identity_destroy_ctx(void * user_data)
 	//db_exec_quick(stmt, user_data);
 }
 
-int axc_db_create()
+int create()
 {
 	const QStringList stmts(
 		QStringList() << "CREATE TABLE IF NOT EXISTS " SESSION_STORE_TABLE_NAME "("
@@ -1074,7 +1074,7 @@ int axc_db_create()
  *
  * @param axc_ctx_p Pointer to the axc context.
  */
-int axc_db_destroy() {
+int destroy() {
 	const QStringList stmts(
 		QStringList() << "DROP TABLE IF EXISTS " SESSION_STORE_TABLE_NAME
 					  << "DROP TABLE IF EXISTS " PRE_KEY_STORE_TABLE_NAME
@@ -1101,21 +1101,21 @@ int axc_db_destroy() {
 		return -2;
 }
 
-int axc_db_init_status_set(const int status) {
-	return axc_db_property_set(INIT_STATUS_NAME, status);
+int initStatusSet(const int status) {
+	return propertySet(INIT_STATUS_NAME, status);
 }
 
-int axc_db_init_status_get(int *init_status_p)
+int initStatusGet(int *init_status_p)
 {
-	return axc_db_property_get(INIT_STATUS_NAME, init_status_p);
+	return propertyGet(INIT_STATUS_NAME, init_status_p);
 }
 
-int axc_db_identity_set_local_registration_id(const uint32_t reg_id)
+int identitySetLocalRegistrationId(const uint32_t reg_id)
 {
-	return axc_db_property_set(REG_ID_NAME, int(reg_id)) ? -1 : 0;
+	return propertySet(REG_ID_NAME, int(reg_id)) ? -1 : 0;
 }
 
-int axc_db_pre_key_store_list(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
+int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
 {
 	const QString stmt("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE_NAME " VALUES (?1, ?2, ?3);");
 	signal_buffer * key_buf_p = nullptr;

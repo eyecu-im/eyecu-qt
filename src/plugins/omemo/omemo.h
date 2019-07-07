@@ -12,6 +12,7 @@
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagestylemanager.h>
+#include <interfaces/istanzaprocessor.h>
 
 class SignalProtocol;
 
@@ -19,8 +20,9 @@ class Omemo: public QObject,
 			 public IPlugin,
 			 public IOmemo,
 			 public IPEPHandler,
-			 public IMessageEditor
+			 public IMessageEditor,
 //			 public IMessageWriter
+			 public IStanzaHandler
 {
 	Q_OBJECT
 	Q_INTERFACES(IPlugin IOmemo IPEPHandler IMessageEditor) // IMessageWriter)
@@ -45,6 +47,9 @@ public:
 	//IMessageEditor
 	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
 
+	// IStanzaHandler interface
+	virtual bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept) override;
+
 	//IMessageWriter
 //	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
 //	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang) override;
@@ -61,6 +66,8 @@ protected:
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
+
+	bool requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
 
 protected slots:
 	void onProfileOpened(const QString &AProfile);
@@ -80,6 +87,7 @@ protected slots:
 
 private:
 	IPEPManager*		FPepManager;
+	IStanzaProcessor*	FStanzaProcessor;
 	IXmppStreamManager*	FXmppStreamManager;
 	IPresenceManager*	FPresenceManager;
 	IOptionsManager*	FOptionsManager;
@@ -91,6 +99,9 @@ private:
 	IconStorage*		FIconStorage;
 	int					FOmemoHandlerIn;
 	int					FOmemoHandlerOut;
+
+	int					FSHIResult;
+	int					FSHIError;
 
 	SignalProtocol*		FSignalProtocol;
 

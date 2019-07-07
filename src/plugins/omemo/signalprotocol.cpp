@@ -63,7 +63,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	qInfo("%s: calling install-time functions", __func__);
 
-	ret_val = axc_db_create();
+	ret_val = create();
 	if (ret_val){
 		err_msg = "failed to create db";
 		goto cleanup;
@@ -71,7 +71,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	qDebug("%s: created db if it did not exist already", __func__);
 
-	ret_val = axc_db_init_status_get(&init_status);
+	ret_val = initStatusGet(&init_status);
 	switch (ret_val) {
 		case -1:
 		default:
@@ -103,13 +103,13 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	if (db_needs_reset) {
 		qDebug("%s: db needs reset", __func__ );
-		ret_val = axc_db_destroy();
+		ret_val = destroy();
 		if (ret_val) {
 			err_msg = "failed to reset db";
 			goto cleanup;
 		}
 
-		ret_val = axc_db_create();
+		ret_val = create();
 		if (ret_val) {
 			err_msg = "failed to create db after reset";
 			goto cleanup;
@@ -122,7 +122,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		qDebug("%s: db needs init", __func__ );
 		qDebug("%s: setting init status to AXC_DB_NEEDS_ROLLBACK (%i)", __func__, AXC_DB_NEEDS_ROLLBACK );
 
-		ret_val = axc_db_init_status_set(AXC_DB_NEEDS_ROLLBACK);
+		ret_val = initStatusSet(AXC_DB_NEEDS_ROLLBACK);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
 			goto cleanup;
@@ -162,21 +162,21 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		}
 		qDebug("%s: generated signed pre key", __func__ );
 
-		ret_val = axc_db_identity_set_key_pair(identity_key_pair_p);
+		ret_val = identitySetKeyPair(identity_key_pair_p);
 		if (ret_val) {
 			err_msg = "failed to set identity key pair";
 			goto cleanup;
 		}
 		qDebug("%s: saved identity key pair", __func__ );
 
-		ret_val = axc_db_identity_set_local_registration_id(registration_id);
+		ret_val = identitySetLocalRegistrationId(registration_id);
 		if (ret_val) {
 			err_msg = "failed to set registration id";
 			goto cleanup;
 		}
 		qDebug("%s: saved registration id", __func__ );
 
-		ret_val = axc_db_pre_key_store_list(pre_keys_head_p);
+		ret_val = preKeyStoreList(pre_keys_head_p);
 		if (ret_val) {
 			err_msg = "failed to save pre key list";
 			goto cleanup;
@@ -189,7 +189,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			goto cleanup;
 		}
 
-		ret_val = axc_db_signed_pre_key_store(session_signed_pre_key_get_id(signed_pre_key_p),
+		ret_val = signedPreKeyStore(session_signed_pre_key_get_id(signed_pre_key_p),
 											  signal_buffer_data(signed_pre_key_data_p),
 											  signal_buffer_len(signed_pre_key_data_p),
 											  this);
@@ -199,7 +199,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		}
 		qDebug("%s: saved signed pre key", __func__ );
 
-		ret_val = axc_db_init_status_set(AXC_DB_INITIALIZED);
+		ret_val = initStatusSet(AXC_DB_INITIALIZED);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_INITIALIZED";
 			goto cleanup;
@@ -636,141 +636,6 @@ cleanup:
 
 	return bundle;
 }
-
-QByteArray SignalProtocol::encryptMessage(const QString &AMessageText,
-										  const QByteArray &AKey,
-										  const QByteArray &AIv,
-										  QByteArray &AAuthTag)
-{
-	int rc = SG_SUCCESS;
-	char * err_msg = nullptr;
-
-	int algo = GCRY_CIPHER_AES128;
-	int mode = GCRY_CIPHER_MODE_GCM;
-	gcry_cipher_hd_t cipher_hd = {nullptr};
-	QByteArray outBuf;
-	QByteArray inBuf(AMessageText.toUtf8());
-
-	if(AIv.size() != 16) {
-		err_msg = "invalid AES IV size (must be not less than 8)";
-		rc = SG_ERR_UNKNOWN;
-		goto cleanup;
-	}
-
-	rc = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
-	if (rc) {
-		err_msg = "failed to init cipher";
-		goto cleanup;
-	}
-
-	rc = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
-	if (rc) {
-		err_msg = "failed to set key";
-		goto cleanup;
-	}
-
-	outBuf.resize(inBuf.size());
-	rc = int(gcry_cipher_encrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-											inBuf.data(), size_t(inBuf.size())));
-	if (rc) {
-		err_msg = "failed to encrypt";
-		goto cleanup;
-	}
-
-	AAuthTag.resize(8);
-	rc = int(gcry_cipher_gettag (cipher_hd, AAuthTag.data(), size_t(AAuthTag.size())));
-	if (rc) {
-		err_msg = "failed get authentication tag";
-	} else {
-		qDebug("Authentication tag: %s", AAuthTag.toHex().data());
-	}
-
-cleanup:
-	if (rc) {
-		if (rc > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
-			rc = SG_ERR_UNKNOWN;
-		} else {
-			qCritical("%s: %s\n", __func__, err_msg);
-		}
-	}
-
-	gcry_cipher_close(cipher_hd);
-
-	return outBuf;
-}
-
-QString SignalProtocol::decryptMessage(const QByteArray &AEncryptedText,
-									   const QByteArray &AKey,
-									   const QByteArray &AIv,
-									   const QByteArray &AAuthTag)
-{
-	int ret_val = SG_SUCCESS;
-	char * err_msg = nullptr;
-
-	int algo = GCRY_CIPHER_AES128;
-	int mode = GCRY_CIPHER_MODE_GCM;
-
-	gcry_cipher_hd_t cipher_hd = {nullptr};
-	QByteArray outBuf;
-
-	if(AIv.size() != 16) {
-	  err_msg = "invalid AES IV size (must be not less than 8)";
-	  ret_val = SG_ERR_UNKNOWN;
-	  goto cleanup;
-	}
-
-	ret_val = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
-	if (ret_val) {
-	  err_msg = "failed to init cipher";
-	  goto cleanup;
-	}
-
-	ret_val = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
-	if (ret_val) {
-	  err_msg = "failed to set key";
-	  goto cleanup;
-	}
-
-	outBuf.resize(AEncryptedText.size());
-	ret_val = int(gcry_cipher_decrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-									  AEncryptedText.data(), size_t(AEncryptedText.size())));
-	if (ret_val) {
-		err_msg = "failed to decrypt";
-		goto cleanup;
-	}
-
-	ret_val = int(gcry_cipher_checktag (cipher_hd, AAuthTag.data(),
-										size_t(AAuthTag.size())));
-	if (ret_val) {
-		err_msg = "failed check authentication tag";
-	} else {
-		qDebug("Authentication tag checked successfuly!");
-	}
-
-  cleanup:
-	if (ret_val) {
-		if (ret_val > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-			ret_val = SG_ERR_UNKNOWN;
-		} else {
-			qCritical("%s: %s\n", __func__, err_msg);
-		}
-	}
-
-	gcry_cipher_close(cipher_hd);
-
-	return QString::fromUtf8(outBuf);
-}
-
-void SignalProtocol::getKeyPair(QByteArray &AKey, QByteArray &AIv)
-{
-	AKey.resize(16);
-	gcry_randomize(AKey.data(), size_t(AKey.size()), GCRY_STRONG_RANDOM);
-	AIv.resize(16);
-	gcry_randomize(AIv.data(), size_t(AIv.size()), GCRY_STRONG_RANDOM);
-}
-
 
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
 {
@@ -1361,13 +1226,13 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	qDebug("%s: created store context", __func__);
 
 	signal_protocol_session_store session_store;
-	session_store.load_session_func = &axc_db_session_load;
-	session_store.get_sub_device_sessions_func = &axc_db_session_get_sub_device_sessions;
-	session_store.store_session_func = &axc_db_session_store;
-	session_store.contains_session_func = &axc_db_session_contains;
-	session_store.delete_session_func = &axc_db_session_delete;
-	session_store.delete_all_sessions_func = &axc_db_session_delete_all;
-	session_store.destroy_func = &axc_db_session_destroy_store_ctx;
+	session_store.load_session_func = &sessionLoad;
+	session_store.get_sub_device_sessions_func = &sessionGetSubDeviceSessions;
+	session_store.store_session_func = &sessionStore;
+	session_store.contains_session_func = &sessionContains;
+	session_store.delete_session_func = &sessionDelete;
+	session_store.delete_all_sessions_func = &sessionDeleteAll;
+	session_store.destroy_func = &sessionDestroyStoreCtx;
 	session_store.user_data = this;
 
 	if (signal_protocol_store_context_set_session_store(store_context_p, &session_store)) {
@@ -1377,11 +1242,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_pre_key_store pre_key_store;
-	pre_key_store.load_pre_key = &axc_db_pre_key_load;
-	pre_key_store.store_pre_key = &axc_db_pre_key_store;
-	pre_key_store.contains_pre_key = &axc_db_pre_key_contains;
-	pre_key_store.remove_pre_key = &axc_db_pre_key_remove;
-	pre_key_store.destroy_func = &axc_db_pre_key_destroy_ctx;
+	pre_key_store.load_pre_key = &preKeyLoad;
+	pre_key_store.store_pre_key = &preKeyStore;
+	pre_key_store.contains_pre_key = &preKeyContains;
+	pre_key_store.remove_pre_key = &preKeyRemove;
+	pre_key_store.destroy_func = &preKeyDestroyCtx;
 	pre_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
@@ -1391,11 +1256,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_signed_pre_key_store signed_pre_key_store;
-	signed_pre_key_store.load_signed_pre_key = &axc_db_signed_pre_key_load;
-	signed_pre_key_store.store_signed_pre_key = &axc_db_signed_pre_key_store;
-	signed_pre_key_store.contains_signed_pre_key = &axc_db_signed_pre_key_contains;
-	signed_pre_key_store.remove_signed_pre_key = &axc_db_signed_pre_key_remove;
-	signed_pre_key_store.destroy_func = &axc_db_signed_pre_key_destroy_ctx;
+	signed_pre_key_store.load_signed_pre_key = &signedPreKeyLoad;
+	signed_pre_key_store.store_signed_pre_key = &signedPreKeyStore;
+	signed_pre_key_store.contains_signed_pre_key = &signedPreKeyContains;
+	signed_pre_key_store.remove_signed_pre_key = &signedPreKeyRemove;
+	signed_pre_key_store.destroy_func = &signedPreKeyDestroyCtx;
 	signed_pre_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_signed_pre_key_store(store_context_p, &signed_pre_key_store)) {
@@ -1405,11 +1270,11 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	}
 
 	signal_protocol_identity_key_store identity_key_store;
-	identity_key_store.get_identity_key_pair = &axc_db_identity_get_key_pair;
-	identity_key_store.get_local_registration_id = &axc_db_identity_get_local_registration_id;
-	identity_key_store.save_identity = &axc_db_identity_save;
-	identity_key_store.is_trusted_identity = &axc_db_identity_always_trusted;
-	identity_key_store.destroy_func = &axc_db_identity_destroy_ctx;
+	identity_key_store.get_identity_key_pair = &identityGetKeyPair;
+	identity_key_store.get_local_registration_id = &identityGetLocalRegistrationId;
+	identity_key_store.save_identity = &identitySave;
+	identity_key_store.is_trusted_identity = &identityAlwaysTrusted;
+	identity_key_store.destroy_func = &identityDestroyCtx;
 	identity_key_store.user_data = this;
 
 	if (signal_protocol_store_context_set_identity_key_store(store_context_p, &identity_key_store)) {

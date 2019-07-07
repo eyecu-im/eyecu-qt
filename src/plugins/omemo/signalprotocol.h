@@ -76,10 +76,6 @@ public:
 											   const QByteArray &ASignedPreKeySignature,
 											   const QByteArray &AIdentityKey) const;
 
-	static QByteArray encryptMessage(const QString &AMessageText, const QByteArray &AKey, const QByteArray &AIv, QByteArray &AAuthTag);
-	static QString decryptMessage(const QByteArray &AEncryptedText, const QByteArray &AKey, const QByteArray &AIv, const QByteArray &AAuthTag);
-
-	static void getKeyPair(QByteArray &AKey, QByteArray &AIv);
 	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
 
 protected:
