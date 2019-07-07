@@ -640,7 +640,7 @@ _gcry_ghash_intel_pclmul (gcry_cipher_hd_t c, byte *result, const byte *buf,
   if (nblocks)
     {
       /* Preload H1. */
-      asm volatile ("movdqa %[h_1], %%xmm0\n\t"
+	  asm volatile ("movdqu %[h_1], %%xmm0\n\t"
                     :
                     : [h_1] "m" (*c->u_mode.gcm.u_ghash_key.key)
                     : "memory" );
