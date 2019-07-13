@@ -806,7 +806,7 @@ void Omemo::bundlesProcessed(const QString &ABareJid)
 							key.setAttribute("rid", QString::number(itb->FDeviceId));
 							if (prekey)
 								key.setAttribute("prekey", "true");
-							key.appendChild(doc.createTextNode(encryptedKey));
+							key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
 							header.appendChild(key);
 						}
 					}

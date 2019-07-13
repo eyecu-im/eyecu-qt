@@ -92,33 +92,34 @@ namespace OmemoStore
 	// Session store methods
 
 	int sessionLoad(signal_buffer ** record,
-							signal_buffer ** user_record,
-							const signal_protocol_address * address,
-							void * user_data);
+					signal_buffer ** user_record,
+					const signal_protocol_address * address,
+					void * user_data);
 	int sessionGetSubDeviceSessions(signal_int_list ** sessions,
-											   const char * name, size_t name_len,
-											   void * user_data);
+									const char * name, size_t name_len,
+									void * user_data);
 	int sessionStore(const signal_protocol_address *address,
-							 uint8_t *record, size_t record_len,
-							 uint8_t *user_record, size_t user_record_len,
-							 void *user_data);
+					 uint8_t *record, size_t record_len,
+					 uint8_t *user_record, size_t user_record_len,
+					 void *user_data);
 	int sessionContains(const signal_protocol_address * address,
-								void * user_data);
-	int sessionDelete(const signal_protocol_address * address,
-							  void * user_data);
+						void * user_data);
+	int sessionDelete(const signal_protocol_address * address, void * user_data);
 	int sessionDeleteAll(const char * name, size_t name_len, void * user_data);
 	void sessionDestroyStoreCtx(void * user_data);
 
 	// Pre key store methods
 	int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * user_data);
-	int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void * user_data);
+	int preKeyStore(uint32_t pre_key_id, uint8_t * record,
+					size_t record_len, void * user_data);
 	int preKeyContains(uint32_t pre_key_id, void * user_data);
 	int preKeyRemove(uint32_t pre_key_id, void * user_data);
 	void preKeyDestroyCtx(void * user_data);
 
 	// Signed pre key store methods
 	int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void * user_data);
-	int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * user_data);
+	int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record,
+						  size_t record_len, void * user_data);
 	int signedPreKeyContains(uint32_t signed_pre_key_id, void * user_data);
 	int signedPreKeyRemove(uint32_t signed_pre_key_id, void * user_data);
 	void signedPreKeyDestroyCtx(void * user_data);

@@ -1321,11 +1321,12 @@ QByteArray SignalProtocol::Cipher::encrypt(const QByteArray &AUnencrypted)
 	{
 		// Get the serialized content
 		signal_buffer *serialized = ciphertext_message_get_serialized(message);
+		SIGNAL_UNREF(message);
 		result = SignalProtocol::signalBufferToByteArray(serialized);
 		signal_buffer_free(serialized);
 	}
-
-	SIGNAL_UNREF(message);
+	else
+		qCritical("session_cipher_encrypt() failed! rc=%d", rc);
 
 	return result;
 }
