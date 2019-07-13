@@ -22,7 +22,7 @@ class Omemo: public QObject,
 			 public IPEPHandler,
 			 public IMessageEditor,
 //			 public IMessageWriter
-			 public IStanzaHandler
+			 public IStanzaRequestOwner
 {
 	Q_OBJECT
 	Q_INTERFACES(IPlugin IOmemo IPEPHandler IMessageEditor) // IMessageWriter)
@@ -31,15 +31,15 @@ class Omemo: public QObject,
 #endif
 public:
 	Omemo();
-	~Omemo();
+	~Omemo() override;
 	//IPlugin
-	virtual QObject *instance() { return this; }
-	virtual QUuid pluginUuid() const { return OMEMO_UUID; }
-	virtual void pluginInfo(IPluginInfo *APluginInfo);
-	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-	virtual bool initObjects();
-	virtual bool initSettings();
-	virtual bool startPlugin() { return true; }
+	virtual QObject *instance() override { return this; }
+	virtual QUuid pluginUuid() const override { return OMEMO_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo) override;
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	virtual bool initObjects() override;
+	virtual bool initSettings() override;
+	virtual bool startPlugin() override { return true; }
 
 	// IPEPHandler
 	virtual bool processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza) override;
@@ -47,8 +47,8 @@ public:
 	//IMessageEditor
 	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
 
-	// IStanzaHandler interface
-	virtual bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept) override;
+	// IStanzaRequestOwner interface
+	void stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza) override;
 
 	//IMessageWriter
 //	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
@@ -66,8 +66,21 @@ protected:
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
+	bool removeOtherKeys(const Jid &AStreamJid);
 
-	bool requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
+	QString requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
+
+	void bundlesProcessed(const QString &ABareJid);
+
+	struct SignalDeviceBundle
+	{
+		quint32 FDeviceId;
+		quint32 FSignedPreKeyId;
+		QByteArray FSignedPreKeyPublic;
+		QByteArray FSignedPreKeySignature;
+		QByteArray FIdentityKey;
+		QMap<quint32, QByteArray> FPreKeys;
+	};
 
 protected slots:
 	void onProfileOpened(const QString &AProfile);
@@ -111,6 +124,12 @@ private:
 	QHash<IXmppStream *, QTimer*> FPepDelay;
 	QHash<QString, QList<quint32> > FDeviceIds;
 	QHash<Jid, QStringList> FActiveSessions;
+	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
+	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
+	QMultiHash<QString, SignalDeviceBundle> FBundles;
+	QMultiHash<QString, Message> FPendingMessages;
+
+	bool				FCleanup;
 };
 
 #endif // OMEMO_H

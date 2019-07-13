@@ -24,14 +24,20 @@ extern "C" {
 #include "omemo.h"
 #include "signalprotocol.h"
 
-#define SHC_REQUEST "/iq[@type='set']/jingle[@xmlns='" NS_JINGLE "']"
-#define SHC_RESULT  "/iq[@type='result']/pubsub[@xmlns='" NS_PUBSUB "']"
-#define SHC_ERROR  "/iq[@type='error']"
-
+#define TAG_NAME_PUBSUB "pubsub"
 #define TAG_NAME_LIST	"list"
 #define TAG_NAME_DEVICE	"device"
 #define TAG_NAME_BUNDLE	"bundle"
 #define TAG_NAME_ITEMS	"items"
+#define TAG_NAME_ITEM	"item"
+#define TAG_NAME_IDENTITYKEY "identityKey"
+#define TAG_NAME_SIGNEDPREKEYPUBLIC "signedPreKeyPublic"
+#define TAG_NAME_SIGNEDPREKEYSIGNATURE "signedPreKeySignature"
+#define TAG_NAME_PREKEYS "prekeys"
+#define TAG_NAME_PREKEYPUBLIC "preKeyPublic"
+
+#define ATTR_NAME_PREKEY_ID "preKeyId"
+#define ATTR_NAME_SIGNED_PREKEY_ID "signedPreKeyId"
 
 //#define DIR_OMEMO       "omemo"
 #define DBFN_OMEMO      "omemo.db"
@@ -51,7 +57,7 @@ static QByteArray encryptMessage(const QString &AMessageText, const QByteArray &
 	QByteArray outBuf;
 	QByteArray inBuf(AMessageText.toUtf8());
 
-	if(AIv.size() != 16) {
+	if(AIv.size() < 8) {
 		err_msg = "invalid AES IV size (must be not less than 8)";
 		rc = SG_ERR_UNKNOWN;
 		goto cleanup;
@@ -185,7 +191,8 @@ Omemo::Omemo(): FPepManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIResult(0),
 				FSHIError(0),
-				FSignalProtocol(nullptr)
+				FSignalProtocol(nullptr),
+				FCleanup(true) // Temporary flag for own device information cleanup
 {}
 
 Omemo::~Omemo()
@@ -280,6 +287,7 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Omemo::initObjects()
 {
+	qDebug() << "Omemo::initObjects()";
 	SignalProtocol::init();
 //	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	if (FDiscovery)
@@ -292,25 +300,6 @@ bool Omemo::initObjects()
 	}
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
-
-	if (FStanzaProcessor)
-	{   // Register Stanza handlers
-		IStanzaHandle requestHandle;
-		requestHandle.handler = this;
-		requestHandle.order = SHO_DEFAULT;
-		requestHandle.direction = IStanzaHandle::DirectionIn;
-
-		requestHandle.conditions.clear();
-		requestHandle.conditions.append(SHC_RESULT);
-		FSHIResult = FStanzaProcessor->insertStanzaHandle(requestHandle);
-
-		requestHandle.conditions.clear();
-		requestHandle.conditions.append(SHC_ERROR);
-		FSHIError = FStanzaProcessor->insertStanzaHandle(requestHandle);
-	}
-	else
-		return false;
-
 
 	QByteArray key, iv;
 	getKeyPair(key, iv);
@@ -339,13 +328,12 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 	qDebug() << "Omemo::processPEPEvent(" << AStreamJid.full() << "," << AStanza.toString() << ")";
 	if (AStanza.type()!="error")
 	{
-		Jid contactJid = AStanza.from();
+		QString bareJid = AStanza.fromJid().bare();
 		QDomElement event  = AStanza.firstElement("event", NS_PUBSUB_EVENT);
-		QDomElement items  = event.firstChildElement("items");
+		QDomElement items  = event.firstChildElement(TAG_NAME_ITEMS);
 		if(!items.isNull())
 		{
-//			bool stop=false;
-			QDomElement item  = items.firstChildElement("item");
+			QDomElement item  = items.firstChildElement(TAG_NAME_ITEM);
 			if(!item.isNull())
 			{
 				QDomElement list = item.firstChildElement(TAG_NAME_LIST);
@@ -356,7 +344,6 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 						   !device.isNull(); device = device.nextSiblingElement(TAG_NAME_DEVICE))
 					{
 						QString ida = device.attribute("id");
-						qDebug() << "ida=" << ida;
 						bool ok;
 						quint32 id = ida.toUInt(&ok);
 						if (ok)
@@ -364,9 +351,10 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 						else
 							qCritical() << "Invalid id attribute value:" << ida;
 					}
+
 					if (!ids.isEmpty())
 					{
-						if (contactJid.bare() == AStreamJid.bare()) // Own ID list
+						if (bareJid == AStreamJid.bare()) // Own ID list
 						{
 							IXmppStream *stream = FXmppStreamManager->findXmppStream(AStreamJid);
 							if (FPepDelay.contains(stream))
@@ -376,44 +364,47 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 								timer->deleteLater();
 							}
 
-							quint32 ownId;
-							if (FSignalProtocol->getDeviceId(ownId)==0) {
-								qDebug() << "own device ID:" << ownId;
+							quint32 ownId = FSignalProtocol->getDeviceId();
+							if (ownId)
+							{
 								if (!ids.contains(ownId))
 								{
 									ids.append(ownId);
-									FDeviceIds.insert(contactJid.bare(), ids);
+									FDeviceIds.insert(bareJid, ids);
+									if (!FCleanup)
+										publishOwnDeviceIds(AStreamJid);
+								}
+								else
+									FDeviceIds.insert(bareJid, ids);
+
+								if (FCleanup && ids.size() != 1)
+								{
+									removeOtherKeys(AStreamJid);
+									ids.clear();
+									ids.append(ownId);
+									FDeviceIds.insert(bareJid, ids);
 									publishOwnDeviceIds(AStreamJid);
 								}
-							} else {
-								qCritical() << "SignalProtocol::getDeviceId() failed!";
 							}
 						}
 						else
-							FDeviceIds.insert(contactJid.bare(), ids);
+							FDeviceIds.insert(bareJid, ids);
+
+						// Remove missing bundles from the hash
+						for (QMultiHash<QString,SignalDeviceBundle>::Iterator it=FBundles.begin();
+							 it != FBundles.constEnd();)
+							if (it.key()==bareJid &&
+								!ids.contains(it->FDeviceId))
+								it = FBundles.erase(it);
+							else
+								++it;
 					}
 					else
-						qCritical() << "No valid IDs found in OMEMO stanza!";
+						qCritical() << "No valid IDs found in OMEMO stanza!";					
 				}
 			}
-
-//			if(!stop && event.firstChild().firstChild().nodeName() == "retract")
-//			{
-//				if(contactJid.bare() == AStreamJid.bare())
-//					FIdHash.remove(AStreamJid.bare());
-//				stop=true;
-//			}
-
-//			if (stop)
-//			{
-//				if (contactJid.bare() == AStreamJid.bare())
-//					FCurrentActivity.clear();
-//				FActivityHash.remove(contactJid.bare());
-//				updateChatWindows(contactJid, AStreamJid);
-//				updateDataHolder(contactJid);
-//				return true;
-//			}
 		}
+		return true;
 	}
 	return false;
 }
@@ -539,7 +530,6 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
 	Action *omemoAction = omemoActions.isEmpty()?nullptr:AWindow->toolBarWidget()
 							->toolBarChanger()->handleAction(omemoActions.first());
 	int supported = isSupported(AWindow->address());
-	qDebug() << "supported=" << supported;
 	if (supported)
 	{
 		if (!omemoAction)
@@ -623,7 +613,7 @@ bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 	}
 
 	QDomDocument doc;
-	QDomElement item=doc.createElement("item");
+	QDomElement item=doc.createElement(TAG_NAME_ITEM);
 	item.setAttribute("id", "current");
 
 	QDomElement list=doc.createElementNS(NS_OMEMO, TAG_NAME_LIST);
@@ -641,15 +631,13 @@ bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 
 bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 {
-	quint32 deviceId;
-	if (FSignalProtocol->getDeviceId(deviceId)!=SG_SUCCESS)
-	{
-		qCritical() << "Failed to get own device ID!";
+	qDebug() << "Omemo::publishOwnKeys(" << AStreamJid.full() << ")";
+	quint32 deviceId = FSignalProtocol->getDeviceId();
+	if (!deviceId)
 		return false;
-	}
 
 	QDomDocument doc;
-	QDomElement item=doc.createElement("item");
+	QDomElement item=doc.createElement(TAG_NAME_ITEM);
 	item.setAttribute("id", "current");
 
 	QDomElement bundle=doc.createElementNS(NS_OMEMO, TAG_NAME_BUNDLE);
@@ -661,8 +649,9 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 		qCritical() << "Failed to get Signed Pre Key";
 		return false;
 	}
-	QDomElement signedPreKeyPublic=doc.createElement("signedPreKeyPublic");
-	signedPreKeyPublic.setAttribute("signedPreKeyId", QString::number(SIGNED_PRE_KEY_ID));
+	QDomElement signedPreKeyPublic=doc.createElement(TAG_NAME_SIGNEDPREKEYPUBLIC);
+	signedPreKeyPublic.setAttribute(ATTR_NAME_SIGNED_PREKEY_ID,
+									QString::number(SIGNED_PRE_KEY_ID));
 	signedPreKeyPublic.appendChild(doc.createTextNode(signedPublic.toBase64()));
 	bundle.appendChild(signedPreKeyPublic);
 
@@ -672,7 +661,7 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 		qCritical() << "Failed to get Signed Pre Key signature";
 		return false;
 	}
-	QDomElement signedPreKeySignature=doc.createElement("signedPreKeySignature");
+	QDomElement signedPreKeySignature=doc.createElement(TAG_NAME_SIGNEDPREKEYSIGNATURE);
 	signedPreKeySignature.appendChild(doc.createTextNode(signature.toBase64()));
 	bundle.appendChild(signedPreKeySignature);
 
@@ -682,11 +671,11 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 		qCritical() << "Failed to get Signed Pre Key";
 		return false;
 	}
-	QDomElement identityKey=doc.createElement("identityKey");
+	QDomElement identityKey=doc.createElement(TAG_NAME_IDENTITYKEY);
 	identityKey.appendChild(doc.createTextNode(identityKeyPublic.toBase64()));
 	bundle.appendChild(identityKey);
 
-	QDomElement prekeys=doc.createElement("prekeys");
+	QDomElement prekeys=doc.createElement(TAG_NAME_PREKEYS);
 	for (quint32 i=PRE_KEYS_START; i<PRE_KEYS_START+PRE_KEYS_AMOUNT; ++i)
 	{
 		QByteArray key = FSignalProtocol->getPreKeyPublic(i);
@@ -695,38 +684,147 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 			qCritical() << "Pre Key id=" << i << "is NULL!";
 			return false;
 		}
-		QDomElement preKeyPublic=doc.createElement("preKeyPublic");
-		preKeyPublic.setAttribute("id", QString::number(i));
+		QDomElement preKeyPublic=doc.createElement(TAG_NAME_PREKEYPUBLIC);
+		preKeyPublic.setAttribute(ATTR_NAME_PREKEY_ID, QString::number(i));
 		preKeyPublic.appendChild(doc.createTextNode(key.toBase64()));
 		prekeys.appendChild(preKeyPublic);
 	}
 	bundle.appendChild(prekeys);
 
+	qDebug() << "Publishing own device bundle...";
 	return FPepManager->publishItem(AStreamJid, QString("%1:%2").arg(NS_PEP_OMEMO_BUNDLES)
 									.arg(deviceId), item);
 }
 
-bool Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId)
+bool Omemo::removeOtherKeys(const Jid &AStreamJid)
 {
-//	<iq type='get'
-//		from='romeo@montague.lit'
-//		to='juliet@capulet.lit'
-//		id='fetch1'>
-//	  <pubsub xmlns='http://jabber.org/protocol/pubsub'>
-//		<items node='eu.siacs.conversations.axolotl.bundles:31415'/>
-//	  </pubsub>
-//	</iq>
+	qDebug() << "Omemo::removeOtherKeys(" << AStreamJid.full() << ")";
+
+	quint32 deviceId = FSignalProtocol->getDeviceId();
+	if (!deviceId)
+		return false;
+
+	QList<quint32> deviceIds = FDeviceIds.value(AStreamJid.bare());
+
+	qDebug() << "deviceIds=" << deviceIds;
+
+	QDomDocument doc;
+	QDomElement item=doc.createElement(TAG_NAME_ITEM);
+	item.setAttribute("id", "current");
+	QString ns(NS_PEP_OMEMO_BUNDLES":%1");
+
+	for (QList<quint32>::ConstIterator it = deviceIds.constBegin();
+		 it != deviceIds.constEnd(); ++it)
+		if (*it != deviceId)
+			FPepManager->deleteItem(AStreamJid, ns.arg(*it), item);
+}
+
+QString Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId)
+{
 	Stanza iq(STANZA_KIND_IQ);
 	iq.setUniqueId()
 	  .setType(STANZA_TYPE_GET)
-//	  .setFrom(AStreamJid.full())
 	  .setTo(ABareJid);
-	QDomElement pubsub = iq.addElement("pubsub", NS_PUBSUB);
+	QDomElement pubsub = iq.addElement(TAG_NAME_PUBSUB, NS_PUBSUB);
 	QDomElement items = iq.document().createElement(TAG_NAME_ITEMS);
 	items.setAttribute("node", QString("%1:%2").arg(NS_PEP_OMEMO_BUNDLES)
 											   .arg(ADevceId));
 	pubsub.appendChild(items);
-	return FStanzaProcessor->sendStanzaOut(AStreamJid, iq);
+	if (FStanzaProcessor->sendStanzaRequest(this, AStreamJid, iq, 1000))
+		return iq.id();
+	else
+		return QString::null;
+}
+
+void Omemo::bundlesProcessed(const QString &ABareJid)
+{
+	qDebug() << "Omemo::bundlesProcessed(" << ABareJid << ")";
+	quint32 deviceId = FSignalProtocol->getDeviceId();
+	if (deviceId)
+	{
+		QList<SignalDeviceBundle> bundles = FBundles.values(ABareJid);
+
+		QList<Message> messages = FPendingMessages.values(ABareJid);
+		for (QList<Message>::Iterator it = messages.begin();
+			 it != messages.end(); ++it)
+		{
+			QDomDocument doc = it->stanza().document();
+			QDomElement encrypted = it->stanza().addElement("encrypted", NS_OMEMO);
+
+			QByteArray keyData, ivData;
+			getKeyPair(keyData, ivData);
+
+			const QString message = it->body();
+
+			QByteArray authTag;
+			QByteArray data = encryptMessage(message, keyData, ivData, authTag);
+			QDomElement payload = doc.createElement("payload");
+			QDomText text = doc.createTextNode(data.toBase64());
+			payload.appendChild(text);
+			encrypted.appendChild(payload);
+
+			QDomElement header = doc.createElement("header");
+			header.setAttribute("sid", QString::number(deviceId));
+
+			for (QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
+				 itb != bundles.constEnd(); ++itb)
+				if (!itb->FPreKeys.isEmpty())
+				{
+					bool prekey = false;
+
+					if (!FSignalProtocol->isSessionExistsAndInitiated(ABareJid, itb->FDeviceId))
+					{
+						prekey = true;
+						QList<quint32> keyIds = itb->FPreKeys.keys();
+						int keyCount = keyIds.size();
+						int keyIndex = qrand()*keyCount/RAND_MAX;
+						quint32 keyId = keyIds.at(keyIndex);
+						QByteArray preKeyPublic = itb->FPreKeys.value(keyId);
+
+						quint32 registrationId = FSignalProtocol->getDeviceId();
+						if (registrationId)
+						{
+							session_pre_key_bundle *bundle = FSignalProtocol->createPreKeyBundle(
+											registrationId, itb->FDeviceId, keyId, preKeyPublic,
+											itb->FSignedPreKeyId, itb->FSignedPreKeyPublic,
+											itb->FSignedPreKeySignature, itb->FIdentityKey);
+							SessionBuilder builder(ABareJid, itb->FDeviceId);
+							builder.processPreKeyBundle(bundle);
+						}
+					}
+
+					SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(ABareJid, itb->FDeviceId);
+
+					if (cipher.isNull())
+						qCritical("Cipher is NULL!");
+					else
+					{
+						QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
+						if (!encryptedKey.isNull())
+						{
+							QDomElement key = doc.createElement("key");
+							key.setAttribute("rid", QString::number(itb->FDeviceId));
+							if (prekey)
+								key.setAttribute("prekey", "true");
+							key.appendChild(doc.createTextNode(encryptedKey));
+							header.appendChild(key);
+						}
+					}
+				}
+
+			QDomElement iv = doc.createElement("iv");
+			iv.appendChild(doc.createTextNode(ivData.toBase64()));
+			header.appendChild(iv);
+
+			encrypted.appendChild(header);
+
+			it->setBody(QString::null);
+
+			qDebug() << "Sending:" << it->stanza().toString();
+			FMessageProcessor->sendMessage(it->fromJid(), *it, IMessageProcessor::DirectionOut);
+		}
+	}
+	FPendingMessages.remove(ABareJid);
 }
 
 void Omemo::onProfileOpened(const QString &AProfile)
@@ -780,14 +878,13 @@ void Omemo::onPepTimeout()
 			it = FPepDelay.erase(it);
 			qDebug() << "stream JID:" << stream->streamJid().full();
 			QList<quint32> ids;
-			quint32 id;
-			if (FSignalProtocol->getDeviceId(id)==0) {
+			quint32 id = FSignalProtocol->getDeviceId();
+			if (id)
+			{
 				qDebug() << "Publishing device ID:" << id;
 				ids.append(id);
 				FDeviceIds.insert(stream->streamJid().bare(), ids);
 				publishOwnDeviceIds(stream->streamJid());				
-			} else {
-				qCritical() << "SignalProtocol::getDeviceId(id) failed!";
 			}
 		}
 		else
@@ -882,10 +979,19 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 				qDebug() << "Have active session!";
 				if (isSupported(AStreamJid, AMessage.toJid()))
 				{
-					QList<quint32> deviceIds = FDeviceIds[bareJid];
 					qDebug() << "The contact supports OMEMO!";
+					QList<quint32> deviceIds = FDeviceIds[bareJid];
 					qDebug() << "Device IDs of the contact:" << deviceIds;
-					bool needData = false;
+					quint32 deviceId = FSignalProtocol->getDeviceId();
+					if (deviceId)
+					{
+						// Add own device IDs except this one
+						QList<quint32> ownDeviceIds = FDeviceIds[AStreamJid.bare()];
+						ownDeviceIds.removeOne(deviceId);
+						deviceIds.append(ownDeviceIds);
+					}
+
+					bool needBundles = false;
 					for (QList<quint32>::ConstIterator it = deviceIds.constBegin();
 						 it != deviceIds.constEnd(); ++it)
 					{
@@ -893,11 +999,26 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 						qDebug() << "device ID:" << *it << "; sessionExists=" << sessionExists;
 						if (!sessionExists)
 						{
-							needData = true;
-							requestDeviceBundle(AStreamJid, bareJid, *it);
+							needBundles = true;
+							if (!FPendingRequests.contains(bareJid, *it))
+							{
+								QString id = requestDeviceBundle(AStreamJid, bareJid, *it);
+								if (!id.isNull())
+								{
+									FBundleRequests.insert(id, *it);
+									FPendingRequests.insert(bareJid, *it);
+								}
+							}
 						}
 					}
-					qDebug() << "needData =" << needData;
+					qDebug() << "needBundles =" << needBundles;
+					if (needBundles)
+					{
+						qDebug() << "Need bundle data! Delaying send...";
+						FPendingMessages.insert(AMessage.toJid().bare(), AMessage);
+						return true;
+					}
+
 				}
 			}
 			else
@@ -911,50 +1032,106 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 	return false;
 }
 
-bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
+void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 {
-	if (AHandleId == FSHIResult)
+	qDebug() << "Omemo::stanzaRequestResult(" << AStreamJid.full()
+			 << "," << AStanza.toString() << ")";
+	quint32 deviceId = FBundleRequests.take(AStanza.id());
+	QString bareJid = AStanza.fromJid().bare();
+
+	if (AStanza.type() == STANZA_TYPE_RESULT)
 	{
-		qDebug() << "Got IQ result! id=" << AStanza.id();
-		qDebug() << "AStanza:" << AStanza.toString();
+		bool ok = false;
 		QDomElement items = AStanza.element()
-								   .firstChildElement("pubsub")
-								   .firstChildElement("items");
-		if (items.isNull())
-			return false;
-
-		QString node = items.attribute("node");
-		qDebug() << "node=" << node;
-
-		if (!node.startsWith(NS_PEP_OMEMO_BUNDLES":"))
-			return false;
-
-		quint32 deviceId = node.split(":").at(1).toUInt();
-		qDebug() << "deviceId=" << deviceId;
-		QDomElement item = items.firstChildElement("item");
-		QDomElement bundle = items.firstChildElement("bundle");
-
-		QDomElement signedPreKeyPublic = items.firstChildElement("signedPreKeyPublic");
-		qDebug() << "signedPreKeyPublic: id=" << signedPreKeyPublic.attribute("id")
-				 << "; value=" << signedPreKeyPublic.text();
-
-		QDomElement signedPreKeySignature = items.firstChildElement("signedPreKeySignature");
-		qDebug() << "signedPreKeyPublic:" << signedPreKeySignature.text();
-
-		QDomElement identityKey = items.firstChildElement("identityKey");
-		qDebug() << "identityKey:" << identityKey.text();
-
-		QDomElement prekeys = items.firstChildElement("prekeys");
-		for (QDomElement preKeyPublic = items.firstChildElement("preKeyPublic");
-			 !preKeyPublic.isNull(); preKeyPublic = item.nextSiblingElement("preKeyPublic"))
+								   .firstChildElement(TAG_NAME_PUBSUB)
+								   .firstChildElement(TAG_NAME_ITEMS);
+		if (!items.isNull())
 		{
-			qDebug() << "id:" << preKeyPublic.attribute("id")
-					 << "; value:" << preKeyPublic.text();
+			QString node = items.attribute("node");
+
+			QString start(NS_PEP_OMEMO_BUNDLES":");
+			if (node.startsWith(start))
+			{
+				SignalDeviceBundle deviceBundle;
+				deviceBundle.FDeviceId = node.mid(start.size()).toUInt(&ok);
+				if (ok)
+				{
+					qDebug() << "deviceId=" << deviceBundle.FDeviceId;
+					if (FDeviceIds.value(bareJid).contains(deviceBundle.FDeviceId))
+					{
+						if (deviceId != deviceBundle.FDeviceId)
+							qWarning() << "Device IDs do not match:" << deviceId
+									   << "/" << deviceBundle.FDeviceId;
+
+						QDomElement item = items.firstChildElement(TAG_NAME_ITEM);
+						QDomElement bundle = item.firstChildElement(TAG_NAME_BUNDLE);
+
+						QDomElement signedPreKeyPublic = bundle.firstChildElement(TAG_NAME_SIGNEDPREKEYPUBLIC);
+						deviceBundle.FSignedPreKeyId = signedPreKeyPublic.attribute(ATTR_NAME_SIGNED_PREKEY_ID)
+																			.toUInt(&ok);
+						if (ok)
+						{
+							deviceBundle.FSignedPreKeyPublic = QByteArray::fromBase64(signedPreKeyPublic.text()
+																						.toLatin1());
+							qDebug() << "signedPreKeyPublic: id=" << deviceBundle.FSignedPreKeyId
+									 << "; value=" << deviceBundle.FSignedPreKeyPublic.toBase64();
+
+							QDomElement signedPreKeySignature = bundle.firstChildElement(TAG_NAME_SIGNEDPREKEYSIGNATURE);
+							deviceBundle.FSignedPreKeySignature = QByteArray::fromBase64(signedPreKeySignature.text()
+																							.toLatin1());
+							qDebug() << "signedPreKeySignature:" << deviceBundle.FSignedPreKeySignature.toBase64();
+
+							QDomElement identityKey = bundle.firstChildElement(TAG_NAME_IDENTITYKEY);
+							deviceBundle.FIdentityKey = QByteArray::fromBase64(identityKey.text().toLatin1());
+							qDebug() << "identityKey:" << deviceBundle.FIdentityKey.toBase64();
+
+							QDomElement prekeys = bundle.firstChildElement(TAG_NAME_PREKEYS);
+							for (QDomElement preKeyPublic = prekeys.firstChildElement(TAG_NAME_PREKEYPUBLIC);
+								 !preKeyPublic.isNull();
+								 preKeyPublic = preKeyPublic.nextSiblingElement(TAG_NAME_PREKEYPUBLIC))
+							{
+								quint32 id = preKeyPublic.attribute(ATTR_NAME_PREKEY_ID).toUInt(&ok);
+								if (ok)
+								{
+									QByteArray preKey = QByteArray::fromBase64(preKeyPublic.text().toLatin1());
+									qDebug() << "id:" << id
+											 << "; value:" << preKey.toBase64();
+									deviceBundle.FPreKeys.insert(id, preKey);
+								}
+								else
+									qCritical("Invalid pre key ID!");
+							}
+							FBundles.insert(bareJid, deviceBundle);
+						}
+						else
+							qCritical("Invalid signed pre key ID!");
+					}
+					else
+						qInfo("Device ID for the bare JID is obsolete!");
+				}
+				else
+					qCritical("Invalid device ID!");
+			}
+			else
+				qCritical("Invalid pub-sub node!");
 		}
+		else
+			qCritical("Invalid stanza structure!");
+
+		FPendingRequests.remove(bareJid, deviceId);
+		if (!FPendingRequests.contains(bareJid))
+			bundlesProcessed(bareJid);
 	}
-	else if (AHandleId == FSHIError)
+	else
 	{
-		qDebug() << "Got IQ error! id=" << AStanza.id();
+		if (!FPendingRequests.contains(bareJid, deviceId))
+			qWarning() << "No pending requests for bare JID:" << AStanza.fromJid().bare()
+					   << "and device ID" << deviceId;
+
+		FPendingRequests.remove(bareJid, deviceId);
+
+		if (!FPendingRequests.contains(bareJid))
+			bundlesProcessed(bareJid);
 	}
 }
 

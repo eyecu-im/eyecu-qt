@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -76,24 +77,31 @@ namespace OmemoStore
 // Session store implementation
 void init(const QString &ADatabaseFileName)
 {
+	qDebug("OmemoStore::init(\"%s\")", ADatabaseFileName.toUtf8().data());
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", CONNECTION_NAME);
 	db.setDatabaseName(ADatabaseFileName);
-	db.open();
+	if (db.open())
+		qDebug("Database opened!");
+	else
+		qCritical("Database open failed!");
 }
 
 void uninit()
 {
+	qDebug("OmemoStore::uninit()");
 	QSqlDatabase::database(CONNECTION_NAME).close();
 	QSqlDatabase::removeDatabase(CONNECTION_NAME);
 }
 
 QSqlDatabase db()
 {
+	qDebug("OmemoStore::db()");
 	return QSqlDatabase::database(CONNECTION_NAME);
 }
 
 
 int propertySet(const char * name, const int val) {
+	qDebug("OmemoStore::propertySet(%s, %d)", name, val);
 	// 1 - name of property
 	// 2 - value
 	const QString stmt("INSERT OR REPLACE INTO " SETTINGS_STORE_TABLE_NAME " VALUES (?1, ?2);");
@@ -108,6 +116,7 @@ int propertySet(const char * name, const int val) {
 }
 
 int propertyGet(const char * name, int * val_p) {
+	qDebug("OmemoStore::propertyGet(%s, %x)", name, uint(val_p));
 	const QString stmt("SELECT * FROM " SETTINGS_STORE_TABLE_NAME " WHERE name IS ?1;");
 
 	QSqlQuery pstmt_p(stmt, db());
@@ -134,12 +143,20 @@ int propertyGet(const char * name, int * val_p) {
 
 
 int sessionLoad(signal_buffer ** record,
-						signal_buffer ** user_record,
-						const signal_protocol_address * address,
-						void * user_data)
+				signal_buffer ** user_record,
+				const signal_protocol_address * address,
+				void * user_data)
 {
 	Q_UNUSED(user_data);
 	Q_UNUSED(user_record);
+
+	qDebug() << "OmemoStore::sessionLoad(" << record << ","
+										   << user_record << ","
+										   << address << ","
+										   << user_data << ")";
+	qDebug() << "address={" << address->device_id << ","
+							<< address->name << ","
+							<< address->name_len << ")";
 
 	const QString stmt("SELECT * FROM " SESSION_STORE_TABLE_NAME
 					   " WHERE " SESSION_STORE_NAME_NAME " IS ?1"
@@ -221,10 +238,16 @@ cleanup:
 }
 
 int sessionStore(const signal_protocol_address *address,
-						 uint8_t *record, size_t record_len,
-						 uint8_t *user_record, size_t user_record_len,
-						 void *user_data)
+				 uint8_t *record, size_t record_len,
+				 uint8_t *user_record, size_t user_record_len,
+				 void *user_data)
 {
+	qDebug() << "OmemoStore::sessionStore({"
+			 << address->name << "," << address->name_len << "," << address->device_id
+			 << "}:" << address << "," << record << "," << record_len
+			 << "," << user_record << "," << user_record_len
+			 << "," << user_data << ")";
+
 	Q_UNUSED(user_data);
 	Q_UNUSED(user_record);
 	Q_UNUSED(user_record_len);
@@ -233,21 +256,37 @@ int sessionStore(const signal_protocol_address *address,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(":name", QString(address->name));
-	pstmt_p.bindValue(":name_len", address->name_len);
-	pstmt_p.bindValue(":device_id", address->device_id);
-	pstmt_p.bindValue(":session_record",
-						QByteArray(reinterpret_cast<char *>(record),
-								   int(record_len)));
-	pstmt_p.bindValue(":record_len", record_len);
+	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(1, address->name_len);
+	pstmt_p.bindValue(2, address->device_id);
+	pstmt_p.bindValue(3, QByteArray(reinterpret_cast<char *>(record),
+									int(record_len)));
+	pstmt_p.bindValue(4, record_len);
 
-	if (!pstmt_p.exec()) return -3;
+
+	qDebug() << "boud values number:" << pstmt_p.boundValues().size();
+	qDebug() << "boud values:" << pstmt_p.boundValues();
+
+	if (!pstmt_p.exec())
+	{
+		qCritical() << "QSL statement execution failed:"
+					<< pstmt_p.lastQuery()
+					<< "number:" << pstmt_p.lastError().number()
+					<< "type:" << pstmt_p.lastError().type()
+					<< "text:" << pstmt_p.lastError().text();
+		return -3;
+	}
 
 	return 0;
 }
 
 int sessionContains(const signal_protocol_address *address, void *user_data)
 {
+	qDebug() << "OmemoStore::sessionContains("
+			 << "{" << address->name << ","
+					<< address->name_len << ","
+					<< address->device_id << "}"
+			 << "," << user_data << ")";
 	Q_UNUSED(user_data);
 
 	const QString stmt(	"SELECT * FROM " SESSION_STORE_TABLE_NAME
@@ -258,6 +297,8 @@ int sessionContains(const signal_protocol_address *address, void *user_data)
 
 	pstmt_p.bindValue(0, QString(address->name));
 	pstmt_p.bindValue(1, address->device_id);
+
+	qDebug() << "HERE!!!";
 
 	if (pstmt_p.exec()) {
 		if (pstmt_p.next())

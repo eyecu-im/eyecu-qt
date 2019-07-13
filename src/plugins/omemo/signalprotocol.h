@@ -30,7 +30,9 @@ public:
 	static void init(signal_context *AGlobalContext,
 					 signal_protocol_store_context *AStoreContext);
 private:
-	session_builder	*ABuilder;
+	QByteArray	FBareJid;
+	signal_protocol_address FAddress;
+	session_builder	*FBuilder;
 
 	static signal_context *					FGlobalContext;
 	static signal_protocol_store_context *	FStoreContext;
@@ -39,6 +41,71 @@ private:
 class SignalProtocol
 {
 public:
+	class SignalMessage {
+		friend class SignalProtocol;
+
+	public:
+		SignalMessage(const SignalMessage &AOther);
+		~SignalMessage();
+		bool isNull() const;
+
+		SignalMessage operator = (const SignalMessage &AOther);
+		bool operator == (const SignalMessage &AOther) const;
+		bool operator != (const SignalMessage &AOther) const;
+
+	protected:
+		SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted);
+		operator signal_message *() const;
+
+	private:
+		signal_message *FMessage;
+	};
+
+	class PreKeySignalMessage {
+		friend class SignalProtocol;
+
+	public:
+		PreKeySignalMessage(const PreKeySignalMessage &AOther);
+		~PreKeySignalMessage();
+		bool isNull() const;
+
+		PreKeySignalMessage operator = (const PreKeySignalMessage &AOther);
+		bool operator == (const PreKeySignalMessage &AOther) const;
+		bool operator != (const PreKeySignalMessage &AOther) const;
+
+	protected:
+		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted);
+		operator pre_key_signal_message *() const;
+
+	private:
+		pre_key_signal_message *FMessage;
+	};
+
+	class Cipher {
+		friend class SignalProtocol;
+
+	public:
+		Cipher(const Cipher &AOther);
+		~Cipher();
+		bool isNull() const;
+
+		QByteArray encrypt(const QByteArray &AUnencrypted);
+		QByteArray decrypt(const SignalMessage &AMessage);
+		QByteArray decrypt(const PreKeySignalMessage &AMessage);
+
+		Cipher operator = (const Cipher &AOther);
+		bool operator == (const Cipher &AOther) const;
+		bool operator != (const Cipher &AOther) const;
+
+	protected:
+		Cipher(signal_context *AGlobalContext, signal_protocol_store_context *AStoreContext,
+			  const QString &ABareJid, int ADeviceId);
+	private:
+		session_cipher *FCipher;
+		QByteArray FBareJid;
+		signal_protocol_address FAddress;
+	};
+
 	static SignalProtocol *instance(const QString &AFileName);
 
 	static void init();
@@ -51,13 +118,10 @@ public:
 
 	int install(quint32 ASignedPreKeyId=SIGNED_PRE_KEY_ID, uint APreKeyStartId=PRE_KEYS_START, uint APreKeyAmount=PRE_KEYS_AMOUNT);
 
-	int getDeviceId(quint32 &AId);
+	quint32 getDeviceId();
 
 	int isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId);
-	session_cipher *sessionCipherCreate(const QString &ABareJid, int ADeviceId);
-	QByteArray encrypt(session_cipher *ACipher, const QByteArray &AUnencrypted);
-	QByteArray decrypt(session_cipher *ACipher, const QByteArray &AEncrypted);
-	QByteArray decryptPre(session_cipher *ACipher, const QByteArray &AEncrypted);
+	Cipher sessionCipherCreate(const QString &ABareJid, int ADeviceId);
 
 	QByteArray getIdentityKeyPublic() const;
 	QByteArray getIdentityKeyPrivate() const;

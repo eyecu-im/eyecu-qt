@@ -3,6 +3,7 @@
 
 #include <QMutex>
 #include <QDateTime>
+#include <QDebug>
 
 extern "C" {
 #include <gcrypt.h>
@@ -225,27 +226,34 @@ cleanup:
 	return ret_val;
 }
 
-int SignalProtocol::getDeviceId(quint32 &AId)
+quint32 SignalProtocol::getDeviceId()
 {
-	return signal_protocol_identity_get_local_registration_id(FStoreContext, &AId);
+	quint32 id;
+	int rc = signal_protocol_identity_get_local_registration_id(FStoreContext, &id);
+	if (rc == SG_SUCCESS)
+		return id;
+	qCritical("%s: signal_protocol_identity_get_local_registration_id() failed! rc=%d", __func__, rc);
+	return 0;
 }
 
 int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId)
 {
-	signal_protocol_address address = {ABareJid.toUtf8(),
+	QByteArray bareJid = ABareJid.toUtf8();
+	signal_protocol_address address = {bareJid.data(),
 									   size_t(ABareJid.size()),
 									   ADeviceId};
+
 	int ret_val = 0;
 	char * err_msg = nullptr;
 
 	session_record * sessionRecord = nullptr;
 	session_state * sessionState = nullptr;
 
-	//TODO: if there was no response yet, even though it is an established session it keeps sending prekeymsgs
-	//      maybe that is "uninitiated" too?
-	if(!signal_protocol_session_contains_session(FStoreContext, &address)) {
+	//TODO: if there was no response yet, even though it is an established session
+	//		it keeps sending prekeymsgs
+	//		maybe that is "uninitiated" too?
+	if(!signal_protocol_session_contains_session(FStoreContext, &address))
 		return 0;
-	}
 
 	ret_val = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
 	if (ret_val){
@@ -269,98 +277,9 @@ cleanup:
 	return ret_val;
 }
 
-session_cipher *SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
+SignalProtocol::Cipher SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
 {
-	signal_protocol_address AAddress = {ABareJid.toUtf8(),
-										size_t(ABareJid.size()),
-										ADeviceId};
-	// Create the session cipher
-	session_cipher	*cipher(nullptr);
-	int rc = session_cipher_create(&cipher, FStoreContext, &AAddress, FGlobalContext);
-	if (rc != SG_SUCCESS)
-		qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
-	return cipher;
-}
-
-QByteArray SignalProtocol::encrypt(session_cipher *ACipher, const QByteArray &AUnencrypted)
-{
-	QByteArray result;
-	ciphertext_message *message;
-	int rc = session_cipher_encrypt(ACipher,
-									reinterpret_cast<const quint8*>(
-										AUnencrypted.data()),
-									size_t(AUnencrypted.size()),
-									&message);
-	if (rc == SG_SUCCESS)
-	{
-		// Get the serialized content
-		signal_buffer *serialized = ciphertext_message_get_serialized(message);
-		result = SignalProtocol::signalBufferToByteArray(serialized);
-		signal_buffer_free(serialized);
-	}
-
-	SIGNAL_UNREF(message);
-
-	return result;
-}
-
-QByteArray SignalProtocol::decrypt(session_cipher *ACipher, const QByteArray &AEncrypted)
-{
-	signal_message *ciphertext;
-	QByteArray result;
-
-	int rc = signal_message_deserialize(&ciphertext,
-										reinterpret_cast<const quint8*>(
-											AEncrypted.data()),
-										size_t(AEncrypted.size()),
-										FGlobalContext);
-	if (rc == SG_SUCCESS)
-	{
-		signal_buffer *buffer(nullptr);
-
-		rc = session_cipher_decrypt_signal_message(ACipher, ciphertext,
-												   nullptr, &buffer);
-		if (rc == SG_SUCCESS)
-			result = SignalProtocol::signalBufferToByteArray(buffer);
-		else
-			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
-
-		signal_buffer_bzero_free(buffer);
-	}
-	else
-		qCritical("signal_message_deserialize() failed! rc=%d", rc);
-
-	return result;
-}
-
-QByteArray SignalProtocol::decryptPre(session_cipher *ACipher, const QByteArray &AEncrypted)
-{
-	pre_key_signal_message *ciphertext(nullptr);
-	QByteArray result;
-	int rc = pre_key_signal_message_deserialize(&ciphertext,
-												reinterpret_cast<const quint8*>(
-													AEncrypted.data()),
-												size_t(AEncrypted.size()),
-												FGlobalContext);
-	if (rc == SG_SUCCESS)
-	{
-		signal_buffer *plaintext(nullptr);
-
-		rc = session_cipher_decrypt_pre_key_signal_message(ACipher, ciphertext,
-														   nullptr, &plaintext);
-		if (rc == SG_SUCCESS)
-		{
-			result = SignalProtocol::signalBufferToByteArray(plaintext);
-		}
-		else
-			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
-
-		signal_buffer_bzero_free(plaintext);
-	}
-	else
-		qCritical("pre_key_signal_message_deserialize() failed! rc=%d", rc);
-
-	return result;
+	return Cipher(FGlobalContext, FStoreContext, ABareJid, ADeviceId);
 }
 
 QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
@@ -956,77 +875,77 @@ int SignalProtocol::encryptFunc(signal_buffer **AOutput, int ACipher, const uint
 	signal_buffer * out_buf_p = nullptr;
 
 	if(AIvLen != 16) {
-	  err_msg = "invalid AES IV size (must be 16)";
-	  rc = SG_ERR_UNKNOWN;
-	  goto cleanup;
+		err_msg = "invalid AES IV size (must be 16)";
+		rc = SG_ERR_UNKNOWN;
+		goto cleanup;
 	}
 
 	rc = choose_aes(ACipher, AKeyLen, &algo, &mode);
 	if (rc) {
-	  err_msg = "failed to choose cipher";
-	  rc = SG_ERR_UNKNOWN;
-	  goto cleanup;
+		err_msg = "failed to choose cipher";
+		rc = SG_ERR_UNKNOWN;
+		goto cleanup;
 	}
 
 	rc = gcry_cipher_open(&cipher_hd, algo, mode, 0);
 	if (rc) {
-	  err_msg = "failed to init cipher";
-	  goto cleanup;
+		err_msg = "failed to init cipher";
+		goto cleanup;
 	}
 
 	rc = gcry_cipher_setkey(cipher_hd, AKey, AKeyLen);
 	if (rc) {
-	  err_msg = "failed to set key";
-	  goto cleanup;
+		err_msg = "failed to set key";
+		goto cleanup;
 	}
 
 	switch (ACipher) {
-	  case SG_CIPHER_AES_CBC_PKCS5:
-		pad_len = 16 - (APlaintextLen % 16);
-		if (pad_len == 0) {
-		  pad_len = 16;
-		}
-		ct_len = APlaintextLen + pad_len;
-		rc = int(gcry_cipher_setiv(cipher_hd, AIv, AIvLen));
-		if (rc) {
-		  err_msg = "failed to set iv";
-		  goto cleanup;
-		}
-		break;
-	  case SG_CIPHER_AES_CTR_NOPADDING:
-		ct_len = APlaintextLen;
-		rc = int(gcry_cipher_setctr(cipher_hd, AIv, AIvLen));
-		if (rc) {
-		  err_msg = "failed to set iv";
-		  goto cleanup;
-		}
-		break;
-	  default:
-		rc = SG_ERR_UNKNOWN;
-		err_msg = "unknown cipher";
-		goto cleanup;
+		case SG_CIPHER_AES_CBC_PKCS5:
+			pad_len = 16 - (APlaintextLen % 16);
+			if (pad_len == 0) {
+			  pad_len = 16;
+			}
+			ct_len = APlaintextLen + pad_len;
+			rc = int(gcry_cipher_setiv(cipher_hd, AIv, AIvLen));
+			if (rc) {
+			  err_msg = "failed to set iv";
+			  goto cleanup;
+			}
+			break;
+		case SG_CIPHER_AES_CTR_NOPADDING:
+			ct_len = APlaintextLen;
+			rc = int(gcry_cipher_setctr(cipher_hd, AIv, AIvLen));
+			if (rc) {
+				err_msg = "failed to set iv";
+				goto cleanup;
+			}
+			break;
+		default:
+			rc = SG_ERR_UNKNOWN;
+			err_msg = "unknown cipher";
+			goto cleanup;
 	}
 
 	pt_p = (uint8_t*)malloc(sizeof(uint8_t) * ct_len);
 	if (!pt_p) {
-	  err_msg = "failed to malloc pt buf";
-	  rc = SG_ERR_NOMEM;
-	  goto cleanup;
+		err_msg = "failed to malloc pt buf";
+		rc = SG_ERR_NOMEM;
+		goto cleanup;
 	}
 	memset(pt_p, pad_len, ct_len);
 	memcpy(pt_p, APlaintext, APlaintextLen);
 
 	out_p = (uchar*)malloc(sizeof(uint8_t) * ct_len);
 	if (!out_p) {
-	  err_msg = "failed to malloc ct buf";
-	  rc = SG_ERR_NOMEM;
-	  goto cleanup;
+		err_msg = "failed to malloc ct buf";
+		rc = SG_ERR_NOMEM;
+		goto cleanup;
 	}
 
 	rc = gcry_cipher_encrypt(cipher_hd, out_p, ct_len, pt_p, ct_len);
 	if (rc) {
-	  err_msg = "failed to encrypt";
-	  goto cleanup;
+		err_msg = "failed to encrypt";
+		goto cleanup;
 	}
 
 	out_buf_p = signal_buffer_create(out_p, ct_len);
@@ -1034,12 +953,12 @@ int SignalProtocol::encryptFunc(signal_buffer **AOutput, int ACipher, const uint
 
 cleanup:
 	if (rc) {
-	  if (rc > 0) {
-		qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
-		rc = SG_ERR_UNKNOWN;
-	  } else {
-		qCritical("%s: %s\n", __func__, err_msg);
-	  }
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
+			rc = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, err_msg);
+		}
 	}
 
 	free(out_p);
@@ -1064,22 +983,22 @@ int SignalProtocol::decryptFunc(signal_buffer **AOutput, int ACipher, const uint
 	signal_buffer * out_buf_p = nullptr;
 
 	if(AIvLen != 16) {
-	  err_msg = "invalid AES IV size (must be 16)";
-	  ret_val = SG_ERR_UNKNOWN;
-	  goto cleanup;
+		err_msg = "invalid AES IV size (must be 16)";
+		ret_val = SG_ERR_UNKNOWN;
+		goto cleanup;
 	}
 
 	ret_val = choose_aes(ACipher, AKeyLen, &algo, &mode);
 	if (ret_val) {
-	  err_msg = "failed to choose cipher";
-	  ret_val = SG_ERR_UNKNOWN;
-	  goto cleanup;
+		err_msg = "failed to choose cipher";
+		ret_val = SG_ERR_UNKNOWN;
+		goto cleanup;
 	}
 
 	ret_val = gcry_cipher_open(&cipher_hd, algo, mode, 0);
 	if (ret_val) {
-	  err_msg = "failed to init cipher";
-	  goto cleanup;
+		err_msg = "failed to init cipher";
+		goto cleanup;
 	}
 
 	ret_val = gcry_cipher_setkey(cipher_hd, AKey, AKeyLen);
@@ -1089,55 +1008,55 @@ int SignalProtocol::decryptFunc(signal_buffer **AOutput, int ACipher, const uint
 	}
 
 	switch (ACipher) {
-	  case SG_CIPHER_AES_CBC_PKCS5:
-		pad_len = 1;
-		ret_val = gcry_cipher_setiv(cipher_hd, AIv, AIvLen);
-		if (ret_val) {
-		  err_msg = "failed to set iv";
-		  goto cleanup;
-		}
-		break;
-	  case SG_CIPHER_AES_CTR_NOPADDING:
-		ret_val = gcry_cipher_setctr(cipher_hd, AIv, AIvLen);
-		if (ret_val) {
-		  err_msg = "failed to set iv";
-		  goto cleanup;
-		}
-		break;
-	  default:
-		ret_val = SG_ERR_UNKNOWN;
-		err_msg = "unknown cipher";
-		goto cleanup;
+		case SG_CIPHER_AES_CBC_PKCS5:
+			pad_len = 1;
+			ret_val = gcry_cipher_setiv(cipher_hd, AIv, AIvLen);
+			if (ret_val) {
+				err_msg = "failed to set iv";
+				goto cleanup;
+			}
+			break;
+		case SG_CIPHER_AES_CTR_NOPADDING:
+			ret_val = gcry_cipher_setctr(cipher_hd, AIv, AIvLen);
+			if (ret_val) {
+				err_msg = "failed to set iv";
+				goto cleanup;
+			}
+			break;
+		default:
+			ret_val = SG_ERR_UNKNOWN;
+			err_msg = "unknown cipher";
+			goto cleanup;
 	}
 
 	out_p = (uchar*)malloc(sizeof(uint8_t) * ACiphertextLen);
 	if (!out_p) {
-	  err_msg = "failed to malloc pt buf";
-	  ret_val = SG_ERR_NOMEM;
-	  goto cleanup;
+		err_msg = "failed to malloc pt buf";
+		ret_val = SG_ERR_NOMEM;
+		goto cleanup;
 	}
 
 	ret_val = gcry_cipher_decrypt(cipher_hd, out_p, ACiphertextLen, ACiphertext, ACiphertextLen);
 	if (ret_val) {
-	  err_msg = "failed to decrypt";
-	  goto cleanup;
+		err_msg = "failed to decrypt";
+		goto cleanup;
 	}
 
 	if (pad_len) {
-	  pad_len = out_p[ACiphertextLen - 1];
+		pad_len = out_p[ACiphertextLen - 1];
 	}
 
 	out_buf_p = signal_buffer_create(out_p, ACiphertextLen - pad_len);
 	*AOutput = out_buf_p;
 
-  cleanup:
+cleanup:
 	if (ret_val) {
-	  if (ret_val > 0) {
-		qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-		ret_val = SG_ERR_UNKNOWN;
-	  } else {
-		qCritical("%s: %s\n", __func__, err_msg);
-	  }
+		if (ret_val > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
+			ret_val = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, err_msg);
+		}
 	}
 
 	free(out_p);
@@ -1174,16 +1093,19 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	FSignedPreKey(nullptr),
 	FStoreContext(nullptr),
 	FFileName(AFileName),
-	FMutex(new QMutex(QMutex::Recursive))
+	FMutex(new QMutex(QMutex::Recursive)),
+	FError(0)
 {
+	qDebug("SignalProtocol::SignalProtocol(\"%s\")", AFileName.toUtf8().data());
+
 	char *err_msg = nullptr;
 	signal_protocol_store_context * store_context_p = nullptr;
 
 	// 1. create global context
 	if (signal_context_create(&FGlobalContext, this)) {
-	  err_msg = "failed to create global signal protocol context";
-	  FError = -1;
-	  goto cleanup;
+		err_msg = "failed to create global signal protocol context";
+		FError = -1;
+		goto cleanup;
 	}
 	qDebug("%s: created and set signal protocol context", __func__);
 
@@ -1203,17 +1125,17 @@ SignalProtocol::SignalProtocol(const QString &AFileName):
 	provider.user_data = this;
 
 	if (signal_context_set_crypto_provider(FGlobalContext, &provider)) {
-	  err_msg = "failed to set signal protocol crypto provider";
-	  FError = -1;
-	  goto cleanup;
+		err_msg = "failed to set signal protocol crypto provider";
+		FError = -1;
+		goto cleanup;
 	}
 	qDebug("%s: set signal protocol crypto provider", __func__);
 
 	// 3. set locking functions
 	if (signal_context_set_locking_functions(FGlobalContext, recursiveMutexLock, recursiveMutexUnlock)) {
-	  err_msg = "failed to set locking functions";
-	  FError = -1;
-	  goto cleanup;
+		err_msg = "failed to set locking functions";
+		FError = -1;
+		goto cleanup;
 	}
 	qDebug("%s: set locking functions", __func__);
 
@@ -1292,6 +1214,7 @@ cleanup:
 	} else {
 		OmemoStore::init(FFileName);
 		qInfo("%s: done initializing SignalProtocol", __func__);
+		SessionBuilder::init(FGlobalContext, FStoreContext);
 	}
 }
 
@@ -1310,30 +1233,264 @@ signal_context *				SessionBuilder::FGlobalContext(nullptr);
 signal_protocol_store_context *	SessionBuilder::FStoreContext(nullptr);
 
 SessionBuilder::SessionBuilder(const QString &ABareJid, int ADeviceId):
-	ABuilder(nullptr)
+	FBareJid(ABareJid.toUtf8()),
+	FAddress({FBareJid.data(),
+			 size_t(ABareJid.size()),
+			 ADeviceId}),
+	FBuilder(nullptr)
 {
-	signal_protocol_address AAddress = {ABareJid.toUtf8(),
-										size_t(ABareJid.size()),
-										ADeviceId};
 	// Instantiate a session_builder for a recipient address.
-	int rc = session_builder_create(&ABuilder, FStoreContext, &AAddress, FGlobalContext);
+	int rc = session_builder_create(&FBuilder, FStoreContext, &FAddress, FGlobalContext);
 	if (rc != SG_SUCCESS)
 		qCritical("session_builder_create() failed! rc=%d", rc);
 }
 
 SessionBuilder::~SessionBuilder()
 {
-	if (ABuilder)
-		session_builder_free(ABuilder);
+	qDebug() << "SessionBuilder::~SessionBuilder()";
+	if (FBuilder)
+		session_builder_free(FBuilder);
+}
+
+bool SessionBuilder::processPreKeyBundle(session_pre_key_bundle *APreKey)
+{
+	int rc = session_builder_process_pre_key_bundle(FBuilder, APreKey);
+	if (rc != SG_SUCCESS)
+	{
+		qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
+		return false;
+	}
+	return true;
 }
 
 bool SessionBuilder::isOk() const
 {
-	return ABuilder != nullptr;
+	return FBuilder != nullptr;
 }
 
-void SessionBuilder::init(signal_context *AGlobalContext, signal_protocol_store_context *AStoreContext)
+void SessionBuilder::init(signal_context *AGlobalContext,
+						  signal_protocol_store_context *AStoreContext)
 {
 	FGlobalContext = AGlobalContext;
 	FStoreContext = AStoreContext;
+}
+
+SignalProtocol::Cipher::Cipher(signal_context *AGlobalContext,
+							   signal_protocol_store_context *AStoreContext,
+							   const QString &ABareJid, int ADeviceId):
+	FCipher(nullptr),
+	FBareJid(ABareJid.toUtf8()),
+	FAddress({FBareJid.data(), size_t(FBareJid.size()), ADeviceId})
+{
+	// Create the session cipher
+	int rc = session_cipher_create(&FCipher, AStoreContext, &FAddress, AGlobalContext);
+	if (rc != SG_SUCCESS)
+	{
+		FCipher = nullptr;
+		qCritical("session_cipher_create() failed! rc=%d", rc);
+	}
+}
+
+SignalProtocol::Cipher::Cipher(const SignalProtocol::Cipher &AOther):
+	FCipher(AOther.FCipher),
+	FBareJid(AOther.FBareJid)
+{
+	SIGNAL_REF(FCipher);
+}
+
+SignalProtocol::Cipher::~Cipher()
+{
+	SIGNAL_UNREF(FCipher);
+}
+
+bool SignalProtocol::Cipher::isNull() const
+{
+	return FCipher == nullptr;
+}
+
+QByteArray SignalProtocol::Cipher::encrypt(const QByteArray &AUnencrypted)
+{
+	QByteArray result;
+	ciphertext_message *message;
+	int rc = session_cipher_encrypt(FCipher,
+									reinterpret_cast<const quint8*>(
+										AUnencrypted.data()),
+									size_t(AUnencrypted.size()),
+									&message);
+	if (rc == SG_SUCCESS)
+	{
+		// Get the serialized content
+		signal_buffer *serialized = ciphertext_message_get_serialized(message);
+		result = SignalProtocol::signalBufferToByteArray(serialized);
+		signal_buffer_free(serialized);
+	}
+
+	SIGNAL_UNREF(message);
+
+	return result;
+}
+
+QByteArray SignalProtocol::Cipher::decrypt(const SignalMessage &AMessage)
+{
+	QByteArray result;
+
+	if (AMessage.isNull())
+		qCritical("SignalMessage is NULL!");
+	else
+	{
+		signal_buffer *buffer(nullptr);
+
+		int rc = session_cipher_decrypt_signal_message(FCipher, AMessage, nullptr, &buffer);
+		if (rc == SG_SUCCESS)
+			result = SignalProtocol::signalBufferToByteArray(buffer);
+		else
+			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
+
+		signal_buffer_bzero_free(buffer);
+	}
+
+	return result;
+}
+
+QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage)
+{
+	QByteArray result;
+
+	if (AMessage.isNull())
+		qCritical("Message is NULL!");
+	else
+	{
+		signal_buffer *plaintext(nullptr);
+
+		int rc = session_cipher_decrypt_pre_key_signal_message(FCipher, AMessage,
+															   nullptr, &plaintext);
+		if (rc == SG_SUCCESS)
+			result = SignalProtocol::signalBufferToByteArray(plaintext);
+		else
+			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
+
+		signal_buffer_bzero_free(plaintext);
+	}
+
+	return result;
+}
+
+SignalProtocol::Cipher SignalProtocol::Cipher::operator =(const SignalProtocol::Cipher &AOther)
+{
+	FCipher = AOther.FCipher;
+	FBareJid = AOther.FBareJid;
+	SIGNAL_REF(FCipher);
+}
+
+bool SignalProtocol::Cipher::operator ==(const SignalProtocol::Cipher &AOther) const
+{
+	return FCipher == AOther.FCipher;
+}
+
+bool SignalProtocol::Cipher::operator !=(const SignalProtocol::Cipher &AOther) const
+{
+	return !operator==(AOther);
+}
+
+SignalProtocol::SignalMessage::SignalMessage(const SignalProtocol::SignalMessage &AOther):
+	FMessage(AOther.FMessage)
+{
+	SIGNAL_REF(FMessage);
+}
+
+SignalProtocol::SignalMessage::~SignalMessage()
+{
+	SIGNAL_UNREF(FMessage);
+}
+
+bool SignalProtocol::SignalMessage::isNull() const
+{
+	return FMessage == nullptr;
+}
+
+SignalProtocol::SignalMessage SignalProtocol::SignalMessage::operator =(const SignalProtocol::SignalMessage &AOther)
+{
+	FMessage = AOther.FMessage;
+	SIGNAL_REF(FMessage);
+}
+
+bool SignalProtocol::SignalMessage::operator == (const SignalProtocol::SignalMessage &AOther) const
+{
+	return FMessage == AOther.FMessage;
+}
+
+bool SignalProtocol::SignalMessage::operator !=(const SignalProtocol::SignalMessage &AOther) const
+{
+	return !operator==(AOther);
+}
+
+SignalProtocol::SignalMessage::operator signal_message *() const
+{
+	return FMessage;
+}
+
+SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
+{
+	int rc = signal_message_deserialize(&FMessage,
+										reinterpret_cast<const quint8*>(
+											AEncrypted.data()),
+										size_t(AEncrypted.size()),
+										AGlobalContext);
+	if (rc != SG_SUCCESS)
+	{
+		qCritical("signal_message_deserialize() failed! rc=%d", rc);
+		FMessage = nullptr;
+	}
+
+}
+
+SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(const SignalProtocol::PreKeySignalMessage &AOther):
+	FMessage(AOther.FMessage)
+{
+	SIGNAL_REF(FMessage);
+}
+
+SignalProtocol::PreKeySignalMessage::~PreKeySignalMessage()
+{
+	SIGNAL_UNREF(FMessage);
+}
+
+bool SignalProtocol::PreKeySignalMessage::isNull() const
+{
+	return FMessage == nullptr;
+}
+
+SignalProtocol::PreKeySignalMessage SignalProtocol::PreKeySignalMessage::operator =(const SignalProtocol::PreKeySignalMessage &AOther)
+{
+	FMessage = AOther.FMessage;
+	SIGNAL_REF(FMessage);
+}
+
+bool SignalProtocol::PreKeySignalMessage::operator ==(const SignalProtocol::PreKeySignalMessage &AOther) const
+{
+	return FMessage == AOther.FMessage;
+}
+
+bool SignalProtocol::PreKeySignalMessage::operator !=(const SignalProtocol::PreKeySignalMessage &AOther) const
+{
+	return !operator==(AOther);
+}
+
+SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
+{
+	int rc = pre_key_signal_message_deserialize(&FMessage,
+												reinterpret_cast<const quint8*>(
+													AEncrypted.data()),
+												size_t(AEncrypted.size()),
+												AGlobalContext);
+	if (rc != SG_SUCCESS)
+	{
+		qCritical("pre_key_signal_message_deserialize() failed! rc=%d", rc);
+		FMessage = nullptr;
+	}
+}
+
+SignalProtocol::PreKeySignalMessage::operator pre_key_signal_message *() const
+{
+	return FMessage;
 }
