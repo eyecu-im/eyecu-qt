@@ -140,6 +140,9 @@ public:
 											   const QByteArray &ASignedPreKeySignature,
 											   const QByteArray &AIdentityKey) const;
 
+	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
+	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
+
 	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
 
 protected:

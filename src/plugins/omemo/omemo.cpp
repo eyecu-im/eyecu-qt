@@ -24,20 +24,31 @@ extern "C" {
 #include "omemo.h"
 #include "signalprotocol.h"
 
-#define TAG_NAME_PUBSUB "pubsub"
-#define TAG_NAME_LIST	"list"
-#define TAG_NAME_DEVICE	"device"
-#define TAG_NAME_BUNDLE	"bundle"
-#define TAG_NAME_ITEMS	"items"
-#define TAG_NAME_ITEM	"item"
-#define TAG_NAME_IDENTITYKEY "identityKey"
-#define TAG_NAME_SIGNEDPREKEYPUBLIC "signedPreKeyPublic"
+// PEP elementa
+#define TAG_NAME_PUBSUB					"pubsub"
+#define TAG_NAME_LIST					"list"
+#define TAG_NAME_DEVICE					"device"
+#define TAG_NAME_BUNDLE					"bundle"
+#define TAG_NAME_ITEMS					"items"
+#define TAG_NAME_ITEM					"item"
+#define TAG_NAME_IDENTITYKEY			"identityKey"
+#define TAG_NAME_SIGNEDPREKEYPUBLIC		"signedPreKeyPublic"
 #define TAG_NAME_SIGNEDPREKEYSIGNATURE "signedPreKeySignature"
-#define TAG_NAME_PREKEYS "prekeys"
-#define TAG_NAME_PREKEYPUBLIC "preKeyPublic"
+#define TAG_NAME_PREKEYS				"prekeys"
+#define TAG_NAME_PREKEYPUBLIC			"preKeyPublic"
+// Message elements
+#define TAG_NAME_ENCRYPTED				"encrypted"
+#define TAG_NAME_HEADER					"header"
+#define TAG_NAME_KEY					"key"
+#define TAG_NAME_IV					    "iv"
+#define TAG_NAME_PAYLOAD				"payload"
 
-#define ATTR_NAME_PREKEY_ID "preKeyId"
-#define ATTR_NAME_SIGNED_PREKEY_ID "signedPreKeyId"
+#define ATTR_NAME_PREKEY_ID			"preKeyId"
+#define ATTR_NAME_SIGNED_PREKEY_ID	"signedPreKeyId"
+
+#define ATTR_NAME_SID				"sid"
+#define ATTR_NAME_RID				"rid"
+#define ATTR_NAME_PREKEY			"prekey"
 
 //#define DIR_OMEMO       "omemo"
 #define DBFN_OMEMO      "omemo.db"
@@ -749,7 +760,7 @@ void Omemo::bundlesProcessed(const QString &ABareJid)
 			 it != messages.end(); ++it)
 		{
 			QDomDocument doc = it->stanza().document();
-			QDomElement encrypted = it->stanza().addElement("encrypted", NS_OMEMO);
+			QDomElement encrypted = it->stanza().addElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 
 			QByteArray keyData, ivData;
 			getKeyPair(keyData, ivData);
@@ -758,13 +769,13 @@ void Omemo::bundlesProcessed(const QString &ABareJid)
 
 			QByteArray authTag;
 			QByteArray data = encryptMessage(message, keyData, ivData, authTag);
-			QDomElement payload = doc.createElement("payload");
+			QDomElement payload = doc.createElement(TAG_NAME_PAYLOAD);
 			QDomText text = doc.createTextNode(data.toBase64());
 			payload.appendChild(text);
 			encrypted.appendChild(payload);
 
-			QDomElement header = doc.createElement("header");
-			header.setAttribute("sid", QString::number(deviceId));
+			QDomElement header = doc.createElement(TAG_NAME_HEADER);
+			header.setAttribute(ATTR_NAME_SID, QString::number(deviceId));
 
 			for (QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
 				 itb != bundles.constEnd(); ++itb)
@@ -802,17 +813,17 @@ void Omemo::bundlesProcessed(const QString &ABareJid)
 						QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
 						if (!encryptedKey.isNull())
 						{
-							QDomElement key = doc.createElement("key");
-							key.setAttribute("rid", QString::number(itb->FDeviceId));
+							QDomElement key = doc.createElement(TAG_NAME_KEY);
+							key.setAttribute(ATTR_NAME_RID, QString::number(itb->FDeviceId));
 							if (prekey)
-								key.setAttribute("prekey", "true");
+								key.setAttribute(ATTR_NAME_PREKEY, "true");
 							key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
 							header.appendChild(key);
 						}
 					}
 				}
 
-			QDomElement iv = doc.createElement("iv");
+			QDomElement iv = doc.createElement(TAG_NAME_IV);
 			iv.appendChild(doc.createTextNode(ivData.toBase64()));
 			header.appendChild(iv);
 
@@ -970,7 +981,8 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 	if (ADirection==IMessageProcessor::DirectionOut)
 	{
 		qDebug() << "Outgoing message!";
-		if (AMessage.stanza().firstElement("encrypted", NS_OMEMO).isNull())
+		if ((AMessage.type()==Message::Chat || AMessage.type()==Message::Normal) &&
+			!AMessage.body().isNull() && AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO).isNull())
 		{
 			qDebug() << "No <encrypted/> element found! Will process...";
 			QString bareJid = AMessage.toJid().bare();
@@ -1027,7 +1039,73 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 	}
 	else
 	{
-		// Nothing to do right now
+		if ((AMessage.type()==Message::Chat || AMessage.type()==Message::Normal) &&
+			AMessage.body().isNull())
+		{
+			QDomElement encrypted = AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+			if (!encrypted.isNull())
+			{
+				QDomElement payload = encrypted.firstChildElement(TAG_NAME_PAYLOAD);
+				if (!payload.isNull())
+				{
+					QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
+					if (!header.isNull())
+					{
+						if (header.hasAttribute(ATTR_NAME_SID))
+						{
+							bool ok;
+							quint32 sid = header.attribute(ATTR_NAME_SID).toUInt(&ok);
+							if (ok && sid)
+							{
+								quint32 deviceId = FSignalProtocol->getDeviceId();
+								for (QDomElement key = header.firstChildElement(TAG_NAME_KEY);
+									 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
+								{
+									if (key.hasAttribute(ATTR_NAME_RID))
+									{
+										quint32 rid = key.attribute(ATTR_NAME_RID).toUInt(&ok);
+										if (ok && rid)
+										{
+											if (rid==deviceId)
+											{
+												qDebug() << "key for registration ID found!";
+												QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
+												SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(AMessage.fromJid().bare(), sid);
+												QByteArray keyTuple;
+												if (key.attribute(ATTR_NAME_PREKEY)=="true")
+												{
+													SignalProtocol::PreKeySignalMessage message = FSignalProtocol->getPreKeySignalMessage(decoded);
+													keyTuple = cipher.decrypt(message);
+												}
+												else
+												{
+													SignalProtocol::SignalMessage message = FSignalProtocol->getSignalMessage(decoded);
+													keyTuple = cipher.decrypt(message);
+												}
+												qDebug() << "keyTuple (received)=" << keyTuple.toBase64();
+												break;
+											}
+										}
+										else
+											qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
+									}
+									else
+										qCritical() << "rid attribute is missing!";
+								}
+							}
+							else
+								qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
+						}
+						else
+							qCritical() << "sid attribute is missing!";
+					}
+					else
+						qCritical() << "<header/> element is missing!";
+				}
+				else
+					qCritical() << "<payload/> element is missing!";
+			}
+		}
 	}
 	return false;
 }

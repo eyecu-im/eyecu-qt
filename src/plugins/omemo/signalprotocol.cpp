@@ -556,6 +556,16 @@ cleanup:
 	return bundle;
 }
 
+SignalProtocol::SignalMessage SignalProtocol::getSignalMessage(const QByteArray &AEncrypted)
+{
+	return SignalMessage(FGlobalContext, AEncrypted);
+}
+
+SignalProtocol::PreKeySignalMessage SignalProtocol::getPreKeySignalMessage(const QByteArray &AEncrypted)
+{
+	return PreKeySignalMessage(FGlobalContext, AEncrypted);
+}
+
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
 {
 	return signal_protocol_key_helper_generate_identity_key_pair(AIdentityKeyPair, FGlobalContext);
