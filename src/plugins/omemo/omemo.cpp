@@ -793,8 +793,9 @@ void Omemo::encryptMessage(Message &AMessage)
 			 it != devices.constEnd(); ++it)
 		{
 			bool prekey = false;
+			bool ok = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
 
-			if (!FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it))
+			if (!ok)
 			{
 				prekey = true;
 //FIXME: Store bundles associated with device IDs to improve performance of this search
@@ -815,31 +816,34 @@ void Omemo::encryptMessage(Message &AMessage)
 											registrationId, *it, keyId, preKeyPublic,
 											itb->FSignedPreKeyId, itb->FSignedPreKeyPublic,
 											itb->FSignedPreKeySignature, itb->FIdentityKey);
-							SignalProtocol::SessionBuilder builder = FSignalProtocol->getSessionBuilder(bareJid, *it);
-							builder.processPreKeyBundle(bundle);
+							if (FSignalProtocol->getSessionBuilder(bareJid, *it)
+									.processPreKeyBundle(bundle))
+								ok = true;
+							else
+								qCritical("Failed to process preKeyBundle()! Session is not built");
 						}
 						break;
 					}
 			}
 
-			SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(bareJid, *it);
-
-			if (cipher.isNull())
-				qCritical("Cipher is NULL!");
-			else
+			if (ok)
 			{
-				qDebug() << "device ID:" << *it << "key/tag tuple:" << (keyData+authTag).toHex();
-				QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
-				qDebug() << "encryptedKey size:" << encryptedKey.size();
-				qDebug() << "encryptedKey HEX:" << encryptedKey.toHex();
-				if (!encryptedKey.isNull())
+				SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(bareJid, *it);
+
+				if (cipher.isNull())
+					qCritical("Cipher is NULL!");
+				else
 				{
-					QDomElement key = doc.createElement(TAG_NAME_KEY);
-					key.setAttribute(ATTR_NAME_RID, QString::number(*it));
-					if (prekey)
-						key.setAttribute(ATTR_NAME_PREKEY, "true");
-					key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
-					header.appendChild(key);
+					QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
+					if (!encryptedKey.isNull())
+					{
+						QDomElement key = doc.createElement(TAG_NAME_KEY);
+						key.setAttribute(ATTR_NAME_RID, QString::number(*it));
+						if (prekey)
+							key.setAttribute(ATTR_NAME_PREKEY, "true");
+						key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
+						header.appendChild(key);
+					}
 				}
 			}
 		}

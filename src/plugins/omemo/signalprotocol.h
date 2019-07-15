@@ -1,18 +1,11 @@
-#ifndef LIBSIGNALPROTOCOL_H
-#define LIBSIGNALPROTOCOL_H
+#ifndef SIGNALPROTOCOL_H
+#define SIGNALPROTOCOL_H
 
-#include <QString>
 #include <QSharedData>
 #include <QSharedDataPointer>
 #include <signal_protocol.h>
 
 class QMutex;
-
-struct axc_buf_list_item {
-	axc_buf_list_item(uint32_t AId, signal_buffer *ABuf_p);
-	uint32_t id;
-	signal_buffer *buf_p;
-};
 
 struct session_builder;
 
@@ -109,7 +102,7 @@ public:
 		~SessionBuilder();
 
 		bool processPreKeyBundle(session_pre_key_bundle *APreKey);
-		bool isOk() const;
+		bool isNull() const;
 
 	protected:
 		SessionBuilder(const QString &ABareJid, quint32 ADeviceId,
@@ -169,8 +162,8 @@ protected:
 	 * Callback for a secure random number generator.
 	 * This function shall fill the provided buffer with random bytes.
 	 *
-	 * @param data pointer to the output buffer
-	 * @param len size of the output buffer
+	 * @param AData pointer to the output buffer
+	 * @param ALen size of the output buffer
 	 * @return 0 on success, negative on failure
 	 */
 	static int randomFunc(uint8_t *AData, size_t ALen, void *AUserData);
@@ -190,9 +183,9 @@ protected:
 	 * Callback for an HMAC-SHA256 implementation.
 	 * This function shall update the HMAC context with the provided data
 	 *
-	 * @param hmac_context private HMAC context pointer
-	 * @param data pointer to the data
-	 * @param data_len length of the data
+	 * @param AHmacContext private HMAC context pointer
+	 * @param AData pointer to the data
+	 * @param ADataLen length of the data
 	 * @return 0 on success, negative on failure
 	 */
 	static int hmacSha256UpdateFunc(void *AHmacContext, const uint8_t *AData, size_t ADataLen, void *AUserData);
@@ -213,7 +206,7 @@ protected:
 	 * This function shall free the private context allocated in
 	 * hmac_sha256_init_func.
 	 *
-	 * @param hmac_context private HMAC context pointer
+	 * @param AHmacContext private HMAC context pointer
 	 */
 	static void hmacSha256CleanupFunc(void *AHmacContext, void *AUserData);
 
@@ -221,7 +214,7 @@ protected:
 	 * Callback for a SHA512 message digest implementation.
 	 * This function shall initialize a digest context.
 	 *
-	 * @param digest_context private digest context pointer
+	 * @param ADigestContext private digest context pointer
 	 * @return 0 on success, negative on failure
 	 */
 	static int sha512DigestInitFunc(void **ADigestContext, void *AUserData);
@@ -230,9 +223,9 @@ protected:
 	 * Callback for a SHA512 message digest implementation.
 	 * This function shall update the digest context with the provided data.
 	 *
-	 * @param digest_context private digest context pointer
-	 * @param data pointer to the data
-	 * @param data_len length of the data
+	 * @param ADigestContext private digest context pointer
+	 * @param AData pointer to the data
+	 * @param ADataLen length of the data
 	 * @return 0 on success, negative on failure
 	 */
 	static int sha512DigestUpdateFunc(void *ADigestContext, const uint8_t *AData, size_t ADataLen, void *AUserData);
@@ -242,8 +235,8 @@ protected:
 	 * This function shall finalize the digest calculation, populate the
 	 * output buffer with the result, and prepare the context for reuse.
 	 *
-	 * @param digest_context private digest context pointer
-	 * @param output buffer to be allocated and populated with the result
+	 * @param ADigestContext private digest context pointer
+	 * @param AOutput buffer to be allocated and populated with the result
 	 * @return 0 on success, negative on failure
 	 */
 	static int sha512DigestFinalFunc(void *ADigestContext, signal_buffer **AOutput, void *AUserData);
@@ -253,21 +246,21 @@ protected:
 	 * This function shall free the private context allocated in
 	 * sha512_digest_init_func.
 	 *
-	 * @param digest_context private digest context pointer
+	 * @param ADigestContext private digest context pointer
 	 */
 	static void sha512DigestCleanupFunc(void *ADigestContext, void *AUserData);
 
 	/**
 	 * Callback for an AES encryption implementation.
 	 *
-	 * @param output buffer to be allocated and populated with the ciphertext
-	 * @param cipher specific cipher variant to use, either SG_CIPHER_AES_CTR_NOPADDING or SG_CIPHER_AES_CBC_PKCS5
-	 * @param key the encryption key
-	 * @param key_len length of the encryption key
-	 * @param iv the initialization vector
-	 * @param iv_len length of the initialization vector
-	 * @param plaintext the plaintext to encrypt
-	 * @param plaintext_len length of the plaintext
+	 * @param AOutput buffer to be allocated and populated with the ciphertext
+	 * @param ACipher specific cipher variant to use, either SG_CIPHER_AES_CTR_NOPADDING or SG_CIPHER_AES_CBC_PKCS5
+	 * @param AKey the encryption key
+	 * @param AKeyLen length of the encryption key
+	 * @param AIv the initialization vector
+	 * @param AIvLen length of the initialization vector
+	 * @param APlaintext the plaintext to encrypt
+	 * @param APlaintextLen length of the plaintext
 	 * @return 0 on success, negative on failure
 	 */
 	static int encryptFunc(signal_buffer **AOutput, int ACipher,
@@ -279,14 +272,14 @@ protected:
 	/**
 	 * Callback for an AES decryption implementation.
 	 *
-	 * @param output buffer to be allocated and populated with the plaintext
-	 * @param cipher specific cipher variant to use, either SG_CIPHER_AES_CTR_NOPADDING or SG_CIPHER_AES_CBC_PKCS5
-	 * @param key the encryption key
-	 * @param key_len length of the encryption key
-	 * @param iv the initialization vector
-	 * @param iv_len length of the initialization vector
-	 * @param ciphertext the ciphertext to decrypt
-	 * @param ciphertext_len length of the ciphertext
+	 * @param AOutput buffer to be allocated and populated with the plaintext
+	 * @param ACipher specific cipher variant to use, either SG_CIPHER_AES_CTR_NOPADDING or SG_CIPHER_AES_CBC_PKCS5
+	 * @param AKey the encryption key
+	 * @param AKeyLen length of the encryption key
+	 * @param AIv the initialization vector
+	 * @param AIvLen length of the initialization vector
+	 * @param ACiphertext the ciphertext to decrypt
+	 * @param ACiphertextLen length of the ciphertext
 	 * @return 0 on success, negative on failure
 	 */
 	static int decryptFunc(signal_buffer **AOutput,
@@ -308,13 +301,7 @@ private:
 
 	// signal-protocol
 	signal_context		*FGlobalContext;
-
-	ratchet_identity_key_pair *FIdentityKeyPair;
-	uint32_t FRegistrationId;
-	signal_protocol_key_helper_pre_key_list_node *FPreKeysHead;
-	session_signed_pre_key *FSignedPreKey;
 	signal_protocol_store_context * FStoreContext;
-	session_builder *FSessionBuilder;
 
 	QString FFileName;
 
@@ -327,4 +314,4 @@ private:
 	static SignalProtocol *FInstance;
 };
 
-#endif // LIBSIGNALPROTOCOL_H
+#endif // SIGNALPROTOCOL_H

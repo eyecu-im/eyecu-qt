@@ -50,7 +50,7 @@ int SignalProtocol::error() const
 
 int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint APreKeyAmount)
 {
-	char * err_msg = "";
+	char * err_msg = nullptr;
 	int ret_val = 0;
 	bool db_needs_init = false;
 	bool db_needs_reset = false;
@@ -1102,10 +1102,6 @@ void SignalProtocol::recursiveMutexUnlock()
 
 SignalProtocol::SignalProtocol(const QString &AFileName):
 	FGlobalContext(nullptr),
-	FIdentityKeyPair(nullptr),
-	FRegistrationId(0),
-	FPreKeysHead(nullptr),
-	FSignedPreKey(nullptr),
 	FStoreContext(nullptr),
 	FFileName(AFileName),
 	FMutex(new QMutex(QMutex::Recursive)),
@@ -1240,67 +1236,76 @@ SignalProtocol::~SignalProtocol()
 	signal_protocol_store_context_destroy(FStoreContext);
 }
 
-axc_buf_list_item::axc_buf_list_item(uint32_t AId, signal_buffer *ABuf_p):
-	id(AId), buf_p(ABuf_p)
+//
+// *** SessionBuilder ***
+//
+// SessionBuilderData
+//
+SignalProtocol::SessionBuilderData::SessionBuilderData(const QString &ABareJid, quint32 ADeviceId):
+	FBareJid(ABareJid.toUtf8()),
+	FAddress({FBareJid.data(),
+			 size_t(ABareJid.size()),
+			 int(ADeviceId)}),
+	FBuilder(nullptr)
 {}
 
-// signal_context *				SessionBuilder::FGlobalContext(nullptr);
-// signal_protocol_store_context *	SessionBuilder::FStoreContext(nullptr);
+SignalProtocol::SessionBuilderData::SessionBuilderData(const SignalProtocol::SessionBuilderData &AOther):
+	FBareJid(AOther.FBareJid),
+	FAddress(AOther.FAddress),
+	FBuilder(AOther.FBuilder)
+{}
 
-SignalProtocol::SessionBuilder::SessionBuilder(const QString &ABareJid, quint32 ADeviceId, signal_context *AGlobalContext, signal_protocol_store_context *AStoreContext):
+SignalProtocol::SessionBuilderData::~SessionBuilderData()
+{
+	session_builder_free(FBuilder);
+}
+//
+// SessionBuilder
+//
+SignalProtocol::SessionBuilder::SessionBuilder(const QString &ABareJid, quint32 ADeviceId,
+											   signal_context *AGlobalContext,
+											   signal_protocol_store_context *AStoreContext):
 	d(new SessionBuilderData(ABareJid, ADeviceId))
 {
-	qDebug() << "SessionBuilder(): refCount:" << d->ref;
 	// Instantiate a session_builder for a recipient address.
 	int rc = session_builder_create(&d->FBuilder, AStoreContext, &d->FAddress, AGlobalContext);
 	if (rc != SG_SUCCESS)
+	{
+		d = nullptr;
 		qCritical("session_builder_create() failed! rc=%d", rc);
+	}
 }
 
 SignalProtocol::SessionBuilder::SessionBuilder(const SignalProtocol::SessionBuilder &AOther):
 	d(AOther.d)
-{
-	qDebug() << "SessionBuilder(copy): refCount:" << d->ref;
-}
+{}
 
 SignalProtocol::SessionBuilder::~SessionBuilder()
-{
-	qDebug() << "SessionBuilder::~SessionBuilder(); refCount:" << d->ref;
-	if (d->ref==1) // The last instance
-	{
-		qDebug() << "The last instance of d!";
-		if (d->FBuilder)
-		{
-			qDebug() << "Freeing Session Bilder...";
-			session_builder_free(d->FBuilder);
-			qDebug() << "Done!";
-		}
-	}
-}
+{}
 
 bool SignalProtocol::SessionBuilder::processPreKeyBundle(session_pre_key_bundle *APreKey)
 {
-	int rc = session_builder_process_pre_key_bundle(d->FBuilder, APreKey);
-	if (rc != SG_SUCCESS)
+	if (!d)
 	{
-		qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
-		return false;
+		int rc = session_builder_process_pre_key_bundle(d->FBuilder, APreKey);
+		if (rc == SG_SUCCESS)
+			return true;
+		else
+			qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
 	}
-	return true;
+	else
+		qCritical("SignalBuilder is NULL!");
+	return false;
 }
 
-bool SignalProtocol::SessionBuilder::isOk() const
+bool SignalProtocol::SessionBuilder::isNull() const
 {
-	return d->FBuilder != nullptr;
+	return d == nullptr;
 }
-/*
-void SignalProtocol::SessionBuilder::init(signal_context *AGlobalContext,
-						  signal_protocol_store_context *AStoreContext)
-{
-	FGlobalContext = AGlobalContext;
-	FStoreContext = AStoreContext;
-}
-*/
+
+//
+// *** Cipher ***
+//
 SignalProtocol::Cipher::Cipher(signal_context *AGlobalContext,
 							   signal_protocol_store_context *AStoreContext,
 							   const QString &ABareJid, int ADeviceId):
@@ -1419,6 +1424,9 @@ bool SignalProtocol::Cipher::operator !=(const SignalProtocol::Cipher &AOther) c
 	return !operator==(AOther);
 }
 
+//
+// *** SignalMessage ***
+//
 SignalProtocol::SignalMessage::SignalMessage(const SignalProtocol::SignalMessage &AOther):
 	FMessage(AOther.FMessage)
 {
@@ -1471,6 +1479,9 @@ SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, con
 
 }
 
+//
+// *** PreKeySignalMessage ***
+//
 SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(const SignalProtocol::PreKeySignalMessage &AOther):
 	FMessage(AOther.FMessage)
 {
@@ -1505,9 +1516,6 @@ bool SignalProtocol::PreKeySignalMessage::operator !=(const SignalProtocol::PreK
 
 SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
 {
-	qDebug() << "PreKeySignalMessage(" << AGlobalContext << "," << AEncrypted << ")";
-	qDebug() << "Encrypted size:" << AEncrypted.size();
-	qDebug() << "Encrypted HEX:" << AEncrypted.toHex();
 	int rc = pre_key_signal_message_deserialize(&FMessage,
 												reinterpret_cast<const quint8*>(
 													AEncrypted.data()),
@@ -1524,20 +1532,3 @@ SignalProtocol::PreKeySignalMessage::operator pre_key_signal_message *() const
 {
 	return FMessage;
 }
-
-SignalProtocol::SessionBuilderData::SessionBuilderData(const QString &ABareJid, quint32 ADeviceId):
-	FBareJid(ABareJid.toUtf8()),
-	FAddress({FBareJid.data(),
-			 size_t(ABareJid.size()),
-			 int(ADeviceId)}),
-	FBuilder(nullptr)
-{}
-
-SignalProtocol::SessionBuilderData::SessionBuilderData(const SignalProtocol::SessionBuilderData &AOther):
-	FBareJid(AOther.FBareJid),
-	FAddress(AOther.FAddress),
-	FBuilder(AOther.FBuilder)
-{}
-
-SignalProtocol::SessionBuilderData::~SessionBuilderData()
-{}
