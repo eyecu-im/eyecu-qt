@@ -20,6 +20,7 @@ enum MultiUserDataRoles {
 	// View Delegate Roles
 	MUDR_LABEL_ITEMS,
 // *** <<< eyeCU <<< ***
+	MUDR_AFFILICON,
 	MUDR_CLIENT_ICON,
 // *** >>> eyeCU >>> ***
 };

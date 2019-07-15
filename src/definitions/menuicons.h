@@ -136,7 +136,14 @@
 #define MNI_MUC_USERS_HIDE              "mucUsersHide"
 #define MNI_MUC_MODERATE                "mucModerate"
 #define MNI_MUC_NOTIFY_SILENCE          "mucNotifySilence"
-
+// *** <<< eyeCU <<< ***
+#define MNI_MUC_ROLE_MODERATOR          "mucRoleModerate"
+#define MNI_MUC_ROLE_PARTICIPANT        "mucRoleParticpant"
+#define MNI_MUC_ROLE_VISITOR            "mucRoleVisitor"
+#define MNI_MUC_AFFIL_OWNER             "mucAffilOwner"
+#define MNI_MUC_AFFIL_ADMIN             "mucAffilAdmin"
+#define MNI_MUC_AFFIL_MEMBER            "mucAffilMember"
+// *** >>> eyeCU >>> ***
 //NormalMessageHandler
 #define MNI_NORMALMHANDLER_MESSAGE      "normalmessagehandlerMessage"
 #define MNI_NORMALMHANDLER_SEND         "normalmessagehandlerSend"
