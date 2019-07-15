@@ -2,6 +2,8 @@
 #define LIBSIGNALPROTOCOL_H
 
 #include <QString>
+#include <QSharedData>
+#include <QSharedDataPointer>
 #include <signal_protocol.h>
 
 class QMutex;
@@ -17,26 +19,6 @@ struct session_builder;
 #define SIGNED_PRE_KEY_ID	1
 #define PRE_KEYS_START		1
 #define PRE_KEYS_AMOUNT		100
-
-class SessionBuilder
-{
-public:
-	SessionBuilder(const QString &ABareJid, int ADeviceId);
-	~SessionBuilder();
-
-	bool processPreKeyBundle(session_pre_key_bundle *APreKey);
-	bool isOk() const;
-
-	static void init(signal_context *AGlobalContext,
-					 signal_protocol_store_context *AStoreContext);
-private:
-	QByteArray	FBareJid;
-	signal_protocol_address FAddress;
-	session_builder	*FBuilder;
-
-	static signal_context *					FGlobalContext;
-	static signal_protocol_store_context *	FStoreContext;
-};
 
 class SignalProtocol
 {
@@ -106,6 +88,37 @@ public:
 		signal_protocol_address FAddress;
 	};
 
+	class SessionBuilderData: public QSharedData
+	{
+	public:
+		SessionBuilderData(const QString &ABareJid, quint32 ADeviceId);
+		SessionBuilderData(const SessionBuilderData &AOther);
+		~SessionBuilderData();
+
+		QByteArray	FBareJid;
+		signal_protocol_address FAddress;
+		session_builder	*FBuilder;
+	};
+
+	class SessionBuilder
+	{
+		friend class SignalProtocol;
+
+	public:
+		SessionBuilder(const SessionBuilder &AOther);
+		~SessionBuilder();
+
+		bool processPreKeyBundle(session_pre_key_bundle *APreKey);
+		bool isOk() const;
+
+	protected:
+		SessionBuilder(const QString &ABareJid, quint32 ADeviceId,
+					   signal_context *AGlobalContext,
+					   signal_protocol_store_context *AStoreContext);
+	private:
+		QSharedDataPointer<SessionBuilderData> d;
+	};
+
 	static SignalProtocol *instance(const QString &AFileName);
 
 	static void init();
@@ -142,6 +155,7 @@ public:
 
 	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
 	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
+	SessionBuilder getSessionBuilder(const QString &ABareJid, quint32 ADeviceId);
 
 	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
 

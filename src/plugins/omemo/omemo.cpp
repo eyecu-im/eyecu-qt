@@ -815,7 +815,7 @@ void Omemo::encryptMessage(Message &AMessage)
 											registrationId, *it, keyId, preKeyPublic,
 											itb->FSignedPreKeyId, itb->FSignedPreKeyPublic,
 											itb->FSignedPreKeySignature, itb->FIdentityKey);
-							SessionBuilder builder(bareJid, *it);
+							SignalProtocol::SessionBuilder builder = FSignalProtocol->getSessionBuilder(bareJid, *it);
 							builder.processPreKeyBundle(bundle);
 						}
 						break;
