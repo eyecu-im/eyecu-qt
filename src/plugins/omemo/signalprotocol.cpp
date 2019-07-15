@@ -1331,9 +1331,9 @@ QByteArray SignalProtocol::Cipher::encrypt(const QByteArray &AUnencrypted)
 	{
 		// Get the serialized content
 		signal_buffer *serialized = ciphertext_message_get_serialized(message);
-		SIGNAL_UNREF(message);
 		result = SignalProtocol::signalBufferToByteArray(serialized);
 		signal_buffer_free(serialized);
+		SIGNAL_UNREF(message);
 	}
 	else
 		qCritical("session_cipher_encrypt() failed! rc=%d", rc);
@@ -1489,6 +1489,9 @@ bool SignalProtocol::PreKeySignalMessage::operator !=(const SignalProtocol::PreK
 
 SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
 {
+	qDebug() << "PreKeySignalMessage(" << AGlobalContext << "," << AEncrypted << ")";
+	qDebug() << "Encrypted size:" << AEncrypted.size();
+	qDebug() << "Encrypted HEX:" << AEncrypted.toHex();
 	int rc = pre_key_signal_message_deserialize(&FMessage,
 												reinterpret_cast<const quint8*>(
 													AEncrypted.data()),

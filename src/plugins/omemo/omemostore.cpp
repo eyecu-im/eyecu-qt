@@ -203,7 +203,7 @@ int sessionStore(const signal_protocol_address *address,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(0, QString::fromLatin1(QByteArray(address->name, address->name_len)));
 	pstmt_p.bindValue(1, address->device_id);
 	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char *>(record),
 									int(record_len)));
@@ -212,7 +212,7 @@ int sessionStore(const signal_protocol_address *address,
 		qCritical("QSL statement execution failed: \"%s\"; rc=%d (%s)",
 					pstmt_p.lastQuery().toUtf8().data(),
 					pstmt_p.lastError().number(),
-					pstmt_p.lastError().text().toLocal8Bit().data());
+					pstmt_p.lastError().text().toUtf8().data());
 		return -3;
 	}
 
@@ -658,10 +658,10 @@ int identitySetKeyPair(const ratchet_identity_key_pair * key_pair_p) {
 	int ret_val = 0;
 	signal_buffer * pubkey_buf_p = nullptr;
 	signal_buffer * privkey_buf_p = nullptr;
-	size_t pubkey_buf_len = 0;
-	uint8_t * pubkey_buf_data_p = nullptr;
-	size_t privkey_buf_len = 0;
-	uint8_t * privkey_buf_data_p = nullptr;
+//	size_t pubkey_buf_len = 0;
+//	uint8_t * pubkey_buf_data_p = nullptr;
+//	size_t privkey_buf_len = 0;
+//	uint8_t * privkey_buf_data_p = nullptr;
 
 	QSqlQuery pstmt_p(stmt, db());
 

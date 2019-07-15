@@ -56,7 +56,7 @@ extern "C" {
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
 
-static QByteArray encryptMessage(const QString &AMessageText, const QByteArray &AKey,
+static QByteArray encryptMessageText(const QString &AMessageText, const QByteArray &AKey,
 								 const QByteArray &AIv, QByteArray &AAuthTag)
 {
 	int rc = SG_SUCCESS;
@@ -117,10 +117,10 @@ cleanup:
 	return outBuf;
 }
 
-static QString decryptMessage(const QByteArray &AEncryptedText,
-							  const QByteArray &AKey,
-							  const QByteArray &AIv,
-							  const QByteArray &AAuthTag)
+static QString decryptMessageText(const QByteArray &AEncryptedText,
+								  const QByteArray &AKey,
+								  const QByteArray &AIv,
+								  const QByteArray &AAuthTag)
 {
 	int ret_val = SG_SUCCESS;
 	char * err_msg = nullptr;
@@ -157,8 +157,8 @@ static QString decryptMessage(const QByteArray &AEncryptedText,
 		goto cleanup;
 	}
 
-	ret_val = int(gcry_cipher_checktag (cipher_hd, AAuthTag.data(),
-										size_t(AAuthTag.size())));
+	ret_val = int(gcry_cipher_checktag(cipher_hd, AAuthTag.data(),
+									   size_t(AAuthTag.size())));
 	if (ret_val) {
 		err_msg = "failed check authentication tag";
 	} else {
@@ -320,10 +320,10 @@ bool Omemo::initObjects()
 	qDebug() << "message=" << message;
 
 	QByteArray authTag;
-	QByteArray encrypted = encryptMessage(message, key, iv, authTag);
+	QByteArray encrypted = encryptMessageText(message, key, iv, authTag);
 	qDebug() << "encrypted=" << encrypted.toBase64();
 
-	QString decrypted = decryptMessage(encrypted, key, iv, authTag);
+	QString decrypted = decryptMessageText(encrypted, key, iv, authTag);
 	qDebug() << "decrypted=" << decrypted;
 
 	return true;
@@ -750,42 +750,58 @@ QString Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJi
 void Omemo::bundlesProcessed(const QString &ABareJid)
 {
 	qDebug() << "Omemo::bundlesProcessed(" << ABareJid << ")";
+
+	QList<Message> messages = FPendingMessages.values(ABareJid);
+	for (QList<Message>::Iterator it = messages.begin();
+		 it != messages.end(); ++it)
+	{
+		encryptMessage(*it);
+		qDebug() << "Sending:" << it->stanza().toString();
+		FMessageProcessor->sendMessage(it->fromJid(), *it, IMessageProcessor::DirectionOut);
+	}
+	FPendingMessages.remove(ABareJid);
+}
+
+void Omemo::encryptMessage(Message &AMessage)
+{
 	quint32 deviceId = FSignalProtocol->getDeviceId();
 	if (deviceId)
 	{
-		QList<SignalDeviceBundle> bundles = FBundles.values(ABareJid);
+		QString bareJid = AMessage.toJid().bare();
+		QList<SignalDeviceBundle> bundles = FBundles.values(bareJid);
+		QList<quint32> devices = FDeviceIds.value(bareJid);
 
-		QList<Message> messages = FPendingMessages.values(ABareJid);
-		for (QList<Message>::Iterator it = messages.begin();
-			 it != messages.end(); ++it)
+		QDomDocument doc = AMessage.stanza().document();
+		QDomElement encrypted = AMessage.stanza().addElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+
+		QByteArray keyData, ivData;
+		getKeyPair(keyData, ivData);
+
+		const QString message = AMessage.body();
+
+		QByteArray authTag;
+		QByteArray data = encryptMessageText(message, keyData, ivData, authTag);
+		QDomElement payload = doc.createElement(TAG_NAME_PAYLOAD);
+		QDomText text = doc.createTextNode(data.toBase64());
+		payload.appendChild(text);
+		encrypted.appendChild(payload);
+
+		QDomElement header = doc.createElement(TAG_NAME_HEADER);
+		header.setAttribute(ATTR_NAME_SID, QString::number(deviceId));
+
+		for (QList<quint32>::ConstIterator it=devices.constBegin();
+			 it != devices.constEnd(); ++it)
 		{
-			QDomDocument doc = it->stanza().document();
-			QDomElement encrypted = it->stanza().addElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+			bool prekey = false;
 
-			QByteArray keyData, ivData;
-			getKeyPair(keyData, ivData);
-
-			const QString message = it->body();
-
-			QByteArray authTag;
-			QByteArray data = encryptMessage(message, keyData, ivData, authTag);
-			QDomElement payload = doc.createElement(TAG_NAME_PAYLOAD);
-			QDomText text = doc.createTextNode(data.toBase64());
-			payload.appendChild(text);
-			encrypted.appendChild(payload);
-
-			QDomElement header = doc.createElement(TAG_NAME_HEADER);
-			header.setAttribute(ATTR_NAME_SID, QString::number(deviceId));
-
-			for (QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
-				 itb != bundles.constEnd(); ++itb)
-				if (!itb->FPreKeys.isEmpty())
-				{
-					bool prekey = false;
-
-					if (!FSignalProtocol->isSessionExistsAndInitiated(ABareJid, itb->FDeviceId))
+			if (!FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it))
+			{
+				prekey = true;
+//FIXME: Store bundles associated with device IDs to improve performance of this search
+				for(QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
+					itb != bundles.constEnd(); ++itb)
+					if (itb->FDeviceId == *it)
 					{
-						prekey = true;
 						QList<quint32> keyIds = itb->FPreKeys.keys();
 						int keyCount = keyIds.size();
 						int keyIndex = qrand()*keyCount/RAND_MAX;
@@ -796,46 +812,44 @@ void Omemo::bundlesProcessed(const QString &ABareJid)
 						if (registrationId)
 						{
 							session_pre_key_bundle *bundle = FSignalProtocol->createPreKeyBundle(
-											registrationId, itb->FDeviceId, keyId, preKeyPublic,
+											registrationId, *it, keyId, preKeyPublic,
 											itb->FSignedPreKeyId, itb->FSignedPreKeyPublic,
 											itb->FSignedPreKeySignature, itb->FIdentityKey);
-							SessionBuilder builder(ABareJid, itb->FDeviceId);
+							SessionBuilder builder(bareJid, *it);
 							builder.processPreKeyBundle(bundle);
 						}
+						break;
 					}
+			}
 
-					SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(ABareJid, itb->FDeviceId);
+			SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(bareJid, *it);
 
-					if (cipher.isNull())
-						qCritical("Cipher is NULL!");
-					else
-					{
-						QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
-						if (!encryptedKey.isNull())
-						{
-							QDomElement key = doc.createElement(TAG_NAME_KEY);
-							key.setAttribute(ATTR_NAME_RID, QString::number(itb->FDeviceId));
-							if (prekey)
-								key.setAttribute(ATTR_NAME_PREKEY, "true");
-							key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
-							header.appendChild(key);
-						}
-					}
+			if (cipher.isNull())
+				qCritical("Cipher is NULL!");
+			else
+			{
+				qDebug() << "device ID:" << *it << "key/tag tuple:" << (keyData+authTag).toHex();
+				QByteArray encryptedKey = cipher.encrypt(keyData+authTag);
+				qDebug() << "encryptedKey size:" << encryptedKey.size();
+				qDebug() << "encryptedKey HEX:" << encryptedKey.toHex();
+				if (!encryptedKey.isNull())
+				{
+					QDomElement key = doc.createElement(TAG_NAME_KEY);
+					key.setAttribute(ATTR_NAME_RID, QString::number(*it));
+					if (prekey)
+						key.setAttribute(ATTR_NAME_PREKEY, "true");
+					key.appendChild(doc.createTextNode(encryptedKey.toBase64()));
+					header.appendChild(key);
 				}
-
-			QDomElement iv = doc.createElement(TAG_NAME_IV);
-			iv.appendChild(doc.createTextNode(ivData.toBase64()));
-			header.appendChild(iv);
-
-			encrypted.appendChild(header);
-
-			it->setBody(QString::null);
-
-			qDebug() << "Sending:" << it->stanza().toString();
-			FMessageProcessor->sendMessage(it->fromJid(), *it, IMessageProcessor::DirectionOut);
+			}
 		}
+
+		QDomElement iv = doc.createElement(TAG_NAME_IV);
+		iv.appendChild(doc.createTextNode(ivData.toBase64()));
+		header.appendChild(iv);
+		encrypted.appendChild(header);
+		AMessage.setBody(QString::null);
 	}
-	FPendingMessages.remove(ABareJid);
 }
 
 void Omemo::onProfileOpened(const QString &AProfile)
@@ -1030,7 +1044,8 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 						FPendingMessages.insert(AMessage.toJid().bare(), AMessage);
 						return true;
 					}
-
+					else
+						encryptMessage(AMessage); // Just encrypt message, allowing to send it
 				}
 			}
 			else
@@ -1057,40 +1072,55 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 							quint32 sid = header.attribute(ATTR_NAME_SID).toUInt(&ok);
 							if (ok && sid)
 							{
-								quint32 deviceId = FSignalProtocol->getDeviceId();
-								for (QDomElement key = header.firstChildElement(TAG_NAME_KEY);
-									 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
+								QDomElement iv = header.firstChildElement(TAG_NAME_IV);
+								if (!iv.isNull())
 								{
-									if (key.hasAttribute(ATTR_NAME_RID))
+									QByteArray ivData = QByteArray::fromBase64(iv.text().toLatin1());
+
+									quint32 deviceId = FSignalProtocol->getDeviceId();
+									for (QDomElement key = header.firstChildElement(TAG_NAME_KEY);
+										 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
 									{
-										quint32 rid = key.attribute(ATTR_NAME_RID).toUInt(&ok);
-										if (ok && rid)
+										if (key.hasAttribute(ATTR_NAME_RID))
 										{
-											if (rid==deviceId)
+											quint32 rid = key.attribute(ATTR_NAME_RID).toUInt(&ok);
+											if (ok && rid)
 											{
-												qDebug() << "key for registration ID found!";
-												QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
-												SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(AMessage.fromJid().bare(), sid);
-												QByteArray keyTuple;
-												if (key.attribute(ATTR_NAME_PREKEY)=="true")
+												if (rid==deviceId)
 												{
-													SignalProtocol::PreKeySignalMessage message = FSignalProtocol->getPreKeySignalMessage(decoded);
-													keyTuple = cipher.decrypt(message);
+													qDebug() << "key for registration ID found:" << rid;
+													QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
+													SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(AMessage.fromJid().bare(), sid);
+													QByteArray keyTuple;
+													if (key.attribute(ATTR_NAME_PREKEY)=="true")
+													{
+														SignalProtocol::PreKeySignalMessage message = FSignalProtocol->getPreKeySignalMessage(decoded);
+														keyTuple = cipher.decrypt(message);
+													}
+													else
+													{
+														SignalProtocol::SignalMessage message = FSignalProtocol->getSignalMessage(decoded);
+														keyTuple = cipher.decrypt(message);
+													}
+													qDebug() << "keyTuple (received)=" << keyTuple.toHex();
+													QByteArray keyData = keyTuple.left(16);
+													QByteArray authTag = keyTuple.mid(16);
+													QByteArray encryptedText = QByteArray::fromBase64(payload.text().toLatin1());
+													QString decryptedText = decryptMessageText(encryptedText, keyData, ivData, authTag);
+													qDebug() << "decryptedText=" << decryptedText;
+
+													AMessage.stanza().element().removeChild(encrypted);
+													AMessage.setBody(decryptedText);
+
+													break;
 												}
-												else
-												{
-													SignalProtocol::SignalMessage message = FSignalProtocol->getSignalMessage(decoded);
-													keyTuple = cipher.decrypt(message);
-												}
-												qDebug() << "keyTuple (received)=" << keyTuple.toBase64();
-												break;
 											}
+											else
+												qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
 										}
 										else
-											qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
+											qCritical() << "rid attribute is missing!";
 									}
-									else
-										qCritical() << "rid attribute is missing!";
 								}
 							}
 							else
@@ -1215,5 +1245,4 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_omemo, Omemo)
-#endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+#endif                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

@@ -71,6 +71,7 @@ protected:
 	QString requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
 
 	void bundlesProcessed(const QString &ABareJid);
+	void encryptMessage(Message &AMessage);
 
 	struct SignalDeviceBundle
 	{
