@@ -792,12 +792,16 @@ void Omemo::encryptMessage(Message &AMessage)
 		for (QList<quint32>::ConstIterator it=devices.constBegin();
 			 it != devices.constEnd(); ++it)
 		{
-			bool prekey = false;
-			bool ok = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
+			int sessionState = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
+			if (sessionState < 0)
+				break;
+
+			bool prekey = sessionState < SignalProtocol::SessionAcknowledged;
+			bool ok = sessionState > SignalProtocol::NoSession;
 
 			if (!ok)
 			{
-				prekey = true;
+				qDebug() << "isSessionExistsAndInitiated()) returned NoSession!";
 //FIXME: Store bundles associated with device IDs to improve performance of this search
 				for(QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
 					itb != bundles.constEnd(); ++itb)
@@ -1025,9 +1029,9 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 					for (QList<quint32>::ConstIterator it = deviceIds.constBegin();
 						 it != deviceIds.constEnd(); ++it)
 					{
-						int sessionExists = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
-						qDebug() << "device ID:" << *it << "; sessionExists=" << sessionExists;
-						if (!sessionExists)
+						int sessionState = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
+						qDebug() << "device ID:" << *it << "; sessionState=" << sessionState;
+						if (sessionState == SignalProtocol::NoSession)
 						{
 							needBundles = true;
 							if (!FPendingRequests.contains(bareJid, *it))

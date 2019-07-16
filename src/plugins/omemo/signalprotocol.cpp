@@ -238,9 +238,10 @@ quint32 SignalProtocol::getDeviceId()
 
 int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId)
 {
+	qDebug() << "SignalProtocol::isSessionExistsAndInitiated(" << ABareJid << "," << ADeviceId << ")";
 	QByteArray bareJid = ABareJid.toUtf8();
 	signal_protocol_address address = {bareJid.data(),
-									   size_t(ABareJid.size()),
+									   size_t(bareJid.size()),
 									   ADeviceId};
 
 	int ret_val = 0;
@@ -253,25 +254,36 @@ int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 
 	//		it keeps sending prekeymsgs
 	//		maybe that is "uninitiated" too?
 	if(!signal_protocol_session_contains_session(FStoreContext, &address))
-		return 0;
+		return NoSession;
 
 	ret_val = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
 	if (ret_val){
-		err_msg = "database error when trying to retrieve session";
+		err_msg = "Database error when trying to retrieve session";
 		goto cleanup;
 	} else {
 		sessionState = session_record_get_state(sessionRecord);
 		if (session_state_has_pending_key_exchange(sessionState)) {
-			err_msg = "session exists but has pending synchronous key exchange";
-			ret_val = 0;
+			err_msg = "Session exists but has pending synchronous key exchange";
+			ret_val = NoSession;
 			goto cleanup;
 		}
-		ret_val = 1;
+		if (session_state_has_unacknowledged_pre_key_message(sessionState))
+		{
+			err_msg = "Has unacknowledged PreKey message";
+			ret_val = SessionInitiated;
+		}
+		else
+		{
+			err_msg = "Has no unacknowledged PreKey message";
+			ret_val = SessionAcknowledged;
+		}
 	}
 
 cleanup:
 	if (ret_val < 1)
-	  qCritical("%s: %s", __func__, err_msg);
+		qCritical("%s: %s", __func__, err_msg);
+	else
+		qDebug("%s: %s", __func__, err_msg);
 
 	SIGNAL_UNREF(sessionRecord);
 	return ret_val;
@@ -1285,7 +1297,7 @@ SignalProtocol::SessionBuilder::~SessionBuilder()
 
 bool SignalProtocol::SessionBuilder::processPreKeyBundle(session_pre_key_bundle *APreKey)
 {
-	if (!d)
+	if (d)
 	{
 		int rc = session_builder_process_pre_key_bundle(d->FBuilder, APreKey);
 		if (rc == SG_SUCCESS)
@@ -1294,7 +1306,7 @@ bool SignalProtocol::SessionBuilder::processPreKeyBundle(session_pre_key_bundle 
 			qCritical("session_builder_process_pre_key_bundle() failed! rc=%d", rc);
 	}
 	else
-		qCritical("SignalBuilder is NULL!");
+		qCritical("SessionBuilder is NULL!");
 	return false;
 }
 

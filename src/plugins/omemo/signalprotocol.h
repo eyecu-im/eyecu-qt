@@ -16,6 +16,12 @@ struct session_builder;
 class SignalProtocol
 {
 public:
+	enum SessionState {
+		NoSession,
+		SessionInitiated,
+		SessionAcknowledged
+	};
+
 	class SignalMessage {
 		friend class SignalProtocol;
 

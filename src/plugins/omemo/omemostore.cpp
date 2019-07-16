@@ -35,6 +35,8 @@
 #define SETTINGS_STORE_NAME_NAME "name"
 #define SETTINGS_STORE_PROPERTY_NAME "property"
 
+#define ADDR_NAME(X) QString::fromLatin1(QByteArray(X->name, int(X->name_len)))
+
 namespace OmemoStore
 {
 // Session store implementation
@@ -118,7 +120,7 @@ int sessionLoad(signal_buffer ** record,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(0, ADDR_NAME(address));
 	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
@@ -203,7 +205,7 @@ int sessionStore(const signal_protocol_address *address,
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(0, QString::fromLatin1(QByteArray(address->name, address->name_len)));
+	pstmt_p.bindValue(0, ADDR_NAME(address));
 	pstmt_p.bindValue(1, address->device_id);
 	pstmt_p.bindValue(2, QByteArray(reinterpret_cast<char *>(record),
 									int(record_len)));
@@ -229,7 +231,7 @@ int sessionContains(const signal_protocol_address *address, void *user_data)
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(0, ADDR_NAME(address));
 	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
@@ -253,7 +255,7 @@ int sessionDelete(const signal_protocol_address *address, void *user_data)
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pstmt_p.bindValue(0, QString(address->name));
+	pstmt_p.bindValue(0, ADDR_NAME(address));
 	pstmt_p.bindValue(1, address->device_id);
 
 	if (pstmt_p.exec()) {
