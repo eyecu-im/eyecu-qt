@@ -60,7 +60,6 @@ void uninit()
 
 QSqlDatabase db()
 {
-	qDebug("OmemoStore::db()");
 	return QSqlDatabase::database(CONNECTION_NAME);
 }
 
@@ -330,6 +329,8 @@ int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void *
 {
 	Q_UNUSED(user_data);
 
+	qDebug() << "preKeyStore(" << pre_key_id << ", record," << record_len << ", user_data)";
+
 	const QString stmt("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE_NAME
 					   " VALUES (?1, ?2)");
 	QSqlQuery pstmt_p(stmt, db());
@@ -345,6 +346,8 @@ int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void *
 				  pstmt_p.lastError().text().toUtf8().data());
 		return -3;
 	}
+
+	qDebug() << "Pre key stored successfuly!";
 	return 0;
 }
 /*
@@ -1032,12 +1035,12 @@ int initStatusGet(int *init_status_p)
 	return propertyGet(INIT_STATUS_NAME, init_status_p);
 }
 
-int identitySetLocalRegistrationId(const uint32_t reg_id)
+int identitySetLocalRegistrationId(const uint32_t ARegistrationId)
 {
-	return propertySet(REG_ID_NAME, int(reg_id)) ? -1 : 0;
+	return propertySet(REG_ID_NAME, int(ARegistrationId)) ? -1 : 0;
 }
 
-int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
+int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead)
 {
 	const QString stmt("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE_NAME
 					   " VALUES (?1, ?2)");
@@ -1052,7 +1055,7 @@ int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
 
 	QSqlQuery pstmt_p(stmt, db());
 
-	pre_keys_curr_p = pre_keys_head;
+	pre_keys_curr_p = APreKeysHead;
 	while (pre_keys_curr_p) {
 		pre_key_p = signal_protocol_key_helper_key_list_element(pre_keys_curr_p);
 		if (session_pre_key_serialize(&key_buf_p, pre_key_p)) {
@@ -1083,6 +1086,141 @@ int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *pre_keys_head)
 		return 0;
 	else
 		return -1;
+}
+
+int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, signal_context *AContext)
+{
+	qDebug() << "preKeyGetList(" << AAmount << ", list_head_pp, AContext)";
+	const QString sql("SELECT * FROM " PRE_KEY_STORE_TABLE_NAME
+					  " ORDER BY " PRE_KEY_STORE_ID_NAME " ASC LIMIT ?1");
+
+	int rc = -1;
+	char * errMsg = nullptr;
+	session_pre_key * preKey = nullptr;
+	signal_buffer * preKeyPublicSerialized = nullptr;
+	signal_buffer * serializedKeypairData = nullptr;
+
+	QSqlQuery query(sql, db());
+
+	query.bindValue(0, AAmount);
+
+	if (query.exec())
+	{
+		while (query.next()) {
+			uint32_t id = query.value(0).toUInt();
+			QByteArray data = query.value(1).toByteArray();
+			serializedKeypairData = signal_buffer_create(reinterpret_cast<uchar *>(data.data()),
+															 size_t(data.size()));
+			if (!serializedKeypairData) {
+				errMsg = "failed to initialize buffer";
+				rc = -3;
+				goto cleanup;
+			}
+
+			rc = session_pre_key_deserialize(&preKey,
+												  signal_buffer_data(serializedKeypairData),
+												  size_t(data.size()),
+												  AContext);
+			if (rc) {
+				errMsg = "failed to deserialize keypair";
+				goto cleanup;
+			}
+
+			ec_key_pair * preKeyPair = session_pre_key_get_key_pair(preKey);
+			ec_public_key * preKeyPublic = ec_key_pair_get_public(preKeyPair);
+
+			rc = ec_public_key_serialize(&preKeyPublicSerialized, preKeyPublic);
+			if (rc) {
+				errMsg = "failed to serialize public key";
+				goto cleanup;
+			}
+
+			APreKeys.insert(id,
+							QByteArray(reinterpret_cast<char*>(signal_buffer_data(preKeyPublicSerialized)),
+									   int(signal_buffer_len(preKeyPublicSerialized))));
+			signal_buffer_free(preKeyPublicSerialized);
+		}
+	} else {
+		errMsg = "sql error when retrieving keys";
+		goto cleanup;
+	}
+
+	rc = 0;
+
+cleanup:
+	if (rc) {
+		qCritical("%s: %d", errMsg, rc);
+	}
+
+	signal_buffer_free(serializedKeypairData);
+	SIGNAL_UNREF(preKey);
+
+	return rc;
+}
+
+int preKeyGetMaxId(uint32_t &AMaxId)
+{
+	const QString stmt("SELECT MAX(" PRE_KEY_STORE_ID_NAME ") FROM " PRE_KEY_STORE_TABLE_NAME
+					   " WHERE " PRE_KEY_STORE_ID_NAME " IS NOT ("
+					   "   SELECT MAX(" PRE_KEY_STORE_ID_NAME ") FROM " PRE_KEY_STORE_TABLE_NAME
+					   " )");
+
+	char * err_msg = nullptr;
+	int ret_val = 0;
+	uint32_t id = 0;
+
+	QSqlQuery pstmt_p(stmt, db());
+
+	if (pstmt_p.exec()) {
+		if (pstmt_p.next()) {
+			id = pstmt_p.value(0).toUInt();
+			if (!id) {
+				err_msg = "db not initialized";
+				ret_val = -1;
+			} else {
+				AMaxId = id;
+				ret_val = 0;
+			}
+		} else {
+			err_msg = "No data in database";
+			ret_val = -2;
+		}
+	} else {
+		err_msg = "SQL statement execution failed";
+		ret_val = pstmt_p.lastError().number();
+	}
+
+	if (ret_val)
+		qCritical("%s: %d", err_msg, ret_val);
+
+	return ret_val;
+}
+
+int preKeyGetCount()
+{
+	const QString stmt("SELECT count(" PRE_KEY_STORE_ID_NAME") FROM " PRE_KEY_STORE_TABLE_NAME);
+
+	int ret_val = 0;
+	char * err_msg = nullptr;
+
+	QSqlQuery pstmt_p(stmt, db());
+
+	if (pstmt_p.exec()) {
+		if (pstmt_p.next()) {
+			ret_val = pstmt_p.value(0).toInt();
+		} else {
+			err_msg = "SQL query returned empty result";
+			ret_val = -2;
+		}
+	} else {
+		err_msg = "SQL statement execution failed";
+		ret_val = -1;
+	}
+
+	if (ret_val<0)
+		qCritical("%s: %d", err_msg, ret_val);
+
+	return ret_val;
 }
 
 }

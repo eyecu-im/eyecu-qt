@@ -37,29 +37,33 @@ extern "C" {
 #define TAG_NAME_PREKEYS				"prekeys"
 #define TAG_NAME_PREKEYPUBLIC			"preKeyPublic"
 // Message elements
+#define TAG_NAME_BODY					"body"
 #define TAG_NAME_ENCRYPTED				"encrypted"
 #define TAG_NAME_HEADER					"header"
 #define TAG_NAME_KEY					"key"
 #define TAG_NAME_IV					    "iv"
 #define TAG_NAME_PAYLOAD				"payload"
 
-#define ATTR_NAME_PREKEY_ID			"preKeyId"
-#define ATTR_NAME_SIGNED_PREKEY_ID	"signedPreKeyId"
+#define ATTR_NAME_PREKEY_ID				"preKeyId"
+#define ATTR_NAME_SIGNED_PREKEY_ID		"signedPreKeyId"
 
-#define ATTR_NAME_SID				"sid"
-#define ATTR_NAME_RID				"rid"
-#define ATTR_NAME_PREKEY			"prekey"
+#define ATTR_NAME_SID					"sid"
+#define ATTR_NAME_RID					"rid"
+#define ATTR_NAME_PREKEY				"prekey"
 
-//#define DIR_OMEMO       "omemo"
-#define DBFN_OMEMO      "omemo.db"
+//#define DIR_OMEMO						"omemo"
+#define DBFN_OMEMO						"omemo.db"
 
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
 
+#define SHC_MESSAGE "/message/body"
+#define SHC_MESSAGE_ENCRYPTED "/message/encrypted[@xmlns='" NS_OMEMO "']"
+
 static QByteArray encryptMessageText(const QString &AMessageText, const QByteArray &AKey,
 								 const QByteArray &AIv, QByteArray &AAuthTag)
 {
-	int rc = SG_SUCCESS;
+	gcry_error_t rc = SG_SUCCESS;
 	char * err_msg = nullptr;
 
 	int algo = GCRY_CIPHER_AES128;
@@ -68,48 +72,46 @@ static QByteArray encryptMessageText(const QString &AMessageText, const QByteArr
 	QByteArray outBuf;
 	QByteArray inBuf(AMessageText.toUtf8());
 
-	if(AIv.size() < 8) {
-		err_msg = "invalid AES IV size (must be not less than 8)";
-		rc = SG_ERR_UNKNOWN;
+	if(AIv.size() != 16) {
+		err_msg = "Invalid AES IV size (must be 16)";
+		rc = gcry_error_t(SG_ERR_UNKNOWN);
 		goto cleanup;
 	}
 
-	rc = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
+	rc = gcry_cipher_open(&cipher_hd, algo, mode, 0);
 	if (rc) {
-		err_msg = "failed to init cipher";
+		err_msg = "Failed to init cipher";
 		goto cleanup;
 	}
 
-	rc = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
+	rc = gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size()));
 	if (rc) {
-		err_msg = "failed to set key";
+		err_msg = "Failed to set key";
 		goto cleanup;
 	}
 
 	outBuf.resize(inBuf.size());
-	rc = int(gcry_cipher_encrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-											inBuf.data(), size_t(inBuf.size())));
+	rc = gcry_cipher_encrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
+											inBuf.data(), size_t(inBuf.size()));
 	if (rc) {
-		err_msg = "failed to encrypt";
+		err_msg = "Failed to encrypt";
 		goto cleanup;
 	}
 
 	AAuthTag.resize(8);
-	rc = int(gcry_cipher_gettag (cipher_hd, AAuthTag.data(), size_t(AAuthTag.size())));
+	rc = gcry_cipher_gettag(cipher_hd, AAuthTag.data(), size_t(AAuthTag.size()));
 	if (rc) {
-		err_msg = "failed get authentication tag";
+		err_msg = "Failed get authentication tag";
 	} else {
 		qDebug("Authentication tag: %s", AAuthTag.toHex().data());
 	}
 
 cleanup:
 	if (rc) {
-		if (rc > 0) {
+		if (rc > 0)
 			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
-			rc = SG_ERR_UNKNOWN;
-		} else {
+		else
 			qCritical("%s: %s\n", __func__, err_msg);
-		}
 	}
 
 	gcry_cipher_close(cipher_hd);
@@ -122,7 +124,7 @@ static QString decryptMessageText(const QByteArray &AEncryptedText,
 								  const QByteArray &AIv,
 								  const QByteArray &AAuthTag)
 {
-	int ret_val = SG_SUCCESS;
+	gcry_error_t ret_val = SG_SUCCESS;
 	char * err_msg = nullptr;
 
 	int algo = GCRY_CIPHER_AES128;
@@ -132,33 +134,33 @@ static QString decryptMessageText(const QByteArray &AEncryptedText,
 	QByteArray outBuf;
 
 	if(AIv.size() != 16) {
-	  err_msg = "invalid AES IV size (must be not less than 8)";
-	  ret_val = SG_ERR_UNKNOWN;
+	  err_msg = "Invalid AES IV size (must be 16)";
+	  ret_val = gcry_error_t(SG_ERR_UNKNOWN);
 	  goto cleanup;
 	}
 
-	ret_val = int(gcry_cipher_open(&cipher_hd, algo, mode, 0));
+	ret_val = gcry_cipher_open(&cipher_hd, algo, mode, 0);
 	if (ret_val) {
 	  err_msg = "failed to init cipher";
 	  goto cleanup;
 	}
 
-	ret_val = int(gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size())));
+	ret_val = gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size()));
 	if (ret_val) {
 	  err_msg = "failed to set key";
 	  goto cleanup;
 	}
 
 	outBuf.resize(AEncryptedText.size());
-	ret_val = int(gcry_cipher_decrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-									  AEncryptedText.data(), size_t(AEncryptedText.size())));
+	ret_val = gcry_cipher_decrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
+								  AEncryptedText.data(), size_t(AEncryptedText.size()));
 	if (ret_val) {
 		err_msg = "failed to decrypt";
 		goto cleanup;
 	}
 
-	ret_val = int(gcry_cipher_checktag(cipher_hd, AAuthTag.data(),
-									   size_t(AAuthTag.size())));
+	ret_val = gcry_cipher_checktag(cipher_hd, AAuthTag.data(),
+								   size_t(AAuthTag.size()));
 	if (ret_val) {
 		err_msg = "failed check authentication tag";
 	} else {
@@ -169,7 +171,6 @@ static QString decryptMessageText(const QByteArray &AEncryptedText,
 	if (ret_val) {
 		if (ret_val > 0) {
 			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-			ret_val = SG_ERR_UNKNOWN;
 		} else {
 			qCritical("%s: %s\n", __func__, err_msg);
 		}
@@ -177,7 +178,7 @@ static QString decryptMessageText(const QByteArray &AEncryptedText,
 
 	gcry_cipher_close(cipher_hd);
 
-	return QString::fromUtf8(outBuf);
+	return outBuf.isNull()?QString():QString::fromUtf8(outBuf);
 }
 
 static void getKeyPair(QByteArray &AKey, QByteArray &AIv)
@@ -193,15 +194,14 @@ Omemo::Omemo(): FPepManager(nullptr),
 				FXmppStreamManager(nullptr),
 				FPresenceManager(nullptr),
 				FOptionsManager(nullptr),
-				FMessageProcessor(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
 				FPluginManager(nullptr),
 				FIconStorage(nullptr),
 				FOmemoHandlerIn(0),
 				FOmemoHandlerOut(0),
-				FSHIResult(0),
-				FSHIError(0),
+				FSHIMessageIn(0),
+				FSHIMessageOut(0),
 				FSignalProtocol(nullptr),
 				FCleanup(true) // Temporary flag for own device information cleanup
 {}
@@ -270,11 +270,6 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0);
-	if (plugin)
-		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
-	else return false;
-
 	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0, nullptr);
 	if (plugin)
 		FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
@@ -304,27 +299,24 @@ bool Omemo::initObjects()
 	if (FDiscovery)
 		registerDiscoFeatures();
 
-	if (FMessageProcessor)
-	{
-//		FMessageProcessor->insertMessageWriter(MWO_OMEMO, this);
-		FMessageProcessor->insertMessageEditor(MEO_OMEMO, this);
+	if (FStanzaProcessor)
+	{   // Register Stanza handlers
+		IStanzaHandle requestHandle;
+		requestHandle.handler = this;
+		requestHandle.conditions.append(SHC_MESSAGE);
+		requestHandle.order = SHO_OMEMO_OUT;
+		requestHandle.direction = IStanzaHandle::DirectionOut;
+		FSHIMessageOut = FStanzaProcessor->insertStanzaHandle(requestHandle);
+		requestHandle.conditions.clear();
+		requestHandle.conditions.append(SHC_MESSAGE_ENCRYPTED);
+		requestHandle.order = SHO_OMEMO_IN;
+		requestHandle.direction = IStanzaHandle::DirectionIn;
+		FSHIMessageIn = FStanzaProcessor->insertStanzaHandle(requestHandle);
 	}
+	else
+		return false;
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
-
-	QByteArray key, iv;
-	getKeyPair(key, iv);
-	qDebug() << "key=" << key.toBase64() << "; iv=" << iv.toBase64();
-
-	const QString message("Test message");
-	qDebug() << "message=" << message;
-
-	QByteArray authTag;
-	QByteArray encrypted = encryptMessageText(message, key, iv, authTag);
-	qDebug() << "encrypted=" << encrypted.toBase64();
-
-	QString decrypted = decryptMessageText(encrypted, key, iv, authTag);
-	qDebug() << "decrypted=" << decrypted;
 
 	return true;
 }
@@ -336,7 +328,6 @@ bool Omemo::initSettings()
 
 bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 {
-	qDebug() << "Omemo::processPEPEvent(" << AStreamJid.full() << "," << AStanza.toString() << ")";
 	if (AStanza.type()!="error")
 	{
 		QString bareJid = AStanza.fromJid().bare();
@@ -422,7 +413,6 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 
 void Omemo::registerDiscoFeatures()
 {
-	qDebug() << "Omemo::registerDiscoFeatures()";
 	IDiscoFeature dfeature;
 	dfeature.active = true;
 	dfeature.var = NS_PEP_OMEMO_NOTIFY;
@@ -588,7 +578,6 @@ void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 
 void Omemo::onOmemoActionTriggered()
 {
-	qDebug() << "Omemo::onOmemoActionTriggered()";
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
 	{
@@ -642,7 +631,6 @@ bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 
 bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 {
-	qDebug() << "Omemo::publishOwnKeys(" << AStreamJid.full() << ")";
 	quint32 deviceId = FSignalProtocol->getDeviceId();
 	if (!deviceId)
 		return false;
@@ -687,22 +675,18 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 	bundle.appendChild(identityKey);
 
 	QDomElement prekeys=doc.createElement(TAG_NAME_PREKEYS);
-	for (quint32 i=PRE_KEYS_START; i<PRE_KEYS_START+PRE_KEYS_AMOUNT; ++i)
+	QMap<quint32, QByteArray> preKeys = FSignalProtocol->getPreKeys();
+	for (QMap<quint32, QByteArray>::ConstIterator it=preKeys.constBegin();
+		 it != preKeys.constEnd(); ++it)
 	{
-		QByteArray key = FSignalProtocol->getPreKeyPublic(i);
-		if (key.isNull())
-		{
-			qCritical() << "Pre Key id=" << i << "is NULL!";
-			return false;
-		}
 		QDomElement preKeyPublic=doc.createElement(TAG_NAME_PREKEYPUBLIC);
-		preKeyPublic.setAttribute(ATTR_NAME_PREKEY_ID, QString::number(i));
-		preKeyPublic.appendChild(doc.createTextNode(key.toBase64()));
+		preKeyPublic.setAttribute(ATTR_NAME_PREKEY_ID, QString::number(it.key()));
+		preKeyPublic.appendChild(doc.createTextNode(it->toBase64()));
 		prekeys.appendChild(preKeyPublic);
 	}
+
 	bundle.appendChild(prekeys);
 
-	qDebug() << "Publishing own device bundle...";
 	return FPepManager->publishItem(AStreamJid, QString("%1:%2").arg(NS_PEP_OMEMO_BUNDLES)
 									.arg(deviceId), item);
 }
@@ -728,6 +712,8 @@ bool Omemo::removeOtherKeys(const Jid &AStreamJid)
 		 it != deviceIds.constEnd(); ++it)
 		if (*it != deviceId)
 			FPepManager->deleteItem(AStreamJid, ns.arg(*it), item);
+
+	return true;
 }
 
 QString Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId)
@@ -749,35 +735,33 @@ QString Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJi
 
 void Omemo::bundlesProcessed(const QString &ABareJid)
 {
-	qDebug() << "Omemo::bundlesProcessed(" << ABareJid << ")";
-
-	QList<Message> messages = FPendingMessages.values(ABareJid);
-	for (QList<Message>::Iterator it = messages.begin();
+	QList<Stanza> messages = FPendingMessages.values(ABareJid);
+	for (QList<Stanza>::Iterator it = messages.begin();
 		 it != messages.end(); ++it)
 	{
 		encryptMessage(*it);
-		qDebug() << "Sending:" << it->stanza().toString();
-		FMessageProcessor->sendMessage(it->fromJid(), *it, IMessageProcessor::DirectionOut);
+		FStanzaProcessor->sendStanzaOut(it->fromJid(), *it);
 	}
 	FPendingMessages.remove(ABareJid);
 }
 
-void Omemo::encryptMessage(Message &AMessage)
+void Omemo::encryptMessage(Stanza &AMessageStanza)
 {
 	quint32 deviceId = FSignalProtocol->getDeviceId();
 	if (deviceId)
 	{
-		QString bareJid = AMessage.toJid().bare();
+		QString bareJid = AMessageStanza.toJid().bare();
 		QList<SignalDeviceBundle> bundles = FBundles.values(bareJid);
 		QList<quint32> devices = FDeviceIds.value(bareJid);
 
-		QDomDocument doc = AMessage.stanza().document();
-		QDomElement encrypted = AMessage.stanza().addElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+		QDomDocument doc = AMessageStanza.document();
+		QDomElement encrypted = AMessageStanza.addElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 
 		QByteArray keyData, ivData;
 		getKeyPair(keyData, ivData);
 
-		const QString message = AMessage.body();
+		QDomElement body = AMessageStanza.firstElement(TAG_NAME_BODY);
+		const QString message = body.text();
 
 		QByteArray authTag;
 		QByteArray data = encryptMessageText(message, keyData, ivData, authTag);
@@ -801,12 +785,12 @@ void Omemo::encryptMessage(Message &AMessage)
 
 			if (!ok)
 			{
-				qDebug() << "isSessionExistsAndInitiated()) returned NoSession!";
 //FIXME: Store bundles associated with device IDs to improve performance of this search
 				for(QList<SignalDeviceBundle>::ConstIterator itb=bundles.constBegin();
 					itb != bundles.constEnd(); ++itb)
 					if (itb->FDeviceId == *it)
 					{
+						qDebug() << "found bundle for the device!";
 						QList<quint32> keyIds = itb->FPreKeys.keys();
 						int keyCount = keyIds.size();
 						int keyIndex = qrand()*keyCount/RAND_MAX;
@@ -832,6 +816,7 @@ void Omemo::encryptMessage(Message &AMessage)
 
 			if (ok)
 			{
+				qDebug() << "ok";
 				SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(bareJid, *it);
 
 				if (cipher.isNull())
@@ -856,7 +841,8 @@ void Omemo::encryptMessage(Message &AMessage)
 		iv.appendChild(doc.createTextNode(ivData.toBase64()));
 		header.appendChild(iv);
 		encrypted.appendChild(header);
-		AMessage.setBody(QString::null);
+		AMessageStanza.element().removeChild(body);
+		AMessageStanza.addElement("store", NS_HINTS);
 	}
 }
 
@@ -909,12 +895,10 @@ void Omemo::onPepTimeout()
 		if (*it == timer) {
 			IXmppStream *stream = it.key();
 			it = FPepDelay.erase(it);
-			qDebug() << "stream JID:" << stream->streamJid().full();
 			QList<quint32> ids;
 			quint32 id = FSignalProtocol->getDeviceId();
 			if (id)
 			{
-				qDebug() << "Publishing device ID:" << id;
 				ids.append(id);
 				FDeviceIds.insert(stream->streamJid().bare(), ids);
 				publishOwnDeviceIds(stream->streamJid());				
@@ -925,97 +909,21 @@ void Omemo::onPepTimeout()
 	timer->deleteLater();
 }
 
-//bool Omemo::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)
-//{
-//	Q_UNUSED(ALang)
-//	Q_UNUSED(AOrder)
-
-//	return !AMessage.stanza().firstElement("x",NS_JABBER_OOB_X).isNull();
-//}
-
-//bool Omemo::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
-//{
-//	Q_UNUSED(ALang)
-//	Q_UNUSED(AOrder)
-
-//	bool noRuler=true;
-//	QTextCursor cursor(ADocument);
-//	QString         icon;
-//	QTextCharFormat origFormat;
-//	QTextCharFormat linkFormat;
-
-//	QUrl bodyUrl(QUrl::fromUserInput(ADocument->toPlainText()));
-
-//	for(QDomElement e=AMessage.stanza().firstElement("x",NS_JABBER_OOB_X); !e.isNull(); e=e.nextSiblingElement("x"))
-//		if(!e.firstChildElement("url").text().isEmpty())
-//		{
-//			QUrl url = QUrl::fromEncoded(e.firstChildElement("url").text().toLatin1());
-//			if (url.isValid() && url != bodyUrl)
-//			{
-//				if (noRuler)    // No ruler inserted so far
-//				{
-//					QTextBlockFormat origBlockFormat = cursor.blockFormat();    // Original block format
-//					icon = QString("<img src=\"%1\" title=\"%2\" alt=\"%2\" /> ")
-//								   .arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_LINK)).toString())
-//								   .arg(tr("Link"));
-
-//					cursor.movePosition(QTextCursor::End);
-//					origFormat = cursor.charFormat();
-//					linkFormat = origFormat;
-//					linkFormat.setAnchor(true);
-
-//					cursor.insertHtml("<hr>");
-//					cursor.insertBlock();
-//					cursor.setBlockFormat(origBlockFormat);                     // Restore original format
-//					noRuler=false;  // Flag ruler inserted
-//				}
-//				else
-//				{
-//					cursor.setCharFormat(origFormat);
-//					cursor.insertHtml("<br>");
-//				}
-
-//				cursor.insertHtml(icon);
-//				linkFormat.setAnchorHref(url.toEncoded());
-//				linkFormat.setToolTip(url.toString());
-//				cursor.setCharFormat(linkFormat);
-
-//				QString desc = !e.firstChildElement("desc").text().isEmpty()?e.firstChildElement("desc").text():"";
-//				cursor.insertText(desc.isEmpty()?url.toString():desc);
-//			}
-//		}
-//	return !noRuler;
-//}
-
-//bool Omemo::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang)
-//{
-//	Q_UNUSED(AOrder) Q_UNUSED(AMessage) Q_UNUSED(ADocument) Q_UNUSED(ALang)
-//	return false;
-//}
-
-bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection)
+bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-	Q_UNUSED(AOrder)
+	qDebug() << "Omemo::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full()
+			 << "," << AStanza.toString() << "," << AAccept << ")";
 
-	qDebug() << "Omemo::messageReadWrite(" << AOrder << "," << AStreamJid.full()
-			 << "," << AMessage.stanza().toString() << "," << ADirection << ")";
-
-	if (ADirection==IMessageProcessor::DirectionOut)
+	if (AHandleId==FSHIMessageOut)
 	{
-		qDebug() << "Outgoing message!";
-		if ((AMessage.type()==Message::Chat || AMessage.type()==Message::Normal) &&
-			!AMessage.body().isNull() && AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO).isNull())
+		if (AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO).isNull())
 		{
-			qDebug() << "No <encrypted/> element found! Will process...";
-			QString bareJid = AMessage.toJid().bare();
+			QString bareJid = AStanza.toJid().bare();
 			if (isActiveSession(AStreamJid, bareJid))
 			{
-				qDebug() << "Have active session!";
-				if (isSupported(AStreamJid, AMessage.toJid()))
+				if (isSupported(AStreamJid, AStanza.toJid()))
 				{
-					qDebug() << "The contact supports OMEMO!";
 					QList<quint32> deviceIds = FDeviceIds[bareJid];
-					qDebug() << "Device IDs of the contact:" << deviceIds;
 					quint32 deviceId = FSignalProtocol->getDeviceId();
 					if (deviceId)
 					{
@@ -1030,7 +938,6 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 						 it != deviceIds.constEnd(); ++it)
 					{
 						int sessionState = FSignalProtocol->isSessionExistsAndInitiated(bareJid, *it);
-						qDebug() << "device ID:" << *it << "; sessionState=" << sessionState;
 						if (sessionState == SignalProtocol::NoSession)
 						{
 							needBundles = true;
@@ -1045,27 +952,22 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 							}
 						}
 					}
-					qDebug() << "needBundles =" << needBundles;
 					if (needBundles)
 					{
-						qDebug() << "Need bundle data! Delaying send...";
-						FPendingMessages.insert(AMessage.toJid().bare(), AMessage);
+						FPendingMessages.insert(AStanza.toJid().bare(), AStanza);
 						return true;
 					}
 					else
-						encryptMessage(AMessage); // Just encrypt message, allowing to send it
+						encryptMessage(AStanza); // Just encrypt message, allowing to send it
 				}
 			}
-			else
-				qDebug() << "No active session!";
 		}
 	}
 	else
 	{
-		if ((AMessage.type()==Message::Chat || AMessage.type()==Message::Normal) &&
-			AMessage.body().isNull())
+		if (AStanza.firstElement(TAG_NAME_BODY).isNull())
 		{
-			QDomElement encrypted = AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+			QDomElement encrypted = AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 			if (!encrypted.isNull())
 			{
 				QDomElement payload = encrypted.firstChildElement(TAG_NAME_PAYLOAD);
@@ -1096,30 +998,30 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 											{
 												if (rid==deviceId)
 												{
-													qDebug() << "key for registration ID found:" << rid;
 													QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
-													SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(AMessage.fromJid().bare(), sid);
+													SignalProtocol::Cipher cipher = FSignalProtocol->sessionCipherCreate(AStanza.fromJid().bare(), sid);
 													QByteArray keyTuple;
 													if (key.attribute(ATTR_NAME_PREKEY)=="true")
 													{
 														SignalProtocol::PreKeySignalMessage message = FSignalProtocol->getPreKeySignalMessage(decoded);
-														keyTuple = cipher.decrypt(message);
+														bool preKeyUpdated;
+														keyTuple = cipher.decrypt(message, preKeyUpdated);
+														if (preKeyUpdated)
+															publishOwnKeys(AStreamJid);
 													}
 													else
 													{
 														SignalProtocol::SignalMessage message = FSignalProtocol->getSignalMessage(decoded);
 														keyTuple = cipher.decrypt(message);
 													}
-													qDebug() << "keyTuple (received)=" << keyTuple.toHex();
 													QByteArray keyData = keyTuple.left(16);
 													QByteArray authTag = keyTuple.mid(16);
 													QByteArray encryptedText = QByteArray::fromBase64(payload.text().toLatin1());
 													QString decryptedText = decryptMessageText(encryptedText, keyData, ivData, authTag);
-													qDebug() << "decryptedText=" << decryptedText;
 
-													AMessage.stanza().element().removeChild(encrypted);
-													AMessage.setBody(decryptedText);
-
+													AStanza.element().removeChild(encrypted);
+													QDomText text = AStanza.document().createTextNode(decryptedText);
+													AStanza.addElement(TAG_NAME_BODY).appendChild(text);
 													break;
 												}
 											}
@@ -1172,7 +1074,6 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 				deviceBundle.FDeviceId = node.mid(start.size()).toUInt(&ok);
 				if (ok)
 				{
-					qDebug() << "deviceId=" << deviceBundle.FDeviceId;
 					if (FDeviceIds.value(bareJid).contains(deviceBundle.FDeviceId))
 					{
 						if (deviceId != deviceBundle.FDeviceId)
@@ -1189,17 +1090,11 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 						{
 							deviceBundle.FSignedPreKeyPublic = QByteArray::fromBase64(signedPreKeyPublic.text()
 																						.toLatin1());
-							qDebug() << "signedPreKeyPublic: id=" << deviceBundle.FSignedPreKeyId
-									 << "; value=" << deviceBundle.FSignedPreKeyPublic.toBase64();
-
 							QDomElement signedPreKeySignature = bundle.firstChildElement(TAG_NAME_SIGNEDPREKEYSIGNATURE);
 							deviceBundle.FSignedPreKeySignature = QByteArray::fromBase64(signedPreKeySignature.text()
 																							.toLatin1());
-							qDebug() << "signedPreKeySignature:" << deviceBundle.FSignedPreKeySignature.toBase64();
-
 							QDomElement identityKey = bundle.firstChildElement(TAG_NAME_IDENTITYKEY);
 							deviceBundle.FIdentityKey = QByteArray::fromBase64(identityKey.text().toLatin1());
-							qDebug() << "identityKey:" << deviceBundle.FIdentityKey.toBase64();
 
 							QDomElement prekeys = bundle.firstChildElement(TAG_NAME_PREKEYS);
 							for (QDomElement preKeyPublic = prekeys.firstChildElement(TAG_NAME_PREKEYPUBLIC);
@@ -1208,12 +1103,9 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 							{
 								quint32 id = preKeyPublic.attribute(ATTR_NAME_PREKEY_ID).toUInt(&ok);
 								if (ok)
-								{
-									QByteArray preKey = QByteArray::fromBase64(preKeyPublic.text().toLatin1());
-									qDebug() << "id:" << id
-											 << "; value:" << preKey.toBase64();
-									deviceBundle.FPreKeys.insert(id, preKey);
-								}
+									deviceBundle.FPreKeys.insert(id,
+																 QByteArray::fromBase64(
+																	 preKeyPublic.text().toLatin1()));
 								else
 									qCritical("Invalid pre key ID!");
 							}

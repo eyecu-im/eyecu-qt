@@ -1,6 +1,7 @@
 #ifndef SIGNALPROTOCOL_H
 #define SIGNALPROTOCOL_H
 
+#include <QMap>
 #include <QSharedData>
 #include <QSharedDataPointer>
 #include <signal_protocol.h>
@@ -54,6 +55,9 @@ public:
 		bool operator == (const PreKeySignalMessage &AOther) const;
 		bool operator != (const PreKeySignalMessage &AOther) const;
 
+		bool hasPreKeyId() const;
+		quint32 preKeyId() const;
+
 	protected:
 		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted);
 		operator pre_key_signal_message *() const;
@@ -72,7 +76,7 @@ public:
 
 		QByteArray encrypt(const QByteArray &AUnencrypted);
 		QByteArray decrypt(const SignalMessage &AMessage);
-		QByteArray decrypt(const PreKeySignalMessage &AMessage);
+		QByteArray decrypt(const PreKeySignalMessage &AMessage, bool &APreKeysUpdated);
 
 		Cipher operator = (const Cipher &AOther);
 		bool operator == (const Cipher &AOther) const;
@@ -83,8 +87,10 @@ public:
 			  const QString &ABareJid, int ADeviceId);
 	private:
 		session_cipher *FCipher;
+		signal_context *FGlobalContext;
+		signal_protocol_store_context *FStoreContext;
 		QByteArray FBareJid;
-		signal_protocol_address FAddress;
+		signal_protocol_address FAddress;		
 	};
 
 	class SessionBuilderData: public QSharedData
@@ -143,6 +149,8 @@ public:
 
 	QByteArray getPreKeyPublic(quint32 AKeyId) const;
 	QByteArray getPreKeyPrivate(quint32 AKeyId) const;
+
+	QMap<quint32, QByteArray> getPreKeys() const;
 
 	session_pre_key_bundle *createPreKeyBundle(uint32_t ARegistrationId,
 											   int ADeviceId, uint32_t APreKeyId,

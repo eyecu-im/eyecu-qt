@@ -238,7 +238,6 @@ quint32 SignalProtocol::getDeviceId()
 
 int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId)
 {
-	qDebug() << "SignalProtocol::isSessionExistsAndInitiated(" << ABareJid << "," << ADeviceId << ")";
 	QByteArray bareJid = ABareJid.toUtf8();
 	signal_protocol_address address = {bareJid.data(),
 									   size_t(bareJid.size()),
@@ -250,9 +249,6 @@ int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 
 	session_record * sessionRecord = nullptr;
 	session_state * sessionState = nullptr;
 
-	//TODO: if there was no response yet, even though it is an established session
-	//		it keeps sending prekeymsgs
-	//		maybe that is "uninitiated" too?
 	if(!signal_protocol_session_contains_session(FStoreContext, &address))
 		return NoSession;
 
@@ -274,7 +270,7 @@ int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 
 		}
 		else
 		{
-			err_msg = "Has no unacknowledged PreKey message";
+			err_msg = "Have no unacknowledged PreKey message";
 			ret_val = SessionAcknowledged;
 		}
 	}
@@ -498,6 +494,13 @@ QByteArray SignalProtocol::getPreKeyPrivate(quint32 AKeyId) const
 		qCritical("signal_protocol_pre_key_load_key() failed! rc=%d", rc);
 
 	return retVal;
+}
+
+QMap<quint32, QByteArray> SignalProtocol::getPreKeys() const
+{
+	QMap<quint32, QByteArray> preKeys;
+	preKeyGetList(PRE_KEYS_AMOUNT, preKeys, FGlobalContext);
+	return preKeys;
 }
 
 session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistrationId,
@@ -1322,6 +1325,8 @@ SignalProtocol::Cipher::Cipher(signal_context *AGlobalContext,
 							   signal_protocol_store_context *AStoreContext,
 							   const QString &ABareJid, int ADeviceId):
 	FCipher(nullptr),
+	FGlobalContext(AGlobalContext),
+	FStoreContext(AStoreContext),
 	FBareJid(ABareJid.toUtf8()),
 	FAddress({FBareJid.data(), size_t(FBareJid.size()), ADeviceId})
 {
@@ -1396,7 +1401,7 @@ QByteArray SignalProtocol::Cipher::decrypt(const SignalMessage &AMessage)
 	return result;
 }
 
-QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage)
+QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage, bool &APreKeysUpdated)
 {
 	QByteArray result;
 
@@ -1406,14 +1411,62 @@ QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage)
 	{
 		signal_buffer *plaintext(nullptr);
 
+		char * errorMsg(nullptr);
+		int cnt(0);
 		int rc = session_cipher_decrypt_pre_key_signal_message(FCipher, AMessage,
 															   nullptr, &plaintext);
-		if (rc == SG_SUCCESS)
-			result = SignalProtocol::signalBufferToByteArray(plaintext);
-		else
-			qCritical("session_cipher_decrypt_signal_message() failed! rc=%d", rc);
+		if (rc != SG_SUCCESS) {
+			errorMsg = "PreKey Signal Message decryption failed";
+			goto cleanup;
+		}
 
-		signal_buffer_bzero_free(plaintext);
+		cnt = preKeyGetCount();
+		qDebug() << "cnt=" << cnt;
+		if (cnt >= 0) {
+			quint32 preKeyId = AMessage.preKeyId();
+			quint32 id(0);
+			rc = preKeyGetMaxId(id);
+			if (rc) {
+				errorMsg = "Failed to retrieve max pre key id";
+				goto cleanup;
+			}
+
+			qDebug() << "preKeyId=" << preKeyId;
+			for (int i = cnt; i<100; ++i) {
+				for (++id;
+					 id == preKeyId ||
+					 signal_protocol_pre_key_contains_key(FStoreContext, id);
+					 ++id);
+
+				signal_protocol_key_helper_pre_key_list_node * keyList = nullptr;
+				rc = signal_protocol_key_helper_generate_pre_keys(&keyList, id, 1,
+																  FGlobalContext);
+				if (rc) {
+					errorMsg = "failed to generate a new key";
+					goto cleanup;
+				}
+
+				qDebug("New Pre Key generated! ID=%d", id);
+
+				rc = signal_protocol_pre_key_store_key(FStoreContext,
+													   signal_protocol_key_helper_key_list_element(keyList));
+				signal_protocol_key_helper_key_list_free(keyList);
+				if (rc) {
+					errorMsg = "Failed to store new key";
+					goto cleanup;
+				}
+
+				APreKeysUpdated = true;
+			}
+		}
+
+		result = SignalProtocol::signalBufferToByteArray(plaintext);
+
+cleanup:
+		if (rc != SG_SUCCESS)
+			qCritical("%s: %d", errorMsg, rc);
+
+		signal_buffer_bzero_free(plaintext);		
 	}
 
 	return result;
@@ -1526,18 +1579,38 @@ bool SignalProtocol::PreKeySignalMessage::operator !=(const SignalProtocol::PreK
 	return !operator==(AOther);
 }
 
+bool SignalProtocol::PreKeySignalMessage::hasPreKeyId() const
+{
+	return pre_key_signal_message_has_pre_key_id(FMessage);
+}
+
+quint32 SignalProtocol::PreKeySignalMessage::preKeyId() const
+{
+	return pre_key_signal_message_get_pre_key_id(FMessage);
+}
+
 SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
 {
+	char *errorMsg;
 	int rc = pre_key_signal_message_deserialize(&FMessage,
 												reinterpret_cast<const quint8*>(
 													AEncrypted.data()),
 												size_t(AEncrypted.size()),
 												AGlobalContext);
-	if (rc != SG_SUCCESS)
-	{
-		qCritical("pre_key_signal_message_deserialize() failed! rc=%d", rc);
-		FMessage = nullptr;
+	if (rc == SG_SUCCESS)
+		return;
+
+	FMessage = nullptr;
+
+	if (rc == SG_ERR_INVALID_PROTO_BUF) {
+		errorMsg = "Not a pre key msg";
+	} else if (rc == SG_ERR_INVALID_KEY_ID) {
+		errorMsg = "Invalid Key ID";
+	} else if (rc != SG_SUCCESS) {
+		errorMsg = "Failed to deserialize pre key message";
 	}
+
+	qCritical("PreKeySignalMessage constructor failed: %s: %d", errorMsg, rc);
 }
 
 SignalProtocol::PreKeySignalMessage::operator pre_key_signal_message *() const

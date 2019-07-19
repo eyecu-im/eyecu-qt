@@ -2,7 +2,9 @@
 #define OMEMOSTORE_H
 
 #include <QSqlDatabase>
+#include <QMap>
 
+struct signal_context;
 struct signal_buffer;
 struct signal_protocol_address;
 struct signal_int_list;
@@ -77,17 +79,43 @@ namespace OmemoStore
 	/**
 	 * Saves the axolotl registration ID which was obtained by a call to axolotl_key_helper_generate_registration_id().
 	 *
-	 * @param reg_id The ID.
+	 * @param ARegistrationId The ID.
 	 * @return 0 on success, negative on error
 	 */
-	int identitySetLocalRegistrationId(const uint32_t reg_id);
+	int identitySetLocalRegistrationId(const uint32_t ARegistrationId);
 
 	/**
 	 * Stores a whole list of pre keys at once, inside a single transaction.
 	 *
-	 * @param pre_keys_head Pointer to the first element of the list.
+	 * @param APreKeysHead Pointer to the first element of the list.
 	 */
-	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * pre_keys_head);
+	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * APreKeysHead);
+
+	/**
+	 * Gets the specified number of pre keys for publishing, i.e. only their public part.
+	 *
+	 * @param AAmount Number of keys to retrieve.
+	 * @param APreKeys A map to be filled will deserialized public pre keys, associated with their IDs.
+	 * @param AContext pointer to SignalProtocol global context.
+	 * @return 0 on success, negative on error.
+	 */
+	int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, signal_context *AContext);
+
+	/**
+	 * Retrieves the highest existing pre key ID that is not the last resort key's ID.
+	 *
+	 * @param max_id_p Will be set to the highest ID that is not MAX_INT.
+	 * @return 0 on success, negative on error.
+	 */
+	int preKeyGetMaxId(uint32_t &AMaxId);
+
+	/**
+	 * Returns the count of pre keys saved in the database.
+	 * This includes the "last resort" key that is additionally generated at db init.
+	 *
+	 * @return pre key count, negative on error.
+	 */
+	int preKeyGetCount();
 
 	// Session store methods
 

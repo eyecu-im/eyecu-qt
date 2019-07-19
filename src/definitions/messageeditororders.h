@@ -12,6 +12,5 @@
 #define MEO_XHTML                               450
 #define MEO_MOOD                                650
 #define MEO_ATTENTION                           700
-#define MEO_OMEMO                               410
 // *** >>> eyeCU >>> ***
 #endif // DEF_MESSAGEEDITORORDERS_H
