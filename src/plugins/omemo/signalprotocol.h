@@ -14,6 +14,15 @@ struct session_builder;
 #define PRE_KEYS_START		1
 #define PRE_KEYS_AMOUNT		100
 
+#define ADDR_NAME(X) QString::fromLatin1(QByteArray(X->name, \
+										 int(X->name_len)))
+#define DATA_SIZE(A) reinterpret_cast<const quint8*>(A.data()), size_t(A.size())
+
+#define BADS(D,S) reinterpret_cast<const char*>(D), int(S)
+#define BYTE_ARRAY(D,S) QByteArray(BADS(D,S))
+#define SBUF2BARR(SB) BYTE_ARRAY(signal_buffer_data(SB), \
+								 signal_buffer_len(SB))
+
 class SignalProtocol
 {
 public:
@@ -124,7 +133,7 @@ public:
 		QSharedDataPointer<SessionBuilderData> d;
 	};
 
-	static SignalProtocol *instance(const QString &AFileName);
+	static SignalProtocol *instance(const QString &AFileName, const QString &AConnectionName);
 
 	static void init();
 
@@ -310,7 +319,7 @@ protected:
 	void recursiveMutexUnlock();
 
 private:
-	SignalProtocol(const QString &AFileName);
+	SignalProtocol(const QString &AFileName, const QString &AConnectionName);
 	~SignalProtocol();
 
 	// signal-protocol
@@ -318,6 +327,7 @@ private:
 	signal_protocol_store_context * FStoreContext;
 
 	QString FFileName;
+	QString FConnectionName;
 
 	// Mutex
 	QMutex	*FMutex;

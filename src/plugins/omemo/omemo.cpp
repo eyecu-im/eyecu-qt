@@ -51,7 +51,7 @@ extern "C" {
 #define ATTR_NAME_RID					"rid"
 #define ATTR_NAME_PREKEY				"prekey"
 
-//#define DIR_OMEMO						"omemo"
+#define DIR_OMEMO						"omemo"
 #define DBFN_OMEMO						"omemo.db"
 
 #define ADR_CONTACT_JID Action::DR_Parametr2
@@ -848,8 +848,11 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 
 void Omemo::onProfileOpened(const QString &AProfile)
 {
-	FOmemoDir.setPath(FOptionsManager->profilePath(AProfile));
-	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO));
+	FOmemoDir.setPath(FOptionsManager->profilePath(AProfile));	
+	FOmemoDir.cd(DIR_OMEMO);
+
+//FIXME: Create different SignalProtocol object for each account in the profile
+	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO), "OMEMO");
 
 	if (FSignalProtocol->install() != SG_SUCCESS) {
 		qCritical() << "SignalProtocol::install() failed!";

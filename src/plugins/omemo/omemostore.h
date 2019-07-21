@@ -17,7 +17,7 @@ namespace OmemoStore
 	#define AXC_DB_NEEDS_ROLLBACK    0
 	#define AXC_DB_INITIALIZED       1
 
-	void init(const QString &ADatabaseFileName);
+	void addDatabase(const QString &ADatabaseFileName, const QString &ADatabaseName);
 	void uninit();
 
 	/**

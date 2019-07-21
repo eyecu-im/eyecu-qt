@@ -18,9 +18,9 @@ using namespace OmemoStore;
 
 SignalProtocol* SignalProtocol::FInstance(nullptr);
 
-SignalProtocol* SignalProtocol::instance(const QString &AFileName)
+SignalProtocol* SignalProtocol::instance(const QString &AFileName, const QString &AConnectionName)
 {
-	return FInstance?FInstance:FInstance=new SignalProtocol(AFileName);
+	return FInstance?FInstance:FInstance=new SignalProtocol(AFileName, AConnectionName);
 }
 
 void SignalProtocol::init()
@@ -297,7 +297,7 @@ QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
 	{
 		const uint8_t *data = signal_buffer_const_data(ABuffer);
 		if (data)
-			return QByteArray(reinterpret_cast<const char *>(data), int(len));
+			return BYTE_ARRAY(data, len);
 		else
 			qCritical("signal_buffer_const_data() returned NULL!");
 	}
@@ -412,7 +412,7 @@ QByteArray SignalProtocol::getSignedPreKeySignature(quint32 AKeyId) const
 			const quint8 *signature = session_signed_pre_key_get_signature(preKey);
 			if (signature)
 			{
-				retVal = QByteArray(reinterpret_cast<const char *>(signature), int(sigLen));
+				retVal = BYTE_ARRAY(signature, sigLen);
 			}
 			else
 				qCritical("session_signed_pre_key_get_signature() returned NULL!");
@@ -517,31 +517,19 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 				  *signedPreKeyPublic(nullptr),
 				  *identityKey(nullptr);
 
-	int rc = curve_decode_point(&preKeyPublic,
-								reinterpret_cast<const quint8*>(
-								APreKeyPublic.data()),
-								size_t(APreKeyPublic.size()),
-								FGlobalContext);
+	int rc = curve_decode_point(&preKeyPublic, DATA_SIZE(APreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
 		err_msg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
 
-	rc = curve_decode_point(&signedPreKeyPublic,
-							reinterpret_cast<const quint8*>(
-							ASignedPreKeyPublic.data()),
-							size_t(ASignedPreKeyPublic.size()),
-							FGlobalContext);
+	rc = curve_decode_point(&signedPreKeyPublic, DATA_SIZE(ASignedPreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
 		err_msg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
 
-	rc = curve_decode_point(&identityKey,
-							reinterpret_cast<const quint8*>(
-							AIdentityKey.data()),
-							size_t(AIdentityKey.size()),
-							FGlobalContext);
+	rc = curve_decode_point(&identityKey, DATA_SIZE(AIdentityKey), FGlobalContext);
 	if (rc != SG_SUCCESS) {
 		err_msg = "curve_decode_point() failed!";
 		goto cleanup;
@@ -551,9 +539,7 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 									   APreKeyId, preKeyPublic,
 									   ASignedPreKeyId,
 									   signedPreKeyPublic,
-									   reinterpret_cast<const quint8*>(
-										   ASignedPreKeySignature.data()),
-									   size_t(ASignedPreKeySignature.size()),
+									   DATA_SIZE(ASignedPreKeySignature),
 									   identityKey);
 	if (rc != SG_SUCCESS) {
 		err_msg = "session_pre_key_bundle_create() failed!";
@@ -648,7 +634,6 @@ int SignalProtocol::randomFunc(uint8_t *AData, size_t ALen, void *AUserData)
 {
 	Q_UNUSED(AUserData);
 
-//	SignalProtocol * axc_ctx_p = reinterpret_cast<SignalProtocol*>(AUserData);
 	gcry_randomize(AData, ALen, GCRY_STRONG_RANDOM);
 
 	return SG_SUCCESS;
@@ -658,7 +643,6 @@ int SignalProtocol::hmacSha256InitFunc(void **AHmacContext, const uint8_t *AKey,
 {
 	Q_UNUSED(AUserData);
 
-//	SignalProtocol * axc_ctx_p = reinterpret_cast<SignalProtocol *>(AUserData);
 	int ret_val = 0;
 	char * err_msg = nullptr;
 
@@ -719,7 +703,6 @@ int SignalProtocol::hmacSha256FinalFunc(void *AHmacContext, signal_buffer **AOut
 {
 	Q_UNUSED(AUserData);
 
-//	SignalProtocol * axc_ctx_p = reinterpret_cast<SignalProtocol *>(AUserData);
 	int ret_val = 0;
 	char * err_msg = nullptr;
 
@@ -1115,10 +1098,11 @@ void SignalProtocol::recursiveMutexUnlock()
 	FMutex->unlock();
 }
 
-SignalProtocol::SignalProtocol(const QString &AFileName):
+SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
 	FFileName(AFileName),
+	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),
 	FError(0)
 {
@@ -1238,9 +1222,8 @@ cleanup:
 	if (FError < 0) {
 		qCritical("%s: %s", __func__, err_msg);
 	} else {
-		OmemoStore::init(FFileName);
+		OmemoStore::addDatabase(FFileName, FConnectionName);
 		qInfo("%s: done initializing SignalProtocol", __func__);
-//		SessionBuilder::init(FGlobalContext, FStoreContext);
 	}
 }
 
@@ -1361,9 +1344,7 @@ QByteArray SignalProtocol::Cipher::encrypt(const QByteArray &AUnencrypted)
 	QByteArray result;
 	ciphertext_message *message;
 	int rc = session_cipher_encrypt(FCipher,
-									reinterpret_cast<const quint8*>(
-										AUnencrypted.data()),
-									size_t(AUnencrypted.size()),
+									DATA_SIZE(AUnencrypted),
 									&message);
 	if (rc == SG_SUCCESS)
 	{
@@ -1532,9 +1513,7 @@ SignalProtocol::SignalMessage::operator signal_message *() const
 SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
 {
 	int rc = signal_message_deserialize(&FMessage,
-										reinterpret_cast<const quint8*>(
-											AEncrypted.data()),
-										size_t(AEncrypted.size()),
+										DATA_SIZE(AEncrypted),
 										AGlobalContext);
 	if (rc != SG_SUCCESS)
 	{
@@ -1593,9 +1572,7 @@ SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobal
 {
 	char *errorMsg;
 	int rc = pre_key_signal_message_deserialize(&FMessage,
-												reinterpret_cast<const quint8*>(
-													AEncrypted.data()),
-												size_t(AEncrypted.size()),
+												DATA_SIZE(AEncrypted),
 												AGlobalContext);
 	if (rc == SG_SUCCESS)
 		return;
