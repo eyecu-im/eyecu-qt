@@ -16,13 +16,6 @@ extern "C" {
 
 using namespace OmemoStore;
 
-//SignalProtocol* SignalProtocol::FInstance(nullptr);
-
-//SignalProtocol* SignalProtocol::instance(const QString &AFileName, const QString &AConnectionName)
-//{
-//	return FInstance?FInstance:FInstance=new SignalProtocol(AFileName, AConnectionName);
-//}
-
 void SignalProtocol::init()
 {
 	gcry_check_version(nullptr);
@@ -55,45 +48,44 @@ int SignalProtocol::error() const
 
 int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint APreKeyAmount)
 {
-	char * err_msg = nullptr;
-	int ret_val = 0;
-	bool db_needs_init = false;
-	bool db_needs_reset = false;
+	char * errMsg = nullptr;
+	bool dbNeedsInit = false;
+	bool dbNeedsReset = false;
 
-	ratchet_identity_key_pair * identity_key_pair_p = nullptr;
-	signal_protocol_key_helper_pre_key_list_node * pre_keys_head_p = nullptr;
-	session_signed_pre_key * signed_pre_key_p = nullptr;
-	signal_buffer * signed_pre_key_data_p = nullptr;
-	uint32_t registration_id;
-	int init_status = AXC_DB_NOT_INITIALIZED;
+	ratchet_identity_key_pair * identityKeyPair = nullptr;
+	signal_protocol_key_helper_pre_key_list_node * preKeysHead = nullptr;
+	session_signed_pre_key * signedPreKey = nullptr;
+	signal_buffer * signedPreKeyData = nullptr;
+	uint32_t registrationId;
+	int initStatus = AXC_DB_NOT_INITIALIZED;
 
 	qInfo("%s: calling install-time functions", __func__);
 
-	ret_val = create(this);
-	if (ret_val){
-		err_msg = "failed to create db";
+	int rc = create(this);
+	if (rc){
+		errMsg = "failed to create db";
 		goto cleanup;
 	}
 
 	qDebug("%s: created db if it did not exist already", __func__);
 
-	ret_val = initStatusGet(&init_status, this);
-	switch (ret_val) {
+	rc = initStatusGet(initStatus, this);
+	switch (rc) {
 		case -1:
 		default:
-			err_msg = "failed to read init status";
+			errMsg = "failed to read init status";
 			goto cleanup;
 		case 0:
 			// there is a value
-			switch (init_status) {
+			switch (initStatus) {
 				case AXC_DB_NOT_INITIALIZED:
 					// init needed
-					db_needs_init = true;
+					dbNeedsInit = true;
 					break;
 				case AXC_DB_NEEDS_ROLLBACK:
 					// reset and init needed
-					db_needs_reset = true;
-					db_needs_init = true;
+					dbNeedsReset = true;
+					dbNeedsInit = true;
 					break;
 				case AXC_DB_INITIALIZED:
 				default:
@@ -103,111 +95,111 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			break;
 		case 1:
 			// no value = not initialised -> init needed
-			db_needs_init = true;
+			dbNeedsInit = true;
 			break;
 	}
 
-	if (db_needs_reset) {
+	if (dbNeedsReset) {
 		qDebug("%s: db needs reset", __func__ );
-		ret_val = destroy(this);
-		if (ret_val) {
-			err_msg = "failed to reset db";
+		rc = destroy(this);
+		if (rc) {
+			errMsg = "failed to reset db";
 			goto cleanup;
 		}
 
-		ret_val = create(this);
-		if (ret_val) {
-			err_msg = "failed to create db after reset";
+		rc = create(this);
+		if (rc) {
+			errMsg = "failed to create db after reset";
 			goto cleanup;
 		}
 	} else {
 		qDebug("%s: db does not need reset", __func__ );
 	}
 
-	if (db_needs_init) {
+	if (dbNeedsInit) {
 		qDebug("%s: db needs init", __func__ );
 		qDebug("%s: setting init status to AXC_DB_NEEDS_ROLLBACK (%i)", __func__, AXC_DB_NEEDS_ROLLBACK );
 
-		ret_val = initStatusSet(AXC_DB_NEEDS_ROLLBACK, this);
-		if (ret_val) {
-			err_msg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
+		rc = initStatusSet(AXC_DB_NEEDS_ROLLBACK, this);
+		if (rc) {
+			errMsg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
 			goto cleanup;
 		}
 
-		ret_val = signal_protocol_key_helper_generate_identity_key_pair(&identity_key_pair_p, FGlobalContext);
-		if (ret_val) {
-			err_msg = "failed to generate the identity key pair";
+		rc = signal_protocol_key_helper_generate_identity_key_pair(&identityKeyPair, FGlobalContext);
+		if (rc) {
+			errMsg = "failed to generate the identity key pair";
 			goto cleanup;
 		}
 		qDebug("%s: generated identity key pair", __func__ );
 
-		ret_val = signal_protocol_key_helper_generate_registration_id(&registration_id, 1, FGlobalContext);
-		if (ret_val) {
-			err_msg = "failed to generate registration id";
+		rc = signal_protocol_key_helper_generate_registration_id(&registrationId, 1, FGlobalContext);
+		if (rc) {
+			errMsg = "failed to generate registration id";
 			goto cleanup;
 		}
-		qDebug("%s: generated registration id: %i", __func__, registration_id);
+		qDebug("%s: generated registration id: %i", __func__, registrationId);
 
-		ret_val = signal_protocol_key_helper_generate_pre_keys(&pre_keys_head_p,
+		rc = signal_protocol_key_helper_generate_pre_keys(&preKeysHead,
 															   APreKeyStartId,
 															   APreKeyAmount,
 															   FGlobalContext);
-		if(ret_val) {
-			err_msg = "failed to generate pre keys";
+		if(rc) {
+			errMsg = "failed to generate pre keys";
 			goto cleanup;
 		}
 		qDebug("%s: generated pre keys", __func__ );
 
-		ret_val = signal_protocol_key_helper_generate_signed_pre_key(
-					&signed_pre_key_p, identity_key_pair_p, ASignedPreKeyId,
+		rc = signal_protocol_key_helper_generate_signed_pre_key(
+					&signedPreKey, identityKeyPair, ASignedPreKeyId,
 					quint64(QDateTime::currentMSecsSinceEpoch()),
 					FGlobalContext);
-		if (ret_val) {
-			err_msg = "failed to generate signed pre key";
+		if (rc) {
+			errMsg = "failed to generate signed pre key";
 			goto cleanup;
 		}
 		qDebug("%s: generated signed pre key", __func__ );
 
-		ret_val = identitySetKeyPair(identity_key_pair_p, this);
-		if (ret_val) {
-			err_msg = "failed to set identity key pair";
+		rc = identitySetKeyPair(identityKeyPair, this);
+		if (rc) {
+			errMsg = "failed to set identity key pair";
 			goto cleanup;
 		}
 		qDebug("%s: saved identity key pair", __func__ );
 
-		ret_val = identitySetLocalRegistrationId(this, registration_id);
-		if (ret_val) {
-			err_msg = "failed to set registration id";
+		rc = identitySetLocalRegistrationId(this, registrationId);
+		if (rc) {
+			errMsg = "failed to set registration id";
 			goto cleanup;
 		}
 		qDebug("%s: saved registration id", __func__ );
 
-		ret_val = preKeyStoreList(pre_keys_head_p, this);
-		if (ret_val) {
-			err_msg = "failed to save pre key list";
+		rc = preKeyStoreList(preKeysHead, this);
+		if (rc) {
+			errMsg = "failed to save pre key list";
 			goto cleanup;
 		}
 		qDebug("%s: saved pre keys", __func__ );
 
-		ret_val = session_signed_pre_key_serialize(&signed_pre_key_data_p, signed_pre_key_p);
-		if (ret_val) {
-			err_msg = "failed to serialize signed pre key";
+		rc = session_signed_pre_key_serialize(&signedPreKeyData, signedPreKey);
+		if (rc) {
+			errMsg = "failed to serialize signed pre key";
 			goto cleanup;
 		}
 
-		ret_val = signedPreKeyStore(session_signed_pre_key_get_id(signed_pre_key_p),
-											  signal_buffer_data(signed_pre_key_data_p),
-											  signal_buffer_len(signed_pre_key_data_p),
+		rc = signedPreKeyStore(session_signed_pre_key_get_id(signedPreKey),
+											  signal_buffer_data(signedPreKeyData),
+											  signal_buffer_len(signedPreKeyData),
 											  this);
-		if (ret_val) {
-			err_msg = "failed to save signed pre key";
+		if (rc) {
+			errMsg = "failed to save signed pre key";
 			goto cleanup;
 		}
 		qDebug("%s: saved signed pre key", __func__ );
 
-		ret_val = initStatusSet(AXC_DB_INITIALIZED, this);
-		if (ret_val) {
-			err_msg = "failed to set init status to AXC_DB_INITIALIZED";
+		rc = initStatusSet(AXC_DB_INITIALIZED, this);
+		if (rc) {
+			errMsg = "failed to set init status to AXC_DB_INITIALIZED";
 			goto cleanup;
 		}
 		qDebug("%s: initialised DB", __func__ );
@@ -217,18 +209,18 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	}
 
 cleanup:
-	if (ret_val < 0) {
-		qCritical("%s: %s", __func__, err_msg);
+	if (rc < 0) {
+		qCritical("%s: %s", __func__, errMsg);
 	}
 
-	if (db_needs_init) {
-		SIGNAL_UNREF(identity_key_pair_p);
-		signal_protocol_key_helper_key_list_free(pre_keys_head_p);
-		SIGNAL_UNREF(signed_pre_key_p);
-		signal_buffer_bzero_free(signed_pre_key_data_p);
+	if (dbNeedsInit) {
+		SIGNAL_UNREF(identityKeyPair);
+		signal_protocol_key_helper_key_list_free(preKeysHead);
+		SIGNAL_UNREF(signedPreKey);
+		signal_buffer_bzero_free(signedPreKeyData);
 	}
 
-	return ret_val;
+	return rc;
 }
 
 quint32 SignalProtocol::getDeviceId()
@@ -241,15 +233,15 @@ quint32 SignalProtocol::getDeviceId()
 	return 0;
 }
 
-int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId)
+int SignalProtocol::sessionInitStatus(const QString &ABareJid, qint32 ADeviceId)
 {
 	QByteArray bareJid = ABareJid.toUtf8();
 	signal_protocol_address address = {bareJid.data(),
 									   size_t(bareJid.size()),
 									   ADeviceId};
 
-	int ret_val = 0;
-	char * err_msg = nullptr;
+	int rc = 0;
+	char * errMsg = nullptr;
 
 	session_record * sessionRecord = nullptr;
 	session_state * sessionState = nullptr;
@@ -257,37 +249,37 @@ int SignalProtocol::isSessionExistsAndInitiated(const QString &ABareJid, qint32 
 	if(!signal_protocol_session_contains_session(FStoreContext, &address))
 		return NoSession;
 
-	ret_val = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
-	if (ret_val){
-		err_msg = "Database error when trying to retrieve session";
+	rc = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
+	if (rc){
+		errMsg = "Database error when trying to retrieve session";
 		goto cleanup;
 	} else {
 		sessionState = session_record_get_state(sessionRecord);
 		if (session_state_has_pending_key_exchange(sessionState)) {
-			err_msg = "Session exists but has pending synchronous key exchange";
-			ret_val = NoSession;
+			errMsg = "Session exists but has pending synchronous key exchange";
+			rc = NoSession;
 			goto cleanup;
 		}
 		if (session_state_has_unacknowledged_pre_key_message(sessionState))
 		{
-			err_msg = "Has unacknowledged PreKey message";
-			ret_val = SessionInitiated;
+			errMsg = "Has unacknowledged PreKey message";
+			rc = SessionInitiated;
 		}
 		else
 		{
-			err_msg = "Have no unacknowledged PreKey message";
-			ret_val = SessionAcknowledged;
+			errMsg = "Have no unacknowledged PreKey message";
+			rc = SessionAcknowledged;
 		}
 	}
 
 cleanup:
-	if (ret_val < 1)
-		qCritical("%s: %s", __func__, err_msg);
+	if (rc < 1)
+		qCritical("%s: %s", __func__, errMsg);
 	else
-		qDebug("%s: %s", __func__, err_msg);
+		qDebug("%s: %s", __func__, errMsg);
 
 	SIGNAL_UNREF(sessionRecord);
-	return ret_val;
+	return rc;
 }
 
 SignalProtocol::Cipher SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
@@ -516,7 +508,7 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 														   const QByteArray &ASignedPreKeySignature,
 														   const QByteArray &AIdentityKey) const
 {
-	char *err_msg(nullptr);
+	char *errMsg(nullptr);
 	session_pre_key_bundle *bundle(nullptr);
 	ec_public_key *preKeyPublic(nullptr),
 				  *signedPreKeyPublic(nullptr),
@@ -524,19 +516,19 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 
 	int rc = curve_decode_point(&preKeyPublic, DATA_SIZE(APreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		err_msg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
 
 	rc = curve_decode_point(&signedPreKeyPublic, DATA_SIZE(ASignedPreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		err_msg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
 
 	rc = curve_decode_point(&identityKey, DATA_SIZE(AIdentityKey), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		err_msg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
 
@@ -547,13 +539,13 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 									   DATA_SIZE(ASignedPreKeySignature),
 									   identityKey);
 	if (rc != SG_SUCCESS) {
-		err_msg = "session_pre_key_bundle_create() failed!";
+		errMsg = "session_pre_key_bundle_create() failed!";
 		goto cleanup;
 	}
 
 cleanup:
-	if (err_msg)
-		qCritical("%s: rc=%d", err_msg, rc);
+	if (errMsg)
+		qCritical("%s: rc=%d", errMsg, rc);
 
 	SIGNAL_UNREF(identityKey);
 	SIGNAL_UNREF(signedPreKeyPublic);
@@ -1106,19 +1098,17 @@ void SignalProtocol::recursiveMutexUnlock()
 SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
-//	FFileName(AFileName),
 	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),
 	FError(0)
 {
 	qDebug("SignalProtocol::SignalProtocol(\"%s\")", AFileName.toUtf8().data());
 
-	char *err_msg = nullptr;
-	signal_protocol_store_context * store_context_p = nullptr;
+	char *errMsg = nullptr;
 
 	// 1. create global context
 	if (signal_context_create(&FGlobalContext, this)) {
-		err_msg = "failed to create global signal protocol context";
+		errMsg = "failed to create global signal protocol context";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1140,7 +1130,7 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	provider.user_data = this;
 
 	if (signal_context_set_crypto_provider(FGlobalContext, &provider)) {
-		err_msg = "failed to set signal protocol crypto provider";
+		errMsg = "failed to set signal protocol crypto provider";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1148,15 +1138,15 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 
 	// 3. set locking functions
 	if (signal_context_set_locking_functions(FGlobalContext, recursiveMutexLock, recursiveMutexUnlock)) {
-		err_msg = "failed to set locking functions";
+		errMsg = "failed to set locking functions";
 		FError = -1;
 		goto cleanup;
 	}
 	qDebug("%s: set locking functions", __func__);
 
 	// Init store context
-	if (signal_protocol_store_context_create(&store_context_p, FGlobalContext)) {
-		err_msg = "failed to create store context";
+	if (signal_protocol_store_context_create(&FStoreContext, FGlobalContext)) {
+		errMsg = "failed to create store context";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1172,8 +1162,8 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	session_store.destroy_func = &sessionDestroyStoreCtx;
 	session_store.user_data = this;
 
-	if (signal_protocol_store_context_set_session_store(store_context_p, &session_store)) {
-		err_msg = "failed to create session store";
+	if (signal_protocol_store_context_set_session_store(FStoreContext, &session_store)) {
+		errMsg = "failed to create session store";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1186,8 +1176,8 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	pre_key_store.destroy_func = &preKeyDestroyCtx;
 	pre_key_store.user_data = this;
 
-	if (signal_protocol_store_context_set_pre_key_store(store_context_p, &pre_key_store)) {
-		err_msg = "failed to set pre key store";
+	if (signal_protocol_store_context_set_pre_key_store(FStoreContext, &pre_key_store)) {
+		errMsg = "failed to set pre key store";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1200,8 +1190,8 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	signed_pre_key_store.destroy_func = &signedPreKeyDestroyCtx;
 	signed_pre_key_store.user_data = this;
 
-	if (signal_protocol_store_context_set_signed_pre_key_store(store_context_p, &signed_pre_key_store)) {
-		err_msg = "failed to set signed pre key store";
+	if (signal_protocol_store_context_set_signed_pre_key_store(FStoreContext, &signed_pre_key_store)) {
+		errMsg = "failed to set signed pre key store";
 		FError = -1;
 		goto cleanup;
 	}
@@ -1214,20 +1204,17 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	identity_key_store.destroy_func = &identityDestroyCtx;
 	identity_key_store.user_data = this;
 
-	if (signal_protocol_store_context_set_identity_key_store(store_context_p, &identity_key_store)) {
-		err_msg = "failed to set identity key store";
+	if (signal_protocol_store_context_set_identity_key_store(FStoreContext, &identity_key_store)) {
+		errMsg = "failed to set identity key store";
 		FError = -1;
 		goto cleanup;
 	}
 
-	FStoreContext = store_context_p;
-	qDebug("%s: set store context", __func__);
-
 cleanup:
 	if (FError < 0) {
-		qCritical("%s: %s", __func__, err_msg);
+		qCritical("%s: %s", __func__, errMsg);
 	} else {
-		OmemoStore::addDatabase(AFileName, FConnectionName);
+		addDatabase(AFileName, FConnectionName);
 		qInfo("%s: done initializing SignalProtocol", __func__);
 	}
 }
@@ -1313,7 +1300,6 @@ SignalProtocol::Cipher::Cipher(SignalProtocol *ASignalProtocol,
 							   const QString &ABareJid, int ADeviceId):
 	FSignalProtocol(ASignalProtocol),
 	FCipher(nullptr),
-//	FStoreContext(AStoreContext),
 	FBareJid(ABareJid.toUtf8()),
 	FAddress({FBareJid.data(), size_t(FBareJid.size()), ADeviceId})
 {

@@ -96,7 +96,6 @@ public:
 	private:
 		SignalProtocol *FSignalProtocol;
 		session_cipher *FCipher;
-//		signal_protocol_store_context *FStoreContext;
 		QByteArray FBareJid;
 		signal_protocol_address FAddress;		
 	};
@@ -135,8 +134,6 @@ public:
 	SignalProtocol(const QString &AFileName, const QString &AConnectionName);
 	~SignalProtocol();
 
-//	static SignalProtocol *instance(const QString &AFileName, const QString &AConnectionName);
-
 	static void init();
 
 	QString connectionName() const;
@@ -150,7 +147,7 @@ public:
 
 	quint32 getDeviceId();
 
-	int isSessionExistsAndInitiated(const QString &ABareJid, qint32 ADeviceId);
+	int sessionInitStatus(const QString &ABareJid, qint32 ADeviceId);
 	Cipher sessionCipherCreate(const QString &ABareJid, int ADeviceId);
 
 	QByteArray getIdentityKeyPublic() const;

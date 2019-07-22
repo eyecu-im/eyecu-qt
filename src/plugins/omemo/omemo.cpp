@@ -789,7 +789,7 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 		for (QList<quint32>::ConstIterator it=devices.constBegin();
 			 it != devices.constEnd(); ++it)
 		{
-			int sessionState = signalProtocol->isSessionExistsAndInitiated(bareJid, *it);
+			int sessionState = signalProtocol->sessionInitStatus(bareJid, *it);
 			if (sessionState < 0)
 				break;
 
@@ -970,7 +970,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 						for (QList<quint32>::ConstIterator it = deviceIds.constBegin();
 							 it != deviceIds.constEnd(); ++it)
 						{
-							int sessionState = signalProtocol->isSessionExistsAndInitiated(bareJid, *it);
+							int sessionState = signalProtocol->sessionInitStatus(bareJid, *it);
 							if (sessionState == SignalProtocol::NoSession)
 							{
 								needBundles = true;

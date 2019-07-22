@@ -4,6 +4,7 @@
 #include <QSqlDatabase>
 #include <QMap>
 
+class SignalProtocol;
 struct signal_context;
 struct signal_buffer;
 struct signal_protocol_address;
@@ -25,40 +26,41 @@ namespace OmemoStore
 	 *
 	 * @return 0 on success, negative on error
 	 */
-	int create(void *AUserData);
+	int create(SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Drops all the tables so that the db can be reset.
 	 *
 	 * @return 0 on success, negative on error
 	 */
-	int destroy(void *AUserData);
+	int destroy(SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Sets the value of a property in the database's "settings" table.
 	 *
-	 * @param name The name of the property.
-	 * @param status The int value of the property.
+	 * @param AName The name of the property.
+	 * @param AValue The int value of the property.
 	 * @return 0 on success, negative on error
 	 */
-	int propertySet(const char * name, const int val, void *AUserData);
+	int propertySet(const QString &AName, const int AValue, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Gets a property from the settings table.
 	 *
-	 * @param name Name of the property
-	 * @param val_p Pointer to where the saved value should be stored.
+	 * @param AName Name of the property
+	 * @param AValue Pointer to where the saved value should be stored.
 	 * @return 0 on success, negative on error, 1 if no sql error but no result
 	 */
-	int propertyGet(const char * name, int * val_p, void *AUserData);
+	int propertyGet(const QString &AName, int &AValue, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * "Partial application" of db_set_property, setting the init status value.
 	 *
-	 * @param status AXC_DB_NOT INITIALIZED, AXC_DB_NEEDS_ROOLBACK, or AXC_DB_INITIALIZED
+	 * @param AStatus AXC_DB_NOT INITIALIZED, AXC_DB_NEEDS_ROOLBACK, or AXC_DB_INITIALIZED
+	 * @param ASignalProtocol pointer to SignalProtocol object
 	 * @return 0 on success, negative on error
 	 */
-	int initStatusSet(const int status, void *AUserData);
+	int initStatusSet(int AStatus, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * "Partial application" of db_get_property, getting the init status value.
@@ -66,30 +68,14 @@ namespace OmemoStore
 	 * @param init_status_p The value behind this pointer will be set to the init status number.
 	 * @return 0 on success, negative on error, 1 if no sql error but no result
 	 */
-	int initStatusGet(int * init_status_p, void *AUserData);
-
-	/**
-	 * Saves the public and private key by using the api serialization calls, as this format (and not the higher-level key type) is needed by the getter.
-	 *
-	 * @param Pointer to the keypair as returned by axolotl_key_helper_generate_identity_key_pair
-	 * @return 0 on success, negative on error
-	 */
-	int identitySetKeyPair(const ratchet_identity_key_pair * key_pair_p, void *AUserData);
-
-	/**
-	 * Saves the axolotl registration ID which was obtained by a call to axolotl_key_helper_generate_registration_id().
-	 *
-	 * @param ARegistrationId The ID.
-	 * @return 0 on success, negative on error
-	 */
-	int identitySetLocalRegistrationId(void *AUserData, const uint32_t ARegistrationId);
+	int initStatusGet(int &AInitStatus, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Stores a whole list of pre keys at once, inside a single transaction.
 	 *
 	 * @param APreKeysHead Pointer to the first element of the list.
 	 */
-	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * APreKeysHead, void *AUserData);
+	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * APreKeysHead, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Gets the specified number of pre keys for publishing, i.e. only their public part.
@@ -99,7 +85,7 @@ namespace OmemoStore
 	 * @param AContext pointer to SignalProtocol global context.
 	 * @return 0 on success, negative on error.
 	 */
-	int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, const void *AUserData);
+	int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, const SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Retrieves the highest existing pre key ID that is not the last resort key's ID.
@@ -107,7 +93,7 @@ namespace OmemoStore
 	 * @param max_id_p Will be set to the highest ID that is not MAX_INT.
 	 * @return 0 on success, negative on error.
 	 */
-	int preKeyGetMaxId(uint32_t &AMaxId, void *AUserData);
+	int preKeyGetMaxId(uint32_t &AMaxId, SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Returns the count of pre keys saved in the database.
@@ -115,49 +101,59 @@ namespace OmemoStore
 	 *
 	 * @return pre key count, negative on error.
 	 */
-	int preKeyGetCount(void *AUserData);
+	int preKeyGetCount(SignalProtocol *ASignalProtocol);
+
+	/**
+	 * saves the public and private key by using the api serialization calls, as this format (and not the higher-level key type) is needed by the getter.
+	 */
+	int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtocol *ASignalProtocol);
+
+	int identitySetLocalRegistrationId(SignalProtocol *ASignalProtocol, const uint32_t ARegistrationId);
+
+	//
+	// Callback methods
+	//
 
 	// Session store methods
 
-	int sessionLoad(signal_buffer ** record,
-					signal_buffer ** user_record,
-					const signal_protocol_address * address,
+	int sessionLoad(signal_buffer ** ARecord,
+					signal_buffer ** AUserRecord,
+					const signal_protocol_address * AAddress,
 					void * AUserData);
-	int sessionGetSubDeviceSessions(signal_int_list ** sessions,
-									const char * name, size_t name_len,
+	int sessionGetSubDeviceSessions(signal_int_list ** ASessions,
+									const char * AName, size_t ANameLen,
 									void * AUserData);
-	int sessionStore(const signal_protocol_address *address,
-					 uint8_t *record, size_t record_len,
-					 uint8_t *user_record, size_t user_record_len,
+	int sessionStore(const signal_protocol_address *AAddress,
+					 uint8_t *ARecord, size_t ARecordLen,
+					 uint8_t *AUserRecord, size_t AUserRecordLen,
 					 void *AUserData);
-	int sessionContains(const signal_protocol_address * address,
-						void * AUserData);
-	int sessionDelete(const signal_protocol_address * address, void * AUserData);
-	int sessionDeleteAll(const char * name, size_t name_len, void * AUserData);
-	void sessionDestroyStoreCtx(void * user_data);
+	int sessionContains(const signal_protocol_address * AAddress, void * AUserData);
+	int sessionDelete(const signal_protocol_address * AAddress, void * AUserData);
+	int sessionDeleteAll(const char * AName, size_t ANameLen, void * AUserData);
+	void sessionDestroyStoreCtx(void * AUserData);
 
 	// Pre key store methods
-	int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * AUserData);
-	int preKeyStore(uint32_t pre_key_id, uint8_t * record,
-					size_t record_len, void * AUserData);
-	int preKeyContains(uint32_t pre_key_id, void * AUserData);
-	int preKeyRemove(uint32_t pre_key_id, void * AUserData);
+	int preKeyLoad(signal_buffer ** ARecord, uint32_t APreKeyId, void * AUserData);
+	int preKeyStore(uint32_t APreKeyId, uint8_t * ARecord,
+					size_t ARecordLen, void * AUserData);
+	int preKeyContains(uint32_t APreKey_Id, void * AUserData);
+	int preKeyRemove(uint32_t APreKeyId, void * AUserData);
 	void preKeyDestroyCtx(void * AUserData);
 
 	// Signed pre key store methods
-	int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void * AUserData);
-	int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record,
-						  size_t record_len, void * AUserData);
-	int signedPreKeyContains(uint32_t signed_pre_key_id, void * user_data);
-	int signedPreKeyRemove(uint32_t signed_pre_key_id, void * AUserData);
+	int signedPreKeyLoad(signal_buffer ** ARecord, uint32_t ASignedPreKeyId, void * AUserData);
+	int signedPreKeyStore(uint32_t ASignedPreKeyId, uint8_t * ARecord,
+						  size_t ARecordLen, void * AUserData);
+	int signedPreKeyContains(uint32_t ASignedPreKeyId, void * AUserData);
+	int signedPreKeyRemove(uint32_t ASignedPreKeyId, void * AUserData);
 	void signedPreKeyDestroyCtx(void * AUserData);
 
 	// Identity key store implementation
-	int identityGetKeyPair(signal_buffer ** public_data, signal_buffer ** private_data, void * AUserData);
-	int identityGetLocalRegistrationId(void * AUserData, uint32_t * registration_id);
-	int identitySave(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * AUserData);
-	int identityAlwaysTrusted(const signal_protocol_address * addr_p, uint8_t * key_data, size_t key_len, void * user_data);
-	void identityDestroyCtx(void * user_data);
+	int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateData, void * AUserData);
+	int identityGetLocalRegistrationId(void * AUserData, uint32_t * ARegistrationId);
+	int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
+	int identityAlwaysTrusted(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
+	void identityDestroyCtx(void * AUserData);
 };
 
 #endif // OMEMOSTORE_H
