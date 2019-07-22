@@ -9,6 +9,7 @@
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/ipepmanager.h>
+#include <interfaces/iaccountmanager.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/imessagestylemanager.h>
@@ -81,8 +82,9 @@ protected:
 
 protected slots:
 	void onProfileOpened(const QString &AProfile);
-	void onStreamOpened(IXmppStream *AXmppStream);
-	void onStreamClosed(IXmppStream *AXmppStream);	
+	void onProfileClosed(const QString &AProfile);
+//	void onStreamOpened(IXmppStream *AXmppStream);
+//	void onStreamClosed(IXmppStream *AXmppStream);
 	void onPresenceOpened(IPresence *APresence);
 	void onPresenceClosed(IPresence *APresence);
 	void onPepTimeout();
@@ -91,11 +93,14 @@ protected slots:
 	void onNormalWindowCreated(IMessageNormalWindow *AWindow);
 	void onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore);
 
-	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
+	void onAccountInserted(IAccount *AAccount);
+	void onAccountRemoved(IAccount *AAccount);
 
+	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 	void onOmemoActionTriggered();
 
 private:
+	IAccountManager*	FAccountManager;
 	IPEPManager*		FPepManager;
 	IStanzaProcessor*	FStanzaProcessor;
 	IXmppStreamManager*	FXmppStreamManager;
@@ -112,9 +117,10 @@ private:
 	int					FSHIMessageIn;
 	int					FSHIMessageOut;
 
-	SignalProtocol*		FSignalProtocol;
+//	SignalProtocol*		FSignalProtocol;
+	QHash<Jid, SignalProtocol*> FSignalProtocols;
 
-	QMap <Jid, QString> FStreamOmemo;
+//	QMap <Jid, QString> FStreamOmemo;
 	QDir				FOmemoDir;
 
 	QHash<IXmppStream *, QTimer*> FPepDelay;

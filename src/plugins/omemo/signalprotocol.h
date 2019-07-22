@@ -133,7 +133,10 @@ public:
 		QSharedDataPointer<SessionBuilderData> d;
 	};
 
-	static SignalProtocol *instance(const QString &AFileName, const QString &AConnectionName);
+	SignalProtocol(const QString &AFileName, const QString &AConnectionName);
+	~SignalProtocol();
+
+//	static SignalProtocol *instance(const QString &AFileName, const QString &AConnectionName);
 
 	static void init();
 
@@ -319,9 +322,6 @@ protected:
 	void recursiveMutexUnlock();
 
 private:
-	SignalProtocol(const QString &AFileName, const QString &AConnectionName);
-	~SignalProtocol();
-
 	// signal-protocol
 	signal_context		*FGlobalContext;
 	signal_protocol_store_context * FStoreContext;
@@ -335,7 +335,7 @@ private:
 	// Error code
 	int FError;
 
-	static SignalProtocol *FInstance;
+//	static SignalProtocol *FInstance;
 };
 
 #endif // SIGNALPROTOCOL_H

@@ -16,12 +16,12 @@ extern "C" {
 
 using namespace OmemoStore;
 
-SignalProtocol* SignalProtocol::FInstance(nullptr);
+//SignalProtocol* SignalProtocol::FInstance(nullptr);
 
-SignalProtocol* SignalProtocol::instance(const QString &AFileName, const QString &AConnectionName)
-{
-	return FInstance?FInstance:FInstance=new SignalProtocol(AFileName, AConnectionName);
-}
+//SignalProtocol* SignalProtocol::instance(const QString &AFileName, const QString &AConnectionName)
+//{
+//	return FInstance?FInstance:FInstance=new SignalProtocol(AFileName, AConnectionName);
+//}
 
 void SignalProtocol::init()
 {
