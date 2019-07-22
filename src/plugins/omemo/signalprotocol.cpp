@@ -33,14 +33,19 @@ void SignalProtocol::init()
 	gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
-QString SignalProtocol::dbFileName() const
+QString SignalProtocol::connectionName() const
 {
-	return FFileName;
+	return FConnectionName;
 }
 
-signal_context *SignalProtocol::globalContext()
+signal_context *SignalProtocol::globalContext() const
 {
 	return FGlobalContext;
+}
+
+signal_protocol_store_context *SignalProtocol::storeContext() const
+{
+	return FStoreContext;
 }
 
 int SignalProtocol::error() const
@@ -64,7 +69,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	qInfo("%s: calling install-time functions", __func__);
 
-	ret_val = create();
+	ret_val = create(this);
 	if (ret_val){
 		err_msg = "failed to create db";
 		goto cleanup;
@@ -72,7 +77,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	qDebug("%s: created db if it did not exist already", __func__);
 
-	ret_val = initStatusGet(&init_status);
+	ret_val = initStatusGet(&init_status, this);
 	switch (ret_val) {
 		case -1:
 		default:
@@ -104,13 +109,13 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 
 	if (db_needs_reset) {
 		qDebug("%s: db needs reset", __func__ );
-		ret_val = destroy();
+		ret_val = destroy(this);
 		if (ret_val) {
 			err_msg = "failed to reset db";
 			goto cleanup;
 		}
 
-		ret_val = create();
+		ret_val = create(this);
 		if (ret_val) {
 			err_msg = "failed to create db after reset";
 			goto cleanup;
@@ -123,7 +128,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		qDebug("%s: db needs init", __func__ );
 		qDebug("%s: setting init status to AXC_DB_NEEDS_ROLLBACK (%i)", __func__, AXC_DB_NEEDS_ROLLBACK );
 
-		ret_val = initStatusSet(AXC_DB_NEEDS_ROLLBACK);
+		ret_val = initStatusSet(AXC_DB_NEEDS_ROLLBACK, this);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
 			goto cleanup;
@@ -163,21 +168,21 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		}
 		qDebug("%s: generated signed pre key", __func__ );
 
-		ret_val = identitySetKeyPair(identity_key_pair_p);
+		ret_val = identitySetKeyPair(identity_key_pair_p, this);
 		if (ret_val) {
 			err_msg = "failed to set identity key pair";
 			goto cleanup;
 		}
 		qDebug("%s: saved identity key pair", __func__ );
 
-		ret_val = identitySetLocalRegistrationId(registration_id);
+		ret_val = identitySetLocalRegistrationId(this, registration_id);
 		if (ret_val) {
 			err_msg = "failed to set registration id";
 			goto cleanup;
 		}
 		qDebug("%s: saved registration id", __func__ );
 
-		ret_val = preKeyStoreList(pre_keys_head_p);
+		ret_val = preKeyStoreList(pre_keys_head_p, this);
 		if (ret_val) {
 			err_msg = "failed to save pre key list";
 			goto cleanup;
@@ -200,7 +205,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		}
 		qDebug("%s: saved signed pre key", __func__ );
 
-		ret_val = initStatusSet(AXC_DB_INITIALIZED);
+		ret_val = initStatusSet(AXC_DB_INITIALIZED, this);
 		if (ret_val) {
 			err_msg = "failed to set init status to AXC_DB_INITIALIZED";
 			goto cleanup;
@@ -287,7 +292,7 @@ cleanup:
 
 SignalProtocol::Cipher SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
 {
-	return Cipher(FGlobalContext, FStoreContext, ABareJid, ADeviceId);
+	return Cipher(this, ABareJid, ADeviceId);
 }
 
 QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
@@ -499,7 +504,7 @@ QByteArray SignalProtocol::getPreKeyPrivate(quint32 AKeyId) const
 QMap<quint32, QByteArray> SignalProtocol::getPreKeys() const
 {
 	QMap<quint32, QByteArray> preKeys;
-	preKeyGetList(PRE_KEYS_AMOUNT, preKeys, FGlobalContext);
+	preKeyGetList(PRE_KEYS_AMOUNT, preKeys, this);
 	return preKeys;
 }
 
@@ -1101,7 +1106,7 @@ void SignalProtocol::recursiveMutexUnlock()
 SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
-	FFileName(AFileName),
+//	FFileName(AFileName),
 	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),
 	FError(0)
@@ -1222,14 +1227,14 @@ cleanup:
 	if (FError < 0) {
 		qCritical("%s: %s", __func__, err_msg);
 	} else {
-		OmemoStore::addDatabase(FFileName, FConnectionName);
+		OmemoStore::addDatabase(AFileName, FConnectionName);
 		qInfo("%s: done initializing SignalProtocol", __func__);
 	}
 }
 
 SignalProtocol::~SignalProtocol()
 {
-	uninit();
+	removeDatabase(FConnectionName);
 	// Uninit store context
 	signal_protocol_store_context_destroy(FStoreContext);
 }
@@ -1304,17 +1309,16 @@ bool SignalProtocol::SessionBuilder::isNull() const
 //
 // *** Cipher ***
 //
-SignalProtocol::Cipher::Cipher(signal_context *AGlobalContext,
-							   signal_protocol_store_context *AStoreContext,
+SignalProtocol::Cipher::Cipher(SignalProtocol *ASignalProtocol,
 							   const QString &ABareJid, int ADeviceId):
+	FSignalProtocol(ASignalProtocol),
 	FCipher(nullptr),
-	FGlobalContext(AGlobalContext),
-	FStoreContext(AStoreContext),
+//	FStoreContext(AStoreContext),
 	FBareJid(ABareJid.toUtf8()),
 	FAddress({FBareJid.data(), size_t(FBareJid.size()), ADeviceId})
 {
 	// Create the session cipher
-	int rc = session_cipher_create(&FCipher, AStoreContext, &FAddress, AGlobalContext);
+	int rc = session_cipher_create(&FCipher, ASignalProtocol->storeContext(), &FAddress, ASignalProtocol->globalContext());
 	if (rc != SG_SUCCESS)
 	{
 		FCipher = nullptr;
@@ -1401,27 +1405,25 @@ QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage, 
 			goto cleanup;
 		}
 
-		cnt = preKeyGetCount();
-		qDebug() << "cnt=" << cnt;
+		cnt = preKeyGetCount(FSignalProtocol);
 		if (cnt >= 0) {
 			quint32 preKeyId = AMessage.preKeyId();
 			quint32 id(0);
-			rc = preKeyGetMaxId(id);
+			rc = preKeyGetMaxId(id, FSignalProtocol);
 			if (rc) {
 				errorMsg = "Failed to retrieve max pre key id";
 				goto cleanup;
 			}
 
-			qDebug() << "preKeyId=" << preKeyId;
 			for (int i = cnt; i<100; ++i) {
 				for (++id;
 					 id == preKeyId ||
-					 signal_protocol_pre_key_contains_key(FStoreContext, id);
+					 signal_protocol_pre_key_contains_key(FSignalProtocol->storeContext(), id);
 					 ++id);
 
 				signal_protocol_key_helper_pre_key_list_node * keyList = nullptr;
 				rc = signal_protocol_key_helper_generate_pre_keys(&keyList, id, 1,
-																  FGlobalContext);
+																  FSignalProtocol->globalContext());
 				if (rc) {
 					errorMsg = "failed to generate a new key";
 					goto cleanup;
@@ -1429,7 +1431,7 @@ QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage, 
 
 				qDebug("New Pre Key generated! ID=%d", id);
 
-				rc = signal_protocol_pre_key_store_key(FStoreContext,
+				rc = signal_protocol_pre_key_store_key(FSignalProtocol->storeContext(),
 													   signal_protocol_key_helper_key_list_element(keyList));
 				signal_protocol_key_helper_key_list_free(keyList);
 				if (rc) {

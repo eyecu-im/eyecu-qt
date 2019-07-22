@@ -305,7 +305,6 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 bool Omemo::initObjects()
 {
-	qDebug() << "Omemo::initObjects()";
 	SignalProtocol::init();
 //	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	if (FDiscovery)
@@ -431,14 +430,8 @@ void Omemo::registerDiscoFeatures()
 //	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK);
 	dfeature.name = tr("OMEMO");
 	dfeature.description = tr("P2P Encryption using OMEMO");
-//	FDiscovery->insertDiscoFeature(dfeature);
-//	qDebug() << "feature inserted:" << dfeature.var;
 
-//	dfeature.var.append(NODE_NOTIFY_SUFFIX);
-//	dfeature.name = tr("OMEMO Notification");
-//	dfeature.description = tr("Receives notifications about devices, which support OMEMO");
 	FDiscovery->insertDiscoFeature(dfeature);
-	qDebug() << "feature inserted:" << dfeature.var;
 }
 
 bool Omemo::isSupported(const QString &ABareJid) const
@@ -534,7 +527,6 @@ void Omemo::onChatWindowCreated(IMessageChatWindow *AWindow)
 
 void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
 {
-	qDebug() << "Omemo::updateChatWindowActions()";
 	QString contact = AWindow->contactJid().uFull();
 	QString stream = AWindow->streamJid().uFull();
 
@@ -620,13 +612,8 @@ void Omemo::onOmemoActionTriggered()
 
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 {
-	qDebug() << "Omemo::publishOwnDeviceIds(" << AStreamJid.full() << ")";
-
 	if (!FDeviceIds.contains(AStreamJid.bare()))
-	{
-		qWarning() << "No device ID list for the stream:" << AStreamJid.bare();
 		return false;
-	}
 	QList<quint32> ids = FDeviceIds.value(AStreamJid.bare());
 	if (ids.isEmpty())
 	{
@@ -659,7 +646,6 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 	quint32 deviceId = signalProtocol->getDeviceId();
 	if (!deviceId)
 		return false;
-
 	QDomDocument doc;
 	QDomElement item=doc.createElement(TAG_NAME_ITEM);
 	item.setAttribute("id", "current");
@@ -718,7 +704,6 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 
 bool Omemo::removeOtherKeys(const Jid &AStreamJid)
 {
-	qDebug() << "Omemo::removeOtherKeys(" << AStreamJid.full() << ")";
 	if (!FSignalProtocols.contains(AStreamJid))
 		return false;
 	SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
@@ -727,8 +712,6 @@ bool Omemo::removeOtherKeys(const Jid &AStreamJid)
 		return false;
 
 	QList<quint32> deviceIds = FDeviceIds.value(AStreamJid.bare());
-
-	qDebug() << "deviceIds=" << deviceIds;
 
 	QDomDocument doc;
 	QDomElement item=doc.createElement(TAG_NAME_ITEM);
@@ -820,7 +803,6 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 					itb != bundles.constEnd(); ++itb)
 					if (itb->FDeviceId == *it)
 					{
-						qDebug() << "found bundle for the device!";
 						QList<quint32> keyIds = itb->FPreKeys.keys();
 						int keyCount = keyIds.size();
 						int keyIndex = qrand()*keyCount/RAND_MAX;
@@ -846,7 +828,6 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 
 			if (ok)
 			{
-				qDebug() << "ok";
 				SignalProtocol::Cipher cipher = signalProtocol->sessionCipherCreate(bareJid, *it);
 
 				if (cipher.isNull())
@@ -886,20 +867,20 @@ void Omemo::onProfileOpened(const QString &AProfile)
 			qCritical() << "Cannot switch to" << DIR_OMEMO;
 	}
 
-//FIXME: Create different SignalProtocol object for each account in the profile
 	QList<IAccount*> accounts = FAccountManager->accounts();
 	for (QList<IAccount*>::ConstIterator it=accounts.constBegin();
 		 it != accounts.constEnd(); ++it)
 	{
-//	FSignalProtocol = SignalProtocol::instance(FOmemoDir.filePath(DBFN_OMEMO), "OMEMO");
 		QString name=(*it)->accountId().toString();
 		SignalProtocol *signalProtocol = new SignalProtocol(FOmemoDir.filePath(name+".db"), name);
-		if (signalProtocol->install() != SG_SUCCESS) {
+		if (signalProtocol->install() == SG_SUCCESS)
+			FSignalProtocols.insert((*it)->streamJid(), signalProtocol);
+		else
+		{
 			qCritical() << "SignalProtocol::install() for account"
 						<< (*it)->name() << "failed!";
 			delete signalProtocol;
-		} else
-			FSignalProtocols.insert((*it)->streamJid(), signalProtocol);
+		}
 	}
 }
 
@@ -913,18 +894,6 @@ void Omemo::onProfileClosed(const QString &AProfile)
 			delete FSignalProtocols.take((*it)->streamJid());
 	}
 }
-
-//void Omemo::onStreamOpened(IXmppStream *AXmppStream)
-//{
-//	qDebug() << "Omemo::onStreamOpened(" << AXmppStream->streamJid().full() << ")";
-//	FStreamOmemo.insert(AXmppStream->streamJid(), nullptr);
-//}
-
-//void Omemo::onStreamClosed(IXmppStream *AXmppStream)
-//{
-//	qDebug() << "Omemo::onStreamClosed(" << AXmppStream->streamJid().full() << ")";
-//	FStreamOmemo.remove(AXmppStream->streamJid());
-//}
 
 void Omemo::onPresenceOpened(IPresence *APresence)
 {
@@ -945,7 +914,6 @@ void Omemo::onPresenceClosed(IPresence *APresence)
 
 void Omemo::onPepTimeout()
 {
-	qDebug() << "Omemo::onPepTimeout()";
 	QTimer *timer = qobject_cast<QTimer*>(sender());
 	for (QHash<IXmppStream*, QTimer*>::Iterator it = FPepDelay.begin();
 		 it != FPepDelay.end();)
@@ -1118,8 +1086,6 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 
 void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 {
-	qDebug() << "Omemo::stanzaRequestResult(" << AStreamJid.full()
-			 << "," << AStanza.toString() << ")";
 	quint32 deviceId = FBundleRequests.take(AStanza.id());
 	QString bareJid = AStanza.fromJid().bare();
 

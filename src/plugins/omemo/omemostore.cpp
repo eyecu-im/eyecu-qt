@@ -7,7 +7,7 @@
 #include "signalprotocol.h"
 #include "omemostore.h"
 
-#define CONNECTION_NAME "OMEMO"
+// #define CONNECTION_NAME "OMEMO"
 
 #define INIT_STATUS "init_status"
 #define OWN_PUBLIC_KEY "own_public_key"
@@ -35,15 +35,17 @@
 #define SETTINGS_STORE_NAME "name"
 #define SETTINGS_STORE_PROPERTY "property"
 
-#define SQL_QUERY(Q) QSqlQuery query(QString(Q), db())
+#define SQL_QUERY(Q) QSqlQuery query(QString(Q), db(AUserData))
 
 namespace OmemoStore
 {
 // Session store implementation
-void addDatabase(const QString &ADatabaseFileName, const QString &ADatabaseName)
+void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionName)
 {
-	qDebug("OmemoStore::init(\"%s\")", ADatabaseFileName.toUtf8().data());
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", ADatabaseName);
+	qDebug("OmemoStore::addDatabase(\"%s\, \"%s\")",
+		   ADatabaseFileName.toLatin1().data(),
+		   AConnectionName.toLatin1().data());
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", AConnectionName);
 	db.setDatabaseName(ADatabaseFileName);
 	if (db.open())
 		qDebug("Database opened!");
@@ -51,21 +53,24 @@ void addDatabase(const QString &ADatabaseFileName, const QString &ADatabaseName)
 		qCritical("Database open failed!");
 }
 
-void uninit()
+void removeDatabase(const QString &AConnectionName)
 {
-	qDebug("OmemoStore::uninit()");
-	QSqlDatabase::database(CONNECTION_NAME).close();
-	QSqlDatabase::removeDatabase(CONNECTION_NAME);
+	QSqlDatabase::database(AConnectionName).close();
+	QSqlDatabase::removeDatabase(AConnectionName);
 }
 
-QSqlDatabase db()
+QSqlDatabase db(const void * AUserData)
 {
-	return QSqlDatabase::database(CONNECTION_NAME);
+	const SignalProtocol *signalProtocol = reinterpret_cast<const SignalProtocol *>(AUserData);
+	QString connectionName = signalProtocol->connectionName();
+	QSqlDatabase sqldb(AUserData?QSqlDatabase::database(connectionName)
+							   :QSqlDatabase::database());
+	return sqldb;
+
 }
 
-int propertySet(const char * name, const int val)
+int propertySet(const char * name, const int val, void *AUserData)
 {
-	qDebug("OmemoStore::propertySet(%s, %d)", name, val);
 	// 1 - name of property
 	// 2 - value
 	SQL_QUERY("INSERT OR REPLACE INTO " SETTINGS_STORE_TABLE " VALUES (?1, ?2)");
@@ -78,9 +83,8 @@ int propertySet(const char * name, const int val)
 	return 0;
 }
 
-int propertyGet(const char * name, int * val_p)
+int propertyGet(const char * name, int * val_p, void *AUserData)
 {
-	qDebug("OmemoStore::propertyGet(%s, %p)", name, (void *)val_p);
 	SQL_QUERY("SELECT * FROM " SETTINGS_STORE_TABLE " WHERE name IS ?1");
 
 	query.bindValue(0, name);
@@ -106,9 +110,8 @@ int propertyGet(const char * name, int * val_p)
 int sessionLoad(signal_buffer ** record,
 				signal_buffer ** user_record,
 				const signal_protocol_address * address,
-				void * user_data)
+				void * AUserData)
 {
-	Q_UNUSED(user_data);
 	Q_UNUSED(user_record);
 
 	SQL_QUERY("SELECT * FROM " SESSION_STORE_TABLE
@@ -140,9 +143,8 @@ int sessionLoad(signal_buffer ** record,
 
 int sessionGetSubDeviceSessions(signal_int_list ** sessions,
 								const char * name, size_t name_len,
-								void * user_data)
+								void * AUserData)
 {
-	Q_UNUSED(user_data);
 	Q_UNUSED(name_len);
 
 	SQL_QUERY("SELECT * FROM " SESSION_STORE_TABLE
@@ -185,9 +187,8 @@ cleanup:
 int sessionStore(const signal_protocol_address *address,
 				 uint8_t *record, size_t record_len,
 				 uint8_t *user_record, size_t user_record_len,
-				 void *user_data)
+				 void *AUserData)
 {
-	Q_UNUSED(user_data);
 	Q_UNUSED(user_record);
 	Q_UNUSED(user_record_len);
 
@@ -209,10 +210,8 @@ int sessionStore(const signal_protocol_address *address,
 	return 0;
 }
 
-int sessionContains(const signal_protocol_address *address, void *user_data)
+int sessionContains(const signal_protocol_address *address, void *AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " SESSION_STORE_TABLE
 			  " WHERE " SESSION_STORE_NAME " IS ?1"
 			  " AND " SESSION_STORE_DEVICE_ID " IS ?2");
@@ -231,10 +230,8 @@ int sessionContains(const signal_protocol_address *address, void *user_data)
 	}
 }
 
-int sessionDelete(const signal_protocol_address *address, void *user_data)
+int sessionDelete(const signal_protocol_address *address, void *AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("DELETE FROM " SESSION_STORE_TABLE
 			  " WHERE " SESSION_STORE_NAME " IS ?1"
 			  " AND " SESSION_STORE_DEVICE_ID " IS ?2");
@@ -253,9 +250,8 @@ int sessionDelete(const signal_protocol_address *address, void *user_data)
 	}
 }
 
-int sessionDeleteAll(const char *name, size_t name_len, void *user_data)
+int sessionDeleteAll(const char *name, size_t name_len, void *AUserData)
 {
-	Q_UNUSED(user_data);
 	Q_UNUSED(name_len);
 
 	SQL_QUERY("DELETE FROM " SESSION_STORE_TABLE
@@ -277,10 +273,8 @@ void sessionDestroyStoreCtx(void *user_data)
 }
 
 // pre key store impl
-int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * user_data)
+int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " PRE_KEY_STORE_TABLE
 			  " WHERE " PRE_KEY_STORE_ID " IS ?1");
 
@@ -306,10 +300,9 @@ int preKeyLoad(signal_buffer ** record, uint32_t pre_key_id, void * user_data)
 	return SG_SUCCESS;
 }
 
-int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void * user_data)
+int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len,
+				void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("INSERT OR REPLACE INTO " PRE_KEY_STORE_TABLE
 			  " VALUES (?1, ?2)");
 
@@ -324,14 +317,11 @@ int preKeyStore(uint32_t pre_key_id, uint8_t * record, size_t record_len, void *
 		return -3;
 	}
 
-	qDebug() << "Pre key stored successfuly!";
 	return 0;
 }
 
-int preKeyContains(uint32_t pre_key_id, void * user_data)
+int preKeyContains(uint32_t pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " PRE_KEY_STORE_TABLE
 			  " WHERE " PRE_KEY_STORE_ID " IS ?1");
 
@@ -348,10 +338,8 @@ int preKeyContains(uint32_t pre_key_id, void * user_data)
 	}
 }
 
-int preKeyRemove(uint32_t pre_key_id, void * user_data)
+int preKeyRemove(uint32_t pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("DELETE FROM " PRE_KEY_STORE_TABLE
 			  " WHERE " PRE_KEY_STORE_ID " IS ?1");
 
@@ -370,19 +358,17 @@ int preKeyRemove(uint32_t pre_key_id, void * user_data)
 	}
 }
 
-void preKeyDestroyCtx(void * user_data)
+void preKeyDestroyCtx(void * AUserData)
 {
-  Q_UNUSED(user_data);
+	Q_UNUSED(AUserData);
   //const char stmt[] = "DELETE FROM pre_key_store; VACUUM;";
 
   //db_exec_quick(stmt, user_data);
 }
 
 // signed pre key store impl
-int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " SIGNED_PRE_KEY_STORE_TABLE
 			  " WHERE " SIGNED_PRE_KEY_STORE_ID " IS ?1");
 
@@ -408,10 +394,8 @@ int signedPreKeyLoad(signal_buffer ** record, uint32_t signed_pre_key_id, void *
 	return SG_SUCCESS;
 }
 
-int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * user_data)
+int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record, size_t record_len, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("INSERT OR REPLACE INTO " SIGNED_PRE_KEY_STORE_TABLE
 			  " VALUES (?1, ?2)");
 
@@ -423,10 +407,8 @@ int signedPreKeyStore(uint32_t signed_pre_key_id, uint8_t * record, size_t recor
 	return 0;
 }
 
-int signedPreKeyContains(uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyContains(uint32_t signed_pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " SIGNED_PRE_KEY_STORE_TABLE
 			  " WHERE " SIGNED_PRE_KEY_STORE_ID " IS ?1");
 
@@ -443,9 +425,8 @@ int signedPreKeyContains(uint32_t signed_pre_key_id, void * user_data)
 	}
 }
 
-int signedPreKeyRemove(uint32_t signed_pre_key_id, void * user_data)
+int signedPreKeyRemove(uint32_t signed_pre_key_id, void * AUserData)
 {
-	Q_UNUSED(user_data);
 
 	SQL_QUERY("DELETE FROM " SIGNED_PRE_KEY_STORE_TABLE
 			  " WHERE " SIGNED_PRE_KEY_STORE_ID " IS ?1");
@@ -465,9 +446,9 @@ int signedPreKeyRemove(uint32_t signed_pre_key_id, void * user_data)
 	}
 }
 
-void signedPreKeyDestroyCtx(void * user_data)
+void signedPreKeyDestroyCtx(void * AUserData)
 {
-	Q_UNUSED(user_data);
+	Q_UNUSED(AUserData);
 //	const char stmt[] = "DELETE FROM signed_pre_key_store; VACUUM;";
 
 //	db_exec_quick(stmt, user_data);
@@ -478,7 +459,7 @@ void signedPreKeyDestroyCtx(void * user_data)
 /**
  * saves the public and private key by using the api serialization calls, as this format (and not the higher-level key type) is needed by the getter.
  */
-int identitySetKeyPair(const ratchet_identity_key_pair * key_pair_p) {
+int identitySetKeyPair(const ratchet_identity_key_pair * key_pair_p, void * AUserData) {
 	// 1 - name ("public" or "private")
 	// 2 - key blob
 	// 3 - trusted (1 for true, 0 for false)
@@ -551,10 +532,8 @@ cleanup:
 	return ret_val;
 }
 
-int identityGetKeyPair(signal_buffer ** public_data, signal_buffer ** private_data, void * user_data)
+int identityGetKeyPair(signal_buffer ** public_data, signal_buffer ** private_data, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
 			  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
 
@@ -631,15 +610,13 @@ cleanup:
 	return ret_val;
 }
 
-int identitySetLocalRegistrationId(const uint32_t reg_id, SignalProtocol * axc_ctx_p)
+int identitySetLocalRegistrationId(void * AUserData, const uint32_t reg_id)
 {
-	return (propertySet(REG_ID, int(reg_id))) ? -1 : 0;
+	return (propertySet(REG_ID, int(reg_id), AUserData)) ? -1 : 0;
 }
 
-int identityGetLocalRegistrationId(void * user_data, uint32_t * registration_id)
+int identityGetLocalRegistrationId(void * AUserData, uint32_t * registration_id)
 {
-	Q_UNUSED(user_data);
-
 	SQL_QUERY("SELECT * FROM " SETTINGS_STORE_TABLE
 			  " WHERE " SETTINGS_STORE_NAME " IS ?1");
 
@@ -661,23 +638,16 @@ int identityGetLocalRegistrationId(void * user_data, uint32_t * registration_id)
 }
 
 int identitySave(const signal_protocol_address * addr_p, uint8_t * key_data,
-				 size_t key_len, void * user_data)
+				 size_t key_len, void * AUserData)
 {
-	Q_UNUSED(user_data);
-
 	// 1 - name ("public" or "private" for own keys, name for contacts)
 	// 2 - key blob
 	// 3 - trusted (1 for true, 0 for false)
-//	const QString save_stmt();
-//	const QString del_stmt();
-//	const QString &stmt = key_data?save_stmt:del_stmt;
 
 	SQL_QUERY(key_data?"INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE
 					   " VALUES (?1, ?2, ?3)"
 					  :"DELETE FROM " IDENTITY_KEY_STORE_TABLE
 					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
-
-//	QSqlQuery query(stmt, db());
 
 	query.bindValue(0, QString(addr_p->name));
 
@@ -692,10 +662,9 @@ int identitySave(const signal_protocol_address * addr_p, uint8_t * key_data,
 }
 
 int identityIsTrusted(const char * name, size_t name_len, uint8_t * key_data,
-					  size_t key_len, void * user_data)
+					  size_t key_len, void * AUserData)
 {
 	Q_UNUSED(name_len);
-	Q_UNUSED(user_data);
 
 	signal_buffer * key_record = nullptr;
 
@@ -754,10 +723,8 @@ void identityDestroyCtx(void * user_data)
 	//db_exec_quick(stmt, user_data);
 }
 
-int create()
+int create(void * AUserData)
 {
-	qDebug() << "OmemoStore::create()";
-
 	const QStringList stmts(
 		QStringList() << "CREATE TABLE IF NOT EXISTS " SESSION_STORE_TABLE "("
 							 SESSION_STORE_NAME " TEXT NOT NULL, "
@@ -778,22 +745,22 @@ int create()
 							 SETTINGS_STORE_NAME " TEXT NOT NULL PRIMARY KEY, "
 							 SETTINGS_STORE_PROPERTY " INTEGER NOT NULL)");
 
-	if (!db().transaction()) {
+	if (!db(AUserData).transaction()) {
 		qCritical("Failed to start transaction");
 		return -3;
 	}
 
-	QSqlQuery query(db());
+	QSqlQuery query(db(AUserData));
 	for (QStringList::ConstIterator it = stmts.constBegin();
 		 it != stmts.constEnd(); ++it) {
 		query.prepare(*it);
 		if (!query.exec()) {
-			db().rollback();
+			db(AUserData).rollback();
 			return -1;
 		}
 	}
 
-	if (db().commit())
+	if (db(AUserData).commit())
 		return 0;
 	else
 		return -2;
@@ -804,7 +771,7 @@ int create()
  *
  * @param axc_ctx_p Pointer to the axc context.
  */
-int destroy() {
+int destroy(void * AUserData) {
 	const QStringList stmts(
 		QStringList() << "DROP TABLE IF EXISTS " SESSION_STORE_TABLE
 					  << "DROP TABLE IF EXISTS " PRE_KEY_STORE_TABLE
@@ -812,48 +779,44 @@ int destroy() {
 					  << "DROP TABLE IF EXISTS " IDENTITY_KEY_STORE_TABLE
 					  << "DROP TABLE IF EXISTS " SETTINGS_STORE_TABLE);
 
-	if (!db().transaction()) {
+	if (!db(AUserData).transaction()) {
 		qCritical("Failed to start transaction");
 		return -3;
 	}
 
-	QSqlQuery query(db());
+	QSqlQuery query(db(AUserData));
 	for (QStringList::ConstIterator it = stmts.cbegin();
 		 it != stmts.constEnd(); ++it) {
 		query.prepare(*it);
 		if (!query.exec()) {
-			db().rollback();
+			db(AUserData).rollback();
 			return -1;
 		}
 	}
 
-	if (db().commit())
+	if (db(AUserData).commit())
 		return 0;
 	else
 		return -2;
 }
 
-int initStatusSet(const int status) {
-	return propertySet(INIT_STATUS, status);
+int initStatusSet(const int status, void * AUserData) {
+	return propertySet(INIT_STATUS, status, AUserData);
 }
 
-int initStatusGet(int *init_status_p)
+int initStatusGet(int *init_status_p, void * AUserData)
 {
-	return propertyGet(INIT_STATUS, init_status_p);
+	return propertyGet(INIT_STATUS, init_status_p, AUserData);
 }
 
-int identitySetLocalRegistrationId(const uint32_t ARegistrationId)
-{
-	return propertySet(REG_ID, int(ARegistrationId)) ? -1 : 0;
-}
-
-int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead)
+int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead,
+					void * AUserData)
 {
 	signal_buffer * key_buf_p = nullptr;
 	signal_protocol_key_helper_pre_key_list_node * pre_keys_curr_p = nullptr;
 	session_pre_key * pre_key_p = nullptr;
 
-	if (!db().transaction()) {
+	if (!db(AUserData).transaction()) {
 		qCritical("Failed to start transaction");
 		return -3;
 	}
@@ -866,7 +829,7 @@ int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead)
 		pre_key_p = signal_protocol_key_helper_key_list_element(pre_keys_curr_p);
 		if (session_pre_key_serialize(&key_buf_p, pre_key_p)) {
 			qCritical("failed to serialize pre key");
-			db().rollback();
+			db(AUserData).rollback();
 			return -1;
 		}
 
@@ -877,7 +840,7 @@ int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead)
 					  query.lastQuery().toUtf8().data(),
 					  query.lastError().number(),
 					  query.lastError().text().toUtf8().data());
-			db().rollback();
+			db(AUserData).rollback();
 			return -3;
 		}
 
@@ -887,13 +850,14 @@ int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node *APreKeysHead)
 		pre_keys_curr_p = signal_protocol_key_helper_key_list_next(pre_keys_curr_p);
 	}
 
-	if (db().commit())
+	if (db(AUserData).commit())
 		return 0;
 	else
 		return -1;
 }
 
-int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, signal_context *AContext)
+int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys,
+				  const void * AUserData)
 {
 	int rc = -1;
 	char * errMsg = nullptr;
@@ -908,6 +872,7 @@ int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, signal_co
 
 	if (query.exec())
 	{
+		const SignalProtocol * signalProtocol = reinterpret_cast<const SignalProtocol*>(AUserData);
 		while (query.next()) {
 			uint32_t id = query.value(0).toUInt();
 			QByteArray data = query.value(1).toByteArray();
@@ -921,7 +886,7 @@ int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, signal_co
 			rc = session_pre_key_deserialize(&preKey,
 											 signal_buffer_data(serializedKeypairData),
 											 signal_buffer_len(serializedKeypairData),
-											 AContext);
+											 signalProtocol->globalContext());
 			if (rc) {
 				errMsg = "failed to deserialize keypair";
 				goto cleanup;
@@ -957,7 +922,7 @@ cleanup:
 	return rc;
 }
 
-int preKeyGetMaxId(uint32_t &AMaxId)
+int preKeyGetMaxId(uint32_t &AMaxId, void * AUserData)
 {
 	char * err_msg = nullptr;
 	int ret_val = 0;
@@ -993,7 +958,7 @@ int preKeyGetMaxId(uint32_t &AMaxId)
 	return ret_val;
 }
 
-int preKeyGetCount()
+int preKeyGetCount(void * AUserData)
 {
 	int ret_val = 0;
 	char * err_msg = nullptr;

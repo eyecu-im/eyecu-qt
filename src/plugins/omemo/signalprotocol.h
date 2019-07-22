@@ -92,12 +92,11 @@ public:
 		bool operator != (const Cipher &AOther) const;
 
 	protected:
-		Cipher(signal_context *AGlobalContext, signal_protocol_store_context *AStoreContext,
-			  const QString &ABareJid, int ADeviceId);
+		Cipher(SignalProtocol *ASignalProtocol, const QString &ABareJid, int ADeviceId);
 	private:
+		SignalProtocol *FSignalProtocol;
 		session_cipher *FCipher;
-		signal_context *FGlobalContext;
-		signal_protocol_store_context *FStoreContext;
+//		signal_protocol_store_context *FStoreContext;
 		QByteArray FBareJid;
 		signal_protocol_address FAddress;		
 	};
@@ -140,9 +139,10 @@ public:
 
 	static void init();
 
-	QString dbFileName() const;
+	QString connectionName() const;
 
-	signal_context *globalContext();
+	signal_context *globalContext() const;
+	signal_protocol_store_context *storeContext() const;
 
 	int error() const;
 
@@ -308,8 +308,7 @@ protected:
 	 * @param ACiphertextLen length of the ciphertext
 	 * @return 0 on success, negative on failure
 	 */
-	static int decryptFunc(signal_buffer **AOutput,
-						   int ACipher,
+	static int decryptFunc(signal_buffer **AOutput, int ACipher,
 						   const uint8_t *AKey, size_t AKeyLen,
 						   const uint8_t *AIv, size_t AIvLen,
 						   const uint8_t *ACiphertext, size_t ACiphertextLen,
@@ -326,7 +325,7 @@ private:
 	signal_context		*FGlobalContext;
 	signal_protocol_store_context * FStoreContext;
 
-	QString FFileName;
+//	QString FFileName;
 	QString FConnectionName;
 
 	// Mutex
