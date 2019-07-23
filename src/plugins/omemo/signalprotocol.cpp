@@ -57,7 +57,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	session_signed_pre_key * signedPreKey = nullptr;
 	signal_buffer * signedPreKeyData = nullptr;
 	uint32_t registrationId;
-	int initStatus = AXC_DB_NOT_INITIALIZED;
+	int initStatus = DbNotInitialized;
 
 	qInfo("%s: calling install-time functions", __func__);
 
@@ -78,16 +78,16 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		case 0:
 			// there is a value
 			switch (initStatus) {
-				case AXC_DB_NOT_INITIALIZED:
+				case DbNotInitialized:
 					// init needed
 					dbNeedsInit = true;
 					break;
-				case AXC_DB_NEEDS_ROLLBACK:
+				case DbNeedsRollback:
 					// reset and init needed
 					dbNeedsReset = true;
 					dbNeedsInit = true;
 					break;
-				case AXC_DB_INITIALIZED:
+				case DbInitialized:
 				default:
 					// the db is already initialised
 					break;
@@ -117,12 +117,9 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	}
 
 	if (dbNeedsInit) {
-		qDebug("%s: db needs init", __func__ );
-		qDebug("%s: setting init status to AXC_DB_NEEDS_ROLLBACK (%i)", __func__, AXC_DB_NEEDS_ROLLBACK );
-
-		rc = initStatusSet(AXC_DB_NEEDS_ROLLBACK, this);
+		rc = initStatusSet(DbNeedsRollback, this);
 		if (rc) {
-			errMsg = "failed to set init status to AXC_DB_NEEDS_ROLLBACK";
+			errMsg = "failed to set init status to DbNeedsRollback";
 			goto cleanup;
 		}
 
@@ -131,24 +128,19 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			errMsg = "failed to generate the identity key pair";
 			goto cleanup;
 		}
-		qDebug("%s: generated identity key pair", __func__ );
 
 		rc = signal_protocol_key_helper_generate_registration_id(&registrationId, 1, FGlobalContext);
 		if (rc) {
 			errMsg = "failed to generate registration id";
 			goto cleanup;
 		}
-		qDebug("%s: generated registration id: %i", __func__, registrationId);
 
-		rc = signal_protocol_key_helper_generate_pre_keys(&preKeysHead,
-															   APreKeyStartId,
-															   APreKeyAmount,
-															   FGlobalContext);
+		rc = signal_protocol_key_helper_generate_pre_keys(&preKeysHead, APreKeyStartId,
+														  APreKeyAmount, FGlobalContext);
 		if(rc) {
 			errMsg = "failed to generate pre keys";
 			goto cleanup;
 		}
-		qDebug("%s: generated pre keys", __func__ );
 
 		rc = signal_protocol_key_helper_generate_signed_pre_key(
 					&signedPreKey, identityKeyPair, ASignedPreKeyId,
@@ -158,28 +150,24 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			errMsg = "failed to generate signed pre key";
 			goto cleanup;
 		}
-		qDebug("%s: generated signed pre key", __func__ );
 
 		rc = identitySetKeyPair(identityKeyPair, this);
 		if (rc) {
 			errMsg = "failed to set identity key pair";
 			goto cleanup;
 		}
-		qDebug("%s: saved identity key pair", __func__ );
 
 		rc = identitySetLocalRegistrationId(this, registrationId);
 		if (rc) {
 			errMsg = "failed to set registration id";
 			goto cleanup;
 		}
-		qDebug("%s: saved registration id", __func__ );
 
 		rc = preKeyStoreList(preKeysHead, this);
 		if (rc) {
 			errMsg = "failed to save pre key list";
 			goto cleanup;
 		}
-		qDebug("%s: saved pre keys", __func__ );
 
 		rc = session_signed_pre_key_serialize(&signedPreKeyData, signedPreKey);
 		if (rc) {
@@ -195,23 +183,17 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			errMsg = "failed to save signed pre key";
 			goto cleanup;
 		}
-		qDebug("%s: saved signed pre key", __func__ );
 
-		rc = initStatusSet(AXC_DB_INITIALIZED, this);
+		rc = initStatusSet(DbInitialized, this);
 		if (rc) {
-			errMsg = "failed to set init status to AXC_DB_INITIALIZED";
+			errMsg = "failed to set init status to DbNeedsRollback";
 			goto cleanup;
 		}
-		qDebug("%s: initialised DB", __func__ );
-
-	} else {
-		qDebug("%s: db already initialized", __func__ );
 	}
 
 cleanup:
-	if (rc < 0) {
+	if (rc < 0)
 		qCritical("%s: %s", __func__, errMsg);
-	}
 
 	if (dbNeedsInit) {
 		SIGNAL_UNREF(identityKeyPair);
@@ -229,7 +211,8 @@ quint32 SignalProtocol::getDeviceId()
 	int rc = signal_protocol_identity_get_local_registration_id(FStoreContext, &id);
 	if (rc == SG_SUCCESS)
 		return id;
-	qCritical("%s: signal_protocol_identity_get_local_registration_id() failed! rc=%d", __func__, rc);
+	qCritical("%s: signal_protocol_identity_get_local_registration_id() failed! rc=%d",
+			  __func__, rc);
 	return 0;
 }
 
@@ -592,11 +575,11 @@ int SignalProtocol::generateSignedPreKey(session_signed_pre_key **ASignedPreKey,
 	return signal_protocol_key_helper_generate_signed_pre_key(ASignedPreKey, AIdentityKeyPair, ASignedPreKeyId, ATimestamp, FGlobalContext);
 }
 
-static int choose_aes(int cipher, size_t key_len, int * algo_p, int * mode_p) {
+static int chooseAes(int ACipher, size_t AKeyLen, int &AAlgo, int &AMode) {
   int algo = 0;
   int mode = 0;
 
-  switch(key_len) {
+  switch(AKeyLen) {
 	case 16:
 	  algo = GCRY_CIPHER_AES128;
 	  break;
@@ -610,7 +593,7 @@ static int choose_aes(int cipher, size_t key_len, int * algo_p, int * mode_p) {
 	  return SG_ERR_UNKNOWN;
   }
 
-  switch (cipher) {
+  switch (ACipher) {
 	case SG_CIPHER_AES_CBC_PKCS5:
 	  mode = GCRY_CIPHER_MODE_CBC;
 	  break;
@@ -621,8 +604,8 @@ static int choose_aes(int cipher, size_t key_len, int * algo_p, int * mode_p) {
 	  return SG_ERR_UNKNOWN;
   }
 
-  *algo_p = algo;
-  *mode_p = mode;
+  AAlgo = algo;
+  AMode = mode;
 
   return 0;
 }
@@ -684,12 +667,10 @@ cleanup:
 	return ret_val;
 }
 
-int SignalProtocol::hmacSha256UpdateFunc(void *AHmacContext, const uint8_t *AData, size_t ADataLen, void *AUserData)
+int SignalProtocol::hmacSha256UpdateFunc(void *AHmacContext, const uint8_t *AData,
+										 size_t ADataLen, void *AUserData)
 {
 	Q_UNUSED(AUserData);
-
-	SignalProtocol * axc_ctx_p = reinterpret_cast<SignalProtocol *>(AUserData);
-	(void) axc_ctx_p;
 
 	gcry_mac_write(*reinterpret_cast<gcry_mac_hd_t *>(AHmacContext), AData, ADataLen);
 
@@ -750,51 +731,50 @@ void SignalProtocol::hmacSha256CleanupFunc(void *AHmacContext, void *AUserData)
 {
 	Q_UNUSED(AUserData);
 
-	gcry_mac_hd_t * mac_hd_p = reinterpret_cast<gcry_mac_hd_t *>(AHmacContext);
-	gcry_mac_close(*mac_hd_p);
-	free(mac_hd_p);
+	gcry_mac_hd_t * macHd = reinterpret_cast<gcry_mac_hd_t *>(AHmacContext);
+	gcry_mac_close(*macHd);
+	free(macHd);
 }
 
 int SignalProtocol::sha512DigestInitFunc(void **ADigestContext, void *AUserData)
 {
 	Q_UNUSED(AUserData);
 
-//	SignalProtocol * axc_ctx_p = (SignalProtocol *) AUserData;
-	int ret_val = 0;
-	char * err_msg = nullptr;
+	int rc = 0;
+	char * errMsg = nullptr;
 
-	gcry_md_hd_t * hash_hd_p = nullptr;
-	hash_hd_p = reinterpret_cast<gcry_md_hd_t*>(malloc(sizeof(gcry_mac_hd_t)));
-	if (!hash_hd_p) {
-	  err_msg = "could not malloc sha512 ctx";
-	  ret_val = SG_ERR_NOMEM;
+	gcry_md_hd_t * hashHd = reinterpret_cast<gcry_md_hd_t*>(malloc(sizeof(gcry_mac_hd_t)));
+	if (!hashHd) {
+	  errMsg = "could not malloc sha512 ctx";
+	  rc = SG_ERR_NOMEM;
 	  goto cleanup;
 	}
 
-	ret_val = int(gcry_md_open(hash_hd_p, GCRY_MD_SHA512, 0));
-	if (ret_val) {
-	  err_msg = "could not create sha512 ctx";
+	rc = int(gcry_md_open(hashHd, GCRY_MD_SHA512, 0));
+	if (rc) {
+	  errMsg = "could not create sha512 ctx";
 	  goto cleanup;
 	}
 
-	*ADigestContext = hash_hd_p;
+	*ADigestContext = hashHd;
 
-  cleanup:
-	if (ret_val) {
-	  if (ret_val > 0) {
-		qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-		ret_val = SG_ERR_UNKNOWN;
-	  } else {
-		qCritical("%s: %s\n", __func__, err_msg);
-	  }
+cleanup:
+	if (rc) {
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg,
+					  gcry_strsource(gcry_error_t(rc)), gcry_strerror(gcry_error_t(rc)));
+			rc = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, errMsg);
+		}
 
-	  if (hash_hd_p) {
-		gcry_md_close(*hash_hd_p);
-		free(hash_hd_p);
-	  }
+		if (hashHd) {
+			gcry_md_close(*hashHd);
+			free(hashHd);
+		}
 	}
 
-	return ret_val;
+	return rc;
 }
 
 int SignalProtocol::sha512DigestUpdateFunc(void *ADigestContext, const uint8_t *AData,
@@ -812,57 +792,54 @@ int SignalProtocol::sha512DigestFinalFunc(void *ADigestContext, signal_buffer **
 {
 	Q_UNUSED(AUserData);
 
-//	SignalProtocol *signalProtocol = (SignalProtocol *)AUserData;
-	gcry_md_hd_t * hash_hd_p = (gcry_md_hd_t *) ADigestContext;
-	int ret_val = 0;
-	char * err_msg = nullptr;
+	gcry_md_hd_t * hashHd = reinterpret_cast<gcry_md_hd_t *>(ADigestContext);
+	int rc = 0;
+	char * errMsg = nullptr;
 
-	int algo = GCRY_MD_SHA512;
-	size_t hash_len = 0;
-	unsigned char * hash_data_p = nullptr;
-	signal_buffer * out_buf_p = nullptr;
+	const int algo = GCRY_MD_SHA512;
+	signal_buffer * outBuf = nullptr;
 
-	hash_len = gcry_md_get_algo_dlen(algo);
+	size_t hashLen = gcry_md_get_algo_dlen(algo);
 
-	hash_data_p = gcry_md_read(*hash_hd_p, algo);
-	if (!hash_data_p) {
-	  ret_val = SG_ERR_UNKNOWN;
-	  err_msg = "failed to read hash";
-	  goto cleanup;
+	unsigned char * hashData = gcry_md_read(*hashHd, algo);
+	if (!hashData) {
+		rc = SG_ERR_UNKNOWN;
+		errMsg = "failed to read hash";
+		goto cleanup;
 	}
 
-	out_buf_p = signal_buffer_create((uint8_t *) hash_data_p, hash_len);
-	if (!out_buf_p) {
-	  ret_val = SG_ERR_NOMEM;
-	  err_msg = "failed to create hash output buf";
-	  goto cleanup;
+	outBuf = signal_buffer_create(hashData, hashLen);
+	if (!outBuf) {
+		rc = SG_ERR_NOMEM;
+		errMsg = "failed to create hash output buf";
+		goto cleanup;
 	}
 
-	gcry_md_reset(*hash_hd_p);
+	gcry_md_reset(*hashHd);
 
-	*AOutput = out_buf_p;
+	*AOutput = outBuf;
 
-  cleanup:
-  if (ret_val) {
-	if (ret_val > 0) {
-	  qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-	  ret_val = SG_ERR_UNKNOWN;
-	} else {
-	  qCritical("%s: %s\n", __func__, err_msg);
+cleanup:
+	if (rc) {
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg,
+					  gcry_strsource(gcry_error_t(rc)), gcry_strerror(gcry_error_t(rc)));
+			rc = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, errMsg);
+		}
 	}
-  }
 
-	return ret_val;
+	return rc;
 }
 
 void SignalProtocol::sha512DigestCleanupFunc(void *ADigestContext, void *AUserData)
 {
 	Q_UNUSED(AUserData);
 
-	gcry_md_hd_t * hash_hd_p = reinterpret_cast<gcry_md_hd_t *>(ADigestContext);
-
-	gcry_md_close(*hash_hd_p);
-	free(hash_hd_p);
+	gcry_md_hd_t * hashHd = reinterpret_cast<gcry_md_hd_t *>(ADigestContext);
+	gcry_md_close(*hashHd);
+	free(hashHd);
 }
 
 int SignalProtocol::encryptFunc(signal_buffer **AOutput, int ACipher, const uint8_t *AKey,
@@ -872,107 +849,106 @@ int SignalProtocol::encryptFunc(signal_buffer **AOutput, int ACipher, const uint
 	Q_UNUSED(AUserData);
 
 	int rc = SG_SUCCESS;
-	char * err_msg = nullptr;
-//	SignalProtocol * axc_ctx_p = (SignalProtocol *)AUserData;
+	char * errMsg = nullptr;
 
 	int algo = 0;
 	int mode = 0;
-	size_t pad_len = 0;
-	size_t ct_len = 0;
-	gcry_cipher_hd_t cipher_hd = {nullptr};
-	uchar * pt_p = nullptr;
-	uchar * out_p = nullptr;
-	signal_buffer * out_buf_p = nullptr;
+	size_t padLen = 0;
+	size_t ctLen = 0;
+	gcry_cipher_hd_t cipherHd = nullptr;
+	uchar * pt = nullptr;
+	uchar * out = nullptr;
+	signal_buffer * outBuf = nullptr;
 
 	if(AIvLen != 16) {
-		err_msg = "invalid AES IV size (must be 16)";
+		errMsg = "invalid AES IV size (must be 16)";
 		rc = SG_ERR_UNKNOWN;
 		goto cleanup;
 	}
 
-	rc = choose_aes(ACipher, AKeyLen, &algo, &mode);
+	rc = chooseAes(ACipher, AKeyLen, algo, mode);
 	if (rc) {
-		err_msg = "failed to choose cipher";
+		errMsg = "failed to choose cipher";
 		rc = SG_ERR_UNKNOWN;
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_open(&cipher_hd, algo, mode, 0);
+	rc = gcry_cipher_open(&cipherHd, algo, mode, 0);
 	if (rc) {
-		err_msg = "failed to init cipher";
+		errMsg = "failed to init cipher";
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_setkey(cipher_hd, AKey, AKeyLen);
+	rc = gcry_cipher_setkey(cipherHd, AKey, AKeyLen);
 	if (rc) {
-		err_msg = "failed to set key";
+		errMsg = "failed to set key";
 		goto cleanup;
 	}
 
 	switch (ACipher) {
 		case SG_CIPHER_AES_CBC_PKCS5:
-			pad_len = 16 - (APlaintextLen % 16);
-			if (pad_len == 0) {
-			  pad_len = 16;
+			padLen = 16 - (APlaintextLen % 16);
+			if (padLen == 0) {
+			  padLen = 16;
 			}
-			ct_len = APlaintextLen + pad_len;
-			rc = int(gcry_cipher_setiv(cipher_hd, AIv, AIvLen));
+			ctLen = APlaintextLen + padLen;
+			rc = int(gcry_cipher_setiv(cipherHd, AIv, AIvLen));
 			if (rc) {
-			  err_msg = "failed to set iv";
+			  errMsg = "failed to set iv";
 			  goto cleanup;
 			}
 			break;
 		case SG_CIPHER_AES_CTR_NOPADDING:
-			ct_len = APlaintextLen;
-			rc = int(gcry_cipher_setctr(cipher_hd, AIv, AIvLen));
+			ctLen = APlaintextLen;
+			rc = int(gcry_cipher_setctr(cipherHd, AIv, AIvLen));
 			if (rc) {
-				err_msg = "failed to set iv";
+				errMsg = "failed to set iv";
 				goto cleanup;
 			}
 			break;
 		default:
 			rc = SG_ERR_UNKNOWN;
-			err_msg = "unknown cipher";
+			errMsg = "unknown cipher";
 			goto cleanup;
 	}
 
-	pt_p = (uint8_t*)malloc(sizeof(uint8_t) * ct_len);
-	if (!pt_p) {
-		err_msg = "failed to malloc pt buf";
+	pt = reinterpret_cast<uint8_t*>(malloc(sizeof(uint8_t) * ctLen));
+	if (!pt) {
+		errMsg = "failed to malloc pt buf";
 		rc = SG_ERR_NOMEM;
 		goto cleanup;
 	}
-	memset(pt_p, pad_len, ct_len);
-	memcpy(pt_p, APlaintext, APlaintextLen);
+	memset(pt, int(padLen), ctLen);
+	memcpy(pt, APlaintext, APlaintextLen);
 
-	out_p = (uchar*)malloc(sizeof(uint8_t) * ct_len);
-	if (!out_p) {
-		err_msg = "failed to malloc ct buf";
+	out = reinterpret_cast<uchar*>(malloc(sizeof(uint8_t) * ctLen));
+	if (!out) {
+		errMsg = "failed to malloc ct buf";
 		rc = SG_ERR_NOMEM;
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_encrypt(cipher_hd, out_p, ct_len, pt_p, ct_len);
+	rc = gcry_cipher_encrypt(cipherHd, out, ctLen, pt, ctLen);
 	if (rc) {
-		err_msg = "failed to encrypt";
+		errMsg = "failed to encrypt";
 		goto cleanup;
 	}
 
-	out_buf_p = signal_buffer_create(out_p, ct_len);
-	*AOutput = out_buf_p;
+	outBuf = signal_buffer_create(out, ctLen);
+	*AOutput = outBuf;
 
 cleanup:
 	if (rc) {
 		if (rc > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg, gcry_strsource(rc), gcry_strerror(rc));
 			rc = SG_ERR_UNKNOWN;
 		} else {
-			qCritical("%s: %s\n", __func__, err_msg);
+			qCritical("%s: %s\n", __func__, errMsg);
 		}
 	}
 
-	free(out_p);
-	gcry_cipher_close(cipher_hd);
+	free(out);
+	gcry_cipher_close(cipherHd);
 
 	return rc;
 }
@@ -981,98 +957,97 @@ int SignalProtocol::decryptFunc(signal_buffer **AOutput, int ACipher, const uint
 {
 	Q_UNUSED(AUserData);
 
-	int ret_val = SG_SUCCESS;
-	char * err_msg = nullptr;
-//	SignalProtocol *axc_ctx_p = reinterpret_cast<SignalProtocol *>(AUserData);
+	int rc = SG_SUCCESS;
+	char * errMsg = nullptr;
 
 	int algo = 0;
 	int mode = 0;
-	gcry_cipher_hd_t cipher_hd = {nullptr};
-	uchar * out_p = nullptr;
-	size_t pad_len = 0;
-	signal_buffer * out_buf_p = nullptr;
+	gcry_cipher_hd_t cipherHd = nullptr;
+	uchar * out = nullptr;
+	size_t padLen = 0;
+	signal_buffer * outBuf = nullptr;
 
 	if(AIvLen != 16) {
-		err_msg = "invalid AES IV size (must be 16)";
-		ret_val = SG_ERR_UNKNOWN;
+		errMsg = "invalid AES IV size (must be 16)";
+		rc = SG_ERR_UNKNOWN;
 		goto cleanup;
 	}
 
-	ret_val = choose_aes(ACipher, AKeyLen, &algo, &mode);
-	if (ret_val) {
-		err_msg = "failed to choose cipher";
-		ret_val = SG_ERR_UNKNOWN;
+	rc = chooseAes(ACipher, AKeyLen, algo, mode);
+	if (rc) {
+		errMsg = "failed to choose cipher";
+		rc = SG_ERR_UNKNOWN;
 		goto cleanup;
 	}
 
-	ret_val = gcry_cipher_open(&cipher_hd, algo, mode, 0);
-	if (ret_val) {
-		err_msg = "failed to init cipher";
+	rc = int(gcry_cipher_open(&cipherHd, algo, mode, 0));
+	if (rc) {
+		errMsg = "failed to init cipher";
 		goto cleanup;
 	}
 
-	ret_val = gcry_cipher_setkey(cipher_hd, AKey, AKeyLen);
-	if (ret_val) {
-	  err_msg = "failed to set key";
+	rc = int(gcry_cipher_setkey(cipherHd, AKey, AKeyLen));
+	if (rc) {
+	  errMsg = "failed to set key";
 	  goto cleanup;
 	}
 
 	switch (ACipher) {
 		case SG_CIPHER_AES_CBC_PKCS5:
-			pad_len = 1;
-			ret_val = gcry_cipher_setiv(cipher_hd, AIv, AIvLen);
-			if (ret_val) {
-				err_msg = "failed to set iv";
+			padLen = 1;
+			rc = int(gcry_cipher_setiv(cipherHd, AIv, AIvLen));
+			if (rc) {
+				errMsg = "failed to set iv";
 				goto cleanup;
 			}
 			break;
 		case SG_CIPHER_AES_CTR_NOPADDING:
-			ret_val = gcry_cipher_setctr(cipher_hd, AIv, AIvLen);
-			if (ret_val) {
-				err_msg = "failed to set iv";
+			rc = int(gcry_cipher_setctr(cipherHd, AIv, AIvLen));
+			if (rc) {
+				errMsg = "failed to set iv";
 				goto cleanup;
 			}
 			break;
 		default:
-			ret_val = SG_ERR_UNKNOWN;
-			err_msg = "unknown cipher";
+			rc = SG_ERR_UNKNOWN;
+			errMsg = "unknown cipher";
 			goto cleanup;
 	}
 
-	out_p = (uchar*)malloc(sizeof(uint8_t) * ACiphertextLen);
-	if (!out_p) {
-		err_msg = "failed to malloc pt buf";
-		ret_val = SG_ERR_NOMEM;
+	out = reinterpret_cast<uchar*>(malloc(sizeof(uchar) * ACiphertextLen));
+	if (!out) {
+		errMsg = "failed to malloc pt buf";
+		rc = SG_ERR_NOMEM;
 		goto cleanup;
 	}
 
-	ret_val = gcry_cipher_decrypt(cipher_hd, out_p, ACiphertextLen, ACiphertext, ACiphertextLen);
-	if (ret_val) {
-		err_msg = "failed to decrypt";
+	rc = int(gcry_cipher_decrypt(cipherHd, out, ACiphertextLen, ACiphertext, ACiphertextLen));
+	if (rc) {
+		errMsg = "failed to decrypt";
 		goto cleanup;
 	}
 
-	if (pad_len) {
-		pad_len = out_p[ACiphertextLen - 1];
+	if (padLen) {
+		padLen = out[ACiphertextLen - 1];
 	}
 
-	out_buf_p = signal_buffer_create(out_p, ACiphertextLen - pad_len);
-	*AOutput = out_buf_p;
+	outBuf = signal_buffer_create(out, ACiphertextLen - padLen);
+	*AOutput = outBuf;
 
 cleanup:
-	if (ret_val) {
-		if (ret_val > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
-			ret_val = SG_ERR_UNKNOWN;
+	if (rc) {
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg, gcry_strsource(rc), gcry_strerror(rc));
+			rc = SG_ERR_UNKNOWN;
 		} else {
-			qCritical("%s: %s\n", __func__, err_msg);
+			qCritical("%s: %s\n", __func__, errMsg);
 		}
 	}
 
-	free(out_p);
-	gcry_cipher_close(cipher_hd);
+	free(out);
+	gcry_cipher_close(cipherHd);
 
-	return ret_val;
+	return rc;
 }
 
 void SignalProtocol::recursiveMutexLock(void *AUserData)
@@ -1134,7 +1109,6 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 		FError = -1;
 		goto cleanup;
 	}
-	qDebug("%s: set signal protocol crypto provider", __func__);
 
 	// 3. set locking functions
 	if (signal_context_set_locking_functions(FGlobalContext, recursiveMutexLock, recursiveMutexUnlock)) {
@@ -1142,7 +1116,6 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 		FError = -1;
 		goto cleanup;
 	}
-	qDebug("%s: set locking functions", __func__);
 
 	// Init store context
 	if (signal_protocol_store_context_create(&FStoreContext, FGlobalContext)) {
@@ -1150,61 +1123,60 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 		FError = -1;
 		goto cleanup;
 	}
-	qDebug("%s: created store context", __func__);
 
-	signal_protocol_session_store session_store;
-	session_store.load_session_func = &sessionLoad;
-	session_store.get_sub_device_sessions_func = &sessionGetSubDeviceSessions;
-	session_store.store_session_func = &sessionStore;
-	session_store.contains_session_func = &sessionContains;
-	session_store.delete_session_func = &sessionDelete;
-	session_store.delete_all_sessions_func = &sessionDeleteAll;
-	session_store.destroy_func = &sessionDestroyStoreCtx;
-	session_store.user_data = this;
+	signal_protocol_session_store sessionStore;
+	sessionStore.load_session_func = &sessionLoad;
+	sessionStore.get_sub_device_sessions_func = &sessionGetSubDeviceSessions;
+	sessionStore.store_session_func = &OmemoStore::sessionStore;
+	sessionStore.contains_session_func = &sessionContains;
+	sessionStore.delete_session_func = &sessionDelete;
+	sessionStore.delete_all_sessions_func = &sessionDeleteAll;
+	sessionStore.destroy_func = &sessionDestroyStoreCtx;
+	sessionStore.user_data = this;
 
-	if (signal_protocol_store_context_set_session_store(FStoreContext, &session_store)) {
+	if (signal_protocol_store_context_set_session_store(FStoreContext, &sessionStore)) {
 		errMsg = "failed to create session store";
 		FError = -1;
 		goto cleanup;
 	}
 
-	signal_protocol_pre_key_store pre_key_store;
-	pre_key_store.load_pre_key = &preKeyLoad;
-	pre_key_store.store_pre_key = &preKeyStore;
-	pre_key_store.contains_pre_key = &preKeyContains;
-	pre_key_store.remove_pre_key = &preKeyRemove;
-	pre_key_store.destroy_func = &preKeyDestroyCtx;
-	pre_key_store.user_data = this;
+	signal_protocol_pre_key_store preKeyStore;
+	preKeyStore.load_pre_key = &preKeyLoad;
+	preKeyStore.store_pre_key = &OmemoStore::preKeyStore;
+	preKeyStore.contains_pre_key = &preKeyContains;
+	preKeyStore.remove_pre_key = &preKeyRemove;
+	preKeyStore.destroy_func = &preKeyDestroyCtx;
+	preKeyStore.user_data = this;
 
-	if (signal_protocol_store_context_set_pre_key_store(FStoreContext, &pre_key_store)) {
+	if (signal_protocol_store_context_set_pre_key_store(FStoreContext, &preKeyStore)) {
 		errMsg = "failed to set pre key store";
 		FError = -1;
 		goto cleanup;
 	}
 
-	signal_protocol_signed_pre_key_store signed_pre_key_store;
-	signed_pre_key_store.load_signed_pre_key = &signedPreKeyLoad;
-	signed_pre_key_store.store_signed_pre_key = &signedPreKeyStore;
-	signed_pre_key_store.contains_signed_pre_key = &signedPreKeyContains;
-	signed_pre_key_store.remove_signed_pre_key = &signedPreKeyRemove;
-	signed_pre_key_store.destroy_func = &signedPreKeyDestroyCtx;
-	signed_pre_key_store.user_data = this;
+	signal_protocol_signed_pre_key_store signedPreKeyStore;
+	signedPreKeyStore.load_signed_pre_key = &signedPreKeyLoad;
+	signedPreKeyStore.store_signed_pre_key = &OmemoStore::signedPreKeyStore;
+	signedPreKeyStore.contains_signed_pre_key = &signedPreKeyContains;
+	signedPreKeyStore.remove_signed_pre_key = &signedPreKeyRemove;
+	signedPreKeyStore.destroy_func = &signedPreKeyDestroyCtx;
+	signedPreKeyStore.user_data = this;
 
-	if (signal_protocol_store_context_set_signed_pre_key_store(FStoreContext, &signed_pre_key_store)) {
+	if (signal_protocol_store_context_set_signed_pre_key_store(FStoreContext, &signedPreKeyStore)) {
 		errMsg = "failed to set signed pre key store";
 		FError = -1;
 		goto cleanup;
 	}
 
-	signal_protocol_identity_key_store identity_key_store;
-	identity_key_store.get_identity_key_pair = &identityGetKeyPair;
-	identity_key_store.get_local_registration_id = &identityGetLocalRegistrationId;
-	identity_key_store.save_identity = &identitySave;
-	identity_key_store.is_trusted_identity = &identityAlwaysTrusted;
-	identity_key_store.destroy_func = &identityDestroyCtx;
-	identity_key_store.user_data = this;
+	signal_protocol_identity_key_store identityKeyStore;
+	identityKeyStore.get_identity_key_pair = &identityGetKeyPair;
+	identityKeyStore.get_local_registration_id = &identityGetLocalRegistrationId;
+	identityKeyStore.save_identity = &identitySave;
+	identityKeyStore.is_trusted_identity = &identityAlwaysTrusted;
+	identityKeyStore.destroy_func = &identityDestroyCtx;
+	identityKeyStore.user_data = this;
 
-	if (signal_protocol_store_context_set_identity_key_store(FStoreContext, &identity_key_store)) {
+	if (signal_protocol_store_context_set_identity_key_store(FStoreContext, &identityKeyStore)) {
 		errMsg = "failed to set identity key store";
 		FError = -1;
 		goto cleanup;

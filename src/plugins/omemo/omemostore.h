@@ -14,9 +14,11 @@ struct ratchet_identity_key_pair;
 
 namespace OmemoStore
 {
-	#define AXC_DB_NOT_INITIALIZED (-1)
-	#define AXC_DB_NEEDS_ROLLBACK    0
-	#define AXC_DB_INITIALIZED       1
+	enum DbInitState {
+		DbNotInitialized = -1,
+		DbNeedsRollback,
+		DbInitialized
+	};
 
 	void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionName);
 	void removeDatabase(const QString &AConnectionName);
@@ -56,17 +58,17 @@ namespace OmemoStore
 	/**
 	 * "Partial application" of db_set_property, setting the init status value.
 	 *
-	 * @param AStatus AXC_DB_NOT INITIALIZED, AXC_DB_NEEDS_ROOLBACK, or AXC_DB_INITIALIZED
+	 * @param AStatus one of DbInitState values
 	 * @param ASignalProtocol pointer to SignalProtocol object
 	 * @return 0 on success, negative on error
 	 */
 	int initStatusSet(int AStatus, SignalProtocol *ASignalProtocol);
 
 	/**
-	 * "Partial application" of db_get_property, getting the init status value.
+	 * "Partial application" of propertyGet(), getting the init status value.
 	 *
-	 * @param init_status_p The value behind this pointer will be set to the init status number.
-	 * @return 0 on success, negative on error, 1 if no sql error but no result
+	 * @param AInitStatus Will be set to the init status.
+	 * @return 0 on success, negative on error, 1 if no SQL error but no result
 	 */
 	int initStatusGet(int &AInitStatus, SignalProtocol *ASignalProtocol);
 
@@ -75,7 +77,8 @@ namespace OmemoStore
 	 *
 	 * @param APreKeysHead Pointer to the first element of the list.
 	 */
-	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * APreKeysHead, SignalProtocol *ASignalProtocol);
+	int preKeyStoreList(signal_protocol_key_helper_pre_key_list_node * APreKeysHead,
+						SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Gets the specified number of pre keys for publishing, i.e. only their public part.
@@ -85,12 +88,13 @@ namespace OmemoStore
 	 * @param AContext pointer to SignalProtocol global context.
 	 * @return 0 on success, negative on error.
 	 */
-	int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys, const SignalProtocol *ASignalProtocol);
+	int preKeyGetList(size_t AAmount, QMap<quint32, QByteArray> &APreKeys,
+					  const SignalProtocol *ASignalProtocol);
 
 	/**
 	 * Retrieves the highest existing pre key ID that is not the last resort key's ID.
 	 *
-	 * @param max_id_p Will be set to the highest ID that is not MAX_INT.
+	 * @param AMaxId Will be set to the highest ID that is not MAX_INT.
 	 * @return 0 on success, negative on error.
 	 */
 	int preKeyGetMaxId(uint32_t &AMaxId, SignalProtocol *ASignalProtocol);
@@ -109,6 +113,8 @@ namespace OmemoStore
 	int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtocol *ASignalProtocol);
 
 	int identitySetLocalRegistrationId(SignalProtocol *ASignalProtocol, const uint32_t ARegistrationId);
+
+	int identityIsTrusted(const QString &AName, const QByteArray &AKeyData, SignalProtocol *ASignalProtocol);
 
 	//
 	// Callback methods
