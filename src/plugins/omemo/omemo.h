@@ -6,7 +6,6 @@
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/ipluginmanager.h>
-#include <interfaces/ioptionsmanager.h>
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/ipepmanager.h>
 #include <interfaces/iaccountmanager.h>
@@ -22,12 +21,10 @@ class Omemo: public QObject,
 			 public IOmemo,
 			 public IPEPHandler,
 			 public IStanzaHandler,
-//			 public IMessageEditor,
-//			 public IMessageWriter
 			 public IStanzaRequestOwner
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IOmemo IPEPHandler IStanzaHandler IStanzaRequestOwner) // IMessageWriter)
+	Q_INTERFACES(IPlugin IOmemo IPEPHandler IStanzaHandler IStanzaRequestOwner)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
@@ -81,10 +78,8 @@ protected:
 	};
 
 protected slots:
-	void onProfileOpened(const QString &AProfile);
-	void onProfileClosed(const QString &AProfile);
-//	void onStreamOpened(IXmppStream *AXmppStream);
-//	void onStreamClosed(IXmppStream *AXmppStream);
+	void onOptionsOpened();
+
 	void onPresenceOpened(IPresence *APresence);
 	void onPresenceClosed(IPresence *APresence);
 	void onPepTimeout();
@@ -95,6 +90,7 @@ protected slots:
 
 	void onAccountInserted(IAccount *AAccount);
 	void onAccountRemoved(IAccount *AAccount);
+	void onAccountDestroyed(const QUuid &AAccountId);
 
 	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 	void onOmemoActionTriggered();
@@ -105,7 +101,6 @@ private:
 	IStanzaProcessor*	FStanzaProcessor;
 	IXmppStreamManager*	FXmppStreamManager;
 	IPresenceManager*	FPresenceManager;
-	IOptionsManager*	FOptionsManager;
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
 	IPluginManager*		FPluginManager;
@@ -117,11 +112,7 @@ private:
 	int					FSHIMessageIn;
 	int					FSHIMessageOut;
 
-//	SignalProtocol*		FSignalProtocol;
 	QHash<Jid, SignalProtocol*> FSignalProtocols;
-
-//	QMap <Jid, QString> FStreamOmemo;
-	QDir				FOmemoDir;
 
 	QHash<IXmppStream *, QTimer*> FPepDelay;
 	QHash<QString, QList<quint32> > FDeviceIds;

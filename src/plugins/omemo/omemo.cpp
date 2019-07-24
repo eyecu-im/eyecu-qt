@@ -194,7 +194,6 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FStanzaProcessor(nullptr),
 				FXmppStreamManager(nullptr),
 				FPresenceManager(nullptr),
-				FOptionsManager(nullptr),
 				FDiscovery(nullptr),
 				FMessageWidgets(nullptr),
 				FPluginManager(nullptr),
@@ -203,7 +202,6 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
 				FSHIMessageOut(0),
-//				FSignalProtocol(nullptr),
 				FCleanup(true) // Temporary flag for own device information cleanup
 {}
 
@@ -229,16 +227,7 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	IPlugin *plugin = APluginManager->pluginInterface("IXmppStreamManager").value(0, nullptr);
 	if (plugin)
-	{
 		FXmppStreamManager = qobject_cast<IXmppStreamManager *>(plugin->instance());
-//		if (FXmppStreamManager)
-//		{
-//			connect(FXmppStreamManager->instance(),SIGNAL(streamOpened(IXmppStream *)),
-//												   SLOT(onStreamOpened(IXmppStream *)));
-//			connect(FXmppStreamManager->instance(),SIGNAL(streamClosed(IXmppStream *)),
-//												   SLOT(onStreamClosed(IXmppStream *)));
-//		}
-	}
 
 	plugin = APluginManager->pluginInterface("IPresenceManager").value(0, nullptr);
 	if (plugin) {
@@ -259,15 +248,9 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 												SLOT(onAccountInserted(IAccount *)));
 			connect(FAccountManager->instance(),SIGNAL(accountRemoved(IAccount *)),
 												SLOT(onAccountRemoved(IAccount *)));
+			connect(FAccountManager->instance(),SIGNAL(accountDestroyed(QUuid)),
+												SLOT(onAccountDestroyed(QUuid)));
 		}
-	}
-
-	plugin = APluginManager->pluginInterface("IOptionsManager").value(0, nullptr);
-	if (plugin) {
-		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
-		if (FOptionsManager)
-			connect(FOptionsManager->instance(),SIGNAL(profileOpened(QString)),
-												 SLOT(onProfileOpened(QString)));
 	}
 
 	plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0, nullptr);
@@ -298,6 +281,9 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 			connect(FMessageWidgets->instance(),SIGNAL(normalWindowCreated(IMessageNormalWindow *)),SLOT(onNormalWindowCreated(IMessageNormalWindow *)));
 		}
 	}
+
+	connect(Options::instance(), SIGNAL(optionsOpened()),
+								 SLOT(onOptionsOpened()));
 
 	//AInitOrder = 100;   // This one should be initialized AFTER ....!
 	return true;
@@ -573,12 +559,50 @@ void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore
 
 void Omemo::onAccountInserted(IAccount *AAccount)
 {
+	qDebug() << "Omemo::onAccountInserted(" << AAccount->name() << AAccount->accountId() << ")";
+	QString name=AAccount->accountId().toString();
+	QDir omemoDir;
+	omemoDir.setPath(Options::instance()->filesPath());
+	if (!omemoDir.cd(DIR_OMEMO))
+	{
+		omemoDir.mkdir(DIR_OMEMO);
+		if (!omemoDir.cd(DIR_OMEMO))
+		{
+			qCritical() << "Cannot switch to" << DIR_OMEMO;
+			return;
+		}
+	}
 
+	SignalProtocol *signalProtocol = new SignalProtocol(omemoDir.filePath(name+".db"), name);
+	if (signalProtocol->install() == SG_SUCCESS)
+		FSignalProtocols.insert(AAccount->streamJid(), signalProtocol);
+	else
+	{
+		qCritical() << "SignalProtocol::install() for account"
+					<< AAccount->name()
+					<< AAccount->accountId()
+					<< "failed!";
+		delete signalProtocol;
+	}
 }
 
 void Omemo::onAccountRemoved(IAccount *AAccount)
 {
+	qDebug() << "Omemo::onAccountRemoved(" << AAccount->name() << AAccount->accountId() << ")";
+	if (FSignalProtocols.contains(AAccount->streamJid()))
+		delete FSignalProtocols.take(AAccount->streamJid());
+}
 
+void Omemo::onAccountDestroyed(const QUuid &AAccountId)
+{
+	qDebug() << "Omemo::onAccountDestroyed(" << AAccountId << ")";
+	QString fileName = AAccountId.toString()+".db";
+	QDir omemoDir(Options::instance()->filesPath());
+	omemoDir.cd(DIR_OMEMO);
+	if (omemoDir.remove(fileName))
+		qInfo() << "Databse file deleted:" << fileName;
+	else
+		qCritical() << "Failed to delete databse file:" << fileName;
 }
 
 void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
@@ -857,42 +881,25 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 	}
 }
 
-void Omemo::onProfileOpened(const QString &AProfile)
-{
-	FOmemoDir.setPath(FOptionsManager->profilePath(AProfile));	
-	if (!FOmemoDir.cd(DIR_OMEMO))
-	{
-		FOmemoDir.mkdir(DIR_OMEMO);
-		if (!FOmemoDir.cd(DIR_OMEMO))
-			qCritical() << "Cannot switch to" << DIR_OMEMO;
-	}
+void Omemo::onOptionsOpened()
+{	// Purge orphaned files
+	Options *options = qobject_cast<Options *>(sender());
+	QDir omemoDir(options->filesPath());
+	omemoDir.cd(DIR_OMEMO);
 
+	QStringList files = omemoDir.entryList(QStringList("{?\?\?\?\?\?\?\?-?\?\?\?-?\?\?\?-?\?\?\?-?\?\?\?\?\?\?\?\?\?\?\?}.db"),
+											QDir::Files);
 	QList<IAccount*> accounts = FAccountManager->accounts();
 	for (QList<IAccount*>::ConstIterator it=accounts.constBegin();
 		 it != accounts.constEnd(); ++it)
-	{
-		QString name=(*it)->accountId().toString();
-		SignalProtocol *signalProtocol = new SignalProtocol(FOmemoDir.filePath(name+".db"), name);
-		if (signalProtocol->install() == SG_SUCCESS)
-			FSignalProtocols.insert((*it)->streamJid(), signalProtocol);
+		files.removeOne((*it)->accountId().toString()+".db");
+
+	for (QStringList::ConstIterator it=files.constBegin();
+		 it != files.constEnd(); ++it)
+		if (omemoDir.remove(*it))
+			qInfo() << "Database file:" << *it << "deleted.";
 		else
-		{
-			qCritical() << "SignalProtocol::install() for account"
-						<< (*it)->name() << "failed!";
-			delete signalProtocol;
-		}
-	}
-}
-
-void Omemo::onProfileClosed(const QString &AProfile)
-{
-	QList<IAccount*> accounts = FAccountManager->accounts();
-	for (QList<IAccount*>::ConstIterator it=accounts.constBegin();
-		 it != accounts.constEnd(); ++it)
-	{
-		if (FSignalProtocols.contains((*it)->streamJid()))
-			delete FSignalProtocols.take((*it)->streamJid());
-	}
+			qCritical() << "Failed to delete database file:" << *it;
 }
 
 void Omemo::onPresenceOpened(IPresence *APresence)
