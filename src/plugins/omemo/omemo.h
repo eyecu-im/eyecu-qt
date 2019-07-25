@@ -1,7 +1,6 @@
 #ifndef OMEMO_H
 #define OMEMO_H
 
-#include <QDir>
 #include <interfaces/iomemo.h>
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/ipresencemanager.h>
@@ -11,7 +10,6 @@
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
-#include <interfaces/imessagestylemanager.h>
 #include <interfaces/istanzaprocessor.h>
 
 class SignalProtocol;

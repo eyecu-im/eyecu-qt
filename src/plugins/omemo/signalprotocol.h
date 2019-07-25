@@ -14,8 +14,7 @@ struct session_builder;
 #define PRE_KEYS_START		1
 #define PRE_KEYS_AMOUNT		100
 
-#define ADDR_NAME(X) QString::fromLatin1(QByteArray(X->name, \
-										 int(X->name_len)))
+#define ADDR_NAME(X) QString::fromLatin1(QByteArray(X->name, int(X->name_len)))
 #define DATA_SIZE(A) reinterpret_cast<const quint8*>(A.data()), size_t(A.size())
 
 #define BADS(D,S) reinterpret_cast<const char*>(D), int(S)

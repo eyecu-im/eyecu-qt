@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QTimer>
+#include <QDir>
 
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
@@ -24,7 +25,7 @@ extern "C" {
 #include "omemo.h"
 #include "signalprotocol.h"
 
-// PEP elementa
+// PEP elements
 #define TAG_NAME_PUBSUB					"pubsub"
 #define TAG_NAME_LIST					"list"
 #define TAG_NAME_DEVICE					"device"
@@ -36,6 +37,7 @@ extern "C" {
 #define TAG_NAME_SIGNEDPREKEYSIGNATURE "signedPreKeySignature"
 #define TAG_NAME_PREKEYS				"prekeys"
 #define TAG_NAME_PREKEYPUBLIC			"preKeyPublic"
+
 // Message elements
 #define TAG_NAME_BODY					"body"
 #define TAG_NAME_ENCRYPTED				"encrypted"
@@ -52,7 +54,6 @@ extern "C" {
 #define ATTR_NAME_PREKEY				"prekey"
 
 #define DIR_OMEMO						"omemo"
-#define DBFN_OMEMO						"omemo.db"
 
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
@@ -60,48 +61,49 @@ extern "C" {
 #define SHC_MESSAGE "/message/body"
 #define SHC_MESSAGE_ENCRYPTED "/message/encrypted[@xmlns='" NS_OMEMO "']"
 
+#define VDATA_SIZE(A) A.data(), size_t(A.size())
+
 static QByteArray encryptMessageText(const QString &AMessageText, const QByteArray &AKey,
 								 const QByteArray &AIv, QByteArray &AAuthTag)
 {
 	gcry_error_t rc = SG_SUCCESS;
-	char * err_msg = nullptr;
+	char * errMsg = nullptr;
 
 	int algo = GCRY_CIPHER_AES128;
 	int mode = GCRY_CIPHER_MODE_GCM;
-	gcry_cipher_hd_t cipher_hd = {nullptr};
+	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray outBuf;
 	QByteArray inBuf(AMessageText.toUtf8());
 
 	if(AIv.size() != 16) {
-		err_msg = "Invalid AES IV size (must be 16)";
+		errMsg = "Invalid AES IV size (must be 16)";
 		rc = gcry_error_t(SG_ERR_UNKNOWN);
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_open(&cipher_hd, algo, mode, 0);
+	rc = gcry_cipher_open(&cipherHd, algo, mode, 0);
 	if (rc) {
-		err_msg = "Failed to init cipher";
+		errMsg = "Failed to init cipher";
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size()));
+	rc = gcry_cipher_setkey(cipherHd, VDATA_SIZE(AKey));
 	if (rc) {
-		err_msg = "Failed to set key";
+		errMsg = "Failed to set key";
 		goto cleanup;
 	}
 
 	outBuf.resize(inBuf.size());
-	rc = gcry_cipher_encrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-											inBuf.data(), size_t(inBuf.size()));
+	rc = gcry_cipher_encrypt(cipherHd, VDATA_SIZE(outBuf), VDATA_SIZE(inBuf));
 	if (rc) {
-		err_msg = "Failed to encrypt";
+		errMsg = "Failed to encrypt";
 		goto cleanup;
 	}
 
 	AAuthTag.resize(8);
-	rc = gcry_cipher_gettag(cipher_hd, AAuthTag.data(), size_t(AAuthTag.size()));
+	rc = gcry_cipher_gettag(cipherHd, VDATA_SIZE(AAuthTag));
 	if (rc) {
-		err_msg = "Failed get authentication tag";
+		errMsg = "Failed get authentication tag";
 	} else {
 		qDebug("Authentication tag: %s", AAuthTag.toHex().data());
 	}
@@ -109,74 +111,72 @@ static QByteArray encryptMessageText(const QString &AMessageText, const QByteArr
 cleanup:
 	if (rc) {
 		if (rc > 0)
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(rc), gcry_strerror(rc));
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg,
+					  gcry_strsource(rc), gcry_strerror(rc));
 		else
-			qCritical("%s: %s\n", __func__, err_msg);
+			qCritical("%s: %s\n", __func__, errMsg);
 	}
 
-	gcry_cipher_close(cipher_hd);
+	gcry_cipher_close(cipherHd);
 
 	return outBuf;
 }
 
-static QString decryptMessageText(const QByteArray &AEncryptedText,
-								  const QByteArray &AKey,
-								  const QByteArray &AIv,
-								  const QByteArray &AAuthTag)
+static QString decryptMessageText(const QByteArray &AEncryptedText, const QByteArray &AKey,
+								  const QByteArray &AIv, const QByteArray &AAuthTag)
 {
-	gcry_error_t ret_val = SG_SUCCESS;
-	char * err_msg = nullptr;
+	gcry_error_t retVal = SG_SUCCESS;
+	char * errMsg = nullptr;
 
 	int algo = GCRY_CIPHER_AES128;
 	int mode = GCRY_CIPHER_MODE_GCM;
 
-	gcry_cipher_hd_t cipher_hd = {nullptr};
+	gcry_cipher_hd_t cipherHd = {nullptr};
 	QByteArray outBuf;
 
 	if(AIv.size() != 16) {
-	  err_msg = "Invalid AES IV size (must be 16)";
-	  ret_val = gcry_error_t(SG_ERR_UNKNOWN);
+	  errMsg = "Invalid AES IV size (must be 16)";
+	  retVal = gcry_error_t(SG_ERR_UNKNOWN);
 	  goto cleanup;
 	}
 
-	ret_val = gcry_cipher_open(&cipher_hd, algo, mode, 0);
-	if (ret_val) {
-	  err_msg = "failed to init cipher";
+	retVal = gcry_cipher_open(&cipherHd, algo, mode, 0);
+	if (retVal) {
+	  errMsg = "failed to init cipher";
 	  goto cleanup;
 	}
 
-	ret_val = gcry_cipher_setkey(cipher_hd, AKey.data(), size_t(AKey.size()));
-	if (ret_val) {
-	  err_msg = "failed to set key";
+	retVal = gcry_cipher_setkey(cipherHd, VDATA_SIZE(AKey));
+	if (retVal) {
+	  errMsg = "failed to set key";
 	  goto cleanup;
 	}
 
 	outBuf.resize(AEncryptedText.size());
-	ret_val = gcry_cipher_decrypt(cipher_hd, outBuf.data(), size_t(outBuf.size()),
-								  AEncryptedText.data(), size_t(AEncryptedText.size()));
-	if (ret_val) {
-		err_msg = "failed to decrypt";
+	retVal = gcry_cipher_decrypt(cipherHd, VDATA_SIZE(outBuf), VDATA_SIZE(AEncryptedText));
+	if (retVal) {
+		errMsg = "failed to decrypt";
 		goto cleanup;
 	}
 
-	ret_val = gcry_cipher_checktag(cipher_hd, AAuthTag.data(),
-								   size_t(AAuthTag.size()));
-	if (ret_val) {
-		err_msg = "failed check authentication tag";
+	retVal = gcry_cipher_checktag(cipherHd, VDATA_SIZE(AAuthTag));
+	if (retVal) {
+		errMsg = "failed check authentication tag";
 	} else {
 		qDebug("Authentication tag checked successfuly!");
 	}
 
   cleanup:
-	if (ret_val) {
-		if (ret_val > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, err_msg, gcry_strsource(ret_val), gcry_strerror(ret_val));
+	if (retVal) {
+		if (retVal > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg, gcry_strsource(retVal),
+															 gcry_strerror(retVal));
 		} else {
-			qCritical("%s: %s\n", __func__, err_msg);
+			qCritical("%s: %s\n", __func__, errMsg);
 		}
 	}
 
-	gcry_cipher_close(cipher_hd);
+	gcry_cipher_close(cipherHd);
 
 	return outBuf.isNull()?QString():QString::fromUtf8(outBuf);
 }
