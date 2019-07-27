@@ -55,6 +55,10 @@ extern "C" {
 
 #define DIR_OMEMO						"omemo"
 
+#define AES_128_KEY_LENGTH				16
+#define AES_GCM_IV_LENGTH				16
+#define AES_GCM_TAG_LENGTH				16
+
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
 
@@ -69,19 +73,17 @@ static QByteArray encryptMessageText(const QString &AMessageText, const QByteArr
 	gcry_error_t rc = SG_SUCCESS;
 	char * errMsg = nullptr;
 
-	int algo = GCRY_CIPHER_AES128;
-	int mode = GCRY_CIPHER_MODE_GCM;
 	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray outBuf;
 	QByteArray inBuf(AMessageText.toUtf8());
 
-	if(AIv.size() != 16) {
+	if(AIv.size() != AES_GCM_IV_LENGTH) {
 		errMsg = "Invalid AES IV size (must be 16)";
 		rc = gcry_error_t(SG_ERR_UNKNOWN);
 		goto cleanup;
 	}
 
-	rc = gcry_cipher_open(&cipherHd, algo, mode, 0);
+	rc = gcry_cipher_open(&cipherHd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_GCM, GCRY_CIPHER_SECURE);
 	if (rc) {
 		errMsg = "Failed to init cipher";
 		goto cleanup;
@@ -93,6 +95,12 @@ static QByteArray encryptMessageText(const QString &AMessageText, const QByteArr
 		goto cleanup;
 	}
 
+	rc = gcry_cipher_setiv(cipherHd, VDATA_SIZE(AIv));
+	if (rc) {
+		errMsg = "Failed to set IV";
+		goto cleanup;
+	}
+
 	outBuf.resize(inBuf.size());
 	rc = gcry_cipher_encrypt(cipherHd, VDATA_SIZE(outBuf), VDATA_SIZE(inBuf));
 	if (rc) {
@@ -100,13 +108,10 @@ static QByteArray encryptMessageText(const QString &AMessageText, const QByteArr
 		goto cleanup;
 	}
 
-	AAuthTag.resize(8);
+	AAuthTag.resize(AES_GCM_TAG_LENGTH);
 	rc = gcry_cipher_gettag(cipherHd, VDATA_SIZE(AAuthTag));
-	if (rc) {
+	if (rc)
 		errMsg = "Failed get authentication tag";
-	} else {
-		qDebug("Authentication tag: %s", AAuthTag.toHex().data());
-	}
 
 cleanup:
 	if (rc) {
@@ -125,52 +130,52 @@ cleanup:
 static QString decryptMessageText(const QByteArray &AEncryptedText, const QByteArray &AKey,
 								  const QByteArray &AIv, const QByteArray &AAuthTag)
 {
-	gcry_error_t retVal = SG_SUCCESS;
+	gcry_error_t rc = SG_SUCCESS;
 	char * errMsg = nullptr;
 
-	int algo = GCRY_CIPHER_AES128;
-	int mode = GCRY_CIPHER_MODE_GCM;
-
-	gcry_cipher_hd_t cipherHd = {nullptr};
+	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray outBuf;
 
-	if(AIv.size() != 16) {
+	if(AIv.size() != AES_GCM_IV_LENGTH) {
 	  errMsg = "Invalid AES IV size (must be 16)";
-	  retVal = gcry_error_t(SG_ERR_UNKNOWN);
+	  rc = gcry_error_t(SG_ERR_UNKNOWN);
 	  goto cleanup;
 	}
 
-	retVal = gcry_cipher_open(&cipherHd, algo, mode, 0);
-	if (retVal) {
+	rc = gcry_cipher_open(&cipherHd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_GCM, GCRY_CIPHER_SECURE);
+	if (rc) {
 	  errMsg = "failed to init cipher";
 	  goto cleanup;
 	}
 
-	retVal = gcry_cipher_setkey(cipherHd, VDATA_SIZE(AKey));
-	if (retVal) {
+	rc = gcry_cipher_setkey(cipherHd, VDATA_SIZE(AKey));
+	if (rc) {
 	  errMsg = "failed to set key";
 	  goto cleanup;
 	}
 
+	rc = gcry_cipher_setiv(cipherHd, VDATA_SIZE(AIv));
+	if (rc) {
+		errMsg = "Failed to set IV";
+		goto cleanup;
+	}
+
 	outBuf.resize(AEncryptedText.size());
-	retVal = gcry_cipher_decrypt(cipherHd, VDATA_SIZE(outBuf), VDATA_SIZE(AEncryptedText));
-	if (retVal) {
+	rc = gcry_cipher_decrypt(cipherHd, VDATA_SIZE(outBuf), VDATA_SIZE(AEncryptedText));
+	if (rc) {
 		errMsg = "failed to decrypt";
 		goto cleanup;
 	}
 
-	retVal = gcry_cipher_checktag(cipherHd, VDATA_SIZE(AAuthTag));
-	if (retVal) {
+	rc = gcry_cipher_checktag(cipherHd, VDATA_SIZE(AAuthTag));
+	if (rc)
 		errMsg = "failed check authentication tag";
-	} else {
-		qDebug("Authentication tag checked successfuly!");
-	}
 
   cleanup:
-	if (retVal) {
-		if (retVal > 0) {
-			qCritical("%s: %s (%s: %s)\n", __func__, errMsg, gcry_strsource(retVal),
-															 gcry_strerror(retVal));
+	if (rc) {
+		if (rc > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg, gcry_strsource(rc),
+															 gcry_strerror(rc));
 		} else {
 			qCritical("%s: %s\n", __func__, errMsg);
 		}
@@ -183,10 +188,10 @@ static QString decryptMessageText(const QByteArray &AEncryptedText, const QByteA
 
 static void getKeyPair(QByteArray &AKey, QByteArray &AIv)
 {
-	AKey.resize(16);
-	gcry_randomize(AKey.data(), size_t(AKey.size()), GCRY_STRONG_RANDOM);
-	AIv.resize(16);
-	gcry_randomize(AIv.data(), size_t(AIv.size()), GCRY_STRONG_RANDOM);
+	AKey.resize(AES_128_KEY_LENGTH);
+	gcry_randomize(VDATA_SIZE(AKey), GCRY_STRONG_RANDOM);
+	AIv.resize(AES_GCM_IV_LENGTH);
+	gcry_randomize(VDATA_SIZE(AIv), GCRY_STRONG_RANDOM);
 }
 
 Omemo::Omemo(): FAccountManager(nullptr),
@@ -202,7 +207,7 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
 				FSHIMessageOut(0),
-				FCleanup(true) // Temporary flag for own device information cleanup
+				FCleanup(false) // Temporary flag for own device information cleanup
 {}
 
 Omemo::~Omemo()
@@ -559,7 +564,6 @@ void Omemo::onAddressChanged(const Jid &AStreamBefore, const Jid &AContactBefore
 
 void Omemo::onAccountInserted(IAccount *AAccount)
 {
-	qDebug() << "Omemo::onAccountInserted(" << AAccount->name() << AAccount->accountId() << ")";
 	QString name=AAccount->accountId().toString();
 	QDir omemoDir;
 	omemoDir.setPath(Options::instance()->filesPath());
@@ -568,7 +572,7 @@ void Omemo::onAccountInserted(IAccount *AAccount)
 		omemoDir.mkdir(DIR_OMEMO);
 		if (!omemoDir.cd(DIR_OMEMO))
 		{
-			qCritical() << "Cannot switch to" << DIR_OMEMO;
+			qCritical("Cannot switch to %s", DIR_OMEMO);
 			return;
 		}
 	}
@@ -588,20 +592,16 @@ void Omemo::onAccountInserted(IAccount *AAccount)
 
 void Omemo::onAccountRemoved(IAccount *AAccount)
 {
-	qDebug() << "Omemo::onAccountRemoved(" << AAccount->name() << AAccount->accountId() << ")";
 	if (FSignalProtocols.contains(AAccount->streamJid()))
 		delete FSignalProtocols.take(AAccount->streamJid());
 }
 
 void Omemo::onAccountDestroyed(const QUuid &AAccountId)
 {
-	qDebug() << "Omemo::onAccountDestroyed(" << AAccountId << ")";
 	QString fileName = AAccountId.toString()+".db";
 	QDir omemoDir(Options::instance()->filesPath());
 	omemoDir.cd(DIR_OMEMO);
-	if (omemoDir.remove(fileName))
-		qInfo() << "Databse file deleted:" << fileName;
-	else
+	if (!omemoDir.remove(fileName))
 		qCritical() << "Failed to delete databse file:" << fileName;
 }
 
@@ -609,9 +609,7 @@ void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 {
 	IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 	if (window)
-	{
 		updateChatWindowActions(window);
-	}
 }
 
 void Omemo::onOmemoActionTriggered()
@@ -904,7 +902,6 @@ void Omemo::onOptionsOpened()
 
 void Omemo::onPresenceOpened(IPresence *APresence)
 {
-	qDebug() << "Omemo::onPresenceOpened(" << APresence->streamJid().full() << ")";
 	IXmppStream *stream = FXmppStreamManager->findXmppStream(APresence->streamJid());
 	QTimer *timer = new QTimer(this);
 	FPepDelay.insert(stream, timer);
@@ -916,7 +913,7 @@ void Omemo::onPresenceOpened(IPresence *APresence)
 
 void Omemo::onPresenceClosed(IPresence *APresence)
 {
-	qDebug() << "Omemo::onPresenceClosed(" << APresence->streamJid().full() << ")";
+	Q_UNUSED(APresence);
 }
 
 void Omemo::onPepTimeout()
@@ -948,9 +945,6 @@ void Omemo::onPepTimeout()
 
 bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
-	qDebug() << "Omemo::stanzaReadWrite(" << AHandleId << "," << AStreamJid.full()
-			 << "," << AStanza.toString() << "," << AAccept << ")";
-
 	if (FSignalProtocols.contains(AStreamJid))
 	{
 		SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
@@ -1005,86 +999,84 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 		}
 		else
 		{
-			if (AStanza.firstElement(TAG_NAME_BODY).isNull())
+			QDomElement encrypted = AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
+			if (!encrypted.isNull())
 			{
-				QDomElement encrypted = AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
-				if (!encrypted.isNull())
+				QDomElement payload = encrypted.firstChildElement(TAG_NAME_PAYLOAD);
+				if (!payload.isNull())
 				{
-					QDomElement payload = encrypted.firstChildElement(TAG_NAME_PAYLOAD);
-					if (!payload.isNull())
+					QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
+					if (!header.isNull())
 					{
-						QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
-						if (!header.isNull())
+						if (header.hasAttribute(ATTR_NAME_SID))
 						{
-							if (header.hasAttribute(ATTR_NAME_SID))
+							bool ok;
+							quint32 sid = header.attribute(ATTR_NAME_SID).toUInt(&ok);
+							if (ok && sid)
 							{
-								bool ok;
-								quint32 sid = header.attribute(ATTR_NAME_SID).toUInt(&ok);
-								if (ok && sid)
+								QDomElement iv = header.firstChildElement(TAG_NAME_IV);
+								if (!iv.isNull())
 								{
-									QDomElement iv = header.firstChildElement(TAG_NAME_IV);
-									if (!iv.isNull())
+									QByteArray ivData = QByteArray::fromBase64(iv.text().toLatin1());
+
+									quint32 deviceId = signalProtocol->getDeviceId();
+									for (QDomElement key = header.firstChildElement(TAG_NAME_KEY);
+										 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
 									{
-										QByteArray ivData = QByteArray::fromBase64(iv.text().toLatin1());
-
-										quint32 deviceId = signalProtocol->getDeviceId();
-										for (QDomElement key = header.firstChildElement(TAG_NAME_KEY);
-											 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
+										if (key.hasAttribute(ATTR_NAME_RID))
 										{
-											if (key.hasAttribute(ATTR_NAME_RID))
+											quint32 rid = key.attribute(ATTR_NAME_RID).toUInt(&ok);
+											if (ok && rid)
 											{
-												quint32 rid = key.attribute(ATTR_NAME_RID).toUInt(&ok);
-												if (ok && rid)
+												if (rid==deviceId)
 												{
-													if (rid==deviceId)
+													QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
+													SignalProtocol::Cipher cipher = signalProtocol->sessionCipherCreate(AStanza.fromJid().bare(), sid);
+													QByteArray keyTuple;
+													if (key.attribute(ATTR_NAME_PREKEY)=="true")
 													{
-														QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
-														SignalProtocol::Cipher cipher = signalProtocol->sessionCipherCreate(AStanza.fromJid().bare(), sid);
-														QByteArray keyTuple;
-														if (key.attribute(ATTR_NAME_PREKEY)=="true")
-														{
-															SignalProtocol::PreKeySignalMessage message = signalProtocol->getPreKeySignalMessage(decoded);
-															bool preKeyUpdated;
-															keyTuple = cipher.decrypt(message, preKeyUpdated);
-															if (preKeyUpdated)
-																publishOwnKeys(AStreamJid);
-														}
-														else
-														{
-															SignalProtocol::SignalMessage message = signalProtocol->getSignalMessage(decoded);
-															keyTuple = cipher.decrypt(message);
-														}
-														QByteArray keyData = keyTuple.left(16);
-														QByteArray authTag = keyTuple.mid(16);
-														QByteArray encryptedText = QByteArray::fromBase64(payload.text().toLatin1());
-														QString decryptedText = decryptMessageText(encryptedText, keyData, ivData, authTag);
-
-														AStanza.element().removeChild(encrypted);
-														QDomText text = AStanza.document().createTextNode(decryptedText);
-														AStanza.addElement(TAG_NAME_BODY).appendChild(text);
-														break;
+														SignalProtocol::PreKeySignalMessage message = signalProtocol->getPreKeySignalMessage(decoded);
+														bool preKeyUpdated;
+														keyTuple = cipher.decrypt(message, preKeyUpdated);
+														if (preKeyUpdated)
+															publishOwnKeys(AStreamJid);
 													}
+													else
+													{
+														SignalProtocol::SignalMessage message = signalProtocol->getSignalMessage(decoded);
+														keyTuple = cipher.decrypt(message);
+													}
+													QByteArray encryptedText = QByteArray::fromBase64(payload.text().toLatin1());
+													QString decryptedText = decryptMessageText(encryptedText, keyTuple.left(AES_128_KEY_LENGTH),
+																							   ivData, keyTuple.mid(AES_128_KEY_LENGTH));
+													AStanza.element().removeChild(encrypted);
+													QDomText text = AStanza.document().createTextNode(decryptedText);
+													QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
+													if (!body.isNull())
+														AStanza.element().removeChild(body);
+													AStanza.addElement(TAG_NAME_BODY).appendChild(text);
+													break;
 												}
-												else
-													qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
 											}
 											else
-												qCritical() << "rid attribute is missing!";
+												qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
 										}
+										else
+											qCritical() << "rid attribute is missing!";
 									}
 								}
-								else
-									qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
 							}
 							else
-								qCritical() << "sid attribute is missing!";
+								qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
 						}
 						else
-							qCritical() << "<header/> element is missing!";
+							qCritical() << "sid attribute is missing!";
 					}
 					else
-						qCritical() << "<payload/> element is missing!";
+						qCritical() << "<header/> element is missing!";
 				}
+				else
+					qCritical() << "<payload/> element is missing!";
 			}
 		}
 	}
