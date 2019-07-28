@@ -520,7 +520,6 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
 {
 	QString contact = AWindow->contactJid().uFull();
 	QString stream = AWindow->streamJid().uFull();
-
 	QList<QAction*> omemoActions = AWindow->toolBarWidget()->toolBarChanger()
 										->groupItems(TBG_MWTBW_OMEMO);
 	Action *omemoAction = omemoActions.isEmpty()?nullptr:AWindow->toolBarWidget()
@@ -541,8 +540,25 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
 		omemoAction->setData(ADR_STREAM_JID, stream);
 		omemoAction->setData(ADR_CONTACT_JID, contact);
 		omemoAction->setEnabled(supported==2);
-		QString iconKey = isActiveSession(AWindow->address())?MNI_CRYPTO_ON
-															 :MNI_CRYPTO_OFF;
+		QString iconKey = MNI_CRYPTO_OFF;
+		if (isActiveSession(AWindow->address()))
+		{
+			iconKey = MNI_CRYPTO_ON;
+			QString bareJid = AWindow->address()->contactJid().bare();
+			if (FDeviceIds.contains(bareJid))
+			{
+				const QList<quint32> &devices = FDeviceIds[bareJid];
+				SignalProtocol *signalProtocol = FSignalProtocols[AWindow->address()->streamJid()];
+				for (QList<quint32>::ConstIterator itc=devices.constBegin();
+					 itc != devices.constEnd(); ++itc)
+					if (signalProtocol->sessionInitStatus(bareJid, *itc)
+							==SignalProtocol::SessionAcknowledged)
+					{
+						iconKey = MNI_CRYPTO_FULL;
+						break;
+					}
+			}
+		}
 		omemoAction->setIcon(RSR_STORAGE_MENUICONS, iconKey);
 	}
 	else

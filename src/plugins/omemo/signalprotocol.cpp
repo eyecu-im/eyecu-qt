@@ -1172,7 +1172,7 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	identityKeyStore.get_identity_key_pair = &identityGetKeyPair;
 	identityKeyStore.get_local_registration_id = &identityGetLocalRegistrationId;
 	identityKeyStore.save_identity = &identitySave;
-	identityKeyStore.is_trusted_identity = &identityAlwaysTrusted;
+	identityKeyStore.is_trusted_identity = &identityIsTrusted;
 	identityKeyStore.destroy_func = &identityDestroyCtx;
 	identityKeyStore.user_data = this;
 

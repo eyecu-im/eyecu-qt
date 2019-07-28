@@ -628,22 +628,24 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 	return 0;
 }
 
-int identityIsTrusted(const QString &AName, const QByteArray &AKeyData, SignalProtocol *ASignalProtocol)
+int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData, size_t AKeyLen, void *AUserData)
 {
-	SQL_QUERYS("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
+	qDebug() << "identityIsTrusted()" ;
+	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
 			   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
 
-	query.bindValue(0, AName);
+	query.bindValue(0, AAddress);
 	if (query.exec()) {
 		if (query.next()) {
+			qDebug() << "No entry. Identity is trusted!";
 			return 1; // no entry = trusted, according to docs
 		} else {
 			// theoretically could be checked if trusted or not but it's TOFU
-			QByteArray data = query.value(1).toByteArray();
-			if (AKeyData != data) {
+			if (query.value(1).toByteArray() != BYTE_ARRAY(AKeyData, AKeyLen)) {
 				qCritical("Key data does not match");
 				return 0;
 			}
+			qDebug() << "Key data matches. Identity is trusted!";
 			return 1;
 		}
 	} else {

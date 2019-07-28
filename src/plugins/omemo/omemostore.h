@@ -114,8 +114,6 @@ namespace OmemoStore
 
 	int identitySetLocalRegistrationId(SignalProtocol *ASignalProtocol, const uint32_t ARegistrationId);
 
-	int identityIsTrusted(const QString &AName, const QByteArray &AKeyData, SignalProtocol *ASignalProtocol);
-
 	//
 	// Callback methods
 	//
@@ -158,6 +156,7 @@ namespace OmemoStore
 	int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateData, void * AUserData);
 	int identityGetLocalRegistrationId(void * AUserData, uint32_t * ARegistrationId);
 	int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
+	int identityIsTrusted(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
 	int identityAlwaysTrusted(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
 	void identityDestroyCtx(void * AUserData);
 };
