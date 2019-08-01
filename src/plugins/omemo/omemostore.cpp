@@ -13,7 +13,7 @@
 #define OWN_KEY 2
 #define REG_ID "axolotl_registration_id"
 #define IDENTITY_KEY_TRUSTED 1
-#define IDENTITY_KEY_UNTRUSTED 1
+#define IDENTITY_KEY_UNTRUSTED 0
 
 #define SESSION_STORE_TABLE "session_store"
 #define SESSION_STORE_NAME "name"
@@ -618,7 +618,7 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 					  :"DELETE FROM " IDENTITY_KEY_STORE_TABLE
 					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
 
-	query.bindValue(0, QString(AAddress->name));
+	query.bindValue(0, ADDR_NAME(AAddress));
 	if (AKeyData) {
 		query.bindValue(1, BYTE_ARRAY(AKeyData, AKeyLen));
 		query.bindValue(2, IDENTITY_KEY_TRUSTED);
@@ -630,22 +630,21 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 
 int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData, size_t AKeyLen, void *AUserData)
 {
-	qDebug() << "identityIsTrusted()" ;
 	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
 			   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
 
-	query.bindValue(0, AAddress);
+	query.bindValue(0, ADDR_NAME(AAddress));
 	if (query.exec()) {
 		if (query.next()) {
-			qDebug() << "No entry. Identity is trusted!";
-			return 1; // no entry = trusted, according to docs
-		} else {
 			// theoretically could be checked if trusted or not but it's TOFU
-			if (query.value(1).toByteArray() != BYTE_ARRAY(AKeyData, AKeyLen)) {
+			if (BYTE_ARRAY(AKeyData, AKeyLen) != query.value(1).toByteArray()) {
 				qCritical("Key data does not match");
 				return 0;
 			}
 			qDebug() << "Key data matches. Identity is trusted!";
+			return 1; // no entry = trusted, according to docs
+		} else {
+			qDebug() << "No entry. Identity is trusted!";
 			return 1;
 		}
 	} else {

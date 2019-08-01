@@ -207,7 +207,7 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
 				FSHIMessageOut(0),
-				FCleanup(false) // Temporary flag for own device information cleanup
+				FCleanup(true) // Temporary flag for own device information cleanup
 {}
 
 Omemo::~Omemo()
