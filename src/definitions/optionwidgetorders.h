@@ -290,6 +290,11 @@
 #define   OWO_JINGLETRANSPORTS_RAWUDP             610
 #define OHO_JINGLETRANSPORTS_ICE                  650
 #define   OWO_JINGLETRANSPORTS_ICE                660
+#define OHO_OTR									  500
+#define   OWO_OTR								  510
+#define OHO_OMEMO								  550
+#define   OWO_OMEMO								  560
 #define OWO_SCHEDULER							  500
 // *** >>> eyeCU >>> ***
 #endif // DEF_OPTIONWIDGETORDERS_H
+
