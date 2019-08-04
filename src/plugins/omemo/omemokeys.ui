@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OmemoKeys</class>
+ <widget class="QWidget" name="OmemoKeys">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OMEMO keys</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QFormLayout" name="lytAccount">
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
+      <number>6</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="lblAccount">
+       <property name="text">
+        <string>Account</string>
+       </property>
+       <property name="buddy">
+        <cstring>cmbAccount</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="cmbAccount"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="lblDeviceIdLabel">
+       <property name="text">
+        <string>Device ID</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="lblDeviceId"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="lblPublicIdentityKeyLabel">
+       <property name="text">
+        <string>Public identity key</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="lblPublicIdentityKey">
+         <property name="font">
+          <font>
+           <family>Terminal</family>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbPublicIdentityKeyCopy">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Copy</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblPreKeys">
+     <property name="text">
+      <string>Pre keys</string>
+     </property>
+     <property name="buddy">
+      <cstring>tvPreKeys</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="lytPreKeys">
+     <item row="0" column="0">
+      <widget class="QTableView" name="tvPreKeys">
+       <property name="font">
+        <font>
+         <family>Terminal</family>
+        </font>
+       </property>
+       <attribute name="horizontalHeaderStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblSessions">
+     <property name="text">
+      <string>Identity keys</string>
+     </property>
+     <property name="buddy">
+      <cstring>tvIdentityKeys</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="lytIdentityKeys">
+     <item row="0" column="0">
+      <widget class="QTableView" name="tvIdentityKeys">
+       <property name="font">
+        <font>
+         <family>Terminal</family>
+        </font>
+       </property>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>cmbAccount</tabstop>
+  <tabstop>tvPreKeys</tabstop>
+  <tabstop>tvIdentityKeys</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cmbAccount</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onAccountIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>225</x>
+     <y>24</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPublicIdentityKeyCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onIdentityKeyCopy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>73</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onAccountIndexChanged(int)</slot>
+  <slot>onIdentityKeyCopy()</slot>
+ </slots>
+</ui>

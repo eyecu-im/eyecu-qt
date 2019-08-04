@@ -10,10 +10,7 @@
 #define INIT_STATUS "init_status"
 #define OWN_PUBLIC_KEY "own_public_key"
 #define OWN_PRIVATE_KEY "own_private_key"
-#define OWN_KEY 2
 #define REG_ID "axolotl_registration_id"
-#define IDENTITY_KEY_TRUSTED 1
-#define IDENTITY_KEY_UNTRUSTED 0
 
 #define SESSION_STORE_TABLE "session_store"
 #define SESSION_STORE_NAME "name"
@@ -460,7 +457,7 @@ int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtoco
 	}
 
 	query.bindValue(1, SBUF2BARR(pubkeyBuf));
-	query.bindValue(2, OWN_KEY);
+	query.bindValue(2, IdentityKeyOwn);
 	if (!query.exec()) {
 		errMsg = "Failed to execute query";
 		rc = -3;
@@ -621,7 +618,7 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 	query.bindValue(0, ADDR_NAME(AAddress));
 	if (AKeyData) {
 		query.bindValue(1, BYTE_ARRAY(AKeyData, AKeyLen));
-		query.bindValue(2, IDENTITY_KEY_TRUSTED);
+		query.bindValue(2, IdentityKeyTrusted);
 	}
 	if (!query.exec()) return -3;
 
@@ -922,6 +919,42 @@ int preKeyGetCount(SignalProtocol * ASignalProtocol)
 		qCritical("%s: %d", err_msg, ret_val);
 
 	return ret_val;
+}
+
+int identityKeyGetList(size_t AAmount, QHash<QString, QPair<QByteArray, uint> > &AIdentityKeys, const SignalProtocol *ASignalProtocol)
+{
+	int rc = -1;
+	char * errMsg = nullptr;
+//	session_pre_key * preKey = nullptr;
+//	signal_buffer * preKeyPublicSerialized = nullptr;
+//	signal_buffer * serializedKeypairData = nullptr;
+
+	SQL_QUERYS(AAmount?"SELECT * FROM " IDENTITY_KEY_STORE_TABLE " LIMIT ?1"
+					  :"SELECT * FROM " IDENTITY_KEY_STORE_TABLE);
+	if (AAmount)
+		query.bindValue(0, AAmount);
+	if (query.exec())
+	{
+		while (query.next()) {
+			QString name = query.value(0).toString();
+			QByteArray data = query.value(1).toByteArray();
+			uint trusted = query.value(2).toUInt();
+			if (trusted != IdentityKeyOwn)
+				AIdentityKeys.insert(name, qMakePair(data, trusted));
+		}
+	} else {
+		errMsg = "sql error when retrieving keys";
+		goto cleanup;
+	}
+
+	rc = 0;
+
+cleanup:
+	if (rc) {
+		qCritical("%s: %d", errMsg, rc);
+	}
+
+	return rc;
 }
 
 }

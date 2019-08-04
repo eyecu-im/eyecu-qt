@@ -3,6 +3,7 @@
 
 #include <QSqlDatabase>
 #include <QMap>
+#include <QHash>
 
 class SignalProtocol;
 struct signal_context;
@@ -18,6 +19,12 @@ namespace OmemoStore
 		DbNotInitialized = -1,
 		DbNeedsRollback,
 		DbInitialized
+	};
+
+	enum IdentityKeyTrust {
+		IdentityKeyUnrusted,
+		IdentityKeyTrusted,
+		IdentityKeyOwn
 	};
 
 	void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionName);
@@ -113,6 +120,9 @@ namespace OmemoStore
 	int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtocol *ASignalProtocol);
 
 	int identitySetLocalRegistrationId(SignalProtocol *ASignalProtocol, const uint32_t ARegistrationId);
+
+	int identityKeyGetList(size_t AAmount, QHash<QString, QPair<QByteArray, uint> > &AIdentityKeys,
+						   const SignalProtocol *ASignalProtocol);
 
 	//
 	// Callback methods

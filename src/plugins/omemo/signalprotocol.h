@@ -135,12 +135,14 @@ public:
 
 	static void init();
 
+	static QString calcFingerprint(const QByteArray &APublicKey);
+
 	QString connectionName() const;
 
 	signal_context *globalContext() const;
 	signal_protocol_store_context *storeContext() const;
 
-	int error() const;
+	int error() const;	
 
 	int install(quint32 ASignedPreKeyId=SIGNED_PRE_KEY_ID, uint APreKeyStartId=PRE_KEYS_START, uint APreKeyAmount=PRE_KEYS_AMOUNT);
 
@@ -159,6 +161,8 @@ public:
 	QByteArray getPreKeyPrivate(quint32 AKeyId) const;
 
 	QMap<quint32, QByteArray> getPreKeys() const;
+
+	QHash<QString, QPair<QByteArray, uint> > getIdentityKeys() const;
 
 	session_pre_key_bundle *createPreKeyBundle(uint32_t ARegistrationId,
 											   int ADeviceId, uint32_t APreKeyId,

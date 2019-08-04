@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OmemoOptions</class>
+ <widget class="QWidget" name="OmemoOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>41</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OMEMO options</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QPushButton" name="pbKeys">
+     <property name="text">
+      <string>&amp;Keys</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbKeys</sender>
+   <signal>clicked()</signal>
+   <receiver>OmemoOptions</receiver>
+   <slot>onKeysClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>340</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onKeysClicked()</slot>
+ </slots>
+</ui>

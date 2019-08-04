@@ -26,6 +26,24 @@ void SignalProtocol::init()
 	gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
+QString SignalProtocol::calcFingerprint(const QByteArray &APublicKey)
+{
+	QString result;
+	if (APublicKey.size() == 33 && APublicKey[0] == 5)
+	{
+		for (int i=0; i<8; ++i)
+		{
+			if (i)
+				result.append(' ');
+			result.append(QString::fromLatin1(APublicKey.mid(1+i*4, 4).toHex()));
+		}
+	}
+	else
+		qCritical("Invalid public key data");
+
+	return result;
+}
+
 QString SignalProtocol::connectionName() const
 {
 	return FConnectionName;
@@ -481,6 +499,13 @@ QMap<quint32, QByteArray> SignalProtocol::getPreKeys() const
 	QMap<quint32, QByteArray> preKeys;
 	preKeyGetList(PRE_KEYS_AMOUNT, preKeys, this);
 	return preKeys;
+}
+
+QHash<QString, QPair<QByteArray, uint> > SignalProtocol::getIdentityKeys() const
+{
+	QHash<QString, QPair<QByteArray, uint> > identityKeys;
+	identityKeyGetList(0, identityKeys, this);
+	return identityKeys;
 }
 
 session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistrationId,

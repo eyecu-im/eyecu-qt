@@ -6,6 +6,7 @@
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/ipluginmanager.h>
 #include <interfaces/iservicediscovery.h>
+#include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipepmanager.h>
 #include <interfaces/iaccountmanager.h>
 #include <interfaces/imessagewidgets.h>
@@ -17,18 +18,22 @@ class SignalProtocol;
 class Omemo: public QObject,
 			 public IPlugin,
 			 public IOmemo,
+			 public IOptionsDialogHolder,
 			 public IPEPHandler,
 			 public IStanzaHandler,
 			 public IStanzaRequestOwner
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IOmemo IPEPHandler IStanzaHandler IStanzaRequestOwner)
+	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IStanzaRequestOwner)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
 public:
 	Omemo();
 	~Omemo() override;
+
+	SignalProtocol *signalProtocol(const Jid &AStreamJid);
+
 	//IPlugin
 	virtual QObject *instance() override { return this; }
 	virtual QUuid pluginUuid() const override { return OMEMO_UUID; }
@@ -37,6 +42,9 @@ public:
 	virtual bool initObjects() override;
 	virtual bool initSettings() override;
 	virtual bool startPlugin() override { return true; }
+
+	// IOptionsDialogHolder
+	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
 
 	// IPEPHandler
 	virtual bool processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza) override;
@@ -95,6 +103,7 @@ protected slots:
 
 private:
 	IAccountManager*	FAccountManager;
+	IOptionsManager*	FOptionsManager;
 	IPEPManager*		FPepManager;
 	IStanzaProcessor*	FStanzaProcessor;
 	IXmppStreamManager*	FXmppStreamManager;
@@ -120,7 +129,7 @@ private:
 	QMultiHash<QString, SignalDeviceBundle> FBundles;
 	QMultiHash<QString, Stanza> FPendingMessages;
 
-	bool				FCleanup;	
+	bool				FCleanup;
 };
 
 #endif // OMEMO_H

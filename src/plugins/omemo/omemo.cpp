@@ -8,6 +8,7 @@
 #include <definitions/toolbargroups.h>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
+#include <definitions/optionnodeorders.h>
 #include <definitions/optionwidgetorders.h>
 #include <definitions/messagewriterorders.h>
 #include <definitions/messageeditororders.h>
@@ -17,6 +18,9 @@
 #include <definitions/shortcuts.h>
 
 #include <utils/options.h>
+
+#include "omemooptions.h"
+#include "omemokeys.h"
 
 extern "C" {
 #include <gcrypt.h>
@@ -195,6 +199,7 @@ static void getKeyPair(QByteArray &AKey, QByteArray &AIv)
 }
 
 Omemo::Omemo(): FAccountManager(nullptr),
+				FOptionsManager(nullptr),
 				FPepManager(nullptr),
 				FStanzaProcessor(nullptr),
 				FXmppStreamManager(nullptr),
@@ -207,11 +212,16 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
 				FSHIMessageOut(0),
-				FCleanup(true) // Temporary flag for own device information cleanup
+				FCleanup(false) // Temporary flag for own device information cleanup
 {}
 
 Omemo::~Omemo()
 {}
+
+SignalProtocol *Omemo::signalProtocol(const Jid &AStreamJid)
+{
+	return FSignalProtocols.value(AStreamJid);
+}
 
 void Omemo::pluginInfo(IPluginInfo *APluginInfo)
 {
@@ -257,6 +267,10 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 												SLOT(onAccountDestroyed(QUuid)));
 		}
 	}
+
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
+	if (plugin)
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0, nullptr);
 	if (plugin)
@@ -320,12 +334,40 @@ bool Omemo::initObjects()
 
 	FPepManager->insertNodeHandler(QString(NS_PEP_OMEMO), this);
 
+	if (FOptionsManager)
+	{
+		IOptionsDialogNode p2pNode = { ONO_P2P, OPN_P2P, MNI_CRYPTO_ON, tr("P2P Encryption") };
+		FOptionsManager->insertOptionsDialogNode(p2pNode);
+
+		IOptionsDialogNode omemoNode = { ONO_P2P_OMEMO, OPN_P2P_OMEMO, MNI_CRYPTO_FULL, tr("OMEMO Keys") };
+		FOptionsManager->insertOptionsDialogNode(omemoNode);
+
+		FOptionsManager->insertOptionsDialogHolder(this);
+	}
+
 	return true;
 }
 
 bool Omemo::initSettings()
 {
 	return true;
+}
+
+QMultiMap<int, IOptionsDialogWidget *> Omemo::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	Q_UNUSED(AParent);
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (ANodeId == OPN_P2P)
+	{
+		widgets.insertMulti(OHO_OMEMO, FOptionsManager->newOptionsDialogHeader(
+								tr("OMEMO"), AParent));
+		widgets.insertMulti(OWO_OMEMO, new OmemoOptions(this, AParent));
+	}
+	else if (ANodeId == OPN_P2P_OMEMO)
+	{
+		widgets.insertMulti(OWO_OMEMO, new OmemoKeys(this, AParent));
+	}
+	return widgets;
 }
 
 bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
