@@ -12,8 +12,7 @@
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/istanzaprocessor.h>
-
-class SignalProtocol;
+#include "signalprotocol.h"
 
 class Omemo: public QObject,
 			 public IPlugin,
@@ -21,7 +20,8 @@ class Omemo: public QObject,
 			 public IOptionsDialogHolder,
 			 public IPEPHandler,
 			 public IStanzaHandler,
-			 public IStanzaRequestOwner
+			 public IStanzaRequestOwner,
+			 public SignalProtocol::IIdentityKeyListener
 {
 	Q_OBJECT
 	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IStanzaRequestOwner)
@@ -44,7 +44,7 @@ public:
 	virtual bool startPlugin() override { return true; }
 
 	// IOptionsDialogHolder
-	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
 
 	// IPEPHandler
 	virtual bool processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza) override;
@@ -54,6 +54,9 @@ public:
 
 	// IStanzaRequestOwner interface
 	void stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza) override;
+
+	// IIdentityKeyListener interface
+	bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData) override;
 
 protected:
 	bool isSupported(const QString &ABareJid) const;
@@ -67,6 +70,7 @@ protected:
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
+	void removeOtherDevices(const Jid &AStreamJid);
 
 	QString requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
 
@@ -85,6 +89,8 @@ protected:
 
 protected slots:
 	void onOptionsOpened();
+	void onOptionsChanged(const OptionsNode &ANode);
+	void purgeDatabases();
 
 	void onPresenceOpened(IPresence *APresence);
 	void onPresenceClosed(IPresence *APresence);

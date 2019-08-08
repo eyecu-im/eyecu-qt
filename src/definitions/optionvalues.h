@@ -634,6 +634,9 @@
 // Off-the-Record Messaging
 #define OPV_OTR_POLICY									"otr.policy"
 #define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
+// Off-the-Record Messaging
+#define OPV_OMEMO_RETRACT								"omemo.retract"
+#define OPV_OMEMO_RETRACT_ACCOUNT						"omemo.retract.account"
 
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"

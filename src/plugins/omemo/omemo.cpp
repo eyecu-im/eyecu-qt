@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QTimer>
 #include <QDir>
+#include <QMessageBox>
 
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
@@ -27,7 +28,6 @@ extern "C" {
 }
 
 #include "omemo.h"
-#include "signalprotocol.h"
 
 // PEP elements
 #define TAG_NAME_PUBSUB					"pubsub"
@@ -212,7 +212,7 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
 				FSHIMessageOut(0),
-				FCleanup(false) // Temporary flag for own device information cleanup
+				FCleanup(true) // Temporary flag for own device information cleanup
 {}
 
 Omemo::~Omemo()
@@ -303,7 +303,8 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 
 	connect(Options::instance(), SIGNAL(optionsOpened()),
 								 SLOT(onOptionsOpened()));
-
+	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)),
+								 SLOT(onOptionsChanged(OptionsNode)));
 	//AInitOrder = 100;   // This one should be initialized AFTER ....!
 	return true;
 }
@@ -350,6 +351,7 @@ bool Omemo::initObjects()
 
 bool Omemo::initSettings()
 {
+	Options::setDefaultValue(OPV_OMEMO_RETRACT_ACCOUNT, false);
 	return true;
 }
 
@@ -410,6 +412,13 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 								timer->deleteLater();
 							}
 
+							bool cleanup = Options::node(OPV_OMEMO_RETRACT)
+									.value("account",
+										   FAccountManager->findAccountByStream(AStreamJid)->accountId().toString())
+									.toBool();
+
+							qDebug() << "cleanup!";
+
 							quint32 ownId = FSignalProtocols[AStreamJid]->getDeviceId();
 							if (ownId)
 							{
@@ -417,20 +426,14 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 								{
 									ids.append(ownId);
 									FDeviceIds.insert(bareJid, ids);
-									if (!FCleanup)
+									if (!cleanup)
 										publishOwnDeviceIds(AStreamJid);
 								}
 								else
-									FDeviceIds.insert(bareJid, ids);
+									FDeviceIds.insert(bareJid, ids);								
 
-								if (FCleanup && ids.size() != 1)
-								{
-									removeOtherKeys(AStreamJid);
-									ids.clear();
-									ids.append(ownId);
-									FDeviceIds.insert(bareJid, ids);
-									publishOwnDeviceIds(AStreamJid);
-								}
+								if (cleanup)
+									removeOtherDevices(AStreamJid);
 							}
 						}
 						else
@@ -635,7 +638,7 @@ void Omemo::onAccountInserted(IAccount *AAccount)
 		}
 	}
 
-	SignalProtocol *signalProtocol = new SignalProtocol(omemoDir.filePath(name+".db"), name);
+	SignalProtocol *signalProtocol = new SignalProtocol(omemoDir.filePath(name+".db"), name, this);
 	if (signalProtocol->install() == SG_SUCCESS)
 		FSignalProtocols.insert(AAccount->streamJid(), signalProtocol);
 	else
@@ -692,6 +695,7 @@ void Omemo::onOmemoActionTriggered()
 
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 {
+	qDebug() << "Omemo::publishOwnDeviceIds(" << AStreamJid.full() << ")";
 	if (!FDeviceIds.contains(AStreamJid.bare()))
 		return false;
 	QList<quint32> ids = FDeviceIds.value(AStreamJid.bare());
@@ -804,6 +808,22 @@ bool Omemo::removeOtherKeys(const Jid &AStreamJid)
 			FPepManager->deleteItem(AStreamJid, ns.arg(*it), item);
 
 	return true;
+}
+
+void Omemo::removeOtherDevices(const Jid &AStreamJid)
+{
+	QList<quint32> deviceIds = FDeviceIds.value(AStreamJid.bare());
+	if (deviceIds.size() != 1)
+	{
+		removeOtherKeys(AStreamJid);
+		deviceIds.clear();
+		deviceIds.append(FSignalProtocols.value(AStreamJid)->getDeviceId());
+		FDeviceIds.insert(AStreamJid.bare(), deviceIds);
+		publishOwnDeviceIds(AStreamJid);
+	}
+
+	Options::node(OPV_OMEMO_RETRACT).removeNode("account",
+		FAccountManager->findAccountByStream(AStreamJid)->accountId().toString());
 }
 
 QString Omemo::requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId)
@@ -938,7 +958,32 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 }
 
 void Omemo::onOptionsOpened()
-{	// Purge orphaned files
+{
+	QTimer::singleShot(0, this, SLOT(purgeDatabases()));
+}
+
+void Omemo::onOptionsChanged(const OptionsNode &ANode)
+{
+	if (ANode.cleanPath()==OPV_OMEMO_RETRACT_ACCOUNT)
+	{
+		if (ANode.value().toBool())
+		{
+			IAccount *account = FAccountManager->findAccountById(ANode.nspace());
+			if (account)
+			{
+				IPresence *presence = FPresenceManager->findPresence(account->streamJid());
+				if (presence &&
+					presence->isOpen() &&
+					presence->show() != IPresence::Offline &&
+					presence->show() != IPresence::Error) // Online
+					removeOtherDevices(account->streamJid());
+			}
+		}
+	}
+}
+
+void Omemo::purgeDatabases()
+{	// Remove orphaned files
 	Options *options = qobject_cast<Options *>(sender());
 	QDir omemoDir(options->filesPath());
 	omemoDir.cd(DIR_OMEMO);
@@ -946,6 +991,7 @@ void Omemo::onOptionsOpened()
 	QStringList files = omemoDir.entryList(QStringList("{?\?\?\?\?\?\?\?-?\?\?\?-?\?\?\?-?\?\?\?-?\?\?\?\?\?\?\?\?\?\?\?}.db"),
 											QDir::Files);
 	QList<IAccount*> accounts = FAccountManager->accounts();
+
 	for (QList<IAccount*>::ConstIterator it=accounts.constBegin();
 		 it != accounts.constEnd(); ++it)
 		files.removeOne((*it)->accountId().toString()+".db");
@@ -1230,6 +1276,17 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 		if (!FPendingRequests.contains(bareJid))
 			bundlesProcessed(bareJid);
 	}
+}
+
+bool Omemo::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
+{
+	int rc = QMessageBox::question(nullptr,
+								   tr("A new identity key received from %1").arg(AName),
+								   tr("%1\n\nDo you trust it?").arg(SignalProtocol::calcFingerprint(AKeyData)),
+								   QMessageBox::Yes,QMessageBox::No);
+	qDebug() << "rc=" << rc;
+	bool retval = rc==QMessageBox::Yes;
+	qDebug() << "returning:" << retval;
 }
 
 #if QT_VERSION < 0x050000

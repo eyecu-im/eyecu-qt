@@ -94,6 +94,13 @@
        </item>
       </layout>
      </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QCheckBox" name="cbRetractOther">
+       <property name="text">
+        <string>Retract other devices</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -192,9 +199,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cbRetractOther</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onRetractOtherClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>95</x>
+     <y>339</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAccountIndexChanged(int)</slot>
   <slot>onIdentityKeyCopy()</slot>
+  <slot>onRetractOtherClicked(bool)</slot>
  </slots>
 </ui>

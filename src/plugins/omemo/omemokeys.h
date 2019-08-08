@@ -1,6 +1,8 @@
 #ifndef OMEMOKEYS_H
 #define OMEMOKEYS_H
 
+#include <QSet>
+
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/iaccountmanager.h>
@@ -32,6 +34,7 @@ public slots:
 protected slots:
 	void onAccountIndexChanged(int AIndex);
 	void onIdentityKeyCopy();
+	void onRetractOtherClicked(bool AChecked);
 
 signals:
 	void modified();
@@ -47,6 +50,7 @@ private:
 
 	QStandardItemModel	*FPreKeysModel;
 	QStandardItemModel	*FIdentityKeysModel;
+	QSet<QUuid>			FRetractDevices;
 };
 
 #endif // OMEMOKEYS_H

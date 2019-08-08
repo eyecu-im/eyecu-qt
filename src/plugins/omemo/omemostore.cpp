@@ -24,6 +24,7 @@
 #define SIGNED_PRE_KEY_STORE_RECORD "signed_pre_key_record"
 #define IDENTITY_KEY_STORE_TABLE "identity_key_store"
 #define IDENTITY_KEY_STORE_NAME "name"
+#define IDENTITY_KEY_STORE_DEVICE_ID "device_id"
 #define IDENTITY_KEY_STORE_KEY "key"
 #define IDENTITY_KEY_STORE_TRUSTED "trusted"
 #define SETTINGS_STORE_TABLE "settings"
@@ -53,6 +54,7 @@ void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionNam
 
 void removeDatabase(const QString &AConnectionName)
 {
+	qDebug() << "OmemoStore::removeDatabase(" << AConnectionName << ")";
 	QSqlDatabase::database(AConnectionName).close();
 	QSqlDatabase::removeDatabase(AConnectionName);
 }
@@ -77,11 +79,17 @@ int propertySet(const QString &AName, const int AValue, SignalProtocol *ASignalP
 
 int propertyGet(const QString &AName, int &AValue, SignalProtocol *ASignalProtocol)
 {
+	qDebug() << "OmemoStore::propertyGet(" << AName << ", ...)";
+	qDebug() << "connection name:" << ASignalProtocol->connectionName();
 	SQL_QUERYS("SELECT * FROM " SETTINGS_STORE_TABLE " WHERE name IS ?1");
+	qDebug() << "query:" << query.lastQuery();
 
 	query.bindValue(0, AName);
-	if (query.exec())	{
+	qDebug() << "bound:" << query.boundValue(0);
+
+	if (query.exec()) {
 		if (query.next()) {
+			qCritical("Got result!");
 			const int temp = query.value(1).toInt();
 			// exactly one result
 			if (query.next()) {
@@ -437,15 +445,16 @@ void signedPreKeyDestroyCtx(void * AUserData)
  */
 int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtocol *ASignalProtocol) {
 	// 1 - name ("public" or "private")
-	// 2 - key blob
-	// 3 - trusted (1 for true, 0 for false)
+	// 2 - device id
+	// 3 - key blob
+	// 4 - trusted (1 for true, 0 for false)
 
 	char * errMsg = nullptr;
 	int rc = 0;
 	signal_buffer * pubkeyBuf = nullptr;
-	signal_buffer * privkeyBuf = nullptr;
+	signal_buffer * privkeyBuf = nullptr;	
 
-	SQL_QUERYS("INSERT INTO " IDENTITY_KEY_STORE_TABLE " VALUES (?1, ?2, ?3)");
+	SQL_QUERYS("INSERT INTO " IDENTITY_KEY_STORE_TABLE " VALUES (?1, ?2, ?3, ?4)");
 
 	// public key
 	query.bindValue(0, OWN_PUBLIC_KEY);
@@ -455,9 +464,9 @@ int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtoco
 		rc = SG_ERR_NOMEM;
 		goto cleanup;
 	}
-
-	query.bindValue(1, SBUF2BARR(pubkeyBuf));
-	query.bindValue(2, IdentityKeyOwn);
+	query.bindValue(1, ASignalProtocol->getDeviceId());
+	query.bindValue(2, SBUF2BARR(pubkeyBuf));
+	query.bindValue(3, IdentityKeyOwn);
 	if (!query.exec()) {
 		errMsg = "Failed to execute query";
 		rc = -3;
@@ -479,7 +488,7 @@ int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtoco
 		goto cleanup;
 	}
 
-	query.bindValue(1, SBUF2BARR(privkeyBuf));
+	query.bindValue(2, SBUF2BARR(privkeyBuf));
 	if (!query.exec()) {
 		errMsg = "Failed to execute query";
 		rc = -3;
@@ -507,7 +516,10 @@ cleanup:
 int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateData, void * AUserData)
 {
 	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
-			  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
+			  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+			  "  AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
+
+	SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
 
 	char * errMsg = nullptr;
 	int rc = 0;
@@ -515,10 +527,11 @@ int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateDa
 	signal_buffer * privkeyBuf = nullptr;
 
 	// public key
-	query.bindValue(0, OWN_PUBLIC_KEY);
+	query.bindValue(1, signalProtocol->getDeviceId());
+	query.bindValue(0, OWN_PUBLIC_KEY);	
 	if (query.exec()) {
 		if (query.next()) {
-			QByteArray data = query.value(1).toByteArray();
+			QByteArray data = query.value(2).toByteArray();
 			pubkeyBuf = signal_buffer_create(DATA_SIZE(data));
 			if (!pubkeyBuf) {
 				errMsg = "Buffer could not be initialised";
@@ -541,7 +554,7 @@ int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateDa
 	query.bindValue(0, OWN_PRIVATE_KEY);
 	if (query.exec()) {
 		if (query.next()) {
-			QByteArray data = query.value(1).toByteArray();
+			QByteArray data = query.value(2).toByteArray();
 			privkeyBuf = signal_buffer_create(DATA_SIZE(data));
 
 			if (!privkeyBuf) {
@@ -606,43 +619,65 @@ int identityGetLocalRegistrationId(void * AUserData, uint32_t * ARegistrationId)
 int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 				 size_t AKeyLen, void * AUserData)
 {
+	qDebug() << "identitySave({" << ADDR_NAME(AAddress) << "," << AAddress->device_id << "},"
+			 << BYTE_ARRAY(AKeyData, AKeyLen).toHex() << ")";
 	// 1 - name ("public" or "private" for own keys, name for contacts)
 	// 2 - key blob
 	// 3 - trusted (1 for true, 0 for false)
 
 	SQL_QUERY(AKeyData?"INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE
-					   " VALUES (?1, ?2, ?3)"
+					   " VALUES (?1, ?2, ?3, ?4)"
 					  :"DELETE FROM " IDENTITY_KEY_STORE_TABLE
-					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
+					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+					   "  AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
 	query.bindValue(0, ADDR_NAME(AAddress));
+	query.bindValue(1, AAddress->device_id);
 	if (AKeyData) {
-		query.bindValue(1, BYTE_ARRAY(AKeyData, AKeyLen));
-		query.bindValue(2, IdentityKeyTrusted);
+		query.bindValue(2, BYTE_ARRAY(AKeyData, AKeyLen));
+		qDebug() << "Saving key as TRUSTED";
+		query.bindValue(3, IdentityKeyTrusted);
 	}
 	if (!query.exec()) return -3;
 
 	return 0;
 }
 
-int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData, size_t AKeyLen, void *AUserData)
+int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData,
+					  size_t AKeyLen, void *AUserData)
 {
+	qDebug() << "identityIsTrusted({" << ADDR_NAME(AAddress) << "," << AAddress->device_id << "},"
+			 << BYTE_ARRAY(AKeyData, AKeyLen).toHex() << ")";
+
 	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
-			   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1");
+			   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+			   "  AND "  IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
 	query.bindValue(0, ADDR_NAME(AAddress));
+	query.bindValue(1, AAddress->device_id);
 	if (query.exec()) {
 		if (query.next()) {
-			// theoretically could be checked if trusted or not but it's TOFU
-			if (BYTE_ARRAY(AKeyData, AKeyLen) != query.value(1).toByteArray()) {
+			if (BYTE_ARRAY(AKeyData, AKeyLen) != query.value(2).toByteArray()) {
 				qCritical("Key data does not match");
 				return 0;
 			}
-			qDebug() << "Key data matches. Identity is trusted!";
-			return 1; // no entry = trusted, according to docs
+			qDebug() << "Key data matches. Trusted flag:" << query.value(3).toUInt();
+			return query.value(3).toUInt()==1;
 		} else {
-			qDebug() << "No entry. Identity is trusted!";
-			return 1;
+			qDebug() << "No entry. TRUSTED!";
+			return 1; // no entry = trusted, according to docs
+//			SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
+//			if (signalProtocol->onNewKeyReceived(ADDR_NAME(AAddress),
+//												 BYTE_ARRAY(AKeyData, AKeyLen)))
+//			{
+//				qDebug() << "returning 1";
+//				return 1;
+//			}
+//			else
+//			{
+//				qDebug() << "returning 0";
+//				return 0;
+//			}
 		}
 	} else {
 		qCritical("Failed executing SQL query");
@@ -683,9 +718,11 @@ int create(SignalProtocol * ASignalProtocol)
 							 SIGNED_PRE_KEY_STORE_ID " INTEGER NOT NULL PRIMARY KEY, "
 							 SIGNED_PRE_KEY_STORE_RECORD " BLOB NOT NULL)"
 					  << "CREATE TABLE IF NOT EXISTS " IDENTITY_KEY_STORE_TABLE "("
-							 IDENTITY_KEY_STORE_NAME " TEXT NOT NULL PRIMARY KEY, "
+							 IDENTITY_KEY_STORE_NAME " TEXT NOT NULL, "
+							 IDENTITY_KEY_STORE_DEVICE_ID " INTEGER NOT NULL, "
 							 IDENTITY_KEY_STORE_KEY " BLOB NOT NULL, "
-							 IDENTITY_KEY_STORE_TRUSTED " INTEGER NOT NULL)"
+							 IDENTITY_KEY_STORE_TRUSTED " INTEGER NOT NULL, "
+						 "  PRIMARY KEY(" IDENTITY_KEY_STORE_NAME ", " IDENTITY_KEY_STORE_DEVICE_ID "))"
 					  << "CREATE TABLE IF NOT EXISTS " SETTINGS_STORE_TABLE "("
 							 SETTINGS_STORE_NAME " TEXT NOT NULL PRIMARY KEY, "
 							 SETTINGS_STORE_PROPERTY " INTEGER NOT NULL)");
@@ -751,6 +788,21 @@ int initStatusSet(int AStatus, SignalProtocol *ASignalProtocol) {
 
 int initStatusGet(int &AInitStatus, SignalProtocol *ASignalProtocol)
 {
+	qDebug() << "OmemoStore::initStatusGet()";
+	qDebug() << "connection name:" << ASignalProtocol->connectionName();
+	SQL_QUERYS("SELECT * FROM " SETTINGS_STORE_TABLE);
+	qDebug() << "query:" << query.lastQuery();
+
+	if (query.exec()) {
+		qDebug() << "query size:" << query.size();
+		while (query.next()) {
+			qDebug() << "Got result!";
+			qDebug() << "name:" << query.value(0);
+			qDebug() << "value:" << query.value(1);
+			// exactly one result
+		}
+	}
+
 	return propertyGet(INIT_STATUS, AInitStatus, ASignalProtocol);
 }
 
@@ -921,7 +973,7 @@ int preKeyGetCount(SignalProtocol * ASignalProtocol)
 	return ret_val;
 }
 
-int identityKeyGetList(size_t AAmount, QHash<QString, QPair<QByteArray, uint> > &AIdentityKeys, const SignalProtocol *ASignalProtocol)
+int identityKeyGetList(size_t AAmount, QList<IdentityKey> &AIdentityKeys, const SignalProtocol *ASignalProtocol)
 {
 	int rc = -1;
 	char * errMsg = nullptr;
@@ -936,11 +988,16 @@ int identityKeyGetList(size_t AAmount, QHash<QString, QPair<QByteArray, uint> > 
 	if (query.exec())
 	{
 		while (query.next()) {
-			QString name = query.value(0).toString();
-			QByteArray data = query.value(1).toByteArray();
-			uint trusted = query.value(2).toUInt();
+			uint trusted = query.value(3).toUInt();
 			if (trusted != IdentityKeyOwn)
-				AIdentityKeys.insert(name, qMakePair(data, trusted));
+			{
+				IdentityKey key;
+				key.name = query.value(0).toString();
+				key.deviceId = query.value(1).toUInt();
+				key.keyData = query.value(2).toByteArray();
+				key.trusted = trusted;
+				AIdentityKeys.append(key);
+			}
 		}
 	} else {
 		errMsg = "sql error when retrieving keys";

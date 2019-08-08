@@ -27,6 +27,14 @@ namespace OmemoStore
 		IdentityKeyOwn
 	};
 
+	struct IdentityKey
+	{
+		QString name;
+		quint32 deviceId;
+		QByteArray keyData;
+		bool	trusted;
+	};
+
 	void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionName);
 	void removeDatabase(const QString &AConnectionName);
 
@@ -121,7 +129,7 @@ namespace OmemoStore
 
 	int identitySetLocalRegistrationId(SignalProtocol *ASignalProtocol, const uint32_t ARegistrationId);
 
-	int identityKeyGetList(size_t AAmount, QHash<QString, QPair<QByteArray, uint> > &AIdentityKeys,
+	int identityKeyGetList(size_t AAmount, QList<IdentityKey> &AIdentityKeys,
 						   const SignalProtocol *ASignalProtocol);
 
 	//

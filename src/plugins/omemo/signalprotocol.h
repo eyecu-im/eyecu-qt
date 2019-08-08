@@ -6,6 +6,8 @@
 #include <QSharedDataPointer>
 #include <signal_protocol.h>
 
+#include "omemostore.h"
+
 class QMutex;
 
 struct session_builder;
@@ -29,6 +31,11 @@ public:
 		NoSession,
 		SessionInitiated,
 		SessionAcknowledged
+	};
+
+	class IIdentityKeyListener {
+	public:
+		virtual bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData) = 0;
 	};
 
 	class SignalMessage {
@@ -130,14 +137,18 @@ public:
 		QSharedDataPointer<SessionBuilderData> d;
 	};
 
-	SignalProtocol(const QString &AFileName, const QString &AConnectionName);
+	SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener);
 	~SignalProtocol();
 
 	static void init();
 
 	static QString calcFingerprint(const QByteArray &APublicKey);
 
+	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
+
 	QString connectionName() const;
+
+	bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData);
 
 	signal_context *globalContext() const;
 	signal_protocol_store_context *storeContext() const;
@@ -162,7 +173,7 @@ public:
 
 	QMap<quint32, QByteArray> getPreKeys() const;
 
-	QHash<QString, QPair<QByteArray, uint> > getIdentityKeys() const;
+	QList<OmemoStore::IdentityKey> getIdentityKeys() const;
 
 	session_pre_key_bundle *createPreKeyBundle(uint32_t ARegistrationId,
 											   int ADeviceId, uint32_t APreKeyId,
@@ -175,8 +186,6 @@ public:
 	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
 	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
 	SessionBuilder getSessionBuilder(const QString &ABareJid, quint32 ADeviceId);
-
-	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
@@ -324,8 +333,8 @@ private:
 	// signal-protocol
 	signal_context		*FGlobalContext;
 	signal_protocol_store_context * FStoreContext;
+	IIdentityKeyListener *FIdentityKeyListener;
 
-//	QString FFileName;
 	QString FConnectionName;
 
 	// Mutex

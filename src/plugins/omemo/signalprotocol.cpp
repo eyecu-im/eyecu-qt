@@ -1,5 +1,4 @@
 #include "signalprotocol.h"
-#include "omemostore.h"
 
 #include <QMutex>
 #include <QDateTime>
@@ -49,6 +48,12 @@ QString SignalProtocol::connectionName() const
 	return FConnectionName;
 }
 
+bool SignalProtocol::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
+{
+	return FIdentityKeyListener?FIdentityKeyListener->onNewKeyReceived(AName, AKeyData)
+							   :true;
+}
+
 signal_context *SignalProtocol::globalContext() const
 {
 	return FGlobalContext;
@@ -95,6 +100,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			goto cleanup;
 		case 0:
 			// there is a value
+			qDebug() << "Init status=" << initStatus;
 			switch (initStatus) {
 				case DbNotInitialized:
 					// init needed
@@ -135,6 +141,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	}
 
 	if (dbNeedsInit) {
+		qDebug("%s: db needs init", __func__ );
 		rc = initStatusSet(DbNeedsRollback, this);
 		if (rc) {
 			errMsg = "failed to set init status to DbNeedsRollback";
@@ -169,15 +176,15 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			goto cleanup;
 		}
 
-		rc = identitySetKeyPair(identityKeyPair, this);
-		if (rc) {
-			errMsg = "failed to set identity key pair";
-			goto cleanup;
-		}
-
 		rc = identitySetLocalRegistrationId(this, registrationId);
 		if (rc) {
 			errMsg = "failed to set registration id";
+			goto cleanup;
+		}
+
+		rc = identitySetKeyPair(identityKeyPair, this);
+		if (rc) {
+			errMsg = "failed to set identity key pair";
 			goto cleanup;
 		}
 
@@ -501,9 +508,9 @@ QMap<quint32, QByteArray> SignalProtocol::getPreKeys() const
 	return preKeys;
 }
 
-QHash<QString, QPair<QByteArray, uint> > SignalProtocol::getIdentityKeys() const
+QList<IdentityKey> SignalProtocol::getIdentityKeys() const
 {
-	QHash<QString, QPair<QByteArray, uint> > identityKeys;
+	QList<IdentityKey> identityKeys;
 	identityKeyGetList(0, identityKeys, this);
 	return identityKeys;
 }
@@ -1095,9 +1102,10 @@ void SignalProtocol::recursiveMutexUnlock()
 	FMutex->unlock();
 }
 
-SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName):
+SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
+	FIdentityKeyListener(AIdentityKeyListener),
 	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),
 	FError(0)

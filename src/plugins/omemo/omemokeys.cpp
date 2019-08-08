@@ -13,6 +13,8 @@
 #include "omemokeys.h"
 #include "ui_omemokeys.h"
 
+#define TAG_ACCOUNT "account"
+
 OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	QWidget(AParent),
 	ui(new Ui::OmemoKeys),
@@ -23,8 +25,6 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	FPreKeysModel(new QStandardItemModel(this)),
 	FIdentityKeysModel(new QStandardItemModel(this))
 {
-	qDebug() << "OmemoKeys(" << AOmemo << "," << AParent << ")";
-
 	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	ui->setupUi(this);
@@ -40,19 +40,20 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 
 	FIdentityKeysModel->setColumnCount(3);
 	FIdentityKeysModel->setHorizontalHeaderLabels(QStringList() << tr("Name")
+																<< tr("Device ID")
 																<< tr("Key data")
 																<< tr("Trusted"));
 	ui->tvIdentityKeys->setModel(FIdentityKeysModel);
 	ui->tvIdentityKeys->setColumnWidth(0, 128);
-	ui->tvIdentityKeys->setColumnWidth(1, 360);
-	ui->tvIdentityKeys->setColumnWidth(2, 48);
+	ui->tvIdentityKeys->setColumnWidth(1, 96);
+	ui->tvIdentityKeys->setColumnWidth(2, 400);
+	ui->tvIdentityKeys->setColumnWidth(3, 48);
 
 	reset();
 }
 
 OmemoKeys::~OmemoKeys()
 {
-	qDebug() << "OmemoKeys::~OmemoKeys()";
 	delete ui;
 }
 
@@ -63,20 +64,44 @@ QWidget *OmemoKeys::instance()
 
 void OmemoKeys::apply()
 {
+	OptionsNode retract = Options::node(OPV_OMEMO_RETRACT);
+	QStringList ns = retract.childNSpaces(TAG_ACCOUNT);
+
+	for (QStringList::ConstIterator it = ns.constBegin();
+		 it != ns.constEnd(); ++it)
+		if (!FRetractDevices.contains(QUuid(*it)))
+			retract.removeNode(TAG_ACCOUNT, *it);
+
+	for (QSet<QUuid>::ConstIterator it = FRetractDevices.constBegin();
+		 it != FRetractDevices.constEnd(); ++it)
+		if (ui->cbRetractOther->isChecked())
+			retract.node(TAG_ACCOUNT, it->toString()).setValue(true);
+
 	emit childApply();
 }
 
 void OmemoKeys::reset()
 {
-	qDebug() << "OmemoKeys::reset()";
-
+	FRetractDevices.clear();
 	ui->cmbAccount->clear();
 
 	QList<IAccount*> accounts = FAccountManager->accounts();
 
+	OptionsNode retract = Options::node(OPV_OMEMO_RETRACT);
+	QStringList ns = retract.childNSpaces(TAG_ACCOUNT);
+
 	for (QList<IAccount*>::ConstIterator it = accounts.constBegin();
 		 it != accounts.constEnd(); ++it)
-		ui->cmbAccount->addItem((*it)->name(), (*it)->accountId());
+	{
+		QUuid uuid = (*it)->accountId();
+		if (ns.contains(uuid.toString()) &&
+			retract.value(TAG_ACCOUNT, uuid.toString()).toBool())
+			FRetractDevices.insert(uuid);
+		ui->cmbAccount->addItem((*it)->name(), uuid);
+	}
+
+	if (ui->cmbAccount->count())
+		onAccountIndexChanged(ui->cmbAccount->currentIndex());
 
 	emit childReset();
 }
@@ -88,6 +113,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 	IAccount *account = FAccountManager->findAccountById(uuid);
 	if (account)
 	{
+		ui->cbRetractOther->setChecked(FRetractDevices.contains(uuid));
 		SignalProtocol *signalProtocol = FOmemo->signalProtocol(account->streamJid());
 		if (signalProtocol)
 		{
@@ -116,19 +142,20 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 			}
 
 			FIdentityKeysModel->removeRows(0, FIdentityKeysModel->rowCount());
-			QHash<QString, QPair<QByteArray,uint> > identityKeys = signalProtocol->getIdentityKeys();
+			QList<OmemoStore::IdentityKey> identityKeys = signalProtocol->getIdentityKeys();
 
-			for (QHash<QString, QPair<QByteArray,uint> >::ConstIterator it=identityKeys.constBegin();
+			for (QList<OmemoStore::IdentityKey>::ConstIterator it=identityKeys.constBegin();
 				 it != identityKeys.constEnd(); ++it)
 			{
 				QList<QStandardItem*> row;
 
-				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(it->first));
-				dataItem->setData(it->first);
+				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(it->keyData));
+				dataItem->setData(it->keyData);
 
-				row.append(new QStandardItem(it.key()));
+				row.append(new QStandardItem(it->name));
+				row.append(new QStandardItem(QString::number(it->deviceId)));
 				row.append(dataItem);
-				row.append(new QStandardItem(QString::number(it->second)));
+				row.append(new QStandardItem(QString::number(it->trusted)));
 				FIdentityKeysModel->appendRow(row);
 			}
 		}
@@ -138,4 +165,15 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 void OmemoKeys::onIdentityKeyCopy()
 {
 	QApplication::clipboard()->setText(ui->lblPublicIdentityKey->text());
+}
+
+void OmemoKeys::onRetractOtherClicked(bool AChecked)
+{
+	QString uuid = ui->cmbAccount->currentData().toUuid().toString();
+	if (AChecked)
+		FRetractDevices.insert(uuid);
+	else
+		FRetractDevices.remove(uuid);
+
+	emit modified();
 }
