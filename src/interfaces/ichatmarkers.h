@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QIcon>
 
-#define CHATMARKERS_UUID "{}"
+#define CHATMARKERS_UUID "{2f3c771d-fa90-6c23-b418-791bc2513d76}"
                      
 class IChatMarkers {
 public:
