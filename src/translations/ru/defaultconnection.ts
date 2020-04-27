@@ -47,6 +47,10 @@
         <source>TLSv1.2</source>
         <translation>TLSv1.2</translation>
     </message>
+    <message>
+        <source>TLSv1.3</source>
+        <translation type="unfinished">TLSv1.3</translation>
+    </message>
 </context>
 <context>
     <name>ConnectionOptionsWidgetClass</name>

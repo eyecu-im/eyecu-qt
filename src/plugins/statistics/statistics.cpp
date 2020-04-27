@@ -1,5 +1,7 @@
 #include "statistics.h"
 
+#include <QScreen>
+#include <QApplication>
 #include <QDir>
 #include <QSslError>
 #include <QDataStream>
@@ -7,6 +9,9 @@
 #include <QNetworkRequest>
 #if QT_VERSION >= 0x050000
 #include <QUrlQuery>
+#if QT_VERSION >= 0x050900
+#include <QOperatingSystemVersion>
+#endif
 #endif
 #include <definitions/version.h>
 #include <definitions/optionnodes.h>
@@ -393,7 +398,9 @@ QString Statistics::userAgent() const
 #ifdef Q_OS_AIX
 		firstPartTemp += QString::fromLatin1("AIX");
 #elif defined Q_OS_WIN
+#if QT_VERSION >= 0x050900
 		firstPartTemp += windowsVersion();
+#endif
 #elif defined Q_OS_DARWIN
 #if defined(__powerpc__)
 		firstPartTemp += QString::fromLatin1("PPC Mac OS X");
@@ -484,24 +491,19 @@ QString Statistics::userAgent() const
 
 	return firstPart + " " + secondPart+ " " + thirdPart;
 }
-
+#if QT_VERSION >= 0x050900
 QString Statistics::windowsVersion() const
 {
 #ifdef Q_OS_WIN
-	OSVERSIONINFOEX versionInfo;
-
-	ZeroMemory(&versionInfo, sizeof(versionInfo));
-	versionInfo.dwOSVersionInfoSize = sizeof(versionInfo);
-	GetVersionEx(reinterpret_cast<OSVERSIONINFO*>(&versionInfo));
-
-	int majorVersion = versionInfo.dwMajorVersion;
-	int minorVersion = versionInfo.dwMinorVersion;
+	QOperatingSystemVersion currentWindows = QOperatingSystemVersion::current();
+	int majorVersion = currentWindows.majorVersion();
+	int minorVersion = currentWindows.minorVersion();
 
 	return QString("Windows NT %1.%2").arg(majorVersion).arg(minorVersion);
 #endif
-	return QString::null;
+	return QString();
 }
-
+#endif
 QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 {
 	QUrl url(MP_URL);
@@ -540,7 +542,7 @@ QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 		APPEND_QUERY("sc","end");
 
 	// Screen Resolution
-	QRect sr = FDesktopWidget->screenGeometry();
+	QRect sr =  QApplication::primaryScreen()->availableGeometry();
 	APPEND_QUERY("sr",QString("%1.%2").arg(sr.width()).arg(sr.height()));
 
 	// User Language
@@ -864,7 +866,7 @@ void Statistics::onSoftwareInfoChanged(const Jid &AContactJid)
 		{
 			IDiscoInfo info = FDiscovery->discoInfo(streamJid,AContactJid);
 			int index = FDiscovery->findIdentity(info.identity,"server","im");
-			sendServerInfoHit(index>=0 ? info.identity.value(index).name : QString::null, QString::null);
+			sendServerInfoHit(index>=0 ? info.identity.value(index).name : QString(), QString());
 		}
 	}
 }
