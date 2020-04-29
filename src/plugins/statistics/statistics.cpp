@@ -542,7 +542,11 @@ QUrl Statistics::buildHitUrl(const IStatisticsHit &AHit) const
 		APPEND_QUERY("sc","end");
 
 	// Screen Resolution
+#if QT_VERSION >= 0x050000
 	QRect sr =  QApplication::primaryScreen()->availableGeometry();
+#else
+	QRect sr =  QApplication::desktop()->screenGeometry();
+#endif
 	APPEND_QUERY("sr",QString("%1.%2").arg(sr.width()).arg(sr.height()));
 
 	// User Language

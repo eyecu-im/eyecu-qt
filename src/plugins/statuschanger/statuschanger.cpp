@@ -927,7 +927,9 @@ void StatusChanger::autoReconnect(IPresence *APresence)
 				int reconSecs = FFastReconnect.contains(APresence) ? 1 : 30;
 				FPendingReconnect.insert(APresence,QPair<QDateTime,int>(QDateTime::currentDateTime().addSecs(reconSecs),statusId));
 				QTimer reconTimer;
+#if QT_VERSION >= 0x050000
 				reconTimer.setTimerType(Qt::PreciseTimer);
+#endif
 				reconTimer.singleShot(reconSecs*1000+200,this,SLOT(onReconnectTimer()));
 				LOG_STRM_INFO(APresence->streamJid(),QString("Automatically reconnection scheduled after %1 seconds").arg(reconSecs));
 			}

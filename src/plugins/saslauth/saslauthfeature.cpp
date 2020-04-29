@@ -4,7 +4,13 @@
 #include <QMultiHash>
 #include <QStringList>
 #include <QCryptographicHash>
-#include <QMessageAuthenticationCode>
+#include <QpMessageAuthenticationCode>
+//#if (QT_VERSION >= QT_VERSION_CHECK(5, 1, 0))
+//# include <QMessageAuthenticationCode>
+# if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+#  include <QRandomGenerator>
+# endif
+//#endif
 #include <definitions/namespaces.h>
 #include <definitions/xmpperrors.h>
 #include <definitions/internalerrors.h>
@@ -13,10 +19,6 @@
 #include <utils/stanza.h>
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
-#include <QRandomGenerator>
-#endif
 
 #define AUTH_PLAIN          "PLAIN"
 #define AUTH_ANONYMOUS      "ANONYMOUS"
@@ -41,7 +43,7 @@ static QByteArray deriveKeyPbkdf2(QCryptographicHash::Algorithm algorithm, const
 
 	QByteArray key;
 	QByteArray index(4, 0);
-	QMessageAuthenticationCode hmac(algorithm, password);
+	QpMessageAuthenticationCode hmac(algorithm, password);
 	for (quint32 loop=1; key.length()<dkLen; loop++)
 	{
 		hmac.reset();
@@ -56,7 +58,7 @@ static QByteArray deriveKeyPbkdf2(QCryptographicHash::Algorithm algorithm, const
 			hmac.reset();
 			hmac.addData(u);
 			u = hmac.result();
-			std::transform(tkey.cbegin(), tkey.cend(), u.cbegin(), tkey.begin(), std::bit_xor<char>());
+			std::transform(tkey.constBegin(), tkey.constEnd(), u.constBegin(), tkey.begin(), std::bit_xor<char>());
 		}
 
 		key += tkey;
@@ -198,7 +200,7 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 				// FSelectedMechanism == AUTH_SCRAM_SHA1
 				QCryptographicHash::Algorithm method = QCryptographicHash::Sha1;
 				int len = SCRAM_SHA1_DKLEN;
-
+#if QT_VERSION >=0x050000
 				if (FSelectedMechanism == AUTH_SCRAM_SHA224)
 				{
 					method = QCryptographicHash::Sha224;
@@ -219,21 +221,21 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 					method = QCryptographicHash::Sha512;
 					len = SCRAM_SHA512_DKLEN;
 				}
-
+#endif
 				int iterations = challengeMap.value("i").toInt();
 				QByteArray salt = QByteArray::fromBase64(challengeMap.value("s"));
 				QByteArray saltedPassword = deriveKeyPbkdf2(method, FXmppStream->password().toUtf8(), salt, iterations, len);
 
-				QByteArray clientKey = QMessageAuthenticationCode::hash("Client Key", saltedPassword, method);
-				QByteArray serverKey = QMessageAuthenticationCode::hash("Server Key", saltedPassword, method);
+				QByteArray clientKey = QpMessageAuthenticationCode::hash("Client Key", saltedPassword, method);
+				QByteArray serverKey = QpMessageAuthenticationCode::hash("Server Key", saltedPassword, method);
 
 				QByteArray serverFirstMessage = challengeData;
 				QByteArray clientFinalMessageBare = "c=biws,r=" + serverNonce;
 				QByteArray authMessage = SCRAMSHA_initialMessage + "," + serverFirstMessage + "," + clientFinalMessageBare;
 
 				QByteArray storedKey = QCryptographicHash::hash(clientKey, method);
-				QByteArray clientSignature = QMessageAuthenticationCode::hash(authMessage, storedKey, method);
-				SCRAMSHA_ServerSignature = QMessageAuthenticationCode::hash(authMessage, serverKey, method);
+				QByteArray clientSignature = QpMessageAuthenticationCode::hash(authMessage, storedKey, method);
+				SCRAMSHA_ServerSignature = QpMessageAuthenticationCode::hash(authMessage, serverKey, method);
 
 				QByteArray clientProof = clientKey;
 				for (int i = 0; i < clientProof.size(); ++i)

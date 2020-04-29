@@ -82,7 +82,7 @@ public:
 	virtual QString humanContact(const Jid& AStreamJid, const Jid& AContactJid) = 0;
 	virtual void authenticateContact(const Jid& AStreamJid, const Jid& AContactJid) =0;
 protected:
-	virtual void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const =0;
+	virtual void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid)=0;
 };
 
 Q_DECLARE_INTERFACE(IOtr,"RWS.Plugin.IOtr/1.0")

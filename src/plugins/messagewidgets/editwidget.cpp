@@ -290,7 +290,11 @@ bool EditWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 			QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(AEvent);
 			if (wheelEvent->modifiers() & Qt::ControlModifier)
 			{
+#if QT_VERSION >= 0x050000
 					const qreal delta = wheelEvent->angleDelta().y() / 120.0;
+#else
+					const qreal delta = wheelEvent->delta() / 120.0;
+#endif
 					const qreal newSize = ui.medEditor->font().pointSizeF() + delta;
 					if (newSize >= 1.0)
 						Options::node(OPV_MESSAGES_EDITORBASEFONTSIZE).setValue(newSize);
