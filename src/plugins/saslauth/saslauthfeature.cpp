@@ -5,12 +5,9 @@
 #include <QStringList>
 #include <QCryptographicHash>
 #include <QpMessageAuthenticationCode>
-//#if (QT_VERSION >= QT_VERSION_CHECK(5, 1, 0))
-//# include <QMessageAuthenticationCode>
 # if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
 #  include <QRandomGenerator>
 # endif
-//#endif
 #include <definitions/namespaces.h>
 #include <definitions/xmpperrors.h>
 #include <definitions/internalerrors.h>
@@ -43,7 +40,7 @@ static QByteArray deriveKeyPbkdf2(QCryptographicHash::Algorithm algorithm, const
 
 	QByteArray key;
 	QByteArray index(4, 0);
-	QpMessageAuthenticationCode hmac(algorithm, password);
+	QMessageAuthenticationCode hmac(algorithm, password);
 	for (quint32 loop=1; key.length()<dkLen; loop++)
 	{
 		hmac.reset();
@@ -226,16 +223,16 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 				QByteArray salt = QByteArray::fromBase64(challengeMap.value("s"));
 				QByteArray saltedPassword = deriveKeyPbkdf2(method, FXmppStream->password().toUtf8(), salt, iterations, len);
 
-				QByteArray clientKey = QpMessageAuthenticationCode::hash("Client Key", saltedPassword, method);
-				QByteArray serverKey = QpMessageAuthenticationCode::hash("Server Key", saltedPassword, method);
+				QByteArray clientKey = QMessageAuthenticationCode::hash("Client Key", saltedPassword, method);
+				QByteArray serverKey = QMessageAuthenticationCode::hash("Server Key", saltedPassword, method);
 
 				QByteArray serverFirstMessage = challengeData;
 				QByteArray clientFinalMessageBare = "c=biws,r=" + serverNonce;
 				QByteArray authMessage = SCRAMSHA_initialMessage + "," + serverFirstMessage + "," + clientFinalMessageBare;
 
 				QByteArray storedKey = QCryptographicHash::hash(clientKey, method);
-				QByteArray clientSignature = QpMessageAuthenticationCode::hash(authMessage, storedKey, method);
-				SCRAMSHA_ServerSignature = QpMessageAuthenticationCode::hash(authMessage, serverKey, method);
+				QByteArray clientSignature = QMessageAuthenticationCode::hash(authMessage, storedKey, method);
+				SCRAMSHA_ServerSignature = QMessageAuthenticationCode::hash(authMessage, serverKey, method);
 
 				QByteArray clientProof = clientKey;
 				for (int i = 0; i < clientProof.size(); ++i)
