@@ -339,7 +339,7 @@ QString Registration::startStreamRegistration(IXmppStream *AXmppStream)
 	{
 		LOG_ERROR(QString("Failed to create XMPP account registration feature, server=%1").arg(AXmppStream->streamJid().pDomain()));
 	}
-	return QString::null;
+	return QString();
 }
 
 QString Registration::submitStreamRegistration(IXmppStream *AXmppStream, const IRegisterSubmit &ASubmit)
@@ -350,7 +350,7 @@ QString Registration::submitStreamRegistration(IXmppStream *AXmppStream, const I
 		if (feature->sendSubmit(ASubmit))
 			return FStreamRegisterId.value(feature->xmppStream());
 	}
-	return QString::null;
+	return QString();
 }
 
 QString Registration::sendRegisterRequest(const Jid &AStreamJid, const Jid &AServiceJid)
@@ -375,7 +375,7 @@ QString Registration::sendRegisterRequest(const Jid &AStreamJid, const Jid &ASer
 	{
 		REPORT_ERROR("Failed to send registration register request: Invalid parameters");
 	}
-	return QString::null;
+	return QString();
 }
 
 QString Registration::sendUnregisterRequest(const Jid &AStreamJid, const Jid &AServiceJid)
@@ -400,7 +400,7 @@ QString Registration::sendUnregisterRequest(const Jid &AStreamJid, const Jid &AS
 	{
 		REPORT_ERROR("Failed to send registration unregister request: Invalid parameters");
 	}
-	return QString::null;
+	return QString();
 }
 
 QString Registration::sendChangePasswordRequest(const Jid &AStreamJid, const Jid &AServiceJid, const QString &AUserName, const QString &APassword)
@@ -427,7 +427,7 @@ QString Registration::sendChangePasswordRequest(const Jid &AStreamJid, const Jid
 	{
 		REPORT_ERROR("Failed to send registration change password request: Invalid parameters");
 	}
-	return QString::null;
+	return QString();
 }
 
 QString Registration::sendRequestSubmit(const Jid &AStreamJid, const IRegisterSubmit &ASubmit)
@@ -455,7 +455,7 @@ QString Registration::sendRequestSubmit(const Jid &AStreamJid, const IRegisterSu
 	{
 		REPORT_ERROR("Failed to send registration submit request: Invalid parameters");
 	}
-	return QString::null;
+	return QString();
 }
 
 QDialog *Registration::showRegisterDialog(const Jid &AStreamJid, const Jid &AServiceJid, int AOperation, QWidget *AParent)

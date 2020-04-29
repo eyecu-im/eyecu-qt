@@ -165,7 +165,7 @@ void Account::onPasswordDialogAccepted()
 		if (FPasswordDialog->savePassword())
 			setPassword(FPasswordDialog->password());
 		else
-			setPassword(QString::null);
+			setPassword(QString());
 		FXmppStream->setPassword(FPasswordDialog->password());
 	}
 	FInvalidPassword = false;

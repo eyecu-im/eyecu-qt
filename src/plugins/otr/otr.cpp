@@ -675,7 +675,7 @@ protected:
 									   .arg(accountName)
 									   .arg(fp));
 			infoMb.exec();
-			emit FOtr->privKeyGenerated(streamJid, fp);
+			FOtr->emitPrivKeyGenerated(streamJid, fp);
 		}
 		else
 		{
@@ -685,7 +685,7 @@ protected:
 										   .arg(accountName),
 							   QMessageBox::Ok);
 			failMb.exec();
-			emit FOtr->privKeyGenerationFailed(streamJid);
+			FOtr->emitPrivKeyGenerationFailed(streamJid);
 		}
 	}
 
@@ -798,7 +798,7 @@ protected:
 	{
 		otrl_privkey_write_fingerprints(FUserState,
 										QFile::encodeName(FFingerprintFile).constData());
-		emit FOtr->fingerprintsUpdated();
+		FOtr->emitFingerprintsUpdated();
 	}
 
 	void goneSecure(ConnContext* AContext)
@@ -1478,6 +1478,21 @@ void Otr::authenticateContact(const Jid &AStreamJid, const Jid &AContactJid)
 QString Otr::dataDir()
 {
 	return FHomePath;
+}
+
+void Otr::emitFingerprintsUpdated()
+{
+	emit fingerprintsUpdated();
+}
+
+void Otr::emitPrivKeyGenerated(const Jid &AStreamJid, const QString &AFingerprint)
+{
+	emit privKeyGenerated(AStreamJid, AFingerprint);
+}
+
+void Otr::emitPrivKeyGenerationFailed(const Jid &AStreamJid)
+{
+	emit emitPrivKeyGenerationFailed(AStreamJid);
 }
 
 //-----------------------------------------------------------------------------

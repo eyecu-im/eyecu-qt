@@ -1,8 +1,13 @@
 #include "saslauthfeature.h"
 
+#include <QtEndian>
 #include <QMultiHash>
 #include <QStringList>
 #include <QCryptographicHash>
+#include <QpMessageAuthenticationCode>
+# if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+#  include <QRandomGenerator>
+# endif
 #include <definitions/namespaces.h>
 #include <definitions/xmpperrors.h>
 #include <definitions/internalerrors.h>
@@ -12,18 +17,67 @@
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 
-#define AUTH_PLAIN        "PLAIN"
-#define AUTH_ANONYMOUS    "ANONYMOUS"
-#define AUTH_DIGEST_MD5   "DIGEST-MD5"
+#define AUTH_PLAIN          "PLAIN"
+#define AUTH_ANONYMOUS      "ANONYMOUS"
+#define AUTH_DIGEST_MD5     "DIGEST-MD5"
+#define AUTH_SCRAM_SHA1     "SCRAM-SHA-1"
+#define AUTH_SCRAM_SHA224   "SCRAM-SHA-224"
+#define AUTH_SCRAM_SHA256   "SCRAM-SHA-256"
+#define AUTH_SCRAM_SHA384   "SCRAM-SHA-384"
+#define AUTH_SCRAM_SHA512   "SCRAM-SHA-512"
+#define SCRAM_SHA1_DKLEN    20
+#define SCRAM_SHA224_DKLEN  28
+#define SCRAM_SHA256_DKLEN  32
+#define SCRAM_SHA384_DKLEN  48
+#define SCRAM_SHA512_DKLEN  64
 
-static const QStringList SupportedMechanisms = QStringList() << AUTH_DIGEST_MD5 << AUTH_PLAIN << AUTH_ANONYMOUS;
+static const QStringList SupportedMechanisms = QStringList() << AUTH_SCRAM_SHA512 << AUTH_SCRAM_SHA384 << AUTH_SCRAM_SHA256 << AUTH_SCRAM_SHA224 << AUTH_SCRAM_SHA1 << AUTH_DIGEST_MD5 << AUTH_PLAIN << AUTH_ANONYMOUS;
+
+static QByteArray deriveKeyPbkdf2(QCryptographicHash::Algorithm algorithm, const QByteArray &password, const QByteArray &salt, int iterations, int dkLen)
+{
+	if (iterations < 1 || dkLen < 1)
+		return QByteArray();
+
+	QByteArray key;
+	QByteArray index(4, 0);
+	QMessageAuthenticationCode hmac(algorithm, password);
+	for (quint32 loop=1; key.length()<dkLen; loop++)
+	{
+		hmac.reset();
+		hmac.addData(salt);
+		qToBigEndian(loop, reinterpret_cast<uchar*>(index.data()));
+		hmac.addData(index);
+
+		QByteArray u = hmac.result();
+		QByteArray tkey = u;
+		for (int iter=1; iter<iterations; iter++)
+		{
+			hmac.reset();
+			hmac.addData(u);
+			u = hmac.result();
+			std::transform(tkey.constBegin(), tkey.constEnd(), u.constBegin(), tkey.begin(), std::bit_xor<char>());
+		}
+
+		key += tkey;
+	}
+	return key.left(dkLen);
+}
+
+static QByteArray getDigestMd5ResponseHash(const QMap<QByteArray, QByteArray> &AResponse, const QString &APassword)
+{
+	QByteArray secret = QCryptographicHash::hash(AResponse.value("username")+':'+AResponse.value("realm")+':'+APassword.toUtf8(),QCryptographicHash::Md5);
+	QByteArray a1Hex = QCryptographicHash::hash(secret+':'+AResponse.value("nonce")+':'+AResponse.value("cnonce"),QCryptographicHash::Md5).toHex();
+	QByteArray a2Hex = QCryptographicHash::hash("AUTHENTICATE:"+AResponse.value("digest-uri"),QCryptographicHash::Md5).toHex();
+	QByteArray value = QCryptographicHash::hash(a1Hex+':'+AResponse.value("nonce")+':'+AResponse.value("nc")+':'+AResponse.value("cnonce")+':'+AResponse.value("qop")+':'+a2Hex,QCryptographicHash::Md5);
+	return value.toHex();
+}
 
 static QMap<QByteArray, QByteArray> parseChallenge(const QByteArray &AChallenge)
 {
 	int startPos = 0;
 	bool quoting = false;
 	QList<QByteArray> paramsList;
-	for (int pos = 1; pos<AChallenge.size(); pos++)
+	for (int pos=1; pos<AChallenge.size(); pos++)
 	{
 		const char c = AChallenge.at(pos);
 		if (c == '\"')
@@ -39,6 +93,7 @@ static QMap<QByteArray, QByteArray> parseChallenge(const QByteArray &AChallenge)
 			startPos=pos+1;
 		}
 	}
+	paramsList.append(AChallenge.mid(startPos));
 
 	QMap<QByteArray, QByteArray> map;
 	for (int i = 0; i<paramsList.count(); i++)
@@ -76,15 +131,6 @@ static QByteArray serializeResponse(const QMap<QByteArray, QByteArray> &ARespons
 	return response;
 }
 
-static QByteArray getResponseValue(const QMap<QByteArray, QByteArray> &AResponse, const QString &APassword)
-{
-	QByteArray secret = QCryptographicHash::hash(AResponse.value("username")+':'+AResponse.value("realm")+':'+APassword.toUtf8(),QCryptographicHash::Md5);
-	QByteArray a1Hex = QCryptographicHash::hash(secret+':'+AResponse.value("nonce")+':'+AResponse.value("cnonce"),QCryptographicHash::Md5).toHex();
-	QByteArray a2Hex = QCryptographicHash::hash("AUTHENTICATE:"+AResponse.value("digest-uri"),QCryptographicHash::Md5).toHex();
-	QByteArray value = QCryptographicHash::hash(a1Hex+':'+AResponse.value("nonce")+':'+AResponse.value("nc")+':'+AResponse.value("cnonce")+':'+AResponse.value("qop")+':'+a2Hex,QCryptographicHash::Md5);
-	return value.toHex();
-}
-
 SASLAuthFeature::SASLAuthFeature(IXmppStream *AXmppStream) : QObject(AXmppStream->instance())
 {
 	FXmppStream = AXmppStream;
@@ -105,14 +151,22 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 		{
 			QByteArray challengeData = QByteArray::fromBase64(AStanza.element().text().toLatin1());
 			LOG_STRM_DEBUG(FXmppStream->streamJid(),QString("SASL auth challenge received: %1").arg(QString::fromUtf8(challengeData)));
-			
+
+			QByteArray responseData;
 			QMap<QByteArray, QByteArray> responseMap;
 			QMap<QByteArray, QByteArray> challengeMap = parseChallenge(challengeData);
-			if (!challengeMap.isEmpty() && challengeMap.value("qop","auth") == "auth")
+
+			if (FSelectedMechanism==AUTH_DIGEST_MD5 && !challengeMap.value("nonce").isEmpty())
 			{
-				QByteArray randBytes(32,' ');
-				for (int i=0; i<randBytes.size(); i++)
-					randBytes[i] = (char) (256.0 * qrand() / (RAND_MAX + 1.0));
+				QByteArray randBytes(32, ' ');
+				for (int i = 0; i < randBytes.size(); i++)
+				{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+					randBytes[i] = static_cast<char>(QRandomGenerator::global()->bounded(0, 256));
+#else
+					randBytes[i] = static_cast<char>(static_cast<int>(256.0 * qrand() / (RAND_MAX + 1.0)));
+#endif
+				}
 
 				responseMap["cnonce"] = randBytes.toHex();
 				if (challengeMap.contains("realm"))
@@ -125,9 +179,67 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 				responseMap["qop"] = "auth";
 				responseMap["digest-uri"] = QString("xmpp/%1").arg(FXmppStream->streamJid().pDomain()).toUtf8();
 				responseMap["charset"] = "utf-8";
-				responseMap["response"] = getResponseValue(responseMap,FXmppStream->password());
+				responseMap["response"] = getDigestMd5ResponseHash(responseMap,FXmppStream->password());
+
+				responseData = serializeResponse(responseMap);
 			}
-			QByteArray responseData = serializeResponse(responseMap);
+			else if (FSelectedMechanism.startsWith("SCRAM-SHA") && !challengeMap.value("r").isEmpty())
+			{
+				QByteArray serverNonce = challengeMap.value("r");
+				if (!serverNonce.startsWith(SCRAMSHA_clientNonce))
+				{
+					XmppError err(IERR_SASL_AUTH_INVALID_REQUEST);
+					LOG_STRM_WARNING(FXmppStream->streamJid(), QString("SCRAM-SHA error: Invalid server challenge nonce"));
+					emit error(err);
+					return true;
+				}
+
+				// FSelectedMechanism == AUTH_SCRAM_SHA1
+				QCryptographicHash::Algorithm method = QCryptographicHash::Sha1;
+				int len = SCRAM_SHA1_DKLEN;
+#if QT_VERSION >=0x050000
+				if (FSelectedMechanism == AUTH_SCRAM_SHA224)
+				{
+					method = QCryptographicHash::Sha224;
+					len = SCRAM_SHA224_DKLEN;
+				}
+				else if (FSelectedMechanism == AUTH_SCRAM_SHA256)
+				{
+					method = QCryptographicHash::Sha256;
+					len = SCRAM_SHA256_DKLEN;
+				}
+				else if (FSelectedMechanism == AUTH_SCRAM_SHA384)
+				{
+					method = QCryptographicHash::Sha384;
+					len = SCRAM_SHA384_DKLEN;
+				}
+				else if (FSelectedMechanism == AUTH_SCRAM_SHA512)
+				{
+					method = QCryptographicHash::Sha512;
+					len = SCRAM_SHA512_DKLEN;
+				}
+#endif
+				int iterations = challengeMap.value("i").toInt();
+				QByteArray salt = QByteArray::fromBase64(challengeMap.value("s"));
+				QByteArray saltedPassword = deriveKeyPbkdf2(method, FXmppStream->password().toUtf8(), salt, iterations, len);
+
+				QByteArray clientKey = QMessageAuthenticationCode::hash("Client Key", saltedPassword, method);
+				QByteArray serverKey = QMessageAuthenticationCode::hash("Server Key", saltedPassword, method);
+
+				QByteArray serverFirstMessage = challengeData;
+				QByteArray clientFinalMessageBare = "c=biws,r=" + serverNonce;
+				QByteArray authMessage = SCRAMSHA_initialMessage + "," + serverFirstMessage + "," + clientFinalMessageBare;
+
+				QByteArray storedKey = QCryptographicHash::hash(clientKey, method);
+				QByteArray clientSignature = QMessageAuthenticationCode::hash(authMessage, storedKey, method);
+				SCRAMSHA_ServerSignature = QMessageAuthenticationCode::hash(authMessage, serverKey, method);
+
+				QByteArray clientProof = clientKey;
+				for (int i = 0; i < clientProof.size(); ++i)
+					clientProof[i] = clientProof[i] ^ clientSignature[i];
+
+				responseData = clientFinalMessageBare + ",p=" + clientProof.toBase64();
+			}
 
 			Stanza response("response",NS_FEATURE_SASL);
 			response.element().appendChild(response.createTextNode(responseData.toBase64()));
@@ -140,6 +252,19 @@ bool SASLAuthFeature::xmppStanzaIn(IXmppStream *AXmppStream, Stanza &AStanza, in
 			FXmppStream->removeXmppStanzaHandler(XSHO_XMPP_FEATURE,this);
 			if (AStanza.kind() == "success")
 			{
+				if (FSelectedMechanism.startsWith("SCRAM-SHA") && SupportedMechanisms.contains(FSelectedMechanism))
+				{
+					QByteArray serverSignature = QByteArray::fromBase64(AStanza.element().text().toLatin1());
+					QByteArray savedServerSignature = QByteArray("v=").append(SCRAMSHA_ServerSignature.toBase64());
+					if (serverSignature != savedServerSignature)
+					{
+						XmppError err(IERR_SASL_AUTH_INVALID_RESPONSE);
+						LOG_STRM_WARNING(FXmppStream->streamJid(),QString("SCRAM-SHA error: Invalid server response signature"));
+						emit error(err);
+						return true;
+					}
+				}
+
 				LOG_STRM_INFO(FXmppStream->streamJid(),"Authorization successes");
 				deleteLater();
 				emit finished(true);
@@ -218,14 +343,60 @@ bool SASLAuthFeature::start(const QDomElement &AElem)
 	{
 		LOG_STRM_ERROR(FXmppStream->streamJid(),QString("Failed to send authorization request: Invalid element=%1").arg(AElem.tagName()));
 	}
+
 	deleteLater();
 	return false;
+}
+
+void SASLAuthFeature::authRequestSCRAM(Stanza &AAuth, const QString AMethod)
+{
+	QByteArray randBytes(32, ' ');
+	for (int i = 0; i < randBytes.size(); i++)
+	{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
+		randBytes[i] = static_cast<char>(QRandomGenerator::global()->bounded(0, 256));
+#else
+		randBytes[i] = static_cast<char>(static_cast<int>(256.0 * qrand() / (RAND_MAX + 1.0)));
+#endif
+	}
+	SCRAMSHA_clientNonce = randBytes.toHex();
+
+	QByteArray gs2Header = "n,,"; // TODO: SCRAM-SHA no Channel Binding support yet, base64 "biws"
+	SCRAMSHA_initialMessage.append("n=").append(FXmppStream->streamJid().pNode().toUtf8()).append(",r=").append(SCRAMSHA_clientNonce);
+
+	AAuth.setAttribute("mechanism", AMethod);
+	AAuth.element().appendChild(AAuth.createTextNode(gs2Header.append(SCRAMSHA_initialMessage).toBase64()));
 }
 
 void SASLAuthFeature::sendAuthRequest(const QStringList &AMechanisms)
 {
 	Stanza auth("auth",NS_FEATURE_SASL);
-	if (AMechanisms.contains(AUTH_DIGEST_MD5))
+	if (AMechanisms.contains(AUTH_SCRAM_SHA512))
+	{
+		authRequestSCRAM(auth, AUTH_SCRAM_SHA512);
+		LOG_STRM_INFO(FXmppStream->streamJid(), "SCRAM-SHA-512 authorization request sent");
+	}
+	else if (AMechanisms.contains(AUTH_SCRAM_SHA384))
+	{
+		authRequestSCRAM(auth, AUTH_SCRAM_SHA384);
+		LOG_STRM_INFO(FXmppStream->streamJid(), "SCRAM-SHA-384 authorization request sent");
+	}
+	else if (AMechanisms.contains(AUTH_SCRAM_SHA256))
+	{
+		authRequestSCRAM(auth, AUTH_SCRAM_SHA256);
+		LOG_STRM_INFO(FXmppStream->streamJid(), "SCRAM-SHA-256 authorization request sent");
+	}
+	else if (AMechanisms.contains(AUTH_SCRAM_SHA224))
+	{
+		authRequestSCRAM(auth, AUTH_SCRAM_SHA224);
+		LOG_STRM_INFO(FXmppStream->streamJid(), "SCRAM-SHA-224 authorization request sent");
+	}
+	else if (AMechanisms.contains(AUTH_SCRAM_SHA1))
+	{
+		authRequestSCRAM(auth, AUTH_SCRAM_SHA1);
+		LOG_STRM_INFO(FXmppStream->streamJid(), "SCRAM-SHA-1 authorization request sent");
+	}
+	else if (AMechanisms.contains(AUTH_DIGEST_MD5))
 	{
 		auth.setAttribute("mechanism",AUTH_DIGEST_MD5);
 		LOG_STRM_INFO(FXmppStream->streamJid(),"Digest-MD5 authorization request sent");
@@ -246,6 +417,7 @@ void SASLAuthFeature::sendAuthRequest(const QStringList &AMechanisms)
 		LOG_STRM_INFO(FXmppStream->streamJid(),"Anonymous authorization request sent");
 	}
 
+	FSelectedMechanism = auth.attribute("mechanism");
 	FXmppStream->insertXmppStanzaHandler(XSHO_XMPP_FEATURE,this);
 	FXmppStream->sendStanza(auth);
 }
