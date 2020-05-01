@@ -3,6 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariant>
+#include <QStringList>
 #include <key_helper.h>
 #include "signalprotocol.h"
 #include "omemostore.h"
@@ -767,7 +768,7 @@ int destroy(SignalProtocol * ASignalProtocol) {
 	}
 
 	QSqlQuery query(DBS);
-	for (QStringList::ConstIterator it = stmts.cbegin();
+	for (QStringList::ConstIterator it = stmts.constBegin();
 		 it != stmts.constEnd(); ++it) {
 		query.prepare(*it);
 		if (!query.exec()) {

@@ -999,7 +999,7 @@ void Omemo::purgeDatabases()
 	for (QStringList::ConstIterator it=files.constBegin();
 		 it != files.constEnd(); ++it)
 		if (omemoDir.remove(*it))
-			qInfo() << "Database file:" << *it << "deleted.";
+			qDebug() << "Database file:" << *it << "deleted.";
 		else
 			qCritical() << "Failed to delete database file:" << *it;
 }
@@ -1154,6 +1154,11 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 													QString decryptedText = decryptMessageText(encryptedText, keyTuple.left(AES_128_KEY_LENGTH),
 																							   ivData, keyTuple.mid(AES_128_KEY_LENGTH));
 													AStanza.element().removeChild(encrypted);
+													if (decryptedText.isEmpty())
+														decryptedText = tr("Failed to decrypt message");
+													else
+														if (!isActiveSession(AStreamJid, AStanza.fromJid().bare()))
+															setActiveSession(AStreamJid, AStanza.fromJid().bare());
 													QDomText text = AStanza.document().createTextNode(decryptedText);
 													QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
 													if (!body.isNull())
@@ -1250,7 +1255,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 							qCritical("Invalid signed pre key ID!");
 					}
 					else
-						qInfo("Device ID for the bare JID is obsolete!");
+						qDebug("Device ID for the bare JID is obsolete!");
 				}
 				else
 					qCritical("Invalid device ID!");
@@ -1280,6 +1285,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 
 bool Omemo::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
 {
+/*
 	int rc = QMessageBox::question(nullptr,
 								   tr("A new identity key received from %1").arg(AName),
 								   tr("%1\n\nDo you trust it?").arg(SignalProtocol::calcFingerprint(AKeyData)),
@@ -1287,6 +1293,8 @@ bool Omemo::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
 	qDebug() << "rc=" << rc;
 	bool retval = rc==QMessageBox::Yes;
 	qDebug() << "returning:" << retval;
+*/
+	return true;
 }
 
 #if QT_VERSION < 0x050000

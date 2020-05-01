@@ -82,7 +82,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	uint32_t registrationId;
 	int initStatus = DbNotInitialized;
 
-	qInfo("%s: calling install-time functions", __func__);
+	qDebug("%s: calling install-time functions", __func__);
 
 	int rc = create(this);
 	if (rc){
@@ -1220,7 +1220,7 @@ cleanup:
 		qCritical("%s: %s", __func__, errMsg);
 	} else {
 		addDatabase(AFileName, FConnectionName);
-		qInfo("%s: done initializing SignalProtocol", __func__);
+		qDebug("%s: done initializing SignalProtocol", __func__);
 	}
 }
 

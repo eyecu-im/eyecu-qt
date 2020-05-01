@@ -97,7 +97,7 @@ void OmemoKeys::reset()
 		if (ns.contains(uuid.toString()) &&
 			retract.value(TAG_ACCOUNT, uuid.toString()).toBool())
 			FRetractDevices.insert(uuid);
-		ui->cmbAccount->addItem((*it)->name(), uuid);
+		ui->cmbAccount->addItem((*it)->name(), uuid.toByteArray());
 	}
 
 	if (ui->cmbAccount->count())
@@ -109,7 +109,7 @@ void OmemoKeys::reset()
 void OmemoKeys::onAccountIndexChanged(int AIndex)
 {
 	ui->pbPublicIdentityKeyCopy->setDisabled(true);
-	QUuid uuid = ui->cmbAccount->itemData(AIndex).toUuid();
+	QUuid uuid = ui->cmbAccount->itemData(AIndex).toString();
 	IAccount *account = FAccountManager->findAccountById(uuid);
 	if (account)
 	{
@@ -169,7 +169,7 @@ void OmemoKeys::onIdentityKeyCopy()
 
 void OmemoKeys::onRetractOtherClicked(bool AChecked)
 {
-	QString uuid = ui->cmbAccount->currentData().toUuid().toString();
+	QString uuid = ui->cmbAccount->itemData(ui->cmbAccount->currentIndex()).toString();
 	if (AChecked)
 		FRetractDevices.insert(uuid);
 	else
