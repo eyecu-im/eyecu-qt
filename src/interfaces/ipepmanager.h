@@ -2,6 +2,7 @@
 #define IPEPMANAGER_H
 
 #include <QDomElement>
+#include <interfaces/idataforms.h>
 #include <utils/jid.h>
 #include <utils/stanza.h>
 #include <utils/action.h>
@@ -21,7 +22,7 @@ class IPEPManager
 {
 public:
 	virtual bool isSupported(const Jid &AStreamJid) const =0;
-	virtual bool publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem) =0;
+	virtual bool publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem, const IDataForm *AOptions=NULL) =0;
     virtual bool deleteItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem) =0;
 
 	virtual IPEPHandler *nodeHandler(int AHandleId) const =0;

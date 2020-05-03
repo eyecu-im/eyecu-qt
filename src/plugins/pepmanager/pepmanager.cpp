@@ -181,15 +181,42 @@ bool PEPManager::isSupported(const Jid &AStreamJid) const
 	return supported;
 }
 
-bool PEPManager::publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem)
+bool PEPManager::publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem, const IDataForm *AOptions)
 {
 	if (FStanzaProcessor && isSupported(AStreamJid))
 	{
 		Stanza iq(STANZA_KIND_IQ);
 		iq.setType(STANZA_TYPE_SET).setUniqueId();
-		QDomElement publish = iq.addElement("pubsub", NS_PUBSUB).appendChild(iq.createElement("publish")).toElement();
+		QDomDocument doc = iq.document();
+		QDomElement pubsub = iq.addElement("pubsub", NS_PUBSUB);
+		QDomElement publish = pubsub.appendChild(iq.createElement("publish")).toElement();
 		publish.setAttribute("node", ANode);
 		publish.appendChild(AItem.cloneNode(true));
+
+		if (AOptions)
+		{
+			QDomElement options = doc.createElement("publish-options");
+			pubsub.appendChild(options);
+			QDomElement x = doc.createElementNS(NS_JABBER_DATA, "x");
+			options.appendChild(x);
+			for (QList<IDataField>::ConstIterator it = AOptions->fields.constBegin();
+				 it != AOptions->fields.constEnd(); ++it)
+			{
+				QDomElement field = doc.createElement("field");
+				if (!it->var.isEmpty())
+					field.setAttribute("var", it->var);
+				if (!it->type.isEmpty())
+					field.setAttribute("type", it->type);
+				if (!it->value.isNull())
+				{
+					QDomElement value = doc.createElement("value");
+					QDomText text = doc.createTextNode(it->value.toString());
+					value.appendChild(text);
+					field.appendChild(value);
+				}
+				x.appendChild(field);
+			}
+		}
 		if (FStanzaProcessor->sendStanzaOut(AStreamJid,iq))
 		{
 			LOG_STRM_INFO(AStreamJid,QString("PEP item publish request sent, node=%1, id=%2").arg(ANode,iq.id()));

@@ -105,10 +105,13 @@
 #define NS_PEP_TUNE                             "http://jabber.org/protocol/tune"
 #define NS_PEP_NICK                             "http://jabber.org/protocol/nick"
 
+//SCE
+#define NS_SCE									"urn:xmpp:sce:0"
 //OMEMO
-#define NS_OMEMO								"eu.siacs.conversations.axolotl"
-#define NS_PEP_OMEMO							NS_OMEMO".devicelist"
-#define NS_PEP_OMEMO_BUNDLES					NS_OMEMO".bundles"
+//#define NS_OMEMO								"eu.siacs.conversations.axolotl"
+#define NS_OMEMO								"urn:xmpp:omemo:1"
+#define NS_PEP_OMEMO							NS_OMEMO":devices"
+#define NS_PEP_OMEMO_BUNDLES					NS_OMEMO":bundles"
 #define NS_PEP_OMEMO_NOTIFY						NS_PEP_OMEMO"+notify"
 
 #define NS_RECEIPTS                         	"urn:xmpp:receipts"

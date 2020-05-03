@@ -81,6 +81,7 @@ protected slots:
 	void onShortcutActivated(const QString &AId, QWidget *AWidget);
 	void onBlinkTabNotifyTimerTimeout();
 	void onCloseWindowIfEmpty();
+	void onSwitchTab();
 private:
 	Ui::TabWindowClass ui;
 private:

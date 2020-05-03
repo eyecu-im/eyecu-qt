@@ -275,8 +275,9 @@ void TabWindow::createActions()
 	{
 		Action *action = new Action(this);
 		action->setShortcutId(QString(SCT_TABWINDOW_QUICKTAB).arg(tabNumber));
+		action->setData(ADR_TAB_INDEX, tabNumber);
 		FMenuButton->addAction(action);
-		connect(action, SIGNAL(triggered()), SLOT([=]() { ui.twtTabs->setCurrentIndex(tabNumber-1); }));
+		connect(action, SIGNAL(triggered()), SLOT(onSwitchTab()));
 	}
 
 	FNextTab = new Action(FWindowMenu);
@@ -795,4 +796,10 @@ void TabWindow::onCloseWindowIfEmpty()
 		deleteLater();
 		close();
 	}
+}
+
+void TabWindow::onSwitchTab()
+{
+	Action *action = qobject_cast<Action*>(sender());
+	ui.twtTabs->setCurrentIndex(action->data(ADR_TAB_INDEX).toInt()-1);
 }

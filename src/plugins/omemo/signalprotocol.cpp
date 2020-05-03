@@ -201,9 +201,9 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		}
 
 		rc = signedPreKeyStore(session_signed_pre_key_get_id(signedPreKey),
-											  signal_buffer_data(signedPreKeyData),
-											  signal_buffer_len(signedPreKeyData),
-											  this);
+							   signal_buffer_data(signedPreKeyData),
+							   signal_buffer_len(signedPreKeyData),
+							   this);
 		if (rc) {
 			errMsg = "failed to save signed pre key";
 			goto cleanup;
