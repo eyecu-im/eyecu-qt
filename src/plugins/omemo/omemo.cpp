@@ -71,21 +71,6 @@ extern "C" {
 
 #define VDATA_SIZE(A) A.data(), size_t(A.size())
 
-#define HASH_LEN 32
-static QByteArray hkdf(QCryptographicHash::Algorithm AMethod, int ALength, const QByteArray &AIkm,
-				const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_LEN, 0))
-{
-	QByteArray prk = QpMessageAuthenticationCode::hash(AIkm, ASalt, AMethod);
-	QByteArray t, okm;
-	int last = ceil(float(ALength)/float(HASH_LEN));
-	for (char i=0; i<last; ++i)
-	{
-		t = QpMessageAuthenticationCode::hash(t+AInfo+QByteArray(1, i+1), ASalt, AMethod);
-		okm += t;
-	}
-	return okm.left(ALength);
-}
-
 static QByteArray pkcs7pad(const QByteArray &AData)
 {
 	int pad = AData.size()%16;
@@ -114,7 +99,7 @@ static QByteArray pkcs7unpad(const QByteArray &AData)
 	return QByteArray(); // No padding
 }
 
-static QByteArray encryptMessageContent(const QByteArray &AContent, QByteArray &AKeyHmac)
+static QByteArray encryptMessageContent(SignalProtocol *ASignalProtocol, const QByteArray &AContent, QByteArray &AKeyHmac)
 {
 	gcry_error_t rc = SG_SUCCESS;
 	char * errMsg = nullptr;
@@ -124,9 +109,7 @@ static QByteArray encryptMessageContent(const QByteArray &AContent, QByteArray &
 	QByteArray encryptionKey, authKey, iv, key, hmac;
 	key.resize(AES_256_KEY_LENGTH);
 	gcry_randomize(VDATA_SIZE(key), GCRY_STRONG_RANDOM);
-
-	QByteArray randomData = hkdf(QCryptographicHash::Sha256, 80, key, QByteArray("OMEMO Payload"));
-
+	QByteArray randomData = ASignalProtocol->hkdf_gen(80, key, QByteArray("OMEMO Payload"));
 	encryptionKey = randomData.left(32);
 	authKey = randomData.mid(32,32);
 	iv = randomData.right(16);
@@ -174,14 +157,14 @@ cleanup:
 	return outBuf;
 }
 
-static QByteArray decryptMessageContent(const QByteArray &AEncryptedContent, const QByteArray &AKeyHmac)
+static QByteArray decryptMessageContent(SignalProtocol *ASignalProtocol, const QByteArray &AEncryptedContent, const QByteArray &AKeyHmac)
 {
 	gcry_error_t rc = SG_SUCCESS;
 	char * errMsg = nullptr;
 
 	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray outBuf;
-	QByteArray key, randomData, encryptionKey, authKey, iv, hmac;
+	QByteArray key, randomData, randomDataMy, encryptionKey, authKey, iv, hmac;
 
 	if(AKeyHmac.size() != 64) {
 	  errMsg = "Invalid Key+HMAC size (must be 64)";
@@ -190,7 +173,7 @@ static QByteArray decryptMessageContent(const QByteArray &AEncryptedContent, con
 	}
 
 	key = AKeyHmac.left(32);
-	randomData = hkdf(QCryptographicHash::Sha256, 80, key, QByteArray("OMEMO Payload"));
+	randomData = ASignalProtocol->hkdf_gen(80, key, QByteArray("OMEMO Payload"));
 	encryptionKey = randomData.left(32);
 	authKey = randomData.mid(32,32);
 	iv = randomData.right(16);
@@ -989,7 +972,7 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 
 		QByteArray keyHmac;
 		QByteArray content = getContent(AMessageStanza);
-		QByteArray data = encryptMessageContent(content, keyHmac);
+		QByteArray data = encryptMessageContent(signalProtocol, content, keyHmac);
 
 		QDomElement payload = doc.createElement(TAG_NAME_PAYLOAD);
 		QDomText text = doc.createTextNode(data.toBase64());
@@ -1276,7 +1259,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 															keyHmac = cipher.decrypt(message);
 														}
 														QByteArray encryptedContent = QByteArray::fromBase64(payload.text().toLatin1());
-														QByteArray decryptedContent = decryptMessageContent(encryptedContent, keyHmac);
+														QByteArray decryptedContent = decryptMessageContent(signalProtocol, encryptedContent, keyHmac);
 														AStanza.element().removeChild(encrypted);
 														if (decryptedContent.isEmpty())
 														{

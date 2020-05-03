@@ -12,6 +12,7 @@ extern "C" {
 #include <session_cipher.h>
 #include <session_state.h>
 #include <protocol.h>
+#include  <hkdf.h>
 
 using namespace OmemoStore;
 
@@ -582,6 +583,37 @@ SignalProtocol::PreKeySignalMessage SignalProtocol::getPreKeySignalMessage(const
 SignalProtocol::SessionBuilder SignalProtocol::getSessionBuilder(const QString &ABareJid, quint32 ADeviceId)
 {
 	return SessionBuilder(ABareJid, ADeviceId, FGlobalContext, FStoreContext);
+}
+
+#define VDATA_SIZE(A) reinterpret_cast<const uint8_t *>(A.data()), unsigned(A.size())
+
+QByteArray SignalProtocol::hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo, const QByteArray &ASalt)
+{
+	hkdf_context *kdf = NULL;
+	uint8_t *output = NULL;
+	QByteArray retVal;
+
+	int result = hkdf_create(&kdf, 3, FGlobalContext);
+	if(result >=0)
+	{
+		ssize_t result_size = hkdf_derive_secrets(
+			kdf, &output,
+			VDATA_SIZE(AIkm),
+			VDATA_SIZE(ASalt),
+			VDATA_SIZE(AInfo), size_t(ALength));
+
+		SIGNAL_UNREF(kdf);
+
+		if(output)
+		{
+			if(result_size == ALength)
+				retVal = QByteArray(reinterpret_cast<char *>(output),
+									result_size);
+			free(output);
+		}
+	}
+
+	return retVal;
 }
 
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)

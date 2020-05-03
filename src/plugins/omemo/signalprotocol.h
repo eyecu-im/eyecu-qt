@@ -186,6 +186,8 @@ public:
 	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
 	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
 	SessionBuilder getSessionBuilder(const QString &ABareJid, quint32 ADeviceId);
+#define HASH_OUTPIT_SIZE 32
+	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPIT_SIZE, 0));
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
