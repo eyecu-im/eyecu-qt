@@ -258,7 +258,7 @@ int SignalProtocol::sessionInitStatus(const QString &ABareJid, qint32 ADeviceId)
 	if(!signal_protocol_session_contains_session(FStoreContext, &address))
 		return NoSession;
 
-	rc = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address);
+	rc = signal_protocol_session_load_session(FStoreContext, &sessionRecord, &address, FVersion);
 	if (rc){
 		errMsg = "Database error when trying to retrieve session";
 		goto cleanup;
@@ -293,7 +293,7 @@ cleanup:
 
 SignalProtocol::Cipher SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
 {
-	return Cipher(this, ABareJid, ADeviceId);
+	return Cipher(this, ABareJid, ADeviceId, FVersion);
 }
 
 QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
@@ -577,12 +577,12 @@ SignalProtocol::SignalMessage SignalProtocol::getSignalMessage(const QByteArray 
 
 SignalProtocol::PreKeySignalMessage SignalProtocol::getPreKeySignalMessage(const QByteArray &AEncrypted)
 {
-	return PreKeySignalMessage(FGlobalContext, AEncrypted);
+	return PreKeySignalMessage(FGlobalContext, AEncrypted, getDeviceId());
 }
 
 SignalProtocol::SessionBuilder SignalProtocol::getSessionBuilder(const QString &ABareJid, quint32 ADeviceId)
 {
-	return SessionBuilder(ABareJid, ADeviceId, FGlobalContext, FStoreContext);
+	return SessionBuilder(ABareJid, ADeviceId, FGlobalContext, FStoreContext, FVersion);
 }
 
 #define VDATA_SIZE(A) reinterpret_cast<const uint8_t *>(A.data()), unsigned(A.size())
@@ -1134,10 +1134,11 @@ void SignalProtocol::recursiveMutexUnlock()
 	FMutex->unlock();
 }
 
-SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener):
+SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener, quint32 AVersion):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
 	FIdentityKeyListener(AIdentityKeyListener),
+	FVersion(AVersion),
 	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),
 	FError(0)
@@ -1291,7 +1292,8 @@ SignalProtocol::SessionBuilderData::~SessionBuilderData()
 //
 SignalProtocol::SessionBuilder::SessionBuilder(const QString &ABareJid, quint32 ADeviceId,
 											   signal_context *AGlobalContext,
-											   signal_protocol_store_context *AStoreContext):
+											   signal_protocol_store_context *AStoreContext,
+											   quint32 AVersion):
 	d(new SessionBuilderData(ABareJid, ADeviceId))
 {
 	// Instantiate a session_builder for a recipient address.
@@ -1301,6 +1303,7 @@ SignalProtocol::SessionBuilder::SessionBuilder(const QString &ABareJid, quint32 
 		d = nullptr;
 		qCritical("session_builder_create() failed! rc=%d", rc);
 	}
+	session_builder_set_version(d->FBuilder, AVersion);
 }
 
 SignalProtocol::SessionBuilder::SessionBuilder(const SignalProtocol::SessionBuilder &AOther):
@@ -1334,7 +1337,7 @@ bool SignalProtocol::SessionBuilder::isNull() const
 // *** Cipher ***
 //
 SignalProtocol::Cipher::Cipher(SignalProtocol *ASignalProtocol,
-							   const QString &ABareJid, int ADeviceId):
+							   const QString &ABareJid, int ADeviceId, quint32 AVersion):
 	FSignalProtocol(ASignalProtocol),
 	FCipher(nullptr),
 	FBareJid(ABareJid.toUtf8()),
@@ -1347,6 +1350,7 @@ SignalProtocol::Cipher::Cipher(SignalProtocol *ASignalProtocol,
 		FCipher = nullptr;
 		qCritical("session_cipher_create() failed! rc=%d", rc);
 	}
+	session_cipher_set_version(FCipher, AVersion);
 }
 
 SignalProtocol::Cipher::Cipher(const SignalProtocol::Cipher &AOther):
@@ -1537,12 +1541,12 @@ SignalProtocol::SignalMessage::operator signal_message *() const
 
 SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
 {
-	int rc = signal_message_deserialize(&FMessage,
+	int rc = signal_message_deserialize_omemo(&FMessage,
 										DATA_SIZE(AEncrypted),
 										AGlobalContext);
 	if (rc != SG_SUCCESS)
 	{
-		qCritical("signal_message_deserialize() failed! rc=%d", rc);
+		qCritical("signal_message_deserialize_omemo() failed! rc=%d", rc);
 		FMessage = nullptr;
 	}
 
@@ -1593,12 +1597,13 @@ quint32 SignalProtocol::PreKeySignalMessage::preKeyId() const
 	return pre_key_signal_message_get_pre_key_id(FMessage);
 }
 
-SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
+SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted, quint32 ARegistrationId)
 {
 	char *errorMsg;
-	int rc = pre_key_signal_message_deserialize(&FMessage,
-												DATA_SIZE(AEncrypted),
-												AGlobalContext);
+	int rc = pre_key_signal_message_deserialize_omemo(&FMessage,
+													  DATA_SIZE(AEncrypted),
+													  ARegistrationId,
+													  AGlobalContext);
 	if (rc == SG_SUCCESS)
 		return;
 

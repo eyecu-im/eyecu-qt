@@ -716,7 +716,7 @@ void Omemo::onAccountInserted(IAccount *AAccount)
 		}
 	}
 
-	SignalProtocol *signalProtocol = new SignalProtocol(omemoDir.filePath(name+".db"), name, this);
+	SignalProtocol *signalProtocol = new SignalProtocol(omemoDir.filePath(name+".db"), name, this, 4);
 	if (signalProtocol->install() == SG_SUCCESS)
 		FSignalProtocols.insert(AAccount->streamJid(), signalProtocol);
 	else

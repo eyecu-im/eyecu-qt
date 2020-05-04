@@ -74,7 +74,7 @@ public:
 		quint32 preKeyId() const;
 
 	protected:
-		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted);
+		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted, quint32 ARegistrationId);
 		operator pre_key_signal_message *() const;
 
 	private:
@@ -98,7 +98,7 @@ public:
 		bool operator != (const Cipher &AOther) const;
 
 	protected:
-		Cipher(SignalProtocol *ASignalProtocol, const QString &ABareJid, int ADeviceId);
+		Cipher(SignalProtocol *ASignalProtocol, const QString &ABareJid, int ADeviceId, quint32 AVersion);
 	private:
 		SignalProtocol *FSignalProtocol;
 		session_cipher *FCipher;
@@ -132,12 +132,12 @@ public:
 	protected:
 		SessionBuilder(const QString &ABareJid, quint32 ADeviceId,
 					   signal_context *AGlobalContext,
-					   signal_protocol_store_context *AStoreContext);
+					   signal_protocol_store_context *AStoreContext, quint32 AVersion);
 	private:
 		QSharedDataPointer<SessionBuilderData> d;
 	};
 
-	SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener);
+	SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener, quint32 AVersion);
 	~SignalProtocol();
 
 	static void init();
@@ -336,6 +336,7 @@ private:
 	signal_context		*FGlobalContext;
 	signal_protocol_store_context * FStoreContext;
 	IIdentityKeyListener *FIdentityKeyListener;
+	quint32				FVersion;
 
 	QString FConnectionName;
 
@@ -344,8 +345,6 @@ private:
 
 	// Error code
 	int FError;
-
-//	static SignalProtocol *FInstance;
 };
 
 #endif // SIGNALPROTOCOL_H
