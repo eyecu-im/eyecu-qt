@@ -189,6 +189,8 @@ public:
 #define HASH_OUTPIT_SIZE 32
 	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPIT_SIZE, 0));
 
+	static QByteArray sha256hmac(const QByteArray &AKey, const QByteArray &AMessage);
+
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
 	int generateRegistrationId(quint32 *ARegistrationId, int AExtendedRange);

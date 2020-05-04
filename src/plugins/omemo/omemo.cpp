@@ -2,7 +2,6 @@
 #include <QTimer>
 #include <QDir>
 #include <QMessageBox>
-#include <QpMessageAuthenticationCode>
 #include <definitions/menuicons.h>
 #include <definitions/namespaces.h>
 #include <definitions/resources.h>
@@ -106,7 +105,7 @@ static QByteArray encryptMessageContent(SignalProtocol *ASignalProtocol, const Q
 
 	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray inBuf, outBuf;
-	QByteArray encryptionKey, authKey, iv, key, hmac;
+	QByteArray encryptionKey, authKey, iv, key, hmac, hmac1;
 	key.resize(AES_256_KEY_LENGTH);
 	gcry_randomize(VDATA_SIZE(key), GCRY_STRONG_RANDOM);
 	QByteArray randomData = ASignalProtocol->hkdf_gen(80, key, QByteArray("OMEMO Payload"));
@@ -140,7 +139,8 @@ static QByteArray encryptMessageContent(SignalProtocol *ASignalProtocol, const Q
 		goto cleanup;
 	}
 
-	hmac = QpMessageAuthenticationCode::hash(outBuf, authKey, QCryptographicHash::Sha256);
+	hmac = SignalProtocol::sha256hmac(authKey, outBuf);
+
 	AKeyHmac = key+hmac;
 
 cleanup:
@@ -178,7 +178,7 @@ static QByteArray decryptMessageContent(SignalProtocol *ASignalProtocol, const Q
 	authKey = randomData.mid(32,32);
 	iv = randomData.right(16);
 
-	hmac = QpMessageAuthenticationCode::hash(AEncryptedContent, authKey, QCryptographicHash::Sha256);
+	hmac = SignalProtocol::sha256hmac(authKey, AEncryptedContent);
 	if (hmac != AKeyHmac.right(32)) {
 		errMsg = "HMAC verification failed!";
 		goto cleanup;
@@ -1233,6 +1233,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 								for (QDomElement keys = header.firstChildElement(TAG_NAME_KEYS);
 									 !keys.isNull(); keys = keys.nextSiblingElement(TAG_NAME_KEYS))
 									if (keys.attribute("jid")==AStreamJid.bare())
+									{
 										for (QDomElement key = keys.firstChildElement(TAG_NAME_KEY);
 											 !key.isNull(); key = key.nextSiblingElement(TAG_NAME_KEY))
 											if (key.hasAttribute(ATTR_NAME_RID))
@@ -1303,6 +1304,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 											}
 											else
 												qCritical() << "rid attribute is missing!";
+									}
 							}
 							else
 								qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
@@ -1339,7 +1341,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 				QDomElement item = items.firstChildElement(TAG_NAME_ITEM);
 				SignalDeviceBundle deviceBundle;
 				deviceBundle.FDeviceId = item.attribute(ATTR_NAME_ID).toInt(&ok);
-				if (ok && (deviceBundle.FDeviceId == deviceId))
+				if (ok)
 				{
 					if (deviceId != deviceBundle.FDeviceId)
 						qWarning() << "Device IDs do not match:" << deviceId

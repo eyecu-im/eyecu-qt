@@ -616,6 +616,73 @@ QByteArray SignalProtocol::hkdf_gen(int ALength, const QByteArray &AIkm, const Q
 	return retVal;
 }
 
+QByteArray SignalProtocol::sha256hmac(const QByteArray &AKey, const QByteArray &AMessage)
+{
+	QString errMsg;
+	int		retVal;
+	gcry_mac_hd_t hmacHd;
+
+	size_t macLen = 0;
+	uchar * macData = nullptr;
+	signal_buffer * outBuf = nullptr;
+	QByteArray result;
+
+	retVal = int(gcry_mac_open(&hmacHd, GCRY_MAC_HMAC_SHA256, 0, nullptr));
+	if (retVal) {
+		errMsg = "could not create hmac-sha256 ctx";
+		goto cleanup;
+	}
+
+	retVal = int(gcry_mac_setkey(hmacHd, AKey, AKey.size()));
+	if (retVal) {
+		errMsg = "could not set key for hmac";
+		goto cleanup;
+	}
+
+	gcry_mac_write(hmacHd, AMessage.data(), AMessage.size());
+
+	macLen = gcry_mac_get_algo_maclen(GCRY_MAC_HMAC_SHA256);
+
+	macData = reinterpret_cast<uchar *>(malloc(sizeof(uint8_t) * macLen));
+	if (!macData) {
+		retVal = SG_ERR_NOMEM;
+		errMsg = "failed to malloc mac buf";
+		goto cleanup;
+	}
+
+	retVal = gcry_mac_read(hmacHd, macData, &macLen);
+	if (retVal) {
+		errMsg = "failed to read mac";
+		goto cleanup;
+	}
+
+	outBuf = signal_buffer_create(macData, macLen);
+	if (!outBuf) {
+		retVal = SG_ERR_NOMEM;
+		errMsg = "failed to create mac output buf";
+		goto cleanup;
+	}
+
+	result = QByteArray((char *)signal_buffer_data(outBuf), macLen);
+
+cleanup:
+	if (retVal) {
+		if (retVal > 0) {
+			qCritical("%s: %s (%s: %s)\n", __func__, errMsg.toLatin1().data(), gcry_strsource(retVal), gcry_strerror(retVal));
+			retVal = SG_ERR_UNKNOWN;
+		} else {
+			qCritical("%s: %s\n", __func__, errMsg.toLatin1().data());
+		}
+	}
+
+	gcry_mac_close(hmacHd);
+
+	if (outBuf)
+		signal_buffer_free(outBuf);
+
+	return result;
+}
+
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
 {
 	return signal_protocol_key_helper_generate_identity_key_pair(AIdentityKeyPair, FGlobalContext);
