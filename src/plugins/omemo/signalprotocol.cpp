@@ -29,19 +29,45 @@ void SignalProtocol::init()
 QString SignalProtocol::calcFingerprint(const QByteArray &APublicKey)
 {
 	QString result;
-	if (APublicKey.size() == 33 && APublicKey[0] == 5)
+	if (APublicKey.size() == 32)
 	{
 		for (int i=0; i<8; ++i)
 		{
 			if (i)
 				result.append(' ');
-			result.append(QString::fromLatin1(APublicKey.mid(1+i*4, 4).toHex()));
+			result.append(QString::fromLatin1(APublicKey.mid(i*4, 4).toHex()));
 		}
 	}
 	else
-		qCritical("Invalid public key data");
+		qCritical("Invalid public key size: %d", APublicKey.size());
 
 	return result;
+}
+
+QByteArray SignalProtocol::curveFromEd(const QByteArray &AEd25519Key)
+{
+	QByteArray retVal;
+	ec_public_key *key(nullptr);
+	int rc = curve_decode_point(&key, reinterpret_cast<const quint8*>(AEd25519Key.data()),
+								AEd25519Key.size(), FGlobalContext);
+	if (rc == SG_SUCCESS)
+	{
+		signal_buffer *buffer = ec_public_key_get_mont(key);
+		if (buffer)
+		{
+			retVal = signalBufferToByteArray(buffer);
+			signal_buffer_free(buffer);
+		}
+		else
+			qCritical("ec_public_key_get_mont() failed!");
+
+		SIGNAL_UNREF(key);
+	}
+	else
+		qCritical("curve_decode_point() failed! rc=%d", rc);
+
+	return retVal;
+
 }
 
 QString SignalProtocol::connectionName() const
@@ -51,6 +77,7 @@ QString SignalProtocol::connectionName() const
 
 bool SignalProtocol::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
 {
+	qDebug() << "SignalProtocol::onNewKeyReceived(" << AName << "," << AKeyData.toHex() << ")";
 	return FIdentityKeyListener?FIdentityKeyListener->onNewKeyReceived(AName, AKeyData)
 							   :true;
 }
@@ -312,7 +339,7 @@ QByteArray SignalProtocol::signalBufferToByteArray(signal_buffer *ABuffer)
 	return QByteArray();
 }
 
-QByteArray SignalProtocol::getIdentityKeyPublic() const
+QByteArray SignalProtocol::getIdentityKeyPublic(bool fingerprint) const
 {
 	ratchet_identity_key_pair *keyPair;
 	QByteArray retVal;
@@ -321,16 +348,16 @@ QByteArray SignalProtocol::getIdentityKeyPublic() const
 	{
 		ec_public_key *key = ratchet_identity_key_pair_get_public(keyPair);
 		if (key)
-		{
-			signal_buffer *buffer;
-			rc = ec_public_key_serialize(&buffer, key);
-			if (rc ==SG_SUCCESS)
+		{		
+			signal_buffer *buffer = fingerprint?ec_public_key_get_mont(key)
+											  :ec_public_key_get_ed(key);
+			if (buffer)
 			{
 				retVal = signalBufferToByteArray(buffer);
 				signal_buffer_free(buffer);
 			}
 			else
-				qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+				qCritical("ec_public_key_get_%s() failed!", fingerprint?"mont":"ed");
 		}
 		else
 			qCritical("ratchet_identity_key_pair_get_public() returned NULL!");
@@ -681,6 +708,26 @@ cleanup:
 		signal_buffer_free(outBuf);
 
 	return result;
+}
+
+bool SignalProtocol::setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool ATrusted)
+{
+	QByteArray addr = ABareJid.toUtf8();
+	signal_protocol_address address;
+	address.name = addr.data();
+	address.name_len = addr.size();
+	address.device_id = ADeviceId;
+	return OmemoStore::identitySetTrusted(&address, AKeyData, ATrusted, this)==0;
+}
+
+bool SignalProtocol::getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData)
+{
+	QByteArray addr = ABareJid.toUtf8();
+	signal_protocol_address address;
+	address.name = addr.data();
+	address.name_len = addr.size();
+	address.device_id = ADeviceId;
+	return OmemoStore::identityIsTrusted(&address, (uint8_t*)AKeyData.data(), AKeyData.size(), this);
 }
 
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
@@ -1305,7 +1352,7 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	identityKeyStore.get_identity_key_pair = &identityGetKeyPair;
 	identityKeyStore.get_local_registration_id = &identityGetLocalRegistrationId;
 	identityKeyStore.save_identity = &identitySave;
-	identityKeyStore.is_trusted_identity = &identityIsTrusted;
+	identityKeyStore.is_trusted_identity = &identityAlwaysTrusted;
 	identityKeyStore.destroy_func = &identityDestroyCtx;
 	identityKeyStore.user_data = this;
 

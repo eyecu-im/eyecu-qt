@@ -636,8 +636,8 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 	query.bindValue(1, AAddress->device_id);
 	if (AKeyData) {
 		query.bindValue(2, BYTE_ARRAY(AKeyData, AKeyLen));
-		qDebug() << "Saving key as TRUSTED";
-		query.bindValue(3, IdentityKeyTrusted);
+		qDebug() << "Saving key as UNTRUSTED";
+		query.bindValue(3, IdentityKeyUnrusted);
 	}
 	if (!query.exec()) return -3;
 
@@ -789,21 +789,6 @@ int initStatusSet(int AStatus, SignalProtocol *ASignalProtocol) {
 
 int initStatusGet(int &AInitStatus, SignalProtocol *ASignalProtocol)
 {
-	qDebug() << "OmemoStore::initStatusGet()";
-	qDebug() << "connection name:" << ASignalProtocol->connectionName();
-	SQL_QUERYS("SELECT * FROM " SETTINGS_STORE_TABLE);
-	qDebug() << "query:" << query.lastQuery();
-
-	if (query.exec()) {
-		qDebug() << "query size:" << query.size();
-		while (query.next()) {
-			qDebug() << "Got result!";
-			qDebug() << "name:" << query.value(0);
-			qDebug() << "value:" << query.value(1);
-			// exactly one result
-		}
-	}
-
 	return propertyGet(INIT_STATUS, AInitStatus, ASignalProtocol);
 }
 
@@ -1013,6 +998,28 @@ cleanup:
 	}
 
 	return rc;
+}
+
+int identitySetTrusted(const signal_protocol_address *AAddress, const QByteArray &AKeyData, bool ATrusted, SignalProtocol *ASignalProtocol)
+{
+	qDebug() << "identitySetTrusted({" << ADDR_NAME(AAddress) << ";" << AAddress->device_id << "}," << AKeyData<< "," << ATrusted << ")";
+	// 1 - trusted (1 for true, 0 for false)
+	// 2 - name ("public" or "private" for own keys, name for contacts)
+	// 3 - device ID ("public" or "private" for own keys, name for contacts)
+	// 4 - key blob (curve25519)
+
+	SQL_QUERYS("UPDATE " IDENTITY_KEY_STORE_TABLE " SET " IDENTITY_KEY_STORE_TRUSTED "=?1 "
+			   "WHERE " IDENTITY_KEY_STORE_NAME "=?2 AND " IDENTITY_KEY_STORE_DEVICE_ID "=?3 AND "
+			   IDENTITY_KEY_STORE_KEY "=?4");
+
+	query.bindValue(0, ATrusted);
+	query.bindValue(1, ADDR_NAME(AAddress));
+	query.bindValue(2, AAddress->device_id);
+	query.bindValue(3, AKeyData);
+
+	if (!query.exec()) return -3;
+
+	return 0;
 }
 
 }

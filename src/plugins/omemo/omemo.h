@@ -72,9 +72,9 @@ protected:
 	bool removeOtherKeys(const Jid &AStreamJid);
 	void removeOtherDevices(const Jid &AStreamJid);
 
-	QString requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
+	QString requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds);
 
-	void bundlesProcessed(const QString &ABareJid);
+	void bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid);
 	void encryptMessage(Stanza &AMessageStanza);
 
 	struct SignalDeviceBundle

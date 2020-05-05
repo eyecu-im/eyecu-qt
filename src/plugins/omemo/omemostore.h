@@ -177,6 +177,8 @@ namespace OmemoStore
 	int identityIsTrusted(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
 	int identityAlwaysTrusted(const signal_protocol_address * AAddress, uint8_t * AKeyData, size_t AKeyLen, void * AUserData);
 	void identityDestroyCtx(void * AUserData);
+
+	int identitySetTrusted(const signal_protocol_address * AAddress, const QByteArray &AKeyData, bool ATrusted, SignalProtocol *ASignalProtocol);
 };
 
 #endif // OMEMOSTORE_H

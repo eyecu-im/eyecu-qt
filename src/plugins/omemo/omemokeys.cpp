@@ -120,7 +120,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 			quint32 deviceId = signalProtocol->getDeviceId();
 			ui->lblDeviceId->setNum(int(deviceId));
 
-			QString fingerprint = SignalProtocol::calcFingerprint(signalProtocol->getIdentityKeyPublic());
+			QString fingerprint = SignalProtocol::calcFingerprint(signalProtocol->getIdentityKeyPublic(true));
 			ui->lblPublicIdentityKey->setText(fingerprint);
 			if (!fingerprint.isEmpty())
 				ui->pbPublicIdentityKeyCopy->setEnabled(true);
@@ -133,7 +133,8 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 			{
 				QList<QStandardItem*> row;
 
-				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(*it));
+				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
+																signalProtocol->curveFromEd(*it)));
 				dataItem->setData(*it);
 
 				row.append(new QStandardItem(QString::number(it.key())));
@@ -149,7 +150,8 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 			{
 				QList<QStandardItem*> row;
 
-				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(it->keyData));
+				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
+								signalProtocol->curveFromEd(it->keyData)));
 				dataItem->setData(it->keyData);
 
 				row.append(new QStandardItem(it->name));

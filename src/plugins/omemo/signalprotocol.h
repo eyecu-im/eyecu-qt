@@ -143,8 +143,9 @@ public:
 	static void init();
 
 	static QString calcFingerprint(const QByteArray &APublicKey);
-
 	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
+
+	QByteArray curveFromEd(const QByteArray &AEd25519Key);
 
 	QString connectionName() const;
 
@@ -162,7 +163,7 @@ public:
 	int sessionInitStatus(const QString &ABareJid, qint32 ADeviceId);
 	Cipher sessionCipherCreate(const QString &ABareJid, int ADeviceId);
 
-	QByteArray getIdentityKeyPublic() const;
+	QByteArray getIdentityKeyPublic(bool fingerprint=false) const;
 	QByteArray getIdentityKeyPrivate() const;
 
 	QByteArray getSignedPreKeyPublic(quint32 AKeyId=SIGNED_PRE_KEY_ID) const;
@@ -186,10 +187,11 @@ public:
 	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
 	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
 	SessionBuilder getSessionBuilder(const QString &ABareJid, quint32 ADeviceId);
-#define HASH_OUTPIT_SIZE 32
-	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPIT_SIZE, 0));
-
+#define HASH_OUTPUT_SIZE 32
+	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPUT_SIZE, 0));
 	static QByteArray sha256hmac(const QByteArray &AKey, const QByteArray &AMessage);
+	bool setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool ATrusted=true);
+	bool getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData);
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
