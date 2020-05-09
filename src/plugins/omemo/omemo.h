@@ -12,6 +12,7 @@
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
 #include <interfaces/istanzaprocessor.h>
+#include <interfaces/imainwindow.h>
 #include "signalprotocol.h"
 
 class Omemo: public QObject,
@@ -20,11 +21,12 @@ class Omemo: public QObject,
 			 public IOptionsDialogHolder,
 			 public IPEPHandler,
 			 public IStanzaHandler,
+			 public IMessageEditor,
 			 public IStanzaRequestOwner,
 			 public SignalProtocol::IIdentityKeyListener
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IStanzaRequestOwner)
+	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IMessageEditor IStanzaRequestOwner)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
@@ -52,11 +54,14 @@ public:
 	//IStanzaHandler
 	virtual bool stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept) override;
 
+	// IMessageEditor interface
+	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
+
 	// IStanzaRequestOwner interface
 	void stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza) override;
 
 	// IIdentityKeyListener interface
-	bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData) override;
+	bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol) override;
 
 protected:
 	bool isSupported(const QString &ABareJid) const;
@@ -79,7 +84,7 @@ protected:
 
 	struct SignalDeviceBundle
 	{
-		quint32 FDeviceId;
+//		quint32 FDeviceId;
 		quint32 FSignedPreKeyId;
 		QByteArray FSignedPreKeyPublic;
 		QByteArray FSignedPreKeySignature;
@@ -112,16 +117,17 @@ private:
 	IOptionsManager*	FOptionsManager;
 	IPEPManager*		FPepManager;
 	IStanzaProcessor*	FStanzaProcessor;
+	IMessageProcessor*	FMessageProcessor;
 	IXmppStreamManager*	FXmppStreamManager;
 	IPresenceManager*	FPresenceManager;
 	IServiceDiscovery*	FDiscovery;
 	IMessageWidgets*	FMessageWidgets;
+	IMainWindowPlugin*	FMainWindowPlugin;
 	IPluginManager*		FPluginManager;
 
 	IconStorage*		FIconStorage;
 	int					FOmemoHandlerIn;
 	int					FOmemoHandlerOut;
-
 	int					FSHIMessageIn;
 	int					FSHIMessageOut;
 
@@ -132,10 +138,10 @@ private:
 	QHash<Jid, QStringList> FActiveSessions;
 	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
-	QMultiHash<QString, SignalDeviceBundle> FBundles;
+	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundles;
 	QMultiHash<QString, Stanza> FPendingMessages;
 
-	bool				FCleanup;
+	bool				FCleanup;	
 };
 
 #endif // OMEMO_H

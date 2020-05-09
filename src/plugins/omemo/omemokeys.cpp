@@ -134,7 +134,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 				QList<QStandardItem*> row;
 
 				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
-																signalProtocol->curveFromEd(*it)));
+															signalProtocol->curveFromEd(*it)));
 				dataItem->setData(*it);
 
 				row.append(new QStandardItem(QString::number(it.key())));
@@ -151,7 +151,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 				QList<QStandardItem*> row;
 
 				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
-								signalProtocol->curveFromEd(it->keyData)));
+															signalProtocol->curveFromEd(it->keyData)));
 				dataItem->setData(it->keyData);
 
 				row.append(new QStandardItem(it->name));

@@ -1,9 +1,8 @@
 #include "signalprotocol.h"
 
+#include <QDebug>
 #include <QMutex>
 #include <QDateTime>
-#include <QDebug>
-
 extern "C" {
 #include <gcrypt.h>
 }
@@ -75,10 +74,9 @@ QString SignalProtocol::connectionName() const
 	return FConnectionName;
 }
 
-bool SignalProtocol::onNewKeyReceived(const QString &AName, const QByteArray &AKeyData)
+bool SignalProtocol::onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists)
 {
-	qDebug() << "SignalProtocol::onNewKeyReceived(" << AName << "," << AKeyData.toHex() << ")";
-	return FIdentityKeyListener?FIdentityKeyListener->onNewKeyReceived(AName, AKeyData)
+	return FIdentityKeyListener?FIdentityKeyListener->onNewKeyReceived(AName, ADeviceId, AKeyData, AExists, this)
 							   :true;
 }
 
@@ -128,7 +126,6 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			goto cleanup;
 		case 0:
 			// there is a value
-			qDebug() << "Init status=" << initStatus;
 			switch (initStatus) {
 				case DbNotInitialized:
 					// init needed
@@ -275,7 +272,6 @@ int SignalProtocol::sessionInitStatus(const QString &ABareJid, qint32 ADeviceId)
 	signal_protocol_address address = {bareJid.data(),
 									   size_t(bareJid.size()),
 									   ADeviceId};
-
 	int rc = 0;
 	char * errMsg = nullptr;
 
@@ -318,6 +314,16 @@ cleanup:
 	return rc;
 }
 
+int SignalProtocol::deleteSession(const QString &ABareJid, qint32 ADeviceId)
+{
+	QByteArray bareJid = ABareJid.toUtf8();
+	signal_protocol_address address = {bareJid.data(),
+									   size_t(bareJid.size()),
+									   ADeviceId};
+
+	return signal_protocol_session_delete_session(FStoreContext, &address);
+}
+
 SignalProtocol::Cipher SignalProtocol::sessionCipherCreate(const QString &ABareJid, int ADeviceId)
 {
 	return Cipher(this, ABareJid, ADeviceId, FVersion);
@@ -350,14 +356,12 @@ QByteArray SignalProtocol::getIdentityKeyPublic(bool fingerprint) const
 		if (key)
 		{		
 			signal_buffer *buffer = fingerprint?ec_public_key_get_mont(key)
-											  :ec_public_key_get_ed(key);
+											   :ec_public_key_get_ed(key);
 			if (buffer)
-			{
 				retVal = signalBufferToByteArray(buffer);
-				signal_buffer_free(buffer);
-			}
 			else
 				qCritical("ec_public_key_get_%s() failed!", fingerprint?"mont":"ed");
+			signal_buffer_free(buffer);
 		}
 		else
 			qCritical("ratchet_identity_key_pair_get_public() returned NULL!");
@@ -557,6 +561,9 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 				  *signedPreKeyPublic(nullptr),
 				  *identityKey(nullptr);
 
+	signal_buffer *buffer(nullptr);
+	QByteArray ik;
+
 	int rc = curve_decode_point(&preKeyPublic, DATA_SIZE(APreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
 		errMsg = "curve_decode_point() failed!";
@@ -574,6 +581,10 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 		errMsg = "curve_decode_point() failed!";
 		goto cleanup;
 	}
+
+	ec_public_key_serialize(&buffer, identityKey);
+	ik = QByteArray((char *)signal_buffer_data(buffer), signal_buffer_len(buffer));
+	signal_buffer_free(buffer);
 
 	rc = session_pre_key_bundle_create(&bundle, ARegistrationId, ADeviceId,
 									   APreKeyId, preKeyPublic,
@@ -710,24 +721,103 @@ cleanup:
 	return result;
 }
 
-bool SignalProtocol::setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool ATrusted)
+bool SignalProtocol::saveIdentity(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key)
 {
 	QByteArray addr = ABareJid.toUtf8();
 	signal_protocol_address address;
 	address.name = addr.data();
 	address.name_len = addr.size();
 	address.device_id = ADeviceId;
-	return OmemoStore::identitySetTrusted(&address, AKeyData, ATrusted, this)==0;
+
+	ec_public_key *key(nullptr);
+	int rc = curve_decode_point(&key, reinterpret_cast<const quint8*>(AEd25519Key.data()),
+								AEd25519Key.size(), FGlobalContext);
+	if (rc == SG_SUCCESS)
+	{
+		rc = signal_protocol_identity_save_identity(FStoreContext, &address, key);
+		if (rc == SG_SUCCESS)
+			return true;
+		else
+			qCritical("%s: signal_protocol_identity_save_identity() failed! rc=%d\n", __func__, rc);
+		SIGNAL_UNREF(key);
+	}
+	else
+		qCritical("%s: curve_decode_point() failed! rc=%d\n", __func__, rc);
+	return false;
 }
 
-bool SignalProtocol::getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData)
+bool SignalProtocol::setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted)
 {
 	QByteArray addr = ABareJid.toUtf8();
 	signal_protocol_address address;
 	address.name = addr.data();
 	address.name_len = addr.size();
 	address.device_id = ADeviceId;
-	return OmemoStore::identityIsTrusted(&address, (uint8_t*)AKeyData.data(), AKeyData.size(), this);
+
+	ec_public_key *key(nullptr);
+	int rc = curve_decode_point(&key, reinterpret_cast<const quint8*>(AEd25519Key.data()),
+								AEd25519Key.size(), FGlobalContext);
+
+	if (rc == SG_SUCCESS)
+	{
+		signal_buffer *buffer;
+		rc = ec_public_key_serialize(&buffer, key);
+		if (rc == SG_SUCCESS)
+		{
+			rc = OmemoStore::identitySetTrusted(&address, signal_buffer_data(buffer), signal_buffer_len(buffer), ATrusted, this);
+			signal_buffer_free(buffer);
+		}
+		else
+			qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+
+		SIGNAL_UNREF(key);
+	}
+	else
+		qCritical("curve_decode_point() failed! rc=%d", rc);
+
+
+	return rc==SG_SUCCESS;
+}
+
+int SignalProtocol::getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key)
+{
+	QByteArray addr = ABareJid.toUtf8();
+	signal_protocol_address address;
+	address.name = addr.data();
+	address.name_len = addr.size();
+	address.device_id = ADeviceId;
+
+	ec_public_key *key(nullptr);
+
+	int rc = AEd25519Key.isNull()?
+			SG_SUCCESS:curve_decode_point(&key, reinterpret_cast<const quint8*>(AEd25519Key.data()),
+										  AEd25519Key.size(), FGlobalContext);
+
+	if (rc == SG_SUCCESS)
+	{
+		signal_buffer *buffer;
+		if (key)
+			rc = ec_public_key_serialize(&buffer, key);
+		else
+			buffer = nullptr;
+		if (rc == SG_SUCCESS)
+		{
+			if (buffer)
+			{
+				rc = OmemoStore::identityIsTrusted(&address, signal_buffer_data(buffer), signal_buffer_len(buffer), this);
+				signal_buffer_free(buffer);
+			}
+			else
+				rc = OmemoStore::identityIsTrusted(&address, nullptr, 0, this);
+		}
+		else
+			qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+		SIGNAL_UNREF(key);
+	}
+	else
+		qCritical("curve_decode_point() failed! rc=%d", rc);
+
+	return rc;
 }
 
 int SignalProtocol::generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair)
@@ -1569,8 +1659,6 @@ QByteArray SignalProtocol::Cipher::decrypt(const PreKeySignalMessage &AMessage, 
 					errorMsg = "failed to generate a new key";
 					goto cleanup;
 				}
-
-				qDebug("New Pre Key generated! ID=%d", id);
 
 				rc = signal_protocol_pre_key_store_key(FSignalProtocol->storeContext(),
 													   signal_protocol_key_helper_key_list_element(keyList));

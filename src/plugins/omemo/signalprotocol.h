@@ -35,7 +35,7 @@ public:
 
 	class IIdentityKeyListener {
 	public:
-		virtual bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData) = 0;
+		virtual bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol) = 0;
 	};
 
 	class SignalMessage {
@@ -149,7 +149,7 @@ public:
 
 	QString connectionName() const;
 
-	bool onNewKeyReceived(const QString &AName, const QByteArray &AKeyData);
+	bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists);
 
 	signal_context *globalContext() const;
 	signal_protocol_store_context *storeContext() const;
@@ -161,6 +161,7 @@ public:
 	quint32 getDeviceId();
 
 	int sessionInitStatus(const QString &ABareJid, qint32 ADeviceId);
+	int deleteSession(const QString &ABareJid, qint32 ADeviceId);
 	Cipher sessionCipherCreate(const QString &ABareJid, int ADeviceId);
 
 	QByteArray getIdentityKeyPublic(bool fingerprint=false) const;
@@ -190,8 +191,9 @@ public:
 #define HASH_OUTPUT_SIZE 32
 	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPUT_SIZE, 0));
 	static QByteArray sha256hmac(const QByteArray &AKey, const QByteArray &AMessage);
-	bool setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool ATrusted=true);
-	bool getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData);
+	bool saveIdentity(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key);
+	bool setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted=true);
+	int getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key=QByteArray());
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);

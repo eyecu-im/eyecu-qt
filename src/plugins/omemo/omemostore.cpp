@@ -55,7 +55,6 @@ void addDatabase(const QString &ADatabaseFileName, const QString &AConnectionNam
 
 void removeDatabase(const QString &AConnectionName)
 {
-	qDebug() << "OmemoStore::removeDatabase(" << AConnectionName << ")";
 	QSqlDatabase::database(AConnectionName).close();
 	QSqlDatabase::removeDatabase(AConnectionName);
 }
@@ -80,13 +79,9 @@ int propertySet(const QString &AName, const int AValue, SignalProtocol *ASignalP
 
 int propertyGet(const QString &AName, int &AValue, SignalProtocol *ASignalProtocol)
 {
-	qDebug() << "OmemoStore::propertyGet(" << AName << ", ...)";
-	qDebug() << "connection name:" << ASignalProtocol->connectionName();
 	SQL_QUERYS("SELECT * FROM " SETTINGS_STORE_TABLE " WHERE name IS ?1");
-	qDebug() << "query:" << query.lastQuery();
 
 	query.bindValue(0, AName);
-	qDebug() << "bound:" << query.boundValue(0);
 
 	if (query.exec()) {
 		if (query.next()) {
@@ -459,10 +454,9 @@ int identitySetKeyPair(const ratchet_identity_key_pair * AKeyPair, SignalProtoco
 
 	// public key
 	query.bindValue(0, OWN_PUBLIC_KEY);
-	if (ec_public_key_serialize(&pubkeyBuf,
-								ratchet_identity_key_pair_get_public(AKeyPair))) {
-		errMsg = "Failed to allocate memory to serialize the public key";
-		rc = SG_ERR_NOMEM;
+	rc = ec_public_key_serialize(&pubkeyBuf, ratchet_identity_key_pair_get_public(AKeyPair));
+	if (rc != SG_SUCCESS) {
+		errMsg = "Failed to serialize the public key";
 		goto cleanup;
 	}
 	query.bindValue(1, ASignalProtocol->getDeviceId());
@@ -620,24 +614,50 @@ int identityGetLocalRegistrationId(void * AUserData, uint32_t * ARegistrationId)
 int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 				 size_t AKeyLen, void * AUserData)
 {
-	qDebug() << "identitySave({" << ADDR_NAME(AAddress) << "," << AAddress->device_id << "},"
-			 << BYTE_ARRAY(AKeyData, AKeyLen).toHex() << ")";
 	// 1 - name ("public" or "private" for own keys, name for contacts)
 	// 2 - key blob
 	// 3 - trusted (1 for true, 0 for false)
+
+	bool trust;
+	if (AKeyData)
+	{
+		SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
+				  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+				  " AND "  IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
+
+		QByteArray keyData(BYTE_ARRAY(AKeyData, AKeyLen));
+		query.bindValue(0, ADDR_NAME(AAddress));
+		query.bindValue(1, AAddress->device_id);
+		if (query.exec()) {
+			bool exists(false);
+			SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
+			if (query.next()) {
+				if (keyData == query.value(2).toByteArray()) {
+					qDebug("The same identity key exixts already!");
+					return 0;
+				}
+				exists = true;
+			}
+			trust = signalProtocol->onNewKeyReceived(ADDR_NAME(AAddress),
+													 AAddress->device_id,
+													 keyData, exists);
+		} else {
+			qCritical("Failed executing SQL query");
+			return -32;
+		}
+	}
 
 	SQL_QUERY(AKeyData?"INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE
 					   " VALUES (?1, ?2, ?3, ?4)"
 					  :"DELETE FROM " IDENTITY_KEY_STORE_TABLE
 					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
-					   "  AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
+					   " AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
 	query.bindValue(0, ADDR_NAME(AAddress));
 	query.bindValue(1, AAddress->device_id);
 	if (AKeyData) {
 		query.bindValue(2, BYTE_ARRAY(AKeyData, AKeyLen));
-		qDebug() << "Saving key as UNTRUSTED";
-		query.bindValue(3, IdentityKeyUnrusted);
+		query.bindValue(3, trust?1:0);
 	}
 	if (!query.exec()) return -3;
 
@@ -647,8 +667,9 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData,
 					  size_t AKeyLen, void *AUserData)
 {
-	qDebug() << "identityIsTrusted({" << ADDR_NAME(AAddress) << "," << AAddress->device_id << "},"
-			 << BYTE_ARRAY(AKeyData, AKeyLen).toHex() << ")";
+	QByteArray keyData;
+	if (AKeyData)
+		keyData = BYTE_ARRAY(AKeyData, AKeyLen);
 
 	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
 			   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
@@ -658,27 +679,13 @@ int identityIsTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData
 	query.bindValue(1, AAddress->device_id);
 	if (query.exec()) {
 		if (query.next()) {
-			if (BYTE_ARRAY(AKeyData, AKeyLen) != query.value(2).toByteArray()) {
+			if (!keyData.isNull() && (keyData != query.value(2).toByteArray())) {
 				qCritical("Key data does not match");
-				return 0;
+				return -2;
 			}
-			qDebug() << "Key data matches. Trusted flag:" << query.value(3).toUInt();
-			return query.value(3).toUInt()==1;
+			return query.value(3).toUInt();
 		} else {
-			qDebug() << "No entry. TRUSTED!";
-			return 1; // no entry = trusted, according to docs
-//			SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
-//			if (signalProtocol->onNewKeyReceived(ADDR_NAME(AAddress),
-//												 BYTE_ARRAY(AKeyData, AKeyLen)))
-//			{
-//				qDebug() << "returning 1";
-//				return 1;
-//			}
-//			else
-//			{
-//				qDebug() << "returning 0";
-//				return 0;
-//			}
+			return -1;	// No entry
 		}
 	} else {
 		qCritical("Failed executing SQL query");
@@ -1000,9 +1007,9 @@ cleanup:
 	return rc;
 }
 
-int identitySetTrusted(const signal_protocol_address *AAddress, const QByteArray &AKeyData, bool ATrusted, SignalProtocol *ASignalProtocol)
+int identitySetTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyData,
+					   size_t AKeyLen, bool ATrusted, SignalProtocol *ASignalProtocol)
 {
-	qDebug() << "identitySetTrusted({" << ADDR_NAME(AAddress) << ";" << AAddress->device_id << "}," << AKeyData<< "," << ATrusted << ")";
 	// 1 - trusted (1 for true, 0 for false)
 	// 2 - name ("public" or "private" for own keys, name for contacts)
 	// 3 - device ID ("public" or "private" for own keys, name for contacts)
@@ -1015,7 +1022,7 @@ int identitySetTrusted(const signal_protocol_address *AAddress, const QByteArray
 	query.bindValue(0, ATrusted);
 	query.bindValue(1, ADDR_NAME(AAddress));
 	query.bindValue(2, AAddress->device_id);
-	query.bindValue(3, AKeyData);
+	query.bindValue(3, BYTE_ARRAY(AKeyData, AKeyLen));
 
 	if (!query.exec()) return -3;
 
