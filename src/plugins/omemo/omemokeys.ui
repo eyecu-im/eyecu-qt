@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>343</height>
+    <width>412</width>
+    <height>395</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -143,18 +143,86 @@
     </widget>
    </item>
    <item>
-    <layout class="QGridLayout" name="lytIdentityKeys">
-     <item row="0" column="0">
+    <layout class="QHBoxLayout" name="hlytIdentityKeys">
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <item>
       <widget class="QTableView" name="tvIdentityKeys">
        <property name="font">
         <font>
          <family>Terminal</family>
         </font>
        </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
        <attribute name="verticalHeaderVisible">
         <bool>false</bool>
        </attribute>
       </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="vlytIdentityKeys">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbTrust">
+         <property name="toolTip">
+          <string>Trust</string>
+         </property>
+         <property name="whatsThis">
+          <string>Trust the identity</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pbUntrust">
+         <property name="toolTip">
+          <string>Untrust</string>
+         </property>
+         <property name="whatsThis">
+          <string>Do not trust identity</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -162,8 +230,12 @@
  </widget>
  <tabstops>
   <tabstop>cmbAccount</tabstop>
+  <tabstop>pbPublicIdentityKeyCopy</tabstop>
+  <tabstop>cbRetractOther</tabstop>
   <tabstop>tvPreKeys</tabstop>
   <tabstop>tvIdentityKeys</tabstop>
+  <tabstop>pbTrust</tabstop>
+  <tabstop>pbUntrust</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -190,7 +262,7 @@
    <slot>onIdentityKeyCopy()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
+     <x>400</x>
      <y>77</y>
     </hint>
     <hint type="destinationlabel">
@@ -215,10 +287,61 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pbTrust</sender>
+   <signal>clicked()</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onIdentityTrustClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>397</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>341</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbUntrust</sender>
+   <signal>clicked()</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onIdentityUntrustClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>335</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>394</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvIdentityKeys</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>OmemoKeys</receiver>
+   <slot>onIdentityContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>185</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onAccountIndexChanged(int)</slot>
   <slot>onIdentityKeyCopy()</slot>
   <slot>onRetractOtherClicked(bool)</slot>
+  <slot>onIdentityTrustClicked()</slot>
+  <slot>onIdentityUntrustClicked()</slot>
+  <slot>onIdentityContextMenu(QPoint)</slot>
  </slots>
 </ui>

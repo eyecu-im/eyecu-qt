@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QClipboard>
 
 #include <definitions/optionvalues.h>
@@ -8,12 +7,18 @@
 #include <utils/iconstorage.h>
 #include <utils/pluginhelper.h>
 
-#include "signalprotocol.h"
 #include "omemo.h"
 #include "omemokeys.h"
 #include "ui_omemokeys.h"
 
 #define TAG_ACCOUNT "account"
+
+#define COL_NAME		0
+#define COL_ID			1
+#define COL_FINGERPRIT	2
+#define COL_TRUSTED		3
+
+#define IDR_KEY_DATA	Qt::UserRole+1
 
 OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	QWidget(AParent),
@@ -22,6 +27,7 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
 	FAccountManager(PluginHelper::pluginInstance<IAccountManager>()),
 	FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>()),
+	FSignalProtocol(nullptr),
 	FPreKeysModel(new QStandardItemModel(this)),
 	FIdentityKeysModel(new QStandardItemModel(this))
 {
@@ -30,6 +36,8 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	ui->setupUi(this);
 
 	ui->pbPublicIdentityKeyCopy->setIcon(menuicons->getIcon(MNI_EDIT_COPY));
+	ui->pbTrust->setIcon(menuicons->getIcon(MNI_RCHANGER_SUBSCRIBE));
+	ui->pbUntrust->setIcon(menuicons->getIcon(MNI_RCHANGER_UNSUBSCRIBE));
 
 	FPreKeysModel->setColumnCount(2);
 	FPreKeysModel->setHorizontalHeaderLabels(QStringList() << tr("Id")
@@ -41,13 +49,18 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	FIdentityKeysModel->setColumnCount(3);
 	FIdentityKeysModel->setHorizontalHeaderLabels(QStringList() << tr("Name")
 																<< tr("Device ID")
-																<< tr("Key data")
+																<< tr("Fingerprint")
 																<< tr("Trusted"));
 	ui->tvIdentityKeys->setModel(FIdentityKeysModel);
 	ui->tvIdentityKeys->setColumnWidth(0, 128);
 	ui->tvIdentityKeys->setColumnWidth(1, 96);
 	ui->tvIdentityKeys->setColumnWidth(2, 400);
 	ui->tvIdentityKeys->setColumnWidth(3, 48);
+	ui->tvIdentityKeys->setSelectionBehavior(QAbstractItemView::SelectRows);
+
+	connect(ui->tvIdentityKeys->selectionModel(),
+			SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+			SLOT(onIdentityKeysSelectionChanged(QItemSelection,QItemSelection)));
 
 	reset();
 }
@@ -106,6 +119,56 @@ void OmemoKeys::reset()
 	emit childReset();
 }
 
+void OmemoKeys::updateIdentityKeys()
+{
+	FIdentityKeysModel->removeRows(0, FIdentityKeysModel->rowCount());
+	QList<OmemoStore::IdentityKey> identityKeys = FSignalProtocol->getIdentityKeys();
+
+	for (QList<OmemoStore::IdentityKey>::ConstIterator it=identityKeys.constBegin();
+		 it != identityKeys.constEnd(); ++it)
+	{
+		QList<QStandardItem*> row;
+
+		QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
+													FSignalProtocol->curveFromEd(it->keyData)));
+		dataItem->setData(it->keyData, IDR_KEY_DATA);
+
+		row.append(new QStandardItem(it->name));
+		row.append(new QStandardItem(QString::number(it->deviceId)));
+		row.append(dataItem);
+		row.append(new QStandardItem(QString::number(it->trusted)));
+		FIdentityKeysModel->appendRow(row);
+	}
+}
+
+void OmemoKeys::setSelectedIdentityKeysTrusted(bool ATrusted)
+{
+	if (FSignalProtocol)
+	{
+		QModelIndexList list = ui->tvIdentityKeys->selectionModel()->selection().indexes();
+
+		QByteArray keyData;
+		QString bareJid;
+		quint32	deviceId;
+
+		for (QModelIndexList::ConstIterator it = list.constBegin();
+			 it != list.constEnd(); ++it)
+			if (it->column()==COL_NAME)
+				bareJid = it->data().toString();
+			else if (it->column()==COL_ID)
+				deviceId = it->data().toUInt();
+			else if (it->column()==COL_FINGERPRIT)
+				keyData = it->data(IDR_KEY_DATA).toByteArray();
+			else if (it->column()==COL_TRUSTED)
+			{
+				int trusted = it->data().toInt();
+				if (trusted != ATrusted)
+					FSignalProtocol->setIdentityTrusted(bareJid, deviceId, keyData, ATrusted);
+			}
+		updateIdentityKeys();
+	}
+}
+
 void OmemoKeys::onAccountIndexChanged(int AIndex)
 {
 	ui->pbPublicIdentityKeyCopy->setDisabled(true);
@@ -113,20 +176,20 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 	IAccount *account = FAccountManager->findAccountById(uuid);
 	if (account)
 	{
-		ui->cbRetractOther->setChecked(FRetractDevices.contains(uuid));
-		SignalProtocol *signalProtocol = FOmemo->signalProtocol(account->streamJid());
-		if (signalProtocol)
+		FSignalProtocol = FOmemo->signalProtocol(account->streamJid());
+		ui->cbRetractOther->setChecked(FRetractDevices.contains(uuid));		
+		if (FSignalProtocol)
 		{
-			quint32 deviceId = signalProtocol->getDeviceId();
+			quint32 deviceId = FSignalProtocol->getDeviceId();
 			ui->lblDeviceId->setNum(int(deviceId));
 
-			QString fingerprint = SignalProtocol::calcFingerprint(signalProtocol->getIdentityKeyPublic(true));
+			QString fingerprint = SignalProtocol::calcFingerprint(FSignalProtocol->getIdentityKeyPublic(true));
 			ui->lblPublicIdentityKey->setText(fingerprint);
 			if (!fingerprint.isEmpty())
 				ui->pbPublicIdentityKeyCopy->setEnabled(true);
 
 			FPreKeysModel->removeRows(0, FPreKeysModel->rowCount());
-			QMap<quint32, QByteArray> preKeys = signalProtocol->getPreKeys();
+			QMap<quint32, QByteArray> preKeys = FSignalProtocol->getPreKeys();
 
 			for (QMap<quint32, QByteArray>::ConstIterator it=preKeys.constBegin();
 				 it != preKeys.constEnd(); ++it)
@@ -134,7 +197,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 				QList<QStandardItem*> row;
 
 				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
-															signalProtocol->curveFromEd(*it)));
+															FSignalProtocol->curveFromEd(*it)));
 				dataItem->setData(*it);
 
 				row.append(new QStandardItem(QString::number(it.key())));
@@ -142,24 +205,9 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 				FPreKeysModel->appendRow(row);
 			}
 
-			FIdentityKeysModel->removeRows(0, FIdentityKeysModel->rowCount());
-			QList<OmemoStore::IdentityKey> identityKeys = signalProtocol->getIdentityKeys();
+			updateIdentityKeys();
 
-			for (QList<OmemoStore::IdentityKey>::ConstIterator it=identityKeys.constBegin();
-				 it != identityKeys.constEnd(); ++it)
-			{
-				QList<QStandardItem*> row;
-
-				QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
-															signalProtocol->curveFromEd(it->keyData)));
-				dataItem->setData(it->keyData);
-
-				row.append(new QStandardItem(it->name));
-				row.append(new QStandardItem(QString::number(it->deviceId)));
-				row.append(dataItem);
-				row.append(new QStandardItem(QString::number(it->trusted)));
-				FIdentityKeysModel->appendRow(row);
-			}
+			onIdentityKeysSelectionChanged(QItemSelection(), QItemSelection());
 		}
 	}
 }
@@ -178,4 +226,82 @@ void OmemoKeys::onRetractOtherClicked(bool AChecked)
 		FRetractDevices.remove(uuid);
 
 	emit modified();
+}
+
+void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected)
+{
+	QModelIndexList list = ASelected.indexes();
+	if (list.isEmpty())
+	{
+		ui->pbTrust->setDisabled(true);
+		ui->pbUntrust->setDisabled(true);
+	}
+	else
+	{
+		bool haveTrusted(false);
+		bool haveUntrusted(false);
+
+		for (QModelIndexList::ConstIterator it = list.constBegin();
+			 it != list.constEnd(); ++it)
+			if (it->column()==COL_TRUSTED)
+			{
+				int trusted = it->data().toInt();
+				if (trusted==1)
+					haveTrusted = true;
+				else
+					haveUntrusted = true;
+				if (haveTrusted && haveUntrusted)
+					break;
+			}
+
+		ui->pbTrust->setEnabled(haveUntrusted);
+		ui->pbUntrust->setEnabled(haveTrusted);
+	}
+}
+
+void OmemoKeys::onIdentityTrustClicked()
+{
+	setSelectedIdentityKeysTrusted(true);
+}
+
+void OmemoKeys::onIdentityUntrustClicked()
+{
+	setSelectedIdentityKeysTrusted(false);
+}
+
+void OmemoKeys::onIdentityContextMenu(const QPoint &APos)
+{
+	QModelIndex index = ui->tvIdentityKeys->indexAt(APos);
+	if (!index.isValid())
+		return;
+
+	QModelIndexList list = ui->tvIdentityKeys->selectionModel()->selectedIndexes();
+	if (!list.isEmpty())
+	{
+		bool haveTrusted(false);
+		bool haveUntrusted(false);
+
+		for (QModelIndexList::ConstIterator it = list.constBegin();
+			 it != list.constEnd(); ++it)
+			if (it->column()==COL_TRUSTED)
+			{
+				int trusted = it->data().toInt();
+				if (trusted==1)
+					haveTrusted = true;
+				else
+					haveUntrusted = true;
+				if (haveTrusted && haveUntrusted)
+					break;
+			}
+
+		IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
+//TODO: Use Menu instead of QMenu here
+		QMenu* menu = new QMenu(this);
+
+		menu->addAction(menuicons->getIcon(MNI_RCHANGER_SUBSCRIBE), tr("Trust key"),
+						this, SLOT(onIdentityTrustClicked()))->setEnabled(haveUntrusted);
+		menu->addAction(menuicons->getIcon(MNI_RCHANGER_UNSUBSCRIBE), tr("Untrust key"),
+						this, SLOT(onIdentityUntrustClicked()))->setEnabled(haveTrusted);
+		menu->exec(QCursor::pos());
+	}
 }

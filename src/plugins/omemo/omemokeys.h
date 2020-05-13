@@ -2,6 +2,7 @@
 #define OMEMOKEYS_H
 
 #include <QSet>
+#include <QItemSelection>
 
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipresencemanager.h>
@@ -9,6 +10,7 @@
 
 class Omemo;
 class QStandardItemModel;
+class SignalProtocol;
 
 namespace Ui {
 class OmemoKeys;
@@ -31,10 +33,19 @@ public slots:
 	void apply();
 	void reset();
 
+protected:
+	void updateIdentityKeys();
+	void setSelectedIdentityKeysTrusted(bool ATrusted);
+
 protected slots:
 	void onAccountIndexChanged(int AIndex);
 	void onIdentityKeyCopy();
 	void onRetractOtherClicked(bool AChecked);
+	void onIdentityKeysSelectionChanged(const QItemSelection &ASelected,
+										const QItemSelection &ADeselected);
+	void onIdentityTrustClicked();
+	void onIdentityUntrustClicked();
+	void onIdentityContextMenu(const QPoint& APos);
 
 signals:
 	void modified();
@@ -47,6 +58,8 @@ private:
 	IPresenceManager	*FPresenceManager;
 	IAccountManager		*FAccountManager;
 	IOptionsManager		*FOptionsManager;
+
+	SignalProtocol		*FSignalProtocol;
 
 	QStandardItemModel	*FPreKeysModel;
 	QStandardItemModel	*FIdentityKeysModel;
