@@ -170,58 +170,6 @@
        <property name="rightMargin">
         <number>0</number>
        </property>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbTrust">
-         <property name="toolTip">
-          <string>Trust</string>
-         </property>
-         <property name="whatsThis">
-          <string>Trust the identity</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pbUntrust">
-         <property name="toolTip">
-          <string>Untrust</string>
-         </property>
-         <property name="whatsThis">
-          <string>Do not trust identity</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
       </layout>
      </item>
     </layout>
@@ -234,8 +182,6 @@
   <tabstop>cbRetractOther</tabstop>
   <tabstop>tvPreKeys</tabstop>
   <tabstop>tvIdentityKeys</tabstop>
-  <tabstop>pbTrust</tabstop>
-  <tabstop>pbUntrust</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -284,38 +230,6 @@
     <hint type="destinationlabel">
      <x>95</x>
      <y>339</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbTrust</sender>
-   <signal>clicked()</signal>
-   <receiver>OmemoKeys</receiver>
-   <slot>onIdentityTrustClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>397</x>
-     <y>306</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>341</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pbUntrust</sender>
-   <signal>clicked()</signal>
-   <receiver>OmemoKeys</receiver>
-   <slot>onIdentityUntrustClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>400</x>
-     <y>335</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>411</x>
-     <y>394</y>
     </hint>
    </hints>
   </connection>

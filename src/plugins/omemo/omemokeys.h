@@ -11,6 +11,7 @@
 class Omemo;
 class QStandardItemModel;
 class SignalProtocol;
+class Action;
 
 namespace Ui {
 class OmemoKeys;
@@ -58,6 +59,9 @@ private:
 	IPresenceManager	*FPresenceManager;
 	IAccountManager		*FAccountManager;
 	IOptionsManager		*FOptionsManager;
+
+	Action				*FIkTrust;
+	Action				*FIkUntrust;
 
 	SignalProtocol		*FSignalProtocol;
 

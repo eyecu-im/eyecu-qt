@@ -1,4 +1,5 @@
 #include <QClipboard>
+#include <QStyle>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -18,7 +19,7 @@
 #define COL_FINGERPRIT	2
 #define COL_TRUSTED		3
 
-#define IDR_KEY_DATA	Qt::UserRole+1
+#define IDR_IDENTITY_DATA	Qt::UserRole+1
 
 OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	QWidget(AParent),
@@ -33,11 +34,35 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 {
 	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
-	ui->setupUi(this);
+	QStyle *style = QApplication::style();
 
+	ui->setupUi(this);
 	ui->pbPublicIdentityKeyCopy->setIcon(menuicons->getIcon(MNI_EDIT_COPY));
-	ui->pbTrust->setIcon(menuicons->getIcon(MNI_RCHANGER_SUBSCRIBE));
-	ui->pbUntrust->setIcon(menuicons->getIcon(MNI_RCHANGER_UNSUBSCRIBE));
+
+	QToolBar *tbIdentityKeys = new QToolBar(this);
+	tbIdentityKeys->setOrientation(Qt::Vertical);
+	tbIdentityKeys->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
+	ui->vlytIdentityKeys->insertWidget(0, tbIdentityKeys);
+	ToolBarChanger *changer = new ToolBarChanger(tbIdentityKeys);
+
+	FIkTrust = new Action(this);
+	FIkTrust->setIcon(style->standardIcon(QStyle::SP_DialogApplyButton));
+	FIkTrust->setText(tr("Declare trusted"));
+	FIkTrust->setToolTip(tr("Trust"));
+	FIkTrust->setWhatsThis(tr("Declare selected keys TRUSTED"));
+	connect(FIkTrust, SIGNAL(triggered()), SLOT(onIdentityTrustClicked()));
+	changer->insertAction(FIkTrust);
+
+	FIkUntrust = new Action(this);
+	FIkUntrust->setIcon(style->standardIcon(QStyle::SP_DialogCancelButton));
+	FIkUntrust->setText(tr("Declare not trusted"));
+	FIkUntrust->setToolTip(tr("Untrust"));
+	FIkUntrust->setWhatsThis(tr("Declare selected keys NOT TRUSTED"));
+	connect(FIkUntrust, SIGNAL(triggered()), SLOT(onIdentityUntrustClicked()));
+	changer->insertAction(FIkUntrust);
+
+	ui->tvIdentityKeys->addAction(new Action(this));
 
 	FPreKeysModel->setColumnCount(2);
 	FPreKeysModel->setHorizontalHeaderLabels(QStringList() << tr("Id")
@@ -131,12 +156,17 @@ void OmemoKeys::updateIdentityKeys()
 
 		QStandardItem* dataItem = new QStandardItem(SignalProtocol::calcFingerprint(
 													FSignalProtocol->curveFromEd(it->keyData)));
-		dataItem->setData(it->keyData, IDR_KEY_DATA);
+		dataItem->setData(it->keyData, IDR_IDENTITY_DATA);
 
 		row.append(new QStandardItem(it->name));
 		row.append(new QStandardItem(QString::number(it->deviceId)));
 		row.append(dataItem);
-		row.append(new QStandardItem(QString::number(it->trusted)));
+		QStandardItem *trusted = new QStandardItem(QApplication::style()
+						->standardIcon(it->trusted?QStyle::SP_DialogApplyButton
+												  :QStyle::SP_DialogCancelButton),
+												   QString());
+		trusted->setData(it->trusted, IDR_IDENTITY_DATA);
+		row.append(trusted);
 		FIdentityKeysModel->appendRow(row);
 	}
 }
@@ -158,13 +188,10 @@ void OmemoKeys::setSelectedIdentityKeysTrusted(bool ATrusted)
 			else if (it->column()==COL_ID)
 				deviceId = it->data().toUInt();
 			else if (it->column()==COL_FINGERPRIT)
-				keyData = it->data(IDR_KEY_DATA).toByteArray();
+				keyData = it->data(IDR_IDENTITY_DATA).toByteArray();
 			else if (it->column()==COL_TRUSTED)
-			{
-				int trusted = it->data().toInt();
-				if (trusted != ATrusted)
+				if (it->data(IDR_IDENTITY_DATA).toBool() != ATrusted)
 					FSignalProtocol->setIdentityTrusted(bareJid, deviceId, keyData, ATrusted);
-			}
 		updateIdentityKeys();
 	}
 }
@@ -228,13 +255,16 @@ void OmemoKeys::onRetractOtherClicked(bool AChecked)
 	emit modified();
 }
 
-void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected, const QItemSelection &ADeselected)
+void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected,
+											   const QItemSelection &ADeselected)
 {
+	Q_UNUSED(ADeselected)
+
 	QModelIndexList list = ASelected.indexes();
 	if (list.isEmpty())
 	{
-		ui->pbTrust->setDisabled(true);
-		ui->pbUntrust->setDisabled(true);
+		FIkTrust->setDisabled(true);
+		FIkUntrust->setDisabled(true);
 	}
 	else
 	{
@@ -245,8 +275,7 @@ void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected, 
 			 it != list.constEnd(); ++it)
 			if (it->column()==COL_TRUSTED)
 			{
-				int trusted = it->data().toInt();
-				if (trusted==1)
+				if (it->data(IDR_IDENTITY_DATA).toBool())
 					haveTrusted = true;
 				else
 					haveUntrusted = true;
@@ -254,8 +283,8 @@ void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected, 
 					break;
 			}
 
-		ui->pbTrust->setEnabled(haveUntrusted);
-		ui->pbUntrust->setEnabled(haveTrusted);
+		FIkTrust->setEnabled(haveUntrusted);
+		FIkUntrust->setEnabled(haveTrusted);
 	}
 }
 
@@ -278,30 +307,9 @@ void OmemoKeys::onIdentityContextMenu(const QPoint &APos)
 	QModelIndexList list = ui->tvIdentityKeys->selectionModel()->selectedIndexes();
 	if (!list.isEmpty())
 	{
-		bool haveTrusted(false);
-		bool haveUntrusted(false);
-
-		for (QModelIndexList::ConstIterator it = list.constBegin();
-			 it != list.constEnd(); ++it)
-			if (it->column()==COL_TRUSTED)
-			{
-				int trusted = it->data().toInt();
-				if (trusted==1)
-					haveTrusted = true;
-				else
-					haveUntrusted = true;
-				if (haveTrusted && haveUntrusted)
-					break;
-			}
-
-		IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
-//TODO: Use Menu instead of QMenu here
-		QMenu* menu = new QMenu(this);
-
-		menu->addAction(menuicons->getIcon(MNI_RCHANGER_SUBSCRIBE), tr("Trust key"),
-						this, SLOT(onIdentityTrustClicked()))->setEnabled(haveUntrusted);
-		menu->addAction(menuicons->getIcon(MNI_RCHANGER_UNSUBSCRIBE), tr("Untrust key"),
-						this, SLOT(onIdentityUntrustClicked()))->setEnabled(haveTrusted);
+		Menu* menu = new Menu(this);
+		menu->addAction(FIkTrust);
+		menu->addAction(FIkUntrust);
 		menu->exec(QCursor::pos());
 	}
 }
