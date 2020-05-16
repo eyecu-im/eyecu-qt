@@ -22,11 +22,12 @@ class Omemo: public QObject,
 			 public IPEPHandler,
 			 public IStanzaHandler,
 			 public IMessageEditor,
+			 public IMessageWriter,
 			 public IStanzaRequestOwner,
-			 public SignalProtocol::IIdentityKeyListener
+			 public SignalProtocol::ISessionStateListener
 {
 	Q_OBJECT
-	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IMessageEditor IStanzaRequestOwner)
+	Q_INTERFACES(IPlugin IOmemo IOptionsDialogHolder IPEPHandler IStanzaHandler IMessageEditor IMessageWriter IStanzaRequestOwner)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
@@ -57,11 +58,20 @@ public:
 	// IMessageEditor interface
 	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
 
+	// IMessageWriter interface
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang) override;
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang) override;
+
 	// IStanzaRequestOwner interface
 	void stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza) override;
 
-	// IIdentityKeyListener interface
-	bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol) override;
+	// ISessionStateListener interface
+	bool onNewKeyReceived(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol) override;
+	virtual void onSessionStateChanged(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol) override;
+	virtual void onSessionDeleted(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol) override;
+	virtual void onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol) override;
+
 
 protected:
 	bool isSupported(const QString &ABareJid) const;
@@ -72,6 +82,7 @@ protected:
 	bool isActiveSession(const IMessageAddress *AAddresses) const;
 	void registerDiscoFeatures();
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
+	void updateOmemoAction(Action *AAction);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
@@ -81,6 +92,10 @@ protected:
 
 	void bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid);
 	void encryptMessage(Stanza &AMessageStanza);
+
+	void setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
+				  const QString &ABareJid, int ADeviceId,
+				  const QString &AImage, const QString &ATitle);
 
 	struct SignalDeviceBundle
 	{
@@ -125,7 +140,7 @@ private:
 	IMainWindowPlugin*	FMainWindowPlugin;
 	IPluginManager*		FPluginManager;
 
-	IconStorage*		FIconStorage;
+//	IconStorage*		FIconStorage;
 	int					FOmemoHandlerIn;
 	int					FOmemoHandlerOut;
 	int					FSHIMessageIn;
@@ -141,7 +156,7 @@ private:
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundles;
 	QMultiHash<QString, Stanza> FPendingMessages;
 
-	bool				FCleanup;	
+	bool				FCleanup;
 };
 
 #endif // OMEMO_H

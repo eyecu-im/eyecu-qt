@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -33,10 +32,11 @@
 #define SETTINGS_STORE_PROPERTY "property"
 
 #define DBX(X) db(X->connectionName())
-#define DB	DBX(reinterpret_cast<const SignalProtocol *>(AUserData))
+#define DB	SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData)
 #define DBS	DBX(ASignalProtocol)
 #define SQL_QUERYX(Q,X) QSqlQuery query(QString(Q), X)
-#define SQL_QUERY(Q) SQL_QUERYX(Q, DB)
+#define SQL_QUERY(Q) DB; \
+					 SQL_QUERYX(Q, DBX(signalProtocol))
 #define SQL_QUERYS(Q) SQL_QUERYX(Q, DBS)
 #define QSTRING(C,S) QString::fromUtf8(QByteArray(C,int(S)))
 
@@ -197,6 +197,8 @@ int sessionStore(const signal_protocol_address *AAddress,
 		return -3;
 	}
 
+	signalProtocol->onSessionStateChanged(ADDR_NAME(AAddress), AAddress->device_id);
+
 	return 0;
 }
 
@@ -230,7 +232,10 @@ int sessionDelete(const signal_protocol_address *AAddress, void *AUserData)
 	query.bindValue(1, AAddress->device_id);
 	if (query.exec()) {
 		if (query.numRowsAffected())
+		{
+			signalProtocol->onSessionDeleted(ADDR_NAME(AAddress), AAddress->device_id);
 			return 1;
+		}
 		else
 			return 0;
 	} else {
@@ -248,7 +253,12 @@ int sessionDeleteAll(const char *AName, size_t ANameLen, void *AUserData)
 
 	query.bindValue(0, QSTRING(AName, ANameLen));
 	if (query.exec())
-		return query.numRowsAffected();
+	{
+		int num = query.numRowsAffected();
+		if (num > 0)
+			signalProtocol->onSessionDeleted(QString::fromUtf8(AName, ANameLen), 0);
+		return num;
+	}
 	else {
 		qCritical("Failed to delete sessions");
 		return -4;
@@ -514,8 +524,6 @@ int identityGetKeyPair(signal_buffer ** APublicData, signal_buffer ** APrivateDa
 			  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
 			  "  AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
-	SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
-
 	char * errMsg = nullptr;
 	int rc = 0;
 	signal_buffer * pubkeyBuf = nullptr;
@@ -618,48 +626,63 @@ int identitySave(const signal_protocol_address * AAddress, uint8_t * AKeyData,
 	// 2 - key blob
 	// 3 - trusted (1 for true, 0 for false)
 
+	bool exists(false);
 	bool trust;
-	if (AKeyData)
-	{
-		SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
-				  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
-				  " AND "  IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
-		QByteArray keyData(BYTE_ARRAY(AKeyData, AKeyLen));
-		query.bindValue(0, ADDR_NAME(AAddress));
-		query.bindValue(1, AAddress->device_id);
-		if (query.exec()) {
-			bool exists(false);
-			SignalProtocol *signalProtocol = reinterpret_cast<SignalProtocol *>(AUserData);
-			if (query.next()) {
-				if (keyData == query.value(2).toByteArray()) {
-					qDebug("The same identity key exixts already!");
-					return 0;
-				}
-				exists = true;
-			}
-			trust = signalProtocol->onNewKeyReceived(ADDR_NAME(AAddress),
-													 AAddress->device_id,
-													 keyData, exists);
-		} else {
-			qCritical("Failed executing SQL query");
-			return -32;
-		}
-	}
+	SQL_QUERY("SELECT * FROM " IDENTITY_KEY_STORE_TABLE
+			  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+			  " AND "  IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
 
-	SQL_QUERY(AKeyData?"INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE
-					   " VALUES (?1, ?2, ?3, ?4)"
-					  :"DELETE FROM " IDENTITY_KEY_STORE_TABLE
-					   " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
-					   " AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
+	QByteArray data;
 
 	query.bindValue(0, ADDR_NAME(AAddress));
 	query.bindValue(1, AAddress->device_id);
-	if (AKeyData) {
-		query.bindValue(2, BYTE_ARRAY(AKeyData, AKeyLen));
-		query.bindValue(3, trust?1:0);
+	if (query.exec()) {
+		if (query.next()) {
+			data = query.value(2).toByteArray();
+			exists = true;
+		}
+	} else {
+		qCritical("Failed executing SQL query");
+		return -32;
 	}
-	if (!query.exec()) return -3;
+
+	if (!AKeyData)
+	{
+		if (!exists)
+			return 0;
+
+		SQL_QUERY("DELETE FROM " IDENTITY_KEY_STORE_TABLE
+				  " WHERE " IDENTITY_KEY_STORE_NAME " IS ?1"
+				  " AND " IDENTITY_KEY_STORE_DEVICE_ID " IS ?2");
+		query.bindValue(0, ADDR_NAME(AAddress));
+		query.bindValue(1, AAddress->device_id);
+		if (!query.exec()) return -3;
+		signalProtocol->onIdentityTrustChanged(ADDR_NAME(AAddress), AAddress->device_id, data, false);
+	}
+	else
+	{
+		QByteArray keyData(BYTE_ARRAY(AKeyData, AKeyLen));
+
+		if (keyData == data) {
+			qDebug("The same identity key exixts already!");
+			return 0;
+		}
+
+		trust = signalProtocol->onNewKeyReceived(ADDR_NAME(AAddress),
+												 AAddress->device_id,
+												 keyData, exists);
+
+		SQL_QUERY("INSERT OR REPLACE INTO " IDENTITY_KEY_STORE_TABLE
+				  " VALUES (?1, ?2, ?3, ?4)");
+
+		query.bindValue(0, ADDR_NAME(AAddress));
+		query.bindValue(1, AAddress->device_id);
+		query.bindValue(2, keyData);
+		query.bindValue(3, trust?1:0);
+		if (!query.exec()) return -3;
+		signalProtocol->onIdentityTrustChanged(ADDR_NAME(AAddress), AAddress->device_id, keyData, trust);
+	}
 
 	return 0;
 }
@@ -1019,12 +1042,15 @@ int identitySetTrusted(const signal_protocol_address *AAddress, uint8_t *AKeyDat
 			   "WHERE " IDENTITY_KEY_STORE_NAME "=?2 AND " IDENTITY_KEY_STORE_DEVICE_ID "=?3 AND "
 			   IDENTITY_KEY_STORE_KEY "=?4");
 
+	QByteArray data(BYTE_ARRAY(AKeyData, AKeyLen));
 	query.bindValue(0, ATrusted);
 	query.bindValue(1, ADDR_NAME(AAddress));
 	query.bindValue(2, AAddress->device_id);
-	query.bindValue(3, BYTE_ARRAY(AKeyData, AKeyLen));
+	query.bindValue(3, data);
 
 	if (!query.exec()) return -3;
+
+	ASignalProtocol->onIdentityTrustChanged(ADDR_NAME(AAddress), AAddress->device_id, data, ATrusted);
 
 	return 0;
 }

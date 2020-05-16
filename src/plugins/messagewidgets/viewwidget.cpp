@@ -182,17 +182,17 @@ QImage ViewWidget::imageAt(const QPoint &APosition) const
 	return QImage();
 }
 
-bool ViewWidget::setImageUrl(const QString &AId, const QString &AUrl)
+bool ViewWidget::setImageUrl(const QString &AId, const QString &AUrl, bool AAll)
 {
 	if (FMessageStyle && FStyleWidget)
-		return FMessageStyle->setImageUrl(FStyleWidget, AId, AUrl);
+		return FMessageStyle->setImageUrl(FStyleWidget, AId, AUrl, AAll);
 	return false;
 }
 
-bool ViewWidget::setObjectTitle(const QString &AId, const QString &ATitle)
+bool ViewWidget::setObjectTitle(const QString &AId, const QString &ATitle, bool AAll)
 {
 	if (FMessageStyle && FStyleWidget)
-		return FMessageStyle->setObjectTitle(FStyleWidget, AId, ATitle);
+		return FMessageStyle->setObjectTitle(FStyleWidget, AId, ATitle, AAll);
 	return false;
 }
 // *** >>> eyeCU >>> ***

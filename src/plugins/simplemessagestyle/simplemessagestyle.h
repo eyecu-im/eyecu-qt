@@ -93,8 +93,8 @@ public:
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions);
 // *** <<< eyeCU <<< ***
 	virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const;
-	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl);
-	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle);
+	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl, bool AAll=false);
+	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle, bool AAll=false);
 // *** >>> eyeCU >>> ***
 	//ISimpleMessageStyle
 	virtual QMap<QString, QVariant> infoValues() const;

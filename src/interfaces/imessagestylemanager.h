@@ -97,8 +97,8 @@ public:
 	virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const =0; // *** <<< eyeCU >>> ***
 	virtual bool changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear = true) =0;
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions) =0;
-	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl) =0;
-	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle) =0;
+	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl, bool AAll=false) =0;
+	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle, bool AAll=false) =0;
 protected:
 	virtual void widgetAdded(QWidget *AWidget) const =0;
 	virtual void widgetRemoved(QWidget *AWidget) const =0;

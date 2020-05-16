@@ -191,7 +191,12 @@ void OmemoKeys::setSelectedIdentityKeysTrusted(bool ATrusted)
 				keyData = it->data(IDR_IDENTITY_DATA).toByteArray();
 			else if (it->column()==COL_TRUSTED)
 				if (it->data(IDR_IDENTITY_DATA).toBool() != ATrusted)
-					FSignalProtocol->setIdentityTrusted(bareJid, deviceId, keyData, ATrusted);
+				{
+					if (ATrusted ||
+						FSignalProtocol->sessionInitStatus(bareJid, deviceId) ==
+							SignalProtocol::SessionInitiated)
+						FSignalProtocol->setIdentityTrusted(bareJid, deviceId, keyData, ATrusted);
+				}
 		updateIdentityKeys();
 	}
 }
@@ -270,18 +275,34 @@ void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected,
 	{
 		bool haveTrusted(false);
 		bool haveUntrusted(false);
+		QString bareJid;
+		quint32 deviceId;
 
 		for (QModelIndexList::ConstIterator it = list.constBegin();
 			 it != list.constEnd(); ++it)
-			if (it->column()==COL_TRUSTED)
+		{
+			if (it->column()==COL_NAME)
+			{
+				bareJid = it->data().toString();
+			}
+			else if (it->column()==COL_ID)
+			{
+				deviceId = it->data().toUInt();
+			}
+			else if (it->column()==COL_TRUSTED)
 			{
 				if (it->data(IDR_IDENTITY_DATA).toBool())
-					haveTrusted = true;
+				{
+					int status = FSignalProtocol->sessionInitStatus(bareJid, deviceId);
+					if (status == SignalProtocol::SessionInitiated)
+						haveTrusted = true;
+				}
 				else
 					haveUntrusted = true;
 				if (haveTrusted && haveUntrusted)
 					break;
 			}
+		}
 
 		FIkTrust->setEnabled(haveUntrusted);
 		FIkUntrust->setEnabled(haveTrusted);

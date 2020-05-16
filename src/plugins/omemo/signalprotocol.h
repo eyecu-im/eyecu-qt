@@ -33,9 +33,12 @@ public:
 		SessionAcknowledged
 	};
 
-	class IIdentityKeyListener {
+	class ISessionStateListener {
 	public:
 		virtual bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol) = 0;
+		virtual void onSessionStateChanged(const QString &AName, quint32 ADeviceId, SignalProtocol *ASignalProtocol) = 0;
+		virtual void onSessionDeleted(const QString &AName, quint32 ADeviceId, SignalProtocol *ASignalProtocol) = 0;
+		virtual void onIdentityTrustChanged(const QString &AName, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol) = 0;
 	};
 
 	class SignalMessage {
@@ -137,7 +140,7 @@ public:
 		QSharedDataPointer<SessionBuilderData> d;
 	};
 
-	SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener, quint32 AVersion);
+	SignalProtocol(const QString &AFileName, const QString &AConnectionName, ISessionStateListener *AIdentityKeyListener, quint32 AVersion);
 	~SignalProtocol();
 
 	static void init();
@@ -148,8 +151,6 @@ public:
 	QByteArray curveFromEd(const QByteArray &AEd25519Key);
 
 	QString connectionName() const;
-
-	bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists);
 
 	signal_context *globalContext() const;
 	signal_protocol_store_context *storeContext() const;
@@ -194,6 +195,12 @@ public:
 	bool saveIdentity(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key);
 	bool setIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted=true);
 	int getIdentityTrusted(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key=QByteArray());
+
+// Special callbacks
+	bool onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists);
+	void onSessionStateChanged(const QString &AName, quint32 ADeviceId);
+	void onSessionDeleted(const QString &AName, quint32 ADeviceId);
+	void onIdentityTrustChanged(const QString &AName, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted);
 
 protected:
 	int generateIdentityKeyPair(ratchet_identity_key_pair **AIdentityKeyPair);
@@ -341,7 +348,7 @@ private:
 	// signal-protocol
 	signal_context		*FGlobalContext;
 	signal_protocol_store_context * FStoreContext;
-	IIdentityKeyListener *FIdentityKeyListener;
+	ISessionStateListener *FSessionStateListener;
 	quint32				FVersion;
 
 	QString FConnectionName;

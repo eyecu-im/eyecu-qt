@@ -1,6 +1,5 @@
 #include "signalprotocol.h"
 
-#include <QDebug>
 #include <QMutex>
 #include <QDateTime>
 extern "C" {
@@ -76,8 +75,26 @@ QString SignalProtocol::connectionName() const
 
 bool SignalProtocol::onNewKeyReceived(const QString &AName, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists)
 {
-	return FIdentityKeyListener?FIdentityKeyListener->onNewKeyReceived(AName, ADeviceId, AKeyData, AExists, this)
-							   :true;
+	return FSessionStateListener?FSessionStateListener->onNewKeyReceived(AName, ADeviceId, AKeyData, AExists, this)
+								:true;
+}
+
+void SignalProtocol::onSessionStateChanged(const QString &AName, quint32 ADeviceId)
+{
+	if (FSessionStateListener)
+		FSessionStateListener->onSessionStateChanged(AName, ADeviceId, this);
+}
+
+void SignalProtocol::onSessionDeleted(const QString &AName, quint32 ADeviceId)
+{
+	if (FSessionStateListener)
+		FSessionStateListener->onSessionDeleted(AName, ADeviceId, this);
+}
+
+void SignalProtocol::onIdentityTrustChanged(const QString &AName, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted)
+{
+	if (FSessionStateListener)
+		FSessionStateListener->onIdentityTrustChanged(AName, ADeviceId, AEd25519Key, ATrusted, this);
 }
 
 signal_context *SignalProtocol::globalContext() const
@@ -754,6 +771,17 @@ bool SignalProtocol::setIdentityTrusted(const QString &ABareJid, quint32 ADevice
 	address.name_len = addr.size();
 	address.device_id = ADeviceId;
 
+	if (!ATrusted)
+	{
+		int status = sessionInitStatus(ABareJid, ADeviceId);
+		if (status == SessionAcknowledged)
+		{
+			qCritical("Cannot untrust acknowledged session! name: %s, id: %d",
+					  ABareJid.toUtf8().data(), ADeviceId);
+			return false;
+		}
+	}
+
 	ec_public_key *key(nullptr);
 	int rc = curve_decode_point(&key, reinterpret_cast<const quint8*>(AEd25519Key.data()),
 								AEd25519Key.size(), FGlobalContext);
@@ -1338,10 +1366,10 @@ void SignalProtocol::recursiveMutexUnlock()
 	FMutex->unlock();
 }
 
-SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName, IIdentityKeyListener *AIdentityKeyListener, quint32 AVersion):
+SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnectionName, ISessionStateListener *AIdentityKeyListener, quint32 AVersion):
 	FGlobalContext(nullptr),
 	FStoreContext(nullptr),
-	FIdentityKeyListener(AIdentityKeyListener),
+	FSessionStateListener(AIdentityKeyListener),
 	FVersion(AVersion),
 	FConnectionName(AConnectionName),
 	FMutex(new QMutex(QMutex::Recursive)),

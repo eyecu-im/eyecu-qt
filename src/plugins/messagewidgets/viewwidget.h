@@ -36,8 +36,8 @@ public:
 	virtual QTextDocumentFragment textFragmentAt(const QPoint &APosition) const;
 // *** <<< eyeCU <<< ***
 	virtual QImage imageAt(const QPoint &APosition) const;
-	virtual bool setImageUrl(const QString &AId, const QString &AUrl);
-	virtual bool setObjectTitle(const QString &AId, const QString &ATitle);
+	virtual bool setImageUrl(const QString &AId, const QString &AUrl, bool AAll=false);
+	virtual bool setObjectTitle(const QString &AId, const QString &ATitle, bool AAll=false);
 // *** >>> eyeCU >>> ***
 signals:
 	void urlClicked(const QUrl &AUrl);

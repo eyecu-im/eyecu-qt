@@ -8,8 +8,36 @@
     <key>crypto_on</key>
     <object mime="image/png">cryptoon.png</object>
   </icon>
+	<icon>
+    <key>crypto_on_no_trust</key>
+    <object mime="image/png">cryptoonnotrust.png</object>
+  </icon>
+	<icon>
+    <key>crypto_on_have_trust</key>
+    <object mime="image/png">cryptoonhavetrust.png</object>
+  </icon>
+	<icon>
+    <key>crypto_on_all_trust</key>
+    <object mime="image/png">cryptoonalltrust.png</object>
+  </icon>
   <icon>
-    <key>crypto_full</key>
-    <object mime="image/png">cryptofull.png</object>
+    <key>crypto_ack</key>
+    <object mime="image/png">cryptoack.png</object>
+  </icon>
+	<icon>
+    <key>crypto_ack_no_trust</key>
+    <object mime="image/png">cryptoacknotrust.png</object>
+  </icon>
+	<icon>
+    <key>crypto_ack_have_trust</key>
+    <object mime="image/png">cryptoackhavetrust.png</object>
+  </icon>
+	<icon>
+    <key>crypto_ack_all_trust</key>
+    <object mime="image/png">cryptoackalltrust.png</object>
+  </icon>
+	<icon>
+    <key>crypto_no_trust</key>
+    <object mime="image/png">cryptonotrust.png</object>
   </icon>
 </icondef>
