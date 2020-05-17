@@ -1,5 +1,6 @@
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
+#include <utils/options.h>
 #include <utils/pluginhelper.h>
 #include "omemooptions.h"
 #include "ui_omemooptions.h"
@@ -27,11 +28,17 @@ QWidget *OmemoOptions::instance()
 
 void OmemoOptions::apply()
 {
+	Options::node(OPV_OMEMO_FALLBACKMESSAGE).setValue(ui->tedFallback->toPlainText());
+	Options::node(OPV_OMEMO_OPTOUTMESSAGE).setValue(ui->tedOptOut->toPlainText());
+	Options::node(OPV_OMEMO_OPTOUTCONFIRM).setValue(ui->chkOptOutConfirm->isChecked());
 	emit childApply();
 }
 
 void OmemoOptions::reset()
 {
+	ui->tedFallback->setPlainText(Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString());
+	ui->tedOptOut->setPlainText(Options::node(OPV_OMEMO_OPTOUTMESSAGE).value().toString());
+	ui->chkOptOutConfirm->setChecked(Options::node(OPV_OMEMO_OPTOUTCONFIRM).value().toBool());
 	emit childReset();
 }
 

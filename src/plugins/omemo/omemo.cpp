@@ -448,6 +448,14 @@ bool Omemo::initObjects()
 bool Omemo::initSettings()
 {
 	Options::setDefaultValue(OPV_OMEMO_RETRACT_ACCOUNT, false);
+	Options::setDefaultValue(OPV_OMEMO_FALLBACKMESSAGE,
+							 tr("I sent you an OMEMO encrypted message but "
+								"your client doesn’t seem to support that. "
+								"Find more information on "
+								"https://xmpp.org/extensions/xep-0384.html"));
+	Options::setDefaultValue(OPV_OMEMO_OPTOUTMESSAGE,
+							 tr("Sorry, but I need to terminate private conversation."));
+	Options::setDefaultValue(OPV_OMEMO_OPTOUTCONFIRM, false);
 	return true;
 }
 
@@ -1404,11 +1412,7 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 		QDomElement body = AMessageStanza.element().firstChildElement("body");
 		AMessageStanza.element().removeChild(body);
 		body = AMessageStanza.addElement(TAG_NAME_BODY, NS_JABBER_CLIENT);
-		body.appendChild(doc.createTextNode(
-							 tr("I sent you an OMEMO encrypted message but "
-								"your client doesn’t seem to support that. "
-								"Find more information on "
-								"https://xmpp.org/extensions/xep-0384.html")));
+		body.appendChild(doc.createTextNode(Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString()));
 		AMessageStanza.addElement("store", NS_HINTS);
 	}
 }

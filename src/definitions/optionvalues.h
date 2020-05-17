@@ -638,6 +638,9 @@
 // Off-the-Record Messaging
 #define OPV_OMEMO_RETRACT								"omemo.retract"
 #define OPV_OMEMO_RETRACT_ACCOUNT						"omemo.retract.account"
+#define OPV_OMEMO_FALLBACKMESSAGE						"omemo.fallback-message"
+#define OPV_OMEMO_OPTOUTMESSAGE							"omemo.opt-out-message"
+#define OPV_OMEMO_OPTOUTCONFIRM							"omemo.opt-out-confirm"
 
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"
