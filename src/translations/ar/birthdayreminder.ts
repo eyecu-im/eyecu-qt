@@ -30,7 +30,6 @@
   <message numerus="yes">
    <location filename="../../plugins/birthdayreminder/birthdayreminder.cpp" line="290"/>
    <source>Birthday in %n day(s),
-
  %1</source>
    <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
   </message>

@@ -53,7 +53,7 @@
   <message>
    <location filename="../../plugins/inbandstreams/inbandstreams.cpp" line="62"/>
    <source>Failed to send data</source>
-   <translation>فشل إرسال البيانات</translation>
+   <translation>فشل في إرسال البيانات</translation>
   </message>
   <message>
    <location filename="../../plugins/inbandstreams/inbandstreams.cpp" line="74"/>

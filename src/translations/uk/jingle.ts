@@ -10,7 +10,7 @@
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="41"/>
    <source>Allows to establish Jingle sessions for media exchange</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє встановити сесії Jingle для обміну медіа</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="124"/>

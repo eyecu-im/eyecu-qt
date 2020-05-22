@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>MapSearchProviderHere</name>
   <message>
@@ -24,7 +24,7 @@
   <message>
    <location line="32" filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.ui"/>
    <source>Here</source>
-   <translation type="unfinished">Here</translation>
+   <translation>Here</translation>
   </message>
   <message>
    <location line="56" filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.ui"/>

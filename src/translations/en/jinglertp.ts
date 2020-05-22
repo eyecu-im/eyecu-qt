@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>AudioOptions</name>
   <message>
@@ -183,7 +183,7 @@
   <message>
    <location line="285" filename="../../plugins/jinglertp/jinglertp.cpp"/>
    <source>Data receive timeout</source>
-   <translation type="unfinished">Data receive timeout</translation>
+   <translation>Data receive timeout</translation>
   </message>
   <message>
    <location line="288" filename="../../plugins/jinglertp/jinglertp.cpp"/>

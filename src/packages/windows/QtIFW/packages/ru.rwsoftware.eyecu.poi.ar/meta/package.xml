@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Points of Interest Arabic Translation</DisplayName>
+ <Description>Points of Interest Arabic translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.poi.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.poi,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

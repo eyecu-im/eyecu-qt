@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>ipstack</DisplayName>
+ <Description>Allows to use ipstack as an IP positioning provider</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack</Name>
+ <UpdateText>Former freegeoip</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip</Dependencies>
+ <SortingPriority>1</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -98,7 +98,7 @@
         </sizepolicy>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>200</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -118,6 +118,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="digitCount">
         <number>3</number>
@@ -143,7 +146,7 @@
         </sizepolicy>
        </property>
        <property name="maximum">
-        <number>100</number>
+        <number>200</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -163,6 +166,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
        </property>
        <property name="digitCount">
         <number>3</number>
@@ -231,34 +237,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>vcInput</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>AudioOptions</receiver>
-   <slot>onInputVolumeChanged(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>169</x>
-     <y>56</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>64</x>
-     <y>154</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cmbAudioDeviceInput</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>AudioOptions</receiver>
    <slot>onInputDeviceChanged(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>315</x>
+     <x>142</x>
      <y>20</y>
     </hint>
     <hint type="destinationlabel">
-     <x>244</x>
-     <y>175</y>
+     <x>185</x>
+     <y>178</y>
     </hint>
    </hints>
   </connection>

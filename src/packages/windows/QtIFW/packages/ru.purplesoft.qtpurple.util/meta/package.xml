@@ -1,12 +1,12 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt Util</DisplayName>
- <Description>Qt Purple - Utilities</Description>
- <Version>1.0.22</Version>
- <ReleaseDate>2016-07-04</ReleaseDate>
+ <DisplayName>QpUtil</DisplayName>
+ <Description>QtPurple - Utilities</Description>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <Dependencies>ru.purplesoft.qtpurple->=3.1.0</Dependencies>
  <Name>ru.purplesoft.qtpurple.util</Name>
- <UpdateText>Rich text to plain text translation algorythm fixed: link address was placed in incorrect place; object replacement character for images wasn't removed.</UpdateText>
- <Dependencies>ru.purplesoft.qtpurple</Dependencies>
+ <UpdateText>QpXmlDocument now supports IDs for changing fragment titles and image URLs.</UpdateText>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>

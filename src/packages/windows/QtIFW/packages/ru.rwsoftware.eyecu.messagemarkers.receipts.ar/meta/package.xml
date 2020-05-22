@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Message Delivery Receipts Arabic Translation</DisplayName>
+ <Description>Message Delivery Receipts Arabic translation</Description>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.messagemarkers.receipts.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.messagemarkers.receipts,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

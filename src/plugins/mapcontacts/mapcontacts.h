@@ -18,7 +18,6 @@ class MapContacts:  public QObject,
 					public IPlugin,
 					public IMapContacts,
 					public IOptionsDialogHolder,
-//					public IRostersClickHooker,
 					public MapSceneObjectHandler,
 					public MapObjectDataHolder
 {
@@ -121,7 +120,7 @@ private:
 	IMessageProcessor   *FMessageProcessor;
 
 //FIXME: Avatar plugin should be used instead
-	bool                FShowEmptyAvatars;
+//	bool                FShowEmptyAvatars;
 	QImage              FEmptyAvatar;
 	quint8              FAvatarSize;
 	QMultiHash<QString, QString> FResourceHash;

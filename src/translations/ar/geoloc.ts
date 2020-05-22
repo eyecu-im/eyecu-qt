@@ -34,7 +34,7 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="63"/>
    <source>Implements XEP-0080: User Location</source>
-   <translation type="unfinished"/>
+   <translation>أداة XEP-0080: موقع المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="186"/>
@@ -55,7 +55,7 @@
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="219"/>
    <source>Accuracy</source>
-   <translation type="unfinished"/>
+   <translation>الدقة</translation>
   </message>
   <message>
    <location filename="../../plugins/geoloc/geoloc.cpp" line="220"/>

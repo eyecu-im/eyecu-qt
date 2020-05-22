@@ -13,14 +13,17 @@ DESTDIR            = ../..
 unix:!macx: MAYBE_QUOTE=
 else: MAYBE_QUOTE=\\\"
 
-DEFINES           += EXTRA_TRANSLATORS=\"$${MAYBE_QUOTE}$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qtgeo;$${MAYBE_QUOTE}\"
+DEFINES           += EXTRA_TRANSLATORS=\"$${MAYBE_QUOTE}$$EYECU_LOADER_NAME;$$EYECU_UTILS_NAME;qpgeo;$${MAYBE_QUOTE}\"
 
 include(loader.pri)
 #Appication icon
 win32:RC_FILE      = loader.rc
 os2:  RC_FILE      = loader2.rc
 
-win32-msvc2013|win32-msvc2015:QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+win32-msvc2013|win32-msvc2015 {
+	contains(QMAKE_TARGET.arch, x86_64): QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.02
+	else: QMAKE_LFLAGS_WINDOWS = /SUBSYSTEM:WINDOWS,5.01
+}
 
 symbian {
     TARGET.UID3 = 0xe3837d66

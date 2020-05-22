@@ -102,6 +102,7 @@ private:
 	bool	FShowAvatars;
 	int FViewMode;
 	int FAvatarSize;
+	qreal FAvatarRounded;
 	AdvancedItemModel *FModel;
 	AdvancedItemDelegate *FDelegate;
 	QHash<const IMultiUser *, QStandardItem *> FUserItem;

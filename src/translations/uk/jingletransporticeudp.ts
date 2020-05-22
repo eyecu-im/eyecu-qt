@@ -4,57 +4,57 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="23"/>
    <source>Server address</source>
-   <translation type="unfinished"/>
+   <translation>Адреса сервера</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="29"/>
    <source>Host</source>
-   <translation type="unfinished"/>
+   <translation>Хост</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="46"/>
    <source>Port</source>
-   <translation type="unfinished"/>
+   <translation>Порт</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="56"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>За замовчуванням</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="69"/>
    <source>Credentials</source>
-   <translation type="unfinished"/>
+   <translation>Повноваження</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="85"/>
    <source>Username</source>
-   <translation type="unfinished"/>
+   <translation>Ім&apos;я користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="95"/>
    <source>Password</source>
-   <translation type="unfinished"/>
+   <translation>Пароль</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="10"/>
    <source>Add %1 server</source>
-   <translation type="unfinished"/>
+   <translation>Додайте %1 сервер</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="16"/>
    <source>Server host name or IP address</source>
-   <translation type="unfinished"/>
+   <translation>Ім&apos;я хоста сервера або IP-адреса</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="17"/>
    <source>TURN server username</source>
-   <translation type="unfinished"/>
+   <translation>Ім&apos;я користувача TURN сервера</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="18"/>
    <source>TURN server password</source>
-   <translation type="unfinished"/>
+   <translation>Пароль TURN сервера</translation>
   </message>
  </context>
  <context>
@@ -62,84 +62,84 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="32"/>
    <source>Servers list</source>
-   <translation type="unfinished"/>
+   <translation>Список серверів</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="56"/>
    <source>&amp;Remove</source>
-   <translation type="unfinished"/>
+   <translation>&amp;Видалити</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="76"/>
    <source>Add &amp;STUN...</source>
-   <translation type="unfinished"/>
+   <translation>Додати і заглушити...</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="96"/>
    <source>Add &amp;TURN...</source>
-   <translation type="unfinished"/>
+   <translation>Додати і включити</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="132"/>
    <source>Type</source>
-   <translation type="unfinished"/>
+   <translation>Тип</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="140"/>
    <source>Address</source>
-   <translation type="unfinished"/>
+   <translation>Адреса</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="145"/>
    <source>Port</source>
-   <translation type="unfinished"/>
+   <translation>Порт</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="150"/>
    <source>Username</source>
-   <translation type="unfinished"/>
+   <translation>Логін</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="155"/>
    <source>Password</source>
-   <translation type="unfinished"/>
+   <translation>Пароль</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="166"/>
    <source>Usually aggressive nomination may slightly decrease session negotiation time, but in some rare cases may cause negotiation fail.</source>
-   <translation type="unfinished"/>
+   <translation>Зазвичай агресивна номінація може дещо зменшити час узгодження сеансу, але в деяких рідкісних випадках це може спричинити невдачу переговорів.</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="169"/>
    <source>&amp;Aggressive nomination</source>
-   <translation type="unfinished"/>
+   <translation>&amp;Агресивна номінація</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="178"/>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="211"/>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="234"/>
    <source> msec</source>
-   <translation type="unfinished"/>
+   <translation>мсек</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="191"/>
    <source>STUN round-trip time estimation</source>
-   <translation type="unfinished"/>
+   <translation>Оцінка часу затримки STUN</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="201"/>
    <source>Controlling agent nomination delay</source>
-   <translation type="unfinished"/>
+   <translation>Затримка призначення контрольного агента</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="221"/>
    <source>Controlled agent nomination timeout</source>
-   <translation type="unfinished"/>
+   <translation>Тайм-аут номінації контрольного агента</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="231"/>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>Ні</translation>
   </message>
  </context>
  <context>
@@ -158,7 +158,7 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="232"/>
    <source>ICE</source>
-   <translation type="unfinished"/>
+   <translation>ICE</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="245"/>

@@ -85,14 +85,12 @@ QUrl MapSearchProviderNavitel::searchRequest(const QString &ASearchString, qreal
 
 QUrl MapSearchProviderNavitel::infoRequest(int ALocationId) const
 {
-	qDebug() << "MapSearchProviderNavitel::infoRequest(" << ALocationId << ")";
 	QUrl url(QString("http://maps.navitel.ru/webmaps/searchTwoStepInfo?id=%1").arg(ALocationId));
 	return url;
 }
 
 void MapSearchProviderNavitel::parseSearchResult(QByteArray ASearchResult)
 {
-	qDebug() << "MapSearchProviderNavitel::parseSearchResult(" << ASearchResult << ")";
 #if QT_VERSION < 0x050000
     QScriptEngine engine;
     QScriptValue value = engine.evaluate("("+QString::fromUtf8(ASearchResult)+")");

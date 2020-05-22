@@ -1,6 +1,10 @@
 HEADERS = \ 
     receipts.h \
-    networkreplyreceipts.h
+    receiptsoptions.h
+
 SOURCES = \ 
     receipts.cpp \
-    networkreplyreceipts.cpp
+    receiptsoptions.cpp
+
+FORMS += \
+    receiptsoptions.ui

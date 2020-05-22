@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle Spanish Translation</DisplayName>
+ <Description>Jingle Spanish translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.es</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.jingle,ru.rwsoftware.eyecu.translations.es</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

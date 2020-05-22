@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>SOCKS5 File Transfer Arabic Translation</DisplayName>
+ <Description>SOCKS5 File Transfer Arabic translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.filetransfer.socks5.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.filetransfer.socks5,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Map Source Arabic Deutsch Translation</DisplayName>
+ <Description>Map Source Arabic Deutsch translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.sources.wiki.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.map.sources.wiki,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

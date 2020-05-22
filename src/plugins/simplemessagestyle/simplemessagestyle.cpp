@@ -119,28 +119,6 @@ QTextDocumentFragment SimpleMessageStyle::textFragmentAt(QWidget *AWidget, const
 	return QTextDocumentFragment();
 }
 
-// *** <<< eyeCU <<< ***
-QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
-{
-	QTextCharFormat format = textFormatAt(AWidget, APosition);
-	if (format.isImageFormat())
-	{
-		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
-		switch (resource.type())
-		{
-			case QMetaType::QImage:
-				return resource.value<QImage>();
-			case QMetaType::QPixmap:
-				return resource.value<QPixmap>().toImage();
-			case QMetaType::QByteArray:
-				return  QImage::fromData(resource.toByteArray());
-			default:;
-		}
-	}
-	return QImage();
-}
-// *** >>> eyeCU >>> ***
-
 bool SimpleMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
@@ -259,6 +237,94 @@ bool SimpleMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, c
 	}
 	return false;
 }
+
+// *** <<< eyeCU <<< ***
+QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
+{
+	QTextCharFormat format = textFormatAt(AWidget, APosition);
+	if (format.isImageFormat())
+	{
+		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
+		switch (resource.type())
+		{
+			case QMetaType::QImage:
+				return resource.value<QImage>();
+			case QMetaType::QPixmap:
+				return resource.value<QPixmap>().toImage();
+			case QMetaType::QByteArray:
+				return  QImage::fromData(resource.toByteArray());
+			default:;
+		}
+	}
+	return QImage();
+}
+
+bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QTextDocument *doc = view->document();
+		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
+			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
+			{
+				QTextFragment fragment = it.fragment();
+				QTextCharFormat format = fragment.charFormat();
+				if (format.isImageFormat() &&
+					format.hasProperty(QpXhtml::ObjectId) &&
+					format.property(QpXhtml::ObjectId) == AObjectId)
+				{
+					QTextImageFormat image = format.toImageFormat();
+					QTextCursor cursor(doc);
+					cursor.setPosition(fragment.position());
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor,
+										fragment.length());
+					image.setName(AUrl);
+					cursor.setCharFormat(image);
+					return true;
+				}
+			}
+		REPORT_ERROR("Failed to set image URL: Image with spwcified ID not found!");
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set image URL: Invalid view");
+	}
+	return false;
+}
+
+bool SimpleMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QTextDocument *doc = view->document();
+		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
+			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
+			{
+				QTextFragment fragment = it.fragment();
+				QTextCharFormat format = fragment.charFormat();
+				if (format.hasProperty(QpXhtml::ObjectId) &&
+					format.property(QpXhtml::ObjectId) == AObjectId)
+				{
+					QTextCursor cursor(doc);
+					cursor.setPosition(fragment.position());
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor,
+										fragment.length());
+					format.setToolTip(ATitle);
+					cursor.setCharFormat(format);
+					return true;
+				}
+			}
+		REPORT_ERROR("Failed to set object title: Fragment with spwcified ID not found!");
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set object title: Invalid view");
+	}
+	return false;
+}
+// *** >>> eyeCU >>> ***
 
 QMap<QString, QVariant> SimpleMessageStyle::infoValues() const
 {

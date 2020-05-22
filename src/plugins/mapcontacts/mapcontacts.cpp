@@ -1,6 +1,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
+#include <MapObject>
 #include <utils/logger.h>
 #include <definitions/mapobjecttyperole.h>
 #include <definitions/mapobjectdatarole.h>
@@ -11,11 +12,9 @@
 #include <definitions/rosterindexroles.h>
 #include <definitions/rosterindexkinds.h>
 #include <definitions/rosterlabels.h>
-// #include <definitions/rosterclickhookerorders.h>
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionwidgetorders.h>
-#include <MapObject>
 
 #include "mapcontacts.h"
 #include "mapcontactsoptions.h"
@@ -24,15 +23,15 @@
 
 MapContacts::MapContacts(QObject *parent) :
 	QObject(parent),
-	FMap(NULL),
-	FGeoloc(NULL),
-	FRosterManager(NULL),
-	FRostersView(NULL),
-	FRostersModel(NULL),
-	FStatusIcons(NULL),
-	FAvatars(NULL),
-	FOptionsManager(NULL),
-	FMessageProcessor(NULL),
+	FMap(nullptr),
+	FGeoloc(nullptr),
+	FRosterManager(nullptr),
+	FRostersView(nullptr),
+	FRostersModel(nullptr),
+	FStatusIcons(nullptr),
+	FAvatars(nullptr),
+	FOptionsManager(nullptr),
+	FMessageProcessor(nullptr),
 	FAvatarSize(32)
 {}
 
@@ -50,13 +49,13 @@ void MapContacts::pluginInfo(IPluginInfo *APluginInfo)
 
 bool MapContacts::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
-	IPlugin *plugin = APluginManager->pluginInterface("IMap").value(0,NULL);
+	IPlugin *plugin = APluginManager->pluginInterface("IMap").value(0,nullptr);
 	if (plugin)
 		FMap = qobject_cast<IMap *>(plugin->instance());
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IGeoloc").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IGeoloc").value(0,nullptr);
 	if (plugin)
 	{
 		FGeoloc = qobject_cast<IGeoloc *>(plugin->instance());
@@ -66,13 +65,13 @@ bool MapContacts::initConnections(IPluginManager *APluginManager, int &AInitOrde
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IStatusIcons").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IStatusIcons").value(0,nullptr);
 	if (plugin)
 		FStatusIcons = qobject_cast<IStatusIcons *>(plugin->instance());
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IRosterManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IRosterManager").value(0,nullptr);
 	if (plugin)
 	{
 		FRosterManager = qobject_cast<IRosterManager *>(plugin->instance());
@@ -85,7 +84,7 @@ bool MapContacts::initConnections(IPluginManager *APluginManager, int &AInitOrde
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IRostersModel").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IRostersModel").value(0,nullptr);
 	if (plugin)
 	{
 		FRostersModel = qobject_cast<IRostersModel *>(plugin->instance());
@@ -102,25 +101,25 @@ bool MapContacts::initConnections(IPluginManager *APluginManager, int &AInitOrde
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IPresenceManager").value(0,nullptr);
 	if (plugin)
 		FPresenceManager = qobject_cast<IPresenceManager *>(plugin->instance());
 	else
 		return false;
 
-	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IMessageProcessor").value(0,nullptr);
 	if (plugin)
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IAvatars").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IAvatars").value(0,nullptr);
 	if (plugin)
 		FAvatars = qobject_cast<IAvatars *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,nullptr);
 	if (plugin)
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
 
-	plugin = APluginManager->pluginInterface("IRostersViewPlugin").value(0,NULL);
+	plugin = APluginManager->pluginInterface("IRostersViewPlugin").value(0,nullptr);
 	if (plugin)
 	{
 		IRostersViewPlugin *rostersViewPlugin = qobject_cast<IRostersViewPlugin *>(plugin->instance());
@@ -183,6 +182,7 @@ bool MapContacts::initSettings()
 void MapContacts::onOptionsOpened()
 {
 	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
+	onOptionsChanged(Options::node(OPV_AVATARS_ASPECTCROP));
 }
 
 void MapContacts::onOptionsClosed()
@@ -192,8 +192,9 @@ void MapContacts::onOptionsChanged(const OptionsNode &ANode)
 {
 	if (ANode.path() == OPV_MAP_CONTACTS_VIEW)
 		FMap->geoMap()->updateObjects(MOT_CONTACT, MDR_NONE);
-	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
-		FShowEmptyAvatars = ANode.value().toBool();
+	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY ||
+			 ANode.path() == OPV_AVATARS_ASPECTCROP)
+		FMap->geoMap()->updateObjects(MOT_CONTACT, MDR_CONTACT_AVATAR);
 	else if (ANode.path() == OPV_ROSTER_SHOWOFFLINE)
 	{
 		bool show=ANode.value().toBool();
@@ -290,7 +291,7 @@ bool MapContacts::contextMenu(SceneObject *ASceneObject, QMenu *AMenu)
 		{
 			QList<IRosterIndex *> single;
 			single.append(index);
-			FRostersView->contextMenuForIndex(single, NULL, menu);
+			FRostersView->contextMenuForIndex(single, nullptr, menu);
 
 
 			QList<Action *> actions=menu->actions(AG_RVCM_RCHANGER_EDIT);
@@ -376,19 +377,6 @@ QString MapContacts::toolTipText(const MapObject *AMapObject, const QHelpEvent *
 	return result;
 }
 
-//bool MapContacts::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
-//{
-//	Q_UNUSED(AOrder)
-
-//	QModelIndex index = FRostersView->mapFromModel(FRostersView->rostersModel()->modelIndexFromRosterIndex(AIndex));
-//	if (FRostersView->labelAt(AEvent->pos(),index) == FGeoloc->rosterLabelId())
-//	{
-//		showContact(AIndex->data(RDR_FULL_JID).toString());
-//		return true;
-//	}
-//	return false;
-//}
-
 int MapContacts::getShow(const QString &AJid) const
 {
 	Jid jid(AJid);
@@ -456,7 +444,7 @@ IRosterIndex *MapContacts::getRosterIndex(const QString &AId) const
 		if (!indexes.isEmpty())
 			return indexes.first();
 	}
-	return NULL;
+	return nullptr;
 }
 
 QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGraphicsItem *ACurrentElement)
@@ -505,9 +493,9 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 
 				if (ASceneObject->isActive())
 				{
-					QFont font=((QGraphicsSimpleTextItem *)ACurrentElement)->font();
+					QFont font=qgraphicsitem_cast<QGraphicsSimpleTextItem *>(ACurrentElement)->font();
 					font.setUnderline(true);
-					((QGraphicsSimpleTextItem *)ACurrentElement)->setFont(font);
+					qgraphicsitem_cast<QGraphicsSimpleTextItem *>(ACurrentElement)->setFont(font);
 				}
 				Qt::GlobalColor color=getColor(id, show);
 				// Set black shadow for bright colors and white shadow for dark
@@ -519,11 +507,12 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 			case MDR_CONTACT_AVATAR:
 				if (FAvatars)
 				{
-					QGraphicsPixmapItem * pixmap=NULL;
-					QImage avatar = FAvatars->loadAvatarImage(FAvatars->avatarHash(id), FAvatarSize, (show==IPresence::Offline||show==IPresence::Error));
-
-					if (avatar.isNull() && FShowEmptyAvatars)
-						avatar = FEmptyAvatar;
+					QImage avatar = FAvatars->visibleAvatarImage(FAvatars->avatarHash(id),
+																 FAvatarSize,
+																 show==IPresence::Offline||
+																 show==IPresence::Error);
+					if (avatar.isNull())
+						return nullptr;
 
 					QSize size=avatar.size();
 					int width=size.width();
@@ -539,6 +528,7 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 					polygon.append(QPointF(2+width+1, 2+height+1));
 					polygon.append(QPointF(0, 2+height+1));
 
+					QGraphicsPixmapItem * pixmap=nullptr;
 					QGraphicsPolygonItem *polygonItem;
 					if (ACurrentElement)
 					{
@@ -564,6 +554,7 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 					polygonItem->setBrush(QBrush(getColor(id, show)));
 					if (pixmap)
 						pixmap->setPos(2, 2);
+
 					return polygonItem;
 				}
 				break;
@@ -574,10 +565,8 @@ QGraphicsItem * MapContacts::mapData(SceneObject *ASceneObject, int ARole, QGrap
 
 void MapContacts::onIndexDataChanged(IRosterIndex *AIndex, int ARole)
 {
-	LOG_DEBUG("MapContacts::onIndexDataChanged("+AIndex->data(RDR_FULL_JID).toString()+","+ARole+")");
 	if (ARole==RDR_RESOURCES)
 	{
-		LOG_DEBUG("RDR_RESOURCES");
 		QStringList resources=AIndex->data(RDR_RESOURCES).toStringList();
 		QStringList resourcesOld=FIndexResourceHash.values(AIndex);
 
@@ -597,7 +586,6 @@ void MapContacts::onIndexDataChanged(IRosterIndex *AIndex, int ARole)
 	}
 	else if ((ARole==RDR_NAME)||(ARole==RDR_AVATAR_IMAGE)||(ARole==RDR_SHOW))
 	{
-		LOG_DEBUG("RDR_NAME|RDR_AVATAR_IMAGE|RDR_SHOW");
 		QStringList resources=AIndex->data(RDR_RESOURCES).toStringList();
 		if (resources.isEmpty())
 			resources.append(AIndex->data(RDR_FULL_JID).toString());

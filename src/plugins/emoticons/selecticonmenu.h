@@ -25,7 +25,7 @@ protected slots:
 private:
 	QVBoxLayout *FLayout;
 	IconStorage *FStorage;
-	IEmoticons	*FEmoji;
+	IEmoticons	*FEmoticons;
 };
 
 #endif // SELECTICONMENU_H

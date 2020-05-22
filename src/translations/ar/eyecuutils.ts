@@ -4,12 +4,12 @@
   <message>
    <location filename="../../utils/passworddialog.cpp" line="12"/>
    <source>Enter password:</source>
-   <translation type="unfinished"/>
+   <translation>أدخل كلمة المرور:</translation>
   </message>
   <message>
    <location filename="../../utils/passworddialog.cpp" line="18"/>
    <source>Save password</source>
-   <translation type="unfinished"/>
+   <translation>حفظ كلمة المرور</translation>
   </message>
  </context>
  <context>
@@ -17,12 +17,12 @@
   <message>
    <location filename="../../utils/searchlineedit.cpp" line="15"/>
    <source>Search options</source>
-   <translation type="unfinished"/>
+   <translation>خيارات البحث</translation>
   </message>
   <message>
    <location filename="../../utils/searchlineedit.cpp" line="26"/>
    <source>Clear text</source>
-   <translation type="unfinished"/>
+   <translation>مسح النص</translation>
   </message>
  </context>
  <context>
@@ -35,22 +35,22 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="420"/>
    <source>Account disabled</source>
-   <translation type="unfinished"/>
+   <translation>الحساب معطل</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="421"/>
    <source>Credentials expired</source>
-   <translation type="unfinished"/>
+   <translation>انتهت صلاحية الشهادة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="422"/>
    <source>Encryption required</source>
-   <translation type="unfinished"/>
+   <translation>التشفير مطلوب</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="423"/>
    <source>Incorrect encoding</source>
-   <translation type="unfinished"/>
+   <translation>ترميز غير صحيح</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="424"/>
@@ -60,7 +60,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="425"/>
    <source>Invalid mechanism</source>
-   <translation type="unfinished"/>
+   <translation>آلية غير صالحة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="426"/>
@@ -70,7 +70,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="427"/>
    <source>Mechanism is too weak</source>
-   <translation type="unfinished"/>
+   <translation>آلية ضعيفة جدا</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="428"/>
@@ -95,7 +95,7 @@
    <location filename="../../utils/xmpperror.cpp" line="332"/>
    <location filename="../../utils/xmpperror.cpp" line="582"/>
    <source>Bad request format</source>
-   <translation type="unfinished"/>
+   <translation>تنسيق الطلب سيء</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="333"/>
@@ -106,12 +106,12 @@
    <location filename="../../utils/xmpperror.cpp" line="334"/>
    <location filename="../../utils/xmpperror.cpp" line="583"/>
    <source>Conflict</source>
-   <translation type="unfinished"/>
+   <translation>تعارض</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="335"/>
    <source>Connection timeout</source>
-   <translation type="unfinished"/>
+   <translation>انتهى وقت محاولة الاتصال</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="336"/>
@@ -121,7 +121,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="337"/>
    <source>Unknown host</source>
-   <translation type="unfinished"/>
+   <translation>مضيف غير معروف</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="338"/>
@@ -147,7 +147,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="342"/>
    <source>Invalid XML</source>
-   <translation type="unfinished"/>
+   <translation>XML غير صالحة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="343"/>
@@ -158,13 +158,13 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="344"/>
    <source>XML not well formed</source>
-   <translation type="unfinished"/>
+   <translation>لم يتم تشكيل XML بشكل جيد</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="345"/>
    <location filename="../../utils/xmpperror.cpp" line="593"/>
    <source>Policy violation</source>
-   <translation type="unfinished"/>
+   <translation>انتهاك السياسة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="346"/>
@@ -195,17 +195,17 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="351"/>
    <source>System shutdown</source>
-   <translation type="unfinished"/>
+   <translation>إيقاف تشغيل النظام</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="352"/>
    <source>Unsupported encoding</source>
-   <translation type="unfinished"/>
+   <translation>ترميز غير مدعوم</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="353"/>
    <source>Unsupported feature</source>
-   <translation type="unfinished"/>
+   <translation>ميزة غير مدعومة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="354"/>
@@ -215,7 +215,7 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="355"/>
    <source>Unsupported version</source>
-   <translation type="unfinished"/>
+   <translation>نسخة غير مدعومة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="584"/>
@@ -225,17 +225,17 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="585"/>
    <source>Insufficient permissions</source>
-   <translation type="unfinished"/>
+   <translation>أذونات غير كافية</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="586"/>
    <source>Recipient changed address</source>
-   <translation type="unfinished"/>
+   <translation>تم تغيير عنوان المستلم</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="588"/>
    <source>Requested item not found</source>
-   <translation type="unfinished"/>
+   <translation>العنصر المطلوب غير موجود</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="589"/>
@@ -245,27 +245,27 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="590"/>
    <source>Not accepted by the recipient</source>
-   <translation type="unfinished"/>
+   <translation>لم تقبل من قبل المستلم</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="591"/>
    <source>Not allowed by the recipient</source>
-   <translation type="unfinished"/>
+   <translation>لا يسمح به من قبل المستلم</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="594"/>
    <source>Recipient unavailable</source>
-   <translation type="unfinished"/>
+   <translation>المستلم غير متوفر</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="595"/>
    <source>Redirect to another address</source>
-   <translation type="unfinished"/>
+   <translation>إعادة التوجيه إلى عنوان آخر</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="596"/>
    <source>Registration required</source>
-   <translation type="unfinished"/>
+   <translation>التسجيل مطلوب</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="597"/>
@@ -280,22 +280,22 @@
   <message>
    <location filename="../../utils/xmpperror.cpp" line="600"/>
    <source>Service unavailable</source>
-   <translation type="unfinished"/>
+   <translation>الخدمة غير متوفرة</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="601"/>
    <source>Subscription required</source>
-   <translation type="unfinished"/>
+   <translation>الاشتراك مطلوب</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="602"/>
    <source>Unexpected request</source>
-   <translation type="unfinished"/>
+   <translation>طلب غير متوقع</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="604"/>
    <source>Resource limit exceeded</source>
-   <translation type="unfinished"/>
+   <translation>تم تجاوز حد الموارد</translation>
   </message>
   <message>
    <location filename="../../utils/xmpperror.cpp" line="605"/>

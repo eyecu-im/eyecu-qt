@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" sourcelanguage="en" language="en">
+<TS language="en" version="2.1" sourcelanguage="en">
  <context>
   <name>ConfigPage</name>
   <message>
@@ -1060,23 +1060,23 @@
    <translation>Owner</translation>
   </message>
   <message>
-   <source>Supported list of commands: &#xd;
- /ban &lt;roomnick> [comment] &#xd;
- /invite &lt;jid> [comment] &#xd;
- /join &lt;roomname> [pass] &#xd;
- /kick &lt;roomnick> [comment] &#xd;
- /msg &lt;roomnick> &lt;foo> &#xd;
- /nick &lt;newnick> &#xd;
- /leave [comment] &#xd;
+   <source>Supported list of commands: &#xd;&#xd;
+ /ban &lt;roomnick> [comment] &#xd;&#xd;
+ /invite &lt;jid> [comment] &#xd;&#xd;
+ /join &lt;roomname> [pass] &#xd;&#xd;
+ /kick &lt;roomnick> [comment] &#xd;&#xd;
+ /msg &lt;roomnick> &lt;foo> &#xd;&#xd;
+ /nick &lt;newnick> &#xd;&#xd;
+ /leave [comment] &#xd;&#xd;
  /topic &lt;foo></source>
-   <translation>Supported list of commands: &#xd;
- /ban &lt;roomnick> [comment] &#xd;
- /invite &lt;jid> [comment] &#xd;
- /join &lt;roomname> [pass] &#xd;
- /kick &lt;roomnick> [comment] &#xd;
- /msg &lt;roomnick> &lt;foo> &#xd;
- /nick &lt;newnick> &#xd;
- /leave [comment] &#xd;
+   <translation>Supported list of commands: &#xd;&#xd;
+ /ban &lt;roomnick> [comment] &#xd;&#xd;
+ /invite &lt;jid> [comment] &#xd;&#xd;
+ /join &lt;roomname> [pass] &#xd;&#xd;
+ /kick &lt;roomnick> [comment] &#xd;&#xd;
+ /msg &lt;roomnick> &lt;foo> &#xd;&#xd;
+ /nick &lt;newnick> &#xd;&#xd;
+ /leave [comment] &#xd;&#xd;
  /topic &lt;foo></translation>
   </message>
   <message>

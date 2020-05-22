@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Recent Contacts Arabic Translation</DisplayName>
+ <Description>Recent Contacts Arabic translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.recentcontacts.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.recentcontacts,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

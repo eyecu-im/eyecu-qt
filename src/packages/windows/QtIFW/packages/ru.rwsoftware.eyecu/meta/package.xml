@@ -1,12 +1,13 @@
 <?xml version='1.0'?>
+
 <Package>
  <DisplayName>eyeCU</DisplayName>
  <Description>XMPP-based IM client with positioning</Description>
- <Version>1.3.26</Version>
- <ReleaseDate>2017-05-14</ReleaseDate>
- <UpdateText>Ask user to restart eyeCU on language change</UpdateText>
+ <Version>2.1.1</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <UpdateText>Update resources</UpdateText>
  <Name>ru.rwsoftware.eyecu</Name>
- <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util,org.openssl.shared</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.loader,ru.purplesoft.qtpurple.util->=2.1.0,org.openssl.shared->=1.0.2.16</Dependencies>
  <Licenses>
   <License name="License Agreement" file="LICENSE.TXT"/>
  </Licenses>

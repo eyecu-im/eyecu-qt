@@ -276,8 +276,12 @@
 #define MNI_ATTENTION                   "attention"
 #define MNI_EXCLAMATION                 "exclamation"
 
-// Message receipts
-#define MNI_RECEIPTS                    "receipts"
+// Chat Markers
+#define MNI_EMPTY_BOX					"emptyBox"
+#define MNI_MESSAGE_RECEIVED            "messageReceived"
+#define MNI_MESSAGE_DISPLAYED			"messageDisplayed"
+#define MNI_MESSAGE_ACKNOWLEDGED		"messageAcknowledged"
+#define MNI_MESSAGE_ACKNOWLEDGE			"messageAcknowledge"
 
 //Poi
 #define MNI_POI                         "poi"
@@ -365,5 +369,10 @@
 //JINGLE
 #define MNI_JINGLE                      "jingle"
 #define MNI_JINGLE_RTP                  "jingleRtp"
+
+//OTR
+#define MNI_OTR_ENCRYPTED               "otr_yes"
+#define MNI_OTR_UNVERFIFIED             "otr_unverified"
+#define MNI_OTR_NO                      "otr_no"
 // >>> eyeCU >>>
 #endif // DEF_MENUICONS_H

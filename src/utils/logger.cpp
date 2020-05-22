@@ -8,15 +8,18 @@
 #include "datetime.h"
 
 #define MAX_LOG_FILES  10
-
+// *** <<< eyeCU <<< ***
+#ifndef DEBUG_MODE
 #if QT_VERSION < 0x050000
 void qtMessagesHandler(QtMsgType AType, const char *AMessage)
 {
+	Logger::writeOldLog(AType, AMessage);
 #else
 void qtMessagesHandler(QtMsgType AType, const QMessageLogContext &ALogContext, const QString &AMessage)
 {
-	Q_UNUSED(ALogContext)
+	Logger::writeOldLog(AType, ALogContext, AMessage);
 #endif
+// *** >>> eyeCU >>> ***
 	switch (AType)
 	{
 	case QtDebugMsg:
@@ -31,14 +34,28 @@ void qtMessagesHandler(QtMsgType AType, const QMessageLogContext &ALogContext, c
 	case QtFatalMsg:
 		Logger::writeLog(Logger::Fatal,"Qt",AMessage);
 		break;
+// *** <<< eyeCU <<< ***
+#if QT_VERSION >= 0x050500
+	case QtInfoMsg:
+		Logger::writeLog(Logger::Info,"Qt",AMessage);
+		break;
+#endif
+// *** >>> eyeCU >>> ***
 	}
 }
-
+#endif // *** <<< eyeCU >>> ***
 struct Logger::LoggerData {
 	QFile logFile;
 	quint32 loggedTypes;
 	quint32 enabledTypes;
 	QMap<QString,QMap<QString,QDateTime> > timings;
+#ifndef DEBUG_MODE
+#if QT_VERSION < 0x050500
+	QtMsgHandler oldMessageHandler; // *** <<< eyeCU >>> ***
+#else
+	QtMessageHandler oldMessageHandler; // *** <<< eyeCU >>> ***
+#endif
+#endif
 };
 
 QMutex Logger::FMutex;
@@ -75,11 +92,13 @@ void Logger::openLog(const QString &APath)
 			QFile::remove(logDir.absoluteFilePath(logFiles.takeFirst()));
 
 #ifndef DEBUG_MODE
+// *** <<< eyeCU <<< ***
 #if QT_VERSION < 0x050000
-		qInstallMsgHandler(qtMessagesHandler);
+		q->oldMessageHandler = qInstallMsgHandler(qtMessagesHandler);
 #else
-		qInstallMessageHandler(qtMessagesHandler);
+		q->oldMessageHandler = qInstallMessageHandler(qtMessagesHandler);
 #endif
+	// *** >>> eyeCU >>> ***
 #endif
 		q->logFile.setFileName(logDir.absoluteFilePath(DateTime(QDateTime::currentDateTime()).toX85DateTime().replace(":","-") +".log"));
 		q->logFile.open(QFile::WriteOnly|QFile::Truncate);
@@ -119,6 +138,7 @@ void Logger::writeLog(quint32 AType, const QString &AClass, const QString &AMess
 {
 	QMutexLocker locker(&FMutex);
 	LoggerData *q = instance()->d;
+
 	if ((q->enabledTypes & AType)>0 && q->logFile.isOpen())
 	{
 		static QDateTime lastLogTime = QDateTime::currentDateTime();
@@ -174,7 +194,7 @@ void Logger::writeLog(quint32 AType, const QString &AClass, const QString &AMess
 		q->logFile.flush();
 
 #if defined(DEBUG_MODE)
-		if (AType <= Logger::Warning)
+		if (AType <= Logger::Warning || AType == Logger::Debug)
 			qDebug() << logLine;
 #endif
 
@@ -182,6 +202,24 @@ void Logger::writeLog(quint32 AType, const QString &AClass, const QString &AMess
 		lastLogTime = curDateTime;
 	}
 }
+// *** <<< eyeCU <<< ***
+#ifndef DEBUG_MODE
+#if (QT_VERSION < 0x050000)
+void Logger::writeOldLog(QtMsgType AType, const char *AMessage)
+#else
+void Logger::writeOldLog(QtMsgType AType, const QMessageLogContext &ALogContext, const QString &AMessage)
+#endif
+{
+	LoggerData *q = instance()->d;
+	if (q->oldMessageHandler)
+#if (QT_VERSION < 0x050000)
+		q->oldMessageHandler(AType, AMessage);
+#else
+		q->oldMessageHandler(AType, ALogContext, AMessage);
+#endif
+}
+#endif
+// *** >>> eyeCU >>> ***
 
 QString Logger::startTiming(const QString &AVariable, const QString &AContext)
 {

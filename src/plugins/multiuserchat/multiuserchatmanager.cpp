@@ -246,6 +246,7 @@ bool MultiUserChatManager::initSettings()
 	Options::setDefaultValue(OPV_MUC_AFFILICON_SHOW, true);
 	Options::setDefaultValue(OPV_MUC_ALTERNATIONHIGHLIGHT, false);
 	Options::setDefaultValue(OPV_MUC_AVATARS_SIZE, IAvatars::AvatarSmall);
+	Options::setDefaultValue(OPV_MUC_AVATARS_ROUNDED, 0);
 	Options::setDefaultValue(OPV_MUC_AVATARS_POSITION, IAvatars::Right);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAYEMPTY, true);
 	Options::setDefaultValue(OPV_MUC_AVATARS_DISPLAY, true);	

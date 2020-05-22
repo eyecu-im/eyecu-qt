@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt Geo Spanish Translation</DisplayName>
- <Description>Qt Geo Spanish translation</Description>
+ <DisplayName>QpGeo Spanish Translation</DisplayName>
+ <Description>QpGeo Spanish translation</Description>
  <Version>1.1.0</Version>
  <ReleaseDate>2017-04-21</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.geo.es</Name>

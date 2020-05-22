@@ -23,8 +23,8 @@ MapSearchProviderHere::MapSearchProviderHere(QObject *parent):
 		.insert("ca", "cat")
 		.insert("zh", "chi")
 		.insert("zh", "chi")
-	//TODO: implement traditional chinese language
-	//	.insert("zh", "cht")
+//TODO: implement traditional chinese language
+//		.insert("zh", "cht")
 		.insert("cs", "cze")
 		.insert("da", "dan")
 		.insert("nl", "dut")
@@ -70,10 +70,13 @@ MapSearchProviderHere::MapSearchProviderHere(QObject *parent):
 		.insert(QLocale::Oman,"OMN")
 		.insert(QLocale::Pakistan,"PAK")
 		.insert(QLocale::Qatar,"QAT")
-		.insert(QLocale::Russia,"RUS")
-		.insert(QLocale::SaudiArabia,"SAU")
-		.insert(QLocale::Turkey,"TUR")
-		.insert(QLocale::Vietnam,"VIE")
+#if QT_VERSION < 0x050000
+		.insert(QLocale::RussianFederation,"RUS")
+		.insert(QLocale::VietNam,"VIE")
+#else
+	   .insert(QLocale::Russia,"RUS")
+	   .insert(QLocale::Vietnam,"VIE")
+#endif
 		.result())
 {}
 
@@ -122,14 +125,8 @@ bool MapSearchProviderHere::initSettings()
 
 bool MapSearchProviderHere::startSearch(const QString &ASearchString, qreal ALatSouth, qreal ALngWest, qreal ALatNorth, qreal ALngEast, int AZoom, bool ALimitRange, int AMaxResults, bool AMore)
 {
-	qDebug() << "MapSearchProviderHere::startSearch(" << ASearchString << ","
-			 << ALatSouth << "," << ALngWest << ","
-			 << ALatNorth << "," << ALngEast << ","
-			 << AZoom << "," << ALimitRange << ","
-			 << AMaxResults << "," << AMore << ")";
 	Q_UNUSED(AZoom)
 	QUrl request = searchRequest(ASearchString, ALatSouth, ALngWest, ALatNorth, ALngEast, ALimitRange, AMaxResults, AMore);
-	qDebug() << "request:" << request;
 	return FHttpRequester->request(request, "request", this, SLOT(onResultReceived(QByteArray,QString)));
 }
 
@@ -215,7 +212,6 @@ QUrl MapSearchProviderHere::searchRequest(QString ASearchString, qreal ALatSouth
 #else
 	url.setQueryItems(queryItems);
 #endif
-	qDebug() << "returning URL:" << url;
 	return url;
 }
 
@@ -223,7 +219,6 @@ void MapSearchProviderHere::parseResult(QByteArray ASearchResult)
 {
 	QDomDocument doc;
 	doc.setContent(ASearchResult);
-	qDebug() << "MapSearchProviderHere::parseResult(" << doc.toString() << ")";
 
 	QDomElement response = doc.documentElement().firstChildElement("Response");
 	if (!response.isNull())

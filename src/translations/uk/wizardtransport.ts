@@ -4,17 +4,17 @@
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1225"/>
    <source>Done!</source>
-   <translation type="unfinished"/>
+   <translation>Готово!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1226"/>
    <source>Transport Wizard completed successfuly</source>
-   <translation type="unfinished"/>
+   <translation>Майстер транспорту виконано успішно</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1230"/>
    <source>Congratulations!</source>
-   <translation type="unfinished"/>
+   <translation>Вітаю!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1236"/>
@@ -26,23 +26,24 @@
    <source>Some transports may report about successful registreation, even if wrong credentials were provided. They may inform you about authentication error later, with a message.
 
 If you receive such message, please rerun the Wizard to register at transport with correct credentials.</source>
-   <translation type="unfinished"/>
+   <translation>Деякі транспортні компанії можуть повідомити про успішну реєстрацію, навіть якщо були надані невірні дані. Вони можуть повідомити вас про помилку автентифікації пізніше, з повідомленням.
+Якщо ви отримаєте таке повідомлення, будь ласка, повторіть майстер, щоб зареєструватися на транспорті з правильними обліковими даними.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1242"/>
    <source>Press &quot;Finish&quot; button to close Wizard.</source>
    <comment>&quot;Finish&quot; should match the text of an appropriate Qt Wizard button</comment>
-   <translation type="unfinished"/>
+   <translation>Натисніть кнопку &quot;Готово&quot;, щоб закрити майстер.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1265"/>
    <source>You successfuly changed %1 transport from %2 to %3.</source>
-   <translation type="unfinished"/>
+   <translation>Ви успішно змінили транспорт %1 з %2 до %3.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="1263"/>
    <source>You successfuly connected to %1 via %2.</source>
-   <translation type="unfinished"/>
+   <translation>Ви успішно підключились до %1 через %2.</translation>
   </message>
  </context>
  <context>
@@ -50,33 +51,33 @@ If you receive such message, please rerun the Wizard to register at transport wi
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="315"/>
    <source>Gateway selection</source>
-   <translation type="unfinished"/>
+   <translation>Вибір шлюзу</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="316"/>
    <source>Choose a gateway you want to use</source>
-   <translation type="unfinished"/>
+   <translation>Виберіть шлюз, який ви хочете використовувати</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="318"/>
    <source>Gateways &amp;list</source>
-   <translation type="unfinished"/>
+   <translation>Шлюзи та список</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="352"/>
    <source>List of Gateways for</source>
-   <translation type="unfinished"/>
+   <translation>Список шлюзів для</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="362"/>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="370"/>
    <source>Warning!</source>
-   <translation type="unfinished"/>
+   <translation>Увага!</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="363"/>
    <source>The transport you selected is unavailable now. An attempt to register at it will probably fail. Press &quot;Ok&quot; to proceed anyway or &quot;Cancel&quot; to select another transport.</source>
-   <translation type="unfinished"/>
+   <translation>Вибраний вами транспорт зараз недоступний. Зарееструватися на ньому, ймовірно, не вдасться. Натисніть &quot;OK&quot;, щоб продовжити, або &quot;Скасувати&quot;, щоб вибрати інший транспорт.</translation>
   </message>
   <message>
    <location filename="../../plugins/wizardtransport/wizardpages.cpp" line="371"/>

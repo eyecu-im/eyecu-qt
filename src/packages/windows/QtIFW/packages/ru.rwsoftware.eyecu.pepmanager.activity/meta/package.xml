@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>User Activity</DisplayName>
  <Description>Allows users to exchage information about their current activity</Description>
- <Version>1.3.6</Version>
- <ReleaseDate>2017-04-21</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.pepmanager.activity</Name>
- <UpdateText>Use QtPurple v2.0</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>9</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

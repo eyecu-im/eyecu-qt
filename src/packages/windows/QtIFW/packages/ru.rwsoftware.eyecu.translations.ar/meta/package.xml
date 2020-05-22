@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Arabic</DisplayName>
+ <Description>Arabic language pack</Description>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.translations.ar</Name>
+ <SortingPriority>12</SortingPriority>
+ <Default>true</Default>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

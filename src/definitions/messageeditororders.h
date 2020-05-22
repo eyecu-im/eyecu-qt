@@ -6,6 +6,7 @@
 
 // *** <<< eyeCU <<< ***
 #define MEO_RECEIPTS                            300
+#define MEO_CHATMARKERS                         400
 #define MEO_OOB                                 500
 #define MEO_POI                                 600
 #define MEO_XHTML                               450

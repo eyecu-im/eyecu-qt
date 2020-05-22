@@ -171,6 +171,8 @@ protected:
 	static void addPayloadType(IJingleContent *AContent, const QPayloadType &APayloadType);
 
 protected slots:
+	void onRtpReadyRead();
+
 	// Options
 	void onOptionsChanged(const OptionsNode &ANode);
 
@@ -186,8 +188,6 @@ protected slots:
 	void onPlayerStatusChanged(int AStatusNew, int AStatusOld);
 	void onCall();
 	void onHangup();
-
-	void onRtpReadyRead();
 
 protected slots:
 	void onContactStateChanged(const Jid &AStreamJid, const Jid &AContactJid, bool AStateOnline);

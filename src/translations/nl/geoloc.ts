@@ -20,7 +20,7 @@
    <location filename="../../plugins/geoloc/contactproximitynotificationoptions.cpp" line="38"/>
    <source>meter(s)</source>
    <comment>distance units</comment>
-   <translation><numerusform>meter</numerusform><numerusform>meters</numerusform></translation>
+   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
   </message>
  </context>
  <context>

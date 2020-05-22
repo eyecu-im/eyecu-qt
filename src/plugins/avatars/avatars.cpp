@@ -2,12 +2,12 @@
 // *** <<< eyeCU <<< ***
 #include "avataroptionswidget.h"
 #include "avatarsizeoptionswidget.h"
+#include <QPainter>
 // *** >>> eyeCU >>> ***
 #include <QFile>
 #include <QBuffer>
 #include <QDataStream>
 #include <QFileDialog>
-#include <QPainter>				/*** <<< eyeCU >>> ***/
 #include <QImageReader>
 #include <QCryptographicHash>
 #include <definitions/resources.h>
@@ -47,9 +47,13 @@
 
 static const QList<int> AvatarRosterKinds = QList<int>() << RIK_STREAM_ROOT << RIK_CONTACT;
 
+// *** <<< eyeCU <<< ***
 void NormalizeAvatarImage(const QImage &AImage, quint8 ASize, QImage &AColor, QImage &AGray)
 {
-	AColor = ASize>0 ? ImageManager::squared(AImage, ASize) : AImage;
+	AColor = ASize>0 ? ImageManager::squared(AImage, ASize,
+											 Options::node(OPV_AVATARS_ASPECTCROP).value().toBool())
+					 : AImage;
+// *** >>> eyeCU >>> ***
 	AGray = ImageManager::opacitized(ImageManager::grayscaled(AColor));
 }
 
@@ -59,8 +63,7 @@ LoadAvatarTask::LoadAvatarTask(QObject *AAvatars, const QString &AFile, quint8 A
 	FSize = ASize;
 	FVCard = AVCard;
 	FAvatars = AAvatars;
-	setAutoDelete(false);
-
+	setAutoDelete(false);	
 	FHash = EMPTY_AVATAR_HASH;
 }
 
@@ -134,6 +137,8 @@ Avatars::Avatars()
 	FAvatarSize = 32;
 	FAvatarsVisible = false;
 /*** <<< eyeCU <<< ***/
+	FLetterPillarBox = false;
+	FRosterAvatarRounded = 0;
 	FAvatarRightLabelId = 0;
 	FAvatarLeftLabelId = 0;
 	FAvatarPosition = Left;
@@ -270,6 +275,8 @@ bool Avatars::initSettings()
 	Options::setDefaultValue(OPV_AVATARS_LARGESIZE, 64);
 // *** <<< eyeCU <<< ***
 	Options::setDefaultValue(OPV_AVATARS_DISPLAYEMPTY, true);
+	Options::setDefaultValue(OPV_AVATARS_ASPECTCROP, true);
+	Options::setDefaultValue(OPV_ROSTER_AVATARS_ROUNDED, 0.5);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_POSITION, Left);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_DISPLAYGRAY, true);
@@ -443,7 +450,7 @@ QVariant Avatars::rosterData(int AOrder, const IRosterIndex *AIndex, int ARole) 
 			case RDR_AVATAR_IMAGE:
 			{
 				bool gray = FShowGrayAvatars && (AIndex->data(RDR_SHOW).toInt()==IPresence::Offline || AIndex->data(RDR_SHOW).toInt()==IPresence::Error);
-				return visibleAvatarImage(avatarHash(AIndex->data(RDR_FULL_JID).toString()),FAvatarSize,gray,FAvatarPosition==Left);
+				return visibleAvatarImage(avatarHash(AIndex->data(RDR_FULL_JID).toString()), FAvatarSize, gray, FAvatarPosition==Left, FRosterAvatarRounded);
 			}
 		}
 	}
@@ -626,14 +633,14 @@ QString Avatars::setCustomPictire(const Jid &AContactJid, const QByteArray &ADat
 QImage Avatars::emptyAvatarImage(quint8 ASize, bool AGray) const
 {
 // *** <<< eyeCU <<< ***
-	if (FShowEmptyAvatars)
+	if (Options::node(OPV_AVATARS_DISPLAYEMPTY).value().toBool())
 	{
 // *** >>> eyeCU >>> ***
 	QMap<quint8, QImage> &imagesCache = AGray ? FAvatarGrayImages[EMPTY_AVATAR_HASH] : FAvatarImages[EMPTY_AVATAR_HASH];
 	if (!imagesCache.contains(ASize))
 	{
 		QImage colorImage, grayImage;
-		NormalizeAvatarImage(FEmptyAvatar,ASize,colorImage,grayImage);
+		NormalizeAvatarImage(FEmptyAvatar,ASize,colorImage,grayImage);  // *** <<< eyeCU >>> ***
 		storeAvatarImages(EMPTY_AVATAR_HASH,ASize,colorImage,grayImage);
 		return AGray ? grayImage : colorImage;
 	}
@@ -647,6 +654,12 @@ QImage Avatars::emptyAvatarImage(quint8 ASize, bool AGray) const
 
 QImage Avatars::cachedAvatarImage(const QString &AHash, quint8 ASize, bool AGray) const
 {
+	if (FLetterPillarBox != Options::node(OPV_AVATARS_ASPECTCROP).value().toBool())
+	{
+		FLetterPillarBox = Options::node(OPV_AVATARS_ASPECTCROP).value().toBool();
+		FAvatarImages.clear();
+		FAvatarGrayImages.clear();
+	}
 	if (AHash == EMPTY_AVATAR_HASH)
 		return emptyAvatarImage(ASize,AGray);
 	else if (AGray)
@@ -665,7 +678,7 @@ QImage Avatars::loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray) 
 		if (!image.isNull())
 		{
 			QImage colorImage, grayImage;
-			NormalizeAvatarImage(image,ASize,colorImage,grayImage);
+			NormalizeAvatarImage(image,ASize,colorImage,grayImage);  // *** <<< eyeCU >>> ***
 			storeAvatarImages(AHash,ASize,colorImage,grayImage);
 			return AGray ? grayImage : colorImage;
 		}
@@ -678,20 +691,38 @@ QImage Avatars::loadAvatarImage(const QString &AHash, quint8 ASize, bool AGray) 
 	return image;
 }
 
-QImage Avatars::visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray, bool ADummy) const
+QImage Avatars::visibleAvatarImage(const QString &AHash, quint8 ASize, bool AGray, bool ADummy, qreal ARound) const
 {
 	QImage image = loadAvatarImage(AHash,ASize,AGray);
 
 	if(image.isNull())
-	{
 		image = emptyAvatarImage(ASize,AGray);
-		if (image.isNull() && ADummy)
+
+	if (image.isNull())
+	{
+		if (ADummy)
 		{
-			image = QImage(ASize, 1, QImage::Format_ARGB32);
-			image.fill(0x00000000);
+			QImage img(ASize, 1, QImage::Format_ARGB32);
+			img.fill(0x00000000);
+			return img;
 		}
+		else
+			return image;
 	}
-	return image;
+	else
+	{
+		QImage img(ASize, ASize, QImage::Format_ARGB32);
+		img.fill(0x00000000);
+
+		QPainter painter(&img);
+		QPainterPath clip;
+		clip.addRoundedRect(1, 1, ASize-2, ASize-2, (ASize-2)*ARound/2, (ASize-2)*ARound/2);
+		painter.setRenderHint(QPainter::Antialiasing);
+		painter.setClipPath(clip);
+		painter.drawImage(0, 0, image);
+
+		return img;
+	}
 }
 
 QString Avatars::getImageFormat(const QByteArray &AData) const
@@ -748,7 +779,7 @@ bool Avatars::startLoadVCardAvatar(const Jid &AContactJid)
 		QString vcardFile = FVCardManager->vcardFileName(AContactJid);
 		if (QFile::exists(vcardFile))
 		{
-			LoadAvatarTask *task = new LoadAvatarTask(this,vcardFile,FAvatarSize,true);
+			LoadAvatarTask *task = new LoadAvatarTask(this,vcardFile,FAvatarSize,true); // *** <<< eyeCU >>> ***
 			startLoadAvatarTask(AContactJid, task);
 			return true;
 		}
@@ -1119,7 +1150,9 @@ void Avatars::onOptionsOpened()
 		onOptionsChanged(Options::node(OPV_ROSTER_VIEWMODE));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_POSITION));
 	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_DISPLAYGRAY));
+	onOptionsChanged(Options::node(OPV_ROSTER_AVATARS_ROUNDED));
 	onOptionsChanged(Options::node(OPV_AVATARS_DISPLAYEMPTY));
+	onOptionsChanged(Options::node(OPV_AVATARS_ASPECTCROP));
 /*** >>> eyeCU >>> ***/
 }
 
@@ -1167,24 +1200,36 @@ void Avatars::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path() == OPV_ROSTER_AVATARS_POSITION)
 	{
 		FAvatarPosition = ANode.value().toInt();
-		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
-		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+		emit rosterLabelChanged(FAvatarRightLabelId, nullptr);
+		emit rosterLabelChanged(FAvatarLeftLabelId, nullptr);
 	}
 	else if (ANode.path() == OPV_AVATARS_DISPLAYEMPTY)
 	{
-		FShowEmptyAvatars = ANode.value().toBool();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
+// *** <<< eyeCU <<< ***
+	else if (ANode.path() == OPV_AVATARS_ASPECTCROP)
+	{
+		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+	}
+	else if (ANode.path() == OPV_ROSTER_AVATARS_ROUNDED)
+	{
+		FRosterAvatarRounded = ANode.value().toReal();
+		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
+		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
+	}
+// *** >>> eyeCU >>> ***
 	else if (ANode.path() == OPV_ROSTER_AVATARS_DISPLAYGRAY)
 	{
 		FShowGrayAvatars = ANode.value().toBool();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);
 		emit rosterLabelChanged(FAvatarLeftLabelId, NULL);
 	}
-	else if (ANode.path() == OPV_AVATARS_SMALLSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarSmall ||
-			 ANode.path() == OPV_AVATARS_NORMALSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarNormal ||
-			 ANode.path() == OPV_AVATARS_LARGESIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarLarge)
+	else if ((ANode.path() == OPV_AVATARS_SMALLSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarSmall) ||
+			 (ANode.path() == OPV_AVATARS_NORMALSIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarNormal) ||
+			 (ANode.path() == OPV_AVATARS_LARGESIZE && Options::node(OPV_ROSTER_AVATARS_SIZE).value().toInt()==AvatarLarge))
 	{
 		FAvatarSize  = ANode.value().toInt();
 		emit rosterLabelChanged(FAvatarRightLabelId, NULL);

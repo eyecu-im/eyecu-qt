@@ -7,38 +7,44 @@
 #include <utils/menu.h>
 #include <utils/options.h>
 #include <utils/toolbarchanger.h>
-
-#include "selecticonwidget.h"
+#include <interfaces/iemoji.h>
 
 class SelectIconMenu :
 	public Menu
 {
 	Q_OBJECT
 public:
-	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = NULL);
+	SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent = nullptr);
 	~SelectIconMenu();
-	QWidget *instance() { return this; }
 	QString iconSet() const;
 	void setIconSet(const QString &AIconSet);
+
 signals:
-	void iconSelected(const QString &AIconKey, const QString &AIconText);
+	void iconSelected(const QString &AIconKey);
+
 public:
 	virtual QSize sizeHint() const;
+
 protected slots:
 	void onAboutToShow();
 	void onSkinColorSelected();
+	void onGenderSelected();
 	void onOptionsChanged(const OptionsNode &ANode);
 	void onRecentIconTriggered();
 	void onHasColoredChanged(bool AHasColored);
+	void onHasGenderedChanged(bool AHasGendered);
 	void onCategorySwitched(int ACategory);
+	void onIconSelected(const QString &AIconKey);
+
 protected:
-	void updateRecentActions(const QString &AColor);
-//	static QString typeUcs4(const QString &AText);
+	void updateRecentActions();
+
 private:
 	IEmoji *FEmoji;
 	QVBoxLayout *FLayout;
 	QTabWidget	*FTabWidget;
-	QPointer<Menu> FMenu;
+	QPointer<Menu> FSkinColor;
+	QPointer<Menu> FGender;
 	ToolBarChanger *FToolBarChanger;
 	QIcon		FEmptyIcon;
 };

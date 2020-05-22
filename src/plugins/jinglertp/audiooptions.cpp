@@ -47,15 +47,13 @@ void AudioOptions::modify(int s)
 
 void AudioOptions::onInputVolumeChanged(int value)
 {
-	if (FAudioInput)
-		FAudioInput->setVolume(value/100.0);
+	FAudioLevel->setVolume(quint8(value));
 }
 
 void AudioOptions::onInputDeviceChanged(int index)
 {
 	FAudioLevel->close();
 	FAudioInput->stop();
-	FAudioInput->disconnect(ui->audioLevel);
 	delete FAudioInput;
 
 	FInputDevice = ui->cmbAudioDeviceInput->itemData(index).value<QAudioDeviceInfo>();
@@ -129,6 +127,7 @@ void AudioOptions::initializeAudio()
 
 	FAudioLevel  = new QpAudioLevel(FInputFormat, this);
 	connect(FAudioLevel, SIGNAL(levelChanged(qreal)), ui->audioLevel, SLOT(setLevel(qreal)));
+	connect(ui->vcInput, SIGNAL(valueChanged(int)), SLOT(onInputVolumeChanged(int)));
 
 	createAudioInput();
 }

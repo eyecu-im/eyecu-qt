@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>QpGeo Arabic Translation</DisplayName>
+ <Description>QpGeo Arabic translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2017-04-21</ReleaseDate>
+ <Name>ru.purplesoft.qtpurple.geo.ar</Name>
+ <AutoDependOn>ru.purplesoft.qtpurple.geo,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

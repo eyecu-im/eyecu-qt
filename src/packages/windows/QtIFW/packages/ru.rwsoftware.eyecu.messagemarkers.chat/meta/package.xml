@@ -1,0 +1,15 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Chat Markers</DisplayName>
+ <Description>Allows to mark messages as received, displayed and acknowledged</Description>
+ <Version>2.0.1</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <UpdateText>Chat markers now sent correctly even when contact resource gone</UpdateText>
+ <Name>ru.rwsoftware.eyecu.messagemarkers.chat</Name>
+ <SortingPriority>1</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

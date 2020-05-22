@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>302</width>
-    <height>84</height>
+    <height>94</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,6 +33,13 @@
     <widget class="QCheckBox" name="cbDisplayEmpty">
      <property name="text">
       <string>Display empty avatars</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="cbAspectCrop">
+     <property name="text">
+      <string>Crop to keep aspect ratio</string>
      </property>
     </widget>
    </item>
@@ -142,6 +149,7 @@
  </widget>
  <tabstops>
   <tabstop>cbDisplayEmpty</tabstop>
+  <tabstop>cbAspectCrop</tabstop>
   <tabstop>spbSmall</tabstop>
   <tabstop>spbNormal</tabstop>
   <tabstop>spbLarge</tabstop>

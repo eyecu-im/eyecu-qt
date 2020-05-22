@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>XMPP URI Queries Arabic Translation</DisplayName>
+ <Description>XMPP URI Queries Arabic translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.xmppuriqueries.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.xmppuriqueries,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

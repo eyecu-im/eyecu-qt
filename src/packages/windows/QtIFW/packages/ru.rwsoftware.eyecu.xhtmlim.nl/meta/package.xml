@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>XHTML-IM Dutch Translation</DisplayName>
  <Description>XHTML-IM Dutch translation</Description>
- <Version>1.3.1</Version>
- <ReleaseDate>2015-11-30</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.xhtmlim.nl</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.xhtmlim,ru.rwsoftware.eyecu.translations.nl</AutoDependOn>
  <Virtual>true</Virtual>

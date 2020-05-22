@@ -1,14 +1,19 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="de" version="2.1">
  <context>
   <name>AboutBox</name>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="18"/>
-   <source>Version: %1.%2 %3</source>
-   <translation>Version: %1.%2 %3</translation>
+   <location filename="../../loader/aboutbox.cpp" line="22"/>
+   <source>Version: %1 %2 of %3</source>
+   <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/aboutbox.cpp" line="19"/>
+   <location filename="../../loader/aboutbox.cpp" line="23"/>
    <source>Revision: %1</source>
+   <translation type="unfinished"/>
+  </message>
+  <message>
+   <location filename="../../loader/aboutbox.cpp" line="27"/>
+   <source>Version: %1 %2</source>
    <translation type="unfinished"/>
   </message>
  </context>
@@ -19,7 +24,7 @@
    <source>About the program</source>
    <translation>Über das Programm</translation>
   </message>
-  <message utf8="true">
+  <message>
    <location filename="../../loader/aboutbox.ui" line="188"/>
    <source>© 2010-2020 Konstantin Kozlov, Vyatcheslav Tselykh, Sergey Potapov. This software is released under the terms of the GNU General Public License version 3.</source>
    <translation type="unfinished"/>
@@ -28,7 +33,7 @@
  <context>
   <name>PluginManager</name>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="366"/>
+   <location filename="../../loader/pluginmanager.cpp" line="365"/>
    <source>Saving settings</source>
    <translation type="unfinished"/>
   </message>
@@ -58,57 +63,57 @@
    <translation>Konflikt mit Plugin %1</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="514"/>
+   <location filename="../../loader/pluginmanager.cpp" line="515"/>
    <source>Initializing plugin connections: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="526"/>
+   <location filename="../../loader/pluginmanager.cpp" line="527"/>
    <source>Initialization failed</source>
    <translation>Initialisierung gescheitert</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="536"/>
+   <location filename="../../loader/pluginmanager.cpp" line="538"/>
    <source>Initializing plugin objects: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="545"/>
+   <location filename="../../loader/pluginmanager.cpp" line="548"/>
    <source>Initializing plugin settings: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="561"/>
+   <location filename="../../loader/pluginmanager.cpp" line="565"/>
    <source>Starting plugin: %1</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="656"/>
+   <location filename="../../loader/pluginmanager.cpp" line="662"/>
    <source>Application started</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="946"/>
+   <location filename="../../loader/pluginmanager.cpp" line="951"/>
    <source>About Qt</source>
    <translation>Über Qt</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="952"/>
+   <location filename="../../loader/pluginmanager.cpp" line="957"/>
    <source>About the program</source>
    <translation>Über das Programm</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="958"/>
+   <location filename="../../loader/pluginmanager.cpp" line="963"/>
    <source>Setup plugins</source>
    <translation>Plugins einrichten</translation>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="967"/>
+   <location filename="../../loader/pluginmanager.cpp" line="972"/>
    <source>Global shortcuts</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <location filename="../../loader/pluginmanager.cpp" line="968"/>
+   <location filename="../../loader/pluginmanager.cpp" line="973"/>
    <source>Application shortcuts</source>
    <translation type="unfinished"/>
   </message>

@@ -11,7 +11,7 @@
   </message>
   <message>
    <source>Edit Bookmarks...</source>
-   <translation type="unfinished"/>
+   <translation>Редагувати закладки ...</translation>
   </message>
   <message>
    <source>Add to Bookmarks</source>

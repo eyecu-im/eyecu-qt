@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Statistics Arabic Translation</DisplayName>
+ <Description>Statistics Arabic translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.statistics.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.statistics,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

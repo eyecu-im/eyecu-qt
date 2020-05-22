@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle Polish Translation</DisplayName>
+ <Description>Jingle Polish translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-09-14</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.pl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.jingle,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

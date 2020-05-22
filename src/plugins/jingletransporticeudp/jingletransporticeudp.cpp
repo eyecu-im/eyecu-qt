@@ -17,6 +17,13 @@ JingleTransportIceUdp::JingleTransportIceUdp(QObject *parent) :
 	FServiceDiscovery(nullptr),
 	FJingle(nullptr)
 {
+	qpIceInit();
+	QpLog::setLevel(1);
+}
+
+JingleTransportIceUdp::~JingleTransportIceUdp()
+{
+	qpIceUnInit();
 }
 
 void JingleTransportIceUdp::pluginInfo(IPluginInfo *APluginInfo)
@@ -66,15 +73,12 @@ bool JingleTransportIceUdp::initObjects()
 
 	FIceCfg.stunConfig.softwareName = QString("%1 %2").arg(CLIENT_NAME).arg(CLIENT_VERSION_FULL);
 
-	qpIceInit();
-	QpLog::setLevel(1);
-
     return true;
 }
 
 bool JingleTransportIceUdp::initSettings()
 {
-	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE, false);
+	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_AGGRESSIVE, true);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_DELAY, QP_ICE_NOMINATED_CHECK_DELAY);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_NOMINATION_WAIT, ICE_CONTROLLED_AGENT_WAIT_NOMINATION_TIMEOUT);
 	Options::setDefaultValue(OPV_JINGLE_TRANSPORT_ICE_STUN_RTO, QP_STUN_RTO_VALUE);
@@ -386,7 +390,7 @@ void JingleTransportIceUdp::onOptionsChanged(const OptionsNode &ANode)
 		FIceCfg.stunTransportCfg.clear();
 
 		// Add TURN servers first
-		QStringList servers = ANode.value().toStringList();
+		QStringList servers = Options::node(OPV_JINGLE_TRANSPORT_ICE_SERVERS_TURN).value().toStringList();
 		for (QStringList::ConstIterator it=servers.constBegin();
 			 it!=servers.constEnd(); ++it) {
 			QStringList parts = (*it).split(':');

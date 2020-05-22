@@ -2,9 +2,9 @@
 <Package>
  <DisplayName>Privacy Lists</DisplayName>
  <Description>Allows to block unwanted contacts</Description>
- <Version>1.3.2</Version>
- <ReleaseDate>2016-05-12</ReleaseDate>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.privacylists</Name>
  <SortingPriority>81</SortingPriority>
  <Default>true</Default>

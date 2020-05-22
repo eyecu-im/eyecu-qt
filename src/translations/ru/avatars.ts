@@ -39,6 +39,22 @@
         <source>Avatar size</source>
         <translation>Размер аватара</translation>
     </message>
+    <message>
+        <source>Avatar shape</source>
+        <translation>Форма аватара</translation>
+    </message>
+    <message>
+        <source>Square</source>
+        <translation>Квадратный</translation>
+    </message>
+    <message>
+        <source>Rounded</source>
+        <translation>Со скруглёнными краями</translation>
+    </message>
+    <message>
+        <source>Round</source>
+        <translation>Круглый</translation>
+    </message>
 </context>
 <context>
     <name>AvatarSizeOptionsWidget</name>
@@ -65,6 +81,10 @@
     <message>
         <source>Large</source>
         <translation>Большой</translation>
+    </message>
+    <message>
+        <source>Crop to keep aspect ratio</source>
+        <translation>Обрезать для сохранения пропорций</translation>
     </message>
 </context>
 <context>

@@ -10,7 +10,7 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="54"/>
    <source>Implements XEP-0172: User Nickname</source>
-   <translation type="unfinished"/>
+   <translation>Впроваджує XEP-0172: Псевдонім користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="266"/>
@@ -20,7 +20,7 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="267"/>
    <source>Supports user nickname</source>
-   <translation type="unfinished"/>
+   <translation>Підтримує псевдонім користувача</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="271"/>
@@ -30,7 +30,7 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="272"/>
    <source>Receives notification of user nickname change</source>
-   <translation type="unfinished"/>
+   <translation>Отримує сповіщення про зміну користувацького псевдоніма</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="355"/>
@@ -50,7 +50,7 @@
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="361"/>
    <source>Change automatically</source>
-   <translation type="unfinished"/>
+   <translation>Зміна автоматично</translation>
   </message>
   <message>
    <location filename="../../plugins/nickname/nickname.cpp" line="362"/>

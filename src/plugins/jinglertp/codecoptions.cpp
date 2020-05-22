@@ -1,4 +1,3 @@
-#include <QDebug>
 #include "jinglertp.h"
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>

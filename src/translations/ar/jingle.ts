@@ -10,17 +10,17 @@
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="41"/>
    <source>Allows to establish Jingle sessions for media exchange</source>
-   <translation type="unfinished"/>
+   <translation>يسمح بإنشاء جلسات Jingle لتبادل الوسائط</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="124"/>
    <source>Jingle transports</source>
-   <translation type="unfinished"/>
+   <translation>وسائل نقل Jingle</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="163"/>
    <source>Supports XEP-0166: Jingle</source>
-   <translation type="unfinished"/>
+   <translation>يدعم XEP-0166: Jingle</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="541"/>
@@ -30,47 +30,47 @@
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="543"/>
    <source>Busy</source>
-   <translation type="unfinished"/>
+   <translation>مشغول</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="545"/>
    <source>Cancelled</source>
-   <translation type="unfinished"/>
+   <translation>ألغيت</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="547"/>
    <source>Alternative session</source>
-   <translation type="unfinished"/>
+   <translation>جلسة بديلة</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="549"/>
    <source>Connectivity error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ في الاتصال</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="551"/>
    <source>Declined</source>
-   <translation type="unfinished"/>
+   <translation>رفضت</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="553"/>
    <source>Session expired</source>
-   <translation type="unfinished"/>
+   <translation>انتهت الجلسة</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="555"/>
    <source>Application failure</source>
-   <translation type="unfinished"/>
+   <translation>فشل التطبيق</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="557"/>
    <source>Transport failure</source>
-   <translation type="unfinished"/>
+   <translation>فشل النقل</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="559"/>
    <source>General error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ عام</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="561"/>
@@ -85,27 +85,27 @@
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="565"/>
    <source>Media error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ في الوسائط</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="567"/>
    <source>Security error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ امني</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="569"/>
    <source>Timeout</source>
-   <translation type="unfinished"/>
+   <translation>نفذ الوقت</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="571"/>
    <source>Application not supported</source>
-   <translation type="unfinished"/>
+   <translation>التطبيق غير مدعوم</translation>
   </message>
   <message>
    <location filename="../../plugins/jingle/jingle.cpp" line="573"/>
    <source>Transport not supported</source>
-   <translation type="unfinished"/>
+   <translation>النقل غير مدعوم</translation>
   </message>
  </context>
 </TS>

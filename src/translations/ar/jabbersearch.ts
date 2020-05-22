@@ -6,7 +6,7 @@
    <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="214"/>
    <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="299"/>
    <source>Jabber Search</source>
-   <translation>بحث Jaber</translation>
+   <translation>بحث Jabber</translation>
   </message>
   <message>
    <location filename="../../plugins/jabbersearch/jabbersearch.cpp" line="33"/>

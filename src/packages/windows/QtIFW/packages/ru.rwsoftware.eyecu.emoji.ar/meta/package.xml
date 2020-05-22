@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Emoji Arabic Translation</DisplayName>
+ <Description>Emoji Arabic translation</Description>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2018-11-13</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.emoji.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.emoji,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

@@ -218,12 +218,12 @@
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="332"/>
    <source>Downloads: %1 at %2</source>
-   <translation type="unfinished"/>
+   <translation>التنزيلات: %1 في %2</translation>
   </message>
   <message>
    <location filename="../../plugins/filestreamsmanager/filestreamswindow.cpp" line="333"/>
    <source>Uploads: %1 at %2</source>
-   <translation type="unfinished"/>
+   <translation>التحميلات: %1 في %2</translation>
   </message>
  </context>
 </TS>

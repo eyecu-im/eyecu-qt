@@ -57,6 +57,7 @@
 
 // Avatars
 #define OPV_AVATARS_DISPLAYEMPTY						"avatars.display-empty"
+#define OPV_AVATARS_ASPECTCROP							"avatars.aspect-crop"
 #define OPV_AVATARS_SMALLSIZE                           "avatars.small-size"
 #define OPV_AVATARS_LARGESIZE                           "avatars.large-size"
 #define OPV_AVATARS_NORMALSIZE                          "avatars.normal-size"
@@ -117,6 +118,7 @@
 #define OPV_MESSAGES_ARCHIVESTATUS                      "messages.archive-status"
 #define OPV_MESSAGES_EDITORAUTORESIZE                   "messages.editor-auto-resize"
 #define OPV_MESSAGES_EDITORMINIMUMLINES                 "messages.editor-minimum-lines"
+#define OPV_MESSAGES_EDITORBASEFONTSIZE                 "messages.editor-base-font-size"
 #define OPV_MESSAGES_CLEANCHATTIMEOUT                   "messages.clean-chat-timeout"
 #define OPV_MESSAGES_COMBINEWITHROSTER                  "messages.combine-with-roster"
 #define OPV_MESSAGES_TABWINDOWS_ROOT                    "messages.tab-windows"
@@ -136,6 +138,7 @@
 // Emoji
 #define OPV_MESSAGES_EMOJI_ICONSET                      "messages.emoji.iconset"
 #define OPV_MESSAGES_EMOJI_SKINCOLOR                    "messages.emoji.skin-color"
+#define OPV_MESSAGES_EMOJI_GENDER						"messages.emoji.gender"
 #define OPV_MESSAGES_EMOJI_SIZE_MENU                    "messages.emoji.size.menu"
 #define OPV_MESSAGES_EMOJI_SIZE_CHAT                    "messages.emoji.size.chat"
 #define OPV_MESSAGES_EMOJI_RECENT                       "messages.emoji.recent"
@@ -196,6 +199,7 @@
 #define OPV_MUC_AVATARS_POSITION						"muc.avatars.position"
 #define OPV_MUC_AVATARS_DISPLAY							"muc.avatars.display"
 #define OPV_MUC_AVATARS_DISPLAYEMPTY					"muc.avatars.display-empty"
+#define OPV_MUC_AVATARS_ROUNDED							"muc.avatars.rounded"
 // *** >>> eyeCU >>> ***
 // Bookmarks
 #define OPV_MUC_SHOWAUTOJOINED                          "muc.show-auto-joined"
@@ -292,6 +296,7 @@
 // Avatars
 #define OPV_ROSTER_AVATARS		                        "roster.avatars"
 #define OPV_ROSTER_AVATARS_SIZE                         "roster.avatars.size"
+#define OPV_ROSTER_AVATARS_ROUNDED                      "roster.avatars.rounded"
 #define OPV_ROSTER_AVATARS_POSITION                     "roster.avatars.position"
 #define OPV_ROSTER_AVATARS_DISPLAY                      "roster.avatars.display"
 #define OPV_ROSTER_AVATARS_DISPLAYGRAY                  "roster.avatars.display-gray"
@@ -407,9 +412,13 @@
 #define OPV_MESSAGES_GEOLOC_DISPLAY                     "messages.geoloc.display"
 #define OPV_GEOLOC_EXTSENDER                            "geoloc.extsender"
 
-//Receipts
-#define OPV_RECEIPTS_SHOW                               "receipts.show"
-#define OPV_RECEIPTS_SEND                               "receipts.send"
+//Message Delivery Receipts / Chat Markers
+#define OPV_MARKERS_SEND_RECEIVED						"markers.send.received"
+#define OPV_MARKERS_SEND_DISPLAYED						"markers.send.dsiplayed"
+#define OPV_MARKERS_SEND_ACK							"markers.send.ack"
+
+#define OPV_MARKERS_SHOW_LEVEL							"markers.show.level"
+#define OPV_MARKERS_SHOW_ACKOWN							"markers.show.ack_own"
 
 // POI
 #define OPV_POI_SHOW                                    "poi.show"
@@ -632,6 +641,11 @@
 #define OPV_JINGLE_RTP_RTCP								"jingle.rtp.rtcp"
 #define OPV_JINGLE_RTP_RINGING							"jingle.rtp.ringing"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
+
+// Entryption
+// Off-the-Record Messaging
+#define OPV_OTR_POLICY									"otr.policy"
+#define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
 
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"

@@ -22,22 +22,22 @@
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.ui" line="32"/>
    <source>Here</source>
-   <translation type="unfinished"/>
+   <translation>Ось тут</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.ui" line="56"/>
    <source>Geopolitical views</source>
-   <translation type="unfinished"/>
+   <translation>Геополітичні перегляди</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.cpp" line="15"/>
    <source>For current locale (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Для поточної локалі (%1)</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsearchproviderhere/mapsearchproviderhereoptions.cpp" line="20"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>За замовчуванням</translation>
   </message>
  </context>
 </TS>

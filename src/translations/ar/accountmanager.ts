@@ -37,7 +37,7 @@
   </message>
   <message>
    <source>Common account settings</source>
-   <translation>اعدادات الحساب العامة</translation>
+   <translation>إعدادات الحساب العامة</translation>
   </message>
   <message>
    <source>Account</source>
@@ -61,7 +61,7 @@
   </message>
   <message>
    <source>Require secure connection to server</source>
-   <translation type="unfinished"/>
+   <translation>فرض اتصال آمن بالسيرفر</translation>
   </message>
   <message>
    <source>Parameters</source>
@@ -131,7 +131,7 @@
   </message>
   <message>
    <source>You are assured that wish to remove an account &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;All settings will be lost.</source>
-   <translation>هل أنت متأكد من أنك تريد حذف الحساب &lt;b&gt;%1&lt;/b&gt;?&lt;br&gt;</translation>
+   <translation>هل أنت متأكد من أنك تريد حذف الحساب &lt;b&gt;%1&lt;/b&gt;؟&lt;br&gt;سيتم حذف جميع الإعدادات.</translation>
   </message>
   <message>
    <source>Use wizard...</source>

@@ -1,4 +1,5 @@
 #include "selecticonmenu.h"
+#include "selecticonwidget.h"
 #include "emoji.h"
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
@@ -6,17 +7,19 @@
 #include <definitions/optionvalues.h>
 #include <utils/iconstorage.h>
 #include <utils/action.h>
+#include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 
 #define ADR_COLOR Action::DR_Parametr1
+#define ADR_GENDER Action::DR_Parametr1
 #define ADR_EMOJI Action::DR_Parametr1
 
 SelectIconMenu::SelectIconMenu(const QString &AIconSet, IEmoji *AEmoji, QWidget *AParent):
 	Menu(AParent),
 	FEmoji(AEmoji),
-	FLayout(NULL),
-	FTabWidget(NULL),
-	FToolBarChanger(NULL)
+	FLayout(nullptr),
+	FTabWidget(nullptr),
+	FToolBarChanger(nullptr)
 {
 	FLayout = new QVBoxLayout(this);
 	FLayout->setMargin(0);
@@ -43,7 +46,9 @@ QString SelectIconMenu::iconSet() const
 
 void SelectIconMenu::setIconSet(const QString &AIconSet)
 {
-	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People).constBegin().value().unicode, QSize(16, 16)));
+	menuAction()->setIcon(FEmoji->getIcon(FEmoji->emojiData(IEmoji::People)
+										  .constBegin().value()->id(),
+										  QSize(16, 16)));
 	menuAction()->setToolTip(AIconSet);
 }
 
@@ -53,26 +58,24 @@ QSize SelectIconMenu::sizeHint() const
 }
 
 void SelectIconMenu::onAboutToShow()
-{
-	int index = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
-	QString color = index?FEmoji->colorSuffixes()[index-1]:QString();
+{	
 	if (!FTabWidget)
 	{
 		FTabWidget = new QTabWidget(this);
 		FLayout->addWidget(FTabWidget);
-		int columns = 0;
-		int rows = 0;
-		int count = 0;
+		unsigned columns = 0;
+		unsigned rows = 0;
+		unsigned count = 0;
 		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
-			int cnt = FEmoji->categoryCount((IEmoji::Category)c);
-			if (count<cnt)
+			unsigned cnt = FEmoji->categoryCount(IEmoji::Category(c));
+			if (count < cnt)
 			{
 				count = cnt;
-				int cols = cnt/2 + 1;
+				unsigned cols = cnt/2 + 1;
 				while (cols>1 && cols*cols>cnt)
 					cols--;
-				int r = cnt/cols;
+				unsigned r = cnt/cols;
 				if (cols*r<cnt)
 					r++;
 				if (r>cols)
@@ -84,17 +87,22 @@ void SelectIconMenu::onAboutToShow()
 				rows=r;
 			}
 		}
+
 		for (int c = IEmoji::People; c<IEmoji::Last; ++c)
 		{
-			SelectIconWidget *widget = new SelectIconWidget((IEmoji::Category)c, columns, rows, FEmoji, this);
-			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon((IEmoji::Category)c), QString()), FEmoji->categoryName((IEmoji::Category)c));
-			FTabWidget->setTabEnabled(c, FEmoji->categoryCount((IEmoji::Category)c));
-			connect(widget,SIGNAL(iconSelected(QString, QString)),SIGNAL(iconSelected(QString, QString)));
-			connect(widget,SIGNAL(hasColoredChanged(bool)), SLOT(onHasColoredChanged(bool)));
+			SelectIconWidget *widget = new SelectIconWidget(IEmoji::Category(c), columns, rows, FEmoji, this);
+			FTabWidget->setTabToolTip(FTabWidget->addTab(widget, FEmoji->categoryIcon(IEmoji::Category(c)),
+														 QString()), FEmoji->categoryName(IEmoji::Category(c)));
+			FTabWidget->setTabEnabled(c, FEmoji->categoryCount(IEmoji::Category(c)));
+			connect(widget,SIGNAL(iconSelected(QString)),SLOT(onIconSelected(QString)));
+			connect(widget,SIGNAL(hasColoredChanged(bool)),SLOT(onHasColoredChanged(bool)));
+			connect(widget,SIGNAL(hasGenderedChanged(bool)),SLOT(onHasGenderedChanged(bool)));
 		}
 		FTabWidget->setCurrentIndex(Options::node(OPV_MESSAGES_EMOJI_CATEGORY).value().toInt());
 		connect(FTabWidget, SIGNAL(currentChanged(int)), SLOT(onCategorySwitched(int)));
 	}
+
+	// Create toolbar
 	int extent = Options::node(OPV_MESSAGES_EMOJI_SIZE_MENU).value().toInt();
 	QSize size(extent, extent);
 	if (FToolBarChanger)
@@ -104,83 +112,116 @@ void SelectIconMenu::onAboutToShow()
 	FLayout->addWidget(toolBar);
 	FToolBarChanger = new ToolBarChanger(toolBar);
 	FToolBarChanger->setSeparatorsVisible(true);
-	FMenu = new Menu(toolBar);
-	FMenu->setIcon(FEmptyIcon);
-	QActionGroup *group = new QActionGroup(FMenu);
 
-	Action *action = new Action(group);
-	action->setText(tr("Default"));
-	action->setData(ADR_COLOR, Emoji::SkinDefault);
-	action->setCheckable(true);
-	action->setActionGroup(group);
-	action->setIcon(FMenu->icon());
-	FMenu->addAction(action);
-	if (color.isEmpty())
+	// Skin color submenu
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	FSkinColor = new Menu(toolBar);
+	FSkinColor->setIcon(FEmptyIcon);
+	QActionGroup *group = new QActionGroup(FSkinColor);
+
+	for (int i=Emoji::SkinDefault; i<=Emoji::SkinTone5; ++i)
 	{
-		action->setChecked(true);
-		FMenu->setIcon(action->icon());
-	}
-	connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
-	QStringList colorSuffixes = FEmoji->colorSuffixes();
-	for (int i=Emoji::SkinDefault; i<Emoji::SkinTone5; ++i)
-	{
-		QString c = colorSuffixes[i];
-		action = new Action(group);
-		action->setText(tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale").arg(i?QString::number(i+2):tr("1 or 2")));
-		action->setIcon(FEmoji->getIcon(c, size));
-		action->setData(ADR_COLOR, i+1);
+		Action *action = new Action(group);
+		action->setText(i==Emoji::SkinDefault?tr("Default")
+											 :tr("Fitzpatrick type %1", "https://en.wikipedia.org/wiki/Fitzpatrick_scale")
+												.arg(i==Emoji::SkinTone1?QString::number(i+1):tr("1 or 2")));
+		action->setIcon(FEmoji->getIcon(FEmoji->skinColorSuffix(IEmoji::SkinColor(i)), size));
+		action->setData(ADR_COLOR, i);
 		action->setCheckable(true);
 		action->setActionGroup(group);
-		FMenu->addAction(action);
-		if (c == color)
+		FSkinColor->addAction(action);
+		if (i == color)
 		{
 			action->setChecked(true);
-			FMenu->setIcon(action->icon());
+			FSkinColor->setIcon(action->icon());
 		}
 		connect(action, SIGNAL(triggered(bool)), SLOT(onSkinColorSelected()));
 	}
-	FToolBarChanger->insertAction(FMenu->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
-	FMenu->setTitle(tr("Skin color"));
+	FToolBarChanger->insertAction(FSkinColor->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
+	FSkinColor->setTitle(tr("Skin color"));
+
+	// Gender submenu
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
+	FGender = new Menu(toolBar);
+	group = new QActionGroup(FGender);
+
+	QStringList genderNames;
+	genderNames << tr("Default") << tr("Male") << tr("Female");
+
+	for (int i = IEmoji::GenderDefault; i <= IEmoji::GenderFemale; i++)
+	{
+		Action *action = new Action(group);
+		action->setText(genderNames[i]);
+		action->setData(ADR_GENDER, i);
+		action->setCheckable(true);
+		action->setActionGroup(group);
+		action->setIcon(FEmoji->getIcon(FEmoji->genderSuffix(Emoji::Gender(i)), size));
+		FGender->addAction(action);
+		if (i == gender)
+		{
+			action->setChecked(true);
+			FGender->setIcon(action->icon());
+		}
+		connect(action, SIGNAL(triggered(bool)), SLOT(onGenderSelected()));
+	}
+
+	FToolBarChanger->insertAction(FGender->menuAction(), TBG_MWSIM_SKINCOLOR)->setPopupMode(QToolButton::InstantPopup);
+	FGender->setTitle(tr("Gender"));
+
 	QStringList recent = FEmoji->recentIcons(QString());
 	for (QStringList::ConstIterator it=recent.constBegin(); it!=recent.constEnd(); ++it)
 	{
-		QString emoji = *it+color;
-		QIcon icon = FEmoji->getIcon(emoji, size);
-		if (icon.isNull() && !color.isEmpty())
+		const IEmojiData *data = FEmoji->findData(*it, IEmoji::SkinColor(color),
+													   IEmoji::Gender(gender));
+		if (data)
 		{
-			icon = FEmoji->getIcon(*it, size);
-			emoji = *it;
+			QIcon icon = FEmoji->getIcon(data->id(), size);
+			if (!icon.isNull())
+			{
+				const IEmojiData *basicData = FEmoji->findData(*it);
+				Action *action = new Action();
+				action->setIcon(icon);
+				action->setToolTip(basicData->name());
+				action->setData(ADR_EMOJI, *it);
+				FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
+				connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
+			}
 		}
-		if (!icon.isNull())
-		{
-			Action *action = new Action();
-			action->setIcon(icon);
-			action->setToolTip(FEmoji->findData(*it).name);
-			action->setData(ADR_EMOJI, emoji);
-			FToolBarChanger->insertAction(action, TBG_MWSIM_RECENT);
-			connect(action, SIGNAL(triggered()), SLOT(onRecentIconTriggered()));
-		}
+		else
+			LOG_WARNING("No data found for recent emoji");
 	}
 }
 
 void SelectIconMenu::onSkinColorSelected()
 {
-	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).setValue(qobject_cast<Action *>(sender())->data(ADR_COLOR));
+	Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).
+			setValue(qobject_cast<Action *>(sender())->data(ADR_COLOR));
+}
+
+void SelectIconMenu::onGenderSelected()
+{
+	Options::node(OPV_MESSAGES_EMOJI_GENDER).
+			setValue(qobject_cast<Action *>(sender())->data(ADR_GENDER));
 }
 
 void SelectIconMenu::onOptionsChanged(const OptionsNode &ANode)
 {
-	if (isVisible() && ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR)
+	if (isVisible() &&
+		(ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR ||
+		 ANode.path() == OPV_MESSAGES_EMOJI_GENDER))
 	{
 		int index = ANode.value().toInt();
-		QString color;
-		if (index)
-			color = FEmoji->colorSuffixes()[index-1];
-		FMenu->setIcon(index?FEmoji->getIcon(color):FEmptyIcon);
+
+		if (ANode.path() == OPV_MESSAGES_EMOJI_SKINCOLOR) // Skin color
+			FSkinColor->setIcon(index?FEmoji->getIcon(FEmoji->skinColorSuffix(IEmoji::SkinColor(index)))
+									 :FEmptyIcon);
+		else // Gender
+			FGender->setIcon(index?FEmoji->getIcon(FEmoji->genderSuffix(IEmoji::Gender(index)))
+								  :FEmptyIcon);
 		SelectIconWidget *widget = qobject_cast<SelectIconWidget *>(qobject_cast<QTabWidget *>(FLayout->itemAt(0)->widget())->currentWidget());
 		if (widget)
-			widget->updateLabels(color);
-		updateRecentActions(color);
+			widget->updateLabels();
+		updateRecentActions();
 	}
 }
 
@@ -189,12 +230,17 @@ void SelectIconMenu::onRecentIconTriggered()
 	hide();
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
-		emit iconSelected(action->data(ADR_EMOJI).toString(), action->toolTip());
+		emit iconSelected(action->data(ADR_EMOJI).toString());
 }
 
 void SelectIconMenu::onHasColoredChanged(bool AHasColored)
 {
-	FMenu->setEnabled(AHasColored);
+	FSkinColor->setEnabled(AHasColored);
+}
+
+void SelectIconMenu::onHasGenderedChanged(bool AHasGendered)
+{
+	FGender->setEnabled(AHasGendered);
 }
 
 void SelectIconMenu::onCategorySwitched(int ACategory)
@@ -202,40 +248,25 @@ void SelectIconMenu::onCategorySwitched(int ACategory)
 	Options::node(OPV_MESSAGES_EMOJI_CATEGORY).setValue(ACategory);
 }
 
-void SelectIconMenu::updateRecentActions(const QString &AColor)
+void SelectIconMenu::onIconSelected(const QString &AIconKey)
+{
+	hide();
+	emit iconSelected(AIconKey);
+}
+
+void SelectIconMenu::updateRecentActions()
 {
 	QList<QAction *> actions = FToolBarChanger->groupItems(TBG_MWSIM_RECENT);
+	int color = Options::node(OPV_MESSAGES_EMOJI_SKINCOLOR).value().toInt();
+	int gender = Options::node(OPV_MESSAGES_EMOJI_GENDER).value().toInt();
 	for (QList<QAction *>::ConstIterator it=actions.constBegin(); it!=actions.constEnd(); ++it)
 	{
 		Action *action = FToolBarChanger->handleAction(*it);
-		QString unicode = action->data(ADR_EMOJI).toString();
-		if (FEmoji->isColored(unicode))
-			unicode.chop(2);
-		QString emoji = unicode+AColor;
-		QIcon icon = FEmoji->getIcon(emoji, QSize(16, 16));
-		if (icon.isNull() && !AColor.isEmpty())
-		{
-			icon = FEmoji->getIcon(unicode, QSize(16, 16));
-			emoji = unicode;
-		}
-		if (!icon.isNull())
-		{
-			action->setIcon(icon);
-			action->setToolTip(FEmoji->findData(unicode).name);
-			action->setData(ADR_EMOJI, emoji);
-		}
+		action->setIcon(FEmoji->getIcon(FEmoji->findData(action->data(ADR_EMOJI).toString(),
+														 IEmoji::SkinColor(color),
+														 IEmoji::Gender(gender))->id(),
+										FToolBarChanger->toolBar()->iconSize()));
 	}
 }
 
-//QString SelectIconMenu::typeUcs4(const QString &AText)
-//{
-//	QString output;
-//	QVector<uint> ucs4 = AText.toUcs4();
-//	for (QVector<uint>::ConstIterator it=ucs4.constBegin(); it!=ucs4.constEnd(); ++it)
-//	{
-//		if (!output.isEmpty())
-//			output.append('-');
-//		output.append(QString::number(*it, 16));
-//	}
-//	return output;
-//}
+

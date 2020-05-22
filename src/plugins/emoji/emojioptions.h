@@ -25,8 +25,6 @@ signals:
 	void childReset();
 protected slots:
 	void onListBoxCurrentIndexChanged(int AIndex);
-//	void onCurrentItemChanged(QListWidgetItem *ACurrent, QListWidgetItem *APrevious);
-//	void onItemChanged(QListWidgetItem *AItem);
 
 private:
 	Ui::EmojiOptionsClass ui;

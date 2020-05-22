@@ -1,12 +1,12 @@
 <?xml version='1.0'?>
 <Package>
- <DisplayName>Qt FFMpeg</DisplayName>
- <Description>Qt Purple - FFMpeg Framework</Description>
- <Version>1.0.2</Version>
- <ReleaseDate>2015-11-10</ReleaseDate>
+ <DisplayName>QpFFMpeg</DisplayName>
+ <Description>QtPurple - FFMpeg library</Description>
+ <Version>2.0.3</Version>
+ <ReleaseDate>2018-10-27</ReleaseDate>
  <Name>ru.purplesoft.qtpurple.ffmpeg</Name>
- <UpdateText>Updated to new FFMgeg library version (avcodec57)</UpdateText>
- <Dependencies>ru.purplesoft.qtpurple,org.digia.qt5.multimedia,org.ffmpeg.library</Dependencies>
+ <UpdateText>Correctly terminate play once input dewvice is closed. Some other fixes and imrovements.</UpdateText>
+ <Dependencies>ru.purplesoft.qtpurple,org.digia.qt5.multimedia->=5.5.1,org.ffmpeg.library->=58.25.100</Dependencies>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>
  <RequiresAdminRights>true</RequiresAdminRights>

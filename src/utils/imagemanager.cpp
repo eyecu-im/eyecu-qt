@@ -28,7 +28,7 @@ QImage ImageManager::grayscaled(const QImage &AImage)
 	return AImage;
 }
 
-QImage ImageManager::squared(const QImage &AImage, int ASize)
+QImage ImageManager::squared(const QImage &AImage, int ASize, bool AAspectCrop) // *** <<< eyeCU >>> ***
 {
 	if (!AImage.isNull() && ((AImage.width()!=ASize) || (AImage.height()!=ASize)))
 	{
@@ -38,19 +38,25 @@ QImage ImageManager::squared(const QImage &AImage, int ASize)
 		int w = AImage.width();
 		int h = AImage.height();
 		QImage scaled = AImage;
-		if (w<h && h!=ASize)
+// *** <<< eyeCU <<< ***
+		if ((w > h && h != ASize && AAspectCrop) ||
+			(w < h && w != ASize && !AAspectCrop))
 			scaled = AImage.scaledToHeight(ASize, Qt::SmoothTransformation);
-		else if (w>=h && w!=ASize)
+		else if ((w <= h && h != ASize && AAspectCrop) ||
+				 (w >= h && w != ASize && !AAspectCrop))
 			scaled = AImage.scaledToWidth(ASize, Qt::SmoothTransformation);
-
+// *** >>> eyeCU >>> ***
 		w = scaled.width();
 		h = scaled.height();
 		QPoint offset(0,0);
-		if (w > h)
+// *** <<< eyeCU <<< ***
+		if ((w < h && AAspectCrop) ||
+			(w > h && !AAspectCrop))
 			offset.setY((ASize - h) / 2);
-		else if (h > w)
+		else if ((h < w && AAspectCrop) ||
+				 (h > w  && !AAspectCrop))
 			offset.setX((ASize - w) / 2);
-
+// *** >>> eyeCU >>> ***
 		QPainter p(&result);
 		p.drawImage(offset, scaled);
 		p.end();

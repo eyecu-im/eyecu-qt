@@ -2,11 +2,11 @@
 <Package>
  <DisplayName>User Mood</DisplayName>
  <Description>Allows users to exchage their Mood</Description>
- <Version>1.3.6</Version>
- <ReleaseDate>2017-04-21</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.pepmanager.mood</Name>
- <UpdateText>Use QtPurple v2.0</UpdateText>
- <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=2.0.0</Dependencies>
+ <Dependencies>ru.rwsoftware.eyecu.pepmanager,ru.purplesoft.qtpurple.geo->=3.0.0</Dependencies>
  <SortingPriority>10</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

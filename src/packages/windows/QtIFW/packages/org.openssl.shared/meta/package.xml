@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>OpenSSL</DisplayName>
  <Description>OpenSSL Shared Library</Description>
- <Version>1.0.2.11</Version>
- <ReleaseDate>2017-01-26</ReleaseDate>
+ <Version>1.0.2.18</Version>
+ <ReleaseDate>2019-04-27</ReleaseDate>
  <Name>org.openssl.shared</Name>
  <Virtual>true</Virtual>
  <Script>installscript.js</Script>

@@ -48,12 +48,12 @@
   <message>
    <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="72"/>
    <source>Connection timeout</source>
-   <translation type="unfinished"/>
+   <translation>Час очікування підключення вийшов</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransportrawudp/rawudpoptions.ui" line="79"/>
    <source> msec</source>
-   <translation type="unfinished"/>
+   <translation>мсек</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransportrawudp/rawudpoptions.cpp" line="49"/>

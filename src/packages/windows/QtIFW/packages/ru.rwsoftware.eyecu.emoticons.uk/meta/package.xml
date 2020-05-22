@@ -2,8 +2,8 @@
 <Package>
  <DisplayName>Emoticons Ukrainian Translation</DisplayName>
  <Description>Emoticons Ukrainian translation</Description>
- <Version>1.3.1</Version>
- <ReleaseDate>2016-04-14</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.emoticons.uk</Name>
  <AutoDependOn>ru.rwsoftware.eyecu.emoticons,ru.rwsoftware.eyecu.translations.uk</AutoDependOn>
  <Virtual>true</Virtual>

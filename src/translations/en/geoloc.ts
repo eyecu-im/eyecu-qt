@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>ContactProximityNotificationOptions</name>
   <message>
@@ -22,9 +22,9 @@
    <location line="38" filename="../../plugins/geoloc/contactproximitynotificationoptions.cpp"/>
    <source>meter(s)</source>
    <comment>distance units</comment>
-   <translation type="unfinished">
-    <numerusform/>
-    <numerusform/>
+   <translation>
+    <numerusform>meter</numerusform>
+    <numerusform>meters</numerusform>
    </translation>
   </message>
  </context>

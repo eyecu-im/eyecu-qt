@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>ipstack Japanese Translation</DisplayName>
+ <Description>ipstack Japanese translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack.ja</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.geoloc.positioning.ip.stack,ru.rwsoftware.eyecu.translations.ja</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

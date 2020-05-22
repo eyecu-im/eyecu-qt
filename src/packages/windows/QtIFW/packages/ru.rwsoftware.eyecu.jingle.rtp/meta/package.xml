@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Jingle RTP Sessions</DisplayName>
+ <Description>Perform VoiP calls</Description>
+ <Version>2.0.3</Version>
+ <ReleaseDate>2018-10-27</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.jingle.rtp</Name>
+ <UpdateText>Terminate RTP media play and stream on hangup more quickly. UI: Remove frames around input and output audio levels.</UpdateText>
+ <Default>true</Default>
+ <Dependencies>ru.purplesoft.qtpurple.ffmpeg->=2.0.3,ru.rwsoftware.eyecu.jingle->=2.0.2</Dependencies>
+ <SortingPriority>1</SortingPriority>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

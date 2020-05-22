@@ -14,7 +14,7 @@
   <message>
    <location filename="../../plugins/mapsourceovi/mapsourceovi.cpp" line="56"/>
    <source>Here</source>
-   <translation type="unfinished"/>
+   <translation>Ось тут</translation>
   </message>
  </context>
  <context>
@@ -22,63 +22,63 @@
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="35"/>
    <source>Political views</source>
-   <translation type="unfinished"/>
+   <translation>Політичні погляди</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="45"/>
    <source>Languages</source>
-   <translation type="unfinished"/>
+   <translation>Мови</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="51"/>
    <source>Primary</source>
-   <translation type="unfinished"/>
+   <translation>Основна</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="61"/>
    <source>Secondary</source>
-   <translation type="unfinished"/>
+   <translation>Допоміжний</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="80"/>
    <source>Style</source>
-   <translation type="unfinished"/>
+   <translation>Стиль</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="95"/>
    <source>Day</source>
-   <translation type="unfinished"/>
+   <translation>День</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.ui" line="102"/>
    <source>Night</source>
-   <translation type="unfinished"/>
+   <translation>Ніч</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="14"/>
    <source>Default (%1)</source>
-   <translation type="unfinished"/>
+   <translation>За умовчанням (%1)</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="16"/>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="18"/>
    <source>Multiple</source>
-   <translation type="unfinished"/>
+   <translation>Кілька</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="17"/>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>Жоден</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="29"/>
    <source>For current locale (%1)</source>
-   <translation type="unfinished"/>
+   <translation>Для поточної місцевості (%1)</translation>
   </message>
   <message>
    <location filename="../../plugins/mapsourceovi/settingshere.cpp" line="34"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>За замовчуванням</translation>
   </message>
  </context>
 </TS>

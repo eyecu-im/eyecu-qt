@@ -8,9 +8,9 @@
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/imainwindow.h>
 #include <interfaces/iservicediscovery.h>
-#include <interfaces/iurlprocessor.h>
 #include <interfaces/inotifications.h>
 #include <interfaces/imessagewidgets.h>
+#include <interfaces/ichatmarkers.h>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -28,11 +28,10 @@ class Receipts : public QObject,
 				 public IOptionsDialogHolder,
                  public IMessageEditor,
                  public IMessageWriter,
-                 public IArchiveHandler,
-                 public IUrlHandler
+				 public IArchiveHandler
  {
     Q_OBJECT
-	Q_INTERFACES(IPlugin IReceipts IOptionsDialogHolder IMessageEditor IMessageWriter IArchiveHandler IUrlHandler)
+	Q_INTERFACES(IPlugin IReceipts IOptionsDialogHolder IMessageEditor IMessageWriter IArchiveHandler)
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IReceipts")
 #endif
@@ -48,6 +47,9 @@ public:
     virtual bool initObjects();
     virtual bool initSettings();
     virtual bool startPlugin(){return true;}
+	//IReceipts
+	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	virtual bool isSupportUnknown(const Jid &AStreamJid, const Jid &AContactJid) const;
     //IOptionsHolder
 	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
     //IMessageEditor
@@ -58,30 +60,28 @@ public:
 	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
     //IArchiveHandler
     virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
-    //IUrlHandler
-    virtual QNetworkReply *request(QNetworkAccessManager::Operation op, const QNetworkRequest &ARequest, QIODevice *AOutgoingData);
-    // Not exported!
-    bool isDelivered(const QString &AId) const;
 
 protected:
     QHash<QString, QString> getReceipts(Jid jid) const;
-    void setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-    bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+    void setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);    
     void removeNotifiedMessages(IMessageChatWindow *AWindow);
+
+signals:
+	void messageDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 
 private:
     IMessageProcessor   *FMessageProcessor;
     IMessageArchiver    *FMessageArchiver;
     IServiceDiscovery   *FDiscovery;    
-    IUrlProcessor       *FUrlProcessor;
     IOptionsManager     *FOptionsManager;
     INotifications      *FNotifications;
     IMessageWidgets     *FMessageWidgets;
+	IChatMarkers		*FChatMarkers;
     IconStorage         *FIconStorage;
 
-    QSet<QString>       FDeliveryHash;
-    QByteArray          FImgeData;
     QHash<IMessageChatWindow *, int>   FNotifies;
+    QHash<Jid, QHash<Jid, QStringList> > FDeliveryRequestHash;
+	QHash<Jid, QSet<Jid> > FSupported;
 
     void registerDiscoFeatures(bool ARegister);
 

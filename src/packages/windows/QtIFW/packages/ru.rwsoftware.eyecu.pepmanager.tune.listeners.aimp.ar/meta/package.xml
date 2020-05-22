@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Tune Listener AIMP Arabic Translation</DisplayName>
+ <Description>Tune Listener AIMP Arabic translation</Description>
+ <Version>1.3.0</Version>
+ <ReleaseDate>2015-02-24</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.pepmanager.tune.listeners.aimp.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.pepmanager.tune.listeners.aimp,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

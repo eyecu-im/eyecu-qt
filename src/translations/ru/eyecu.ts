@@ -1,15 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS sourcelanguage="en" version="2.1" language="ru">
+<TS language="ru" version="2.1" sourcelanguage="en">
   <context>
     <name>AboutBox</name>
     <message>
-      <source>Version: %1.%2 %3</source>
-      <translation>Версия: %1.%2 %3</translation>
-    </message>
-    <message>
       <source>Revision: %1</source>
       <translation>Ревизия: %1</translation>
+    </message>
+    <message>
+      <source>Version: %1 %2 of %3</source>
+      <translation>Версия %1 %2 от %3</translation>
+    </message>
+    <message>
+      <source>Version: %1 %2</source>
+      <translation>Версия: %1 %2</translation>
     </message>
   </context>
   <context>

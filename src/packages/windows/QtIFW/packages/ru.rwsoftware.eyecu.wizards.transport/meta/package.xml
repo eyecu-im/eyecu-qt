@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Transport</DisplayName>
  <Description>Wizard, which help user to connect his or her Jabber account to legacy network via XMPP transport</Description>
- <Version>1.3.3</Version>
- <ReleaseDate>2016-04-04</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Name>ru.rwsoftware.eyecu.wizards.transport</Name>
- <UpdateText>Synchronized with Vacuum-IM</UpdateText>
  <SortingPriority>1</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>

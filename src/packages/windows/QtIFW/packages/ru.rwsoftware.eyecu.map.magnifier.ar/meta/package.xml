@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Map Magnifier Arabic Translation</DisplayName>
+ <Description>Map Magnifier Arabic translation</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.map.magnifier.ar</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.map.magnifier,ru.rwsoftware.eyecu.translations.ar</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

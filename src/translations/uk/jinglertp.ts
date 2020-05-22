@@ -82,7 +82,7 @@
   <message>
    <location filename="../../plugins/jinglertp/codecoptions.ui" line="125"/>
    <source>Codecs in this list will not be offered to the other party, but still available and will be used if all the codecs offered by other party are not in the in-use list.</source>
-   <translation type="unfinished"/>
+   <translation>Кодеки в цьому списку не будуть запропоновані іншій стороні, але вони доступні і будуть використовуватися, якщо всі кодеки, запропоновані іншою стороною, не знаходяться у списку, що використовується.</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/codecoptions.ui" line="141"/>
@@ -92,7 +92,7 @@
   <message>
    <location filename="../../plugins/jinglertp/codecoptions.ui" line="144"/>
    <source>Codecs in this list will be offered to the other party and will be prefered among codecs offered by other party.</source>
-   <translation type="unfinished"/>
+   <translation>Кодеки в цьому списку будуть запропоновані іншій стороні і будуть віддані перевагам серед кодеків, запропонованих іншою стороною.</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/codecoptions.ui" line="151"/>
@@ -151,197 +151,197 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="222"/>
    <source>When outgoing voice or video call rejected by callee</source>
-   <translation type="unfinished"/>
+   <translation>Коли вихідний голосовий або відеодзвінок відхилено абонентом</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="228"/>
    <source>When outgoing voice or video call initiated</source>
-   <translation type="unfinished"/>
+   <translation>Коли ініційовано вихідний голосовий або відеодзвінок </translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="234"/>
    <source>When voice or video chat in progress</source>
-   <translation type="unfinished"/>
+   <translation>Коли відбувається голосовий або відеочат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="237"/>
    <source>When voice or video chat finished</source>
-   <translation type="unfinished"/>
+   <translation>Коли завершено голосовий або відеочат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="279"/>
    <source>Common</source>
-   <translation type="unfinished"/>
+   <translation>Загальний</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="283"/>
    <source>msec</source>
-   <translation type="unfinished"/>
+   <translation>мсек</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="285"/>
    <source>Data receive timeout</source>
-   <translation type="unfinished"/>
+   <translation>Тайм-аут прийому даних</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="288"/>
    <source>Use RTCP</source>
-   <translation type="unfinished"/>
+   <translation>Використовуйте RTCP</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="225"/>
    <source>When voice or video chat session failed</source>
-   <translation type="unfinished"/>
+   <translation>Коли голосовий або відеочат не відбувся</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="290"/>
    <source>Assume the other party ringing, once the call is acknowledged</source>
-   <translation type="unfinished"/>
+   <translation>Припустимо, що сторона дзвонить, коли виклик буде підтверджений</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="623"/>
    <source>Outgoing video call to %1</source>
-   <translation type="unfinished"/>
+   <translation>Вихідний відеодзвінок на %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="623"/>
    <source>Outgoing voice call to %1</source>
-   <translation type="unfinished"/>
+   <translation>Вихідний голосовий дзвінок на %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="624"/>
    <source>Ougoing video call!</source>
-   <translation type="unfinished"/>
+   <translation>Вихідний відеодзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="624"/>
    <source>Ougoing voice call!</source>
-   <translation type="unfinished"/>
+   <translation>Вихідний голосовий дзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="632"/>
    <source>Ringing!</source>
-   <translation type="unfinished"/>
+   <translation>Виклик!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="637"/>
    <source>Incoming video call from %1</source>
-   <translation type="unfinished"/>
+   <translation>Вхідний відеодзвінок від %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="637"/>
    <source>Incoming voice call from %1</source>
-   <translation type="unfinished"/>
+   <translation>Вхідний голосовий дзвінок з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="638"/>
    <source>Incoming video call!</source>
-   <translation type="unfinished"/>
+   <translation>Вхідний відеодзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="638"/>
    <source>Incoming voice call!</source>
-   <translation type="unfinished"/>
+   <translation>Вхідний голосовий дзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="643"/>
    <source>Video chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Відеочат з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="643"/>
    <source>Voice chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий чат з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="644"/>
    <source>Video chat</source>
-   <translation type="unfinished"/>
+   <translation>Відеочат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="644"/>
    <source>Voice chat</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий чат</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="649"/>
    <source>Missed video call from %1</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений відеодзвінок з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="649"/>
    <source>Missed voice call from %1</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений голосовий дзвінок від %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="650"/>
    <source>Missed video call!</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений відеодзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="650"/>
    <source>Missed voice call!</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений голосовий дзвінок!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="655"/>
    <source>Rejected video call to %1</source>
-   <translation type="unfinished"/>
+   <translation>Відхилений відеодзвінок на %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="655"/>
    <source>Rejected voice call to %1</source>
-   <translation type="unfinished"/>
+   <translation>Відхилений голосовий дзвінок на %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="656"/>
    <source>Video call rejected!</source>
-   <translation type="unfinished"/>
+   <translation>Відеодзвінок відхилено!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="656"/>
    <source>Voice call rejected!</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий дзвінок відхилено!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="661"/>
    <source>Finished video chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Готовий відеочат з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="661"/>
    <source>Finished voice chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Готовий голосовий чат з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="662"/>
    <source>Video chat finished</source>
-   <translation type="unfinished"/>
+   <translation>Відеочат закінчено</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="662"/>
    <source>Voice chat finished</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий чат завершено</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="667"/>
    <source>Failed video chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Помилка відеочату з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="667"/>
    <source>Failed voice chat with %1</source>
-   <translation type="unfinished"/>
+   <translation>Помилка голосового чату з %1</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="668"/>
    <source>Video call failed!</source>
-   <translation type="unfinished"/>
+   <translation>Відеодзвінок не вдався!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="668"/>
    <source>Voice call failed!</source>
-   <translation type="unfinished"/>
+   <translation>Голосовий дзвінок не вдався!</translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="781"/>
@@ -387,7 +387,7 @@
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="1007"/>
    <source>Incoming call missed</source>
-   <translation type="unfinished"/>
+   <translation>Пропущений вхідний дзвінок </translation>
   </message>
   <message>
    <location filename="../../plugins/jinglertp/jinglertp.cpp" line="1010"/>

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en">
+<TS language="en" version="2.1">
  <context>
   <name>BirthdayReminder</name>
   <message>
@@ -31,11 +31,13 @@
   </message>
   <message numerus="yes">
    <location line="290" filename="../../plugins/birthdayreminder/birthdayreminder.cpp"/>
-   <source>Birthday in %n day(s),&#xd;&#xd;
+   <source>Birthday in %n day(s),&#xd;
  %1</source>
-   <translation type="unfinished">
-    <numerusform/>
-    <numerusform/>
+   <translation>
+    <numerusform>Birthday in %n day,&#xd;
+ %1</numerusform>
+    <numerusform>Birthday in %n days,&#xd;
+ %1</numerusform>
    </translation>
   </message>
   <message numerus="yes">

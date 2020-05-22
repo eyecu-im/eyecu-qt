@@ -2,11 +2,10 @@
 <Package>
  <DisplayName>History</DisplayName>
  <Description>Allows to store and display the history of communications</Description>
- <Version>1.3.5</Version>
- <ReleaseDate>2017-01-24</ReleaseDate>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2018-10-17</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.messagearchiver</Name>
- <UpdateText>Synchronized with Vacuum-IM: Use radiobuttons</UpdateText>
- <Dependencies>org.digia.qt5.sql,org.digia.qt5.printsupport</Dependencies>
+ <Dependencies>org.digia.qt5.sql->=5.5.1,org.digia.qt5.printsupport->=5.5.1</Dependencies>
  <SortingPriority>70</SortingPriority>
  <Default>true</Default>
  <ForcedInstallation>false</ForcedInstallation>
