@@ -15,6 +15,7 @@
 #include <definitions/menuicons.h>
 // *** >>> eyeCU >>> ***
 #include <utils/logger.h>
+#include <utils/qt4qt5compat.h>
 
 MultiUserView::MultiUserView(IMultiUserChat *AMultiChat, QWidget *AParent) : QTreeView(AParent)
 {
@@ -493,7 +494,7 @@ void MultiUserView::updateUserItem(IMultiUser *AUser)
 		QString statusMessage = userPresence.status;
 		if (statusMessage.isEmpty())
 			userItem->setData(statusName, MUDR_PRESENCE_STATUS);
-		else userItem->setData(Qt::escape(statusMessage), MUDR_PRESENCE_STATUS);
+        else userItem->setData(HTML_ESCAPE(statusMessage), MUDR_PRESENCE_STATUS);
 
 		IconStorage *iconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 		userItem->setData(iconStorage->getIcon(userStar), MUDR_AFFILICON);
