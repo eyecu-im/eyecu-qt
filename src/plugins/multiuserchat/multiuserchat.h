@@ -48,6 +48,7 @@ public:
 	virtual QList<IMultiUser *> allUsers() const;
 	virtual IMultiUser *findUser(const QString &ANick) const;
 	virtual IMultiUser *findUserByRealJid(const Jid &ARealJid) const;
+    virtual MultiUser *findUserByRealJid2(const Jid &ARealJid) const;
 	virtual bool isUserPresent(const Jid &AContactJid) const;
 	virtual void abortConnection(const QString &AStatus, bool AError=true);
 	//Occupant
@@ -107,6 +108,8 @@ signals:
 	void roomConfigLoaded(const QString &AId, const IDataForm &AForm);
 	void roomConfigUpdated(const QString &AId, const IDataForm &AForm);
 	void roomDestroyed(const QString &AId, const QString &AReason);
+    //Other
+    void chatRestored();
 protected:
 	void setState(ChatState AState);
 	bool processMessage(const Stanza &AStanza);
@@ -120,6 +123,7 @@ protected slots:
 	void onXmppStreamClosed(IXmppStream *AXmppStream);
 	void onXmppStreamJidChanged(IXmppStream *AXmppStream, const Jid &ABefore);
 	void onPresenceChanged(IPresence *APresence, int AShow, const QString &AStatus, int APriority);
+    void onChatRestored();
 private:
 	PluginPointer<IDataForms> FDataForms;
 	PluginPointer<IServiceDiscovery> FDiscovery;
@@ -155,6 +159,7 @@ private:
 	QList<int> FStatusCodes;
 	IMultiUserChatHistory FHistory;
 	QHash<QString, MultiUser *> FUsers;
+    QHash<QString, MultiUser *> FAborted;
 };
 
 #endif // MULTIUSERCHAT_H

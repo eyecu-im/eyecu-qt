@@ -7,6 +7,7 @@
 #include <definitions/stanzahandlerorders.h>
 #include <utils/xmpperror.h>
 #include <utils/logger.h>
+#include <QDebug>
 
 #define SHC_PRESENCE        "/presence"
 #define SHC_MESSAGE         "/message"
@@ -345,6 +346,15 @@ IMultiUser *MultiUserChat::findUserByRealJid(const Jid &ARealJid) const
 	return NULL;
 }
 
+MultiUser *MultiUserChat::findUserByRealJid2(const Jid &ARealJid) const
+{
+    foreach (MultiUser *user, FAborted) {
+        if (ARealJid == user->realJid())
+            return user;
+    }
+    return NULL;
+}
+
 bool MultiUserChat::isUserPresent(const Jid &AContactJid) const
 {
 	return AContactJid.pBare()!=FRoomJid.pBare() ? findUserByRealJid(AContactJid)!=NULL : FUsers.contains(AContactJid.resource());
@@ -360,6 +370,12 @@ void MultiUserChat::abortConnection(const QString &AStatus, bool AError)
 		presence.itemJid = FMainUser!=NULL ? FMainUser->userJid() : FRoomJid;
 		presence.show = AError ? IPresence::Error : IPresence::Offline;
 		presence.status = AStatus;
+        qDebug() << "FAborted";
+        FAborted = FUsers;
+        FAborted.detach();
+        FAborted.remove(FNickname);
+        FUsers.clear();
+        //qDeleteAll(FUsers);
 		closeRoom(presence);
 	}
 }
@@ -1125,6 +1141,34 @@ bool MultiUserChat::processPresence(const Stanza &AStanza)
 		else
 			presence.sentTime = QDateTime::currentDateTime();
 
+        if (!FAborted.isEmpty() && fromUser == NULL && !FUsers.contains(fromNick) && !FStatusCodes.contains(MUC_SC_SELF_PRESENCE))
+        {
+            Jid realJid = itemElem.attribute("jid");
+            fromUser = FAborted.contains(fromNick) ? FAborted.value(fromNick) : findUserByRealJid2(realJid);
+            if (fromUser)
+            {
+                qDebug() << "fromJid:" << fromJid.full() << "fromUser->realJid:" << fromUser->realJid().full();
+                if (fromUser && fromUser->realJid() == realJid)
+                {
+                    FUsers.insert(fromNick,fromUser);
+                    if (fromUser->nick() != fromNick)
+                    {
+                        qDebug() << "Nick changed from" << fromUser->nick() << "to" << fromNick;
+                        fromUser->setNick(fromNick);
+                    }
+                    FAborted.take(fromNick);
+                }
+                else if (fromUser->realJid() == realJid)
+                {
+                    qDebug() << "realJid:" << realJid.full();
+                }
+                else if (!fromUser)
+                {
+                    qDebug() << "fromUser not found!";
+                }
+            }
+        }
+
 		if (fromUser == NULL)
 		{
 			LOG_STRM_DEBUG(FStreamJid,QString("User has joined the conference, nick=%1, role=%2, affiliation=%3, room=%4").arg(fromNick,role,affiliation,FRoomJid.bare()));
@@ -1158,6 +1202,13 @@ bool MultiUserChat::processPresence(const Stanza &AStanza)
 				setState(IMultiUserChat::Opened);
 			}
 		}
+
+        if (FState == IMultiUserChat::Opened && !FAborted.isEmpty())
+        {
+            qDebug() << "FState:Opened" << FState;
+            connect(this->instance(),SIGNAL(chatRestored()),SLOT(onChatRestored()));
+            emit chatRestored();
+        }
 
 		if (fromUser == FMainUser)
 		{
@@ -1366,6 +1417,20 @@ void MultiUserChat::onDiscoveryInfoReceived(const IDiscoInfo &AInfo)
 			emit roomTitleChanged(FRoomTitle);
 		}
 	}
+}
+
+void MultiUserChat::onChatRestored()
+{
+    qDebug() << "onChatRestored";
+    foreach(MultiUser *user, FAborted)
+    {
+        if (!FUsers.contains(user->nick()) && user != FMainUser)
+        {
+            qDebug() << "FUsers does not contain:" << user->nick();
+            user->setPresence(IPresenceItem());
+        }
+    }
+    FAborted.clear();
 }
 
 void MultiUserChat::onXmppStreamClosed(IXmppStream *AXmppStream)
