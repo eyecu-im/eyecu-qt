@@ -11,7 +11,7 @@
 #include <utils/logger.h>
 #include <utils/qt4qt5compat.h>
 
-VCardDialog::VCardDialog(IVCardManager *AVCardPlugin, const Jid &AStreamJid, const Jid &AContactJid, QWidget *AParent) : QDialog(AParent)
+VCardDialog::VCardDialog(IVCardManager *AVCardPlugin, const Jid &AStreamJid, const Jid &AContactJid, bool AMuc, QWidget *AParent) : QDialog(AParent)
 {
 	REPORT_VIEW;
 	ui.setupUi(this);
@@ -24,12 +24,13 @@ VCardDialog::VCardDialog(IVCardManager *AVCardPlugin, const Jid &AStreamJid, con
 	FVCardManager = AVCardPlugin;
 
 	FSaveClicked = false;
+	FMuc = AMuc;
 
 	ui.cmbGender->addItem(tr("<Unset>"),QString());
 	ui.cmbGender->addItem(tr("Male"),QString(VCARD_GENDER_MALE));
 	ui.cmbGender->addItem(tr("Female"),QString(VCARD_GENDER_FEMALE));
 
-	if (FStreamJid.pBare() == FContactJid.pBare())
+	if (FStreamJid.pBare() == FContactJid.pBare() || FMuc)
 		ui.btbButtons->setStandardButtons(QDialogButtonBox::Save|QDialogButtonBox::Close);
 	else
 		ui.btbButtons->setStandardButtons(QDialogButtonBox::Close);
@@ -88,7 +89,7 @@ Jid VCardDialog::contactJid() const
 
 void VCardDialog::updateDialog()
 {
-	bool readOnly = FContactJid.pBare()!=FStreamJid.pBare();
+	bool readOnly = FContactJid.pBare()!=FStreamJid.pBare() && !FMuc;
 
 	ui.lneFullName->setText(FVCard->value(VVN_FULL_NAME));
 	ui.lneFullName->setReadOnly(readOnly);
@@ -423,7 +424,7 @@ void VCardDialog::onEmailDeleteClicked()
 
 void VCardDialog::onEmailItemDoubleClicked(QListWidgetItem *AItem)
 {
-	if (FStreamJid.pBare() == FContactJid.pBare())
+	if (FStreamJid.pBare() == FContactJid.pBare() || FMuc)
 	{
 		static QStringList emailTagList = QStringList() << "HOME" << "WORK" << "INTERNET" << "X400";
 		EditItemDialog dialog(AItem->text(),AItem->data(Qt::UserRole).toStringList(),emailTagList,this);
@@ -457,7 +458,7 @@ void VCardDialog::onPhoneDeleteClicked()
 
 void VCardDialog::onPhoneItemDoubleClicked(QListWidgetItem *AItem)
 {
-	if (FStreamJid.pBare() == FContactJid.pBare())
+	if (FStreamJid.pBare() == FContactJid.pBare() || FMuc)
 	{
 		static QStringList phoneTagList = QStringList() << "HOME" << "WORK" << "CELL" << "MODEM";
 		EditItemDialog dialog(AItem->text(),AItem->data(Qt::UserRole).toStringList(),phoneTagList,this);
@@ -479,7 +480,7 @@ void VCardDialog::onDialogButtonClicked(QAbstractButton *AButton)
 	else if (ui.btbButtons->standardButton(AButton) == QDialogButtonBox::Save)
 	{
 		updateVCard();
-		if (FVCard->publish(FStreamJid))
+		if (FVCard->publish(FStreamJid, FContactJid, FMuc))
 		{
 			ui.btbButtons->setEnabled(false);
 			ui.twtVCard->setEnabled(false);

@@ -587,7 +587,7 @@ bool Avatars::setAvatar(const Jid &AStreamJid, const QByteArray &AData)
 				vcard->setValueForTags(VVN_PHOTO_VALUE,QString::null);
 				vcard->setValueForTags(VVN_PHOTO_TYPE,QString::null);
 			}
-			if (FVCardManager->publishVCard(AStreamJid,vcard))
+			if (FVCardManager->publishVCard(AStreamJid,AStreamJid,vcard))
 			{
 				published = true;
 				LOG_STRM_INFO(AStreamJid,"Published self avatar in vCard");

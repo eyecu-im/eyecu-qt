@@ -170,12 +170,13 @@ bool VCard::update(const Jid &AStreamJid)
 	return false;
 }
 
-bool VCard::publish(const Jid &AStreamJid)
+bool VCard::publish(const Jid &AStreamJid, const Jid &AContactJid, bool AMuc)
 {
+	Jid vcardJid = AMuc ? AContactJid : AStreamJid;
 	if (isValid() && AStreamJid.isValid())
 	{
 		FStreamJid = AStreamJid;
-		return FVCardPlugin->publishVCard(AStreamJid,this);
+		return FVCardPlugin->publishVCard(AStreamJid,vcardJid,this);
 	}
 	return false;
 }

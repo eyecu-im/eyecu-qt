@@ -28,7 +28,7 @@ public:
 	virtual void setValueForTags(const QString &AName, const QString &AValue, const QStringList &ATags = QStringList(), const QStringList &ATagList = QStringList());
 	virtual void clear();
 	virtual bool update(const Jid &AStreamJid);
-	virtual bool publish(const Jid &AStreamJid);
+	virtual bool publish(const Jid &AStreamJid, const Jid &AContactJid, bool AMuc=false);
 	virtual void unlock();
 signals:
 	void vcardUpdated();

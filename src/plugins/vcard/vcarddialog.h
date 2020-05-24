@@ -11,7 +11,7 @@ class VCardDialog :
 {
 	Q_OBJECT;
 public:
-	VCardDialog(IVCardManager *AVCardPlugin,const Jid &AStreamJid, const Jid &AContactJid, QWidget *AParent);
+	VCardDialog(IVCardManager *AVCardPlugin,const Jid &AStreamJid, const Jid &AContactJid, bool AMuc, QWidget *AParent);
 	~VCardDialog();
 	Jid streamJid() const;
 	Jid contactJid() const;
@@ -52,6 +52,7 @@ private:
 	QByteArray FLogo;
 	QByteArray FPhoto;
 	bool FSaveClicked;
+	bool FMuc;
 };
 
 #endif // VCARDDIALOG_H

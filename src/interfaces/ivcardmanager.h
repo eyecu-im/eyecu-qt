@@ -30,7 +30,7 @@ public:
 	virtual void setValueForTags(const QString &AName, const QString &AValue, const QStringList &ATags = QStringList(), const QStringList &ATagList = QStringList()) =0;
 	virtual void clear() = 0;
 	virtual bool update(const Jid &AStreamJid) =0;
-	virtual bool publish(const Jid &AStreamJid) =0;
+        virtual bool publish(const Jid &AStreamJid, const Jid &AContactJid, bool AMuc=false) =0;
 	virtual void unlock() =0;
 protected:
 	virtual void vcardUpdated() =0;
@@ -46,8 +46,8 @@ public:
 	virtual bool hasVCard(const Jid &AContactJid) const =0;
 	virtual bool requestVCard(const Jid &AStreamJid, const Jid &AContactJid) =0;
 	virtual IVCard *getVCard(const Jid &AContactJid) =0;
-	virtual bool publishVCard(const Jid &AStreamJid, IVCard *AVCard) =0;
-	virtual QDialog *showVCardDialog(const Jid &AStreamJid, const Jid &AContactJid, QWidget *AParent = NULL) =0;
+        virtual bool publishVCard(const Jid &AStreamJid, const Jid &AContactJid, IVCard *AVCard) =0;
+        virtual QDialog *showVCardDialog(const Jid &AStreamJid, const Jid &AContactJid, bool AMuc=false, QWidget *AParent = NULL) =0;
 protected:
 	virtual void vcardReceived(const Jid &AContactJid) =0;
 	virtual void vcardPublished(const Jid &AStreamJid) =0;

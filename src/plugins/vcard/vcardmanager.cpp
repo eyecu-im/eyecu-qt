@@ -402,14 +402,14 @@ bool VCardManager::requestVCard(const Jid &AStreamJid, const Jid &AContactJid)
 	return false;
 }
 
-bool VCardManager::publishVCard(const Jid &AStreamJid, IVCard *AVCard)
+bool VCardManager::publishVCard(const Jid &AStreamJid, const Jid &AContactJid, IVCard *AVCard)
 {
 	if (FStanzaProcessor && AVCard->isValid())
 	{
 		restrictVCardImagesSize(AVCard);
 
 		Stanza stanza(STANZA_KIND_IQ);
-		stanza.setType(STANZA_TYPE_SET).setTo(AStreamJid.bare()).setUniqueId();
+		stanza.setType(STANZA_TYPE_SET).setTo(AContactJid.bare()).setUniqueId();
 		QDomElement elem = stanza.element().appendChild(AVCard->vcardElem().cloneNode(true)).toElement();
 		removeEmptyChildElements(elem);
 		if (FStanzaProcessor->sendStanzaRequest(this,AStreamJid,stanza,VCARD_TIMEOUT))
@@ -430,7 +430,7 @@ bool VCardManager::publishVCard(const Jid &AStreamJid, IVCard *AVCard)
 	return false;
 }
 
-QDialog *VCardManager::showVCardDialog(const Jid &AStreamJid, const Jid &AContactJid, QWidget *AParent)
+QDialog *VCardManager::showVCardDialog(const Jid &AStreamJid, const Jid &AContactJid, bool AMuc, QWidget *AParent)
 {
 	if (FVCardDialogs.contains(AContactJid))
 	{
@@ -440,7 +440,7 @@ QDialog *VCardManager::showVCardDialog(const Jid &AStreamJid, const Jid &AContac
 	}
 	else if (AStreamJid.isValid() && AContactJid.isValid())
 	{
-		VCardDialog *dialog = new VCardDialog(this,AStreamJid,AContactJid, AParent);
+		VCardDialog *dialog = new VCardDialog(this,AStreamJid,AContactJid, AMuc, AParent);
 		connect(dialog,SIGNAL(destroyed(QObject *)),SLOT(onVCardDialogDestroyed(QObject *)));
 		FVCardDialogs.insert(AContactJid,dialog);
 		WidgetManager::showActivateRaiseWindow(dialog);
