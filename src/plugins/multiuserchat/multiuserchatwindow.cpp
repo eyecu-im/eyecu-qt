@@ -89,6 +89,7 @@ MultiUserChatWindow::MultiUserChatWindow(IMultiUserChatManager *AMultiChatManage
 	FToolBarWidget = NULL;
 	FStatusBarWidget = NULL;
 	FTabPageNotifier = NULL;
+	FVCardManager = NULL;
 	FTemporaryNick = false; // *** <<< eyeCU >>> ***
 
 	FSHIAnyStanza = -1;
@@ -138,6 +139,8 @@ MultiUserChatWindow::MultiUserChatWindow(IMultiUserChatManager *AMultiChatManage
 	FMessageWidgets = PluginHelper::pluginInstance<IMessageWidgets>();
 	if (FMessageWidgets)
 		FMessageWidgets->insertViewUrlHandler(MVUHO_MUC, this);
+
+	FVCardManager = PluginHelper::pluginInstance<IVCardManager>();
 
 	FMainSplitter->insertWidget(MUCWW_CENTRALSPLITTER,FCentralSplitter,100);
 	FCentralSplitter->insertWidget(MUCWW_VIEWSPLITTER,FViewSplitter,75);
@@ -1191,6 +1194,12 @@ void MultiUserChatWindow::createStaticRoomActions()
 	connect(FEditAffiliations,SIGNAL(triggered(bool)),SLOT(onRoomActionTriggered(bool)));
 	FToolsMenu->addAction(FEditAffiliations,AG_MUTM_MULTIUSERCHAT_AFFILIATIONS,true);
 
+	FEditVCard = new Action(this);
+	FEditVCard->setText(tr("Edit vCard"));
+	FEditVCard->setIcon(RSR_STORAGE_MENUICONS,MNI_VCARD);
+	connect(FEditVCard,SIGNAL(triggered(bool)),SLOT(onRoomActionTriggered(bool)));
+	FToolsMenu->addAction(FEditVCard,AG_MUTM_MULTIUSERCHAT_EDITVCARD);
+
 	FConfigRoom = new Action(this);
 	FConfigRoom->setText(tr("Configure Conference"));
 	FConfigRoom->setIcon(RSR_STORAGE_MENUICONS,MNI_MUC_CONFIGURE_ROOM);
@@ -1323,6 +1332,7 @@ void MultiUserChatWindow::updateStaticRoomActions()
 	FConfigRoom->setVisible(affiliation == MUC_AFFIL_OWNER);
 	FDestroyRoom->setVisible(affiliation == MUC_AFFIL_OWNER);
 	FEditAffiliations->setVisible(affiliation==MUC_AFFIL_OWNER || affiliation==MUC_AFFIL_ADMIN);
+	FEditVCard->setVisible((affiliation == MUC_AFFIL_OWNER && FVCardManager != NULL));
 
 	FRequestVoice->setVisible(role == MUC_ROLE_VISITOR);
 	FChangeTopic->setVisible(affiliation==MUC_AFFIL_OWNER || affiliation==MUC_AFFIL_ADMIN || affiliation==MUC_AFFIL_MEMBER);
@@ -3043,6 +3053,11 @@ void MultiUserChatWindow::onRoomActionTriggered(bool)
 			if (ok)
 				FDestroyRequestId = FMultiChat->destroyRoom(reason);
 		}
+	}
+	//MUC vCard
+	else if (action == FEditVCard)
+	{
+		FVCardManager->showVCardDialog(FMultiChat->streamJid(),FMultiChat->roomJid(),true);
 	}
 	else if (action == FHideUserView)
 	{

@@ -66,6 +66,7 @@
 #define AG_MUTM_MULTIUSERCHAT_CHANGEPASSWORD                    600
 #define AG_MUTM_MULTIUSERCHAT_REQUESTVOICE                      600
 #define AG_MUTM_MULTIUSERCHAT_AFFILIATIONS                      800
+#define AG_MUTM_MULTIUSERCHAT_EDITVCARD                         800
 #define AG_MUTM_MULTIUSERCHAT_CONFIGROOM                        800
 #define AG_MUTM_MULTIUSERCHAT_DESTROYROOM                       800
 #define AG_MUTM_MULTIUSERCHAT_ENTERROOM                         1000

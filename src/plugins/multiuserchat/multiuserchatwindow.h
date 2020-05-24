@@ -16,6 +16,7 @@
 #include <interfaces/irecentcontacts.h>
 #include <interfaces/istanzaprocessor.h>
 #include <interfaces/irostermanager.h>
+#include <interfaces/ivcardmanager.h>
 #include <utils/pluginhelper.h>
 #include "multiuserview.h"
 #include "inputtextdialog.h"
@@ -241,6 +242,7 @@ private:
 	Action *FToggleSilence;
 	Action *FEnterRoom;
 	Action *FExitRoom;
+	Action *FEditVCard;
 private:
 	PluginPointer<IAvatars> FAvatars;
 	PluginPointer<IDataForms> FDataForms;
@@ -269,6 +271,7 @@ private:
 	IMessageToolBarWidget *FToolBarWidget;
 	IMessageStatusBarWidget *FStatusBarWidget;
 	IMessageTabPageNotifier *FTabPageNotifier;
+	IVCardManager *FVCardManager;
 private:
 	int FSHIAnyStanza;
 	bool FStateLoaded;
