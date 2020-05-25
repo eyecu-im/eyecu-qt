@@ -263,10 +263,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			!AMessage.body().isNull())
 		{
 			if(AMessage.id().isEmpty())
-			{
-				uint uTime = QDateTime().currentDateTime().toTime_t();
-				AMessage.setId(QString().setNum(uTime,16));
-			}
+				AMessage.setRandomId();
 			AMessage.detach();
 			AMessage.stanza().addElement("request", NS_RECEIPTS);
 			FDeliveryRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());

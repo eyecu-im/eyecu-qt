@@ -613,10 +613,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 			!AMessage.body().isNull())
 		{
 			if(AMessage.id().isEmpty())
-			{
-				uint uTime = QDateTime().currentDateTime().toTime_t();
-				AMessage.setId(QString().setNum(uTime,16));
-			}
+				AMessage.setRandomId();
 			AMessage.detach();
 			AMessage.stanza().addElement("markable", NS_CHATMARKERS);
 			if (Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt())
