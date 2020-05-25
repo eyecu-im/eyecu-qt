@@ -1842,6 +1842,14 @@ void MultiUserChatWindow::requestMultiChatHistory()
 
 void MultiUserChatWindow::updateMultiChatWindow()
 {
+	if (FAvatars)
+	{
+		QString avatar = FAvatars->avatarHash(FMultiChat->roomJid());
+		if (FAvatars->hasAvatar(avatar))
+			FInfoWidget->setFieldValue(IMessageInfoWidget::Avatar,avatar);
+	//	else
+	//		FInfoWidget->setFieldValue(IMessageInfoWidget::Avatar,FAvatars->emptyAvatarImage(FAvatars->avatarSize(IAvatars::AvatarSmall)));
+	}
 	FInfoWidget->setFieldValue(IMessageInfoWidget::Caption,FMultiChat->roomTitle());
 
 	QIcon statusIcon = FStatusIcons!=NULL ? FStatusIcons->iconByJidStatus(FMultiChat->roomJid(),FMultiChat->roomPresence().show,SUBSCRIPTION_BOTH,false) : QIcon();
