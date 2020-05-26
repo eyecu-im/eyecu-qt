@@ -1681,6 +1681,15 @@ void MultiUserChatManager::onRostersViewIndexToolTips(IRosterIndex *AIndex, quin
 				AToolTips.insert(RTTO_MULTIUSERCHAT_ROOM,tr("<b>Conference:</b> %1").arg(window->multiUserChat()->roomJid().uBare()));
 			}
 		}
+		else if (AIndex->kind() == RIK_MUC_ITEM)
+		{
+			Jid roomJid = AIndex->data(RDR_PREP_BARE_JID).toString();
+			IMultiUserChatWindow *window = findMultiChatWindowForIndex(AIndex);
+			if (window)
+			{
+				window->toolTipsForRoom(roomJid,AToolTips);
+			}
+		}
 	}
 }
 

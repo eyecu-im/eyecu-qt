@@ -101,6 +101,7 @@ public:
 	virtual Menu *roomToolsMenu() const;
 	virtual void contextMenuForRoom(Menu *AMenu);
 	virtual void contextMenuForUser(IMultiUser *AUser, Menu *AMenu);
+	virtual void toolTipsForRoom(const Jid &ARoomJid, QMap<int,QString> &AToolTips);
 	virtual void toolTipsForUser(IMultiUser *AUser, QMap<int,QString> &AToolTips);
 	virtual void exitAndDestroy(const QString &AStatus, int AWaitClose = 5000);
 signals:

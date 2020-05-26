@@ -998,6 +998,21 @@ void MultiUserChatWindow::contextMenuForUser(IMultiUser *AUser, Menu *AMenu)
 	}
 }
 
+void MultiUserChatWindow::toolTipsForRoom(const Jid &ARoomJid, QMap<int, QString> &AToolTips)
+{
+	QString avatar = FAvatars!=NULL ? FAvatars->avatarHash(ARoomJid,true) : QString::null;
+	if (FAvatars->hasAvatar(avatar))
+	{
+		QString fileName = FAvatars->avatarFileName(avatar);
+		QSize imageSize = QImageReader(fileName).size();
+		if (imageSize.height()>64 || imageSize.width()>64)
+			imageSize.scale(QSize(64,64), Qt::KeepAspectRatio);
+		QString avatarMask = "<img src='%1' width=%2 height=%3 />";
+		AToolTips.insert(MUTTO_MULTIUSERCHAT_AVATAR,avatarMask.arg(fileName).arg(imageSize.width()).arg(imageSize.height()));
+	}
+
+}
+
 void MultiUserChatWindow::toolTipsForUser(IMultiUser *AUser, QMap<int,QString> &AToolTips)
 {
 	if (FUsers.contains(AUser))

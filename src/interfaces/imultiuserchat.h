@@ -273,7 +273,8 @@ public:
 	virtual Menu *roomToolsMenu() const =0;
 	virtual void contextMenuForRoom(Menu *AMenu) =0;
 	virtual void contextMenuForUser(IMultiUser *AUser, Menu *AMenu) =0;
-	virtual void toolTipsForUser(IMultiUser *AUser, QMap<int,QString> &AToolTips) =0;
+        virtual void toolTipsForRoom(const Jid &ARoomJid, QMap<int,QString> &AToolTips) =0;
+        virtual void toolTipsForUser(IMultiUser *AUser, QMap<int,QString> &AToolTips) =0;
 	virtual void exitAndDestroy(const QString &AStatus, int AWaitClose = 5000) =0;
 protected:
 	virtual void roomToolsMenuAboutToShow() =0;
