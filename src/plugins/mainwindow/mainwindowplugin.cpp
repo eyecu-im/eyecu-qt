@@ -65,7 +65,8 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 		}
 	}
 // *** <<< eyeCU >>> ***
-#endif	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+#endif
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
 	if (plugin)
 	{
 		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
