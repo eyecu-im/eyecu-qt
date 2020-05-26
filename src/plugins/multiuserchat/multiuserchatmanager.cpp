@@ -1681,7 +1681,7 @@ void MultiUserChatManager::onRostersViewIndexToolTips(IRosterIndex *AIndex, quin
 				AToolTips.insert(RTTO_MULTIUSERCHAT_ROOM,tr("<b>Conference:</b> %1").arg(window->multiUserChat()->roomJid().uBare()));
 			}
 		}
-		else if (AIndex->kind() == RIK_MUC_ITEM)
+		else if (AIndex->kind()==RIK_MUC_ITEM)
 		{
 			Jid roomJid = AIndex->data(RDR_PREP_BARE_JID).toString();
 			IMultiUserChatWindow *window = findMultiChatWindowForIndex(AIndex);
@@ -1713,13 +1713,39 @@ void MultiUserChatManager::onRostersViewIndexClipboardMenu(const QList<IRosterIn
 				}
 
 				QString subject = window->multiUserChat()->subject().trimmed();
-				if (!subject.isEmpty())
+				if (!subject.isEmpty() && index->kind()==RIK_MUC_ITEM)
 				{
 					Action *subjectAction = new Action(AMenu);
 					subjectAction->setText(TextManager::getElidedString(subject,Qt::ElideRight,50));
 					subjectAction->setData(ADR_CLIPBOARD_DATA,subject);
 					connect(subjectAction,SIGNAL(triggered(bool)),SLOT(onCopyToClipboardActionTriggered(bool)));
 					AMenu->addAction(subjectAction, AG_RVCBM_MULTIUSERCHAT_SUBJECT, true);
+				}
+				if (index->kind()==RIK_RECENT_ITEM && index->data(RDR_RECENT_TYPE).toString()==REIT_CONFERENCE_PRIVATE)
+				{
+					Jid userJid = index->data(RDR_RECENT_REFERENCE).toString();
+					IMultiUser *user = window!=NULL ? window->multiUserChat()->findUser(userJid.resource()) : NULL;
+					if (user)
+					{
+						Action *jidAction = new Action(AMenu);
+						jidAction->setText(TextManager::getElidedString(user->userJid().uBare(),Qt::ElideRight,50));
+						jidAction->setData(ADR_CLIPBOARD_DATA,user->userJid().uBare());
+						connect(jidAction,SIGNAL(triggered(bool)),SLOT(onCopyToClipboardActionTriggered(bool)));
+						AMenu->addAction(jidAction, AG_RVCBM_JABBERID);
+
+						Action *realJidAction = new Action(AMenu);
+						realJidAction->setText(TextManager::getElidedString(user->realJid().full(),Qt::ElideRight,50));
+						realJidAction->setData(ADR_CLIPBOARD_DATA,user->realJid().full());
+						connect(realJidAction,SIGNAL(triggered(bool)),SLOT(onCopyToClipboardActionTriggered(bool)));
+						AMenu->addAction(realJidAction, AG_RVCBM_JABBERID);
+
+						Action *statusAction = new Action(AMenu);
+						statusAction->setText(TextManager::getElidedString(user->presence().status,Qt::ElideRight,50));
+						statusAction->setData(ADR_CLIPBOARD_DATA,user->presence().status);
+						connect(statusAction,SIGNAL(triggered(bool)),SLOT(onCopyToClipboardActionTriggered(bool)));
+						AMenu->addAction(statusAction, AG_RVCBM_STATUS);
+
+					}
 				}
 			}
 		}
