@@ -23,6 +23,7 @@ public:
 	virtual void setSubscribeContact(bool ASubscribe) =0;
 	virtual QString subscriptionMessage() const =0;
 	virtual void setSubscriptionMessage(const QString &AMessage) =0;
+        virtual void updateSubscriptionMessage(const QString &ANick) =0;
 	virtual ToolBarChanger *toolBarChanger() const =0;
 protected:
 	virtual void dialogDestroyed() =0;

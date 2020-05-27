@@ -7,6 +7,7 @@
 #include <interfaces/irosterchanger.h>
 #include <interfaces/irostermanager.h>
 #include <interfaces/ivcardmanager.h>
+#include <interfaces/iaccountmanager.h>
 #include "ui_addcontactdialog.h"
 
 class AddContactDialog :
@@ -31,6 +32,7 @@ public:
 	virtual void setSubscribeContact(bool ASubscribe);
 	virtual QString subscriptionMessage() const;
 	virtual void setSubscriptionMessage(const QString &AMessage);
+	virtual void updateSubscriptionMessage(const QString &ANick);
 	virtual ToolBarChanger *toolBarChanger() const;
 signals:
 	void dialogDestroyed();

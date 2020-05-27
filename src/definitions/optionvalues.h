@@ -292,6 +292,7 @@
 // RosterChanger
 #define OPV_ROSTER_AUTOSUBSCRIBE                        "roster.auto-subscribe"
 #define OPV_ROSTER_AUTOUNSUBSCRIBE                      "roster.auto-unsubscribe"
+#define OPV_ROSTER_SUBSCRIPTION_MESSAGE                 "roster.subscription-message"
 
 // RosterSearch
 #define OPV_ROSTER_SEARCH_ENABLED                       "roster.search.enabled"

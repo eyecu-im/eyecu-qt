@@ -40,6 +40,7 @@
 #define ADR_NAME                    Action::DR_Parametr2
 #define ADR_GROUP                   Action::DR_Parametr3
 #define ADR_TO_GROUP                Action::DR_Parametr4
+#define ADR_MESSAGE                 Action::DR_Parametr4
 
 static const QList<int> DragRosterKinds = QList<int>() << RIK_CONTACT << RIK_GROUP << RIK_METACONTACT_ITEM;
 static const QList<int> DropRosterKinds = QList<int>() << RIK_STREAM_ROOT << RIK_CONTACTS_ROOT << RIK_GROUP << RIK_GROUP_BLANK;
@@ -190,6 +191,7 @@ bool RosterChanger::initSettings()
 {
 	Options::setDefaultValue(OPV_ROSTER_AUTOSUBSCRIBE, false);
 	Options::setDefaultValue(OPV_ROSTER_AUTOUNSUBSCRIBE, true);
+	Options::setDefaultValue(OPV_ROSTER_SUBSCRIPTION_MESSAGE, tr("Hello %(nick), I am %(whoami). I would like to add you to my contact list."));
 
 	if (FOptionsManager)
 	{
@@ -1983,7 +1985,6 @@ void RosterChanger::onRostersViewIndexContextMenu(const QList<IRosterIndex *> &A
 
 void RosterChanger::onMultiUserContextMenu(IMultiUserChatWindow *AWindow, IMultiUser *AUser, Menu *AMenu)
 {
-	Q_UNUSED(AWindow);
 	if (AUser->realJid().isValid())
 	{
 		IRoster *roster = FRosterManager!=NULL ? FRosterManager->findRoster(AUser->streamJid()) : NULL;
@@ -1994,6 +1995,9 @@ void RosterChanger::onMultiUserContextMenu(IMultiUserChatWindow *AWindow, IMulti
 			action->setData(ADR_STREAM_JID,AUser->streamJid().full());
 			action->setData(ADR_CONTACT_JID,AUser->realJid().bare());
 			action->setData(ADR_NAME,AUser->userJid().resource());
+			action->setData(ADR_MESSAGE,Options::node(OPV_ROSTER_SUBSCRIPTION_MESSAGE).value().toString()
+							.replace("%(nick)",AUser->userJid().resource())
+							.replace("%(whoami)",AWindow->multiUserChat()->nickname()));
 			action->setIcon(RSR_STORAGE_MENUICONS,MNI_RCHANGER_ADD_CONTACT);
 			connect(action,SIGNAL(triggered(bool)),SLOT(onShowAddContactDialog(bool)));
 			AMenu->addAction(action,AG_MUCM_ROSTERCHANGER_ADD,true);

@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <definitions/toolbargroups.h>
 #include <definitions/vcardvaluenames.h>
+#include <definitions/optionvalues.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
 #include <utils/pluginhelper.h>
@@ -213,9 +214,43 @@ void AddContactDialog::onVCardReceived(const Jid &AContactJid)
 		IVCard *vcard = FVCardManager->getVCard(AContactJid.bare());
 		if (vcard)
 		{
-			setNickName(vcard->value(VVN_NICKNAME));
+			QString nick = !vcard->value(VVN_NICKNAME).isEmpty() ? vcard->value(VVN_NICKNAME) : contactJid().node();
+			setNickName(nick);
 			vcard->unlock();
+			if (!nick.isEmpty())
+			{
+				updateSubscriptionMessage(nick);
+			}
 		}
 		FResolving = false;
 	}
+}
+
+void AddContactDialog::updateSubscriptionMessage(const QString &ANick)
+{
+	QString nick;
+	IAccountManager *accountManager = PluginHelper::pluginInstance<IAccountManager>();
+	if (accountManager)
+	{
+		nick = accountManager->findAccountByStream(streamJid())->optionsNode().value(OPV_NICKNAME).toString();
+	}
+	if (nick.isEmpty())
+	{
+		IVCard *vcard = FVCardManager->getVCard(FStreamJid.bare());
+		if (vcard)
+		{
+			if (!vcard->value(VVN_NICKNAME).isEmpty())
+			{
+				nick = vcard->value(VVN_NICKNAME);
+				vcard->unlock();
+			}
+		}
+	}
+	if (nick.isEmpty())
+	{
+		nick = FStreamJid.node();
+	}
+	setSubscriptionMessage(Options::node(OPV_ROSTER_SUBSCRIPTION_MESSAGE).value().toString()
+						   .replace("%(nick)",ANick)
+						   .replace("%(whoami)",nick));
 }
