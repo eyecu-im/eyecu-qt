@@ -128,15 +128,15 @@ bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	{
 		FPositioning = qobject_cast<IPositioning *>(plugin->instance());
 		connect(FPositioning->instance(),SIGNAL(newPositionAvailable(GeolocElement)),SLOT(onNewPositionAvailable(GeolocElement)));
-
-		plugin = APluginManager->pluginInterface("INotifications").value(0, NULL);
-		if (plugin)
-		{
-			FNotifications = qobject_cast<INotifications *>(plugin->instance());
-			connect(FNotifications->instance(), SIGNAL(notificationActivated(int)), SLOT(onNotificationActivated(int)));
-			connect(FNotifications->instance(), SIGNAL(notificationRemoved(int)), SLOT(onNotificationRemoved(int)));
-		}
 	}	
+
+	plugin = APluginManager->pluginInterface("INotifications").value(0, NULL);
+	if (plugin)
+	{
+		FNotifications = qobject_cast<INotifications *>(plugin->instance());
+		connect(FNotifications->instance(), SIGNAL(notificationActivated(int)), SLOT(onNotificationActivated(int)));
+		connect(FNotifications->instance(), SIGNAL(notificationRemoved(int)), SLOT(onNotificationRemoved(int)));
+	}
 
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
@@ -319,15 +319,18 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 
 	QModelIndex index = FRostersViewPlugin->rostersView()->mapFromModel(FRostersViewPlugin->rostersView()->rostersModel()->modelIndexFromRosterIndex(AIndex));
 	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
-	if (labelId == FRosterLabelIdGeoloc)
+	if (FMapContacts)
 	{
-		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
-		return true;
-	}
-	else  if (labelId == FRosterLabelIdProximity)
-	{
-		FMapContacts->showContact(notificationJidForIndex(AIndex).full());
-		return true;
+		if (labelId == FRosterLabelIdGeoloc)
+		{
+			FMapContacts->showContact(geolocJidForIndex(AIndex).full());
+			return true;
+		}
+		else  if (labelId == FRosterLabelIdProximity)
+		{
+			FMapContacts->showContact(notificationJidForIndex(AIndex).full());
+			return true;
+		}
 	}
 	return false;
 }
@@ -753,7 +756,7 @@ void Geoloc::putGeoloc(const Jid &AStreamJid, const Jid &AContactJid, const Geol
 	MercatorCoordinates coords(lat, lon);
 
 	// Contact proximity notification
-	if (AStreamJid!=AContactJid)
+	if (FPositioning && AStreamJid!=AContactJid)
 	{
 		QPair<Jid, MercatorCoordinates> pair(AStreamJid, coords);
 		FContactCoordinates.insert(AContactJid, pair);
