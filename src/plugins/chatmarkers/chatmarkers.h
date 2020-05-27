@@ -75,9 +75,6 @@ protected:
 						  const QString &AMessageId, Type AType);
 	void setAcknowledgedMarker(const Jid &AStreamJid, const Jid &AContactJid,
 							   const QString &AMessageId);
-	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum);
 	void markMessage(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
 	void markMessages(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QStringList &AMessageIds);
