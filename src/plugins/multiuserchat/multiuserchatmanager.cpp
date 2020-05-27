@@ -1280,7 +1280,7 @@ void MultiUserChatManager::onExitRoomActionTriggered(bool)
 		{
 			IMultiUserChatWindow *window = findMultiChatWindow(streamJid.at(i),roomJid.at(i));
 			if (window)
-				window->exitAndDestroy(QString::null);
+				window->leaveRoom();
 		}
 	}
 }

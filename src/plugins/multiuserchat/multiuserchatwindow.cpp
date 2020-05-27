@@ -1073,6 +1073,37 @@ void MultiUserChatWindow::toolTipsForUser(IMultiUser *AUser, QMap<int,QString> &
 	}
 }
 
+// *** <<< eyeCU <<< ***
+void MultiUserChatWindow::leaveRoom()
+{
+	bool confirm = Options::node(OPV_MUC_CONFIRMLEAVE).value().toBool();
+	if (confirm)
+	{
+		bool store = Options::node(OPV_MUC_LEAVESTATUSSTORE).value().toBool();
+		QString status = Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed();
+		ConfirmationDialog *dialog = new ConfirmationDialog(tr("Leave conference"),
+															tr("Leave status message:"),
+															status, store, confirm, this);
+
+		if (dialog->exec() == QDialog::Accepted)
+		{
+			if (store)
+				Options::node(OPV_MUC_LEAVESTATUS).setValue(status);
+			Options::node(OPV_MUC_LEAVESTATUSSTORE).setValue(store);
+			Options::node(OPV_MUC_CONFIRMLEAVE).setValue(confirm);
+			FMultiChat->sendPresence(IPresence::Offline, status, 0);
+			exitAndDestroy(QString::null);
+		}
+		dialog->deleteLater();
+	}
+	else
+	{
+		FMultiChat->sendPresence(IPresence::Offline,Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed(),0);
+		exitAndDestroy(QString::null);
+	}
+}
+// *** >>> eyeCU >>> ***
+
 void MultiUserChatWindow::exitAndDestroy(const QString &AStatus, int AWaitClose)
 {
 	closeTabPage();
@@ -3014,33 +3045,7 @@ void MultiUserChatWindow::onRoomActionTriggered(bool)
 	}
 	else if (action == FExitRoom)
 	{
-// *** <<< eyeCU <<< ***
-		bool confirm = Options::node(OPV_MUC_CONFIRMLEAVE).value().toBool();
-		if (confirm)
-		{
-			bool store = Options::node(OPV_MUC_LEAVESTATUSSTORE).value().toBool();
-			QString status = Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed();
-			ConfirmationDialog *dialog = new ConfirmationDialog(tr("Leave conference"),
-																tr("Leave status message:"),
-																status, store, confirm, this);
-
-			if (dialog->exec() == QDialog::Accepted)
-			{
-				if (store)
-					Options::node(OPV_MUC_LEAVESTATUS).setValue(status);
-				Options::node(OPV_MUC_LEAVESTATUSSTORE).setValue(store);
-				Options::node(OPV_MUC_CONFIRMLEAVE).setValue(confirm);
-				FMultiChat->sendPresence(IPresence::Offline, status, 0);
-				exitAndDestroy(QString::null);
-			}
-			dialog->deleteLater();
-		}
-		else
-		{
-			FMultiChat->sendPresence(IPresence::Offline,Options::node(OPV_MUC_LEAVESTATUS).value().toString().trimmed(),0);
-			exitAndDestroy(QString::null);
-		}
-// *** >>> eyeCU >>> ***
+		leaveRoom();
 	}
 	else if (action == FRequestVoice)
 	{
