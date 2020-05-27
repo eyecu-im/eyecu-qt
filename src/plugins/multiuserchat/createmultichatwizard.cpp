@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <definitions/menuicons.h>
 #include <definitions/resources.h>
+#include <definitions/optionvalues.h>
 #include <definitions/vcardvaluenames.h>
 #include <definitions/statisticsparams.h>
 #include <utils/pluginhelper.h>
@@ -1512,7 +1513,16 @@ void JoinPage::onRegisteredNickRecieved(const QString &AId, const QString &ANick
 		}
 		else if (lneNick->text().isEmpty())
 		{
-			QString nick = Options::fileValue(OFV_LAST_NICK).toString();
+			QString nick;
+			IAccountManager *accountManager = PluginHelper::pluginInstance<IAccountManager>();
+			if (accountManager && accountManager->findAccountByStream(streamJid())->optionsNode().value(OPV_NICKNAME_MUC_DEFAULT).toBool())
+			{
+				nick = accountManager->findAccountByStream(streamJid())->optionsNode().value(OPV_NICKNAME).toString();
+			}
+			if (nick.isEmpty())
+			{
+				nick = Options::fileValue(OFV_LAST_NICK).toString();
+			}
 			if (nick.isEmpty())
 			{
 				IVCardManager *vcardManager = PluginHelper::pluginInstance<IVCardManager>();

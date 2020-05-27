@@ -47,6 +47,8 @@
 #define OPV_ACCOUNT_PUBLISHUSERLOCATION                 "accounts.account.publish-user-location"
 #define OPV_NICKNAME                                    "nickname"
 #define OPV_ACCOUNT_NICKNAME                            "accounts.account.nickname"
+#define OPV_NICKNAME_MUC_DEFAULT                        "nickname-muc-default"
+#define OPV_ACCOUNT_NICKNAME_MUC_DEFAULT                "accounts.account.nickname-muc-default"
 #define OPV_NICKNAMECHANGE                              "nickname-change"
 #define OPV_ACCOUNT_NICKNAMECHANGE                      "accounts.account.nickname-change"
 #define OPV_NICKNAMESET                                 "nickname-set"

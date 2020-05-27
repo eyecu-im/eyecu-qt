@@ -158,6 +158,7 @@ bool Nickname::initSettings()
     Options::setDefaultValue(OPV_ACCOUNT_NICKNAMECHANGE, true);
     Options::setDefaultValue(OPV_ACCOUNT_NICKNAMESET, true);
     Options::setDefaultValue(OPV_ACCOUNT_NICKNAMEBROADCAST, false);
+	Options::setDefaultValue(OPV_ACCOUNT_NICKNAME_MUC_DEFAULT, false);
     if (FOptionsManager)
 		FOptionsManager->insertOptionsDialogHolder(this);
     return true;
@@ -359,6 +360,7 @@ QMultiMap<int, IOptionsDialogWidget *> Nickname::optionsDialogWidgets(const QStr
 		widgets.insertMulti(OHO_ACCOUNTS_ADDITIONAL_NICKNAME, FOptionsManager->newOptionsDialogHeader(tr("User nickname"), AParent));
 		OptionsNode node =  FAccountManager->findAccountById(nodeTree.at(1))->optionsNode();
 		widgets.insertMulti(OWO_ACCOUNTS_ADDITIONAL_NICKNAME, FOptionsManager->newOptionsDialogWidget(node.node(OPV_NICKNAME), tr("Nickname:"), AParent));
+		widgets.insertMulti(OWO_ACCOUNTS_ADDITIONAL_NICKNAME_MUC_DEFAULT, FOptionsManager->newOptionsDialogWidget(node.node(OPV_NICKNAME_MUC_DEFAULT), tr("Set as default for conferences"), AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 		{
 			widgets.insertMulti(OWO_ACCOUNTS_ADDITIONAL_NICKNAME_SET, FOptionsManager->newOptionsDialogWidget(node.node(OPV_NICKNAMESET), tr("Set contact name when added"), AParent));
