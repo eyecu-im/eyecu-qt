@@ -65,6 +65,7 @@ void Geoloc::pluginInfo(IPluginInfo *APluginInfo)
 	APluginInfo->author = "Road Works Software";
 	APluginInfo->homePage = "http://www.eyecu.ru";
 	APluginInfo->dependences.append(PEPMANAGER_UUID);
+	APluginInfo->dependences.append(POSITIONING_UUID);
 }
 
 bool Geoloc::initConnections(IPluginManager *APluginManager, int &AInitOrder)
@@ -319,15 +320,18 @@ bool Geoloc::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QM
 
 	QModelIndex index = FRostersViewPlugin->rostersView()->mapFromModel(FRostersViewPlugin->rostersView()->rostersModel()->modelIndexFromRosterIndex(AIndex));
 	quint32 labelId = FRostersViewPlugin->rostersView()->labelAt(AEvent->pos(),index);
-	if (labelId == FRosterLabelIdGeoloc)
+	if (FMapContacts)
 	{
-		FMapContacts->showContact(geolocJidForIndex(AIndex).full());
-		return true;
-	}
-	else  if (labelId == FRosterLabelIdProximity)
-	{
-		FMapContacts->showContact(notificationJidForIndex(AIndex).full());
-		return true;
+		if (labelId == FRosterLabelIdGeoloc)
+		{
+			FMapContacts->showContact(geolocJidForIndex(AIndex).full());
+			return true;
+		}
+		else  if (labelId == FRosterLabelIdProximity)
+		{
+			FMapContacts->showContact(notificationJidForIndex(AIndex).full());
+			return true;
+		}
 	}
 	return false;
 }
