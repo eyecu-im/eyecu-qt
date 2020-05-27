@@ -271,7 +271,21 @@ static QWebElement findRecursively(const QWebElement &AParent, const QString &AI
 	return QWebElement();
 }
 
-bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+static QList<QWebElement> findRecursivelyAll(const QWebElement &AParent, const QString &AId, const QString &ATagName=QString())
+{
+	QList<QWebElement> result;
+
+	for (QWebElement e = AParent.firstChild(); !e.isNull(); e=e.nextSibling())
+		if ((AId.isEmpty() || e.attribute("id") == AId) &&
+			(ATagName.isEmpty() || e.tagName() == ATagName))
+			result.append(e);
+		else
+			result.append(findRecursivelyAll(e, AId, ATagName));
+
+	return result;
+}
+
+bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl, bool AAll)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view)
@@ -279,28 +293,44 @@ bool AdiumMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, 
 		QWebFrame *frame = view->page()->currentFrame();
 		if (frame)
 		{
-			QWebElement img = findRecursively(frame->documentElement(), AObjectId, "IMG");
-			if (img.isNull())
-				REPORT_ERROR(QString("Failed to set image name: Image with ID:%1 not found!").arg(AObjectId));
+			QWebElement body = frame->documentElement().findFirst("body");
+			if (AAll)
+			{
+				QList<QWebElement> imgs = findRecursivelyAll(body, AObjectId, "IMG");
+				if (imgs.isEmpty())
+					REPORT_ERROR(QString("Failed to set URL for images: Images with ID:%1 not found!").arg(AObjectId));
+				else
+				{
+					for (QList<QWebElement>::Iterator it=imgs.begin(); it!= imgs.end(); ++it)
+						it->setAttribute("src", AUrl);
+					return true;
+				}
+			}
 			else
 			{
-				img.setAttribute("src", AUrl);
-				return true;
+				QWebElement img = findRecursively(body, AObjectId, "IMG");
+				if (!img.isNull())
+				{
+					img.setAttribute("src", AUrl);
+					return true;
+				}
+				else
+					REPORT_ERROR(QString("Failed to set image URL: Image with ID:%1 not found!").arg(AObjectId));
 			}
 		}
 		else
 		{
-			REPORT_ERROR("Failed to set image name: No current frame");
+			REPORT_ERROR("Failed to set image URL: No current frame");
 		}
 	}
 	else
 	{
-		REPORT_ERROR("Failed to set image name: Invalid view");
+		REPORT_ERROR("Failed to set image URL: Invalid view");
 	}
 	return false;
 }
 
-bool AdiumMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle)
+bool AdiumMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle, bool AAll)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view)
@@ -308,15 +338,25 @@ bool AdiumMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectI
 		QWebFrame *frame = view->page()->currentFrame();
 		if (frame)
 		{
-			QWebElement e = findRecursively(frame->documentElement(), AObjectId);
-			if (!e.isNull())
-			{
-				e.setAttribute("title", ATitle);
-				return true;
-			}
+			QList<QWebElement> objs;
+			if (AAll)
+				objs = findRecursivelyAll(frame->documentElement(), AObjectId);
 			else
 			{
+				QWebElement obj = findRecursively(frame->documentElement(), AObjectId);
+				if (obj.isNull())
+					REPORT_ERROR(QString("Failed to set image name: Image with ID:%1 not found!").arg(AObjectId));
+				else
+					objs.append(obj);
+			}
+
+			if (objs.isEmpty())
 				REPORT_ERROR("Failed to set object title: Element with specified ID not found!");
+			else
+			{
+				for (QList<QWebElement>::Iterator it=objs.begin(); it!= objs.end(); ++it)
+					it->setAttribute("title", ATitle);
+				return true;
 			}
 		}
 		else

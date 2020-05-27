@@ -1,8 +1,6 @@
 #ifndef OTROPTIONS_H
 #define OTROPTIONS_H
 
-#include <QStandardItemModel>
-#include <QItemSelection>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/iaccountmanager.h>
@@ -30,29 +28,8 @@ public slots:
 	virtual void apply() override;
 	virtual void reset() override;
 
-protected:
-	void copyFingerprint(const QItemSelectionModel *AModel, int AColumn);
-	void updatePrivKeys();
-	void updatePrivKeyGenerateButton(int AIndex);
-
 protected slots:
-	void updateFingerprints();
-	void onFingerprintDelete();
-	void onFingerprintVerify();
-	void onFingerprintCopyFingerprint();
-	void onFingerprintSelectionChanged(const QItemSelection &ASelected,
-									   const QItemSelection &ADeselected);
-	void onFingerprintContextMenu(const QPoint& APos);
-	void onPrivKeyDelete();
-	void onPrivKeyGenerate();
-	void onPrivKeyCopyFingerprint();
-	void onPrivKeySelectionChanged(const QItemSelection &ASelected,
-								   const QItemSelection &ADeselected);
-	void onPrivKeyContextMenu(const QPoint& APos);
-	void onAccountIndexChanged(int AIndex);
-
-	void onPrivKeyGenerated(const Jid &AStreamJid, const QString &AFingerprint);
-//	void onPrivKeyGenerationFailed(const Jid &AStreamJid);
+	void onKeysClicked();
 
 signals:
 	void modified();
@@ -64,8 +41,7 @@ private:
 	Otr*				FOtr;
 	IPresenceManager*	FPresenceManager;
 	IAccountManager*	FAccountManager;
-	QStandardItemModel* FFingerprintsModel;
-	QStandardItemModel* FPrivKeyModel;
+	IOptionsManager*	FOptionsManager;
 };
 
 #endif // OTROPTIONS_H

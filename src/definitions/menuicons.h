@@ -367,5 +367,17 @@
 #define MNI_OTR_ENCRYPTED               "otr_yes"
 #define MNI_OTR_UNVERFIFIED             "otr_unverified"
 #define MNI_OTR_NO                      "otr_no"
+
+#define MNI_CRYPTO_OFF                  "crypto_off"
+#define MNI_CRYPTO_ON					"crypto_on"
+#define MNI_CRYPTO_ON_NO_TRUST			"crypto_on_no_trust"
+#define MNI_CRYPTO_ON_HAVE_TRUST		"crypto_on_have_trust"
+#define MNI_CRYPTO_ON_ALL_TRUST			"crypto_on_all_trust"
+#define MNI_CRYPTO_ACK                  "crypto_ack"
+#define MNI_CRYPTO_ACK_NO_TRUST			"crypto_ack_no_trust"
+#define MNI_CRYPTO_ACK_HAVE_TRUST		"crypto_ack_have_trust"
+#define MNI_CRYPTO_ACK_ALL_TRUST		"crypto_ack_all_trust"
+#define MNI_CRYPTO_NO_TRUST				"crypto_no_trust"
+
 // >>> eyeCU >>>
 #endif // DEF_MENUICONS_H

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OtrKeys</class>
+ <widget class="QWidget" name="OtrKeys">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>418</width>
+    <height>294</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OTR keys</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="lblPrivateKeys">
+     <property name="text">
+      <string>My private keys</string>
+     </property>
+     <property name="buddy">
+      <cstring>cmbAccount</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="lytPrivateKeys">
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <property name="bottomMargin">
+      <number>10</number>
+     </property>
+     <item row="2" column="1">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="cmbAccount"/>
+     </item>
+     <item row="1" column="0" rowspan="3">
+      <widget class="QTableView" name="tvPrivateKeys"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QToolButton" name="pbPrivKeyGenerate">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Add</string>
+       </property>
+       <property name="whatsThis">
+        <string>Generate private key for the account</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QToolButton" name="pbPrivKeyDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="whatsThis">
+        <string>Delete private key</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QToolButton" name="pbPrivKeyCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy fingerprint</string>
+       </property>
+       <property name="whatsThis">
+        <string>Copies fingerprint of selected private key</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="lblFingerprints">
+     <property name="text">
+      <string>Known fingerprints</string>
+     </property>
+     <property name="buddy">
+      <cstring>tvFingerprints</cstring>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="lytFingerprints">
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <property name="bottomMargin">
+      <number>10</number>
+     </property>
+     <item row="3" column="1" rowspan="5">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0" rowspan="9">
+      <widget class="QTableView" name="tvFingerprints"/>
+     </item>
+     <item row="0" column="1" rowspan="2">
+      <widget class="QToolButton" name="pbFingerprintVerify">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Verify</string>
+       </property>
+       <property name="whatsThis">
+        <string>Verify fingerprint</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QToolButton" name="pbFingerprintDelete">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete</string>
+       </property>
+       <property name="whatsThis">
+        <string>Delete fingerprint</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QToolButton" name="pbFingerprintCopy">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Copy fingerprint</string>
+       </property>
+       <property name="whatsThis">
+        <string>Copies selected fingerprint</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbFingerprintDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onFingerprintDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvFingerprints</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onFingerprintContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>228</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tvPrivateKeys</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onPrivKeyContextMenu(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPrivKeyDelete</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onPrivKeyDelete()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>76</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPrivKeyGenerate</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onPrivKeyGenerate()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFingerprintVerify</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onFingerprintVerify()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cmbAccount</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onAccountIndexChanged(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFingerprintCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onFingerprintCopy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbPrivKeyCopy</sender>
+   <signal>clicked()</signal>
+   <receiver>OtrKeys</receiver>
+   <slot>onPrivKeyCopyFingerprint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>125</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onFingerprintDelete()</slot>
+  <slot>onFingerprintContextMenu(QPoint)</slot>
+  <slot>onPrivKeyContextMenu(QPoint)</slot>
+  <slot>onPrivKeyDelete()</slot>
+  <slot>onPrivKeyGenerate()</slot>
+  <slot>onFingerprintVerify()</slot>
+  <slot>onAccountIndexChanged(int)</slot>
+  <slot>onFingerprintCopy()</slot>
+  <slot>onPrivKeyCopyFingerprint()</slot>
+ </slots>
+</ui>

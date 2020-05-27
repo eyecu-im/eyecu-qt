@@ -40,7 +40,9 @@
 #define ONO_JINGLERTP             1010
 #define ONO_JINGLETRANSPORTS      1015
 #define ONO_MMPLAYER              1020
-#define ONO_OTR                   1025
-#define ONO_SCHEDULER             1030
+#define ONO_P2P                   1030
+#define ONO_P2P_OTR               1031
+#define ONO_P2P_OMEMO             1032
+#define ONO_SCHEDULER             1050
 
 #endif // DEF_OPTIONNODEORDERS_H

@@ -259,12 +259,13 @@ QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) co
 	return QImage();
 }
 
-bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl, bool AAll)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view)
 	{
-		QTextDocument *doc = view->document();
+		bool found = false;
+		QTextDocument *doc = view->document();		
 		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
 			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
 			{
@@ -281,9 +282,13 @@ bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId,
 										fragment.length());
 					image.setName(AUrl);
 					cursor.setCharFormat(image);
-					return true;
+					if (AAll)
+						found = true;
+					else
+						return true;
 				}
 			}
+		return found;
 		REPORT_ERROR("Failed to set image URL: Image with spwcified ID not found!");
 	}
 	else
@@ -293,11 +298,12 @@ bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId,
 	return false;
 }
 
-bool SimpleMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle)
+bool SimpleMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle, bool AAll)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
 	if (view)
 	{
+		bool found = false;
 		QTextDocument *doc = view->document();
 		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
 			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
@@ -313,9 +319,13 @@ bool SimpleMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObject
 										fragment.length());
 					format.setToolTip(ATitle);
 					cursor.setCharFormat(format);
-					return true;
+					if (AAll)
+						found = true;
+					else
+						return true;
 				}
 			}
+		return found;
 		REPORT_ERROR("Failed to set object title: Fragment with spwcified ID not found!");
 	}
 	else

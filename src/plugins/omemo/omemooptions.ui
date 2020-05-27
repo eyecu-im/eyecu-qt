@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OmemoOptions</class>
+ <widget class="QWidget" name="OmemoOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>265</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OMEMO options</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="2" column="0">
+    <widget class="QLabel" name="lblOptOut">
+     <property name="text">
+      <string>Opt-out message</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedOptOut</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lblFallback">
+     <property name="text">
+      <string>Fallback message</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedFallback</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QCheckBox" name="chkOptOutConfirm">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>Confirm</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QPlainTextEdit" name="tedFallback"/>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QPlainTextEdit" name="tedOptOut"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QPushButton" name="pbKeys">
+     <property name="text">
+      <string>&amp;Keys</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>tedFallback</tabstop>
+  <tabstop>chkOptOutConfirm</tabstop>
+  <tabstop>tedOptOut</tabstop>
+  <tabstop>pbKeys</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pbKeys</sender>
+   <signal>clicked()</signal>
+   <receiver>OmemoOptions</receiver>
+   <slot>onKeysClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>340</x>
+     <y>39</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onKeysClicked()</slot>
+ </slots>
+</ui>

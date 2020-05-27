@@ -9,3 +9,15 @@ else {
 	FEATURES = serialport mobility
 	for(feature, FEATURES): exists($$FEATURE_DIR/$${feature}.prf): QT_CONFIG *= $${feature}
 }
+
+greaterThan(QT_VERSION, 0x040700) {
+	packagesExist(QpFFMpeg): QP_FEATURES *= ffmpeg
+}
+else {
+	exists($$QMAKESPEC): FEATURE_DIR=$$QMAKESPEC/../features
+	else: exists($(QMAKESPEC)): FEATURE_DIR=$(QMAKESPEC)/../features
+	else: exists($(QTDIR)): FEATURE_DIR=$(QTDIR)/mkspecs/features
+	else: exists($(UNIXROOT)/usr/share/qt4/mkspecs/features): FEATURE_DIR=$(UNIXROOT)/usr/share/qt4/mkspecs/features
+
+	exists($$FEATURE_DIR/$$qpffmpeg.prf): QP_FEATURES *= ffmpeg
+}

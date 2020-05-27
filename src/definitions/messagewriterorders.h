@@ -14,6 +14,7 @@
 #define MWO_CHATMARKERS                       1100
 #define MWO_ABBREVIATIONS                     600
 #define MWO_EMOJI							  510
+#define MWO_OMEMO							  1000
 // *** >>> eyeCU >>> ***
 #define MWO_EMOTICONS                         500
 

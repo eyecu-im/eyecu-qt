@@ -33,6 +33,10 @@
 //Off-the-Record Messaging
 #define SHO_OTR                       500
 
+//OMEMO
+#define SHO_OMEMO_IN                  300
+#define SHO_OMEMO_OUT                 1400
+
 //Default
 #define SHO_DEFAULT                   1000
 

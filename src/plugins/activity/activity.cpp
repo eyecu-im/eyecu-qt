@@ -36,7 +36,7 @@
 #define TAG_NAME			"activity"
 #define MDR_ACTIVITY_ICON   1000
 
-ActivityData::ActivityData(QString ANameBasic, QString ANameDetailed, QString AText):nameBasic(ANameBasic==NO_ACTIVITY?QString():ANameBasic),nameDetailed(ANameDetailed),text(AText)
+ActivityData::ActivityData(const QString &ANameBasic, const QString &ANameDetailed, const QString &AText):nameBasic(ANameBasic==NO_ACTIVITY?QString():ANameBasic),nameDetailed(ANameDetailed),text(AText)
 {}
 
 ActivityData::ActivityData():nameBasic(),nameDetailed(),text()
@@ -60,7 +60,7 @@ void ActivityData::clear()
 Activity::Activity():
 	FOptionsManager(NULL),
 	FMessageProcessor(NULL),
-	FPEPManager(NULL),
+	FPepManager(NULL),
 	FDiscovery(NULL),
 	FRostersViewPlugin(NULL),
 	FPresenceManager(NULL),
@@ -119,10 +119,8 @@ bool Activity::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
 	IPlugin *plugin = APluginManager->pluginInterface("IPEPManager").value(0,NULL);
 	if (plugin)
-	{
-		FPEPManager = qobject_cast<IPEPManager *>(plugin->instance());
-		FPEPManager->insertNodeHandler(QString(NS_PEP_ACTIVITY), this);
-	} else
+		FPepManager = qobject_cast<IPEPManager *>(plugin->instance());
+	else
 		return false;
 
 	//-----------------------
@@ -253,11 +251,16 @@ bool Activity::initObjects()
 		FNotifications->registerNotificationType(NNT_ACTIVITY, notifyType);
 	}
 
-	Action *action = FPEPManager->addAction(AG_ACTIVITY);
-	action->setText(tr("Activity"));
-	action->setIcon(RSR_STORAGE_MENUICONS, MNI_ACTIVITY);
-	action->setShortcutId(SCT_APP_SETACTIVITY);
-	connect(action,SIGNAL(triggered(bool)),this,SLOT(menuActivity()));
+	if (FPepManager)
+	{
+		FPepManager->insertNodeHandler(QString(NS_PEP_ACTIVITY), this);
+
+		Action *action = FPepManager->addAction(AG_ACTIVITY);
+		action->setText(tr("Activity"));
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_ACTIVITY);
+		action->setShortcutId(SCT_APP_SETACTIVITY);
+		connect(action,SIGNAL(triggered(bool)),this,SLOT(menuActivity()));
+	}
 
 	return true;
 }
@@ -280,7 +283,7 @@ void Activity::menuActivity()
 		ActivityData activityData = activitySelect->activityData();
 		saveComments(activityData);
 		for (QSet<Jid>::ConstIterator it = FStreamsOnline.begin(); it != FStreamsOnline.end(); ++it)
-			if (FPEPManager->isSupported(*it))
+			if (FPepManager->isSupported(*it))
 				sendActivity(activityData, *it);
 	}
 	activitySelect->deleteLater();
@@ -423,10 +426,10 @@ void Activity::sendActivity(const ActivityData &AActivityData, const Jid &AStrea
 		if (Options::node(OPV_PEP_DELETE_PUBLISHEMPTY).value().toBool())
 		{
 			item.appendChild(doc.createElementNS(NS_PEP_ACTIVITY, TAG_NAME));
-			FPEPManager->publishItem(AStreamJid, NS_PEP_ACTIVITY, item);
+			FPepManager->publishItem(AStreamJid, NS_PEP_ACTIVITY, item);
 		}
 		if (Options::node(OPV_PEP_DELETE_RETRACT).value().toBool())
-			FPEPManager->deleteItem(AStreamJid, NS_PEP_ACTIVITY, item);
+			FPepManager->deleteItem(AStreamJid, NS_PEP_ACTIVITY, item);
 	}
 	else
 	{
@@ -443,7 +446,7 @@ void Activity::sendActivity(const ActivityData &AActivityData, const Jid &AStrea
 			activityText.appendChild(doc.createTextNode(AActivityData.text));
 			activityNode.appendChild(activityText);
 		}
-		FPEPManager->publishItem(AStreamJid, NS_PEP_ACTIVITY, item);
+		FPepManager->publishItem(AStreamJid, NS_PEP_ACTIVITY, item);
 	}
 }
 
@@ -538,7 +541,7 @@ void Activity::onRosterIndexContextMenu(const QList<IRosterIndex *> &AIndexes, q
 			if ((*it)->kind() == RIK_STREAM_ROOT)
 			{
 				Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
-				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
+				if (FStreamsOnline.contains(streamJid) && FPepManager->isSupported(streamJid))
 					streamJids.append((*it)->data(RDR_STREAM_JID).toString());
 			}
 		}
@@ -584,7 +587,7 @@ void Activity::onRosterIndexToolTips(IRosterIndex *AIndex, quint32 ALabelId, QMa
 {
 	if ((ALabelId == AdvancedDelegateItem::DisplayId || ALabelId == FRosterLabelId) && FRosterIndexKinds.contains(AIndex->kind()))
 	{
-		 QString label=getLabel(AIndex->data(RDR_FULL_JID).toString());
+		 QString label=getLabel(Jid(AIndex->data(RDR_FULL_JID).toString()));
 		 if (!label.isEmpty())
 			 AToolTips.insert(RTTO_ROSTERSVIEW_ACTIVITY, label);
 	}
@@ -632,7 +635,7 @@ void Activity::onSetActivityByAction(bool)
 		setActivityForAccount(*it);
 }
 
-void Activity::setActivityForAccount(Jid AStreamJid)
+void Activity::setActivityForAccount(const Jid &AStreamJid)
 {
 	ActivityData data = FActivityHash.value(AStreamJid.bare());
 	ActivitySelect *activitySelect = new ActivitySelect(this, FActivityList, FActivityTextLists, data);
@@ -656,7 +659,7 @@ void Activity::onShortcutActivated(const QString &AString, QWidget *AWidget)
 			if ((*it)->kind()==RIK_STREAM_ROOT)
 			{
 				Jid streamJid((*it)->data(RDR_STREAM_JID).toString());
-				if (FStreamsOnline.contains(streamJid) && FPEPManager->isSupported(streamJid))
+				if (FStreamsOnline.contains(streamJid) && FPepManager->isSupported(streamJid))
 					setActivityForAccount(streamJid);
 			}
 	}

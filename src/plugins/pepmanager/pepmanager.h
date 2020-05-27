@@ -42,7 +42,7 @@ public:
     // *** >>> eyeCU >>> ***
 	// IPEPManager
 	virtual bool isSupported(const Jid &AStreamJid) const;
-	virtual bool publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem);
+	virtual bool publishItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem, const IDataForm *AOptions=NULL);
     virtual bool deleteItem(const Jid &AStreamJid, const QString &ANode, const QDomElement &AItem);  // *** <<< eyeCU >>>***
 
 	virtual IPEPHandler* nodeHandler(int AHandleId) const;

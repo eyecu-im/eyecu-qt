@@ -1,4 +1,4 @@
-TEMPLATE = subdirs
+ TEMPLATE = subdirs
 include(pkgtest.inc)
 
 SUBDIRS += optionsmanager
@@ -133,11 +133,11 @@ SUBDIRS += boburlhandler
 SUBDIRS += clienticons
 SUBDIRS += emoji
 SUBDIRS += abbreviations
-contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += mmplayer
-contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += jingle
-contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += jinglertp
-contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += jingletransporticeudp
-contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):exists($(FFMPEGDIR)): SUBDIRS += jingletransportrawudp
+contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):contains(QP_FEATURES, ffmpeg): SUBDIRS += mmplayer
+contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):contains(QP_FEATURES, ffmpeg): SUBDIRS += jingle
+contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):contains(QP_FEATURES, ffmpeg): SUBDIRS += jinglertp
+contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):contains(QP_FEATURES, ffmpeg): SUBDIRS += jingletransporticeudp
+contains(QT_CONFIG, multimedia)|contains(QT_CONFIG, mobility):contains(QP_FEATURES, ffmpeg): SUBDIRS += jingletransportrawudp
 #SUBDIRS += streetview
 #SUBDIRS += streetviewprovidergoogle
 #SUBDIRS += placeview
@@ -148,3 +148,4 @@ SUBDIRS += wizardaccount
 SUBDIRS += wizardtransport
 SUBDIRS += scheduler 
 SUBDIRS += otr
+SUBDIRS += omemo 

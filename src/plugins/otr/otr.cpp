@@ -23,6 +23,7 @@ extern "C"
 #include "otr.h"
 #include "otrclosure.h"
 #include "otroptions.h"
+#include "otrkeys.h"
 
 #include <interfaces/ipresencemanager.h>
 #include <interfaces/ixmppstreammanager.h>
@@ -38,6 +39,7 @@ extern "C"
 #include <definitions/menuicons.h>
 #include <definitions/optionnodes.h>
 #include <definitions/optionnodeorders.h>
+#include <definitions/optionwidgetorders.h>
 #include <definitions/optionvalues.h>
 #include <definitions/resources.h>
 #include <definitions/stanzahandlerorders.h>
@@ -1117,6 +1119,17 @@ bool Otr::initObjects()
 		FNotifications->registerNotificationType(NNT_OTR_VERIFY, notifyType);
 	}
 
+	if (FOptionsManager)
+	{
+		IOptionsDialogNode p2pNode = { ONO_P2P, OPN_P2P, MNI_CRYPTO_ON, tr("P2P Encryption") };
+		FOptionsManager->insertOptionsDialogNode(p2pNode);
+
+		IOptionsDialogNode otrNode = { ONO_P2P_OTR, OPN_P2P_OTR, MNI_OTR_ENCRYPTED, tr("OTR Keys") };
+		FOptionsManager->insertOptionsDialogNode(otrNode);
+
+		FOptionsManager->insertOptionsDialogHolder(this);
+	}
+
 	return true;
 }
 
@@ -1124,12 +1137,7 @@ bool Otr::initSettings()
 {
 	Options::setDefaultValue(OPV_OTR_POLICY, PolicyEnabled);
 	Options::setDefaultValue(OPV_OTR_ENDWHENOFFLINE, false);
-	if (FOptionsManager)
-	{
-		IOptionsDialogNode otrNode = { ONO_OTR, OPN_OTR, MNI_OTR_ENCRYPTED, tr("OTR Messaging") };
-		FOptionsManager->insertOptionsDialogNode(otrNode);
-		FOptionsManager->insertOptionsDialogHolder(this);
-	}
+
 	return true;
 }
 
@@ -1137,8 +1145,16 @@ QMultiMap<int, IOptionsDialogWidget *> Otr::optionsDialogWidgets(const QString &
 {
 	Q_UNUSED(AParent);
 	QMultiMap<int, IOptionsDialogWidget *> widgets;
-	if (ANodeId == OPN_OTR)
-		widgets.insertMulti(ONO_OTR, new OtrOptions(this, AParent));
+	if (ANodeId == OPN_P2P)
+	{
+		widgets.insertMulti(OHO_OTR, FOptionsManager->newOptionsDialogHeader(
+								tr("OTR Messaging"), AParent));
+		widgets.insertMulti(OWO_OTR, new OtrOptions(this, AParent));
+	}
+	else if (ANodeId == OPN_P2P_OTR)
+	{
+		widgets.insertMulti(OWO_OTR, new OtrKeys(this, AParent));
+	}
 	return widgets;
 }
 
@@ -1746,7 +1762,8 @@ bool Otr::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &AStanza
 	else if (AHandlerId == FSHIMessage || AHandlerId == FSHOMessage)
 	{
 		Message message(AStanza);
-		if (message.type() != Message::Chat)
+		if (message.type() != Message::Normal &&
+			message.type() != Message::Chat)
 			return false;
 
 		if (message.body().isEmpty())
