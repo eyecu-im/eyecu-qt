@@ -231,14 +231,17 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			!AMessage.body().isNull() &&
 			!AMessage.isDelayed())
 		{
-			Stanza message("message");
-			QString id=AMessage.id();
-			message.setTo(AMessage.from()).setId(id); // -- Obsolete revision of XEP-0184 --
-			message.addElement("received", NS_RECEIPTS).setAttribute("id", id);
-			Message msg(message);
-			FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
-			if (isSupportUnknown(AStreamJid, AMessage.fromJid()))
-				FSupported[AStreamJid].insert(AMessage.fromJid());
+			if (AMessage.stanza().firstElement("failed", NS_EYECU).isNull()) // Ignore failed messages
+			{
+				Stanza message("message");
+				QString id=AMessage.id();
+				message.setTo(AMessage.from()).setId(id); // -- Obsolete revision of XEP-0184 --
+				message.addElement("received", NS_RECEIPTS).setAttribute("id", id);
+				Message msg(message);
+				FMessageProcessor->sendMessage(AStreamJid, msg, IMessageProcessor::DirectionOut);
+				if (isSupportUnknown(AStreamJid, AMessage.fromJid()))
+					FSupported[AStreamJid].insert(AMessage.fromJid());
+			}
 		}
 		else
 		{

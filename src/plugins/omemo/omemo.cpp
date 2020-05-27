@@ -755,6 +755,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 														if (decryptedContent.isEmpty())
 															decryptedContent = QString(	"<content xmlns='" NS_SCE "'>" \
 																						" <payload>" \
+																						"  <failed xmlns='" NS_EYECU "'/>" \
 																						"  <body>%1</body>" \
 																						" </payload>" \
 																						"</content>")
@@ -764,14 +765,14 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 															if (!isActiveSession(AStreamJid, AStanza.fromJid().bare()))
 																setActiveSession(AStreamJid, AStanza.fromJid().bare());
 														QDomDocument content;
-														if (content.setContent(decryptedContent))
+														if (content.setContent(decryptedContent, true))
 														{
 //TODO: Process all the fiels in <content/> element
 															QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
 															if (!body.isNull())
 																AStanza.element().removeChild(body);
 															QDomElement root = content.documentElement();
-															if (root.tagName()=="content" && root.attribute("xmlns")==NS_SCE)
+															if (root.tagName()=="content" && root.namespaceURI()==NS_SCE)
 															{
 																QDomElement payload = root.firstChildElement("payload");
 																if (!payload.isNull())

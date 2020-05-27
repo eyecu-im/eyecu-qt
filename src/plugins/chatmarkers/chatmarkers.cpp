@@ -558,39 +558,42 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 			!stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
 			!AMessage.body().isNull())
 		{
-			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool())
-				markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
-
-			if (Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool())
+			if (AMessage.stanza().firstElement("failed", NS_EYECU).isNull()) // Ignore failed messages
 			{
-				IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
-				if (window && window->isActiveTabPage())
-					markMessage(AStreamJid, AMessage.from(), Displayed, AMessage.id());
-				else
+				if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool())
+					markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
+
+				if (Options::node(OPV_MARKERS_SEND_DISPLAYED).value().toBool())
 				{
-					if (FLastMarkableDisplayHash[AStreamJid][AMessage.from()].isEmpty())
-						FLastMarkableDisplayHash[AStreamJid][AMessage.from()].append(AMessage.id());
+					IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AMessage.from());
+					if (window && window->isActiveTabPage())
+						markMessage(AStreamJid, AMessage.from(), Displayed, AMessage.id());
 					else
-						FLastMarkableDisplayHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+					{
+						if (FLastMarkableDisplayHash[AStreamJid][AMessage.from()].isEmpty())
+							FLastMarkableDisplayHash[AStreamJid][AMessage.from()].append(AMessage.id());
+						else
+							FLastMarkableDisplayHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+					}
 				}
+
+				bool isMarkedBefore = !getLastMarkableAcknowledge(AStreamJid,
+																  AMessage.fromJid().bare()).isEmpty();
+
+				if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
+					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
+				else
+					FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
+
+				if (Options::node(OPV_MARKERS_SEND_ACK).value().toBool() && !isMarkedBefore)
+					emit markable(AStreamJid, AMessage.from());
+
+				if (Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool() &&
+					isSupported(AStreamJid, AMessage.from()) &&
+					!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
+					!AMessage.body().isNull())
+					FAcknowledgeHash[AMessage.from()][AMessage.to()].append(AMessage.id());
 			}
-
-			bool isMarkedBefore = !getLastMarkableAcknowledge(AStreamJid,
-															  AMessage.fromJid().bare()).isEmpty();
-
-			if (FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].isEmpty())
-				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].append(AMessage.id());
-			else
-				FLastMarkableAcknowledgeHash[AStreamJid][AMessage.from()].last() = AMessage.id();
-
-			if (Options::node(OPV_MARKERS_SEND_ACK).value().toBool() && !isMarkedBefore)
-				emit markable(AStreamJid, AMessage.from());
-
-			if (Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool() &&
-				isSupported(AStreamJid, AMessage.from()) &&
-				!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
-				!AMessage.body().isNull())
-				FAcknowledgeHash[AMessage.from()][AMessage.to()].append(AMessage.id());
 		}
 		else
 		{
