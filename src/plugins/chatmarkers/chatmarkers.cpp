@@ -203,7 +203,7 @@ void ChatMarkers::registerDiscoFeatures(bool ARegister)
 		FDiscovery->removeDiscoFeature(NS_CHATMARKERS);
 }
 
-static QString calcId(const Jid &AFrom, const Jid &ATo, const QString &AMessageId)
+static QString calcHash(const Jid &AFrom, const Jid &ATo, const QString &AMessageId)
 {
 	return QString::fromLatin1(QCryptographicHash::hash(QString("%1|%2|%3").arg(AFrom.full())
 																		   .arg(ATo.full())
@@ -216,7 +216,7 @@ void ChatMarkers::setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
 						   const Jid &AContactJid, const QString &AMessageId,
 						   const QString &AImage, const QString &ATitle)
 {
-	QString hash = calcId(AStreamJid, AContactJid, AMessageId);
+	QString hash = calcHash(AStreamJid, AContactJid, AMessageId);
 	AWindow->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(AImage)).toString());
 	AWindow->viewWidget()->setObjectTitle(hash, ATitle);
 }
@@ -596,13 +596,13 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 		{
 			QDomElement received=stanza.firstElement("received", NS_CHATMARKERS);
 			if (!received.isNull())
-				setReceived(AStreamJid, AMessage.from(), received.attribute("id"));
+				setMessageMarker(AStreamJid, AMessage.from(), received.attribute("id"), Received);
 			QDomElement displayed=stanza.firstElement("displayed", NS_CHATMARKERS);
 			if(!displayed.isNull())
-				setDisplayed(AStreamJid, AMessage.from(), displayed.attribute("id"));
+				setMessageMarker(AStreamJid, AMessage.from(), displayed.attribute("id"), Displayed);
 			QDomElement acknowledged=stanza.firstElement("acknowledged", NS_CHATMARKERS);
 			if (!acknowledged.isNull())
-			   setAcknowledged(AStreamJid, AMessage.from(), acknowledged.attribute("id"));
+				setMessageMarker(AStreamJid, AMessage.from(), acknowledged.attribute("id"), Acknowledged);
 		}
 	}
 	else
@@ -650,7 +650,7 @@ bool ChatMarkers::writeMessageToText(int AOrder, Message &AMessage, QTextDocumen
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-		image.setProperty(QpXhtml::ObjectId, calcId(AMessage.from(), AMessage.to(), AMessage.id()));
+		image.setProperty(QpXhtml::ObjectId, calcHash(AMessage.from(), AMessage.to(), AMessage.id()));
 		cursor.insertImage(image);
 
 		return true;
@@ -693,27 +693,21 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 }
 
 void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
-								   const QString &AMessageId,
-								   ChatMarkers::Type AType)
+								   const QString &AMessageId, ChatMarkers::Type AType)
 {
 	if (FRequestHash.contains(AStreamJid))
 	{
 		Jid contactJid;
-		QStringList *ids;
 		if (FRequestHash[AStreamJid].contains(AContactJid) &&
 			FRequestHash[AStreamJid][AContactJid].contains(AMessageId))
-		{
 			contactJid = AContactJid;
-			ids = &FRequestHash[AStreamJid][AContactJid];
-		}
 		else if (FRequestHash[AStreamJid].contains(AContactJid.bare()) &&
 				 FRequestHash[AStreamJid][AContactJid.bare()].contains(AMessageId))
-		{
 			contactJid = AContactJid.bare();
-			ids = &FRequestHash[AStreamJid][AContactJid.bare()];
-		}
 		else
 			return;
+
+		const QStringList &ids = FRequestHash[AStreamJid][contactJid];
 
 		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
 
@@ -724,7 +718,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 
 		if (!receiptsSupported || AType!=Received)
 		{
-			int index(ids->indexOf(AMessageId)), i(index), idsNum(0);
+			int index(ids.indexOf(AMessageId)), i(index), idsNum(0);
 
 			IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
 
@@ -750,7 +744,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 						   : AType == Displayed ? FLastDisplayed[AStreamJid][contactJid]
 						   :					  FLastAcknowledged[AStreamJid][contactJid];
 
-			for (; i>=0 && !ids->at(i).isEmpty() && ids->at(i) != lastId; --i)
+			for (; i>=0 && !ids.at(i).isEmpty() && ids.at(i) != lastId; --i)
 			{
 				if (receiptsSupported &&
 					!FDeliveredHash[AStreamJid][AContactJid].contains(AMessageId))
@@ -782,7 +776,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 						break;
 				}
 
-				setImage(window, AStreamJid, AContactJid, ids->at(i), image, title);
+				setImage(window, AStreamJid, contactJid, ids.at(i), image, title);
 			}
 
 			if (idsNum)
@@ -831,21 +825,6 @@ void ChatMarkers::setAcknowledgedMarker(const Jid &AStreamJid, const Jid &AConta
 			}
 		}
 	}
-}
-
-void ChatMarkers::setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
-{
-	setMessageMarker(AStreamJid, AContactJid, AMessageId, Received);
-}
-
-void ChatMarkers::setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
-{
-	setMessageMarker(AStreamJid, AContactJid, AMessageId, Displayed);
-}
-
-void ChatMarkers::setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
-{
-	setMessageMarker(AStreamJid, AContactJid, AMessageId, Acknowledged);
 }
 
 void ChatMarkers::showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum)
