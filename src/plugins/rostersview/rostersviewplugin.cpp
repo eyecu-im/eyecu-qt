@@ -185,6 +185,7 @@ bool RostersViewPlugin::initSettings()
 	Options::setDefaultValue(OPV_ROSTER_VIEWMODE,IRostersView::ViewFull);
 	Options::setDefaultValue(OPV_ROSTER_SORTMODE,IRostersView::SortByStatus);
     // *** <<< eyeCU <<< ***
+	Options::setDefaultValue(OPV_ROSTER_DBLCLICK,IRostersView::ComposeMessage);
 	Options::setDefaultValue(OPV_ROSTER_AVATARS_SIZE, IAvatars::AvatarNormal);
 	Options::setDefaultValue(OPV_ROSTER_STATUSDISPLAY, true);
 	Options::setDefaultValue(OPV_ROSTER_ALTERNATIONHIGHLIGHT, false);
@@ -213,6 +214,11 @@ QMultiMap<int, IOptionsDialogWidget *> RostersViewPlugin::optionsDialogWidgets(c
 		widgets.insertMulti(OWO_ROSTER_HIDESCROLLBAR,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_HIDESCROLLBAR),tr("Hide scroll bars in contact list window"),AParent));
 // *** <<< eyeCU <<< ***
 		widgets.insertMulti(OWO_ROSTER_ALTERNATIONHIGHLIGHT,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_ALTERNATIONHIGHLIGHT),tr("Highlight alternation"),AParent));
+		QComboBox *comboBox=new QComboBox(AParent);
+		comboBox->addItem(tr("Rename contact"), IRostersView::RenameContact);
+		comboBox->addItem(tr("Open chat dialog"), IRostersView::OpenChat);
+		comboBox->addItem(tr("Compose message"), IRostersView::ComposeMessage);
+		widgets.insertMulti(OWO_ROSTER_DBLCLICK,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_DBLCLICK),tr("Doubleclick on contact"),comboBox,AParent));
 		widgets.insertMulti(OHO_ROSTER_EXTRA_ICONS, FOptionsManager->newOptionsDialogHeader(tr("Extra icons"), AParent));
 		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
 		{

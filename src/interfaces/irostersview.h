@@ -86,6 +86,11 @@ public:
 		SortByStatus,
 		SortAlphabetically,
 	};
+        enum DblClickMod {
+                RenameContact,
+                OpenChat,
+                ComposeMessage,
+        };
 public:
 	virtual QTreeView *instance() = 0;
 	//IndexManagment

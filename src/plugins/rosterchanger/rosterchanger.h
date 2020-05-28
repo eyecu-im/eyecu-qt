@@ -32,11 +32,12 @@ class RosterChanger :
 	public IOptionsDialogHolder,
 	public IRostersEditHandler,
 	public IRostersDragDropHandler,
+	public IRostersClickHooker,
 	public IXmppUriHandler,
 	public AdvancedDelegateEditProxy
 {
 	Q_OBJECT;
-	Q_INTERFACES(IPlugin IRosterChanger IOptionsDialogHolder IRostersDragDropHandler IRostersEditHandler IXmppUriHandler);
+	Q_INTERFACES(IPlugin IRosterChanger IOptionsDialogHolder IRostersDragDropHandler IRostersEditHandler IRostersClickHooker IXmppUriHandler);
 #if QT_VERSION >= 0x050000
 	Q_PLUGIN_METADATA(IID "org.jrudevels.vacuum.IRosterChanger")
 #endif
@@ -75,6 +76,9 @@ public:
 	virtual void subscribeContact(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage = QString::null, bool ASilently = false);
 	virtual void unsubscribeContact(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage = QString::null, bool ASilently = false);
 	virtual IAddContactDialog *showAddContactDialog(const Jid &AStreamJid);
+	//IRostersClickHooker
+	virtual bool rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
+	virtual bool rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent);
 signals:
 	void addContactDialogCreated(IAddContactDialog *ADialog);
 	void subscriptionDialogCreated(ISubscriptionDialog *ADialog);

@@ -9,6 +9,7 @@
 #define RCHO_GEOLOC                         400
 #define RCHO_CLIENTICONS                    400
 #define RCHO_TUNE                           500
+#define RCHO_ROSTERCHANGER_RENAME           600
 /*** >>> eyeCU >>> ***/
 #define RCHO_SERVICEDISCOVERY               1000
 #define RCHO_CHATMESSAGEHANDLER             1000

@@ -71,6 +71,8 @@
 #define   OWO_ROSTER_SHOWSELF                     125
 #define   OWO_ROSTER_STATUSDISPLAY                135
 #define   OWO_ROSTER_ALTERNATIONHIGHLIGHT         145
+#define   OWO_ROSTER_DBLCLICK                     156
+
 #define OHO_ROSTER_EXTRA_ICONS                    200
 #define   OWO_ROSTER_CLIENTICONS                  210
 #define   OWO_ROSTER_PEP_MOOD                     220

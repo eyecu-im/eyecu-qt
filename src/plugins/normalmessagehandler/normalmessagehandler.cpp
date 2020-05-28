@@ -413,7 +413,7 @@ bool NormalMessageHandler::rosterIndexSingleClicked(int AOrder, IRosterIndex *AI
 bool NormalMessageHandler::rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
 {
 	int indexKind = AIndex->kind();
-	if (AOrder==RCHO_NORMALMESSAGEHANDLER && AEvent->modifiers()==Qt::NoModifier)
+	if (AOrder==RCHO_NORMALMESSAGEHANDLER && AEvent->modifiers()==Qt::NoModifier && Options::node(OPV_ROSTER_DBLCLICK).value().toInt()==IRostersView::ComposeMessage)
 	{
 		QString streamJid = AIndex->data(RDR_STREAM_JID).toString();
 		if (isAnyPresenceOpened(QStringList() << streamJid))

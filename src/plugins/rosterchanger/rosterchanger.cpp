@@ -17,6 +17,7 @@
 #include <definitions/rosternotifyorders.h>
 #include <definitions/rosteredithandlerorders.h>
 #include <definitions/rosterdragdropmimetypes.h>
+#include <definitions/rosterclickhookerorders.h>
 #include <definitions/multiuserdataroles.h>
 #include <definitions/notificationtypes.h>
 #include <definitions/notificationdataroles.h>
@@ -175,6 +176,7 @@ bool RosterChanger::initObjects()
 	{
 		FRostersView->insertDragDropHandler(this);
 		FRostersView->insertEditHandler(REHO_ROSTERCHANGER_RENAME,this);
+		FRostersView->insertClickHooker(RCHO_ROSTERCHANGER_RENAME,this);
 		Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_ADDCONTACT,FRostersView->instance());
 		Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_RENAME,FRostersView->instance());
 		Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_REMOVEFROMGROUP,FRostersView->instance());
@@ -2003,6 +2005,26 @@ void RosterChanger::onMultiUserContextMenu(IMultiUserChatWindow *AWindow, IMulti
 			AMenu->addAction(action,AG_MUCM_ROSTERCHANGER_ADD,true);
 		}
 	}
+}
+
+bool RosterChanger::rosterIndexSingleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
+{
+	Q_UNUSED(AOrder); Q_UNUSED(AIndex); Q_UNUSED(AEvent);
+	return false;
+}
+
+bool RosterChanger::rosterIndexDoubleClicked(int AOrder, IRosterIndex *AIndex, const QMouseEvent *AEvent)
+{
+	Q_UNUSED(AEvent);
+	if (AOrder==RCHO_ROSTERCHANGER_RENAME && FRostersView && AIndex->kind()==RIK_CONTACT && Options::node(OPV_ROSTER_DBLCLICK).value().toInt()==IRostersView::RenameContact)
+	{
+		if (!FRostersView->editRosterIndex(AIndex,RDR_NAME))
+		{
+			renameContact(AIndex->data(RDR_STREAM_JID).toString(),AIndex->data(RDR_PREP_BARE_JID).toString(),AIndex->data(RDR_NAME).toString());
+		}
+		return true;
+	}
+	return false;
 }
 
 void RosterChanger::onNotificationActivated(int ANotifyId)

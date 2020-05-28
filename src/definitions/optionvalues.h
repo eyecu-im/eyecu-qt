@@ -293,6 +293,7 @@
 #define OPV_ROSTER_AUTOSUBSCRIBE                        "roster.auto-subscribe"
 #define OPV_ROSTER_AUTOUNSUBSCRIBE                      "roster.auto-unsubscribe"
 #define OPV_ROSTER_SUBSCRIPTION_MESSAGE                 "roster.subscription-message"
+#define OPV_ROSTER_DBLCLICK                             "roster.doubleclick"
 
 // RosterSearch
 #define OPV_ROSTER_SEARCH_ENABLED                       "roster.search.enabled"
