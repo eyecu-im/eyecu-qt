@@ -283,6 +283,7 @@ void TabWindow::createActions()
 	FNextTab = new Action(FWindowMenu);
 	FNextTab->setText(tr("Next Tab"));
 	FNextTab->setShortcutId(SCT_TABWINDOW_NEXTTAB);
+
 	FWindowMenu->addAction(FNextTab,AG_MWTW_MWIDGETS_TAB_ACTIONS);
 	connect(FNextTab,SIGNAL(triggered(bool)),SLOT(onActionTriggered(bool)));
 

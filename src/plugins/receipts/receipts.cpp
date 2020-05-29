@@ -114,13 +114,13 @@ bool Receipts::initObjects()
 {
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
-	if (FNotifications)
-	{
-		INotificationType notifyType;
+    if (FNotifications)
+    {
+        INotificationType notifyType;
 		notifyType.order = NTO_DELIVERED_NOTIFY;
-		if (FIconStorage)
+        if (FIconStorage)
 			notifyType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
-		notifyType.title = tr("When message delivery notification recieved");
+        notifyType.title = tr("When message delivery notification received");
 		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		notifyType.kindDefs = notifyType.kindMask;
 		FNotifications->registerNotificationType(NNT_DELIVERED, notifyType);
@@ -314,14 +314,14 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
 	Q_UNUSED(AStreamJid)
 	Q_UNUSED(ADirectionIn)
 
-	if (!AMessage.stanza().firstElement("recieved", NS_RECEIPTS).isNull())
-		return true;
-	if (!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-	{
-		AMessage.detach();
-		AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("request", NS_RECEIPTS));
-	}
-	return false;
+    if (!AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull())
+        return true;
+    if (!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+    {
+        AMessage.detach();
+        AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("request", NS_RECEIPTS));
+    }
+    return false;
 }
 
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
