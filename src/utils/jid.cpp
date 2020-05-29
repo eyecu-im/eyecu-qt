@@ -33,7 +33,7 @@ QString stringPrepare(const Stringprep_profile *AProfile, const QString &AString
 		if (stringprep(buffer.data(),buffer.capacity(),(Stringprep_profile_flags)0, AProfile) == STRINGPREP_OK)
 			return QString::fromUtf8(buffer.constData());
 	}
-	return QString::null;
+	return QString();
 }
 
 JidData::JidData()
@@ -412,11 +412,11 @@ Jid &Jid::parseFromString(const QString &AJidStr)
 			int at = AJidStr.lastIndexOf(CharDog, slash-AJidStr.size()-1);
 
 			// Build normal JID
-			dd->FFull = QString::null;
+			dd->FFull = QString();
 
 			if (at > 0)
 			{
-				dd->FFull += AJidStr.left(at);
+				dd->FFull += AJidStr.left(at).toLower();
 				dd->FNode = QStringRef(&dd->FFull,0,dd->FFull.size());
 				dd->FFull.append(CharDog);
 			}
@@ -428,7 +428,7 @@ Jid &Jid::parseFromString(const QString &AJidStr)
 			if (slash-at-1 > 0)
 			{
 				int nodeSize = dd->FFull.size();
-				dd->FFull += AJidStr.mid(at+1,slash-at-1);
+				dd->FFull += AJidStr.mid(at+1,slash-at-1).toLower();
 				dd->FDomain = QStringRef(&dd->FFull,nodeSize,dd->FFull.size()-nodeSize);
 			}
 			else
@@ -458,7 +458,7 @@ Jid &Jid::parseFromString(const QString &AJidStr)
 			}
 
 			//Build prepared JID
-			dd->FPrepFull = QString::null;
+			dd->FPrepFull = QString();
 
 			if (dd->FNode.string())
 			{
@@ -538,7 +538,7 @@ Jid &Jid::parseFromString(const QString &AJidStr)
 		}
 		else
 		{
-			dd->FFull = dd->FPrepFull = QString::null;
+			dd->FFull = dd->FPrepFull = QString();
 			dd->FBare = dd->FPrepBare = QStringRef(NULL,0,0);
 			dd->FNode = dd->FPrepNode = QStringRef(NULL,0,0);
 			dd->FDomain = dd->FPrepDomain = QStringRef(NULL,0,0);

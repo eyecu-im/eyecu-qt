@@ -34,7 +34,7 @@
   <message>
    <location filename="../../plugins/commands/commanddialog.cpp" line="152"/>
    <source>Executing command &apos;%1&apos; at %2</source>
-   <translation>تنفيذ الأمر &apos;%1&apos; atفي %2</translation>
+   <translation>تنفيذ الأمر &apos;%1&apos; في %2</translation>
   </message>
   <message>
    <location filename="../../plugins/commands/commanddialog.cpp" line="190"/>
@@ -44,7 +44,7 @@
   <message>
    <location filename="../../plugins/commands/commanddialog.cpp" line="195"/>
    <source>Error: Can&apos;t send request to host.</source>
-   <translation>خطأ: لا يمكن إرسال الطلب</translation>
+   <translation>خطأ: لا يمكن إرسال الطلب.</translation>
   </message>
  </context>
  <context>

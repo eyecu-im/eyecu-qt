@@ -10,13 +10,13 @@
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="60"/>
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="74"/>
    <source>Waiting for host response ...</source>
-   <translation type="unfinished"/>
+   <translation>في انتظار استجابة المضيف ...</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="62"/>
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="76"/>
    <source>Error: Can&apos;t send request to host.</source>
-   <translation type="unfinished"/>
+   <translation>خطأ: لا يمكن إرسال طلب إلى المضيف.</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="87"/>
@@ -31,7 +31,7 @@
   <message>
    <location filename="../../plugins/gateways/addlegacycontactdialog.cpp" line="118"/>
    <source>Requested operation failed: %1</source>
-   <translation type="unfinished"/>
+   <translation>فشلت العملية المطلوبة: %1</translation>
   </message>
  </context>
  <context>
@@ -64,7 +64,7 @@
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="321"/>
    <source>Log Out</source>
-   <translation type="unfinished"/>
+   <translation>تسجيل الخروج</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="549"/>
@@ -75,7 +75,7 @@
    <location filename="../../plugins/gateways/gateways.cpp" line="734"/>
    <location filename="../../plugins/gateways/gateways.cpp" line="904"/>
    <source>Remove transport and its contacts</source>
-   <translation type="unfinished"/>
+   <translation>إزالة الناقل وجهات الاتصال به</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="735"/>
@@ -85,7 +85,7 @@
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="741"/>
    <source>Remove transports and their contacts</source>
-   <translation type="unfinished"/>
+   <translation>إزالة وسائل النقل وجهات الاتصال الخاصة بهم</translation>
   </message>
   <message numerus="yes">
    <location filename="../../plugins/gateways/gateways.cpp" line="742"/>
@@ -105,22 +105,22 @@
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick names</source>
-   <translation type="unfinished"/>
+   <translation>إعادة تعيين الألقاب</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="849"/>
    <source>Reset nick name</source>
-   <translation type="unfinished"/>
+   <translation>إعادة تعيين اللقب</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="862"/>
    <source>Login on transport</source>
-   <translation type="unfinished"/>
+   <translation>تسجيل الدخول إلى الناقل</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="871"/>
    <source>Logout from transport</source>
-   <translation type="unfinished"/>
+   <translation>تسجيل الخروج من الناقل</translation>
   </message>
   <message>
    <location filename="../../plugins/gateways/gateways.cpp" line="891"/>

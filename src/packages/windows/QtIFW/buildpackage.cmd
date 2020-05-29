@@ -1,15 +1,15 @@
 echo off
 
-set qtdir=h:\qt\5.5\msvc2013_64
+set qtdir=h:\qt\5.5\msvc2013
 set MSVCREDIST=h:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\1033\
 set OPENSSLDIR=h:\openssl
-set FFMPEGDIR=h:\ffmpeg.x64
+set FFMPEGDIR=h:\ffmpeg
 
-set platform=x64
+set platform=x86
 set qt=5
 set packagename=eyecu-win
 set devpackagename=%packagename%-dev
-set version=2.0.0.20181027
+set version=2.0.0.20190601
 set packagefilename=%packagename%-%platform%-%version%
 set devpackagefilename=%devpackagename%-%version%
 set packages=packages
@@ -82,8 +82,8 @@ xcopy %qtdir%\bin\QtSerialPort.dll %packages%\org.digia.qt4.serialport\data\ /Y
 xcopy %qtdir%\bin\QpFFMpeg2.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
 xcopy %qtdir%\bin\QpGeo2.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
 xcopy %qtdir%\bin\QpUtil2.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce1.dll %packages%\ru.purplesoft.qtpurple.ice\data\ /Y
+xcopy %qtdir%\bin\QpDns1.dll %packages%\ru.purplesoft.qtpurple.dns\data\ /Y
 
 set qt_files=phonon4.dll QtCore4.dll QtGui4.dll QtNetwork4.dll QtSvg4.dll QtXml4.dll
 set targetqt=qt4
@@ -130,8 +130,8 @@ xcopy %qtdir%\bin\Qt5SerialPort.dll %packages%\org.digia.qt5.serialport\data\ /Y
 xcopy %qtdir%\bin\QpFFMpeg.dll %packages%\ru.purplesoft.qtpurple.ffmpeg\data\ /Y
 xcopy %qtdir%\bin\QpGeo.dll %packages%\ru.purplesoft.qtpurple.geo\data\ /Y
 xcopy %qtdir%\bin\QpUtil.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
-xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.util\data\ /Y
+xcopy %qtdir%\bin\QpIce.dll %packages%\ru.purplesoft.qtpurple.ice\data\ /Y
+xcopy %qtdir%\bin\QpDns.dll %packages%\ru.purplesoft.qtpurple.dns\data\ /Y
 
 set qt_files=Qt5Core.dll Qt5Gui.dll Qt5Widgets.dll Qt5Network.dll Qt5Svg.dll Qt5Xml.dll
 set targetqt=qt5
@@ -322,7 +322,6 @@ call copyplugins ru.rwsoftware.eyecu.commands commands
 set files=commands.def.xml commands.png
 call copyresources2 ru.rwsoftware.eyecu.commands menuicons\shared
 
-
 call copyplugins ru.rwsoftware.eyecu.remotecontrol remotecontrol
 
 set pluginlist=filetransfer filestreamsmanager datastreamsmanager
@@ -426,9 +425,16 @@ call copyplugins ru.rwsoftware.eyecu.attention attention
 set files=attention.def.xml attention.png bell.gif exclamation.gif
 call copyresources2 ru.rwsoftware.eyecu.attention menuicons\shared
 
-call copyplugins ru.rwsoftware.eyecu.receipts receipts
-set files=receipts.def.xml receipts.png
-call copyresources2 ru.rwsoftware.eyecu.receipts menuicons\shared
+set files=chatmarkers.def.xml emptybox.png messagereceived.png
+call copyresources2 ru.rwsoftware.eyecu.messagemarkers menuicons\shared
+call copyplugins ru.rwsoftware.eyecu.messagemarkers.receipts receipts
+set files=messagedisplayed.png messageacknowledged.png messageacknowledge.png
+call copyresources2 ru.rwsoftware.eyecu.messagemarkers.chat menuicons\shared
+call copyplugins ru.rwsoftware.eyecu.messagemarkers.chat chatmarkers
+
+call copyplugins ru.rwsoftware.eyecu.p2p.otr otr
+set files=otr.def.xml otr_unverified.png otr_yes.png otr_no.png
+call copyresources2 ru.rwsoftware.eyecu.p2p.otr menuicons\shared
 
 call copyplugins ru.rwsoftware.eyecu.mmplayer mmplayer
 set files=mmplayer.def.xml mmplayer.png mmplayereject.png

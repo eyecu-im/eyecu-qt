@@ -9,32 +9,32 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="29"/>
    <source>Host</source>
-   <translation type="unfinished"/>
+   <translation>المضيف</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="46"/>
    <source>Port</source>
-   <translation type="unfinished"/>
+   <translation>المنفذ</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="56"/>
    <source>Default</source>
-   <translation type="unfinished"/>
+   <translation>افتراضي</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="69"/>
    <source>Credentials</source>
-   <translation type="unfinished"/>
+   <translation>وثائق التفويض</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="85"/>
    <source>Username</source>
-   <translation type="unfinished"/>
+   <translation>اسم المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.ui" line="95"/>
    <source>Password</source>
-   <translation type="unfinished"/>
+   <translation>كلمة المرور</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/addserver.cpp" line="10"/>
@@ -67,42 +67,42 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="56"/>
    <source>&amp;Remove</source>
-   <translation type="unfinished"/>
+   <translation>&amp;إزالة</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="76"/>
    <source>Add &amp;STUN...</source>
-   <translation type="unfinished"/>
+   <translation>إضافة &amp;STUN...</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="96"/>
    <source>Add &amp;TURN...</source>
-   <translation type="unfinished"/>
+   <translation>إضافة &amp;TURN...</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="132"/>
    <source>Type</source>
-   <translation type="unfinished"/>
+   <translation>النوع</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="140"/>
    <source>Address</source>
-   <translation type="unfinished"/>
+   <translation>العنوان</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="145"/>
    <source>Port</source>
-   <translation type="unfinished"/>
+   <translation>المنفذ</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="150"/>
    <source>Username</source>
-   <translation type="unfinished"/>
+   <translation>اسم المستخدم</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="155"/>
    <source>Password</source>
-   <translation type="unfinished"/>
+   <translation>كلمة المرور</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="166"/>
@@ -119,7 +119,7 @@
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="211"/>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="234"/>
    <source> msec</source>
-   <translation type="unfinished"/>
+   <translation>ميللي ثانية</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="191"/>
@@ -139,7 +139,7 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/iceoptions.ui" line="231"/>
    <source>None</source>
-   <translation type="unfinished"/>
+   <translation>لا شيء</translation>
   </message>
  </context>
  <context>
@@ -153,7 +153,7 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="25"/>
    <source>Implements XEP-0176: Jingle ICE-UDP transport Method</source>
-   <translation type="unfinished"/>
+   <translation>أداة XEP-0176: طريقة نقل Jingle ICE-UDP</translation>
   </message>
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="232"/>
@@ -163,7 +163,7 @@
   <message>
    <location filename="../../plugins/jingletransporticeudp/jingletransporticeudp.cpp" line="245"/>
    <source>Allows using ICE-UDP transport in Jingle sesions</source>
-   <translation type="unfinished"/>
+   <translation>يتيح استخدام النقل ICE-UDP في جلسات Jingle</translation>
   </message>
  </context>
 </TS>

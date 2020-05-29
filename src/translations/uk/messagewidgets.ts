@@ -106,7 +106,7 @@
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="96"/>
    <source>Alt+M</source>
    <comment>Toggle /me command</comment>
-   <translation type="unfinished"/>
+   <translation>Alt+M</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="97"/>
@@ -133,24 +133,24 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="99"/>
    <source>Send chat message</source>
-   <translation type="unfinished"/>
+   <translation>Надіслати повідомлення чату</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="99"/>
    <source>Return</source>
    <comment>Send chat message</comment>
-   <translation type="unfinished"/>
+   <translation>Повернення</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="100"/>
    <source>Send single message</source>
-   <translation type="unfinished"/>
+   <translation>Надіслати одне повідомлення</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="100"/>
    <source>Ctrl+Return</source>
    <comment>Send single message</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+Return</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="119"/>
@@ -165,52 +165,52 @@
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="138"/>
    <source>Message window view</source>
-   <translation type="unfinished"/>
+   <translation>Вид вікна повідомлення</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="139"/>
    <source>Load last messages from history</source>
-   <translation type="unfinished"/>
+   <translation>Завантаження останніх повідомлень з історії</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="140"/>
    <source>Show message windows together with contacts list</source>
-   <translation type="unfinished"/>
+   <translation>Показати вікна повідомлень разом зі списком контактів</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="141"/>
    <source>Show message windows in tab window</source>
-   <translation type="unfinished"/>
+   <translation>Показати вікна повідомлень у вікні вкладки</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="142"/>
    <source>Automatically resize messages input field</source>
-   <translation type="unfinished"/>
+   <translation>Автоматична зміна розміру поля введення повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="143"/>
    <source>Minimum number of lines in messages input field:</source>
-   <translation type="unfinished"/>
+   <translation>Мінімальна кількість рядків у полі вводу повідомлень:</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="145"/>
    <source>Message window behavior</source>
-   <translation type="unfinished"/>
+   <translation>Режим вікна повідомлень</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="146"/>
    <source>Show contacts status changes</source>
-   <translation type="unfinished"/>
+   <translation>Показувати зміни статусу контактів</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="147"/>
    <source>Save contacts status messages in history</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти повідомлення історії контактів в історії</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="149"/>
    <source>Information bar icons</source>
-   <translation type="unfinished"/>
+   <translation>Значки інформаційної панелі</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/messagewidgets.cpp" line="384"/>
@@ -269,7 +269,7 @@
   <message numerus="yes">
    <location filename="../../plugins/messagewidgets/normalwindow.cpp" line="356"/>
    <source>Selected %n contact(s)</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Вибрано %n контакт</numerusform><numerusform>Вибрано %n контактів</numerusform><numerusform>Вибрано %n контактів</numerusform><numerusform>Вибрано %n контактів</numerusform></translation>
   </message>
  </context>
  <context>
@@ -340,7 +340,7 @@
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="383"/>
    <source>Sort Contacts by Status</source>
-   <translation type="unfinished"/>
+   <translation>Сортувати контакти за статусом</translation>
   </message>
   <message>
    <location filename="../../plugins/messagewidgets/receiverswidget.cpp" line="437"/>

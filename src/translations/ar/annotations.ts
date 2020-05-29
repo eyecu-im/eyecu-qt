@@ -4,23 +4,23 @@
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="47"/>
    <source>Annotations</source>
-   <translation type="unfinished"/>
+   <translation>الملاحظات</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="48"/>
    <source>Allows to add comments to the contacts in the roster</source>
-   <translation>التعليقات</translation>
+   <translation>يتيح إضافة ملاحظات إلى جهات الاتصال في القائمة</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="124"/>
    <location filename="../../plugins/annotations/annotations.cpp" line="388"/>
    <source>Annotation</source>
-   <translation type="unfinished"/>
+   <translation>ملاحظة</translation>
   </message>
   <message>
    <location filename="../../plugins/annotations/annotations.cpp" line="423"/>
    <source>&lt;b&gt;Annotation:&lt;/b&gt;</source>
-   <translation>&lt;b&gt;التعليقات:&lt;/b&gt;</translation>
+   <translation>&lt;b&gt;الملاحظات:&lt;/b&gt;</translation>
   </message>
  </context>
  <context>
@@ -28,7 +28,7 @@
   <message>
    <location filename="../../plugins/annotations/editnotedialog.cpp" line="13"/>
    <source>Annotation - %1</source>
-   <translation>التعليقات - %1</translation>
+   <translation>الملاحظة - %1</translation>
   </message>
  </context>
  <context>

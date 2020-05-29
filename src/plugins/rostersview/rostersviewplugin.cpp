@@ -48,6 +48,7 @@ RostersViewPlugin::RostersViewPlugin()
 	FShowOfflineAction = NULL;
 	FShowStatus = true;
 	FShowResource = true;
+	FExpandStateActive = 1;
 	FStartRestoreExpandState = false;
 
 	FViewSavedState.sliderPos = 0;
@@ -395,6 +396,24 @@ void RostersViewPlugin::startRestoreExpandState()
 	}
 }
 
+bool RostersViewPlugin::isExpandStateActive() const
+{
+	return FExpandStateActive > 0;
+}
+
+void RostersViewPlugin::setExpandStateActive(bool active)
+{
+	if (active)
+		FExpandStateActive++;
+	else
+		FExpandStateActive--;
+
+	if (!active && FExpandStateActive == 0)
+		emit expandStateActiveChanged(false);
+	else if (active && FExpandStateActive == 1)
+		emit expandStateActiveChanged(true);
+}
+
 void RostersViewPlugin::restoreExpandState(const QModelIndex &AParent)
 {
 	QAbstractItemModel *curModel = FRostersView->model();
@@ -429,7 +448,7 @@ QString RostersViewPlugin::rootExpandId(const QModelIndex &AIndex) const
 QString RostersViewPlugin::indexExpandId(const QModelIndex &AIndex) const
 {
 	int role = FExpandableKinds.value(AIndex.data(RDR_KIND).toInt());
-	return role>0 ? AIndex.data(role).toString() : QString::null;
+	return role>0 ? AIndex.data(role).toString() : QString();
 }
 
 void RostersViewPlugin::loadExpandState(const QModelIndex &AIndex)
@@ -449,18 +468,21 @@ void RostersViewPlugin::loadExpandState(const QModelIndex &AIndex)
 
 void RostersViewPlugin::saveExpandState(const QModelIndex &AIndex)
 {
-	QString indexId = indexExpandId(AIndex);
-	if (!indexId.isEmpty())
+	if (FExpandStateActive > 0)
 	{
-		QString rootId = rootExpandId(AIndex);
-		if (!rootId.isEmpty())
+		QString indexId = indexExpandId(AIndex);
+		if (!indexId.isEmpty())
 		{
-			bool expanded = FRostersView->isExpanded(AIndex);
-			bool defExpanded = FExpandableDefaults.value(AIndex.data(RDR_KIND).toInt(),true);
-			if (expanded != defExpanded)
-				FExpandStates[rootId][indexId] = expanded;
-			else
-				FExpandStates[rootId].remove(indexId);
+			QString rootId = rootExpandId(AIndex);
+			if (!rootId.isEmpty())
+			{
+				bool expanded = FRostersView->isExpanded(AIndex);
+				bool defExpanded = FExpandableDefaults.value(AIndex.data(RDR_KIND).toInt(),true);
+				if (expanded != defExpanded)
+					FExpandStates[rootId][indexId] = expanded;
+				else
+					FExpandStates[rootId].remove(indexId);
+			}
 		}
 	}
 }
@@ -754,7 +776,7 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 				if (!pItem.isNull())
 				{
 					QString resource = pItem.itemJid.hasResource() ? pItem.itemJid.resource() : pItem.itemJid.uBare();
-					QString statusIcon = FStatusIcons!=NULL ? FStatusIcons->iconFileName(streamJid,pItem.itemJid) : QString::null;
+					QString statusIcon = FStatusIcons!=NULL ? FStatusIcons->iconFileName(streamJid,pItem.itemJid) : QString();
 					AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME+orderShift,QString("<img src='%1'> %2 (%3)").arg(statusIcon).arg(HTML_ESCAPE(resource)).arg(pItem.priority));
 					
 					if (!pItem.status.isEmpty())
@@ -777,9 +799,9 @@ void RostersViewPlugin::onRostersViewIndexToolTips(IRosterIndex *AIndex, quint32
 			bool subscription_ask = AIndex->data(RDR_SUBSCRIPTION_ASK).toString() == SUBSCRIPTION_SUBSCRIBE;
 			QString resource = contactJid.hasResource() ? contactJid.resource() : contactJid.uBare();
 
-			QString statusIconSet = FStatusIcons!=NULL ? FStatusIcons->iconsetByJid(contactJid) : QString::null;
-			QString statusIconKey = FStatusIcons!=NULL ? FStatusIcons->iconKeyByStatus(show,subscription,subscription_ask) : QString::null;
-			QString statusIconFile = FStatusIcons!=NULL ? FStatusIcons->iconFileName(statusIconSet,statusIconKey) : QString::null;
+			QString statusIconSet = FStatusIcons!=NULL ? FStatusIcons->iconsetByJid(contactJid) : QString();
+			QString statusIconKey = FStatusIcons!=NULL ? FStatusIcons->iconKeyByStatus(show,subscription,subscription_ask) : QString();
+			QString statusIconFile = FStatusIcons!=NULL ? FStatusIcons->iconFileName(statusIconSet,statusIconKey) : QString();
 			AToolTips.insert(RTTO_ROSTERSVIEW_RESOURCE_NAME,QString("<img src='%1'> %2 (%3)").arg(statusIconFile).arg(HTML_ESCAPE(resource)).arg(priority));
 
 			QString statusText = AIndex->data(RDR_STATUS).toString();

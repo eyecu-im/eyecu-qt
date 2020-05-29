@@ -218,8 +218,6 @@ QString EditListsDialog::ruleName(const IPrivacyRule &ARule)
 		return tr("%1: if %2 = '%3' then %4 [%5 ]").arg(ARule.order).arg(tr(ARule.type.toLatin1())).arg(ARule.value).arg(!ARule.action.isEmpty() ? tr(ARule.action.toLatin1()) : tr("<action>")).arg(stanzas);
 	else
 		return tr("%1: always %2 [%3 ]").arg(ARule.order).arg(!ARule.action.isEmpty() ? tr(ARule.action.toLatin1()) : tr("<action>")).arg(stanzas);
-
-	return QString::null;
 }
 
 void EditListsDialog::updateListRules()
@@ -530,14 +528,14 @@ void EditListsDialog::onRuleConditionTypeChanged(int AIndex)
 		}
 		ui.cmbValue->setEditable(true);
 		ui.cmbValue->blockSignals(false);
-		ui.cmbValue->setEditText(QString::null);
+		ui.cmbValue->setEditText(QString());
 	}
 }
 
 void EditListsDialog::onCurrentListItemChanged(QListWidgetItem *ACurrent, QListWidgetItem *APrevious)
 {
 	Q_UNUSED(APrevious);
-	FListName = ACurrent!=NULL ? ACurrent->data(DR_NAME).toString() : QString::null;
+	FListName = ACurrent!=NULL ? ACurrent->data(DR_NAME).toString() : QString();
 	updateListRules();
 }
 

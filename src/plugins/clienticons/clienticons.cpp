@@ -13,7 +13,7 @@
 #include "clienticons.h"
 
 #define PROPERTY_CLIENT "client"
-#define SHC_PRESENCE  "/presence/c[@xmlns="NS_CAPS"]"
+#define SHC_PRESENCE  "/presence/c[@xmlns=" NS_CAPS "]"
 
 #define ADR_STREAM_JID          Action::DR_StreamJid
 #define ADR_CONTACT_JID         Action::DR_Parametr1

@@ -7,94 +7,94 @@
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="78"/>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="131"/>
    <source>Multimedia player</source>
-   <translation type="unfinished"/>
+   <translation>Мультимедійний програвач</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="37"/>
    <source>Allows to play multimedia streams during file transfer</source>
-   <translation type="unfinished"/>
+   <translation>Дозволяє програвати мультимедійні потоки під час передачі файлів</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="67"/>
    <source>Show/Hide player window</source>
-   <translation type="unfinished"/>
+   <translation>Показати / сховати вікно програвача</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="67"/>
    <source>F9</source>
    <comment>Show/Hide</comment>
-   <translation type="unfinished"/>
+   <translation>F9</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="68"/>
    <source>Open/Stop</source>
-   <translation type="unfinished"/>
+   <translation>Відкрити / Зупинити</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="68"/>
    <source>Return</source>
    <comment>Open/Stop</comment>
-   <translation type="unfinished"/>
+   <translation>Повернення</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="69"/>
    <source>Pause/Play</source>
-   <translation type="unfinished"/>
+   <translation>Пауза / відтворення</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="69"/>
    <source>Space</source>
    <comment>Pause/Play</comment>
-   <translation type="unfinished"/>
+   <translation>Пробіл</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="70"/>
    <source>Mute/Unmute</source>
-   <translation type="unfinished"/>
+   <translation>Вимкнути / Увімкнути звук</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="70"/>
    <source>M</source>
    <comment>Mute/Unmute</comment>
-   <translation type="unfinished"/>
+   <translation>M</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="71"/>
    <source>Volume up</source>
-   <translation type="unfinished"/>
+   <translation>Збільшити гучність</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="71"/>
    <source>Up</source>
    <comment>Volume up</comment>
-   <translation type="unfinished"/>
+   <translation>Угору</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="72"/>
    <source>Volume down</source>
-   <translation type="unfinished"/>
+   <translation>Зменшити гучність </translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="72"/>
    <source>Down</source>
    <comment>Volume down</comment>
-   <translation type="unfinished"/>
+   <translation>Вниз</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="73"/>
    <source>Show options dialog</source>
-   <translation type="unfinished"/>
+   <translation>Показати діалогове вікно параметрів</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="73"/>
    <source>Ctrl+O</source>
    <comment>Show options dialog</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+O</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/mmplayer.cpp" line="144"/>
    <source>Play multimedia data during file transfer</source>
-   <translation type="unfinished"/>
+   <translation>Програвання мультимедійних даних під час передачі файлів</translation>
   </message>
  </context>
  <context>
@@ -102,32 +102,32 @@
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="14"/>
    <source>Multimedia player options</source>
-   <translation type="unfinished"/>
+   <translation>Опції мультимедійного програвача</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="20"/>
    <source>Aspect ratio mode</source>
-   <translation type="unfinished"/>
+   <translation>Режим співвідношення сторін</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="44"/>
    <source>Do not keep aspect ratio</source>
-   <translation type="unfinished"/>
+   <translation>Не зберігати співвідношення сторін</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="49"/>
    <source>Keep aspect ratio</source>
-   <translation type="unfinished"/>
+   <translation>Зберегти співвідношення сторін</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="54"/>
    <source>Keep aspect ratio by expanding</source>
-   <translation type="unfinished"/>
+   <translation>Зберігайте співвідношення сторін, розширюючи</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/multimediaplayeroptions.ui" line="62"/>
    <source>Smooth video resize</source>
-   <translation type="unfinished"/>
+   <translation>Плавна зміна розміру відео</translation>
   </message>
  </context>
  <context>
@@ -135,136 +135,136 @@
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="47"/>
    <source>Current time</source>
-   <translation type="unfinished"/>
+   <translation>Поточний час</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="60"/>
    <source>Play position</source>
-   <translation type="unfinished"/>
+   <translation>Програвати з позиції</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="70"/>
    <source>Duration</source>
-   <translation type="unfinished"/>
+   <translation>Тривалість</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="136"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="247"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="432"/>
    <source>Pause</source>
-   <translation type="unfinished"/>
+   <translation>Пауза</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="164"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="619"/>
    <source>Mute</source>
-   <translation type="unfinished"/>
+   <translation>Вимкнути звук</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="189"/>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="220"/>
    <source>Volume</source>
-   <translation type="unfinished"/>
+   <translation>Гучність</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="266"/>
    <source>The number of tracks in the playlist</source>
-   <translation type="unfinished"/>
+   <translation>Кількість доріжок у списку відтворення</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.ui" line="316"/>
    <source>Options</source>
-   <translation type="unfinished"/>
+   <translation>Параметри</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="69"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="190"/>
    <source>Multimedia player - %1</source>
-   <translation type="unfinished"/>
+   <translation>Мультимедійний програвач - %1</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="72"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="443"/>
    <source>Open...</source>
-   <translation type="unfinished"/>
+   <translation>Відкрито...</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="77"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="437"/>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="446"/>
    <source>Play</source>
-   <translation type="unfinished"/>
+   <translation>Грати</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="159"/>
    <source>%1 (%3)</source>
-   <translation type="unfinished"/>
+   <translation>%1 (%3)</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="161"/>
    <source>%1 - %2 (%3)</source>
-   <translation type="unfinished"/>
+   <translation>%1 - %2 (%3)</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="164"/>
    <source>%1</source>
-   <translation type="unfinished"/>
+   <translation>%1</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="166"/>
    <source>%1 - %2</source>
-   <translation type="unfinished"/>
+   <translation>%1 - %2</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="187"/>
    <source>%1 - Multimedia player - %2</source>
    <comment>%1: Track name; %2: Application name</comment>
-   <translation type="unfinished"/>
+   <translation>%1 - мультимедійний програвач -%2</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="391"/>
    <source>File open error!</source>
-   <translation type="unfinished"/>
+   <translation>Помилка відкриття файла!</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="391"/>
    <source>An error occured while opening &quot;%1&quot;</source>
-   <translation type="unfinished"/>
+   <translation>Під час відкриття &quot;%1&quot; сталася помилка</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="429"/>
    <source>Stop</source>
-   <translation type="unfinished"/>
+   <translation>Стоп</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="468"/>
    <source>Select file</source>
-   <translation type="unfinished"/>
+   <translation>Виберіть файл</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="469"/>
    <source>All Supported Formats</source>
-   <translation type="unfinished"/>
+   <translation>Усі підтримувані формати</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="470"/>
    <source>Audio</source>
-   <translation type="unfinished"/>
+   <translation>Аудіо</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="471"/>
    <source>Video</source>
-   <translation type="unfinished"/>
+   <translation>Відео</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="472"/>
    <source>All Files</source>
-   <translation type="unfinished"/>
+   <translation>Усі файли</translation>
   </message>
   <message>
    <location filename="../../plugins/mmplayer/playerwindow.cpp" line="606"/>
    <source>Unmute</source>
-   <translation type="unfinished"/>
+   <translation>Увімкнути звук</translation>
   </message>
  </context>
 </TS>

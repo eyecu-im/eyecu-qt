@@ -118,6 +118,7 @@
 #define OPV_MESSAGES_ARCHIVESTATUS                      "messages.archive-status"
 #define OPV_MESSAGES_EDITORAUTORESIZE                   "messages.editor-auto-resize"
 #define OPV_MESSAGES_EDITORMINIMUMLINES                 "messages.editor-minimum-lines"
+#define OPV_MESSAGES_EDITORBASEFONTSIZE                 "messages.editor-base-font-size"
 #define OPV_MESSAGES_CLEANCHATTIMEOUT                   "messages.clean-chat-timeout"
 #define OPV_MESSAGES_COMBINEWITHROSTER                  "messages.combine-with-roster"
 #define OPV_MESSAGES_TABWINDOWS_ROOT                    "messages.tab-windows"
@@ -137,6 +138,7 @@
 // Emoji
 #define OPV_MESSAGES_EMOJI_ICONSET                      "messages.emoji.iconset"
 #define OPV_MESSAGES_EMOJI_SKINCOLOR                    "messages.emoji.skin-color"
+#define OPV_MESSAGES_EMOJI_GENDER						"messages.emoji.gender"
 #define OPV_MESSAGES_EMOJI_SIZE_MENU                    "messages.emoji.size.menu"
 #define OPV_MESSAGES_EMOJI_SIZE_CHAT                    "messages.emoji.size.chat"
 #define OPV_MESSAGES_EMOJI_RECENT                       "messages.emoji.recent"
@@ -270,6 +272,7 @@
 #define OPV_ROSTER_ROOT                                 "roster"
 #define OPV_ROSTER_VIEWMODE                             "roster.view-mode"
 #define OPV_ROSTER_SORTMODE                             "roster.sort-mode"
+#define OPV_ROSTER_MINIMIZEONCLOSE                      "roster.minimize-on-close"
 #define OPV_ROSTER_SHOWOFFLINE                          "roster.show-offline"
 #define OPV_ROSTER_SHOWRESOURCE                         "roster.show-resource"
 #define OPV_ROSTER_HIDESCROLLBAR                        "roster.hide-scrollbar"
@@ -398,9 +401,13 @@
 #define OPV_MESSAGES_GEOLOC_DISPLAY                     "messages.geoloc.display"
 #define OPV_GEOLOC_EXTSENDER                            "geoloc.extsender"
 
-//Receipts
-#define OPV_RECEIPTS_SHOW                               "receipts.show"
-#define OPV_RECEIPTS_SEND                               "receipts.send"
+//Message Delivery Receipts / Chat Markers
+#define OPV_MARKERS_SEND_RECEIVED						"markers.send.received"
+#define OPV_MARKERS_SEND_DISPLAYED						"markers.send.dsiplayed"
+#define OPV_MARKERS_SEND_ACK							"markers.send.ack"
+
+#define OPV_MARKERS_SHOW_LEVEL							"markers.show.level"
+#define OPV_MARKERS_SHOW_ACKOWN							"markers.show.ack_own"
 
 // POI
 #define OPV_POI_SHOW                                    "poi.show"
@@ -623,6 +630,11 @@
 #define OPV_JINGLE_RTP_RTCP								"jingle.rtp.rtcp"
 #define OPV_JINGLE_RTP_RINGING							"jingle.rtp.ringing"
 #define OPV_JINGLE_RTP_CODECS_USED                      "jingle.rtp.codecs.used"
+
+// Entryption
+// Off-the-Record Messaging
+#define OPV_OTR_POLICY									"otr.policy"
+#define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
 
 // Client Icons
 #define OPV_ROSTER_CLIENTICON_SHOW                      "roster.clienticon.show"

@@ -16,27 +16,30 @@ class SelectIconWidget :
 public:
 	SelectIconWidget(IEmoji::Category ACategory, uint AColumns, uint ARows, IEmoji *AEmoji, QWidget *AParent = NULL);
 	~SelectIconWidget();
-	void updateLabels(const QString &AColor, bool AForce=false);
+	void updateLabels();
 	bool hasColored() const {return FHasColored;}
-	void invalidate() {FNotReady = true;}
+//	void invalidate() {FNotReady = true;}
 signals:
-	void iconSelected(const QString &AIconKey, const QString &AIconText);
+	void iconSelected(const QString &AIconKey);
 	void hasColoredChanged(bool AHasColored);
+	void hasGenderedChanged(bool AHasGendered);
 protected:
 	void createLabels();
 protected:
-// QObject interface
-	virtual bool eventFilter(QObject *AWatched, QEvent *AEvent);
 // QWidget interface
 	virtual void showEvent(QShowEvent *AShowEvent);
+protected slots:
+	void onActionTriggered(QAction *AAction);
+
 private:
 	IEmoji *FEmoji;
 	QLabel *FPressed;
 	QGridLayout *FLayout;
-	const QMap<uint, EmojiData> FEmojiMap;
-	QMap<QLabel *, QString> FKeyByLabel;
-	QString FColor;
+	const QMap<uint, IEmojiData*> FEmojiMap;
+	int	FColor;
 	bool FHasColored;
+	int	FGender;
+	bool FHasGendered;
 	bool FNotReady;
 	uint FColumns;
 	uint FRows;

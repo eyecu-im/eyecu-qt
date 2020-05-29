@@ -60,6 +60,7 @@
 
 //Node = ON_ROSTERVIEW
 #define OHO_ROSTER_VIEW                           100
+#define   OWO_ROSTER_MINIMIZE_ON_CLOSE            101
 #define   OWO_ROSTER_SHOWOFFLINE                  110
 #define   OWO_ROSTER_MERGESTREAMS                 120
 #define   OWO_ROSTER_SHOWRESOURCE                 130
@@ -105,8 +106,8 @@
 #define   OWO_MESSAGES_CHATSTATESENABLED          360
 #define   OWO_MESSAGES_UNNOTIFYALLNORMAL          370
 // *** <<< eyeCU <<< ***
-#define   OWO_MESSAGES_RECEIPTS_SHOW              400
-#define   OWO_MESSAGES_RECEIPTS_SEND              410
+#define OHO_MESSAGES_MARKERS					  400
+#define   OWO_MESSAGES_MARKERS					  410
 #define OHO_MESSAGES_INFOBAR_ICONS                450
 #define   OWO_MESSAGES_INFOBAR_CLIENTICONS        452
 #define   OWO_MESSAGES_INFOBAR_MOOD               454

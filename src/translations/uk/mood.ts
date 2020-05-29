@@ -4,147 +4,147 @@
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="71"/>
    <source>Afraid</source>
-   <translation type="unfinished"/>
+   <translation>Боюсь</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="71"/>
    <source>Amazed</source>
-   <translation type="unfinished"/>
+   <translation>Вражений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="71"/>
    <source>Amorous</source>
-   <translation type="unfinished"/>
+   <translation>Закоханий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="71"/>
    <source>Angry</source>
-   <translation type="unfinished"/>
+   <translation>Сердитий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="72"/>
    <source>Annoyed</source>
-   <translation type="unfinished"/>
+   <translation>Роздратований</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="72"/>
    <source>Anxious</source>
-   <translation type="unfinished"/>
+   <translation>Занепокоєний</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="72"/>
    <source>Aroused</source>
-   <translation type="unfinished"/>
+   <translation>Збуджений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="72"/>
    <source>Ashamed</source>
-   <translation type="unfinished"/>
+   <translation>Соромно</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="73"/>
    <source>Bored</source>
-   <translation type="unfinished"/>
+   <translation>Нудно</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="73"/>
    <source>Brave</source>
-   <translation type="unfinished"/>
+   <translation>Сміливий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="73"/>
    <source>Calm</source>
-   <translation type="unfinished"/>
+   <translation>Спокійний</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="73"/>
    <source>Cautious</source>
-   <translation type="unfinished"/>
+   <translation>Обережний</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="74"/>
    <source>Cold</source>
-   <translation type="unfinished"/>
+   <translation>Змерзлий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="74"/>
    <source>Confident</source>
-   <translation type="unfinished"/>
+   <translation>Впевнений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="74"/>
    <source>Confused</source>
-   <translation type="unfinished"/>
+   <translation>Збентежений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="74"/>
    <source>Contemplative</source>
-   <translation type="unfinished"/>
+   <translation>Задумливий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="75"/>
    <source>Contented</source>
-   <translation type="unfinished"/>
+   <translation>Задоволений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="75"/>
    <source>Cranky</source>
-   <translation type="unfinished"/>
+   <translation>Роздратований</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="75"/>
    <source>Crazy</source>
-   <translation type="unfinished"/>
+   <translation>Божевільний</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="75"/>
    <source>Creative</source>
-   <translation type="unfinished"/>
+   <translation>Творчий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="76"/>
    <source>Curious</source>
-   <translation type="unfinished"/>
+   <translation>Допитливий</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="76"/>
    <source>Dejected</source>
-   <translation type="unfinished"/>
+   <translation>Пригнічений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="76"/>
    <source>Depressed</source>
-   <translation type="unfinished"/>
+   <translation>Депресія</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="76"/>
    <source>Disappointed</source>
-   <translation type="unfinished"/>
+   <translation>Розчарований</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="77"/>
    <source>Disgusted</source>
-   <translation type="unfinished"/>
+   <translation>Відчуваю огиду</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="77"/>
    <source>Dismayed</source>
-   <translation type="unfinished"/>
+   <translation>Збентежений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="77"/>
    <source>Distracted</source>
-   <translation type="unfinished"/>
+   <translation>Спантеличений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="77"/>
    <source>Embarrassed</source>
-   <translation type="unfinished"/>
+   <translation>Збентежений</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="78"/>
    <source>Envious</source>
-   <translation type="unfinished"/>
+   <translation>Заздрість</translation>
   </message>
   <message>
    <location filename="../../plugins/mood/mood.cpp" line="78"/>

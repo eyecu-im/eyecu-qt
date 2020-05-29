@@ -7,6 +7,17 @@
 
 OptionsDialogWidget::OptionsDialogWidget(const OptionsNode &ANode, const QString &ACaption, QWidget *AParent) : QWidget(AParent)
 {
+	FCaption = NULL;
+	FCheckBox = NULL;
+	FLineEdit = NULL;
+	FComboBox = NULL;
+	FFontComboBox = NULL;
+	FSpinBox = NULL;
+	FTimeEdit = NULL;
+	FDateEdit = NULL;
+	FDateTimeEdit = NULL;
+	FDoubleSpinBox = NULL;
+
 	QVariant::Type valueType = ANode.value().type();
 	if (valueType == QVariant::Bool)
 	{
@@ -225,8 +236,6 @@ void OptionsDialogWidget::rigisterEditor(const OptionsNode &ANode, const QString
 	FValue = ANode.value();
 	QHBoxLayout *hlayout = new QHBoxLayout(this);
 
-	FCaption = NULL;
-
 	FCheckBox = qobject_cast<QCheckBox *>(AEditor);
 	FLineEdit = qobject_cast<QLineEdit *>(AEditor);
 
@@ -244,7 +253,7 @@ void OptionsDialogWidget::rigisterEditor(const OptionsNode &ANode, const QString
 	{
 		FCheckBox->setChecked(FValue.toBool());
 		connect(FCheckBox,SIGNAL(stateChanged(int)),SIGNAL(modified()));
-		insertEditor(QString::null,FCheckBox,hlayout);
+		insertEditor(QString(),FCheckBox,hlayout);
 	}
 	else if (FLineEdit != NULL)
 	{

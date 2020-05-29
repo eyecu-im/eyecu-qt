@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Message Delivery Receipts Polish Translation</DisplayName>
+ <Description>Message Delivery Receipts Polish translation</Description>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.messagemarkers.receipts.pl</Name>
+ <AutoDependOn>ru.rwsoftware.eyecu.messagemarkers.receipts,ru.rwsoftware.eyecu.translations.pl</AutoDependOn>
+ <Virtual>true</Virtual>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

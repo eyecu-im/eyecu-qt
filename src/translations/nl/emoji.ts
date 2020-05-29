@@ -2,57 +2,57 @@
  <context>
   <name>Emoji</name>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="51"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="110"/>
    <source>Emoji</source>
    <translation>Emoji</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="52"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="111"/>
    <source>Allows to use emoji in messages</source>
    <translation>Stelt je in staat om emoji te gebruiken in berichten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="87"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="146"/>
    <source>Smileys &amp; People</source>
    <translation>Smileys en mensen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="88"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="147"/>
    <source>Animals &amp; Nature</source>
    <translation>Dieren en natuur</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="89"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="148"/>
    <source>Food &amp; Drink</source>
    <translation>Eten en drinken</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="90"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="149"/>
    <source>Travel &amp; Places</source>
    <translation>Reizen en locaties</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="91"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="150"/>
    <source>Symbols</source>
    <translation>Symbolen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="92"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="151"/>
    <source>Activities</source>
    <translation>Activiteiten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="94"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="153"/>
    <source>Flags</source>
    <translation>Vlaggen</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="93"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="152"/>
    <source>Objects</source>
    <translation>Objecten</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/emoji.cpp" line="166"/>
+   <location filename="../../plugins/emoji/emoji.cpp" line="234"/>
    <source>Message windows</source>
    <translation>Berichtvensters</translation>
   </message>
@@ -94,23 +94,39 @@
  <context>
   <name>SelectIconMenu</name>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="125"/>
    <source>Fitzpatrick type %1</source>
    <comment>https://en.wikipedia.org/wiki/Fitzpatrick_scale</comment>
    <translation>Fitzpatrick type %1</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="143"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="140"/>
    <source>Skin color</source>
    <translation>Huidskleur</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="112"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
+   <source>Male</source>
+   <translation>Man</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
+   <source>Female</source>
+   <translation>Vrouw</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="168"/>
+   <source>Gender</source>
+   <translation>Geslacht</translation>
+  </message>
+  <message>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="124"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="148"/>
    <source>Default</source>
    <translation>Standaard</translation>
   </message>
   <message>
-   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="129"/>
+   <location filename="../../plugins/emoji/selecticonmenu.cpp" line="126"/>
    <source>1 or 2</source>
    <translation>1 of 2</translation>
   </message>

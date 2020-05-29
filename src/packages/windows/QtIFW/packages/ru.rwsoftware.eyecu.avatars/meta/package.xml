@@ -2,10 +2,10 @@
 <Package>
  <DisplayName>Avatars</DisplayName>
  <Description>Allows to set and display avatars</Description>
- <Version>2.0.0</Version>
- <ReleaseDate>2018-10-15</ReleaseDate>
+ <Version>2.1.0</Version>
+ <ReleaseDate>2019-05-15</ReleaseDate>
  <Name>ru.rwsoftware.eyecu.avatars</Name>
- <UpdateText>Fix avatar display in MUC. Implement round and rounded avatars. Replace empty avatar image with the one with transparent background.</UpdateText>
+ <UpdateText>Updated work with new version of Rosters View plugin</UpdateText>
  <Dependencies>ru.rwsoftware.eyecu.vcard</Dependencies>
  <SortingPriority>74</SortingPriority>
  <Default>true</Default>

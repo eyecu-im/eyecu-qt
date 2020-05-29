@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<Package>
+ <DisplayName>Off-the-Record Messaging</DisplayName>
+ <Description>Allows to create private messaging using OTR P2P encryption</Description>
+ <Version>2.0.0</Version>
+ <ReleaseDate>2019-06-01</ReleaseDate>
+ <Name>ru.rwsoftware.eyecu.p2p.otr</Name>
+ <SortingPriority>1</SortingPriority>
+ <Default>true</Default>
+ <ForcedInstallation>false</ForcedInstallation>
+ <Essential>false</Essential>
+ <Script>installscript.js</Script>
+ <RequiresAdminRights>true</RequiresAdminRights>
+</Package>

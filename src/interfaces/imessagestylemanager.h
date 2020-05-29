@@ -97,6 +97,8 @@ public:
 	virtual QImage imageAt(QWidget *AWidget, const QPoint &APosition) const =0; // *** <<< eyeCU >>> ***
 	virtual bool changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear = true) =0;
 	virtual bool appendContent(QWidget *AWidget, const QString &AHtml, const IMessageStyleContentOptions &AOptions) =0;
+	virtual bool setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl) =0;
+	virtual bool setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle) =0;
 protected:
 	virtual void widgetAdded(QWidget *AWidget) const =0;
 	virtual void widgetRemoved(QWidget *AWidget) const =0;
@@ -114,7 +116,7 @@ public:
 	virtual QList<QString> styles() const =0;
 	virtual QList<int> supportedMessageTypes() const =0;
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) =0;
-	virtual IMessageStyleOptions styleOptions(const OptionsNode &AEngineNode, const QString &AStyleId=QString::null) const =0;
+	virtual IMessageStyleOptions styleOptions(const OptionsNode &AEngineNode, const QString &AStyleId=QString()) const =0;
 	virtual IOptionsDialogWidget *styleSettingsWidget(const OptionsNode &AStyleNode, QWidget *AParent) =0;
 	virtual IMessageStyleOptions styleSettinsOptions(IOptionsDialogWidget *AWidget) const =0;
 protected:
@@ -132,7 +134,7 @@ public:
 	virtual IMessageStyleEngine *findStyleEngine(const QString &AEngineId) const =0;
 	virtual void registerStyleEngine(IMessageStyleEngine *AEngine) =0;
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) const =0;
-	virtual IMessageStyleOptions styleOptions(int AMessageType, const QString &AContext=QString::null) const =0;
+	virtual IMessageStyleOptions styleOptions(int AMessageType, const QString &AContext=QString()) const =0;
 	virtual QString contactAvatar(const Jid &AContactJid) const =0;
 	virtual QString contactName(const Jid &AStreamJid, const Jid &AContactJid=Jid::null) const =0;
 	virtual QString contactIcon(const Jid &AStreamJid, const Jid &AContactJid=Jid::null) const =0;

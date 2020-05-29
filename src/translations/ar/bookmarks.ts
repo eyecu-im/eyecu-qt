@@ -3,155 +3,155 @@
   <name>Bookmarks</name>
   <message>
    <source>Bookmarks</source>
-   <translation type="unfinished"/>
+   <translation>الإشارات المرجعية</translation>
   </message>
   <message>
    <source>Allows to create bookmarks at the jabber conference and web pages</source>
-   <translation type="unfinished"/>
+   <translation>يتيح إنشاء إشارات مرجعية على مؤتمرات jabber وصفحات الويب</translation>
   </message>
   <message>
    <source>Edit Bookmarks...</source>
-   <translation type="unfinished"/>
+   <translation>تعديل الإشارات المرجعية...</translation>
   </message>
   <message>
    <source>Add to Bookmarks</source>
-   <translation type="unfinished"/>
+   <translation>إضافة إلى الإشارات المرجعية</translation>
   </message>
   <message>
    <source>Remove from Bookmarks</source>
-   <translation type="unfinished"/>
+   <translation>إزالة من الإشارات المرجعية</translation>
   </message>
   <message>
    <source>Edit Bookmark</source>
-   <translation type="unfinished"/>
+   <translation>تعديل الإشارة المرجعية</translation>
   </message>
   <message>
    <source>Rename Bookmark</source>
-   <translation type="unfinished"/>
+   <translation>إعادة تسمية الإشارة المرجعية</translation>
   </message>
   <message>
    <source>Enter bookmark name:</source>
-   <translation type="unfinished"/>
+   <translation>أدخل اسم الإشارة المرجعية:</translation>
   </message>
   <message>
    <source>Join to Conference at Startup</source>
-   <translation type="unfinished"/>
+   <translation>الانضمام إلى المؤتمر عند بدء التشغيل</translation>
   </message>
   <message>
    <source>Conferences</source>
-   <translation type="unfinished"/>
+   <translation>المؤتمرات</translation>
   </message>
   <message>
    <source>Disable auto join to conferences on this computer</source>
-   <translation type="unfinished"/>
+   <translation>تعطيل الانضمام التلقائي للمؤتمرات على هذا الكمبيوتر</translation>
   </message>
   <message>
    <source>Show windows of auto joined conferences at startup</source>
-   <translation type="unfinished"/>
+   <translation>عرض نوافذ المؤتمرات المنضمة تلقائيًا عند بدء التشغيل</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarkDialog</name>
   <message>
    <source>Field &apos;Name&apos; should not be empty</source>
-   <translation type="unfinished"/>
+   <translation>يجب ألا يكون حقل &quot;الاسم&quot; فارغًا</translation>
   </message>
   <message>
    <source>In URL bookmark field &apos;URL&apos; should not be empty</source>
-   <translation type="unfinished"/>
+   <translation>في حقل إشارة مرجعية الرابط ، يجب ألا يكون حقل &quot;الرابط&quot; فارغًا</translation>
   </message>
   <message>
    <source>In conference bookmark field &apos;Room&apos; should not be empty</source>
-   <translation type="unfinished"/>
+   <translation>يجب ألا يكون حقل &quot;المؤتمر&quot; فارغًا في إشارة مرجعية المؤتمر</translation>
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarkDialogClass</name>
   <message>
    <source>Edit bookmark</source>
-   <translation type="unfinished"/>
+   <translation>تعديل الإشارة المرجعية</translation>
   </message>
   <message>
    <source>Password:</source>
-   <translation type="unfinished"/>
+   <translation>كلمة المرور:</translation>
   </message>
   <message>
    <source>Auto join</source>
-   <translation type="unfinished"/>
+   <translation>الانضمام التلقائي</translation>
   </message>
   <message>
    <source>Conference:</source>
-   <translation type="unfinished"/>
+   <translation>المؤتمر:</translation>
   </message>
   <message>
    <source>Conference as &apos;name@service.server.com&apos;</source>
-   <translation type="unfinished"/>
+   <translation>المؤتمر مثل &quot;name@service.server.com&quot;</translation>
   </message>
   <message>
    <source>Nickname:</source>
-   <translation type="unfinished"/>
+   <translation>الاسم المستعار:</translation>
   </message>
   <message>
    <source>Your nickname in conference</source>
-   <translation type="unfinished"/>
+   <translation>الاسم الخاص بك في المؤتمر</translation>
   </message>
   <message>
    <source>Conference password if required</source>
-   <translation type="unfinished"/>
+   <translation>كلمة مرور المؤتمر إذا لزم الأمر</translation>
   </message>
   <message>
    <source>Name:</source>
-   <translation type="unfinished"/>
+   <translation>الاسم:</translation>
   </message>
   <message>
    <source>Bookmark to Conference</source>
-   <translation type="unfinished"/>
+   <translation>إشارة مرجعية إلى المؤتمر</translation>
   </message>
   <message>
    <source>Bookmark to Link</source>
-   <translation type="unfinished"/>
+   <translation>إشارة مرجعية إلى رابط</translation>
   </message>
   <message>
    <source>Link:</source>
-   <translation type="unfinished"/>
+   <translation>الرابط:</translation>
   </message>
   <message>
    <source>Any valid link</source>
-   <translation type="unfinished"/>
+   <translation>أي رابط صالح</translation>
   </message>
   <message>
    <source>Bookmark name</source>
-   <translation type="unfinished"/>
+   <translation>اسم الإشارة المرجعية</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarksDialog</name>
   <message>
    <source>Cant save bookmarks to server</source>
-   <translation type="unfinished"/>
+   <translation>لا يمكن حفظ الإشارات المرجعية في السيرفر</translation>
   </message>
   <message>
    <source>Edit bookmarks - %1</source>
-   <translation type="unfinished"/>
+   <translation>تعديل الإشارات المرجعية - %1</translation>
   </message>
   <message>
    <source>Error</source>
-   <translation type="unfinished"/>
+   <translation>خطأ</translation>
   </message>
  </context>
  <context>
   <name>EditBookmarksDialogClass</name>
   <message>
    <source>Edit bookmarks</source>
-   <translation type="unfinished"/>
+   <translation>تعديل الإشارات المرجعية</translation>
   </message>
   <message>
    <source>Name</source>
-   <translation type="unfinished"/>
+   <translation>الاسم</translation>
   </message>
   <message>
    <source>JID/URL</source>
@@ -159,27 +159,27 @@
   </message>
   <message>
    <source>Nick</source>
-   <translation type="unfinished"/>
+   <translation>الاسم المستعار</translation>
   </message>
   <message>
    <source>Add</source>
-   <translation type="unfinished"/>
+   <translation>إضافة</translation>
   </message>
   <message>
    <source>Edit</source>
-   <translation type="unfinished"/>
+   <translation>تعديل</translation>
   </message>
   <message>
    <source>Delete</source>
-   <translation type="unfinished"/>
+   <translation>حذف</translation>
   </message>
   <message>
    <source>Up</source>
-   <translation type="unfinished"/>
+   <translation>إلى الأعلى</translation>
   </message>
   <message>
    <source>Down</source>
-   <translation type="unfinished"/>
+   <translation>الى الأسفل</translation>
   </message>
  </context>
 </TS>

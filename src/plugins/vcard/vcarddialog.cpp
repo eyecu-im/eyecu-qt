@@ -201,7 +201,7 @@ void VCardDialog::updateVCard()
 	if (ui.dedBirthday->date() > ui.dedBirthday->minimumDate())
 		FVCard->setValueForTags(VVN_BIRTHDAY,ui.dedBirthday->date().toString(Qt::ISODate));
 	else
-		FVCard->setValueForTags(VVN_BIRTHDAY,QString::null);
+		FVCard->setValueForTags(VVN_BIRTHDAY,QString());
 	FVCard->setValueForTags(VVN_GENDER,ui.cmbGender->itemData(ui.cmbGender->currentIndex()).toString());
 	FVCard->setValueForTags(VVN_MARITAL_STATUS,ui.lneMarital->text());
 	FVCard->setValueForTags(VVN_TITLE,ui.lneTitle->text());
@@ -368,7 +368,7 @@ void VCardDialog::onPhotoSaveClicked()
 
 void VCardDialog::onPhotoLoadClicked()
 {
-	QString filename = QFileDialog::getOpenFileName(this,tr("Open image"),QString::null,tr("Image Files (*.png *.jpg *.bmp *.gif)"));
+	QString filename = QFileDialog::getOpenFileName(this,tr("Open image"),QString(),tr("Image Files (*.png *.jpg *.bmp *.gif)"));
 	if (!filename.isEmpty())
 		setPhoto(loadFromFile(filename));
 }
@@ -392,7 +392,7 @@ void VCardDialog::onLogoSaveClicked()
 
 void VCardDialog::onLogoLoadClicked()
 {
-	QString filename = QFileDialog::getOpenFileName(this,tr("Open image"),QString::null,tr("Image Files (*.png *.jpg *.bmp *.gif)"));
+	QString filename = QFileDialog::getOpenFileName(this,tr("Open image"),QString(),tr("Image Files (*.png *.jpg *.bmp *.gif)"));
 	if (!filename.isEmpty())
 		setLogo(loadFromFile(filename));
 }
@@ -405,7 +405,7 @@ void VCardDialog::onLogoClearClicked()
 void VCardDialog::onEmailAddClicked()
 {
 	static QStringList emailTagList = QStringList() << "HOME" << "WORK" << "INTERNET" << "X400";
-	EditItemDialog dialog(QString::null,QStringList(),emailTagList,this);
+	EditItemDialog dialog(QString(),QStringList(),emailTagList,this);
 	dialog.setLabelText(tr("EMail:"));
 	if (dialog.exec()==QDialog::Accepted && !dialog.value().isEmpty() && ui.ltwEmails->findItems(dialog.value(),Qt::MatchFixedString).isEmpty())
 	{
@@ -439,7 +439,7 @@ void VCardDialog::onEmailItemDoubleClicked(QListWidgetItem *AItem)
 void VCardDialog::onPhoneAddClicked()
 {
 	static QStringList phoneTagList = QStringList() << "HOME" << "WORK" << "CELL" << "MODEM";
-	EditItemDialog dialog(QString::null,QStringList(),phoneTagList,this);
+	EditItemDialog dialog(QString(),QStringList(),phoneTagList,this);
 	dialog.setLabelText(tr("Phone:"));
 	if (dialog.exec()==QDialog::Accepted && !dialog.value().isEmpty() && ui.ltwPhones->findItems(dialog.value(),Qt::MatchFixedString).isEmpty())
 	{

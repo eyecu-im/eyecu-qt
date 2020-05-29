@@ -9,7 +9,7 @@
   <message numerus="yes">
    <location filename="../../plugins/metacontacts/combinecontactsdialog.cpp" line="110"/>
    <source>The following &lt;b&gt;%n contact(s)&lt;/b&gt; will be merged into metacontact:</source>
-   <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+   <translation><numerusform>Наступний %n контакт буде об&apos;єднаний в метаконтакт:</numerusform><numerusform>Наступні %n контакти будуть об&apos;єднані в метаконтакт:</numerusform><numerusform>Наступні %n контактів будуть об&apos;єднані в метаконтакт:</numerusform><numerusform>Наступні %n контакти будуть об&apos;єднані в метаконтакт:</numerusform></translation>
   </message>
  </context>
  <context>
@@ -27,23 +27,23 @@
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="202"/>
    <source>Combine contacts</source>
-   <translation type="unfinished"/>
+   <translation>Об&apos;єднати контакти</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="202"/>
    <source>Ctrl+M</source>
    <comment>Combine contacts</comment>
-   <translation type="unfinished"/>
+   <translation>Ctrl+M</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="203"/>
    <source>Destroy metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Знищити метаконтакт</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="204"/>
    <source>Detach from metacontact</source>
-   <translation type="unfinished"/>
+   <translation>Від&apos;єднати від метаконтакту</translation>
   </message>
   <message>
    <location filename="../../plugins/metacontacts/metacontacts.cpp" line="519"/>

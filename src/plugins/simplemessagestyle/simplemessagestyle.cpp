@@ -26,7 +26,7 @@
 #define SCROLL_TIMEOUT                      100
 #define SHARED_STYLE_PATH                   RESOURCES_DIR "/" RSR_STORAGE_SIMPLEMESSAGESTYLES "/" FILE_STORAGE_SHARED_DIR
 
-QString SimpleMessageStyle::FSharedPath = QString::null;
+QString SimpleMessageStyle::FSharedPath = QString();
 
 SimpleMessageStyle::SimpleMessageStyle(const QString &AStylePath, QNetworkAccessManager *ANetworkAccessManager, QObject *AParent) : QObject(AParent)
 {
@@ -119,28 +119,6 @@ QTextDocumentFragment SimpleMessageStyle::textFragmentAt(QWidget *AWidget, const
 	return QTextDocumentFragment();
 }
 
-// *** <<< eyeCU <<< ***
-QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
-{
-	QTextCharFormat format = textFormatAt(AWidget, APosition);
-	if (format.isImageFormat())
-	{
-		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
-		switch (resource.type())
-		{
-			case QMetaType::QImage:
-				return resource.value<QImage>();
-			case QMetaType::QPixmap:
-				return resource.value<QPixmap>().toImage();
-			case QMetaType::QByteArray:
-				return  QImage::fromData(resource.toByteArray());
-			default:;
-		}
-	}
-	return QImage();
-}
-// *** >>> eyeCU >>> ***
-
 bool SimpleMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOptions &AOptions, bool AClear)
 {
 	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
@@ -151,7 +129,7 @@ bool SimpleMessageStyle::changeOptions(QWidget *AWidget, const IMessageStyleOpti
 		{
 			WidgetStatus &wstatus = FWidgetStatus[view];
 			wstatus.lastKind = -1;
-			wstatus.lastId = QString::null;
+			wstatus.lastId = QString();
 			wstatus.lastTime = QDateTime();
 			wstatus.scrollStarted = false;
 			wstatus.content.clear();
@@ -260,6 +238,94 @@ bool SimpleMessageStyle::appendContent(QWidget *AWidget, const QString &AHtml, c
 	return false;
 }
 
+// *** <<< eyeCU <<< ***
+QImage SimpleMessageStyle::imageAt(QWidget *AWidget, const QPoint &APosition) const
+{
+	QTextCharFormat format = textFormatAt(AWidget, APosition);
+	if (format.isImageFormat())
+	{
+		QVariant resource = qobject_cast<StyleViewer *>(AWidget)->document()->resource(QTextDocument::ImageResource, QUrl::fromEncoded(format.toImageFormat().name().toLatin1()));
+		switch (resource.type())
+		{
+			case QMetaType::QImage:
+				return resource.value<QImage>();
+			case QMetaType::QPixmap:
+				return resource.value<QPixmap>().toImage();
+			case QMetaType::QByteArray:
+				return  QImage::fromData(resource.toByteArray());
+			default:;
+		}
+	}
+	return QImage();
+}
+
+bool SimpleMessageStyle::setImageUrl(QWidget *AWidget, const QString &AObjectId, const QString &AUrl)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QTextDocument *doc = view->document();
+		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
+			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
+			{
+				QTextFragment fragment = it.fragment();
+				QTextCharFormat format = fragment.charFormat();
+				if (format.isImageFormat() &&
+					format.hasProperty(QpXhtml::ObjectId) &&
+					format.property(QpXhtml::ObjectId) == AObjectId)
+				{
+					QTextImageFormat image = format.toImageFormat();
+					QTextCursor cursor(doc);
+					cursor.setPosition(fragment.position());
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor,
+										fragment.length());
+					image.setName(AUrl);
+					cursor.setCharFormat(image);
+					return true;
+				}
+			}
+		REPORT_ERROR("Failed to set image URL: Image with spwcified ID not found!");
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set image URL: Invalid view");
+	}
+	return false;
+}
+
+bool SimpleMessageStyle::setObjectTitle(QWidget *AWidget, const QString &AObjectId, const QString &ATitle)
+{
+	StyleViewer *view = qobject_cast<StyleViewer *>(AWidget);
+	if (view)
+	{
+		QTextDocument *doc = view->document();
+		for (QTextBlock block=doc->firstBlock(); block.isValid(); block=block.next())
+			for (QTextBlock::Iterator it=block.begin(); !it.atEnd(); ++it)
+			{
+				QTextFragment fragment = it.fragment();
+				QTextCharFormat format = fragment.charFormat();
+				if (format.hasProperty(QpXhtml::ObjectId) &&
+					format.property(QpXhtml::ObjectId) == AObjectId)
+				{
+					QTextCursor cursor(doc);
+					cursor.setPosition(fragment.position());
+					cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor,
+										fragment.length());
+					format.setToolTip(ATitle);
+					cursor.setCharFormat(format);
+					return true;
+				}
+			}
+		REPORT_ERROR("Failed to set object title: Fragment with spwcified ID not found!");
+	}
+	else
+	{
+		REPORT_ERROR("Failed to set object title: Invalid view");
+	}
+	return false;
+}
+// *** >>> eyeCU >>> ***
+
 QMap<QString, QVariant> SimpleMessageStyle::infoValues() const
 {
 	return FInfo;
@@ -341,15 +407,15 @@ void SimpleMessageStyle::initStyleSettings()
 
 void SimpleMessageStyle::loadTemplates()
 {
-	FIn_ContentHTML =      loadFileData(FStylePath+"/Incoming/Content.html",QString::null);
+	FIn_ContentHTML =      loadFileData(FStylePath+"/Incoming/Content.html",QString());
 	FIn_NextContentHTML =  loadFileData(FStylePath+"/Incoming/NextContent.html",FIn_ContentHTML);
 
 	FOut_ContentHTML =     loadFileData(FStylePath+"/Outgoing/Content.html",FIn_ContentHTML);
 	FOut_NextContentHTML = loadFileData(FStylePath+"/Outgoing/NextContent.html",FOut_ContentHTML);
 
-	FTopicHTML =           loadFileData(FStylePath+"/Topic.html",QString::null);
+	FTopicHTML =           loadFileData(FStylePath+"/Topic.html",QString());
 	FStatusHTML =          loadFileData(FStylePath+"/Status.html",FIn_ContentHTML);
-	FMeCommandHTML =       loadFileData(FStylePath+"/MeCommand.html",QString::null);
+	FMeCommandHTML =       loadFileData(FStylePath+"/MeCommand.html",QString());
 }
 
 void SimpleMessageStyle::loadSenderColors()
@@ -383,7 +449,7 @@ QString SimpleMessageStyle::makeStyleTemplate() const
 	QString htmlFileName = FStylePath+"/Template.html";
 	if (!QFile::exists(htmlFileName))
 		htmlFileName =FSharedPath+"/Template.html";
-	return loadFileData(htmlFileName,QString::null);;
+	return loadFileData(htmlFileName,QString());;
 }
 
 void SimpleMessageStyle::fillStyleKeywords(QString &AHtml, const IMessageStyleOptions &AOptions) const
@@ -408,7 +474,7 @@ void SimpleMessageStyle::setVariant(StyleViewer *AView, const QString &AVariant)
 {
 	QString variantName = !FVariants.contains(AVariant) ? FInfo.value(MSIV_DEFAULT_VARIANT,"main").toString() : AVariant;
 	QString variantFile = QString("Variants/%1.css").arg(variantName);
-	AView->document()->setDefaultStyleSheet(loadFileData(FStylePath+"/"+variantFile,QString::null));
+	AView->document()->setDefaultStyleSheet(loadFileData(FStylePath+"/"+variantFile,QString()));
 }
 
 bool SimpleMessageStyle::isConsecutive(const IMessageStyleContentOptions &AOptions, const WidgetStatus &AStatus) const

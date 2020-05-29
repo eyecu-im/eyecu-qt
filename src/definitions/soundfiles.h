@@ -40,6 +40,8 @@
 #define SDF_ATTENTION_ALARM               "attentionAlarm"
 //Receipts
 #define SDF_RECEIPTS_DELIVERED            "receiptsDelivered"
+//ChatMarkers
+#define SDF_CHATMARKERS_MARKED            "chatmarkersMarked"
 //PEP
 #define SDF_PEP_EVENT                     "pepEvent"
 //Contact Proximity
@@ -47,6 +49,8 @@
 //Jingle RTP Sessions
 #define SDF_JINGLE_RTP_CALL               "jingleRtpCall"
 #define SDF_JINGLE_RTP_RINGBACK_LONG      "jingleRtpRingbackLong"
+//OTR
+#define SDF_OTR_EVENT                     "OTREvent"
 // *** >>> eyeCU >>> ***
 
 #endif

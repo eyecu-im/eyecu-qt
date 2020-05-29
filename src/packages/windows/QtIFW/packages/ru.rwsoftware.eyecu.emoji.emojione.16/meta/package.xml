@@ -2,8 +2,9 @@
 <Package>
  <DisplayName>16 x 16</DisplayName>
  <Description>16 x 16 Emoji One emoji subset</Description>
- <Version>3.0</Version>
- <ReleaseDate>2016-12-13</ReleaseDate>
+ <Version>4.0</Version>
+ <ReleaseDate>2018-11-13</ReleaseDate>
+ <UpdateText>Udated to version 4.0</UpdateText>
  <Name>ru.rwsoftware.eyecu.emoji.emojione.16</Name>
  <SortingPriority>1</SortingPriority>
  <Default>true</Default>

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 
 #include <QTimer>
+#include <QCloseEvent>
 #include <QResizeEvent>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *AParent, Qt::WindowFlags AFlags) : QMainWindow(A
 	setIconSize(QSize(16,16));
 
 	FAligned = false;
+	FCentralVisible = false;
 	FLeftWidgetWidth = 0;
 
 	QIcon icon;
@@ -59,7 +61,6 @@ MainWindow::MainWindow(QWidget *AParent, Qt::WindowFlags AFlags) : QMainWindow(A
 	FSplitter->setCollapsible(1,false);
 	FSplitter->setStretchFactor(1,4);
 
-	FCentralVisible = false;
 	FSplitter->setHandleWidth(0);
 	FCentralWidget->instance()->setVisible(false);
 
@@ -88,6 +89,8 @@ MainWindow::MainWindow(QWidget *AParent, Qt::WindowFlags AFlags) : QMainWindow(A
 
 	FMainMenuBar = new MenuBarChanger(new QMenuBar());
 	setMenuBar(FMainMenuBar->menuBar());
+
+	this->installEventFilter(this);
 
 	updateWindow();
 }
@@ -297,7 +300,7 @@ void MainWindow::setCentralWidgetVisible(bool AVisible)
 		bool windowVisible = isVisible();
 		saveWindowGeometryAndState();
 		closeWindow();
-		
+
 		FCentralVisible = AVisible;
 		if (AVisible)
 		{
@@ -311,7 +314,7 @@ void MainWindow::setCentralWidgetVisible(bool AVisible)
 			FSplitter->setHandleWidth(0);
 			FLeftWidget->setFrameShape(QFrame::NoFrame);
 			FCentralWidget->instance()->setVisible(false);
-			setWindowFlags(Qt::WindowCloseButtonHint); // *** <<< eyeCU >>> ***
+			setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 		}
 
 		updateWindow();
@@ -343,6 +346,17 @@ void MainWindow::showEvent(QShowEvent *AEvent)
 	}
 }
 
+void MainWindow::closeEvent(QCloseEvent *AEvent)
+{
+	if (!Options::isNull())
+	{
+		if (Options::node(OPV_ROSTER_MINIMIZEONCLOSE).value().toBool() && AEvent->spontaneous())
+		{
+			AEvent->ignore();
+			setWindowState(Qt::WindowMinimized);
+		}
+	}
+}
 bool MainWindow::eventFilter(QObject *AObject, QEvent *AEvent)
 {
 	if (AObject == FSplitter)

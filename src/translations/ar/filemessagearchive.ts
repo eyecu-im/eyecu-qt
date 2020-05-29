@@ -4,7 +4,7 @@
   <message>
    <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui" line="20"/>
    <source>Synchronize archive database at startup</source>
-   <translation>مزامنة قاعدة البيانات أرشيف عند بدء التشغيل</translation>
+   <translation>مزامنة قاعدة بيانات الأرشيف عند بدء التشغيل</translation>
   </message>
   <message>
    <location filename="../../plugins/filemessagearchive/filearchiveoptionswidget.ui" line="29"/>

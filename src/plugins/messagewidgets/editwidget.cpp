@@ -1,7 +1,8 @@
 #include "editwidget.h"
 
-#include <QKeyEvent>
 #include <QMimeData>
+#include <QKeyEvent>
+#include <QWheelEvent>
 #include <definitions/actiongroups.h>
 #include <definitions/optionvalues.h>
 #include <definitions/resources.h>
@@ -65,6 +66,7 @@ EditWidget::EditWidget(IMessageWidgets *AMessageWidgets, IMessageWindow *AWindow
 
 	onOptionsChanged(Options::node(OPV_MESSAGES_EDITORAUTORESIZE));
 	onOptionsChanged(Options::node(OPV_MESSAGES_EDITORMINIMUMLINES));
+	onOptionsChanged(Options::node(OPV_MESSAGES_EDITORBASEFONTSIZE));
 	connect(Options::instance(),SIGNAL(optionsChanged(const OptionsNode &)),SLOT(onOptionsChanged(const OptionsNode &)));
 
 	connect(Shortcuts::instance(),SIGNAL(shortcutUpdated(const QString &)),SLOT(onShortcutUpdated(const QString &)));
@@ -283,6 +285,21 @@ bool EditWidget::eventFilter(QObject *AWatched, QEvent *AEvent)
 		{
 			hooked = true;
 		}
+		else if (AEvent->type() == QEvent::Wheel)
+		{
+			QWheelEvent *wheelEvent = static_cast<QWheelEvent *>(AEvent);
+			if (wheelEvent->modifiers() & Qt::ControlModifier)
+			{
+#if QT_VERSION >= 0x050000
+					const qreal delta = wheelEvent->angleDelta().y() / 120.0;
+#else
+					const qreal delta = wheelEvent->delta() / 120.0;
+#endif
+					const qreal newSize = ui.medEditor->font().pointSizeF() + delta;
+					if (newSize >= 1.0)
+						Options::node(OPV_MESSAGES_EDITORBASEFONTSIZE).setValue(newSize);
+			}
+		}
 	}
 	return hooked || QWidget::eventFilter(AWatched,AEvent);
 }
@@ -372,6 +389,16 @@ void EditWidget::onOptionsChanged(const OptionsNode &ANode)
 	else if (ANode.path() == OPV_MESSAGES_EDITORMINIMUMLINES)
 	{
 		setMinimumHeightLines(ANode.value().toInt());
+	}
+	else if (ANode.path() == OPV_MESSAGES_EDITORBASEFONTSIZE)
+	{
+		const qreal newSize = ANode.value().toReal();
+		if (newSize >= 1.0)
+		{
+			QFont newFont = ui.medEditor->font();
+			newFont.setPointSizeF(newSize);
+			ui.medEditor->setFont(newFont);
+		}
 	}
 }
 

@@ -11,6 +11,7 @@
 #define MWO_ATTENTION                         450
 #define MWO_MOOD                              460
 #define MWO_RECEIPTS                          1000
+#define MWO_CHATMARKERS                       1100
 #define MWO_ABBREVIATIONS                     600
 #define MWO_EMOJI							  510
 // *** >>> eyeCU >>> ***

@@ -104,7 +104,7 @@ bool PEPManager::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &A
 	if (FStanzaHandles.value(AStreamJid) == AHandleId)
 	{
 		bool hooked = false;
-		QString node = AStanza.firstElement("event",NS_PUBSUB_EVENT).firstChildElement("items").attribute("node",QString::null);
+		QString node = AStanza.firstElement("event",NS_PUBSUB_EVENT).firstChildElement("items").attribute("node",QString());
 
 		foreach(int handlerId, FHandlersByNode.values(node))
 		{
@@ -151,12 +151,33 @@ QMultiMap<int, IOptionsDialogWidget *> PEPManager::optionsDialogWidgets(const QS
 bool PEPManager::isSupported(const Jid &AStreamJid) const
 {
 	bool supported = false;
-	IDiscoInfo dinfo = FDiscovery!=NULL ? FDiscovery->discoInfo(AStreamJid, AStreamJid.domain()) : IDiscoInfo();
-	for (int i=0; !supported && i<dinfo.identity.count(); i++)
+// *** <<< eyeCU <<< ***
+	if (FDiscovery)
 	{
-		const IDiscoIdentity &ident = dinfo.identity.at(i);
-		supported = ident.category==DIC_PUBSUB && ident.type==DIT_PEP;
+		if (FDiscovery->hasDiscoInfo(AStreamJid, AStreamJid.bare()))
+		{
+			IDiscoInfo dinfo = FDiscovery->discoInfo(AStreamJid, AStreamJid.bare());
+			for (int i=0; !supported && i<dinfo.identity.count(); i++)
+			{
+				const IDiscoIdentity &ident = dinfo.identity.at(i);
+				supported = ident.category==DIC_PUBSUB && ident.type==DIT_PEP;
+			}
+		}
+		if (supported)
+			return true;
+
+		// For servers with wrong PEP discovery implementation
+		if (FDiscovery->hasDiscoInfo(AStreamJid, AStreamJid.domain()))
+		{
+			IDiscoInfo dinfo = FDiscovery->discoInfo(AStreamJid, AStreamJid.domain());
+			for (int i=0; !supported && i<dinfo.identity.count(); i++)
+			{
+				const IDiscoIdentity &ident = dinfo.identity.at(i);
+				supported = ident.category==DIC_PUBSUB && ident.type==DIT_PEP;
+			}
+		}
 	}
+// *** >>> eyeCU >>> ***
 	return supported;
 }
 

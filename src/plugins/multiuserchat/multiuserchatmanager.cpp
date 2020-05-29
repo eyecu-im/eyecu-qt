@@ -81,7 +81,7 @@ void MultiUserChatManager::pluginInfo(IPluginInfo *APluginInfo)
 
 bool MultiUserChatManager::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
-	Q_UNUSED(APluginManager); Q_UNUSED(AInitOrder); 
+	Q_UNUSED(APluginManager); Q_UNUSED(AInitOrder);
 
 	if (FMessageProcessor)
 	{
@@ -93,7 +93,7 @@ bool MultiUserChatManager::initConnections(IPluginManager *APluginManager, int &
 		connect(FXmppStreamManager->instance(),SIGNAL(streamOpened(IXmppStream *)),SLOT(onXmppStreamOpened(IXmppStream *)));
 		connect(FXmppStreamManager->instance(),SIGNAL(streamClosed(IXmppStream *)),SLOT(onXmppStreamClosed(IXmppStream *)));
 	}
-	
+
 	if (FStatusIcons)
 	{
 		connect(FStatusIcons->instance(),SIGNAL(statusIconsChanged()),SLOT(onStatusIconsChanged()));
@@ -108,9 +108,9 @@ bool MultiUserChatManager::initConnections(IPluginManager *APluginManager, int &
 
 	if (FRostersViewPlugin)
 	{
-		connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexMultiSelection(const QList<IRosterIndex *> &, bool &)), 
+		connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexMultiSelection(const QList<IRosterIndex *> &, bool &)),
 			SLOT(onRostersViewIndexMultiSelection(const QList<IRosterIndex *> &, bool &)));
-		connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)), 
+		connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)),
 			SLOT(onRostersViewIndexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)));
 		connect(FRostersViewPlugin->rostersView()->instance(),SIGNAL(indexClipboardMenu(const QList<IRosterIndex *> &, quint32, Menu *)),
 			SLOT(onRostersViewIndexClipboardMenu(const QList<IRosterIndex *> &, quint32, Menu *)));
@@ -409,7 +409,7 @@ void MultiUserChatManager::stanzaRequestResult(const Jid &AStreamJid, const Stan
 			else
 			{
 				LOG_STRM_WARNING(AStreamJid,QString("Failed to send registered nick request as register request to=%1").arg(stanza.to()));
-				emit registeredNickReceived(AStanza.id(),QString::null);
+				emit registeredNickReceived(AStanza.id(),QString());
 			}
 		}
 	}
@@ -432,7 +432,7 @@ void MultiUserChatManager::stanzaRequestResult(const Jid &AStreamJid, const Stan
 		else
 		{
 			LOG_STRM_WARNING(AStreamJid,QString("Failed to receive registered nick as register request from=%1, id=%2: %3").arg(AStanza.from(),AStanza.id(),XmppStanzaError(AStanza).errorMessage()));
-			emit registeredNickReceived(reqId,QString::null);
+			emit registeredNickReceived(reqId,QString());
 		}
 	}
 }
@@ -483,7 +483,7 @@ bool MultiUserChatManager::xmppUriOpen(const Jid &AStreamJid, const Jid &AContac
 {
 	if (AAction == "join")
 	{
-		showJoinMultiChatWizard(AStreamJid,AContactJid,QString::null,AParams.value("password"));
+		showJoinMultiChatWizard(AStreamJid,AContactJid,QString(),AParams.value("password"));
 		return true;
 	}
 	return false;
@@ -497,7 +497,7 @@ bool MultiUserChatManager::execDiscoFeature(const Jid &AStreamJid, const QString
 		if (window != NULL)
 			window->showTabPage();
 		else
-			showJoinMultiChatWizard(AStreamJid,ADiscoInfo.contactJid,QString::null,QString::null);
+			showJoinMultiChatWizard(AStreamJid,ADiscoInfo.contactJid,QString(),QString());
 		return true;
 	}
 	return false;
@@ -507,7 +507,7 @@ Action *MultiUserChatManager::createDiscoFeatureAction(const Jid &AStreamJid, co
 {
 	if (AFeature==NS_MUC && FDiscovery)
 	{
-		if (FDiscovery->findIdentity(ADiscoInfo.identity,DIC_CONFERENCE,QString::null) < 0)
+		if (FDiscovery->findIdentity(ADiscoInfo.identity,DIC_CONFERENCE,QString()) < 0)
 		{
 			Menu *inviteMenu = createInviteMenu(QStringList()<<ADiscoInfo.streamJid.full(), QStringList()<<ADiscoInfo.contactJid.full(), AParent);
 			if (!inviteMenu->isEmpty())
@@ -658,7 +658,7 @@ QString MultiUserChatManager::recentItemName(const IRecentItem &AItem) const
 		Jid userJid = AItem.reference;
 		return QString("[%1]").arg(userJid.resource());
 	}
-	return QString::null;
+	return QString();
 }
 
 IRecentItem MultiUserChatManager::recentItemForIndex(const IRosterIndex *AIndex) const
@@ -750,10 +750,10 @@ IMultiUserChatWindow *MultiUserChatManager::getMultiChatWindow(const Jid &AStrea
 			if (chat)
 			{
 				LOG_STRM_INFO(AStreamJid,QString("Creating multi user chat window, room=%1, nick=%2").arg(ARoomJid.bare(),ANick));
-				
+
 				window = new MultiUserChatWindow(this,chat);
 				WidgetManager::setWindowSticky(window->instance(),true);
-				
+
 				connect(window->instance(),SIGNAL(tabPageDestroyed()),SLOT(onMultiChatWindowDestroyed()));
 				connect(window->instance(),SIGNAL(multiChatContextMenu(Menu *)),SLOT(onMultiChatWindowContextMenu(Menu *)));
 				connect(window->instance(),SIGNAL(multiUserContextMenu(IMultiUser *, Menu *)),SLOT(onMultiChatWindowUserContextMenu(IMultiUser *, Menu *)));
@@ -769,7 +769,7 @@ IMultiUserChatWindow *MultiUserChatManager::getMultiChatWindow(const Jid &AStrea
 
 				connect(window->infoWidget()->instance(),SIGNAL(contextMenuRequested(Menu *)),SLOT(onMultiChatWindowInfoContextMenu(Menu *)));
 				connect(window->infoWidget()->instance(),SIGNAL(toolTipsRequested(QMap<int,QString> &)),SLOT(onMultiChatWindowInfoToolTips(QMap<int,QString> &)));
-				
+
 				FChatWindows.append(window);
 				getMultiChatRosterIndex(window->streamJid(),window->contactJid(),window->multiUserChat()->nickname(),window->multiUserChat()->password());
 
@@ -882,7 +882,7 @@ QString MultiUserChatManager::requestRegisteredNick(const Jid &AStreamJid, const
 			LOG_STRM_WARNING(AStreamJid,QString("Failed to send registered nick request as discovery request to=%1").arg(ARoomJid.bare()));
 		}
 	}
-	return QString::null;
+	return QString();
 }
 
 void MultiUserChatManager::registerDiscoFeatures()
@@ -1112,7 +1112,7 @@ QString MultiUserChatManager::multiChatRecentName(const Jid &AStreamJid, const J
 	item.type = REIT_CONFERENCE;
 	item.streamJid = AStreamJid;
 	item.reference = ARoomJid.pBare();
-	return FRecentContacts!=NULL ? FRecentContacts->itemProperty(item,REIP_NAME).toString() : QString::null;
+	return FRecentContacts!=NULL ? FRecentContacts->itemProperty(item,REIP_NAME).toString() : QString();
 }
 
 IRecentItem MultiUserChatManager::multiChatRecentItem(IMultiUserChat *AChat, const QString &ANick) const
@@ -1267,7 +1267,7 @@ void MultiUserChatManager::onExitRoomActionTriggered(bool)
 		{
 			IMultiUserChatWindow *window = findMultiChatWindow(streamJid.at(i),roomJid.at(i));
 			if (window)
-				window->exitAndDestroy(QString::null);
+				window->exitAndDestroy(QString());
 		}
 	}
 }
@@ -1303,7 +1303,7 @@ void MultiUserChatManager::onShortcutActivated(const QString &AId, QWidget *AWid
 		{
 			if (isReady(xmppStream->streamJid()))
 			{
-				showJoinMultiChatWizard(xmppStream->streamJid(),Jid::null,QString::null,QString::null);
+				showJoinMultiChatWizard(xmppStream->streamJid(),Jid::null,QString(),QString());
 				break;
 			}
 		}
@@ -1356,7 +1356,7 @@ void MultiUserChatManager::onMultiChatUserChanged(IMultiUser *AUser, int AData, 
 			{
 				IRecentItem oldItem = multiChatRecentItem(chat,ABefore.toString());
 				QList<IRecentItem> realItems = FRecentContacts->streamItems(chat->streamJid());
-				
+
 				int oldIndex = realItems.indexOf(oldItem);
 				if (oldIndex >= 0)
 				{
@@ -1495,7 +1495,7 @@ void MultiUserChatManager::onRostersModelIndexDataChanged(IRosterIndex *AIndex, 
 		{
 			IMultiUserChatWindow *window = findMultiChatWindow(AIndex->data(RDR_STREAM_JID).toString(),AIndex->data(RDR_PREP_BARE_JID).toString());
 			if (window)
-				updateMultiUserRecentItems(window->multiUserChat(),QString::null);
+				updateMultiUserRecentItems(window->multiUserChat(),QString());
 		}
 	}
 }
@@ -1757,7 +1757,7 @@ void MultiUserChatManager::onInviteDialogFinished(int AResult)
 		if (AResult == QMessageBox::Yes)
 		{
 			LOG_STRM_INFO(invite.streamJid,QString("Accepted invite request from=%1 to room=%2").arg(invite.fromJid.full(),invite.roomJid.bare()));
-			showJoinMultiChatWizard(invite.streamJid,invite.roomJid,QString::null,invite.password);
+			showJoinMultiChatWizard(invite.streamJid,invite.roomJid,QString(),invite.password);
 		}
 		else
 		{
@@ -1807,8 +1807,8 @@ void MultiUserChatManager::onNotificationActivated(int ANotifyId)
 		ChatInvite invite = FInviteNotify.take(ANotifyId);
 
 		QList<IDiscoIdentity> roomIdent = FDiscovery!=NULL ? FDiscovery->discoInfo(invite.streamJid,invite.roomJid).identity : QList<IDiscoIdentity>();
-		int identIndex = !roomIdent.isEmpty() ? FDiscovery->findIdentity(roomIdent,DIC_CONFERENCE,QString::null) : -1;
-		QString identName = identIndex>=0 ? roomIdent.value(identIndex).name : QString::null;
+		int identIndex = !roomIdent.isEmpty() ? FDiscovery->findIdentity(roomIdent,DIC_CONFERENCE,QString()) : -1;
+		QString identName = identIndex>=0 ? roomIdent.value(identIndex).name : QString();
 
 		QString roomName = HTML_ESCAPE(!identName.isEmpty() ? QString("%1 <%2>").arg(identName,invite.roomJid.uBare()) : invite.roomJid.uBare());
 		QString userName = HTML_ESCAPE(FNotifications->contactName(invite.streamJid,invite.fromJid));
@@ -1893,7 +1893,7 @@ void MultiUserChatManager::onConvertMessageChatWindowStart(const QMultiMap<Jid, 
 		hints["muc#roomconfig_changesubject"] = true;
 		hints["muc#roomconfig_allowinvites"] = true;
 
-		CreateMultiChatWizard *wizard = new CreateMultiChatWizard(CreateMultiChatWizard::ModeCreate,convert.streamJid,Jid::null,QString::null,QString::null);
+		CreateMultiChatWizard *wizard = new CreateMultiChatWizard(CreateMultiChatWizard::ModeCreate,convert.streamJid,Jid::null,QString(),QString());
 		connect(wizard,SIGNAL(wizardAccepted(IMultiUserChatWindow *)),SLOT(onConvertMessageChatWindowWizardAccetped(IMultiUserChatWindow *)));
 		connect(wizard,SIGNAL(rejected()),SLOT(onConvertMessageChatWindowWizardRejected()));
 		FWizardConvert.insert(wizard,convert);
