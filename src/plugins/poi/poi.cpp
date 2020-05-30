@@ -713,17 +713,17 @@ bool Poi::initObjects()
         connect(action, SIGNAL(triggered(bool)), SLOT(onPoiList(bool)));
 
         FMenuToolbar->addAction(action, AG_POI_MENU_COMMON, false);
-        FMenuToolbar->addSeparator();
+		FMenuToolbar->addSeparator();
 
-        action = new Action();
-        action->setCheckable(true);
-        action->setText(tr("Show POI"));
+		action = new Action();
+		action->setCheckable(true);
+		action->setText(tr("Show POI"));
 		action->setIcon(RSR_STORAGE_MENUICONS, MNI_POI);
-        action->setData(Action::DR_UserDefined, MNO_SHOW_POI);
-        action->setShortcutId(SCT_POI_VIEW);
+		action->setData(Action::DR_UserDefined, MNO_SHOW_POI);
+		action->setShortcutId(SCT_POI_VIEW);
 		connect(action, SIGNAL(triggered()), SLOT(onPoiShow()));
 
-        FMenuToolbar->addAction(action, AG_POI_MENU_COMMON, false);
+		FMenuToolbar->addAction(action, AG_POI_MENU_COMMON, false);
     }
 
     if (FRostersViewPlugin)
@@ -803,13 +803,13 @@ void Poi::onOptionsChanged(const OptionsNode &ANode)
             action->setChecked(false);
         }
     }
-    else if (ANode.path()==OPV_POI_PNT_ICONSIZE)
+	else if (FMap && ANode.path()==OPV_POI_PNT_ICONSIZE)
 		FGeoMap->updateObjects(MOT_POI, MDR_POI_ICON);
-    else if (ANode.path()==OPV_POI_PNT_TEXTCOLOR ||
+	else if (FMap && (ANode.path()==OPV_POI_PNT_TEXTCOLOR ||
              ANode.path()==OPV_POI_PNT_SHADOWCOLOR ||
-             ANode.path()==OPV_POI_PNT_FONT)
+			 ANode.path()==OPV_POI_PNT_FONT))
 		FGeoMap->updateObjects(MOT_POI, MDR_POI_LABEL);
-    else if (ANode.path()==OPV_POI_PNT_TEMPTEXTCOLOR)
+	else if (FMap && ANode.path()==OPV_POI_PNT_TEMPTEXTCOLOR)
     {
         if (FTempPois.contains("temporary"))
 			FGeoMap->updateObject(MOT_POI, "temporary", MDR_POI_LABEL);
@@ -971,7 +971,8 @@ bool Poi::removePoi(const QString &AId)
         if(FTempPois.contains(AId))
         {
             FTempPois.remove(AId);
-			FGeoMap->removeObject(MOT_POI, AId);
+			if (FMap)
+				FGeoMap->removeObject(MOT_POI, AId);
             emit poiModified(AId, PMT_REMOVED);
             return true;
         }
@@ -988,7 +989,8 @@ bool Poi::removePoi(const QString &AId)
                 if (streamJid.isValid())
                     if (savePoiList(streamJid))
                     {
-						FGeoMap->removeObject(MOT_POI, AId);
+						if (FMap)
+							FGeoMap->removeObject(MOT_POI, AId);
                         emit poiModified(AId, PMT_REMOVED);
                         return true;
                     }
@@ -1172,7 +1174,8 @@ void  Poi::onInsertLocation(bool)
         NewPoi *newPoi  = new NewPoi(this, FMapLocationSelector, FPoiAccounts, tr("Insert location"));
         newPoi->initStreamList(QString(), false);
         newPoi->allowEmptyName(true);
-		newPoi->setLocation(FMap->mapCenter());
+		if (FMap)
+			newPoi->setLocation(FMap->mapCenter());
         if(newPoi->exec())
             messagePoiList->addPoi(newPoi->getPoi());
         newPoi->deleteLater();
@@ -1287,7 +1290,7 @@ void Poi::showSinglePoi(QString AId)
     if (Options::node(OPV_POI_SHOW).value().toBool() || splitted.size()<2)
     {        
         GeolocElement geolocElement=splitted.size()>1?FGeolocHash[splitted[0]][splitted[1]]:FTempPois[AId];
-        if(isTypeEnabled(geolocElement.hasProperty("type")?geolocElement.type():"none"))
+		if(FMap && isTypeEnabled(geolocElement.hasProperty("type")?geolocElement.type():"none"))
         {
 			FGeoMap->addObject(MOT_POI, AId, geolocElement.coordinates()); // MercatorCoordinates(geolocElement.value("lat").toDouble(), geolocElement.value("lon").toDouble())
             emit mapDataChanged(MOT_POI, AId, MDR_ALL);
@@ -1487,7 +1490,7 @@ void Poi::poiShow(const QString &APoiId) const
         {
 			FMap->showMap(true);
 			FGeoMap->getScene()->setMapCenter(poi.coordinates());
-        }
+		}
 	}
 }
 
@@ -1528,7 +1531,8 @@ bool Poi::poiEdit(QString id, QWidget *AParent)
     if(newPoi->exec())
 		if (putPoi(splitId[1], newPoi->getPoi(), newPoi->getStreamJid().bare()))
         {
-            updateOnePoi(id);
+			if (FMap)
+			  updateOnePoi(id);
             return true;
         }
     newPoi->deleteLater();
@@ -1825,12 +1829,15 @@ bool Poi::contextMenu(const QString &AId, Menu *AMenu)
     GeolocElement e = temporary?FTempPois.value(splitId[0])
                                :FGeolocHash.value(splitId[0]).value(splitId[1]);
     Action *action=new Action(AMenu);
-    action->setText(tr("Show"));
-    action->setIcon(RSR_STORAGE_MENUICONS, MNI_POI);
-    action->setData(ADR_ID, AId);
-    action->setData(ADR_ACTION, PA_SHOW);
-    connect(action, SIGNAL(triggered()), SLOT(onPoiActionTriggered()));
-    AMenu->addAction(action);
+	if (FMap)
+	{
+		action->setText(tr("Show"));
+		action->setIcon(RSR_STORAGE_MENUICONS, MNI_POI);
+		action->setData(ADR_ID, AId);
+		action->setData(ADR_ACTION, PA_SHOW);
+		connect(action, SIGNAL(triggered()), SLOT(onPoiActionTriggered()));
+		AMenu->addAction(action);
+	}
 
     action=new Action(AMenu);
     if (temporary)
