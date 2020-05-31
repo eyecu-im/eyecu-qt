@@ -554,7 +554,7 @@ void InsertImage::onLoadFinished()
     }
     else
     {
-        ui->lblInfo->setText(tr("Error: %1").append(reply->errorString()));
+		ui->lblInfo->setText(tr("Error: %1").arg(reply->errorString()));
         disableCommon();
     }
     reply->close();
