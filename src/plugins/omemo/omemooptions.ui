@@ -14,27 +14,7 @@
    <string>OMEMO options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QLabel" name="lblOptOut">
-     <property name="text">
-      <string>Opt-out message</string>
-     </property>
-     <property name="buddy">
-      <cstring>tedOptOut</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lblFallback">
-     <property name="text">
-      <string>Fallback message</string>
-     </property>
-     <property name="buddy">
-      <cstring>tedFallback</cstring>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
+   <item row="3" column="1">
     <widget class="QCheckBox" name="chkOptOutConfirm">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -47,16 +27,43 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QPlainTextEdit" name="tedFallback"/>
+   <item row="3" column="0">
+    <widget class="QLabel" name="lblOptOut">
+     <property name="text">
+      <string>Opt-out message</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedOptOut</cstring>
+     </property>
+    </widget>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QPlainTextEdit" name="tedOptOut"/>
-   </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QPushButton" name="pbKeys">
      <property name="text">
       <string>&amp;Keys</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QPlainTextEdit" name="tedFallback"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QPlainTextEdit" name="tedOptOut"/>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QCheckBox" name="chkSimulateError">
+     <property name="text">
+      <string>Simulate error</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="lblFallback">
+     <property name="text">
+      <string>Fallback message</string>
+     </property>
+     <property name="buddy">
+      <cstring>tedFallback</cstring>
      </property>
     </widget>
    </item>

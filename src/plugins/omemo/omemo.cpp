@@ -447,6 +447,7 @@ bool Omemo::initObjects()
 
 bool Omemo::initSettings()
 {
+	Options::setDefaultValue(OPV_OMEMO_SIMULATEERROR, false);
 	Options::setDefaultValue(OPV_OMEMO_RETRACT_ACCOUNT, false);
 	Options::setDefaultValue(OPV_OMEMO_FALLBACKMESSAGE,
 							 tr("I sent you an OMEMO encrypted message but "
@@ -536,7 +537,7 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 							for (QList<quint32>::ConstIterator it = ids.constBegin();
 								 it != ids.constEnd(); ++it)
 								if (!currentIds.contains(*it))
-								newIds.append(*it);
+									newIds.append(*it);
 						}
 
 						if (ownJid) // Own ID list
@@ -752,7 +753,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 														QByteArray decryptedContent = decryptMessageContent(signalProtocol, encryptedContent, keyHmac);
 // Don't delete <encrypted/> element: it will be used later in messageReadWrite()
 //														AStanza.element().removeChild(encrypted);
-														if (decryptedContent.isEmpty())
+														if (decryptedContent.isEmpty() || Options::node(OPV_OMEMO_SIMULATEERROR).value().toBool())
 															decryptedContent = QString(	"<content xmlns='" NS_SCE "'>" \
 																						" <payload>" \
 																						"  <failed xmlns='" NS_EYECU "'/>" \

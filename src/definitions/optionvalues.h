@@ -635,7 +635,8 @@
 // Off-the-Record Messaging
 #define OPV_OTR_POLICY									"otr.policy"
 #define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
-// Off-the-Record Messaging
+// OMEMO
+#define OPV_OMEMO_SIMULATEERROR							"omemo.simulate-error"
 #define OPV_OMEMO_RETRACT								"omemo.retract"
 #define OPV_OMEMO_RETRACT_ACCOUNT						"omemo.retract.account"
 #define OPV_OMEMO_FALLBACKMESSAGE						"omemo.fallback-message"
