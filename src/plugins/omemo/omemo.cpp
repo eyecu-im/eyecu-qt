@@ -447,7 +447,9 @@ bool Omemo::initObjects()
 
 bool Omemo::initSettings()
 {
+#ifdef DEBUG_MODE
 	Options::setDefaultValue(OPV_OMEMO_SIMULATEERROR, false);
+#endif
 	Options::setDefaultValue(OPV_OMEMO_RETRACT_ACCOUNT, false);
 	Options::setDefaultValue(OPV_OMEMO_FALLBACKMESSAGE,
 							 tr("I sent you an OMEMO encrypted message but "
@@ -468,6 +470,11 @@ QMultiMap<int, IOptionsDialogWidget *> Omemo::optionsDialogWidgets(const QString
 	{
 		widgets.insertMulti(OHO_OMEMO, FOptionsManager->newOptionsDialogHeader(
 								tr("OMEMO"), AParent));
+#ifdef DEBUG_MODE
+		if (Options::node(OPV_COMMON_ADVANCED).value().toBool())
+			widgets.insertMulti(OWO_OMEMO_DEBUG, FOptionsManager->newOptionsDialogWidget(
+									Options::node(OPV_OMEMO_SIMULATEERROR), tr("Simulate error"), AParent));
+#endif
 		widgets.insertMulti(OWO_OMEMO, new OmemoOptions(this, AParent));
 	}
 	else if (ANodeId == OPN_P2P_OMEMO)
@@ -733,6 +740,11 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 												{
 													if (rid==deviceId)
 													{
+														QByteArray decryptedContent;
+#ifdef DEBUG_MODE
+														if (!Options::node(OPV_OMEMO_SIMULATEERROR).value().toBool())
+														{
+#endif
 														QByteArray decoded = QByteArray::fromBase64(key.text().toLatin1());
 														SignalProtocol::Cipher cipher = signalProtocol->sessionCipherCreate(AStanza.fromJid().bare(), sid);
 														QByteArray keyHmac;
@@ -750,10 +762,13 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 															keyHmac = cipher.decrypt(message);
 														}
 														QByteArray encryptedContent = QByteArray::fromBase64(payload.text().toLatin1());
-														QByteArray decryptedContent = decryptMessageContent(signalProtocol, encryptedContent, keyHmac);
+														decryptedContent = decryptMessageContent(signalProtocol, encryptedContent, keyHmac);
+#ifdef DEBUG_MODE
+														}
+#endif
 // Don't delete <encrypted/> element: it will be used later in messageReadWrite()
 //														AStanza.element().removeChild(encrypted);
-														if (decryptedContent.isEmpty() || Options::node(OPV_OMEMO_SIMULATEERROR).value().toBool())
+														if (decryptedContent.isEmpty())
 															decryptedContent = QString(	"<content xmlns='" NS_SCE "'>" \
 																						" <payload>" \
 																						"  <failed xmlns='" NS_EYECU "'/>" \

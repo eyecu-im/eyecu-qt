@@ -294,6 +294,9 @@
 #define OHO_OTR									  500
 #define   OWO_OTR								  510
 #define OHO_OMEMO								  550
+#ifdef DEBUG_MODE
+#define   OWO_OMEMO_DEBUG						  555
+#endif
 #define   OWO_OMEMO								  560
 #define OWO_SCHEDULER							  500
 // *** >>> eyeCU >>> ***

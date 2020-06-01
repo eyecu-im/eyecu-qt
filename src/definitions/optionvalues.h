@@ -636,7 +636,9 @@
 #define OPV_OTR_POLICY									"otr.policy"
 #define OPV_OTR_ENDWHENOFFLINE							"otr.end-when-offline"
 // OMEMO
+#ifdef DEBUG_MODE
 #define OPV_OMEMO_SIMULATEERROR							"omemo.simulate-error"
+#endif
 #define OPV_OMEMO_RETRACT								"omemo.retract"
 #define OPV_OMEMO_RETRACT_ACCOUNT						"omemo.retract.account"
 #define OPV_OMEMO_FALLBACKMESSAGE						"omemo.fallback-message"
