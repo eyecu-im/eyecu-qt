@@ -378,6 +378,7 @@
 #define MNI_CRYPTO_ACK_HAVE_TRUST		"crypto_ack_have_trust"
 #define MNI_CRYPTO_ACK_ALL_TRUST		"crypto_ack_all_trust"
 #define MNI_CRYPTO_NO_TRUST				"crypto_no_trust"
+#define MNI_CRYPTO_ERROR                "crypto_error"
 
 // >>> eyeCU >>>
 #endif // DEF_MENUICONS_H

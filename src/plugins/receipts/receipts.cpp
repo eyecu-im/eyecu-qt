@@ -229,8 +229,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 		if (!stanza.firstElement("request", NS_RECEIPTS).isNull() &&
 			!AMessage.body().isNull())
 		{
-			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() &&
-				AMessage.stanza().firstElement("failed", NS_EYECU).isNull()) // Ignore failed messages
+			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool()) // Ignore failed messages
 			{
 				Stanza message("message");
 				QString id=AMessage.id();

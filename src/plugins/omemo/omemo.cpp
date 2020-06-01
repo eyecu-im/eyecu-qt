@@ -713,6 +713,13 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 			QDomElement encrypted = AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 			if (!encrypted.isNull())
 			{
+				// Remove existing <body/> element, if any.
+				// If <message/> stanza contains <encrypted/> element, qualified by OMEMO namespace,
+				// but contains no <body/> element, it means that decryption failed!
+				QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
+				if (!body.isNull())
+					AStanza.element().removeChild(body);
+
 				QDomElement payload = encrypted.firstChildElement(TAG_NAME_PAYLOAD);
 				if (!payload.isNull())
 				{
@@ -769,45 +776,37 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 // Don't delete <encrypted/> element: it will be used later in messageReadWrite()
 //														AStanza.element().removeChild(encrypted);
 														if (decryptedContent.isEmpty())
-															decryptedContent = QString(	"<content xmlns='" NS_SCE "'>" \
-																						" <payload>" \
-																						"  <failed xmlns='" NS_EYECU "'/>" \
-																						"  <body>%1</body>" \
-																						" </payload>" \
-																						"</content>")
-																				.arg(tr("Failed to decrypt message"))
-																				.toUtf8();
+															qCritical("Decryption failed!");
 														else
+														{
 															if (!isActiveSession(AStreamJid, AStanza.fromJid().bare()))
 																setActiveSession(AStreamJid, AStanza.fromJid().bare());
-														QDomDocument content;
-														if (content.setContent(decryptedContent, true))
-														{
-//TODO: Process all the fiels in <content/> element
-															QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
-															if (!body.isNull())
-																AStanza.element().removeChild(body);
-															QDomElement root = content.documentElement();
-															if (root.tagName()=="content" && root.namespaceURI()==NS_SCE)
+															QDomDocument content;
+															if (content.setContent(decryptedContent, true))
 															{
-																QDomElement payload = root.firstChildElement("payload");
-																if (!payload.isNull())
+//TODO: Process all the fiels in <content/> element
+																QDomElement root = content.documentElement();
+																if (root.tagName()=="content" && root.namespaceURI()==NS_SCE)
 																{
-																	for (QDomElement e = payload.firstChildElement(); !e.isNull();
-																		 e = e.nextSiblingElement())
+																	QDomElement payload = root.firstChildElement("payload");
+																	if (!payload.isNull())
 																	{
-																		QDomNode node = AStanza.document().importNode(e, true);
-																		AStanza.element().appendChild(node);
+																		for (QDomElement e = payload.firstChildElement(); !e.isNull();
+																			 e = e.nextSiblingElement())
+																		{
+																			QDomNode node = AStanza.document().importNode(e, true);
+																			AStanza.element().appendChild(node);
+																		}
 																	}
+																	else
+																		qCritical("No payload element found in content!");
 																}
 																else
-																	qCritical("No payload element found in content!");
+																	qCritical("Invalid content!");
 															}
 															else
 																qCritical("Invalid content!");
 														}
-														else
-															qCritical("Invalid content!");
 														break;
 													}
 												}
@@ -1759,9 +1758,11 @@ bool Omemo::writeMessageHasText(int AOrder, Message &AMessage, const QString &AL
 		QDomElement encrypted = AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 		if (!encrypted.isNull())
 		{
+			if (AMessage.stanza().firstElement("body").isNull()) // Failed to decrypt
+				return true;
 			QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
 			if (header.isNull())
-				qCritical("No <header/> element found!");
+				return true;
 			else
 			{
 				bool ok;
@@ -1771,9 +1772,7 @@ bool Omemo::writeMessageHasText(int AOrder, Message &AMessage, const QString &AL
 					SignalProtocol *signalProtocol = FSignalProtocols.value(AMessage.toJid());
 					bool trusted = signalProtocol->getIdentityTrusted(AMessage.fromJid().bare(), deviceId);
 					if (!trusted)
-					{
 						return true;
-					}
 				}
 			}
 		}
@@ -1790,30 +1789,42 @@ bool Omemo::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADo
 		QDomElement encrypted = AMessage.stanza().firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO);
 		if (!encrypted.isNull())
 		{
-			QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
-			if (header.isNull())
-				qCritical("No <header/> element found!");
+			if (AMessage.stanza().firstElement("body").isNull()) // Failed to decrypt
+			{
+				QTextCursor cursor(ADocument);
+				cursor.insertHtml(QString("<img src='%1'>&nbsp;<span style='color: red; font-style: Italic'>%2</span>")
+								  .arg(QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
+														   ->fileFullName(MNI_CRYPTO_ERROR)).toString())
+								  .arg("Failed to decrypt OMEMO message!"));
+				return true;
+			}
 			else
 			{
-				bool ok;
-				quint32 deviceId = header.attribute(ATTR_NAME_SID).toUInt(&ok);
-				if (ok)
+				QDomElement header = encrypted.firstChildElement(TAG_NAME_HEADER);
+				if (header.isNull())
+					qCritical("No <header/> element found!");
+				else
 				{
-					SignalProtocol *signalProtocol = FSignalProtocols.value(AMessage.toJid());
-					bool trusted = signalProtocol->getIdentityTrusted(AMessage.fromJid().bare(), deviceId);
+					bool ok;
+					quint32 deviceId = header.attribute(ATTR_NAME_SID).toUInt(&ok);
+					if (ok)
+					{
+						SignalProtocol *signalProtocol = FSignalProtocols.value(AMessage.toJid());
+						bool trusted = signalProtocol->getIdentityTrusted(AMessage.fromJid().bare(), deviceId);
 
-					QTextCursor cursor(ADocument);
-					cursor.movePosition(QTextCursor::End);
-					QTextImageFormat image;
-					image.setName(QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
-													  ->fileFullName(trusted?MNI_EMPTY_BOX
-																			:MNI_CRYPTO_NO_TRUST)).toString());
-					image.setProperty(QpXhtml::ObjectId, calcId(AMessage.toJid().full(), AMessage.fromJid().bare(), deviceId));
-					if (!trusted)
-						image.setToolTip(tr("From untrusted identity"));
-					cursor.insertImage(image);
-					return true;
+						QTextCursor cursor(ADocument);
+						cursor.movePosition(QTextCursor::End);
+						QTextImageFormat image;
+						image.setName(QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
+														  ->fileFullName(trusted?MNI_EMPTY_BOX
+																				:MNI_CRYPTO_NO_TRUST)).toString());
+						image.setProperty(QpXhtml::ObjectId, calcId(AMessage.toJid().full(), AMessage.fromJid().bare(), deviceId));
+						if (!trusted)
+							image.setToolTip(tr("From untrusted identity"));
+						cursor.insertImage(image);
+						return true;
 
+					}
 				}
 			}
 		}

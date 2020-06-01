@@ -98,8 +98,6 @@
 #define NS_VACUUM_PRIVATESTORAGE_UPDATE         "vacuum:privatestorage:update"
 
 // *** <<< eyeCU <<< ***
-#define NS_EYECU								"http://eyecu.ru"
-
 #define NS_PUBSUB_RETRACT                       "http://jabber.org/protocol/pubsub#retract"
 
 #define NS_PEP_ACTIVITY                         "http://jabber.org/protocol/activity"

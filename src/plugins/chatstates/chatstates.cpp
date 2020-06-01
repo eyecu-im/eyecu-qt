@@ -403,7 +403,6 @@ bool ChatStates::stanzaReadWrite(int AHandlerId, const Jid &AStreamJid, Stanza &
 				}
 			}
 		}
-		return !hasBody;
 	}
 	else if (FSHIMessagesOut.value(AStreamJid)==AHandlerId && isReady(AStreamJid) && !AStanza.isError())
 	{
