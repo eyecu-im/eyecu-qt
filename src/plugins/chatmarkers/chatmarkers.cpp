@@ -747,7 +747,7 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 			for (; i>=0 && !ids.at(i).isEmpty() && ids.at(i) != lastId; --i)
 			{
 				if (receiptsSupported &&
-					!FDeliveredHash[AStreamJid][AContactJid].contains(AMessageId))
+					!FDeliveredHash[AStreamJid][AContactJid].contains(ids.at(i)))
 					continue;
 
 				idsNum++;
