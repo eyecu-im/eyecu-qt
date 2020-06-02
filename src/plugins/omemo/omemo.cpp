@@ -85,14 +85,14 @@ static QByteArray pkcs7pad(const QByteArray &AData)
 
 static QByteArray pkcs7unpad(const QByteArray &AData)
 {
-	if (!AData.isEmpty() && (AData.size()%16 == 0))
+	if (!AData.isEmpty() && AData.size()%16==0)
 	{
 		quint8 padsize = quint8(AData.at(AData.size() - 1));
-		if (padsize < 16 && padsize < AData.size())
+		if ((padsize < 16) && (padsize < AData.size()))
 		{
 			for (int i = 0; i < padsize; ++i)
 				if (quint8(AData.at(AData.size()-i-1)) != padsize)
-					return QByteArray(); // No padding
+					return AData; // No padding
 			return AData.left(AData.size()-padsize);
 		}
 	}
@@ -556,8 +556,6 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 								timer->stop();
 								timer->deleteLater();
 							}
-
-							qDebug() << "cleanup!";
 
 							quint32 ownId = FSignalProtocols[AStreamJid]->getDeviceId();
 							if (ownId)
@@ -1475,9 +1473,9 @@ void Omemo::purgeDatabases()
 	for (QStringList::ConstIterator it=files.constBegin();
 		 it != files.constEnd(); ++it)
 		if (omemoDir.remove(*it))
-			qDebug() << "Database file:" << *it << "deleted.";
+			qDebug("Database file: %s deleted.", it->toLocal8Bit().data());
 		else
-			qCritical() << "Failed to delete database file:" << *it;
+			qCritical("Failed to delete database file: %s", it->toLocal8Bit().data());
 }
 
 void Omemo::onPresenceOpened(IPresence *APresence)
