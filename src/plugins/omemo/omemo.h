@@ -144,12 +144,14 @@ private:
 	int					FOmemoHandlerIn;
 	int					FOmemoHandlerOut;
 	int					FSHIMessageIn;
+	int					FSHIMessageCheck;
 	int					FSHIMessageOut;
 
 	QHash<Jid, SignalProtocol*> FSignalProtocols;
 
 	QHash<IXmppStream *, QTimer*> FPepDelay;
 	QHash<QString, QList<quint32> > FDeviceIds;
+	QHash<QString, QList<quint32> > FFailedDeviceIds;
 	QHash<Jid, QStringList> FActiveSessions;
 	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
