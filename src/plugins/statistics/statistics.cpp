@@ -296,7 +296,6 @@ bool Statistics::isValidHit(const IStatisticsHit &AHit) const
 	case IStatisticsHit::HitView:
 		break;
 	case IStatisticsHit::HitEvent:
-
 		if (AHit.event.category.isEmpty() || AHit.event.category.size()>150)
 			return false;
 		if (AHit.event.action.isEmpty() || AHit.event.action.size()>500)
@@ -494,7 +493,7 @@ QString Statistics::userAgent() const
 #if QT_VERSION >= 0x050900
 QString Statistics::windowsVersion() const
 {
-#ifdef Q_OS_WIN
+#if QT_VERSION > 0x050900 && defined Q_OS_WIN
 	QOperatingSystemVersion currentWindows = QOperatingSystemVersion::current();
 	int majorVersion = currentWindows.majorVersion();
 	int minorVersion = currentWindows.minorVersion();
