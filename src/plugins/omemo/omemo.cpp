@@ -68,7 +68,7 @@ extern "C" {
 #define ADR_CONTACT_JID Action::DR_Parametr2
 #define ADR_STREAM_JID Action::DR_StreamJid
 
-#define SHC_MESSAGE "/message/body"
+#define SHC_MESSAGE "/message"
 #define SHC_MESSAGE_ENCRYPTED "/message/encrypted[@xmlns='" NS_OMEMO "']"
 
 #define VDATA_SIZE(A) A.data(), size_t(A.size())
@@ -246,6 +246,7 @@ static QString getRandomString(int ALength)
 
 static QByteArray getContent(const Stanza &AStanza)
 {
+	qDebug() << "getContent(" << AStanza.toString() << ")";
 	QDomDocument d;
 	QDomElement content = d.createElementNS(NS_SCE, "content");
 	d.appendChild(content);
@@ -275,6 +276,7 @@ static QByteArray getContent(const Stanza &AStanza)
 	child = AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO);
 	if (!child.isNull())
 		payload.appendChild(d.importNode(child, true));
+	qDebug() << "returning:" << d.toByteArray();
 	return d.toByteArray();
 }
 
@@ -623,7 +625,8 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 			if (AStanza.firstElement(TAG_NAME_ENCRYPTED, NS_OMEMO).isNull())
 			{
 				QString bareJid = AStanza.toJid().bare();
-				if (isActiveSession(AStreamJid, bareJid))
+				if (isActiveSession(AStreamJid, bareJid) ||
+									!AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO).isNull())
 				{
 					bool haveTrustedIdentities(false);
 					if (isSupported(AStreamJid, AStanza.toJid()))
@@ -1095,6 +1098,7 @@ void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 
 void Omemo::onOmemoActionTriggered()
 {
+	qDebug() << "Omemo::onOmemoActionTriggered()";
 	Action *action = qobject_cast<Action*>(sender());
 	if (action)
 	{
@@ -1102,14 +1106,18 @@ void Omemo::onOmemoActionTriggered()
 		Jid contactJid(action->data(ADR_CONTACT_JID).toString());
 
 		bool active = isActiveSession(streamJid, contactJid.bare());
+		qDebug() << "active(before):" << active;
 
 		if (setActiveSession(streamJid, contactJid.bare(), !active))
-		{
+		{			
 			IMessageChatWindow *window = FMessageWidgets
 									->findChatWindow(streamJid, contactJid);
 			if (window)
 				updateChatWindowActions(window);
-			sendOptOutStanza(streamJid, contactJid);
+			active = isActiveSession(streamJid, contactJid.bare());
+			qDebug() << "active(after):" << active;
+			if (!active)
+				sendOptOutStanza(streamJid, contactJid);
 		}
 	}
 }
@@ -1285,6 +1293,7 @@ void Omemo::removeOtherDevices(const Jid &AStreamJid)
 
 void Omemo::sendOptOutStanza(const Jid &AStreamJid, const Jid &AContactJid)
 {
+	qDebug() << "Omemo::sendOptOutStanza(" << AStreamJid.full() << "," << AContactJid.full() << ")";
 	Stanza stanza;
 	stanza.setTo(AContactJid.full());
 	QDomElement optOut=stanza.addElement(TAG_NAME_OPTOUT, NS_OMEMO);
@@ -1351,6 +1360,7 @@ void Omemo::bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid)
 
 void Omemo::encryptMessage(Stanza &AMessageStanza)
 {
+	qDebug() << "Omemo::encryptMessage(" << AMessageStanza.toString() << ")";
 	if (!FSignalProtocols.contains(AMessageStanza.fromJid()))
 		return;
 	SignalProtocol *signalProtocol = FSignalProtocols[AMessageStanza.fromJid()];
@@ -1456,9 +1466,10 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 			}
 		}
 
+		qDebug() << "Here!";
 		encrypted.appendChild(header);
 //TODO: Make optional list of supported elements
-		QDomElement body = AMessageStanza.element().firstChildElement("body");
+		QDomElement body = AMessageStanza.firstElement("body", NS_JABBER_CLIENT);
 		if (!body.isNull())
 		{
 			AMessageStanza.element().removeChild(body);
