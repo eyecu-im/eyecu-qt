@@ -51,6 +51,8 @@ extern "C" {
 #define TAG_NAME_KEYS					"keys"
 // #define TAG_NAME_IV					    "iv"
 #define TAG_NAME_PAYLOAD				"payload"
+#define TAG_NAME_OPTOUT					"opt-out"
+#define TAG_NAME_REASON					"reason"
 
 #define ATTR_NAME_ID					"id"
 
@@ -267,8 +269,12 @@ static QByteArray getContent(const Stanza &AStanza)
 	time.setAttribute("stamp", DateTime(QDateTime::currentDateTime()).toX85UTC());
 	QDomElement payload = d.createElement("payload");
 	content.appendChild(payload);
-	QDomNode body = d.importNode(AStanza.element().firstChildElement("body"), true);
-	payload.appendChild(body);
+	QDomElement child = AStanza.firstElement(TAG_NAME_BODY, NS_JABBER_CLIENT);
+	if (!child.isNull())
+		payload.appendChild(d.importNode(child, true));
+	child = AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO);
+	if (!child.isNull())
+		payload.appendChild(d.importNode(child, true));
 	return d.toByteArray();
 }
 
@@ -394,6 +400,7 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 								 SLOT(onOptionsOpened()));
 	connect(Options::instance(), SIGNAL(optionsChanged(OptionsNode)),
 								 SLOT(onOptionsChanged(OptionsNode)));
+	connect(this, SIGNAL(optOut(Jid,Jid)), SLOT(onOptOut(Jid,Jid)), Qt::QueuedConnection);
 	//AInitOrder = 100;   // This one should be initialized AFTER ....!
 	return true;
 }
@@ -793,14 +800,12 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 																{
 																	QDomElement payload = root.firstChildElement("payload");
 																	if (!payload.isNull())
-																	{
 																		for (QDomElement e = payload.firstChildElement(); !e.isNull();
 																			 e = e.nextSiblingElement())
-																		{
-																			QDomNode node = AStanza.document().importNode(e, true);
-																			AStanza.element().appendChild(node);
-																		}
-																	}
+																			if (e.tagName()==TAG_NAME_OPTOUT && e.namespaceURI()==NS_OMEMO)
+																				emit optOut(AStreamJid, AStanza.fromJid());
+																			else
+																				AStanza.element().appendChild(AStanza.document().importNode(e, true));
 																	else
 																		qCritical("No payload element found in content!");
 																}
@@ -1104,6 +1109,25 @@ void Omemo::onOmemoActionTriggered()
 									->findChatWindow(streamJid, contactJid);
 			if (window)
 				updateChatWindowActions(window);
+			sendOptOutStanza(streamJid, contactJid);
+		}
+	}
+}
+
+void Omemo::onOptOut(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	if (isActiveSession(AStreamJid, AContactJid.bare()))
+	{
+		IMessageChatWindow *window = FMessageWidgets
+								->getChatWindow(AStreamJid, AContactJid);
+		if (window)
+		{
+			window->showTabPage();
+			QMessageBox::warning(window->instance(),
+								 tr("Contact stopped OMEMO encryption"),
+								 tr("%1 stopped OMEMO session!"), QMessageBox::Ok);
+			setActiveSession(AStreamJid, AContactJid.bare(), false);
+			updateChatWindowActions(window);
 		}
 	}
 }
@@ -1256,7 +1280,22 @@ void Omemo::removeOtherDevices(const Jid &AStreamJid)
 	}
 
 	Options::node(OPV_OMEMO_RETRACT).removeNode("account",
-		FAccountManager->findAccountByStream(AStreamJid)->accountId().toString());
+												FAccountManager->findAccountByStream(AStreamJid)->accountId().toString());
+}
+
+void Omemo::sendOptOutStanza(const Jid &AStreamJid, const Jid &AContactJid)
+{
+	Stanza stanza;
+	stanza.setTo(AContactJid.full());
+	QDomElement optOut=stanza.addElement(TAG_NAME_OPTOUT, NS_OMEMO);
+	if (!Options::node(OPV_OMEMO_OPTOUTMESSAGE).isNull())
+	{
+		QDomElement reason = stanza.createElement(TAG_NAME_REASON);
+		QDomText text = stanza.createTextNode(Options::node(OPV_OMEMO_OPTOUTMESSAGE).value().toString());
+		reason.appendChild(text);
+		optOut.appendChild(reason);
+	}
+	FStanzaProcessor->sendStanzaOut(AStreamJid, stanza);
 }
 
 QString Omemo::requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds)
@@ -1418,10 +1457,17 @@ void Omemo::encryptMessage(Stanza &AMessageStanza)
 		}
 
 		encrypted.appendChild(header);
+//TODO: Make optional list of supported elements
 		QDomElement body = AMessageStanza.element().firstChildElement("body");
-		AMessageStanza.element().removeChild(body);
-		body = AMessageStanza.addElement(TAG_NAME_BODY, NS_JABBER_CLIENT);
-		body.appendChild(doc.createTextNode(Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString()));
+		if (!body.isNull())
+		{
+			AMessageStanza.element().removeChild(body);
+			body = AMessageStanza.addElement(TAG_NAME_BODY, NS_JABBER_CLIENT);
+			body.appendChild(doc.createTextNode(Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString()));
+		}
+		QDomElement optOut = AMessageStanza.firstElement("opt-out", NS_OMEMO);
+		if (!optOut.isNull())
+			AMessageStanza.element().removeChild(body);
 		AMessageStanza.addElement("store", NS_HINTS);
 	}
 }

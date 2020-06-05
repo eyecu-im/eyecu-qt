@@ -87,6 +87,7 @@ protected:
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
 	void removeOtherDevices(const Jid &AStreamJid);
+	void sendOptOutStanza(const Jid &AStreamJid, const Jid &AContactJid);
 
 	QString requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds);
 
@@ -126,6 +127,11 @@ protected slots:
 
 	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 	void onOmemoActionTriggered();
+
+	void onOptOut(const Jid &AStreamJid, const Jid &AContactJid);
+
+signals:
+	void optOut(const Jid &AStreamJid, const Jid &AContactJid);
 
 private:
 	IAccountManager*	FAccountManager;
