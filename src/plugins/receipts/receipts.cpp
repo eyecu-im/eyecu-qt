@@ -14,6 +14,8 @@
 #include "definitions/soundfiles.h"
 #include "definitions/tabpagenotifypriorities.h"
 
+#include <QDebug>
+
 #include <QDateTime>
 #include <QpXhtml>
 #include <QCryptographicHash>
@@ -227,7 +229,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	if (ADirection==IMessageProcessor::DirectionIn)
 	{
 		if (!stanza.firstElement("request", NS_RECEIPTS).isNull() &&
-			!AMessage.body().isNull())
+			!AMessage.data(MDR_MESSAGE_FAILED).toBool())
 		{
 			Stanza message("message");
 			QString id=AMessage.id();
@@ -286,7 +288,8 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
 		Options::node(OPV_MARKERS_SHOW_LEVEL).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-	{	
+	{
+		qDebug() << "Receipts::writeMessageToText(" << AOrder << "," << AMessage.stanza().toString() << ", ...)";
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;

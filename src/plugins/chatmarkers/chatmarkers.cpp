@@ -556,7 +556,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 	{
 		if (isSupported(AStreamJid, AMessage.from()) &&
 			!stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
-			!AMessage.body().isNull())
+			!AMessage.data(MDR_MESSAGE_FAILED).toBool())
 		{
 			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool())
 				markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
