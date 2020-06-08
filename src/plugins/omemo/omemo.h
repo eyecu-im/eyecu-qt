@@ -72,17 +72,29 @@ public:
 	virtual void onSessionDeleted(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol) override;
 	virtual void onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol) override;
 
+	// IOmemo interface
+//TODO: Move addAcceptableElement() to a separate plugin.
+	bool addAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+//TODO: Move removeAcceptableElement() to a separate plugin.
+	bool removeAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+//TODO: Move isElementAcceptable() to a separate plugin.
+	bool isElementAcceptable(const QString &ANamespace, const QString &ATagName) const override;
+//TODO: Move isStanzaAcceptable() to a separate plugin.
+	bool isStanzaAcceptable(const Stanza &AStanza) const override;
 
 protected:
 	bool isSupported(const QString &ABareJid) const;
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
+//TODO: Move getContent() to a separate plugin.
+	QByteArray getContentToEncrypt(const Stanza &AStanza, const QString &AFallbackBodyText);
 	bool setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive=true);
 	bool isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const;
 	bool isActiveSession(const IMessageAddress *AAddresses) const;
 	void registerDiscoFeatures();
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	void updateOmemoAction(Action *AAction);
+	void updateOmemoAction(const Jid &AStreamJid, const Jid &AContactJid);
 	bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
@@ -92,10 +104,10 @@ protected:
 	QString requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds);
 
 	void bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid);
-	void encryptMessage(Stanza &AMessageStanza);
+	bool encryptMessage(Stanza &AMessageStanza);
 
 	void setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
-				  const QString &ABareJid, int ADeviceId,
+				  const QString &ABareJid, quint32 ADeviceId,
 				  const QString &AImage, const QString &ATitle);
 
 	struct SignalDeviceBundle
@@ -128,10 +140,10 @@ protected slots:
 	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 	void onOmemoActionTriggered();
 
-	void onOptOut(const Jid &AStreamJid, const Jid &AContactJid);
+	void onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QString &AReasonText);
 
 signals:
-	void optOut(const Jid &AStreamJid, const Jid &AContactJid);
+	void optOut(const Jid &AStreamJid, const Jid &AContactJid, const QString &AReasonText);
 
 private:
 	IAccountManager*	FAccountManager;
@@ -163,6 +175,7 @@ private:
 	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundles;
 	QMultiHash<QString, Stanza> FPendingMessages;
+	QMultiHash<QString, QString> FAcceptableElements;
 
 	bool				FCleanup;
 };
