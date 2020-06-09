@@ -22,6 +22,10 @@
 #include <interfaces/istatuschanger.h>
 #include <interfaces/ixmppuriqueries.h>
 #include <interfaces/irecentcontacts.h>
+// *** <<< eyeCU <<< ***
+#include <interfaces/ireceipts.h>
+#include <interfaces/ichatmarkers.h>
+// *** >>> eyeCU >>> ***
 
 struct WindowStatus {
 	QDateTime startTime;
@@ -130,6 +134,10 @@ private:
 	IAccountManager *FAccountManager;
 	IXmppUriQueries *FXmppUriQueries;
 	IRecentContacts *FRecentContacts;
+// *** <<< eyeCU <<< ***
+	IReceipts *FReceipts;
+	IChatMarkers *FChatMarkers;
+// *** >>> eyeCU >>> ***
 private:
 	QList<IMessageChatWindow *> FWindows;
 	QMap<IMessageChatWindow *, QTimer *> FDestroyTimers;

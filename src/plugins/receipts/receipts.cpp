@@ -14,8 +14,6 @@
 #include "definitions/soundfiles.h"
 #include "definitions/tabpagenotifypriorities.h"
 
-#include <QDebug>
-
 #include <QDateTime>
 #include <QpXhtml>
 #include <QCryptographicHash>
@@ -260,7 +258,7 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			(isSupported(AStreamJid, AMessage.toJid()) ||
 			 isSupportUnknown(AStreamJid, AMessage.toJid())) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&
-			!AMessage.body().isNull())
+			isStanzaAcceptable(AMessage.stanza()))
 		{
 			if(AMessage.id().isEmpty())
 				AMessage.setRandomId();
@@ -289,7 +287,6 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 		Options::node(OPV_MARKERS_SHOW_LEVEL).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
 	{
-		qDebug() << "Receipts::writeMessageToText(" << AOrder << "," << AMessage.stanza().toString() << ", ...)";
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
@@ -321,7 +318,33 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
         AMessage.detach();
         AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("request", NS_RECEIPTS));
     }
-    return false;
+	return false;
+}
+
+bool Receipts::addAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	if (FAcceptableElements.contains(ANamespace, ATagName))
+		return false;
+	FAcceptableElements.insert(ANamespace, ATagName);
+	return true;
+}
+
+bool Receipts::removeAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	return FAcceptableElements.remove(ANamespace, ATagName)==1;
+}
+
+bool Receipts::isElementAcceptable(const QString &ANamespace, const QString &ATagName)
+{
+	return FAcceptableElements.contains(ANamespace, ATagName);
+}
+
+bool Receipts::isStanzaAcceptable(const Stanza &AStanza) const
+{
+	for (QDomElement e=AStanza.firstElement(); !e.isNull(); e=e.nextSiblingElement())
+		if (FAcceptableElements.contains(e.namespaceURI(), e.tagName()))
+			return true;
+	return false;
 }
 
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)

@@ -40,26 +40,31 @@ public:
     ~Receipts();
 
     //IPlugin
-    virtual QObject *instance() { return this; }
-    virtual QUuid pluginUuid() const { return RECEIPTS_UUID; }
-    virtual void pluginInfo(IPluginInfo *APluginInfo);
-    virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-    virtual bool initObjects();
-    virtual bool initSettings();
-    virtual bool startPlugin(){return true;}
+	virtual QObject *instance() override { return this; }
+	virtual QUuid pluginUuid() const override { return RECEIPTS_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo) override;
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	virtual bool initObjects() override;
+	virtual bool initSettings() override;
+	virtual bool startPlugin() override {return true;}
 	//IReceipts
-	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
-	virtual bool isSupportUnknown(const Jid &AStreamJid, const Jid &AContactJid) const;
+	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const override;
+	virtual bool isSupportUnknown(const Jid &AStreamJid, const Jid &AContactJid) const override;
     //IOptionsHolder
-	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
     //IMessageEditor
-    virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection);
+	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
     //IMessageWriter
-	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang);
-	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
-	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang) override;
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang) override;
     //IArchiveHandler
-    virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
+	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn) override;
+	// IReceipts interface
+	virtual bool addAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+	virtual bool removeAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+	virtual bool isElementAcceptable(const QString &ANamespace, const QString &ATagName) override;
+	virtual bool isStanzaAcceptable(const Stanza &AStanza) const override;
 
 protected:
     QHash<QString, QString> getReceipts(Jid jid) const;
@@ -79,6 +84,7 @@ private:
 	IChatMarkers		*FChatMarkers;
     IconStorage         *FIconStorage;
 
+	QMultiHash<QString, QString> FAcceptableElements;
     QHash<IMessageChatWindow *, int>   FNotifies;
     QHash<Jid, QHash<Jid, QStringList> > FDeliveryRequestHash;
 	QHash<Jid, QSet<Jid> > FSupported;
@@ -93,7 +99,7 @@ protected slots:
 	void onOptionsChanged(const OptionsNode &ANode);
 
 signals:
-    void delivered(const QString &AId);
+    void delivered(const QString &AId);	
 };
 
 #endif // RECEIPTS_H

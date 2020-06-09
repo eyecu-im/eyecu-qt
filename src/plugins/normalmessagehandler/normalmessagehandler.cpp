@@ -24,6 +24,7 @@
 #include <definitions/notificationdataroles.h>
 #include <definitions/notificationtypeorders.h>
 #include <definitions/tabpagenotifypriorities.h>
+#include <definitions/namespaces.h> // *** <<< eyeCU >>> ***
 #include <utils/widgetmanager.h>
 #include <utils/textmanager.h>
 #include <utils/xmpperror.h>
@@ -54,7 +55,8 @@ NormalMessageHandler::NormalMessageHandler()
 	FRostersModel = NULL;
 	FXmppUriQueries = NULL;
 	FOptionsManager = NULL;
-	FRecentContacts = NULL;
+	FRecentContacts = NULL;	
+	FReceipts = NULL; // *** <<< eyeCU >>> ***
 }
 
 NormalMessageHandler::~NormalMessageHandler()
@@ -173,7 +175,13 @@ bool NormalMessageHandler::initConnections(IPluginManager *APluginManager, int &
 	{
 		FRecentContacts = qobject_cast<IRecentContacts *>(plugin->instance());
 	}
-
+	// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IReceipts").value(0,NULL);
+	if (plugin)
+	{
+		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+	}
+	// *** >>> eyeCU >>> ***
 	connect(Shortcuts::instance(),SIGNAL(shortcutActivated(const QString &, QWidget *)),SLOT(onShortcutActivated(const QString &, QWidget *)));
 
 	return FMessageProcessor!=NULL && FMessageWidgets!=NULL && FMessageStyleManager!=NULL;
@@ -214,6 +222,12 @@ bool NormalMessageHandler::initObjects()
 	{
 		FMessageWidgets->insertEditSendHandler(MESHO_NORMALMESSAGEHANDLER,this);
 	}
+	// *** <<< eyeCU <<< ***
+	if (FReceipts)
+	{
+		FReceipts->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+	// *** >>> eyeCU >>> ***
 	return true;
 }
 
