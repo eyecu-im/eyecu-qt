@@ -556,7 +556,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 	{
 		if (isSupported(AStreamJid, AMessage.from()) &&
 			!stanza.firstElement("markable", NS_CHATMARKERS).isNull() &&
-			!AMessage.body().isNull())
+			!AMessage.data(MDR_MESSAGE_FAILED).toBool())
 		{
 			if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool())
 				markMessage(AStreamJid, AMessage.from(), Received, AMessage.id());
@@ -588,8 +588,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 
 			if (Options::node(OPV_MARKERS_SHOW_ACKOWN).value().toBool() &&
 				isSupported(AStreamJid, AMessage.from()) &&
-				!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
-				!AMessage.body().isNull())
+				!AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull())
 				FAcknowledgeHash[AMessage.from()][AMessage.to()].append(AMessage.id());
 		}
 		else
@@ -610,7 +609,7 @@ bool ChatMarkers::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &A
 		if ((Options::node(OPV_MARKERS_SHOW_LEVEL).value().toInt()) &&
 			isSupported(AStreamJid, AMessage.to()) &&
 			AMessage.stanza().firstElement("markable", NS_CHATMARKERS).isNull() &&
-			!AMessage.body().isNull())
+			isStanzaAcceptable(AMessage.stanza()))
 		{
 			if(AMessage.id().isEmpty())
 				AMessage.setRandomId();
@@ -692,6 +691,32 @@ bool ChatMarkers::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message 
 	return false;
 }
 
+bool ChatMarkers::addAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	if (FAcceptableElements.contains(ANamespace, ATagName))
+		return false;
+	FAcceptableElements.insert(ANamespace, ATagName);
+	return true;
+}
+
+bool ChatMarkers::removeAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	return FAcceptableElements.remove(ANamespace, ATagName)==1;
+}
+
+bool ChatMarkers::isElementAcceptable(const QString &ANamespace, const QString &ATagName) const
+{
+	return FAcceptableElements.contains(ANamespace, ATagName);
+}
+
+bool ChatMarkers::isStanzaAcceptable(const Stanza &AStanza) const
+{
+	for (QDomElement e=AStanza.firstElement(); !e.isNull(); e=e.nextSiblingElement())
+		if (FAcceptableElements.contains(e.namespaceURI(), e.tagName()))
+			return true;
+	return false;
+}
+
 void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
 								   const QString &AMessageId, ChatMarkers::Type AType)
 {
@@ -708,6 +733,8 @@ void ChatMarkers::setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid
 			return;
 
 		const QStringList &ids = FRequestHash[AStreamJid][contactJid];
+
+		emit messagesMarked(AStreamJid, AContactJid, AMessageId, AType);
 
 		bool receiptsSupported = isReceiptsSupported(AStreamJid, AContactJid);
 

@@ -40,7 +40,9 @@ Attention::Attention():
         FStatusIcons(NULL),
         FMainWindowPlugin(NULL),        
         FMainWindow(NULL),
-        FNotifications(NULL)
+		FNotifications(NULL),
+		FReceipts(NULL),
+		FChatMarkers(NULL)
 {}
 
 Attention::~Attention()
@@ -116,6 +118,18 @@ bool Attention::initConnections(IPluginManager *APluginManager, int & /*AInitOrd
     if (plugin)
         FDiscovery = qobject_cast<IServiceDiscovery *>(plugin->instance());
 
+	plugin = APluginManager->pluginInterface("IReceipts").value(0,NULL);
+	if (plugin)
+	{
+		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IChatMarkers").value(0,NULL);
+	if (plugin)
+	{
+		FChatMarkers = qobject_cast<IChatMarkers *>(plugin->instance());
+	}
+
     FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
     // AInitOrder = 200;   // This one should be initialized AFTER !
@@ -152,6 +166,18 @@ bool Attention::initObjects()
         notifyType.kindDefs = notifyType.kindMask & ~(INotification::AutoActivate|INotification::PopupWindow);
         FNotifications->registerNotificationType(NNT_ATTENTION, notifyType);
     }
+
+	if (FReceipts)
+	{
+		FReceipts->addAcceptableElement(NS_JABBER_CLIENT, "body");
+		FReceipts->addAcceptableElement(NS_ATTENTION, "attention");
+	}
+
+	if (FChatMarkers)
+	{
+		FChatMarkers->addAcceptableElement(NS_JABBER_CLIENT, "body");
+		FChatMarkers->addAcceptableElement(NS_ATTENTION, "attention");
+	}
 
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CHAT_ATTENTION, tr("Attention"), tr("Alt+Return","Attention"), Shortcuts::WindowShortcut);
 
