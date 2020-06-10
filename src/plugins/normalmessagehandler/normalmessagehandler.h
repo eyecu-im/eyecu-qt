@@ -17,7 +17,10 @@
 #include <interfaces/ixmppuriqueries.h>
 #include <interfaces/ioptionsmanager.h>
 #include <interfaces/irecentcontacts.h>
-#include <interfaces/ireceipts.h> // *** <<< eyeCU >>> ***
+// *** <<< eyeCU <<< ***
+#include <interfaces/ireceipts.h>
+#include <interfaces/istanzacontentencryption.h>
+// *** >>> eyeCU >>> ***
 
 enum WindowMenuAction {
 	NextAction,
@@ -132,7 +135,10 @@ private:
 	IXmppUriQueries *FXmppUriQueries;
 	IOptionsManager *FOptionsManager;
 	IRecentContacts *FRecentContacts;
-	IReceipts *FReceipts; // *** <<< eyeCU >>> ***
+// *** <<< eyeCU <<< ***
+	IReceipts *FReceipts;
+	IStanzaContentEncrytion *FStanzaContentEncrytion;
+// *** >>> eyeCU >>> ***
 private:
 	QList<IMessageNormalWindow *> FWindows;
 	QMultiMap<IMessageNormalWindow *, int> FNotifiedMessages;

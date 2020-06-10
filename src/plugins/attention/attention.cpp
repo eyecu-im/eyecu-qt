@@ -42,7 +42,8 @@ Attention::Attention():
         FMainWindow(NULL),
 		FNotifications(NULL),
 		FReceipts(NULL),
-		FChatMarkers(NULL)
+		FChatMarkers(NULL),
+		FStanzaContentEncrytion(NULL)
 {}
 
 Attention::~Attention()
@@ -130,6 +131,12 @@ bool Attention::initConnections(IPluginManager *APluginManager, int & /*AInitOrd
 		FChatMarkers = qobject_cast<IChatMarkers *>(plugin->instance());
 	}
 
+	plugin = APluginManager->pluginInterface("IStanzaContentEncrytion").value(0,NULL);
+	if (plugin)
+	{
+		FStanzaContentEncrytion = qobject_cast<IStanzaContentEncrytion *>(plugin->instance());
+	}
+
     FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
     // AInitOrder = 200;   // This one should be initialized AFTER !
@@ -177,6 +184,12 @@ bool Attention::initObjects()
 	{
 		FChatMarkers->addAcceptableElement(NS_JABBER_CLIENT, "body");
 		FChatMarkers->addAcceptableElement(NS_ATTENTION, "attention");
+	}
+
+	if (FStanzaContentEncrytion)
+	{
+		FStanzaContentEncrytion->addAcceptableElement(NS_JABBER_CLIENT, "body");
+		FStanzaContentEncrytion->addAcceptableElement(NS_ATTENTION, "attention");
 	}
 
 	Shortcuts::declareShortcut(SCT_MESSAGEWINDOWS_CHAT_ATTENTION, tr("Attention"), tr("Alt+Return","Attention"), Shortcuts::WindowShortcut);

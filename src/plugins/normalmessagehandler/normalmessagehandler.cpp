@@ -55,8 +55,11 @@ NormalMessageHandler::NormalMessageHandler()
 	FRostersModel = NULL;
 	FXmppUriQueries = NULL;
 	FOptionsManager = NULL;
-	FRecentContacts = NULL;	
-	FReceipts = NULL; // *** <<< eyeCU >>> ***
+	FRecentContacts = NULL;
+// *** <<< eyeCU <<< ***
+	FReceipts = NULL;
+	FStanzaContentEncrytion = NULL;
+// *** >>> eyeCU >>> ***
 }
 
 NormalMessageHandler::~NormalMessageHandler()
@@ -181,6 +184,11 @@ bool NormalMessageHandler::initConnections(IPluginManager *APluginManager, int &
 	{
 		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
 	}
+	plugin = APluginManager->pluginInterface("IStanzaContentEncrytion").value(0,NULL);
+	if (plugin)
+	{
+		FStanzaContentEncrytion = qobject_cast<IStanzaContentEncrytion *>(plugin->instance());
+	}
 	// *** >>> eyeCU >>> ***
 	connect(Shortcuts::instance(),SIGNAL(shortcutActivated(const QString &, QWidget *)),SLOT(onShortcutActivated(const QString &, QWidget *)));
 
@@ -226,6 +234,10 @@ bool NormalMessageHandler::initObjects()
 	if (FReceipts)
 	{
 		FReceipts->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+	if (FStanzaContentEncrytion)
+	{
+		FStanzaContentEncrytion->addAcceptableElement(NS_JABBER_CLIENT, "body");
 	}
 	// *** >>> eyeCU >>> ***
 	return true;

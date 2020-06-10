@@ -10,10 +10,6 @@ class IOmemo
 {
 public:
     virtual QObject *instance() =0;
-	virtual bool addAcceptableElement(const QString &ANamespace, const QString &ATagName)=0;
-	virtual bool removeAcceptableElement(const QString &ANamespace, const QString &ATagName)=0;
-	virtual bool isElementAcceptable(const QString &ANamespace, const QString &ATagName) const=0;
-	virtual bool isStanzaAcceptable(const Stanza &AStanza) const=0;
 };
 
 Q_DECLARE_INTERFACE(IOmemo, "RWS.Plugin.IOmemo/1.0")

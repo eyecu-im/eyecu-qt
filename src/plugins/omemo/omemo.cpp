@@ -238,75 +238,6 @@ cleanup:
 	return outBuf;
 }
 
-static QString getRandomString(int ALength)
-{
-   const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-!%^$#@*/_.,;?'`~");
-
-   QString randomString;
-   for(int i=0; i<ALength; ++i)
-   {
-	   int index = qrand() % possibleCharacters.length();
-	   QChar nextChar = possibleCharacters.at(index);
-	   randomString.append(nextChar);
-   }
-   return randomString;
-}
-
-//TODO: Move getContent() to a separate plugin.
-QByteArray Omemo::getContentToEncrypt(const Stanza &AStanza, const QString &AFallbackBodyText)
-{
-	QDomDocument d;
-	QDomElement payload = d.createElement("payload");
-	for (QDomElement e=AStanza.firstElement(); !e.isNull(); e=e.nextSiblingElement())
-	{
-		if (FAcceptableElements.contains(e.namespaceURI(), e.tagName()))
-		{
-			payload.appendChild(d.importNode(e, true));
-			if (e.tagName()==TAG_NAME_BODY && e.namespaceURI()==NS_JABBER_CLIENT)
-			{
-				QDomNode text = e.firstChild();
-				if (e.isText())
-					e.toText().setData(AFallbackBodyText);
-				else
-					qWarning("Invalid <body/> child node: non-text!");
-			}
-			else
-				AStanza.element().removeChild(e);
-		}
-	}
-
-	if (payload.hasChildNodes())
-	{
-		QDomElement content = d.createElementNS(NS_SCE, "content");
-		content.appendChild(payload);
-		d.appendChild(content);
-		if (!AStanza.from().isEmpty())
-		{
-			QDomElement from = d.createElement("from");
-			content.appendChild(from);
-			from.setAttribute("jid", AStanza.from());
-		}
-		if (!AStanza.to().isEmpty())
-		{
-			QDomElement to = d.createElement("from");
-			content.appendChild(to);
-			to.setAttribute("jid", AStanza.to());
-		}
-		QDomElement rpad = d.createElement("rpad");
-		content.appendChild(rpad);
-		rpad.appendChild(d.createTextNode(getRandomString(qrand()*200/RAND_MAX)));
-		QDomElement time = d.createElement("time");
-		content.appendChild(time);
-		time.setAttribute("stamp", DateTime(QDateTime::currentDateTime()).toX85UTC());
-		return d.toByteArray();
-	}
-	else
-	{
-		qCritical("No acceptable message elements! Returning NULL data.");
-		return QByteArray();
-	}
-}
-
 Omemo::Omemo(): FAccountManager(nullptr),
 				FOptionsManager(nullptr),
 				FPepManager(nullptr),
@@ -344,6 +275,7 @@ void Omemo::pluginInfo(IPluginInfo *APluginInfo)
 	APluginInfo->homePage = "http://www.eyecu.ru";
 	APluginInfo->dependences.append(MESSAGEPROCESSOR_UUID);
 	APluginInfo->dependences.append(PEPMANAGER_UUID);
+	APluginInfo->dependences.append(STANZACONTENTENCRYPTION_UUID);
 }
 
 bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
@@ -387,6 +319,12 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	plugin = APluginManager->pluginInterface("IStanzaProcessor").value(0, nullptr);
 	if (plugin)
 		FStanzaProcessor = qobject_cast<IStanzaProcessor *>(plugin->instance());
+	else
+		return false;
+
+	plugin = APluginManager->pluginInterface("IStanzaContentEncrytion").value(0, nullptr);
+	if (plugin)
+		FStanzaContentEncrytion = qobject_cast<IStanzaContentEncrytion *>(plugin->instance());
 	else
 		return false;
 
@@ -481,10 +419,7 @@ bool Omemo::initObjects()
 		FOptionsManager->insertOptionsDialogHolder(this);
 	}
 
-//TODO: Move addAcceptableElement() to a separate plugin.
-	addAcceptableElement(NS_OMEMO, TAG_NAME_OPTOUT);
-//TODO: Add <body xmlns='jabber:client'/> in a separate plugin (Message Processor?)
-	addAcceptableElement(NS_JABBER_CLIENT, TAG_NAME_BODY);
+	FStanzaContentEncrytion->addAcceptableElement(NS_OMEMO, TAG_NAME_OPTOUT);
 	return true;
 }
 
@@ -648,6 +583,8 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 
 bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanza, bool &AAccept)
 {
+	Q_UNUSED(AAccept)
+
 	if (FSignalProtocols.contains(AStreamJid))
 	{
 		SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
@@ -658,7 +595,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 				QString bareJid = AStanza.toJid().bare();
 				if ((isActiveSession(AStreamJid, bareJid) ||
 					!AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO).isNull()) &&
-					isStanzaAcceptable(AStanza))
+					FStanzaContentEncrytion->isStanzaAcceptable(AStanza))
 				{
 					bool haveTrustedIdentities(false);
 					if (isSupported(AStreamJid, AStanza.toJid()))
@@ -1402,8 +1339,7 @@ bool Omemo::encryptMessage(Stanza &AMessageStanza)
 {
 	if (!FSignalProtocols.contains(AMessageStanza.fromJid()))
 		return false;
-//TODO: Move getContent() to a separate plugin.
-	QByteArray content = getContentToEncrypt(AMessageStanza, Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString());
+	QByteArray content = FStanzaContentEncrytion->getContentToEncrypt(AMessageStanza, Options::node(OPV_OMEMO_FALLBACKMESSAGE).value().toString());
 	if (content.isNull())
 	{
 		qCritical("No elements to encrypt!");
@@ -1831,39 +1767,6 @@ void Omemo::onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, c
 				setImage(chatWindow, stremJid, ABareJid, ADeviceId, MNI_CRYPTO_NO_TRUST, tr("From untrusted identity"));
 		}
 	}
-}
-
-//TODO: Move addAcceptableElement() to a separate plugin.
-bool Omemo::addAcceptableElement(const QString &ANamespace, const QString &ATagName)
-{
-	if (FAcceptableElements.contains(ANamespace, ATagName))
-		return false;
-	else
-		FAcceptableElements.insert(ANamespace, ATagName);
-	return true;
-}
-//TODO: Move removeAcceptableElement() to a separate plugin.
-bool Omemo::removeAcceptableElement(const QString &ANamespace, const QString &ATagName)
-{
-	if (FAcceptableElements.contains(ANamespace, ATagName))
-	{
-		FAcceptableElements.remove(ANamespace, ATagName);
-		return true;
-	}
-	return false;
-}
-//TODO: Move isElementAcceptable() to a separate plugin.
-bool Omemo::isElementAcceptable(const QString &ANamespace, const QString &ATagName) const
-{
-	return FAcceptableElements.contains(ANamespace, ATagName);
-}
-//TODO: Move isStanzaAcceptable() to a separate plugin.
-bool Omemo::isStanzaAcceptable(const Stanza &AStanza) const
-{
-	for (QDomElement e=AStanza.firstElement(); !e.isNull(); e=e.nextSiblingElement())
-		if (FAcceptableElements.contains(e.namespaceURI(), e.tagName()))
-			return true;
-	return false;
 }
 
 bool Omemo::writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang)

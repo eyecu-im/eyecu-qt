@@ -17,6 +17,7 @@
 #include <interfaces/istatusicons.h>
 #include <interfaces/ireceipts.h>
 #include <interfaces/ichatmarkers.h>
+#include <interfaces/istanzacontentencryption.h>
 
 #include "attentiondialog.h"
 
@@ -106,8 +107,9 @@ private:
 	IMainWindowPlugin	*FMainWindowPlugin;
 	QMainWindow			*FMainWindow;
 	INotifications		*FNotifications;
-	IReceipts *FReceipts;
-	IChatMarkers *FChatMarkers;
+	IReceipts			*FReceipts;
+	IChatMarkers		*FChatMarkers;
+	IStanzaContentEncrytion	*FStanzaContentEncrytion;
 private:
     QMultiMap<IMessageChatWindow*, int>     FNotifiedMessages;
     QMap<int, AttentionDialog*>             FAttentionDialogs;

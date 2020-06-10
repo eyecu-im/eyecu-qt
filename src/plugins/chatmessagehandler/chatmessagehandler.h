@@ -25,6 +25,7 @@
 // *** <<< eyeCU <<< ***
 #include <interfaces/ireceipts.h>
 #include <interfaces/ichatmarkers.h>
+#include <interfaces/istanzacontentencryption.h>
 // *** >>> eyeCU >>> ***
 
 struct WindowStatus {
@@ -137,6 +138,7 @@ private:
 // *** <<< eyeCU <<< ***
 	IReceipts *FReceipts;
 	IChatMarkers *FChatMarkers;
+	IStanzaContentEncrytion *FStanzaContentEncrytion;
 // *** >>> eyeCU >>> ***
 private:
 	QList<IMessageChatWindow *> FWindows;

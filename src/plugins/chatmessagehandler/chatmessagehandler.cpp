@@ -57,10 +57,11 @@ ChatMessageHandler::ChatMessageHandler()
 	FAccountManager = NULL;
 	FXmppUriQueries = NULL;
 	FRecentContacts = NULL;
-	// *** <<< eyeCU <<< ***
+// *** <<< eyeCU <<< ***
 	FReceipts = NULL;
 	FChatMarkers = NULL;
-	// *** >>> eyeCU >>> ***
+	FStanzaContentEncrytion = NULL;
+// *** >>> eyeCU >>> ***
 }
 
 ChatMessageHandler::~ChatMessageHandler()
@@ -212,8 +213,7 @@ bool ChatMessageHandler::initConnections(IPluginManager *APluginManager, int &AI
 	{
 		FRecentContacts = qobject_cast<IRecentContacts *>(plugin->instance());
 	}
-
-	// *** <<< eyeCU <<< ***
+// *** <<< eyeCU <<< ***
 	plugin = APluginManager->pluginInterface("IReceipts").value(0,NULL);
 	if (plugin)
 	{
@@ -225,8 +225,13 @@ bool ChatMessageHandler::initConnections(IPluginManager *APluginManager, int &AI
 	{
 		FChatMarkers = qobject_cast<IChatMarkers *>(plugin->instance());
 	}
-	// *** >>> eyeCU >>> ***
 
+	plugin = APluginManager->pluginInterface("IStanzaContentEncrytion").value(0,NULL);
+	if (plugin)
+	{
+		FStanzaContentEncrytion = qobject_cast<IStanzaContentEncrytion *>(plugin->instance());
+	}
+// *** >>> eyeCU >>> ***
 	connect(Shortcuts::instance(),SIGNAL(shortcutActivated(const QString &, QWidget *)),SLOT(onShortcutActivated(const QString &, QWidget *)));
 
 	return FMessageProcessor!=NULL && FMessageWidgets!=NULL && FMessageStyleManager!=NULL;
@@ -272,6 +277,11 @@ bool ChatMessageHandler::initObjects()
 	if (FChatMarkers)
 	{
 		FChatMarkers->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+
+	if (FStanzaContentEncrytion)
+	{
+		FStanzaContentEncrytion->addAcceptableElement(NS_JABBER_CLIENT, "body");
 	}
 	// *** >>> eyeCU >>> ***
 	return true;
