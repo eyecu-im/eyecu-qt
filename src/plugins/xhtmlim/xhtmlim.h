@@ -9,6 +9,7 @@
 #include <interfaces/iservicediscovery.h>
 #include <interfaces/imessagewidgets.h>
 #include <interfaces/imessageprocessor.h>
+#include <interfaces/istanzacontentencryption.h>
 #include <interfaces/imultiuserchat.h>
 #include <interfaces/ibitsofbinary.h>
 
@@ -171,6 +172,7 @@ signals:
 private:
     IOptionsManager*        FOptionsManager;
     IMessageProcessor*      FMessageProcessor;
+	IStanzaContentEncrytion* FStanzaContentEncrytion;
     IMessageWidgets*        FMessageWidgets;
 	IMultiUserChatManager*	FMultiUserChatManager;
     IServiceDiscovery*      FDiscovery;

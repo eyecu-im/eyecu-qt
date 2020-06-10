@@ -63,11 +63,14 @@
 #define INDENT_LESS	0
 #define INDENT_MORE	1
 
+#define TAG_NAME_HTML "html"
+
 using namespace QpXhtml;
 
 XhtmlIm::XhtmlIm():
 	FOptionsManager(nullptr),
 	FMessageProcessor(nullptr),
+	FStanzaContentEncrytion(nullptr),
 	FMessageWidgets(nullptr),
 	FMultiUserChatManager(nullptr),
 	FDiscovery(nullptr),
@@ -101,6 +104,10 @@ bool XhtmlIm::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 	if (plugin)
 		FMessageProcessor = qobject_cast<IMessageProcessor *>(plugin->instance());
 	else  return false;
+
+	plugin = APluginManager->pluginInterface("IStanzaContentEncrytion").value(0);
+	if (plugin)
+		FStanzaContentEncrytion = qobject_cast<IStanzaContentEncrytion *>(plugin->instance());
 
 	plugin = APluginManager->pluginInterface("IServiceDiscovery").value(0,nullptr);
 	if (plugin)
@@ -202,6 +209,9 @@ bool XhtmlIm::initObjects()
 		FMessageProcessor->insertMessageWriter(MWO_XHTML_M2T, this);
 		FMessageProcessor->insertMessageWriter(MWO_XHTML_T2M, this);
 	}
+
+	if (FStanzaContentEncrytion)
+		FStanzaContentEncrytion->addAcceptableElement(NS_XHTML_IM, TAG_NAME_HTML);
 
 	if (FBitsOfBinary)
 	{
@@ -2163,7 +2173,7 @@ bool XhtmlIm::writeMessageHasText(int AOrder, Message &AMessage, const QString &
 {
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
-	return !AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body").isNull();
+	return !AMessage.stanza().firstElement(TAG_NAME_HTML, NS_XHTML_IM).firstChildElement("body").isNull();
 }
 
 bool XhtmlIm::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang)
@@ -2171,7 +2181,7 @@ bool XhtmlIm::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *A
 	Q_UNUSED(ALang)
 	Q_UNUSED(AOrder)
 
-	QDomElement body=AMessage.stanza().firstElement("html", NS_XHTML_IM).firstChildElement("body");
+	QDomElement body=AMessage.stanza().firstElement(TAG_NAME_HTML, NS_XHTML_IM).firstChildElement("body");
 	if (!body.isNull())
 	{
 		QDomDocument doc;
@@ -2292,7 +2302,7 @@ bool XhtmlIm::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &
 						}
 					}
 			}
-			QDomElement  html=AMessage.stanza().document().createElementNS(NS_XHTML_IM, "html");
+			QDomElement  html=AMessage.stanza().document().createElementNS(NS_XHTML_IM, TAG_NAME_HTML);
 			QDomElement  body=AMessage.stanza().document().createElementNS(NS_XHTML, "body");
 			html.appendChild(body);
 			AMessage.stanza().element().appendChild(html);
