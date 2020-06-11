@@ -99,16 +99,18 @@
 
 // *** <<< eyeCU <<< ***
 #define NS_EYECU								"http://eyecu.ru"
-
+//Pub-Sub
 #define NS_PUBSUB_RETRACT                       "http://jabber.org/protocol/pubsub#retract"
-
+//PEP
 #define NS_PEP_ACTIVITY                         "http://jabber.org/protocol/activity"
 #define NS_PEP_MOOD                             "http://jabber.org/protocol/mood"
 #define NS_PEP_TUNE                             "http://jabber.org/protocol/tune"
 #define NS_PEP_NICK                             "http://jabber.org/protocol/nick"
 
+#define NS_XMPP_SID								"urn:xmpp:sid:0"
+
 //SCE
-#define NS_SCE									"urn:xmpp:sce:0"
+#define NS_XMPP_SCE								"urn:xmpp:sce:0"
 //OMEMO
 //#define NS_OMEMO								"eu.siacs.conversations.axolotl"
 #define NS_OMEMO								"urn:xmpp:omemo:1"

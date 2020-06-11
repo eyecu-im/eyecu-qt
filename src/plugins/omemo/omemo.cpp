@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QTimer>
 #include <QDir>
 #include <QMessageBox>
@@ -493,7 +492,7 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 						if (ok)
 							ids.append(id);
 						else
-							qCritical() << "Invalid id attribute value:" << ida;
+							qCritical("Invalid id attribute value: %s", ida.toUtf8().data());
 					}
 
 					if (FDeviceIds.contains(bareJid)) // Cleanup orpaned devices
@@ -572,7 +571,7 @@ bool Omemo::processPEPEvent(const Jid &AStreamJid, const Stanza &AStanza)
 
 					}
 					else
-						qCritical() << "No valid IDs found in OMEMO stanza!";					
+						qCritical("No valid IDs found in OMEMO stanza!");
 				}
 			}
 		}
@@ -748,47 +747,31 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 #ifdef DEBUG_MODE
 													}
 #endif
-// Don't delete <encrypted/> element: it will be used later in messageReadWrite()
 													AStanza.element().removeChild(encrypted);
 													int state=STATE_FAILURE;
 													if (decryptedContent.isEmpty())
 														qCritical("Decryption failed!");
 													else
 													{
-														QDomDocument content;
-														if (content.setContent(decryptedContent, true))
+														if (FStanzaContentEncrytion->putEncryptedContent(AStanza, decryptedContent))
 														{
-//TODO: Process all the fiels in <content/> element
-															QDomElement root = content.documentElement();
-															if (root.tagName()=="content" && root.namespaceURI()==NS_SCE)
+															QDomElement optout = AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO);
+															if (!optout.isNull())
 															{
-																QDomElement payload = root.firstChildElement("payload");
-																if (!payload.isNull())
-																{
-																	for (QDomElement e = payload.firstChildElement(); !e.isNull();
-																		 e = e.nextSiblingElement())
-																		if (e.tagName()==TAG_NAME_OPTOUT && e.namespaceURI()==NS_OMEMO) // OMEMO opt-out signal
-																		{
-																			QDomElement reason = e.firstChildElement(TAG_NAME_REASON);
-																			QString reasonText;
-																			if (!e.isNull())
-																				reasonText = e.text();
-																			emit optOut(AStreamJid, AStanza.fromJid(), reasonText);
-																			return true; // Don't need to process message further
-																		}
-																		else
-																			AStanza.element().appendChild(AStanza.document().importNode(e, true));
-																	state = signalProtocol->getIdentityTrusted(AStanza.fromJid().bare(), sid)==1?
-																		STATE_OK:STATE_UNTRUSTED;
-																}
-																else
-																	qCritical("No payload element found in content!");
+																QDomElement reason = optout.firstChildElement(TAG_NAME_REASON);
+																QString reasonText;
+																if (!reason.isNull())
+																	reasonText = reason.text();
+																emit optOut(AStreamJid, AStanza.fromJid(), reasonText);
+																return true; // Don't need to process message further
 															}
-															else
-																qCritical("Invalid content!");
+															state = signalProtocol->getIdentityTrusted(AStanza.fromJid().bare(), sid)==1?
+																STATE_OK:STATE_UNTRUSTED;
 														}
 														else
-															qCritical("Invalid content!");
+															qCritical("Failed to put decrypted content into the stanza: %s",
+																	  decryptedContent.data());
+
 														if (!isActiveSession(AStreamJid, AStanza.fromJid().bare()))
 															setActiveSession(AStreamJid, AStanza.fromJid().bare());
 													}
@@ -806,23 +789,23 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 													break;
 												}
 												else
-													qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
+													qCritical("Invalid 'rid' attribute: %s", header.attribute(ATTR_NAME_RID).toUtf8().data());
 											}
 											else
-												qCritical() << "rid attribute is missing!";
+												qCritical("'rid' attribute is missing!");
 									}
 							}
 							else
-								qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
+								qCritical("Invalid 'sid' attribute: %s", header.attribute(ATTR_NAME_SID).toUtf8().data());
 						}
 						else
-							qCritical() << "sid attribute is missing!";
+							qCritical("'sid' attribute is missing!");
 					}
 					else
-						qCritical() << "<header/> element is missing!";
+						qCritical("<header/> element is missing!");
 				}
 				else
-					qCritical() << "<payload/> element is missing!";
+					qCritical("<payload/> element is missing!");
 			}
 		}
 	}
@@ -1662,8 +1645,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 								qDebug("Device ID for the bare JID is obsolete!");
 						}
 						else
-							qWarning() << "Device ID:" << deviceId
-									   << "is not expected in the result:" << deviceIds;
+							qWarning("Device ID: %d is not expected in the result!", deviceId);
 					}
 					else
 						qCritical("Invalid device ID!");
@@ -1688,8 +1670,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 			removed = true;
 		}
 		else
-			qWarning() << "No pending requests for bare JID:" << AStanza.fromJid().bare()
-					   << "and device ID" << *it;
+			qWarning("No pending requests for bare JID: %s and device ID: %d", AStanza.fromJid().bare().toUtf8().data(), *it);
 	}
 
 	if (removed && !FPendingRequests.contains(bareJid))
@@ -1782,8 +1763,6 @@ bool Omemo::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADo
 {
 	Q_UNUSED(AOrder)
 	Q_UNUSED(ALang)
-
-	qDebug() << "Omemo::writeMessageToText(" << AOrder << "," << AMessage.stanza().toString() << ", ...)";
 
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionIn)
 	{
