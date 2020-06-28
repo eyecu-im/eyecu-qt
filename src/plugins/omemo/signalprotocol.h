@@ -145,7 +145,7 @@ public:
 
 	static void init();
 
-	static QString calcFingerprint(const QByteArray &APublicKey);
+	static QString calcFingerprint(const QByteArray &APublicKey, bool AColored=true);
 	static QByteArray signalBufferToByteArray(signal_buffer *ABuffer);
 
 	QByteArray curveFromEd(const QByteArray &AEd25519Key);

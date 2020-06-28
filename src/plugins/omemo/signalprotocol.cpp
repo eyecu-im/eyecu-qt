@@ -10,7 +10,9 @@ extern "C" {
 #include <session_cipher.h>
 #include <session_state.h>
 #include <protocol.h>
-#include  <hkdf.h>
+#include <hkdf.h>
+#include <utils/pluginhelper.h>
+#include <interfaces/iconsistentcolorgeneration.h>
 
 using namespace OmemoStore;
 
@@ -24,18 +26,21 @@ void SignalProtocol::init()
 	gcry_control(GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
-QString SignalProtocol::calcFingerprint(const QByteArray &APublicKey)
+QString SignalProtocol::calcFingerprint(const QByteArray &APublicKey, bool AColored)
 {
+	IConsistentColorGeneration *ccg = PluginHelper::pluginInstance<IConsistentColorGeneration>();
 	QString result;
 	if (APublicKey.size() == 32)
-	{
 		for (int i=0; i<8; ++i)
 		{
 			if (i)
 				result.append(' ');
-			result.append(QString::fromLatin1(APublicKey.mid(i*4, 4).toHex()));
+			QString part = QString::fromLatin1(APublicKey.mid(i*4, 4).toHex());
+			result.append(AColored?QString("<span style='color:%1'>%2</span>")
+										.arg(ccg->calculateColor(part, float(1), float(0.5)).name())
+										.arg(part)
+								  :part);
 		}
-	}
 	else
 		qCritical("Invalid public key size: %d", APublicKey.size());
 

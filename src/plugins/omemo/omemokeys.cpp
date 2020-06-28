@@ -7,6 +7,7 @@
 #include <definitions/resources.h>
 #include <utils/iconstorage.h>
 #include <utils/pluginhelper.h>
+#include <utils/richtextitemdelegate.h>
 
 #include "omemo.h"
 #include "omemokeys.h"
@@ -68,6 +69,7 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	FPreKeysModel->setHorizontalHeaderLabels(QStringList() << tr("Id")
 														   << tr("Key data"));
 	ui->tvPreKeys->setModel(FPreKeysModel);
+	ui->tvPreKeys->setItemDelegate(new RichTextItemDelegate());
 	ui->tvPreKeys->setColumnWidth(0, 31);
 	ui->tvPreKeys->setColumnWidth(1, 360);
 
@@ -77,6 +79,7 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 																<< tr("Fingerprint")
 																<< tr("Trusted"));
 	ui->tvIdentityKeys->setModel(FIdentityKeysModel);
+	ui->tvIdentityKeys->setItemDelegate(new RichTextItemDelegate());
 	ui->tvIdentityKeys->setColumnWidth(0, 128);
 	ui->tvIdentityKeys->setColumnWidth(1, 96);
 	ui->tvIdentityKeys->setColumnWidth(2, 400);

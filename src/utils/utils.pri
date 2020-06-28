@@ -1,4 +1,5 @@
 HEADERS  = utilsexport.h \
+		   richtextitemdelegate.h \
            jid.h \
            versionparser.h \
            xmpperror.h \
@@ -37,6 +38,7 @@ HEADERS  = utilsexport.h \
            qt4qt5compat.h
 
 SOURCES  = jid.cpp \
+		   richtextitemdelegate.cpp \
            versionparser.cpp \
            xmpperror.cpp \
            stanza.cpp \
