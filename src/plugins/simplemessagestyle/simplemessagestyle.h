@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QNetworkAccessManager>
 #include <interfaces/imessagestylemanager.h>
+#include <interfaces/iconsistentcolorgeneration.h> // *** <<< eyeCU >>> ***
 #include "styleviewer.h"
 
 //Message Style Info Values
@@ -148,6 +149,7 @@ private:
 	QMap<QString, QVariant> FInfo;
 	QMap<QWidget *, WidgetStatus> FWidgetStatus;
 	QNetworkAccessManager *FNetworkAccessManager;
+	IConsistentColorGeneration *FConsistentColorGeneration; // *** <<< eyeCU >>> ***
 private:
 	static QString FSharedPath;
 };

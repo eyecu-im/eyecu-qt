@@ -42,7 +42,9 @@ SimpleMessageStyle::SimpleMessageStyle(const QString &AStylePath, QNetworkAccess
 	FInfo = styleInfo(AStylePath);
 	FVariants = styleVariants(AStylePath);
 	FNetworkAccessManager = ANetworkAccessManager;
-
+// *** <<< eyeCU <<< ***
+	FConsistentColorGeneration = PluginHelper::pluginInstance<IConsistentColorGeneration>();
+// *** >>> eyeCU >>> ***
 	FScrollTimer.setSingleShot(true);
 	FScrollTimer.setInterval(SCROLL_TIMEOUT);
 	connect(&FScrollTimer,SIGNAL(timeout()),SLOT(onScrollAfterResize()));
@@ -85,7 +87,9 @@ QWidget *SimpleMessageStyle::createWidget(const IMessageStyleOptions &AOptions, 
 
 QString SimpleMessageStyle::senderColorById(const QString &ASenderId) const
 {
-	return FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
+	return FSenderColors.isEmpty()?FConsistentColorGeneration?FConsistentColorGeneration->calculateColor(ASenderId, float(1), float(0.5)).name()
+															 :"0x808080"
+								  :FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
 }
 
 QTextDocumentFragment SimpleMessageStyle::selection(QWidget *AWidget) const
@@ -433,10 +437,6 @@ void SimpleMessageStyle::loadSenderColors()
 	QFile colors(FStylePath+"/Incoming/SenderColors.txt");
 	if (colors.open(QFile::ReadOnly))
 		FSenderColors = QString::fromUtf8(colors.readAll()).split(':',QString::SkipEmptyParts);
-// *** <<< eyeCU <<< ***
-	if (FSenderColors.isEmpty())
-		FSenderColors = PluginHelper::pluginInstance<IMessageStyleManager>()->senderColors();
-// *** >>> eyeCU >>> ***
 }
 
 QString SimpleMessageStyle::loadFileData(const QString &AFileName, const QString &DefValue) const

@@ -360,25 +360,6 @@ void MessageStyleManager::onApplyPendingChanges()
 	FForceUpdate = false; // *** <<< eyeCU >>> ***
 }
 
-// *** <<< eyeCU <<< ***
-QList<QString> MessageStyleManager::senderColors() const
-{
-	qreal hue = 0.386507556936755784;
-	qreal golden_ratio_conjugate = 0.618033988749895;
-	QList<QString> colors;
-	for (int i=0; i<16; i++)
-	{
-		QColor color;
-		color.setHsv((int)(hue*0x100), 255, 180);
-		colors.append(color.name());
-		hue+=golden_ratio_conjugate;
-		if (hue>1)
-			hue-=1;
-	}
-	return colors;
-}
-// *** >>> eyeCU >>> ***
-
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_messagestylemanager, MessageStyleManager)
 #endif

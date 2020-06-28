@@ -62,7 +62,9 @@ AdiumMessageStyle::AdiumMessageStyle(const QString &AStylePath, QNetworkAccessMa
 	FVariants = styleVariants(AStylePath);
 	FResourcePath = AStylePath + "/" STYLE_RESOURCES_PATH;
 	FNetworkAccessManager = ANetworkAccessManager;
-
+// *** <<< eyeCU <<< ***
+	FConsistentColorGeneration = PluginHelper::pluginInstance<IConsistentColorGeneration>();
+// *** >>> eyeCU >>> ***
 	FScrollTimer.setSingleShot(true);
 	connect(&FScrollTimer,SIGNAL(timeout()),SLOT(onScrollTimerTimeout()));
 
@@ -107,7 +109,9 @@ QWidget *AdiumMessageStyle::createWidget(const IMessageStyleOptions &AOptions, Q
 
 QString AdiumMessageStyle::senderColorById(const QString &ASenderId) const
 {
-	return FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
+	return FSenderColors.isEmpty()?FConsistentColorGeneration?FConsistentColorGeneration->calculateColor(ASenderId, float(1), float(0.5)).name()
+															 :"0x808080"
+								  :FSenderColors.at(qHash(ASenderId) % FSenderColors.count());
 }
 
 QTextDocumentFragment AdiumMessageStyle::selection(QWidget *AWidget) const
@@ -479,10 +483,6 @@ void AdiumMessageStyle::loadSenderColors()
 	QFile colors(FResourcePath + "/Incoming/SenderColors.txt");
 	if (colors.open(QFile::ReadOnly))
 		FSenderColors = QString::fromUtf8(colors.readAll()).split(':',QString::SkipEmptyParts);
-// *** <<< eyeCU <<< ***
-	if (FSenderColors.isEmpty())
-		FSenderColors = PluginHelper::pluginInstance<IMessageStyleManager>()->senderColors();
-// *** >>> eyeCU >>> ***
 }
 
 QString AdiumMessageStyle::loadFileData(const QString &AFileName, const QString &DefValue) const
