@@ -5,6 +5,7 @@
 #define OHO_COMMON_SETTINGS                       100
 // *** <<< eyeCU <<< ***
 #  define OWO_COMMON_ADVANCED                     105
+#  define OWO_COMMON_CCG						  150
 // *** <<< eyeCU <<< ***
 #  define OWO_COMMON_AUTOSTART                    110
 #  define OWO_COMMON_SENDSTATISTICS               120
