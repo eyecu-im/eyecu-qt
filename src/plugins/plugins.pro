@@ -148,5 +148,6 @@ SUBDIRS += wizardaccount
 SUBDIRS += wizardtransport
 SUBDIRS += scheduler
 SUBDIRS += otr
-SUBDIRS += consistentcolorgenerationSUBDIRS += omemo
+SUBDIRS += consistentcolorgeneration
+SUBDIRS += omemo
 SUBDIRS += stanzacontentencryption
