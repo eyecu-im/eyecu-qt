@@ -248,7 +248,7 @@ Omemo::Omemo(): FAccountManager(nullptr),
 				FMessageWidgets(nullptr),
 				FMainWindowPlugin(nullptr),
 				FPluginManager(nullptr),
-//				FIconStorage(nullptr),
+				FIconStorage(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)),
 				FOmemoHandlerIn(0),
 				FOmemoHandlerOut(0),
 				FSHIMessageIn(0),
@@ -374,7 +374,6 @@ bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 bool Omemo::initObjects()
 {
 	SignalProtocol::init();
-//	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 	if (FDiscovery)
 		registerDiscoFeatures();
 
@@ -817,7 +816,7 @@ void Omemo::registerDiscoFeatures()
 	IDiscoFeature dfeature;
 	dfeature.active = true;
 	dfeature.var = NS_PEP_OMEMO_NOTIFY;
-//	dfeature.icon = IconStorage::staticStorage(RSR_STORAGE_MENUICONS)->getIcon(MNI_LINK);
+	dfeature.icon = FIconStorage->getIcon(MNI_CRYPTO_ON);
 	dfeature.name = tr("OMEMO");
 	dfeature.description = tr("P2P Encryption using OMEMO");
 
@@ -854,12 +853,12 @@ int Omemo::isSupported(const IMessageAddress *AAddresses) const
 
 bool Omemo::setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive)
 {
+	bool rc = false;
 	if (AActive)
 	{
 		if (!FActiveSessions[AStreamJid].contains(ABareJid))
 		{
 			FActiveSessions[AStreamJid].append(ABareJid);
-
 			QList<quint32> deviceIds = FDeviceIds[ABareJid];
 			QList<quint32> failedDeviceIds = FFailedDeviceIds[ABareJid];
 			SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
@@ -885,8 +884,8 @@ bool Omemo::setActiveSession(const Jid &AStreamJid, const QString &ABareJid, boo
 						FPendingRequests.insertMulti(ABareJid, *it);
 					}
 			}
-			updateOmemoAction(AStreamJid, ABareJid);
-			return true;
+
+			rc = true;
 		}
 	}
 	else if (FActiveSessions.contains(AStreamJid) &&
@@ -895,11 +894,10 @@ bool Omemo::setActiveSession(const Jid &AStreamJid, const QString &ABareJid, boo
 		FActiveSessions[AStreamJid].removeAll(ABareJid);
 		if (FActiveSessions[AStreamJid].isEmpty())
 			FActiveSessions.remove(AStreamJid);
-		updateOmemoAction(AStreamJid, ABareJid);
-		return true;
+		rc = true;
 	}
-
-	return false;
+	updateOmemoAction(AStreamJid, ABareJid);
+	return rc;
 }
 
 bool Omemo::isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const
@@ -933,8 +931,9 @@ void Omemo::onNormalWindowCreated(IMessageNormalWindow *AWindow)
 
 void Omemo::onChatWindowCreated(IMessageChatWindow *AWindow)
 {
-	connect(AWindow->address()->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
-											SLOT(onAddressChanged(const Jid &, const Jid &)));
+	IMessageAddress *address = AWindow->address();
+	connect(address->instance(), SIGNAL(addressChanged(const Jid &, const Jid &)),
+								 SLOT(onAddressChanged(const Jid &, const Jid &)));
 	updateChatWindowActions(AWindow);
 }
 
@@ -971,27 +970,8 @@ void Omemo::updateChatWindowActions(IMessageChatWindow *AWindow)
 
 void Omemo::updateOmemoAction(Action *AAction)
 {
-	QString iconKey = MNI_CRYPTO_OFF;
-	Jid streamJid = AAction->data(ADR_STREAM_JID).toString();
-	Jid contactJid = AAction->data(ADR_CONTACT_JID).toString();
-	if (isActiveSession(streamJid, contactJid.bare()))
-	{
-		iconKey = MNI_CRYPTO_ON;
-		QString bareJid = contactJid.bare();
-		if (FDeviceIds.contains(bareJid))
-		{
-			const QList<quint32> &devices = FDeviceIds[bareJid];
-			SignalProtocol *signalProtocol = FSignalProtocols[streamJid];
-			for (QList<quint32>::ConstIterator itc=devices.constBegin();
-				 itc != devices.constEnd(); ++itc)
-				if (signalProtocol->sessionInitStatus(bareJid, *itc)
-						==SignalProtocol::SessionAcknowledged)
-				{
-					iconKey = MNI_CRYPTO_ACK;
-					break;
-				}
-		}
-	}
+	QString iconKey = sessionStateIconName(Jid(AAction->data(ADR_STREAM_JID).toString()),
+										   Jid(AAction->data(ADR_CONTACT_JID).toString()).bare());
 	AAction->setIcon(RSR_STORAGE_MENUICONS, iconKey);
 }
 
@@ -1067,14 +1047,12 @@ void Omemo::onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid)
 
 void Omemo::onOmemoActionTriggered()
 {
-	Action *action = qobject_cast<Action*>(sender());
+	Action *action = qobject_cast<Action*>(sender());	
 	if (action)
 	{
 		Jid streamJid(action->data(ADR_STREAM_JID).toString());
 		Jid contactJid(action->data(ADR_CONTACT_JID).toString());
-
 		bool active = isActiveSession(streamJid, contactJid.bare());
-
 		if (setActiveSession(streamJid, contactJid.bare(), !active) && active)
 			sendOptOutStanza(streamJid, contactJid);
 	}
@@ -1436,6 +1414,25 @@ bool Omemo::encryptMessage(Stanza &AMessageStanza)
 	return true;
 }
 
+QString Omemo::sessionStateIconName(const Jid &AStreamJid, const QString &ABareJid)
+{
+	if (isActiveSession(AStreamJid, ABareJid))
+	{
+		if (FDeviceIds.contains(ABareJid))
+		{
+			const QList<quint32> &devices = FDeviceIds[ABareJid];
+			SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
+			for (QList<quint32>::ConstIterator itc=devices.constBegin();
+				 itc != devices.constEnd(); ++itc)
+				if (signalProtocol->sessionInitStatus(ABareJid, *itc)
+						==SignalProtocol::SessionAcknowledged)
+					return MNI_CRYPTO_ACK;
+		}
+		return MNI_CRYPTO_ON;
+	}
+	return MNI_CRYPTO_OFF;
+}
+
 void Omemo::onOptionsOpened()
 {
 	QTimer::singleShot(0, this, SLOT(purgeDatabases()));
@@ -1569,6 +1566,29 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 												 QMessageBox::Ok);
 							return true;
 						}
+
+						if (!FRunningSessions.contains(AStreamJid) ||
+							!FRunningSessions[AStreamJid].contains(bareJid))
+						{
+							FRunningSessions[AStreamJid].append(bareJid);
+							QString iconKey = sessionStateIconName(AStreamJid, bareJid);
+							QString message = iconKey==MNI_CRYPTO_ACK?tr("Unacknowledged OMEMO encrypted session is running")
+																	 :tr("Acknowledged OMEMO encrypted session is running");
+							notifyInChatWindow(AStreamJid, AMessage.toJid(), message, iconKey);
+						}
+					}
+				}
+				else // Session is inacive now
+				{
+					if (FRunningSessions.contains(AStreamJid) &&
+						FRunningSessions[AStreamJid].contains(bareJid))
+					{
+						FRunningSessions[AStreamJid].removeOne(bareJid);
+						if (FRunningSessions[AStreamJid].isEmpty())
+							FRunningSessions.remove(AStreamJid);
+						QString iconKey = sessionStateIconName(AStreamJid, bareJid);
+						QString message = tr("Unacknowledged OMEMO encrypted session is paused");
+						notifyInChatWindow(AStreamJid, AMessage.toJid(), message, iconKey);
 					}
 				}
 			}
@@ -1696,16 +1716,17 @@ bool Omemo::onNewKeyReceived(const QString &ABareJid, quint32 ADeviceId, const Q
 
 void Omemo::onSessionStateChanged(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol)
 {
-	Jid stremJid = FSignalProtocols.key(ASignalProtocol);
-	if (stremJid.isValid())
+	Q_UNUSED(ADeviceId)
+
+	Jid streamJid = FSignalProtocols.key(ASignalProtocol);
+	if (streamJid.isValid() && isActiveSession(streamJid, ABareJid))
 	{
-		if (isActiveSession(stremJid, ABareJid))
-		{
-			IMessageChatWindow *chatWindow = FMessageWidgets->findChatWindow(stremJid, ABareJid);
-			if (chatWindow)
-				updateChatWindowActions(chatWindow);
-		}
+		IMessageChatWindow *chatWindow = FMessageWidgets->findChatWindow(streamJid, ABareJid);
+		if (chatWindow)
+			updateChatWindowActions(chatWindow);
 	}
+
+	int status = ASignalProtocol->sessionInitStatus(ABareJid, ADeviceId);
 }
 
 void Omemo::onSessionDeleted(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol)
@@ -1729,9 +1750,28 @@ void Omemo::setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
 					 const QString &AImage, const QString &ATitle)
 {
 	QString id = calcId(AStreamJid.full(), ABareJid, ADeviceId);
-	AWindow->viewWidget()->setImageUrl(id, QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
-																->fileFullName(AImage)).toString(), true);
+	AWindow->viewWidget()->setImageUrl(id, QUrl::fromLocalFile(FIconStorage->fileFullName(AImage)).toString(), true);
 	AWindow->viewWidget()->setObjectTitle(id, ATitle, true);
+}
+
+void Omemo::notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessage, const QString &AIconKey) const
+{
+	if (FMessageWidgets)
+	{
+		IMessageWindow *window = FMessageProcessor->getMessageWindow(AStreamJid, AContactJid, Message::Chat,
+																	 IMessageProcessor::ActionAssign);
+		if (window)
+		{
+			IMessageStyleContentOptions options;
+			options.kind = IMessageStyleContentOptions::KindStatus;
+			options.type |= IMessageStyleContentOptions::TypeEvent;
+			options.direction = IMessageStyleContentOptions::DirectionIn;
+			options.time = QDateTime::currentDateTime();
+			window->viewWidget()->appendHtml(QString("<img src=\"%1\"> %2").arg(QUrl::fromLocalFile(
+																					FIconStorage->fileFullName(AIconKey)).toString())
+																		   .arg(AMessage), options);
+		}
+	}
 }
 
 void Omemo::onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol)
@@ -1774,8 +1814,7 @@ bool Omemo::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADo
 			{
 				QTextCursor(ADocument).insertHtml(
 							QString("<img src='%1'>&nbsp;<span style='color: red; font-style: Italic'>%2</span>")
-								.arg(QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
-										->fileFullName(MNI_CRYPTO_ERROR)).toString())
+								.arg(QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_CRYPTO_ERROR)).toString())
 								.arg("Failed to decrypt OMEMO message! Device id: %1").arg(deviceId));
 				return true;
 			}
@@ -1786,9 +1825,8 @@ bool Omemo::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADo
 				QTextCursor cursor(ADocument);
 				cursor.movePosition(QTextCursor::End);
 				QTextImageFormat image;
-				image.setName(QUrl::fromLocalFile(IconStorage::staticStorage(RSR_STORAGE_MENUICONS)
-												  ->fileFullName(trusted?MNI_EMPTY_BOX
-																		:MNI_CRYPTO_NO_TRUST)).toString());
+				image.setName(QUrl::fromLocalFile(FIconStorage->fileFullName(trusted?MNI_EMPTY_BOX
+																					:MNI_CRYPTO_NO_TRUST)).toString());
 				image.setProperty(QpXhtml::ObjectId, calcId(AMessage.toJid().full(),
 															AMessage.fromJid().bare(), deviceId));
 				if (!trusted)

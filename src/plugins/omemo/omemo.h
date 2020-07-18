@@ -74,6 +74,16 @@ public:
 	virtual void onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol) override;
 
 protected:
+	struct SignalDeviceBundle
+	{
+//		quint32 FDeviceId;
+		quint32 FSignedPreKeyId;
+		QByteArray FSignedPreKeyPublic;
+		QByteArray FSignedPreKeySignature;
+		QByteArray FIdentityKey;
+		QMap<quint32, QByteArray> FPreKeys;
+	};
+
 	bool isSupported(const QString &ABareJid) const;
 	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
@@ -95,19 +105,14 @@ protected:
 	void bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid);
 	bool encryptMessage(Stanza &AMessageStanza);
 
+	QString sessionStateIconName(const Jid &AStreamJid, const QString &ABareJid);
+
 	void setImage(IMessageChatWindow *AWindow, const Jid &AStreamJid,
 				  const QString &ABareJid, quint32 ADeviceId,
 				  const QString &AImage, const QString &ATitle);
 
-	struct SignalDeviceBundle
-	{
-//		quint32 FDeviceId;
-		quint32 FSignedPreKeyId;
-		QByteArray FSignedPreKeyPublic;
-		QByteArray FSignedPreKeySignature;
-		QByteArray FIdentityKey;
-		QMap<quint32, QByteArray> FPreKeys;
-	};
+	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid,
+							const QString &AMessage, const QString &AIconKey=QString()) const;
 
 protected slots:
 	void onOptionsOpened();
@@ -148,7 +153,7 @@ private:
 	IMainWindowPlugin*	FMainWindowPlugin;
 	IPluginManager*		FPluginManager;
 
-//	IconStorage*		FIconStorage;
+	IconStorage*		FIconStorage;
 	int					FOmemoHandlerIn;
 	int					FOmemoHandlerOut;
 	int					FSHIMessageIn;
@@ -161,6 +166,7 @@ private:
 	QHash<QString, QList<quint32> > FDeviceIds;
 	QHash<QString, QList<quint32> > FFailedDeviceIds;
 	QHash<Jid, QStringList> FActiveSessions;
+	QHash<Jid, QStringList> FRunningSessions;
 	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundles;
