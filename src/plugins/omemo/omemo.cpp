@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include <QTimer>
 #include <QDir>
 #include <QMessageBox>
@@ -771,8 +773,19 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 															qCritical("Failed to put decrypted content into the stanza: %s",
 																	  decryptedContent.data());
 
-														if (!isActiveSession(AStreamJid, AStanza.fromJid().bare()))
-															setActiveSession(AStreamJid, AStanza.fromJid().bare());
+														QString bareJid = AStanza.fromJid().bare();
+														if (!isActiveSession(AStreamJid, bareJid))
+														{
+															setActiveSession(AStreamJid, bareJid);
+															if (!FRunningSessions.contains(AStreamJid) ||
+																!FRunningSessions[AStreamJid].contains(bareJid))
+															{
+																FRunningSessions[AStreamJid].append(bareJid);
+																QString iconKey = MNI_CRYPTO_ACK;
+																QString message = tr("Acknowledged OMEMO encrypted session is running");
+																notifyInChatWindow(AStreamJid, AStanza.fromJid(), message, iconKey);
+															}
+														}
 													}
 
 													if (state!=STATE_OK)
@@ -1060,7 +1073,8 @@ void Omemo::onOmemoActionTriggered()
 
 void Omemo::onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QString &AReasonText)
 {
-	if (isActiveSession(AStreamJid, AContactJid.bare()))
+	QString bareJid = AContactJid.bare();
+	if (isActiveSession(AStreamJid, bareJid))
 	{
 		IMessageChatWindow *window = FMessageWidgets
 								->findChatWindow(AStreamJid, AContactJid);
@@ -1076,7 +1090,17 @@ void Omemo::onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QStrin
 													  :tr("%1 stopped OMEMO session!\nReason: %2")
 													   .arg(name).arg(AReasonText),
 								 QMessageBox::Ok);
-			setActiveSession(AStreamJid, AContactJid.bare(), false);
+			setActiveSession(AStreamJid, bareJid, false);
+			if (FRunningSessions.contains(AStreamJid) &&
+				FRunningSessions[AStreamJid].contains(bareJid))
+			{
+				FRunningSessions[AStreamJid].removeOne(bareJid);
+				if (FRunningSessions[AStreamJid].isEmpty())
+					FRunningSessions.remove(AStreamJid);
+				QString iconKey = MNI_CRYPTO_OFF;
+				QString message = tr("OMEMO encrypted session was stopped by %1").arg(window->infoWidget()->fieldValue(IMessageInfoWidget::Caption).toString());
+				notifyInChatWindow(AStreamJid, AContactJid, message, iconKey);
+			}
 		}
 	}
 }
@@ -1572,8 +1596,8 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 						{
 							FRunningSessions[AStreamJid].append(bareJid);
 							QString iconKey = sessionStateIconName(AStreamJid, bareJid);
-							QString message = iconKey==MNI_CRYPTO_ACK?tr("Unacknowledged OMEMO encrypted session is running")
-																	 :tr("Acknowledged OMEMO encrypted session is running");
+							QString message = iconKey==MNI_CRYPTO_ACK?tr("Acknowledged OMEMO encrypted session is running")
+																	 :tr("Unacknowledged OMEMO encrypted session is running");
 							notifyInChatWindow(AStreamJid, AMessage.toJid(), message, iconKey);
 						}
 					}
@@ -1587,7 +1611,7 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 						if (FRunningSessions[AStreamJid].isEmpty())
 							FRunningSessions.remove(AStreamJid);
 						QString iconKey = sessionStateIconName(AStreamJid, bareJid);
-						QString message = tr("Unacknowledged OMEMO encrypted session is paused");
+						QString message = tr("OMEMO encrypted session is stopped");
 						notifyInChatWindow(AStreamJid, AMessage.toJid(), message, iconKey);
 					}
 				}
@@ -1718,6 +1742,8 @@ void Omemo::onSessionStateChanged(const QString &ABareJid, quint32 ADeviceId, Si
 {
 	Q_UNUSED(ADeviceId)
 
+	qDebug() << "onSessionStateChanged(" << ABareJid << "," << ADeviceId << "," << ASignalProtocol << ")";
+
 	Jid streamJid = FSignalProtocols.key(ASignalProtocol);
 	if (streamJid.isValid() && isActiveSession(streamJid, ABareJid))
 	{
@@ -1726,7 +1752,25 @@ void Omemo::onSessionStateChanged(const QString &ABareJid, quint32 ADeviceId, Si
 			updateChatWindowActions(chatWindow);
 	}
 
-	int status = ASignalProtocol->sessionInitStatus(ABareJid, ADeviceId);
+	int status = ASignalProtocol->sessionInitStatus(ABareJid, qint32(ADeviceId));
+	qDebug() << "status=" << status;
+	QString iconKey, message;
+	switch (status)
+	{
+		case SignalProtocol::NoSession:
+			iconKey = MNI_CRYPTO_OFF;
+			message = tr("OMEMO encrypted session is terminated");
+			break;
+		case SignalProtocol::SessionInitiated:
+			iconKey = MNI_CRYPTO_ON;
+			message = tr("Unacknowledged OMEMO encrypted session is initiated");
+			break;
+		case SignalProtocol::SessionAcknowledged:
+			iconKey = MNI_CRYPTO_ACK;
+			message = tr("OMEMO encrypted session is now acknowledged");
+			break;
+	}
+	notifyInChatWindow(streamJid, ABareJid, message, iconKey);
 }
 
 void Omemo::onSessionDeleted(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol)

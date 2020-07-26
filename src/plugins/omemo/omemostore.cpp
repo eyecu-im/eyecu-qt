@@ -179,11 +179,13 @@ int sessionStore(const signal_protocol_address *AAddress,
 				 uint8_t *AUserRecord, size_t AUserRecordLen,
 				 void *AUserData)
 {
-	Q_UNUSED(AUserRecord);
-	Q_UNUSED(AUserRecordLen);
+	Q_UNUSED(AUserRecord)
+	Q_UNUSED(AUserRecordLen)
 
 	SQL_QUERY("INSERT OR REPLACE INTO " SESSION_STORE_TABLE
 			  " VALUES (:name, :device_id, :session_record)");
+
+	int oldStaus = signalProtocol->sessionInitStatus(ADDR_NAME(AAddress), AAddress->device_id);
 
 	query.bindValue(0, ADDR_NAME(AAddress));
 	query.bindValue(1, AAddress->device_id);
@@ -197,7 +199,10 @@ int sessionStore(const signal_protocol_address *AAddress,
 		return -3;
 	}
 
-	signalProtocol->onSessionStateChanged(ADDR_NAME(AAddress), AAddress->device_id);
+	int newStaus = signalProtocol->sessionInitStatus(ADDR_NAME(AAddress), AAddress->device_id);
+
+	if (oldStaus != newStaus)
+		signalProtocol->onSessionStateChanged(ADDR_NAME(AAddress), quint32(AAddress->device_id));
 
 	return 0;
 }
