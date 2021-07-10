@@ -1724,18 +1724,19 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 bool Omemo::onNewKeyReceived(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AKeyData, bool AExists, SignalProtocol *ASignalProtocol)
 {
 	FMainWindowPlugin->mainWindow()->showWindow();
-	int rc = QMessageBox::question(FMainWindowPlugin->mainWindow()->instance(),
-								   ABareJid,
-								   tr("A new identity key received for the device: %1\n"
-									  "Identity key:\n%2%3"
-									  "\nDo you trust it?").arg(ADeviceId)
-														   .arg(SignalProtocol::calcFingerprint(
-																ASignalProtocol->curveFromEd(AKeyData)))
-														   .arg(AExists?QString("\n%1")
-																			.arg(tr("But you already have a different key for it!"))
-																	   :QString()),
-								   QMessageBox::Yes,QMessageBox::No);
-	return rc==QMessageBox::Yes;
+
+	QMessageBox *msgbTrust = new QMessageBox(QMessageBox::Question, ABareJid,
+											 QString("%1<br>%2<br>%3").arg(tr("A new identity key received for the device: %1").arg(ADeviceId))
+																	  .arg(tr("Identity key:<br>%1%2").arg(SignalProtocol::calcFingerprint(
+																										   ASignalProtocol->curveFromEd(AKeyData)))
+																									  .arg(AExists?QString(tr(",<br>but you already have a different key for it!"))
+																												  :QString()))
+																	  .arg("Do you trust it?"),
+											QMessageBox::Yes|QMessageBox::No, FMainWindowPlugin->mainWindow()->instance());
+	msgbTrust->setTextFormat(Qt::RichText);
+	int rc = msgbTrust->exec();
+	msgbTrust->deleteLater();
+	return rc==QMessageBox::Yes;	
 }
 
 void Omemo::onSessionStateChanged(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol)
