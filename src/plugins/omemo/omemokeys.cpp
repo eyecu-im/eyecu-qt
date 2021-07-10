@@ -1,5 +1,6 @@
 #include <QClipboard>
 #include <QStyle>
+#include <QMimeData>
 
 #include <definitions/optionvalues.h>
 #include <definitions/optionnodes.h>
@@ -182,7 +183,7 @@ void OmemoKeys::setSelectedIdentityKeysTrusted(bool ATrusted)
 
 		QByteArray keyData;
 		QString bareJid;
-		quint32	deviceId;
+		quint32	deviceId(0);
 
 		for (QModelIndexList::ConstIterator it = list.constBegin();
 			 it != list.constEnd(); ++it)
@@ -196,7 +197,7 @@ void OmemoKeys::setSelectedIdentityKeysTrusted(bool ATrusted)
 				if (it->data(IDR_IDENTITY_DATA).toBool() != ATrusted)
 				{
 					if (ATrusted ||
-						FSignalProtocol->sessionInitStatus(bareJid, deviceId) ==
+						FSignalProtocol->sessionInitStatus(bareJid, qint32(deviceId)) ==
 							SignalProtocol::SessionInitiated)
 						FSignalProtocol->setIdentityTrusted(bareJid, deviceId, keyData, ATrusted);
 				}
@@ -249,7 +250,14 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 
 void OmemoKeys::onIdentityKeyCopy()
 {
-	QApplication::clipboard()->setText(ui->lblPublicIdentityKey->text());
+	QTextDocument doc;
+	doc.setHtml(ui->lblPublicIdentityKey->text());
+
+	QMimeData *data = new QMimeData();
+	data->setText(doc.toPlainText());
+	data->setHtml(doc.toHtml());
+
+	QApplication::clipboard()->setMimeData(data);
 }
 
 void OmemoKeys::onRetractOtherClicked(bool AChecked)
@@ -279,7 +287,7 @@ void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected,
 		bool haveTrusted(false);
 		bool haveUntrusted(false);
 		QString bareJid;
-		quint32 deviceId;
+		quint32 deviceId(0);
 
 		for (QModelIndexList::ConstIterator it = list.constBegin();
 			 it != list.constEnd(); ++it)
@@ -296,7 +304,7 @@ void OmemoKeys::onIdentityKeysSelectionChanged(const QItemSelection &ASelected,
 			{
 				if (it->data(IDR_IDENTITY_DATA).toBool())
 				{
-					int status = FSignalProtocol->sessionInitStatus(bareJid, deviceId);
+					int status = FSignalProtocol->sessionInitStatus(bareJid, qint32(deviceId));
 					if (status == SignalProtocol::SessionInitiated)
 						haveTrusted = true;
 				}

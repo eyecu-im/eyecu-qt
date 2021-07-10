@@ -281,7 +281,7 @@ void Omemo::pluginInfo(IPluginInfo *APluginInfo)
 
 bool Omemo::initConnections(IPluginManager *APluginManager, int &AInitOrder)
 {
-	Q_UNUSED(AInitOrder);
+	Q_UNUSED(AInitOrder)
 
 	FPluginManager = APluginManager;
 
