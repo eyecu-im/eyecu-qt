@@ -112,10 +112,13 @@
 //SCE
 #define NS_XMPP_SCE								"urn:xmpp:sce:0"
 //OMEMO
-//#define NS_OMEMO								"eu.siacs.conversations.axolotl"
+#define NS_OMEMO_OLD							"eu.siacs.conversations.axolotl"
 #define NS_OMEMO								"urn:xmpp:omemo:1"
+#define NS_PEP_OMEMO_OLD						NS_OMEMO_OLD":devices"
 #define NS_PEP_OMEMO							NS_OMEMO":devices"
+#define NS_PEP_OMEMO_BUNDLES_OLD				NS_OMEMO_OLD":bundles"
 #define NS_PEP_OMEMO_BUNDLES					NS_OMEMO":bundles"
+#define NS_PEP_OMEMO_NOTIFY_OLD					NS_PEP_OMEMO_OLD"+notify"
 #define NS_PEP_OMEMO_NOTIFY						NS_PEP_OMEMO"+notify"
 
 #define NS_RECEIPTS                         	"urn:xmpp:receipts"

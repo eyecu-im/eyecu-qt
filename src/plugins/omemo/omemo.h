@@ -1,6 +1,8 @@
 #ifndef OMEMO_H
 #define OMEMO_H
 
+#include <QFlags>
+
 #include <interfaces/iomemo.h>
 #include <interfaces/ixmppstreammanager.h>
 #include <interfaces/ipresencemanager.h>
@@ -33,6 +35,15 @@ class Omemo: public QObject,
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
 public:
+	enum Support
+	{
+		SupportNone = 0,
+		SupportOld  = 1,
+		SupportNew  = 2
+	};
+
+	Q_DECLARE_FLAGS(SupportFlags, Support)
+
 	Omemo();
 	~Omemo() override;
 
@@ -85,7 +96,7 @@ protected:
 	};
 
 	bool isSupported(const QString &ABareJid) const;
-	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+	SupportFlags isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
 	bool setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive=true);
 	bool isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const;
@@ -113,6 +124,9 @@ protected:
 
 	void notifyInChatWindow(const Jid &AStreamJid, const Jid &AContactJid,
 							const QString &AMessage, const QString &AIconKey=QString()) const;
+
+	bool processBundles(const QDomElement &AItem, const QString &ABareJid, const Jid &AStreamJid);
+	bool processBundlesOld(const QDomElement &AItem, const QString &ABareJid, const Jid &AStreamJid);
 
 protected slots:
 	void onOptionsOpened();
@@ -175,5 +189,7 @@ private:
 
 	bool				FCleanup;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Omemo::SupportFlags)
 
 #endif // OMEMO_H
