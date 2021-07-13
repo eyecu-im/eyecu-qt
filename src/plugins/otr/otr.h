@@ -158,6 +158,10 @@ public:
 
 	QString dataDir();	// To be used by OtrPrivate class
 
+	void emitFingerprintsUpdated();
+	void emitPrivKeyGenerated(const Jid &AStreamJid, const QString &AFingerprint);
+	void emitPrivKeyGenerationFailed(const Jid &AStreamJid);
+
 	//IPlugin
 	virtual QObject *instance() { return this; }
 	virtual QUuid pluginUuid() const { return OTR_UUID; }
@@ -228,8 +232,8 @@ protected slots:
 	void onUpdateMessageState(const Jid &AStreamJid, const Jid &AContactJid);
 
 signals:
-	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid) const;
-	void fingerprintsUpdated() const;
+	void otrStateChanged(const Jid &AStreamJid, const Jid &AContactJid);
+	void fingerprintsUpdated();
 	void privKeyGenerated(const Jid &AStreamJid, const QString &Fingerprint);
 	void privKeyGenerationFailed(const Jid &AStreamJid);
 

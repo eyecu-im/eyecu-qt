@@ -64,19 +64,19 @@ public:
 	QDateTime delayedStamp() const;
 	Message &setDelayed(const QDateTime &AStamp, const Jid &AFrom);
 	QStringList subjectLangs() const;
-	QString subject(const QString &ALang=QString::null) const;
-	Message &setSubject(const QString &ASubject, const QString &ALang=QString::null);
+	QString subject(const QString &ALang=QString()) const;
+	Message &setSubject(const QString &ASubject, const QString &ALang=QString());
 	QStringList bodyLangs() const;
-	QString body(const QString &ALang=QString::null) const;
-	Message &setBody(const QString &ABody, const QString &ALang=QString::null);
+	QString body(const QString &ALang=QString()) const;
+	Message &setBody(const QString &ABody, const QString &ALang=QString());
 	QString threadId() const;
 	Message &setThreadId(const QString &AThreadId);
 	QVariant data(int ARole) const;
 	void setData(int ARole, const QVariant &AData);
 	void setData(const QHash<int, QVariant> &AData);
 	QStringList availableLangs(const QDomElement &AParent, const QString &ATagName) const;
-	QDomElement findChidByLang(const QDomElement &AParent, const QString &ATagName, const QString &ALang) const;
-	QDomElement addChildByLang(const QDomElement &AParent, const QString &ATagName, const QString &ALang, const QString &AText);
+	QDomElement findChidByLang(const QDomElement &AParent, const QString &ATagName, const QString &ALang, const QString &ANamespace=QString()) const;
+	QDomElement addChildByLang(const QDomElement &AParent, const QString &ATagName, const QString &ALang, const QString &AText, const QString &ANamespace=QString());
 	bool operator<(const Message &AOther) const;
 protected:
 	QDomElement setTextToElem(QDomElement &AElem, const QString &AText) const;

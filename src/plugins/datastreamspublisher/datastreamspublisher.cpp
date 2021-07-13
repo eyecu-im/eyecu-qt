@@ -11,7 +11,7 @@
 
 DataStreamsPublisher::DataStreamsPublisher()
 {
-
+	FSHIStreamStart = 0;
 }
 
 DataStreamsPublisher::~DataStreamsPublisher()
@@ -252,7 +252,7 @@ QString DataStreamsPublisher::startStream(const Jid &AStreamJid, const Jid &ACon
 	{
 		REPORT_ERROR("Failed to send start public data stream request: Invalid parameters");
 	}
-	return QString::null;
+	return QString();
 }
 
 QList<IPublicDataStreamHandler *> DataStreamsPublisher::streamHandlers() const

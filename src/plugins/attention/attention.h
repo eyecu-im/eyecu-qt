@@ -15,6 +15,8 @@
 #include <interfaces/irostersview.h>
 #include <interfaces/irostersmodel.h>
 #include <interfaces/istatusicons.h>
+#include <interfaces/ireceipts.h>
+#include <interfaces/ichatmarkers.h>
 
 #include "attentiondialog.h"
 
@@ -104,7 +106,8 @@ private:
 	IMainWindowPlugin	*FMainWindowPlugin;
 	QMainWindow			*FMainWindow;
 	INotifications		*FNotifications;
-
+	IReceipts *FReceipts;
+	IChatMarkers *FChatMarkers;
 private:
     QMultiMap<IMessageChatWindow*, int>     FNotifiedMessages;
     QMap<int, AttentionDialog*>             FAttentionDialogs;

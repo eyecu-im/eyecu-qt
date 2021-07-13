@@ -5,6 +5,7 @@
 #define OHO_COMMON_SETTINGS                       100
 // *** <<< eyeCU <<< ***
 #  define OWO_COMMON_ADVANCED                     105
+#  define OWO_COMMON_CCG						  150
 // *** <<< eyeCU <<< ***
 #  define OWO_COMMON_AUTOSTART                    110
 #  define OWO_COMMON_SENDSTATISTICS               120
@@ -60,6 +61,7 @@
 
 //Node = ON_ROSTERVIEW
 #define OHO_ROSTER_VIEW                           100
+#define   OWO_ROSTER_MINIMIZE_ON_CLOSE            101
 #define   OWO_ROSTER_SHOWOFFLINE                  110
 #define   OWO_ROSTER_MERGESTREAMS                 120
 #define   OWO_ROSTER_SHOWRESOURCE                 130

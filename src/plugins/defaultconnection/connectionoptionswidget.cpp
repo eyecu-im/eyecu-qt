@@ -23,6 +23,9 @@ ConnectionOptionsWidget::ConnectionOptionsWidget(IConnectionManager *AManager, c
 	ui.cmbSslProtocol->addItem(tr("TLSv1.0"),QSsl::TlsV1_0);
 	ui.cmbSslProtocol->addItem(tr("TLSv1.1"),QSsl::TlsV1_1);
 	ui.cmbSslProtocol->addItem(tr("TLSv1.2"),QSsl::TlsV1_2);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
+	ui.cmbSslProtocol->addItem(tr("TLSv1.3"),QSsl::TlsV1_3);
+#endif
 #endif
 // *** >>> eyeCU >>> ***
 	ui.cmbSslProtocol->addItem(tr("SSLv2"),QSsl::SslV2);

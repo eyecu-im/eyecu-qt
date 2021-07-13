@@ -24,6 +24,7 @@
 #include <definitions/notificationdataroles.h>
 #include <definitions/notificationtypeorders.h>
 #include <definitions/tabpagenotifypriorities.h>
+#include <definitions/namespaces.h> // *** <<< eyeCU >>> ***
 #include <utils/widgetmanager.h>
 #include <utils/textmanager.h>
 #include <utils/xmpperror.h>
@@ -54,7 +55,8 @@ NormalMessageHandler::NormalMessageHandler()
 	FRostersModel = NULL;
 	FXmppUriQueries = NULL;
 	FOptionsManager = NULL;
-	FRecentContacts = NULL;
+	FRecentContacts = NULL;	
+	FReceipts = NULL; // *** <<< eyeCU >>> ***
 }
 
 NormalMessageHandler::~NormalMessageHandler()
@@ -143,9 +145,9 @@ bool NormalMessageHandler::initConnections(IPluginManager *APluginManager, int &
 		if (rostersViewPlugin)
 		{
 			FRostersView = rostersViewPlugin->rostersView();
-			connect(FRostersView->instance(),SIGNAL(indexMultiSelection(const QList<IRosterIndex *> &, bool &)), 
+			connect(FRostersView->instance(),SIGNAL(indexMultiSelection(const QList<IRosterIndex *> &, bool &)),
 				SLOT(onRostersViewIndexMultiSelection(const QList<IRosterIndex *> &, bool &)));
-			connect(FRostersView->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)), 
+			connect(FRostersView->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)),
 				SLOT(onRostersViewIndexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)));
 		}
 	}
@@ -173,7 +175,13 @@ bool NormalMessageHandler::initConnections(IPluginManager *APluginManager, int &
 	{
 		FRecentContacts = qobject_cast<IRecentContacts *>(plugin->instance());
 	}
-
+	// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IReceipts").value(0,NULL);
+	if (plugin)
+	{
+		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+	}
+	// *** >>> eyeCU >>> ***
 	connect(Shortcuts::instance(),SIGNAL(shortcutActivated(const QString &, QWidget *)),SLOT(onShortcutActivated(const QString &, QWidget *)));
 
 	return FMessageProcessor!=NULL && FMessageWidgets!=NULL && FMessageStyleManager!=NULL;
@@ -214,6 +222,12 @@ bool NormalMessageHandler::initObjects()
 	{
 		FMessageWidgets->insertEditSendHandler(MESHO_NORMALMESSAGEHANDLER,this);
 	}
+	// *** <<< eyeCU <<< ***
+	if (FReceipts)
+	{
+		FReceipts->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+	// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -482,7 +496,7 @@ IMessageNormalWindow *NormalMessageHandler::getWindow(const Jid &AStreamJid, con
 			connect(window->receiversWidget()->instance(),SIGNAL(addressSelectionChanged()),SLOT(onWindowSelectedReceiversChanged()));
 			connect(window->tabPageNotifier()->instance(),SIGNAL(activeNotifyChanged(int)),this,SLOT(onWindowNotifierActiveNotifyChanged(int)));
 			onWindowSelectedReceiversChanged();
-			
+
 			Menu *windowMenu = createWindowMenu(window);
 			QToolButton *button = window->toolBarWidget()->toolBarChanger()->insertAction(windowMenu->menuAction(),TBG_MWNWTB_WINDOWMENU);
 			button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -598,7 +612,7 @@ void NormalMessageHandler::setDefaultWindowMenuAction(IMessageNormalWindow *AWin
 		if (menu)
 		{
 			menu->menuAction()->disconnect(menu->defaultAction());
-			
+
 			menu->setDefaultAction(action);
 			menu->menuAction()->setText(action->text());
 			menu->menuAction()->setIcon(action->icon());
@@ -629,7 +643,7 @@ void NormalMessageHandler::updateWindowMenu(IMessageNormalWindow *AWindow) const
 	{
 		Action *sendAction = findWindowMenuAction(AWindow,SendAction);
 		if (sendAction)
-			sendAction->setEnabled(!AWindow->receiversWidget()->selectedAddresses().isEmpty()); 
+			sendAction->setEnabled(!AWindow->receiversWidget()->selectedAddresses().isEmpty());
 
 		setWindowMenuActionVisible(AWindow,NextAction,nextCount>0);
 		setWindowMenuActionVisible(AWindow,SendAction,true);
@@ -695,7 +709,7 @@ void NormalMessageHandler::updateWindow(IMessageNormalWindow *AWindow) const
 	}
 
 	updateWindowMenu(AWindow);
-	AWindow->updateWindow(tabIcon,name,title,QString::null);
+	AWindow->updateWindow(tabIcon,name,title,QString());
 }
 
 bool NormalMessageHandler::showNextMessage(IMessageNormalWindow *AWindow)
@@ -801,7 +815,7 @@ bool NormalMessageHandler::isAnyPresenceOpened(const QStringList &AStreams) cons
 
 bool NormalMessageHandler::isSelectionAccepted(const QList<IRosterIndex *> &ASelected) const
 {
-	static const QList<int> acceptKinds = QList<int>() 
+	static const QList<int> acceptKinds = QList<int>()
 		<< RIK_STREAM_ROOT << ContactRosterKinds << GroupRosterKinds;
 
 	bool hasGroups = false;
@@ -841,14 +855,14 @@ QMap<int,QStringList> NormalMessageHandler::indexesRolesMap(const QList<IRosterI
 		{
 			QString group;
 			if (indexKind != RIK_GROUP)
-				group = FRostersModel!=NULL ? FRostersModel->singleGroupName(indexKind) : QString::null;
+				group = FRostersModel!=NULL ? FRostersModel->singleGroupName(indexKind) : QString();
 			else
 				group = index->data(RDR_GROUP).toString();
 
 			foreach(const QString &streamJid, index->data(RDR_STREAMS).toStringList())
 			{
 				rolesMap[RDR_STREAM_JID].append(streamJid);
-				rolesMap[RDR_PREP_BARE_JID].append(QString::null);
+				rolesMap[RDR_PREP_BARE_JID].append(QString());
 				rolesMap[RDR_GROUP].append(group);
 			}
 		}
@@ -861,7 +875,7 @@ QMap<int,QStringList> NormalMessageHandler::indexesRolesMap(const QList<IRosterI
 				{
 					rolesMap[RDR_STREAM_JID].append(child->data(RDR_STREAM_JID).toString());
 					rolesMap[RDR_PREP_BARE_JID].append(child->data(RDR_PREP_BARE_JID).toString());
-					rolesMap[RDR_GROUP].append(QString::null);
+					rolesMap[RDR_GROUP].append(QString());
 				}
 			}
 		}
@@ -870,15 +884,15 @@ QMap<int,QStringList> NormalMessageHandler::indexesRolesMap(const QList<IRosterI
 			if (isAnyPresenceOpened(index->data(RDR_STREAM_JID).toStringList()))
 			{
 				rolesMap[RDR_STREAM_JID].append(index->data(RDR_STREAM_JID).toString());
-				rolesMap[RDR_PREP_BARE_JID].append(QString::null);
-				rolesMap[RDR_GROUP].append(QString::null);
+				rolesMap[RDR_PREP_BARE_JID].append(QString());
+				rolesMap[RDR_GROUP].append(QString());
 			}
 		}
 		else
 		{
 			rolesMap[RDR_STREAM_JID].append(index->data(RDR_STREAM_JID).toString());
 			rolesMap[RDR_PREP_BARE_JID].append(index->data(RDR_PREP_BARE_JID).toString());
-			rolesMap[RDR_GROUP].append(QString::null);
+			rolesMap[RDR_GROUP].append(QString());
 		}
 	}
 	return rolesMap;

@@ -272,6 +272,7 @@
 #define OPV_ROSTER_ROOT                                 "roster"
 #define OPV_ROSTER_VIEWMODE                             "roster.view-mode"
 #define OPV_ROSTER_SORTMODE                             "roster.sort-mode"
+#define OPV_ROSTER_MINIMIZEONCLOSE                      "roster.minimize-on-close"
 #define OPV_ROSTER_SHOWOFFLINE                          "roster.show-offline"
 #define OPV_ROSTER_SHOWRESOURCE                         "roster.show-resource"
 #define OPV_ROSTER_HIDESCROLLBAR                        "roster.hide-scrollbar"
@@ -643,8 +644,10 @@
 #define OPV_MUC_CLIENTICON_SHOW                         "muc.clienticon.show"
 #define OPV_MESSAGES_CLIENTICON_DISPLAY                 "messages.clienticon.display"
 
-#define OPV_SCHEDULER_ACTIVE                           "scheduler.active"
-#define OPV_SCHEDULER_ITEMS                            "scheduler.items"
+#define OPV_CCG_COLORVISIONDEFICIENCIES					"pep.ccg.colorvisiondeficiencies"
+
+#define OPV_SCHEDULER_ACTIVE                            "scheduler.active"
+#define OPV_SCHEDULER_ITEMS                             "scheduler.items"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONVALUES_H

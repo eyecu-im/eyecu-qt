@@ -36,6 +36,7 @@
 RostersView::RostersView(QWidget *AParent) : QTreeView(AParent)
 {
 	FRostersModel = NULL;
+	FStartDragFailed = false;
 
 	FPressedPos = QPoint();
 	FPressedIndex = QModelIndex();
@@ -90,7 +91,7 @@ QString RostersView::tabPageCaption() const
 
 QString RostersView::tabPageToolTip() const
 {
-	return QString::null;
+	return QString();
 }
 
 QList<int> RostersView::rosterDataRoles(int AOrder) const

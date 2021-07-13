@@ -50,7 +50,9 @@ public:
 	virtual bool sendStatisticsHit(const IStatisticsHit &AHit);
 protected:
 	QString userAgent() const;
+#if QT_VERSION >= 0x050900
 	QString windowsVersion() const;
+#endif
 protected:
 	QUrl buildHitUrl(const IStatisticsHit &AHit) const;
 	QString getStatisticsFilePath(const QString &AFileName) const;

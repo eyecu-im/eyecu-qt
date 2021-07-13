@@ -116,7 +116,7 @@ public:
 	virtual QList<QString> styles() const =0;
 	virtual QList<int> supportedMessageTypes() const =0;
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) =0;
-	virtual IMessageStyleOptions styleOptions(const OptionsNode &AEngineNode, const QString &AStyleId=QString::null) const =0;
+	virtual IMessageStyleOptions styleOptions(const OptionsNode &AEngineNode, const QString &AStyleId=QString()) const =0;
 	virtual IOptionsDialogWidget *styleSettingsWidget(const OptionsNode &AStyleNode, QWidget *AParent) =0;
 	virtual IMessageStyleOptions styleSettinsOptions(IOptionsDialogWidget *AWidget) const =0;
 protected:
@@ -134,14 +134,13 @@ public:
 	virtual IMessageStyleEngine *findStyleEngine(const QString &AEngineId) const =0;
 	virtual void registerStyleEngine(IMessageStyleEngine *AEngine) =0;
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) const =0;
-	virtual IMessageStyleOptions styleOptions(int AMessageType, const QString &AContext=QString::null) const =0;
+	virtual IMessageStyleOptions styleOptions(int AMessageType, const QString &AContext=QString()) const =0;
 	virtual QString contactAvatar(const Jid &AContactJid) const =0;
 	virtual QString contactName(const Jid &AStreamJid, const Jid &AContactJid=Jid::null) const =0;
 	virtual QString contactIcon(const Jid &AStreamJid, const Jid &AContactJid=Jid::null) const =0;
 	virtual QString contactIcon(const Jid &AContactJid, int AShow, const QString &ASubscription, bool AAsk) const =0;
 	virtual QString dateSeparator(const QDate &ADate, const QDate &ACurDate=QDate::currentDate()) const =0;
 	virtual QString timeFormat(const QDateTime &ATime, const QDateTime &ACurTime=QDateTime::currentDateTime()) const =0;
-	virtual QList<QString> senderColors() const =0; // *** <<< eyeCU >>> ***
 protected:
 	virtual void styleEngineRegistered(IMessageStyleEngine *AEngine) =0;
 	virtual void styleOptionsChanged(const IMessageStyleOptions &AOptions, int AMessageType, const QString &AContext) const =0;

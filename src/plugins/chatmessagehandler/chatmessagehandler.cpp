@@ -22,6 +22,7 @@
 #include <definitions/messagehandlerorders.h>
 #include <definitions/messageeditsendhandlerorders.h>
 #include <definitions/xmppurihandlerorders.h>
+#include <definitions/namespaces.h> // *** <<< eyeCU >>> ***
 #include <utils/widgetmanager.h>
 #include <utils/textmanager.h>
 #include <utils/shortcuts.h>
@@ -56,6 +57,10 @@ ChatMessageHandler::ChatMessageHandler()
 	FAccountManager = NULL;
 	FXmppUriQueries = NULL;
 	FRecentContacts = NULL;
+	// *** <<< eyeCU <<< ***
+	FReceipts = NULL;
+	FChatMarkers = NULL;
+	// *** >>> eyeCU >>> ***
 }
 
 ChatMessageHandler::~ChatMessageHandler()
@@ -167,7 +172,7 @@ bool ChatMessageHandler::initConnections(IPluginManager *APluginManager, int &AI
 		if (rostersViewPlugin)
 		{
 			FRostersView = rostersViewPlugin->rostersView();
-			connect(FRostersView->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)), 
+			connect(FRostersView->instance(),SIGNAL(indexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)),
 				SLOT(onRostersViewIndexContextMenu(const QList<IRosterIndex *> &, quint32, Menu *)));
 		}
 	}
@@ -208,6 +213,20 @@ bool ChatMessageHandler::initConnections(IPluginManager *APluginManager, int &AI
 		FRecentContacts = qobject_cast<IRecentContacts *>(plugin->instance());
 	}
 
+	// *** <<< eyeCU <<< ***
+	plugin = APluginManager->pluginInterface("IReceipts").value(0,NULL);
+	if (plugin)
+	{
+		FReceipts = qobject_cast<IReceipts *>(plugin->instance());
+	}
+
+	plugin = APluginManager->pluginInterface("IChatMarkers").value(0,NULL);
+	if (plugin)
+	{
+		FChatMarkers = qobject_cast<IChatMarkers *>(plugin->instance());
+	}
+	// *** >>> eyeCU >>> ***
+
 	connect(Shortcuts::instance(),SIGNAL(shortcutActivated(const QString &, QWidget *)),SLOT(onShortcutActivated(const QString &, QWidget *)));
 
 	return FMessageProcessor!=NULL && FMessageWidgets!=NULL && FMessageStyleManager!=NULL;
@@ -244,6 +263,17 @@ bool ChatMessageHandler::initObjects()
 	{
 		FMessageWidgets->insertEditSendHandler(MESHO_CHATMESSAGEHANDLER,this);
 	}
+	// *** <<< eyeCU <<< ***
+	if (FReceipts)
+	{
+		FReceipts->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+
+	if (FChatMarkers)
+	{
+		FChatMarkers->addAcceptableElement(NS_JABBER_CLIENT, "body");
+	}
+	// *** >>> eyeCU >>> ***
 	return true;
 }
 
@@ -534,7 +564,7 @@ void ChatMessageHandler::updateWindow(IMessageChatWindow *AWindow)
 
 	QString name = FMessageStyleManager!=NULL ? FMessageStyleManager->contactName(AWindow->streamJid(),AWindow->contactJid()) : AWindow->contactJid().uFull();
 	AWindow->infoWidget()->setFieldValue(IMessageInfoWidget::Caption,name);
-	
+
 	QIcon statusIcon = FStatusIcons!=NULL ? FStatusIcons->iconByJid(AWindow->streamJid(),AWindow->contactJid()) : QIcon();
 	AWindow->infoWidget()->setFieldValue(IMessageInfoWidget::StatusIcon,statusIcon);
 
@@ -549,7 +579,7 @@ void ChatMessageHandler::updateWindow(IMessageChatWindow *AWindow)
 	if (AWindow->tabPageNotifier() && AWindow->tabPageNotifier()->activeNotify()>0)
 		tabIcon = AWindow->tabPageNotifier()->notifyById(AWindow->tabPageNotifier()->activeNotify()).icon;
 
-	AWindow->updateWindow(tabIcon,name,tr("%1 - Chat").arg(name),QString::null);
+	AWindow->updateWindow(tabIcon,name,tr("%1 - Chat").arg(name),QString());
 }
 
 void ChatMessageHandler::removeNotifiedMessages(IMessageChatWindow *AWindow)
@@ -570,8 +600,8 @@ void ChatMessageHandler::showHistory(IMessageChatWindow *AWindow)
 
 		QList<Message> pending = FPendingMessages.take(AWindow);
 		IArchiveCollectionBody history = FHistoryMessages.take(AWindow);
-		qStableSort(history.messages.begin(),history.messages.end(),qGreater<Message>());
-		
+		std::stable_sort(history.messages.begin(),history.messages.end(),qGreater<Message>());
+
 		// Remove extra history messages
 		if (history.messages.count() > HISTORY_MESSAGES)
 		{
@@ -1030,7 +1060,7 @@ void ChatMessageHandler::onPresenceItemReceived(IPresence *APresence, const IPre
 		{
 			if (Options::node(OPV_MESSAGES_SHOWSTATUS).value().toBool())
 			{
-				QString show = FStatusChanger ? FStatusChanger->nameByShow(AItem.show) : QString::null;
+				QString show = FStatusChanger ? FStatusChanger->nameByShow(AItem.show) : QString();
 				QString name = FMessageStyleManager!=NULL ? FMessageStyleManager->contactName(APresence->streamJid(),AItem.itemJid) : AItem.itemJid.uBare();
 				if (AItem.itemJid.hasResource() && name!=AItem.itemJid.resource())
 					name += "/" + AItem.itemJid.resource();
@@ -1109,7 +1139,7 @@ void ChatMessageHandler::onArchiveMessagesLoaded(const QString &AId, const IArch
 	{
 		IMessageChatWindow *window = FHistoryRequests.take(AId);
 		LOG_STRM_INFO(window->streamJid(),QString("Chat history loaded, id=%1").arg(AId));
-		
+
 		FHistoryMessages[window].messages += ABody.messages;
 		FHistoryMessages[window].notes.unite(ABody.notes);
 		showHistory(window);

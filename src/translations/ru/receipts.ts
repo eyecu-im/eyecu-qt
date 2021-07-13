@@ -20,7 +20,7 @@
         <translation type="vanished">Посылать уведомления о достваке</translation>
     </message>
     <message>
-        <source>When message delivery notification recieved</source>
+        <source>When message delivery notification received</source>
         <translation>При получении уведомления о доставке сообщения</translation>
     </message>
     <message>

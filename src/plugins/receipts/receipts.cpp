@@ -114,13 +114,13 @@ bool Receipts::initObjects()
 {
 	FIconStorage = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
-	if (FNotifications)
-	{
-		INotificationType notifyType;
+    if (FNotifications)
+    {
+        INotificationType notifyType;
 		notifyType.order = NTO_DELIVERED_NOTIFY;
-		if (FIconStorage)
+        if (FIconStorage)
 			notifyType.icon = FIconStorage->getIcon(MNI_MESSAGE_RECEIVED);
-		notifyType.title = tr("When message delivery notification recieved");
+        notifyType.title = tr("When message delivery notification received");
 		notifyType.kindMask = INotification::PopupWindow|INotification::SoundPlay;
 		notifyType.kindDefs = notifyType.kindMask;
 		FNotifications->registerNotificationType(NNT_DELIVERED, notifyType);
@@ -210,7 +210,7 @@ void Receipts::removeNotifiedMessages(IMessageChatWindow *AWindow)
 	}
 }
 
-static QString calcId(const Jid &AFrom, const Jid &ATo, const QString &AMessageId)
+static QString calcHash(const Jid &AFrom, const Jid &ATo, const QString &AMessageId)
 {
 	return QString::fromLatin1(QCryptographicHash::hash(QString("%1|%2|%3").arg(AFrom.full())
 																		   .arg(ATo.full())
@@ -226,10 +226,8 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 	Stanza stanza=AMessage.stanza();
 	if (ADirection==IMessageProcessor::DirectionIn)
 	{
-		if (Options::node(OPV_MARKERS_SEND_RECEIVED).value().toBool() &&
-			!stanza.firstElement("request", NS_RECEIPTS).isNull() &&
-			!AMessage.body().isNull() &&
-			!AMessage.isDelayed())
+		if (!stanza.firstElement("request", NS_RECEIPTS).isNull() &&
+			!AMessage.data(MDR_MESSAGE_FAILED).toBool())
 		{
 			Stanza message("message");
 			QString id=AMessage.id();
@@ -260,13 +258,10 @@ bool Receipts::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMes
 			(isSupported(AStreamJid, AMessage.toJid()) ||
 			 isSupportUnknown(AStreamJid, AMessage.toJid())) &&
 			AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull() &&
-			!AMessage.body().isNull())
+			isStanzaAcceptable(AMessage.stanza()))
 		{
 			if(AMessage.id().isEmpty())
-			{
-				uint uTime = QDateTime().currentDateTime().toTime_t();
-				AMessage.setId(QString().setNum(uTime,16));
-			}
+				AMessage.setRandomId();
 			AMessage.detach();
 			AMessage.stanza().addElement("request", NS_RECEIPTS);
 			FDeliveryRequestHash[AStreamJid][AMessage.to()].append(AMessage.id());
@@ -291,13 +286,13 @@ bool Receipts::writeMessageToText(int AOrder, Message &AMessage, QTextDocument *
 	if (AMessage.data(MDR_MESSAGE_DIRECTION).toInt() == IMessageProcessor::DirectionOut &&
 		Options::node(OPV_MARKERS_SHOW_LEVEL).value().toBool() &&
 	   !AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-	{	
+	{
 		QTextCursor cursor(ADocument);
 		cursor.movePosition(QTextCursor::End);
 		QTextImageFormat image;
 		QString name = QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_EMPTY_BOX)).toString();
 		image.setName(name);
-		image.setProperty(QpXhtml::ObjectId, calcId(AMessage.from(), AMessage.to(), AMessage.id()));
+		image.setProperty(QpXhtml::ObjectId, calcHash(AMessage.from(), AMessage.to(), AMessage.id()));
 		cursor.insertImage(image);
 		return true;
 	}
@@ -316,48 +311,82 @@ bool Receipts::archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AM
 	Q_UNUSED(AStreamJid)
 	Q_UNUSED(ADirectionIn)
 
-	if (!AMessage.stanza().firstElement("recieved", NS_RECEIPTS).isNull())
-		return true;
-	if (!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
-	{
-		AMessage.detach();
-		AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("request", NS_RECEIPTS));
-	}
+    if (!AMessage.stanza().firstElement("received", NS_RECEIPTS).isNull())
+        return true;
+    if (!AMessage.stanza().firstElement("request", NS_RECEIPTS).isNull())
+    {
+        AMessage.detach();
+        AMessage.stanza().element().removeChild(AMessage.stanza().firstElement("request", NS_RECEIPTS));
+    }
+	return false;
+}
+
+bool Receipts::addAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	if (FAcceptableElements.contains(ANamespace, ATagName))
+		return false;
+	FAcceptableElements.insert(ANamespace, ATagName);
+	return true;
+}
+
+bool Receipts::removeAcceptableElement(const QString &ANamespace, const QString &ATagName)
+{
+	return FAcceptableElements.remove(ANamespace, ATagName)==1;
+}
+
+bool Receipts::isElementAcceptable(const QString &ANamespace, const QString &ATagName)
+{
+	return FAcceptableElements.contains(ANamespace, ATagName);
+}
+
+bool Receipts::isStanzaAcceptable(const Stanza &AStanza) const
+{
+	for (QDomElement e=AStanza.firstElement(); !e.isNull(); e=e.nextSiblingElement())
+		if (FAcceptableElements.contains(e.namespaceURI(), e.tagName()))
+			return true;
 	return false;
 }
 
 void Receipts::setDelivered(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId)
 {
-	if (FDeliveryRequestHash.contains(AStreamJid) &&
-			FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
-			FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+	if (FDeliveryRequestHash.contains(AStreamJid))
 	{
-		QStringList ids = FDeliveryRequestHash[AStreamJid][AContactJid];
-		FDeliveryRequestHash[AStreamJid][AContactJid] = ids.mid(ids.indexOf(AMessageId)+1);
-		if (FMessageWidgets)
+		Jid contactJid;
+		if (FDeliveryRequestHash[AStreamJid].contains(AContactJid) &&
+			FDeliveryRequestHash[AStreamJid][AContactJid].contains(AMessageId))
+			contactJid = AContactJid;
+		else if (FDeliveryRequestHash[AStreamJid].contains(AContactJid.bare()) &&
+				 FDeliveryRequestHash[AStreamJid][AContactJid.bare()].contains(AMessageId))
+			contactJid = AContactJid.bare();
+		if (!contactJid.isEmpty())
 		{
-			IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
-			if (window && !window->isActiveTabPage())
+			QStringList ids = FDeliveryRequestHash[AStreamJid][contactJid];
+			FDeliveryRequestHash[AStreamJid][contactJid] = ids.mid(ids.indexOf(AMessageId)+1);
+			if (FMessageWidgets)
 			{
-				INotification notify;
-				notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
-				if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+				IMessageChatWindow *window = FMessageWidgets->findChatWindow(AStreamJid, AContactJid);
+				if (window && !window->isActiveTabPage())
 				{
-					notify.typeId = NNT_DELIVERED;
-					notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
-					notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
-					notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
-//					notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
+					INotification notify;
+					notify.kinds = FNotifications->enabledTypeNotificationKinds(NNT_DELIVERED);
+					if (notify.kinds & (INotification::PopupWindow|INotification::SoundPlay))
+					{
+						notify.typeId = NNT_DELIVERED;
+						notify.data.insert(NDR_ICON,FIconStorage->getIcon(MNI_MESSAGE_RECEIVED));
+						notify.data.insert(NDR_POPUP_CAPTION, tr("Message delivered"));
+						notify.data.insert(NDR_POPUP_TITLE, FNotifications->contactName(AStreamJid, AContactJid));
+	//					notify.data.insert(NDR_POPUP_IMAGE, FNotifications->contactAvatar(AContactJid));
 
-					notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
-					FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
-					connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
+						notify.data.insert(NDR_SOUND_FILE, SDF_RECEIPTS_DELIVERED);
+						FNotifies.insertMulti(window, FNotifications->appendNotification(notify));
+						connect(window->instance(), SIGNAL(tabPageActivated()), SLOT(onWindowActivated()));
+					}
 				}
-			}
 
-			QString hash = calcId(AStreamJid, AContactJid, AMessageId);
-			window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED)).toString());
-			window->viewWidget()->setObjectTitle(hash, tr("Received"));
+				QString hash = calcHash(AStreamJid, contactJid, AMessageId);
+				window->viewWidget()->setImageUrl(hash, QUrl::fromLocalFile(FIconStorage->fileFullName(MNI_MESSAGE_RECEIVED)).toString());
+				window->viewWidget()->setObjectTitle(hash, tr("Received"));
+			}
 		}
 	}
 

@@ -4,7 +4,9 @@
 #include <definitions/actiongroups.h>
 #include <definitions/resources.h>
 #include <definitions/menuicons.h>
+#include <definitions/optionnodes.h>
 #include <definitions/optionvalues.h>
+#include <definitions/optionwidgetorders.h>
 #include <definitions/shortcuts.h>
 #include <definitions/shortcutgrouporders.h>
 #include <utils/widgetmanager.h>
@@ -20,10 +22,12 @@ MainWindowPlugin::MainWindowPlugin()
 	FTrayManager = NULL;
 // *** <<< eyeCU >>> ***
 #endif
+	FOptionsManager = NULL;
+
 	FStartShowLoopCount = 0;
 
 	FActivationChanged = QTime::currentTime();
-	FMainWindow = new MainWindow(NULL, Qt::Window|Qt::WindowTitleHint);
+	FMainWindow = new MainWindow(NULL, Qt::Window | Qt::WindowCloseButtonHint);
 	FMainWindow->installEventFilter(this);
 	WidgetManager::setWindowSticky(FMainWindow,true);
 }
@@ -62,6 +66,12 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 	}
 // *** <<< eyeCU >>> ***
 #endif
+	plugin = APluginManager->pluginInterface("IOptionsManager").value(0,NULL);
+	if (plugin)
+	{
+		FOptionsManager = qobject_cast<IOptionsManager *>(plugin->instance());
+	}
+
 	connect(Options::instance(),SIGNAL(optionsOpened()),SLOT(onOptionsOpened()));
 	connect(Options::instance(),SIGNAL(optionsClosed()),SLOT(onOptionsClosed()));
 
@@ -73,7 +83,7 @@ bool MainWindowPlugin::initConnections(IPluginManager *APluginManager, int &AIni
 bool MainWindowPlugin::initObjects()
 {
 	Shortcuts::declareShortcut(SCT_GLOBAL_SHOW,tr("Show"),QKeySequence::UnknownKey,Shortcuts::GlobalShortcut); 	// *** <<< eyeCU >>> ***
-	Shortcuts::declareShortcut(SCT_ROSTERVIEW_CLOSEWINDOW,QString::null,tr("Esc","Close main window"));
+	Shortcuts::declareShortcut(SCT_ROSTERVIEW_CLOSEWINDOW,QString(),tr("Esc","Close main window"));
 	Shortcuts::insertWidgetShortcut(SCT_ROSTERVIEW_CLOSEWINDOW,FMainWindow);
 
 	Action *quitAction = new Action(this);
@@ -90,6 +100,10 @@ bool MainWindowPlugin::initObjects()
 		connect(showRosterAction,SIGNAL(triggered(bool)),SLOT(onShowMainWindowByAction(bool)));
 		FTrayManager->contextMenu()->addAction(showRosterAction,AG_TMTM_MAINWINDOW_SHOW,true);
 	}
+	if (FOptionsManager)
+	{
+		FOptionsManager->insertOptionsDialogHolder(this);
+	}
 
 	return true;
 }
@@ -97,7 +111,18 @@ bool MainWindowPlugin::initObjects()
 bool MainWindowPlugin::initSettings()
 {
 	Options::setDefaultValue(OPV_MAINWINDOW_SHOWONSTART,true);
+	Options::setDefaultValue(OPV_ROSTER_MINIMIZEONCLOSE,false);
 	return true;
+}
+
+QMultiMap<int, IOptionsDialogWidget *> MainWindowPlugin::optionsDialogWidgets(const QString &ANodeId, QWidget *AParent)
+{
+	QMultiMap<int, IOptionsDialogWidget *> widgets;
+	if (ANodeId == OPN_ROSTERVIEW)
+	{
+		widgets.insertMulti(OWO_ROSTER_MINIMIZE_ON_CLOSE,FOptionsManager->newOptionsDialogWidget(Options::node(OPV_ROSTER_MINIMIZEONCLOSE),tr("Minimize roster window instead of closing it"),AParent));
+	}
+	return widgets;
 }
 
 bool MainWindowPlugin::startPlugin()
