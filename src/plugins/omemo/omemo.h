@@ -95,6 +95,22 @@ protected:
 		QMap<quint32, QByteArray> FPreKeys;
 	};
 
+    struct PepDelay
+    {
+        PepDelay(QTimer *ATimer):
+            FTimer(ATimer),
+            FNewProcessed(false)
+#ifndef NO_OMEMO_OLD
+          , FOldProcessed(false)
+#endif
+        {}
+        QTimer *FTimer;
+        bool    FNewProcessed;
+#ifndef NO_OMEMO_OLD
+        bool    FOldProcessed;
+#endif
+    };
+
 	bool isSupported(const QString &ABareJid) const;
 	SupportFlags isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
@@ -105,13 +121,17 @@ protected:
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	void updateOmemoAction(Action *AAction);
 	void updateOmemoAction(const Jid &AStreamJid, const Jid &AContactJid);
-	bool publishOwnDeviceIds(const Jid &AStreamJid);
+    bool publishOwnDeviceIds(const Jid &AStreamJid
+#ifndef NO_OMEMO_OLD
+                             , bool AOld = false
+#endif
+                             );
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
 	void removeOtherDevices(const Jid &AStreamJid);
 	void sendOptOutStanza(const Jid &AStreamJid, const Jid &AContactJid);
 
-	QString requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds);
+    QString requestBundles4Devices(const Jid &AStreamJid, const QString &ABareJid, const QList<quint32> &ADevceIds);
 
 	void bundlesProcessed(const Jid &AStreamJid, const QString &ABareJid);
 	bool encryptMessage(Stanza &AMessageStanza);
@@ -126,8 +146,14 @@ protected:
 							const QString &AMessage, const QString &AIconKey=QString()) const;
 
 	bool processBundles(const QDomElement &AItem, const QString &ABareJid, const Jid &AStreamJid);
+#ifndef NO_OMEMO_OLD
+    QString requestDeviceBundle(const Jid &AStreamJid, const QString &ABareJid, quint32 ADevceId);
+    bool publishOwnDeviceIdsOld(const Jid &AStreamJid);
+    bool publishOwnKeysOld(const Jid &AStreamJid);
 	bool processBundlesOld(const QDomElement &AItem, const QString &ABareJid, const Jid &AStreamJid);
-
+    bool removeOtherKeysOld(const Jid &AStreamJid);
+    void removeOtherDevicesOld(const Jid &AStreamJid);
+#endif
 protected slots:
 	void onOptionsOpened();
 	void onOptionsChanged(const OptionsNode &ANode);
@@ -176,9 +202,13 @@ private:
 
 	QHash<Jid, SignalProtocol*> FSignalProtocols;
 
-	QHash<IXmppStream *, QTimer*> FPepDelay;
+    QHash<IXmppStream *, PepDelay> FPepDelay;
 	QHash<QString, QList<quint32> > FDeviceIds;
 	QHash<QString, QList<quint32> > FFailedDeviceIds;
+#ifndef NO_OMEMO_KEYS
+    QHash<QString, QList<quint32> > FDeviceIdsOld;
+    QHash<QString, QList<quint32> > FFailedDeviceIdsOld;
+#endif
 	QHash<Jid, QStringList> FActiveSessions;
 	QHash<Jid, QStringList> FRunningSessions;
 	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
