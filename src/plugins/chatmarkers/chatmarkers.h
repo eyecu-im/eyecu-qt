@@ -37,53 +37,48 @@ class ChatMarkers:
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IChatMarkers")
 #endif
 public:
-	enum Type {
-		Unknown,
-		Received,
-		Displayed,
-		Acknowledged,
-		Acknowledge
-	};
 	ChatMarkers();
 	~ChatMarkers();
 
 	//IPlugin
-	virtual QObject *instance() { return this; }
-	virtual QUuid pluginUuid() const { return CHATMARKERS_UUID; }
-	virtual void pluginInfo(IPluginInfo *APluginInfo);
-	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder);
-	virtual bool initObjects();
-	virtual bool initSettings();
-	virtual bool startPlugin(){return true;}
+	virtual QObject *instance() override { return this; }
+	virtual QUuid pluginUuid() const override { return CHATMARKERS_UUID; }
+	virtual void pluginInfo(IPluginInfo *APluginInfo) override;
+	virtual bool initConnections(IPluginManager *APluginManager, int &AInitOrder) override;
+	virtual bool initObjects() override;
+	virtual bool initSettings() override;
+	virtual bool startPlugin() override {return true;}
 	//IOptionsHolder
-	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent);
+	virtual QMultiMap<int, IOptionsDialogWidget *> optionsDialogWidgets(const QString &ANodeId, QWidget *AParent) override;
 	//IMessageEditor
-	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection);
+	virtual bool messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessage, int ADirection) override;
 	//IMessageWriter
-	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang);
-	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang);
-	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang);
+	virtual bool writeMessageHasText(int AOrder, Message &AMessage, const QString &ALang) override;
+	virtual bool writeMessageToText(int AOrder, Message &AMessage, QTextDocument *ADocument, const QString &ALang) override;
+	virtual bool writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AMessage, const QString &ALang) override;
 	//IArchiveHandler
-	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn);
+	virtual bool archiveMessageEdit(int AOrder, const Jid &AStreamJid, Message &AMessage, bool ADirectionIn) override;
+	//IChatMarkers
+	virtual bool addAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+	virtual bool removeAcceptableElement(const QString &ANamespace, const QString &ATagName) override;
+	virtual bool isElementAcceptable(const QString &ANamespace, const QString &ATagName) const override;
+	virtual bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const override;
+	virtual bool isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const override;
+	virtual bool isStanzaAcceptable(const Stanza &AStanza) const override;
 
-	//Incomming
+	//Incoming
 	QList<Jid> getLastMarkableDisplay(const Jid &AStreamJid, const QString &AContactBareJid) const;
-	QList<Jid>  getLastMarkableAcknowledge(const Jid &AStreamJid, const QString &AContactBareJid) const;
+	QList<Jid> getLastMarkableAcknowledge(const Jid &AStreamJid, const QString &AContactBareJid) const;
 
 protected:
 	void setMessageMarker(const Jid &AStreamJid, const Jid &AContactJid,
 						  const QString &AMessageId, Type AType);
 	void setAcknowledgedMarker(const Jid &AStreamJid, const Jid &AContactJid,
 							   const QString &AMessageId);
-	void setReceived(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-	void setDisplayed(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
-	void setAcknowledged(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId);
 	void showNotification(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, int IdsNum);
 	void markMessage(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
 	void markMessages(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QStringList &AMessageIds);
 	void sendMessageMarked(const Jid &AStreamJid, const Jid &AContactJid, const Type &AType, const QString &AMessageId);
-	bool isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
-	bool isReceiptsSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	void removeNotifiedMessages(IMessageChatWindow *AWindow);
 	void updateToolBarAction();
 	void updateToolBarAction(IMessageToolBarWidget *AWidget);
@@ -108,6 +103,7 @@ protected slots:
 
 signals:
 	void markable(const Jid &AStreamJid, const Jid &AContactJid);
+	void messagesMarked(const Jid &AStreamJid, const Jid &AContactJid, const QString &AMessageId, Type AType);
 
 private:
 	IMessageProcessor   *FMessageProcessor;
@@ -121,6 +117,7 @@ private:
 	IconStorage         *FIconStorage;
 
 	QHash<IMessageChatWindow *, int>   FNotifies;
+	QMultiHash<QString, QString> FAcceptableElements;
 
 	// Outgoing
 	QHash<Jid, QHash<Jid, QStringList> > FRequestHash;

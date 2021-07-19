@@ -27,7 +27,7 @@
   </message>
   <message>
    <location filename="../../plugins/receipts/receipts.cpp" line="125"/>
-   <source>When message delivery notification recieved</source>
+   <source>When message delivery notification received</source>
    <translation type="unfinished"/>
   </message>
   <message>

@@ -40,7 +40,6 @@ public:
 	virtual void registerStyleEngine(IMessageStyleEngine *AEngine);
 	virtual IMessageStyle *styleForOptions(const IMessageStyleOptions &AOptions) const;
 	virtual IMessageStyleOptions styleOptions(int AMessageType, const QString &AContext = QString()) const;
-	virtual QList<QString> senderColors() const; // *** <<< eyeCU >>> ***
 	//Other functions
 	virtual QString contactAvatar(const Jid &AContactJid) const;
 	virtual QString contactName(const Jid &AStreamJid, const Jid &AContactJid = Jid::null) const;
