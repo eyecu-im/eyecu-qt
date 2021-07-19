@@ -39,6 +39,7 @@
 #define OPN_P2P                 "P2P"
 #define OPN_P2P_OTR             "P2P.Otr"
 #define OPN_P2P_OMEMO           "P2P.Omemo"
+#define OPN_P2P_OMEMO_OLD       "P2P.OmemoOld"
 // *** >>> eyeCU >>> ***
 
 #endif // DEF_OPTIONNODES_H

@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QClipboard>
 #include <QStyle>
 #include <QMimeData>
@@ -23,10 +24,17 @@
 
 #define IDR_IDENTITY_DATA	Qt::UserRole+1
 
-OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
+OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent
+#ifndef NO_OMEMO_OLD
+					, bool AOld
+#endif
+					 ) :
 	QWidget(AParent),
 	ui(new Ui::OmemoKeys),
 	FOmemo(AOmemo),
+#ifndef NO_OMEMO_OLD
+	FOld(AOld),
+#endif
 	FPresenceManager(PluginHelper::pluginInstance<IPresenceManager>()),
 	FAccountManager(PluginHelper::pluginInstance<IAccountManager>()),
 	FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>()),
@@ -34,6 +42,7 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent) :
 	FPreKeysModel(new QStandardItemModel(this)),
 	FIdentityKeysModel(new QStandardItemModel(this))
 {
+	qDebug() << "OmemoKeys(" << AOld << ")";
 	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	QStyle *style = QApplication::style();
@@ -106,7 +115,11 @@ QWidget *OmemoKeys::instance()
 
 void OmemoKeys::apply()
 {
-	OptionsNode retract = Options::node(OPV_OMEMO_RETRACT);
+	OptionsNode retract = Options::node(
+#ifndef NO_OMEMO_OLD
+				FOld?OPV_OMEMO_RETRACTOLD:
+#endif
+					 OPV_OMEMO_RETRACT);
 	QStringList ns = retract.childNSpaces(TAG_ACCOUNT);
 
 	for (QStringList::ConstIterator it = ns.constBegin();
@@ -129,7 +142,11 @@ void OmemoKeys::reset()
 
 	QList<IAccount*> accounts = FAccountManager->accounts();
 
-	OptionsNode retract = Options::node(OPV_OMEMO_RETRACT);
+	OptionsNode retract = Options::node(
+#ifndef NO_OMEMO_OLD
+				FOld?OPV_OMEMO_RETRACTOLD:
+#endif
+					 OPV_OMEMO_RETRACT);
 	QStringList ns = retract.childNSpaces(TAG_ACCOUNT);
 
 	for (QList<IAccount*>::ConstIterator it = accounts.constBegin();
@@ -212,7 +229,7 @@ void OmemoKeys::onAccountIndexChanged(int AIndex)
 	IAccount *account = FAccountManager->findAccountById(uuid);
 	if (account)
 	{
-		FSignalProtocol = FOmemo->signalProtocol(account->streamJid());
+		FSignalProtocol = FOmemo->signalProtocol(account->streamJid(), FOld);
 		ui->cbRetractOther->setChecked(FRetractDevices.contains(uuid));		
 		if (FSignalProtocol)
 		{

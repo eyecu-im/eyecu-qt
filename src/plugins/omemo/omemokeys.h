@@ -24,7 +24,11 @@ class OmemoKeys:
 	Q_OBJECT
 
 public:
-	OmemoKeys(Omemo *AOmemo, QWidget *AParent = nullptr);
+	OmemoKeys(Omemo *AOmemo, QWidget *AParent = nullptr
+#ifndef NO_OMEMO_OLD
+			, bool AOld = false
+#endif
+			  );
 	~OmemoKeys();
 
 	// IOptionsDialogWidget
@@ -56,6 +60,9 @@ signals:
 private:
 	Ui::OmemoKeys		*ui;
 	Omemo				*FOmemo;
+#ifndef NO_OMEMO_OLD
+	bool				FOld;
+#endif
 	IPresenceManager	*FPresenceManager;
 	IAccountManager		*FAccountManager;
 	IOptionsManager		*FOptionsManager;

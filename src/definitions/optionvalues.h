@@ -640,7 +640,11 @@
 #define OPV_OMEMO_SIMULATEERROR							"omemo.simulate-error"
 #endif
 #define OPV_OMEMO_RETRACT								"omemo.retract"
-#define OPV_OMEMO_RETRACT_ACCOUNT						"omemo.retract.account"
+#define OPV_OMEMO_RETRACT_ACCOUNT						OPV_OMEMO_RETRACT".account"
+#ifndef NO_OMEMO_OLD
+#define OPV_OMEMO_RETRACTOLD							"omemo.retract-old"
+#define OPV_OMEMO_RETRACTOLD_ACCOUNT					OPV_OMEMO_RETRACTOLD".account"
+#endif
 #define OPV_OMEMO_FALLBACKMESSAGE						"omemo.fallback-message"
 #define OPV_OMEMO_OPTOUTMESSAGE							"omemo.opt-out-message"
 #define OPV_OMEMO_OPTOUTCONFIRM							"omemo.opt-out-confirm"

@@ -35,19 +35,25 @@ class Omemo: public QObject,
 	Q_PLUGIN_METADATA(IID "ru.rwsoftware.eyecu.IOmemo")
 #endif
 public:
-	enum Support
+	enum OmemoVersion
 	{
-		SupportNone = 0,
-		SupportOld  = 1,
-		SupportNew  = 2
+		  OmemoNone
+		, OmemoNew
+#ifndef NO_OMEMO_OLD
+		, OmemoOld
+#endif
 	};
 
-	Q_DECLARE_FLAGS(SupportFlags, Support)
+	Q_DECLARE_FLAGS(OmemoVersionFlags, OmemoVersion)
 
 	Omemo();
 	~Omemo() override;
 
-	SignalProtocol *signalProtocol(const Jid &AStreamJid);
+	SignalProtocol *signalProtocol(const Jid &AStreamJid
+#ifndef NO_OMEMO_OLD
+								   , bool AOld = false
+#endif
+			);
 
 	//IPlugin
 	virtual QObject *instance() override { return this; }
@@ -84,7 +90,7 @@ public:
 	virtual void onSessionDeleted(const QString &ABareJid, quint32 ADeviceId, SignalProtocol *ASignalProtocol) override;
 	virtual void onIdentityTrustChanged(const QString &ABareJid, quint32 ADeviceId, const QByteArray &AEd25519Key, bool ATrusted, SignalProtocol *ASignalProtocol) override;
 
-protected:
+protected:    
 	struct SignalDeviceBundle
 	{
 //		quint32 FDeviceId;
@@ -97,7 +103,7 @@ protected:
 
     struct PepDelay
     {
-        PepDelay(QTimer *ATimer):
+		PepDelay(QTimer *ATimer = NULL):
             FTimer(ATimer),
             FNewProcessed(false)
 #ifndef NO_OMEMO_OLD
@@ -111,8 +117,9 @@ protected:
 #endif
     };
 
-	bool isSupported(const QString &ABareJid) const;
-	SupportFlags isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
+
+	OmemoVersionFlags isSupported(const QString &ABareJid) const;
+	OmemoVersionFlags isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
 	bool setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive=true);
 	bool isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const;
@@ -121,11 +128,7 @@ protected:
 	void updateChatWindowActions(IMessageChatWindow *AWindow);
 	void updateOmemoAction(Action *AAction);
 	void updateOmemoAction(const Jid &AStreamJid, const Jid &AContactJid);
-    bool publishOwnDeviceIds(const Jid &AStreamJid
-#ifndef NO_OMEMO_OLD
-                             , bool AOld = false
-#endif
-                             );
+    bool publishOwnDeviceIds(const Jid &AStreamJid);
 	bool publishOwnKeys(const Jid &AStreamJid);
 	bool removeOtherKeys(const Jid &AStreamJid);
 	void removeOtherDevices(const Jid &AStreamJid);
@@ -153,6 +156,7 @@ protected:
 	bool processBundlesOld(const QDomElement &AItem, const QString &ABareJid, const Jid &AStreamJid);
     bool removeOtherKeysOld(const Jid &AStreamJid);
     void removeOtherDevicesOld(const Jid &AStreamJid);
+	bool encryptMessageOld(Stanza &AMessageStanza);
 #endif
 protected slots:
 	void onOptionsOpened();
@@ -205,21 +209,32 @@ private:
     QHash<IXmppStream *, PepDelay> FPepDelay;
 	QHash<QString, QList<quint32> > FDeviceIds;
 	QHash<QString, QList<quint32> > FFailedDeviceIds;
-#ifndef NO_OMEMO_KEYS
-    QHash<QString, QList<quint32> > FDeviceIdsOld;
-    QHash<QString, QList<quint32> > FFailedDeviceIdsOld;
-#endif
 	QHash<Jid, QStringList> FActiveSessions;
 	QHash<Jid, QStringList> FRunningSessions;
 	QHash<QString, quint32> FBundleRequests; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequests;	// Bare JID, Device ID
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundles;
 	QMultiHash<QString, Stanza> FPendingMessages;
+
+#ifndef NO_OMEMO_OLD
+	QHash<Jid, SignalProtocol*> FSignalProtocolsOld;
+
+	QHash<QString, QList<quint32> > FDeviceIdsOld;
+	QHash<QString, QList<quint32> > FFailedDeviceIdsOld;
+//	QHash<Jid, QStringList> FActiveSessionsOld;
+	QHash<Jid, QStringList> FRunningSessionsOld;
+	QHash<QString, quint32> FBundleRequestsOld; // Stanza ID, device ID
+	QMultiHash<QString, quint32> FPendingRequestsOld;	// Bare JID, Device ID
+	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundlesOld;
+	QMultiHash<QString, Stanza> FPendingMessagesOld;
+#endif
+
 	QMultiHash<QString, QString> FAcceptableElements;
 
-	bool				FCleanup;
+	bool                    FCleanup;
+	QHash<QString, OmemoVersionFlags>  FRemoveRequested;
 };
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(Omemo::SupportFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Omemo::OmemoVersionFlags)
 
 #endif // OMEMO_H

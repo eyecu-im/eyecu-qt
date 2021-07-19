@@ -12,7 +12,11 @@ OmemoOptions::OmemoOptions(Omemo *AOmemo, QWidget *AParent) :
 	FOptionsManager(PluginHelper::pluginInstance<IOptionsManager>())
 {
 	ui->setupUi(this);
-
+#ifndef NO_OMEMO_OLD
+	QPushButton *pbKeysOld = new QPushButton(tr("Keys (old OMEMO)"), this);
+	ui->hlKeys->addWidget(pbKeysOld);
+	connect(pbKeysOld, SIGNAL(clicked()), SLOT(onKeysClicked()));
+#endif
 	reset();
 }
 
@@ -44,5 +48,9 @@ void OmemoOptions::reset()
 
 void OmemoOptions::onKeysClicked()
 {
-	FOptionsManager->showOptionsDialog(OPN_P2P_OMEMO, OPN_P2P, this);
+	FOptionsManager->showOptionsDialog(
+#ifndef NO_OMEMO_OLD
+		sender() != ui->pbKeys?OPN_P2P_OMEMO_OLD:
+#endif
+							   OPN_P2P_OMEMO, OPN_P2P, this);
 }
