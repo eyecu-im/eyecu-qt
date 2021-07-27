@@ -226,7 +226,6 @@ private:
 	QHash<QString, quint32> FBundleRequestsOld; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequestsOld;	// Bare JID, Device ID
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundlesOld;
-	QMultiHash<QString, Stanza> FPendingMessagesOld;
 #endif
 
 	QMultiHash<QString, QString> FAcceptableElements;
