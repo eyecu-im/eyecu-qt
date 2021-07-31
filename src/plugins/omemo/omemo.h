@@ -180,6 +180,8 @@ protected slots:
 
 	void onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QString &AReasonText);
 
+	void onDiscoItemsReceived(const IDiscoItems &ADiscoItems);
+
 signals:
 	void optOut(const Jid &AStreamJid, const Jid &AContactJid, const QString &AReasonText);
 
