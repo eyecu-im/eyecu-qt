@@ -676,11 +676,9 @@ bool Omemo::processBundles(const QDomElement &AItem, const QString &ABareJid, co
 			QList<quint32> &currentIds = FDeviceIds[ABareJid];
 			for (QList<quint32>::ConstIterator it = currentIds.constBegin();
 				 it != currentIds.constEnd(); ++it)
-			{
 				if (!ids.contains(*it) &&							 // Device was removed and
 					(signalProtocol->sessionInitStatus(ABareJid, qint32(*it)) > SignalProtocol::NoSession)) // session with the device exists
 					signalProtocol->deleteSession(ABareJid, qint32(*it));
-			}
 		}
 
 		if (!ids.isEmpty())
@@ -706,12 +704,7 @@ bool Omemo::processBundles(const QDomElement &AItem, const QString &ABareJid, co
 			{
 				IXmppStream *stream = FXmppStreamManager->findXmppStream(AStreamJid);
 				if (FPepDelay.contains(stream))
-				{
-//					QTimer *timer = FPepDelay.take(stream);
-//					timer->stop();
-//					timer->deleteLater();
                     FPepDelay[stream].FNewProcessed = true;
-				}
 
 				quint32 ownId = FSignalProtocols[AStreamJid]->getDeviceId();
 				if (ownId)
@@ -1040,7 +1033,7 @@ bool Omemo::removeOtherKeysOld(const Jid &AStreamJid)
 	if (!deviceId)
 		return false;
 
-	QList<quint32> deviceIds = FDeviceIdsOld.value(AStreamJid.bare());
+	QList<quint32> deviceIds = FAllDeviceIds.values(AStreamJid.bare());
 
 	QDomDocument doc;
 	QDomElement item=doc.createElement(TAG_NAME_ITEM);
@@ -1103,15 +1096,19 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 				if ((isActiveSession(AStreamJid, bareJid) ||
 					!AStanza.firstElement(TAG_NAME_OPTOUT, NS_OMEMO).isNull()))
 				{
-					bool haveTrustedIdentities(false);
-					OmemoVersionFlags supported = isSupported(AStanza.toJid().bare());
-					bool newEncode(false), dontSendNow(false);
+					bool haveTrusted(false)
 #ifndef NO_OMEMO_OLD
-					bool oldEncode(false);
+						, haveTrustedOld(false)
+#endif
+							;
+					OmemoVersionFlags supported = isSupported(AStanza.toJid().bare());
+					bool encrypt(false), dontSendNow(false);
+#ifndef NO_OMEMO_OLD
+					bool encryptOld(false);
 					if (supported.testFlag(OmemoOld) &&
 						!AStanza.firstElement(TAG_NAME_BODY, NS_JABBER_CLIENT).isNull())
 					{
-						oldEncode = true; // Mark as supported by old OMEMO
+						encryptOld = true; // Mark as supported by old OMEMO
 						SignalProtocol *signalProtocol = FSignalProtocolsOld[AStreamJid];
 						QList<quint32> deviceIds = FDeviceIdsOld[bareJid];
 						QHash<quint32, SignalDeviceBundle> bundles = FBundlesOld.value(bareJid);
@@ -1125,7 +1122,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 							{
 								int trusted = signalProtocol->getIdentityTrusted(bareJid, *it);
 								if (trusted == 1) // Trusted identity
-									haveTrustedIdentities = true;
+									haveTrustedOld = true;
 								else if (trusted == -1 && !bundles.contains(*it)) // New identity
 								{
 									needBundles = true;
@@ -1176,7 +1173,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 					if (supported.testFlag(OmemoNew) &&
 						FStanzaContentEncrytion->isStanzaAcceptable(AStanza))
 					{
-						newEncode = true;
+						encrypt = true;
 						SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
 						QList<quint32> deviceIds = FDeviceIds[bareJid];
 						QList<quint32> failedDeviceIds = FFailedDeviceIds[bareJid];
@@ -1189,7 +1186,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 							{
 								int trusted = signalProtocol->getIdentityTrusted(bareJid, *it);
 								if (trusted == 1) // Trusted identity
-									haveTrustedIdentities = true;
+									haveTrusted = true;
 								else if (trusted == -1 && !bundles.contains(*it)) // New identity
 								{
 									needBundles = true;
@@ -1244,14 +1241,18 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 						}
 					}
 
-					if (!newEncode
+					if (!encrypt
 #ifndef NO_OMEMO_OLD
-					 && !oldEncode
+					 && !encryptOld
 #endif
 							)
 						return false;
 
-					if (!haveTrustedIdentities)
+					if (!haveTrusted
+#ifndef NO_OMEMO_OLD
+					 && !haveTrustedOld
+#endif
+							)
 					{
 //FIXME: Use appropriate message widget for the message box below
 						QMessageBox::critical(FMainWindowPlugin->mainWindow()->instance(),
@@ -1271,21 +1272,31 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 					if (AHandleId == FSHIMessageOut)
 					{
 #ifndef NO_OMEMO_OLD
-						if (oldEncode)
+						if (encryptOld)
 						{
-							oldEncode = encryptMessageOld(AStanza); // Just encrypt message, allowing to send it
-							if (!oldEncode)
-								qCritical("Message encryption failed!");
+							if (haveTrustedOld)
+							{
+								encryptOld = encryptMessageOld(AStanza); // Just encrypt message, allowing to send it
+								if (!encryptOld)
+									qCritical("Message encryption failed!");
+							}
+							else
+								encryptOld = false;
 						}
 #endif
-						if (newEncode)
+						if (encrypt)
 						{
-							newEncode = encryptMessage(AStanza);
-							if (!newEncode)
-								qCritical("Message encryption failed!"); // Just encrypt message, allowing to send it
+							if (haveTrusted)
+							{
+								encrypt = encryptMessage(AStanza);
+								if (!encrypt)
+									qCritical("Message encryption failed!"); // Just encrypt message, allowing to send it
+							}
+							else
+								encrypt = false;
 						}
 #ifndef NO_OMEMO_OLD
-						if (oldEncode && !newEncode) // If old style encrypted, replace message body with a fallback message
+						if (encryptOld && !encrypt) // If old style encrypted, replace message body with a fallback message
 						{
 							QDomElement body = AStanza.firstElement(TAG_NAME_BODY);
 							if (body.isNull())
@@ -1300,9 +1311,9 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 							}
 						}
 #endif
-						if (newEncode
+						if (encrypt
 #ifndef NO_OMEMO_OLD
-						 || oldEncode
+						 || encryptOld
 #endif
 								)
 							AStanza.addElement("store", NS_HINTS);
@@ -1534,8 +1545,10 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 											}
 											else
 												qCritical() << "rid attribute is missing!";
-										}
+										}										
 									}
+									else
+										qCritical() << "<iv/> element is missing!";
 								}
 								else
 									qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
@@ -1578,8 +1591,10 @@ Omemo::OmemoVersionFlags Omemo::isSupported(const QString &ABareJid) const
 	OmemoVersionFlags flags;
 	if (FDeviceIds.contains(ABareJid))
 		flags|=OmemoNew;
+#ifndef NO_OMEMO_OLD
 	if (FDeviceIdsOld.contains(ABareJid))
 		flags|=OmemoOld;
+#endif
 	return flags;
 }
 
@@ -1592,8 +1607,10 @@ Omemo::OmemoVersionFlags Omemo::isSupported(const Jid &AStreamJid, const Jid &AC
 		QStringList features(FDiscovery->discoInfo(AStreamJid,AContactJid).features);
 		if (supported.testFlag(OmemoNew) && features.contains(NS_PEP_OMEMO_NOTIFY))
 			flags |= OmemoNew;
+#ifndef NO_OMEMO_OLD
 		if (supported.testFlag(OmemoOld) && features.contains(NS_PEP_OMEMO_NOTIFY_OLD))
 			flags |= OmemoOld;
+#endif
 	}
 	return flags;
 }
@@ -1606,10 +1623,9 @@ int Omemo::isSupported(const IMessageAddress *AAddresses) const
 		return 2;
 	QMultiMap<Jid,Jid> addresses = AAddresses->availAddresses(true);
 	for (QMultiMap<Jid,Jid>::ConstIterator it = addresses.constBegin();
-		 it != addresses.constEnd(); ++it) {
+		 it != addresses.constEnd(); ++it)
 		if (isSupported(it->bare()))
 			return 1;
-	}
 	return 0;
 }
 
@@ -1903,9 +1919,23 @@ void Omemo::onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QStrin
 
 void Omemo::onDiscoItemsReceived(const IDiscoItems &ADiscoItems)
 {
-	for (QList<IDiscoItem>::ConstIterator it=ADiscoItems.items.constBegin();
+	qDebug() << "onDiscoItemsReceived({" << ADiscoItems.streamJid.full() << "," << ADiscoItems.contactJid.full() << "})";
+	if (ADiscoItems.streamJid.bare() == ADiscoItems.contactJid.bare())
+		for (QList<IDiscoItem>::ConstIterator it=ADiscoItems.items.constBegin();
 		 it!=ADiscoItems.items.constEnd(); ++it)
-		qDebug() << "item node:" << it->node;
+		{
+			qDebug() << "item node:" << it->node;
+			if (it->node.startsWith(NS_PEP_OMEMO_BUNDLES_OLD":"))
+			{
+				bool ok;
+				quint32 id = it->node.split(":").last().toUInt(&ok);
+				if (ok)
+				{
+					qDebug() << "id=" << id;
+					FAllDeviceIds.insertMulti(ADiscoItems.streamJid.bare(), id);
+				}
+			}
+		}
 }
 
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
@@ -2054,7 +2084,6 @@ void Omemo::removeOtherDevices(const Jid &AStreamJid)
 		publishOwnDeviceIds(AStreamJid);
 	}
 
-//	FRemoveRequested[AStreamJid.bare()]&=~OmemoNew;
 	Options::node(OPV_OMEMO_RETRACT).removeNode("account",
 		FAccountManager->findAccountByStream(AStreamJid)->accountId().toString());
 }
@@ -2170,7 +2199,6 @@ bool Omemo::encryptMessage(Stanza &AMessageStanza)
 
 				for (QList<quint32>::ConstIterator it=devices.constBegin();
 					 it != devices.constEnd(); ++it)
-				{
 					if (!FFailedDeviceIds.value(bareJid).contains(*it))
 					{
 						int sessionState = signalProtocol->sessionInitStatus(bareJid, *it);
@@ -2231,7 +2259,6 @@ bool Omemo::encryptMessage(Stanza &AMessageStanza)
 					}
 					else
 						qDebug("Failed device!");
-				}
 			}
 		}
 
@@ -2487,7 +2514,7 @@ void Omemo::stanzaRequestResult(const Jid &AStreamJid, const Stanza &AStanza)
 				{
 					SignalDeviceBundle deviceBundle;
 					bool ok = false;
-					quint32 deviceId = item.attribute(ATTR_NAME_ID).toInt(&ok);
+					quint32 deviceId = item.attribute(ATTR_NAME_ID).toUInt(&ok);
 					if (ok)
 					{
 						if (deviceIds.contains(deviceId))
@@ -2839,4 +2866,5 @@ bool Omemo::writeTextToMessage(int AOrder, QTextDocument *ADocument, Message &AM
 
 #if QT_VERSION < 0x050000
 Q_EXPORT_PLUGIN2(plg_omemo, Omemo)
-#endif                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+#endif
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

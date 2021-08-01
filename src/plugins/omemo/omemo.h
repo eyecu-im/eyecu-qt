@@ -220,14 +220,13 @@ private:
 
 #ifndef NO_OMEMO_OLD
 	QHash<Jid, SignalProtocol*> FSignalProtocolsOld;
-
 	QHash<QString, QList<quint32> > FDeviceIdsOld;
 	QHash<QString, QList<quint32> > FFailedDeviceIdsOld;
-//	QHash<Jid, QStringList> FActiveSessionsOld;
 	QHash<Jid, QStringList> FRunningSessionsOld;
 	QHash<QString, quint32> FBundleRequestsOld; // Stanza ID, device ID
 	QMultiHash<QString, quint32> FPendingRequestsOld;	// Bare JID, Device ID
 	QHash<QString, QHash<quint32, SignalDeviceBundle> > FBundlesOld;
+	QHash<QString, quint32>  FAllDeviceIds;
 #endif
 
 	QMultiHash<QString, QString> FAcceptableElements;
