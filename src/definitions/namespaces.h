@@ -118,7 +118,7 @@
 #define NS_PEP_OMEMO_NOTIFY						NS_PEP_OMEMO"+notify"
 #ifndef NO_OMEMO_OLD
 #define NS_OMEMO_OLD							"eu.siacs.conversations.axolotl"
-#define NS_PEP_OMEMO_BUNDLES_OLD				NS_OMEMO_OLD":bundles"
+#define NS_PEP_OMEMO_BUNDLES_OLD				NS_OMEMO_OLD".bundles"
 #define NS_PEP_OMEMO_OLD						NS_OMEMO_OLD".devicelist"
 #define NS_PEP_OMEMO_NOTIFY_OLD					NS_PEP_OMEMO_OLD"+notify"
 #endif
