@@ -1,5 +1,6 @@
 #include "signalprotocol.h"
 
+#include <utils/logger.h>
 #include <QMutex>
 #include <QDateTime>
 extern "C" {
@@ -588,19 +589,19 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 
 	int rc = curve_decode_point(&preKeyPublic, DATA_SIZE(APreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		errMsg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed! (public pre key)";
 		goto cleanup;
 	}
 
 	rc = curve_decode_point(&signedPreKeyPublic, DATA_SIZE(ASignedPreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		errMsg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed! (public signed pre key)";
 		goto cleanup;
 	}
 
 	rc = curve_decode_point(&identityKey, DATA_SIZE(AIdentityKey), FGlobalContext);
 	if (rc != SG_SUCCESS) {
-		errMsg = "curve_decode_point() failed!";
+		errMsg = "curve_decode_point() failed! (identity key)";
 		goto cleanup;
 	}
 
@@ -1351,6 +1352,26 @@ cleanup:
 	return rc;
 }
 
+void SignalProtocol::logFunc(int ALevel, const char *AMessage, size_t ALen, void *AUserData)
+{
+	switch (ALevel)
+	{
+		case SG_LOG_ERROR:
+			qCritical("%s", AMessage);
+			break;
+		case SG_LOG_WARNING:
+			qWarning("%s", AMessage);
+			break;
+		case SG_LOG_NOTICE:
+		case SG_LOG_INFO:
+			qInfo("%s", AMessage);
+			break;
+		case SG_LOG_DEBUG:
+			qDebug("%s", AMessage);
+			break;
+	}
+}
+
 void SignalProtocol::recursiveMutexLock(void *AUserData)
 {
 	reinterpret_cast<SignalProtocol *>(AUserData)->recursiveMutexLock();
@@ -1416,6 +1437,13 @@ SignalProtocol::SignalProtocol(const QString &AFileName, const QString &AConnect
 	// 3. set locking functions
 	if (signal_context_set_locking_functions(FGlobalContext, recursiveMutexLock, recursiveMutexUnlock)) {
 		errMsg = "failed to set locking functions";
+		FError = -1;
+		goto cleanup;
+	}
+
+	// 3. set logging function
+	if (signal_context_set_log_function(FGlobalContext,	logFunc)) {
+		errMsg = "failed to set logging function";
 		FError = -1;
 		goto cleanup;
 	}
