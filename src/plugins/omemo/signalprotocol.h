@@ -323,6 +323,16 @@ protected:
 						   const uint8_t *ACiphertext, size_t ACiphertextLen,
 						   void *AUserData);
 
+	/**
+	 * Callback for Sighnal logging function.
+	 *
+	 * @param ALevel log level
+	 * @param AMessagr log message
+	 * @param ALen message length
+	 * @param AUserData opaque user data
+	 */
+	static void logFunc(int ALevel, const char *AMessage, size_t ALen, void *AUserData);
+
 	static void recursiveMutexLock(void *AUserData);
 	static void recursiveMutexUnlock(void *AUserData);
 
