@@ -1,4 +1,3 @@
-#include <QDebug>
 #include <QClipboard>
 #include <QStyle>
 #include <QMimeData>
@@ -42,7 +41,6 @@ OmemoKeys::OmemoKeys(Omemo *AOmemo, QWidget *AParent
 	FPreKeysModel(new QStandardItemModel(this)),
 	FIdentityKeysModel(new QStandardItemModel(this))
 {
-	qDebug() << "OmemoKeys(" << AOld << ")";
 	IconStorage *menuicons = IconStorage::staticStorage(RSR_STORAGE_MENUICONS);
 
 	QStyle *style = QApplication::style();

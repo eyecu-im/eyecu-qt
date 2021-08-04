@@ -54,7 +54,11 @@ public:
 		bool operator != (const SignalMessage &AOther) const;
 
 	protected:
-		SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted);
+		SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted
+#ifndef NO_OMEMO_OLD
+					  , bool AOld = false
+#endif
+					  );
 		operator signal_message *() const;
 
 	private:
@@ -77,7 +81,11 @@ public:
 		quint32 preKeyId() const;
 
 	protected:
-		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted, quint32 ARegistrationId);
+		PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted, quint32 ARegistrationId
+#ifndef NO_OMEMO_OLD
+							=0
+#endif
+							);
 		operator pre_key_signal_message *() const;
 
 	private:
@@ -166,6 +174,9 @@ public:
 	Cipher sessionCipherCreate(const QString &ABareJid, int ADeviceId);
 
 	QByteArray getIdentityKeyPublic(bool fingerprint=false) const;
+#ifndef NO_OMEMO_OLD
+	QByteArray getIdentityKeyPublicOld() const;
+#endif
 	QByteArray getIdentityKeyPrivate() const;
 
 	QByteArray getSignedPreKeyPublic(quint32 AKeyId=SIGNED_PRE_KEY_ID) const;
@@ -188,6 +199,10 @@ public:
 
 	SignalMessage getSignalMessage(const QByteArray &AEncrypted);
 	PreKeySignalMessage getPreKeySignalMessage(const QByteArray &AEncrypted);
+#ifndef NO_OMEMO_OLD
+	SignalMessage getSignalMessageOld(const QByteArray &AEncrypted);
+	PreKeySignalMessage getPreKeySignalMessageOld(const QByteArray &AEncrypted);
+#endif
 	SessionBuilder getSessionBuilder(const QString &ABareJid, quint32 ADeviceId);
 #define HASH_OUTPUT_SIZE 32
 	QByteArray hkdf_gen(int ALength, const QByteArray &AIkm, const QByteArray &AInfo=QByteArray(), const QByteArray &ASalt=QByteArray(HASH_OUTPUT_SIZE, 0));

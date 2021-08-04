@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include <QTimer>
 #include <QDir>
 #include <QMessageBox>
@@ -21,6 +19,7 @@
 
 #include <utils/options.h>
 #include <utils/datetime.h>
+#include <utils/logger.h>
 
 #include "omemooptions.h"
 #include "omemokeys.h"
@@ -1001,7 +1000,7 @@ bool Omemo::publishOwnKeysOld(const Jid &AStreamJid)
     signedPreKeySignature.appendChild(doc.createTextNode(signature.toBase64()));
     bundle.appendChild(signedPreKeySignature);
 
-    QByteArray identityKeyPublic = signalProtocol->getIdentityKeyPublic();
+	QByteArray identityKeyPublic = signalProtocol->getIdentityKeyPublicOld();
     if (identityKeyPublic.isNull())
         return false;
     QDomElement identityKey=doc.createElement(TAG_NAME_IDENTITYKEY);
@@ -1495,7 +1494,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 														QByteArray keyTuple;
 														if (key.attribute(ATTR_NAME_PREKEY)=="true")
 														{
-															SignalProtocol::PreKeySignalMessage message = signalProtocol->getPreKeySignalMessage(decoded);
+															SignalProtocol::PreKeySignalMessage message = signalProtocol->getPreKeySignalMessageOld(decoded);
 															bool preKeyUpdated;
 															keyTuple = cipher.decrypt(message, preKeyUpdated);
 															if (preKeyUpdated)
@@ -1503,7 +1502,7 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 														}
 														else
 														{
-															SignalProtocol::SignalMessage message = signalProtocol->getSignalMessage(decoded);
+															SignalProtocol::SignalMessage message = signalProtocol->getSignalMessageOld(decoded);
 															keyTuple = cipher.decrypt(message);
 														}
 														QByteArray encryptedText = QByteArray::fromBase64(payload.text().toLatin1());
@@ -1541,26 +1540,26 @@ bool Omemo::stanzaReadWrite(int AHandleId, const Jid &AStreamJid, Stanza &AStanz
 													}
 												}
 												else
-													qCritical() << "Invalid rid attribute:" << header.attribute(ATTR_NAME_RID);
+													LOG_ERROR(QString("Invalid rid attribute: %1").arg(header.attribute(ATTR_NAME_RID)));
 											}
 											else
-												qCritical() << "rid attribute is missing!";
+												LOG_ERROR("rid attribute is missing!");
 										}										
 									}
 									else
-										qCritical() << "<iv/> element is missing!";
+										LOG_ERROR("<iv/> element is missing!");
 								}
 								else
-									qCritical() << "Invalid sid attribute:" << header.attribute(ATTR_NAME_SID);
+									LOG_ERROR(QString("Invalid sid attribute: %s").arg(header.attribute(ATTR_NAME_SID)));
 							}
 							else
-								qCritical() << "sid attribute is missing!";
+								LOG_ERROR("sid attribute is missing!");
 						}
 						else
-							qCritical() << "<header/> element is missing!";
+							LOG_ERROR("<header/> element is missing!");
 					}
 					else
-						qCritical() << "<payload/> element is missing!";
+						LOG_ERROR("<payload/> element is missing!");
 				}
 			}
 #endif
@@ -1919,23 +1918,16 @@ void Omemo::onOptOut(const Jid &AStreamJid, const Jid &AContactJid, const QStrin
 
 void Omemo::onDiscoItemsReceived(const IDiscoItems &ADiscoItems)
 {
-	qDebug() << "onDiscoItemsReceived({" << ADiscoItems.streamJid.full() << "," << ADiscoItems.contactJid.full() << "})";
 	if (ADiscoItems.streamJid.bare() == ADiscoItems.contactJid.bare())
 		for (QList<IDiscoItem>::ConstIterator it=ADiscoItems.items.constBegin();
-		 it!=ADiscoItems.items.constEnd(); ++it)
-		{
-			qDebug() << "item node:" << it->node;
+			 it!=ADiscoItems.items.constEnd(); ++it)
 			if (it->node.startsWith(NS_PEP_OMEMO_BUNDLES_OLD":"))
 			{
 				bool ok;
 				quint32 id = it->node.split(":").last().toUInt(&ok);
 				if (ok)
-				{
-					qDebug() << "id=" << id;
 					FAllDeviceIds.insertMulti(ADiscoItems.streamJid.bare(), id);
-				}
 			}
-		}
 }
 
 bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)

@@ -131,6 +131,9 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 	uint32_t registrationId;
 	int initStatus = DbNotInitialized;
 
+//FIXME: Temp
+	signal_buffer * pubkeyBuf = nullptr;
+
 	qDebug("%s: calling install-time functions", __func__);
 
 	int rc = create(this);
@@ -202,6 +205,12 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 			goto cleanup;
 		}
 
+		rc = ec_public_key_serialize(&pubkeyBuf, ratchet_identity_key_pair_get_public(identityKeyPair));
+		if (rc != SG_SUCCESS) {
+			errMsg = "Failed to serialize the public key";
+			goto cleanup;
+		}
+
 		rc = signal_protocol_key_helper_generate_registration_id(&registrationId, 1, FGlobalContext);
 		if (rc) {
 			errMsg = "failed to generate registration id";
@@ -222,7 +231,7 @@ int SignalProtocol::install(quint32 ASignedPreKeyId, uint APreKeyStartId, uint A
 		if (rc) {
 			errMsg = "failed to generate signed pre key";
 			goto cleanup;
-		}
+		}		
 
 		rc = identitySetLocalRegistrationId(this, registrationId);
 		if (rc) {
@@ -394,7 +403,36 @@ QByteArray SignalProtocol::getIdentityKeyPublic(bool fingerprint) const
 
 	return retVal;
 }
+#ifndef NO_OMEMO_OLD
+QByteArray SignalProtocol::getIdentityKeyPublicOld() const
+{
+	ratchet_identity_key_pair *keyPair;
+	QByteArray retVal;
+	int rc = signal_protocol_identity_get_key_pair(FStoreContext, &keyPair);
+	if (rc == SG_SUCCESS)
+	{
+		ec_public_key *key = ratchet_identity_key_pair_get_public(keyPair);
+		if (key)
+		{
+			signal_buffer *buffer;
+			rc = ec_public_key_serialize(&buffer, key);
+			if (rc ==SG_SUCCESS)
+			{
+				retVal = signalBufferToByteArray(buffer);
+				signal_buffer_free(buffer);
+			}
+			else
+				qCritical("ec_public_key_serialize() failed! rc=%d", rc);
+		}
+		else
+			qCritical("ratchet_identity_key_pair_get_public() returned NULL!");
+	}
+	else
+		qCritical("signal_protocol_identity_get_key_pair() failed! rc=%d", rc);
 
+	return retVal;
+}
+#endif
 QByteArray SignalProtocol::getIdentityKeyPrivate() const
 {
 	ratchet_identity_key_pair *keyPair = nullptr;
@@ -584,9 +622,6 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 				  *signedPreKeyPublic(nullptr),
 				  *identityKey(nullptr);
 
-	signal_buffer *buffer(nullptr);
-	QByteArray ik;
-
 	int rc = curve_decode_point(&preKeyPublic, DATA_SIZE(APreKeyPublic), FGlobalContext);
 	if (rc != SG_SUCCESS) {
 		errMsg = "curve_decode_point() failed! (public pre key)";
@@ -604,10 +639,6 @@ session_pre_key_bundle *SignalProtocol::createPreKeyBundle(uint32_t ARegistratio
 		errMsg = "curve_decode_point() failed! (identity key)";
 		goto cleanup;
 	}
-
-	ec_public_key_serialize(&buffer, identityKey);
-	ik = QByteArray((char *)signal_buffer_data(buffer), signal_buffer_len(buffer));
-	signal_buffer_free(buffer);
 
 	rc = session_pre_key_bundle_create(&bundle, ARegistrationId, ADeviceId,
 									   APreKeyId, preKeyPublic,
@@ -640,7 +671,17 @@ SignalProtocol::PreKeySignalMessage SignalProtocol::getPreKeySignalMessage(const
 {
 	return PreKeySignalMessage(FGlobalContext, AEncrypted, getDeviceId());
 }
+#ifndef NO_OMEMO_OLD
+SignalProtocol::SignalMessage SignalProtocol::getSignalMessageOld(const QByteArray &AEncrypted)
+{
+	return SignalMessage(FGlobalContext, AEncrypted, true);
+}
 
+SignalProtocol::PreKeySignalMessage SignalProtocol::getPreKeySignalMessageOld(const QByteArray &AEncrypted)
+{
+	return PreKeySignalMessage(FGlobalContext, AEncrypted);
+}
+#endif
 SignalProtocol::SessionBuilder SignalProtocol::getSessionBuilder(const QString &ABareJid, quint32 ADeviceId)
 {
 	return SessionBuilder(ABareJid, ADeviceId, FGlobalContext, FStoreContext, FVersion);
@@ -1802,17 +1843,26 @@ SignalProtocol::SignalMessage::operator signal_message *() const
 	return FMessage;
 }
 
-SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted)
+SignalProtocol::SignalMessage::SignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted
+#ifndef NO_OMEMO_OLD
+											 , bool AOld
+#endif
+											 )
 {
-	int rc = signal_message_deserialize_omemo(&FMessage,
-										DATA_SIZE(AEncrypted),
-										AGlobalContext);
+	int rc =
+#ifndef NO_OMEMO_OLD
+			AOld?signal_message_deserialize(&FMessage,
+											DATA_SIZE(AEncrypted),
+											AGlobalContext):
+#endif
+				 signal_message_deserialize_omemo(&FMessage,
+												  DATA_SIZE(AEncrypted),
+												  AGlobalContext);
 	if (rc != SG_SUCCESS)
 	{
 		qCritical("signal_message_deserialize_omemo() failed! rc=%d", rc);
 		FMessage = nullptr;
 	}
-
 }
 
 //
@@ -1863,10 +1913,17 @@ quint32 SignalProtocol::PreKeySignalMessage::preKeyId() const
 SignalProtocol::PreKeySignalMessage::PreKeySignalMessage(signal_context *AGlobalContext, const QByteArray &AEncrypted, quint32 ARegistrationId)
 {
 	char *errorMsg;
-	int rc = pre_key_signal_message_deserialize_omemo(&FMessage,
-													  DATA_SIZE(AEncrypted),
-													  ARegistrationId,
-													  AGlobalContext);
+	int rc =
+#ifndef NO_OMEMO_OLD
+			ARegistrationId == 0?
+				pre_key_signal_message_deserialize(&FMessage,
+												   DATA_SIZE(AEncrypted),
+												   AGlobalContext):
+#endif
+				pre_key_signal_message_deserialize_omemo(&FMessage,
+														 DATA_SIZE(AEncrypted),
+														 ARegistrationId,
+														 AGlobalContext);
 	if (rc == SG_SUCCESS)
 		return;
 
