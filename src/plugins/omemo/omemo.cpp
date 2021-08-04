@@ -724,6 +724,7 @@ bool Omemo::publishOwnDeviceIds(const Jid &AStreamJid)
 
 bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 {
+	qDebug() << "Omemo::publishOwnKeys(" << AStreamJid.full() << ")";
 	if (!FSignalProtocols.contains(AStreamJid))
 		return false;
 	SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
@@ -760,6 +761,7 @@ bool Omemo::publishOwnKeys(const Jid &AStreamJid)
 	bundle.appendChild(signedPreKeySignature);
 
 	QByteArray identityKeyPublic = signalProtocol->getIdentityKeyPublic();
+	qDebug() << "identityKeyPublic = " << identityKeyPublic.toHex();
 	if (identityKeyPublic.isNull())
 	{
 		qCritical() << "Failed to get Signed Pre Key";
