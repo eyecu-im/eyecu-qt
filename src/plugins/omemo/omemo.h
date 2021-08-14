@@ -121,6 +121,9 @@ protected:
 	OmemoVersionFlags isSupported(const QString &ABareJid) const;
 	OmemoVersionFlags isSupported(const Jid &AStreamJid, const Jid &AContactJid) const;
 	int isSupported(const IMessageAddress *AAddresses) const;
+	bool isTrusted(SignalProtocol *ASignalProtocol, const QString &ABareJid,
+				   const QList<quint32> &ADeviceIds, const QList<quint32> &AFailedDeviceIds,
+				   const QHash<quint32, SignalDeviceBundle> &ABundles) const;
 	bool setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive=true);
 	bool isActiveSession(const Jid &AStreamJid, const QString &ABareJid) const;
 	bool isActiveSession(const IMessageAddress *AAddresses) const;

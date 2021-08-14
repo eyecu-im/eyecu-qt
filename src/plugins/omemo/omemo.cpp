@@ -1628,6 +1628,18 @@ int Omemo::isSupported(const IMessageAddress *AAddresses) const
 	return 0;
 }
 
+bool Omemo::isTrusted(SignalProtocol *ASignalProtocol, const QString &ABareJid,
+					  const QList<quint32> &ADeviceIds, const QList<quint32> &AFailedDeviceIds,
+					  const QHash<quint32, SignalDeviceBundle> &ABundles) const
+{
+	for (QList<quint32>::ConstIterator it = ADeviceIds.constBegin();
+		 it != ADeviceIds.constEnd(); ++it)
+		if (!AFailedDeviceIds.contains(*it) &&
+			ASignalProtocol->getIdentityTrusted(ABareJid, *it) == 1) // Trusted identity
+			return true;
+	return false;
+}
+
 bool Omemo::setActiveSession(const Jid &AStreamJid, const QString &ABareJid, bool AActive)
 {
 	bool rc = false;
@@ -1877,7 +1889,8 @@ void Omemo::onOmemoActionTriggered()
 		Jid streamJid(action->data(ADR_STREAM_JID).toString());
 		Jid contactJid(action->data(ADR_CONTACT_JID).toString());
 		bool active = isActiveSession(streamJid, contactJid.bare());
-		if (setActiveSession(streamJid, contactJid.bare(), !active) && active)
+		if (setActiveSession(streamJid, contactJid.bare(), !active) && active &&
+			isSupported(contactJid.bare()).testFlag(OmemoNew))
 			sendOptOutStanza(streamJid, contactJid);
 	}
 }
@@ -2412,7 +2425,6 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 
 	if (FSignalProtocols.contains(AStreamJid))
 	{
-		SignalProtocol *signalProtocol = FSignalProtocols[AStreamJid];
 		if (ADirection == IMessageProcessor::DirectionOut)
 		{
 			Stanza stanza(AMessage.stanza());
@@ -2423,21 +2435,14 @@ bool Omemo::messageReadWrite(int AOrder, const Jid &AStreamJid, Message &AMessag
 				QString bareJid = stanza.toJid().bare();
 				if (isActiveSession(AStreamJid, bareJid))
 				{
-					bool haveTrustedIdentities(false);
 					if (isSupported(AStreamJid, stanza.toJid()))
 					{
-						QList<quint32> deviceIds = FDeviceIds[bareJid];
-						QList<quint32> failedDeviceIds = FFailedDeviceIds[bareJid];
-						QHash<quint32, SignalDeviceBundle> bundles = FBundles.value(bareJid);
-						for (QList<quint32>::ConstIterator it = deviceIds.constBegin();
-							 it != deviceIds.constEnd(); ++it)
-							if (!failedDeviceIds.contains(*it) &&
-								signalProtocol->getIdentityTrusted(bareJid, *it) == 1) // Trusted identity
-							{
-								haveTrustedIdentities = true;
-								break;
-							}
-
+						bool haveTrustedIdentities = isTrusted(FSignalProtocols[AStreamJid], bareJid, FDeviceIds[bareJid],
+															   FFailedDeviceIds[bareJid], FBundles.value(bareJid))
+#ifndef NO_OMEMO_OLD
+												  || isTrusted(FSignalProtocolsOld[AStreamJid], bareJid, FDeviceIdsOld[bareJid],
+															  FFailedDeviceIdsOld[bareJid], FBundlesOld.value(bareJid));
+#endif
 						if (!haveTrustedIdentities)
 						{
 //FIXME: Use appropriate message widget for the message box below
