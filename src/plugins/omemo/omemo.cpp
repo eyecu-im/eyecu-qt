@@ -208,11 +208,11 @@ static QString decryptMessageText(const QByteArray &AEncryptedText, const QByteA
 	gcry_cipher_hd_t cipherHd = nullptr;
 	QByteArray outBuf;
 
-	if(AIv.size() != AES_GCM_IV_LENGTH) {
-	  errMsg = "Invalid AES IV size (must be 16)";
-	  rc = gcry_error_t(SG_ERR_UNKNOWN);
-	  goto cleanup;
-	}
+//	if(AIv.size() != AES_GCM_IV_LENGTH) {
+//	  errMsg = "Invalid AES IV size (must be 16)";
+//	  rc = gcry_error_t(SG_ERR_UNKNOWN);
+//	  goto cleanup;
+//	}
 
 	rc = gcry_cipher_open(&cipherHd, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_GCM, GCRY_CIPHER_SECURE);
 	if (rc) {
